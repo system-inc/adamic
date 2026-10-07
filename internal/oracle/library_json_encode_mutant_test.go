@@ -17,18 +17,20 @@ func TestJSONEncodeNativeMutants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	const field = `const adamic_decode_field *field=&type->fields[i];adamic_value child={0};`
+	const field = "adamic_encode_field *field = &type->fields[i];\n\t\t\tadamic_value child = {0};"
 	cases := []struct{ name, source, from, to string }{
-		{"runtime_order", `interface Pair {readonly first:string;readonly second:number} const v:Pair={second:2,first:'one'};console.log(encodeJson<Pair>(v));`, field, `const adamic_decode_field *field=&type->fields[i];
+		{"runtime_order", `interface Pair {readonly first:string;readonly second:number} const v:Pair={second:2,first:'one'};console.log(encodeJson<Pair>(v));`, field, `adamic_encode_field *field=&type->fields[i];
 if (!tuple) { for (size_t f=0;f<type->field_count;f++) { if (strcmp(type->fields[f].name,object->shape->names[i])==0) {field=&type->fields[f];break;} } }
 adamic_value child={0};`},
-		{"hidden_field", `interface Pair {readonly first:string;readonly second:number} const full={first:'one',second:2,hidden:'secret'.repeat(2)};const v:Pair=full;console.log(encodeJson<Pair>(v));`, field, `adamic_decode_field extra={"hidden",type->fields[0].node,false};
-const adamic_decode_field *field=i<type->field_count?&type->fields[i]:&extra;adamic_value child={0};`},
-		{"negative_zero", `console.log(encodeJson<number>(-0));`, `char bytes[ADAMIC_NUMBER_FORMAT_MAX];size_t length=adamic_number_format(value.number,bytes);`, `if (value.number==0.0 && signbit(value.number)) { ascii(builder,"-0");return; }
+		{"hidden_field", `interface Pair {readonly first:string;readonly second:number} const full={first:'one',second:2,hidden:'secret'.repeat(2)};const v:Pair=full;console.log(encodeJson<Pair>(v));`, field, `adamic_encode_field extra={.name="hidden",.node=type->fields[0].node,.optional=false};
+adamic_encode_field *field=i<type->field_count?&type->fields[i]:&extra;adamic_value child={0};`},
+		{"negative_zero", `console.log(encodeJson<number>(-0));`, "char bytes[ADAMIC_NUMBER_FORMAT_MAX];\n\t\tsize_t length = adamic_number_format(value.number, bytes);", `if (value.number==0.0 && signbit(value.number)) { ascii(builder,"-0");return; }
 char bytes[ADAMIC_NUMBER_FORMAT_MAX];size_t length=adamic_number_format(value.number,bytes);`},
-		{"nan", `console.log(encodeJson<number>(NaN));`, `if (!isfinite(value.number)) { ascii(builder,"null");return; }`, `if (isnan(value.number)) { ascii(builder,"NaN");return; }
+		{"nan", `console.log(encodeJson<number>(NaN));`, "if (!isfinite(value.number)) {\n\t\t\tascii(builder, \"null\");\n\t\t\treturn;\n\t\t}", `if (isnan(value.number)) { ascii(builder,"NaN");return; }
 if (!isfinite(value.number)) { ascii(builder,"null");return; }`},
-		{"raw_surrogate", `console.log(encodeJson<string>('x'.repeat(3)+'\ud800'));`, `code < 0x20 || (code >= 0xd800 && code <= 0xdfff)`, `code < 0x20`},
+		{"raw_surrogate", `console.log(encodeJson<string>('x'.repeat(3)+'\ud800'));`, `width == 3 && code == 0xed && here[1] >= 0xa0`, `width == 3 && code == 0xed && here[1] >= 0xa0 && false`},
+		{"split_byte_run", `console.log(encodeJson<string>('ordinary'.repeat(3)));`, `append(w, bytes + run, length - run, units);`, `append(w, bytes + run, length - run > 0 ? length - run - 1 : 0, units);`},
+		{"cache_invalidation", `interface Pair {readonly first:string;readonly second:string} const values:readonly Pair[]=[{first:"a",second:"b"},{second:"d",first:"c"},{second:"f",first:"e"},{first:"g",second:"h"}];console.log(encodeJson<readonly Pair[]>(values));`, `field->cache.shape != object->shape`, `field->cache.shape == NULL`},
 	}
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
@@ -37,7 +39,7 @@ if (!isfinite(value.number)) { ascii(builder,"null");return; }`},
 				t.Fatal("mutation target missing")
 			}
 			if test.name == "hidden_field" {
-				mutated = strings.Replace(mutated, `for (size_t i=0;i<type->field_count;i++)`, `for (size_t i=0;i<object->shape->count;i++)`, 1)
+				mutated = strings.Replace(mutated, `for (size_t i = 0; i < type->field_count; i++)`, `for (size_t i = 0; i < object->shape->count; i++)`, 1)
 			}
 			path := filepath.Join(t.TempDir(), "mutant.a")
 			if err := os.WriteFile(path, []byte("import {encodeJson} from 'adamic';\n"+test.source), 0600); err != nil {
@@ -85,4 +87,53 @@ func TestJSONEncodePlainStringifyMutant(t *testing.T) {
 		t.Fatal("mutant survived")
 	}
 	t.Log("plain JSON.stringify backend: pinned declared-fields assertion failed, exit 70")
+}
+
+func TestJSONEncodeNativeStringMetadata(t *testing.T) {
+	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_encode.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "metadata.a")
+	if err := os.WriteFile(path, []byte("import {encodeJson} from 'adamic'; console.log(encodeJson<string>('x🌍é\\ud800')); console.log(encodeJson<string>('abc'));"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	const wrapper = `static adamic_string *checked_encode(adamic_value value, const adamic_encode_schema *schema) {
+ adamic_string *result=metadata_target(value,schema);
+ if (!((result->length==15 && result->units==13) || (result->length==5 && result->units==6))) {
+  adamic_panic("encode metadata differs",sizeof "encode metadata differs"-1);
+ }
+ return result;
+}
+`
+	for _, mutant := range []bool{false, true} {
+		source := string(runtime)
+		if mutant {
+			source = strings.Replace(source, "result->units = builder.units + 1;", "result->units = 0;", 1)
+			if source == string(runtime) {
+				t.Fatal("metadata mutation target missing")
+			}
+		}
+		code := strings.ReplaceAll(source, "adamic_json_encode(", "metadata_target(") + "\n" + wrapper + strings.ReplaceAll(native.C(program), "adamic_json_encode(", "checked_encode(")
+		binary := buildDecodeMutant(t, code)
+		// The mutant panics with its result still allocated, by design. This test is about the
+		// result's metadata, not leaks, so the mutant runs uncounted: on macOS runDecodeMutant's
+		// counted build would report that allocation, exit 1 and hide the panic being asserted.
+		// The baseline keeps the leak check.
+		if mutant {
+			got := execute(t, binary)
+			if got.exitCode != 70 || !strings.Contains(string(got.stderr), "encode metadata differs") {
+				t.Fatalf("metadata mutant survived: %d %s", got.exitCode, got.stderr)
+			}
+		} else {
+			got := runDecodeMutant(t, code, binary)
+			if diff := disagreement(onNode(t, path), got); diff != "" {
+				t.Fatalf("metadata baseline: %s %s", diff, got.stderr)
+			}
+		}
+	}
 }

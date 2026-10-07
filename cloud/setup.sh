@@ -9,6 +9,16 @@
 # Nothing here is needed on a Mac: Xcode's clang and leaks already do this job there.
 set -euo pipefail
 
+wasiSDK=false
+wasmtime=false
+for option in "$@"; do
+ case $option in
+  --wasi-sdk) wasiSDK=true ;;
+  --wasmtime) wasmtime=true ;;
+  *) echo "usage: bash cloud/setup.sh [--wasi-sdk] [--wasmtime]" >&2; exit 2 ;;
+ esac
+done
+
 started=$(date +%s)
 step() { echo "setup: $1 ($(($(date +%s) - started))s)"; }
 
@@ -91,12 +101,55 @@ fi
 "$tools/bin/node" --version
 step "node ready"
 
+# Optional WASI SDK 27: native clang remains the default in PATH.
+if "$wasiSDK"; then
+ wasiVersion=27
+ wasiDirectory="$tools/wasi-sdk"
+ if [ ! -x "$wasiDirectory/bin/clang" ]; then
+  case $(uname -m) in
+   x86_64) wasiArchitecture=x86_64 ;;
+   *) wasiArchitecture=arm64 ;;
+  esac
+  mkdir -p "$wasiDirectory"
+  curl -fsSL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$wasiVersion/wasi-sdk-$wasiVersion.0-$wasiArchitecture-linux.tar.gz" | tar --no-same-owner -xz -C "$wasiDirectory" --strip-components 1
+ fi
+ "$wasiDirectory/bin/clang" --version | head -n 1
+ step "wasi sdk ready ($wasiDirectory)"
+fi
+
+# Optional independent WASI engine, pinned with archive checksums.
+if "$wasmtime"; then
+ wasmtimeVersion=38.0.3
+ case $(uname -m) in
+  x86_64)
+   wasmtimeArchitecture=x86_64
+   wasmtimeSHA256=101d79dff495b0392d583d11c3c78dd50941c3ae28e80cf1604ca43acdf05af7 ;;
+  *)
+   wasmtimeArchitecture=aarch64
+   wasmtimeSHA256=10f8dd0f4789075321a439a1fb4a3d1888e3a45c0620dc9c562e198095120120 ;;
+ esac
+ wasmtimeDirectory="$tools/wasmtime-$wasmtimeVersion"
+ if [ ! -x "$wasmtimeDirectory/wasmtime" ]; then
+  wasmtimeArchive="$tools/wasmtime-$wasmtimeVersion-$wasmtimeArchitecture.tar.xz"
+  curl -fsSL "https://github.com/bytecodealliance/wasmtime/releases/download/v$wasmtimeVersion/wasmtime-v$wasmtimeVersion-$wasmtimeArchitecture-linux.tar.xz" -o "$wasmtimeArchive"
+  printf '%s  %s\n' "$wasmtimeSHA256" "$wasmtimeArchive" | sha256sum -c -
+  mkdir -p "$wasmtimeDirectory"
+  tar --no-same-owner -xJf "$wasmtimeArchive" -C "$wasmtimeDirectory" --strip-components 1
+ fi
+ "$wasmtimeDirectory/wasmtime" --version
+ ln -sf "$wasmtimeDirectory/wasmtime" "$tools/bin/wasmtime"
+ step "wasmtime ready ($wasmtimeDirectory, archive sha256 $wasmtimeSHA256)"
+fi
+
 # One file every shell sources: the agent's shell in Codex is a different session from this one.
 cat > "$tools/env.sh" << ENV
 export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"
 export GOTOOLCHAIN=auto
 export TMPDIR=$gate
 ENV
+if "$wasiSDK"; then
+ printf 'export WASI_SYSROOT=%q\n' "$wasiDirectory/share/wasi-sysroot" >> "$tools/env.sh"
+fi
 grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
 # shellcheck disable=SC1091
 source "$tools/env.sh"

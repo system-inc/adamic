@@ -171,7 +171,12 @@ func Build(entry, output string) error {
 	if strings.Count(runtime, decoderStub) != 1 {
 		return fmt.Errorf("worker: decodeJson runtime assembly marker missing")
 	}
-	runtime = strings.Replace(runtime, decoderStub, jsonDecodeRuntime+"\n"+jsonEncodeRuntime, 1)
+	runtime = strings.Replace(runtime, decoderStub, jsonDecodeRuntime, 1)
+	const encoderStub = "// Keep the backend's encoder import linkable until the Workers JSON runtime unit lands.\nexport function encodeJson() { panic('encodeJson: not yet available on Workers'); }"
+	if strings.Count(runtime, encoderStub) != 1 {
+		return fmt.Errorf("worker: encodeJson runtime assembly marker missing")
+	}
+	runtime = strings.Replace(runtime, encoderStub, jsonEncodeRuntime, 1)
 	files := []struct{ name, text string }{
 		{"handler.mjs", handler},
 		{"adamic.mjs", runtime},

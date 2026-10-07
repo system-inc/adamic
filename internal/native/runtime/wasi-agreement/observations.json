@@ -1,0 +1,111 @@
+{
+  "closures_throw": {
+    "node": {
+      "exit": 0,
+      "stdout": "map threw: map stopped at 2\nfilter threw: filter stopped at 3\nfind threw: find stopped at b2\nsome threw: some stopped at d4\nforEach threw: forEach stopped after a1+b2+c3\nreduce threw: reduce stopped with start0a1b2\nArray.from threw: from stopped at 3\nMap forEach threw: Map forEach stopped at bob2 with age 42 after ann1=age 31\nSet forEach threw: Set forEach stopped at cy3\n3 3\nsort threw: sort stopped after 6 comparisons\nq9,d4,m1,a7,z2,k5\nsort by name threw: the comparator met a7\nq9,d4,m1,a7,z2,k5\nsort by name, in a function threw: the comparator met a7\nq9,d4,m1,a7,z2,k5\nsort, mid-merge threw: sort stopped in a merge\nn0,n37,n74,n11,n48\nsort with undefined threw: the comparator met 1\n3,,1,2\nmapped in place stopped\nx1,y2,z3\nremapping w0\nremapping w1\nremapped: w0w0,w1w1\nremapping w0\nremapping w1\nremapping w2\nremapped threw: remapped stopped at w2\ncall threw: called1\nthrough a function threw: called1\nthe closure's finally ran\nfinally inside threw: called1\n",
+      "stderr": ""
+    },
+    "fixed": {
+      "exit": 0,
+      "stdout": "map threw: map stopped at 2\nfilter threw: filter stopped at 3\nfind threw: find stopped at b2\nsome threw: some stopped at d4\nforEach threw: forEach stopped after a1+b2+c3\nreduce threw: reduce stopped with start0a1b2\nArray.from threw: from stopped at 3\nMap forEach threw: Map forEach stopped at bob2 with age 42 after ann1=age 31\nSet forEach threw: Set forEach stopped at cy3\n3 3\nsort threw: sort stopped after 6 comparisons\nq9,d4,m1,a7,z2,k5\nsort by name threw: the comparator met a7\nq9,d4,m1,a7,z2,k5\nsort by name, in a function threw: the comparator met a7\nq9,d4,m1,a7,z2,k5\nsort, mid-merge threw: sort stopped in a merge\nn0,n37,n74,n11,n48\nsort with undefined threw: the comparator met 1\n3,,1,2\nmapped in place stopped\nx1,y2,z3\nremapping w0\nremapping w1\nremapped: w0w0,w1w1\nremapping w0\nremapping w1\nremapping w2\nremapped threw: remapped stopped at w2\ncall threw: called1\nthrough a function threw: called1\nthe closure's finally ran\nfinally inside threw: called1\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "exit": 70,
+      "stdout": "map threw: map stopped at 2\nfilter threw: filter stopped at 3\nfind threw: find stopped at b2\nsome threw: some stopped at d4\nforEach threw: forEach stopped after a1+b2+c3\nreduce threw: reduce stopped with start0a1b2\nArray.from threw: from stopped at 3\nMap forEach threw: Map forEach stopped at bob2 with age 42 after ann1=age 31\nSet forEach threw: Set forEach stopped at cy3\n3 3\n",
+      "stderr": "adamic: panic: wasm32: throwing sort comparators are not supported\n"
+    }
+  },
+  "stack_forever": {
+    "node": {
+      "exit": 70,
+      "stdout": "start\n",
+      "stderr": "adamic: panic: RangeError: Maximum call stack size exceeded\n"
+    },
+    "fixed": {
+      "exit": 70,
+      "stdout": "start\n",
+      "stderr": "adamic: panic: RangeError: Maximum call stack size exceeded\n"
+    },
+    "mutant": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "wasm://wasm/stack_forever.wasm-0010ad72:1\n\n\nRangeError: Maximum call stack size exceeded\n    at stack_forever.wasm.adamic_function_0_loop (wasm://wasm/stack_forever.wasm-0010ad72:wasm-function[12]:0x355)\n    at stack_forever.wasm.adamic_function_0_loop (wasm://wasm/stack_forever.wasm-0010ad72:wasm-function[12]:0x386)\n    at stack_forever.wasm.adamic_function_0_loop (wasm://wasm/stack_forever.wasm-0010ad72:wasm-function[12]:0x386)\n    at stack_forever.wasm.adamic_function_0_loop (wasm://wasm/stack_forever.wasm-0010ad72:wasm-function[12]:0x386)\n    at stack_forever.wasm.adamic_function_0_loop (wasm://wasm/stack_forever.wasm-0010ad72:wasm-function[12]:0x386)\n    at stack_forever.wasm.adamic_function_0_loop (wasm://wasm/stack_forever.wasm-0010ad72:wasm-function[12]:0x386)\n    at stack_forever.wasm.adamic_function_0_loop (wasm://wasm/stack_forever.wasm-0010ad72:wasm-function[12]:0x386)\n    at stack_forever.wasm.adamic_function_0_loop (wasm://wasm/stack_forever.wasm-0010ad72:wasm-function[12]:0x386)\n    at stack_forever.wasm.adamic_function_0_loop (wasm://wasm/stack_forever.wasm-0010ad72:wasm-function[12]:0x386)\n    at stack_forever.wasm.adamic_function_0_loop (wasm://wasm/stack_forever.wasm-0010ad72:wasm-function[12]:0x386)\n\nNode.js v24.19.0\n"
+    }
+  },
+  "stack_tail_call": {
+    "node": {
+      "exit": 70,
+      "stdout": "0\n",
+      "stderr": "adamic: panic: RangeError: Maximum call stack size exceeded\n"
+    },
+    "fixed": {
+      "exit": 70,
+      "stdout": "0\n",
+      "stderr": "adamic: panic: RangeError: Maximum call stack size exceeded\n"
+    },
+    "mutant": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "wasm://wasm/stack_tail_call.wasm-0010af0a:1\n\n\nRangeError: Maximum call stack size exceeded\n    at stack_tail_call.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call.wasm-0010af0a:wasm-function[12]:0x3a6)\n    at stack_tail_call.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call.wasm-0010af0a:wasm-function[12]:0x3df)\n    at stack_tail_call.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call.wasm-0010af0a:wasm-function[12]:0x3df)\n    at stack_tail_call.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call.wasm-0010af0a:wasm-function[12]:0x3df)\n    at stack_tail_call.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call.wasm-0010af0a:wasm-function[12]:0x3df)\n    at stack_tail_call.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call.wasm-0010af0a:wasm-function[12]:0x3df)\n    at stack_tail_call.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call.wasm-0010af0a:wasm-function[12]:0x3df)\n    at stack_tail_call.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call.wasm-0010af0a:wasm-function[12]:0x3df)\n    at stack_tail_call.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call.wasm-0010af0a:wasm-function[12]:0x3df)\n    at stack_tail_call.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call.wasm-0010af0a:wasm-function[12]:0x3df)\n\nNode.js v24.19.0\n"
+    }
+  },
+  "write_stdout_order": {
+    "node": {
+      "exit": 0,
+      "stdout": "first\nsecond\nthird\n",
+      "stderr": ""
+    },
+    "fixed": {
+      "exit": 0,
+      "stdout": "first\nsecond\nthird\n",
+      "stderr": ""
+    },
+    "combined": {
+      "node": {
+        "exit": 0,
+        "stdout": "first\nsecond\nthird\n",
+        "stderr": ""
+      },
+      "fixed": {
+        "exit": 0,
+        "stdout": "first\nsecond\nthird\n",
+        "stderr": ""
+      }
+    },
+    "mutant": {
+      "exit": 0,
+      "stdout": "first\nthird, after cannot write /dev/stdout: no such directory\n",
+      "stderr": ""
+    }
+  },
+  "write_stderr_order": {
+    "node": {
+      "exit": 0,
+      "stdout": "first\nthird\n",
+      "stderr": "second\n"
+    },
+    "fixed": {
+      "exit": 0,
+      "stdout": "first\nthird\n",
+      "stderr": "second\n"
+    },
+    "combined": {
+      "node": {
+        "exit": 0,
+        "stdout": "first\nsecond\nthird\n",
+        "stderr": ""
+      },
+      "fixed": {
+        "exit": 0,
+        "stdout": "first\nsecond\nthird\n",
+        "stderr": ""
+      }
+    },
+    "mutant": {
+      "exit": 0,
+      "stdout": "first\nthird\n",
+      "stderr": ""
+    }
+  }
+}
