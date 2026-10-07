@@ -164,10 +164,10 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
-	if err == nil && value.Type() == ir.Object && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+	if err == nil && value.Type() != ir.Weak && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 		if _, constant := value.(ir.Undefined); !constant {
 			if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-				if to, known := l.representation(contextual); known && to != ir.Object && to != ir.Union && (to.IsMaybe() || to.IsReference()) {
+				if to, known := l.representation(contextual); known && to != value.Type() && to != ir.Union && (to.IsMaybe() || to.IsReference()) {
 					// Keep the read or call's effects while converting its only possible value to the
 					// destination's missing representation, including packed optional scalars.
 					value = ir.Narrow{Value: ir.Box{Value: value}, To: to}
