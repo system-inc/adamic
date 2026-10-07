@@ -16,7 +16,7 @@ func batch8Mutants(t *testing.T, oracle, directory, originalBinary string) {
 		{"no_octal_escape", "no-octal-escape", `const value = '\251';`, "if(width !== 0)", "if(width < 0)"},
 		{"no_unexpected_multiline", "no-unexpected-multiline", "const x = f\n(a);", "context.line(start) !== context.line(context.node(expression).end - 1)", "context.line(start) === context.line(context.node(expression).end - 1)"},
 		{"no_unused_private_class_members", "no-unused-private-class-members", "class C { #x=0; m(){this.#x=1;} }", "if(!read)", "if(read)"},
-		{"no_useless_constructor", "no-useless-constructor", "class C { constructor(){} }", "if(body < 0)", "if(body < 0 || body >= 0)"},
+		{"no_useless_constructor", "no-useless-constructor", "class C { constructor(){} }", "if(body < 0)", "if(body >= 0)"},
 		{"prefer_template", "prefer-template", "const x = 'a' + value;", "if(!contains(context, top, false))", "if(contains(context, top, false))"},
 		{"forward_ref_uses_ref", "react/forward-ref-uses-ref", "const C = forwardRef(props => props);", "if(counted !== 1)", "if(counted === 1)"},
 		{"jsx_no_comment_textnodes", "react/jsx-no-comment-textnodes", "const view = <div>// comment</div>;", "if(atLineStart && character === '/'", "if(!atLineStart && character === '/'"},
