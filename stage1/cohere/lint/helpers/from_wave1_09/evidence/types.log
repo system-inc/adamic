@@ -1,0 +1,13 @@
+stage1/cohere/lint/helpers/from_wave1_09/main.a:5:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/from_wave1_09/main.a:7:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/from_wave1_09/main.a:8:7: variable root: number
+stage1/cohere/lint/helpers/from_wave1_09/main.a:10:11: variable row: number
+stage1/cohere/lint/helpers/from_wave1_09/main.a:11:11: variable declarations: StaticDeclaration[]
+stage1/cohere/lint/helpers/from_wave1_09/main.a:12:15: variable index: number
+stage1/cohere/lint/helpers/from_wave1_09/main.a:20:11: variable nodes: DeclarationNode[]
+stage1/cohere/lint/helpers/from_wave1_09/main.a:21:11: variable again: DeclarationNode[]
+stage1/cohere/lint/helpers/from_wave1_09/main.a:23:15: variable node: DeclarationNode
+stage1/cohere/lint/helpers/from_wave1_09/main.a:29:11: variable first: DeclarationNode | undefined
+stage1/cohere/lint/helpers/from_wave1_09/main.a:30:11: variable next: DeclarationNode | undefined
+stage1/cohere/lint/helpers/from_wave1_09/main.a:31:11: variable fresh: DeclarationNode | undefined
+stage1/cohere/lint/helpers/from_wave1_09/main.a:32:11: variable original: StaticDeclaration | undefined
