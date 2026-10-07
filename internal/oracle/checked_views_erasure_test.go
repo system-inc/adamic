@@ -12,6 +12,8 @@ func TestCheckedViewShapeErasure(t *testing.T) {
 		{"proven", "hello\n", ""},
 		{"proven-property", "hello\n", ""},
 		{"proven-callback", "hello\n", ""},
+		{"proven-generic", "hello\n", ""},
+		{"nonconforming-generic", "true\n", "field read failed: (held as Identifier).ready is not a boolean; expected boolean, found number"},
 		{"nonconforming-callback", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
 		{"nonconforming-property", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
 		{"nonconforming", "true\n", "field read failed: (value as Identifier).ready is not a boolean; expected boolean, found number"},
@@ -99,6 +101,12 @@ func TestShapeErasureCountRows(t *testing.T) {
 
 func TestShapeCallbackCountRows(t *testing.T) {
 	for _, name := range []string{"proven-callback", "nonconforming-callback"} {
+		t.Log(counted(t, "stage3/interface-downcasts/lane3/"+name+".a", false, nil, false, false))
+	}
+}
+
+func TestShapeGenericCountRows(t *testing.T) {
+	for _, name := range []string{"proven-generic", "nonconforming-generic"} {
 		t.Log(counted(t, "stage3/interface-downcasts/lane3/"+name+".a", false, nil, false, false))
 	}
 }

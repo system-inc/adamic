@@ -1,0 +1,43 @@
+Overlapping-dependency mutant caught: one fixed producer does not clear every diagnosis barrier.
+{
+  "diagnostics": 260,
+  "groups": 73,
+  "diagnosed_cast_sites": 2427,
+  "top": [
+    {
+      "code": "TS2345",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 30,
+      "affected_sites": 2336,
+      "recorded_barrier_cleared_alone": 10
+    },
+    {
+      "code": "TS18048",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 27,
+      "affected_sites": 2320,
+      "recorded_barrier_cleared_alone": 1
+    },
+    {
+      "code": "TS18048",
+      "file": "src/compiler/transformers/es2017.ts",
+      "diagnostics": 6,
+      "affected_sites": 2319,
+      "recorded_barrier_cleared_alone": 4
+    },
+    {
+      "code": "TS2769",
+      "file": "src/compiler/checker.ts",
+      "diagnostics": 5,
+      "affected_sites": 2315,
+      "recorded_barrier_cleared_alone": 0
+    },
+    {
+      "code": "TS2322",
+      "file": "src/compiler/transformers/es2017.ts",
+      "diagnostics": 1,
+      "affected_sites": 2315,
+      "recorded_barrier_cleared_alone": 0
+    }
+  ]
+}

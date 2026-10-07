@@ -141,4 +141,3 @@ The table covers all 260 diagnostics, grouped by code and file. Affected sites c
 | TS2379 | `src/compiler/watchPublic.ts` | 2 | 0 | 0 | 0 | 0 |
 
 Diagnostic count check: 260; diagnosed casts: 2060. Exact adapted line/column locations and messages for every diagnostic are in diagnostic-actions.json. Locations refer to the adapted tree recorded in this census source hashes.
-

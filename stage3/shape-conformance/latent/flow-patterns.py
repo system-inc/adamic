@@ -13,6 +13,7 @@ def patterns(sites):
    'function-value escape callback boundary':['function value may receive untracked callback arguments'],
    'indirect/callback/intrinsic result boundary':['indirect, callback or intrinsic result not modeled'],
    'unbounded callback identity':['callback target identity is unknown'],
+   'generic direct calls':['generic call substitution not modeled'],
    'generic callback identity':['generic callback implementation not instantiated','generic callback substitution not modeled'],
    'dynamic keys':['dynamic element key','dynamic or relative element key'],
    'constructors':['constructor allocation and initialization body not modeled'],

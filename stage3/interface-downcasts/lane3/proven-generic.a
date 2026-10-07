@@ -1,0 +1,6 @@
+interface Base { readonly kind: 'identifier' | 'other'; }
+interface Identifier extends Base { readonly kind: 'identifier'; readonly name: string; }
+function create(): Identifier { return {kind: 'identifier', name: 'hello'}; }
+function identity<T extends Base>(value: T): T { return value; }
+function read(value: Base): string { const held = identity(value); return (held as Identifier).name; }
+console.log(read(create()));

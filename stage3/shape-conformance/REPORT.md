@@ -1,3 +1,5 @@
+Current generic-flow checkpoint on the exact adapted tree: [GENERIC-FLOW-SHARE-REPORT.md](GENERIC-FLOW-SHARE-REPORT.md).
+
 Current exact adapted-tree census: [ADAPTED-STAGE3-SHARE-REPORT.md](ADAPTED-STAGE3-SHARE-REPORT.md).
 
 Built: finite callback allocation flow through aliases, parameters, returns and joined implementation identities.

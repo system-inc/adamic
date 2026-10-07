@@ -289,14 +289,7 @@ func (m *latentShapeMeter) expression(node *ast.Node) ir.Expression {
 					if function.Skipped {
 						return m.opaqueCallbackCall(node, "diagnosed body", "callee body skipped", m.text(call.Expression), function.Node)
 					}
-					if len(declaration.TypeParameters()) != 0 {
-						return m.opaqueCallbackCall(node, "flow the graph can't see", "generic call substitution not modeled", m.text(call.Expression))
-					}
-					arguments := []ir.Expression{}
-					for _, argument := range call.Arguments.Nodes {
-						arguments = append(arguments, m.expression(argument))
-					}
-					return m.materialize(node, ir.Call{Function: function.Index, Arguments: arguments, Returns: ir.Object})
+					return m.directAllocationCall(node, function)
 				}
 			}
 		}
@@ -910,7 +903,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 		hosts = append(hosts, name)
 	}
 	sort.Strings(hosts)
-	return map[string]any{"measurement": latentShapeLabel, "checker_rejected": len(program.LatentDiagnostics()) > 0, "diagnostics": program.LatentDiagnostics(), "diagnostic_sites": program.LatentDiagnosticSites(), "counts": counts, "unknown_reasons": reasons, "host_values": hostInventory, "host_names": hosts, "sites": sites, "analysis_only": true, "allocation_shapes": len(allocations), "allocation_schemas": schemas, "limits": "Identity-only source adapter feeds the compiler's shared graph. Diagnosed bodies are skipped, no source is emitted. Record property and constant array-element producers are tracked. Finite callback identities and arguments are tracked. Opaque callback protocols, generic, constructor, dynamic-index and whole-array contracts remain unknown. Presence is syntax evidence, never inferred from an interface declaration. Readiness is conservative initializer evidence; post-store erasure is not claimed."}
+	return map[string]any{"measurement": latentShapeLabel, "checker_rejected": len(program.LatentDiagnostics()) > 0, "diagnostics": program.LatentDiagnostics(), "diagnostic_sites": program.LatentDiagnosticSites(), "counts": counts, "unknown_reasons": reasons, "host_values": hostInventory, "host_names": hosts, "sites": sites, "analysis_only": true, "allocation_shapes": len(allocations), "allocation_schemas": schemas, "limits": "Identity-only source adapter feeds the compiler's shared graph. Diagnosed bodies are skipped, no source is emitted. Record property and constant array-element producers are tracked. Finite callback identities and arguments are tracked. Clean direct generic calls join runtime allocation identities without substituting field types. Opaque callback protocols, generic callable identities, constructor, dynamic-index and whole-array contracts remain unknown. Presence is syntax evidence, never inferred from an interface declaration. Readiness is conservative initializer evidence; post-store erasure is not claimed."}
 }
 
 // Only syntax represented by this source adapter closes a callback reference.
@@ -966,4 +959,32 @@ func normalizeLatentShapeSite(site *LatentShapeSite) {
         for _, detail := range site.Detail { if !detailSeen[detail] { detailSeen[detail]=true;details=append(details,detail) } }
         site.Detail = details
 
+}
+
+// Type arguments do not select a different runtime body. Join all actual values
+// at the known implementation; generic field schemas still need certificates.
+func (m *latentShapeMeter) directAllocationCall(node *ast.Node, function latentShapeFunction) ir.Expression {
+    for _, parameter := range function.Node.Parameters() {
+        if parameter.AsParameterDeclaration().DotDotDotToken != nil {
+            return m.opaqueAllocationCall(node, function, "rest call arguments require an array allocation")
+        }
+    }
+    for _, argument := range node.AsCallExpression().Arguments.Nodes {
+        if argument.Kind == ast.KindSpreadElement {
+            return m.opaqueAllocationCall(node, function, "spread call arguments not mapped to parameters")
+        }
+    }
+    arguments := []ir.Expression{}
+    for _, argument := range node.AsCallExpression().Arguments.Nodes { arguments=append(arguments,m.expression(argument)) }
+    return m.materialize(node, ir.Call{Function:function.Index, Arguments:arguments, Returns:ir.Object})
+}
+
+// An unmodeled call still reaches this known implementation. Taint its incoming
+// values as well as its result, including callers whose result is unused.
+func (m *latentShapeMeter) opaqueAllocationCall(node *ast.Node, function latentShapeFunction, reason string) ir.Expression {
+    boundary := m.opaqueCallbackCall(node, "flow the graph can't see", reason, m.text(node.AsCallExpression().Expression))
+    for _, parameter := range m.IR.Functions[function.Index].Parameters {
+        m.append(ir.Assign{Local:parameter, Value:boundary})
+    }
+    return boundary
 }

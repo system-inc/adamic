@@ -1,0 +1,82 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "counts": {
+    "tagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1758
+    },
+    "untagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1178
+    }
+  },
+  "unknown_reasons": {
+    "tagged": {
+      "diagnosed body": 1500,
+      "flow the graph can't see": 258
+    },
+    "untagged": {
+      "diagnosed body": 927,
+      "flow the graph can't see": 248,
+      "host metadata": 3
+    }
+  },
+  "allocation_shapes": 2522,
+  "typed_body_skip_sites": {
+    "untagged": 35,
+    "tagged": 9
+  },
+  "diagnosed_dependency_sites": {
+    "tagged": 1491,
+    "untagged": 892
+  },
+  "host_values": {
+    "cachedDirectoryStructureHost.addOrDeleteFileOrDirectory": 2291,
+    "compilerHost.getSourceFile": 2015,
+    "getOutputPathsFor(node, host, /*forceDtsPaths*/ true).declarationFilePath": 578,
+    "host.fileExists": 4,
+    "host.getCanonicalFileName": 2291,
+    "host.getCommonSourceDirectory": 578,
+    "host.getCompilerOptions": 684,
+    "host.getCurrentDirectory": 2291,
+    "host.getFileIncludeReasons().get": 346,
+    "host.getModuleResolutionCache": 1030,
+    "host.getModuleSpecifierCache": 346,
+    "host.getNearestAncestorDirectoryWithPackageJson": 346,
+    "host.getPackageJsonInfoCache?.()?.getPackageJsonInfo": 1,
+    "host.getParsedCommandLine": 2291,
+    "host.getResolvedModule": 352,
+    "host.getResolvedModule(currentSourceFile, moduleReference, mode)?.resolvedModule": 346,
+    "host.getSourceFile": 2291,
+    "host.getSourceFileByPath": 2291,
+    "host.getSourceFileFromReference": 809,
+    "host.getSourceFileLike": 346,
+    "host.getSourceFiles": 2,
+    "host.getSymlinkCache?.().getSymlinkedDirectoriesByRealpath": 346,
+    "host.readFile": 2291,
+    "host.realpath": 862,
+    "host.redirectTargetsMap.get": 346,
+    "host.resolveModuleNames!(\r\n                moduleNames.map(getModuleResolutionName),\r\n                containingFile,\r\n                reusedNames?.map(getModuleResolutionName),\r\n                redirectedReference,\r\n                options,\r\n                containingSourceFile,\r\n            ).map": 2,
+    "host: ModuleResolutionHost": 2291,
+    "resolutionHost.fileIsOpen": 346,
+    "resolutionHost.getCurrentProgram": 2291,
+    "resolutionHost.toPath": 718,
+    "state.compilerHost.getCanonicalFileName": 346,
+    "state.host": 352,
+    "state.host.fileExists": 346,
+    "state.host.getModifiedTime": 352,
+    "state.host.readDirectory(\r\n                    scope.packageDirectory,\r\n                    extensionsToExtensionsArray(extensions),\r\n                    /*excludes*/ undefined,\r\n                    [\r\n                        changeFullExtension(replaceFirstStar(target, \"**/*\"), \".*\"),\r\n                    ],\r\n                ).forEach": 1291,
+    "state: ModuleResolutionState & { host: GetPackageJsonEntrypointsHost; }": 346,
+    "sys.createDirectory": 347,
+    "sys.directoryExists": 347,
+    "sys.fileExists": 346,
+    "sys.writeFile": 346,
+    "sys: System": 2291,
+    "system.getExecutingFilePath": 2291,
+    "system: System": 2291
+  }
+}

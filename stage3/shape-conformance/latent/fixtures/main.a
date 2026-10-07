@@ -59,3 +59,25 @@ genericSink(genericCallback);
 function diagnosedCallback(node:Base):Ready {return node as Ready;}
 function diagnosedSink(callback:(node:Base)=>Ready):void {const error:number='bad';}
 diagnosedSink(diagnosedCallback);
+
+function allocationIdentity<T>(value:T):T {return value;}
+function genericRead():Ready {const node:Base=allocationIdentity(make());return node as Ready;}
+function genericWrong(flag:boolean):Ready {const node:Base=allocationWrongIdentity(flag?make():{kind:'ok' as const,ready:0});return node as Ready;}
+function genericHostRead():Ready {const node:Base=allocationHostIdentity(JSON.parse('{}'));return node as Ready;}
+function genericStagedRead():Ready {const staged:Ready={kind:'ok',ready:undefined!};const node:Base=allocationStagedIdentity(staged);return node as Ready;}
+function rejectedAllocationIdentity<T>(value:T):T {const error:number='bad';return value;}
+function genericDiagnosedRead():Ready {const node:Base=rejectedAllocationIdentity(make());return node as Ready;}
+
+function allocationWrongIdentity<T>(value:T):T {return value;}
+function allocationHostIdentity<T>(value:T):T {return value;}
+function allocationStagedIdentity<T>(value:T):T {return value;}
+function sharedAllocationIdentity<T>(value:T):T {return value;}
+function genericJoinedRead():Ready {const node:Base=sharedAllocationIdentity(make());sharedAllocationIdentity(JSON.parse('{}'));return node as Ready;}
+
+function allocationRestIdentity<T>(...values:T[]):T {return values as unknown as T;}
+function genericRestRead():Ready {const node:Base=allocationRestIdentity(make());return node as Ready;}
+function genericSpreadRead():Ready {const values:[Base]=[make()];const node:Base=allocationSpreadIdentity(...values);return node as Ready;}
+function allocationSpreadIdentity<T>(value:T):T {return value;}
+
+function allocationSpreadJoinedIdentity<T>(value:T):T {return value;}
+function genericSpreadJoinedRead():Ready {const node:Base=allocationSpreadJoinedIdentity(make());const wrong={kind:'ok' as const,ready:0};const values:[Base]=[wrong];allocationSpreadJoinedIdentity(...values);return node as Ready;}
