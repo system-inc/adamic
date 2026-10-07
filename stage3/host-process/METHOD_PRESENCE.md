@@ -41,7 +41,7 @@ The requested remote SHA is on codex/method-presence-test, rather than codex/met
 
 The owner's existing 047e8572 WASI guards were imported unchanged rather than edited in parallel. All runtime translation units compiled as part of the actual WASI artifact builds. Linux counts were regenerated after the compiler merge. No whole-oracle or full-flow success is claimed. No main push, rebase or force-push occurred.
 
-Setup: GOPROXY=https://proxy.golang.org|direct was set. WASI SDK 27 setup succeeded: Go ready 0.022s, Node ready 0.024s, submodules ready 0.053s, clang ready 0.147s, WASI ready 3.798s, build ready 29.735s, total 29.995s. nproc=5. The exact printed timing lines are retained in logs.
+Setup: GOPROXY=https://proxy.golang.org|direct was set. WASI SDK 27 setup succeeded: Go ready 0.033s, Node ready 0.020s, submodules ready 0.050s, clang ready 0.147s, WASI ready 3.798s, build ready 29.735s, total 29.995s. nproc=5. The exact printed timing lines are retained in logs.
 
 Final commands, all redirected to logs:
 
