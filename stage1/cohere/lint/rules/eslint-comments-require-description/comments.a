@@ -1,0 +1,47 @@
+import type { RuleContext } from '../../context.ts';
+
+export class Comment {
+    readonly pos: number;
+    readonly end: number;
+    constructor(pos: number, end: number) { this.pos = pos; this.end = end; }
+}
+function lineBreak(code: number): boolean {
+    return code === 10 || code === 13 || code === 8232 || code === 8233;
+}
+// Literal ranges come from the parser. No slash inside a string, regex, or
+// template chunk can introduce a comment; interpolation expressions remain visible.
+export function comments(context: RuleContext): Comment[] {
+    const protectedEnds = new Map<number, number>();
+    for(let index = 0; index < context.parser.nodes.length; index++) {
+        const node = context.node(index);
+        if(['StringLiteral', 'RegularExpressionLiteral', 'NoSubstitutionTemplateLiteral',
+            'TemplateHead', 'TemplateMiddle', 'TemplateTail'].includes(node.kind)) {
+            protectedEnds.set(context.start(index), node.end);
+        }
+    }
+    const source = context.source;
+    const result: Comment[] = [];
+    let index = 0;
+    if(source.startsWith('#!')) {
+        while(index < source.length && !lineBreak(source.charCodeAt(index))) index++;
+    }
+    while(index < source.length) {
+        const end = protectedEnds.get(index);
+        if(end !== undefined) { index = end; continue; }
+        const opening = source.slice(index, index + 2);
+        if(opening === '//') {
+            const pos = index;
+            index += 2;
+            while(index < source.length && !lineBreak(source.charCodeAt(index))) index++;
+            result.push(new Comment(pos, index));
+        }
+        else if(opening === '/*') {
+            const pos = index;
+            const closing = source.indexOf('*/', index + 2);
+            index = closing < 0 ? source.length : closing + 2;
+            result.push(new Comment(pos, index));
+        }
+        else index++;
+    }
+    return result;
+}

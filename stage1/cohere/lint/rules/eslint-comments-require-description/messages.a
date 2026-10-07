@@ -1,0 +1,1 @@
+export const message = 'Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary: write the reason after ` -- ` at the end of the directive, as in `// eslint-disable-next-line some-rule -- why this line is the exception`. A suppression that does not say why cannot be told apart from one nobody remembers adding.';

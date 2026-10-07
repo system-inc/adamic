@@ -1,0 +1,7 @@
+This `.a` candidate implements `@eslint-community/eslint-comments/require-description` using the real Go rule and decoder as its oracle. It reuses suppression directive recognition and subject registration. Comment delimiters come from a rule-owned scan protected by parser-provided literal ranges, including regex and template chunks. Line comments stop at every ECMAScript line boundary. Messages and full-comment ranges are compared byte for byte; the rule has no automatic fixes.
+
+The real compiler corpus caught the first scanner's inclusion of CR in CRLF comments. The owned lexical witness also covers bare CR and comment-looking text inside a regex following `return`. Those failures are preserved, followed by passing comparisons after the correction.
+
+All 200 compiler/stage1 files and the supported upstream cases match Go on source Node, emitted JavaScript and sanitized native. An intentionally unterminated block-comment fixture remains outside findings-plus-fixes comparison because Go's fix engine refuses malformed source. Malformed JSON option rejection and exhaustive lexical fuzzing are not covered. This is a candidate awaiting shared `.a` registration support, not a certified complete port.
+
+The empty-description mutant compiles and runs cleanly on all three runtimes. Only its differing output catches it. The reproduction script, coverage decisions and raw logs are in the sibling `structure-tailwind-no-physical-direction` directory and the continuation report under `claims/`.
