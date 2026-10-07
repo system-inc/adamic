@@ -1,0 +1,67 @@
+import type { RuleContext } from '../../context.ts';
+import { all } from '../../helpers/comments/all.ts';
+import type { Comment } from '../../helpers/comments/comment.ts';
+import { utf8Length } from 'adamic';
+import { messages } from './messages.a';
+// Exact disjoint repairs are exposed to the integrating harness. Finding currently has one edit.
+export class Edit {
+    readonly start: number; readonly end: number; readonly text: string;
+    constructor(start: number, end: number, text: string) { this.start = start; this.end = end; this.text = text; }
+}
+export class Repair {
+    readonly property: number; readonly edits: Edit[];
+    constructor(property: number, edits: Edit[]) { this.property = property; this.edits = edits; }
+}
+export class Rule {
+    readonly context: RuleContext; readonly repairs: Repair[] = [];
+    private cachedComments: Comment[] = []; private commentsReady = false;
+    constructor(context: RuleContext) { this.context = context; }
+    fileComments(root: number): Comment[] {
+        if(!this.commentsReady) { this.cachedComments = all(this.context.parser, root); this.commentsReady = true; }
+        return this.cachedComments;
+    }
+    kind(index: number): string { return index < 0 ? '' : this.context.node(index).kind; }
+    child(index: number, at: number): number { return index < 0 ? -1 : this.context.node(index).children[at] ?? -1; }
+    parent(index: number): number { return this.context.parents[index] ?? -1; }
+    ownThis(index: number, root: number): boolean {
+        if(index !== root && ['FunctionExpression', 'FunctionDeclaration', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor', 'ClassDeclaration', 'ClassExpression'].includes(this.kind(index))) { return false; }
+        if(this.kind(index) === 'ThisKeyword') { return true; }
+        for(const child of this.context.node(index).children) { if(this.ownThis(child, root)) { return true; } }
+        return false;
+    }
+    climb(index: number): number {
+        let current = index;
+        while(this.kind(this.parent(current)) === 'ParenthesizedExpression') { current = this.parent(current); }
+        return current;
+    }
+    after(end: number): number { this.context.scanner.pos = end; this.context.scanner.scan(); return this.context.scanner.start; }
+    visit(index: number): void {
+        const context = this.context;
+        if(this.kind(index) === 'FunctionExpression' && this.ownThis(index, index)) { return; }
+        const receiver = this.climb(index); const access = this.parent(receiver);
+        const property = access < 0 ? -1 : context.node(access).children[context.node(access).children.length - 1] ?? -1;
+        if(this.child(access, 0) !== receiver || property < 0) { return; }
+        if(this.kind(access) === 'PropertyAccessExpression') {
+            if(this.kind(property) !== 'Identifier' || context.node(property).text !== 'bind') { return; }
+        } else if(this.kind(access) === 'ElementAccessExpression') {
+            if(!['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.kind(property)) || context.node(property).text !== 'bind') { return; }
+        } else { return; }
+        const callee = this.climb(access); const call = this.parent(callee);
+        if(this.kind(call) !== 'CallExpression' || this.child(call, 0) !== callee || context.node(call).list !== 1) { return; }
+        const children = context.node(call).children; const argument = children[children.length - 1] ?? -1;
+        if(this.kind(argument) === 'SpreadElement') { return; }
+        const edits: Edit[] = [];
+        if(['Identifier', 'ThisKeyword', 'FunctionExpression', 'StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'RegularExpressionLiteral', 'TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(this.kind(argument))) {
+            const first = this.after(context.node(receiver).end); const second = this.after(context.node(callee).end);
+            let root = index; while(this.parent(root) >= 0) { root = this.parent(root); }
+            const from = utf8Length(context.source.slice(0, first)); const to = utf8Length(context.source.slice(0, context.node(call).end));
+            let comment = false;
+            for(const item of this.fileComments(root)) { if(item.start >= from && item.start < to) { comment = true; } }
+            if(!comment) { edits.push(new Edit(first, context.node(access).end, '')); edits.push(new Edit(second, context.node(call).end, '')); }
+        }
+        this.repairs.push(new Repair(property, edits));
+        // Do not collapse two edits into one and falsely claim Go fix parity.
+        context.report(property, 'no-extra-bind', 'unexpected', messages[0] ?? '', '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,0 +1,6 @@
+{
+  "name": "bind_argument_count_disabled",
+  "file": "rule.a",
+  "from": "context.node(call).list !== 1",
+  "to": "true"
+}
