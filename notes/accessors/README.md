@@ -1,5 +1,9 @@
 # Accessor branch coverage
 
+These observations record d785e87 and coverage commit d6b9675. They are
+historical. See [merge.md](merge.md) for reconciliation with main and the
+current fixture and counts checks. The inferred mixed array is now refused.
+
 20 programs added to the oracle, 4 source/native differences kept here, and 57
 rejected probes kept under unsupported/. Cut coverage/accessors from d785e87.
 Compiler code is unchanged. See coverage.md for the case-by-case inventory and

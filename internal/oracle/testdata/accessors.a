@@ -29,8 +29,8 @@ try { computed.x = -1; } catch (error) {
 console.log(`${computed.x}`);
 class Sink {
  stored = 0;
- set x(value: number) { this.stored = value; }
+ set input(value: number) { this.stored = value; }
 }
 const sink = new Sink();
-sink.x = 9;
+sink.input = 9;
 console.log(`${sink.stored}`);

@@ -1,10 +1,12 @@
 package lower
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
 )
 
 // refusal is one construct Adamic 0.1 doesn't allow (docs/0.1.md, "What's refused in 0.1"), and the
@@ -45,18 +47,38 @@ var refusedOperators = map[ast.Kind]refusal{
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
+	// Use the parser's directives, which also recognize the block forms honored by the checker.
+	// Text in a string or a prose comment never enters this list.
+	if len(module.CommentDirectives) > 0 {
+		directive := module.CommentDirectives[0]
+		name := "@ts-ignore"
+		if directive.Kind == ast.CommentDirectiveKindExpectError {
+			name = "@ts-expect-error"
+		}
+		line, column := scanner.GetLineAndCharacterOfPosition(module, directive.Loc.Pos())
+		return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: name + " suppression directive", Fix: "remove it and fix the type error"}
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if found != nil {
 			return true
 		}
-		if err := l.accessorRefusal(node); err != nil {
-			found = err
-			return true
-		}
 		if refused, isRefused := refusals[node.Kind]; isRefused {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+			return true
+		}
+		var assertion *ast.Node
+		if node.Kind == ast.KindPropertyDeclaration {
+			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
+				assertion = token
+			}
+		}
+		if node.Kind == ast.KindVariableDeclaration {
+			assertion = node.AsVariableDeclaration().ExclamationToken
+		}
+		if assertion != nil {
+			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
 			return true
 		}
 		if node.Kind == ast.KindBinaryExpression {
@@ -64,6 +86,19 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
 				return true
 			}
+		}
+		generator := false
+		switch node.Kind {
+		case ast.KindFunctionDeclaration:
+			generator = node.AsFunctionDeclaration().AsteriskToken != nil
+		case ast.KindFunctionExpression:
+			generator = node.AsFunctionExpression().AsteriskToken != nil
+		case ast.KindMethodDeclaration:
+			generator = node.AsMethodDeclaration().AsteriskToken != nil
+		}
+		if generator {
+			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+			return true
 		}
 		if ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
 			found = &Refused{Where: l.program.Where(node), What: "an async function", Fix: "0.1 has no async; it arrives with the concurrency model"}

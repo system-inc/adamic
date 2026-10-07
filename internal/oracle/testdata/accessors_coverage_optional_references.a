@@ -10,12 +10,16 @@ class Maybe {
 function show(value: Maybe): void {
  console.log(`${value.item?.label ?? 'none'} ${value.name ?? 'none'}`);
 }
+function readItem(value: Maybe): Item | undefined { return value.item; }
+function readName(value: Maybe): string | undefined { return value.name; }
 const maybe = new Maybe();
 show(maybe);
 maybe.item = { label: 'item'.repeat(2) };
 maybe.name = 'text'.repeat(2);
-if (maybe.item !== undefined) { console.log(maybe.item.label); }
-if (maybe.name !== undefined) { console.log(`${maybe.name.length}`); }
+const item = readItem(maybe);
+if (item !== undefined) { console.log(item.label); }
+const name = readName(maybe);
+if (name !== undefined) { console.log(`${name.length}`); }
 maybe.item = undefined;
 maybe.name = undefined;
 show(maybe);

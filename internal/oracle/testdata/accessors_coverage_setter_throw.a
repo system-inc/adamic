@@ -12,8 +12,8 @@ try { update(new Thrower()); } catch (error) {
  if (error instanceof Error) { console.log(`caught ${error.message}`); }
 } finally { console.log('finally'); }
 class Sink {
- set text(value: string) { throw new Error(value); }
+ set input(value: string) { throw new Error(value); }
 }
-try { new Sink().text = 'sink'.repeat(2); } catch (error) {
+try { new Sink().input = 'sink'.repeat(2); } catch (error) {
  if (error instanceof Error) { console.log(error.message); }
 }

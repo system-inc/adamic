@@ -33,9 +33,8 @@ type widening struct {
 	source, target *checker.Type
 
 	// readonlyField names a readonly field seen as a writable one, when that's the slot.
-	readonlyField   string
-	accessorField   string
-	accessorErasure bool
+	readonlyField string
+	accessorField string
 
 	// parameter is a function's parameter of type source seen as taking target, which it can't.
 	parameter bool
@@ -93,16 +92,6 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		// are, so Box<Dog> seen as Box<Animal>, or a plain object seen as a class, is judged by them.
 		return nil
 	}
-	// Erasing a descriptor can later expose it as an optional structural field.
-	// Keep accessor identity even when the target does not mention the property.
-	for _, property := range l.checker.GetPropertiesOfType(from) {
-		if accessorSymbol(property) {
-			viewed := l.checker.GetPropertyOfType(to, property.Name)
-			if viewed == nil {
-				return &widening{source: l.checker.GetTypeOfSymbol(property), target: l.checker.GetTypeOfSymbol(property), accessorField: property.Name, accessorErasure: true}
-			}
-		}
-	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
@@ -152,9 +141,6 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 			continue
 		}
 		source, target := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)
-		if accessorSymbol(inside) != accessorSymbol(viewed) || (accessorSymbol(inside) && !isClassInstance(to)) {
-			return &widening{source: source, target: target, accessorField: viewed.Name}
-		}
 		if viewed.Flags&ast.SymbolFlagsMethod != 0 || inside.Flags&ast.SymbolFlagsMethod != 0 {
 			// A method isn't a slot anything writes, but what it returns and takes are views: the
 			// program's own methods. The library's (an Iterable's, an array's own) are left to the
@@ -167,16 +153,16 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 			}
 			continue
 		}
-		if !fresh && !accessorReadonly(l.checker, viewed) && accessorReadonly(l.checker, inside) {
+		if !fresh && !l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside) {
 			// tsc ignores readonly when it relates properties, so a readonly field, which may hold
 			// something narrower than its type says (it's covariant), can be seen as a writable one,
 			// and the wider type written into it. Only the identical type, which this walk never
 			// enters, is the same field.
 			return &widening{source: source, target: target, readonlyField: viewed.Name}
 		}
-		// An accessor writes through its setter signature, not its getter result
-		// type. The nominal override proof has already checked that input.
-		if !fresh && !accessorSymbol(viewed) && !accessorReadonly(l.checker, viewed) && !l.checker.IsTypeAssignableTo(target, source) {
+		// A descriptor writes through its setter signature, already proved by
+		// the override check; its getter result is not a mutable storage slot.
+		if !fresh && !accessorSymbol(viewed) && !l.checker.IsReadonlySymbol(viewed) && !l.checker.IsTypeAssignableTo(target, source) {
 			return &widening{source: source, target: target}
 		}
 		if found := l.widened(source, target, visited); found != nil {
@@ -284,7 +270,7 @@ func (l *lowering) canWrite(proven *checker.Type, visited map[*checker.Type]bool
 		if property.Flags&ast.SymbolFlagsMethod != 0 {
 			continue
 		}
-		if !accessorReadonly(l.checker, property) || l.canWrite(l.checker.GetTypeOfSymbol(property), visited) {
+		if !l.checker.IsReadonlySymbol(property) || l.canWrite(l.checker.GetTypeOfSymbol(property), visited) {
 			return true
 		}
 	}
@@ -476,12 +462,9 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		what = "a value of type " + l.checker.TypeToString(found.source) + " seen as " + l.checker.TypeToString(found.target) + ", a type parameter whose constraint " + l.checker.TypeToString(l.checker.GetBaseConstraintOfType(found.target)) + " can be written, so it can write what " + l.checker.TypeToString(found.source) + " can't hold"
 		fix = "take it as " + l.checker.TypeToString(found.source) + ", or constrain " + l.checker.TypeToString(found.target) + " to something readonly, which can't write (adamic/invariant-mutable)"
 	}
-	if found.accessorErasure {
-		what = "a view erasing accessor " + found.accessorField + " (adamic/accessor-view-erasure)"
-		fix = "keep a class view declaring the accessor; erasing it could expose it later as an optional field"
-	} else if found.accessorField != "" {
+	if found.accessorField != "" {
 		what = "an accessor and a field sharing the view of " + found.accessorField + " (adamic/accessor-field-view)"
-		fix = "keep the nominal class type; structural property views do not carry accessor dispatch"
+		fix = "keep the nominal class type; a fresh field literal does not declare that accessor"
 	}
 	return &Refused{Where: l.program.Where(node), What: what, Fix: fix}
 }
@@ -499,7 +482,7 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 			if l.checker.IsTypeAssignableTo(own, viewed) {
 				for _, property := range l.checker.GetPropertiesOfType(viewed) {
 					inside := l.checker.GetPropertyOfType(own, property.Name)
-					if inside != nil && accessorSymbol(inside) != accessorSymbol(property) {
+					if inside != nil && !accessorSymbol(inside) && accessorSymbol(property) {
 						return &widening{source: l.checker.GetTypeOfSymbol(inside), target: l.checker.GetTypeOfSymbol(property), accessorField: property.Name}
 					}
 				}

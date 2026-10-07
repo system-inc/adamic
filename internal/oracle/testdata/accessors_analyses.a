@@ -27,10 +27,10 @@ getterBorrow();
 setterBorrow();
 let text = 'old'.repeat(3);
 class Changer {
- get x(): string { text = 'new'.repeat(4); return '!'.repeat(2); }
+ get changedText(): string { text = 'new'.repeat(4); return '!'.repeat(2); }
 }
 const changer = new Changer();
-console.log(text + changer.x);
+console.log(text + changer.changedText);
 console.log(text);
 interface Point { readonly x: number; readonly label: string }
 let saved: Point | undefined = undefined;

@@ -29,10 +29,13 @@ func init() {
 		"internal/oracle/testdata/accessors_coverage_objects.a",
 		"internal/oracle/testdata/accessors_coverage_optional_references.a",
 	} {
+		// Main has no optional boolean slot and requires matching getter/setter
+		// representations. Keep these original probes as explicit NotYet checks.
+		lowers := path != "internal/oracle/testdata/accessors_coverage_scalars.a" && path != "internal/oracle/testdata/accessors_coverage_union_setter.a"
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{path, true, false})
+		}{path, lowers, false})
 	}
 }

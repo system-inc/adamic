@@ -1,4 +1,26 @@
-# Accessors lowered as methods
+# Accessor views after integration
+
+The current accessor implementation is main's descriptor dispatcher, described
+in [class-features.md](class-features.md). There is one shared accessorSymbol.
+The earlier implementation and its decisions below are historical, superseded
+by that document except for the fresh data-literal refusal retained here.
+
+`class A { get total(): number { return 1; } }` followed by
+`const items = [new A(), { total: 2 }]` is refused with
+`adamic/accessor-field-view`, in either element order. A fresh data field cannot
+supply the accessor identity of the inferred nominal view. Literal freshness
+still permits ordinary field covariance. A getter/setter property's write type
+is its setter parameter, proved by the override check, rather than its getter
+result type treated as mutable storage.
+
+The 26 branch fixtures remain registered. Twenty-four compare against Node,
+native sanitizers and the JavaScript backend. Two retain their original programs
+as explicit NotYet probes: optional boolean accessor slots and different native
+getter/setter representations. Unrelated descriptors use distinct names, and
+optional references are read through un-narrowed receiver helpers before their
+local results are narrowed. These keep main's documented dispatch limits true.
+
+## Initial accessor implementation (historical)
 
 Stage 0 opens this part of the 0.2 accessor decision. Named instance getters and
 setters on non-generic classes lower to ordinary typed methods. Each descriptor
