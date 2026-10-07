@@ -4,7 +4,7 @@
     "JsxOpeningElement",
     "JsxSelfClosingElement"
   ],
-  "status": "partial-reporting",
-  "blocker": "shared RuleContext has no checker/file-program handle; source Node lacks tsgoProgram and emitted-JavaScript compilation refuses an unlinked checker call; source discovery and callbacks incomplete",
+  "status": "partial-source-selection",
+  "blocker": "shared RuleContext has no checker/file-program handle; source Node lacks tsgoProgram and emitted-JavaScript compilation refuses an unlinked checker call; checker-dependent declaration resolution and complete source callbacks remain incomplete",
   "node": true
 }

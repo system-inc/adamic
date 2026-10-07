@@ -1,0 +1,31 @@
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+
+// A bare identifier is unresolved, never silently treated as a non-fragment.
+// The caller dispatches paired elements through their opening child.
+export function namedSelection(parser: Parser, opening: ParseNode): number {
+    const tagIndex = opening.children[0];
+    const attributesIndex = opening.children[opening.children.length - 1];
+    if(tagIndex === undefined || attributesIndex === undefined) {
+        return 0;
+    }
+    if(parser.node(attributesIndex).children.length > 0) {
+        return 0;
+    }
+    const tag = parser.node(tagIndex);
+    if(tag.kind === 'Identifier') {
+        return 2; // Needs checker declarations and alias initializers.
+    }
+    if(tag.kind !== 'PropertyAccessExpression') {
+        return 0;
+    }
+    const objectIndex = tag.children[0];
+    const nameIndex = tag.children[1];
+    if(objectIndex === undefined || nameIndex === undefined) {
+        return 0;
+    }
+    const object = parser.node(objectIndex);
+    const name = parser.node(nameIndex);
+    return object.kind === 'Identifier' && object.text === 'React' &&
+        name.kind === 'Identifier' && name.text === 'Fragment' ? 1 : 0;
+}

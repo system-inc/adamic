@@ -1,0 +1,31 @@
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+
+// Receives only an opening or self-closing node from the kind-indexed caller.
+// This selects a reference; declaration resolution must still consult the checker.
+export function tagReference(parser: Parser, node: ParseNode): ParseNode | undefined {
+    const tagIndex = node.children[0];
+    if(tagIndex === undefined) {
+        return undefined;
+    }
+    let tag = parser.node(tagIndex);
+    if(tag.kind === 'Identifier') {
+        const name = tag.text;
+        if(name === '' || name.includes('-')) {
+            return undefined;
+        }
+        const first = name.charCodeAt(0);
+        return first >= 97 && first <= 122 ? undefined : tag;
+    }
+    if(tag.kind !== 'PropertyAccessExpression') {
+        return undefined;
+    }
+    while(tag.kind === 'PropertyAccessExpression') {
+        const object = tag.children[0];
+        if(object === undefined) {
+            return undefined;
+        }
+        tag = parser.node(object);
+    }
+    return tag.kind === 'Identifier' ? tag : undefined;
+}
