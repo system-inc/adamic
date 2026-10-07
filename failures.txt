@@ -1,0 +1,118 @@
+run: whole
+package: github.com/system-inc/adamic/internal/unicodeproperties
+test: TestCanonicalizeUnicodeNode
+=== RUN   TestCanonicalizeUnicodeNode
+    canonicalize_test.go:238: node: signal: killed
+        
+--- FAIL: TestCanonicalizeUnicodeNode (962.46s)
+
+run: whole
+package: github.com/system-inc/adamic/internal/unicodeproperties
+test: (package-level failure)
+--- PASS: TestBinaryAliases (0.00s)
+=== CONT  TestStringPropertyCensus
+=== CONT  TestScriptAliasSet
+--- PASS: TestStringPropertyCensus (0.00s)
+=== CONT  TestGeneralCategoryAliases
+--- PASS: TestGeneralCategoryAliases (0.00s)
+=== CONT  TestEquivalentsAreClosed
+--- PASS: TestScriptAliasSet (0.00s)
+=== CONT  TestRejectedNames
+--- PASS: TestRejectedNames (0.00s)
+=== CONT  TestVersionMatchesNode
+=== CONT  TestKnownMembership
+--- PASS: TestKnownMembership (0.00s)
+=== CONT  TestCanonicalizeExamples
+--- PASS: TestCanonicalizeExamples (0.00s)
+--- PASS: TestSetBoundaries (0.02s)
+--- PASS: TestVersionMatchesNode (0.18s)
+--- PASS: TestEquivalentsAreClosed (0.38s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/unicodeproperties	1027.709s
+
+run: whole
+package: github.com/system-inc/adamic/stage1/cohere/json
+test: TestPortMatchesGoCohere
+=== RUN   TestPortMatchesGoCohere
+=== PAUSE TestPortMatchesGoCohere
+=== CONT  TestPortMatchesGoCohere
+    port_test.go:200: repository groups: map[Adamic:1086 TypeScript:202 cohere:835]; generated 34; total 2157
+    port_test.go:202: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 2157 texts in 206.319s
+        --- PASS: TestAdamicJSONAudit (222.30s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	229.982s
+    port_test.go:227: native ASan/UBSan exits -1: 
+--- FAIL: TestPortMatchesGoCohere (980.67s)
+
+run: whole
+package: github.com/system-inc/adamic/stage1/cohere/json
+test: (package-level failure)
+    port_test.go:299: native caught wrong filename parser on package.json: "ok\t{ \"text\": \"é😀\", \"empty\": [] }\\n"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+--- PASS: TestThreePortMutantsAreCaught/wrong_filename_parser (115.90s)
+--- PASS: TestAdditionalJSONBoundaries (122.96s)
+    port_test.go:299: Node caught missing colon space on probe.json: "ok\t{ \"a\":1, \"b\":[2, 3] }\\n"; Go "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"
+    port_test.go:299: Node caught missing colon space on package.json: "ok\t{\\n  \"a\":1,\\n  \"b\":[\\n    2,\\n    3\\n  ]\\n}\\n"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+    port_test.go:299: Node caught missing colon space on package.json: "ok\t{\\n  \"text\":\"é😀\",\\n  \"empty\":[]\\n}\\n"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+    port_test.go:299: native caught missing colon space on probe.json: "ok\t{ \"a\":1, \"b\":[2, 3] }\\n"; Go "ok\t{ \"a\": 1, \"b\": [2, 3] }\\n"
+    port_test.go:299: native caught missing colon space on package.json: "ok\t{\\n  \"a\":1,\\n  \"b\":[\\n    2,\\n    3\\n  ]\\n}\\n"; Go "ok\t{\\n  \"a\": 1,\\n  \"b\": [\\n    2,\\n    3\\n  ]\\n}\\n"
+    port_test.go:299: native caught missing colon space on package.json: "ok\t{\\n  \"text\":\"é😀\",\\n  \"empty\":[]\\n}\\n"; Go "ok\t{\\n  \"text\": \"é😀\",\\n  \"empty\": []\\n}\\n"
+--- PASS: TestThreePortMutantsAreCaught/missing_colon_space (92.96s)
+--- PASS: TestThreePortMutantsAreCaught (4.76s)
+    port_test.go:202: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 2157 texts in 206.319s
+        --- PASS: TestAdamicJSONAudit (222.30s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	229.982s
+    port_test.go:227: native ASan/UBSan exits -1: 
+--- FAIL: TestPortMatchesGoCohere (980.67s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/json	1025.599s
+
+run: whole
+package: github.com/system-inc/adamic/stage1/cohere/lint
+test: (package-level failure)
+goroutine 4260 [chan receive, 31 minutes]:
+testing.(*T).Parallel(0x304db9316fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1957 +0x230
+github.com/system-inc/adamic/stage1/cohere/lint.TestCountGuardMutant(0x304db9316fc8)
+	/workspace/adamic/stage1/cohere/lint/lint_test.go:621 +0x2a
+testing.tRunner(0x304db9316fc8, 0x1a7b0c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 4262 [chan receive]:
+testing.(*T).Run(0x304db9317448, {0x304db975a440?, 0x1?}, 0x304db9226c90)
+	/workspace/adamic-tools/go/src/testing/testing.go:2266 +0x4f2
+github.com/system-inc/adamic/stage1/cohere/lint.TestMutants(0x304db9317448)
+	/workspace/adamic/stage1/cohere/lint/lint_test.go:739 +0x88
+testing.tRunner(0x304db9317448, 0x1a7b108)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3600.065s
+
+run: whole
+package: github.com/system-inc/adamic/stage1/cohere/markdownblocks
+test: (package-level failure)
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x3eaeedd820e0, {0x1a46248, 0x3eaeef85a120})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1a46248, 0x3eaeef85a120}, {0x1a461a8, 0x3eaeedd820e0}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x207c2065766f6d2d?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 119
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+goroutine 391 [select, 3 minutes]:
+os/exec.(*Cmd).watchCtx(0x3eaeee87e1a0, 0x3eaeee3fa230)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:808 +0xb0
+created by os/exec.(*Cmd).Start in goroutine 262
+	/workspace/adamic-tools/go/src/os/exec/exec.go:794 +0x8f3
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	3600.095s
