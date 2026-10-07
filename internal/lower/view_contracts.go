@@ -40,9 +40,13 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 		return 0, l.notYet(node, "checked-view representation for "+l.checker.TypeToString(target))
 	}
 	contract := ir.ViewContract{Name: l.checker.TypeToString(target), Of: of}
-	if interfaceScalar(target) && of != ir.Union {
+	scalar := target
+	if base := l.phantomBase(target); base != nil {
+		scalar = base
+	}
+	if interfaceScalar(scalar) && of != ir.Union {
 		contract.Kind = ir.ViewScalar
-		contract.Allowed = l.viewContractLiterals(target)
+		contract.Allowed = l.viewContractLiterals(scalar)
 	} else {
 		contract.Kind = ir.ViewObject
 	}

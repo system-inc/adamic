@@ -74,7 +74,7 @@ func TestCheckedViewLane4UnsupportedHelper(t *testing.T) {
 	t.Logf("current eager compile refusal: %v", err)
 }
 
-func dropLane4HelperView(program *ir.Program) int {
+func dropLane4HelperView(program *ir.Program, replacement ...ir.Expression) int {
 	dropped := 0
 	var rewrite func(reflect.Value) reflect.Value
 	rewrite = func(v reflect.Value) reflect.Value {
@@ -92,8 +92,11 @@ func dropLane4HelperView(program *ir.Program) int {
 				out.Field(i).Set(rewrite(v.Field(i)))
 			}
 			if field, ok := out.Interface().(ir.Property); ok && field.Name == "unsupported" && field.View != "" {
-				field.View = ""
 				dropped++
+				if len(replacement) != 0 {
+					return reflect.ValueOf(replacement[0])
+				}
+				field.View = ""
 				out.Set(reflect.ValueOf(field))
 			}
 			return out
@@ -249,3 +252,51 @@ int main(int argc,char **argv){
  return 0;
 }
 `
+
+// Primitive phantom brands erase only after their approved primitive base is known.
+func TestCheckedViewBrandString(t *testing.T) {
+	for _, fixture := range []string{"good", "wrong", "literal-good", "literal-wrong"} {
+		t.Run(fixture, func(t *testing.T) {
+			program, path := interfaceFixture(t, "lane4/read-fixtures/brand-string-"+fixture)
+			sourceWant := run{stdout: []byte("word\n")}
+			want := sourceWant
+			if strings.HasSuffix(fixture, "wrong") {
+				sourceWant.stdout = []byte("42\n")
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.unsupported is not a __String; expected __String, found number\n")}
+			}
+			if fixture == "literal-wrong" {
+				sourceWant.stdout = []byte("different\n")
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.unsupported expected __String, found string different\n")}
+			}
+			if difference := disagreement(sourceWant, onNode(t, path)); difference != "" {
+				t.Fatal("source Node: " + difference)
+			}
+			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s; got %#v", difference, got)
+				}
+			}
+			if strings.HasSuffix(fixture, "good") {
+				got, _ := nativelyUncached(t, program)
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatal(difference)
+				}
+			} else {
+				index := len(program.Strings)
+				program.Strings = append(program.Strings, "unchecked")
+				if count := dropLane4HelperView(program, ir.StringConstant{Index: index}); count != 1 {
+					t.Fatalf("want one mutated read, got %d", count)
+				}
+				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if got.exitCode != 0 {
+						t.Fatalf("mutant must execute valid release code: %#v", got)
+					}
+					if disagreement(want, got) == "" {
+						t.Fatal("brand read mutant escaped refusal")
+					}
+					t.Logf("brand read mutant caught: exit %d stdout %q", got.exitCode, got.stdout)
+				}
+			}
+		})
+	}
+}

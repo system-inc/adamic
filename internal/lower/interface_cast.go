@@ -68,7 +68,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				if name != nil && fields[name.Text()] {
 					declared := l.checker.GetTypeAtLocation(binding.Name())
 					of, known := l.representation(declared)
-					if !known || of < ir.Number || of > ir.Array || !viewDataType(declared) {
+					if !known || of < ir.Number || of > ir.Array || !l.viewDataType(declared) {
 						found = l.notYet(binding, "a checked destructured alias requiring a representation conversion")
 					}
 				}
@@ -83,7 +83,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 					if (of == ir.Object || of == ir.Array) && ast.IsAssignmentTarget(part) {
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
 					}
-					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.Array || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
+					if !l.viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.Array || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
 						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
 					}
 				}
@@ -288,6 +288,9 @@ func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Ty
 
 // A finite literal contract is checked as well as its primitive representation.
 func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+	if base := l.phantomBase(declared); base != nil {
+		return l.viewLiterals(base)
+	}
 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.Expression
 		for _, member := range declared.Types() {

@@ -131,12 +131,25 @@ func TestMixedUnionContractRecursiveMember(t *testing.T) {
 	}
 }
 
-func TestMixedUnionContractPhantomBrandRemainsUnsupported(t *testing.T) {
+func TestMixedUnionContractPhantomBrandUsesPrimitiveBase(t *testing.T) {
 	l, target, release := mixedUnionLowering(t, `type Brand=string&{readonly marker:void}; type Target=Brand|number;`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
 	id, err := internMixedUnionViewContract(l, node, target, func(member *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, member) })
-	if err == nil || id != 0 || len(l.result.ViewContracts) != 0 {
-		t.Fatal("runtime kind was treated as a phantom brand certificate")
+	if err != nil || id == 0 {
+		t.Fatalf("approved phantom base refused: %v", err)
+	}
+	found := false
+	for _, child := range l.result.ViewContracts[id-1].Members {
+		contract := l.result.ViewContracts[child-1]
+		if contract.Of == ir.String {
+			found = true
+			if contract.Kind != ir.ViewScalar || len(contract.Fields) != 0 {
+				t.Fatalf("brand became runtime object: %#v", contract)
+			}
+		}
+	}
+	if !found {
+		t.Fatal("string member lost")
 	}
 }
