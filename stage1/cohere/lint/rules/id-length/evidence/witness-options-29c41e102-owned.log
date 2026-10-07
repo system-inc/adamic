@@ -1,0 +1,6 @@
+--- FAIL: TestOwnedWitnesses (29.99s)
+    registration_test.go:45: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestOwnedWitnesses1677944586/303/manifest.txt]: exit status 70
+        adamic: panic: non-null rules require a driver that reports complete suggestion edits
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	30.017s
+FAIL

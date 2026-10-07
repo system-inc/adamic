@@ -1,0 +1,17 @@
+--- FAIL: TestMutants (2.39s)
+    --- FAIL: TestMutants/debugger_fix_suppressed (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants368311830/001/oracle [--manifest /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed728127609/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x3e0bc76ff440, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x3e0bc7a61196, 0x4f}, {0x3e0bc77f8bd0, 0x86}, {0x3e0bc76ff440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3e0bc7a61196?, 0x3e0bc79fe8c0?}, 0x0, 0x3e0bc79fe8c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	2.407s
+FAIL

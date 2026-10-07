@@ -1,0 +1,602 @@
+--- FAIL: TestMutants (3.14s)
+    --- FAIL: TestMutants/debugger_fix_suppressed (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed322485604/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x3301b54dd440, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x3301b583d196, 0x4f}, {0x3301b55d6bd0, 0x86}, {0x3301b54dd440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3301b583d196?, 0x3301b57dc8c0?}, 0x0, 0x3301b57dc8c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/empty_function_body_reported (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsempty_function_body_reported2306317716/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x31fd0a72b440, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x31fd0aa0d6ae, 0x55}, {0x31fd0a7a4bd0, 0x86}, {0x31fd0a72b440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x31fd0aa0d6ae?, 0x31fd0a9aa8c0?}, 0x0, 0x31fd0a9aa8c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/suggestion_applied_as_fix (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix3673798441/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x353106c8300, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x353109bf6a2, 0x52}, {0x35310756000, 0x86}, {0x353106c8300, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x353109bf6a2?, 0x35310960880?}, 0x0, 0x35310960880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/var_declaration_suppressed (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsvar_declaration_suppressed508058227/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x2aa4c700180, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x2aa4cb3f6a2, 0x52}, {0x2aa4c8d6000, 0x86}, {0x2aa4c700180, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2aa4cb3f6a2?, 0x2aa4cae0880?}, 0x0, 0x2aa4cae0880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/duplicate_case_suppressed (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsduplicate_case_suppressed2133373420/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x36ca360de000, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x36ca364416a2, 0x52}, {0x36ca361d8000, 0x86}, {0x36ca360de000, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x36ca364416a2?, 0x36ca363de8c0?}, 0x0, 0x36ca363de8c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/no-octal-escape_mutant_from_batch_8 (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_82225014298/020/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x3ef8bd135440, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x3ef8bd4981ca, 0x5c}, {0x3ef8bd22ebd0, 0x86}, {0x3ef8bd135440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3ef8bd4981ca?, 0x3ef8bd4348c0?}, 0x0, 0x3ef8bd4348c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/no-unexpected-multiline_mutant_from_batch_8 (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_81432156667/021/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x10cba07483c0, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x10cba0a3e1ea, 0x64}, {0x10cba07d6090, 0x86}, {0x10cba07483c0, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x10cba0a3e1ea?, 0x10cba09e0880?}, 0x0, 0x10cba09e0880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/no-unused-private-class-members_mutant_from_batch_8 (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_8262520636/021/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x16c538a8000, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x16c53b8cc86, 0x6b}, {0x16c53922000, 0x86}, {0x16c538a8000, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x16c53b8cc86?, 0x16c53b288c0?}, 0x0, 0x16c53b288c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/no-useless-constructor_mutant_from_batch_8 (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_83733173850/021/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x2b6074b4a180, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x2b6074eae1e6, 0x63}, {0x2b6074c44000, 0x86}, {0x2b6074b4a180, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2b6074eae1e6?, 0x2b6074e4a8c0?}, 0x0, 0x2b6074e4a8c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/prefer-template_mutant_from_batch_8 (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_81575662741/020/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x3d1a8d688000, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x3d1a8d96a1ca, 0x5c}, {0x3d1a8d702000, 0x86}, {0x3d1a8d688000, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3d1a8d96a1ca?, 0x3d1a8d9088c0?}, 0x0, 0x3d1a8d9088c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8 (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_83582483982/020/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x3e8766a3f440, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x3e8766da01f6, 0x67}, {0x3e8766b38bd0, 0x86}, {0x3e8766a3f440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3e8766da01f6?, 0x3e8766d3e8c0?}, 0x0, 0x3e8766d3e8c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8 (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83292343747/020/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0xa8bcd7103c0, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0xa8bcdb40c86, 0x6b}, {0xa8bcd8d6090, 0x86}, {0xa8bcd7103c0, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0xa8bcdb40c86?, 0xa8bcdae0880?}, 0x0, 0xa8bcdae0880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/react-no-find-dom-node_mutant_from_batch_8 (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-no-find-dom-node_mutant_from_batch_82643988128/020/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x2102d92c300, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x2102d7c01e6, 0x63}, {0x2102d956000, 0x86}, {0x2102d92c300, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2102d7c01e6?, 0x2102d760880?}, 0x0, 0x2102d760880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/react-no-is-mounted_mutant_from_batch_8 (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_81386978771/020/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x39933241440, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x399335361da, 0x60}, {0x399332cebd0, 0x86}, {0x39933241440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x399335361da?, 0x399334d8880?}, 0x0, 0x399334d8880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8 (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr466246179/020/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x27a323748180, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x27a323a40c8a, 0x6c}, {0x27a3237d6000, 0x86}, {0x27a323748180, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x27a323a40c8a?, 0x27a3239e0880?}, 0x0, 0x27a3239e0880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/method_listener_lost (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsmethod_listener_lost24242796/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x3d96de389440, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x3d96de669186, 0x4b}, {0x3d96de402bd0, 0x86}, {0x3d96de389440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3d96de669186?, 0x3d96de6088c0?}, 0x0, 0x3d96de6088c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/allowed_restricted_type_ban_reported (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported3990005056/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x2f312f12a000, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x2f312f40e1ce, 0x5d}, {0x2f312f1a4000, 0x86}, {0x2f312f12a000, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2f312f40e1ce?, 0x2f312f3aa8c0?}, 0x0, 0x2f312f3aa8c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/wrapper_Number_ignored (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantswrapper_Number_ignored2411243867/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x25444294a000, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x254442cad696, 0x4f}, {0x254442a44000, 0x86}, {0x25444294a000, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x254442cad696?, 0x254442c4a8c0?}, 0x0, 0x254442c4a8c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/enum_bitwise_option_ignored (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored332117720/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x1498bd2f8240, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x1498bd6476a6, 0x53}, {0x1498bd3de000, 0x86}, {0x1498bd2f8240, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1498bd6476a6?, 0x1498bd5e8880?}, 0x0, 0x1498bd5e8880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/predicate_finding_widened_to_its_owner (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner789184102/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x33bd860483c0, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x33bd863401d2, 0x5e}, {0x33bd860d6090, 0x86}, {0x33bd860483c0, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x33bd863401d2?, 0x33bd862e0880?}, 0x0, 0x33bd862e0880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/void_callback_exemption_omitted (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsvoid_callback_exemption_omitted3495369360/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x3b8b42f49440, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x3b8b432ac1ba, 0x58}, {0x3b8b43042bd0, 0x86}, {0x3b8b42f49440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3b8b432ac1ba?, 0x3b8b432488c0?}, 0x0, 0x3b8b432488c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/AggregateError_container_reported (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsAggregateError_container_reported2957513497/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x23b4c56206c0, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x23b4c59b61c2, 0x5a}, {0x23b4c5740090, 0x86}, {0x23b4c56206c0, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x23b4c59b61c2?, 0x23b4c5958840?}, 0x0, 0x23b4c5958840)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/console_receiver_widened (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsconsole_receiver_widened1540635436/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x1bfb7a0e7440, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x1bfb7a44769e, 0x51}, {0x1bfb7a1e0bd0, 0x86}, {0x1bfb7a0e7440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1bfb7a44769e?, 0x1bfb7a3e68c0?}, 0x0, 0x1bfb7a3e68c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/insert_an_extra_numeric_receiver_separator (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsinsert_an_extra_numeric_receiver_separator2180599347/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x1329dca48180, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x1329dcd401e6, 0x63}, {0x1329dcad6000, 0x86}, {0x1329dca48180, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1329dcd401e6?, 0x1329dcce0880?}, 0x0, 0x1329dcce0880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/ignore_duplicate_getter_exemption (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption2596848714/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x25cf0098a3c0, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x25cf00dc01c2, 0x5a}, {0x25cf00b56090, 0x86}, {0x25cf0098a3c0, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x25cf00dc01c2?, 0x25cf00d60880?}, 0x0, 0x25cf00d60880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/count_private_identifier_hash (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantscount_private_identifier_hash3197548316/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x637661b86c0, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x6376653d6b2, 0x56}, {0x637661d4090, 0x86}, {0x637661b86c0, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x6376653d6b2?, 0x637664e0880?}, 0x0, 0x637664e0880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/enum_reported_at_its_declaration_rather_than_its_name (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam4287229973/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x38bb7cc1a000, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x38bb7cf06c8e, 0x6d}, {0x38bb7cc94000, 0x86}, {0x38bb7cc1a000, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x38bb7cf06c8e?, 0x38bb7ce9a8c0?}, 0x0, 0x38bb7ce9a8c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/interface_accepts_type_suffix (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix384781351/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x11f570fe7440, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x11f5713496ae, 0x55}, {0x11f5710e0bd0, 0x86}, {0x11f570fe7440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x11f5713496ae?, 0x11f5712e68c0?}, 0x0, 0x11f5712e68c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/await_crosses_function_boundary (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary3179833866/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x33e69f48300, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x33e6a2401ba, 0x58}, {0x33e69fd6000, 0x86}, {0x33e69f48300, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x33e6a2401ba?, 0x33e6a1e0880?}, 0x0, 0x33e6a1e0880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/int32_hint_option_ignored (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsint32_hint_option_ignored1948743895/020/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x16f540a8180, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x16f53f2f6a2, 0x52}, {0x16f540c8000, 0x86}, {0x16f540a8180, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x16f53f2f6a2?, 0x16f53ecc8c0?}, 0x0, 0x16f53ecc8c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/continue_finding_stops_before_its_semicolon (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantscontinue_finding_stops_before_its_semicolon1964840482/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0xe0a3ae58180, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0xe0a3b18c1ea, 0x64}, {0xe0a3ae6e000, 0x86}, {0xe0a3ae58180, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0xe0a3b18c1ea?, 0xe0a3b1288c0?}, 0x0, 0xe0a3b1288c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/regex_fix_eats_extra_byte (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte800534059/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x1114c44fc180, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x1114c486569e, 0x51}, {0x1114c45fe000, 0x86}, {0x1114c44fc180, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1114c486569e?, 0x1114c48048c0?}, 0x0, 0x1114c48048c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/label_option_widened (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantslabel_option_widened1982003159/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x3da170cc8180, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x3da170fbd18e, 0x4d}, {0x3da170d56000, 0x86}, {0x3da170cc8180, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3da170fbd18e?, 0x3da170f60880?}, 0x0, 0x3da170f60880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/condition_polarity_reversed (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantscondition_polarity_reversed763582364/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x36e72e980300, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x36e72ed3f6a6, 0x53}, {0x36e72e992000, 0x86}, {0x36e72e980300, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x36e72ed3f6a6?, 0x36e72ece0880?}, 0x0, 0x36e72ece0880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/parentheses_around_a_discarded_construction_not_seen_through (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen3399798677/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x86569be3c0, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x86568c0c8e, 0x6d}, {0x86569b6090, 0x86}, {0x86569be3c0, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x86568c0c8e?, 0x8656860880?}, 0x0, 0x8656860880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/for_update_option_ignored (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsfor_update_option_ignored1701773600/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x37dfdda54000, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x37dfdddb76a2, 0x52}, {0x37dfddb4e000, 0x86}, {0x37dfdda54000, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x37dfdddb76a2?, 0x37dfddd548c0?}, 0x0, 0x37dfddd548c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/return_parentheses_option_reversed (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1801117155/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x180f944f9440, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x180f9485c1c6, 0x5b}, {0x180f945f2bd0, 0x86}, {0x180f944f9440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x180f9485c1c6?, 0x180f947f88c0?}, 0x0, 0x180f947f88c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/comma_chain_reports_inner (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantscomma_chain_reports_inner3313627812/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x1c0eb8c61440, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x1c0eb8fc36a2, 0x52}, {0x1c0eb8d5abd0, 0x86}, {0x1c0eb8c61440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1c0eb8fc36a2?, 0x1c0eb8f608c0?}, 0x0, 0x1c0eb8f608c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/destructuring_hole_reported (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsdestructuring_hole_reported3100871931/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x2c3551c2b440, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x2c3551f096aa, 0x54}, {0x2c3551ca2bd0, 0x86}, {0x2c3551c2b440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2c3551f096aa?, 0x2c3551ea88c0?}, 0x0, 0x2c3551ea88c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/empty_placeholder_reported (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsempty_placeholder_reported1225261993/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x2e775ce36480, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x2e775ccbf6a6, 0x53}, {0x2e775ca56090, 0x86}, {0x2e775ce36480, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2e775ccbf6a6?, 0x2e775cc60880?}, 0x0, 0x2e775cc60880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/boolean_inverse_changed (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsboolean_inverse_changed2191150202/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x2bb14e79440, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x2bb151db69a, 0x50}, {0x2bb14f72bd0, 0x86}, {0x2bb14e79440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x2bb151db69a?, 0x2bb151788c0?}, 0x0, 0x2bb151788c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/comment_self_directive_exemption_removed (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed2290428472/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x1845cc246240, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x1845cc0c01de, 0x61}, {0x1845cbe56000, 0x86}, {0x1845cc246240, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1845cc0c01de?, 0x1845cc060880?}, 0x0, 0x1845cc060880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/with_statement_underlined_whole (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantswith_statement_underlined_whole3982306294/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x3c3784961440, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x3c3784cc41ba, 0x58}, {0x3c3784a5abd0, 0x86}, {0x3c3784961440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x3c3784cc41ba?, 0x3c3784c608c0?}, 0x0, 0x3c3784c608c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/nested_generator_owns_outer_yield (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3128516230/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x1c39cf818000, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x1c39cf69a1c2, 0x5a}, {0x1c39cf822000, 0x86}, {0x1c39cf818000, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1c39cf69a1c2?, 0x1c39cf6368c0?}, 0x0, 0x1c39cf6368c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/bom_removes_two_marks (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsbom_removes_two_marks472724742/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0x1c6dd3948300, 0x1945958?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0x1c6dd3c3f18e, 0x4d}, {0x1c6dd39d6000, 0x86}, {0x1c6dd3948300, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0x1c6dd3c3f18e?, 0x1c6dd3be0880?}, 0x0, 0x1c6dd3be0880)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+    --- FAIL: TestMutants/directive_prefix_ignored (0.02s)
+        lint_test.go:743: /tmp/adamic-gate/TestMutants1015806621/001/oracle [--manifest /tmp/adamic-gate/TestMutantsdirective_prefix_ignored2501980501/019/manifest.txt]: exit status 2
+            panic: json: unknown field "allowLoop"
+            
+            goroutine 1 [running]:
+            main.oracleRestrictedTypesOptions({0xe14a49dd440, 0x0?, 0x0?})
+            	/workspace/adamic/cohere/adamic_lint_typescript_no_restricted_types.go:29 +0x18f
+            main.collect({0xe14a4d3f69e, 0x51}, {0xe14a4ad6bd0, 0x86}, {0xe14a49dd440, 0x7, 0xc})
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:164 +0x3c9
+            main.run({0xe14a4d3f69e?, 0xe14a4cdc8c0?}, 0x0, 0xe14a4cdc8c0)
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:58 +0x12f
+            main.main()
+            	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	3.150s
+FAIL

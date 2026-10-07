@@ -166,3 +166,61 @@ Legacy-registry refresh: rebased forty-three owned commits cleanly onto origin/a
 
 
 Typeof/null main refresh: clean rebase onto origin/area/stage1-lint d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898, containing origin/main b6b1538b0cebc4ba6741ac34f1aedb60293c1d06. Ledger and witness gate unchanged; six winners retained and six losing copies retired. Zero shared lint hunks. Registry PASS 0.091s; TestOwnedWitnesses FAIL 2.882s at restricted-types default witness with zero Go findings. Logs: evidence/area-d3a37422-*.log. Incoming typeof/null compiler fixes retained. No new rule runtime comparison or semantic mutant asserted; no new claim or relaxed correctness check.
+
+
+## Witness-options unit, 2026-10-07
+
+Rebased cleanly onto 29c41e102 from origin/lint-rules/witness-options,
+based on area d3a37422c. Shared files match that commit exactly; zero shared
+hunks. Added restricted-types/testdata/witness.options.json beside witness.ts.txt:
+{"types":{"Foo":false,"Bar":true,"[]":"no","{}":"no","string":"no"}}.
+This uses upstream raw lowercase types/options spelling, not captured Go struct
+keys. Existing oracleRestrictedTypesOptions decodes it through upstream
+DecodeNoRestrictedTypesOptions. Foo is deliberately allowed to exercise the
+registered allowed-ban mutant; other entries produce findings. The other five
+retained rules' witnesses already produce findings with default options and
+need no sidecar. New owned witness all rows remain unconfigured.
+
+Requested commands after sourcing /workspace/adamic-tools/env.sh:
+
+- go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1:
+  FAIL 30.017s. The former zero-finding witness problem is resolved: Go witness
+  counts complete and the port builds. Node then refuses explicitly through
+  the owned old detailed-reporting guard: "non-null rules require a driver
+  that reports complete suggestion edits". This owned guard remains an
+  integration limitation; it is not described as a shared harness defect.
+- go test ./stage1/cohere/lint -run '^TestMutants$' -count=1:
+  FAIL 3.150s. Go oracle fails before mutant compilation/comparison with
+  json: unknown field "allowLoop" in oracleRestrictedTypesOptions.
+- go test ./stage1/cohere/lint -run '^TestRulesAgree$' -count=1:
+  FAIL 45.982s at the same Go option-isolation problem. Existing explicit
+  parser-recovery refusals remain in the log. No check was relaxed or skipped.
+
+Different shared blocker, reported once: generated(t) in lint_test.go creates
+all-rule rows carrying a legacy options bag including allowLoop/allowSwitch.
+The shared oracle invokes every registered adapter with that same bag. The
+restricted-types upstream decoder correctly rejects those foreign keys.
+The new ownedWitnessRows sidecars isolate options correctly, but generated
+all-rule rows still do not. Do not bypass the nil-adapter guard or make the
+restricted-types decoder silently accept another rule's options.
+
+Focused reproducer, also executed and retained (FAIL 2.407s):
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./stage1/cohere/lint -run '^TestMutants/debugger_fix_suppressed$' -count=1 > /tmp/wave02-options-reproducer.log 2>&1
+```
+
+The first generated fixture is debugger source. A generated manifest row has
+field 1 = all and field 5 = the legacy bag beginning {"allowLoop":true,...}.
+The failure occurs in the unchanged Go DecodeNoRestrictedTypesOptions before
+any debugger mutant is compiled. The immediate error is unknown field allowLoop.
+The shared generated corpus/option dispatch needs isolation; no shared file
+was edited. Stop here as explicitly directed for a different shared blocker.
+
+All four outputs are evidence/witness-options-29c41e102-*.log. None of these
+failed runs earns semantic mutant credit or runtime parity. No further helper
+or rule claim. Helper branch d62bb9d4d remains unchanged, green on current main
+b6b1538b0 with its prior twelve semantic mutants. Full required-input gate and
+fresh whole-owned-rule throughput remain unverified. Only own landing branch
+is pushed, never main or area.
