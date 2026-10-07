@@ -1,0 +1,41 @@
+import { utf8Length } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Finding } from '../../finding.ts';
+import { all } from '../../helpers/comments/all.ts';
+
+export function unit(source: string, byte: number): number {
+    let offset = 0;
+    for(let at = 0; at < source.length;) {
+        if(offset === byte) { return at; }
+        const width = (source.codePointAt(at) ?? 0) > 65535 ? 2 : 1;
+        offset += utf8Length(source.slice(at, at + width));
+        at += width;
+    }
+    return source.length;
+}
+export function goTrim(text: string): string {
+    return text.replace(/^[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+|[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/g, '');
+}
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const context = this.context;
+        for(const comment of all(context.parser, index)) {
+            if(comment.isBlock && comment.text.length < 4) { continue; }
+            const interior = comment.text.slice(2, comment.isBlock ? comment.text.length - 2 : comment.text.length);
+            if(!/^[\t\n\f\r ]*tslint:(enable|disable)(?:-(line|next-line))?(:|[\t\n\f\r ]|$)/.test(interior)) { continue; }
+            const text = comment.isBlock ? `/* ${goTrim(interior)} */` : `// ${goTrim(interior)}`;
+            const start = unit(context.source, comment.start);
+            const end = unit(context.source, comment.end);
+            const description = `This file carries the tslint directive ${text}. tslint has been deprecated since 2019 and nothing in this project reads its directives, so the comment suppresses nothing and instead reads as a live suppression to anyone who finds it. Delete it, and if the code it guarded still warrants a suppression, write the equivalent eslint-disable comment naming the rule.`;
+            const finding = new Finding('@typescript-eslint/ban-tslint-comment', 'commentDetected', description, start, end, 'fix', '', '');
+            const before = context.source.slice(start - 1, start);
+            const after = context.source.slice(end, end + 1);
+            finding.editStart = start > 0 && comment.startColumn > 0 && before !== '' && ' \t\n\r\f\v'.includes(before) ? start - 1 : start;
+            finding.editEnd = end < context.source.length && after !== '' && ' \t\n\r\f\v'.includes(after) ? end + 1 : end;
+            context.findings.push(finding);
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

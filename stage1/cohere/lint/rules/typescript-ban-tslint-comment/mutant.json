@@ -1,0 +1,6 @@
+{
+  "name": "tslint_directive_disabled",
+  "file": "rule.a",
+  "from": "tslint:(enable|disable)",
+  "to": "tslint:(neverenable|neverdisable)"
+}
