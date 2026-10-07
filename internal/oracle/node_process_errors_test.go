@@ -17,7 +17,8 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Keep the requested real source test visible until the compiler implements unknown/in narrowing.
+// Unknown narrowing (616870d) removed the in blocker. Keep the unchanged source's
+// next refusal recorded exactly: reading hasOwnProperty as an unbound method.
 func TestNodeProcessErrorNarrowingBlocker(t *testing.T) {
 	adapter, err := os.ReadFile(filepath.Join(repository, "stage3/adapt/47-host-errors/adapt.cjs"))
 	if err != nil {
@@ -32,10 +33,15 @@ func TestNodeProcessErrorNarrowingBlocker(t *testing.T) {
 		t.Fatal("process error fixture drifted from adaptation 47's exact helpers")
 	}
 
-	_, err = lowered(t, filepath.Join(repository, "internal/oracle/testdata/node_process_runtime/node_process_errors.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_errors.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowered(t, path)
+	want := path + ":9:32: Adamic 0.1 refuses a method read as a value (hasOwnProperty would lose its object, and this with it); call it in an arrow that keeps the object: (v) => its object.hasOwnProperty(v) (unbound-method)"
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "in") {
-		t.Fatalf("expected reported in-language blocker; got %v", err)
+	if !errors.As(err, &refused) || refused.Error() != want {
+		t.Fatalf("recorded blocker changed:\nwant %s\ngot %v", want, err)
 	}
 	t.Log(err)
 }

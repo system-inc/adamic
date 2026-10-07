@@ -1,3 +1,6 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
 import { programArguments } from 'adamic';
 import { Buffer } from 'node:buffer';
 import { readFileSync, writeFileSync, openSync, writeSync, closeSync } from 'node:fs';

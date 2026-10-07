@@ -223,6 +223,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
+		if err := l.refuseOptionalWidening(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.classViewRefusal(node); err != nil {
 			found = err
 			return true

@@ -1,3 +1,6 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
 import { readFile } from '../../load/node_fs_file_system.a';
 import { readFileSync, openSync, closeSync } from 'node:fs';
 import { programArguments } from 'adamic';
@@ -15,8 +18,7 @@ for (const name of ['missing', 'directory']) {
     try { readFileSync(root + '/' + name); }
     catch (error) {
         if (error instanceof Error) {
-            const errno: NodeJS.ErrnoException = error;
-            console.log(errno.code ?? 'missing');
+            console.log(errorCode(error) ?? 'missing');
         }
     }
 }

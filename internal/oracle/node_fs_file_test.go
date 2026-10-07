@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"syscall"
@@ -204,7 +205,15 @@ func TestNodeFSFileMutants(t *testing.T) {
 			}
 			code := native.C(program)
 			original := code
-			code = strings.ReplaceAll(code, "adamic_fs_file_"+one.operation+"(", "fs_file_mutant(")
+			if method := map[string]string{"is_file": "isFile", "is_directory": "isDirectory", "is_symbolic_link": "isSymbolicLink"}[one.operation]; method != "" {
+				// StatsBase now uses the same runtime-kind dispatcher as Dirent.
+				// Mutate only this predicate; keep the original one-argument
+				// helper and its Node-only behavioral comparison unchanged.
+				pattern := regexp.MustCompile(`adamic_node_fs_dirent_is\(([^,\n]+), "` + method + `"\)`)
+				code = pattern.ReplaceAllString(code, "fs_file_mutant(${1})")
+			} else {
+				code = strings.ReplaceAll(code, "adamic_fs_file_"+one.operation+"(", "fs_file_mutant(")
+			}
 			if code == original {
 				t.Fatal("mutant changed nothing")
 			}
