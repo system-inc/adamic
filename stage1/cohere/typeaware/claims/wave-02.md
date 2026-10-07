@@ -136,3 +136,25 @@ pass. Full ports remain reserved and blocked on the shared parser's JSX support:
 99 additional Go-parse-valid controls fail explicitly in native. An owned refusal
 mutant proves a JSX type-assertion misread would otherwise silently lose a button
 finding. No shared file was edited and no further rule was claimed.
+
+## React parking status
+
+Per Ahra's React parking instruction, react/button-has-type,
+react/checked-requires-onchange-or-readonly and react/display-name are PARKED.
+Their default non-JSX implementations and evidence are pushed. The blocker is
+native JSX parsing and the missing JSX node, tag and attribute structure: 99
+Go-valid JSX controls are explicitly refused. JSX support is landing on
+area/stage1-lint; cohere analysis modules are being ported on #dnv6f2c. These
+parked allocations count as finished for the React portion of the landing cap,
+without claiming complete JSX behavior or full React parity.
+
+The released supplemental react-hooks/exhaustive-deps implementation is also
+parked on shared JSX parsing (14 controls); it remains supplemental work and
+does not renew its released reservation.
+
+A separate inherited inventory corpus failure still blocks this branch's
+landing readiness: shared bindings.ts compares declaration paths exactly and
+omits callerDataMutation findings with relative manifest paths. Main remains
+f8013f0baac41ddc340d76f83bddde38536a8f07. The fresh failed oracle and all ten
+caught inventory mutants are recorded in wave_02_landing/README.md. Parking
+React does not waive this distinct blocker. No new rules are claimed.
