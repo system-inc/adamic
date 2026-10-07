@@ -905,7 +905,7 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 		}
 		arguments = append(arguments, lowered)
 	}
-	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
+	return l.overloadedCall(call, ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
 }
 
 // coalesce lowers value ?? fallback, and value ?? panic('why'), evaluating the right side only when
@@ -968,6 +968,9 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 // the parameters the function declares, so one with a parameter that may be left out isn't made yet:
 // a function value is called with the arguments its caller has, and no more.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	if err := l.overloadedValue(node); err != nil {
+		return nil, err
+	}
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil
 	}

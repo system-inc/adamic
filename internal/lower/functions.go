@@ -55,6 +55,9 @@ func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) err
 // signature writes the function at index's parameters and result, from the checker, without lowering
 // its body, so a call to it lowers whether or not its body has been. this is as for lowerFunction.
 func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
+	if err := l.overloadResults(declaration); err != nil {
+		return err
+	}
 	function := l.result.Functions[index]
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
