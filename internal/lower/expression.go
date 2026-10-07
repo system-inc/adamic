@@ -65,6 +65,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			if l.includesUndefined(proven) {
 				return 0, false
 			}
+			if l.nullableCallable(proven) {
+				return ir.Closure, true
+			}
 			for _, member := range proven.Types() {
 				if member.Flags()&checker.TypeFlagsNull == 0 && !l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray") {
 					return 0, false

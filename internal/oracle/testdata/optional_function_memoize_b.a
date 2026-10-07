@@ -1,0 +1,17 @@
+// Adapted memoize probe from codex/stage3-adapt-memoize d0e9a373.
+export function memoize<T>(callback: () => T): () => T {
+    let value: T;
+    let pending: (() => T) | undefined = callback;
+    return () => {
+        if (pending) {
+            value = pending();
+            pending = undefined;
+        }
+        return value;
+    };
+}
+let calls = 0;
+const cached = memoize(() => { calls += 1; return 42; });
+const first = cached();
+const second = cached();
+console.log(`${first} ${second} ${calls}`);

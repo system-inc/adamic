@@ -1,0 +1,52 @@
+// Optional callable presence at each storage place, for both absence types.
+function localUndefined(present: boolean): boolean {
+    let callback: (() => number) | undefined = present ? (() => 42) : undefined;
+    if (callback) { return true; }
+    return false;
+}
+function parameterUndefined(callback: (() => number) | undefined): boolean {
+    if (callback) { return true; }
+    return false;
+}
+function fieldUndefined(holder: { callback: (() => number) | undefined }): boolean {
+    if (holder.callback) { return true; }
+    return false;
+}
+function capturedUndefined(callback: (() => number) | undefined): () => boolean {
+    return () => {
+        if (callback) { callback = undefined; return true; }
+        return false;
+    };
+}
+const capturedPresentUndefined = capturedUndefined(() => 42);
+const capturedAbsentUndefined = capturedUndefined(undefined);
+console.log(`${localUndefined(true)} ${localUndefined(false)}`);
+console.log(`${parameterUndefined(() => 42)} ${parameterUndefined(undefined)}`);
+console.log(`${fieldUndefined({ callback: () => 42 })} ${fieldUndefined({ callback: undefined })}`);
+console.log(`${capturedPresentUndefined()} ${capturedPresentUndefined()} ${capturedAbsentUndefined()}`);
+function localNull(present: boolean): boolean {
+    let callback: (() => number) | null = present ? (() => 42) : null;
+    if (callback) { return true; }
+    return false;
+}
+function parameterNull(callback: (() => number) | null): boolean {
+    if (callback) { return true; }
+    return false;
+}
+function fieldNull(holder: { callback: (() => number) | null }): boolean {
+    if (holder.callback) { return true; }
+    return false;
+}
+function capturedNull(callback: (() => number) | null): () => boolean {
+    return () => {
+        if (callback) { callback = null; return true; }
+        return false;
+    };
+}
+const capturedPresentNull = capturedNull(() => 42);
+const capturedAbsentNull = capturedNull(null);
+console.log(`${localNull(true)} ${localNull(false)}`);
+console.log(`${parameterNull(() => 42)} ${parameterNull(null)}`);
+console.log(`${fieldNull({ callback: () => 42 })} ${fieldNull({ callback: null })}`);
+console.log(`${capturedPresentNull()} ${capturedPresentNull()} ${capturedAbsentNull()}`);
+
