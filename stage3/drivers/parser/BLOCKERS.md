@@ -1,3 +1,36 @@
+# Temporary parser repairs: list pushed before implementation
+
+This list supersedes the earlier ownership restriction for core.ts only:
+the user now permits that shared file if the scanner oracle remains identical.
+
+| Number | Directory | Exact proposed edit | Removal condition |
+| --- | --- | --- | --- |
+| 60 | 60-temporary-factory-local-symbol | At createBaseDeclaration's localSymbol assignment only, view node as Mutable<Declaration>, whose field admits undefined; retain the assignment and return verbatim. | Factory construction establishes the generic subtype's fields. |
+| 61 | 61-temporary-factory-type-expression | At createJSDocTypeLikeTagWorker's typeExpression assignment only, use a structural write view with JSDocTypeExpression or undefined; retain the assignment and return verbatim. | Factory construction establishes the generic subtype's fields. |
+| 62 | 62-temporary-tracing-write | At writeSync(typesFd, JSON.stringify(descriptor)) only, give writeSync a type-only call view admitting string or undefined. Undefined still reaches Node and throws as before. | Node binding admission models this call's throwing behavior. |
+| 63 | 63-temporary-tracing-legend | At writeFileSync(legendPath, JSON.stringify(legend)) only, give writeFileSync the equivalent type-only data view. Preserve path and data evaluation order. | Node binding admission models this call's throwing behavior. |
+
+The two tracing errors concern serialized data, not paths (columns 35 and
+38 point at JSON.stringify). These views leave runtime Node validation in
+place; they do not claim native host binding support. The factory views are
+explicitly temporary escape hatches: they do not prove the narrower generic
+return contract which partition 30 declined.
+
+**Core stopping condition:** addRange must still perform its first indexed
+read, the push property lookup, and its second indexed read in that order.
+Partition 30's two counterexamples append an own undefined element. Caching,
+skipping that element, or asserting presence changes or lies about that
+behavior. Widening the target array at the push would leave its T[] return
+contract unproved. No core adaptation is proposed until an exact, truthful
+contract repair is available. Lowering remains behind that checker gate.
+
+Each implemented temporary must preserve emitted JavaScript byte for byte,
+pass the default stage 3 suite with no additional API changes, and preserve
+the full parser dump. Its removed type view must restore its diagnostic.
+The scanner oracle and both core counterexamples will also be rerun.
+
+---
+
 # Fixed parser slice: ordered checker blockers, October 7
 
 Shared tool 188de02 is merged. The raw slice now runs on Node and exactly
