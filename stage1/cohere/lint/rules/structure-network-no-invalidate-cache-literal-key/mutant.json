@@ -1,0 +1,6 @@
+{
+  "name": "structure-network-no-invalidate-cache-literal-key_semantic",
+  "file": "rule.a",
+  "from": ".text !== 'invalidate'",
+  "to": ".text !== 'invalidateNever'"
+}
