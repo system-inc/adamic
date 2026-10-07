@@ -1,0 +1,59 @@
+{
+  "coverage": {
+    "go": {
+      "raw_sha256": "e47412e4b41bc3728b51a0867795f834aa1c7e966213363b29b75fcf79356db8",
+      "canonical_sha256": "24d3e29e8d5eb9f4c89f03de301aa5e0d443ebc61d99afe1afadc94d1f4cbad3",
+      "canonical_bytes": 85151
+    },
+    "native": {
+      "raw_sha256": "e47412e4b41bc3728b51a0867795f834aa1c7e966213363b29b75fcf79356db8",
+      "canonical_sha256": "24d3e29e8d5eb9f4c89f03de301aa5e0d443ebc61d99afe1afadc94d1f4cbad3",
+      "canonical_bytes": 85151
+    },
+    "native_asan": {
+      "raw_sha256": "e47412e4b41bc3728b51a0867795f834aa1c7e966213363b29b75fcf79356db8",
+      "canonical_sha256": "24d3e29e8d5eb9f4c89f03de301aa5e0d443ebc61d99afe1afadc94d1f4cbad3",
+      "canonical_bytes": 85151
+    },
+    "previous_native_sha256": "24d3e29e8d5eb9f4c89f03de301aa5e0d443ebc61d99afe1afadc94d1f4cbad3"
+  },
+  "volume": {
+    "go": {
+      "raw_sha256": "83080f33a6be896e27bd66ada53d64732f259196f5570ba0553cb20461241649",
+      "canonical_sha256": "c0af3d521a5c82fc0ff55758dd9922a326a8d81fbb759c3bb91e5d68a1733a0a",
+      "canonical_bytes": 31862
+    },
+    "native": {
+      "raw_sha256": "83080f33a6be896e27bd66ada53d64732f259196f5570ba0553cb20461241649",
+      "canonical_sha256": "c0af3d521a5c82fc0ff55758dd9922a326a8d81fbb759c3bb91e5d68a1733a0a",
+      "canonical_bytes": 31862
+    },
+    "native_asan": {
+      "raw_sha256": "83080f33a6be896e27bd66ada53d64732f259196f5570ba0553cb20461241649",
+      "canonical_sha256": "c0af3d521a5c82fc0ff55758dd9922a326a8d81fbb759c3bb91e5d68a1733a0a",
+      "canonical_bytes": 31862
+    },
+    "previous_native_sha256": "c0af3d521a5c82fc0ff55758dd9922a326a8d81fbb759c3bb91e5d68a1733a0a"
+  },
+  "compiler-coverage": {
+    "previous_native_sha256": "cb4d875ac853b1e27561cbcce3b68eccc4d0818e701c9ab2a4e3d8494c614ab3",
+    "go": "cb4d875ac853b1e27561cbcce3b68eccc4d0818e701c9ab2a4e3d8494c614ab3",
+    "bytes": 7120228,
+    "native": "cb4d875ac853b1e27561cbcce3b68eccc4d0818e701c9ab2a4e3d8494c614ab3",
+    "asan-native": "cb4d875ac853b1e27561cbcce3b68eccc4d0818e701c9ab2a4e3d8494c614ab3"
+  },
+  "compiler-volume": {
+    "previous_native_sha256": "6c1cafe2c044717bdb8fc427d4d5585b4d5cf357373fc759916638440ec60e59",
+    "go": "6c1cafe2c044717bdb8fc427d4d5585b4d5cf357373fc759916638440ec60e59",
+    "bytes": 6717107,
+    "native": "6c1cafe2c044717bdb8fc427d4d5585b4d5cf357373fc759916638440ec60e59",
+    "asan-native": "6c1cafe2c044717bdb8fc427d4d5585b4d5cf357373fc759916638440ec60e59"
+  },
+  "inputs": {
+    "starting_commit": "0d540f413625f016f20fea39761c7b184f335de6",
+    "repository_snapshot_prefix": "/workspace/tsgo-speed/frozen-final/repository-frozen",
+    "canonical_repository_prefix": "/workspace/adamic",
+    "root_count": 287,
+    "compiler_root_count": 77
+  }
+}

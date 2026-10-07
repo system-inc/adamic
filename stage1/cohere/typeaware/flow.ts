@@ -40,7 +40,7 @@ export class Flow {
     readonly originCache = new Map<number, string>();
     readonly referenceCache = new Map<number, Types>();
     readonly assignableCache = new Map<string, boolean>();
-    readonly visited: string[] = [];
+    readonly visited = new Map<string, boolean>();
     siteIndex = 0;
     newContainer = false;
     exact = false;
@@ -101,8 +101,8 @@ export class Flow {
     relate(pair: FlowPair, depth: number): FlowPair | undefined {
         if(pair.s.id === pair.t.id || depth > 8) { return undefined; }
         const key = `${pair.s.id}:${pair.t.id}`;
-        if(this.visited.includes(key)) { return undefined; }
-        this.visited.push(key);
+        if(this.visited.has(key)) { return undefined; }
+        this.visited.set(key, true);
         if((pair.t.flags & 1048576) !== 0 && this.metadata(pair.t).isClass()) { return undefined; }
         if(!this.optional) {
             if(pair.mutable && !this.assignable(pair.t.id, pair.s.id)) { return pair; }
@@ -199,7 +199,7 @@ export class Flow {
         const sp = this.properties(pair.s); const tp = this.properties(pair.t);
         for(let at = 0; at < tp.names.length; at++) {
             if(((tp.flags[at] ?? 0) & 8192) !== 0) { continue; }
-            const match = sp.names.indexOf(tp.names[at] ?? ''); if(match < 0) { continue; }
+            const match = sp.firstName.get(tp.names[at] ?? '') ?? -1; if(match < 0) { continue; }
             const found = this.relate(new FlowPair(sp.types, sp.types.root(match), tp.types, tp.types.root(at),
                 `${pair.path}.${tp.names[at] ?? ''}`, shared && tp.readonlys[at] !== true), depth + 1);
             if(found !== undefined) { return found; }
@@ -256,7 +256,7 @@ export class Flow {
         const fresh = this.fresh(index); const pair = new FlowPair(source, source.root(), target, target.root());
         for(const optional of [false, true]) {
             if(optional && fresh) { continue; }
-            this.optional = optional; this.missingName = ''; this.missingType = ''; this.visited.splice(0, this.visited.length);
+            this.optional = optional; this.missingName = ''; this.missingType = ''; this.visited.clear();
             let found: FlowPair | undefined;
             if(!fresh) { found = this.relate(pair, 0); }
             // The mutable rule's top judge sees a non-mutable pair, so a fresh site passes.

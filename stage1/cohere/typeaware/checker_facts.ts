@@ -26,12 +26,18 @@ export class TypeMetadata {
 }
 export class Properties {
     readonly names: readonly string[];
+    readonly firstName = new Map<string, number>();
     readonly flags: readonly number[];
     readonly keys: readonly number[];
     readonly readonlys: readonly boolean[];
     readonly types: Types;
     constructor(names: readonly string[], keys: readonly number[], flags: readonly number[], readonlys: readonly boolean[], types_: Types) {
         this.names = names;
+        // Match indexOf, including the first slot for a repeated name.
+        for(let at = 0; at < names.length; at++) {
+            const name = names[at] ?? '';
+            if(!this.firstName.has(name)) { this.firstName.set(name, at); }
+        }
         this.keys = keys;
         this.flags = flags;
         this.readonlys = readonlys;

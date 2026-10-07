@@ -1,0 +1,104 @@
+[
+  {
+    "corpus": "repository",
+    "round": 1,
+    "implementation": "go",
+    "process_ns": 304792550,
+    "findings": 46,
+    "load_ns": 74982939,
+    "rule_ns": 200856714,
+    "run_ns": 219359086
+  },
+  {
+    "corpus": "repository",
+    "round": 1,
+    "implementation": "native",
+    "process_ns": 1275003461,
+    "findings": 46,
+    "load_ns": 81874834,
+    "query_ns": 550549913,
+    "queries": 65198,
+    "first_query_ns": 13966,
+    "run_ns": 1183127257
+  },
+  {
+    "corpus": "repository",
+    "round": 1,
+    "implementation": "before",
+    "process_ns": 1262680294,
+    "findings": 46,
+    "load_ns": 87143931,
+    "query_ns": 545155728,
+    "queries": 65198,
+    "first_query_ns": 13275,
+    "run_ns": 1165374646
+  },
+  {
+    "corpus": "repository",
+    "round": 2,
+    "implementation": "before",
+    "process_ns": 1229632476,
+    "findings": 46,
+    "load_ns": 81189366,
+    "query_ns": 528145453,
+    "queries": 65198,
+    "first_query_ns": 14377,
+    "run_ns": 1139471954
+  },
+  {
+    "corpus": "repository",
+    "round": 2,
+    "implementation": "native",
+    "process_ns": 1244422826,
+    "findings": 46,
+    "load_ns": 82931227,
+    "query_ns": 529848269,
+    "queries": 65198,
+    "first_query_ns": 14247,
+    "run_ns": 1150839263
+  },
+  {
+    "corpus": "repository",
+    "round": 2,
+    "implementation": "go",
+    "process_ns": 305938393,
+    "findings": 46,
+    "load_ns": 78057124,
+    "rule_ns": 197294056,
+    "run_ns": 216105954
+  },
+  {
+    "corpus": "repository",
+    "round": 3,
+    "implementation": "go",
+    "process_ns": 313429488,
+    "findings": 46,
+    "load_ns": 76386355,
+    "rule_ns": 207065157,
+    "run_ns": 226292581
+  },
+  {
+    "corpus": "repository",
+    "round": 3,
+    "implementation": "native",
+    "process_ns": 1238840865,
+    "findings": 46,
+    "load_ns": 81939786,
+    "query_ns": 526787960,
+    "queries": 65198,
+    "first_query_ns": 12484,
+    "run_ns": 1146975471
+  },
+  {
+    "corpus": "repository",
+    "round": 3,
+    "implementation": "before",
+    "process_ns": 1260922890,
+    "findings": 46,
+    "load_ns": 84285184,
+    "query_ns": 550000641,
+    "queries": 65198,
+    "first_query_ns": 12995,
+    "run_ns": 1165900261
+  }
+]

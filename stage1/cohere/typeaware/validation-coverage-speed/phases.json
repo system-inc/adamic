@@ -1,0 +1,326 @@
+{
+  "before-phases": {
+    "cpu_sampling_enabled": false,
+    "timing": {
+      "load_ns": 306172808,
+      "query_ns": 13712974141,
+      "queries": 2222043,
+      "first_query_ns": 65843,
+      "run_ns": 66282901995
+    },
+    "adapters_ns": 14005150208,
+    "phases": {
+      "byteOffsets": {
+        "inclusive_ns": 190285372,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 190285372
+      },
+      "types": {
+        "inclusive_ns": 6529273303,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 6529273303
+      },
+      "Parser_file": {
+        "inclusive_ns": 942815914,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 942815914
+      },
+      "Rules_links": {
+        "inclusive_ns": 56613310,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 56613310
+      },
+      "Reassign_run": {
+        "inclusive_ns": 359939822,
+        "queries_ns": 198566392,
+        "decoding_ns": 0,
+        "own_ns": 161373430
+      },
+      "Before_run": {
+        "inclusive_ns": 10665262396,
+        "queries_ns": 1037698946,
+        "decoding_ns": 0,
+        "own_ns": 9627563450
+      },
+      "Bindings_new": {
+        "inclusive_ns": 1567208796,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 1567208796
+      },
+      "Coercion_run": {
+        "inclusive_ns": 163874883,
+        "queries_ns": 114164938,
+        "decoding_ns": 7627245,
+        "own_ns": 42082700
+      },
+      "Methods_run": {
+        "inclusive_ns": 1591805913,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 1591805913
+      },
+      "Casts_run": {
+        "inclusive_ns": 3684214073,
+        "queries_ns": 1171882302,
+        "decoding_ns": 2155181842,
+        "own_ns": 357149929
+      },
+      "PropertyAlias_run": {
+        "inclusive_ns": 340364206,
+        "queries_ns": 27277156,
+        "decoding_ns": 54872082,
+        "own_ns": 258214968
+      },
+      "Flow_run": {
+        "inclusive_ns": 29931276429,
+        "queries_ns": 9857071712,
+        "decoding_ns": 4307845192,
+        "own_ns": 15766359525
+      },
+      "Unused_run": {
+        "inclusive_ns": 15812896678,
+        "queries_ns": 1538754067,
+        "decoding_ns": 0,
+        "own_ns": 14274142611
+      },
+      "Caller_run": {
+        "inclusive_ns": 277606542,
+        "queries_ns": 59734695,
+        "decoding_ns": 3746942,
+        "own_ns": 214124905
+      }
+    }
+  },
+  "before-detail": {
+    "cpu_sampling_enabled": false,
+    "timing": {
+      "load_ns": 304625096,
+      "query_ns": 13923528412,
+      "queries": 2222043,
+      "first_query_ns": 79979,
+      "run_ns": 69873278169
+    },
+    "adapters_ns": 14223746267,
+    "phases": {
+      "byteOffsets": {
+        "inclusive_ns": 192685287,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 192685287
+      },
+      "types": {
+        "inclusive_ns": 6583139749,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 6583139749
+      },
+      "Parser_file": {
+        "inclusive_ns": 938197630,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 938197630
+      },
+      "Rules_links": {
+        "inclusive_ns": 59568242,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 59568242
+      },
+      "Reassign_run": {
+        "inclusive_ns": 369261637,
+        "queries_ns": 204880594,
+        "decoding_ns": 0,
+        "own_ns": 164381043
+      },
+      "Before_run": {
+        "inclusive_ns": 13887361573,
+        "queries_ns": 1046265909,
+        "decoding_ns": 0,
+        "own_ns": 12841095664
+      },
+      "Bindings_new": {
+        "inclusive_ns": 1545453818,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 1545453818
+      },
+      "Coercion_run": {
+        "inclusive_ns": 175983062,
+        "queries_ns": 123442133,
+        "decoding_ns": 7606012,
+        "own_ns": 44934917
+      },
+      "Methods_run": {
+        "inclusive_ns": 1519199793,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 1519199793
+      },
+      "Casts_run": {
+        "inclusive_ns": 3933938334,
+        "queries_ns": 1444916998,
+        "decoding_ns": 2139088346,
+        "own_ns": 349932990
+      },
+      "PropertyAlias_run": {
+        "inclusive_ns": 350984780,
+        "queries_ns": 32501610,
+        "decoding_ns": 56769045,
+        "own_ns": 261714125
+      },
+      "Flow_relate": {
+        "inclusive_ns": 20847511210,
+        "queries_ns": 3725795332,
+        "decoding_ns": 2293043190,
+        "own_ns": 14828672688
+      },
+      "Flow_offer": {
+        "inclusive_ns": 23200497451,
+        "queries_ns": 5077647930,
+        "decoding_ns": 2615365499,
+        "own_ns": 15507484022
+      },
+      "Flow_run": {
+        "inclusive_ns": 30228040674,
+        "queries_ns": 9756599614,
+        "decoding_ns": 4376032888,
+        "own_ns": 16095408172
+      },
+      "Unused_run": {
+        "inclusive_ns": 15695852753,
+        "queries_ns": 1554224308,
+        "decoding_ns": 0,
+        "own_ns": 14141628445
+      },
+      "Caller_run": {
+        "inclusive_ns": 286203849,
+        "queries_ns": 60915101,
+        "decoding_ns": 3643458,
+        "own_ns": 221645290
+      }
+    }
+  },
+  "after-phases": {
+    "cpu_sampling_enabled": true,
+    "timing": {
+      "inspect_ns": 12739877688,
+      "parts_ns": 0,
+      "allocated_bytes": 3794850904,
+      "allocated_objects": 37987164,
+      "collections": 14,
+      "input_ns": 293308764,
+      "call_ns": 13496558437,
+      "output_ns": 582703651,
+      "facts_bytes": 245444486,
+      "load_ns": 284584366,
+      "query_ns": 14466736217,
+      "queries": 2222043,
+      "first_query_ns": 70262,
+      "run_ns": 65649799251
+    },
+    "adapters_ns": 14650307790,
+    "phases": {
+      "byteOffsets": {
+        "inclusive_ns": 200866129,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 200866129
+      },
+      "types": {
+        "inclusive_ns": 5622777601,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 5622777601
+      },
+      "Parser_file": {
+        "inclusive_ns": 940473799,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 940473799
+      },
+      "Rules_links": {
+        "inclusive_ns": 62611555,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 62611555
+      },
+      "Reassign_run": {
+        "inclusive_ns": 388411151,
+        "queries_ns": 223531953,
+        "decoding_ns": 0,
+        "own_ns": 164879198
+      },
+      "Before_run": {
+        "inclusive_ns": 13910239798,
+        "queries_ns": 1097098803,
+        "decoding_ns": 0,
+        "own_ns": 12813140995
+      },
+      "Bindings_new": {
+        "inclusive_ns": 1626715303,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 1626715303
+      },
+      "Coercion_run": {
+        "inclusive_ns": 175782422,
+        "queries_ns": 118924520,
+        "decoding_ns": 8247906,
+        "own_ns": 48609996
+      },
+      "Methods_run": {
+        "inclusive_ns": 1624936802,
+        "queries_ns": 0,
+        "decoding_ns": 0,
+        "own_ns": 1624936802
+      },
+      "Casts_run": {
+        "inclusive_ns": 3447427131,
+        "queries_ns": 1331615022,
+        "decoding_ns": 1785878014,
+        "own_ns": 329934095
+      },
+      "PropertyAlias_run": {
+        "inclusive_ns": 342230615,
+        "queries_ns": 28648467,
+        "decoding_ns": 42431858,
+        "own_ns": 271150290
+      },
+      "Flow_relate": {
+        "inclusive_ns": 16571693723,
+        "queries_ns": 3930950744,
+        "decoding_ns": 1914537140,
+        "own_ns": 10726205839
+      },
+      "Flow_offer": {
+        "inclusive_ns": 18730668747,
+        "queries_ns": 5309178834,
+        "decoding_ns": 2255348357,
+        "own_ns": 11166141556
+      },
+      "Flow_run": {
+        "inclusive_ns": 25713598403,
+        "queries_ns": 10172866172,
+        "decoding_ns": 3782354804,
+        "own_ns": 11758377427
+      },
+      "Unused_run": {
+        "inclusive_ns": 16205408197,
+        "queries_ns": 1615480643,
+        "decoding_ns": 0,
+        "own_ns": 14589927554
+      },
+      "Caller_run": {
+        "inclusive_ns": 294731857,
+        "queries_ns": 62142210,
+        "decoding_ns": 3865019,
+        "own_ns": 228724628
+      }
+    }
+  }
+}

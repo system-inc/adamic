@@ -8,6 +8,7 @@ export class Types {
     readonly roots: readonly number[];
     readonly rests: readonly boolean[];
     readonly records: readonly TypeFact[];
+    readonly ordered: readonly TypeFact[];
     constructor(
         strict: boolean,
         present: boolean,
@@ -20,13 +21,23 @@ export class Types {
         this.roots = roots;
         this.rests = rests;
         this.records = records;
+        // Checker graphs are complete and read-only after decoding. Keep wire
+        // order intact; the stable sorted copy preserves the first equal ID.
+        const ordered = records.slice();
+        ordered.sort((left, right) => left.id - right.id);
+        this.ordered = ordered;
     }
     type(id: number): TypeFact {
-        for(const record of this.records) {
-            if(record.id === id) {
-                return record;
-            }
+        let first = 0;
+        let last = this.ordered.length;
+        while(first < last) {
+            const middle = Math.floor((first + last) / 2);
+            const record = this.ordered[middle] ?? panic('missing checker type index');
+            if(record.id < id) { first = middle + 1; }
+            else { last = middle; }
         }
+        const record = this.ordered[first];
+        if(record !== undefined && record.id === id) { return record; }
         panic('missing checker type identity');
     }
     root(index = 0): TypeFact {

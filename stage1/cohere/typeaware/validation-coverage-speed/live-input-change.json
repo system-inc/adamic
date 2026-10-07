@@ -1,0 +1,15 @@
+{
+  "old_canonical_sha256": "c0af3d521a5c82fc0ff55758dd9922a326a8d81fbb759c3bb91e5d68a1733a0a",
+  "live_gate_sha256": "a4ac5715a580d3ffdc6eede4969a869d720e3a29f495e13161a32f9106b1615e",
+  "file": "stage1/cohere/typeaware/types.ts",
+  "rule": "@typescript-eslint/consistent-return",
+  "old_span": [
+    668,
+    672
+  ],
+  "live_gate_span": [
+    843,
+    847
+  ],
+  "reason": "The implementation source is also a lint input; use the starting-commit archive for the unchanged-input comparison."
+}

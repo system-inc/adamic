@@ -1,0 +1,154 @@
+{
+  "coverage-compiler": {
+    "before": {
+      "query_ns": 13831341784,
+      "load_ns": 302208227,
+      "queries": 2222043,
+      "run_ns": 65091874746,
+      "findings": 16589,
+      "first_query_ns": 65643,
+      "process_ns": 65449756421,
+      "process_min_ns": 65106727583,
+      "process_max_ns": 66122617524,
+      "query_mean_us": 6.224605817259162,
+      "findings_per_process_second": 253.46160027384465
+    },
+    "native": {
+      "query_ns": 13775553726,
+      "load_ns": 297848297,
+      "queries": 2222043,
+      "run_ns": 61171895529,
+      "findings": 16589,
+      "first_query_ns": 66865,
+      "process_ns": 61539751564,
+      "process_min_ns": 60775360892,
+      "process_max_ns": 61727707347,
+      "query_mean_us": 6.1994991663077625,
+      "findings_per_process_second": 269.56559911925876
+    },
+    "go": {
+      "load_ns": 294826285,
+      "run_ns": 7111968505,
+      "findings": 16589,
+      "process_ns": 7443676350,
+      "rule_ns": 6725638761,
+      "process_min_ns": 7425900470,
+      "process_max_ns": 7720205910,
+      "findings_per_process_second": 2228.6030746084225
+    }
+  },
+  "volume-compiler": {
+    "before": {
+      "query_ns": 7715661908,
+      "load_ns": 291405933,
+      "queries": 854525,
+      "run_ns": 17266254452,
+      "findings": 14232,
+      "first_query_ns": 18104,
+      "process_ns": 17599841529,
+      "process_min_ns": 17507703566,
+      "process_max_ns": 17608399748,
+      "query_mean_us": 9.029182186594891,
+      "findings_per_process_second": 808.6436446913078
+    },
+    "native": {
+      "query_ns": 7901128755,
+      "load_ns": 304648152,
+      "queries": 854525,
+      "run_ns": 17067006282,
+      "findings": 14232,
+      "first_query_ns": 15850,
+      "process_ns": 17404760989,
+      "process_min_ns": 17214708941,
+      "process_max_ns": 17477453362,
+      "query_mean_us": 9.246223053743307,
+      "findings_per_process_second": 817.7072933661531
+    },
+    "go": {
+      "load_ns": 287441155,
+      "run_ns": 3939953890,
+      "findings": 14232,
+      "process_ns": 4264157285,
+      "rule_ns": 3561215167,
+      "process_min_ns": 4217305855,
+      "process_max_ns": 4631788742,
+      "findings_per_process_second": 3337.5879567256634
+    }
+  },
+  "coverage-repository": {
+    "before": {
+      "query_ns": 507060445,
+      "load_ns": 84653070,
+      "queries": 72186,
+      "run_ns": 1467988753,
+      "findings": 180,
+      "first_query_ns": 191678,
+      "process_ns": 1563777603,
+      "process_min_ns": 1562579504,
+      "process_max_ns": 1575947341,
+      "query_mean_us": 7.024359917435514,
+      "findings_per_process_second": 115.10588184322525
+    },
+    "native": {
+      "query_ns": 511367661,
+      "load_ns": 84071484,
+      "queries": 72186,
+      "run_ns": 1495796707,
+      "findings": 180,
+      "first_query_ns": 160690,
+      "process_ns": 1585576611,
+      "process_min_ns": 1584770543,
+      "process_max_ns": 1619677917,
+      "query_mean_us": 7.084028218768182,
+      "findings_per_process_second": 113.52336982725586
+    },
+    "go": {
+      "load_ns": 84575472,
+      "run_ns": 235577803,
+      "findings": 180,
+      "process_ns": 335996194,
+      "rule_ns": 171729448,
+      "process_min_ns": 320102286,
+      "process_max_ns": 338745676,
+      "findings_per_process_second": 535.7203540228196
+    }
+  },
+  "volume-repository": {
+    "before": {
+      "query_ns": 545155728,
+      "load_ns": 84285184,
+      "queries": 65198,
+      "run_ns": 1165374646,
+      "findings": 46,
+      "first_query_ns": 13275,
+      "process_ns": 1260922890,
+      "process_min_ns": 1229632476,
+      "process_max_ns": 1262680294,
+      "query_mean_us": 8.361540660756466,
+      "findings_per_process_second": 36.48121575459702
+    },
+    "native": {
+      "query_ns": 529848269,
+      "load_ns": 81939786,
+      "queries": 65198,
+      "run_ns": 1150839263,
+      "findings": 46,
+      "first_query_ns": 13966,
+      "process_ns": 1244422826,
+      "process_min_ns": 1238840865,
+      "process_max_ns": 1275003461,
+      "query_mean_us": 8.12675648026013,
+      "findings_per_process_second": 36.96492786769245
+    },
+    "go": {
+      "load_ns": 76386355,
+      "run_ns": 219359086,
+      "findings": 46,
+      "process_ns": 305938393,
+      "rule_ns": 200856714,
+      "process_min_ns": 304792550,
+      "process_max_ns": 313429488,
+      "findings_per_process_second": 150.3570687841065
+    }
+  }
+}

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/bridge/tsgo/profile/frozen_repository.py", line 88, in <module>
+    main()
+  File "/workspace/adamic/bridge/tsgo/profile/frozen_repository.py", line 77, in main
+    raise RuntimeError(f"Output differs from previous findings/fixes: {stem}")
+RuntimeError: Output differs from previous findings/fixes: /workspace/tsgo-speed/wrong-golden/frozen-coverage-go

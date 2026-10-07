@@ -17,13 +17,15 @@ def main():
     parser.add_argument("--corpus", nargs=3, action="append", required=True,
                         metavar=("NAME", "CONFIG", "MANIFEST"))
     parser.add_argument("--rounds", type=int, default=3)
+    parser.add_argument("--start-round", type=int, default=1,
+                        help="Preserve alternating order when repeating an affected round")
     parser.add_argument("--before", help="Optional unchanged native baseline binary")
     args = parser.parse_args()
     args.directory.mkdir(parents=True, exist_ok=True)
     records = []
     environment = dict(os.environ, ADAMIC_TSGO_TIMING="1")
     for name, config, manifest in args.corpus:
-        for round_number in range(1, args.rounds + 1):
+        for round_number in range(args.start_round, args.start_round + args.rounds):
             order = [("go", args.oracle), ("native", args.native)]
             if args.before:
                 order.append(("before", args.before))

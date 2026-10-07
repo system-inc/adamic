@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/bridge/tsgo/profile/frozen_repository.py", line 88, in <module>
+    main()
+  File "/workspace/adamic/bridge/tsgo/profile/frozen_repository.py", line 33, in main
+    raise RuntimeError("Snapshot directory must be fresh to exclude stale inputs")
+RuntimeError: Snapshot directory must be fresh to exclude stale inputs
