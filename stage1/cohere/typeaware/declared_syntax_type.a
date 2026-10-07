@@ -1,0 +1,7 @@
+import { Frames, header } from './frames.ts';
+import type { SyntaxProjection } from './syntax_projection.a';
+export class DeclaredSyntaxTypes {
+ readonly syntax: SyntaxProjection; readonly cache = new Map<number, number>();
+ constructor(syntax: SyntaxProjection) { this.syntax = syntax; }
+ get(index: number): number { const cached = this.cache.get(index); if(cached !== undefined) { return cached; } const frames = new Frames(this.syntax.ask(index, 'declared-syntax-type')); header(frames, 'declared-syntax-type'); const value = frames.natural(); frames.end(); this.cache.set(index, value); return value; }
+}

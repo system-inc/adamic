@@ -1,0 +1,1454 @@
+[
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-000.tsx",
+    "sha256": "56c6b827c0565e6f596a4454de74621a09caf18cc4878b7f4f01df1fe0149b75",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('props.x = true');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-001.tsx",
+    "sha256": "6f0316f71cc0c9f93d4e1e7aa034440af7fc66a667a27459d1fb2cf63bf9357d",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  with (props) {}\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-002.tsx",
+    "sha256": "045533a6f4abfe0164660a60ba69e4b59b587d9f87e9b2e83770dcb84d0a3edb",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  class Foo {}\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-003.tsx",
+    "sha256": "b0255b1979ae47f73b95507983a7255ac6bfd1a27a1f7da43a62c113e352e430",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const runner = eval;\n  return <div>{String(runner)}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-004.tsx",
+    "sha256": "ccbd0be5c09dd806c7418938dd475630d42798d9f1fd66c7e919b9613d691c67",
+    "parse_valid": true,
+    "source": "function useThing(a) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-005.tsx",
+    "sha256": "8152c1d97a5518c91523fe580979f83980a67e9e2f58fba93d497f9bb081fe8d",
+    "parse_valid": true,
+    "source": "function use2Things(a) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-006.tsx",
+    "sha256": "3631ffd0058efefc963ce2c6b58584cbf90fc0147a7b22a00cfbd852dd525e24",
+    "parse_valid": true,
+    "source": "const Component = (props) => {\n  eval('x');\n  return <div />;\n};\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-007.tsx",
+    "sha256": "ad21c9f0cc01c1164282b30f1287dc3fdd179d2b685d57b865430818d8e12ec8",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  function inner() {\n    eval('x');\n  }\n  return <div onClick={inner} />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-008.tsx",
+    "sha256": "408d71660f0a5e059f052213ec82154892ea16069f34fe98265933e8ef86b943",
+    "parse_valid": true,
+    "source": "function Component(props, ref) {\n  eval('x');\n  return <div ref={ref} />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-009.tsx",
+    "sha256": "6c21564950a5ff9ca5200d6663f29e94cf6d9622de2988ec6fce98a7e685a03a",
+    "parse_valid": true,
+    "source": "function Component(props: {a: number}) {\n  eval('x');\n  return <div>{props.a}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-010.tsx",
+    "sha256": "7d544efe26c29228273a78492fca738a231fab994bac048df9bb0715eaf3e7b3",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  if (props.a) {\n    return {};\n  }\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-011.tsx",
+    "sha256": "b65f61a6d68c4715555aca67ed07878b4080df24485b676cfd15bb6a6653ce60",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  const value = useState(0);\n  return value;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-012.tsx",
+    "sha256": "4eb955b4e2a2bd677db2c4497e1a0638eb717b04566d368c3a239dd3e3183937",
+    "parse_valid": true,
+    "source": "function Outer(props) {\n  function mid() {\n    const Inner = (p) => {\n      eval('x');\n      return <b />;\n    };\n    return Inner;\n  }\n  return <div>{mid()}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-013.tsx",
+    "sha256": "616f2aacbdc3ed72ef5e0174c35faf110e1f6ce4eb4d4341b95213e46d63ad2b",
+    "parse_valid": true,
+    "source": "function useOuter() {\n  const Component = (p) => {\n    eval('x');\n    return <div />;\n  };\n  return Component;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-014.tsx",
+    "sha256": "5f7ebb4d7e52197fccc28f7aac270ff58ac54d2e480d6aa90979ac432820ed91",
+    "parse_valid": true,
+    "source": "export const Component = (props) => {\n  eval('x');\n  return <div />;\n};\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-015.tsx",
+    "sha256": "505693861eebf999c9972081541d24bb4c32f795a439c2862b78100c32ed3acc",
+    "parse_valid": true,
+    "source": "const Component = ((props) => {\n  eval('x');\n  return <div />;\n});\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-016.tsx",
+    "sha256": "b5298cbfd9de346015ef7011f79761ba62376d4392abed3f2abad7325c816e9a",
+    "parse_valid": true,
+    "source": "interface Props {\n  a: number;\n}\nfunction Component(props: Props) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-017.tsx",
+    "sha256": "f33fb3cb54653f1d686e22b28f9bfca3350d9feaab8e2a0765bb11229ada359e",
+    "parse_valid": true,
+    "source": "function useThing(...args) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-018.tsx",
+    "sha256": "3a252bb96c75359c38364c825b59e651665f20b6dcc36247861551222bd07d4e",
+    "parse_valid": true,
+    "source": "function useThing(a, b, c) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-019.tsx",
+    "sha256": "e870d4d4fb1efeefa14d70141a9c0c6baed8ccf5eb39da1b3071036cfeb74faa",
+    "parse_valid": true,
+    "source": "function useThing(a: string) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-020.tsx",
+    "sha256": "1692ce8484a2a8724588a224a4edf8bcf839e8f4674d56c790128d631ee81187",
+    "parse_valid": true,
+    "source": "function useThing(a, b) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-021.tsx",
+    "sha256": "1f3a0971d674d3a6e23c3092e01d5f2213686ae628e09ebf2161cd7cb6c2b13d",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  Helpers.useThing(0);\n  return 1;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-022.tsx",
+    "sha256": "d232afa25cd872f9bc1888c10eff92cdf1530930262144e329f89db6b51572e0",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  with (props) {}\n  class Foo {}\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-023.tsx",
+    "sha256": "e07d221f11a035d37d04c39d686f700c50ee05fd966329403dee33a49acaa9f8",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  eval('y');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-024.tsx",
+    "sha256": "823117fecb2d75616284ea2e9118200a986a26afe25c3f2e996dfdfadb8cc4fc",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  return <></>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-025.tsx",
+    "sha256": "74985c24c94736bf1606cd126b8967fbe1aded80752b8f295ca24f66e1ec1645",
+    "parse_valid": true,
+    "source": "function Outer(props) {\n  const Inner = (p) => {\n    eval('x');\n    return <span />;\n  };\n  return <div>{Inner(props)}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-026.tsx",
+    "sha256": "d3ca18fe2c1ae7f892446b63e75221a5e37cb601ebb38ff95704931313fcc532",
+    "parse_valid": true,
+    "source": "{\n  function Component(props) {\n    eval('x');\n    return <div />;\n  }\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-027.tsx",
+    "sha256": "7adc1e93f056dc8278c42bf602d0b7ad374a285c647fcb3d966cb1456894edf5",
+    "parse_valid": true,
+    "source": "if (true) {\n  function Component(props) {\n    eval('x');\n    return <div />;\n  }\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-028.tsx",
+    "sha256": "1def3ff3cc86594878f80973bcb90a690885fbde1748ba15c75ffd06eb254fd0",
+    "parse_valid": true,
+    "source": "class Container {\n  render() {\n    function Component(props) {\n      eval('x');\n      return <div />;\n    }\n    return Component;\n  }\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-029.tsx",
+    "sha256": "a081cde0879d2d0a2a07c5fef22e27e029b25ed0ece6641235436bd4971f47dd",
+    "parse_valid": true,
+    "source": "function useOuter() {\n  const Component = (p) => {\n    eval('x');\n    return 1;\n  };\n  return Component;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-030.tsx",
+    "sha256": "ad4820259ce9d4f2b432084865563a0734ea0a04a4664650e26690c04f786c03",
+    "parse_valid": true,
+    "source": "function helper(props) {\n  with (props) {}\n  return props.a;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-031.tsx",
+    "sha256": "305651137441d08f035a160fc7a9e7f6dca7a8b46db8e6ae5be829fe15c50b92",
+    "parse_valid": true,
+    "source": "function helper(props) {\n  class Foo {}\n  return Foo;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-032.tsx",
+    "sha256": "05c87fdf576c8a8dc7d9a2a3752cef997028a3f6d366ea9f5b4fa2e158143b86",
+    "parse_valid": true,
+    "source": "function Component(props: [number, string]) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-033.tsx",
+    "sha256": "78069be110cd2fdbdd111d7971b61ded517050a86fc75be1981c86a8570be0e6",
+    "parse_valid": true,
+    "source": "function Component(props: number[]) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-034.tsx",
+    "sha256": "531d7770d82e7c2ab7af3264788bec1ffc835a73a11178349ad87a5ef9335476",
+    "parse_valid": true,
+    "source": "function Component(props: () => void) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-035.tsx",
+    "sha256": "2bdfeb1a4d5837e2567f47dbd617146b03a7dfe8c03831ca6fb2026b703104f9",
+    "parse_valid": true,
+    "source": "function Component(props: boolean) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-036.tsx",
+    "sha256": "d7865ad1bc200c68c1804e8c6ee0b07c1c56662b223690776cc03930978fd59a",
+    "parse_valid": true,
+    "source": "function Component(props: \"a\") {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-037.tsx",
+    "sha256": "24ad60ab1e49e4d6f122589e2153f86c97467ebeafb6fe2b07e07197b93e03ce",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  helpers.useThing(0);\n  return 1;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-038.tsx",
+    "sha256": "16ba7ce8f6cc0fcdc895d67d85d2c236264975d8ec6cf8c764e41796c37cb021",
+    "parse_valid": true,
+    "source": "function helper(a) {\n  eval('x');\n  return a;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-039.tsx",
+    "sha256": "83bd0dd1abb0d503997ae51ffadd2dd351042b285d8c4def9d1890f13d208cfa",
+    "parse_valid": true,
+    "source": "eval('x');\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-040.tsx",
+    "sha256": "2f4a899e199cf49b2b46502ea3180c1a037b07a19507a6fe5a2b237a59f6c963",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  return 1;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-041.tsx",
+    "sha256": "8511023396979b450d63cba152d9c9b56704eedf8beaddc8d0c8468b19eb57fa",
+    "parse_valid": true,
+    "source": "function useThing(a) {\n  eval('x');\n  return a;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-042.tsx",
+    "sha256": "6f9332b30226e866885f4522d6374780fcd814d1c26172c131257b233bf03a8b",
+    "parse_valid": true,
+    "source": "function Component(eval) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-043.tsx",
+    "sha256": "e5f5d8027b2376dbdfd09c50e4329c942dec0176c3407a0d629cb33d97d79724",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const eval = (s: string) => s;\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-044.tsx",
+    "sha256": "911e9170de7814515e1c079bc97de813e559419a4f16dbfe936f8e7609392328",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const Foo = class {};\n  return <div>{String(Foo)}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-045.tsx",
+    "sha256": "7d127b4b39368cb439cd8ad438db22ab996572a3b47b97ee8c7b4aa02c3b4b6a",
+    "parse_valid": true,
+    "source": "class Foo {}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-046.tsx",
+    "sha256": "83f210554ca8fd08976598cb3a8e3f1c29318eb4cce169c240bbee05015b2059",
+    "parse_valid": true,
+    "source": "function Émile(props) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-047.tsx",
+    "sha256": "83e6d99d03dac967f7e6255c6183afff120cf406f683a417424f4a53978cfd5c",
+    "parse_valid": true,
+    "source": "function Component(...props) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-048.tsx",
+    "sha256": "44680f722090f5a1a276d26294158f1c9c4dc4c3f9985f6a78e787b662c1bb18",
+    "parse_valid": true,
+    "source": "function Component(a, b, c) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-049.tsx",
+    "sha256": "d3d3a396ce41dba403dbe9d450d9ff2b08eb1483622da268b4a6f622a4319d02",
+    "parse_valid": true,
+    "source": "function Component(props, other) {\n  eval('x');\n  return <div>{String(other)}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-050.tsx",
+    "sha256": "c2addf7d9e89ff640e394108a4e02fb05350533e2515bc300f43defccd715654",
+    "parse_valid": true,
+    "source": "function Component(props: string) {\n  eval('x');\n  return <div>{props}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-051.tsx",
+    "sha256": "3981aee5eaca144e64e6e9486400d11c4cfb581b21d5c5e1752e67a34287a2dc",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  const inner = () => <div />;\n  return inner;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-052.tsx",
+    "sha256": "4aba475c8517f98c479cdac2aab1045246be5b1fb58d1fd5b264de72f4eefedd",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  const inner = () => useState(0);\n  return inner;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-053.tsx",
+    "sha256": "64294762a2c500333e0c16df5734baf2ab8b9f7a1270fbf3355440364e89da1e",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  use(props.p);\n  return 1;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-054.tsx",
+    "sha256": "2a628b1d22fb439097d23bdb16aa12f955f5cf6bab07ffcec4ecb9d097744f8b",
+    "parse_valid": true,
+    "source": "function use(a) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-055.tsx",
+    "sha256": "f56370492b6798cfe6800a4d9b93b1c143cec0dac18962d0118034bbe77948d1",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const table = {eval: 1};\n  return <div>{table.eval}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-056.tsx",
+    "sha256": "43f56e72c9421ba30a584ceeef1d7afff5e8f11beba78ff8536a5ad4c40342be",
+    "parse_valid": true,
+    "source": "function outer() {\n  const Component = (props) => {\n    eval('x');\n    return <div />;\n  };\n  return Component;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-057.tsx",
+    "sha256": "71744c69dedc2cdbc3b233d91655a8fe6a867589d250c648ed3dafb64a291e3d",
+    "parse_valid": true,
+    "source": "const Component = memo((props) => {\n  eval('x');\n  return <div />;\n});\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-058.tsx",
+    "sha256": "77e4f57283b4a1c9f690ca98858f3f5e01770664f107eee3047b378f36c718b6",
+    "parse_valid": true,
+    "source": "const namespace = {\n  Component: (props) => {\n    eval('x');\n    return <div />;\n  },\n};\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-059.tsx",
+    "sha256": "3c2c236b8d77d0ca63d9adbb0fd999ecf98b61109201706bca670214423b0f0c",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  eval('x');\n  return <div />;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-060.tsx",
+    "sha256": "ad2d6ef08281121e2d0b9c20a032f8feb470ee11e7bc60e477d167eb823b5b90",
+    "parse_valid": true,
+    "source": "function Component() {\n  let x;\n  const y = useMemo(() => {\n    let z;\n    x = [];\n    z = true;\n    return z;\n  }, []);\n  return [x, y];\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-061.tsx",
+    "sha256": "809afd8d03edae5729edc947147f7da4b8cae76673bb9feaa24235c36cbbcb03",
+    "parse_valid": true,
+    "source": "import {useMemo} from 'react';\n\n// react-hooks-deps would error on this code (complex expression in depslist),\n// so Forget could bailout here\nfunction App({text, hasDeps}) {\n  const resolvedText = useMemo(\n    () => {\n      return text.toUpperCase();\n    },\n    hasDeps ? null : [text], // should be DCE'd\n  );\n  return resolvedText;\n}\n\nexport const FIXTURE_ENTRYPOINT = {\n  fn: App,\n  params: ['TodoAdd'],\n  isComponent: 'TodoAdd',\n};\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-062.tsx",
+    "sha256": "f8755f9d7396fd719327848b560722174b460086e4857021b8b6aa44b79a0bc6",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(async () => props.a, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-063.tsx",
+    "sha256": "aa2568fd5f0a23a7a7ab02ff0635e91699da3c41b5b467438f0c1d0512db34c9",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(function* () { yield 1; }, []);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-064.tsx",
+    "sha256": "ea6adc92008823cf0465cdfca068e66d86f0799cade36846fd56fbd45530be3f",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo((c) => c, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-065.tsx",
+    "sha256": "799c26c2b069fe1687decff2840f664ad6dc11ba104e3b7894e6d7e693089c96",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo((a, b) => a, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-066.tsx",
+    "sha256": "16fff1b95e9cf53be84b9a1bb244a519ae828ae4601cb8e227f9581994731489",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(({a}) => a, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-067.tsx",
+    "sha256": "6c8e06452d98628c07e6aba223f4e4ab25a083fd863e10d4c94f62d8029e8e83",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo((a = 1) => a, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-068.tsx",
+    "sha256": "ac00bed7d5de278a98019e5fb98eed0a82707bb80c83d585e6cffd4310dff72c",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo();\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-069.tsx",
+    "sha256": "003c94949ca39988ac9cfa9d7706b50caed06a06b085947c9ada9bd578f4aeff",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-070.tsx",
+    "sha256": "ccc97bd940b30754e08aedafcb4449eb6bfbe1112ae11862fcddcf6b92b32ead",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(42, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-071.tsx",
+    "sha256": "66ee3f1265ba09630d6e0ebdcd6ccca43063e8c10d1d5231bdbdbbaf77804a68",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const cb = () => props.a;\n  const x = useMemo(cb, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-072.tsx",
+    "sha256": "f9b62aa8bdb04b1a219f5f9b04a2b1bba7b71cfaa959783bb204933875a6b3f8",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const d = [props.a];\n  const x = useMemo(() => 1, d);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-073.tsx",
+    "sha256": "8885c623929e5c5c7ddd0df1407751d1be0227ec698029b4271616e284753fcf",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, null);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-074.tsx",
+    "sha256": "d4b5aedbc60e541c54c8bd2472c384e75e987e6009e696e537dda72e97ba2a00",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, [...props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-075.tsx",
+    "sha256": "802b4bf6e539938dd35f70b1589c5bf5da1bd3c0b04dd7bab8ba23a5fe3640ea",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, [, props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-076.tsx",
+    "sha256": "bd7e5566309f123f1f36e1056e254b6e2d272a78e6434cf792e6dc36d139ea4b",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, [f()]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-077.tsx",
+    "sha256": "416561d59cb6494ec2a785d29a1050a83c55ea87aca0a58936085ff04daec918",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => props.a, [props.a + 1]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-078.tsx",
+    "sha256": "6a5be8bbb77ca31ca473adb13e71679f6741550b3226dc7734090d6299ec7ceb",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, [props['a']]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-079.tsx",
+    "sha256": "e560b423570c3862d7b410d90704e833904188069f934936ef6078c0e869f00f",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, [1]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-080.tsx",
+    "sha256": "0f1b49eb94b19010cd11cc426df3e6c6e2e5f1b5f8ee44f8c1e39d1ad1d65a85",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, [this.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-081.tsx",
+    "sha256": "1f46e96f5aec5617e31493bd55677293575baa674a0497b5bc826ac4a296458c",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, [f(), g()]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-082.tsx",
+    "sha256": "9e1265b94bce703384b1c92ece7c4253e197dee1fc5c957a1c565ac70ade03dd",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(async (c) => c, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-083.tsx",
+    "sha256": "072be64b8f0f7b30d931bdddbcd190a2d10b523f93333814c96996f5c2edc100",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(props.fn, [f()]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-084.tsx",
+    "sha256": "9747ffd499e9f99bb2fc85d7e1c1139be1276e2bbe97af8d9f211bdd8c48c7b6",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const a = useMemo(props.f, [props.a]);\n  const b = useMemo(props.g, [props.b]);\n  return <div>{a}{b}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-085.tsx",
+    "sha256": "b8c462c411bc472568f770b4ea0f25831bc38c3cdd6e2fdf4704d4798a823aca",
+    "parse_valid": true,
+    "source": "function Component() {\n  let x = 0;\n  const y = useMemo(() => { x += 1; return 1; }, []);\n  return [x, y];\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-086.tsx",
+    "sha256": "4e478f8f4f26f4425c0829ac206b648a3482c18e9a10bc0f40cac53aa2ff673b",
+    "parse_valid": true,
+    "source": "function Component(p) {\n  const y = useMemo(() => { p = 1; return 1; }, []);\n  return [p, y];\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-087.tsx",
+    "sha256": "c1869bfba45542dbda4e64c66caeb931555fec5577875900500801033d2c77f1",
+    "parse_valid": true,
+    "source": "function useThing(props) {\n  const x = useMemo(props.fn, [props.a]);\n  return x;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-088.tsx",
+    "sha256": "669f93b26d7f18d427e9a8462b1d988c5aee1581bb1a8dc522cbaa6fa4f7aa78",
+    "parse_valid": true,
+    "source": "const Component = (props) => {\n  const x = useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n};\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-089.tsx",
+    "sha256": "82b59569b6e9add37c8414d2de40ba1c88f55f635555e6f14a41bc88879f7b12",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = React.useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-090.tsx",
+    "sha256": "65858bca5970cea81226b96e8e65bf57a1aaee3c153b0dcc452a638063996db7",
+    "parse_valid": true,
+    "source": "import {useMemo} from 'react';\nfunction Component(props) {\n  const x = useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-091.tsx",
+    "sha256": "85f9db4f7d76b5428285be5197a222412cf2f96245a2f27d84d6fb58a47ce60f",
+    "parse_valid": true,
+    "source": "import {useMemo as um} from 'react';\nfunction Component(props) {\n  const x = um(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-092.tsx",
+    "sha256": "714e95baae02acd67ae7cfb80a625a84175ec438a92c25287da368bb0ffc0a6b",
+    "parse_valid": true,
+    "source": "import * as React from 'react';\nfunction Component(props) {\n  const x = React.useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-093.tsx",
+    "sha256": "5f6c21466c9f89c155ee52d173bcd7dd182e50cbaa81fafe7a43ffe717c2f8c5",
+    "parse_valid": true,
+    "source": "import React from 'react';\nfunction Component(props) {\n  const x = React.useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-094.tsx",
+    "sha256": "4fd189805f4098dc4f61eebaf74a183364734dc2341733f5b8c989460ea28c6e",
+    "parse_valid": true,
+    "source": "import React from 'preact/compat';\nfunction Component(props) {\n  const x = React.useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-095.tsx",
+    "sha256": "f5f982e0118e1973f00f2d743d6b419c31bea8bf6fc99d8cfa5f74cf5006620f",
+    "parse_valid": true,
+    "source": "import * as React from 'not-react';\nfunction Component(props) {\n  const x = React.useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-096.tsx",
+    "sha256": "81860beeb407839048fc2d89e540ba54cfb5a0bce2ed8fc806d3c731c85a4a2d",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const cb = () => 1;\n  const x = useMemo(cb, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-097.tsx",
+    "sha256": "2e5e6e06d82373f4140a622b7d47a0badef9c4b5fcd25de1590f43c20245eace",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(props.c ? () => 1 : () => 2, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-098.tsx",
+    "sha256": "2c2c8b243493b8ae9a233b244e431bce9089a73b683cfc7b22fe6c2493d87bf5",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useCallback();\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-099.tsx",
+    "sha256": "d39187698ea1dbd9f6a4e57da6da89301a37ec0f2a38b9e0744817802d3fcfa9",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useCallback(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-100.tsx",
+    "sha256": "30044f9d92cec89758dfb25d12982e585a15aca35af53a301e25fb4eed3a8236",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useCallback(() => 1, props.d);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-101.tsx",
+    "sha256": "ca93461c980d9f178cbcfbe8f65913ccd3bc4f5c36fe0c1d670fe76336fb29a9",
+    "parse_valid": true,
+    "source": "function Component(props, ref) {\n  const x = useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-102.tsx",
+    "sha256": "d21746c13dd707729fe0e99d479769df3a6f55da2eba2842c8ae800bb840bb6d",
+    "parse_valid": true,
+    "source": "function Outer() {\n  function Component(props) {\n    const x = useMemo(props.fn, [props.a]);\n    return <div>{x}</div>;\n  }\n  return Component;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-103.tsx",
+    "sha256": "3690dfa3ff92cecc391e6a8bce42f1d0dd48d69d4259b39fa174c56067dc2000",
+    "parse_valid": true,
+    "source": "function Component() {\n  const x = 1;\n  const y = useMemo(() => { x = 1; return 1; }, []);\n  return [x, y];\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-104.tsx",
+    "sha256": "539aa79c59d6722bd6e9a1eb84027c0529aed4aa17031bc69214f3153329c696",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const bad = useMemo(props.fn, [props.a]);\n  const helper = (...a) => a;\n  return <div>{bad}{helper(1)}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-105.tsx",
+    "sha256": "5f2825b9b6009b892109e7d994b51c6dae112170d1e7f17d3cf00b99352c3431",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => props.a + 1, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-106.tsx",
+    "sha256": "71228a7e5259ea4e7fa58dde1309d88715b9e167380e3346452d390f040a8e09",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(function () { return props.a; }, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-107.tsx",
+    "sha256": "719fc7a059e9c0317bee2a33a57e20803fc4ad560b32408c3ca0624c96efd527",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(function inner() { return props.a; }, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-108.tsx",
+    "sha256": "cf1dc0605815cc9a7639394253e2b5cb2a102ddcad23b9e4a3776e032bc07daf",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, []);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-109.tsx",
+    "sha256": "d49d8e56805a40f6c045a88e55cda2caedbc90da6d78404d144d988bdffbb089",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => props.a);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-110.tsx",
+    "sha256": "c7c14d56038c01ff5407fde6fb09285efa9772e60250c1a0d7f1d0fcd28a3f01",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, [props.a.b.c]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-111.tsx",
+    "sha256": "d5606a84fc7427f78dce1962ba7750bbea705981c76926615f84ea0bb34f4a32",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, [props?.a?.b]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-112.tsx",
+    "sha256": "9872b2992a80d81faf7401cc48972e3eff489bcd66eaf8d51cb2ea40de3096eb",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, [props[0]]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-113.tsx",
+    "sha256": "4a0941c26b9d551d7925b7bd91480efc204c79aaac47e9e578973414922d2642",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => 1, [props.a], extra);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-114.tsx",
+    "sha256": "4ae159c5dcb86120d9c301dc52fdfad22e6a2006227e67ccd7d0db8d97cc4b88",
+    "parse_valid": true,
+    "source": "function widget(props) {\n  const x = useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-115.tsx",
+    "sha256": "5d993e47256b49b71096547868dce4daabf1c32ffe86e757f2be053ac901db1d",
+    "parse_valid": true,
+    "source": "function usething(props) {\n  const x = useMemo(props.fn, [props.a]);\n  return x;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-116.tsx",
+    "sha256": "135369589d1ca1db50ec1a52e56a361133a10e0e5a146a62271263378c91aea3",
+    "parse_valid": true,
+    "source": "const x = useMemo(fn, [a]);\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-117.tsx",
+    "sha256": "6460416f3a4646d8cb0c7a69310d3c422889a2963d14ffbf0c220b9b864aa727",
+    "parse_valid": true,
+    "source": "function Widget(props) {\n  const x = notMemo(props.fn, [props.a]);\n  return x;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-118.tsx",
+    "sha256": "f01e142b85b01d289cdc7e3c4e8b51948c268acc23f69cf2a6822b1c2d5653cc",
+    "parse_valid": true,
+    "source": "function Component(...props) {\n  const x = useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-119.tsx",
+    "sha256": "301bc8d2701c66ebb12573e3dc4e9f44007e5d3afe8915af9f2d877c29b92055",
+    "parse_valid": true,
+    "source": "function Component(props, other) {\n  const x = useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-120.tsx",
+    "sha256": "74fc1dc7d29ba7630606629d193a807c842632d43884593db4d23eafcd57a765",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const useMemo = (a, b) => a;\n  const x = useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-121.tsx",
+    "sha256": "fa87549839a1bd6851d2d4a899855c766a252ccc87590effbd2d0ecf5bdb18d0",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const m = useMemo;\n  const x = m(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-122.tsx",
+    "sha256": "6bcbdb8be873a55e576d068590d72b2469baff8f96093f283d5de8b78453fc00",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(() => { return; }, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-123.tsx",
+    "sha256": "2a6b8711a74a7d835f8c23ac3380d31caa0a41e642fe6d13b012bd837afb9fcd",
+    "parse_valid": true,
+    "source": "const useMemo = (a, b) => a;\nfunction Component(props) {\n  const x = useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-124.tsx",
+    "sha256": "fed67bbddadace7bbb35e878b8732aa5d35f892897ac6fb8a3bb093c812149d2",
+    "parse_valid": true,
+    "source": "import {useMemo} from 'not-react';\nfunction Component(props) {\n  const x = useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-125.tsx",
+    "sha256": "7a5d867bdb23a400809a0bbedacb5e0d2ecf0f95f148f293eae2941ba5b33c35",
+    "parse_valid": true,
+    "source": "import {somethingElse as useMemo} from 'react';\nfunction Component(props) {\n  const x = useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-126.tsx",
+    "sha256": "875cf6118ed84fe5caf065893079aaa29ff7112f0ceac90626e85e824938fa57",
+    "parse_valid": true,
+    "source": "import Rct from 'react';\nfunction Component(props) {\n  const x = Rct.useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-127.tsx",
+    "sha256": "ba85acf4954097ec892bbe4b8841925adba3c645be7194bb6397959ff0d54ba8",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = Foo.useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-128.tsx",
+    "sha256": "f6c2a4007c7aadc7d3b58b5393affc1afea6092278d1043bba35014538a234ac",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const React = {useMemo: (a, b) => a};\n  const x = React.useMemo(props.fn, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-129.tsx",
+    "sha256": "752d4d315d8e9e2d17bff6a80a85805e5dd70b56334796f80342a5821449e9e6",
+    "parse_valid": true,
+    "source": "function Component() {\n  const y = useMemo(() => { let z; z = 1; return z; }, []);\n  return y;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-130.tsx",
+    "sha256": "e1508fb9680791e5368d4d0fcf3a64c04e6b1ed274a9746f015107e4c87ffea8",
+    "parse_valid": true,
+    "source": "function Component() {\n  const y = useMemo(() => { globalThing = 1; return 1; }, []);\n  return y;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-131.tsx",
+    "sha256": "6bc295e339324848efb303011bc3f5a4fdfd492302197815a87659ce5d63a367",
+    "parse_valid": true,
+    "source": "function Component() {\n  let x = {};\n  const y = useMemo(() => { x.a = 1; return 1; }, []);\n  return [x, y];\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-132.tsx",
+    "sha256": "d041fddbb64aa587b6f4fbf55490de59a3658adab5f8093ddde2f37f8b624c98",
+    "parse_valid": true,
+    "source": "function Component() {\n  let x = 0;\n  const y = useMemo(() => { x++; return 1; }, []);\n  return [x, y];\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-133.tsx",
+    "sha256": "4e789c8f2b322bbca36ae27c2f43bdea07d22b404eece1ff77ed605201755a85",
+    "parse_valid": true,
+    "source": "function Component() {\n  let x = 0;\n  const y = useMemo(() => { const f = () => { x = 1; }; f(); return 1; }, []);\n  return [x, y];\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-134.tsx",
+    "sha256": "d112c052bd3d9d62942a0516fe2b3c202860925f67befc1f01e772db006a6a0b",
+    "parse_valid": true,
+    "source": "function Component() {\n  let x;\n  const y = useCallback(() => { x = 1; return 1; }, []);\n  return [x, y];\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-135.tsx",
+    "sha256": "fd857e616204eadf50a8dcb1e28a8ea4babd127dfd09e0ee39cc7e2d3e5e43f2",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useCallback((c) => c, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-136.tsx",
+    "sha256": "a6c615dd5d8ff4136ec0b7818c463363ab36846824246e1b0cac0e7916cce34f",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useCallback(async () => 1, [props.a]);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-137.tsx",
+    "sha256": "0a178eb986dff669c012fb6c0fe90c2b35d365d14994d95402e98dec4303722e",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useEffect(() => {}, props.d);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-138.tsx",
+    "sha256": "8ca3f6e67235a558e7b554730b4582f27acd7a54df20c2d37b756cb402a9580e",
+    "parse_valid": true,
+    "source": "function Component(props) {\n  const x = useMemo(...props.args);\n  return <div>{x}</div>;\n}\n\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-139.tsx",
+    "sha256": "2417387ecbd9b7a2d2301b7fa37732669d1b7ac07496c5040b7214ea759237a6",
+    "parse_valid": true,
+    "source": "useMemoMissingCallback\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-140.tsx",
+    "sha256": "e6227536f5963d9143510f35ac7016f7646927e2e1a895c4c48b5373720b1957",
+    "parse_valid": true,
+    "source": "useMemoCallbackNotInline\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-141.tsx",
+    "sha256": "cd392abffb1fb9d928eb86aa7401296bf2574201590065f835ede04506db6b47",
+    "parse_valid": true,
+    "source": "useMemoDependencyListNotArrayLiteral\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-142.tsx",
+    "sha256": "d379e592945d5c3836148dc83c15888a52567152035e3663ab10c114a6eef182",
+    "parse_valid": true,
+    "source": "useMemoDependencyNotSimple\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-143.tsx",
+    "sha256": "424af9803050afb34801ee36613183cef2495292aa071c0d541ad90e4702c1ab",
+    "parse_valid": true,
+    "source": "useMemoCallbackHasParameters\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-144.tsx",
+    "sha256": "b4368a08a7d7943cdec344db1894bb35c2a942dbd99572c13fa169b6694d8e1a",
+    "parse_valid": true,
+    "source": "useMemoCallbackAsyncOrGenerator\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-145.tsx",
+    "sha256": "58b05df09c9ab8dfb6e57f276433f15a991947fabbe99ac34b002e297bb9a6ba",
+    "parse_valid": true,
+    "source": "useMemoCallbackReassignsOuterVariable\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-146.tsx",
+    "sha256": "8d26d78b5bb4de29dd988e3e0605dbcf93e719c90d0bfad47b49a9dbe639232f",
+    "parse_valid": true,
+    "source": "\n        var Hello = createReactClass({\n          propTypes: {isSomething: PropTypes.bool, hasValue: PropTypes.bool},\n          render: function() { return <div />; }\n        });\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-147.tsx",
+    "sha256": "ce49cc7224355943279370484a36e15b506f9715688fb1842d48b42d65aafaf3",
+    "parse_valid": true,
+    "source": "\n        var Hello = createReactClass({\n          propTypes: {isSomething: PropTypes.bool},\n          render: function() { return <div />; }\n        });\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-148.tsx",
+    "sha256": "2c85ba08d33307c2c162aa007ecd33765514064d9b48aa520d763479bb889b25",
+    "parse_valid": true,
+    "source": "\n        var Hello = createReactClass({\n          propTypes: {isSomething: React.PropTypes.bool},\n          render: function() { return <div />; }\n        });\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-149.tsx",
+    "sha256": "c3cb5c0fc52828c94aa185ab167418069f062ee890dc39139ec83796e702b27e",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          render () { return <div />; }\n        }\n        Hello.propTypes = {isSomething: PropTypes.bool}\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-150.tsx",
+    "sha256": "27942565d6538a627b4e14e061bbd7fd461142215ac71c817898dd40c74fd89f",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          render () { return <div />; }\n        }\n        Hello.propTypes = wrap({ a: PropTypes.bool })\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-151.tsx",
+    "sha256": "2bbeefbcb094b7ac780880558ccadb95054f97258f3a46de9442ed186da04759",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          render () { return <div />; }\n        }\n        Hello.propTypes = {something: PropTypes.any}\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-152.tsx",
+    "sha256": "1aac0f35fb2e1084bdfd5b75e5c7d28e076636bc8e0a69c85c6225244b00be81",
+    "parse_valid": true,
+    "source": "\n        class Hello extends Component {\n          render () { return <div />; }\n        }\n        Hello.propTypes = {isSomething: PropTypes.bool}\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-153.tsx",
+    "sha256": "da323569c5153225273793c7065f81314a7214fe21ba11f3230ad5b8295f09e5",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          static propTypes = {isSomething: PropTypes.bool};\n          render () { return <div />; }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-154.tsx",
+    "sha256": "dbc5a8b89ad80985936863309c006cd6bd6890c6dc5c9fb439794af547c30706",
+    "parse_valid": true,
+    "source": "\n        const spreadProps = { aSpreadProp: PropTypes.string };\n        class Hello extends React.Component {\n          static propTypes = {isSomething: PropTypes.bool, ...spreadProps};\n          render () { return <div />; }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-155.tsx",
+    "sha256": "98d051ee91a37b60d54012dde9df7c6e95e11d7b00ecc0ada77e9fc2f4234d5d",
+    "parse_valid": true,
+    "source": "\n        const spreadProps = { aSpreadProp: PropTypes.string };\n        class Hello extends Component {\n          render () { return <div />; }\n        }\n        Hello.propTypes = {isSomething: PropTypes.bool, ...spreadProps}\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-156.tsx",
+    "sha256": "9a0e3f480a05e68e2b031da546da0b9abd00852f08f56eb4737eff1dcb52a020",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          static propTypes = {isSomething: React.PropTypes.bool};\n          render () { return <div />; }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-157.tsx",
+    "sha256": "32ef031e065c5be880c5a12715392a1df5a57dfafe2728194011183743a37ad3",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          static propTypes = {something: PropTypes.any};\n          render () { return <div />; }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-158.tsx",
+    "sha256": "4850e2e767e12fc3c0422c4ef80704f92e7a2564b45555e74698aac8e601d506",
+    "parse_valid": true,
+    "source": "\n        var Hello = ({isSomething}) => { return <div /> }\n        Hello.propTypes = {isSomething: PropTypes.bool};\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-159.tsx",
+    "sha256": "6efb7820b17bbbd21a306c3cb34cd97548eae214a5ca29f22c885f068587221a",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          static propTypes = {\n            isSomething: PropTypes.mutuallyExclusiveTrueProps,\n            something: PropTypes.bool\n          };\n          render () { return <div />; }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-160.tsx",
+    "sha256": "c499e7617fb597d6c3c13983de90c55a08786698d12b2d4c18e1db6150c39a2a",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          static propTypes = {\n            isSomething: mutuallyExclusiveTrueProps,\n            isSomethingElse: bool\n          };\n          render () { return <div />; }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-161.tsx",
+    "sha256": "93c88df2d08e28322892705a230e93db9e5f8c6ef5f80d1d7aeb5e995ce7a134",
+    "parse_valid": true,
+    "source": "\n        var x = {a: 1}\n        var y = {...x}\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-162.tsx",
+    "sha256": "9398694407b1360c7c5336610a0e4ef0b97e5aa55cc8165838116b6ac2b99497",
+    "parse_valid": true,
+    "source": "\n      function Card(props) {\n        return <div>{props.showScore ? 'yeh' : 'no'}</div>;\n      }\n      Card.propTypes = merge({}, Card.propTypes, {\n          showScore: PropTypes.bool\n      });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-163.tsx",
+    "sha256": "ecee425ff9d89f77e7e0d8c3e0bc0a1a231d724eb3c4e12165d5c1ba2f3cd7f5",
+    "parse_valid": true,
+    "source": "\n        var Hello = createReactClass({\n          propTypes: {isSomething: PropTypes.bool.isRequired, hasValue: PropTypes.bool.isRequired},\n          render: function() { return <div />; }\n        });\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-164.tsx",
+    "sha256": "5d9f84f18cf8cf8d2320ed6cfc8f282e26cbb0075bec73b59edcdb129a2e3b72",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          static propTypes = {\n            isSomething: PropTypes.bool.isRequired,\n            hasValue: PropTypes.bool.isRequired\n          };\n\n          render() {\n            return (\n              <div />\n            );\n          }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-165.tsx",
+    "sha256": "b3968d950c1982f71f459b7e05a2fe9b93479cf87239f73f9be37024c1f67467",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          render() {\n            return (\n              <div />\n            );\n          }\n        }\n\n        Hello.propTypes = {\n          isSomething: PropTypes.bool.isRequired,\n          hasValue: PropTypes.bool.isRequired\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-166.tsx",
+    "sha256": "902c074c0cc0c57ea116e76d609e1d8d65911d5641099c803eb77d833902b8c2",
+    "parse_valid": true,
+    "source": "\n        var Hello = createReactClass({\n          propTypes: {something: PropTypes.shape({}).isRequired},\n          render: function() { return <div />; }\n        });\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-167.tsx",
+    "sha256": "b0b364369a2c212db63f61ac8dcc181b05f727b175da01d4025993219cfbbe36",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          render() {\n            return (\n              <div />\n            );\n          }\n        }\n\n        Hello.propTypes = {\n          isSomething: PropTypes.bool.isRequired,\n          nested: PropTypes.shape({\n            isWorking: PropTypes.bool\n          })\n        };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-168.tsx",
+    "sha256": "42cee56ae5e1c41677de2d34214e284597ec9fd6e1ae35ad210d2b752a7af8b5",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          render() {\n            return (\n              <div />\n            );\n          }\n        }\n\n        Hello.propTypes = {\n          isSomething: PropTypes.bool.isRequired,\n          nested: PropTypes.shape({\n            nested: PropTypes.shape({\n              isWorking: PropTypes.bool\n            })\n          })\n        };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-169.tsx",
+    "sha256": "5a1a73db302569159a2e81bd25b9333c624a18df2b27992a1a6413217e47e61e",
+    "parse_valid": true,
+    "source": "\n        type TestFNType = {\n          isEnabled: boolean\n        }\n        const HelloNew = (props: TestFNType) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-170.tsx",
+    "sha256": "a535ad4372d2d364243b3f080583bcc3cf5f261c8c251756bf45f4b66244336c",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          isEnabled: boolean\n        } & OtherProps\n        const HelloNew = (props: Props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-171.tsx",
+    "sha256": "dae5c73e21c010b88939dbde3a22e405b07df04fc1d9229f448a00be71950c94",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          isEnabled: boolean\n        } & {\n          hasLOL: boolean\n        } & OtherProps\n        const HelloNew = (props: Props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-172.tsx",
+    "sha256": "74293c1bbb837b5b4d2e3391bd23bf814b5b782e9d42df7b734f38f440e6fba5",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          isEnabled: boolean\n        }\n\n        const HelloNew: React.FC<Props> = (props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-173.tsx",
+    "sha256": "586da77a7b608c0a47b44d40335cde71a6ba430b59e44de08c8264826526325e",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          isEnabled: boolean\n        } & {\n          hasLOL: boolean\n        }\n\n        const HelloNew: React.FC<Props> = (props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-174.tsx",
+    "sha256": "2aada5ae1a1a79a733ffa0aaa9c7a305800dcb2dbcde4d42a7804d19db78f9c8",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          isEnabled: boolean\n        } | {\n          hasLOL: boolean\n        }\n\n        const HelloNew = (props: Props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-175.tsx",
+    "sha256": "3a0d4f2f78df174ec10a33824d31b8d4d37d8882e0d48e77a2496e7560e46f4f",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          isEnabled: boolean\n        } & ({\n          hasLOL: boolean\n        } | {\n          isLOL: boolean\n        })\n\n        const HelloNew = (props: Props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-176.tsx",
+    "sha256": "dea04fe707dd023746a54b47c49c8ffeba2c54af0d863bf3e04335f5342409c9",
+    "parse_valid": true,
+    "source": "\n        export const DataRow = (props: { label: string; value: string; } & React.HTMLAttributes<HTMLDivElement>) => {\n            const { label, value, ...otherProps } = props;\n            return (\n                <div {...otherProps}>\n                    <span>{label}</span>\n                    <span>{value}</span>\n                </div>\n            );\n        };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-177.tsx",
+    "sha256": "3c4ae5e9a1c7cf118d3dc7bc4c319538ea57441b41a2e7e04672f9473954964f",
+    "parse_valid": true,
+    "source": "\n        // Strip @jsx comments, see https://github.com/microsoft/fluentui/issues/29126\n        const resultCode = result.code\n          .replace('/** @jsxRuntime automatic */', '')\n          .replace('/** @jsxImportSource @fluentui/react-jsx-runtime */', '');\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-178.tsx",
+    "sha256": "e29919c554d4253f983f82c49e300eeeb635971c6d55205e22b665d6939483c8",
+    "parse_valid": true,
+    "source": "\n        var Hello = createReactClass({\n          propTypes: {something: PropTypes.bool},\n          render: function() { return <div />; }\n        });\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-179.tsx",
+    "sha256": "ac8a213eb09fc7caadcb216004b702d5518c8494aa71bd45feab97a50f9f42af",
+    "parse_valid": true,
+    "source": "\n        var Hello = createReactClass({\n          propTypes: {something: React.PropTypes.bool},\n          render: function() { return <div />; }\n        });\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-180.tsx",
+    "sha256": "d10559882aeb956b123990293516febca83130afae7576cfb0f299e45f00472d",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          render () { return <div />; }\n        }\n        Hello.propTypes = {something: PropTypes.bool}\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-181.tsx",
+    "sha256": "589f118d129f06cc8c50880729db533988278aebc9d91c70bba408924fd6f35a",
+    "parse_valid": true,
+    "source": "\n        class Hello extends Component {\n          render () { return <div />; }\n        }\n        Hello.propTypes = {something: PropTypes.bool}\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-182.tsx",
+    "sha256": "753ab86cec721fbf68b38f15882ae28c7049116bd784cd87323c02862ec0e568",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          static propTypes = {something: PropTypes.bool};\n          render () { return <div />; }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-183.tsx",
+    "sha256": "e911739b6ddabbeeef7d2affc0aae070e4507c2f477298200ca3be83d3bdcc66",
+    "parse_valid": true,
+    "source": "\n        const spreadProps = { aSpreadProp: PropTypes.string };\n        class Hello extends Component {\n          render () { return <div />; }\n        }\n        Hello.propTypes = {something: PropTypes.bool, ...spreadProps}\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-184.tsx",
+    "sha256": "5747634ac5d04055eb86e94ab71741c234810a28ec357806ba7a579bffe90613",
+    "parse_valid": true,
+    "source": "\n        const spreadProps = { aSpreadProp: PropTypes.string };\n        class Hello extends React.Component {\n          static propTypes = {something: PropTypes.bool, ...spreadProps};\n          render () { return <div />; }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-185.tsx",
+    "sha256": "c181f69a6128cafa4dd4cec584df8101df078e84157c445975fa29a61aef6b7a",
+    "parse_valid": true,
+    "source": "\n        var Hello = ({something}) => { return <div /> }\n        Hello.propTypes = {something: PropTypes.bool};\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-186.tsx",
+    "sha256": "3c3ec3433a2bf55c59f1b56e42c5a6e9079f53aed10b1738b5cfc25925df0861",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          something: boolean;\n        };\n        function Hello(props: Props): React.Element { return <div /> }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-187.tsx",
+    "sha256": "889d8f8d3b288f6cfbc91aa89fd882e982bea1c280e860eb9ce151149e05bc04",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          static propTypes = {\n            something: PropTypes.mutuallyExclusiveTrueProps,\n            somethingElse: PropTypes.bool\n          };\n          render () { return <div />; }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-188.tsx",
+    "sha256": "185ac0f15e7606264496da7831827a5f1e91d4411b3aed745f46c3dd05d50c7f",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          static propTypes = {\n            something: mutuallyExclusiveTrueProps,\n            somethingElse: bool\n          };\n          render () { return <div />; }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-189.tsx",
+    "sha256": "adc33e92525a74aaa4ce4ac00335062a9b8d986a87fdbaca9a1607e5c057a848",
+    "parse_valid": true,
+    "source": "\n        var Hello = createReactClass({\n          propTypes: {something: PropTypes.bool.isRequired},\n          render: function() { return <div />; }\n        });\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-190.tsx",
+    "sha256": "96aa9108f04bd75e8da91389187786dfd89237bc7ad30d1e8a841bc23031c8b5",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          static propTypes = {\n            something: PropTypes.bool.isRequired\n          };\n\n          render() {\n            return (\n              <div />\n            );\n          }\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-191.tsx",
+    "sha256": "8e2c64cfaf1e1dd92c1048d253abebeaa22af5589ffc826797285e782a10176d",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          render() {\n            return (\n              <div />\n            );\n          }\n        }\n\n        Hello.propTypes = {\n          something: PropTypes.bool.isRequired\n        }\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-192.tsx",
+    "sha256": "e48de76672da92440f964b9086fc9118b27c8ae380d18faa1967f3fa3463562c",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          render() {\n            return (\n              <div />\n            );\n          }\n        }\n\n        Hello.propTypes = {\n          isSomething: PropTypes.bool.isRequired,\n          nested: PropTypes.shape({\n            failingItIs: PropTypes.bool\n          })\n        };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-193.tsx",
+    "sha256": "6732898514754d697d446c904fd5b476bf231432dbf97fa39ab684946d83ef47",
+    "parse_valid": true,
+    "source": "\n        class Hello extends React.Component {\n          render() {\n            return (\n              <div />\n            );\n          }\n        }\n\n        Hello.propTypes = {\n          isSomething: PropTypes.bool.isRequired,\n          nested: PropTypes.shape({\n            nested: PropTypes.shape({\n              failingItIs: PropTypes.bool\n            })\n          })\n        };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-194.tsx",
+    "sha256": "5d449e1b9fbf01556fca0ef23652eb35b69f86d891a5ddcf3f236c5706db3dfc",
+    "parse_valid": true,
+    "source": "\n      import { bool } from 'prop-types';\n        var Hello = createReactClass({\n          propTypes: {something: bool},\n          render: function() { return <div />; }\n        });\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-195.tsx",
+    "sha256": "38c1c5d5678907d4ca4f9d5336d548af6a9f48fc995dbcd56b8a7461f4468a3f",
+    "parse_valid": true,
+    "source": "\n        type TestConstType = {\n          enabled: boolean\n        }\n        const HelloNew = (props: TestConstType) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-196.tsx",
+    "sha256": "ee0a197d58d8f48aab67959e9b2779ae4ec7d68b90bdf930babaa26ec0e0db6c",
+    "parse_valid": true,
+    "source": "\n        type TestFNType = {\n          enabled: boolean\n        }\n        const HelloNew = (props: TestFNType) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-197.tsx",
+    "sha256": "9d9eeedefda5c6642228018929ff5b4a72dd1eafedda9e652db973e77926f993",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          enabled: boolean\n        } & OtherProps\n\n        const HelloNew = (props: Props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-198.tsx",
+    "sha256": "7e0bc347670acf2ef9b3df8632921e8c4b837dd1ea9b832bafc834cc1b2766df",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          enabled: boolean\n        } & {\n          hasLOL: boolean\n        } & OtherProps\n\n        const HelloNew = (props: Props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-199.tsx",
+    "sha256": "18698eb36549e15a09124277ce5e777cd8873c94729f1d83e723c42fe4394d50",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          enabled: boolean\n        }\n\n        const HelloNew: React.FC<Props> = (props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-200.tsx",
+    "sha256": "9863e7cffd574974f35ddc645bc0b33c72157347806f7c7ff755d356bd916797",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          enabled: boolean\n        } & {\n          hasLOL: boolean\n        }\n\n        const HelloNew: React.FC<Props> = (props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-201.tsx",
+    "sha256": "2112e823b6184d0e2b224e617ebcf168552e5247fbadd9fb142fcd76b794996a",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          enabled: boolean\n        } | {\n          hasLOL: boolean\n        }\n\n        const HelloNew = (props: Props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-202.tsx",
+    "sha256": "5905ad2feb433d844f76ac94021c8b211089739f5343ea4c4748ea8502b3fe54",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          enabled: boolean\n        } & ({\n          hasLOL: boolean\n        } | {\n          lol: boolean\n        })\n\n        const HelloNew = (props: Props) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-203.tsx",
+    "sha256": "1624a26db3449966682bcb447d3c9dc7de559052557df7624cba1019bbb2c17a",
+    "parse_valid": true,
+    "source": "\n        interface TestFNType {\n          enabled: boolean\n        }\n        const HelloNew = (props: TestFNType) => { return <div /> };\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-204.tsx",
+    "sha256": "a8bbb2cf6d2c724d78446ca84ca0921bdfb44c5685d66418c6bb3745156ceb04",
+    "parse_valid": true,
+    "source": "const Hello = (props: {enabled:boolean}) => <div />;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-205.tsx",
+    "sha256": "b36f777c2c182643e4bb6a69eb1979ef5d9f4c82c3d435d62df1f54c39833a03",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          enabled: boolean\n        };\n        type BaseProps = {\n          semi: boolean\n        };\n\n        const Hello = (props: Props & BaseProps) => <div />;\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-206.tsx",
+    "sha256": "e8acf5b60326d333f2ca7a43688e61dcb107a7da55dd9f034d6531477b9f3705",
+    "parse_valid": true,
+    "source": "\n        type Props = {\n          enabled: boolean\n        };\n\n        const Hello = (props: Props & {\n          semi: boolean\n        }) => <div />;\n      \nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-207.tsx",
+    "sha256": "f72c507b3f5b07d9b2425701eed5928e36e1ecf2d55f229b856657e8350ba92e",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { isEnabled: PropTypes.bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-208.tsx",
+    "sha256": "b28cf34ac010fa66474a41cd63b86283bd06e505db6d67cf268960ee32b6c11b",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { hasThing: PropTypes.bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-209.tsx",
+    "sha256": "d6606358d27cb3c5c97309f90903c60b8ff5a896793fc506329dd436cc7cd86e",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { enabled: PropTypes.bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-210.tsx",
+    "sha256": "3a181357a784d5aa54654c41572a360d6b985482bb05a9cdd808aae69bf9e117",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { isenabled: PropTypes.bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-211.tsx",
+    "sha256": "4730d73514b3f58bb367c4bb174af9797a6cafa3731702c34137ba527137f2ec",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { enabled: React.PropTypes.bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-212.tsx",
+    "sha256": "c35609b9f6e205d9dfdf2d9962c4b90c8c4250ace533d4eee680d1293d13af58",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { enabled: bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-213.tsx",
+    "sha256": "65ee5c99677d4373ddbaf3cae78e0c0ad943ba58f8f7b851f3afb5b19aee9c10",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { enabled: PropTypes.bool.isRequired };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-214.tsx",
+    "sha256": "cb0b0195fc8b7fe85647dd79400832e6b7b34f59bf946bd69e84aaf4938bda5e",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { enabled: PropTypes.bool.isRequired.isRequired };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-215.tsx",
+    "sha256": "c2077c37eecdb6c5740a6cc8227b1a25f09fd8e729c83200bc514a3af4d70a98",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { enabled: PropTypes.string };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-216.tsx",
+    "sha256": "83d0699df258dd8cb4044c9aec1c79076f655f29147c0d5600cda510abdd9e31",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { ...other, enabled: PropTypes.bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-217.tsx",
+    "sha256": "009cec7ac07e6a679afe49dcad2221171c92e8ddbb847067629cee7e24a940b1",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { [k]: PropTypes.bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-218.tsx",
+    "sha256": "66fbc27e2b4130a2ccf97d578ed51d3f63edef03fb90e733ab8ac67aff91d443",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { 'enabled': PropTypes.bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-219.tsx",
+    "sha256": "74de69540bbed857557b0aa2419e4cfd4f87c00ce6b0f8730615dc5f2265f478",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { 'isEnabled': PropTypes.bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-220.tsx",
+    "sha256": "cbce11ed18ab3fe470896239497b71e0a6cbd41761ec7aeab4d14e4669054fb4",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { 1: PropTypes.bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-221.tsx",
+    "sha256": "218e9913b19fb1ca16819d3aeb25e996a90c7e2904ea2e111acdbb12975fccbe",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = wrap({ enabled: PropTypes.bool });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-222.tsx",
+    "sha256": "825f3b65d8373b707d74bf10001fb3ff1a96227b31d5a1c09630d588059b29c7",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = forbidExtraProps({ enabled: PropTypes.bool });\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-223.tsx",
+    "sha256": "543b3e651bb5e4768211ee4ac47f3ad70e75e2bf58d07a8cd47ac39a3f65186f",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { nested: PropTypes.shape({ enabled: PropTypes.bool }) };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-224.tsx",
+    "sha256": "30c589070f7f4cadc898f8bade94d2259bfb70f95910ac1822c835e7cd0b19f8",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { n: PropTypes.arrayOf({ enabled: PropTypes.bool }) };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-225.tsx",
+    "sha256": "4a6ca9e18b5e1d24a9eec7414e29446381ec63c36e41844e0f5b541885eb8aba",
+    "parse_valid": true,
+    "source": "class C extends React.Component { static propTypes = { enabled: PropTypes.bool }; render(){return <div/>;} }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-226.tsx",
+    "sha256": "eba5b187f22141cb2e9e838ffa10404d561163a0532112beea4012ac8b4bd0db",
+    "parse_valid": true,
+    "source": "interface Props { enabled: boolean }\nfunction C(p: Props) { return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-227.tsx",
+    "sha256": "bf21a55c267acb8dfaf992f7644c43c4c1df314af02c3c5f7137d44765dbeb04",
+    "parse_valid": true,
+    "source": "interface Props { isEnabled: boolean }\nfunction C(p: Props) { return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-228.tsx",
+    "sha256": "8d95f0a1f15b8f6ababb4954429b8a330dc1167473fb6e0bfb6738bc13115415",
+    "parse_valid": true,
+    "source": "function C(p: { enabled: boolean }) { return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-229.tsx",
+    "sha256": "f28a5988f9036917b7430a9a590882e89365ef86564f2062ad8023f640551656",
+    "parse_valid": true,
+    "source": "type Props = { enabled: boolean };\nfunction C(p: Props) { return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-230.tsx",
+    "sha256": "ed36e1070282cbef0ceb79d4524118e6c1f8e65a59006c23a341fef9b940d5b0",
+    "parse_valid": true,
+    "source": "type Props = ({ a: boolean } & { b: boolean });\nfunction C(p: Props) { return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-231.tsx",
+    "sha256": "aa9e3f01642f0e5363d005c30ee26fb1e5d8670c85296d5685852019fa33d1bb",
+    "parse_valid": true,
+    "source": "type Props = { a: boolean } & { b: boolean };\nfunction C(p: Props) { return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-232.tsx",
+    "sha256": "95c7e08f362a11fdf064b4985f4eb92488603a893e7edfcb5bbb5a857565a203",
+    "parse_valid": true,
+    "source": "type Props = { a: boolean } | { b: boolean };\nfunction C(p: Props) { return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-233.tsx",
+    "sha256": "b08c542afa583c67dd0abbeb8c4c9b9cba7dbc90e787397496c60aedb7a76d2e",
+    "parse_valid": true,
+    "source": "interface Props { enabled?: boolean }\nfunction C(p: Props) { return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-234.tsx",
+    "sha256": "fd58a0676ed40ea5ad5c2eafb82b80a804000a42cc1555c134a521b18bb06c24",
+    "parse_valid": true,
+    "source": "interface Props { enabled: boolean | undefined }\nfunction C(p: Props) { return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-235.tsx",
+    "sha256": "16ec608c7c90dd817d500edfd8a1bc6943d3060c278c47b37b26d16d0e4c8165",
+    "parse_valid": true,
+    "source": "interface Props { enabled: string }\nfunction C(p: Props) { return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-236.tsx",
+    "sha256": "b2742e550997345ff706ee666c677849d7f928e4dbfa3dc65352d8f427393bf0",
+    "parse_valid": true,
+    "source": "interface Props { enabled: boolean }\nconst C = (p: Props) => <div/>;\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-237.tsx",
+    "sha256": "a80a783da70a8f273da903b23f49d7e3d390c9b6ecc525ba8be66875548665b5",
+    "parse_valid": true,
+    "source": "interface Props { enabled: boolean; self: Props }\nfunction C(p: Props) { return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-238.tsx",
+    "sha256": "d80a387f91808b6792f3d1b0faccf36221c1750345086390bbbbdd9920a961bc",
+    "parse_valid": true,
+    "source": "class C extends React.Component { render(){return <div/>;} }\nC.propTypes = { enabled: PropTypes.bool, active: PropTypes.bool };\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-239.tsx",
+    "sha256": "69e47c77a6012b73fc3b339182684633dcac44ee60fee059071372e2cb85f898",
+    "parse_valid": true,
+    "source": "function Component(p) { eval('x'); with(p){} class Inner {} return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-240.tsx",
+    "sha256": "097eefd43c4b4956819146168554ef67330c8781b0e99ed82dbe99a49c4958f0",
+    "parse_valid": true,
+    "source": "function Component(p) { useMemo(p.fn, [f()]); return <div/>; }\nexport {};\n"
+  },
+  {
+    "path": "/workspace/wave-25-fifth-final/controls/control-241.tsx",
+    "sha256": "d59961fc4d5a6c87ede3cff780cb745dc52b22c682dd88298508b00d4cf1735d",
+    "parse_valid": true,
+    "source": "interface Props { enabled: boolean; isFine: boolean } function Component(p: Props) { return <div/>; }\nexport {};\n"
+  }
+]

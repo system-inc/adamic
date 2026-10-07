@@ -90,3 +90,9 @@ in the combined-volume ranking are reserved here:
 Baseline main: e011f8f60899586d6373a5ccb07335ad82cfbf3c
 Baseline tsgo-c-library: 5afbdb83da2ed7ad9815657cd3f6ececd5294bf6
 Implementation begins only after this claim is pushed.
+
+Fifth-batch status: unsupported-syntax and use-memo are ported and verified.
+Boolean-prop-naming remains partial: arbitrary regex, cross-file annotations
+and typed memo/forwardRef wrapper paths refuse explicitly. The tested partial
+implementation and evidence are committed together; this claim remains reserved.
+No additional rules are claimed. See WAVE_25_FIFTH_REPORT.md.

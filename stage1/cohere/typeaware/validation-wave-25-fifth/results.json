@@ -1,0 +1,42 @@
+{
+  "controls": {
+    "total": 242,
+    "valid": 242,
+    "findings": 141,
+    "rule_counts": {
+      "react-hooks/unsupported-syntax": 33,
+      "react-hooks/use-memo": 51,
+      "react/boolean-prop-naming": 57
+    },
+    "message_counts": {
+      "unsupportedEval": 27,
+      "unsupportedWith": 3,
+      "unsupportedInlineClass": 3,
+      "useMemoCallbackReassignsOuterVariable": 4,
+      "useMemoDependencyListNotArrayLiteral": 6,
+      "useMemoCallbackAsyncOrGenerator": 3,
+      "useMemoCallbackHasParameters": 5,
+      "useMemoMissingCallback": 2,
+      "useMemoCallbackNotInline": 22,
+      "useMemoDependencyNotSimple": 9,
+      "patternMismatch": 57
+    },
+    "fix_count": 0,
+    "findings_with_fixes": 0,
+    "suggestions": 0
+  },
+  "files": {
+    "controls": {
+      "bytes": 58944,
+      "sha256": "c5728826195e3254efb2e0e0ced134a4643c96ff58178cad24363216c4ea8b6a"
+    },
+    "repository": {
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    "compiler": {
+      "bytes": 5010,
+      "sha256": "71742d9d1712f1358a843224d1f5f9452e1e15c7083c4b848438f340f03cf2fe"
+    }
+  }
+}

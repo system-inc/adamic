@@ -10,6 +10,8 @@ import (
 func (p *Program) processQuestions(c *checker.Checker, node *ast.Node, question string) (string, error) {
 	mode := strings.Split(question, "\n")[0]
 	switch mode {
+	case "declared-syntax-type":
+		return p.declaredSyntaxType(node, question)
 	case "syntax-reference-facts":
 		return p.syntaxReferenceFacts(c, node, question)
 	case "syntax-projection":
