@@ -54,7 +54,7 @@ func programs(t *testing.T) []string {
 			"node_process_errors.a", "node_process_directory_mutation.a", "node_process_environment_mutation.a":
 			return true
 		}
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a"
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))

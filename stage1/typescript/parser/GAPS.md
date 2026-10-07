@@ -8,6 +8,12 @@ The green-step and selected-node measurement sections retain the expression
 slice's history. Current whole-file scope appears in the final continuation
 section and [WHOLE_REPORT.md](WHOLE_REPORT.md).
 
+The JSX continuation is now in [JSX_REPORT.md](JSX_REPORT.md). The historical
+JSX exclusions below describe the earlier slices. Current TSX and JavaScript
+mode build all thirteen JSX AST kinds and compare their trees with Go, then
+run the batch-8 React listeners directly. General diagnostic/recovery parity,
+binder fields and full JSX application-code compilation remain outside scope.
+
 ## 1. Strong AST parent and child pointers are cycle-capable
 
 Go's `finishNode` gives every child a strong Parent pointer. Go's tracing
@@ -33,17 +39,6 @@ indexes. The representation accommodates speculative parse rollback as well.
 appended an argument list with `children.push(...arguments)`, which met this
 same refusal. Workaround: an explicit loop appends each numeric child index.
 This does not limit parsing spread syntax in the source being parsed.
-
-## 3. Type-only import cycles
-
-Splitting lookahead into its own module first imported the Parser class as a
-TypeScript type. Node accepts that cycle, since the type import is erased.
-Adamic 0.1 refuses an import cycle, including a type-only edge.
-`gaps/3_import_cycle.ts` and its peer print `1` on Node; stage 0 returns
-`lower.Refused` with `What: "an import cycle"`. `TestTypeImportCycleGap`
-requires both observations. Workaround: the lookahead module owns the scanner
-snapshot interface and takes the concrete Scanner class. Parser imports that
-interface and passes its scanner; lookahead does not import Parser.
 
 ## 4. Class methods through a structural interface
 

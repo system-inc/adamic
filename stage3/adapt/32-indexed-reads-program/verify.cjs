@@ -16,8 +16,8 @@ for (const file of files) {
     assert.equal(after.split("\n").length, before.split("\n").length, `newline count changed: ${file}`);
     // No U-zero operands are selected in this partition.
     // All required-read assertions must disappear under the independent stock emitter.
-    const zeroOnly = plan(ts, file, before, false, true).text;
-    const expected = ts.transpileModule(zeroOnly, { fileName: file, compilerOptions: options });
+    // Compare directly with untouched input, independent of the adapter planner.
+    const expected = ts.transpileModule(before, { fileName: file, compilerOptions: options });
     const actual = ts.transpileModule(after, { fileName: file, compilerOptions: options });
     if (actual.outputText !== expected.outputText) {
         const hash = text => createHash("sha256").update(text).digest("hex");
