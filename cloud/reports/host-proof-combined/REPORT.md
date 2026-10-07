@@ -1,8 +1,8 @@
 # Combined host proof
 
-19/25 adapted fixtures and 15/25 pristine fixtures execute and agree with fresh Node observations on both backends. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
+20/25 adapted fixtures and 16/25 pristine fixtures execute and agree with fresh Node observations on both backends. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
 
-Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 7218520a. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
+Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 0555bc27. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
 
 | Fixture | Pristine native | Pristine JS | Adapted native | Adapted JS | First adapted blocker | Owner |
 |---|---|---|---|---|---|---|
@@ -29,7 +29,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 21_createHash.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 22_createHash_fallback.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 23_newLine.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 24_useCaseSensitiveFileNames.a | NotYet | NotYet | NotYet | NotYet | regex replacement callback at 56:12 | Library |
+| 24_useCaseSensitiveFileNames.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 25_readDirectory.a | Checker | Checker | Refused | Refused | isArray predicate return not proven at 530:5, adamic/no-type-predicate | Compiler |
 
 Fixture 25 passes checking on both backends. Exact next diagnostic:
@@ -129,3 +129,24 @@ Final checks:
 
 - Full `go test ./internal/flow -count=1 -timeout 10m`: FAIL, 109.401s. The program sweep includes incoming non_null_deinitialize_* fixtures now explicitly refused by ed6e30e2's exact-nullish assertion ruling; it cannot lower them for SSA/range/trace checks. Full diagnostics, including all other flow findings, are in fs_predicate_nonnull_flow.log. No flow success or full repository gate success is claimed.
 - `git diff --check`: PASS. No new POSIX runtime calls were added; merged runtime archive passes the WASI host leg. These compiler branches remain proof inputs, not area/main landings.
+
+## Regex callback recount and fixture tip 0555bc27
+
+Regex branch a8ddb3a7 merged in 04529736. Exact fixture tip 0555bc27 taken in 9ecec994. The merge brings newer async/concurrency ancestry along with regex callbacks; no extra host-blockers fix was merged. Required reconciliations retain the argument-count closure ABI, compiler optional/default/rest support, regex callback rest specialization, typed-array dispatch, atomic packed field caches and initialized-field bits. Readiness indexes use actual returned slots rather than removed cache fields. Unsupported typed-array publication uses the incoming sharing path's existing non-shareable panic instead of silently publishing mutable storage; cross-worker typed-array publication is not claimed supported.
+
+All 25 newest adapted and all 25 pristine sources rerun on native and JavaScript after the final rest-parameter reconciliation: 20/25 adapted, 16/25 pristine agree with fresh Node stdout/stderr/exit. Both commands exit 1 solely for named blocked sources, not mismatches. Fixture 24 is now green on both backends; 11, 06, 07 and 10 remain green. 05 and 13 retain the a85a9cb1 regression. The requested later compiler fix for them was held.
+
+Fixture 14 on both backends: Refused at 17:24, exactly undefined non-null assertion. The delivered 0555bc27 does not contain the described optional memoize signature: it preserves callback: () => T and callback = undefined!. Its ADAPTED.md says adaptation 48 was declined and source statements were unchanged. The fixture is taken exactly, without inventing a replacement adaptation. This first refusal precedes the capture-cycle check; the recount does not claim that cycle has disappeared.
+```
+adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:17:24: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+```
+
+Final validation:
+
+- fs_regex_memoize_adapted.log and fs_regex_memoize_original.log: all 25 observed per set on both backends, counts 20/25 and 16/25.
+- Regex callback family: all selected source/native/JS oracles PASS, 0.428s, with sanitizer/leak checks and cache fingerprints reflecting final generated artifacts. The earlier callback rest refusal was corrected and independently rerun successfully; the full family then passed.
+- Three field-readiness/accessor/narrowed-number oracles PASS, 25.602s. This covers the packed-cache/readiness reconciliation.
+- Regex guard and source mutants plus `ADAMIC_ORACLE_WASI=1` full selected host leg: PASS, 63.344s. Native and WASI empty symlink checks/mutant pass; explicit target skips remain excluded. No POSIX call was added by the merge fixes. Earlier compiling-runtime share.c switch failure was resolved and is retained in the intermediate logs, not counted as a behavioral mutant.
+- Selected compiler tests `go test ./internal/lower ./internal/fresh -run 'TestCensus|TestArrayPredicate|TestUnknownArrayPredicate' -count=1 -timeout 10m`: lower PASS 0.719s; fresh no matching tests. No full-package fresh success is claimed for that filtered command.
+- Full flow comparison requested by the user: proof checkpoint 57fd72ae FAIL 109.401s; pure main 48c05d09 PASS 117.159s; pure library/merge-p2b a5d5dc9 PASS 150.472s. Same full flow command and matching cohere pin. All four top-level failure names and first diagnostic lines are in FLOW-COMPARISON.md; every failing subtest first line is in flow-failure-first-lines.json. All 42 failing source files are absent on both baselines. The comparison applies to the cited pre-regex proof, not a new full flow run after regex integration.
+- Full go test ./..., full language WASI and counts regeneration were not run. All prior broader gate limits remain explicit; no main/area push or force push.

@@ -309,12 +309,14 @@
     "file": "24_useCaseSensitiveFileNames.a",
     "nodeMatches": true,
     "native": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /tmp/fs-combined-pristine-host/24_useCaseSensitiveFileNames.a:48:12: stage 0 can't lower regex replacement other than a string yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     },
     "javascript": {
-      "stage": "NotYet",
-      "diagnostic": "adamic: /tmp/fs-combined-pristine-host/24_useCaseSensitiveFileNames.a:48:12: stage 0 can't lower regex replacement other than a string yet\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {

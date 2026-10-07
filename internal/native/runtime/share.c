@@ -109,6 +109,7 @@ void adamic_share(void *value) {
 			break;
 		}
 		case adamic_kind_number: case adamic_kind_boolean: break;
+		case adamic_kind_typed_array: case adamic_kind_typed_array_iterator:
 		case adamic_kind_weak: case adamic_kind_map_iterator:
 			adamic_panic("compiler bug: non-shareable value reached a task", sizeof "compiler bug: non-shareable value reached a task" - 1);
 		}

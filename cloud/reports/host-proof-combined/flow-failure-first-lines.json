@@ -1,0 +1,543 @@
+{
+  "proof": "57fd72ae",
+  "mainBaseline": {
+    "sha": "48c05d09",
+    "result": "PASS",
+    "seconds": 117.159
+  },
+  "libraryBaseline": {
+    "sha": "a5d5dc9",
+    "result": "PASS",
+    "seconds": 150.472
+  },
+  "failures": [
+    {
+      "test": "TestEveryFunctionIsInSingleAssignment",
+      "firstLine": "flow_test.go:95: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_alias.a:5:15: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph",
+      "firstLine": "--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/unknown_narrowing.a (0.06s)"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/unknown_narrowing.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/unknown_narrowing.a:2:16: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/unknown_narrowing_host.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/unknown_narrowing_host.a:3:16: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_literal_assignment.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_literal_assignment.a:2:9: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_write_union_logical.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_write_typed_array.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_typed_array.a:39:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_write_logical.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_logical.a:4:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_write_field.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_field.a:40:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_write_local.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_local.a:11:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_write_array.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_array.a:39:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_spread.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_spread.a:1:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_optional.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_optional.a:1:32: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_map_entry.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_map_entry.a:1:21: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_iteration.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_iteration.a:2:26: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_interface.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_interface.a:2:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_field.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_field.a:1:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_default.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_default.a:1:30: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_const.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_const.a:1:23: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_catch.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_catch.a:2:25: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_uninitialized_append.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_append.a:2:24: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_static_uninitialized.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_static_uninitialized.a:1:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_static_initialized.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_static_initialized.a:1:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_scanner_initialized.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_scanner_initialized.a:2:20: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_refuse_undefined.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_refuse_undefined.a:1:21: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_refuse_null.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_refuse_null.a:1:21: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_literal_statement.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_literal_statement.a:2:1: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_literal_return.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_literal_return.a:1:33: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_initialized.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_initialized.a:2:25: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_values.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_values.a:2:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_store.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_store.a:2:8: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_static.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_static.a:3:37: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_parameter.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_parameter.a:3:10: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_loop.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_loop.a:3:10: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_read.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_read.a:2:9: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_initialized.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_initialized.a:2:8: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_field_initialized.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_field_initialized.a:3:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_field.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_field.a:3:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_exception.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_exception.a:3:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_entries.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_entries.a:2:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_capture.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_capture.a:3:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_assign_read.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_assign_read.a:3:16: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_assign.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_assign.a:2:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/non_null_deinitialize_alias.a",
+      "firstLine": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_alias.a:5:15: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange",
+      "firstLine": "--- FAIL: TestEveryMutationIsInItsRange/programs (0.03s)"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs",
+      "firstLine": "--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/unknown_narrowing.a (0.09s)"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/unknown_narrowing.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/unknown_narrowing.a:2:16: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/unknown_narrowing_host.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/unknown_narrowing_host.a:3:16: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_store.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_store.a:2:8: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_write_union_logical.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_write_typed_array.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_typed_array.a:39:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_static.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_static.a:3:37: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_read.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_read.a:2:9: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_parameter.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_parameter.a:3:10: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_loop.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_loop.a:3:10: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_initialized.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_initialized.a:2:8: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_field_initialized.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_field_initialized.a:3:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_exception.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_exception.a:3:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_field.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_field.a:3:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_entries.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_entries.a:2:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_capture.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_capture.a:3:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_assign_read.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_assign_read.a:3:16: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_assign.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_assign.a:2:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_alias.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_alias.a:5:15: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_write_logical.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_logical.a:4:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_write_local.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_local.a:11:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_write_field.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_field.a:40:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_write_array.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_array.a:39:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_spread.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_spread.a:1:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_optional.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_optional.a:1:32: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_map_entry.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_map_entry.a:1:21: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_iteration.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_iteration.a:2:26: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_interface.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_interface.a:2:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_field.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_field.a:1:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_default.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_default.a:1:30: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_const.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_const.a:1:23: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_catch.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_catch.a:2:25: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_uninitialized_append.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_append.a:2:24: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_static_uninitialized.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_static_uninitialized.a:1:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_static_initialized.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_static_initialized.a:1:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_scanner_initialized.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_scanner_initialized.a:2:20: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_refuse_undefined.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_refuse_undefined.a:1:21: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_refuse_null.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_refuse_null.a:1:21: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_literal_statement.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_literal_statement.a:2:1: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_literal_return.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_literal_return.a:1:33: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_literal_assignment.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_literal_assignment.a:2:9: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_initialized.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_initialized.a:2:25: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestEveryMutationIsInItsRange/programs/../oracle/testdata/non_null_deinitialize_values.a",
+      "firstLine": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_values.a:2:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath",
+      "firstLine": "--- FAIL: TestLivenessHoldsOnEveryPath/programs (0.05s)"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs",
+      "firstLine": "--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/unknown_narrowing.a (0.05s)"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/unknown_narrowing.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/unknown_narrowing.a:2:16: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/unknown_narrowing_host.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/unknown_narrowing_host.a:3:16: stage 0 can't lower an unknown value observed outside Array.isArray or its narrowed array length yet"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_write_union_logical.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_write_typed_array.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_typed_array.a:39:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_write_logical.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_logical.a:4:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_write_local.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_local.a:11:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_write_field.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_field.a:40:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_write_array.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_array.a:39:1: stage 0 can't lower a logical assignment to this target yet"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_spread.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_spread.a:1:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_optional.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_optional.a:1:32: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_map_entry.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_map_entry.a:1:21: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_iteration.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_iteration.a:2:26: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_interface.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_interface.a:2:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_default.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_default.a:1:30: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_field.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_field.a:1:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_const.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_const.a:1:23: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_catch.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_catch.a:2:25: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_uninitialized_append.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_uninitialized_append.a:2:24: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_static_uninitialized.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_static_uninitialized.a:1:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_static_initialized.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_static_initialized.a:1:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_scanner_initialized.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_scanner_initialized.a:2:20: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_exception.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_exception.a:3:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_refuse_undefined.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_refuse_undefined.a:1:21: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_refuse_null.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_refuse_null.a:1:21: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_literal_statement.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_literal_statement.a:2:1: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_literal_return.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_literal_return.a:1:33: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_literal_assignment.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_literal_assignment.a:2:9: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_initialized.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_initialized.a:2:25: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_values.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_values.a:2:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_store.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_store.a:2:8: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_static.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_static.a:3:37: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_read.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_read.a:2:9: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_parameter.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_parameter.a:3:10: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_initialized.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_initialized.a:2:8: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_field_initialized.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_field_initialized.a:3:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_loop.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_loop.a:3:10: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_field.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_field.a:3:31: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_entries.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_entries.a:2:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_assign_read.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_assign_read.a:3:16: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_capture.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_capture.a:3:38: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_assign.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_assign.a:2:13: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+    },
+    {
+      "test": "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/non_null_deinitialize_alias.a",
+      "firstLine": "trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_alias.a:5:15: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+    }
+  ]
+}

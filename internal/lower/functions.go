@@ -121,7 +121,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if !ast.IsIdentifier(parameter.Name()) {
 			return l.notYet(parameter, "a parameter that isn't a plain name")
 		}
-		if declared.DotDotDotToken != nil {
+		if declared.DotDotDotToken != nil && !l.regexReplacementRest(declaration, parameter) {
 			if err := l.censusRestParameter(declaration, parameter); err != nil {
 				return err
 			}
