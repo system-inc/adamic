@@ -1,7 +1,7 @@
 {
-  "source_commit": "7ae0911fe1db05858f841d7f461ae91166ed0b06",
-  "integration_base": "b46914832d70e00847d82d5d221ab7bb24040c53",
-  "main": "c7991b900362796aefd111474e65eb5398e91953",
+  "source_commit": "f8af20264b2d46795f848e34ed2b02ae018435c4",
+  "integration_base": "d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898",
+  "main": "b6b1538b0cebc4ba6741ac34f1aedb60293c1d06",
   "files": {
     "jsx/control-048.tsx.gz": {
       "bytes": 155,
@@ -17,7 +17,7 @@
     },
     "jsx/compiler-go.stderr.gz": {
       "bytes": 58,
-      "sha256": "7dec17c0b2a4c3b03bbc496ae49cdbb6a451d85b053058badb84f430673f3ec8"
+      "sha256": "0b8edf85b0a888434a7f386febf38b09c6ee2e9706f96039d5eb65ce4eb8590b"
     },
     "jsx/control-040.tsx.gz": {
       "bytes": 110,
@@ -41,7 +41,7 @@
     },
     "jsx/timing-repository-undef-go-2.stderr.gz": {
       "bytes": 51,
-      "sha256": "f78aaaf3098dd324964c853d2012d347266f4c55e0381816f1b6671822603ce3"
+      "sha256": "65bd6cafa3fce0eb16cebb15c2a059236ae69bca281f371666b1af092875de3e"
     },
     "jsx/control-074.tsx.gz": {
       "bytes": 177,
@@ -136,8 +136,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "jsx/timing-repository-adjacent-go-1.stderr.gz": {
-      "bytes": 57,
-      "sha256": "1eb23a7848cf4d35abef734b46d4f5ee5fa752fd6d0f71a9109b0da7defb501a"
+      "bytes": 56,
+      "sha256": "9dbf7d884cdd510bbcd66a3b1d7cba103ca35248289d5f802a80b547634c3762"
     },
     "jsx/timing-repository-fragments-native-1.stderr.gz": {
       "bytes": 0,
@@ -145,7 +145,7 @@
     },
     "jsx/timing-repository-fragments-go-1.stderr.gz": {
       "bytes": 51,
-      "sha256": "0ca1a8271f1e7fdefe12eb3582e279d006b61205ec8df88cb75a22c99c2bd6eb"
+      "sha256": "0b562f92de67f6ef2322d1c6174ace1c3129a7bc9d3d431b6a30ce7fa5624e40"
     },
     "jsx/control-084.tsx.gz": {
       "bytes": 137,
@@ -169,7 +169,7 @@
     },
     "jsx/timing-repository-undef-go-0.stderr.gz": {
       "bytes": 51,
-      "sha256": "c59e6badabed5980efb16c6480230f5a98f370e815b9f73449c44b2dd871d9f2"
+      "sha256": "647c7589c51e067a36a7153d3c5a06da5a7ba3157641216e87d25fb30254d423"
     },
     "jsx/controls-element-native.stdout.gz": {
       "bytes": 24534,
@@ -201,7 +201,7 @@
     },
     "jsx/commands.json.gz": {
       "bytes": 12554,
-      "sha256": "59c87c1c5a11c558583f5e6bdc5e6972d075851f6b0aacadd82fd43e8945ff24"
+      "sha256": "09ac94f774a1f5af8c39ccd7aba300620eeafbd86ab39d597d8da6040ca58f3a"
     },
     "jsx/control-015.tsx.gz": {
       "bytes": 122,
@@ -245,7 +245,7 @@
     },
     "jsx/timing-repository-fragments-go-2.stderr.gz": {
       "bytes": 51,
-      "sha256": "4f0def6421df8553164a9d7f15129d208a165cc81f9cb144e9eeb47863cb74ff"
+      "sha256": "15feca3b5f73d03cabf908f5e088c488cc6d973452635724c5db1f957161efd4"
     },
     "jsx/control-018.tsx.gz": {
       "bytes": 124,
@@ -265,11 +265,11 @@
     },
     "jsx/parser-pins.json.gz": {
       "bytes": 2434,
-      "sha256": "ff561e1abe56c198fe871973fd3c882a26bd13f37bf2ee444e23db627521bba5"
+      "sha256": "a2eb9115892a64a2b197bca46ecf7a0ab1abfad7f9a62fa4f95572127436c630"
     },
     "jsx/controls-globals-asan-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "08b2e78420ce52b15e3fd8b55759226d2800c5c4ecde60151639e715755991e3"
+      "sha256": "8c3fe6be363efe9af664a0875903c9dbcc7995e56008894cf30f31efac35f680"
     },
     "jsx/control-112.tsx.gz": {
       "bytes": 144,
@@ -381,7 +381,7 @@
     },
     "jsx/timing-compiler-adjacent-go-2.stderr.gz": {
       "bytes": 58,
-      "sha256": "809d01e2d6ca3c4d0c7b87f935fffc15118734caf0800369f54ebef21f0bc642"
+      "sha256": "ba990e340243ace46e50cf0fb708cb801ed1eb981f289cfa71d8dd61419ab318"
     },
     "jsx/repository-native.stderr.gz": {
       "bytes": 0,
@@ -437,7 +437,7 @@
     },
     "jsx/controls-element-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "17eb100ed26ed080ec5573d4b11ef2eddacda0821816922550f0bdd9a639c158"
+      "sha256": "d17e6de8e864a525f7063c2610088bb160a556bfa9fe402dae1bc64ef82a9db8"
     },
     "jsx/control-102.tsx.gz": {
       "bytes": 140,
@@ -445,7 +445,7 @@
     },
     "jsx/timing-compiler-fragments-go-1.stderr.gz": {
       "bytes": 52,
-      "sha256": "a454fdd49b856b19db62de8aeef9302e59b6b06ea3d32700d27c80bca3126c41"
+      "sha256": "a287fdf7f8e94fafd79cf9d97d81ef6108d8b202e4a03cd8bde0ca78ff9a0655"
     },
     "jsx/controls-both-native.stderr.gz": {
       "bytes": 0,
@@ -465,7 +465,7 @@
     },
     "jsx/repository-go.stderr.gz": {
       "bytes": 57,
-      "sha256": "31164972e2dd8bd1317d5b08cc924ba0ead8af69288510fca94a11b4a2254a46"
+      "sha256": "07a25e3dd5ef50aae04dc9c028643cbbc8449fda382b0ea9593cca4c36bc0cee"
     },
     "jsx/timing-compiler-undef-go-1.stdout.gz": {
       "bytes": 5318,
@@ -485,7 +485,7 @@
     },
     "jsx/timing-compiler-undef-go-0.stderr.gz": {
       "bytes": 52,
-      "sha256": "0e2e269120e77f75c4b40139a863d8f4ace09a8161096ae86fcd50d65d3f6741"
+      "sha256": "d28a211107e0b7877ac75582e9b1eb87c77213e993b02acbbcd780752b0f45bf"
     },
     "jsx/native-asan-build.stdout.gz": {
       "bytes": 0,
@@ -505,11 +505,11 @@
     },
     "jsx/controls-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "c035932396165658547c69870738622086e84bf97240ec141d828607f3bd7774"
+      "sha256": "8b9985f2432c214289dc0a805c35af490899c1b311ffb7974e91138d574d4a54"
     },
     "jsx/timing-repository-undef-go-1.stderr.gz": {
       "bytes": 51,
-      "sha256": "1c75d026fef715d53180faa1ccb908d41c99f71e5df7474497cc9241c43ba075"
+      "sha256": "de0edef452eca81af42bcfa260a8d39a9e271083ec4ae16d3686b0e79c40d12a"
     },
     "jsx/go.stderr.gz": {
       "bytes": 54,
@@ -601,11 +601,11 @@
     },
     "jsx/timing-compiler-undef-go-1.stderr.gz": {
       "bytes": 52,
-      "sha256": "367e81afe3163115fdc58df95e6189834cf55e19bcc933119ceaa4afbba63dba"
+      "sha256": "3d5ac82bc17bf2fa3cb4f07b1dc1134ef84f5a92167fc6a4971557963e7647fd"
     },
     "jsx/controls-globals-go.stderr.gz": {
       "bytes": 57,
-      "sha256": "69a05f9fbde83998959cb8fa80fa099ce6b2d060ecde31435534d418c26ea57a"
+      "sha256": "414a505d8e8af51e2734e2152ee09b2e2a20f09f742f7fcd598d0b4e1a8e4c21"
     },
     "jsx/control-021.tsx.gz": {
       "bytes": 129,
@@ -657,7 +657,7 @@
     },
     "jsx/controls-asan-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "3456e263416f48fb1465e42524cd6ce55b2fd6712a74c0358eb44bcb8829254a"
+      "sha256": "4d9f881caedf39bcceb337a020719b91c39f3e672b51b0f840a1a0c89d27fb7e"
     },
     "jsx/timing-repository-adjacent-native-2.stdout.gz": {
       "bytes": 18485,
@@ -673,7 +673,7 @@
     },
     "jsx/timing-compiler-undef-go-2.stderr.gz": {
       "bytes": 52,
-      "sha256": "f08ce5cf9bff7ae1948949f8f7b7919e203dbf99121edbf4ff99845892de722b"
+      "sha256": "fde7a2dbbbe656d7e0c46dfeba31e52caaea239a961481058f3669d7f2533e3b"
     },
     "jsx/control-030.tsx.gz": {
       "bytes": 170,
@@ -805,15 +805,15 @@
     },
     "jsx/timing-repository-fragments-go-0.stderr.gz": {
       "bytes": 51,
-      "sha256": "02a326e8cd3093671e7a65b4c896fe8c7493fdaca83faaf1e8f9438ee3f4dea1"
+      "sha256": "9ef5c89d19629fc9a63b5dc4a3c0c1d0406b0bd7087f61c602c25f6b203e5298"
     },
     "jsx/repository-asan-go.stderr.gz": {
       "bytes": 57,
-      "sha256": "b90021deffef731cfca5ea10d4cd4db819c136b6b7b4aadef44a57817aec12c0"
+      "sha256": "8f5231adf56c5d5035087deb32c1a64acc8da7d4e27804c710d3515e3dbeec0b"
     },
     "jsx/timing-compiler-adjacent-go-0.stderr.gz": {
       "bytes": 58,
-      "sha256": "fb6ca2b6b2daf50f35991d75ea426e192409b74e1f498b0dbc86d64a6ed7ef14"
+      "sha256": "477bbde49fba7016edc11d1736cc44f2bff6cddfe5d54514715d88859c8191b8"
     },
     "jsx/control-098.tsx.gz": {
       "bytes": 140,
@@ -849,7 +849,7 @@
     },
     "jsx/timing-repository-adjacent-go-0.stderr.gz": {
       "bytes": 56,
-      "sha256": "bfbc44a270bda0d8fa3434068835f4c80aafefd02cbed9ea17ce7550c88d1df1"
+      "sha256": "1c40dc0c4354d84c46acea992edec4298f2a8ab38ea7452de0bf906ce2c3f269"
     },
     "jsx/control-038.tsx.gz": {
       "bytes": 101,
@@ -912,8 +912,8 @@
       "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
     },
     "jsx/timings.json.gz": {
-      "bytes": 2099,
-      "sha256": "d5bd64994bd4525b6a889773f48626151064f988e724e0a735fb3b92de3c779d"
+      "bytes": 2103,
+      "sha256": "095d845e6df749d6bab68952dd5e05af226c36902ca09a1a527dcef189ea6455"
     },
     "jsx/repository-asan-native.stdout.gz": {
       "bytes": 18485,
@@ -1013,7 +1013,7 @@
     },
     "jsx/timing-repository-adjacent-go-2.stderr.gz": {
       "bytes": 56,
-      "sha256": "0f08e66be2f5f279e360d45d7b4d23f3a4eceab8c7410189ee6144f894cc46f1"
+      "sha256": "13637fe1e3df706bd7ea440355d92db3d5a93a0d423bae7d9883ed0b8efd788b"
     },
     "jsx/control-077.tsx.gz": {
       "bytes": 179,
@@ -1021,7 +1021,7 @@
     },
     "jsx/timing-compiler-fragments-go-0.stderr.gz": {
       "bytes": 52,
-      "sha256": "e12977b974ea42a36d6ff52d4646c93b804009241feaab38231d8a5dbfcd0fe4"
+      "sha256": "87de5e2e02e93198388a4d8456e9908f04f28923777ce6b4eee0d17df15684b8"
     },
     "jsx/compiler.manifest.gz": {
       "bytes": 4922,
@@ -1077,7 +1077,7 @@
     },
     "jsx/timing-compiler-fragments-go-2.stderr.gz": {
       "bytes": 52,
-      "sha256": "0e4764fa3510ab539f7b065e9546862d6b2e91e2632fd14328461631ccc96cad"
+      "sha256": "5dd1b9799dfd4ea2cae574a2978718551926484e0e11d32ea690cb0cad0a5aa0"
     },
     "jsx/question-missing-compiler.log.gz": {
       "bytes": 1302,
@@ -1085,7 +1085,7 @@
     },
     "jsx/compiler-asan-go.stderr.gz": {
       "bytes": 58,
-      "sha256": "c1af785a4c54f250f3eb41c5fd362cf7a883bbe49e06a145c1f16683422725cb"
+      "sha256": "4ddfa42f12b32cb390efced55dc4264c402221ec539a092cfc7e45301fae52a1"
     },
     "jsx/control-100.tsx.gz": {
       "bytes": 140,
@@ -1121,7 +1121,7 @@
     },
     "jsx/controls-both-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "86b54ad8f82d9cd016689673f5862804f080b732ef8823153499f86cba02e0a9"
+      "sha256": "34d088d076b0d2888cc6e7f0c3b5027706cea5658bc2f7fa226c1af48fc5565a"
     },
     "jsx/control-017.tsx.gz": {
       "bytes": 119,
@@ -1229,7 +1229,7 @@
     },
     "jsx/controls-element-asan-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "4d835bc77330fe3f5d05266e74c6ba7964f5dfa6a6ac071b2d31fc77598dd131"
+      "sha256": "719e079f164f88f715e65600f8663a33bc19cc8beb20efc6e99331f29a1246a1"
     },
     "jsx/timing-repository-fragments-native-2.stdout.gz": {
       "bytes": 18485,
@@ -1309,11 +1309,11 @@
     },
     "jsx/controls-both-asan-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "10a0b04d1ee78ca06a3ac1442118b01c3ae856f46a260f0b79fadb15cb5af907"
+      "sha256": "29af5ace675b07e6ac1ebaa42035d248618f1b129690b454a345a2240d045c28"
     },
     "jsx/timing-compiler-adjacent-go-1.stderr.gz": {
       "bytes": 58,
-      "sha256": "91e0e74ff8c36d866552d528d8321eadbe14a2615d1aef3c5cce0d241fc45c8d"
+      "sha256": "9cfdddb6a20cf36a077fa254998b3140d74e4ff0fd1ca9de626deb0f83031b51"
     },
     "jsx/controls-globals-native.stdout.gz": {
       "bytes": 27829,
@@ -1380,24 +1380,24 @@
       "sha256": "0213959b1a158c1a62d4e4328c32299b2008a369111ac967c2761e8ffb0683ee"
     },
     "landing/commands.json.gz": {
-      "bytes": 6630,
-      "sha256": "0bdccf0e9b5117491bbd395e8dad6599e6ba6a32e87ae1ce100e5ee573f401b6"
+      "bytes": 6783,
+      "sha256": "39fb329f99252122687224becdeaef9a27555a65df497bb4004c00bc3ece1add"
     },
     "landing/type-proof-integration.log.gz": {
       "bytes": 12273,
-      "sha256": "cc79c29656221e35ce81cdc818706310aca65101625426705732236e49bde428"
+      "sha256": "62f9350d09e5f6e2f964d695c9c21956b60440ea32292aca6a1b078b72aee83d"
     },
     "landing/shared-finding-model.log.gz": {
-      "bytes": 9541,
-      "sha256": "8c54899cfa2ab535af5ac74b5c8f620ac543cd3ad426e5123e5cbff0804b3ff7"
+      "bytes": 9591,
+      "sha256": "d9a8dd04cf3a27017c5422186ef43840d52f0122907096b74ef9dace9b34de6a"
     },
     "landing/process-scratch-recovery.json.gz": {
       "bytes": 583,
-      "sha256": "5ab707dd603b8405afb85c3db77bca29f613a4d51c075ccef38b015f6238bc68"
+      "sha256": "328c9beebb3a3720e4a960c8940f616e4adaa2d69e8653db4af1bf308321ac26"
     },
     "landing/fact-guards.log.gz": {
       "bytes": 2336,
-      "sha256": "8f7f8b08c022c353071f07eac9ce38ef65e7675b7ccc5c8cd4d629f54426c17f"
+      "sha256": "ec201ab6863a8498d8d01363d5126f44bb2df5fff57cac8c514177b14eec445d"
     },
     "landing/react-branch-blocker.log.gz": {
       "bytes": 2029,
@@ -1421,19 +1421,19 @@
     },
     "landing/runtime-integration.log.gz": {
       "bytes": 8535,
-      "sha256": "7985c1f400af746be03ca21f2f20e9ccf6c75e2b5d9ade6fc21db0c1ebd90efa"
+      "sha256": "dfff2273dedb1f38ce4982f7186657e75f89c07f5423d1c3a2ce68c83793bfa4"
     },
     "landing/rest.log.gz": {
       "bytes": 422,
       "sha256": "7497ccc6629b97a5fc4970829b8b94c4dbb2a5ef881e9cb905ca4401e88cd68f"
     },
     "landing/original-trio.log.gz": {
-      "bytes": 2100,
-      "sha256": "932f14f9dc633a0747b640777c34658de875f01a4e44fb133b43058a0cd3d6c1"
+      "bytes": 2098,
+      "sha256": "713e5bb1f5cbf9bc872ddb2dadb819892a52349d331412aa5ffe6652155f012a"
     },
     "landing/bridge.log.gz": {
-      "bytes": 45250,
-      "sha256": "7b4ae3c9b3696635673a05efa826e61246281e3bc7bda2333e381a5968802684"
+      "bytes": 45251,
+      "sha256": "35b0007d8626767d0f1076e7235032f0ff78d198d48dccfc8df65697b0c9589c"
     },
     "landing/continuation-questions.log.gz": {
       "bytes": 486,
@@ -1445,11 +1445,11 @@
     },
     "landing/streams-scratch-recovery.json.gz": {
       "bytes": 536,
-      "sha256": "6c921f8d986c429e6301f76b7ab10ad679e45224e81ea7fcd26d5ebd8462d00b"
+      "sha256": "8698aa0cdd68bdeb139333ca816c3d6041c2e41090b02b41dc69d4eb1a7ee90f"
     },
     "landing/node-oracle.log.gz": {
-      "bytes": 27915,
-      "sha256": "17c5dd55af2e3b146580f96b3058b603476bba1da476e620504b35e7f532e522"
+      "bytes": 50002,
+      "sha256": "70bdec17f24715423d2a448d58550bdfe1d9b1e404ef2b479a58d4fa1eaaee74"
     },
     "landing/promise.log.gz": {
       "bytes": 425,
@@ -1477,19 +1477,19 @@
     },
     "landing/rest-scratch-recovery.json.gz": {
       "bytes": 340,
-      "sha256": "e9289f045dcb8babcd190d2b34b9918210491cee0cb7edeca1bc13df3fcd93fd"
+      "sha256": "d9c7474f069ac463b8f26392d7e45695abe77f1fab98c39c7ceccf8b95ca8108"
     },
     "landing/timer-scratch-recovery.json.gz": {
       "bytes": 491,
-      "sha256": "5452d3f48864eea7b5d57afe98eb1c5549d387a8200cb067c585e4ad13dfc7bc"
+      "sha256": "bc0eb7adceb3702fb8c637d120259f5fb6823e7bc6a9884fe42ea02c6100b76f"
     },
     "landing/regex-scratch-recovery.json.gz": {
       "bytes": 435,
-      "sha256": "a12d1727ad9e58126b558a521b2402f6fff63f5865f060cae49d2b653192b1d5"
+      "sha256": "af818fbba9dcd913a10644293b52f9d863ab2766db9ad6e47f47ed69861ceebc"
     },
     "landing/promise-scratch-recovery.json.gz": {
       "bytes": 618,
-      "sha256": "ea6f28b8746c009673f245758792e92f98f71c3014a392f435d1b72d62cb3199"
+      "sha256": "01da97d5e05cd5581409564d5c73300cfc39c6c76d90bcc4946ca6c2d59231af"
     },
     "landing/gofmt.log.gz": {
       "bytes": 0,
@@ -1501,11 +1501,11 @@
     },
     "landing/original-trio-scratch-recovery.json.gz": {
       "bytes": 735,
-      "sha256": "ecd433fc5b9918f5142211f2a43aab0df91fd9b57574321e96c1e94c166e34bf"
+      "sha256": "a1a0cf2a33b387a50bc6798d34ddbce7309f8b123f93b2a6290a49b1778f614f"
     },
     "landing/original-trio/027-repository-timing-go.stderr.gz": {
-      "bytes": 58,
-      "sha256": "2d7453037981266c0ff811dd167572fe6599658d1e8e6cda63ef494b1b9b6eb8"
+      "bytes": 57,
+      "sha256": "7afc7b494774ed77a4ab17154eba7fca87803252be4bec0cb1d4b5c5c60d7046"
     },
     "landing/original-trio/control-094.a.gz": {
       "bytes": 72,
@@ -1725,7 +1725,7 @@
     },
     "landing/original-trio/031-compiler-asan-go.stderr.gz": {
       "bytes": 59,
-      "sha256": "bbe735ab0a4f879ba140aa7cd5b6f54902a2e6f2c50a9d9deae629d0c0e59584"
+      "sha256": "76d05f58a75f0aca04b57d459a02447eb21d8fee12f92597d95b8fddb28dde75"
     },
     "landing/original-trio/028-repository-timing-native.stdout.gz": {
       "bytes": 22753,
@@ -2317,7 +2317,7 @@
     },
     "landing/original-trio/033-compiler-timing-go.stderr.gz": {
       "bytes": 59,
-      "sha256": "93fc48e04a0d878ff4d5efd9df439fabdd4000581443c2ad3bc1045d585546b1"
+      "sha256": "5271b6e87d768d60f5007c82047a534600e6aac0ccdd9c7868a5d7e5517e508f"
     },
     "landing/original-trio/control-162.a.gz": {
       "bytes": 79,
@@ -2380,8 +2380,8 @@
       "sha256": "a74e32242d6d874102ea05b23ee89ca431c23d2d905e92a5dd8480435f6e3420"
     },
     "landing/original-trio/034-compiler-timing-native.stderr.gz": {
-      "bytes": 98,
-      "sha256": "9252e7fd0fcb0b9df5e28a9a8a9fc16957ed451028c7baca036ccb7e7dcc3b9b"
+      "bytes": 97,
+      "sha256": "d43cd97d0320ea1ad52c30c74e56b8c9183e6e59edf9d4bbd59aa494f353c3cb"
     },
     "landing/original-trio/control-019.a.gz": {
       "bytes": 72,
@@ -2393,7 +2393,7 @@
     },
     "landing/original-trio/010-controls-asan-go.stderr.gz": {
       "bytes": 57,
-      "sha256": "56aaf261919d95b70e9201209706775f26fa491234b1a3838aaa88acc73bbb4e"
+      "sha256": "6617b57c5cc0f8f83cef830a3f12c900c5147f6673c6ce6c021cccb182e66fcf"
     },
     "landing/original-trio/control-257.a.gz": {
       "bytes": 67,
@@ -2417,7 +2417,7 @@
     },
     "landing/original-trio/029-compiler-go.stderr.gz": {
       "bytes": 59,
-      "sha256": "b671b5945bb3b8d2007bf4a52e556514962fddc7db0145125598ae77d76aa444"
+      "sha256": "20b27898e4e733e8387712cdfacd4c866a34d7863a355111b782be0bd70ffefe"
     },
     "landing/original-trio/control-071.a.gz": {
       "bytes": 74,
@@ -2681,7 +2681,7 @@
     },
     "landing/original-trio/028-repository-timing-native.stderr.gz": {
       "bytes": 92,
-      "sha256": "682a5cc6f5cccd39287c5c4e44fb5f13ac5cb8f6e648da711a48d12c9fb3f770"
+      "sha256": "482b5e0cb00577d99cefc34cb400aff6111783c4d0e20223179536f711943e11"
     },
     "landing/original-trio/control-263.a.gz": {
       "bytes": 55,
@@ -2705,7 +2705,7 @@
     },
     "landing/original-trio/025-repository-asan-go.stderr.gz": {
       "bytes": 58,
-      "sha256": "727454cd8175440014fb7989ca81b2288ddc55242d7087c9975e9e80b6bbad0f"
+      "sha256": "fd47b5547a7aa51204f5ec7a61b55f34ac55aeb69b75f29393ed8374fced0d48"
     },
     "landing/original-trio/control-211.a.gz": {
       "bytes": 77,
@@ -2777,7 +2777,7 @@
     },
     "landing/original-trio/023-repository-go.stderr.gz": {
       "bytes": 58,
-      "sha256": "5e8c8a38120ea0195146dc36c5224e31025faeb897a35399164f669db3a9e406"
+      "sha256": "e705ed9c3aa3141bb09a8360ea9af58b8b4e26de440868ef05949a0d14c51b77"
     },
     "landing/original-trio/037-released-registry.stderr.gz": {
       "bytes": 0,
@@ -2897,7 +2897,7 @@
     },
     "landing/original-trio/006-controls-go.stderr.gz": {
       "bytes": 57,
-      "sha256": "7757f590c91122b8fade56f2e7dd3e6535cea94522c85f4b4dc537ce9df0ef2f"
+      "sha256": "deb939a31c7c70e2dee898bd5236e4f8760659142bba27b4b71b3050df78ac07"
     },
     "landing/original-trio/control-160.a.gz": {
       "bytes": 79,
@@ -4469,11 +4469,11 @@
     },
     "react-parser/oracle.stderr.gz": {
       "bytes": 55,
-      "sha256": "c4e2eea98748ca6cd2bade41a644e3322859d335d92940b2f77fb77e236088d9"
+      "sha256": "9d48b702ac09f3fcea23ebe4200cfdde80dbd3148558eb3f18c37fac78cd6a16"
     },
     "required-inputs/receipt.json.gz": {
       "bytes": 18012,
-      "sha256": "8c6873ab38c7628ce30a1449da73dc5ecd36c3cadc13f3a1d78cfdf0f4bb2202"
+      "sha256": "abbb9b74dba565b27fe46fe7f18a0447144d0ec0f02381e383d90b5d65e2c8d8"
     },
     "required-inputs/package-lock.json.gz": {
       "bytes": 6290,
@@ -4492,12 +4492,12 @@
       "sha256": "109438c523e44d0374834d4cd62b968ac7ede988a5c89b5b98f50b0f59fc8e8f"
     },
     "required-inputs/events.jsonl.gz": {
-      "bytes": 331966,
-      "sha256": "1dc5b06e51853bfe4bdc62b73b107fd1d7ddd884591bed7651ce1817c152f25d"
+      "bytes": 331936,
+      "sha256": "d60a1c0466f60836ff4802f93a6c399b0a9d6db80d101cebe8ce48c1f99e34ba"
     },
     "timer/compiler-go.stderr.gz": {
       "bytes": 58,
-      "sha256": "f0850b0cb1fae5cafa5f49552c6f106f373f2eb715c8507da5a42b7db9e892fc"
+      "sha256": "e308076ccab1e56407e3040c24591a4868c650b4242bfa8550507e9398ed0b81"
     },
     "timer/controls-native.stdout.gz": {
       "bytes": 6942,
@@ -4532,8 +4532,8 @@
       "sha256": "2305b4edbc687008b70b1d750d99a814c8b761a5d42f1ee7721756c243f66cee"
     },
     "timer/commands.json.gz": {
-      "bytes": 6239,
-      "sha256": "cc477ccd039a895d3e851746a04e07b2868ba14141276388f8ad1e845dbfcaab"
+      "bytes": 6237,
+      "sha256": "699211721cf46608251b206ce25b64d5c5232eeb7b730028db35f622f6fb7cdb"
     },
     "timer/compiler-asan-native.stdout.gz": {
       "bytes": 5318,
@@ -4572,8 +4572,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "timer/controls-dom-go.stderr.gz": {
-      "bytes": 56,
-      "sha256": "4234f44394e099c285b99dd8723cb25cf910aa9b8609396bbd310c8cb927dfb0"
+      "bytes": 57,
+      "sha256": "fc3bc4a65e72767c4655b78967cb45cdcd269bf19373e28d21ae1efac53da114"
     },
     "timer/repository-native.stderr.gz": {
       "bytes": 0,
@@ -4589,7 +4589,7 @@
     },
     "timer/repository-go.stderr.gz": {
       "bytes": 57,
-      "sha256": "0a8bafeb34396fb28c1da98c5eb08b72c249ebb4fadec793e9f8fdd0521a83e5"
+      "sha256": "e98d5186838f3d49cc74206e803e6cb50d76adc32eb86f0790588535210f31d8"
     },
     "timer/oracle-build.stdout.gz": {
       "bytes": 0,
@@ -4613,7 +4613,7 @@
     },
     "timer/controls-go.stderr.gz": {
       "bytes": 55,
-      "sha256": "3e17ffccc99a551574b8d3d16cb452fb811c8e329c04979143f6d6f0c97597e1"
+      "sha256": "dad57b18681bd2011b4ab9fc80c829131573811bb49538b5f99766a47fc68ebb"
     },
     "timer/checker-asan.h.gz": {
       "bytes": 2669,
@@ -4648,8 +4648,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "timer/controls-asan-go.stderr.gz": {
-      "bytes": 56,
-      "sha256": "baff7ec1016f0d6c546334a00bbbf3494ad3990ee19c7e897fe21c9ecc52d42f"
+      "bytes": 55,
+      "sha256": "c9a46a8d589e1af634ea2c926fb626b1ee6e6dc223e6012feaa4ccabfdd7674e"
     },
     "timer/control-011.a.gz": {
       "bytes": 202,
@@ -4684,8 +4684,8 @@
       "sha256": "133188cf33a6b5d58c900d702ca9e0a77065769cefa41f7adf0543c6d9109015"
     },
     "timer/repository-asan-go.stderr.gz": {
-      "bytes": 58,
-      "sha256": "3064fd2e38ed00db63a89f920a62ed4a7e10d6e202024e0e65ba49d8a232766d"
+      "bytes": 57,
+      "sha256": "4aeab8c6584f15f3659b23caea0bb8e6c4b577877283715a2955c51fd7be7b6e"
     },
     "timer/control-007.a.gz": {
       "bytes": 206,
@@ -4756,8 +4756,8 @@
       "sha256": "fad4b1ea297f08dcdf86ad8b0b37b0c9afb703f369b90aa2b7b88dfdf1dfd140"
     },
     "timer/compiler-asan-go.stderr.gz": {
-      "bytes": 59,
-      "sha256": "9398670bbd5841e3b2cc565888ae426d5c7072c984d8c9285ce66c04a50a3ab8"
+      "bytes": 58,
+      "sha256": "c8b1a63f588e6b88b7eaf9a4839b9dbff1e66e5ec18da08bb8c2cd7a33b8942c"
     },
     "timer/control-013.a.gz": {
       "bytes": 184,
@@ -4789,7 +4789,7 @@
     },
     "timer/question-test.stdout.gz": {
       "bytes": 142,
-      "sha256": "364f9143fd277d0365a2950ce9a59bd295f65d4f9416fa8a4df0634415218c57"
+      "sha256": "2096a1a30a2940b22d0a19c074377adb8628377e963585e3b412ef43b7c5d30d"
     },
     "timer/compiler-go.stdout.gz": {
       "bytes": 5318,
@@ -4921,7 +4921,7 @@
     },
     "process/compiler-go.stderr.gz": {
       "bytes": 59,
-      "sha256": "6009e93463633d6b0bb13ba1526722838da20d6b3bec54d976aaf28f98149926"
+      "sha256": "44d7e99c215446b44c9a4f85df84821526835fcf5582eb7a24e517d77c51f8ab"
     },
     "process/controls-native.stdout.gz": {
       "bytes": 9638,
@@ -4960,8 +4960,8 @@
       "sha256": "b166143062ac38d919a22ce2428f1cfd54cb09a72135f889ca7440d350a8ef34"
     },
     "process/commands.json.gz": {
-      "bytes": 6350,
-      "sha256": "8c4d843bfda5b64201a20684502d57335bc02e84c567f697afc862fefb768c01"
+      "bytes": 6352,
+      "sha256": "aa5b619821567a73d1d88bfc6cd64cd84b2b25c0cdb10e38752f9beb52496c78"
     },
     "process/compiler-asan-native.stdout.gz": {
       "bytes": 5318,
@@ -5000,8 +5000,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "process/controls-dom-go.stderr.gz": {
-      "bytes": 55,
-      "sha256": "d073089ddc272b656a3691f821cb565809c52437b72df5784c273e1b0f545dd2"
+      "bytes": 57,
+      "sha256": "b6e2e7553cd41d3c887e45ea0ba7291e728b2b75f07fcd51cfa14033c6a2cb3c"
     },
     "process/repository-native.stderr.gz": {
       "bytes": 0,
@@ -5024,8 +5024,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "process/repository-go.stderr.gz": {
-      "bytes": 59,
-      "sha256": "0b2b87bd119ff5d295f3264626dc20cc6f8451fdc21b31116d56bfdceeac2c53"
+      "bytes": 58,
+      "sha256": "db254e201e3aaa2ef24a0307d880a7d956bc4ee26f333e2e44ccded535c663b4"
     },
     "process/oracle-build.stdout.gz": {
       "bytes": 0,
@@ -5049,7 +5049,7 @@
     },
     "process/controls-go.stderr.gz": {
       "bytes": 57,
-      "sha256": "b2dc666c38cc9f62f7b06555e3449f934d44e7706f1b2709b630ea3c358542b4"
+      "sha256": "0972b99d1ed0849f38fcabb705196fa6337f753497c491261b6a4e13ffa1b2be"
     },
     "process/checker-asan.h.gz": {
       "bytes": 2669,
@@ -5088,8 +5088,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "process/controls-asan-go.stderr.gz": {
-      "bytes": 55,
-      "sha256": "d34cd20fb8f58d0fd865eea61aafd2ddc4dfe118d18ef9113807be1f96c16d2d"
+      "bytes": 57,
+      "sha256": "b10e0ac25e1e5ac21b5b220cd7dfbfdbf3c29174d79f87e1164999001126693b"
     },
     "process/control-011.a.gz": {
       "bytes": 149,
@@ -5124,8 +5124,8 @@
       "sha256": "6169a01e85267ed9b00fcffae19c961d807cd41dbbe87236b49e73befab5796d"
     },
     "process/repository-asan-go.stderr.gz": {
-      "bytes": 60,
-      "sha256": "b86cda6fde8ec2d6ad9f5e48f1caf72891f9555d4466f9e1613d99325bf9c604"
+      "bytes": 58,
+      "sha256": "d3206afd414d1f15fbfc7c2ee15ffeb919968fee497fbca00635bfcdc5398dfa"
     },
     "process/control-007.a.gz": {
       "bytes": 143,
@@ -5201,7 +5201,7 @@
     },
     "process/compiler-asan-go.stderr.gz": {
       "bytes": 59,
-      "sha256": "ca80b00e6a77b3903fb117a5544a8bdd9132da3f1013498eb6ab16b6d5097b52"
+      "sha256": "ee55bc279b4d03b905ee7e80cce9d900019272266677382b05711a7ac725e444"
     },
     "process/control-013.a.gz": {
       "bytes": 165,
@@ -5233,7 +5233,7 @@
     },
     "process/question-test.stdout.gz": {
       "bytes": 142,
-      "sha256": "df35268138c2c5feef15ce1224da1556df1e8f01c7c3ce0b9687edda0083eefd"
+      "sha256": "8e36ca93981ebc35a878b87cba0511ea2cb42ebfb122d3bfaa631bd9ad1774dd"
     },
     "process/compiler-go.stdout.gz": {
       "bytes": 5318,
@@ -5369,7 +5369,7 @@
     },
     "streams/compiler-go.stderr.gz": {
       "bytes": 59,
-      "sha256": "7ada5d72a6d4a1235cc97b216f14b1b99d219d0f522c44622dd6234a40a50123"
+      "sha256": "0e8b79a15826aa0290458f22f6f059fac70dbc99bbcd6cd3a41e5618fff1653a"
     },
     "streams/control-029.a.gz": {
       "bytes": 244,
@@ -5420,8 +5420,8 @@
       "sha256": "e74dc948cbaf9f7934a19d58b50d297641229ff4b2447e7baaeb4063f23fd468"
     },
     "streams/commands.json.gz": {
-      "bytes": 6673,
-      "sha256": "5025a008ec3978ee7f5dc26cf1201b4607eb80f3e57194a856920d5801268ebf"
+      "bytes": 6672,
+      "sha256": "cdd56cf06e813494f937bd5338a30716269688aa4793a89a004939307502ff56"
     },
     "streams/compiler-asan-native.stdout.gz": {
       "bytes": 5318,
@@ -5460,8 +5460,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "streams/controls-dom-go.stderr.gz": {
-      "bytes": 57,
-      "sha256": "a97f6d8b3762ea072802f47680649ab7ba7efd3d0b7d9c6e357bd7e578159dbe"
+      "bytes": 58,
+      "sha256": "94e02c881b1174a37e7aa6268e5bb92be22dc69fcac6f591f75f264d7e39b79c"
     },
     "streams/repository-native.stderr.gz": {
       "bytes": 0,
@@ -5485,7 +5485,7 @@
     },
     "streams/repository-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "692fa9791dc6bfc0367e69e9f6a1525f2e21d9563c3571872029480b9506ef0d"
+      "sha256": "bb491961260aa767fda458925f4c561605c34ad8ee7becd94b6fe343a192e4c7"
     },
     "streams/oracle-build.stdout.gz": {
       "bytes": 0,
@@ -5508,8 +5508,8 @@
       "sha256": "a54b8346541d10f430ee54270d9e57bfe913ceb78b869e83ed6cfdd570c6ab9c"
     },
     "streams/controls-go.stderr.gz": {
-      "bytes": 55,
-      "sha256": "5d9acd0e47c38f34ec56e4fd7488f68462cc06ef20289dd3552ae1945bfbeeaf"
+      "bytes": 57,
+      "sha256": "67c796386f0d7a8af2f852805474f14f0596677e0a70cbc24e38c3eb41b40c67"
     },
     "streams/checker-asan.h.gz": {
       "bytes": 2669,
@@ -5548,8 +5548,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "streams/controls-asan-go.stderr.gz": {
-      "bytes": 56,
-      "sha256": "f3bed550fc339ff4fe0961f5cba2b56bfb6d9f89232c1a2f4ba5719f4a7944c1"
+      "bytes": 54,
+      "sha256": "75abd556d8605dc0b072f000872a6402514ba6024ae03602d135b73576178c9d"
     },
     "streams/control-011.a.gz": {
       "bytes": 149,
@@ -5597,7 +5597,7 @@
     },
     "streams/repository-asan-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "e10a3445d22c3a5c861cf362a1c7fa052b5180db2cd1565849ac1de18ff9bbb8"
+      "sha256": "9a9ef96158b8b9fcd851e8e69c8d846e7527595ef3b31d328a3f3bae8489b3f6"
     },
     "streams/BlockOnLoad.ts.gz": {
       "bytes": 95,
@@ -5681,7 +5681,7 @@
     },
     "streams/compiler-asan-go.stderr.gz": {
       "bytes": 59,
-      "sha256": "145dea9692c04a44e9fe539525c243bb173a25679ce38a61647e379766099027"
+      "sha256": "a4b1226ac8a661594f6c6aa6a4fbb048ce69f500efbdba396d0f366bd454c104"
     },
     "streams/control-013.a.gz": {
       "bytes": 165,
@@ -5721,7 +5721,7 @@
     },
     "streams/question-test.stdout.gz": {
       "bytes": 142,
-      "sha256": "df35268138c2c5feef15ce1224da1556df1e8f01c7c3ce0b9687edda0083eefd"
+      "sha256": "3c70fa51cdfca02b4a82182e29e9a537528c3f53d7f5c9b04ca0ca6abe8eea3d"
     },
     "streams/control-031.a.gz": {
       "bytes": 262,
@@ -5869,7 +5869,7 @@
     },
     "rest/compiler-go.stderr.gz": {
       "bytes": 59,
-      "sha256": "e285eae6653b0e43c593873882053abfa1515cfe8cc9725ea4d9f6b7c5fef10f"
+      "sha256": "f01c760746f1bd9370610e157d1aad35042c8acf91eb64a5b9fe935991161124"
     },
     "rest/controls-native.stdout.gz": {
       "bytes": 3431,
@@ -5904,8 +5904,8 @@
       "sha256": "17c60394c8f3bc1a2ab14ee5932944427a9f165229d2d4fb864a771b489d37f7"
     },
     "rest/commands.json.gz": {
-      "bytes": 6044,
-      "sha256": "d16ac5e7d3856bf9f7cae9b6b2ef1b9eb55c9b7b145a19d75f8a2a618cf730f7"
+      "bytes": 6043,
+      "sha256": "da39ddbf6e62381870b421e0f8355635136d68f8cd30ddca4b126f2ddfd9c1ba"
     },
     "rest/compiler-asan-native.stdout.gz": {
       "bytes": 5318,
@@ -5941,7 +5941,7 @@
     },
     "rest/controls-dom-go.stderr.gz": {
       "bytes": 54,
-      "sha256": "6b887d5538f9c401bbc44c8d35d4b7e569d83761c73637c46acb0a07117a1281"
+      "sha256": "c5545a963929048fe511d52486c00a4576c1f416fd3d6b433aaca9ec449cfa20"
     },
     "rest/repository-native.stderr.gz": {
       "bytes": 0,
@@ -5957,7 +5957,7 @@
     },
     "rest/repository-go.stderr.gz": {
       "bytes": 57,
-      "sha256": "0111b43875431bd12e0951615763d3927e27cb5a3f156750bce44e9650144cd6"
+      "sha256": "5543decae87992111f0053d0475c38f56446977f22fcd1fe2ce11238705b19b6"
     },
     "rest/oracle-build.stdout.gz": {
       "bytes": 0,
@@ -5980,8 +5980,8 @@
       "sha256": "2b3d69940c75bccb32b2313364723582aa166018f7214c6f175541d2720f21e0"
     },
     "rest/controls-go.stderr.gz": {
-      "bytes": 54,
-      "sha256": "0169fa5cf6cc4b6abfc5f9bfac98671df6da3189db1edfeb17e463b938a7f486"
+      "bytes": 53,
+      "sha256": "eac1bb08f04593294b328304ca8cc9c0e7385de0d2f0a3ae4b9a69826adedc79"
     },
     "rest/checker-asan.h.gz": {
       "bytes": 2669,
@@ -6016,8 +6016,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "rest/controls-asan-go.stderr.gz": {
-      "bytes": 53,
-      "sha256": "7e5429cc8212a79838b6d1c7eced60a7d8ce7b0ed8e89a200c0e008d30524eec"
+      "bytes": 54,
+      "sha256": "4b0a31f9b594e0b1df26069fd030666bbe1ecb246c9fc45aa73b9617baa463db"
     },
     "rest/control-011.a.gz": {
       "bytes": 132,
@@ -6053,7 +6053,7 @@
     },
     "rest/repository-asan-go.stderr.gz": {
       "bytes": 57,
-      "sha256": "64ec647630be1e0d4949d83d6ab3cdb1103b78e73acaa0217d00d8d35b949ccb"
+      "sha256": "e12eea537c2cc1f78536a4b25f36ad4eb06d1fd2bb009657a8a4ab30c6369db1"
     },
     "rest/control-007.a.gz": {
       "bytes": 144,
@@ -6117,7 +6117,7 @@
     },
     "rest/compiler-asan-go.stderr.gz": {
       "bytes": 59,
-      "sha256": "8d4f534446f1e4a0770e8ebc780f7b75d6505226840d893d972e9b2261e03d29"
+      "sha256": "fdfaa691980cb99cf56c2b83c9b5a9e33cc1bac03c6a7a9aa04ddd626a616471"
     },
     "rest/control-013.a.gz": {
       "bytes": 130,
@@ -6369,7 +6369,7 @@
     },
     "promise/compiler-go.stderr.gz": {
       "bytes": 58,
-      "sha256": "f42dea0d30ae85cdd6190164ece282c27ac0d02d3dbf5dfc998651643dbac862"
+      "sha256": "2922d978a78c230e69c967165e7e9506d38fb128e727aa54cc4024dcc01891c3"
     },
     "promise/control-029.a.gz": {
       "bytes": 121,
@@ -6425,7 +6425,7 @@
     },
     "promise/commands.json.gz": {
       "bytes": 6206,
-      "sha256": "06d5132f0fbc35467cf062914b9e63ee01b6ded65686802b7a1e0dac210fe262"
+      "sha256": "693e4e7a2f158c33635e3de0dcbe5cf4fbc799a5729189e33cfc6a1eaf688c11"
     },
     "promise/control-039.a.gz": {
       "bytes": 128,
@@ -6464,8 +6464,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "promise/controls-dom-go.stderr.gz": {
-      "bytes": 54,
-      "sha256": "e02927580c2050aa55e65efc3a976b8302a76a62386c9034e0a411e61afc2093"
+      "bytes": 55,
+      "sha256": "d86d694b64b66d7760e5d0c3f80a4ef5760ec948c89c7a20b43854807f6d4caa"
     },
     "promise/repository-native.stderr.gz": {
       "bytes": 0,
@@ -6489,7 +6489,7 @@
     },
     "promise/repository-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "2056af6b3397ee354a4bbf33f636fa42808ae966941dc90b2c63c4eecd3e9e8f"
+      "sha256": "e0de2f249dde2ccaea0ea3ca13845c03983611ac5f189e98ccacb94ee537dae4"
     },
     "promise/oracle-build.stdout.gz": {
       "bytes": 0,
@@ -6513,7 +6513,7 @@
     },
     "promise/controls-go.stderr.gz": {
       "bytes": 54,
-      "sha256": "3e6ce54981ceebfb327b0439d99077275c96464211acf1284347c7866faf1d89"
+      "sha256": "0f127c29d8c62fb95c80fc24fb158cc141094c6f7ff42ec47b3ee17e403d7fde"
     },
     "promise/checker-asan.h.gz": {
       "bytes": 2669,
@@ -6553,7 +6553,7 @@
     },
     "promise/controls-asan-go.stderr.gz": {
       "bytes": 54,
-      "sha256": "08bb869f153ab8a7244b68c997227b00c1d1bfd8e7a7588ed18b4bb617fb41ba"
+      "sha256": "68fd48b33bec8095bf1e29523ee4f22d00112da3360cf6a13ecd0c8b8ca7a5ba"
     },
     "promise/control-011.a.gz": {
       "bytes": 127,
@@ -6601,7 +6601,7 @@
     },
     "promise/repository-asan-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "0dd80e280131d933470c66ad7072576083fe513cb1caf705ec7c2eec2b39a36e"
+      "sha256": "5f39c4d9480fd77b2923fa8893778a87f1c8d15be318d2ec586399b9c34664ec"
     },
     "promise/control-007.a.gz": {
       "bytes": 126,
@@ -6681,7 +6681,7 @@
     },
     "promise/compiler-asan-go.stderr.gz": {
       "bytes": 58,
-      "sha256": "043b5d1699705bd5f021b94161f6fcbfe5f38d119ec12d8f5e663efad5713045"
+      "sha256": "8fcabb5d8e635449f35cc38e5c348bd50be7d79914c702ff9794ae2aed4cf848"
     },
     "promise/control-013.a.gz": {
       "bytes": 122,
@@ -6957,7 +6957,7 @@
     },
     "regex/compiler-go.stderr.gz": {
       "bytes": 59,
-      "sha256": "ebb20328280b46fbe11088c1cd7dfb130ae500b712648bbba5cff0581bdccf66"
+      "sha256": "47c639fc89a3cab8f1d6c2497a341530f7d76618aae1a6aea8c5e7de265f4f51"
     },
     "regex/control-029.a.gz": {
       "bytes": 173,
@@ -7025,7 +7025,7 @@
     },
     "regex/commands.json.gz": {
       "bytes": 6248,
-      "sha256": "63516f7ab3f7d2bafdee824c06ce8b4cb79a0af536f95ff7cfdaf802a3f7fca8"
+      "sha256": "fe958e55fbc86a1a7196a41f00813ad061fa1e5fa59f4f7dfecbf65411e8357f"
     },
     "regex/control-039.a.gz": {
       "bytes": 177,
@@ -7069,7 +7069,7 @@
     },
     "regex/controls-dom-go.stderr.gz": {
       "bytes": 55,
-      "sha256": "bec51070dbcb0fd268a604a03f35ad173f15161fb132cf31207c69e2eff3ec98"
+      "sha256": "016bb649789eb9d2d23d0cb006de2756b1ca774ac8065bfcdaf18a3fed8223e2"
     },
     "regex/control-051.a.gz": {
       "bytes": 162,
@@ -7097,7 +7097,7 @@
     },
     "regex/repository-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "5566628492a2230825915bbb3687eab4fdd375edf3031f8fe3543475de901d7f"
+      "sha256": "4dd741e764afcc92e09cd48507a7e8b9a916d26d3cd81c5e1cc7490a43e6ac92"
     },
     "regex/oracle-build.stdout.gz": {
       "bytes": 0,
@@ -7120,8 +7120,8 @@
       "sha256": "be3ed5f664359925ef091cdb32a551a8f33df55bec46f5e2b88033bce21d837e"
     },
     "regex/controls-go.stderr.gz": {
-      "bytes": 56,
-      "sha256": "db380861524651273cdf9eab7774e229a9838884b47063718bf139d0cf774f07"
+      "bytes": 55,
+      "sha256": "0d1f2e7367270b38441f800bbf4b2a25ccc0b41432fe845cd928eb985cef0593"
     },
     "regex/checker-asan.h.gz": {
       "bytes": 2669,
@@ -7169,7 +7169,7 @@
     },
     "regex/controls-asan-go.stderr.gz": {
       "bytes": 55,
-      "sha256": "fde3ac20a8e9caf44b0a787cd9bfb7e961e82394f2e307e3791d3da2fd2fd1e4"
+      "sha256": "71e89470d268d5e1172d2ead5afa85fc8ba021c5ba46d855608aefd166cc6a61"
     },
     "regex/control-011.a.gz": {
       "bytes": 172,
@@ -7221,7 +7221,7 @@
     },
     "regex/repository-asan-go.stderr.gz": {
       "bytes": 56,
-      "sha256": "04af9c644a3a43d15eb31901ae5e03432283eda0514365bc55ee59fb575abe85"
+      "sha256": "c633d612ca65c52dd808bdfb7f0109a07cae3404f9d586207caef5f3c8ff0b61"
     },
     "regex/control-007.a.gz": {
       "bytes": 168,
@@ -7313,7 +7313,7 @@
     },
     "regex/compiler-asan-go.stderr.gz": {
       "bytes": 59,
-      "sha256": "c04a90ed86f398017677e40ed3c99a5bb725cf8a26a7dae7c5f8f7839cc62f1e"
+      "sha256": "49686d6bc5c843806a9fe8eb5b5965916bda218b5d38b65dbb379c0cf86e3e7d"
     },
     "regex/control-013.a.gz": {
       "bytes": 185,
@@ -8008,8 +8008,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "legacy-listeners/commands.json.gz": {
-      "bytes": 5710,
-      "sha256": "a9501db4159309ec1c6dec974d99e649c52f4f65c5e39eff48714ab12814f853"
+      "bytes": 5709,
+      "sha256": "5717daa46da3ad43c74500a9ad474c84f8af970b8f12487ed0d733cd59a14119"
     },
     "legacy-listeners/mutant-0.stdout.gz": {
       "bytes": 358,
@@ -8060,8 +8060,8 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "legacy-listeners/go.stderr.gz": {
-      "bytes": 50,
-      "sha256": "ac73516f3e5881f438208ce55752a80cf00259627b66d1261141a07f9420e5a3"
+      "bytes": 49,
+      "sha256": "3a30ef06f6bfec0cf7aaa17dbd8230e662e7edd7b4d98702f898d7720e750b8a"
     },
     "legacy-listeners/oracle.json.gz": {
       "bytes": 154,
@@ -8290,6 +8290,42 @@
     "legacy-listeners/mutant-3.stderr.gz": {
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "typeof-setup.log.gz": {
+      "bytes": 388,
+      "sha256": "7a597258df3310a8780e500124a7027db5874db9f36d5afed4dab5788ed22c14"
+    },
+    "typeof-probe-compiler.log.gz": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "typeof-rebase.log.gz": {
+      "bytes": 757,
+      "sha256": "33663bfd27ab89aa08fba748cc2d41b5d19a345acc93d0ffa656a479eb5045df"
+    },
+    "typeof-landing.log.gz": {
+      "bytes": 442,
+      "sha256": "1fa1b67c9d3d6929691a02a29fa000f43c2429e51bb9e599cdb3aeb10e4327a4"
+    },
+    "typeof-required.log.gz": {
+      "bytes": 147,
+      "sha256": "06f78ab8024490f57a01091bfb4af5671787970852a76e7ec84602d11380cb00"
+    },
+    "typeof-jsx.log.gz": {
+      "bytes": 1281,
+      "sha256": "7d8f585de171d2d28ee8efc4daf3da165cb7effacae5acf15709d9b065a1ae61"
+    },
+    "typeof-listeners.log.gz": {
+      "bytes": 824,
+      "sha256": "8e6f04049b2193dedc6e5c4a7c09dfb07b4e48c697b9c70757f8d9471dba5de0"
+    },
+    "typeof-libraries.log.gz": {
+      "bytes": 128,
+      "sha256": "d35fb440313bc1cb4f48cf85162258efcb63e43bc09c4a10206cb010c83a002a"
+    },
+    "typeof-benchmark.log.gz": {
+      "bytes": 400,
+      "sha256": "e5abd6081dcb6f6e2d969aa67a4584938207999e4cb0e704b4cf760f4b54a349"
     },
     "driver-setup.log.gz": {
       "bytes": 386,
@@ -8526,10 +8562,12 @@
   },
   "owned_sources": {
     "symbol.a": "c101e0921131f705b1d7a297644efa7b8e9f8672cb65a3783ead62d9125e3934",
+    "TYPEOF_LANDING_REPORT.md": "ea6aab5beb424b33f6fa9ee27385f4ed242fc3c30e064ab45adb52f5ffed67eb",
     "AREA_LANDING_REPORT.md": "4303895ce35422b9b2bf9245a0698be43bb34887df593970c2f7dbc55d72a088",
     "listeners_probe.a": "b50c906a49ce718221980bc948d79848caeb3ee98c93910b9b83c48119adee99",
     "FINAL_SELECTION_REPORT.md": "af2f7529e1c3e3dd61b4e666c69af2ca5f8c40c5b9b6d9ad16d585c21972e813",
     "libraries.a": "5b4c957ae6762a61f185c21328806eddc7662d98e00403707aa245745fce6d96",
+    "DRIVER_SELECTION_REPORT.md": "fc406ce53897b09c5cd9f90b25ce5aaba5d34910424ac712ad47e84091c2739c",
     "kinds.a": "7d6d3c272d1c86a3c62f851160894d7b6f52a5d88403c7aa060b772aabbd4093",
     "REQUIRED_INPUTS_REPORT.md": "c536ac4e3586b3c6245787b0d6aeacb76bf722f5e662a6b66867848150464f49",
     "generate_libraries.py": "51828bccbfc210b3eda316ecc75e845fc391283b56a31a1fc455c1bb1e95cea8",
@@ -8542,11 +8580,11 @@
     "REPORT.md": "28753cb89f87028d2074195bef076de027fb0e9e8883d138aa19d4ea3ebb8a07",
     "LATEST_SELECTION_REPORT.md": "853756338cd6e6b220074b50e80e681b9dae14beca8e5da176c528e0aea9196d",
     "pragma.a": "28650aa0ea0f9b0e132d8395c282741a7df7d7a1383f3a0401657db053e5cb0a",
-    "DRIVER_LANDING_REPORT.md": "6e27ba827121f27f7a59dc828ee2b85d858a38d2a9eb1d1f2a8715183a42b033",
+    "DRIVER_LANDING_REPORT.md": "57a48befd04c36dcdd1e48a9d0a1c025c67d068488f203361354171b867575e8",
     "NAMED_LANDING_REPORT.md": "0dcad2737eccffaefc82343e79d0e896d2eb55c1f801c46463d86fa1f8c8a22f",
     "document.a": "e73d5e0c8ef3b00913c0bb592c5fe93302311608a5f309302fc4d9dbd6928125",
     "released_probe.a": "6f97ceaa0f5425d3d941375c82fb88762b7c7fb981532c41b4a4fca497c96a5f",
-    "collect_evidence.py": "896356d1227a4923141501147110a5f645aa8f5460cfe71fbb84702a4f6ce3db",
+    "collect_evidence.py": "c4e50d7f65d1e02e00f31f12d21e4ba4517114c6fb3667cc2c34a7751a584649",
     "REQUIRED_INPUTS_SELECTION_REPORT.md": "ea58071be8799163b7f7d831eedaed44d1f0b170c1acfa55b180ee4c5f172ed4",
     "LATEST_LANDING_REPORT.md": "89bc9bf571a53e8811985af57d9f382185ceac5183a5a64312d4a2176ade21e9",
     "suite.a": "0a1ac5be8cfe43f3a20274869e61bebaaefc6156bc4d5a8b240567fc0903253b",
