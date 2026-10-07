@@ -51,9 +51,14 @@ func (g *generator) emitCheck() (string, error) {
 				available = append(available, constant)
 			}
 		}
+		// Option values are written unsigned, so bit 63 needs its suffix to stay a literal C reads.
+		suffix := ""
+		if d.options {
+			suffix = "UL"
+		}
 		for i, constant := range available {
 			if i < len(d.values) {
-				fmt.Fprintf(&text, "_Static_assert(%s == %s, \"%s enum value\");\n", constant.Name, d.values[i], constant.Name)
+				fmt.Fprintf(&text, "_Static_assert(%s == %s%s, \"%s enum value\");\n", constant.Name, d.values[i], suffix, constant.Name)
 			}
 		}
 	}
@@ -131,7 +136,8 @@ func (g *generator) emitCheck() (string, error) {
 func checkKey(call checkCall) string {
 	owner := ""
 	if call.owner != nil {
-		owner = call.owner.node.Name
+		// A protocol and a class may share an Objective-C name; the kind keeps their order fixed.
+		owner = call.owner.node.Name + ":" + string(call.owner.declaration.Kind)
 	}
 	return fmt.Sprintf("%s:%t:%s", owner, call.instance, call.selector)
 }

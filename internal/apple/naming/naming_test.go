@@ -106,9 +106,13 @@ func TestCollisionsAreRejected(t *testing.T) {
 			{Kind: OptionConstant, Name: "NSFirstStatusReady", Parent: "NSFirstStatus", ParentSwiftName: "NSWindow.Status", Framework: "AppKit", Enumerators: []Enumerator{{Name: "NSFirstStatusReady"}, {Name: "NSFirstStatusWaiting"}}},
 			{Kind: OptionConstant, Name: "NSSecondStatusReady", Parent: "NSSecondStatus", ParentSwiftName: "NSWindow.Status", Framework: "AppKit", Enumerators: []Enumerator{{Name: "NSSecondStatusReady"}, {Name: "NSSecondStatusWaiting"}}},
 		},
-		"class and instance method": {
-			{Kind: ClassMethod, Name: "reload", Parent: "NSWindow", Framework: "AppKit"},
+		"property and method": {
+			{Kind: Property, Name: "reload", Parent: "NSWindow", Framework: "AppKit"},
 			{Kind: InstanceMethod, Name: "reload", Parent: "NSWindow", Framework: "AppKit"},
+		},
+		"overloads of one shape": {
+			{Kind: InstanceMethod, Name: "showText:", Parent: "NSWindow", Framework: "AppKit", Parameters: []Parameter{{Name: "text", Type: Type{Spelling: "NSString *", Nullability: Nonnull}}}, SwiftName: "show(_:)"},
+			{Kind: InstanceMethod, Name: "showMessage:", Parent: "NSWindow", Framework: "AppKit", Parameters: []Parameter{{Name: "message", Type: Type{Spelling: "NSString *", Nullability: Nonnull}}}, SwiftName: "show(_:)"},
 		},
 		"normalization": {
 			{Kind: Property, Name: "contentRect", Parent: "NSWindow", Framework: "AppKit"},
@@ -134,6 +138,16 @@ func TestCollisionsAreRejected(t *testing.T) {
 				t.Fatal("reversed collision accepted")
 			}
 		})
+	}
+	// A class and its instances are two namespaces, and overloads of different shapes are told apart
+	// by a call's arguments.
+	if _, err := Build([]Declaration{
+		{Kind: ClassMethod, Name: "reload", Parent: "NSWindow", Framework: "AppKit"},
+		{Kind: InstanceMethod, Name: "reload", Parent: "NSWindow", Framework: "AppKit"},
+		{Kind: InstanceMethod, Name: "showText:", Parent: "NSWindow", Framework: "AppKit", Parameters: []Parameter{{Name: "text", Type: Type{Spelling: "NSString *", Nullability: Nonnull}}}, SwiftName: "show(_:)"},
+		{Kind: InstanceMethod, Name: "showCount:", Parent: "NSWindow", Framework: "AppKit", Parameters: []Parameter{{Name: "count", Type: Type{Spelling: "NSInteger", Nullability: Nonnull}}}, SwiftName: "show(_:)"},
+	}); err != nil {
+		t.Fatal(err)
 	}
 	// Identical words in different frameworks and different owning types are safe.
 	_, err := Build([]Declaration{{Kind: Class, Name: "NSView", Framework: "AppKit"}, {Kind: Class, Name: "UIView", Framework: "UIKit"}, {Kind: Property, Name: "title", Parent: "NSWindow", Framework: "AppKit"}, {Kind: Property, Name: "title", Parent: "NSMenu", Framework: "AppKit"}})

@@ -11,7 +11,8 @@ typedef enum __attribute__((flag_enum)) NSFixtureStyle : NSUInteger NSFixtureSty
 enum __attribute__((flag_enum)) NSFixtureStyle : NSUInteger {
  NSFixtureStylePlain = 0,
  NSFixtureStyleBright = 1 << 1,
- NSFixtureStyleQuiet = 1 << 3
+ NSFixtureStyleQuiet = 1 << 3,
+ NSFixtureStyleFlipped = 1UL << 63
 };
 typedef struct CGPoint { CGFloat x; CGFloat y; } CGPoint;
 typedef struct CGSize { CGFloat width; CGFloat height; } CGSize;
@@ -27,6 +28,10 @@ union NSFixtureUnion { long count; double ratio; };
 - (CGRect)bounds;
 - (void)takeUnion:(union NSFixtureUnion)value;
 + (NSFixturePanel * _Nonnull)currentPanel;
+// Overloads Swift imports under one name, told apart by their argument types.
+- (instancetype _Nonnull)initWithTitle:(NSString * _Nonnull)title NS_SWIFT_NAME(init(title:));
+- (void)showText:(NSString * _Nonnull)text NS_SWIFT_NAME(show(_:));
+- (void)showCount:(NSInteger)count NS_SWIFT_NAME(show(_:));
 @end
 @interface NSFixturePanel (Painting)
 - (void)paint;

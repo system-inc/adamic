@@ -23,7 +23,7 @@ declare module 'apple/appkit/fixture-panel' {
 
 		/**
 		 * -[NSFixturePanel configureMode:style:]
-		 * @objc method configureMode:style: 0:enum(Calm=0,Loud=7) 1.style:options(Plain=0,Bright=2,Quiet=8) -> void
+		 * @objc method configureMode:style: 0:enum(Calm=0,Loud=7) 1.style:options(Plain=0,Bright=2,Quiet=8,Flipped=9223372036854775808) -> void
 		 */
 		configureMode(mode: FixtureMode, options: { readonly style: readonly FixtureStyle[] }): void;
 
@@ -32,6 +32,12 @@ declare module 'apple/appkit/fixture-panel' {
 		 * @objc init initWithRecord: 0:object
 		 */
 		constructor(record: FixtureRecord);
+
+		/**
+		 * -[NSFixturePanel initWithTitle:]
+		 * @objc init initWithTitle: 0.title:string
+		 */
+		constructor(options: { readonly title: string });
 
 		/**
 		 * -[NSFixturePanel paint]
@@ -50,6 +56,18 @@ declare module 'apple/appkit/fixture-panel' {
 		 * @objc method setFrame:display:animate: 0:rectangle 1.display:boolean 1.animate:boolean -> void
 		 */
 		setFrame(rectangle: Rectangle, options: { readonly display: boolean; readonly animate: boolean }): void;
+
+		/**
+		 * -[NSFixturePanel showCount:]
+		 * @objc method showCount: 0:integer -> void
+		 */
+		show(count: number): void;
+
+		/**
+		 * -[NSFixturePanel showText:]
+		 * @objc method showText: 0:string -> void
+		 */
+		show(text: string): void;
 
 		/**
 		 * -[NSFixturePanel takeRecord:]

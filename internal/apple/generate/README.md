@@ -57,13 +57,18 @@ inspection work; it neither links an Apple framework nor emulates one.
 | Instance/class methods | Keep Apple's selector in `method`/`static` tags. Naming supplies the base and argument labels. An unlabeled first argument is positional; labeled arguments use a single trailing object. |
 | Initializers/factories | Naming identifies constructors; instance initializers use `init`, class factories use `static`. All declared parameters remain required; nullability does not invent default arguments. |
 | Ownership | Object results in alloc/new/copy/mutableCopy families, or with `NSReturnsRetainedAttr`, use `new object`; explicit `NSReturnsNotRetainedAttr` overrides the family inference. Retained C object/string results use the same ownership tag. |
-| Enum constants | Recover evaluated nested ConstantExpr values, including shifted expressions; implicit values increment the previous value. Naming strips the common word prefix and rejects collisions. Values must fit the bridge's signed 64-bit table. |
+| Enum constants | Recover evaluated nested ConstantExpr values, including shifted expressions; implicit values increment the previous value. Naming strips the common word prefix and rejects collisions. Enumeration values must fit a signed 64-bit long; option bits are unsigned and may reach bit 63 (`NSAlignRectFlipped`), written unsigned in the tag and with a `UL` suffix in the witness, and carried in the bridge's long with their bits intact. |
 | `FlagEnumAttr` | Emit PascalCase literal domains, readonly-array parameters and `options(Name=bit,...)` tags. Ordinary enums use unions and `enum(Name=value,...)`. Fixed underlying types must match the bridge's long/unsigned long ABI when passed. |
 | Scalars | Double/CGFloat, long/NSInteger, unsigned long/NSUInteger and BOOL use their documented tags and Adamic number/boolean types. NSString pointers become strings. Narrow integers and float are omitted because the bridge has no matching native call type. |
 | CGRect/NSRect | Resolve NSRect's desugared CGRect identity. Emit the four-number Rectangle interface and rectangle argument tag. No rectangle result is emitted. |
 | C functions | Emit standalone tagged functions; preserve positional C parameters and their order. |
 | Module output | One ambient declaration file per module, sorted paths, imports, declarations, comments and witness calls. Original spellings are comments and tags; source offsets, addresses and absolute SDK paths are absent. |
-| Name collisions | Validate the emitted surface with naming.Build before returning output. No overload winner, numeric suffix or silent merge is selected. Imports that would hide a local export or another imported type also fail. A collision aborts generation. |
+| Name collisions | Validate the emitted surface with naming.Build before returning output, which reports every collision at once. A member's slot is its owner and name, static and instance apart; callables may share a slot as overloads when their argument shapes differ (lowering takes the overload the checker resolved, each with its own tag), and a value member may not share one. Imports that would hide a local export or another imported type also fail. A collision aborts generation. |
+| Class and protocol of one name | Swift's rule: the protocol imports as `...Protocol` (`NSAccessibilityElement` and `AccessibilityElementProtocol`), whichever is declared first; `id<Name>` means the protocol and `Name *` the class, and the protocol's members carry its imported name in their identity. |
+| Factory beside an initializer | Swift's rule: a class factory imported as an initializer gives way to an instance initializer of the same shape (`+[NSAffineTransform transform]` beside `-init`). |
+| Method beside a property | Swift tells `abbreviation(for:)` from the property `abbreviation` by labels; a class can't, so the method folds its first label into its name and takes that argument positionally, Objective-C's own reading: `abbreviationFor(date)`, `isValidDateIn(calendar)`. Only properties of the same staticness count. |
+| Redeclared properties | A category that redeclares a class's property (`NSSlider`'s `vertical`, readonly in a category beside the class's readwrite) is dropped, unless it widens readonly to readwrite. |
+| Unnameable members | A member the naming layer can't name yet (a zero-argument named initializer without an explicit Swift name, such as `initListDescriptor`) is left out with its reason rather than stopping the framework. |
 
 The naming amendment reserves every audited ES2024 global, plus Dictionary by
 explicit policy. NSError, NSDate, NSString, NSNumber, NSArray, NSSet,
@@ -110,13 +115,10 @@ This is a synchronous generator over JSON/header facts, not Swift's complete
 SDK importer. It does not read SDK API-note YAML, bridge overlays, async/throws
 transformations, deployment-version availability, category implementations,
 protocol inheritance/conformance synthesis, or inherited methods from an
-unbound superclass. An overload or normalized-name collision remains a fatal
-naming error. Class/protocol declarations sharing one original Objective-C
-name are also refused instead of discarding one kind; effective SDK protocol
-renaming and separate type namespaces need a later importer extension. This can prevent a full framework export until the naming policy
-or generator input supplies a collision-free surface. The fixture suite proves
-the implemented patterns; it does not establish that a complete current SDK
-can be emitted without such errors.
+unbound superclass. Two overloads of one shape, or a value member and a method
+that can't fold a label, remain a fatal naming error. A method colliding with an
+inherited property isn't detected here; the checker sees it. Overloads whose
+argument types are a class and its subclass resolve to the one declared first.
 
 The existing bridge cannot lower a literal undefined as a nullable string
 argument: it assigns that literal the object representation. The compiler
@@ -128,6 +130,25 @@ The Linux run cannot regenerate or replace the real SDK seed bindings, compile
 the check against Apple headers, link the generated C to Apple frameworks, or
 run Apple's framework methods. The real seed files remain unchanged. The Mac
 must generate the real files and compile the header witness before using them.
+
+## The real SDK (macOS 27.0 SDK, October 6, 2026)
+
+`go run ./cmd/adamic-apple-bindings Foundation AppKit -o <directory>` generates
+both frameworks whole: 1,249 modules, 7.6 MB, about 5 seconds. Its check file
+holds 7,297 calls and compiles clean against the real headers with
+`xcrun clang -x objective-c -fsyntax-only -fno-objc-arc -Werror
+-Wno-deprecated-declarations -fmodules`, the bridge's own mode. Under ARC, the
+seven checks of `NSAutoreleasePool` and `NSGarbageCollector` are refused, as
+they should be; without `-Wno-deprecated-declarations`, 20 deprecated
+declarations warn.
+
+Each rule above marked as Swift's, and the unsigned option bits, the protocol
+results, and the redeclared properties, is a wall the real headers showed, held
+on Linux by `Collision.h`, `Shapes.h` and the golden fixture. The largest
+omissions, by count: global constants (2,700), unbound types such as `id` and
+`SEL` (1,168), pointer-to-pointer parameters (329), enumeration and option
+results (261), enumerations over `NSUInteger` (152), and anything taking a
+`CGRect` while CoreGraphics isn't generated (110).
 Output.Write does not delete old seed or previously generated files; removing
 obsolete modules is a separate SDK-generation integration step.
 

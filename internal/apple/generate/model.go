@@ -295,19 +295,39 @@ func (g *generator) inventory() error {
 			g.skipped(n, "unavailable on "+g.configuration.Platform)
 			continue
 		}
+		key := n.Name
+		if old := g.types[key]; old != nil && old.declaration.Kind != d.Kind {
+			// Swift's rule: a protocol that shares a class's name imports as
+			// ...Protocol (NSObjectProtocol, NSAccessibilityElementProtocol), and both are kept.
+			switch {
+			case d.Kind == naming.Protocol && old.declaration.Kind == naming.Class:
+				key = protocolKey(n.Name)
+			case d.Kind == naming.Class && old.declaration.Kind == naming.Protocol:
+				delete(g.types, key)
+				protocolSwiftName(&old.declaration)
+				renamed, err := naming.Name(old.declaration)
+				if err != nil {
+					return err
+				}
+				old.output = renamed
+				g.types[protocolKey(n.Name)] = old
+			default:
+				return fmt.Errorf("ambiguous type kind for %s; refusing to discard either declaration", n.Name)
+			}
+		}
+		if key != n.Name {
+			protocolSwiftName(&d)
+		}
 		out, err := naming.Name(d)
 		if err != nil {
 			return err
 		}
-		if old := g.types[n.Name]; old != nil {
-			if old.declaration.Kind != d.Kind {
-				return fmt.Errorf("ambiguous class/protocol or type kind for %s; refusing to discard either declaration", n.Name)
-			}
+		if old := g.types[key]; old != nil {
 			if len(n.Children) <= len(old.node.Children) {
 				continue
 			}
 		}
-		g.types[n.Name] = &definition{node: n, declaration: d, output: out, options: kind == naming.OptionSet}
+		g.types[key] = &definition{node: n, declaration: d, output: out, options: kind == naming.OptionSet}
 	}
 	// Read every enumerator's evaluated value. Implicit values use the previous
 	// evaluated value plus one, not a search for an arbitrary integer leaf.
@@ -337,9 +357,21 @@ func (g *generator) inventory() error {
 			if siblings[i].Unavailable {
 				continue
 			}
-			parsed, err := strconv.ParseInt(current, 10, 64)
-			if err != nil {
-				return fmt.Errorf("%s: bridge enum table requires signed 64-bit values: %w", child.Name, err)
+			// An option set's bits are unsigned and may reach bit 63 (NSAlignRectFlipped); an
+			// enumeration's values are signed.
+			bound := ""
+			if def.options {
+				parsed, err := strconv.ParseUint(current, 10, 64)
+				if err != nil {
+					return fmt.Errorf("%s: bridge option table requires unsigned 64-bit values: %w", child.Name, err)
+				}
+				bound = strconv.FormatUint(parsed, 10)
+			} else {
+				parsed, err := strconv.ParseInt(current, 10, 64)
+				if err != nil {
+					return fmt.Errorf("%s: bridge enum table requires signed 64-bit values: %w", child.Name, err)
+				}
+				bound = strconv.FormatInt(parsed, 10)
 			}
 			kind := naming.EnumConstant
 			if def.options {
@@ -351,12 +383,36 @@ func (g *generator) inventory() error {
 				return err
 			}
 			def.members = append(def.members, out.Name)
-			def.values = append(def.values, strconv.FormatInt(parsed, 10))
+			def.values = append(def.values, bound)
 			g.declarations = append(g.declarations, d)
 		}
 	}
 	return nil
 }
+
+// protocolKey keys a protocol in the type table when a class holds its Objective-C name.
+// It can't collide with a declaration's own name, which is always an identifier.
+func protocolKey(name string) string { return "@protocol " + name }
+
+// protocol finds the protocol written id<name>, under its own name or beside a class of that name.
+func (g *generator) protocol(name string) *definition {
+	if def := g.types[protocolKey(name)]; def != nil {
+		return def
+	}
+	if def := g.types[name]; def != nil && def.declaration.Kind == naming.Protocol {
+		return def
+	}
+	return nil
+}
+
+// protocolSwiftName gives a protocol beside a same-named class Swift's imported name, unless
+// the header already names it.
+func protocolSwiftName(d *naming.Declaration) {
+	if d.SwiftName == "" {
+		d.SwiftName = d.Name + "Protocol"
+	}
+}
+
 func sortedKeys[T any](m map[string]T) []string {
 	keys := make([]string, 0, len(m))
 	for k := range m {
@@ -488,9 +544,10 @@ func (g *generator) native(t writtenType, parent string, result bool) (nativeTyp
 			return mapped, fmt.Errorf("pointer-to-pointer types are not carried by the bridge")
 		}
 		base = strings.TrimSpace(strings.TrimSuffix(q, "*"))
-		base = strings.TrimPrefix(base, "id<")
-		base = strings.TrimSuffix(base, ">")
 		def := g.types[base]
+		if strings.HasPrefix(base, "id<") {
+			def = g.protocol(strings.TrimSuffix(strings.TrimPrefix(base, "id<"), ">"))
+		}
 		if def == nil || def.declaration.Kind != naming.Class && def.declaration.Kind != naming.Protocol {
 			return mapped, fmt.Errorf("unsupported or unbound native type %q", t.Qual)
 		}

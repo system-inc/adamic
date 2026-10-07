@@ -2,5 +2,5 @@
 
 declare module 'apple/appkit/fixture-style' {
 	/** NSFixtureStyle */
-	export type FixtureStyle = 'Plain' | 'Bright' | 'Quiet';
+	export type FixtureStyle = 'Plain' | 'Bright' | 'Quiet' | 'Flipped';
 }

@@ -123,7 +123,7 @@ func (g *generator) emitClass(def *definition) (string, error) {
 	protocol := def.declaration.Kind == naming.Protocol
 	nodes := append([]*node{}, n.Children...)
 	for _, category := range g.nodes {
-		if category.Kind == "ObjCCategoryDecl" && category.Interface.Name == n.Name {
+		if !protocol && category.Kind == "ObjCCategoryDecl" && category.Interface.Name == n.Name {
 			_, _, unavailable, err := g.attributes(category)
 			if err != nil {
 				return "", err
@@ -145,7 +145,22 @@ func (g *generator) emitClass(def *definition) (string, error) {
 	// without @property are also combined, with both selectors in the tag.
 	properties := children(n, "ObjCPropertyDecl")
 	for _, child := range nodes {
-		if child.Kind == "ObjCPropertyDecl" && !containsNode(properties, child) {
+		if child.Kind != "ObjCPropertyDecl" || containsNode(properties, child) {
+			continue
+		}
+		// A category may declare a property the class already has (NSSlider's vertical, readwrite in
+		// the class, readonly in NSSliderVerticalGetter): the class's declaration stands unless the
+		// category's widens it to readwrite.
+		redeclared := false
+		for i, existing := range properties {
+			if existing.Name == child.Name && existing.ClassProperty == child.ClassProperty {
+				redeclared = true
+				if existing.Readonly && !child.Readonly {
+					properties[i] = child
+				}
+			}
+		}
+		if !redeclared {
 			properties = append(properties, child)
 		}
 	}
@@ -186,22 +201,37 @@ func (g *generator) emitClass(def *definition) (string, error) {
 			}
 		}
 	}
+	// Swift's rule: a factory method imported as an initializer gives way to a real initializer
+	// of the same shape (+[NSAffineTransform transform] beside -init).
+	initializers := map[string]bool{}
+	for _, child := range nodes {
+		if child.Kind == "ObjCMethodDecl" && child.Instance && !child.Implicit && !accessors[child.Name] {
+			_, out, _, _, reason, err := g.callable(child, naming.InstanceMethod, n.Name, def.declaration.SwiftName, nil, nil)
+			if err == nil && reason == "" && out.Arguments.Constructor {
+				initializers[naming.Shape(out.Arguments)] = true
+			}
+		}
+	}
 	members := []string{}
 	constructor := false
+	// values holds the Adamic names of the properties, static and instance apart, so a method that
+	// would share one's name can give way.
+	values := map[bool][]string{}
 	for _, p := range properties {
-		member, err := g.emitProperty(def, p, protocol)
+		member, name, err := g.emitProperty(def, p, protocol)
 		if err != nil {
 			return "", err
 		}
 		if member != "" {
 			members = append(members, member)
+			values[p.ClassProperty] = append(values[p.ClassProperty], name)
 		}
 	}
 	for _, child := range nodes {
 		if child.Kind != "ObjCMethodDecl" || child.Implicit || accessors[child.Name] {
 			continue
 		}
-		member, isConstructor, err := g.emitMethod(def, child, protocol)
+		member, isConstructor, err := g.emitMethod(def, child, protocol, initializers, values[!child.Instance])
 		if err != nil {
 			return "", err
 		}
@@ -258,10 +288,12 @@ func propertySelectors(n *node) (string, string) {
 	}
 	return getter, setter
 }
-func (g *generator) emitProperty(owner *definition, n *node, protocol bool) (string, error) {
+func (g *generator) emitProperty(owner *definition, n *node, protocol bool) (string, string, error) {
 	d, unavailable, err := g.description(n, naming.Property, owner.node.Name)
+	d.ParentSwiftName = owner.declaration.SwiftName
+	d.ClassProperty = n.ClassProperty
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 	m := g.getModule(owner.output.Module)
 	skip := func(reason string) {
@@ -269,30 +301,33 @@ func (g *generator) emitProperty(owner *definition, n *node, protocol bool) (str
 	}
 	if unavailable {
 		skip("unavailable on " + g.configuration.Platform)
-		return "", nil
+		return "", "", nil
 	}
 	if protocol {
 		optional, err := g.protocolOptional(owner.node, n)
 		if err != nil {
-			return "", err
+			return "", "", err
 		}
 		if optional {
 			skip("optional protocol properties are not proven present")
-			return "", nil
+			return "", "", nil
 		}
 	}
 	native, err := g.native(n.Type, owner.node.Name, true)
 	if err != nil {
 		skip(err.Error())
-		return "", nil
+		return "", "", nil
 	}
 	getter, setter := propertySelectors(n)
 	d.Getter = getter
 	d.Setter = setter
-	d.Result = naming.Type{Spelling: cleanType(n.Type.Qual), Object: native.c == "id", Framework: referenceFramework(native, n.Framework), Nullability: naming.Nonnull}
+	d.Result = naming.Type{Spelling: namingSpelling(n.Type, native), Object: native.c == "id", Framework: referenceFramework(native, n.Framework), Nullability: naming.Nonnull}
 	out, err := naming.Name(d)
 	if err != nil {
-		return "", err
+		// One member the naming layer can't name yet is left out with its reason; a collision
+		// between names that were given stays fatal in naming.Build.
+		skip("no Adamic name yet: " + err.Error())
+		return "", "", nil
 	}
 	g.declarations = append(g.declarations, d)
 	g.addImport(m, owner.output.Module, native.reference)
@@ -302,7 +337,7 @@ func (g *generator) emitProperty(owner *definition, n *node, protocol bool) (str
 		prefix = "static "
 		if protocol {
 			skip("class protocol properties have no receiver class")
-			return "", nil
+			return "", "", nil
 		}
 	}
 	readonly := ""
@@ -317,7 +352,7 @@ func (g *generator) emitProperty(owner *definition, n *node, protocol bool) (str
 		original += ", " + methodOriginal(owner.node.Name, setter, !n.ClassProperty)
 		g.checks = append(g.checks, checkCall{owner: owner, selector: setter, instance: !n.ClassProperty, parameters: []nativeType{native}, result: nativeType{tag: "void", c: "void", header: "void"}})
 	}
-	return doc(original, tags, "\t\t") + "\t\t" + prefix + readonly + out.Name + ": " + native.adamic + ";\n", nil
+	return doc(original, tags, "\t\t") + "\t\t" + prefix + readonly + out.Name + ": " + native.adamic + ";\n", out.Name, nil
 }
 func methodOriginal(parent, selector string, instance bool) string {
 	prefix := "+"
@@ -326,8 +361,12 @@ func methodOriginal(parent, selector string, instance bool) string {
 	}
 	return prefix + "[" + parent + " " + selector + "]"
 }
-func (g *generator) callable(n *node, kind naming.Kind, parent string, properties []string) (naming.Declaration, naming.Output, []nativeType, nativeType, string, error) {
+
+// parentSwiftName is the owner's explicit imported name, which tells a protocol's members from
+// those of a class sharing its Objective-C name.
+func (g *generator) callable(n *node, kind naming.Kind, parent, parentSwiftName string, properties, values []string) (naming.Declaration, naming.Output, []nativeType, nativeType, string, error) {
 	d, unavailable, err := g.description(n, kind, parent)
+	d.ParentSwiftName = parentSwiftName
 	if err != nil {
 		return d, naming.Output{}, nil, nativeType{}, "", err
 	}
@@ -357,29 +396,18 @@ func (g *generator) callable(n *node, kind naming.Kind, parent string, propertie
 			return d, naming.Output{}, nil, nativeType{}, e.Error(), nil
 		}
 		natives = append(natives, native)
-		spelling := cleanType(p.Type.Qual)
-		// The naming layer needs the written type for omission, but references to
-		// protocols and rectangle aliases use their established concrete spelling.
-		if strings.HasPrefix(spelling, "id<") {
-			spelling = native.reference.node.Name + " *"
-		}
-		if native.tag == "rectangle" {
-			spelling = "CGRect"
-		}
-		if native.reference != nil && (native.reference.declaration.Kind == naming.Enum || native.reference.options) {
-			spelling = native.reference.node.Name
-		}
-		d.Parameters = append(d.Parameters, naming.Parameter{Name: p.Name, Type: naming.Type{Spelling: spelling, Object: native.c == "id", Nullability: naming.Nonnull, Framework: referenceFramework(native, n.Framework)}})
+		d.Parameters = append(d.Parameters, naming.Parameter{Name: p.Name, Type: naming.Type{Spelling: namingSpelling(p.Type, native), Object: native.c == "id", Nullability: naming.Nonnull, Framework: referenceFramework(native, n.Framework)}})
 	}
 	result, e := g.native(n.Result, parent, true)
 	if e != nil {
 		return d, naming.Output{}, nil, nativeType{}, e.Error(), nil
 	}
-	d.Result = naming.Type{Spelling: cleanType(n.Result.Qual), Object: result.c == "id", Framework: referenceFramework(result, n.Framework), Nullability: naming.Nonnull}
+	d.Result = naming.Type{Spelling: namingSpelling(n.Result, result), Object: result.c == "id", Framework: referenceFramework(result, n.Framework), Nullability: naming.Nonnull}
 	d.PropertyNames = properties
+	d.ValueNames = values
 	out, e := naming.Name(d)
 	if e != nil {
-		return d, out, nil, result, "", e
+		return d, out, nil, result, "no Adamic name yet: " + e.Error(), nil
 	}
 	return d, out, natives, result, "", nil
 }
@@ -411,7 +439,7 @@ func signature(out naming.Output, natives []nativeType) (string, string) {
 	}
 	return strings.Join(parameters, ", "), suffix
 }
-func (g *generator) emitMethod(owner *definition, n *node, protocol bool) (string, bool, error) {
+func (g *generator) emitMethod(owner *definition, n *node, protocol bool, initializers map[string]bool, values []string) (string, bool, error) {
 	if protocol {
 		optional, err := g.protocolOptional(owner.node, n)
 		if err != nil {
@@ -427,7 +455,7 @@ func (g *generator) emitMethod(owner *definition, n *node, protocol bool) (strin
 	if !n.Instance {
 		kind = naming.ClassMethod
 	}
-	d, out, natives, result, reason, err := g.callable(n, kind, owner.node.Name, g.propertyNames(owner, map[string]bool{}))
+	d, out, natives, result, reason, err := g.callable(n, kind, owner.node.Name, owner.declaration.SwiftName, g.propertyNames(owner, map[string]bool{}), values)
 	if err != nil {
 		return "", false, err
 	}
@@ -437,6 +465,10 @@ func (g *generator) emitMethod(owner *definition, n *node, protocol bool) (strin
 		return "", false, nil
 	}
 	constructor := out.Arguments.Constructor
+	if constructor && !n.Instance && initializers[naming.Shape(out.Arguments)] {
+		m.comments = append(m.comments, "// Skipped "+methodOriginal(owner.node.Name, n.Name, false)+": an initializer of the same shape is the constructor.")
+		return "", false, nil
+	}
 	if has(n, "NSConsumesSelfAttr") && !constructor {
 		m.comments = append(m.comments, "// Skipped "+n.Name+": a consumed receiver cannot be passed borrowed.")
 		return "", false, nil
@@ -492,7 +524,7 @@ func (g *generator) emitFunction(n *node) error {
 		return nil
 	}
 	n.Result = writtenType{Qual: strings.TrimSpace(q[:left])}
-	d, out, natives, result, reason, err := g.callable(n, naming.CFunction, "", nil)
+	d, out, natives, result, reason, err := g.callable(n, naming.CFunction, "", "", nil, nil)
 	if err != nil {
 		return err
 	}
@@ -513,6 +545,22 @@ func (g *generator) emitFunction(n *node) error {
 	m.declarations = append(m.declarations, doc(n.Name, []string{"function " + n.Name + sources + returns}, "\t")+"\texport function "+out.Name+"("+parameters+"): "+result.adamic+";\n")
 	g.checks = append(g.checks, checkCall{selector: n.Name, parameters: natives, result: result, function: true})
 	return nil
+}
+
+// namingSpelling is the written type the naming layer reads for omission, except that references
+// to protocols and rectangle aliases use their established concrete spelling.
+func namingSpelling(written writtenType, native nativeType) string {
+	spelling := cleanType(written.Qual)
+	if strings.HasPrefix(spelling, "id<") && native.reference != nil {
+		spelling = native.reference.node.Name + " *"
+	}
+	if native.tag == "rectangle" {
+		spelling = "CGRect"
+	}
+	if native.reference != nil && (native.reference.declaration.Kind == naming.Enum || native.reference.options) {
+		spelling = native.reference.node.Name
+	}
+	return spelling
 }
 
 func referenceFramework(native nativeType, fallback string) string {

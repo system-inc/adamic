@@ -108,7 +108,7 @@ func TestPatterns(t *testing.T) {
 		t.Error("array omission has no specific reason")
 	}
 	panel := files["appkit/fixture-panel.d.ts"]
-	for _, want := range []string{"0:rectangle 1.display:boolean 1.animate:boolean", "0:enum(Calm=0,Loud=7)", "1.style:options(Plain=0,Bright=2,Quiet=8)", "readonly style: readonly FixtureStyle[]", "paint(): void", "constructor(record: FixtureRecord)", "FixtureRecord | undefined"} {
+	for _, want := range []string{"0:rectangle 1.display:boolean 1.animate:boolean", "0:enum(Calm=0,Loud=7)", "1.style:options(Plain=0,Bright=2,Quiet=8,Flipped=9223372036854775808)", "readonly style: readonly FixtureStyle[]", "paint(): void", "constructor(record: FixtureRecord)", "FixtureRecord | undefined"} {
 		if !strings.Contains(panel, want) {
 			t.Errorf("panel missing %q", want)
 		}
@@ -298,7 +298,7 @@ func TestCompilerLowersGeneratedModules(t *testing.T) {
 	if runError != nil {
 		t.Fatalf("go run ./cmd/adamic c: %v\n%s", runError, content)
 	}
-	for _, want := range []string{"objc_msgSend", "NSFixturePanel", "setFrame:display:animate:", "configureMode:style:", "NSFixtureAdd", "adamic_apple_rectangle", "adamic_apple_options", "adamic_apple_string", "NSFixtureCreateText", "objc_release(result);"} {
+	for _, want := range []string{"objc_msgSend", "NSFixturePanel", "setFrame:display:animate:", "configureMode:style:", "NSFixtureAdd", "adamic_apple_rectangle", "adamic_apple_options", "adamic_apple_string", "NSFixtureCreateText", "objc_release(result);", "showText:", "showCount:", "initWithTitle:"} {
 		if !bytes.Contains(content, []byte(want)) {
 			t.Errorf("lowered C missing %q", want)
 		}
@@ -333,17 +333,92 @@ func TestWrittenTagTypeSpellings(t *testing.T) {
 	g := &generator{types: map[string]*definition{"CGRect": rectangle, "NSFixtureMode": mode}}
 	for _, written := range []string{"struct CGRect", "enum NSFixtureMode"} {
 		declaration := &node{Name: "consume:", Framework: "AppKit", Result: writtenType{Qual: "void"}, Children: []*node{{Kind: "ParmVarDecl", Name: "value", Type: writtenType{Qual: written}}}}
-		_, output, natives, _, reason, err := g.callable(declaration, naming.InstanceMethod, "NSFixtureOwner", nil)
+		_, output, natives, _, reason, err := g.callable(declaration, naming.InstanceMethod, "NSFixtureOwner", "", nil, nil)
 		if err != nil || reason != "" || len(natives) != 1 || output.Arguments == nil {
 			t.Fatalf("written tag type %s failed: %s %v", written, reason, err)
 		}
 	}
 }
 
+// A protocol sharing a class's name imports as ...Protocol, as Swift does, whichever comes first,
+// and id<Name> means the protocol while Name * means the class.
 func TestDeclarationKindCollision(t *testing.T) {
 	t.Parallel()
-	_, err := RunClang(context.Background(), clangPath(t), []string{"-x", "objective-c", "-fobjc-runtime=macosx-10.13", "-fsyntax-only", "-fblocks", "-Werror", "-Wno-nullability-completeness", "-F", "testdata/SDK", "-Xclang", "-ast-dump=json", "testdata/SDK/Foundation.framework/Headers/Collision.h"}, fixtureConfiguration(t))
-	if err == nil || !strings.Contains(err.Error(), "ambiguous class/protocol") {
-		t.Fatal("one declaration kind silently hid another", err)
+	output, err := RunClang(context.Background(), clangPath(t), []string{"-x", "objective-c", "-fobjc-runtime=macosx-10.13", "-fsyntax-only", "-fblocks", "-Werror", "-Wno-nullability-completeness", "-F", "testdata/SDK", "-Xclang", "-ast-dump=json", "testdata/SDK/Foundation.framework/Headers/Collision.h"}, fixtureConfiguration(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := map[string]string{}
+	for _, file := range output.Files {
+		files[file.Path] = string(file.Content)
+	}
+	for path, wants := range map[string][]string{
+		"foundation/fixture-ambiguous.d.ts":          {"export class FixtureAmbiguous", "takeProtocol(protocol: FixtureAmbiguousProtocol)", "takeClass(value: FixtureAmbiguous)", "protocolValue(): FixtureAmbiguousProtocol;", "import type { FixtureAmbiguousProtocol } from 'apple/foundation/fixture-ambiguous-protocol';"},
+		"foundation/fixture-ambiguous-protocol.d.ts": {"/** NSFixtureAmbiguous */\n\texport interface FixtureAmbiguousProtocol {", "readonly doThing: () => void;"},
+		"foundation/fixture-element.d.ts":            {"export class FixtureElement", "activate(): void;"},
+		"foundation/fixture-holder.d.ts":             {"readonly element: FixtureElementProtocol;"},
+		"foundation/fixture-element-protocol.d.ts":   {"export interface FixtureElementProtocol {", "readonly describe: () => void;"},
+	} {
+		content, ok := files[path]
+		if !ok {
+			t.Errorf("missing %s", path)
+			continue
+		}
+		for _, want := range wants {
+			if !strings.Contains(content, want) {
+				t.Errorf("%s missing %q:\n%s", path, want, content)
+			}
+		}
+	}
+	if strings.Contains(files["foundation/fixture-element-protocol.d.ts"], "activate") || strings.Contains(files["foundation/fixture-element.d.ts"], "describe") {
+		t.Error("a class and its same-named protocol shared members")
+	}
+	for _, want := range []string{"id<NSFixtureAmbiguous> _Nonnull receiver", "NSFixtureAmbiguous * _Nonnull receiver", "id<NSFixtureElement> _Nonnull receiver"} {
+		if !strings.Contains(string(output.Check), want) {
+			t.Errorf("check file missing %q", want)
+		}
+	}
+}
+
+// Each pattern here stopped the real SDK once; Shapes.h holds them so Linux keeps them working.
+func TestMemberShapes(t *testing.T) {
+	t.Parallel()
+	output, err := RunClang(context.Background(), clangPath(t), []string{"-x", "objective-c", "-fobjc-runtime=macosx-10.13", "-fsyntax-only", "-fblocks", "-Werror", "-Wno-nullability-completeness", "-F", "testdata/SDK", "-Xclang", "-ast-dump=json", "testdata/SDK/Foundation.framework/Headers/Shapes.h"}, fixtureConfiguration(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var zone string
+	for _, file := range output.Files {
+		if file.Path == "foundation/fixture-zone.d.ts" {
+			zone = string(file.Content)
+		}
+	}
+	for _, want := range []string{
+		"@objc init initWithLabel:count: 0.label:string 0.count:integer\n\t\t */\n\t\tconstructor(options: { readonly label: string; readonly count: number });",
+		"@objc init initWithKind:count: 0.kind:integer 0.count:integer\n\t\t */\n\t\tconstructor(options: { readonly kind: number; readonly count: number });",
+		"@objc init init\n\t\t */\n\t\tconstructor();",
+		"// Skipped +[NSFixtureZone zone]: an initializer of the same shape is the constructor.",
+		"static path(options: { readonly forResource: string; readonly ofType: string }): string | undefined;",
+		"\t\tpath(options: { readonly forResource: string; readonly ofType: string }): string | undefined;",
+		"static readonly highlight: FixtureZone;",
+		"\t\thighlight(options: { readonly withLevel: number }): FixtureZone;",
+		"static readonly interval: number;",
+		"\t\treadonly interval: number;",
+		"readonly abbreviation: string;",
+		"@objc method abbreviationForDate: 0:object -> string?\n\t\t */\n\t\tabbreviationFor(date: FixtureDate): string | undefined;",
+		"readonly isDaylightSavingTime: boolean;",
+		"isDaylightSavingTimeFor(date: FixtureDate): boolean;",
+		"// Skipped -[NSFixtureZone initToMemory]: no Adamic name yet:",
+		"@objc set setVertical: boolean\n\t\t */\n\t\tisVertical: boolean;",
+	} {
+		if !strings.Contains(zone, want) {
+			t.Errorf("fixture-zone missing %q", want)
+		}
+	}
+	if strings.Count(zone, "isVertical: boolean;") != 1 {
+		t.Error("a category's redeclared property was emitted beside the class's")
+	}
+	if t.Failed() {
+		t.Log(zone)
 	}
 }

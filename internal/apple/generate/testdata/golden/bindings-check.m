@@ -6,9 +6,10 @@ typedef struct adamic_apple_rectangle { double x, y, width, height; } adamic_app
 _Static_assert(sizeof(long) == 8 && sizeof(void *) == 8, "the bridge requires a 64-bit Apple ABI");
 _Static_assert(NSFixtureModeCalm == 0, "NSFixtureModeCalm enum value");
 _Static_assert(NSFixtureModeLoud == 7, "NSFixtureModeLoud enum value");
-_Static_assert(NSFixtureStylePlain == 0, "NSFixtureStylePlain enum value");
-_Static_assert(NSFixtureStyleBright == 2, "NSFixtureStyleBright enum value");
-_Static_assert(NSFixtureStyleQuiet == 8, "NSFixtureStyleQuiet enum value");
+_Static_assert(NSFixtureStylePlain == 0UL, "NSFixtureStylePlain enum value");
+_Static_assert(NSFixtureStyleBright == 2UL, "NSFixtureStyleBright enum value");
+_Static_assert(NSFixtureStyleQuiet == 8UL, "NSFixtureStyleQuiet enum value");
+_Static_assert(NSFixtureStyleFlipped == 9223372036854775808UL, "NSFixtureStyleFlipped enum value");
 
 void adamic_binding_check_0(long argument0, long argument1) {
 	_Static_assert(__builtin_types_compatible_p(long, NSInteger), "NSFixtureAdd parameter 0 ABI");
@@ -53,17 +54,22 @@ void adamic_binding_check_7(NSFixturePanel * _Nonnull receiver, id argument0) {
 	(void)result;
 }
 
-void adamic_binding_check_8(NSFixturePanel * _Nonnull receiver) {
-	[receiver paint];
+void adamic_binding_check_8(NSFixturePanel * _Nonnull receiver, id argument0) {
+	id result = [receiver initWithTitle:argument0];
+	(void)result;
 }
 
 void adamic_binding_check_9(NSFixturePanel * _Nonnull receiver) {
+	[receiver paint];
+}
+
+void adamic_binding_check_10(NSFixturePanel * _Nonnull receiver) {
 	_Static_assert(__builtin_types_compatible_p(double, __typeof__([receiver scale])), "scale result ABI");
 	double result = [receiver scale];
 	(void)result;
 }
 
-void adamic_binding_check_10(NSFixturePanel * _Nonnull receiver, adamic_apple_rectangle argument0, BOOL argument1, BOOL argument2) {
+void adamic_binding_check_11(NSFixturePanel * _Nonnull receiver, adamic_apple_rectangle argument0, BOOL argument1, BOOL argument2) {
 	_Static_assert(sizeof(NSRect) == sizeof(adamic_apple_rectangle) && _Alignof(NSRect) == _Alignof(adamic_apple_rectangle), "rectangle ABI");
 	_Static_assert(offsetof(NSRect, origin.x) == offsetof(adamic_apple_rectangle, x) && __builtin_types_compatible_p(__typeof__(((NSRect *)0)->origin.x), double), "rectangle x");
 	_Static_assert(offsetof(NSRect, origin.y) == offsetof(adamic_apple_rectangle, y) && __builtin_types_compatible_p(__typeof__(((NSRect *)0)->origin.y), double), "rectangle y");
@@ -76,85 +82,94 @@ void adamic_binding_check_10(NSFixturePanel * _Nonnull receiver, adamic_apple_re
 	[receiver setFrame:header0 display:argument1 animate:argument2];
 }
 
-void adamic_binding_check_11(NSFixturePanel * _Nonnull receiver, id argument0) {
+void adamic_binding_check_12(NSFixturePanel * _Nonnull receiver, long argument0) {
+	_Static_assert(__builtin_types_compatible_p(long, NSInteger), "showCount: parameter 0 ABI");
+	[receiver showCount:argument0];
+}
+
+void adamic_binding_check_13(NSFixturePanel * _Nonnull receiver, id argument0) {
+	[receiver showText:argument0];
+}
+
+void adamic_binding_check_14(NSFixturePanel * _Nonnull receiver, id argument0) {
 	[receiver takeRecord:argument0];
 }
 
-void adamic_binding_check_12(id<NSFixtureReadable> _Nonnull receiver) {
+void adamic_binding_check_15(id<NSFixtureReadable> _Nonnull receiver) {
 	id result = [receiver readText];
 	(void)result;
 }
 
-void adamic_binding_check_13(NSFixtureRecord * _Nonnull receiver) {
+void adamic_binding_check_16(NSFixtureRecord * _Nonnull receiver) {
 	id result = [receiver copyRecord];
 	(void)result;
 }
 
-void adamic_binding_check_14(NSFixtureRecord * _Nonnull receiver) {
+void adamic_binding_check_17(NSFixtureRecord * _Nonnull receiver) {
 	id result = [receiver displayText];
 	(void)result;
 }
 
-void adamic_binding_check_15(NSFixtureRecord * _Nonnull receiver, long argument0) {
+void adamic_binding_check_18(NSFixtureRecord * _Nonnull receiver, long argument0) {
 	_Static_assert(__builtin_types_compatible_p(long, NSInteger), "initWithCount: parameter 0 ABI");
 	id result = [receiver initWithCount:argument0];
 	(void)result;
 }
 
-void adamic_binding_check_16(NSFixtureRecord * _Nonnull receiver) {
+void adamic_binding_check_19(NSFixtureRecord * _Nonnull receiver) {
 	_Static_assert(__builtin_types_compatible_p(BOOL, __typeof__([receiver isReady])), "isReady result ABI");
 	BOOL result = [receiver isReady];
 	(void)result;
 }
 
-void adamic_binding_check_17(NSFixtureRecord * _Nonnull receiver) {
+void adamic_binding_check_20(NSFixtureRecord * _Nonnull receiver) {
 	id result = [receiver label];
 	(void)result;
 }
 
-void adamic_binding_check_18(NSFixtureRecord * _Nonnull receiver) {
+void adamic_binding_check_21(NSFixtureRecord * _Nonnull receiver) {
 	id result = [receiver optionalText];
 	(void)result;
 }
 
-void adamic_binding_check_19(NSFixtureRecord * _Nonnull receiver) {
+void adamic_binding_check_22(NSFixtureRecord * _Nonnull receiver) {
 	[receiver phoneOnly];
 }
 
-void adamic_binding_check_20(NSFixtureRecord * _Nonnull receiver) {
+void adamic_binding_check_23(NSFixtureRecord * _Nonnull receiver) {
 	[receiver rawAction];
 }
 
-void adamic_binding_check_21(NSFixtureRecord * _Nonnull receiver) {
+void adamic_binding_check_24(NSFixtureRecord * _Nonnull receiver) {
 	id result = [receiver readText];
 	(void)result;
 }
 
-void adamic_binding_check_22(NSFixtureRecord * _Nonnull receiver) {
+void adamic_binding_check_25(NSFixtureRecord * _Nonnull receiver) {
 	[receiver renamedAction];
 }
 
-void adamic_binding_check_23(NSFixtureRecord * _Nonnull receiver, id argument0) {
+void adamic_binding_check_26(NSFixtureRecord * _Nonnull receiver, id argument0) {
 	[receiver replaceText:argument0];
 }
 
-void adamic_binding_check_24(NSFixtureRecord * _Nonnull receiver, id argument0) {
+void adamic_binding_check_27(NSFixtureRecord * _Nonnull receiver, id argument0) {
 	[receiver setLabel:argument0];
 }
 
-void adamic_binding_check_25(NSFixtureRecord * _Nonnull receiver, id argument0) {
+void adamic_binding_check_28(NSFixtureRecord * _Nonnull receiver, id argument0) {
 	[receiver takeObject:argument0];
 }
 
-void adamic_binding_check_26(NSFixtureRecord * _Nonnull receiver, id argument0) {
+void adamic_binding_check_29(NSFixtureRecord * _Nonnull receiver, id argument0) {
 	[receiver takeProtocol:argument0];
 }
 
-void adamic_binding_check_27(NSFixtureRecord * _Nonnull receiver, id argument0) {
+void adamic_binding_check_30(NSFixtureRecord * _Nonnull receiver, id argument0) {
 	[receiver takeText:argument0];
 }
 
-void adamic_binding_check_28(void) {
+void adamic_binding_check_31(void) {
 	id result = [NSFixtureRoot alloc];
 	(void)result;
 }
