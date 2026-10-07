@@ -212,3 +212,10 @@ in 405.976s; the new 60-command gate passes, with 18 rule mutants caught. All
 Cross-file context still refuses in the full graph at parser.ts:41:20, while
 the standalone adapter runs. It remains incomplete, not parked; no new claims.
 See wave16_seventh/AREA_B469_LANDING.md and area-b469 evidence.
+
+Current landing: rebased onto area d3a37422c containing main b6b1538b0.
+Fifteen-port oracle PASS 431.585s; new gate PASS; 18 rule mutants and eight
+inherited typeof mutants caught. Sanitizers and handles pass, no owned skips.
+Cross-file context remains incomplete, not parked: full graph refuses at
+parser.ts:41:20 while standalone adapter succeeds. No new claims. Full 17-check
+repository gate not run. See wave16_seventh/AREA_D3_LANDING.md and area-d3 evidence.
