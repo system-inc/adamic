@@ -469,6 +469,124 @@ The analyses that move and reuse values (`internal/flow`, and reuse in place on 
 
 `regions_throw.a` throws out of a region version mid-statement, after nodes are made in the region: at the top level inside a `try`, out of a function into its caller's catch, and through a `finally`, each followed by a region that finishes. Mutant: no region end on the throw path, caught by the leak check (8,627 bytes in 9 allocations: the region's blocks and its label strings).
 
+## Regions for cyclic graphs
+
+Status: design approved by @system_adamic on October 6, 2026, with counting-only
+retention evidence added October 7. Unit 1 starts after `codex/nested-functions`.
+This section supersedes the refusal of unproven data cycles above once its build
+and evidence land. No collector, tracing in release builds, or pauses are allowed.
+
+### Which types
+
+After lowering, the cycle finder and fresh-write proof identify cycle-capable
+slots whose writes remain unproven. Their holders and targets seed graph types,
+closed over the strongly connected part of the ownership type graph. Weak edges
+are excluded. Only those types use graph regions; a program whose finder proves
+every write has no graph types and emits the same C as before. Structural views,
+instantiated containers, closure environments and capture cells must agree about
+an allocation's ownership representation. The sibling-capture proof added by
+nested-functions stays a proof, not an automatic reason to use a region.
+
+The closure includes the strong paths connecting unproven edges, even where a
+connecting slot's writes are proven fresh or it is readonly. Otherwise a graph
+could own a counted object which counts a reference back into the same graph,
+preventing the region from reaching zero. This is a design clarification from
+reading `cycles.go`: its `reaches` follows readonly and proven edges too. It must
+not be implemented as an SCC using only unproven edges.
+
+### Dynamic regions
+
+Every graph allocation starts in its own region with one outside count. Regions
+have union-find records, union by member count and path compression. Member lists
+are intrusive with head and tail, so concatenation on merge is O(1); finding roots
+has the usual amortized union-find cost. Losing region records remain valid until
+the whole merged region ends, since existing members still point to them.
+
+A graph-to-graph slot store merges the holder's and target's regions before
+publishing the pointer. It sums their outside counts. Internal pointers are plain:
+no retain on store and no release on overwrite. A merge never splits again, so an
+overwritten pointer's old target remains allocated until the region ends. This
+applies to initialization, copies, spread and every container operation as well
+as later field writes. Taking an element out into a local or returning it must
+acquire an outside count before the source ownership can disappear.
+
+An array, Map or Set with graph elements, keys or values is a graph allocation,
+including its resizable storage. It joins what it stores. Non-graph contents such
+as string Map keys retain their ordinary counts. A graph-typed closure environment
+and its graph capture cells join regions in the same way; function signatures
+alone do not describe the environment's ownership. Proven acyclic closures keep
+the current counted representation.
+
+### Counts at the boundary
+
+An owned local, kept parameter, global, counted object's field, non-graph
+container entry or counted closure capture owns one count on `find(region)`, not
+on an individual graph object. Borrowed references still borrow and moves still
+transfer their ownership. Every outside retain/release follows the object's
+region record to its current root. No static anchor or annotation is required:
+Program is an anchor only because it holds an outside reference.
+
+At outside count zero, first invalidate Weak handles for all members and release
+everything they own outside the graph, while all graph members remain allocated.
+Then free every member and every merged region record. Freeing must integrate
+with the existing iterative release queue rather than recurse down million-node
+chains. Graph internal links are never passed to counted release. Reuse cannot
+infer object uniqueness from a region count of one: that count says nothing about
+internal aliases. Statement arenas cannot take graph allocations whose lifetime
+is dynamic.
+
+A Weak into a region targets one object, counts only its handle, and expires when
+the region frees. Explicit Weak spelling and its existing expiry semantics stay
+unchanged.
+
+### Threads and long-lived services
+
+Threads are design only. Crossing a thread boundary marks a whole region shared,
+with one atomic region count, never an atomic count per member. Unit 1 must loudly
+reject merging two different regions if either is shared. Actual publication,
+synchronization and concurrent merging are not built here.
+
+Watch mode and language services remain NotYet. Each Program version would hold
+an outside reference to its graph, with returned nodes, symbols, types and client
+handles holding additional counts. Retiring a version drops its Program reference;
+escaping objects keep the region alive. Sharing graph objects across versions
+merges regions permanently, so it can retain old versions. Version isolation or
+copying needs a separate design and measured retention evidence.
+
+### Evidence required by unit 1
+
+Oracle fixtures run source Node, emitted JavaScript on Node, and native, with
+ASan, UBSan and LeakSanitizer: mutable parse parents/children, a doubly linked
+list, flow loops and restored edges, literal self/twin links kept by a cache,
+symbol/declaration inverses, and a cache as sole owner. An escaping local must
+keep a region alive after its root drops, and dropping the last anchor must free
+all of it. Every previously refused fresh probe newly accepted must explicitly
+show leak-clean region destruction. Acceptance alone is no evidence.
+
+Mutants: free despite an outside count (ASan later read); omit outside releases
+(LeakSanitizer); merge without summing counts (ASan or leak); count internal slot
+stores (counts mismatch or leak). Record every changed counts row, region counts
+and merges, and each previously refused fixture now accepted.
+
+Counting builds also measure retained graph garbage from day one. They track
+outside counts per member in addition to the root's aggregate, and mark from
+outside-held members through current strong graph links. At final release,
+measure immediately before dropping the final outside count and report at free
+time: total live members/bytes, reachable members/bytes, and unreachable
+members/bytes. After dropping that count there are no roots, which would classify
+every member as unreachable and obscure overwrite retention. This timing
+clarification makes the requested report meaningful. The diagnostic mark pass is
+compiled only with counting enabled, never decides what is freed, and is never a
+collector. Weak links and stale overwritten links are not traversed. Member bytes
+and container buffer bytes must have stated accounting; region record overhead
+is reported separately.
+
+The million-node generated graph with parent links and cross edges must report
+native peak live bytes versus Node, and the reachable/unreachable object and byte
+figures above. Include deliberate overwritten links so the diagnostic's nonzero
+case is exercised. Scanner/parser slices will use the same report once they
+compile. No measurements are claimed by this design commit.
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.
