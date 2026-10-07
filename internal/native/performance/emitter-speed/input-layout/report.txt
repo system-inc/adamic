@@ -1,0 +1,57 @@
+Built conditional input/directory layout seeding and a shared whole-program expression predicate; no scanner or runtime source changed.
+Commits: pre-build claim b4e49a6; implementation 53bd119 pushed to codex/emitter-speed; guarded baseline b381118 (same emitter code as 0b8e870).
+Commands/output: uncached native 165.621s and oracle 149.414s PASS, vet/format clean, batch 8 cmp equal; parse C and binaries byte-identical.
+Mutants: overlooking input API use caught by executable file-layout fixture (release segmentation fault); 26 profile-accounting mutants rejected.
+Not covered: a parse speedup, new receiver-specific layout proof, hardware cycles/cache counters, full repository tests, W6, or a freeze IR flag.
+
+First measurement, before implementation
+Counted actual emitted field load sites in batch 8's parse-only C and full batch 8 C. The two counts agree:
+Scope/field                    Direct slots       Shape-tested         Lookup-only
+Scanner text                        0                  59                    0
+Scanner kind                        0                  16                    0
+Whole generated program text        0                  93                    3
+Whole generated program kind        0                  36                    8
+These are static C load-site counts, not dynamic executions or instruction counts. The conditional fast arm of a shape-tested expression does use slots[n], but is not counted as an unconditional direct load. Address selection for field stores is excluded. count.py and compressed per-site JSON retain function, line and exact C source. The zero-direct result follows fieldSlot's uniform-offset prerequisite and the observed conflicting generated layouts, not merely absence of a name in direct slot expressions. The counter asserts the conflict premise and must be revisited if emission or layouts change.
+
+The premise about phantom layouts does not hold for this workload
+Batch 8 parse.a imports readTextFile. run calls it for every source, and main calls it for the manifest; generated C contains adamic_read_text_file at lines 25731 and 30447 in the retained snapshot. Thus the input API's actual {kind,text} layout must remain. A conservative whole-program predicate necessarily returns true.
+There are also real generated conflicts independent of input: Scanner text at slot0/kind at slot4; ParseNode kind at slot0/text at slot4; Edit text at slot3; saved scanner/parser states put kind at slot3. All observed generated offsets for both text and kind are {0,3,4}, before the runtime input text1/kind0 are considered. Deleting the input seeds cannot make either field globally uniform even without file reading. This report does not remove the existing class/shape safety checks or change layouts. Improving those scanner loads needs a separate proof about the receiver/layout, not omission of a reachable runtime layout.
+
+General implementation
+fields.go includes the input/directory seed group only if the fully lowered program contains ir.ReadTextFile, ir.WriteTextFile, ir.ReadDirectory or ir.FileStatus. programArguments and UTF-8 helpers produce no object layouts and do not enable this seed group. Other runtime layout groups remain conservatively included; regex programs still retain all checked field access. All class, spread, static/inherited field and object-literal conflict handling is unchanged.
+programHasExpression in emit_speed.go uses the existing native walkExpressions traversal: Main plus every lowered function body, including nested expressions and statements. It counts even unused function/callback bodies and branches; no alias or call-graph reachability is guessed. This has the same conservative completed-program coverage as the frozen-guard audit. That unit stopped without implementing a freeze flag, so there was no implemented freeze predicate to share; the reusable helper shares the native walker and can serve future whole-program predicates. Lowering's private objectCanFreeze and the frozen guards are unchanged. Naming and temporary/cache counter mechanisms are untouched.
+Audited the four native runtime entry points: input.c defines read/write text file; directory.c defines read directory/file status; the header declares them. No internal runtime caller of any of the four was found. Their generated callers correspond to the four IR expressions. If another runtime caller can create those layouts, this conservative predicate must account for that entry or retain unconditional seeding.
+
+Fixtures and correctness
+TestUniformFieldsMatchNode now includes a scanner-like text0/kind4 literal in a program with no input API. It asserts the text/kind lookup fallback is absent and compares actual release and sanitized output with Node. This holds the optimization, not just semantic parity.
+TestInputAPIFieldLayouts writes real bytes disk text to a temporary file, compiles a new .a fixture with a scanner-like class, and calls readTextFile. Release and sanitized output must equal local text:local kind|Ok:disk text newline. This pins the real runtime-produced slots against known filesystem input. The existing external Node file/directory oracles also ran in the full package gate.
+TestInputLayoutReachability covers all four API expressions inside a nested branch of an otherwise unused function, and checks that the real text/kind conflicts remain. The runtime-layout inventory test still checks every embedded C layout using a program with an input call, instead of treating an empty program as using all APIs.
+Mutant replaces programHasExpression's final result with false, overlooking all input producers. go test -overlay=scratch/emitter-speed/input-layout/overlay.json ./internal/native -run '^TestInputAPIFieldLayouts$' -count=1 -timeout 5m FAIL (0.321s). C compiles, then the release fixture segfaults by reading input through the wrong class-proven offsets. This is an executable catch, not a compiler warning or emission-string assertion. Source and log archived.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -count=1 -timeout 30m > scratch/emitter-speed/input-layout/gate.log 2>&1
+PASS native 165.621s and oracle 149.414s. Both oracle backends, ordinary release and sanitizers are covered by TestNativeAgreesWithNode. go vet ./... passed, gofmt -l on changed Go files empty, git diff --check passed. No full repository go test claim. All test output went to logs, never a pipe.
+Full batch 8 release build using the new compiler --manifest scratch/emitter-speed/compiler.txt compares byte for byte with retained independent Go output: cmp exit0, stderr empty, 11,444,678 bytes, SHA256 fc2df7405f773b1234ad1edf4d14d8f60da68be59666460651782529effd9322.
+
+Build flags for every performance number below
+clang 20.1.8 native release: -std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2.
+No -g, sanitizers, counted runtime, LTO or PGO. Same runtime archive and flags for both binaries, --whole-archive/--no-whole-archive and -lm. Go1.27.1; Node24.19.0. Full flags in flags.txt. Source driver/corpus remain the parent report's pinned batch8/parse.a and 77-file compiler.txt manifest.
+Valgrind3.24.0 for both sequential fresh runs: --tool=callgrind --cache-sim=yes --branch-sim=yes --I1=32768,8,64 --D1=32768,8,64 --LL=268435456,1,64 --callgrind-out-file=PATH.
+This matches the supplied cache model, not hardware: I1/D1 32KiB eight-way, 64-byte lines; LL256MiB direct-mapped. Cache discovery and nonfatal brk warnings retained. Both profile processes exit0, stdout 0 newline.
+
+Whole parse, matched release flags and model above
+Metric                            Before              After
+Self/footer instructions          7,886,876,181        7,886,876,181
+L1 instruction misses                64,120,092           64,120,092
+L1 data read+write misses             20,893,164           20,893,164
+Branch mispredictions Bcm+Bim         49,283,155           49,283,154
+Whole executable .text bytes           506,718              506,718
+Best of ten user seconds              0.866745             0.850871
+Best of ten wall seconds           0.919901847          0.897599060
+
+There is no instruction, instruction-cache or text-size improvement. Both emitted C files and both complete ELF binaries are byte-identical. Binary SHA256 49f8411de4ff75640ade5fc04dea3196af6c0709fa927dd826a56c4d8d117dee. Timed best user differs by 1.8314% despite identical binaries: run variation, not an optimization win. Best user/wall minima are independently selected. The one modeled branch difference likewise is not attributed to a source change. No cycles are inferred.
+Timing uses ten alternating before/after pairs, taskset -c3 and the sieve bench's wait4 helper (direct-child rusage), --manifest absolutecompiler.txt --count. No builds/tests/profilers during timing. Allowed cores0-4, quota400000/100000 (4 CPUs); raw samples, load and commands in timings.json. Every timed output is 0 newline, stderr empty, exit0. GNU objcopy --only-section=.text -O binary measures whole hot+cold text.
+All 13 self-event sums match each footer; summary Ir is exactly two higher in each profile and all other events agree. Tables use self/footer values. ../cache/summarize.py rejects every footer event +1, 13 per profile. Raw compressed profiles and normalized summaries are preserved.
+
+Reproduction and provenance
+Before code b381118; after 53bd119. The after compiler was built just before a comment-only cleanup and fixture additions; emitted C is byte-identical to the guarded baseline. No runtime input bytes changed. Build compiler with go build -o COMPILER ./cmd/adamic and use COMPILER c scratch/emitter-speed/batch8/parse.a for each checkout. The parent cold/no-freeze reports supply corpus and driver reconstruction, independent Go provenance and locally extracted Valgrind/wait4.
+From repo root, copy build.go.txt into scratch/emitter-speed/input-layout/build.go and decompress the emitted C there; source /workspace/adamic-tools/env.sh; go run scratch/emitter-speed/input-layout/build.go > build.log 2>&1. profile.py and timing.py retain exact workspace paths/invocations. count.py expects the parse C and the full batch8-before.c retained by the no-freeze experiment. Decompress profiles and run ../cache/summarize.py for reconciliation. Restore mutant source and supply an absolute-path Go overlay replacing internal/native/emit_speed.go to rerun the pinned fixture.
+Setup for this worker was already completed in the frozen-guard unit: Go/clang/Node/submodules0s, cache warm/done102s, nproc5, 4-CPU quota, 17.6GB. Pre-build claim b4e49a6 was pushed before any compilation for this unit. Implementation 53bd119 was pushed after gate and before evidence packaging. Own branch only; no pull request. No cohere code was copied. Frozen guards remain intact; W6 stays queued.

@@ -1,0 +1,76 @@
+{
+  "before": {
+    "function": "whole",
+    "Ir": 7886876181,
+    "Dr": 2207223427,
+    "Dw": 1214971683,
+    "I1mr": 64120092,
+    "D1mr": 15406199,
+    "D1mw": 5486965,
+    "ILmr": 6529,
+    "DLmr": 58535,
+    "DLmw": 1527569,
+    "Bc": 1277182421,
+    "Bcm": 45777649,
+    "Bi": 28742147,
+    "Bim": 3505506,
+    "L1_data": 20893164,
+    "L1_instruction": 64120092,
+    "branch_mispredicts": 49283155
+  },
+  "after": {
+    "function": "whole",
+    "Ir": 7886876181,
+    "Dr": 2207223427,
+    "Dw": 1214971683,
+    "I1mr": 64120092,
+    "D1mr": 15406199,
+    "D1mw": 5486965,
+    "ILmr": 6529,
+    "DLmr": 58535,
+    "DLmw": 1527569,
+    "Bc": 1277182421,
+    "Bcm": 45777648,
+    "Bi": 28742147,
+    "Bim": 3505506,
+    "L1_data": 20893164,
+    "L1_instruction": 64120092,
+    "branch_mispredicts": 49283154
+  },
+  "best": {
+    "before": {
+      "user_seconds": 0.866745,
+      "wall_seconds": 0.919901847
+    },
+    "after": {
+      "user_seconds": 0.8508709999999999,
+      "wall_seconds": 0.89759906
+    }
+  },
+  "static_load_counts": {
+    "whole": {
+      "text": {
+        "direct": 0,
+        "shape_tested": 93,
+        "lookup": 3
+      },
+      "kind": {
+        "direct": 0,
+        "shape_tested": 36,
+        "lookup": 8
+      }
+    },
+    "scanner": {
+      "text": {
+        "direct": 0,
+        "shape_tested": 59,
+        "lookup": 0
+      },
+      "kind": {
+        "direct": 0,
+        "shape_tested": 16,
+        "lookup": 0
+      }
+    }
+  }
+}

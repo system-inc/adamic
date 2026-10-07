@@ -1,0 +1,3 @@
+package main
+import("os";"fmt";"github.com/system-inc/adamic/internal/native")
+func main(){for _,name:=range []string{"before","after"}{p:="scratch/emitter-speed/input-layout/"+name;s,err:=os.ReadFile(p+".c");if err!=nil{panic(err)};if err=native.Build(string(s),p,native.Options{});err!=nil{panic(err)};fmt.Println(name)}}
