@@ -2,10 +2,10 @@
 === RUN   TestCheckedViewObjects/objects-wrong-nested
     checked_views_objects_test.go:32: exit codes differ; got oracle.run{stdout:[]uint8{0x66, 0x61, 0x6c, 0x73, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
 --- FAIL: TestCheckedViewObjects (0.33s)
-    --- FAIL: TestCheckedViewObjects/objects-wrong-nested (0.33s)
+    --- FAIL: TestCheckedViewObjects/objects-wrong-nested (0.32s)
 FAIL
 gate cache: native hits=0 misses=0
 gate cache: node hits=0 misses=1
 gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.337s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.333s
 FAIL

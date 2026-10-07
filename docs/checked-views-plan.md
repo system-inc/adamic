@@ -265,3 +265,9 @@ Working estimate for lane 1 nullish plus optional: October 8 22:00 UTC (16:00 MD
 with native null/undefined separation and mutation/alias parity still a risk.
 This is an estimate, not a completion claim; each family is pushed only after its
 both-backend oracle and semantic mutants pass.
+
+Current main 48c05d09 introduces a checker-only cast preflight. `castProof.view`
+routes eligible structural downcasts to the existing full `view(node,value,target)`
+admission, rather than treating them as proven upcasts. The preflight does not
+certify any field. Lane 2 and lane 3 hooks and ownership remain unchanged. Shared
+readiness still handles staged assertions; no second state representation is added.

@@ -192,7 +192,8 @@ type emitter struct {
 	prototypeNames map[string]string
 
 	// continues holds, innermost last, each open loop's continue label.
-	continues []string
+	continues  []string
+	breakables []string
 }
 
 func (e *emitter) line(format string, arguments ...any) {
@@ -414,7 +415,9 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.ForOf:
 		e.forOf(at, statement)
 	case ir.Switch:
-		e.line("do {")
+		label := e.temporary()
+		e.breakables = append(e.breakables, label)
+		e.line("%s: do {", label)
 		e.indent++
 		value := e.temporary()
 		e.markLine(at, 0)
@@ -442,8 +445,9 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 		e.indent--
 		e.line("} while (false);")
+		e.breakables = e.breakables[:len(e.breakables)-1]
 	case ir.Break:
-		e.line("break;")
+		e.line("break %s;", e.breakables[len(e.breakables)-1-statement.Depth])
 	case ir.Continue:
 		e.line("break %s;", e.continues[len(e.continues)-1])
 	case ir.Throw:
@@ -483,7 +487,9 @@ func (e *emitter) temporary() string {
 func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
 	e.labels++
 	label := fmt.Sprintf("continue_%d", e.labels)
-	e.line("for (;;) {")
+	breakLabel := e.temporary()
+	e.breakables = append(e.breakables, breakLabel)
+	e.line("%s: for (;;) {", breakLabel)
 	e.indent++
 	if !statement.CheckAfter {
 		e.line("if (!%s) break;", e.marked(at, 0, "("+e.value(statement.Condition)+")"))
@@ -504,6 +510,7 @@ func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
 	}
 	e.indent--
 	e.line("}")
+	e.breakables = e.breakables[:len(e.breakables)-1]
 }
 
 func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
@@ -514,6 +521,9 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 	e.indent++
 	e.markLine(at, 0)
 	e.line("const %s = %s;", held, e.value(statement.Iterable))
+	breakLabel := e.temporary()
+	e.breakables = append(e.breakables, breakLabel)
+	e.line("%s:", breakLabel)
 	switch {
 	case statement.MapPart == "keys" || statement.MapPart == "values":
 		e.line("for (const %s of %s.%s()) {", index, held, statement.MapPart)
@@ -544,6 +554,7 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 	e.line("}")
 	e.indent--
 	e.line("}")
+	e.breakables = e.breakables[:len(e.breakables)-1]
 }
 
 var operators = map[ir.Operator]string{

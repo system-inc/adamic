@@ -1,8 +1,8 @@
-Built: overlapping blocker census; merged lane 2 helpers; shared array registry adapter and physical storage tags, with array admission still disabled.
-Commits: prior tip 609ed395; lane 2 merge f709a1c5 from 2a16ce35; largest-blocker prerequisites follow on this feature branch only.
-Commands and outputs: full lower/JS PASS 10.312s/0.369s; native PASS 115.486s; broad uncached Node/count oracle PASS 115.748s; final oracle PASS 34.190s; vet PASS.
-Mutants: eight existing semantic mutants caught again; discarded child-contract errors caught by the unknown-contract compiler assertion without C compilation.
-Not covered: native array read/mutation integration, nullish/optional/mixed admission, proof integration or timings; complete sites remain 0/1,758 tagged and 0/1,178 untagged.
+Built: per-site remaining-family sets and exclusive lane counts; merged current main while preserving checked-view admission and shared readiness.
+Commits: b4cfd1aa pushes the census and renewed lane split; the next feature-only merge includes main 48c05d09 and the non-null extraction repair.
+Commands and outputs: census PASS all 2,936 identities; setup PASS 172.330s, nproc 5; full lower/JS PASS 17.343s/0.707s; count regeneration PASS 21.813s; final uncached Node/count oracle PASS 110.458s; scoped vet PASS.
+Mutants: nine production-source view mutants caught by semantic assertions with valid C, including treating a checked-view admission proof as an erased cast.
+Not covered: nullish/optional/mixed admission, native array/callable integration, proof erasure or timings; complete sites remain 0/1,758 tagged and 0/1,178 untagged.
 
 No main or area branch was pushed or merged into. Both dependency merges were into
 `codex/interface-downcasts`; only that feature branch was pushed. The unit is still
@@ -505,3 +505,60 @@ child-error mutant attempt left an unused Go variable and is not counted; the
 corrected compiling mutant discards the error and is killed by the semantic
 unknown-element assertion. Full repository adapter gate and performance/read-share
 measurements are not claimed. Logs are array-prerequisite-*.log.
+
+## Remaining-family census and current main integration
+
+The per-site table now preserves original `blockers` and adds `remaining_families`,
+`remaining_owner`, `lane_projection`, and `other_remaining_families`. All 2,936
+source identities and counts verify against the pinned ledger. Exclusive counts:
+only lane 1 2, only lane 2 32, both 23, other unresolved 2,879, complete 0.
+The two-lane projection is only lane 1 2, only lane 2 32, both 2,901, neither 1.
+Do not confuse the projection with removal of dictionary, any, generic,
+intersection, never, empty-contract or nominal-class blockers. The two exclusively
+lane 1 sites target ResolvedModuleFull and need nullish plus optional support.
+There are 21 distinct remaining sets, grouped in the summary JSON.
+
+Census and scheduling docs were pushed first as b4cfd1aa. Lane 1 now proceeds with
+nullish plus optional, then mixed unions; lane 2 owns native array reads/mutations
+and callable contracts. Working estimate for nullish plus optional is October 8
+22:00 UTC (16:00 MDT), with null/undefined separation and alias parity still risks.
+No family was marked complete and no lowering increase is claimed in this push.
+
+Fetched main 48c05d09 and merged it into the feature branch only. The initial
+recursive fetch tried unrelated TypeScript history and stalled; its optional
+submodule fetch was terminated after the requested branch refs had arrived.
+Setup then fetched and checked out the actual required pins successfully:
+cohere 7945d102, TypeScript d92d9bfe. Setup timing lines: Go 0.020s, Node 0.023s,
+markdown 0.081s, clang 0.217s, submodules 4.070s, Go build 172.110s, cache
+172.302s, done 172.330s; nproc 5, CPU quota 4. The proxy fallback was present
+and no Go module download failure occurred.
+
+Four merge conflicts were resolved with explicit hunks. Main's cast preflight
+keeps its class, enum, duplicate-tag and union-write proofs. A separate view bit
+routes structural downcasts to complete view admission without erasing their
+checks. Module read proofs and non-null readiness both remain on IR reads. The
+definite-assignment refusal from main does not replace the merged readiness
+worker's runtime state. No protected orchestration file was manually edited.
+
+The first uncached Node/count gate found a clang error in non_null.a: a checked
+numeric extraction from main's union guard reached the non-null coalescer, which
+compared a double with NULL. Keeping the incoming type guard and recognizing its
+already checked scalar fixes that integration. This clang failure is not counted
+as a mutant catch. Regeneration changes only non_null_initialized.a: retains
+22 to 23 and releases 66 to 67; allocations/frees remain 42/42. The extra reference
+comes from preserving the guarded union helper, not a new initialization state.
+
+Nine semantic mutants pass independent kill assertions with valid C: erase view
+admission as an upcast; drop field read; drop readiness; erase without proof;
+skip transitive object; skip inherited interface; skip object-union membership;
+drop runtime type; evaluate the operand twice. The script restores all sources.
+New/nullish and optional check mutants remain pending their implementations.
+Logs are remaining-families-*.log and remaining-main-*.log.
+
+Final restored-source verification: full lower/JavaScript PASS 17.343s/0.707s;
+scoped vet PASS; broad uncached Node/view/cast/narrowing/readiness/count oracle
+PASS 110.458s. Command: ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'TestNativeAgreesWithNode|TestCheckedView|TestDefaultTagged|TestRequiredViewField|TestCountsAreRecorded|TestCheckedCast|TestCast|TestNarrowedUnion|TestReadiness'
+-count=1 -timeout 30m. The full repository adapter gate and benchmarks were not
+rerun. Remaining-family and complete-site counts are unchanged after this merge.
+Only the feature branch is pushed; no main or area branch is written.

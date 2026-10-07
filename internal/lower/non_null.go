@@ -68,6 +68,11 @@ stored:
 		return nil, err
 	}
 	proven := l.checker.GetTypeAtLocation(operand)
+	// A checked union extraction can already return a scalar. Its type guard
+	// remains in value; a scalar has no nullish representation to check again.
+	if value.Type() == ir.Number || value.Type() == ir.Boolean {
+		return value, nil
+	}
 	if !weakOperand && !l.includesUndefined(proven) && !l.includesNull(proven) && !l.narrowedAway(ast.SkipParentheses(operand)) && !value.Type().IsMaybe() {
 		if value.Type() == ir.Union && of != ir.Union {
 			return ir.Narrow{Value: value, To: of}, nil
