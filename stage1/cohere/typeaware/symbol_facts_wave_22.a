@@ -1,0 +1,51 @@
+import { Frames, header } from './frames.ts';
+import type { Bindings } from './bindings.ts';
+
+export class Wave22Declaration {
+    readonly file: string;
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    constructor(file: string, kind: string, start: number, end: number) {
+        this.file = file; this.kind = kind; this.start = start; this.end = end;
+    }
+}
+export class Wave22Symbol {
+    readonly present: boolean;
+    readonly identity: number;
+    readonly flags: number;
+    readonly declarations: readonly Wave22Declaration[];
+    constructor(present: boolean, identity: number, flags: number, declarations: readonly Wave22Declaration[]) {
+        this.present = present; this.identity = identity; this.flags = flags; this.declarations = declarations;
+    }
+}
+// Existing declaration metadata has more fields than these rules need. Consume
+// and validate them all, retaining only identity and exact declaration locations.
+export class Wave22SymbolFacts {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) { this.bindings = bindings; }
+    symbol(frames: Frames): Wave22Symbol {
+        const present = frames.yes();
+        let identity = 0; let flags = 0;
+        const declarations: Wave22Declaration[] = [];
+        if(present) {
+            identity = frames.natural(); flags = frames.natural(); frames.field();
+            const count = frames.natural();
+            for(let index = 0; index < count; index++) {
+                const file = frames.field(); const kind = frames.field(); const start = frames.natural(); const end = frames.natural();
+                frames.yes(); frames.yes(); frames.field(); frames.field(); frames.natural(); frames.natural();
+                const tags = frames.natural();
+                for(let at = 0; at < tags; at++) { frames.field(); frames.field(); frames.natural(); frames.natural(); frames.field(); }
+                const parameters = frames.natural();
+                for(let at = 0; at < parameters; at++) { frames.field(); }
+                declarations.push(new Wave22Declaration(file, kind, start, end));
+            }
+        }
+        return new Wave22Symbol(present, identity, flags, declarations);
+    }
+    nodeSymbol(index: number): Wave22Symbol {
+        const frames = new Frames(this.bindings.rules.ask(index, 'node-symbol-details'));
+        header(frames, 'node-symbol-details');
+        const result = this.symbol(frames); frames.end(); return result;
+    }
+}
