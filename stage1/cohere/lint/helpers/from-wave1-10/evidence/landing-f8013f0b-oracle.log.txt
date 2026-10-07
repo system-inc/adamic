@@ -1,0 +1,24 @@
+=== RUN   TestMathWhitespace
+    helper_test.go:159: runtime 0 matched 873758 bytes
+    helper_test.go:159: runtime 1 matched 873758 bytes
+    helper_test.go:159: runtime 2 matched 873758 bytes
+    helper_test.go:161: all six consumers covered; 49162 scanner inputs
+--- PASS: TestMathWhitespace (8.00s)
+=== RUN   TestMathWhitespaceMutant
+    helper_test.go:190: runtime 0 compiling comma_spacing_disabled mutant caught only by output comparison
+    helper_test.go:190: runtime 1 compiling comma_spacing_disabled mutant caught only by output comparison
+    helper_test.go:190: runtime 2 compiling comma_spacing_disabled mutant caught only by output comparison
+--- PASS: TestMathWhitespaceMutant (3.61s)
+=== RUN   TestCSSIdentifierUnescape
+    unescape_test.go:63: runtime 0 matched 5608876 bytes
+    unescape_test.go:63: runtime 1 matched 5608876 bytes
+    unescape_test.go:63: runtime 2 matched 5608876 bytes
+    unescape_test.go:65: 1116695 cases, every scalar through 0x110000 plus six consumers' literals and CSS boundary controls
+--- PASS: TestCSSIdentifierUnescape (26.45s)
+=== RUN   TestCSSIdentifierUnescapeMutant
+    unescape_test.go:107: runtime 0 compiling scalar_one_replaced mutant caught only by output comparison
+    unescape_test.go:107: runtime 1 compiling scalar_one_replaced mutant caught only by output comparison
+    unescape_test.go:107: runtime 2 compiling scalar_one_replaced mutant caught only by output comparison
+--- PASS: TestCSSIdentifierUnescapeMutant (1.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-10	39.234s
