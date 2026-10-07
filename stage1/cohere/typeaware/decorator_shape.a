@@ -1,0 +1,44 @@
+import type { Rules } from './rules.ts';
+
+// Syntax stays in Adamic; checker questions are asked only after these guards.
+export class DecoratorShape {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    expression(index: number): number {
+        return this.rules.parser.node(index).children[0] ?? -1;
+    }
+    callName(index: number): string {
+        const expression = this.expression(index);
+        if(expression < 0 || this.rules.parser.node(expression).kind !== 'CallExpression') { return ''; }
+        const callee = this.rules.parser.node(this.expression(expression));
+        return callee.kind === 'Identifier' ? callee.text : '';
+    }
+    name(index: number): number {
+        for(const child of this.rules.parser.node(index).children) {
+            const kind = this.rules.parser.node(child).kind;
+            if(kind !== 'Decorator' && !kind.endsWith('Keyword') && kind !== 'AsteriskToken') { return child; }
+        }
+        return -1;
+    }
+    has(index: number, names: readonly string[]): boolean {
+        if(index < 0) { return false; }
+        return this.rules.parser.node(index).children.some((child) =>
+            this.rules.parser.node(child).kind === 'Decorator' && names.includes(this.callName(child)));
+    }
+    nullable(index: number): number {
+        const call = this.rules.parser.node(this.expression(index));
+        for(const argument of call.children.slice(call.children.length - call.list)) {
+            const object = this.rules.parser.node(argument);
+            if(object.kind !== 'ObjectLiteralExpression') { continue; }
+            for(const child of object.children) {
+                const property = this.rules.parser.node(child);
+                if(property.kind !== 'PropertyAssignment') { continue; }
+                const name = this.rules.parser.node(property.children[0] ?? -1);
+                if(name.kind !== 'Identifier' || name.text !== 'nullable') { continue; }
+                const value = this.rules.parser.node(property.children[1] ?? -1).kind;
+                return value === 'TrueKeyword' ? 1 : value === 'FalseKeyword' ? 0 : -1;
+            }
+        }
+        return 0;
+    }
+}

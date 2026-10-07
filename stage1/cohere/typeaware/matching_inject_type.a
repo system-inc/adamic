@@ -1,0 +1,48 @@
+import type { Rules } from './rules.ts';
+import { DecoratorShape } from './decorator_shape.a';
+import { CheckerFacts } from './checker_facts.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { types } from './facts.ts';
+
+export class MatchingInjectType {
+    readonly rules: Rules;
+    readonly shape: DecoratorShape;
+    readonly facts: CheckerFacts;
+    constructor(rules: Rules, shape: DecoratorShape, facts: CheckerFacts) {
+        this.rules = rules; this.shape = shape; this.facts = facts;
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.rules.parser.node(index).kind !== 'Decorator') { continue; }
+            const owner = this.rules.parents[index] ?? -1;
+            if(owner < 0 || this.rules.parser.node(owner).kind !== 'Parameter') { continue; }
+            const expression = this.shape.expression(index);
+            if(expression < 0) { continue; }
+            const decorator = types(this.rules.ask(expression, 'raw-shape'), 'raw-shape');
+            const properties = this.facts.properties(expression, decorator.root());
+            const at = properties.names.indexOf('__resolvedType');
+            if(at < 0) { continue; }
+            const graph = properties.types;
+            let resolved = graph.root(at);
+            if((resolved.flags & 134217728) !== 0) {
+                const kept = resolved.parts.filter((part) => (graph.type(part).flags & 4) === 0);
+                if(kept.length === 1) { resolved = graph.type(kept[0] ?? 0); }
+            }
+            if((resolved.flags & 3) !== 0) { continue; }
+            const parameter = types(this.rules.ask(owner, 'raw-shape'), 'raw-shape').root();
+            if(this.facts.compare(owner, resolved.id, parameter.id)) { continue; }
+            let callee = expression;
+            if(this.rules.parser.node(callee).kind === 'CallExpression') { callee = this.shape.expression(callee); }
+            let node = this.rules.parser.node(callee);
+            if(node.kind === 'PropertyAccessExpression' && this.rules.parser.node(expression).kind === 'CallExpression') {
+                node = this.rules.parser.node(node.children[node.children.length - 1] ?? -1);
+            }
+            const name = node.kind === 'Identifier' ? node.text : '<decorator>';
+            const parameterName = this.shape.name(owner);
+            this.rules.findings.push(new Diagnostic('base/correctness-require-matching-inject-type', 'mismatch',
+                `@${name} resolves to '${this.rules.name(resolved, owner)}' but parameter is typed as '${this.rules.name(parameter, owner)}'`,
+                this.rules.byte(this.rules.start(this.rules.parser.node(parameterName))),
+                this.rules.byte(this.rules.parser.node(owner).end), ''));
+        }
+    }
+}

@@ -1,0 +1,75 @@
+import type { Rules } from './rules.ts';
+import { DecoratorShape } from './decorator_shape.a';
+import { Diagnostic } from './diagnostic.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+
+export class GraphQlNullableParity {
+    readonly rules: Rules;
+    readonly shape: DecoratorShape;
+    constructor(rules: Rules, shape: DecoratorShape) { this.rules = rules; this.shape = shape; }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.rules.parser.node(index).kind !== 'Decorator') { continue; }
+            const name = this.shape.callName(index);
+            if(!['GraphQlArgument', 'GraphQlField', 'GraphQlQuery', 'GraphQlMutation', 'GraphQlFieldResolver'].includes(name)) { continue; }
+            const declared = this.shape.nullable(index);
+            if(declared < 0) { continue; }
+            const owner = this.rules.parents[index] ?? -1;
+            if(owner < 0) { continue; }
+            const kind = this.rules.parser.node(owner).kind;
+            let report = this.shape.name(owner);
+            let input = false;
+            let returns = false;
+            if(name === 'GraphQlArgument') {
+                if(kind !== 'Parameter') { continue; }
+                report = owner; input = true;
+            }
+            else if(name === 'GraphQlField') {
+                if(this.shape.has(owner, ['OrmManyToOne', 'OrmOneToMany', 'OrmOneToOne'])) { continue; }
+                if(kind === 'PropertyDeclaration') {
+                    input = this.shape.has(this.rules.parents[owner] ?? -1, ['GraphQlInputType']);
+                }
+                else if(kind === 'MethodDeclaration' || kind === 'GetAccessor') { returns = true; }
+                else { continue; }
+            }
+            else {
+                if(kind !== 'MethodDeclaration') { continue; }
+                returns = true;
+            }
+            if(report < 0) { continue; }
+            const question = returns ? 'call-returns' : 'raw-shape';
+            let graph = types(this.rules.ask(returns ? owner : report, question), question);
+            if(graph.roots.length === 0) { continue; }
+            let actual = graph.root();
+            if(returns) {
+                const frames = new Frames(this.rules.ask(owner, `type-symbol\n${actual.id}`));
+                header(frames, 'type-symbol'); const symbol = frames.field(); frames.end();
+                if(symbol === 'Promise') {
+                    graph = types(this.rules.ask(owner, `reference-shape\n${actual.id}`), 'reference-shape');
+                    actual = graph.root();
+                    if(actual.arguments.length > 0) { actual = graph.type(actual.arguments[0] ?? 0); }
+                }
+            }
+            const nullable = graph.has(actual, 1 | 2 | 4 | 8 | 16);
+            let id = '';
+            let message = '';
+            if((declared === 1) === nullable) {
+                if(!input || declared !== 1 || graph.has(actual, 1 | 2 | 8)) { continue; }
+                id = 'decoratorNullableButInputExcludesNull';
+                message = `Decorator declares 'nullable: true' on an input, so a client can send null, but the type '${this.rules.name(actual, report)}' does not admit null. Add '| null' so the code's checks follow what can arrive`;
+            }
+            else if(declared === 1) {
+                id = 'decoratorNullableButTypeNot';
+                message = `Decorator declares 'nullable: true' but the type '${this.rules.name(actual, report)}' is not nullable`;
+            }
+            else {
+                id = 'typeNullableButDecoratorNot';
+                message = `Type '${this.rules.name(actual, report)}' is nullable but the decorator does not have 'nullable: true'`;
+            }
+            const node = this.rules.parser.node(report);
+            this.rules.findings.push(new Diagnostic('base/correctness-require-graphql-nullable-parity', id, message,
+                this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+        }
+    }
+}

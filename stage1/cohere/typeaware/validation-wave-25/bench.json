@@ -1,0 +1,124 @@
+{
+  "rounds": [
+    {
+      "corpus": "repository",
+      "round": 1,
+      "implementation": "native",
+      "process_ns": 243011630,
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+      "timing": "tsgo: load_ns=76160487 query_ns=0 queries=0 first_query_ns=0 run_ns=156189090"
+    },
+    {
+      "corpus": "repository",
+      "round": 1,
+      "implementation": "go",
+      "process_ns": 131444865,
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+      "timing": "cohere: load_ns=71183362 rule_ns=0 run_ns=46866320"
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "implementation": "go",
+      "process_ns": 134225908,
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+      "timing": "cohere: load_ns=63175830 rule_ns=0 run_ns=54172161"
+    },
+    {
+      "corpus": "repository",
+      "round": 2,
+      "implementation": "native",
+      "process_ns": 220035703,
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+      "timing": "tsgo: load_ns=83668411 query_ns=0 queries=0 first_query_ns=0 run_ns=131035213"
+    },
+    {
+      "corpus": "repository",
+      "round": 3,
+      "implementation": "native",
+      "process_ns": 234705100,
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+      "timing": "tsgo: load_ns=76173051 query_ns=0 queries=0 first_query_ns=0 run_ns=153882854"
+    },
+    {
+      "corpus": "repository",
+      "round": 3,
+      "implementation": "go",
+      "process_ns": 130905773,
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+      "timing": "cohere: load_ns=63216247 rule_ns=0 run_ns=54274927"
+    },
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "implementation": "native",
+      "process_ns": 1421022930,
+      "bytes": 5010,
+      "sha256": "71742d9d1712f1358a843224d1f5f9452e1e15c7083c4b848438f340f03cf2fe",
+      "timing": "tsgo: load_ns=256855032 query_ns=0 queries=0 first_query_ns=0 run_ns=1150986441"
+    },
+    {
+      "corpus": "compiler",
+      "round": 1,
+      "implementation": "go",
+      "process_ns": 308798649,
+      "bytes": 5010,
+      "sha256": "71742d9d1712f1358a843224d1f5f9452e1e15c7083c4b848438f340f03cf2fe",
+      "timing": "cohere: load_ns=249327893 rule_ns=0 run_ns=37720877"
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "implementation": "go",
+      "process_ns": 292290362,
+      "bytes": 5010,
+      "sha256": "71742d9d1712f1358a843224d1f5f9452e1e15c7083c4b848438f340f03cf2fe",
+      "timing": "cohere: load_ns=233837016 rule_ns=0 run_ns=39547193"
+    },
+    {
+      "corpus": "compiler",
+      "round": 2,
+      "implementation": "native",
+      "process_ns": 1268030733,
+      "bytes": 5010,
+      "sha256": "71742d9d1712f1358a843224d1f5f9452e1e15c7083c4b848438f340f03cf2fe",
+      "timing": "tsgo: load_ns=250593005 query_ns=0 queries=0 first_query_ns=0 run_ns=1001103173"
+    },
+    {
+      "corpus": "compiler",
+      "round": 3,
+      "implementation": "native",
+      "process_ns": 1403193949,
+      "bytes": 5010,
+      "sha256": "71742d9d1712f1358a843224d1f5f9452e1e15c7083c4b848438f340f03cf2fe",
+      "timing": "tsgo: load_ns=258612456 query_ns=0 queries=0 first_query_ns=0 run_ns=1131661684"
+    },
+    {
+      "corpus": "compiler",
+      "round": 3,
+      "implementation": "go",
+      "process_ns": 306441267,
+      "bytes": 5010,
+      "sha256": "71742d9d1712f1358a843224d1f5f9452e1e15c7083c4b848438f340f03cf2fe",
+      "timing": "cohere: load_ns=247522738 rule_ns=0 run_ns=40694117"
+    }
+  ],
+  "medians": {
+    "repository": {
+      "native": 0.2347051,
+      "go": 0.131444865,
+      "native_over_go": 1.7855783107236636
+    },
+    "compiler": {
+      "native": 1.403193949,
+      "go": 0.306441267,
+      "native_over_go": 4.578998000944827
+    }
+  }
+}
