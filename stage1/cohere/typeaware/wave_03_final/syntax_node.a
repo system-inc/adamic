@@ -1,0 +1,2 @@
+import type { SourceSyntaxNode } from '../wave_03_react/source_syntax_node.a';
+export class SyntaxNode { readonly index:number; readonly kind:number; readonly operator:number; readonly raw:SourceSyntaxNode; constructor(index:number,kind:number,operator:number,raw:SourceSyntaxNode){this.index=index;this.kind=kind;this.operator=operator;this.raw=raw;} }

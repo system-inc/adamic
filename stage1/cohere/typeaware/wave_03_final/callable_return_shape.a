@@ -1,0 +1,4 @@
+import type { SyntaxGraph } from './syntax_graph.a';
+import type { SyntaxNode } from './syntax_node.a';
+import type { Types } from '../types.ts';
+export function callableReturnShape(graph:SyntaxGraph,node:SyntaxNode,id:number):Types {return graph.types(node,`callable-return-shape\n${id}`);}

@@ -1,0 +1,4 @@
+import type { SyntaxGraph } from './syntax_graph.a';
+import type { SyntaxNode } from './syntax_node.a';
+import type { Types } from '../types.ts';
+export function indexedTypeShape(graph:SyntaxGraph,node:SyntaxNode,id:number,key:'number'|'string'):Types {return graph.types(node,`indexed-type-shape\n${id}\n${key}`);}

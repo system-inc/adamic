@@ -1,0 +1,15 @@
+import type { SyntaxGraph } from '../../syntax_graph.a';
+import type { SyntaxNode } from '../../syntax_node.a';
+import { KIdentifier } from '../../syntax_kinds.a';
+export class Rule {
+ readonly graph:SyntaxGraph; constructor(graph:SyntaxGraph){this.graph=graph;}
+ visit(node:SyntaxNode):void {
+  if(node.raw.callArguments.length!==0||node.raw.expression===0){return;}
+  const callee=this.graph.node(this.graph.skip(node.raw.expression));
+  if(callee.kind!==KIdentifier||callee.raw.text!=='Symbol'){return;}
+  const symbol=this.graph.tree.context(callee.index);
+  if(symbol.own===0||!(symbol.ownDeclarations[0]?.declared??false)){return;}
+  this.graph.report(node,'symbol-description','expected','This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one.');
+ }
+}
+export function create(graph:SyntaxGraph):Rule{return new Rule(graph);}

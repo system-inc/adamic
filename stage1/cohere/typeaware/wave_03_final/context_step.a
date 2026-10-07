@@ -1,0 +1,1 @@
+export class ContextStep {readonly kind:number;readonly name:string;readonly index:number;constructor(kind:number,name:string,index:number){this.kind=kind;this.name=name;this.index=index;}}

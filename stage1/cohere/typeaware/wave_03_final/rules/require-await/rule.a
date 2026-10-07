@@ -1,0 +1,39 @@
+import type { SyntaxGraph } from '../../syntax_graph.a';
+import type { SyntaxNode } from '../../syntax_node.a';
+import { PromiseContract } from '../../promise_contract.a';
+import { Diagnostic } from '../../../diagnostic.ts';
+import { Suggestion } from '../../../suggestion.ts';
+import { Repair } from '../../../repair.ts';
+import { KFunctionDeclaration,KFunctionExpression,KArrowFunction,KMethodDeclaration,KGetAccessor,KSetAccessor,KConstructor,KClassDeclaration,KClassExpression,KBlock,KSourceFile,KPropertyAssignment,KPropertyDeclaration,KAwaitExpression,KForOfStatement,KAwaitKeyword,KVariableDeclarationList,KAsyncKeyword,KExportKeyword,KDefaultKeyword,KDeclareKeyword,KEqualsGreaterThanToken,KExpressionStatement,KVariableStatement } from '../../syntax_kinds.a';
+function whitespace(value:string):boolean{return value===' '||value==='\t'||value==='\n'||value==='\r';}
+function identifier(value:string):boolean{return (value>='a'&&value<='z')||(value>='A'&&value<='Z')||(value>='0'&&value<='9')||value==='_'||value==='$';}
+export class Rule {
+ readonly graph:SyntaxGraph;readonly contract:PromiseContract;constructor(graph:SyntaxGraph){this.graph=graph;this.contract=new PromiseContract(graph);}
+ boundary(kind:number):boolean{return [KFunctionDeclaration,KFunctionExpression,KArrowFunction,KMethodDeclaration,KGetAccessor,KSetAccessor,KConstructor,KClassDeclaration,KClassExpression].includes(kind);}
+ await(node:SyntaxNode):boolean {if(node.kind===KAwaitExpression){return true;}if(node.kind===KForOfStatement&&node.raw.children.some(child=>this.graph.kind(child)===KAwaitKeyword)){return true;}if(node.kind===KVariableDeclarationList&&(node.raw.flags&7)===6){return true;}if(this.boundary(node.kind)){return false;}for(const child of node.raw.children){if(this.await(this.graph.node(child))){return true;}}return false;}
+ containsAwait(body:SyntaxNode):boolean{for(const child of body.raw.children){if(this.await(this.graph.node(child))){return true;}}return body.kind!==KBlock&&this.await(body);}
+ spaces(start:number):number{let unit=this.graph.unit(start);while(whitespace(this.graph.source[unit]??'')){unit++;}return this.graph.bytes(unit);}
+ params(node:SyntaxNode,start:number):number{const position=this.graph.source.indexOf('(',this.graph.unit(start));return position>=0&&position<this.graph.unit(node.raw.end)?this.graph.bytes(position):start;}
+ headStart(node:SyntaxNode):number{let start=node.raw.start;for(const child of node.raw.children){const modifier=this.graph.node(child);if([KExportKeyword,KDefaultKeyword,KDeclareKeyword].includes(modifier.kind)){start=Math.max(start,modifier.raw.end);}else if(modifier.kind===KAsyncKeyword||modifier.raw.pos>=start){return this.spaces(start);}}return this.spaces(start);}
+ previous(node:SyntaxNode):number{let subject=node;while(subject.raw.parent!==0){const parent=this.graph.node(subject.raw.parent);if([KClassDeclaration,KClassExpression,KBlock,KSourceFile].includes(parent.kind)){const index=parent.raw.children.indexOf(subject.index);return index>0?parent.raw.children[index-1]??0:0;}subject=parent;}return 0;}
+ replacement(node:SyntaxNode,asyncEnd:number):string{const unit=this.graph.unit(asyncEnd);const next=this.graph.source[unit]??'';const rest=this.graph.source.slice(unit);const continues=next==='['||next==='('||['instanceof','in'].some(keyword=>rest.startsWith(keyword)&&!identifier(this.graph.source[unit+keyword.length]??''));if(!continues){return '';}
+  const previousIndex=this.previous(node);if(previousIndex===0){return '';}const previous=this.graph.node(previousIndex);if(previous.kind===KPropertyDeclaration){if(previous.raw.initializer===0){return '';}}else if(previous.kind!==KExpressionStatement&&previous.kind!==KVariableStatement){return '';}
+  let end=this.graph.unit(previous.raw.end);while(end>0&&whitespace(this.graph.source[end-1]??'')){end--;}return end===0||this.graph.source[end-1]!==';'?';':'';
+ }
+ describe(node:SyntaxNode):string{if(node.kind===KArrowFunction){return 'Async arrow function';}if(node.kind===KConstructor){return "Async method 'constructor'";}let kind=[KMethodDeclaration,KGetAccessor,KSetAccessor].includes(node.kind)?'method':'function';let holder=node;
+ if(node.raw.parent!==0){const parent=this.graph.node(node.raw.parent);if(parent.kind===KPropertyAssignment&&parent.raw.initializer===node.index){holder=parent;kind='method';}}
+ const name=this.contract.name(holder.raw.name);return name===undefined?`Async ${kind}`:`Async ${kind} '${name}'`;
+ }
+ visit(node:SyntaxNode):void {
+  if((node.raw.functionFlags&2)===0||(node.raw.functionFlags&1)!==0||node.raw.body===0){return;}
+  const body=this.graph.node(node.raw.body);if(body.kind===KBlock&&body.raw.children.length===0){return;}if(this.containsAwait(body)||this.contract.satisfies(node)){return;}
+  let start=this.headStart(node);let end:number;const parent=node.raw.parent===0?undefined:this.graph.node(node.raw.parent);
+  if(parent!==undefined&&(parent.kind===KPropertyAssignment||parent.kind===KPropertyDeclaration)){start=parent.raw.start;end=this.params(node,start);}
+  else if(node.kind===KArrowFunction){const token=node.raw.children.find(child=>this.graph.kind(child)===KEqualsGreaterThanToken);if(token!==undefined){const arrow=this.graph.node(token);start=arrow.raw.start;end=arrow.raw.end;}else{end=node.raw.name===0?this.params(node,start):this.graph.node(node.raw.name).raw.end;}}
+  else{end=node.raw.name===0?this.params(node,start):this.graph.node(node.raw.name).raw.end;if(end<=start){end=start+5;}}
+  const message=`${this.describe(node)} has no \`await\` expression. The \`async\` keyword wraps the return value in a promise and obliges every caller to await it or handle a floating promise, so a function that never awaits pays that cost for nothing and tells the reader there is asynchrony here to find. Remove \`async\`, or await what this was waiting for.`;
+  const finding=new Diagnostic('require-await','missingAwait',message,start,end,'');this.graph.tree.findings.push(finding);
+  const asyncIndex=node.raw.children.find(child=>this.graph.kind(child)===KAsyncKeyword);if(asyncIndex!==undefined){const keyword=this.graph.node(asyncIndex);const asyncEnd=this.spaces(keyword.raw.end);const repair=new Repair(keyword.raw.start,asyncEnd,this.replacement(node,asyncEnd));finding.suggestions.push(new Suggestion('removeAsync',"Remove `async`. This changes the function's return type from a promise to the value itself, so every caller has to stop awaiting it, which is why it is offered rather than applied.",[repair]));}
+ }
+}
+export function create(graph:SyntaxGraph):Rule{return new Rule(graph);}

@@ -1,0 +1,22 @@
+import { panic, tsgoInspect } from 'adamic';
+import type { SourceSyntaxTree } from '../wave_03_react/source_syntax_tree.a';
+import { SyntaxNode } from './syntax_node.a';
+import { syntaxKinds, kindNumber, KParenthesizedExpression } from './syntax_kinds.a';
+import { types } from '../facts.ts';
+import { byteOffsets } from '../unary_minus.ts';
+import type { Types } from '../types.ts';
+import { Diagnostic } from '../diagnostic.ts';
+export class SyntaxGraph {
+ readonly tree:SourceSyntaxTree; readonly source:string; readonly offsets:readonly number[]; readonly nodes:SyntaxNode[]=[];
+ constructor(tree:SourceSyntaxTree,source:string){this.tree=tree;this.source=source;this.offsets=byteOffsets(source);const kinds=syntaxKinds();for(let index=0;index<tree.nodes.length;index++){const raw=tree.nodes[index]??panic('missing source node');this.nodes.push(new SyntaxNode(index+1,kindNumber(kinds,raw.kind),raw.operator===''?0:kindNumber(kinds,raw.operator),raw));}}
+ unit(byte:number):number{let low=0;let high=this.offsets.length-1;while(low<high){const middle=Math.floor((low+high)/2);if((this.offsets[middle]??0)<byte){low=middle+1;}else{high=middle;}}return low;}
+ bytes(unit:number):number{return this.offsets[unit]??panic('text position outside source');}
+ slice(start:number,end:number):string{return this.source.slice(this.unit(start),this.unit(end));}
+ node(index:number):SyntaxNode{return this.nodes[index-1]??panic('missing numeric syntax node');}
+ kind(index:number):number{return index===0?0:this.node(index).kind;}
+ text(index:number):string{return index===0?'':this.node(index).raw.text;}
+ skip(index:number):number{let current=index;while(this.kind(current)===KParenthesizedExpression){current=this.node(current).raw.expression;}return current;}
+ ask(node:SyntaxNode,question:string):string{return tsgoInspect(this.tree.program,this.tree.path,node.raw.pos,node.raw.end,node.raw.kind,question);}
+ types(node:SyntaxNode,question:string):Types{return types(this.ask(node,question),question.split('\n')[0]??'');}
+ report(node:SyntaxNode,rule:string,id:string,message:string):Diagnostic{const finding=new Diagnostic(rule,id,message,node.raw.start,node.raw.end,'');this.tree.findings.push(finding);return finding;}
+}

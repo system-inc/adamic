@@ -1,0 +1,13 @@
+import { Frames,header } from '../frames.ts';
+import { types } from '../facts.ts';
+import type { Types } from '../types.ts';
+export class GenericSignatureData {
+ readonly starts:readonly number[];readonly ends:readonly number[];readonly kinds:readonly number[]; readonly explicit:number;readonly present:boolean;readonly typeParameters:readonly number[];readonly declared:readonly number[];readonly resolved:readonly number[];readonly rest:boolean;readonly element:number;readonly returnType:number;readonly contextual:number;readonly facts:Types;
+ constructor(starts:readonly number[],ends:readonly number[],kinds:readonly number[],explicit:number,present:boolean,typeParameters:readonly number[],declared:readonly number[],resolved:readonly number[],rest:boolean,element:number,returnType:number,contextual:number,facts:Types){this.starts=starts;this.ends=ends;this.kinds=kinds;this.explicit=explicit;this.present=present;this.typeParameters=typeParameters;this.declared=declared;this.resolved=resolved;this.rest=rest;this.element=element;this.returnType=returnType;this.contextual=contextual;this.facts=facts;}
+}
+export function genericSignatureData(payload:string):GenericSignatureData {
+ const frames=new Frames(payload);header(frames,'generic-signature-shape');const argumentCount=frames.natural();const starts:number[]=[];const ends:number[]=[];const kinds:number[]=[];for(let index=0;index<argumentCount;index++){starts.push(frames.natural());ends.push(frames.natural());kinds.push(frames.natural());}const explicit=frames.natural();const present=frames.yes();let parameters:readonly number[]=[];let declared:readonly number[]=[];let resolved:readonly number[]=[];let rest=false;let element=0;let returnType=0;let contextual=0;
+ if(present){parameters=frames.ids();rest=frames.yes();declared=frames.ids();element=frames.natural();frames.yes();resolved=frames.ids();frames.natural();returnType=frames.natural();contextual=frames.natural();}
+ const facts=types(`1\n123\ngeneric-signature-shape${frames.text.slice(frames.cursor)}`,'generic-signature-shape');
+ return new GenericSignatureData(starts,ends,kinds,explicit,present,parameters,declared,resolved,rest,element,returnType,contextual,facts);
+}

@@ -124,3 +124,7 @@ will declare rule.json kinds and accept the handed node; shared generator and
 harness files remain untouched. Earlier React ports are already pushed;
 boolean-prop-naming retains its separate arbitrary-runtime-regex limitation,
 which is not mislabelled as an IR or capture-analysis blocker.
+
+### Continuation 4 status
+
+All three native rules are implemented with numeric kind listeners and handed-node visits. The owned full oracle passed: 136 parseable controls, 100 findings and 71 suggestions; 77 compiler and 287 repository roots match byte for byte, including sanitizer runs. Each rule has a compiled message-only mutant caught by comparison. Released-handle and retained-registry mutation checks pass. Evidence and exact limitations are in wave_03_final/REPORT.md. Shared emitted-JavaScript checker execution remains blocked by the unlinked typescript-go library refusal; shared harness and generator files were not edited.

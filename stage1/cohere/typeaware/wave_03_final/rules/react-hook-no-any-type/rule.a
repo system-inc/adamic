@@ -1,0 +1,18 @@
+import type { SyntaxGraph } from '../../syntax_graph.a';
+import type { SyntaxNode } from '../../syntax_node.a';
+import { KIdentifier,KPropertyAccessExpression } from '../../syntax_kinds.a';
+function hookName(name:string):boolean{const fourth=name[3]??'';return name.startsWith('use')&&((fourth>='A'&&fourth<='Z')||(fourth>='0'&&fourth<='9'));}
+function named(names:readonly string[]):string {if(names.length===1){return `\`${names[0]??''}\``;}if(names.length===2){return `\`${names[0]??''}\` and \`${names[1]??''}\``;}return names.map((name,index)=>index===names.length-1?`and \`${name}\``:`\`${name}\`, `).join('');}
+export class Rule {
+ readonly graph:SyntaxGraph;readonly blinded:readonly string[];constructor(graph:SyntaxGraph,blinded:readonly string[]){this.graph=graph;this.blinded=blinded;}
+ visit(node:SyntaxNode):void {
+  if(node.raw.expression===0){return;}const callee=this.graph.node(node.raw.expression);let name:string;
+  if(callee.kind===KIdentifier){if(!hookName(callee.raw.text)){return;}name=callee.raw.text;}
+  else if(callee.kind===KPropertyAccessExpression){const receiver=this.graph.node(this.graph.skip(callee.raw.expression));const property=this.graph.node(callee.raw.name);if(receiver.kind!==KIdentifier||receiver.raw.text!=='React'||property.kind!==KIdentifier||!hookName(property.raw.text)){return;}name=`React.${property.raw.text}`;}
+  else{return;}
+  const facts=this.graph.types(node,'raw-shape');if(facts.roots.length===0||(facts.root().flags&1)===0){return;}
+  const cost=this.blinded.length===0?'Every rule that identifies a React value by its type is disabled for this file, and this build linked none of them so none can be named. ':`These rules identify a React value by asking the checker for its type, so they cannot analyse this file and will report nothing in it: ${named(this.blinded)}. Suppressing this finding turns those off for the file rather than tidying a type. `;
+  this.graph.report(node,'structure/react-hook-no-any-type','reactHookNoAnyType',`\`${name}\` here resolves to \`any\`, so the type checker cannot see what this hook returns. ${cost}React's types are probably not resolving here: check that \`@types/react\` is installed and current, that no ambient declaration is shadowing it, and that the path mapping for \`react\` resolves.`);
+ }
+}
+export function create(graph:SyntaxGraph,blinded:readonly string[]):Rule{return new Rule(graph,blinded);}

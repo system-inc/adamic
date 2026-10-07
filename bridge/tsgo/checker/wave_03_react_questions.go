@@ -1,7 +1,6 @@
 package checker
 
 import (
-	"fmt"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
@@ -17,6 +16,6 @@ func (p *Program) inspectWave03React(out *fields, c *checker.Checker, node *ast.
 	case "source-syntax-tree":
 		return p.sourceSyntaxTree(out, node, question)
 	default:
-		return "", fmt.Errorf("unsupported checker question: %s", question)
+		return p.inspectWave03Final(out, c, node, mode, question)
 	}
 }

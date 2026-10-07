@@ -1,0 +1,65 @@
+import type { SyntaxGraph } from './syntax_graph.a';
+import type { SyntaxNode } from './syntax_node.a';
+import type { TypeFact } from '../type_fact.ts';
+import { unionFlag } from '../flags.ts';
+import type { Types } from '../types.ts';
+import { Frames,header } from '../frames.ts';
+import { ContextStep } from './context_step.a';
+import { indexedTypeShape } from './indexed_type_shape.a';
+import { callableReturnShape } from './callable_return_shape.a';
+import { genericSignatureData } from './generic_signature_shape.a';
+import { KFunctionDeclaration,KGetAccessor,KSetAccessor,KConstructor,KIdentifier,KPrivateIdentifier,KStringLiteral,KNumericLiteral,KNoSubstitutionTemplateLiteral,KMethodDeclaration,KObjectLiteralExpression,KParenthesizedExpression,KConditionalExpression,KBinaryExpression,KBarBarToken,KQuestionQuestionToken,KPropertyAssignment,KArrayLiteralExpression,KSpreadElement,KReturnStatement,KArrowFunction,KFunctionExpression,KCallExpression,KNewExpression,KClassDeclaration,KClassExpression,KHeritageClause,KStaticKeyword } from './syntax_kinds.a';
+export class PromiseContract {
+ readonly graph:SyntaxGraph;readonly records=new Map<number,TypeFact>();readonly substitutions=new Map<number,readonly number[]>(); constructor(graph:SyntaxGraph){this.graph=graph;}
+ absorb(facts:Types):Types{for(const record of facts.records){this.records.set(record.id,record);}return facts;}
+ facts(node:SyntaxNode,question:string):Types{return this.absorb(this.graph.types(node,question));}
+ record(node:SyntaxNode,id:number):TypeFact {const found=this.records.get(id);if(found!==undefined){return found;}return this.facts(node,`reference-shape\n${id}`).root();}
+ parts(node:SyntaxNode,id:number):readonly number[]{const record=this.record(node,id);return (record.flags&unionFlag)!==0?record.parts:[id];}
+ expand(node:SyntaxNode,ids:readonly number[],substitutions:ReadonlyMap<number,readonly number[]>):number[]{const expanded:number[]=[];for(const id of ids){for(const part of this.parts(node,id)){const standIns=substitutions.get(part);if(standIns===undefined){expanded.push(part);}else{for(const standIn of standIns){for(const value of this.parts(node,standIn)){expanded.push(value);}}}}}return expanded;}
+ thenable(node:SyntaxNode,id:number):boolean {
+  const apparent=this.facts(node,`apparent-shape\n${id}`);for(const root of apparent.roots){for(const part of this.parts(node,root)){
+   const property=this.facts(node,`property-shape\n${part}\nthen`);for(const propertyType of property.roots){for(const then of this.parts(node,propertyType)){
+    const parameters=this.facts(node,`call-parameters\n${then}`);for(const parameter of parameters.roots){for(const callback of this.parts(node,parameter)){const frames=new Frames(this.graph.ask(node,`call-count\n${callback}`));header(frames,'call-count');const count=frames.natural();frames.end();if(count>0){return true;}}}
+   }}
+  }}return false;
+ }
+ demands(node:SyntaxNode,ids:readonly number[],substitutions:ReadonlyMap<number,readonly number[]>):boolean {
+  let saw=false;for(const id of this.expand(node,ids,substitutions)){const returns=this.absorb(callableReturnShape(this.graph,node,id));for(const returned of returns.roots){saw=true;for(const part of this.expand(node,[returned],substitutions)){if(!this.thenable(node,part)){return false;}}}}return saw;
+ }
+ name(index:number):string|undefined {if(index===0){return undefined;}const node=this.graph.node(index);return [KIdentifier,KPrivateIdentifier,KStringLiteral,KNumericLiteral,KNoSubstitutionTemplateLiteral].includes(node.kind)?node.raw.text:undefined;}
+ returnsContext(node:SyntaxNode):boolean{return (node.kind===KFunctionExpression||node.kind===KArrowFunction)&&node.raw.type===0&&node.raw.functionFlags===0;}
+ apply(node:SyntaxNode,ids:readonly number[],step:ContextStep):number[]{const next:number[]=[];for(const id of ids){if(step.kind===0){const property=this.facts(node,`property-shape\n${id}\n${step.name}`);if(property.present){for(const value of property.roots){next.push(value);}}else{for(const value of this.absorb(indexedTypeShape(this.graph,node,id,'string')).roots){next.push(value);}}}
+ else if(step.kind===1){const reference=this.facts(node,`reference-shape\n${id}`).root();if(reference.tuple>=0&&!reference.array){const element=reference.arguments[step.index];if(element!==undefined){next.push(element);}}else{for(const value of this.absorb(indexedTypeShape(this.graph,node,id,'number')).roots){next.push(value);}}}
+ else{for(const value of this.absorb(callableReturnShape(this.graph,node,id)).roots){next.push(value);}}}return next;}
+ generic(node:SyntaxNode):number {
+  const steps:ContextStep[]=[];let current=node;
+  if(node.kind===KMethodDeclaration){if(this.graph.kind(node.raw.parent)!==KObjectLiteralExpression){return -1;}const name=this.name(node.raw.name);if(name===undefined){return -1;}steps.push(new ContextStep(0,name,0));current=this.graph.node(node.raw.parent);}
+  while(current.raw.parent!==0){let parent=this.graph.node(current.raw.parent);
+   if(parent.kind===KParenthesizedExpression){/* Parentheses carry the contextual type unchanged. */}else if(parent.kind===KConditionalExpression){if(parent.raw.yes!==current.index&&parent.raw.no!==current.index){return -1;}}
+   else if(parent.kind===KBinaryExpression){if(parent.operator!==KBarBarToken&&parent.operator!==KQuestionQuestionToken){return -1;}}
+   else if(parent.kind===KPropertyAssignment){if(parent.raw.initializer!==current.index){return -1;}const name=this.name(parent.raw.name);if(name===undefined){return -1;}steps.push(new ContextStep(0,name,0));parent=this.graph.node(parent.raw.parent);}
+   else if(parent.kind===KArrayLiteralExpression){let index=-1;for(let at=0;at<parent.raw.children.length;at++){const child=parent.raw.children[at]??0;if(child===current.index){index=at;break;}if(this.graph.kind(child)===KSpreadElement){return -1;}}if(index<0){return -1;}steps.push(new ContextStep(1,'',index));}
+   else if(parent.kind===KReturnStatement){let enclosing=parent.raw.parent;while(enclosing!==0&&!this.returnsContext(this.graph.node(enclosing))){const candidate=this.graph.node(enclosing);if([KFunctionDeclaration,KArrowFunction,KFunctionExpression,KMethodDeclaration,KGetAccessor,KSetAccessor,KConstructor].includes(candidate.kind)){return -1;}enclosing=candidate.raw.parent;}if(enclosing===0){return -1;}steps.push(new ContextStep(2,'',0));parent=this.graph.node(enclosing);}
+   else if(parent.kind===KArrowFunction){if(parent.raw.body!==current.index||!this.returnsContext(parent)){return -1;}steps.push(new ContextStep(2,'',0));}
+   else if(parent.kind===KCallExpression||parent.kind===KNewExpression){return this.genericCall(node,parent,current,steps);}
+   else{return -1;}current=parent;
+  }return -1;
+ }
+ substitute(key:number,value:number):void{const values:number[]=[];const existing=this.substitutions.get(key);if(existing!==undefined){for(const item of existing){values.push(item);}}values.push(value);this.substitutions.set(key,values);}
+ genericCall(node:SyntaxNode,call:SyntaxNode,argument:SyntaxNode,steps:readonly ContextStep[]):number {
+  const signature=genericSignatureData(this.graph.ask(call,'generic-signature-shape'));this.absorb(signature.facts);if(signature.explicit!==0||!signature.present||signature.typeParameters.length===0){return -1;}
+  let argumentIndex=-1;for(let index=0;index<signature.starts.length;index++){if(signature.starts[index]===argument.raw.pos&&signature.ends[index]===argument.raw.end){argumentIndex=index;break;}if(signature.kinds[index]===KSpreadElement){return -1;}}if(argumentIndex<0){return -1;}
+
+  const parameter=signature.rest&&argumentIndex>=signature.declared.length-1?signature.element:signature.declared[argumentIndex]??0;if(parameter===0){return -1;}
+  this.substitutions.clear();for(let index=0;index<signature.starts.length;index++){if(index===argumentIndex||index>=signature.declared.length||index>=signature.resolved.length||(signature.rest&&index>=signature.declared.length-1)){continue;}const declared=signature.declared[index]??0;if(signature.typeParameters.includes(declared)){const resolved=signature.resolved[index]??0;this.substitute(declared,resolved);}}
+  if(signature.contextual!==0&&signature.typeParameters.includes(signature.returnType)){this.substitute(signature.returnType,signature.contextual);}
+  let ids:readonly number[]=[parameter];for(let index=steps.length-1;index>=0;index--){const step=steps[index];if(step!==undefined){ids=this.apply(node,this.expand(node,ids,this.substitutions),step);}}
+  return this.demands(node,ids,this.substitutions)?1:0;
+ }
+ heritage(node:SyntaxNode):readonly number[] {
+  if(node.kind!==KMethodDeclaration||node.raw.children.some(child=>this.graph.kind(child)===KStaticKeyword)||this.graph.kind(node.raw.name)!==KIdentifier){return [];}
+  if(![KClassDeclaration,KClassExpression].includes(this.graph.kind(node.raw.parent))){return [];}
+  const parent=this.graph.node(node.raw.parent);for(const child of parent.raw.children){if(this.graph.kind(child)!==KHeritageClause){continue;}for(const typeIndex of this.graph.node(child).raw.children){const type=this.graph.node(typeIndex);const facts=this.facts(type,'raw-shape');for(const id of facts.roots){const property=this.facts(node,`property-shape\n${id}\n${this.graph.text(node.raw.name)}`);if(property.present){return property.roots;}}}}return [];
+ }
+ satisfies(node:SyntaxNode):boolean {const generic=this.generic(node);if(generic>=0){return generic===1;}let ids=this.facts(node,'contextual-shape').roots;if(ids.length===0){ids=this.heritage(node);}return this.demands(node,ids,new Map<number,readonly number[]>());}
+}
