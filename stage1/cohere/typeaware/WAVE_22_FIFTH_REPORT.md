@@ -88,3 +88,16 @@ The earlier setup remains in /workspace/wave-22-setup.log: warm toolchain total
 Setup was not repeated for this continuation. Earlier native/Go timings,
 mutants and sanitizer evidence remain in the four completed wave reports;
 none establishes coverage of these three pending rules.
+
+## Prerequisite recheck after renewed continuation
+
+Fetched all origin heads again successfully. The updated main, tsgo-c-library,
+lint-harness-dot-a and lint-helpers inventories still contain no matching native
+React graph or pending rule paths, and their parser.ts files have zero JSX
+mentions. Exact inspected ref SHAs are in prerequisite-recheck.json. This
+path/text search is evidence about those refs, not a proof about every possible
+implementation on every origin branch. The existing native reproduction again
+exited 70 with the same GreaterThanToken/SlashToken parser panic; stdout, stderr
+and exit status are preserved as recheck.*. No rules were marked complete and
+no further claims were made. Ahra's instruction to stop at other blockers
+without editing shared files still applies.
