@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	goruntime "runtime"
 	"sort"
 	"strings"
 	"testing"
@@ -161,7 +162,12 @@ int main(int argc,char **argv) {
 	defer cancel()
 	for _, arguments := range [][]string{nil, {"unlimited"}} {
 		command := exec.CommandContext(ctx, binary, arguments...)
-		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
+		command.Env = os.Environ()
+		// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it, so the leak half
+		// of this check runs on Linux, the gate of record.
+		if goruntime.GOOS == "linux" {
+			command.Env = append(command.Env, "ASAN_OPTIONS=detect_leaks=1")
+		}
 		output, err := command.CombinedOutput()
 		if err != nil {
 			t.Fatalf("native regex oracle (%v): %v\n%s", arguments, err, output)
