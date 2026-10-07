@@ -37,6 +37,9 @@ func TestConcurrencyBudgetAndResumeIdentity(t *testing.T) {
 	if schedulingIdentity("inputs", 4, 1, 1) == schedulingIdentity("inputs", 4, 2, 2) {
 		t.Fatal("parallel missing from resume identity")
 	}
+	if schedulingIdentity("inputs", 4, 0, 5) == schedulingIdentity("inputs", 4, 5, 5) {
+		t.Fatal("explicit parallel flag missing from resume identity")
+	}
 	if schedulingIdentity("inputs", 4, 0, 4) == schedulingIdentity("inputs", 4, 0, 2) {
 		t.Fatal("effective automatic parallel missing from resume identity")
 	}

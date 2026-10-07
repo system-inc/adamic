@@ -775,3 +775,88 @@ go test -race -count=20 -json -run 'Deadline|ExitedLeader|WaitCannot|CompilerWor
 `cmd/adamic-gate/evidence/readiness-proofs.tar.gz` preserves the supervisors, raw trial logs,
 source hashes, toolchain/CPU metadata, full suite, Python tests, Darwin build, vet and both mutants.
 This is a scheduling-contention correctness proof, not a whole-gate performance measurement.
+
+
+## Concurrency measurement before the provisioned fleet
+
+All four trials tested fixed commit `6f61080201f13b84cdec1bc6078b1813d135ac21`,
+uncached, on this box. Shard 8 is the heaviest shard of the 15-shard plan: predicted
+1,152.940 seconds, 51 planned units. Required parity corpora and the verified tsgo
+C archive were supplied. The three requested settings each ran once because they
+take over five minutes. A fourth run repeated the baseline after the alternatives
+to detect run-order/compiler-cache effects. Each emitted the identical set of
+429 named terminal verdicts: 429 pass, zero fail, zero skip; summary errors empty.
+
+| Loop / setting | Wall seconds | Peak RSS GiB | Sampled cgroup peak GiB | Load 1/5/15 min before → after |
+| --- | ---: | ---: | ---: | --- |
+| today (`auto`) | 654.116 | 2.230 | 12.592 | 4.99/5.23/3.16 → 1.09/3.88/4.33 |
+| four-one (`4x1`) | 510.437 | 2.225 | 12.551 | 1.09/3.88/4.33 → 1.03/2.32/3.55 |
+| two-two (`2x2`) | 562.544 | 2.225 | 12.308 | 1.03/2.32/3.55 → 1.04/1.80/2.86 |
+| today-repeat (`auto`) | 524.655 | 2.222 | 12.744 | 1.04/1.80/2.86 → 1.09/2.15/2.87 |
+
+The fastest alternative, `4x1`, is only 2.710% faster than the repeated baseline,
+below the requested 5% threshold. Retain today's default: `-concurrency auto`.
+`2x2` is slower than the repeated baseline. The initial baseline paid additional
+compilation work despite plan-discovery warming; treating its 21.97% difference
+as a concurrency improvement would confound compilation-cache/run-order effects.
+ADAMIC_GATE_UNCACHED bypassed answer caches in every trial; the Go compilation
+cache remained enabled. No new answer cache was added.
+
+Here `auto` resolved to five package jobs and Go's unset `-parallel`, whose effective
+default was five: a nominal budget of 25, despite a four-core cgroup quota.
+`4x1` and `2x2` each have a nominal budget of four. Limits apply to package workers
+and Go parallel tests; they do not cap every native subprocess inside one test.
+`-concurrency JOBSxPARALLEL` sets both through one flag. The shard summary records
+Setting, Jobs, Parallel, EffectiveParallel and Budget; its build-flags line also
+records them. Resume keys include both explicit and effective parallelism, and
+merge validates package checkpoints against the actual `-parallel` argument.
+Two source-overlay mutants dropping those individual key components must fail
+`TestConcurrencyBudgetAndResumeIdentity`; the checkpoint test also rejects an
+invocation with different parallelism.
+
+Every trial's build flags: commit above; `nproc=5`; `cpu.max="400000 100000"`;
+`go version go1.27.1 linux/amd64`;
+`clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)`;
+`node=v24.19.0`; `uncached=1`; GOFLAGS, CGO_ENABLED and GOMAXPROCS unset.
+Per-trial loads are in the table and complete build-flags lines are in summaries.
+GNU time's maximum RSS is a process peak, not the sum of concurrent process RSS.
+The supplemental cgroup peaks were sampled at 100 ms and include page cache and
+other cgroup processes, so they are not an isolated application-memory measurement.
+
+Exact instrument, with CASE/SETTING respectively `today/auto`, `four-one/4x1`,
+`two-two/2x2`, `today-repeat/auto`, in that order:
+
+```sh
+source /workspace/adamic-tools/env.sh
+source /workspace/gate-concurrency-inputs.env
+export ADAMIC_GATE_UNCACHED=1
+/workspace/gate-concurrency-measure/time-tools/usr/bin/time -v \
+  -o /workspace/gate-concurrency-measure/CASE/time.txt \
+  /workspace/adamic-gate-budget shard -index 8 -count 15 -concurrency SETTING \
+  -scratch /workspace/gate-concurrency-scratch \
+  -out /workspace/gate-concurrency-measure/CASE/shard
+```
+
+Before/after for the scheduling change: repeated auto 524.655 s before,
+4x1 510.437 s after, instrument above; retained default because the difference
+is under 5%. No whole gate or other fleet shards were run for this measurement.
+
+The timing replan remains: 8 shards 33.92 min; 10 27.62; 12 23.42;
+14 20.42; 15 19.22; 16 18.17 predicted maximum. Choose **15** as the smallest
+count below twenty minutes; 16 gives more margin. These predictions retain the
+plain-log weights, rather than scaling the fleet using this one shard's observed
+wall time. Unknown complement work and host contention remain prediction limits.
+No single known unit exceeds fifteen minutes; the largest remains
+`internal/unicodeproperties::TestCanonicalizeUnicodeNode`, 822.510 s.
+
+For the fleet, build the CLI once, generate `adamic-gate plan -count 15`, then run
+one index per box with `adamic-gate shard -index INDEX -count 15 -concurrency auto
+-resume -scratch DISK_SCRATCH -out OUTPUT`. Provision gate inputs everywhere and
+the WASI SDK/variables on the required WASI shard as documented above.
+
+Setup's module warming hit the already-observed forbidden compress-module ZIP
+redirect. The pinned tsgo C archive was built directly, and verified gate-input
+environment was generated from setup's helper. GNU time was extracted from the
+Ubuntu package because this box had no installed time binary. The evidence archive
+contains raw stdout-only JSON logs, separate stderr, summaries, commands, samples,
+verification and both key mutants.
