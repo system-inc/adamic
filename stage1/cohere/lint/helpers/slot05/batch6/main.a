@@ -1,0 +1,74 @@
+import { panic, readTextFile, programArguments, utf8At, utf8Length } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import type { ThemeValue } from '../batch4/theme_live_keys.a';
+import type { MutableThemeState } from '../batch5/theme_clear_all.a';
+import { newTheme } from './new_theme.a';
+import { resolveThemeKey } from './theme_resolve_key.a';
+import { resolveThemeValue } from './theme_resolve_value.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
+function number(index: number, field: string): number { return json.node(json.field(index, field)).number; }
+function byteCompare(a: string, b: string): number {
+    const left = utf8Length(a); const right = utf8Length(b);
+    const length = Math.min(left, right);
+    for(let index = 0; index < length; index++) {
+        const difference = utf8At(a, index) - utf8At(b, index);
+        if(difference !== 0) { return difference; }
+    }
+    return left - right;
+}
+function printOrder(order: readonly string[]): void {
+    console.log(`${order.length}`);
+    for(const key of order) { console.log(key); }
+}
+function printValues(values: ReadonlyMap<string, ThemeValue>): void {
+    const keys: string[] = [];
+    for(const key of values.keys()) { keys.push(key); }
+    keys.sort((a, b) => byteCompare(a, b));
+    console.log(`${keys.length}`);
+    for(const key of keys) {
+        const value = values.get(key) ?? panic('missing snapshot value');
+        console.log(key); console.log(value.value); console.log(`${value.options}`);
+    }
+}
+function printTheme(theme: MutableThemeState): void {
+    console.log(theme.prefix); console.log(`${theme.deadKeys}`);
+    printOrder(theme.keyOrder); printValues(theme.values);
+}
+for(const row of json.node(root).children) {
+    const mode = text(row, 'mode');
+    if(mode === 'new') {
+        const first = newTheme(); const second = newTheme();
+        printTheme(first); printTheme(second);
+        first.prefix = 'tw'; first.values.set('--a', {value: text(row, 'source') + ' stored', options: 17}); first.keyOrder.push('--a');
+        printTheme(first); printTheme(second);
+    } else {
+        const state = json.field(row, 'state');
+        const keyOrder = json.node(json.field(state, 'order')).children.map(c => json.node(c).text);
+        const values = new Map<string, ThemeValue>();
+        for(const entry of json.node(json.field(state, 'entries')).children) {
+            values.set(text(entry, 'key'), {value: text(entry, 'value'), options: number(entry, 'options')});
+        }
+        const theme = {keyOrder, values};
+        const namespaces = json.node(json.field(row, 'namespaces')).children.map(c => json.node(c).text);
+        const predictions = json.node(json.field(row, 'ignored')).children.map(c => ({key: text(c, 'key'), namespace: text(c, 'namespace'), ignored: text(c, 'ignored') === 'true'}));
+        const isIgnored = (key: string, namespace: string): boolean => {
+            for(const item of predictions) {
+                if(item.key === key && item.namespace === namespace) { return item.ignored; }
+            }
+            return panic('missing Go ignored-key result');
+        };
+        const candidate = text(row, 'candidate'); const present = text(row, 'present') === 'true';
+        if(mode === 'key') {
+            const result = resolveThemeKey(theme, candidate, present, namespaces, isIgnored);
+            console.log(`${result.found}`); console.log(result.key);
+        } else if(mode === 'value') {
+            const result = resolveThemeValue(theme, candidate, present, namespaces, isIgnored);
+            console.log(`${result.found}`); console.log(result.value);
+        } else { panic('unsupported helper mode'); }
+    }
+}

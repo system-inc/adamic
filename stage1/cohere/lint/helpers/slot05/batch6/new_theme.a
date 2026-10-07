@@ -1,0 +1,6 @@
+import type { ThemeValue } from '../batch4/theme_live_keys.a';
+import type { MutableThemeState } from '../batch5/theme_clear_all.a';
+// A constructor call owns fresh containers; neither instance can mutate the other.
+export function newTheme(): MutableThemeState {
+    return {prefix: '', values: new Map<string, ThemeValue>(), keyOrder: [], deadKeys: 0};
+}

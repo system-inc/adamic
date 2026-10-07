@@ -1,0 +1,14 @@
+import { panic } from 'adamic';
+import type { ThemeState } from '../batch4/theme_live_keys.a';
+import { resolveThemeKey } from './theme_resolve_key.a';
+export interface ResolvedThemeValue {
+    readonly value: string;
+    readonly found: boolean;
+}
+// Literal resolution consults no options and never creates a CSS var() reference.
+export function resolveThemeValue(theme: ThemeState, candidateValue: string, candidateValuePresent: boolean, namespaces: readonly string[], isIgnoredThemeKey: (key: string, namespace: string) => boolean): ResolvedThemeValue {
+    const result = resolveThemeKey(theme, candidateValue, candidateValuePresent, namespaces, isIgnoredThemeKey);
+    if(!result.found) { return {value: '', found: false}; }
+    const stored = theme.values.get(result.key) ?? panic('resolved theme entry disappeared');
+    return {value: stored.value, found: true};
+}

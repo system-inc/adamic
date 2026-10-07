@@ -1,0 +1,39 @@
+=== RUN   TestSlot05NewTheme
+    helper_test.go:55: 6 consumers, 639 distinct test-file literals, 640 cases, 2560 constructor snapshots
+    helper_test.go:65: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:79: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch6/main.a:4:40: error TS2307: Cannot find module './theme_clear_all.a' or its corresponding type declarations.
+--- FAIL: TestSlot05NewTheme (1.38s)
+=== RUN   TestSlot05ResolveThemeKey
+    helper_test.go:55: 6 consumers, 639 distinct test-file literals, 10330 cases, 0 constructor snapshots
+    helper_test.go:65: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:79: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch6/main.a:4:40: error TS2307: Cannot find module './theme_clear_all.a' or its corresponding type declarations.
+--- FAIL: TestSlot05ResolveThemeKey (1.61s)
+=== RUN   TestSlot05ResolveThemeValue
+    helper_test.go:55: 6 consumers, 639 distinct test-file literals, 10330 cases, 0 constructor snapshots
+    helper_test.go:65: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:79: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch6/main.a:4:40: error TS2307: Cannot find module './theme_clear_all.a' or its corresponding type declarations.
+--- FAIL: TestSlot05ResolveThemeValue (1.60s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch6	4.592s
+FAIL

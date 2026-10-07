@@ -1,0 +1,49 @@
+=== RUN   TestSlot05NewTheme
+    helper_test.go:59: 6 consumers, 639 distinct test-file literals, 640 cases, 2560 constructor snapshots
+    helper_test.go:69: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:124: new_theme.a mutant "deadKeys: 0" -> "deadKeys: 1" caught at verdict 2: mutant "1", Go "0"
+    helper_test.go:124: new_theme.a mutant "prefix: ''" -> "prefix: 'wrong'" caught at verdict 1: mutant "wrong", Go ""
+    helper_test.go:124: new_theme.a mutant "export function newTheme(): MutableThemeState {\n    return {prefix: '', values: new Map<string, ThemeValue>(), keyOrder: [], deadKeys: 0};\n}\n" -> "const sharedValues = new Map<string, ThemeValue>();\nexport function newTheme(): MutableThemeState {\n    return {prefix: '', values: sharedValues, keyOrder: [], deadKeys: 0};\n}\n" caught at verdict 21: mutant "1", Go "0"
+    helper_test.go:124: new_theme.a mutant "export function newTheme(): MutableThemeState {\n    return {prefix: '', values: new Map<string, ThemeValue>(), keyOrder: [], deadKeys: 0};\n}\n" -> "const sharedOrder: string[] = [];\nexport function newTheme(): MutableThemeState {\n    return {prefix: '', values: new Map<string, ThemeValue>(), keyOrder: sharedOrder, deadKeys: 0};\n}\n" caught at verdict 20: mutant "1", Go "0"
+--- PASS: TestSlot05NewTheme (5.59s)
+=== RUN   TestSlot05ResolveThemeKey
+    helper_test.go:59: 6 consumers, 639 distinct test-file literals, 10330 cases, 0 constructor snapshots
+    helper_test.go:69: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:124: theme_resolve_key.a mutant "if(candidateValuePresent)" -> "if(true)" caught at verdict 5: mutant "--first-seed.", Go "--first"
+    helper_test.go:124: theme_resolve_key.a mutant "candidateValuePresent && candidateValue.includes('.')" -> "false" caught at verdict 21: mutant "--second-seed.", Go "--first-seed_"
+    helper_test.go:124: theme_resolve_key.a mutant "if(isIgnoredThemeKey(key, namespace))" -> "if(false)" caught at verdict 20769: mutant "true", Go "false"
+    helper_test.go:124: theme_resolve_key.a mutant "candidateValue.replaceAll('.', '_')" -> "candidateValue.replace('.', '_')" caught at verdict 21: mutant "--second-seed.", Go "--first-seed_"
+    helper_test.go:124: theme_resolve_key.a mutant "for(const namespace of namespaces)" -> "for(const namespace of namespaces.slice().reverse())" caught at verdict 2: mutant "--second-seed.", Go "--first-seed."
+    helper_test.go:117: /tmp/adamic-gate/TestSlot05ResolveThemeKey2666892160/026/slot05 [/tmp/adamic-gate/TestSlot05ResolveThemeKey2666892160/002/cases.json]: exit status 70
+        adamic: panic: missing Go ignored-key result
+--- FAIL: TestSlot05ResolveThemeKey (120.44s)
+=== RUN   TestSlot05ResolveThemeValue
+    helper_test.go:59: 6 consumers, 639 distinct test-file literals, 10330 cases, 0 constructor snapshots
+    helper_test.go:69: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:124: theme_resolve_value.a mutant "value: stored.value" -> "value: result.key" caught at verdict 2: mutant "--first-seed.", Go ""
+    helper_test.go:124: theme_resolve_value.a mutant "found: true" -> "found: stored.value !== ''" caught at verdict 9: mutant "false", Go "true"
+--- PASS: TestSlot05ResolveThemeValue (53.79s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch6	179.829s
+FAIL

@@ -1,0 +1,21 @@
+import type { ThemeState } from '../batch4/theme_live_keys.a';
+export interface ResolvedThemeKey {
+    readonly key: string;
+    readonly found: boolean;
+}
+// The candidate's presence is distinct from its text being empty.
+export function resolveThemeKey(theme: ThemeState, candidateValue: string, candidateValuePresent: boolean, namespaces: readonly string[], isIgnoredThemeKey: (key: string, namespace: string) => boolean): ResolvedThemeKey {
+    for(const namespace of namespaces) {
+        let key = namespace;
+        if(candidateValuePresent) { key = namespace + '-' + candidateValue; }
+        if(!theme.values.has(key)) {
+            if(candidateValuePresent && candidateValue.includes('.')) {
+                key = namespace + '-' + candidateValue.replaceAll('.', '_');
+                if(!theme.values.has(key)) { continue; }
+            } else { continue; }
+        }
+        if(isIgnoredThemeKey(key, namespace)) { continue; }
+        return {key, found: true};
+    }
+    return {key: '', found: false};
+}
