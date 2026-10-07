@@ -3,6 +3,7 @@ package lint
 import (
 	"context"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -122,7 +123,33 @@ func TestProfileCompilation(t *testing.T) {
 		t.Fatal(diff)
 	}
 	want = execute(t, "", oracle, "--manifest", path, "--count").output
-	got = execute(t, "", filepath.Join(directory, "counted"), "--manifest", path, "--count").output
+	output, err := os.CreateTemp(t.TempDir(), "counted-output-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	stats, err := os.CreateTemp(t.TempDir(), "counted-stats-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer stats.Close()
+	command := exec.Command(filepath.Join(directory, "counted"), "--manifest", path, "--count")
+	command.Stdout, command.Stderr = output, stats
+	if err := command.Run(); err != nil {
+		t.Fatal(err)
+	}
+	got, err = os.ReadFile(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	counters, err := os.ReadFile(stats.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.HasPrefix(string(counters), "adamic: counts: allocations ") {
+		t.Fatalf("unexpected counted stderr: %s", counters)
+	}
+	t.Logf("counted instrumentation: %s", counters)
 	if diff := difference(got, want); diff != "" {
 		t.Fatal(diff)
 	}

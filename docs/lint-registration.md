@@ -9,7 +9,7 @@ Go oracle selections, corpus filters, file-copy lists or mutant lists elsewhere.
 The rule directory contains:
 
 - `rule.a` (or existing `rule.ts`): an exported concrete listener class and named factory.
-- `messages.ts`: exact descriptions and any message builders.
+- `messages.a` (or existing `messages.ts`): exact descriptions and any message builders.
 - `rule.json`: public name, interested node kinds, factory/class names and provenance.
 - `oracle.go`: the unmodified upstream cohere rule and its typed options adapter.
 - `testdata/*.{ts,tsx,js,jsx}.txt`: raw source witnesses, outside the module graph.
