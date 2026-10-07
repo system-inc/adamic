@@ -1,0 +1,52 @@
+import { panic } from 'adamic';
+export class Edit {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    constructor(start: number, end: number, text: string) { this.start = start; this.end = end; this.text = text; }
+}
+export class Run {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    readonly separator: boolean;
+    constructor(start: number, end: number, text: string, separator: boolean) { this.start = start; this.end = end; this.text = text; this.separator = separator; }
+}
+export function space(character: string): boolean { return character !== '' && ' \t\n\r\v\f'.includes(character); }
+export function runs(text: string): Run[] {
+    const result: Run[] = [];
+    for(let start = 0; start < text.length;) {
+        const separator = space(text[start] ?? ''); let end = start + 1;
+        while(end < text.length && space(text[end] ?? '') === separator) { end++; }
+        result.push(new Run(start, end, text.slice(start, end), separator)); start = end;
+    }
+    return result;
+}
+export function repair(text: string, first: boolean, last: boolean, count: number, leading: boolean, trailing: boolean, multiline: boolean): string {
+    if(count === 0 && !leading && !trailing) { return ''; }
+    if(multiline && text.includes('\n')) { return text.replace(/^ +/, ''); }
+    const between = (!first && !last) || (leading && first && !last) || (trailing && last && !first) || (leading && trailing);
+    const keep = (first && leading) || (last && trailing);
+    if(between || keep) { return text.length <= 1 ? text : ' '; }
+    return '';
+}
+export function tidy(text: string, leading: boolean, trailing: boolean, multiline: boolean): string {
+    const tokens = runs(text); const count = tokens.filter(token => !token.separator).length;
+    return tokens.map((token, index) => token.separator ? repair(token.text, index === 0, index === tokens.length - 1, count, leading, trailing, multiline) : token.text).join('');
+}
+export function edits(source: string, start: number, end: number, text: string, leading: boolean, trailing: boolean, multiline: boolean): Edit[] {
+    if(start < 0 || end > source.length || start > end || source.slice(start, end) !== text) { return []; }
+    const tokens = runs(text); const count = tokens.filter(token => !token.separator).length; const result: Edit[] = [];
+    for(let index = 0; index < tokens.length; index++) {
+        const token = tokens[index] ?? panic('missing whitespace run');
+        if(!token.separator) { continue; }
+        const replacement = repair(token.text, index === 0, index === tokens.length - 1, count, leading, trailing, multiline);
+        if(replacement === token.text) { continue; }
+        const begin = start + token.start; const finish = start + token.end;
+        if(replacement === '') { result.push(new Edit(begin, finish, '')); }
+        else if(replacement === ' ' && token.text[0] === ' ') { result.push(new Edit(begin + 1, finish, '')); }
+        else if(token.text.endsWith(replacement)) { result.push(new Edit(begin, finish - replacement.length, '')); }
+        else { result.push(new Edit(begin, finish, replacement)); }
+    }
+    return result;
+}

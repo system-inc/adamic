@@ -1,0 +1,15 @@
+{
+  "name": "better-tailwindcss/no-unnecessary-whitespace",
+  "kinds": [
+    "JsxAttribute",
+    "CallExpression",
+    "VariableDeclaration"
+  ],
+  "parent": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUnnecessaryWhitespace",
+  "upstreamPackage": "tailwind",
+  "upstreamTest": "TestNoUnnecessaryWhitespace|TestWhitespaceFix"
+}

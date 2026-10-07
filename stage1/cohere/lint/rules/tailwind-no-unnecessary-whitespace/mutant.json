@@ -1,0 +1,6 @@
+{
+  "name": "spaces by holes trimmed",
+  "file": "whitespace.a",
+  "from": "return text.length <= 1 ? text : ' ';",
+  "to": "return text.length <= 1 ? text : '';"
+}

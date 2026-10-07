@@ -1,0 +1,1 @@
+export const description = 'This class string carries whitespace that does nothing: a leading or trailing run, or more than one space between two classes. It is invisible in the rendered output and it makes the string a worse thing to diff and search, because two literals that mean the same list stop being the same text.';
