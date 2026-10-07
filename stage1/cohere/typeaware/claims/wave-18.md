@@ -26,3 +26,7 @@ JSX parsing; WAVE_18_REPORT.md records a Go-positive native-refusal measurement.
 
 The premature continuation reservation from 340ca63c is withdrawn following
 Ahra's correction. Only the original three rules above remain claimed.
+
+The original Next visitor is now complete and byte-tested against the native
+JSX slice from origin/codex/stage1-jsx-lint. WAVE_18_TITLE_REPORT.md records
+its mutant, corpus/sanitizer agreement and remaining shared parser integration.

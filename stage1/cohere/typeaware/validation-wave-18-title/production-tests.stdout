@@ -1,0 +1,122 @@
+=== RUN   TestNoTitleInDocumentHeadReports
+=== PAUSE TestNoTitleInDocumentHeadReports
+=== RUN   TestNoTitleInDocumentHeadIsSilent
+=== PAUSE TestNoTitleInDocumentHeadIsSilent
+=== RUN   TestNoTitleInDocumentHeadPointsAtTheTagName
+=== PAUSE TestNoTitleInDocumentHeadPointsAtTheTagName
+=== RUN   TestNoTitleInDocumentHeadMessageText
+=== PAUSE TestNoTitleInDocumentHeadMessageText
+=== CONT  TestNoTitleInDocumentHeadReports
+=== RUN   TestNoTitleInDocumentHeadReports/the_upstream_failure
+=== PAUSE TestNoTitleInDocumentHeadReports/the_upstream_failure
+=== RUN   TestNoTitleInDocumentHeadReports/an_aliased_named_import
+=== PAUSE TestNoTitleInDocumentHeadReports/an_aliased_named_import
+=== RUN   TestNoTitleInDocumentHeadReports/a_named_import_that_is_not_Head_at_all
+=== PAUSE TestNoTitleInDocumentHeadReports/a_named_import_that_is_not_Head_at_all
+=== RUN   TestNoTitleInDocumentHeadReports/a_self-closing_title_child
+=== PAUSE TestNoTitleInDocumentHeadReports/a_self-closing_title_child
+=== RUN   TestNoTitleInDocumentHeadReports/two_title_children_report_twice
+=== PAUSE TestNoTitleInDocumentHeadReports/two_title_children_report_twice
+=== CONT  TestNoTitleInDocumentHeadPointsAtTheTagName
+=== CONT  TestNoTitleInDocumentHeadIsSilent
+=== RUN   TestNoTitleInDocumentHeadIsSilent/the_upstream_next/head_pass
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/the_upstream_next/head_pass
+=== RUN   TestNoTitleInDocumentHeadIsSilent/the_upstream_empty_head_pass
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/the_upstream_empty_head_pass
+=== RUN   TestNoTitleInDocumentHeadReports/a_second_declaration_brings_its_own_first_specifier
+=== PAUSE TestNoTitleInDocumentHeadReports/a_second_declaration_brings_its_own_first_specifier
+=== CONT  TestNoTitleInDocumentHeadMessageText
+=== RUN   TestNoTitleInDocumentHeadReports/a_default_before_the_first_named_specifier_does_not_consume_the_slot
+=== PAUSE TestNoTitleInDocumentHeadReports/a_default_before_the_first_named_specifier_does_not_consume_the_slot
+=== RUN   TestNoTitleInDocumentHeadReports/a_single_named_specifier_after_a_default
+=== PAUSE TestNoTitleInDocumentHeadReports/a_single_named_specifier_after_a_default
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_default_import_from_next/document
+=== CONT  TestNoTitleInDocumentHeadReports/the_upstream_failure
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_default_import_from_next/document
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_named_import_from_next/head
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_named_import_from_next/head
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_title_under_a_named_import_that_is_not_the_first_one
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_title_under_a_named_import_that_is_not_the_first_one
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_title_under_the_third_of_three_named_imports
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_title_under_the_third_of_three_named_imports
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_title_nested_below_a_direct_child
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_title_nested_below_a_direct_child
+=== CONT  TestNoTitleInDocumentHeadReports/a_single_named_specifier_after_a_default
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_title_inside_an_expression_container
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_title_inside_an_expression_container
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_namespace_import
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_namespace_import
+=== RUN   TestNoTitleInDocumentHeadIsSilent/the_binding_as_the_object_of_a_member_expression_tag
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/the_binding_as_the_object_of_a_member_expression_tag
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_self-closing_Head
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_self-closing_Head
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_capitalised_Title_child
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_capitalised_Title_child
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_non-JSX_reference_to_the_binding
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_non-JSX_reference_to_the_binding
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_require_destructure_rather_than_an_import
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_require_destructure_rather_than_an_import
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_module_whose_name_extends_the_specifier
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_module_whose_name_extends_the_specifier
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_side-effect_import
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_side-effect_import
+=== RUN   TestNoTitleInDocumentHeadIsSilent/no_next/document_import_at_all
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/no_next/document_import_at_all
+=== RUN   TestNoTitleInDocumentHeadIsSilent/a_local_declaration_shadowing_the_import
+=== PAUSE TestNoTitleInDocumentHeadIsSilent/a_local_declaration_shadowing_the_import
+=== CONT  TestNoTitleInDocumentHeadReports/a_default_before_the_first_named_specifier_does_not_consume_the_slot
+=== CONT  TestNoTitleInDocumentHeadReports/a_second_declaration_brings_its_own_first_specifier
+=== CONT  TestNoTitleInDocumentHeadReports/two_title_children_report_twice
+=== CONT  TestNoTitleInDocumentHeadReports/a_self-closing_title_child
+--- PASS: TestNoTitleInDocumentHeadPointsAtTheTagName (0.01s)
+--- PASS: TestNoTitleInDocumentHeadMessageText (0.01s)
+=== CONT  TestNoTitleInDocumentHeadReports/a_named_import_that_is_not_Head_at_all
+=== CONT  TestNoTitleInDocumentHeadIsSilent/the_upstream_next/head_pass
+=== CONT  TestNoTitleInDocumentHeadReports/an_aliased_named_import
+=== CONT  TestNoTitleInDocumentHeadIsSilent/the_binding_as_the_object_of_a_member_expression_tag
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_local_declaration_shadowing_the_import
+=== CONT  TestNoTitleInDocumentHeadIsSilent/no_next/document_import_at_all
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_side-effect_import
+--- PASS: TestNoTitleInDocumentHeadReports (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadReports/a_default_before_the_first_named_specifier_does_not_consume_the_slot (0.01s)
+    --- PASS: TestNoTitleInDocumentHeadReports/a_single_named_specifier_after_a_default (0.01s)
+    --- PASS: TestNoTitleInDocumentHeadReports/the_upstream_failure (0.01s)
+    --- PASS: TestNoTitleInDocumentHeadReports/a_self-closing_title_child (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadReports/a_second_declaration_brings_its_own_first_specifier (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadReports/two_title_children_report_twice (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadReports/a_named_import_that_is_not_Head_at_all (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadReports/an_aliased_named_import (0.00s)
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_module_whose_name_extends_the_specifier
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_non-JSX_reference_to_the_binding
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_require_destructure_rather_than_an_import
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_title_under_the_third_of_three_named_imports
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_namespace_import
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_title_inside_an_expression_container
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_title_nested_below_a_direct_child
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_self-closing_Head
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_named_import_from_next/head
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_title_under_a_named_import_that_is_not_the_first_one
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_default_import_from_next/document
+=== CONT  TestNoTitleInDocumentHeadIsSilent/the_upstream_empty_head_pass
+=== CONT  TestNoTitleInDocumentHeadIsSilent/a_capitalised_Title_child
+--- PASS: TestNoTitleInDocumentHeadIsSilent (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/the_upstream_next/head_pass (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/the_binding_as_the_object_of_a_member_expression_tag (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_local_declaration_shadowing_the_import (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/no_next/document_import_at_all (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_side-effect_import (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_module_whose_name_extends_the_specifier (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_non-JSX_reference_to_the_binding (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_title_under_the_third_of_three_named_imports (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_namespace_import (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_require_destructure_rather_than_an_import (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_title_nested_below_a_direct_child (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_self-closing_Head (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_title_under_a_named_import_that_is_not_the_first_one (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_named_import_from_next/head (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_title_inside_an_expression_container (0.01s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/the_upstream_empty_head_pass (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_default_import_from_next/document (0.00s)
+    --- PASS: TestNoTitleInDocumentHeadIsSilent/a_capitalised_Title_child (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/next	0.032s

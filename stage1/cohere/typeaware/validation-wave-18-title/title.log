@@ -1,0 +1,23 @@
+=== RUN   TestWave18TitleWithJsxSlice
+    wave_18_title_test.go:93: controls: 6228 identical finding bytes; findings 12
+    wave_18_title_test.go:99: controls-asan: 6228 identical finding bytes; findings 12
+    wave_18_title_test.go:105: title mutant exit 0 empty stderr: byte oracle caught byte 57
+    wave_18_title_test.go:116: repository: 18485 identical finding bytes; findings 0
+    wave_18_title_test.go:117: repository-asan: 18485 identical finding bytes; findings 0
+    wave_18_title_test.go:123: repository round 0 native 0.184621s tsgo: load_ns=59048263 query_ns=0 queries=0 first_query_ns=0 run_ns=120515454
+    wave_18_title_test.go:123: repository round 0 go 0.115558s cohere: load_ns=62653388 rule_ns=18140 run_ns=40525915
+    wave_18_title_test.go:123: repository round 1 native 0.197409s tsgo: load_ns=62950472 query_ns=0 queries=0 first_query_ns=0 run_ns=130175404
+    wave_18_title_test.go:123: repository round 1 go 0.104890s cohere: load_ns=52991158 rule_ns=22845 run_ns=38330176
+    wave_18_title_test.go:123: repository round 2 native 0.185151s tsgo: load_ns=56252346 query_ns=0 queries=0 first_query_ns=0 run_ns=123577468
+    wave_18_title_test.go:123: repository round 2 go 0.113240s cohere: load_ns=56874837 rule_ns=23657 run_ns=44344772
+    wave_18_title_test.go:116: compiler: 5318 identical finding bytes; findings 0
+    wave_18_title_test.go:117: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_18_title_test.go:123: compiler round 0 native 1.346403s tsgo: load_ns=231268642 query_ns=0 queries=0 first_query_ns=0 run_ns=1100851816
+    wave_18_title_test.go:123: compiler round 0 go 0.288483s cohere: load_ns=220696623 rule_ns=23229 run_ns=50949120
+    wave_18_title_test.go:123: compiler round 1 native 1.365258s tsgo: load_ns=243869494 query_ns=0 queries=0 first_query_ns=0 run_ns=1110990908
+    wave_18_title_test.go:123: compiler round 1 go 0.274236s cohere: load_ns=225651779 rule_ns=20405 run_ns=35173281
+    wave_18_title_test.go:123: compiler round 2 native 1.318081s tsgo: load_ns=244402332 query_ns=0 queries=0 first_query_ns=0 run_ns=1062940270
+    wave_18_title_test.go:123: compiler round 2 go 0.298161s cohere: load_ns=244104361 rule_ns=20861 run_ns=37173118
+--- PASS: TestWave18TitleWithJsxSlice (63.70s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	63.700s

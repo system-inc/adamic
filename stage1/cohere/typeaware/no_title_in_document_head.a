@@ -1,0 +1,121 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { Diagnostic } from './diagnostic.ts';
+
+const message =
+    'A <title> here is emitted once for every page in the application, because the `Head` from `next/document` renders the shared document shell rather than a page. A page that then sets its own title competes with this one and which wins depends on order. Set the title per page, with `Head` from `next/head`.';
+
+export class NoTitleInDocumentHead {
+    readonly rules: Rules;
+    readonly watched: string[] = [];
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    collect(index: number): void {
+        const declaration = this.rules.parser.node(index);
+        const module = declaration.children.find((child) =>
+            ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.rules.parser.node(child).kind),
+        );
+        if(module === undefined || this.rules.parser.node(module).text !== 'next/document') {
+            return;
+        }
+        const clause = declaration.children.find((child) => this.rules.parser.node(child).kind === 'ImportClause');
+        if(clause === undefined) {
+            return;
+        }
+        const named = this.rules.parser
+            .node(clause)
+            .children.find((child) => this.rules.parser.node(child).kind === 'NamedImports');
+        if(named === undefined) {
+            return;
+        }
+        const first = this.rules.parser.node(named).children[0];
+        if(first === undefined) {
+            return;
+        }
+        const specifier = this.rules.parser.node(first);
+        this.watched.push(`${this.rules.byte(specifier.pos)}:${this.rules.byte(specifier.end)}`);
+    }
+    resolves(index: number): boolean {
+        const frames = new Frames(this.rules.ask(index, 'binding-declarations'));
+        header(frames, 'binding-declarations');
+        let result = false;
+        if(frames.yes()) {
+            frames.natural();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const path = frames.field();
+                const kind = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                if(path === this.rules.path && kind === 'ImportSpecifier' && this.watched.includes(`${start}:${end}`)) {
+                    result = true;
+                }
+            }
+        }
+        frames.end();
+        return result;
+    }
+    opening(index: number): void {
+        if(this.watched.length === 0) {
+            return;
+        }
+        const opening = this.rules.parser.node(index);
+        const name = opening.children[0] ?? -1;
+        if(name < 0 || this.rules.parser.node(name).kind !== 'Identifier' || !this.resolves(name)) {
+            return;
+        }
+        const parent = this.rules.parents[index] ?? -1;
+        if(parent < 0) {
+            return;
+        }
+        const element = this.rules.parser.node(parent);
+        if(element.kind !== 'JsxElement') {
+            return;
+        }
+        for(const child of element.children) {
+            const node = this.rules.parser.node(child);
+            let tag = -1;
+            if(node.kind === 'JsxElement') {
+                const childOpening = this.rules.parser.node(node.children[0] ?? -1);
+                tag = childOpening.children[0] ?? -1;
+            }
+            else if(node.kind === 'JsxSelfClosingElement') {
+                tag = node.children[0] ?? -1;
+            }
+            if(tag < 0) {
+                continue;
+            }
+            const title = this.rules.parser.node(tag);
+            if(title.kind !== 'Identifier' || title.text !== 'title') {
+                continue;
+            }
+            const head = this.rules.parser.node(name);
+            this.rules.findings.push(
+                new Diagnostic(
+                    '@next/next/no-title-in-document-head',
+                    'noTitleInDocumentHead',
+                    message,
+                    this.rules.byte(this.rules.start(head)),
+                    this.rules.byte(head.end),
+                    '',
+                ),
+            );
+        }
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'ImportDeclaration') {
+            this.collect(index);
+        }
+        else if(node.kind === 'JsxOpeningElement') {
+            this.opening(index);
+        }
+        for(const child of node.children) {
+            this.visit(child);
+        }
+    }
+    run(root: number): void {
+        this.visit(root);
+    }
+}

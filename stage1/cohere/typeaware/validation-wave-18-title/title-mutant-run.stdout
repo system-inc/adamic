@@ -1,0 +1,34 @@
+file	/workspace/wave-18-title-validation/control-000.tsx
+file	/workspace/wave-18-title-validation/control-001.tsx
+file	/workspace/wave-18-title-validation/control-002.tsx
+file	/workspace/wave-18-title-validation/control-003.tsx
+file	/workspace/wave-18-title-validation/control-004.tsx
+file	/workspace/wave-18-title-validation/control-005.tsx
+file	/workspace/wave-18-title-validation/control-006.tsx
+file	/workspace/wave-18-title-validation/control-007.tsx
+file	/workspace/wave-18-title-validation/control-008.tsx
+file	/workspace/wave-18-title-validation/control-009.tsx
+153	157	@next/next/no-title-in-document-head	noTitleInDocumentHead	A <title> here is emitted once for every page in the application, because the `Head` from `next/document` renders the shared document shell rather than a page. A page that then sets its own title competes with this one and which wins depends on order. Set the title per page, with `Head` from `next/head`.	0	0
+file	/workspace/wave-18-title-validation/control-010.tsx
+file	/workspace/wave-18-title-validation/control-011.tsx
+file	/workspace/wave-18-title-validation/control-012.tsx
+file	/workspace/wave-18-title-validation/control-013.tsx
+file	/workspace/wave-18-title-validation/control-014.tsx
+62	66	@next/next/no-title-in-document-head	noTitleInDocumentHead	A <title> here is emitted once for every page in the application, because the `Head` from `next/document` renders the shared document shell rather than a page. A page that then sets its own title competes with this one and which wins depends on order. Set the title per page, with `Head` from `next/head`.	0	0
+file	/workspace/wave-18-title-validation/control-015.tsx
+file	/workspace/wave-18-title-validation/control-016.tsx
+file	/workspace/wave-18-title-validation/control-017.tsx
+file	/workspace/wave-18-title-validation/control-018.tsx
+file	/workspace/wave-18-title-validation/control-019.tsx
+62	66	@next/next/no-title-in-document-head	noTitleInDocumentHead	A <title> here is emitted once for every page in the application, because the `Head` from `next/document` renders the shared document shell rather than a page. A page that then sets its own title competes with this one and which wins depends on order. Set the title per page, with `Head` from `next/head`.	0	0
+file	/workspace/wave-18-title-validation/control-020.tsx
+file	/workspace/wave-18-title-validation/control-021.tsx
+file	/workspace/wave-18-title-validation/control-022.tsx
+file	/workspace/wave-18-title-validation/control-023.tsx
+file	/workspace/wave-18-title-validation/control-024.tsx
+file	/workspace/wave-18-title-validation/control-025.tsx
+file	/workspace/wave-18-title-validation/control-026.tsx
+file	/workspace/wave-18-title-validation/control-027.tsx
+file	/workspace/wave-18-title-validation/control-028.tsx
+file	/workspace/wave-18-title-validation/control-029.tsx
+findings 3

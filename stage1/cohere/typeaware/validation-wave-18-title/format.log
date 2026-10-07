@@ -1,0 +1,6 @@
+=== RUN   TestWave18Format
+    wave_18_format_test.go:10: no_title_in_document_head.a formatted and stable
+    wave_18_format_test.go:10: wave_18_title_suite.a formatted and stable
+--- PASS: TestWave18Format (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/format/native	0.010s
