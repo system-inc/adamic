@@ -358,7 +358,7 @@ func assertionInitializer(node *ast.Node) bool {
 
 func assertionVarList(list *ast.Node) bool {
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
-		if !ast.IsIdentifier(declaration.Name()) || !assertionInitializer(declaration.AsVariableDeclaration().Initializer) {
+		if !ast.IsIdentifier(declaration.Name()) || !assertionInitializer(declaration.AsVariableDeclaration().Initializer) && declaration.AsVariableDeclaration().ExclamationToken == nil {
 			return false
 		}
 	}
