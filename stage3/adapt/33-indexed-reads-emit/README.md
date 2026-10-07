@@ -132,3 +132,24 @@ cache and arrayFrom overload have exact decline reasons. JavaScript equality
 and idempotence pass; the endpoint mutant is caught twice. Default oracle
 **106367 passing**, empty baseline diff, 219.281s.
 [Full findings](proof/whole-files/module/README.md).
+
+### transformers/module/system.ts: one required group read, three declines
+
+All-code census **4 -> 3**. The private group-index producer proves the
+original-point U-position read. Three legitimately optional emission caches
+have individual declines pending a complete context-owner review. JavaScript
+equality and idempotence pass; the group-index mutant is caught twice. First
+oracle attempt had a worker exit with increased observed OOM kills; its failed
+report is retained. Fresh default oracle **106367 passing**, empty baseline
+diff, 211.299s. [Full proof](proof/whole-files/system/README.md).
+
+### Whole-file closure result
+
+All nine requested files were measured, reviewed and given per-file default
+oracles. Four are at zero: visitorPublic.ts, emitter.ts, transformers/ts.ts and
+transformers/es2018.ts. The pinned latent meter is **40 of 78 files clean**,
+up from 36, and **382 -> 366** total diagnostics. The nine requested files are
+**26 -> 10**. Every remaining finding has a proof or explicit unfinished-review
+decline; no native compiler options or out-of-partition source was changed.
+CRLF preservation across all 30 owned files is checked in the
+[closure summary](proof/whole-files/closure-summary.json).

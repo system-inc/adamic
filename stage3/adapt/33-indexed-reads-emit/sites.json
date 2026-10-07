@@ -3019,9 +3019,9 @@
     "expression": "dependencyGroups[groupIndex]",
     "occurrence": 1,
     "total": 1,
-    "action": "decline",
+    "action": "assert",
     "class": "U-position",
-    "invariant": "Presence of dependencyGroups[groupIndex] in collectDependencyGroups has not been established; its producer and index invariant review remains unfinished."
+    "invariant": "The private groupIndices map stores dependencyGroups.length immediately before pushing a defined DependencyGroup; the populated array is never spliced or truncated, so every existing map value names a present group at this original read."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3033,7 +3033,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of moduleInfoMap[id] in onEmitNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "Unconditional SourceFile emit notifications include plain scripts returned before cache population; moduleInfo can legitimately receive undefined. Widening its owning declaration requires a complete proof of required transformation and substitution context reads, which remains unfinished; no false required-read assertion is added."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3045,7 +3045,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of exportFunctionsMap[id] in onEmitNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "Unconditional SourceFile emit notifications include plain scripts returned before cache population; exportFunction can legitimately receive undefined. Widening its owning declaration requires a complete proof of required transformation and substitution context reads, which remains unfinished; no false required-read assertion is added."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3057,7 +3057,7 @@
     "total": 3,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of noSubstitutionMap[id] in onEmitNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "This cache entry is legitimately absent unless the transformer records substitutions to suppress; the receiving noSubstitution owner already includes undefined and the subsequent guard handles absence."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3069,7 +3069,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of contextObjectMap[id] in onEmitNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "Unconditional SourceFile emit notifications include plain scripts returned before cache population; contextObject can legitimately receive undefined. Widening its owning declaration requires a complete proof of required transformation and substitution context reads, which remains unfinished; no false required-read assertion is added."
   },
   {
     "file": "transformers/module/system.ts",
