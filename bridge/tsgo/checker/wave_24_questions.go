@@ -12,6 +12,9 @@ import (
 func (p *Program) inspectWave24(out *fields, c *checker.Checker, node *ast.Node, question string) (string, error) {
 	questions := map[string]func(*fields, *checker.Checker, *ast.Node, string) error{
 		"raw-symbol-declaration-count": p.rawSymbolDeclarationCount,
+		"generic-call-signature":       p.genericCallSignature,
+		"heritage-types":               p.heritageTypes,
+		"type-index":                   p.typeIndex,
 
 		"class-this-types":         p.classThisTypes,
 		"then-callback-signatures": p.thenCallbackSignatures,
@@ -35,7 +38,7 @@ func (p *Program) inspectWave24(out *fields, c *checker.Checker, node *ast.Node,
 // and its refusal mutation anchors unchanged. The C ABI registers this once.
 func (p *Program) InspectWave24(file string, start, end uint64, kind, question string) (string, error) {
 	mode := strings.Split(question, "\n")[0]
-	if mode != "raw-symbol-declaration-count" && mode != "class-this-types" && mode != "then-callback-signatures" && mode != "handler-parameter-types" && mode != "symbol-provenance" && mode != "symbol-provenance-alias" && mode != "resolved-call-origin" && mode != "program-module-edges" {
+	if mode != "heritage-types" && mode != "generic-call-signature" && mode != "type-index" && mode != "raw-symbol-declaration-count" && mode != "class-this-types" && mode != "then-callback-signatures" && mode != "handler-parameter-types" && mode != "symbol-provenance" && mode != "symbol-provenance-alias" && mode != "resolved-call-origin" && mode != "program-module-edges" {
 		return p.Inspect(file, start, end, kind, question)
 	}
 	source, node, err := p.exact(file, start, end, kind)
