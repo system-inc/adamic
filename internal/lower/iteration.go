@@ -116,7 +116,7 @@ func (l *lowering) memberFunction(where *ast.Node, proven *checker.Type, value i
 				if err != nil {
 					return nil, false, -1, err
 				}
-				return nil, true, instance.methods[methodKey(declaration, instance.class)], nil
+				return nil, true, instance.methods[l.methodKey(declaration, instance.class)], nil
 			}
 		}
 	}

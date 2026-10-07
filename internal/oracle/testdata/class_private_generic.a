@@ -1,0 +1,56 @@
+// A private field read through another instantiation of its own class: inside Box<number>,
+// other.#label with other a Box<string> is Box<string>'s slot. And a generic base and derived class
+// that each declare #label keep two slots, in every instantiation.
+class Box<T> {
+	#value: T;
+	#label = `label${1}`;
+	constructor(value: T) {
+		this.#value = value;
+	}
+	read(): T {
+		return this.#value;
+	}
+	peek(other: Box<string>): string {
+		return other.#label + '/' + other.#value;
+	}
+	relabel(other: Box<boolean>, label: string): void {
+		other.#label = label;
+	}
+	labelOf(other: Box<boolean>): string {
+		return other.#label;
+	}
+}
+const numbers = new Box<number>(5);
+const strings = new Box<string>(`s${2}`);
+console.log(numbers.peek(strings));
+console.log(`${numbers.read()} ${strings.read()}`);
+const flags = new Box<boolean>(true);
+strings.relabel(flags, `flag${3}`);
+console.log(`${numbers.labelOf(flags)} ${flags.read()}`);
+
+class Base<T> {
+	#label: string;
+	constructor(label: string) {
+		this.#label = label;
+	}
+	baseLabel(): string {
+		return this.#label;
+	}
+	otherBaseLabel(other: Base<number>): string {
+		return other.#label;
+	}
+}
+class Derived<T> extends Base<T> {
+	#label: T;
+	constructor(base: string, own: T) {
+		super(base);
+		this.#label = own;
+	}
+	ownLabel(): T {
+		return this.#label;
+	}
+}
+const words = new Derived<string>(`base${4}`, `own${5}`);
+const counts = new Derived<number>(`base${6}`, 7);
+console.log(`${words.baseLabel()} ${words.ownLabel()} ${counts.baseLabel()} ${counts.ownLabel()}`);
+console.log(words.otherBaseLabel(counts));

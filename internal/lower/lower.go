@@ -108,6 +108,10 @@ type lowering struct {
 	instances        map[string]*instance
 	derivedAncestors map[*ast.Symbol]bool
 
+	// privateOwners numbers each class that declares a private name, in the order first met, to
+	// qualify its private members' names (privateName).
+	privateOwners map[*ast.Node]int
+
 	// instance is the class instantiation being lowered, if any.
 	instance *instance
 

@@ -2,7 +2,6 @@ package lower
 
 import (
 	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -586,28 +585,15 @@ func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) e
 	return refused
 }
 
-// Private names with the same spelling in a base and a derived class are separate JavaScript slots.
+// Private names with the same spelling in a base and a derived class are separate JavaScript slots,
+// so each is qualified by the class that declares it (privateName), the same spelling memberKey gives
+// its definition, for fields, methods, accessors and statics alike.
 func (l *lowering) fieldName(name *ast.Node) string {
 	if name.Kind != ast.KindPrivateIdentifier {
 		return name.Text()
 	}
-	symbol := l.checker.GetSymbolAtLocation(name)
-	if symbol != nil && len(symbol.Declarations) > 0 {
-		class := symbol.Declarations[0].Parent
-		if class != nil && ast.HasSyntacticModifier(symbol.Declarations[0], ast.ModifierFlagsStatic) {
-			if lowered := l.statics[l.symbol(class.Name())]; lowered != nil {
-				return memberKey(name, lowered.class)
-			}
-		}
-		if class != nil && class.Kind == ast.KindClassDeclaration {
-			if l.instance != nil && l.classNode != nil && l.classNode.Parent == class {
-				return name.Text() + "@" + strconv.Itoa(l.instance.class)
-			}
-			if instance := l.instances[l.program.Where(class)+":"+class.Name().Text()]; instance != nil {
-				return name.Text() + "@" + strconv.Itoa(instance.class)
-			}
-			return l.program.Where(class) + ":" + name.Text()
-		}
+	if declaring := l.declaringClass(name); declaring != nil {
+		return l.privateName(name.Text(), declaring)
 	}
 	return name.Text()
 }
@@ -776,22 +762,10 @@ func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string
 	if name == nil || name.Kind != ast.KindPrivateIdentifier {
 		return false
 	}
-	class := property.Declarations[0].Parent
-	if ast.HasSyntacticModifier(property.Declarations[0], ast.ModifierFlagsStatic) {
-		if lowered := l.statics[l.symbol(class.Name())]; lowered != nil {
-			return written == memberKey(name, lowered.class)
-		}
+	if class := property.Declarations[0].Parent; class != nil && class.Kind == ast.KindClassDeclaration {
+		return written == l.privateName(name.Text(), class)
 	}
-	prefix := l.program.Where(class) + ":" + class.Name().Text()
-	for key, instance := range l.instances {
-		if key != prefix && !strings.HasPrefix(key, prefix+",") {
-			continue
-		}
-		if written == name.Text()+"@"+strconv.Itoa(instance.class) {
-			return true
-		}
-	}
-	return false
+	return written == name.Text()
 }
 
 func (l *lowering) cycleFieldName(field *ast.Symbol) string {

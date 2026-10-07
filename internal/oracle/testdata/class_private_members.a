@@ -1,0 +1,52 @@
+// Private methods, accessors and statics are named the way their reads are: inside one
+// instantiation, a private method called on another instantiation, a static private field and method,
+// and a base and derived class each with a private method of the same name.
+class Cell<T> {
+	#value: T;
+	static #made = 0;
+	constructor(value: T) {
+		this.#value = value;
+		Cell.#made = Cell.#made + 1;
+	}
+	#describe(): string {
+		return `cell(${String(this.#value)})`;
+	}
+	get #label(): string {
+		return `[${this.#describe()}]`;
+	}
+	peek(other: Cell<string>): string {
+		return `${other.#describe()} ${other.#label}`;
+	}
+	own(): string {
+		return this.#label;
+	}
+	static #count(): number {
+		return Cell.#made;
+	}
+	static made(): number {
+		return Cell.#count();
+	}
+}
+const numbers = new Cell<number>(4);
+const words = new Cell<string>(`w${2}`);
+console.log(numbers.peek(words));
+console.log(`${numbers.own()} ${words.own()} ${Cell.made()}`);
+
+class Base {
+	#tag(): string {
+		return 'base';
+	}
+	baseTag(): string {
+		return this.#tag();
+	}
+}
+class Derived extends Base {
+	#tag(): string {
+		return 'derived';
+	}
+	derivedTag(): string {
+		return this.#tag();
+	}
+}
+const derived = new Derived();
+console.log(`${derived.baseTag()} ${derived.derivedTag()}`);
