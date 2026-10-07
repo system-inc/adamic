@@ -14,14 +14,18 @@ edits each selected owner once per program. It rechecks the whole dependency
 closure after each pass, stopping only when no eligible owner remains. This also
 tolerates preceding type-import adaptations: no source line is a rewrite address.
 Type insertions use parsed UTF-16 offsets and preserve existing source trivia.
-Nested type wrappers compose. An optional interface method becomes an optional
-callable property with the union around the entire callable. Live methods,
-accessors and overload sets are excluded.
+Nested type additions compose. Optional methods, live methods, accessors and
+overload sets are declined: unioning an optional method's callable requires a
+property conversion that changes variance and public declaration shape.
+Only function, constructor and conditional type annotations need parentheses.
+An inherited optional view of the same proven present-undefined slot receives
+the same truthful union; this resolves the slot at all its declaration owners.
 
 Both absence and present undefined are now admitted. Consumers must therefore
 prove more than key presence before using the value. Every new or changed
 stock-checker diagnostic is reported with location in `newly_exposed_consumers`;
-this unit does not edit those consumers or repair base-interface relationships.
+runtime consumers stay unchanged. Type-only inherited owner coherence and the
+build-error dispositions below follow the user's revised scope.
 The evidence-to-owner ledger is `resolved_findings`. `initially_declined` retains
 seed exclusions even if another legitimate write to a shared owner removes the
 finding incidentally. `declined` lists remaining optional-code findings and reasons.
@@ -74,37 +78,139 @@ unchanged. A structural chain must actually end in an undefined incompatibility;
 a diagnostic code alone is insufficient. Shared-owner changes can discharge an
 indexed diagnostic incidentally, but do not prove the indexed read invariant.
 
-## Measurement and proof
+## Current revision and proof
 
-The sections below record observed runs, rather than extrapolating the survey.
+This revision supersedes `e3535e7`'s measured 405-owner implementation. It removes
+all **39** optional-method conversions, retains **366** property-owner edits,
+and adds **seven** inherited optional declaration owners. The current adapter
+edits **373 distinct declarations** for the initial **725** optional-code findings.
+The shared apply diff is **24 files, 371 lines replaced**. The method conversions
+were JavaScript-neutral but altered callable variance and public declaration
+syntax; they do not satisfy the now-required API snapshot contract.
 
-Input preparation generated `diagnosticInformationMap.generated.ts`, giving 78
-compiler roots. Its `reportsUnnecessary` literal adds one TS2375 beyond the
-historical 77-root survey. Adaptation 10 marks all 3,719 diagnosed imports,
-including its generated `DiagnosticMessage` import, before this unit is measured.
-The census commit is `429c117`; the branch began at main `ef3d907`.
+Merged latest adaptation 10, `a3ef0dc`, in merge `299738f`. Shared apply uses its
+unchanged numeric ordering. `stage3/apply.sh` and `stage3/oracle/run.sh` are
+unmodified. Upstream source and baseline changes stay in the external pinned
+checkout, never in Adamic. Heavy apply, default oracle and census runs are
+sequential.
 
-### Whole-program census
+### The nine build errors
 
-The unchanged Adamic gate reports **2833 → 2163** checker diagnostics. No entry
-in this whole-program check reaches lowering. All reason counts follow, including
-zeros for reasons that appear on only one side.
+The seven `compilerHost` errors were cascading from a rejected initializer,
+not an `in` guard. This corrects the first revision's explanation. No statement,
+assignment, object key, callback implementation or guard was changed.
 
-| Reason | After 10 | After 10 + 20 |
+| Original location | Error | Disposition |
+| --- | --- | --- |
+| `src/compiler/tsbuildPublic.ts:787:5` | TS2322, cached `WriteFileCallback` versus optional-boolean callable | Leave `SolutionBuilderHostBase.writeFile?` at `tsbuildPublic.ts:222` a method. Converting it changed method bivariance; widening the callback implementation contract is unproven. The property cache declaration still truthfully admits undefined. |
+| `src/services/services.ts:1769:13` | TS2322, mutable versus readonly reference-name arrays | Leave `CompilerHost.resolveTypeReferenceDirectives?` at `types.ts:8161` a method. Its original variance accepts the forwarded host callback; proving a readonly callable implementation would require broader consumer work. |
+| `src/services/services.ts:1779:39` | TS18048, `compilerHost` possibly undefined | The preceding initializer now succeeds, restoring its existing flow narrowing. No additional edit. |
+| `src/services/services.ts:1782:13` | TS2345, compiler host argument | Same initializer correction; no additional edit. |
+| `src/services/services.ts:1786:9` | TS18048 | Same initializer correction; no additional edit. |
+| `src/services/services.ts:1788:32` | TS2345 | Same initializer correction; no additional edit. |
+| `src/services/services.ts:1796:23` | TS18048 | Same initializer correction; no additional edit. |
+| `src/services/services.ts:1798:20` | TS18048 | Same initializer correction; no additional edit. |
+| `src/services/services.ts:1799:34` | TS18048 | Same initializer correction; no additional edit. |
+
+Optional methods have no syntax for unioning the callable itself with undefined.
+A callable-property conversion would also violate the sanctioned snapshot diff.
+The adapter declines every optional method it encounters, with owner location
+and reason in `declined_owners`, instead of inventing a new calling contract.
+
+### Inherited declaration owners
+
+A proven undefined store through a derived/interface-intersection view also
+belongs to its inherited optional views. The resolver walks interface bases and
+peer bases, resolves the same property's symbols, and adds the union only to
+compatible, owned, typed optional declarations. Required, generic, unknown,
+external and method contracts are still excluded by the original selection rules.
+The original write finding is retained as evidence; inherited rows have
+`resolution` and `from` in the ledger. A set deduplicates every owner.
+
+The seven added owners, beyond the retained original property edits, are:
+
+| Owner | Pristine location |
+| --- | --- |
+| `NonRelativeNameResolutionCache.isReadonly` | `moduleNameResolver.ts:891` |
+| `NamedDeclaration.name` | `types.ts:1763` |
+| `DeclarationStatement.name` | `types.ts:1793` |
+| `ObjectLiteralElement.name` | `types.ts:1982` |
+| `TypeReference.mapper` | `types.ts:6650` |
+| `ResolvedTypeReferenceDirectiveWithFailedLookupLocations.failedLookupLocations` | `types.ts:8118` |
+| `ResolvedTypeReferenceDirectiveWithFailedLookupLocations.affectingLocations` | `types.ts:8119` |
+
+The new owners make the same slot truthful through all existing optional views;
+there are no JavaScript edits. They eliminate the declaration inheritance errors
+that previously changed APILibCheck. The focused upstream test now passes
+**6 checks** against its original reference baseline.
+
+### Mechanical public snapshot proof
+
+`check-baselines.cjs` uses stock TypeScript 6.0.3 to parse both snapshots and
+pinned source owner declarations. It verifies the pristine commit, unmodified
+tracked source/reference inputs, and that upstream's pristine declaration emitter
+reproduces the original API reference exactly. Namespace-qualified owner paths
+keep `ts.Diagnostic` distinct from `ts.server.protocol.Diagnostic`.
+
+From the original snapshot it constructs exactly the permitted additions at the
+373-owner ledger's matching public optional property types, keeping each `?`.
+Function/constructor/conditional types alone receive necessary parentheses. The
+constructed full text must equal the newly emitted snapshot byte-for-byte; this
+also proves every changed line belongs to an edited declaration, with no member,
+signature, whitespace, name, unrelated line or unlisted owner changes. Upstream
+expands some enum annotations, so the existing emitted annotation is retained
+exactly, rather than reconstructed from source tokens.
+
+Observed result: **189 edited snapshot declarations, exactly 189 changed lines**.
+All **60,930 other reference baselines** are byte-identical to pristine. Only
+`tests/baselines/reference/api/typescript.d.ts` is accepted in the external tree,
+and only after proof passes. APILibCheck's reference is unchanged. The tool's
+`--accept-api` switch authorizes only this proved snapshot; its default is read-only.
+
+Four real-input mutants are rejected by this named check: remove an edited
+`?`; append undefined to unedited protocol `Diagnostic.source`; omit
+`CompilerOptions.traceResolution` from the owner ledger; append a newline to
+an unrelated reference JS baseline. Each exits 1 and every input is restored.
+The unrelated reference mutant passes the API reconstruction first and fails
+only the all-other-reference comparison.
+
+### Default oracle
+
+The unchanged default command used all suites, no test regex, four workers and
+the default 2,400-second test limit. Install exited 0 (3.600s), checked build
+exited 0 (2.808s), tests exited 0 (477.923s): **106,367 passing, 0 failing,
+0 pending**, with **zero baseline diffs**. Total wall time **484.400s**.
+The preparation also ran upstream's checked build before accepting the API
+snapshot. No `--no-typecheck` option or weakened compiler option was used.
+
+The default oracle compares against the mechanically proved API reference.
+Every other reference, including APILibCheck, is original. The after-oracle
+snapshot/reference proof reruns independently, preventing acceptance of any
+unrelated reference change.
+
+### Complete whole-program census
+
+The unchanged full census driver ran every input entry, followed by all compiler
+roots, sequentially. Each final pass attempted **81 entries** and checked **78
+TypeScript roots** together. The whole program remains checker-rejected and
+never reaches lowering; the three JSON entries give extension-loading errors.
+Prepared latest-10 source has zero TS1484 on both sides.
+
+| Reason | After latest 10 | After 10 + 20 |
 | --- | ---: | ---: |
 | TS1294 | 180 | 180 |
 | TS1484 | 0 | 0 |
 | TS2304 | 6 | 6 |
-| TS2320 | 0 | 6 |
-| TS2322 | 120 | 119 |
+| TS2320 | 0 | 0 |
+| TS2322 | 120 | 118 |
 | TS2339 | 28 | 28 |
-| TS2345 | 733 | 738 |
+| TS2345 | 733 | 736 |
 | TS2366 | 1 | 0 |
-| TS2375 | 77 | 15 |
-| TS2379 | 31 | 15 |
-| TS2412 | 617 | 6 |
+| TS2375 | 77 | 19 |
+| TS2379 | 31 | 14 |
+| TS2412 | 617 | 27 |
 | TS2420 | 1 | 1 |
-| TS2430 | 0 | 10 |
+| TS2430 | 0 | 0 |
 | TS2488 | 11 | 11 |
 | TS2532 | 225 | 225 |
 | TS2538 | 7 | 7 |
@@ -121,199 +227,68 @@ zeros for reasons that appear on only one side.
 | TS18046 | 8 | 8 |
 | TS18048 | 380 | 380 |
 
-TS2412/2375/2379 total **725 → 36**, a net reduction of **689**. Other counts
-net +19: TS2345 rises by 5, TS2320 by 6 and TS2430 by 10 because widening
-callable/field owners exposes incompatible consumer and base-interface contracts.
-TS2322 falls by 1 and TS2366 by 1. Every other count is unchanged. These
-increases are reported rather than repaired.
+Whole-program total **2,833 → 2,168**. TS2412/2375/2379 total **725 → 60**,
+net **665** removed. TS2345 rises **733 → 736** as widened fields reveal stricter
+consumer argument contracts, listed below. TS2322 falls **120 → 118** and
+TS2366 falls **1 → 0**; all other counts are unchanged. Inherited declaration
+coherence leaves TS2320 and TS2430 at zero, unlike the superseded revision.
 
-### Resolver counts and source diff
+The generated diagnostics source contributes one TS2375 beyond the historical
+77-root survey, explaining **77** rather than **76**. During fresh apply the
+stock checker reports **2,729 → 2,064**: one unregenerated TS1484 and one
+not-yet-installed `source-map-support` TS2307 are present on both sides. After
+upstream generation/dependency installation the stock counts are **2,727 →
+2,062**. The meter uses its own sounder library; its complete table above is
+the authority. No checker options were changed.
 
-During shared apply, before upstream dependencies are installed, the stock npm
-checker reports **2728 → 2057**, with TS2412 **617 → 6**,
-TS2375 **77 → 15** and TS2379 **31 → 15**. Its regex library and other
-checker differences explain why its nonoptional counts differ from Adamic.
-One TS2307 is the not-yet-installed upstream `source-map-support` dependency;
-apply does not install upstream build dependencies. The earlier direct run with
-those dependencies installed and without adaptation 10 was **6446 → 5775**;
-subtracting its 3,719 import findings gives **2727 → 2056**. Owner edits, evidence,
-declines and the complete new-consumer ledger are identical in both runs.
-The script edits **405 distinct declarations** for a starting population of
-**725 optional-code findings**. The evidence ledger has 829 property-to-owner
-rows across rechecks, representing 737 distinct diagnostic messages/locations;
-that is not 737 independent original findings, since rechecking changes chains
-and introduces new structural findings. All sharing resolves to one owner edit.
-The second run edits **0** declarations.
+The first standalone before-generator invocation accidentally omitted its input
+filename and exited 0 with usage. That exploratory count was 2,834. The final
+before pass was rerun in full with the correct input; every diagnostic chain
+except that stale generated TS1484 matches the discarded pass exactly.
 
-Upstream source diff: **26 files, 406 lines replaced** (406 insertions and
-406 deletions), all declaration types or optional interface signatures. Owners
-sharing a line and multiline wrappers mean changed-line counts need not equal
-owner counts.
+### JavaScript identity and idempotence
 
-| File | Replaced lines |
-| --- | ---: |
-| `src/compiler/builder.ts` | 13 |
-| `src/compiler/builderPublic.ts` | 2 |
-| `src/compiler/builderState.ts` | 2 |
-| `src/compiler/checker.ts` | 4 |
-| `src/compiler/commandLineParser.ts` | 6 |
-| `src/compiler/emitter.ts` | 4 |
-| `src/compiler/moduleNameResolver.ts` | 2 |
-| `src/compiler/moduleSpecifiers.ts` | 1 |
-| `src/compiler/parser.ts` | 2 |
-| `src/compiler/performanceCore.ts` | 2 |
-| `src/compiler/program.ts` | 3 |
-| `src/compiler/programDiagnostics.ts` | 1 |
-| `src/compiler/resolutionCache.ts` | 5 |
-| `src/compiler/sourcemap.ts` | 5 |
-| `src/compiler/tracing.ts` | 2 |
-| `src/compiler/transformers/declarations/diagnostics.ts` | 1 |
-| `src/compiler/transformers/destructuring.ts` | 1 |
-| `src/compiler/transformers/es2015.ts` | 1 |
-| `src/compiler/transformers/esDecorators.ts` | 5 |
-| `src/compiler/transformers/jsx.ts` | 1 |
-| `src/compiler/tsbuildPublic.ts` | 6 |
-| `src/compiler/types.ts` | 311 |
-| `src/compiler/utilities.ts` | 1 |
-| `src/compiler/watch.ts` | 6 |
-| `src/compiler/watchPublic.ts` | 18 |
-| `src/compiler/watchUtilities.ts` | 1 |
+Upstream's ordinary checked build passed on the latest-10 control and on the
+adapted tree. All **10 emitted JavaScript files, 28,599,479 bytes**, including
+the actual compiler bundled in `run.js`, are byte-identical. The comparison
+checks full byte arrays and file sets, not only hashes. A copied artifact with
+an appended statement is rejected by the same comparator. Declaration output
+is the proved exception; maps and build metadata are not claimed identical.
 
-### Consumers exposed by the census
+| JavaScript artifact | SHA-256 on both sides |
+| --- | --- |
+| `_tsc.js` | `3e526e28c780ada5f46e8e7c06f075fa51910580c2dc185fbc66a55ebd60fc34` |
+| `_tsserver.js` | `1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b` |
+| `_typingsInstaller.js` | `71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1` |
+| `run.js` | `0520cd6de4d4eae7cac4fcaebd6057baebbb059f7401334bbae53b2b5fee6fc1` |
+| `tsc.js` | `2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983` |
+| `tsserver.js` | `e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb` |
+| `tsserverlibrary.js` | `6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf` |
+| `typescript.js` | `8fe41e154da327616c99568f551fe13d48764b73f08abf1fd773d5ce74870905` |
+| `typingsInstaller.js` | `2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213` |
+| `watchGuard.js` | `008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88` |
 
-The following **35 new or changed diagnostic chains** are the conservative
-whole-program delta. A changed chain can be a persisting error with a different
-structural cause. Locations are in the adapted pinned tree. None was fixed.
 
-```text
-src/compiler/checker.ts:1683:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration["kind"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.
-  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
-    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
-      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-          Types of property 'typeArguments' are incompatible.
-            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.
-              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'.
-src/compiler/checker.ts:21434:98: error TS2379: Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Types of property 'errors' are incompatible.
-    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
-      Type 'undefined' is not assignable to type 'Diagnostic[]'.
-src/compiler/checker.ts:46159:176: error TS2345: Argument of type 'ErrorOutputContainer | undefined' is not assignable to parameter of type '{ errors?: Diagnostic[]; } | undefined'.
-  Type 'ErrorOutputContainer' is not assignable to type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-    Types of property 'errors' are incompatible.
-      Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
-        Type 'undefined' is not assignable to type 'Diagnostic[]'.
-src/compiler/commandLineParser.ts:2677:9: error TS2322: Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.
-  Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.
-    Type '{ prepend?: (boolean) | undefined; circular?: (boolean) | undefined; path: string; originalPath: undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-      Types of property 'originalPath' are incompatible.
-        Type 'undefined' is not assignable to type 'string'.
-src/compiler/emitter.ts:1011:33: error TS2345: Argument of type 'Bundle | SourceFile' is not assignable to parameter of type 'Bundle'.
-  Property 'sourceFiles' is missing in type 'SourceFile' but required in type 'Bundle'.
-src/compiler/emitter.ts:1014:31: error TS2345: Argument of type 'Bundle | SourceFile' is not assignable to parameter of type 'SourceFile'.
-  Type 'Bundle' is missing the following properties from type 'SourceFile': statements, endOfFileToken, fileName, path, and 27 more.
-src/compiler/moduleNameResolver.ts:1271:11: error TS2320: Interface 'ModuleOrTypeReferenceResolutionCache<T>' cannot simultaneously extend types 'PerDirectoryResolutionCache<T>' and 'NonRelativeNameResolutionCache<T>'.
-  Named property 'isReadonly' of types 'PerDirectoryResolutionCache<T>' and 'NonRelativeNameResolutionCache<T>' are not identical.
-src/compiler/moduleNameResolver.ts:1450:97: error TS2345: Argument of type 'ModuleResolutionCache | undefined' is not assignable to parameter of type 'NonRelativeModuleNameResolutionCache | undefined'.
-  Type 'ModuleResolutionCache' is not assignable to type 'NonRelativeModuleNameResolutionCache' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-    Types of property 'isReadonly' are incompatible.
-      Type 'boolean | undefined' is not assignable to type 'boolean'.
-        Type 'undefined' is not assignable to type 'boolean'.
-src/compiler/moduleNameResolver.ts:3035:85: error TS2345: Argument of type 'ModuleResolutionCache | undefined' is not assignable to parameter of type 'NonRelativeModuleNameResolutionCache | undefined'.
-  Type 'ModuleResolutionCache' is not assignable to type 'NonRelativeModuleNameResolutionCache' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-    Types of property 'isReadonly' are incompatible.
-      Type 'boolean | undefined' is not assignable to type 'boolean'.
-        Type 'undefined' is not assignable to type 'boolean'.
-src/compiler/moduleNameResolver.ts:852:18: error TS2320: Interface 'TypeReferenceDirectiveResolutionCache' cannot simultaneously extend types 'PerDirectoryResolutionCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>' and 'NonRelativeNameResolutionCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>'.
-  Named property 'isReadonly' of types 'PerDirectoryResolutionCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>' and 'NonRelativeNameResolutionCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>' are not identical.
-src/compiler/moduleNameResolver.ts:900:18: error TS2320: Interface 'ModuleResolutionCache' cannot simultaneously extend types 'PerDirectoryResolutionCache<ResolvedModuleWithFailedLookupLocations>' and 'NonRelativeModuleNameResolutionCache'.
-  Named property 'isReadonly' of types 'PerDirectoryResolutionCache<ResolvedModuleWithFailedLookupLocations>' and 'NonRelativeModuleNameResolutionCache' are not identical.
-src/compiler/moduleNameResolver.ts:910:18: error TS2320: Interface 'NonRelativeModuleNameResolutionCache' cannot simultaneously extend types 'NonRelativeNameResolutionCache<ResolvedModuleWithFailedLookupLocations>' and 'PackageJsonInfoCache'.
-  Named property 'isReadonly' of types 'NonRelativeNameResolutionCache<ResolvedModuleWithFailedLookupLocations>' and 'PackageJsonInfoCache' are not identical.
-src/compiler/program.ts:5105:5: error TS2375: Type '(CompilerHost | ProgramHost<T>) & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Type 'CompilerHost & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-    Types of property 'directoryExists' are incompatible.
-      Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.
-        Type 'undefined' is not assignable to type '(path: string) => boolean'.
-src/compiler/resolutionCache.ts:180:18: error TS2320: Interface 'CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations' cannot simultaneously extend types 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' and 'ResolutionWithFailedLookupLocations'.
-  Named property 'affectingLocations' of types 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' and 'ResolutionWithFailedLookupLocations' are not identical.
-src/compiler/resolutionCache.ts:180:18: error TS2320: Interface 'CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations' cannot simultaneously extend types 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' and 'ResolutionWithFailedLookupLocations'.
-  Named property 'failedLookupLocations' of types 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' and 'ResolutionWithFailedLookupLocations' are not identical.
-src/compiler/tracing.ts:175:17: error TS2339: Property 'phase' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
-src/compiler/tracing.ts:175:24: error TS2339: Property 'name' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
-src/compiler/tracing.ts:175:30: error TS2339: Property 'args' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
-src/compiler/tracing.ts:175:36: error TS2339: Property 'time' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
-src/compiler/tracing.ts:175:42: error TS2339: Property 'separateBeginAndEnd' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
-src/compiler/tsbuildPublic.ts:787:5: error TS2322: Type 'WriteFileCallback | undefined' is not assignable to type '((path: string, data: string, writeByteOrderMark?: boolean | undefined) => void) | undefined'.
-  Type 'WriteFileCallback' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'.
-    Types of parameters 'writeByteOrderMark' and 'writeByteOrderMark' are incompatible.
-      Type 'boolean | undefined' is not assignable to type 'boolean'.
-        Type 'undefined' is not assignable to type 'boolean'.
-src/compiler/types.ts:1840:18: error TS2430: Interface 'SignatureDeclarationBase' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'PropertyName | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:2085:18: error TS2430: Interface 'FunctionDeclaration' incorrectly extends interface 'DeclarationStatement'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'Identifier | NumericLiteral | StringLiteral'.
-      Type 'undefined' is not assignable to type 'Identifier | NumericLiteral | StringLiteral'.
-src/compiler/types.ts:3543:18: error TS2430: Interface 'ClassLikeDeclarationBase' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:3551:18: error TS2430: Interface 'ClassDeclaration' incorrectly extends interface 'DeclarationStatement'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'Identifier | NumericLiteral | StringLiteral'.
-      Type 'undefined' is not assignable to type 'Identifier | NumericLiteral | StringLiteral'.
-src/compiler/types.ts:3567:18: error TS2430: Interface 'ClassElement' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'PropertyName | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:3572:18: error TS2430: Interface 'TypeElement' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'PropertyName | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:3719:18: error TS2430: Interface 'ImportClause' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:4071:18: error TS2430: Interface 'JSDocTypedefTag' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:4079:18: error TS2430: Interface 'JSDocCallbackTag' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:6659:18: error TS2430: Interface 'DeferredTypeReference' incorrectly extends interface 'TypeReference'.
-  Types of property 'mapper' are incompatible.
-    Type 'TypeMapper | undefined' is not assignable to type 'TypeMapper'.
-      Type 'undefined' is not assignable to type 'TypeMapper'.
-src/compiler/watch.ts:754:118: error TS2375: Type 'ProgramHost<any>' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Types of property 'directoryExists' are incompatible.
-    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.
-      Type 'undefined' is not assignable to type '(path: string) => boolean'.
-src/compiler/watchPublic.ts:383:52: error TS2379: Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Types of property 'createProgram' are incompatible.
-    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.
-      Type 'undefined' is not assignable to type 'CreateProgram<T>'.
-src/compiler/watchPublic.ts:463:120: error TS2379: Argument of type 'WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>' is not assignable to parameter of type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Type 'WatchCompilerHostOfConfigFile<T> & Partial<WatchCompilerHostOfFilesAndCompilerOptions<T>>' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-    Types of property 'directoryExists' are incompatible.
-      Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.
-        Type 'undefined' is not assignable to type '(path: string) => boolean'.
-src/compiler/watchPublic.ts:464:11: error TS2375: Type 'CachedDirectoryStructureHost | WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Type 'WatchCompilerHostOfConfigFile<T> & Partial<WatchCompilerHostOfFilesAndCompilerOptions<T>>' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-    Types of property 'directoryExists' are incompatible.
-      Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.
-        Type 'undefined' is not assignable to type '(path: string) => boolean'.
-```
+Repeated adapter runs on the same final tree each report **zero new declarations**.
+All **745 source files** retain their SHA-256 map. An actual source newline
+mutant fails that same map comparison and is restored byte-for-byte. The fixture
+passes **six property owners**, inherited/peer views, method deferral, callable
+precedence, the new `in`-guard diagnostic location, indexed/generic/wrong/live
+exclusions, identical emitted JavaScript, Node key fingerprints and second-run
+source byte stability.
 
-### Consumers exposed by the stock resolver
+### Source diff and evidence
 
-Stock 6.0.3 additionally records every new or changed chain in its JSON report;
-its 34 entries follow. They overlap with the census list but are retained because
-the checkers do not have identical standard libraries or diagnostics.
+There are **373** owners, **737** evidence rows including **13** inherited-owner
+rows, and **69** initially declined optional-code chains. Remaining findings and
+new consumers follow below. Idempotence emits zero new owner edits. Line-based
+diff sizes differ from declaration counts because some lines hold multiple owners.
+
+### Consumers exposed by the stock checker
+
+The prepared dependency/generation state reports every newly exposed consumer
+without runtime fixes. The 13 new or changed chains in the apply ledger follow;
+a changed chain may be an existing diagnostic with a different structural cause.
 
 ```text
 src/compiler/checker.ts:1683:9: TS2322: Type '(signature: Signature, kind: SignatureDeclaration["kind"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & { ...; }) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBui...'.
@@ -335,167 +310,158 @@ src/compiler/checker.ts:46159:176: TS2345: Argument of type 'ErrorOutputContaine
         Type 'undefined' is not assignable to type 'Diagnostic[]'.
 src/compiler/commandLineParser.ts:2677:9: TS2322: Type '{ path: string; originalPath: undefined; prepend?: boolean | undefined; circular?: boolean | undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.
   Type '{ path: string; originalPath: undefined; prepend?: boolean | undefined; circular?: boolean | undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.
-    Type '{ path: string; originalPath: undefined; prepend?: (boolean) | undefined; circular?: (boolean) | undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Type '{ path: string; originalPath: undefined; prepend?: boolean | undefined; circular?: boolean | undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
       Types of property 'originalPath' are incompatible.
         Type 'undefined' is not assignable to type 'string'.
 src/compiler/emitter.ts:1011:33: TS2345: Argument of type 'SourceFile | Bundle' is not assignable to parameter of type 'Bundle'.
   Property 'sourceFiles' is missing in type 'SourceFile' but required in type 'Bundle'.
 src/compiler/emitter.ts:1014:31: TS2345: Argument of type 'SourceFile | Bundle' is not assignable to parameter of type 'SourceFile'.
   Type 'Bundle' is missing the following properties from type 'SourceFile': statements, endOfFileToken, fileName, path, and 27 more.
-src/compiler/moduleNameResolver.ts:852:18: TS2320: Interface 'TypeReferenceDirectiveResolutionCache' cannot simultaneously extend types 'PerDirectoryResolutionCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>' and 'NonRelativeNameResolutionCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>'.
-  Named property 'isReadonly' of types 'PerDirectoryResolutionCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>' and 'NonRelativeNameResolutionCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>' are not identical.
-src/compiler/moduleNameResolver.ts:900:18: TS2320: Interface 'ModuleResolutionCache' cannot simultaneously extend types 'PerDirectoryResolutionCache<ResolvedModuleWithFailedLookupLocations>' and 'NonRelativeModuleNameResolutionCache'.
-  Named property 'isReadonly' of types 'PerDirectoryResolutionCache<ResolvedModuleWithFailedLookupLocations>' and 'NonRelativeModuleNameResolutionCache' are not identical.
-src/compiler/moduleNameResolver.ts:910:18: TS2320: Interface 'NonRelativeModuleNameResolutionCache' cannot simultaneously extend types 'NonRelativeNameResolutionCache<ResolvedModuleWithFailedLookupLocations>' and 'PackageJsonInfoCache'.
-  Named property 'isReadonly' of types 'NonRelativeNameResolutionCache<ResolvedModuleWithFailedLookupLocations>' and 'PackageJsonInfoCache' are not identical.
-src/compiler/moduleNameResolver.ts:1271:11: TS2320: Interface 'ModuleOrTypeReferenceResolutionCache<T>' cannot simultaneously extend types 'PerDirectoryResolutionCache<T>' and 'NonRelativeNameResolutionCache<T>'.
-  Named property 'isReadonly' of types 'PerDirectoryResolutionCache<T>' and 'NonRelativeNameResolutionCache<T>' are not identical.
-src/compiler/moduleNameResolver.ts:1450:97: TS2345: Argument of type 'ModuleResolutionCache | undefined' is not assignable to parameter of type 'NonRelativeModuleNameResolutionCache | undefined'.
-  Type 'ModuleResolutionCache' is not assignable to type 'NonRelativeModuleNameResolutionCache' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-    Types of property 'isReadonly' are incompatible.
-      Type 'boolean | undefined' is not assignable to type 'boolean'.
-        Type 'undefined' is not assignable to type 'boolean'.
-src/compiler/moduleNameResolver.ts:3035:85: TS2345: Argument of type 'ModuleResolutionCache | undefined' is not assignable to parameter of type 'NonRelativeModuleNameResolutionCache | undefined'.
-  Type 'ModuleResolutionCache' is not assignable to type 'NonRelativeModuleNameResolutionCache' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-    Types of property 'isReadonly' are incompatible.
-      Type 'boolean | undefined' is not assignable to type 'boolean'.
-        Type 'undefined' is not assignable to type 'boolean'.
-src/compiler/program.ts:5105:5: TS2375: Type '(CompilerHost | ProgramHost<T>) & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Type 'CompilerHost & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-    Types of property 'directoryExists' are incompatible.
-      Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.
-        Type 'undefined' is not assignable to type '(path: string) => boolean'.
-src/compiler/resolutionCache.ts:180:18: TS2320: Interface 'CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations' cannot simultaneously extend types 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' and 'ResolutionWithFailedLookupLocations'.
-  Named property 'affectingLocations' of types 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' and 'ResolutionWithFailedLookupLocations' are not identical.
+src/compiler/moduleNameResolver.ts:635:5: TS2375: Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: string[] | undefined; resolutionDiagnostics: Diagnostic[] | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'resolutionDiagnostics' are incompatible.
+    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+      Type 'undefined' is not assignable to type 'Diagnostic[]'.
 src/compiler/tracing.ts:175:17: TS2339: Property 'phase' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
 src/compiler/tracing.ts:175:24: TS2339: Property 'name' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
 src/compiler/tracing.ts:175:30: TS2339: Property 'args' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
 src/compiler/tracing.ts:175:36: TS2339: Property 'time' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
 src/compiler/tracing.ts:175:42: TS2339: Property 'separateBeginAndEnd' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
-src/compiler/tsbuildPublic.ts:787:5: TS2322: Type 'WriteFileCallback | undefined' is not assignable to type '((path: string, data: string, writeByteOrderMark?: boolean | undefined) => void) | undefined'.
-  Type 'WriteFileCallback' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'.
-    Types of parameters 'writeByteOrderMark' and 'writeByteOrderMark' are incompatible.
-      Type 'boolean | undefined' is not assignable to type 'boolean'.
-        Type 'undefined' is not assignable to type 'boolean'.
-src/compiler/types.ts:1840:18: TS2430: Interface 'SignatureDeclarationBase' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'PropertyName | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:2085:18: TS2430: Interface 'FunctionDeclaration' incorrectly extends interface 'DeclarationStatement'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'Identifier | StringLiteral | NumericLiteral'.
-      Type 'undefined' is not assignable to type 'Identifier | StringLiteral | NumericLiteral'.
-src/compiler/types.ts:3543:18: TS2430: Interface 'ClassLikeDeclarationBase' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:3551:18: TS2430: Interface 'ClassDeclaration' incorrectly extends interface 'DeclarationStatement'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'Identifier | StringLiteral | NumericLiteral'.
-      Type 'undefined' is not assignable to type 'Identifier | StringLiteral | NumericLiteral'.
-src/compiler/types.ts:3567:18: TS2430: Interface 'ClassElement' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'PropertyName | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:3572:18: TS2430: Interface 'TypeElement' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'PropertyName | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:3719:18: TS2430: Interface 'ImportClause' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:4071:18: TS2430: Interface 'JSDocTypedefTag' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:4079:18: TS2430: Interface 'JSDocCallbackTag' incorrectly extends interface 'NamedDeclaration'.
-  Types of property 'name' are incompatible.
-    Type 'Identifier | undefined' is not assignable to type 'DeclarationName'.
-      Type 'undefined' is not assignable to type 'DeclarationName'.
-src/compiler/types.ts:6659:18: TS2430: Interface 'DeferredTypeReference' incorrectly extends interface 'TypeReference'.
-  Types of property 'mapper' are incompatible.
-    Type 'TypeMapper | undefined' is not assignable to type 'TypeMapper'.
-      Type 'undefined' is not assignable to type 'TypeMapper'.
-src/compiler/watch.ts:754:118: TS2375: Type 'ProgramHost<any>' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Types of property 'directoryExists' are incompatible.
-    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.
-      Type 'undefined' is not assignable to type '(path: string) => boolean'.
 src/compiler/watchPublic.ts:383:52: TS2379: Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
   Types of property 'createProgram' are incompatible.
     Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.
       Type 'undefined' is not assignable to type 'CreateProgram<T>'.
-src/compiler/watchPublic.ts:463:120: TS2379: Argument of type 'WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>' is not assignable to parameter of type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Type 'WatchCompilerHostOfFilesAndCompilerOptions<T> & Partial<WatchCompilerHostOfConfigFile<T>>' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-    Types of property 'directoryExists' are incompatible.
-      Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.
-        Type 'undefined' is not assignable to type '(path: string) => boolean'.
-src/compiler/watchPublic.ts:464:11: TS2375: Type 'CachedDirectoryStructureHost | WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-  Type 'WatchCompilerHostOfFilesAndCompilerOptions<T> & Partial<WatchCompilerHostOfConfigFile<T>>' is not assignable to type 'DirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
-    Types of property 'directoryExists' are incompatible.
-      Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.
-        Type 'undefined' is not assignable to type '(path: string) => boolean'.
 ```
 
-### Initially declined seeds
+### Consumers exposed by the census
 
-All 43 initial exclusions follow. An eligible independent write may widen the
-same owner and remove an excluded diagnostic incidentally. E022 and E023 are
-not seeds even though their shared owners are widened elsewhere.
+The final meter reports **13 new or changed whole-program chains**.
+Locations are in the final adapted source. A changed chain can be a persisting
+error whose structural cause changed. No runtime consumer was edited.
 
-| Site | Code | Reason |
-| --- | --- | --- |
-| `src/compiler/builder.ts:1597:36` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/checker.ts:5964:13` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/checker.ts:6035:9` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/checker.ts:7837:133` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/checker.ts:8082:62` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/checker.ts:10941:33` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/checker.ts:17890:21` | TS2412 | unproven indexed read, not optionality evidence |
-| `src/compiler/checker.ts:33923:17` | TS2412 | unproven indexed read, not optionality evidence |
-| `src/compiler/checker.ts:43517:20` | TS2412 | unproven indexed read, not optionality evidence |
-| `src/compiler/checker.ts:43740:86` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/checker.ts:50153:21` | TS2412 | unproven indexed read, not optionality evidence |
-| `src/compiler/emitter.ts:862:55` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/emitter.ts:938:70` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/emitter.ts:1011:33` | TS2379 | expanded chain is not a present-undefined optional value mismatch |
-| `src/compiler/emitter.ts:1014:31` | TS2379 | expanded chain is not a present-undefined optional value mismatch |
-| `src/compiler/factory/nodeFactory.ts:1216:9` | TS2412 | arbitrary generic specialization |
-| `src/compiler/factory/nodeFactory.ts:1223:13` | TS2412 | arbitrary generic specialization |
-| `src/compiler/factory/nodeFactory.ts:1315:41` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/factory/nodeFactory.ts:1403:41` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/factory/nodeFactory.ts:5202:9` | TS2412 | arbitrary generic specialization |
-| `src/compiler/factory/nodeFactory.ts:5209:9` | TS2412 | arbitrary generic specialization |
-| `src/compiler/factory/nodeFactory.ts:5496:9` | TS2412 | arbitrary generic specialization |
-| `src/compiler/factory/nodeFactory.ts:7181:25` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/factory/nodeFactory.ts:7422:9` | TS2412 | generic or unresolved receiver contract |
-| `src/compiler/moduleNameResolver.ts:132:13` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/moduleNameResolver.ts:627:9` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/moduleNameResolver.ts:635:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/program.ts:5094:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/resolutionCache.ts:990:43` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/resolutionCache.ts:1019:43` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/resolutionCache.ts:1332:58` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/resolutionCache.ts:1332:58` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/resolutionCache.ts:1386:9` | TS2412 | generic or unresolved receiver contract |
-| `src/compiler/transformers/classFields.ts:2745:16` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/transformers/declarations.ts:1668:62` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/transformers/declarations/diagnostics.ts:207:50` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/transformers/declarations/diagnostics.ts:310:50` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/transformers/declarations/diagnostics.ts:424:50` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/transformers/utilities.ts:689:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/transformers/utilities.ts:749:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/transformers/utilities.ts:773:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/watchPublic.ts:568:17` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/watchUtilities.ts:125:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+```text
+src/compiler/checker.ts:1683:9: error TS2322: Type '(signature: Signature, kind: SignatureDeclaration["kind"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.
+  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
+    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.
+      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+          Types of property 'typeArguments' are incompatible.
+            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.
+              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'.
+src/compiler/checker.ts:21434:98: error TS2379: Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'errors' are incompatible.
+    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+      Type 'undefined' is not assignable to type 'Diagnostic[]'.
+src/compiler/checker.ts:46159:176: error TS2345: Argument of type 'ErrorOutputContainer | undefined' is not assignable to parameter of type '{ errors?: Diagnostic[]; } | undefined'.
+  Type 'ErrorOutputContainer' is not assignable to type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'errors' are incompatible.
+      Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+        Type 'undefined' is not assignable to type 'Diagnostic[]'.
+src/compiler/commandLineParser.ts:2677:9: error TS2322: Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.
+  Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.
+    Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+      Types of property 'originalPath' are incompatible.
+        Type 'undefined' is not assignable to type 'string'.
+src/compiler/emitter.ts:1011:33: error TS2345: Argument of type 'Bundle | SourceFile' is not assignable to parameter of type 'Bundle'.
+  Property 'sourceFiles' is missing in type 'SourceFile' but required in type 'Bundle'.
+src/compiler/emitter.ts:1014:31: error TS2345: Argument of type 'Bundle | SourceFile' is not assignable to parameter of type 'SourceFile'.
+  Type 'Bundle' is missing the following properties from type 'SourceFile': statements, endOfFileToken, fileName, path, and 27 more.
+src/compiler/moduleNameResolver.ts:635:5: error TS2375: Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: ... | undefined; resolutionDiagnostics: ... | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'resolutionDiagnostics' are incompatible.
+    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.
+      Type 'undefined' is not assignable to type 'Diagnostic[]'.
+src/compiler/tracing.ts:175:17: error TS2339: Property 'phase' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
+src/compiler/tracing.ts:175:24: error TS2339: Property 'name' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
+src/compiler/tracing.ts:175:30: error TS2339: Property 'args' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
+src/compiler/tracing.ts:175:36: error TS2339: Property 'time' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
+src/compiler/tracing.ts:175:42: error TS2339: Property 'separateBeginAndEnd' does not exist on type '{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; } | undefined'.
+src/compiler/watchPublic.ts:383:52: error TS2379: Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'createProgram' are incompatible.
+    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.
+      Type 'undefined' is not assignable to type 'CreateProgram<T>'.
+```
 
-### Remaining optional-code findings
+### Declined optional method owners
 
-All 36 final exclusions follow; complete expanded chains are emitted in the
-script report. Generic specialization, indexed evidence and unrelated chains
-remain separate from representation-only corrections.
+All 64 encountered owners are left with their original method syntax and variance.
+Their common reason is the inability to add a callable undefined union while
+preserving public method shape. They are not proof of a non-undefined runtime
+value; they remain obligations for a later adaptation with a broader API contract.
 
-| Site | Code | Reason |
+| Pristine owner location | Name |
+| --- | --- |
+| `src/compiler/types.ts:9991` | `readFile` |
+| `src/compiler/types.ts:9993` | `getSymlinkCache` |
+| `src/compiler/types.ts:9996` | `getGlobalTypingsCacheLocation` |
+| `src/compiler/types.ts:8196` | `createHash` |
+| `src/compiler/types.ts:7994` | `realpath` |
+| `src/compiler/types.ts:9990` | `directoryExists` |
+| `src/compiler/types.ts:9992` | `realpath` |
+| `src/compiler/types.ts:8620` | `createHash` |
+| `src/compiler/types.ts:10008` | `trace` |
+| `src/compiler/types.ts:7989` | `directoryExists` |
+| `src/compiler/types.ts:7996` | `getDirectories` |
+| `src/compiler/types.ts:4549` | `trace` |
+| `src/compiler/tsbuildPublic.ts:238` | `now` |
+| `src/compiler/types.ts:8162` | `resolveModuleNameLiterals` |
+| `src/compiler/types.ts:8170` | `resolveTypeReferenceDirectiveReferences` |
+| `src/compiler/types.ts:8179` | `resolveLibrary` |
+| `src/compiler/types.ts:8151` | `resolveModuleNames` |
+| `src/compiler/types.ts:8161` | `resolveTypeReferenceDirectives` |
+| `src/compiler/types.ts:8155` | `getModuleResolutionCache` |
+| `src/compiler/watchPublic.ts:200` | `directoryExists` |
+| `src/compiler/tsbuildPublic.ts:217` | `createDirectory` |
+| `src/compiler/tsbuildPublic.ts:222` | `writeFile` |
+| `src/compiler/types.ts:8135` | `getDefaultLibLocation` |
+| `src/compiler/types.ts:8141` | `readDirectory` |
+| `src/compiler/types.ts:7988` | `trace` |
+| `src/compiler/watchPublic.ts:186` | `createHash` |
+| `src/compiler/watchPublic.ts:207` | `realpath` |
+| `src/compiler/watchPublic.ts:211` | `getEnvironmentVariable` |
+| `src/compiler/watchPublic.ts:274` | `now` |
+| `src/compiler/types.ts:8198` | `useSourceOfProjectReferenceRedirect` |
+| `src/compiler/types.ts:8201` | `createDirectory` |
+| `src/compiler/types.ts:9991` | `readFile` |
+| `src/compiler/types.ts:9993` | `getSymlinkCache` |
+| `src/compiler/types.ts:9996` | `getGlobalTypingsCacheLocation` |
+| `src/compiler/types.ts:8196` | `createHash` |
+| `src/compiler/types.ts:7994` | `realpath` |
+| `src/compiler/types.ts:9990` | `directoryExists` |
+| `src/compiler/types.ts:9992` | `realpath` |
+| `src/compiler/types.ts:8620` | `createHash` |
+| `src/compiler/types.ts:10008` | `trace` |
+| `src/compiler/types.ts:7989` | `directoryExists` |
+| `src/compiler/types.ts:7996` | `getDirectories` |
+| `src/compiler/types.ts:4549` | `trace` |
+| `src/compiler/types.ts:8162` | `resolveModuleNameLiterals` |
+| `src/compiler/types.ts:8170` | `resolveTypeReferenceDirectiveReferences` |
+| `src/compiler/types.ts:8179` | `resolveLibrary` |
+| `src/compiler/types.ts:8151` | `resolveModuleNames` |
+| `src/compiler/types.ts:8161` | `resolveTypeReferenceDirectives` |
+| `src/compiler/types.ts:8155` | `getModuleResolutionCache` |
+| `src/compiler/watchPublic.ts:200` | `directoryExists` |
+| `src/compiler/types.ts:8135` | `getDefaultLibLocation` |
+| `src/compiler/types.ts:8141` | `readDirectory` |
+| `src/compiler/types.ts:7988` | `trace` |
+| `src/compiler/watchPublic.ts:186` | `createHash` |
+| `src/compiler/watchPublic.ts:207` | `realpath` |
+| `src/compiler/watchPublic.ts:211` | `getEnvironmentVariable` |
+| `src/compiler/watchPublic.ts:274` | `now` |
+| `src/compiler/types.ts:8198` | `useSourceOfProjectReferenceRedirect` |
+| `src/compiler/types.ts:8201` | `createDirectory` |
+| `src/compiler/watchPublic.ts:200` | `directoryExists` |
+| `src/compiler/watchPublic.ts:186` | `createHash` |
+| `src/compiler/watchPublic.ts:207` | `realpath` |
+| `src/compiler/watchPublic.ts:211` | `getEnvironmentVariable` |
+| `src/compiler/watchPublic.ts:274` | `now` |
+
+### Remaining optional-code chains
+
+There are 60 remaining chains in the final stock recheck. Some share an owner;
+all source writes and literal keys remain. Survey C/R evidence above is declined
+for indexed, generic or discriminator reasons. Remaining chains are listed with
+the resolver's reason, including missing compatible declaration-owner evidence.
+
+| Location | Code | Reason |
 | --- | --- | --- |
 | `src/compiler/checker.ts:5964:13` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/checker.ts:6035:9` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
@@ -506,6 +472,7 @@ remain separate from representation-only corrections.
 | `src/compiler/checker.ts:21434:98` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/checker.ts:43517:20` | TS2412 | unproven indexed read, not optionality evidence |
 | `src/compiler/checker.ts:43740:86` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/checker.ts:54261:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/commandLineParser.ts:2663:9` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/emitter.ts:862:55` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/emitter.ts:938:70` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
@@ -516,7 +483,12 @@ remain separate from representation-only corrections.
 | `src/compiler/moduleNameResolver.ts:132:13` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/moduleNameResolver.ts:627:9` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/moduleNameResolver.ts:635:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/program.ts:5105:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/program.ts:472:11` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/program.ts:1876:11` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/program.ts:2599:9` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/program.ts:4956:9` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/program.ts:4957:9` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/program.ts:5107:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/resolutionCache.ts:990:43` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/resolutionCache.ts:1019:43` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/resolutionCache.ts:1332:58` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
@@ -526,321 +498,95 @@ remain separate from representation-only corrections.
 | `src/compiler/transformers/utilities.ts:689:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/transformers/utilities.ts:749:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/transformers/utilities.ts:773:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/watch.ts:754:118` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/tsbuildPublic.ts:302:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/tsbuildPublic.ts:438:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/tsbuildPublic.ts:439:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/tsbuildPublic.ts:440:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/tsbuildPublic.ts:441:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/tsbuildPublic.ts:442:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/tsbuildPublic.ts:443:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/tsbuildPublic.ts:785:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/tsbuildPublic.ts:786:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/tsbuildPublic.ts:787:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/watch.ts:756:11` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/watch.ts:845:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/watchPublic.ts:125:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/watchPublic.ts:371:65` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/watchPublic.ts:383:52` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/watchPublic.ts:463:120` | TS2379 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
-| `src/compiler/watchPublic.ts:464:11` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/watchPublic.ts:506:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/watchPublic.ts:529:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/watchPublic.ts:530:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/watchPublic.ts:534:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/watchPublic.ts:535:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/watchPublic.ts:542:5` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/watchPublic.ts:568:17` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/watchPublic.ts:661:9` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
+| `src/compiler/watchPublic.ts:662:9` | TS2412 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 | `src/compiler/watchUtilities.ts:125:5` | TS2375 | expanded chain has no eligible owned optional declaration with compatible present-undefined evidence |
 
-### Upstream build consumer errors
+### Mutants, commands and limits
 
-Pristine `npm run build` succeeds. Adapted `npm run build` exits 1 after its
-stock build compiler exits 2 with the nine diagnostics below. The checked test
-build reports the same nine. The strict source-census options are unchanged.
-The error at `tsbuildPublic.ts:787` exposes callable parameter variance previously
-hidden by method bivariance. `services.ts:1769` similarly exposes a readonly
-array parameter mismatch. The remaining seven service errors follow the
-`getCompilerHost` key-presence guard, which now correctly leaves its callable
-possibly undefined. Consumer fixes are outside this unit's scope.
-
-```text
-src/compiler/tsbuildPublic.ts(787,5): error TS2322: Type 'WriteFileCallback | undefined' is not assignable to type '((path: string, data: string, writeByteOrderMark?: boolean | undefined) => void) | undefined'.
-  Type 'WriteFileCallback' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'.
-    Types of parameters 'writeByteOrderMark' and 'writeByteOrderMark' are incompatible.
-      Type 'boolean | undefined' is not assignable to type 'boolean'.
-        Type 'undefined' is not assignable to type 'boolean'.
-src/services/services.ts(1769,13): error TS2322: Type '((typeDirectiveNames: FileReference[] | string[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]) | undefined' is not assignable to type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]) | undefined'.
-  Type '(typeDirectiveNames: FileReference[] | string[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]'.
-    Types of parameters 'typeDirectiveNames' and 'typeReferenceDirectiveNames' are incompatible.
-      Type 'string[] | readonly FileReference[]' is not assignable to type 'FileReference[] | string[]'.
-        Type 'readonly FileReference[]' is not assignable to type 'FileReference[] | string[]'.
-          The type 'readonly FileReference[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'.
-src/services/services.ts(1779,39): error TS18048: 'compilerHost' is possibly 'undefined'.
-src/services/services.ts(1782,13): error TS2345: Argument of type 'CompilerHost | undefined' is not assignable to parameter of type 'CompilerHostLikeForCache'.
-  Type 'undefined' is not assignable to type 'CompilerHostLikeForCache'.
-src/services/services.ts(1786,9): error TS18048: 'compilerHost' is possibly 'undefined'.
-src/services/services.ts(1788,32): error TS2345: Argument of type 'CompilerHost | undefined' is not assignable to parameter of type 'CompilerHost'.
-  Type 'undefined' is not assignable to type 'CompilerHost'.
-src/services/services.ts(1796,23): error TS18048: 'compilerHost' is possibly 'undefined'.
-src/services/services.ts(1798,20): error TS18048: 'compilerHost' is possibly 'undefined'.
-src/services/services.ts(1799,34): error TS18048: 'compilerHost' is possibly 'undefined'.
-```
-
-The upstream runtime bundler still produces its compiler/test JavaScript without
-these declaration checks. `hereby local --no-typecheck` emits the bundles but
-still exits 1 because upstream's service declaration task remains checked.
-The baseline suite uses `hereby runtests-parallel --light=false --workers=4
---lint=false --no-typecheck`; this builds the current source bundles and avoids
-those checked declaration tasks. This is a runtime oracle build, **not a clean
-upstream typecheck**, and is not used for the census. No consumer is hidden from
-the diagnostic ledgers and no Adamic checker option is weakened.
-
-### JavaScript identity, idempotence and mutants
-
-All **10 emitted JavaScript files, 28,599,562 bytes**, from upstream's own build
-are byte-identical in the direct **20-only** comparison, before adaptation 10
-landed, between pristine and adapted trees, including `run.js`, which
-bundles the actual compiler into the test harness. Only `.js` output is compared;
-declaration output intentionally changes, and source maps/build metadata are
-not claimed identical. The source byte comparison uses full bytes rather than
-only hashes. SHA-256 values for review follow.
-
-| Emitted file | SHA-256 (both trees) |
+| Mutant | Named check and observed kill |
 | --- | --- |
-| `_tsc.js` | `1c59e77a54b186ec43fa7f3e0d3c4bb15ca5eb5ba43e96b1d3a267139eddd3e3` |
-| `_tsserver.js` | `1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b` |
-| `_typingsInstaller.js` | `71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1` |
-| `run.js` | `515554e08cfa2887a10c2d357e3515068788d427af4053e7db016de98350bb94` |
-| `tsc.js` | `2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983` |
-| `tsserver.js` | `e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb` |
-| `tsserverlibrary.js` | `6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf` |
-| `typescript.js` | `569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39` |
-| `typingsInstaller.js` | `2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213` |
-| `watchGuard.js` | `008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88` |
+| Drop `?` from edited `CompilerOptions.traceResolution` | Census missing-property check: total **2,168 → 2,200**; **31** missing-property chains, TS2741 **0 → 24**; all **18** directly checked omitted-key literals caught. |
+| Drop only that owner union | Census optional-count check: TS2375 **19 → 20**, optional total **60 → 61**, whole total **2,168 → 2,169**. |
+| Remove an edited `?` in the emitted API snapshot | Parsed snapshot reconstruction exits 1. |
+| Add undefined to unedited protocol `Diagnostic.source` | Namespace-qualified owner proof exits 1; no compiler-owner false match. |
+| Drop `traceResolution` from the snapshot owner ledger | Parsed reconstruction exits 1 on the unlisted addition. |
+| Append a newline to unrelated `assignmentCompat1.js` reference | All-other-reference comparison exits 1 after the API proof succeeds. |
+| Append a statement to one emitted JS artifact copy | The same byte-array comparator rejects it. |
+| Append a newline to actual adapted `src/compiler/types.ts` | The source-idempotence hash map comparison rejects it; original bytes restored. |
 
-Two runs on one pinned tree both exit 0: 405 declarations changed, then 0.
-The scratch fixture independently asserts unchanged source bytes on the second
-run, identical emitted JavaScript and Node key fingerprints, three owners for
-four write/literal findings, correct callable precedence, an `in`-guard consumer
-at its location, and unchanged indexed/generic/wrong-value/live-method contracts.
+The census mutants use identical dependencies and stock compiler API AST edits.
+For only their repeated whole-program probes, a scratch Go scheduling overlay
+skips the per-entry loop (`CENSUS_WHOLE_ONLY=1`); root discovery, `inspect`,
+checker options and the final whole-program call are unchanged. Both primary
+before/after censuses use the full unmodified driver. The required-literal
+coverage excludes assertions, which bypass construction checking, and keys
+supplied by spreads. Mutation sites and complete chains are in
+`revision-required-sites.log`; `revision-required-literals.log` checks every
+one of the 18 directly checked literal sites.
 
-| Mutant | Named check and observed failure |
-| --- | --- |
-| Drop `?` only on edited `CompilerOptions.traceResolution` | Census missing-property check: 31 missing-property diagnostics, including TS2741 0 → 24; all 18 directly checked omitted-key literals are caught. Total 2163 → 2195. |
-| Omit only that owner edit, restoring `traceResolution?: boolean` | Census optional-count check: TS2375 15 → 16; exact-optional total 36 → 37; total 2163 → 2164. |
-| Append a newline to one source file in a copy of the second shared-apply tree | The source-idempotence SHA-256 map comparison rejects the changed copy. Log: `idempotence-mutant.log`. |
-| Append a byte-changing statement to a copy of one emitted JS artifact | The same byte-comparison assertion fails. |
-| Append `const stage3BaselineMutant: number = "wrong";` to `assignmentCompat1.ts` in an isolated pristine copy | Upstream's filtered baseline oracle exits 3 with three failing comparisons (JS, diagnostics, types/symbols). Restoring only that test input produces 6 passing, exit 0. The deliberately invalid test input is compiled by the test harness; it fails baseline comparison, not the build. |
-
-Mutant trees use identical dependencies. Their initial scratch copies lacked
-`source-map-support`, producing an unrelated TS2307; those exploratory counts
-were discarded and both census mutants rerun after restoring the dependency.
-Only the requested single declaration change distinguishes each final source
-mutant. The directly checked literal coverage excludes type assertions (which
-bypass construction checks) and keys provided through spreads.
-
-All missing-property mutant locations follow. The one required-property edit
-also causes a TS7053 consequence; it is included in the mutant's total above.
-
-| Missing-property site | Code |
-| --- | --- |
-| `src/compiler/builder.ts:1447:18` | TS2741 |
-| `src/compiler/builder.ts:2250:40` | TS2379 |
-| `src/compiler/builder.ts:2275:13` | TS2375 |
-| `src/compiler/builder.ts:2309:92` | TS2379 |
-| `src/compiler/builder.ts:2312:13` | TS2375 |
-| `src/compiler/builder.ts:2313:73` | TS2379 |
-| `src/compiler/commandLineParser.ts:1858:14` | TS2741 |
-| `src/compiler/commandLineParser.ts:2128:5` | TS2322 |
-| `src/compiler/commandLineParser.ts:2663:9` | TS2741 |
-| `src/compiler/commandLineParser.ts:2691:71` | TS2741 |
-| `src/compiler/commandLineParser.ts:2697:79` | TS2741 |
-| `src/compiler/commandLineParser.ts:2972:11` | TS2741 |
-| `src/compiler/commandLineParser.ts:3064:5` | TS2741 |
-| `src/compiler/commandLineParser.ts:3437:41` | TS2741 |
-| `src/compiler/commandLineParser.ts:3746:11` | TS2375 |
-| `src/compiler/commandLineParser.ts:4264:11` | TS2741 |
-| `src/compiler/moduleNameResolver.ts:1755:9` | TS2741 |
-| `src/compiler/moduleNameResolver.ts:1800:127` | TS2741 |
-| `src/compiler/moduleSpecifiers.ts:1348:55` | TS2741 |
-| `src/compiler/moduleSpecifiers.ts:817:96` | TS2741 |
-| `src/compiler/transformer.ts:671:31` | TS2741 |
-| `src/compiler/utilities.ts:9231:41` | TS2741 |
-| `src/compiler/utilities.ts:9237:41` | TS2741 |
-| `src/compiler/utilities.ts:9243:41` | TS2741 |
-| `src/compiler/utilities.ts:9249:41` | TS2741 |
-| `src/compiler/utilities.ts:9255:41` | TS2741 |
-| `src/compiler/utilities.ts:9261:41` | TS2741 |
-| `src/compiler/utilities.ts:9267:41` | TS2741 |
-| `src/compiler/utilities.ts:9280:41` | TS2741 |
-| `src/compiler/watchPublic.ts:847:82` | TS2741 |
-| `src/compiler/watchPublic.ts:963:17` | TS2741 |
-
-### Reproduction and logs
-
-Toolchain setup was `bash cloud/setup.sh`, then
-`source /workspace/adamic-tools/env.sh`. Timing lines: Go ready 1s, clang ready
-1s, Node ready 1s, submodules ready 1s, build cache warm 237s, total 237s.
-`nproc` is 5; cgroup quota is 4 CPUs. Go 1.27.1, clang 20.1.8, Node 24.19.0.
-All test output was written directly to logs and read afterward.
-
-The primary unmodified census commands ran every input entry and the whole
-program, sequentially, with adaptation 10 already applied:
+Representative replay commands, run sequentially from Adamic's root:
 
 ```sh
+stage3/apply.sh /tmp/adamic-optional/revision-approved > /tmp/adamic-optional/revision-approved-apply.log 2>&1
+# Extract the adapter JSON object (starts with "typescript") from apply's log
+# using JSONDecoder.raw_decode, into revision-approved-adapt.json.
+npm ci --prefix /tmp/adamic-optional/revision-approved --no-audit --no-fund > /tmp/adamic-optional/revision-approved-install.log 2>&1
+npm run build --prefix /tmp/adamic-optional/revision-approved > /tmp/adamic-optional/revision-approved-build.log 2>&1
+export NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules
+node stage3/adapt/20-optional-declarations/check-baselines.cjs /tmp/adamic-optional/pristine /tmp/adamic-optional/revision-approved /tmp/adamic-optional/revision-approved-adapt.json --accept-api > /tmp/adamic-optional/revision-approved-api-proof.log 2>&1
+stage3/oracle/run.sh /tmp/adamic-optional/revision-approved /tmp/adamic-optional/revision-approved-oracle > /tmp/adamic-optional/revision-approved-oracle.log 2>&1
+source /workspace/adamic-tools/env.sh
 go build -o /tmp/adamic-optional/census ./stage3/census/tool > /tmp/adamic-optional/census-build.log 2>&1
-/tmp/adamic-optional/census /tmp/adamic-optional/before-20/src/compiler /tmp/adamic-optional/census-before20.jsonl > /tmp/adamic-optional/census-before20.log 2>&1
-/tmp/adamic-optional/census /tmp/adamic-optional/pipeline-final/src/compiler /tmp/adamic-optional/census-after20.jsonl > /tmp/adamic-optional/census-after20.log 2>&1
+# before is pinned pristine plus latest 10, with identical locked dependencies;
+# regenerate using scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json.
+/tmp/adamic-optional/census /tmp/adamic-optional/revision-census-before/src/compiler /tmp/adamic-optional/revision-census-before.jsonl > /tmp/adamic-optional/revision-census-before.log 2>&1
+/tmp/adamic-optional/census /tmp/adamic-optional/revision-approved/src/compiler /tmp/adamic-optional/revision-census-after.jsonl > /tmp/adamic-optional/revision-census-after.log 2>&1
+node stage3/adapt/20-optional-declarations/check-baselines.cjs /tmp/adamic-optional/pristine /tmp/adamic-optional/revision-approved /tmp/adamic-optional/revision-approved-adapt.json > /tmp/adamic-optional/revision-api-proof-after-oracle.log 2>&1
 ```
 
-For the earlier supplemental after check and the mutant checks, a scratch Go
-overlay adds only
-`if os.Getenv("CENSUS_WHOLE_ONLY") == "1" { entries = nil }` before the
-single-entry loop in `stage3/census/tool/main.go`. Root discovery, `inspect`,
-checker options and the final whole-program call are unchanged. The completed
-earlier unmodified census's whole-program diagnostics equal the overlay result
-exactly. Both primary with-10 passes use the unmodified driver.
-The overlay is not committed and is solely a scheduling optimization.
+The API acceptance phase is explicit and restricted to the proved reference;
+shared apply/oracle code is unchanged. Apply refuses an existing output path,
+so choose fresh paths when replaying. Stock 6.0.3 comes from the shared API cache;
+upstream's own checked build uses its locked dependencies.
 
-```sh
-go build -overlay=/tmp/adamic-optional/census-whole-overlay.json -o /tmp/adamic-optional/census-whole ./stage3/census/tool > /tmp/adamic-optional/census-whole-build.log 2>&1
-CENSUS_WHOLE_ONLY=1 /tmp/adamic-optional/census-whole /tmp/adamic-optional/typescript/src/compiler /tmp/adamic-optional/whole-after.jsonl > /tmp/adamic-optional/whole-after.log 2>&1
-CENSUS_WHOLE_ONLY=1 /tmp/adamic-optional/census-whole /tmp/adamic-optional/mutant-required/src/compiler /tmp/adamic-optional/whole-required.jsonl > /tmp/adamic-optional/whole-required.log 2>&1
-CENSUS_WHOLE_ONLY=1 /tmp/adamic-optional/census-whole /tmp/adamic-optional/mutant-omitted/src/compiler /tmp/adamic-optional/whole-omitted.jsonl > /tmp/adamic-optional/whole-omitted.log 2>&1
-```
+Evidence logs: `revision-approved-oracle/report.json`,
+`revision-approved-api-proof.log`, `revision-api-proof-after-oracle.log`,
+`revision-snapshot-mutants.log`, `revision-final-tests.log`,
+`revision-js-manifest.json`, `revision-idempotence-final.log`,
+`revision-idempotence-source-hashes.json`, and the full census JSONL files.
+The source-level declaration ledger is `revision-approved-adapt.json`.
+All evidence and upstream trees are under `/tmp/adamic-optional`, outside Adamic.
+The generated scoreboard is preserved as `revision-approved-patch-set.md`;
+only adaptation 20's source tools and README are committed by this revision.
 
-Supplemental upstream commands were run by hand from each checkout before the
-shared pipeline landed. The shared default oracle result is recorded below:
-
-```sh
-npm ci --ignore-scripts --no-audit --no-fund > /tmp/adamic-optional/upstream-npm.log 2>&1
-npm run build > /tmp/adamic-optional/pristine-build.log 2>&1
-npm test -- --workers=4 > /tmp/adamic-optional/pristine-tests.log 2>&1
-npm run build > /tmp/adamic-optional/adapted-build-final.log 2>&1
-node node_modules/hereby/bin/hereby.js local --no-typecheck > /tmp/adamic-optional/adapted-runtime-build.log 2>&1
-node node_modules/hereby/bin/hereby.js tests > /tmp/adamic-optional/adapted-tests-build-checked.log 2>&1
-node node_modules/hereby/bin/hereby.js runtests-parallel --light=false --workers=4 --lint=false --no-typecheck > /tmp/adamic-optional/adapted-tests-runtime.log 2>&1
-```
-
-Additional checks:
-
-```sh
-node --check stage3/adapt/20-optional-declarations/adapt.cjs
-node /tmp/adamic-optional/verify-fixture.cjs > /tmp/adamic-optional/verify-fixture.log 2>&1
-python3 /tmp/adamic-optional/check-emit.py > /tmp/adamic-optional/emit-check.log 2>&1
-python3 /tmp/adamic-optional/check-mutants.py > /tmp/adamic-optional/mutants-check.log 2>&1
-node /tmp/adamic-optional/check-required-literals.cjs > /tmp/adamic-optional/required-literals.log 2>&1
-go test ./stage3/census/tool ./cmd/adamic-meter ./internal/load -count=1 > /tmp/adamic-optional/package-tests.log 2>&1
-```
-
-These checks pass. The census tool has no package tests; meter 9.711s and loader
-3.646s pass. The complete Adamic native gate was not run for this source-tooling
-unit. No compiler implementation, native fixture, checker option, adaptation 10,
-`stage3/apply.sh`, base oracle or source pin was changed.
-
-### Consumers in generated declaration tests
-
-The supplemental APILibCheck test newly reports these **22** generated-declaration
-diagnostics. They echo the source-level inheritance incompatibilities already
-listed above, at emitted declaration locations. They remain unfixed. The exact
-chains are retained in `tests/baselines/local/APILibCheck.errors.txt` in the scratch
-adapted tree; none of its reference baselines was changed.
-
-```text
-typescript.d.ts(4647,15): error TS2430: Interface 'FunctionDeclaration' incorrectly extends interface 'DeclarationStatement'.
-typescript.d.ts(4647,15): error TS2430: Interface 'FunctionDeclaration' incorrectly extends interface 'FunctionLikeDeclarationBase'.
-typescript.d.ts(4992,15): error TS2430: Interface 'FunctionExpression' incorrectly extends interface 'FunctionLikeDeclarationBase'.
-typescript.d.ts(5415,15): error TS2430: Interface 'ClassLikeDeclarationBase' incorrectly extends interface 'NamedDeclaration'.
-typescript.d.ts(5422,15): error TS2430: Interface 'ClassDeclaration' incorrectly extends interface 'DeclarationStatement'.
-typescript.d.ts(5530,15): error TS2430: Interface 'ImportClause' incorrectly extends interface 'NamedDeclaration'.
-typescript.d.ts(5840,15): error TS2430: Interface 'JSDocTypedefTag' incorrectly extends interface 'NamedDeclaration'.
-typescript.d.ts(5847,15): error TS2430: Interface 'JSDocCallbackTag' incorrectly extends interface 'NamedDeclaration'.
-typescript.internal.d.ts(9436,15): error TS2430: Interface 'FunctionDeclaration' incorrectly extends interface 'DeclarationStatement'.
-typescript.internal.d.ts(9436,15): error TS2430: Interface 'FunctionDeclaration' incorrectly extends interface 'FunctionLikeDeclarationBase'.
-typescript.internal.d.ts(9823,15): error TS2430: Interface 'FunctionExpression' incorrectly extends interface 'FunctionLikeDeclarationBase'.
-typescript.internal.d.ts(10390,15): error TS2430: Interface 'ClassLikeDeclarationBase' incorrectly extends interface 'NamedDeclaration'.
-typescript.internal.d.ts(10397,15): error TS2430: Interface 'ClassDeclaration' incorrectly extends interface 'DeclarationStatement'.
-typescript.internal.d.ts(10509,15): error TS2430: Interface 'ImportClause' incorrectly extends interface 'NamedDeclaration'.
-typescript.internal.d.ts(10820,15): error TS2430: Interface 'JSDocTypedefTag' incorrectly extends interface 'NamedDeclaration'.
-typescript.internal.d.ts(10827,15): error TS2430: Interface 'JSDocCallbackTag' incorrectly extends interface 'NamedDeclaration'.
-typescript.internal.d.ts(12999,15): error TS2430: Interface 'DeferredTypeReference' incorrectly extends interface 'TypeReference'.
-typescript.internal.d.ts(23491,15): error TS2320: Interface 'TypeReferenceDirectiveResolutionCache' cannot simultaneously extend types 'PerDirectoryResolutionCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>' and 'NonRelativeNameResolutionCache<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>'.
-typescript.internal.d.ts(23534,15): error TS2320: Interface 'ModuleResolutionCache' cannot simultaneously extend types 'PerDirectoryResolutionCache<ResolvedModuleWithFailedLookupLocations>' and 'NonRelativeModuleNameResolutionCache'.
-typescript.internal.d.ts(23543,15): error TS2320: Interface 'NonRelativeModuleNameResolutionCache' cannot simultaneously extend types 'NonRelativeNameResolutionCache<ResolvedModuleWithFailedLookupLocations>' and 'PackageJsonInfoCache'.
-typescript.internal.d.ts(25095,15): error TS2430: Interface 'BuilderProgramState' incorrectly extends interface 'ReusableBuilderProgramState'.
-typescript.internal.d.ts(25518,15): error TS2320: Interface 'CachedResolvedModuleWithFailedLookupLocations' cannot simultaneously extend types 'ResolvedModuleWithFailedLookupLocations' and 'ResolutionWithFailedLookupLocations'.
-```
-
-### Exact baseline equality is not established
-
-The pristine hand-run full suite passed **106,367 tests**. The adapted supplemental
-full runtime suite exited 1: **106,365 passing, 2 failing**. Its mismatches are
-`tests/baselines/local/APILibCheck.errors.txt` and
-`tests/baselines/local/api/typescript.d.ts`. The latter deliberately snapshots
-public declaration text; truthful optional unions therefore change its expected
-output even though every emitted JavaScript byte is identical. APILibCheck tests
-the generated public declarations too. References were not updated. These are
-observed counterexamples to the claim that type-only edits trivially preserve
-every upstream baseline.
-
-The ordinary checked build also fails on the nine consumer diagnostics above.
-Consumer repairs and acceptance of changed declaration baselines are outside this
-unit, so a successful default upstream oracle cannot be claimed.
-
-### Shared pipeline integration
-
-Merged base pipeline `8728405` and type imports `396f87e` after census `429c117`.
-The adaptation script was used unchanged by `stage3/apply.sh` in numeric order.
-The input for the primary census table is setup plus adaptation 10; the output
-adds adaptation 20. Heavy apply, oracle and census runs were sequential.
-
-The default shared oracle command was:
-
-```sh
-stage3/apply.sh /tmp/adamic-optional/pipeline > /tmp/adamic-optional/pipeline-apply.log 2>&1
-stage3/oracle/run.sh /tmp/adamic-optional/pipeline /tmp/adamic-optional/pipeline-oracle > /tmp/adamic-optional/pipeline-oracle.log 2>&1
-```
-
-Apply passed. The unchanged oracle used `runners=all`, no regex, four workers and
-its default limit. Install passed (3.602s), build failed (20.482s), oracle exited
-1 after 24.100s. Its `report.json` has `status=fail` and no test phase: the checked
-build prevents entry into the default suites. This is the primary oracle result;
-the supplemental runtime suite above does not turn it into a pass.
-
-Upstream build regenerates the diagnostics source, replacing its adapted
-optional owner and type import. A fresh second apply output, `pipeline-final`,
-therefore supplies the census and idempotence input. A second adapter run on
-that output changed zero declarations and preserved all **745 source files**
-byte-for-byte. The two apply runs selected exactly the same 405 owners and
-identical evidence/consumer/decline ledgers as the original direct run.
-
-The generated patch scoreboard reports setup 0; adaptation 10 **72 files,
-3,719 lines replaced**; adaptation 20 **26 files, 406 lines replaced**; combined
-**73 files, 4,125 lines replaced**. The generated scoreboard is preserved in
-`/tmp/adamic-optional/pipeline-patch-set.md`; this unit commits only its adapter
-and README.
-
-Both primary censuses ran the unchanged full driver: 81 individual input
-attempts followed by all 78 TypeScript roots together. Both exited 0 with a
-checker-rejected whole program. The three JSON inputs fail extension loading,
-as expected, and are outside the TypeScript root population. Every non-import
-diagnostic chain is byte-identical, after removing the tree prefix, to the
-earlier 20-only before/after reports; the 3,719 TS1484 findings are removed by
-adaptation 10. Thus the complete consumer list above is also verified on 10.
-
-```sh
-stage3/apply.sh /tmp/adamic-optional/pipeline-final > /tmp/adamic-optional/pipeline-final-apply.log 2>&1
-NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules node stage3/adapt/20-optional-declarations/adapt.cjs /tmp/adamic-optional/pipeline-final > /tmp/adamic-optional/pipeline-idempotence.log 2>&1
-# before-20 is pristine plus setup and adaptation 10, with the same locked dependencies.
-/tmp/adamic-optional/census /tmp/adamic-optional/before-20/src/compiler /tmp/adamic-optional/census-before20.jsonl > /tmp/adamic-optional/census-before20.log 2>&1
-/tmp/adamic-optional/census /tmp/adamic-optional/pipeline-final/src/compiler /tmp/adamic-optional/census-after20.jsonl > /tmp/adamic-optional/census-after20.log 2>&1
-```
-
-The full-driver census summed durations were **212.840s before**, **200.622s
-after**, including all per-entry attempts and the final whole-program call.
-These are measured tool durations, not estimates of native compilation time.
-
-Both declaration mutants were rerun on the final with-10 source, using the same
-unchanged whole-program gate through the scheduling overlay. The required-key
-mutant totals **2,195** diagnostics, versus **2,163**: TS2322 +1, TS2345 +1,
-TS2375 +2, TS2379 +3, TS2741 +24, TS7053 +1; every other reason is unchanged.
-There are **31** missing-property chains, covering all **18** directly checked
-omitted-key literals. The omitted-owner mutant totals **2,164**, with only
-TS2375 +1 (15 → 16). Logs: `mutants10-check.log`, `required-literals10.log`;
-raw records: `whole10-required.jsonl`, `whole10-omitted.jsonl`.
-
-The previous-adaptation control (`before-20`) then passed upstream's ordinary
-`npm run build`. Its **eight emitted compiler JavaScript artifacts, 15,424,668
-bytes**, are byte-identical to every `.js` artifact emitted by the default
-shared oracle's 10+20 compiler build, despite that build's checked failure.
-Log: `pipeline-emit-check.log`. The earlier direct 20-only proof additionally
-compares all ten artifacts, including the test harness. Overall unadapted-to-
-10+20 bundle bytes differ in esbuild's allocated local names because of
-adaptation 10; this unit's before/after comparison holds 10 fixed.
-
-All supplemental fixture, byte-mutant, source-idempotence-mutant, baseline-mutant
-and package results above remain applicable to the identical adapter. A successful
-default oracle and exact reference-baseline equality remain **failed obligations**,
-not waived checks. No consumers or reference baselines were repaired.
+Toolchain setup from the first revision succeeded: Go ready 1s, clang 1s,
+Node 1s, submodules 1s, cache warm 237s, total 237s; `nproc` 5, CPU quota 4.
+Go 1.27.1, clang 20.1.8, Node 24.19.0. The final preparation hit scratch-disk
+`ENOSPC`; obsolete self-created trees were removed, preserving proof logs, and
+the checked build and snapshot proof were rerun successfully. Package checks
+from the unchanged census/meter/loader tooling passed (9.711s and 3.646s);
+this unit changes only source-adaptation tooling. The full native Adamic gate,
+future adaptations and unproven C/R invariants are outside this unit. No PR.
