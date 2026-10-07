@@ -1406,3 +1406,26 @@ remains readable.
 At 2026-10-07T19:29:34.219258+00:00, half A was still running after 1827.034 seconds of test execution, with 13 of fifteen mutant checks passed and no failed events. Its fixture reached the first mutant after 587.348 seconds. Setup was 43.848 seconds separately (including container start/exit overhead; setup itself logged 41.433 seconds). Half B had not started because the workers run sequentially on the sole available machine. Neither end-of-run memory peak nor complete native process intervals is available yet. The estimated 15-shard table above stands; shard 0 actual is explicitly a running lower bound, shard 1 actual remains pending. This is an honest partial report, not a sub-20-minute certificate. Measurement continues.
 
 The snapshot JSON and split proof archive are committed in `cmd/adamic-gate/evidence/layout-split-deadline.json` and `layout-split-proof.tgz`. Compare provenance is implemented and its matching and refusal tests pass.
+
+### Completed half A
+
+Half A passed all fifteen mutants and four parents. Test span: 2022.108 seconds; `go test` wall: 2028.967 seconds; separately measured setup: 43.848 seconds. The fixture built once. End-of-run fresh cgroup memory peak: 3633004544 bytes (3.383 GiB), limit 16 GiB, all memory limit/OOM counters zero. This differs in scope from the earlier outer-cgroup lifetime peak. No four-slot experiment or stage1 change was made.
+
+| Test-wall component | Seconds | Instrument |
+| --- | ---: | --- |
+| Fixture through first mutant | 587.348 | Go JSON `cont` to first child `run` |
+| Native mutant builds or runs, overlapping intervals unioned | 1292.580 | External `/proc` process samples, 15 builds and 15 executions |
+| Residual test work | 142.180 | Test span minus fixture and native interval union |
+| Outside Go test span | 6.859 | `go test` process wall minus package terminal `Elapsed` |
+
+Summed native compiler duration: 148.470 seconds; summed native executable duration: 1881.139 seconds. Execution dominates. Their separate wall unions are 135.581 and 1207.533 seconds, respectively; build/run overlap means these do not add to the combined union. Semantic mutant intervals occupy 1271.890 seconds of the observed wall, and policy-mutant intervals occupy 201.810 seconds; those also overlap. Moving semantic checks to another backend must preserve policy work and oracle checks, so subtracting the semantic interval union is not a valid speedup prediction. Go lowering/C emission is in the residual rather than the native subprocess measurements.
+
+Half A overlaps some planner verification/build commands on the same parent machine. It is not an isolated physical-box benchmark or a controlled comparison with the old whole-group run. Half B runs after verification builds have finished. The measured numbers and resource/method limits are preserved rather than presented as a speedup claim.
+
+Half A used whole-parent `-run` patterns, equivalent to selecting all their subtests; half B uses the planner-style `/.*` suffix explicitly, with membership read from the estimated plan. Both keep the same parent partition and all thirty child checks overall. Exact metadata and command are in `cmd/adamic-gate/evidence/layout-split-half-a.json`.
+
+Half A build flags:
+
+```text
+commit=47fbaf174d168f14cd50dedcaabfaa09c51cdefd nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="3.01 2.13 1.04 1/390 17" load_after="1.02 1.43 1.77 1/429 317" uncached=1 cached_builds=warm GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" instrument="external /proc process sampling every 5 ms; no test source changes; native build/run intervals approximate"
+```
