@@ -1,0 +1,6 @@
+{
+  "name": "proto accessor suppressed",
+  "file": "rule.a",
+  "from": "key.text === '__proto__'",
+  "to": "key.text === '__never_proto__'"
+}
