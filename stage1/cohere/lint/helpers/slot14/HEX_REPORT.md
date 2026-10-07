@@ -59,3 +59,5 @@ source Node, emitted JavaScript, sanitized native and release native, and
 TestTheOracleCatchesOneByte passes. An initial abbreviated fixture filter ran
 only the parent test; the full slash-separated path was corrected and its
 executed subtest is visible in the retained log. Full repository gate not run.
+
+Latest landing rebase: 39638d9e278d38bb5aeae887f46d55a70e47aaad. Changes since b8fb957aa are outside compiler/dependency/runner/stage1 paths. The retained helper, all four original consumer suites, captured targeted paths and all three width-mutant executions pass again: 68,844 inputs / 2,149,768 bytes. The correctly selected inherited-field oracle and one-byte failure control pass again (cached artifacts with unchanged compiled inputs). No additional helper was claimed while the landing cap was being resolved.

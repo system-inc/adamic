@@ -75,3 +75,6 @@ Rebased onto current main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06. Bounded with
 
 ## Current compiler landing b8fb957aa
 Rebased and re-green after inherited static-field emission landed. Retained fixed-hex helper: 68,844 unique inputs / 2,149,768 bytes, actual Go private helper compared with Node, emitted JavaScript and sanitized native; width mutant caught on all three. All four original consumer suites pass, with additional real hex-path calls in all four consumers. Archived withdrawn integer/declaration witnesses pass again without delivery credit. Full consumer findings on Adamic require the surrounding regexp/rule integration and are not claimed by this leaf result. See HEX_REPORT.md.
+
+## Latest main 39638d9e2
+Rebased without conflict. Retained fixed-hex helper rebuilt and re-green on all three runtimes with the Go oracle and width mutant. Original four consumer suites and targeted actual leaf calls pass again. Filtered inherited-field and one-byte oracles pass. Shared rule-harness blockers remain on the parked rule branch; no new helper claimed during landing-first work.
