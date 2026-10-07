@@ -1,0 +1,13 @@
+sF...
+======================================================================
+FAIL: test_collected_manifests_invalidate (__main__.WarmingKey.test_collected_manifests_invalidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup.py", line 111, in test_collected_manifests_invalidate
+    self.assertNotEqual(previous, current, str(file))
+AssertionError: '2b896d6214e5250dedfa98cd6c8168086af1720f69fd2fbb9f815b39ffef872f\n' == '2b896d6214e5250dedfa98cd6c8168086af1720f69fd2fbb9f815b39ffef872f\n' : /tmp/setup-collected-3pcuqy92/cloud/markdown-width/package.json
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.004s
+
+FAILED (failures=1, skipped=1)
