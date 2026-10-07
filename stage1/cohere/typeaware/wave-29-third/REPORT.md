@@ -1,8 +1,8 @@
-Built: executable blocker controls and an independent Go oracle for the three newly claimed React rules; no native rule port is marked complete.
-Commits: previous six ports are pushed through 7f4eabb8; d0c89a9d claimed this batch and was pushed before any implementation.
-Commands: setup 29s, nproc 5; production Go suites PASS 0.082s; Go positive controls produce three JSX findings and two hook-only findings.
-Mutants: no new native rule mutants were run because the native validators are not implemented; blocker probes are not counted as lint agreement.
-Not covered: native React SSA lowering, JSX parsing, end-to-end findings/fixes/suggestions, sanitizer rule agreement or native-versus-Go lint timings for this batch.
+Built: supplied-SSA static-components kernel in .a plus Go comparison controls; all three full React ports remain blocked.
+Commits: previous six complete ports pushed through 7f4eabb8; third claim d0c89a9d and blocker evidence 5b1590fe were already pushed.
+Commands: fresh setup 19s, nproc 5; supplied-graph comparison PASS 34 cases, 27 findings, 14419 identical bytes; ASan/UBSan/leaks PASS.
+Mutants: store-binding and phi propagation mutants both compile and exit 0; byte comparison catches each.
+Not covered: native source-to-SSA, captures, post-dominance and compilation gates; full three-rule corpus agreement, rule mutants, handles and lint timings remain unfinished.
 
 The third batch is:
 
@@ -97,3 +97,78 @@ no-op rule stub was presented as a port. The three claims remain owned and
 blocked, and no additional rules were claimed. Native rule mutants, byte
 agreement, sanitizer checks and lint performance measurements remain unfinished
 for this batch; zero default corpus counts do not satisfy those requirements.
+
+## Follow-up: supplied-graph kernel and dependency recheck
+
+The preceding blocker observations describe the earlier branch state. Origin
+was refreshed again across all heads (417 refs). Current main is
+`e011f8f60899586d6373a5ccb07335ad82cfbf3c`, bridge
+`eb6df00e91b07c9fc81b2ec396a6f118be55d172`, and harness
+`f4d98cab50048692781da3599131317dc569d466`.
+
+JSX parser work is now published on `origin/codex/stage1-jsx-lint`, tip
+`a8a62d62ca49db7415e14c3887dd305022b17309`. Its JSX_REPORT.md was read
+in full. Published parser/scanner directories were materialized in scratch
+`/workspace/wave29-jsx-dependency`, and the static-components probe was compiled
+with its import pointing there. It exits 0 and emits `JsxSelfClosingElement`,
+resolving the formerly failing `<C/>` parse in that scratch experiment.
+The shared parser was not changed on this branch. Its logged output is
+`validation/recheck-jsx.stdout`.
+
+An all-origin source search for `LoadContext`, `ControlDominators`,
+`UnconditionalBlocks`, and `ForFunctionWithoutManualMemoization` found only
+wave08-react's supplied-HIR effect kernel and its core probe. That kernel was
+read in full; its run entry explicitly rejects the absent lowering/SSA pipeline.
+This search supports, but does not prove exhaustively, the inference that no
+published usable native React lowering entry exists. The Go lowering, capture
+translation, manual-memoization handling, and control analysis are still needed.
+
+`static_components.a` now implements the independent forward-taint validator
+on supplied graphs. It follows the unchanged Go `reportDynamicComponents`:
+function/call/new/method taint creation, local loads and both store outputs,
+phi propagation, ordered block traversal, JSX tag filtering, creator-specific
+messages, missing-node fallback ranges, and UTF-16-to-byte diagnostics. It
+imports no Go lint judgment and adds no bridge predicate. `static_core.a`
+is its framed-graph executable, not a source-file lint entry.
+
+The overlay test in `testdata/static_core_test.go` invokes the unchanged private
+production Go validator directly. The Go test constructs the HIR and exports
+its structural fields for native evaluation, along with the expected complete
+diagnostics. No production Go file is replaced. These are supplied-graph
+controls, not lowering or compiler-corpus agreement. Each phi control has at
+most one tainted operand: Go ranges an unordered map when choosing a creator,
+so different tainted creators at the same merge are not covered by this test.
+
+Run with the configured Go/clang toolchain:
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave-29-third/check_static_core.py \
+  /workspace/wave29-third-static-core-verified \
+  > /tmp/wave29-third-static-core-verified.log 2>&1
+```
+
+Observed: 34 supplied graphs, 27 findings, 14,419 identical bytes. All findings
+have zero fixes and zero suggestions, matching Go. Byte SHA-256 is
+`78ce14fae61fcede8e45b0fcc1137e1896855818af4a8770c55bf7b9c8d9fe31`.
+The native run exits 0 with empty stderr; its ASan/UBSan/leak-check build produces
+identical bytes and empty stderr with halt-on-error options. Two mutations
+replace the creator propagated to a store binding or phi with that binding's
+own identifier. Both compile and execute normally; comparison catches each
+as a differing diagnostic. They prove the graph-kernel checks can fail, not
+that an end-to-end rule comparison exists. This kernel uses no bridge handles,
+so released-handle checks for a new full rule are not claimed.
+
+Fresh setup output: Go ready 0s, clang ready 1s, Node ready 1s, submodules ready
+1s, build cache warm 19s, total 19s; nproc 5, quota 400000/100000 and 17.6 GB.
+Only the supplied-graph overlay test and native kernel checks were run in this
+follow-up; the previous full production rule-suite result remains above.
+The native framed invocation took 2.865 ms; Go test elapsed time includes build
+and cannot serve as a native-versus-Go lint comparison. Full lint timings remain
+unavailable until lowering is implemented.
+
+Commands, controls, Go/native bytes, empty sanitizer stderr, and mutant output
+are stored in `validation/static-core/`. No shared files were edited, no new
+rules were claimed, and the three full rules remain blocked rather than marked
+complete. Set-state-in-effect and set-state-in-render have no new native
+validator here; their blocker controls remain the executable evidence.

@@ -1,0 +1,36 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Frames } from '../frames.ts';
+import { written } from '../../../typescript/parser/nodes.ts';
+import { StaticComponents, StaticGraph, StaticIdentifier, StaticInstruction, StaticPhi, StaticBlock } from './static_components.a';
+const args = programArguments();
+const content = readTextFile(args[0] ?? panic('missing graph records'));
+if(content.kind === 'Error') { panic(content.message); }
+const frames = new Frames(content.text);
+const count = frames.natural();
+for(let caseIndex = 0; caseIndex < count; caseIndex++) {
+    const source = frames.field();
+    const identifiers: (StaticIdentifier | undefined)[] = [];
+    const ids = frames.natural();
+    for(let at = 0; at < ids; at++) { identifiers.push(frames.yes() ? new StaticIdentifier(frames.number(), frames.number()) : undefined); }
+    const instructions: (StaticInstruction | undefined)[] = [];
+    const length = frames.natural();
+    for(let at = 0; at < length; at++) {
+        const kind = frames.field();
+        if(kind === '') { instructions.push(undefined); }
+        else { instructions.push(new StaticInstruction(kind, frames.natural(), frames.number(), frames.number(), frames.number(), frames.number(), frames.number())); }
+    }
+    const blocks: StaticBlock[] = [];
+    const blockCount = frames.natural();
+    for(let at = 0; at < blockCount; at++) {
+        const phis: StaticPhi[] = [];
+        const phiCount = frames.natural();
+        for(let phi = 0; phi < phiCount; phi++) { phis.push(new StaticPhi(frames.natural(), frames.ids())); }
+        blocks.push(new StaticBlock(frames.ids(), phis));
+    }
+    const graph = new StaticGraph(source, identifiers, instructions, blocks);
+    console.log(`case ${caseIndex}`);
+    for(const finding of new StaticComponents().validate(graph)) {
+        console.log(`${finding.start}\t${finding.end}\treact-hooks/static-components\tstaticComponents\t${written(finding.description)}\t0\t0`);
+    }
+}
+frames.end();

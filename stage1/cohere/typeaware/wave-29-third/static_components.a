@@ -1,0 +1,108 @@
+// Partial validator over supplied SSA graphs. This does not construct SSA or
+// decide which source functions are React compilation units.
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+export class StaticIdentifier {
+    readonly pos: number;
+    readonly end: number;
+    constructor(pos: number, end: number) { this.pos = pos; this.end = end; }
+}
+export class StaticInstruction {
+    readonly kind: string;
+    readonly target: number;
+    readonly source: number;
+    readonly binding: number;
+    readonly tag: number;
+    readonly pos: number;
+    readonly end: number;
+    constructor(kind: string, target: number, source = -1, binding = -1, tag = -1, pos = 0, end = 0) {
+        this.kind = kind; this.target = target; this.source = source;
+        this.binding = binding; this.tag = tag; this.pos = pos; this.end = end;
+    }
+}
+export class StaticPhi {
+    readonly target: number;
+    readonly operands: number[];
+    constructor(target: number, operands: number[]) { this.target = target; this.operands = operands; }
+}
+export class StaticBlock {
+    readonly instructions: number[];
+    readonly phis: StaticPhi[];
+    constructor(instructions: number[], phis: StaticPhi[]) { this.instructions = instructions; this.phis = phis; }
+}
+export class StaticGraph {
+    readonly source: string;
+    readonly identifiers: (StaticIdentifier | undefined)[];
+    readonly instructions: (StaticInstruction | undefined)[];
+    readonly blocks: StaticBlock[];
+    constructor(source: string, identifiers: (StaticIdentifier | undefined)[], instructions: (StaticInstruction | undefined)[], blocks: StaticBlock[]) {
+        this.source = source; this.identifiers = identifiers; this.instructions = instructions; this.blocks = blocks;
+    }
+}
+export class StaticFinding {
+    readonly start: number;
+    readonly end: number;
+    readonly description: string;
+    constructor(start: number, end: number, description: string) { this.start = start; this.end = end; this.description = description; }
+}
+export class StaticComponents {
+    byte(source: string, position: number): number {
+        let bytes = 0;
+        for(let at = 0; at < position; at++) {
+            const code = source.charCodeAt(at);
+            if(code >= 55296 && code <= 56319 && source.charCodeAt(at + 1) >= 56320 && source.charCodeAt(at + 1) <= 57343) { bytes += 4; at++; }
+            else { bytes += code < 128 ? 1 : code < 2048 ? 2 : 3; }
+        }
+        return bytes;
+    }
+    start(source: string, position: number): number {
+        const scanner = new Scanner(source);
+        scanner.pos = position;
+        scanner.scan();
+        return scanner.start;
+    }
+    message(graph: StaticGraph, creator: number): string {
+        const identifier = graph.identifiers[creator];
+        let created = '';
+        if(identifier !== undefined && identifier.pos >= 0 && identifier.end <= graph.source.length && identifier.pos < identifier.end) {
+            const start = this.start(graph.source, identifier.pos);
+            if(start < identifier.end) { created = graph.source.slice(start, identifier.end); }
+        }
+        const where = created === '' ? 'in this render' : `at \`${created}\``;
+        return `This component is created during render, ${where}, so it gets a new identity every time this function runs. React compares components by identity, so it unmounts the previous one and mounts this as a fresh component rather than updating it, discarding all of its state and re-rendering its whole subtree on every render. The usual symptom is an input that loses what was typed into it. Move the component to module scope, or pass the value that varies as a prop.`;
+    }
+    validate(graph: StaticGraph): StaticFinding[] {
+        const dynamic = new Map<number, number>();
+        const findings: StaticFinding[] = [];
+        for(const block of graph.blocks) {
+            for(const phi of block.phis) {
+                for(const operand of phi.operands) {
+                    const creator = dynamic.get(operand);
+                    if(creator !== undefined) { dynamic.set(phi.target, creator); break; }
+                }
+            }
+            for(const id of block.instructions) {
+                const instruction = graph.instructions[id];
+                if(instruction === undefined) { continue; }
+                const target = instruction.target;
+                if(instruction.kind === 'FunctionExpression') { dynamic.set(target, target); }
+                else if(['CallExpression', 'NewExpression', 'MethodCall'].includes(instruction.kind)) { dynamic.set(target, instruction.source); }
+                else if(instruction.kind === 'LoadLocal' || instruction.kind === 'StoreLocal') {
+                    const creator = dynamic.get(instruction.source);
+                    if(creator !== undefined) {
+                        dynamic.set(target, creator);
+                        if(instruction.kind === 'StoreLocal') { dynamic.set(instruction.binding, creator); }
+                    }
+                }
+                else if(instruction.kind === 'JsxExpression' && instruction.tag >= 0) {
+                    const creator = dynamic.get(instruction.tag);
+                    if(creator === undefined) { continue; }
+                    const identifier = graph.identifiers[instruction.tag];
+                    const start = identifier === undefined ? instruction.pos : this.start(graph.source, identifier.pos);
+                    const end = identifier === undefined ? instruction.end : identifier.end;
+                    findings.push(new StaticFinding(this.byte(graph.source, start), this.byte(graph.source, end), this.message(graph, creator)));
+                }
+            }
+        }
+        return findings;
+    }
+}

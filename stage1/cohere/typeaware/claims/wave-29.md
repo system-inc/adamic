@@ -46,3 +46,5 @@ Previous six native rule ports are tested and pushed through 7f4eabb8. The share
 This claim update is committed and pushed before implementation. No other rules are claimed by this update.
 
 Third-batch status: blocked, not ported. [wave-29-third/REPORT.md](../wave-29-third/REPORT.md) records positive Go findings, native JSX misclassification/failure and the separate missing native React SSA pipeline. No additional claims were taken.
+
+Follow-up: static-components has a tested supplied-SSA native kernel (34 controls, two compiling mutants, sanitizer agreement), but no source-to-SSA entry. Published JSX parsing works in scratch. All three full ports remain blocked; no additional claim is taken. See the follow-up section of wave-29-third/REPORT.md.
