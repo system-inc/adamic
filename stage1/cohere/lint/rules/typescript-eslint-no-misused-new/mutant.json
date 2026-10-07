@@ -1,0 +1,6 @@
+{
+  "file": "rule.a",
+  "name": "getter named new silently skipped",
+  "from": "kind !== 'MethodDeclaration' && kind !== 'GetAccessor'",
+  "to": "kind !== 'MethodDeclaration'"
+}
