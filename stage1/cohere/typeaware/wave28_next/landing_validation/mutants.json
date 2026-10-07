@@ -1,0 +1,94 @@
+[
+  {
+    "batch": "first",
+    "observation": "wave_28_test.go:197: parity mutant: exit 0, empty stderr, independent Go bytes catch byte 37127"
+  },
+  {
+    "batch": "first",
+    "observation": "wave_28_test.go:197: scope mutant: exit 0, empty stderr, independent Go bytes catch byte 51"
+  },
+  {
+    "batch": "first",
+    "observation": "wave_28_test.go:197: getter mutant: exit 0, empty stderr, independent Go bytes catch byte 21874"
+  },
+  {
+    "batch": "first",
+    "observation": "wave_28_test.go:234: released-registry mutant: exit 0, caught by required panic 70"
+  },
+  {
+    "batch": "next",
+    "observation": "checks_test.go:60: mutant exit exited zero, empty stderr, comparison caught byte 1825"
+  },
+  {
+    "batch": "next",
+    "observation": "checks_test.go:60: mutant timeout exited zero, empty stderr, comparison caught byte 4846"
+  },
+  {
+    "batch": "next",
+    "observation": "checks_test.go:60: mutant blocking exited zero, empty stderr, comparison caught byte 7963"
+  },
+  {
+    "batch": "next",
+    "observation": "checks_test.go:115: released registry mutant exited zero; required panic assertion catches it"
+  },
+  {
+    "batch": "third",
+    "observation": "checks_test.go:48: mutant throw exited zero, empty stderr, comparison caught byte 5438"
+  },
+  {
+    "batch": "third",
+    "observation": "checks_test.go:48: mutant backreference exited zero, empty stderr, comparison caught byte 953"
+  },
+  {
+    "batch": "third",
+    "observation": "checks_test.go:48: mutant arrow-fix exited zero, empty stderr, comparison caught byte 3750"
+  },
+  {
+    "batch": "third",
+    "observation": "checks_test.go:103: released registry mutant exited zero; required panic assertion catches it"
+  },
+  {
+    "batch": "coverage",
+    "observation": "coverage_test.go:153: before: exit 0, Go byte oracle catches byte 55; findings 52"
+  },
+  {
+    "batch": "coverage",
+    "observation": "coverage_test.go:153: cast: exit 0, Go byte oracle catches byte 1552; findings 53"
+  },
+  {
+    "batch": "coverage",
+    "observation": "coverage_test.go:153: methods: exit 0, Go byte oracle catches byte 2196; findings 46"
+  },
+  {
+    "batch": "coverage",
+    "observation": "coverage_test.go:153: coercion: exit 0, Go byte oracle catches byte 1159; findings 53"
+  },
+  {
+    "batch": "coverage",
+    "observation": "coverage_test.go:153: caller: exit 0, Go byte oracle catches byte 10234; findings 54"
+  },
+  {
+    "batch": "coverage",
+    "observation": "coverage_test.go:153: parameter: exit 0, Go byte oracle catches byte 367; findings 50"
+  },
+  {
+    "batch": "coverage",
+    "observation": "coverage_test.go:153: invariant: exit 0, Go byte oracle catches byte 12740; findings 48"
+  },
+  {
+    "batch": "coverage",
+    "observation": "coverage_test.go:153: optional: exit 0, Go byte oracle catches byte 15499; findings 53"
+  },
+  {
+    "batch": "coverage",
+    "observation": "coverage_test.go:153: alias: exit 0, Go byte oracle catches byte 15973; findings 53"
+  },
+  {
+    "batch": "coverage",
+    "observation": "coverage_test.go:153: unused: exit 0, Go byte oracle catches byte 16787; findings 56"
+  },
+  {
+    "batch": "coverage",
+    "observation": "coverage_test.go:187: released-registry mutant exits 0, caught by the required panic 70"
+  }
+]

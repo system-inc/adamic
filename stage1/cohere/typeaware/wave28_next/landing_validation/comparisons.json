@@ -1,0 +1,202 @@
+[
+  {
+    "batch": "first",
+    "comparison": "controls",
+    "bytes": 45929,
+    "sha256": "42794ad2d7bea8656295f5ad008b6675d2cc4226b387e290cc418928278bff02",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 126"
+  },
+  {
+    "batch": "first",
+    "comparison": "controls-asan",
+    "bytes": 45929,
+    "sha256": "42794ad2d7bea8656295f5ad008b6675d2cc4226b387e290cc418928278bff02",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 126"
+  },
+  {
+    "batch": "first",
+    "comparison": "repository",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "first",
+    "comparison": "repository-asan",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "first",
+    "comparison": "compiler",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "first",
+    "comparison": "compiler-asan",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "next",
+    "comparison": "controls",
+    "bytes": 66867,
+    "sha256": "db732d5bba301df68cb13239405b91a6658c53b08e88d11d5d85d40063fa93b2",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 108"
+  },
+  {
+    "batch": "next",
+    "comparison": "dom-controls",
+    "bytes": 8600,
+    "sha256": "7340cf9b3a727e6ce1838e043443799f1ffdd76e2750571533700ebeb1301b19",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 14"
+  },
+  {
+    "batch": "next",
+    "comparison": "controls-asan",
+    "bytes": 8600,
+    "sha256": "7340cf9b3a727e6ce1838e043443799f1ffdd76e2750571533700ebeb1301b19",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 14"
+  },
+  {
+    "batch": "next",
+    "comparison": "repository",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "next",
+    "comparison": "repository-asan",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "next",
+    "comparison": "compiler",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "next",
+    "comparison": "compiler-asan",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "next",
+    "comparison": "expanded-controls-final",
+    "bytes": 66867,
+    "sha256": "db732d5bba301df68cb13239405b91a6658c53b08e88d11d5d85d40063fa93b2",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 108"
+  },
+  {
+    "batch": "next",
+    "comparison": "expanded-controls-asan",
+    "bytes": 66867,
+    "sha256": "db732d5bba301df68cb13239405b91a6658c53b08e88d11d5d85d40063fa93b2",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 108"
+  },
+  {
+    "batch": "third",
+    "comparison": "controls",
+    "bytes": 68850,
+    "sha256": "b003ca9b68bdb2af1333b7285ce467ee3f7bdd8a7749b0b353ecf5cee0aa77a6",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 181"
+  },
+  {
+    "batch": "third",
+    "comparison": "controls-asan",
+    "bytes": 68850,
+    "sha256": "b003ca9b68bdb2af1333b7285ce467ee3f7bdd8a7749b0b353ecf5cee0aa77a6",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 181"
+  },
+  {
+    "batch": "third",
+    "comparison": "repository",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "third",
+    "comparison": "repository-asan",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "third",
+    "comparison": "compiler",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "third",
+    "comparison": "compiler-asan",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 0"
+  },
+  {
+    "batch": "coverage",
+    "comparison": "controls",
+    "bytes": 23986,
+    "sha256": "0baa2eecbb522bd1ff88a138426f746ab164abca4545f2da4ffa9010c5f24c75",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 53"
+  },
+  {
+    "batch": "coverage",
+    "comparison": "controls-asan",
+    "bytes": 23986,
+    "sha256": "0baa2eecbb522bd1ff88a138426f746ab164abca4545f2da4ffa9010c5f24c75",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 53"
+  },
+  {
+    "batch": "coverage",
+    "comparison": "repository",
+    "bytes": 85151,
+    "sha256": "0223182e1ad3f325e11da943acb97bcf65935c9d7b2e1a3f4eb5fee155f95bf8",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 180"
+  },
+  {
+    "batch": "coverage",
+    "comparison": "repository-asan",
+    "bytes": 85151,
+    "sha256": "0223182e1ad3f325e11da943acb97bcf65935c9d7b2e1a3f4eb5fee155f95bf8",
+    "native_stderr_bytes": 0,
+    "last_line": "findings 180"
+  }
+]

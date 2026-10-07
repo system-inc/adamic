@@ -1,0 +1,14 @@
+=== RUN   TestContinuation
+    next_test.go:57: accepted controls 132
+    next_test.go:58: controls: 66999 identical finding bytes; findings 108
+    next_test.go:62: dom-controls: 8618 identical finding bytes; findings 14
+    next_test.go:68: no-process-exit-after-output positive findings 6
+    next_test.go:68: no-uncleared-race-timeout positive findings 6
+    next_test.go:68: require-blocking-standard-streams positive findings 2
+    checks_test.go:43: mutant-exit: exit status 1
+        
+        adamic: /workspace/wave-28-landing-next/runner-exit.a:41:40: Adamic 0.1 refuses a value without nominal ancestry seen as NoProcessExitAfterOutput; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)
+--- FAIL: TestContinuation (25.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_next	25.163s
+FAIL

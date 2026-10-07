@@ -1,0 +1,1059 @@
+[
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/005-parse-filter.stdout",
+    "artifact": "first__005-parse-filter.stdout.gz",
+    "bytes": 11730,
+    "sha256": "51f5220a9d6c1371567775b3011451a8513b4ff3fa61b10c40e50b4ea792ffc8"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/006-controls-go.stderr",
+    "artifact": "first__006-controls-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "c3f0baf4330ed68710c10b800f6fcf0779ae74c771366d92c2365bd807b9fe29"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/006-controls-go.stdout",
+    "artifact": "first__006-controls-go.stdout.gz",
+    "bytes": 45929,
+    "sha256": "42794ad2d7bea8656295f5ad008b6675d2cc4226b387e290cc418928278bff02"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/007-controls-native.stdout",
+    "artifact": "first__007-controls-native.stdout.gz",
+    "bytes": 45929,
+    "sha256": "42794ad2d7bea8656295f5ad008b6675d2cc4226b387e290cc418928278bff02"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/010-controls-asan-go.stderr",
+    "artifact": "first__010-controls-asan-go.stderr.gz",
+    "bytes": 59,
+    "sha256": "884a42e5b3219a18fb4c06a8c30721219cb373051d4fa928f52d6a0895cba0c7"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/010-controls-asan-go.stdout",
+    "artifact": "first__010-controls-asan-go.stdout.gz",
+    "bytes": 45929,
+    "sha256": "42794ad2d7bea8656295f5ad008b6675d2cc4226b387e290cc418928278bff02"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/011-controls-asan-native.stdout",
+    "artifact": "first__011-controls-asan-native.stdout.gz",
+    "bytes": 45929,
+    "sha256": "42794ad2d7bea8656295f5ad008b6675d2cc4226b387e290cc418928278bff02"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/013-parity-run.stdout",
+    "artifact": "first__013-parity-run.stdout.gz",
+    "bytes": 45696,
+    "sha256": "80053c469301155d5ae80c0fd71a02491ca7c1388f8b758cf3acbd6ac808e551"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/015-scope-run.stdout",
+    "artifact": "first__015-scope-run.stdout.gz",
+    "bytes": 27732,
+    "sha256": "f3ef895ad2606ac5971f04a1155ff26c49687170ac6277c60baf2c26c72b58f0"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/017-getter-run.stdout",
+    "artifact": "first__017-getter-run.stdout.gz",
+    "bytes": 44201,
+    "sha256": "c1c5400d009479b0a456b4f0b04b6657cc3cbff47c788dbe2d8a9b7ba4799f2f"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/018-repository-go.stderr",
+    "artifact": "first__018-repository-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "8c0ba908731e5c12e9ee37e2223557e70efcb616b703932cade854da224113d7"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/018-repository-go.stdout",
+    "artifact": "first__018-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/019-repository-native.stdout",
+    "artifact": "first__019-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/020-repository-asan-go.stderr",
+    "artifact": "first__020-repository-asan-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "c7c5355124b83f5fea78e1d7abf3527ffb193c6c39a6be622bb429a16ae452e4"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/020-repository-asan-go.stdout",
+    "artifact": "first__020-repository-asan-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/021-repository-asan-native.stdout",
+    "artifact": "first__021-repository-asan-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/022-repository-timed-native.stderr",
+    "artifact": "first__022-repository-timed-native.stderr.gz",
+    "bytes": 79,
+    "sha256": "2c73a221e9cf33e6748f9935e32f3a708669584b7dc421c8c5307588f5c4b1c3"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/022-repository-timed-native.stdout",
+    "artifact": "first__022-repository-timed-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/023-repository-timed-Go.stderr",
+    "artifact": "first__023-repository-timed-Go.stderr.gz",
+    "bytes": 60,
+    "sha256": "4eb661aa36b35b2911ae1d68b69199b17596df4d6bd66f8145cb33332989c642"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/023-repository-timed-Go.stdout",
+    "artifact": "first__023-repository-timed-Go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/024-compiler-go.stderr",
+    "artifact": "first__024-compiler-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "3322bdabef1b71f0b675c82efdd255db8235dfccc6d4c74b8f32d7f06c1a6654"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/024-compiler-go.stdout",
+    "artifact": "first__024-compiler-go.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/025-compiler-native.stdout",
+    "artifact": "first__025-compiler-native.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/026-compiler-asan-go.stderr",
+    "artifact": "first__026-compiler-asan-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "104e4044bc52e80b44e59ee93a6753ed20dfaed4c9d6de96d520ce76fbf0e56d"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/026-compiler-asan-go.stdout",
+    "artifact": "first__026-compiler-asan-go.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/027-compiler-asan-native.stdout",
+    "artifact": "first__027-compiler-asan-native.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/028-compiler-timed-native.stderr",
+    "artifact": "first__028-compiler-timed-native.stderr.gz",
+    "bytes": 102,
+    "sha256": "ae4aad83b2c1d41d3c441b68581c46443439b77644ccde2da0dd28fe847ed0a7"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/028-compiler-timed-native.stdout",
+    "artifact": "first__028-compiler-timed-native.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/029-compiler-timed-Go.stderr",
+    "artifact": "first__029-compiler-timed-Go.stderr.gz",
+    "bytes": 63,
+    "sha256": "74576ee370b08dafb2d29908dadc84c8b484bdecca1a0d193be7229ecde73fc2"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/029-compiler-timed-Go.stdout",
+    "artifact": "first__029-compiler-timed-Go.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/031-released-run.stderr",
+    "artifact": "first__031-released-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "batch": "first",
+    "source": "/workspace/wave-28-latest-first/034-released-mutant-run.stdout",
+    "artifact": "first__034-released-mutant-run.stdout.gz",
+    "bytes": 39,
+    "sha256": "9eacabab8c081ae68e831be38b59d5a1ab590f4c75619859d6b36221de0f1bf1"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/005-valid.stdout",
+    "artifact": "next__005-valid.stdout.gz",
+    "bytes": 5940,
+    "sha256": "500d0600dc01a924f5ea1893f42daf9eccbef95bc85a4b9bb50e41b4b093a4cb"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/006-controls-go.stderr",
+    "artifact": "next__006-controls-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "ee4f5036a767b7cf1d1a1bbfc6910b63f7b7053cadbed54578ccc1dca682ec96"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/006-controls-go.stdout",
+    "artifact": "next__006-controls-go.stdout.gz",
+    "bytes": 66867,
+    "sha256": "db732d5bba301df68cb13239405b91a6658c53b08e88d11d5d85d40063fa93b2"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/007-controls-native.stdout",
+    "artifact": "next__007-controls-native.stdout.gz",
+    "bytes": 66867,
+    "sha256": "db732d5bba301df68cb13239405b91a6658c53b08e88d11d5d85d40063fa93b2"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/008-dom-controls-go.stderr",
+    "artifact": "next__008-dom-controls-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "e70d1fd5a9c268b7ea430719ce0d4dfe567253883eb64649525250919e69790c"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/008-dom-controls-go.stdout",
+    "artifact": "next__008-dom-controls-go.stdout.gz",
+    "bytes": 8600,
+    "sha256": "7340cf9b3a727e6ce1838e043443799f1ffdd76e2750571533700ebeb1301b19"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/009-dom-controls-native.stdout",
+    "artifact": "next__009-dom-controls-native.stdout.gz",
+    "bytes": 8600,
+    "sha256": "7340cf9b3a727e6ce1838e043443799f1ffdd76e2750571533700ebeb1301b19"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/011-mutant-exit-run.stdout",
+    "artifact": "next__011-mutant-exit-run.stdout.gz",
+    "bytes": 10175,
+    "sha256": "f658982d29450c482fb13e84cbb2ab22500a415a37617c13ec54c18994820d92"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/013-mutant-timeout-run.stdout",
+    "artifact": "next__013-mutant-timeout-run.stdout.gz",
+    "bytes": 8600,
+    "sha256": "311657caffde7524ae700426db5f05cbece5f1f72c94fbfbdc1dc608436546f2"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/015-mutant-blocking-run.stdout",
+    "artifact": "next__015-mutant-blocking-run.stdout.gz",
+    "bytes": 7975,
+    "sha256": "53d92e75067256a82ac137b49e34d32228675039d28386cfef78bf67740ab7a8"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/018-controls-asan-go.stderr",
+    "artifact": "next__018-controls-asan-go.stderr.gz",
+    "bytes": 59,
+    "sha256": "9553c2627de97f3a3f78758ee300f7ad728eb61be009528680c34335f42cb206"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/018-controls-asan-go.stdout",
+    "artifact": "next__018-controls-asan-go.stdout.gz",
+    "bytes": 8600,
+    "sha256": "7340cf9b3a727e6ce1838e043443799f1ffdd76e2750571533700ebeb1301b19"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/019-controls-asan-native.stdout",
+    "artifact": "next__019-controls-asan-native.stdout.gz",
+    "bytes": 8600,
+    "sha256": "7340cf9b3a727e6ce1838e043443799f1ffdd76e2750571533700ebeb1301b19"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/020-repository-go.stderr",
+    "artifact": "next__020-repository-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "bd319d77b4cbf08c7f8a8b02b21551d40527cc389e9fac10adc5aa84d2fe71ff"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/020-repository-go.stdout",
+    "artifact": "next__020-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/021-repository-native.stdout",
+    "artifact": "next__021-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/022-repository-asan-go.stderr",
+    "artifact": "next__022-repository-asan-go.stderr.gz",
+    "bytes": 59,
+    "sha256": "3d593637a96ca92f77a798f4aed8ec487d6969442079e0b8e8162c91e90b274a"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/022-repository-asan-go.stdout",
+    "artifact": "next__022-repository-asan-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/023-repository-asan-native.stdout",
+    "artifact": "next__023-repository-asan-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/024-repository-timing-go-0.stderr",
+    "artifact": "next__024-repository-timing-go-0.stderr.gz",
+    "bytes": 58,
+    "sha256": "5d6c9da53ebb71e02ae595eda8e9dd9f6a74e01c563057a9318f374dde2c1c13"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/024-repository-timing-go-0.stdout",
+    "artifact": "next__024-repository-timing-go-0.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/025-repository-timing-native-0.stdout",
+    "artifact": "next__025-repository-timing-native-0.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/026-repository-timing-go-1.stderr",
+    "artifact": "next__026-repository-timing-go-1.stderr.gz",
+    "bytes": 59,
+    "sha256": "dd1b987b2b3ec807dddc3eb51d245ae40024c96602007254e9d90470ab3e1eaf"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/026-repository-timing-go-1.stdout",
+    "artifact": "next__026-repository-timing-go-1.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/027-repository-timing-native-1.stdout",
+    "artifact": "next__027-repository-timing-native-1.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/028-repository-timing-go-2.stderr",
+    "artifact": "next__028-repository-timing-go-2.stderr.gz",
+    "bytes": 59,
+    "sha256": "5ba1460fbe6fb9df1eed6ab0a553420231936de1946f61b33b8b7c362baf1509"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/028-repository-timing-go-2.stdout",
+    "artifact": "next__028-repository-timing-go-2.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/029-repository-timing-native-2.stdout",
+    "artifact": "next__029-repository-timing-native-2.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/030-compiler-go.stderr",
+    "artifact": "next__030-compiler-go.stderr.gz",
+    "bytes": 61,
+    "sha256": "f9d82b5c223b293ac4279b427ddc05c6211550465308a572c8f5f805f0920824"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/030-compiler-go.stdout",
+    "artifact": "next__030-compiler-go.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/031-compiler-native.stdout",
+    "artifact": "next__031-compiler-native.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/032-compiler-asan-go.stderr",
+    "artifact": "next__032-compiler-asan-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "8c45a34abe932c30bd16f60b1a1150dc847c9651a7a448d969bc8dfe2a6e4b7b"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/032-compiler-asan-go.stdout",
+    "artifact": "next__032-compiler-asan-go.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/033-compiler-asan-native.stdout",
+    "artifact": "next__033-compiler-asan-native.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/034-compiler-timing-go-0.stderr",
+    "artifact": "next__034-compiler-timing-go-0.stderr.gz",
+    "bytes": 59,
+    "sha256": "d6959ff9e78e2407f18483f108b5fc12ece6803b48f23a9924e7322e24baea1c"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/034-compiler-timing-go-0.stdout",
+    "artifact": "next__034-compiler-timing-go-0.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/035-compiler-timing-native-0.stdout",
+    "artifact": "next__035-compiler-timing-native-0.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/036-compiler-timing-go-1.stderr",
+    "artifact": "next__036-compiler-timing-go-1.stderr.gz",
+    "bytes": 59,
+    "sha256": "3832f92443a9f5ddc7c35dc9c91a27465f888d9085af773a6e6784147c4cc5b6"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/036-compiler-timing-go-1.stdout",
+    "artifact": "next__036-compiler-timing-go-1.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/037-compiler-timing-native-1.stdout",
+    "artifact": "next__037-compiler-timing-native-1.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/038-compiler-timing-go-2.stderr",
+    "artifact": "next__038-compiler-timing-go-2.stderr.gz",
+    "bytes": 59,
+    "sha256": "7d883226630d7ca412bbcef17b158b7a6eefa82a42800ad470eef71fb3ec0f36"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/038-compiler-timing-go-2.stdout",
+    "artifact": "next__038-compiler-timing-go-2.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/039-compiler-timing-native-2.stdout",
+    "artifact": "next__039-compiler-timing-native-2.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/041-released-run.stderr",
+    "artifact": "next__041-released-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/043-released-asan-run.stderr",
+    "artifact": "next__043-released-asan-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/046-released-mutant-run.stdout",
+    "artifact": "next__046-released-mutant-run.stdout.gz",
+    "bytes": 26,
+    "sha256": "3808255a544559d4c3ca43da5ce20604a0d7ecc4bb07b4cfa63cf7952dc17cec"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/047-expanded-controls-final-go.stderr",
+    "artifact": "next__047-expanded-controls-final-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "4cc096e351c560e3ff68b492f67c75d976c02d599c605c5187089c02b862f5be"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/047-expanded-controls-final-go.stdout",
+    "artifact": "next__047-expanded-controls-final-go.stdout.gz",
+    "bytes": 66867,
+    "sha256": "db732d5bba301df68cb13239405b91a6658c53b08e88d11d5d85d40063fa93b2"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/048-expanded-controls-final-native.stdout",
+    "artifact": "next__048-expanded-controls-final-native.stdout.gz",
+    "bytes": 66867,
+    "sha256": "db732d5bba301df68cb13239405b91a6658c53b08e88d11d5d85d40063fa93b2"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/049-expanded-controls-asan-go.stderr",
+    "artifact": "next__049-expanded-controls-asan-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "6d057d3914322f4ff52c96586d91b68bf76e9a4ad47644011ef3a07cf6ad8b87"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/049-expanded-controls-asan-go.stdout",
+    "artifact": "next__049-expanded-controls-asan-go.stdout.gz",
+    "bytes": 66867,
+    "sha256": "db732d5bba301df68cb13239405b91a6658c53b08e88d11d5d85d40063fa93b2"
+  },
+  {
+    "batch": "next",
+    "source": "/workspace/wave-28-latest-next/050-expanded-controls-asan-native.stdout",
+    "artifact": "next__050-expanded-controls-asan-native.stdout.gz",
+    "bytes": 66867,
+    "sha256": "db732d5bba301df68cb13239405b91a6658c53b08e88d11d5d85d40063fa93b2"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/005-valid.stdout",
+    "artifact": "third__005-valid.stdout.gz",
+    "bytes": 14766,
+    "sha256": "3416eef327ce650e8d35343264c1c56579912f33dce4c286bf694a4bc1c1eca3"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/006-controls-go.stderr",
+    "artifact": "third__006-controls-go.stderr.gz",
+    "bytes": 144,
+    "sha256": "2d9e8dc37bbce4d59fc83e37ccaad6f719726a679c01bfc244c1ce31265e81c3"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/006-controls-go.stdout",
+    "artifact": "third__006-controls-go.stdout.gz",
+    "bytes": 68850,
+    "sha256": "b003ca9b68bdb2af1333b7285ce467ee3f7bdd8a7749b0b353ecf5cee0aa77a6"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/007-controls-native.stdout",
+    "artifact": "third__007-controls-native.stdout.gz",
+    "bytes": 68850,
+    "sha256": "b003ca9b68bdb2af1333b7285ce467ee3f7bdd8a7749b0b353ecf5cee0aa77a6"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/009-mutant-throw-run.stdout",
+    "artifact": "third__009-mutant-throw-run.stdout.gz",
+    "bytes": 69538,
+    "sha256": "cf304895034a661f95a318881444dbe7dcef93cfb5db69d1a34e9829495d128a"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/011-mutant-backreference-run.stdout",
+    "artifact": "third__011-mutant-backreference-run.stdout.gz",
+    "bytes": 73138,
+    "sha256": "fb24ecef0b9874b00d1d4f20eefbc04e906d6d2a6bbff12385280dcf382b381e"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/013-mutant-arrow-fix-run.stdout",
+    "artifact": "third__013-mutant-arrow-fix-run.stdout.gz",
+    "bytes": 68899,
+    "sha256": "9f95297b0ffc75c5a971616c9eb5292618504b2bfcc30d84c71eda89fadd9f46"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/016-controls-asan-go.stderr",
+    "artifact": "third__016-controls-asan-go.stderr.gz",
+    "bytes": 143,
+    "sha256": "af3157fad23dd085fc1323062c436ffae0db92ac5f4dc6a3d871aad6ca8c97cb"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/016-controls-asan-go.stdout",
+    "artifact": "third__016-controls-asan-go.stdout.gz",
+    "bytes": 68850,
+    "sha256": "b003ca9b68bdb2af1333b7285ce467ee3f7bdd8a7749b0b353ecf5cee0aa77a6"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/017-controls-asan-native.stdout",
+    "artifact": "third__017-controls-asan-native.stdout.gz",
+    "bytes": 68850,
+    "sha256": "b003ca9b68bdb2af1333b7285ce467ee3f7bdd8a7749b0b353ecf5cee0aa77a6"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/018-repository-go.stderr",
+    "artifact": "third__018-repository-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "84397d249cd9020e59199e7016263e188dcc60fddce79f6a810ba8d601af75ef"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/018-repository-go.stdout",
+    "artifact": "third__018-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/019-repository-native.stdout",
+    "artifact": "third__019-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/020-repository-asan-go.stderr",
+    "artifact": "third__020-repository-asan-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "8c482302080e47a38569d68244fa7bcefc24c135f77b079e43d81473f2b29f3e"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/020-repository-asan-go.stdout",
+    "artifact": "third__020-repository-asan-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/021-repository-asan-native.stdout",
+    "artifact": "third__021-repository-asan-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/022-repository-timing-go-0.stderr",
+    "artifact": "third__022-repository-timing-go-0.stderr.gz",
+    "bytes": 59,
+    "sha256": "4fdf3ee269043d0e8163155f5355f9e98bc4cd61687b867ad8e1c7431137ba28"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/022-repository-timing-go-0.stdout",
+    "artifact": "third__022-repository-timing-go-0.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/023-repository-timing-native-0.stdout",
+    "artifact": "third__023-repository-timing-native-0.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/024-repository-timing-go-1.stderr",
+    "artifact": "third__024-repository-timing-go-1.stderr.gz",
+    "bytes": 58,
+    "sha256": "f964638daa6d02da73dbc1901ae6f189a2fae33ed5c6e33228ad70ffda9fd360"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/024-repository-timing-go-1.stdout",
+    "artifact": "third__024-repository-timing-go-1.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/025-repository-timing-native-1.stdout",
+    "artifact": "third__025-repository-timing-native-1.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/026-repository-timing-go-2.stderr",
+    "artifact": "third__026-repository-timing-go-2.stderr.gz",
+    "bytes": 59,
+    "sha256": "b1475813b6b67b9c62f7bf29aedc2ca15decbd95a43b59ac32aee0c8368e8c94"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/026-repository-timing-go-2.stdout",
+    "artifact": "third__026-repository-timing-go-2.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/027-repository-timing-native-2.stdout",
+    "artifact": "third__027-repository-timing-native-2.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/028-compiler-go.stderr",
+    "artifact": "third__028-compiler-go.stderr.gz",
+    "bytes": 61,
+    "sha256": "85ed32d8bf194d356446762ca4967750d87a18ef6d061995183e1ad51d10b40c"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/028-compiler-go.stdout",
+    "artifact": "third__028-compiler-go.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/029-compiler-native.stdout",
+    "artifact": "third__029-compiler-native.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/030-compiler-asan-go.stderr",
+    "artifact": "third__030-compiler-asan-go.stderr.gz",
+    "bytes": 61,
+    "sha256": "53f01bf171f1eb44b60501576d2723b8afc5c621308159bc8c9911962690c35e"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/030-compiler-asan-go.stdout",
+    "artifact": "third__030-compiler-asan-go.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/031-compiler-asan-native.stdout",
+    "artifact": "third__031-compiler-asan-native.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/032-compiler-timing-go-0.stderr",
+    "artifact": "third__032-compiler-timing-go-0.stderr.gz",
+    "bytes": 60,
+    "sha256": "ccaf944477157e65363043f32c6b4eba3740dbd263ab1ad20875a41a9d38bcad"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/032-compiler-timing-go-0.stdout",
+    "artifact": "third__032-compiler-timing-go-0.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/033-compiler-timing-native-0.stdout",
+    "artifact": "third__033-compiler-timing-native-0.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/034-compiler-timing-go-1.stderr",
+    "artifact": "third__034-compiler-timing-go-1.stderr.gz",
+    "bytes": 61,
+    "sha256": "2f38b036bab9b825395a4064e18ee2001ca7ca4d2f8e45939c05b0066451543c"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/034-compiler-timing-go-1.stdout",
+    "artifact": "third__034-compiler-timing-go-1.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/035-compiler-timing-native-1.stdout",
+    "artifact": "third__035-compiler-timing-native-1.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/036-compiler-timing-go-2.stderr",
+    "artifact": "third__036-compiler-timing-go-2.stderr.gz",
+    "bytes": 61,
+    "sha256": "3b5674e383bd6c14db87bf83ad1c74f64c549ce88f2c46afc122a03bdbe72305"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/036-compiler-timing-go-2.stdout",
+    "artifact": "third__036-compiler-timing-go-2.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/037-compiler-timing-native-2.stdout",
+    "artifact": "third__037-compiler-timing-native-2.stdout.gz",
+    "bytes": 5010,
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/039-released-run.stderr",
+    "artifact": "third__039-released-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/041-released-asan-run.stderr",
+    "artifact": "third__041-released-asan-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "batch": "third",
+    "source": "/workspace/wave-28-latest-third/044-released-mutant-run.stdout",
+    "artifact": "third__044-released-mutant-run.stdout.gz",
+    "bytes": 29,
+    "sha256": "3b56648992c9c62ffb4f8d4b2ce8b2dde4913c00248d45d04ac9193a32ed8afc"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/005-controls-go.stderr",
+    "artifact": "coverage__005-controls-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "d6af59771b8db8ac9a8f56ec39f4efb538cd5bbcc5670c018da5f88059d1c54c"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/005-controls-go.stdout",
+    "artifact": "coverage__005-controls-go.stdout.gz",
+    "bytes": 23986,
+    "sha256": "0baa2eecbb522bd1ff88a138426f746ab164abca4545f2da4ffa9010c5f24c75"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/006-controls-native.stdout",
+    "artifact": "coverage__006-controls-native.stdout.gz",
+    "bytes": 23986,
+    "sha256": "0baa2eecbb522bd1ff88a138426f746ab164abca4545f2da4ffa9010c5f24c75"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/009-controls-asan-go.stderr",
+    "artifact": "coverage__009-controls-asan-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "9657900246628832e11f9f1e478066dc3bfa1c93da17b1fcb8a4d49aebe7b8ff"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/009-controls-asan-go.stdout",
+    "artifact": "coverage__009-controls-asan-go.stdout.gz",
+    "bytes": 23986,
+    "sha256": "0baa2eecbb522bd1ff88a138426f746ab164abca4545f2da4ffa9010c5f24c75"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/010-controls-asan-native.stdout",
+    "artifact": "coverage__010-controls-asan-native.stdout.gz",
+    "bytes": 23986,
+    "sha256": "0baa2eecbb522bd1ff88a138426f746ab164abca4545f2da4ffa9010c5f24c75"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/012-before-run.stdout",
+    "artifact": "coverage__012-before-run.stdout.gz",
+    "bytes": 23674,
+    "sha256": "53cc3cd9c1b3bbc5b0f54a967458a8b13ae5ee7b86b21f5bca04663c4a688b03"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/014-cast-run.stdout",
+    "artifact": "coverage__014-cast-run.stdout.gz",
+    "bytes": 23989,
+    "sha256": "6fe7baa9a8a3f5bda1f14fc9661e64f5b434338a6e0ba83a396ae2b374c656c5"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/016-methods-run.stdout",
+    "artifact": "coverage__016-methods-run.stdout.gz",
+    "bytes": 21357,
+    "sha256": "5a8939ca5a8166f0b5c7dae1254f09811e722ffd5ef3f0bb9f97f130d23a2d80"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/018-coercion-run.stdout",
+    "artifact": "coverage__018-coercion-run.stdout.gz",
+    "bytes": 23938,
+    "sha256": "f99e2fda82626fdd0e8dfcdad21a61b134cb213150569ebe966f73de063beff2"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/020-caller-run.stdout",
+    "artifact": "coverage__020-caller-run.stdout.gz",
+    "bytes": 24349,
+    "sha256": "bb43f5d75833efdb911b6a090b2778e762ef3f67d971c07a1202606a5d6a378c"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/022-parameter-run.stdout",
+    "artifact": "coverage__022-parameter-run.stdout.gz",
+    "bytes": 23705,
+    "sha256": "f06b9c9de809b7da39c1f72a3afe1f3a87c8511bcf3b15a18dfb24de491d9f58"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/024-invariant-run.stdout",
+    "artifact": "coverage__024-invariant-run.stdout.gz",
+    "bytes": 21517,
+    "sha256": "0939d170cf54d6eaf89e18d4c1b94b9888a713877992f4f6c5a9c29263561a9a"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/026-optional-run.stdout",
+    "artifact": "coverage__026-optional-run.stdout.gz",
+    "bytes": 23998,
+    "sha256": "5f1938ceb0b284804f8f28f5647c7e036a98ab5a9a858ce6fd62f8397d64dc57"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/028-alias-run.stdout",
+    "artifact": "coverage__028-alias-run.stdout.gz",
+    "bytes": 23986,
+    "sha256": "2cacb0c7e2edbfffee482a8e9ea39d0e6ac232a61fbacd9cfc88a3f81c0b9a11"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/030-unused-run.stdout",
+    "artifact": "coverage__030-unused-run.stdout.gz",
+    "bytes": 25610,
+    "sha256": "e546b8b403ca62a597c198c03d239bb3a5fda95bb61a6cfaf81f97426178e54b"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/031-repository-go.stderr",
+    "artifact": "coverage__031-repository-go.stderr.gz",
+    "bytes": 61,
+    "sha256": "6dcede6beceb0de45d78770db5d405662a7dcc5a2145a6a0a1fb370f3bae2465"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/031-repository-go.stdout",
+    "artifact": "coverage__031-repository-go.stdout.gz",
+    "bytes": 85151,
+    "sha256": "0223182e1ad3f325e11da943acb97bcf65935c9d7b2e1a3f4eb5fee155f95bf8"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/032-repository-native.stdout",
+    "artifact": "coverage__032-repository-native.stdout.gz",
+    "bytes": 85151,
+    "sha256": "0223182e1ad3f325e11da943acb97bcf65935c9d7b2e1a3f4eb5fee155f95bf8"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/033-repository-asan-go.stderr",
+    "artifact": "coverage__033-repository-asan-go.stderr.gz",
+    "bytes": 61,
+    "sha256": "3e8783b67b6f3ba7e29ee76fa36bc24b7394aca618837abfc9fbaceffbf2d5d2"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/033-repository-asan-go.stdout",
+    "artifact": "coverage__033-repository-asan-go.stdout.gz",
+    "bytes": 85151,
+    "sha256": "0223182e1ad3f325e11da943acb97bcf65935c9d7b2e1a3f4eb5fee155f95bf8"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/034-repository-asan-native.stdout",
+    "artifact": "coverage__034-repository-asan-native.stdout.gz",
+    "bytes": 85151,
+    "sha256": "0223182e1ad3f325e11da943acb97bcf65935c9d7b2e1a3f4eb5fee155f95bf8"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/036-released-run.stderr",
+    "artifact": "coverage__036-released-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "batch": "coverage",
+    "source": "/workspace/wave-28-latest-coverage/039-released-mutant-run.stdout",
+    "artifact": "coverage__039-released-mutant-run.stdout.gz",
+    "bytes": 29,
+    "sha256": "ef68fca4039907ab3e10ddcbd79b5c08fc134ac65111de51aa19f50f0925793d"
+  }
+]

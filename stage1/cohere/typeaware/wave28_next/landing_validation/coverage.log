@@ -1,0 +1,41 @@
+=== RUN   TestCoverageAgreementAndMutants
+    coverage_test.go:121: controls: 23986 identical finding bytes; findings 53
+    coverage_test.go:129: controls-asan: 23986 identical finding bytes; findings 53
+=== RUN   TestCoverageAgreementAndMutants/before
+    coverage_test.go:153: before: exit 0, Go byte oracle catches byte 55; findings 52
+=== RUN   TestCoverageAgreementAndMutants/cast
+    coverage_test.go:153: cast: exit 0, Go byte oracle catches byte 1552; findings 53
+=== RUN   TestCoverageAgreementAndMutants/methods
+    coverage_test.go:153: methods: exit 0, Go byte oracle catches byte 2196; findings 46
+=== RUN   TestCoverageAgreementAndMutants/coercion
+    coverage_test.go:153: coercion: exit 0, Go byte oracle catches byte 1159; findings 53
+=== RUN   TestCoverageAgreementAndMutants/caller
+    coverage_test.go:153: caller: exit 0, Go byte oracle catches byte 10234; findings 54
+=== RUN   TestCoverageAgreementAndMutants/parameter
+    coverage_test.go:153: parameter: exit 0, Go byte oracle catches byte 367; findings 50
+=== RUN   TestCoverageAgreementAndMutants/invariant
+    coverage_test.go:153: invariant: exit 0, Go byte oracle catches byte 12740; findings 48
+=== RUN   TestCoverageAgreementAndMutants/optional
+    coverage_test.go:153: optional: exit 0, Go byte oracle catches byte 15499; findings 53
+=== RUN   TestCoverageAgreementAndMutants/alias
+    coverage_test.go:153: alias: exit 0, Go byte oracle catches byte 15973; findings 53
+=== RUN   TestCoverageAgreementAndMutants/unused
+    coverage_test.go:153: unused: exit 0, Go byte oracle catches byte 16787; findings 56
+=== NAME  TestCoverageAgreementAndMutants
+    coverage_test.go:161: repository: 85151 identical finding bytes; findings 180
+    coverage_test.go:162: repository-asan: 85151 identical finding bytes; findings 180
+    coverage_test.go:182: released program queried using a new question: panic 70, invalid or released checker handle
+    coverage_test.go:187: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestCoverageAgreementAndMutants (335.76s)
+    --- PASS: TestCoverageAgreementAndMutants/before (17.28s)
+    --- PASS: TestCoverageAgreementAndMutants/cast (17.46s)
+    --- PASS: TestCoverageAgreementAndMutants/methods (17.58s)
+    --- PASS: TestCoverageAgreementAndMutants/coercion (17.89s)
+    --- PASS: TestCoverageAgreementAndMutants/caller (22.22s)
+    --- PASS: TestCoverageAgreementAndMutants/parameter (15.55s)
+    --- PASS: TestCoverageAgreementAndMutants/invariant (13.23s)
+    --- PASS: TestCoverageAgreementAndMutants/optional (22.48s)
+    --- PASS: TestCoverageAgreementAndMutants/alias (14.28s)
+    --- PASS: TestCoverageAgreementAndMutants/unused (13.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	335.767s

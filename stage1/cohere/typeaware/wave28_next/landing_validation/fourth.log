@@ -1,0 +1,11 @@
+=== RUN   TestSharedParserBlocker
+    blocker_test.go:116: react-hooks/set-state-in-effect: Go 1 finding, native parser rejects JSX: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 101 in /workspace/wave-28-latest-fourth/effect.tsx
+    blocker_test.go:121: react-hooks/set-state-in-effect: parser bypass mutant exits 0 and is rejected by expected-rejection comparison
+    blocker_test.go:116: react-hooks/set-state-in-render: Go 1 finding, native parser rejects JSX: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 75 in /workspace/wave-28-latest-fourth/render.tsx
+    blocker_test.go:121: react-hooks/set-state-in-render: parser bypass mutant exits 0 and is rejected by expected-rejection comparison
+    blocker_test.go:116: react-hooks/static-components: Go 1 finding, native parser rejects JSX: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 62 in /workspace/wave-28-latest-fourth/static.tsx
+    blocker_test.go:121: react-hooks/static-components: parser bypass mutant exits 0 and is rejected by expected-rejection comparison
+    blocker_test.go:128: ordinary non-JSX parser control passes
+--- PASS: TestSharedParserBlocker (15.45s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fourth	15.455s
