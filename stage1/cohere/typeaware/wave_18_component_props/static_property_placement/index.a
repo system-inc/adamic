@@ -1,0 +1,142 @@
+import { ComponentFacts, ComponentNode } from '../component_property_syntax_facts.a';
+export class StaticPropertyPlacement {
+    readonly facts: ComponentFacts;
+    readonly position: string;
+    readonly overrides: Map<string, string>;
+    constructor(facts: ComponentFacts, position: string, overrides: Map<string, string>) {
+        this.facts = facts;
+        this.position = position;
+        this.overrides = overrides;
+    }
+    property(node: ComponentNode): void {
+        if(!this.component(this.facts.parent(node))) {
+            return;
+        }
+        this.judge(node, this.name(node), 'static public field', node.isStatic);
+    }
+    getter(node: ComponentNode): void {
+        if(!node.isStatic || !this.component(this.facts.parent(node))) {
+            return;
+        }
+        this.judge(node, this.name(node), 'static getter', true);
+    }
+    assignment(node: ComponentNode): void {
+        if(this.facts.node(node.property)?.kind !== 63) {
+            return;
+        }
+        const target = this.facts.node(node.expression);
+        if(target?.kind !== 212) {
+            return;
+        }
+        let parent = this.facts.parent(node);
+        while(parent !== undefined) {
+            if(parent.kind === 264 || parent.kind === 232) {
+                return;
+            }
+            parent = this.facts.parent(parent);
+        }
+        const name = this.name(target);
+        if(name === '') {
+            return;
+        }
+        const receiver = this.facts.node(target.expression);
+        if(receiver === undefined) {
+            return;
+        }
+        for(const id of receiver.declarations) {
+            const d = this.facts.require(id);
+            if(
+                this.component(d) ||
+                ((d.kind === 261 || d.kind === 303) && this.component(this.facts.node(d.initializer)))
+            ) {
+                this.judge(target, name, 'property assignment', false);
+                return;
+            }
+        }
+    }
+    name(node: ComponentNode): string {
+        const name = this.facts.node(node.name)?.text ?? '';
+        if(node.hasType && name === 'props') {
+            return 'propTypes';
+        }
+        if(node.hasType && name === 'context') {
+            return 'contextTypes';
+        }
+        return [
+            'propTypes',
+            'defaultProps',
+            'childContextTypes',
+            'contextTypes',
+            'contextType',
+            'displayName',
+        ].includes(name)
+            ? name
+            : '';
+    }
+    component(node: ComponentNode | undefined): boolean {
+        if(node === undefined || (node.kind !== 264 && node.kind !== 232)) {
+            return false;
+        }
+        for(const id of node.items) {
+            const clause = this.facts.require(id);
+            if(clause.kind !== 299 || clause.token !== 95) {
+                continue;
+            }
+            for(const typeID of clause.items) {
+                const type = this.facts.require(typeID);
+                if(type.kind !== 234) {
+                    continue;
+                }
+                const base = this.facts.unwrap(this.facts.node(type.expression));
+                if(base === undefined) {
+                    continue;
+                }
+                if(base.kind === 79 && ['Component', 'PureComponent'].includes(base.text)) {
+                    return true;
+                }
+                if(base.kind === 212) {
+                    const object = this.facts.unwrap(this.facts.node(base.expression));
+                    const name = this.facts.node(base.name);
+                    if(
+                        object?.kind === 79 &&
+                        object.text === 'React' &&
+                        name !== undefined &&
+                        ['Component', 'PureComponent'].includes(name.text)
+                    ) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    judge(node: ComponentNode, name: string, arm: string, isStatic: boolean): void {
+        if(name === '') {
+            return;
+        }
+        const expected = this.overrides.get(name) ?? this.position;
+        if(expected === arm && (isStatic || expected === 'property assignment')) {
+            return;
+        }
+        let id = 'notStaticClassProp';
+        let message =
+            "'" +
+            name +
+            "' should be declared as a static class property. This file's configuration puts React statics in the class body as static fields, and a reader looking for them will look there.";
+        if(expected === 'static getter') {
+            id = 'notGetterClassFunc';
+            message =
+                "'" +
+                name +
+                "' should be declared as a static getter class function. This file's configuration puts React statics in the class body as getters, and a reader looking for them will look there.";
+        }
+        if(expected === 'property assignment') {
+            id = 'declareOutsideClass';
+            message =
+                "'" +
+                name +
+                "' should be declared outside the class body. This file's configuration puts React statics after the class as assignments, and a reader looking for them will look there.";
+        }
+        this.facts.report(node, 'static-property-placement', id, message);
+    }
+}
