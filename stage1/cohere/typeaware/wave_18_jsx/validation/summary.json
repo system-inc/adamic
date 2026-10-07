@@ -1,0 +1,31 @@
+{
+  "code_commit": "937dc881b03096feaea37338f8bfd8c56f95529d",
+  "main": "f8013f0baac41ddc340d76f83bddde38536a8f07",
+  "candidate_controls": 132,
+  "valid_controls": 130,
+  "default_findings": 110,
+  "default_per_rule": {
+    "react/jsx-no-undef": 71,
+    "react/jsx-fragments": 19,
+    "react/no-adjacent-inline-elements": 20
+  },
+  "element_findings": 96,
+  "allow_globals_findings": 107,
+  "both_options_findings": 93,
+  "fixes": 0,
+  "suggestions": 0,
+  "mutants": {
+    "fragment_member_name": 446,
+    "undef_resolution_guard": 8288,
+    "adjacency_guard": 27811,
+    "raw_numeric_question": 43,
+    "stale_registry": "required exit 70; mutant exits 0"
+  },
+  "timings_seconds": {
+    "compiler_native": 1.7766466100001708,
+    "compiler_go": 0.3270152479999524,
+    "repository_native": 0.27863121799964574,
+    "repository_go": 0.1303700749995187
+  },
+  "shared_registration_edits": 1
+}

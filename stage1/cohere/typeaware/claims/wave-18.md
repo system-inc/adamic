@@ -164,3 +164,12 @@ batch is jsx-fragments, jsx-no-undef and no-adjacent-inline-elements.
 No-adjacent-inline-elements uses JSX sibling syntax and createElement import
 resolution only; it needs no high-level IR/SSA/capture analysis. This update
 is pushed before implementation too.
+
+Sixth-batch implementation is complete in 937dc881: jsx-fragments,
+jsx-no-undef and no-adjacent-inline-elements run on numeric supplied nodes.
+wave_18_jsx/REPORT.md records complete default/options/corpus byte agreement,
+sanitisers, one mutant per rule, numeric-query and stale-handle mutations,
+released-handle refusal and native/Go timings. Native uses raw syntax/binding
+facts from the C bridge; shared parser/driver files remain untouched.
+The four capture/HIR-dependent claims above remain parked. No further batch
+is reserved in this turn.
