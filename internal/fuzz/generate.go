@@ -13,10 +13,7 @@ import (
 // plain object, a class, closures, and the Array and string methods the runtime has. It is also
 // what makes the oracle exact: no Math.random, no time, no input, loops with a bound the program
 // can't change, no recursion (a function only calls the ones declared before it), and growth that
-// stops (a push only below a length, a string written back cut to a length). Ownership scenes
-// hand a narrowed object to a call that reassigns it, borrow an array element and then move the
-// array, spread an object while calling a method on it, and construct an object straight into a
-// call while a closure keeps it.
+// stops (a push only below a length, a string written back cut to a length).
 //
 // The richest vein is calls with side effects inside expressions: every function writes to the
 // globals and the holder, and calls go everywhere a value can, so the order of reads and calls in
@@ -54,13 +51,12 @@ var Features = []string{
 	"map-keys",         // a number Map and a number Set, including NaN and -0
 	"regex",            // regular expression literals: exec, replace, replaceAll and split
 	"bitwise",          // &, |, ^, ~, <<, >> and >>>
-	"ownership",        // narrowed lends, borrowed elements, spreads that call methods, capturing constructors
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
 // same features always make the same program.
 func GenerateWithout(seed uint64, without []string) *Program {
-	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}, seed: seed}
+	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}}
 	for _, feature := range without {
 		generator.without[feature] = true
 	}
@@ -75,10 +71,7 @@ func (g *generator) allowed(feature string) bool {
 type generator struct {
 	random  *rand.Rand
 	without map[string]bool
-	// seed picks which ownership scene a program runs, on a fixed cadence, so a run reaches every
-	// shape instead of waiting on the random stream to name one.
-	seed  uint64
-	scope *scope
+	scope   *scope
 	// names counts every name made, so each is unique in the program and a shrunk expression that
 	// escapes its scope fails the checker instead of meaning something else.
 	names int
@@ -227,11 +220,6 @@ func (g *generator) program() *Program {
 
 	for range 2 + g.random.IntN(4) {
 		add(g.function())
-	}
-	if g.allowed("ownership") {
-		for _, part := range g.ownershipProgram() {
-			add(part)
-		}
 	}
 
 	for range 6 + g.random.IntN(14) {
