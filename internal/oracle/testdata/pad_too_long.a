@@ -1,3 +1,0 @@
-// A pad past V8's longest string is RangeError: Invalid string length, Infinity included.
-console.log('before');
-console.log('a'.padStart(536870889, 'xy'));

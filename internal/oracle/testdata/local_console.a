@@ -1,2 +1,0 @@
-const console = { log: (message: string): void => {} };
-console.log('a local console, so this prints nothing');

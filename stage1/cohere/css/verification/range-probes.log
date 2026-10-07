@@ -1,5 +1,0 @@
-=== RUN   TestTheCanonicalRangeChecksCanFail
-    css_test.go:487: public Range corruption caught on raw native, raw Node and composition Node; raw leak clean
---- PASS: TestTheCanonicalRangeChecksCanFail (7.05s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/css	7.055s

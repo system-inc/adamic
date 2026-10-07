@@ -1,8 +1,0 @@
-PASS: source hashes, 77 files, 1041 counted sites, all 68 census spans, all 27 for-in loops, all 10 literal in tests, zero non-literal in tests
-CAUGHT omit a dynamic element read: Site coverage
-CAUGHT omit a hasProperty call: Site coverage
-CAUGHT drop for-in context while leaving totals unchanged: for-in context: src/compiler/commandLineParser.ts:2690:29@107199
-CAUGHT omit in-operator enumeration: Site coverage
-CAUGHT count an assignment target as a read: Counted flag: src/compiler/commandLineParser.ts:2050:13@78881
-CAUGHT invent a fixed classification for an unknown: Class evidence method
-CAUGHT remove user-input origin: Reviewed input source

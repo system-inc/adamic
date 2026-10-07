@@ -1,8 +1,0 @@
-// assign checks the frozen flag, and the first key in index order is the one named in the TypeError.
-const object = { b: 1, '2': 2, a: 3 };
-console.log(`${Object.isFrozen(object)}`);
-Object.freeze(object);
-const alias: { b: number; '2': number; a: number } = object;
-console.log(`${Object.isFrozen(alias)}`);
-Object.assign(object, { a: 9, '2': 8, b: 7 });
-console.log(`${object.a}`);

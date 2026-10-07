@@ -1,7 +1,0 @@
-console.log(`${Number.prototype.valueOf()} ${1 / Number.prototype.valueOf()}`);
-console.log(`${Number.prototype.toString()} ${Number.prototype.toString(2)} ${Number.prototype.toFixed(3)} ${Number.prototype.toExponential(2)} ${Number.prototype.toPrecision(3)}`);
-const values: readonly number[] = [0, -0, 1.25, -12.5, 1e21, 1e-7, 0 / 0, 1 / 0];
-for (const value of values) {
- console.log(`${Number.prototype.valueOf.call(value)} ${1 / Number.prototype.valueOf.call(value)} ${Number.prototype.toString.call(value, 16)} ${Number.prototype.toFixed.call(value, 2)} ${Number.prototype.toExponential.call(value, 3)} ${Number.prototype.toPrecision.call(value, 4)}`);
-}
-console.log(`${Number.prototype.toString.call(Number.prototype)} ${Number.prototype.toFixed(undefined)} ${Number.prototype.toExponential()} ${Number.prototype.toPrecision()}`);

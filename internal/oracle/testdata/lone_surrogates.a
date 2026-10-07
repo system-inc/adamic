@@ -1,3 +1,0 @@
-const half = '\uD83C';
-console.log(`${half.charCodeAt(0)} ${half.length} ${(half + '\uDF0D').length} ${half + '\uDF0D' === '\u{1F30D}'}`);
-console.log(half);

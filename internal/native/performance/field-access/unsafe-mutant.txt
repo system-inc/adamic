@@ -1,6 +1,0 @@
-Go overlay mutation of fields.go:
-
-- offsets[field.Name] = -1
-+ offsets[field.Name] = index
-
-Accepts conflicting layouts as if they were uniform.

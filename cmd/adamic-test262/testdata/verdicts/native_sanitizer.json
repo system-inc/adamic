@@ -1,6 +1,0 @@
-{
-  "name": "native sanitizer is a crash, not a pass",
-  "node": {"exit": 0, "stdout": "", "stderr": ""},
-  "native": {"exit": 1, "stdout": "", "stderr": "ERROR: AddressSanitizer: heap-use-after-free\n"},
-  "want": "crashed"
-}

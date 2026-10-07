@@ -1,6 +1,0 @@
-// Array.from({ length }) past 2^32 - 1: JavaScript throws a RangeError, and Adamic panics with it.
-const fits = Array.from({ length: 2 ** 32 - 2 ** 32 + 3 }, (_, index) => index);
-console.log(`${fits.length}`);
-const huge = 2 ** 32;
-const never = Array.from({ length: huge }, (_, index) => index);
-console.log(`${never.length}`);

@@ -1,8 +1,0 @@
-// writeTextFile to /dev/stdout between two console.logs. Node writes each line at once, so the file's
-// text lands between them, and so must native's, whose stdout is buffered: a file is written only
-// after what was printed is out (output_test.go runs this with stdout and stderr on one pipe).
-import { writeTextFile } from 'adamic';
-
-console.log('first');
-const written = writeTextFile('/dev/stdout', 'second\n');
-console.log(written.kind === 'Ok' ? 'third' : `third, after ${written.message}`);

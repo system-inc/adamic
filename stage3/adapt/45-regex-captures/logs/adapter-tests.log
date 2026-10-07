@@ -1,8 +1,0 @@
-PASS: participation proof requires every branch, respects zero-minimum quantifiers, declines unsupported constructs
-PASS: first pass 19 edits / 8 files; second pass 0 edits and identical hashes
-PASS: idempotence hash mutant caught despite unchanged edit-count observation
-PASS: alternative-branch mutant matches anonymous with undefined capture; actual adapter declines and writes nothing
-PASS: optional-capture split mutant declined by density proof; no writes
-PASS: optional positional-argument mutant declines bounds invariant; no writes
-PASS: seven edited files erase to identical JavaScript ASTs modulo parentheses
-Temporary probe copies: /tmp/adamic-gate/regex-captures-idempotence-zrMaC1, /tmp/adamic-gate/regex-captures-alternative-mutant-cCJdut, /tmp/adamic-gate/regex-captures-split-mutant-ObL3ou
