@@ -3,6 +3,7 @@
 import argparse
 import copy
 import json
+import re
 from pathlib import Path
 import subprocess
 import tempfile
@@ -17,6 +18,19 @@ parser.add_argument('--compiler-repo', type=Path, default=repo)
 parser.add_argument('--logs', type=Path, required=True)
 args = parser.parse_args()
 args.logs.mkdir(parents=True, exist_ok=True)
+# The selected host-capable library compiler may predate main's option ruling.
+# A Go overlay changes only its two house-style options and erasable syntax
+# policy to current main, without editing the compiler checkout.
+loader_path = args.compiler_repo.resolve() / 'internal/load/load.go'
+loader_source = loader_path.read_text()
+for style_option in ('NoImplicitReturns', 'NoFallthroughCasesInSwitch'):
+    loader_source = re.sub(r'^\s*' + style_option + r':\s*core.TSTrue,\n', '', loader_source, flags=re.MULTILINE)
+loader_source = re.sub(r'(ErasableSyntaxOnly:\s*)core.TSTrue', r'\1core.TSFalse', loader_source)
+assert not re.search(r'(NoImplicitReturns|NoFallthroughCasesInSwitch):', loader_source)
+overlay_source = args.logs.resolve() / 'load.go'
+overlay_source.write_text(loader_source)
+overlay = args.logs.resolve() / 'checker-overlay.json'
+overlay.write_text(json.dumps({'Replace': {str(loader_path): str(overlay_source)}}, indent=2) + '\n')
 status = json.loads((args.record or bucket / 'status.json').read_text())
 
 
@@ -45,7 +59,7 @@ with tempfile.TemporaryDirectory(prefix='adamic-host-check-') as scratch:
         assert observed['stderr'] == '', (row['file'], observed)
         assert observed['exit'] == ({'18_exit_0.a': 0, '19_exit_1.a': 1, '20_exit_2.a': 2}.get(row['file'], 0))
         binary = Path(scratch) / row['file'].replace('.a', '')
-        built = run(['go', 'run', './cmd/adamic', 'build', str(file), '-o', str(binary)], row['file'] + '.stage0', args.compiler_repo)
+        built = run(['go', 'run', '-overlay=' + str(overlay), './cmd/adamic', 'build', str(file), '-o', str(binary)], row['file'] + '.stage0', args.compiler_repo)
         diagnostic = built['stdout'] + built['stderr']
         diagnostic = diagnostic.removeprefix('adamic: ').removesuffix('exit status 1\n').rstrip('\n')
         diagnostic = diagnostic.replace(str(bucket) + '/', 'stage3/fixtures/host/').replace(str(args.compiler_repo.resolve()) + '/', '')

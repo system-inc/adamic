@@ -54,11 +54,12 @@ filename and case-probe platform are controlled driver inputs.
 
 `status.json` has the requested schema and records Node stdout, stderr and exit,
 plus canonical stage 0 diagnostics under the library loader pinned in ADAPTED.md.
-All 25 Node observations are unchanged. Current results are 1 Checker,
-8 Refused, 15 NotYet and 1 Compiles. Stock tsc agrees with the sole checker
-diagnostic; other rows name the compiler's refusal or missing lowering rule.
-Fixture 11 passed native byte comparison, sanitizer checks and the Linux leak
-check. source-spans.json preserves the precise adapted-source provenance.
+All 25 Node observations are unchanged. Current results are 0 Checker,
+14 Refused, 11 NotYet and 0 Compiles with library c13622a0 and main's checker
+options. Stock tsc accepts all 25. See 25-followup-proof.json for every status
+movement and STYLE-OPTIONS.md for checker configuration.
+Fixture 11 historically passed native byte comparison, sanitizer checks and
+the Linux leak check; the current library integration stops at utimesSync. source-spans.json preserves the precise adapted-source provenance.
 Historical validation.md describes the initial pristine-source recording;
 ADAPTED.md supersedes its source and stage 0 results.
 

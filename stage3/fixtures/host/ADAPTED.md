@@ -1,5 +1,8 @@
 # Host fixtures from the adapted compiler
 
+The October 7 fixture 25 follow-up below supersedes the historical checker
+options and outcomes in this initial report.
+
 No unexplained loader diagnostic or silent native miscompile was observed.
 All 25 Node stdout/stderr/exit observations remain identical to the previous
 status.json. Classification: **a=1, b=23, c=1**. Final stage 0 outcomes:
@@ -164,3 +167,66 @@ line 1238. Re-extraction of 25 is outside this unit's fixture-08 territory.
 This is a reported incomplete full-bucket audit, not a passing full-bucket claim.
 The scoped fixture-08 audit passes. Native/library outcomes and the full Go
 gate were not rerun; the existing stage 0 status remains its historical record.
+
+## Fixture 25 and checker policy follow-up, October 7
+
+Re-extracted getAccessibleFileSystemEntries from the same actual adapted tree
+as fixture 08, pinned at 06971f0574b6cd408c6291973c685941ea6457ee.
+Fixture 25 line 1238 now carries Stats | Dirent | undefined. Only the local
+annotation and its provenance header changed. All 99 copied declarations in
+25 and the full bucket's 164 declarations / 126 function and method spans
+match the adapted tree. Node stdout/stderr/exit are byte-identical before and
+after extraction, and all 25 recorded Node goldens remain unchanged.
+
+Main's docs/0.1.md October 7 ruling removes noImplicitReturns and
+noFallthroughCasesInSwitch. The shared runner inherits internal/load options;
+the host CLI harness now supplies a Go overlay for older host-capable library
+compilers, dropping both flags and matching main's erasableSyntaxOnly false.
+Stock checker options match this policy. Production compiler files are not
+edited. Main 48c05d091f0a43c31cbe051b1d6578d99eeedf19's
+TestAdamicOptionsAreOn passes. STYLE-OPTIONS.md inventories the remaining live
+adaptation/triage flags and census option inheritance; none was changed.
+
+The README's scratch library integration uses fetched area/library
+c13622a02363dc577508c0e5a49b774aba714e8b merged with fixture branch
+17c5385aff74448c124b8cf245b0337b771e8da3 using --no-commit -X ours.
+Its pinned cohere is 715ba94f3608a6500086b1076ce5cb7e51b836db.
+This scratch integration is not delivered or pushed. Current results:
+**0 Checker, 14 Refused, 11 NotYet, 0 Compiles**. Stock accepts all 25.
+Fixture 25 is Refused at its source-owned non-null assertion, line 522.
+
+An independent all-25 run under this SAME library compiler's original options
+isolates the policy change: only 25 moves, TS7030 -> Refused. Compared with the
+historical ledger, outcome changes also occur in 06, 07, 08, 10 and 24
+(NotYet -> Refused), and 11 (Compiles -> NotYet at utimesSync). Diagnostics
+change without an outcome change in 09, 12, 13, 15, 16, 17 and 23.
+These additional movements are compiler-pin/integration changes, not effects
+of dropping style options. Every old/new diagnostic is in 25-followup-proof.json.
+No current fixture reaches native execution; historical fixture 11's native,
+sanitizer and leak evidence is retained but not claimed as a current pass.
+
+Commands (Node 24.19.0 first on PATH), each logged:
+
+```sh
+source /workspace/adamic-tools/env.sh
+NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules node stage3/fixtures/host/reextract-08.cjs . /tmp/sys-stat-lane/adapted-tree 06971f0574b6cd408c6291973c685941ea6457ee 25_readDirectory.a > /tmp/host-followup-extract.log 2>&1
+NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules node stage3/fixtures/host/source-audit.cjs /tmp/sys-stat-lane/adapted-tree > /tmp/host-followup-audit.log 2>&1
+python3 stage3/fixtures/host/check.py --compiler-repo /workspace/host-followup-library --record stage3/fixtures/host/status.json --mutants --logs /tmp/host-followup-library-check > /tmp/host-followup-library-check.log 2>&1
+node stage3/fixtures/host/stock-check.cjs /workspace/host-followup-library /tmp/host-followup-stock-final > /tmp/host-followup-stock-final.log 2>&1
+node stage3/fixtures/host/stock-check.cjs /workspace/host-followup-library /tmp/host-followup-stock-final --mutant > /tmp/host-followup-stock-final-mutant.log 2>&1
+# In the independent current-main checkout:
+go test ./internal/load -run '^TestAdamicOptionsAreOn$' -count=1 > /tmp/host-followup-options.log 2>&1
+```
+
+All 25 semantic Node mutants and the invented diagnostic were caught. Source
+audit mutants reject a reduction-added cast and SHA256 -> SHA1. Extraction
+rejects a changed canonical declaration and is idempotent. The stock type
+mutant produces TS2322; restoring both style flags produces TS7030 in stock
+and the real stage 0 build. Evidence logs and the same-compiler original-option
+ledger are in followup-evidence. No full repository gate, full tsc suite,
+Windows run or current native/sanitizer/leak check was run.
+
+Setup on the reference main checkout used GOPROXY=https://proxy.golang.org|direct
+before cloud/setup.sh: Go ready 0.016s, Node 0.017s, markdown 0.060s,
+clang 0.162s, submodules 327.151s, Go build 577.798s, tests deferred 577.910s,
+cache warm 577.912s, total 577.955s; nproc=5, CPU quota=4.
