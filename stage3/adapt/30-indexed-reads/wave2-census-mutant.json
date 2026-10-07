@@ -1,0 +1,107 @@
+{
+  "roots": 78,
+  "codes": [
+    2345,
+    18048,
+    2532,
+    2322,
+    2538
+  ],
+  "counts": {
+    "parser.ts": {
+      "TS2345": 0,
+      "TS18048": 1,
+      "TS2532": 0,
+      "TS2322": 5,
+      "TS2538": 0
+    },
+    "scanner.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 1,
+      "TS2322": 1,
+      "TS2538": 0
+    },
+    "factory/baseNodeFactory.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/emitHelpers.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/emitNode.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/nodeChildren.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/nodeConverters.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/nodeFactory.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/nodeTests.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/parenthesizerRules.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/utilities.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "factory/utilitiesPublic.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    }
+  },
+  "total": 8,
+  "diagnostics": [
+    "src/compiler/parser.ts:10458:13: error TS2322: Type '(position: number) => Node | undefined' is not assignable to type '(position: number) => Node'.\n  Type 'Node | undefined' is not assignable to type 'Node'.\n    Type 'undefined' is not assignable to type 'Node'.",
+    "src/compiler/parser.ts:10656:17: error TS2322: Type '{ name: string | undefined; path: string; }[]' is not assignable to type 'AmdDependency[]'.\n  Type '{ name: string | undefined; path: string; }' is not assignable to type 'AmdDependency' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'name' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/parser.ts:10735:29: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/parser.ts:10737:45: error TS18048: 'value' is possibly 'undefined'.",
+    "src/compiler/parser.ts:10741:25: error TS2322: Type 'string | undefined' is not assignable to type 'string | { value: string; pos: number; end: number; }'.\n  Type 'undefined' is not assignable to type 'string | { value: string; pos: number; end: number; }'.",
+    "src/compiler/parser.ts:10794:9: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.",
+    "src/compiler/scanner.ts:491:22: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/scanner.ts:491:45: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
+  ]
+}

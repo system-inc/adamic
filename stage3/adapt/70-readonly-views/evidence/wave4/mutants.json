@@ -1,0 +1,7 @@
+{
+  "mutant": "payload-writer",
+  "adapt_exit": 1,
+  "guard_files_edited": 0,
+  "upstream_build_exit": 1,
+  "diagnostic": "TS2540: Cannot assign to 'isExternalLibraryImport' because it is a read-only property."
+}
