@@ -44,3 +44,7 @@ Area b84a9d9314b65d3d0261ee017e233287b4f071da, containing current main c7991b900
 ## Area b46914832 recheck
 
 Rebased cleanly onto b46914832d70e00847d82d5d221ab7bb24040c53. Uncached owned helper package PASS 55.374s: Theme.Add 14,780 cases, FrameworkStaticReading 6,239 cases; canonical bytes and hashes unchanged. All six output-only mutants caught on Node, emitted JavaScript and sanitized native. go vet exits 0. Strong CFG successor self-edge still refuses adamic/cycle-capable before emission. Six Tailwind consumers lose two prerequisites each, zero new fully-ready rules. Rule branch 47d0c4df1 is pushed on the same area: owned witnesses PASS 102,814 bytes, six mutants PASS, full oracle still fails decorated async AtToken at 12. No new claim or shared edits; full gate, 17 required correctness checks and fresh throughput remain unverified.
+
+## Area d3a37422c recheck
+
+Clean rebase onto d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898, including main b6b1538b0cebc4ba6741ac34f1aedb60293c1d06. Uncached helper oracle PASS 74.928s: all 21,019 cases, unchanged bytes and canonical hashes, six mutants caught only by comparison across Node, emitted JavaScript and sanitized native. go vet exits 0. Strong successor self-edge still refuses adamic/cycle-capable before emission. Two delivered helpers remove twelve prerequisite edges across six Tailwind consumers, zero fully-ready rules. No new claim or shared-file edit. Full gate, 17 required external-input checks and throughput remain unverified.
