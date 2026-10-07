@@ -67,8 +67,8 @@ four-finding comparison and explicit refusal contracts.
 
 Checker PASS 0.131s, production Go PASS 0.138s, vet exit 0, filtered uncached
 Node PASS 1.342s (native 19 misses, Node 13 misses, zero hits). Setup prints Go
-1s, clang 1s, Node 1s, submodules 1s, cache warm 86s, done 86s; nproc 5,
-CPU quota 4. Exact setup lines are authoritative if rounding differs.
+0s, clang 1s, Node 1s, submodules 1s, cache warm 86s, done 86s; nproc 5,
+CPU quota 4.
 
 ## Every mutant observation
 
