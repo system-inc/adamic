@@ -26,3 +26,7 @@ No rule is declared fully helper-ready by this one helper. Second claim follows 
 3. `github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.IsRoot`
    File: from_wave1_11/cfg_is_root.a. Ties the highest unclaimed count (four), audited across all 547 origin refs and 19 distinct claim contents. Compare numeric SyntaxKind and initializer metadata from all four consumer fixture suites with unchanged Go, source Node, emitted JavaScript and sanitized native; a compiling semantic mutant. No shared harness files are changed. Rule branch is independently green, rebased and parked at 1d09e38cc under #zmh9v36. This claim is pushed before code.
    Consumers: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks.
+
+4. `github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isDestructuringTarget`
+   File: from_wave1_11/cfg_is_destructuring_target.a. Four consumers, tied highest after fetching 555 origin refs and checking 19 distinct claim contents. Numeric-kind metadata; independently unwrap parentheses and recognize array/object literal assignment targets; preserve nil behavior. Go consumer fixture calls and synthetic AST controls on Node, emitted JavaScript and sanitized native, with a compiling mutant. Prior helper pushed at f7976d175; rule branch parked at 1d09e38cc. This claim is pushed before code.
+   Consumers: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks.
