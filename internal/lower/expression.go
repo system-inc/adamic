@@ -29,6 +29,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
+	if l.phantomArrayBase(proven) != nil {
+		return ir.Array, true
+	}
 	flags := proven.Flags()
 	if l.nodeBufferType(proven, "Buffer") {
 		return ir.Array, true
@@ -42,6 +45,12 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// Target & WeakBrand is what a Weak<Target> reads as where it's present: the target.
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
+		}
+		if primitive := l.phantomBase(proven); primitive != nil {
+			if l.phantomUndefined(proven) {
+				return ir.Object, true
+			}
+			return l.representation(primitive)
 		}
 		return l.objectIntersection(proven)
 	}
@@ -77,7 +86,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		var shared ir.Type
 		mixed, weak := false, false
 		for _, member := range proven.Types() {
-			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 || l.phantomUndefined(member) {
 				// undefined joins a union of references as a null pointer; it's checked below that
 				// the rest are references.
 				continue
@@ -132,10 +141,10 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
-		return proven.Flags()&checker.TypeFlagsUndefined != 0
+		return proven.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(proven)
 	}
 	for _, member := range proven.Types() {
-		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+		if member.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(member) {
 			return true
 		}
 	}
@@ -219,6 +228,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 // and result of a function, Weak in both or in neither, all the way down.
 func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
 	from, to = l.present(from), l.present(to)
+	from, to = l.phantomArrayView(from), l.phantomArrayView(to)
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
 	}
@@ -412,6 +422,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	}
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
+	}
+	if member, handled, err := l.phantomMember(node); handled {
+		return member, err
 	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil

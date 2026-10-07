@@ -1,0 +1,10 @@
+--- FAIL: TestPhantomArrayPresenceRefusals (0.00s)
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker?:_undefined/JSON.stringify (0.10s)
+        phantom_array_presence_test.go:32: got /tmp/adamic-gate/TestPhantomArrayPresenceRefusalsmarker_undefinedJSON.stringi3904408831/001/main.a:1:108: stage 0 can't lower JSON.stringify an array without a proven element type yet, want Adamic 0.1 refuses presence of phantom array brand member marker via JSON.stringify; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker:_undefined/JSON.stringify (0.08s)
+        phantom_array_presence_test.go:32: got /tmp/adamic-gate/TestPhantomArrayPresenceRefusalsmarker_undefinedJSON.stringif1069806971/001/main.a:1:107: stage 0 can't lower JSON.stringify an array without a proven element type yet, want Adamic 0.1 refuses presence of phantom array brand member marker via JSON.stringify; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker:_void/JSON.stringify (0.04s)
+        phantom_array_presence_test.go:32: got /tmp/adamic-gate/TestPhantomArrayPresenceRefusalsmarker_voidJSON.stringify3428161743/001/main.a:1:102: stage 0 can't lower JSON.stringify an array without a proven element type yet, want Adamic 0.1 refuses presence of phantom array brand member marker via JSON.stringify; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.776s
+FAIL

@@ -88,6 +88,18 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if err := l.phantomArrayPresenceRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.phantomArrayRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.phantomRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if node.Kind == ast.KindTypePredicate {
 			found = l.predicateRefusal(node)
 			return found != nil

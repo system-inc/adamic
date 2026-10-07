@@ -1,0 +1,10 @@
+--- FAIL: TestPhantomArrayPresenceRefusals (0.00s)
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker:_undefined/Object.assign (0.10s)
+        phantom_array_presence_test.go:32: got /tmp/adamic-gate/TestPhantomArrayPresenceRefusalsmarker_undefinedObject.assign2864345612/001/main.a:1:92: Adamic 0.1 refuses Object.assign; each source must have its complete shape proven by a literal or const binding; a widened source can hide overwriting fields, want Adamic 0.1 refuses presence of phantom array brand member marker via Object.assign; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker?:_undefined/Object.assign (0.07s)
+        phantom_array_presence_test.go:32: got /tmp/adamic-gate/TestPhantomArrayPresenceRefusalsmarker_undefinedObject.assig2036097068/001/main.a:1:93: Adamic 0.1 refuses Object.assign; each source must have its complete shape proven by a literal or const binding; a widened source can hide overwriting fields, want Adamic 0.1 refuses presence of phantom array brand member marker via Object.assign; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker:_void/Object.assign (0.04s)
+        phantom_array_presence_test.go:32: got /tmp/adamic-gate/TestPhantomArrayPresenceRefusalsmarker_voidObject.assign3444796805/001/main.a:1:87: Adamic 0.1 refuses Object.assign; each source must have its complete shape proven by a literal or const binding; a widened source can hide overwriting fields, want Adamic 0.1 refuses presence of phantom array brand member marker via Object.assign; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.665s
+FAIL
