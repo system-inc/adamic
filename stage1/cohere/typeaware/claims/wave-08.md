@@ -41,3 +41,22 @@ compiling byte-only mutant; raw-fact, state, released-handle and full bridge
 ownership/sanitizer gates pass. Shared registration/profile integration is left
 to the assigned harness worker; an owned scratch overlay links the new raw
 questions without editing shared files. See ../wave08-next/REPORT.md.
+
+## Second continuation claim
+
+All six earlier claims are complete and pushed through cfa7115d and a116e599.
+Fetched all origin heads again and checked all claim Markdown blobs across 356
+origin refs, plus full and shorthand native rule registrations on origin/main
+and origin/codex/tsgo-c-library. Of 197 ranked checker-dependent rules, 25 are
+already ported and 136 are named in claims; 36 remain eligible.
+
+The first three eligible rules in the combined by-volume ranking, with lexical
+ordering for tied zero totals, are:
+
+- react-hooks/globals (0)
+- react-hooks/immutability (0)
+- react-hooks/no-deriving-state-in-effects (0)
+
+Reserved for this branch. This claim update is committed and pushed before
+implementation. Shared harness, generator and dispatcher files stay untouched;
+new native implementation files will be .a.
