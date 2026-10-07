@@ -31,6 +31,17 @@ if shutil.which("shellcheck"):
 else:
     print("shellcheck unavailable; bash -n only", flush=True)
 
+run(["node", "cloud/apple/check-simulator.mjs"])
+helper = (repository / "cloud/apple/simulator.mjs").read_text()
+for name, before, after in (
+        ("oldest-runtime", "return candidates.at(-1)", "return candidates.at(0)"),
+        ("first-line-only", "if (!removed &&", "if (start === 0 && !removed &&")):
+    mutant_helper = work / f"{name}.mjs"
+    mutant_helper.write_text(helper.replace(before, after))
+    run(["node", "cloud/apple/check-simulator.mjs", mutant_helper], expected=1,
+        log=work / f"{name}.log")
+    print(f"Caught {name} regression by simulator input probes", flush=True)
+
 # No platform override is exposed by the production scripts.
 for platform in ("macos", "ios-sim"):
     log = work / f"linux-refusal-{platform}.log"
@@ -41,7 +52,7 @@ mock = work / "mock"
 mock.mkdir()
 # A single mock implements transport and plist validation. clang and Adamic stay real.
 (mock / "apple-tool").write_text('''#!/usr/bin/env python3
-import os, pathlib, plistlib, shutil, subprocess, sys
+import json, os, pathlib, plistlib, shutil, subprocess, sys
 name = pathlib.Path(sys.argv[0]).name
 args = sys.argv[1:]
 operation = name + " " + " ".join(args)
@@ -76,6 +87,15 @@ elif name == "xcrun":
         sys.exit(subprocess.call([os.environ["APPLE_CLANG"], *filtered]))
     elif args[0] == "lipo":
         shutil.copy(args[2], args[-1])
+    elif args[:3] == ["simctl", "list", "devices"]:
+        state = "Shutdown" if os.environ.get("APPLE_BOOTED") == "no" else "Booted"
+        print(json.dumps({"devices": {
+            "com.apple.CoreSimulator.SimRuntime.iOS-26-9": [{"name": "iPhone 17", "udid": "older", "state": state, "isAvailable": True}],
+            "com.apple.CoreSimulator.SimRuntime.iOS-26-10": [{"name": "iPhone 17 Pro", "udid": "newest", "state": "Shutdown", "isAvailable": True}],
+            "com.apple.CoreSimulator.SimRuntime.iOS-27-0": [{"name": "iPad Pro", "udid": "ipad", "state": "Shutdown", "isAvailable": True}]
+        }}))
+    elif args[:2] == ["simctl", "boot"]:
+        assert args[-1] == "newest", args
     elif args[:2] == ["simctl", "bootstatus"]:
         pass
     elif args[:2] == ["simctl", "install"]:
@@ -90,6 +110,8 @@ elif name == "xcrun":
             data += b"unexpected console text\\n"
         elif os.environ.get("APPLE_MUTANT") == "missing-newline":
             data = data.rstrip(b"\\n")
+        if os.environ.get("APPLE_RECEIPT") == "after":
+            data += b"org.system.adamic.dedication: 1234\\n"
         sys.stdout.buffer.write(data)
         sys.stderr.buffer.write(result.stderr)
     else:
@@ -105,11 +127,11 @@ base_environment = dict(os.environ, PATH=str(mock) + os.pathsep + os.environ["PA
                         APPLE_INSTALLED=str(work / "installed"))
 
 
-def bundle_check(platform, label, *, fail="", mutant="", receipt="yes"):
+def bundle_check(platform, label, *, fail="", mutant="", receipt="yes", booted="yes"):
     calls = work / f"{platform}-{label}.calls"
     log = work / f"{platform}-{label}.log"
     environment = dict(base_environment, APPLE_CALLS=str(calls), APPLE_FAIL=fail,
-                       APPLE_MUTANT=mutant, APPLE_RECEIPT=receipt)
+                       APPLE_MUTANT=mutant, APPLE_RECEIPT=receipt, APPLE_BOOTED=booted)
     expected = 19 if fail else 1 if mutant else 0
     run(["bash", f"cloud/apple/build-{platform}.sh"], environment=environment,
         expected=expected, log=log)
@@ -135,14 +157,20 @@ for platform in ("macos", "ios-sim"):
         assert "xcrun lipo -create" in calls
     else:
         assert "arm64-apple-ios17.0-simulator" in calls
-        assert "simctl install booted" in calls and "simctl launch --console booted" in calls
+        assert "simctl install older" in calls and "simctl launch --console older" in calls
+        assert "simctl boot " not in calls
     bundle_check(platform, "program-byte", mutant="program-byte")
     for failed in ("clang", "codesign --sign", "codesign --verify"):
         bundle_check(platform, failed.replace(" ", "-"), fail=failed)
 bundle_check("ios-sim", "without-receipt", receipt="no")
 for mutant in ("extra-console", "missing-newline"):
     bundle_check("ios-sim", mutant, mutant=mutant)
-for failed in ("simctl bootstatus", "simctl install", "simctl launch"):
+calls = bundle_check("ios-sim", "boot-newest-receipt-after", receipt="after", booted="no")
+assert "simctl boot newest" in calls and "simctl bootstatus newest -b" in calls
+assert "simctl install newest" in calls and "simctl launch --console newest" in calls
+assert "booting simulator iPhone 17 Pro (iOS 26.10, newest)" in (work / "ios-sim-boot-newest-receipt-after.log").read_text()
+bundle_check("ios-sim", "boot-failure", fail="simctl boot ", booted="no")
+for failed in ("simctl list", "simctl bootstatus", "simctl install", "simctl launch"):
     bundle_check("ios-sim", failed.replace(" ", "-"), fail=failed)
 
 for app in work.glob("adamic-*/Dedication.app"):

@@ -10,8 +10,13 @@ finish by comparing application stdout byte for byte with the source run by
 
 A successful Mac run establishes that this program compiles and links against
 the Apple SDKs, its bundles have valid plists and ad-hoc signatures, and the
-macOS executable and simulator process print the same bytes as Node. Until the
-lead runs the commands below, those Apple claims are unverified.
+macOS executable and simulator process print the same bytes as Node.
+The lead reports verification on a Mac with Xcode, the macOS SDK and
+iPhoneSimulator 27.0 SDK: the universal macOS bundle passed plist lint, signing,
+signature verification and the 97-byte Node comparison. The iOS app built,
+signed and launched on an iPhone 17 Pro running iOS 26, printing Node's exact
+97 bytes. The two follow-up script fixes below were tested on Linux with mocks
+and still need a Mac run.
 
 ## Run on a Mac
 
@@ -46,16 +51,14 @@ The script executes the universal binary's host architecture. Building both
 slices does not prove that the other slice runs. Verify that slice on a suitable
 Mac, or under Rosetta on Apple silicon if Rosetta is installed.
 
-For iOS use an Apple silicon Mac. Choose an available iOS 17 or newer device's
-UDID from the list, then boot it if it is not already booted. Keep exactly one
-simulator booted because the script targets `booted`:
+For iOS use an Apple silicon Mac. The script lists available devices as JSON.
+It reuses a booted iOS 17 or newer simulator. If none is booted, it chooses an
+available iPhone on the newest iOS runtime (numeric version order), boots it,
+and waits for `bootstatus -b`. It reports the device name, runtime and UDID.
+Install and launch use the selected UDID, so other booted devices do not make
+the target ambiguous. If no suitable iPhone exists, it fails with a reason.
 
 ```sh
-xcrun simctl list devices available
-# Set this to the chosen device's UDID from the list.
-SIMULATOR_UDID=the-chosen-udid
-xcrun simctl boot "$SIMULATOR_UDID"
-xcrun simctl bootstatus "$SIMULATOR_UDID" -b
 bash cloud/apple/build-ios-sim.sh > /tmp/adamic-apple-ios-sim.log 2>&1
 ```
 
@@ -65,16 +68,18 @@ minimum iOS version 17.0, and device families 1 and 2. It signs and verifies the
 bundle, then runs:
 
 ```sh
-xcrun simctl bootstatus booted -b
-xcrun simctl install booted "$app"
-xcrun simctl launch --console booted org.system.adamic.dedication
+xcrun simctl list devices available --json
+# When the selected device is not booted:
+xcrun simctl boot "$simulator_udid"
+xcrun simctl bootstatus "$simulator_udid" -b
+xcrun simctl install "$simulator_udid" "$app"
+xcrun simctl launch --console "$simulator_udid" org.system.adamic.dedication
 ```
 
 Here `$app` is the fresh bundle path printed by the script. This is a C entry
 point that prints and exits, with no UIKit event loop or screen. Simulator
-acceptance of that minimal app is part of the lead's verification, not an
-observation made on Linux. Step 1 does not prove physical-device execution or
-App Store suitability.
+acceptance of that minimal app was reported by the lead, not observed on Linux.
+Step 1 does not prove physical-device execution or App Store suitability.
 
 ## Build and evidence
 
@@ -101,10 +106,11 @@ No prior stdout can satisfy a later comparison.
 
 The macOS binary's stdout goes straight to `app.stdout`; stderr goes to
 `app.stderr`. The simulator console stream goes to `console.stdout` and
-`console.stderr`. If its first line is exactly the known bundle identifier,
-a colon, a space and a decimal process ID, the script removes that one simctl
-launch receipt. Otherwise it copies the stream unchanged. No application text,
-whitespace, newline or unexpected diagnostic is normalized. The final
+`console.stderr`. The byte-preserving Node helper removes one whole line
+matching `org.system.adamic.dedication: <decimal pid>` wherever it appears,
+including after the application's output. No receipt leaves the bytes unchanged;
+a second receipt is preserved so an unexpected duplicate fails the comparison.
+No application text, whitespace, newline or unexpected diagnostic is normalized. The final
 `cmp "$out/node.stdout" "$out/app.stdout"` must succeed. A receipt format
 change fails the comparison and leaves the original console bytes for review.
 
@@ -126,7 +132,7 @@ still belongs to the startup thread. Step 2 must revisit it before running
 Adamic code on other threads. The dedication needs only stdout and the startup
 thread. The other inspected OS interfaces are POSIX file, directory, signal
 and output APIs provided by Darwin; no additional guards were needed by
-inspection. Compiling them against the actual iOS SDK remains unverified.
+inspection. The lead reports successful compilation against the iPhoneSimulator SDK.
 The simulator is not a proof of unrestricted file access in an iOS sandbox.
 
 ## Linux verification and limits
@@ -157,8 +163,9 @@ all real `xcrun` SDK queries, all three target clang invocations, `xcrun lipo`,
 Apple `plutil`, both `codesign` operations, execution of the macOS Mach-O bundle,
 `simctl boot`, `bootstatus`, `install`, and `launch --console`, the real console
 receipt format, and the final comparisons using Apple-built executables.
-The Go driver and Node command ran on Linux, not on macOS. The lead should
-retain the two Mac logs and the artifact directories as the evidence.
+The worker ran the Go driver and Node command on Linux. The lead reported the
+initial Mac verification above and should retain the two Mac logs and artifact directories. Automatic boot selection and the updated
+receipt filter have not yet been rerun on a Mac.
 
 ## What step 2 needs
 
@@ -218,3 +225,27 @@ install and launch. Successful simulator capture was checked with and without
 a launch receipt. Evidence remains under
 `/tmp/adamic-gate/adamic-apple-check-wslbbr8l`. These are Linux observations
 with mocked Apple commands, not Apple verification.
+
+## Simulator follow-up checks
+
+`python3 cloud/apple/check-linux.py > /tmp/apple-followup-check.log 2>&1`
+exercises automatic boot of the newest available iPhone runtime, reuse of an
+already booted device, and receipts before and after the real dedication output.
+The smaller `node cloud/apple/check-simulator.mjs` probes also cover a receipt
+between lines, missing devices, unavailable devices, numeric runtime ordering,
+exact whole-line matching, duplicate receipts and preservation of binary bytes
+and missing newlines. Selecting the oldest runtime and restoring first-line-only
+filtering each fail the probes. Real automatic boot and the updated filter still
+need verification on the lead's Mac.
+
+Follow-up setup completed in 100s with `nproc=5`: Go, clang, Node and submodules
+were ready at 0s, and the build cache was warm at 100s. ShellCheck remained
+unavailable; Bash and Node syntax checks passed. No native runtime code changed
+in this follow-up, so the previous native package gate was not repeated.
+The complete follow-up Linux check passed, including the no-booted-device path:
+`booting simulator iPhone 17 Pro (iOS 26.10, newest)`, followed by a 97-byte
+comparison with the launch receipt after the application output. Both new
+regression mutants were caught, alongside the existing C-byte, console-text,
+missing-newline and stack-margin mutants. Injected list and boot failures also
+stopped the script. Evidence is under
+`/tmp/adamic-gate/adamic-apple-check-oxyo4eeu`.
