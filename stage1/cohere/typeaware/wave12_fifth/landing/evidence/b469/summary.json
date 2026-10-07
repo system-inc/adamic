@@ -1,0 +1,2828 @@
+{
+  "source_commits": [
+    "c341f203ed6af9e44207ac09f0b8ced6e69ab99f",
+    "b27fc133f6bd0318ddfbc3da5c309d776260970d"
+  ],
+  "area": "b46914832d70e00847d82d5d221ab7bb24040c53",
+  "main": "c7991b900362796aefd111474e65eb5398e91953",
+  "previous_published": "1e0356a601eb52156ce63c93b43ff965d7f8ac50",
+  "source_subset": {
+    "source_selection_only": true,
+    "cases": 53,
+    "findings": 30,
+    "bytes": 11705,
+    "backends": [
+      "native",
+      "native-asan",
+      "source-node",
+      "emitted-node"
+    ],
+    "mutants": [
+      {
+        "name": "undef-ascii",
+        "exit": 0,
+        "stderr_bytes": 0,
+        "first_difference": 51
+      },
+      {
+        "name": "fragment-member",
+        "exit": 0,
+        "stderr_bytes": 0,
+        "first_difference": 4293
+      },
+      {
+        "name": "fragment-initializer",
+        "exit": 0,
+        "stderr_bytes": 0,
+        "first_difference": 6729
+      },
+      {
+        "name": "context-inline-array",
+        "exit": 0,
+        "stderr_bytes": 0,
+        "first_difference": 8612
+      }
+    ],
+    "unresolved_alias": {
+      "normal_exit": 70,
+      "bypass_exit": 0
+    },
+    "unsupported_context": {
+      "normal_exit": 70,
+      "bypass_exit": 0
+    },
+    "commands": [
+      {
+        "name": "oracle-build",
+        "args": [
+          "go",
+          "build",
+          "-overlay",
+          "/workspace/wave-12/b469/source-inline/overlay.json",
+          "-o",
+          "/workspace/wave-12/b469/source-inline/oracle",
+          "/workspace/adamic/cohere/adamic_wave12_selection_oracle.go"
+        ],
+        "code": 0
+      },
+      {
+        "name": "production-go",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/oracle",
+          "/workspace/wave-12/b469/source-inline/tsconfig.json",
+          "/workspace/wave-12/b469/source-inline/manifest"
+        ],
+        "code": 0
+      },
+      {
+        "name": "stage0",
+        "args": [
+          "go",
+          "build",
+          "-o",
+          "/workspace/wave-12/b469/source-inline/adamic",
+          "./cmd/adamic"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-build",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/adamic",
+          "build",
+          "/workspace/wave-12/b469/source-inline/selection-main.a",
+          "-o",
+          "/workspace/wave-12/b469/source-inline/native"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-run",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/native",
+          "/workspace/wave-12/b469/source-inline/1-0.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-1.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-2.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-3.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-4.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-5.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-6.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-7.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-8.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-9.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-10.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-11.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-12.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-13.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-14.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-15.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/2-0.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-1.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-2.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-3.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-4.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-5.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-6.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-7.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-8.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-9.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/3-0.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-1.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-2.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-3.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-4.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-5.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-6.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-7.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-8.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-9.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-10.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-11.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/4-0.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-1.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-2.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-3.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-4.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-5.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-6.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-7.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-8.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-9.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-10.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-11.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-12.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-13.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-14.tsx",
+          "4"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-asan-build",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/adamic",
+          "build",
+          "/workspace/wave-12/b469/source-inline/selection-main.a",
+          "-o",
+          "/workspace/wave-12/b469/source-inline/native-asan",
+          "--sanitize"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-asan-run",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/native-asan",
+          "/workspace/wave-12/b469/source-inline/1-0.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-1.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-2.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-3.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-4.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-5.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-6.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-7.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-8.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-9.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-10.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-11.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-12.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-13.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-14.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-15.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/2-0.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-1.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-2.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-3.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-4.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-5.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-6.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-7.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-8.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-9.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/3-0.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-1.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-2.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-3.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-4.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-5.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-6.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-7.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-8.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-9.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-10.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-11.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/4-0.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-1.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-2.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-3.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-4.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-5.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-6.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-7.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-8.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-9.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-10.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-11.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-12.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-13.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-14.tsx",
+          "4"
+        ],
+        "code": 0
+      },
+      {
+        "name": "source-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/b469/source-inline/selection-main.a",
+          "/workspace/wave-12/b469/source-inline/1-0.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-1.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-2.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-3.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-4.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-5.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-6.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-7.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-8.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-9.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-10.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-11.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-12.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-13.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-14.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-15.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/2-0.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-1.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-2.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-3.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-4.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-5.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-6.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-7.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-8.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-9.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/3-0.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-1.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-2.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-3.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-4.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-5.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-6.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-7.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-8.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-9.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-10.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-11.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/4-0.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-1.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-2.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-3.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-4.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-5.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-6.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-7.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-8.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-9.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-10.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-11.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-12.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-13.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-14.tsx",
+          "4"
+        ],
+        "code": 0
+      },
+      {
+        "name": "emitted-build",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/adamic",
+          "js",
+          "/workspace/wave-12/b469/source-inline/selection-main.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "emitted-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/b469/source-inline/emitted.mjs",
+          "/workspace/wave-12/b469/source-inline/1-0.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-1.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-2.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-3.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-4.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-5.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-6.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-7.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-8.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-9.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-10.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-11.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-12.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-13.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-14.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-15.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/2-0.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-1.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-2.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-3.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-4.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-5.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-6.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-7.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-8.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-9.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/3-0.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-1.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-2.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-3.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-4.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-5.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-6.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-7.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-8.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-9.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-10.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-11.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/4-0.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-1.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-2.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-3.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-4.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-5.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-6.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-7.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-8.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-9.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-10.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-11.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-12.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-13.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-14.tsx",
+          "4"
+        ],
+        "code": 0
+      },
+      {
+        "name": "undef-ascii-build",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/adamic",
+          "build",
+          "/workspace/wave-12/b469/source-inline/selection-main.a",
+          "-o",
+          "/workspace/wave-12/b469/source-inline/undef-ascii"
+        ],
+        "code": 0
+      },
+      {
+        "name": "undef-ascii-run",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/undef-ascii",
+          "/workspace/wave-12/b469/source-inline/1-0.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-1.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-2.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-3.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-4.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-5.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-6.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-7.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-8.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-9.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-10.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-11.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-12.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-13.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-14.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-15.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/2-0.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-1.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-2.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-3.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-4.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-5.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-6.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-7.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-8.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-9.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/3-0.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-1.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-2.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-3.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-4.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-5.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-6.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-7.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-8.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-9.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-10.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-11.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/4-0.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-1.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-2.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-3.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-4.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-5.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-6.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-7.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-8.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-9.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-10.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-11.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-12.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-13.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-14.tsx",
+          "4"
+        ],
+        "code": 0
+      },
+      {
+        "name": "fragment-member-build",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/adamic",
+          "build",
+          "/workspace/wave-12/b469/source-inline/selection-main.a",
+          "-o",
+          "/workspace/wave-12/b469/source-inline/fragment-member"
+        ],
+        "code": 0
+      },
+      {
+        "name": "fragment-member-run",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/fragment-member",
+          "/workspace/wave-12/b469/source-inline/1-0.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-1.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-2.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-3.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-4.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-5.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-6.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-7.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-8.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-9.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-10.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-11.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-12.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-13.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-14.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-15.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/2-0.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-1.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-2.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-3.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-4.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-5.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-6.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-7.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-8.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-9.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/3-0.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-1.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-2.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-3.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-4.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-5.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-6.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-7.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-8.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-9.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-10.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-11.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/4-0.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-1.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-2.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-3.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-4.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-5.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-6.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-7.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-8.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-9.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-10.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-11.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-12.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-13.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-14.tsx",
+          "4"
+        ],
+        "code": 0
+      },
+      {
+        "name": "fragment-initializer-build",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/adamic",
+          "build",
+          "/workspace/wave-12/b469/source-inline/selection-main.a",
+          "-o",
+          "/workspace/wave-12/b469/source-inline/fragment-initializer"
+        ],
+        "code": 0
+      },
+      {
+        "name": "fragment-initializer-run",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/fragment-initializer",
+          "/workspace/wave-12/b469/source-inline/1-0.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-1.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-2.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-3.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-4.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-5.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-6.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-7.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-8.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-9.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-10.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-11.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-12.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-13.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-14.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-15.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/2-0.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-1.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-2.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-3.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-4.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-5.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-6.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-7.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-8.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-9.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/3-0.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-1.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-2.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-3.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-4.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-5.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-6.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-7.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-8.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-9.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-10.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-11.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/4-0.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-1.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-2.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-3.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-4.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-5.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-6.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-7.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-8.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-9.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-10.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-11.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-12.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-13.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-14.tsx",
+          "4"
+        ],
+        "code": 0
+      },
+      {
+        "name": "context-inline-array-build",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/adamic",
+          "build",
+          "/workspace/wave-12/b469/source-inline/selection-main.a",
+          "-o",
+          "/workspace/wave-12/b469/source-inline/context-inline-array"
+        ],
+        "code": 0
+      },
+      {
+        "name": "context-inline-array-run",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/context-inline-array",
+          "/workspace/wave-12/b469/source-inline/1-0.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-1.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-2.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-3.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-4.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-5.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-6.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-7.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-8.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-9.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-10.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-11.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-12.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-13.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-14.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/1-15.tsx",
+          "1",
+          "/workspace/wave-12/b469/source-inline/2-0.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-1.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-2.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-3.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-4.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-5.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-6.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-7.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-8.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/2-9.tsx",
+          "2",
+          "/workspace/wave-12/b469/source-inline/3-0.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-1.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-2.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-3.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-4.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-5.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-6.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-7.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-8.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-9.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-10.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/3-11.tsx",
+          "3",
+          "/workspace/wave-12/b469/source-inline/4-0.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-1.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-2.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-3.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-4.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-5.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-6.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-7.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-8.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-9.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-10.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-11.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-12.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-13.tsx",
+          "4",
+          "/workspace/wave-12/b469/source-inline/4-14.tsx",
+          "4"
+        ],
+        "code": 0
+      },
+      {
+        "name": "unresolved-alias",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/native",
+          "/workspace/wave-12/b469/source-inline/alias.tsx",
+          "2"
+        ],
+        "code": 70
+      },
+      {
+        "name": "unresolved-bypass-build",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/adamic",
+          "build",
+          "/workspace/wave-12/b469/source-inline/selection-main.a",
+          "-o",
+          "/workspace/wave-12/b469/source-inline/unresolved-bypass"
+        ],
+        "code": 0
+      },
+      {
+        "name": "unresolved-bypass-run",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/unresolved-bypass",
+          "/workspace/wave-12/b469/source-inline/alias.tsx",
+          "2"
+        ],
+        "code": 0
+      },
+      {
+        "name": "unsupported-context",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/native",
+          "/workspace/wave-12/b469/source-inline/unsupported-context.tsx",
+          "4"
+        ],
+        "code": 70
+      },
+      {
+        "name": "unsupported-context-bypass-build",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/adamic",
+          "build",
+          "/workspace/wave-12/b469/source-inline/selection-main.a",
+          "-o",
+          "/workspace/wave-12/b469/source-inline/unsupported-context-bypass"
+        ],
+        "code": 0
+      },
+      {
+        "name": "unsupported-context-bypass-run",
+        "args": [
+          "/workspace/wave-12/b469/source-inline/unsupported-context-bypass",
+          "/workspace/wave-12/b469/source-inline/unsupported-context.tsx",
+          "4"
+        ],
+        "code": 0
+      }
+    ]
+  },
+  "partial": {
+    "reporting_only": true,
+    "cases": 18,
+    "findings": {
+      "react/jsx-fragments": 1,
+      "react/jsx-no-undef": 1,
+      "react/jsx-no-constructed-context-values": 16
+    },
+    "bytes": 7390,
+    "mutants": [
+      {
+        "rule": "jsx_fragments",
+        "first_difference": 75
+      },
+      {
+        "rule": "jsx_no_undef",
+        "first_difference": 347
+      },
+      {
+        "rule": "jsx_no_constructed_context_values",
+        "first_difference": 758
+      },
+      {
+        "rule": "constructed-context-unicode-quote",
+        "first_difference": 1985
+      }
+    ],
+    "guards": [
+      {
+        "guard": "construction-range",
+        "normal_exit": 70,
+        "mutant_exit": 0
+      }
+    ],
+    "metadata_mutants": [
+      {
+        "declaration": "jsx_fragments",
+        "mutation": "refetch-instead-of-supplied-node"
+      },
+      {
+        "declaration": "jsx_no_constructed_context_values",
+        "mutation": "refetch-instead-of-supplied-node"
+      },
+      {
+        "declaration": "jsx_no_undef",
+        "mutation": "refetch-instead-of-supplied-node"
+      },
+      {
+        "declaration": "no_redeclare.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "no_redeclare.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "no_redeclare.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "no_test_on_global_regex.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "no_test_on_global_regex.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "no_test_on_global_regex.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "no_write_only_collection.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "no_write_only_collection.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "no_write_only_collection.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_next/no_process_exit_after_output.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_next/no_process_exit_after_output.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_next/no_process_exit_after_output.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_next/no_uncleared_race_timeout.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_next/no_uncleared_race_timeout.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_next/no_uncleared_race_timeout.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_next/require_blocking_standard_streams.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_next/require_blocking_standard_streams.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_next/require_blocking_standard_streams.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_third/no_new_func.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_third/no_new_func.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_third/no_new_func.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_third/no_new_native_nonconstructor.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_third/no_new_native_nonconstructor.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_third/no_new_native_nonconstructor.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_third/no_new_wrappers.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_third/no_new_wrappers.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_third/no_new_wrappers.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_regex_literals.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_regex_literals.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_regex_literals.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_rest_params.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_rest_params.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_fourth/prefer_rest_params.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "wave12_fourth/exhaustive_deps.a",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "wave12_fourth/exhaustive_deps.a",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "wave12_fourth/exhaustive_deps.a",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "jsx_fragments",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "jsx_fragments",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "jsx_fragments",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "jsx_no_constructed_context_values",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "jsx_no_constructed_context_values",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "jsx_no_constructed_context_values",
+        "mutation": "wrong-listener"
+      },
+      {
+        "declaration": "jsx_no_undef",
+        "mutation": "unknown-name"
+      },
+      {
+        "declaration": "jsx_no_undef",
+        "mutation": "numeric-kind"
+      },
+      {
+        "declaration": "jsx_no_undef",
+        "mutation": "wrong-listener"
+      }
+    ],
+    "checker_gap": {
+      "source_node_exit": 70,
+      "emitted_js_exit": 1,
+      "bypass_mutant_exit": 0
+    },
+    "quote": {
+      "unicode_version": "17.0.0",
+      "cases": 6202,
+      "bytes": 76917,
+      "mutants": [
+        {
+          "name": "newline",
+          "first_difference": 86
+        },
+        {
+          "name": "ascii-control",
+          "first_difference": 106
+        },
+        {
+          "name": "unicode-control",
+          "first_difference": 885
+        },
+        {
+          "name": "supplementary-control",
+          "first_difference": 33046
+        },
+        {
+          "name": "surrogate-guard",
+          "normal_exit": 70,
+          "mutant_exit": 0
+        }
+      ]
+    },
+    "commands": [
+      {
+        "name": "oracle-build",
+        "args": [
+          "go",
+          "build",
+          "-overlay",
+          "/workspace/wave-12/b469/sixth/overlay.json",
+          "-o",
+          "/workspace/wave-12/b469/sixth/oracle",
+          "/workspace/adamic/cohere/adamic_wave12_sixth_oracle.go"
+        ],
+        "code": 0
+      },
+      {
+        "name": "production-go",
+        "args": [
+          "/workspace/wave-12/b469/sixth/oracle",
+          "/workspace/wave-12/b469/sixth/tsconfig.json",
+          "/workspace/wave-12/b469/sixth/manifest"
+        ],
+        "code": 0
+      },
+      {
+        "name": "stage0",
+        "args": [
+          "go",
+          "build",
+          "-o",
+          "/workspace/wave-12/b469/sixth/adamic",
+          "./cmd/adamic"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/native"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/native"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-asan-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/native-asan",
+          "--sanitize"
+        ],
+        "code": 0
+      },
+      {
+        "name": "native-asan-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/native-asan"
+        ],
+        "code": 0
+      },
+      {
+        "name": "source-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/b469/sixth/source/main.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "emitted-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "js",
+          "/workspace/wave-12/b469/sixth/source/main.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "emitted-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/b469/sixth/emitted.mjs"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_fragments-mutant-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/jsx_fragments-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_fragments-mutant-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/jsx_fragments-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_no_undef-mutant-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/jsx_no_undef-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_no_undef-mutant-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/jsx_no_undef-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_no_constructed_context_values-mutant-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/jsx_no_constructed_context_values-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "jsx_no_constructed_context_values-mutant-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/jsx_no_constructed_context_values-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "unicode-quote-mutant-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/unicode-quote-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "unicode-quote-mutant-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/unicode-quote-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "construction-range-guard-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/construction-range-guard"
+        ],
+        "code": 0
+      },
+      {
+        "name": "construction-range-guard-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/construction-range-guard"
+        ],
+        "code": 70
+      },
+      {
+        "name": "construction-range-guard-mutant-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/source/main.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/construction-range-guard-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "construction-range-guard-mutant-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/construction-range-guard-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "ast-kind-names",
+        "args": [
+          "go",
+          "run",
+          "/workspace/adamic/stage1/cohere/typeaware/wave12_sixth/kind_names.go"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/adamic/stage1/typescript/parser/main.ts",
+          "-o",
+          "/workspace/wave-12/b469/sixth/shared-parser"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-fragment",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/fragment.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-undef",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/undef.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-object",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/object.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-array",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/array.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-function",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/function.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-declaration",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/declaration.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-variable",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/variable.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-class",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/class.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-new",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/new.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-regex",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/regex.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-jsx",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/jsx.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-jsxfragment",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/jsxfragment.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-assignment",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/assignment.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-memo",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/memo.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-unstable",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/unstable.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-korean",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/korean.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-greek",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/greek.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "shared-parser-joiner",
+        "args": [
+          "/workspace/wave-12/b469/sixth/shared-parser",
+          "/workspace/wave-12/b469/sixth/joiner.tsx",
+          "--whole"
+        ],
+        "code": 0
+      },
+      {
+        "name": "checker-gap-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/adamic/stage1/cohere/typeaware/wave12_sixth/checker_gap.a"
+        ],
+        "code": 70
+      },
+      {
+        "name": "checker-gap-emitted",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "js",
+          "/workspace/adamic/stage1/cohere/typeaware/wave12_sixth/checker_gap.a"
+        ],
+        "code": 1
+      },
+      {
+        "name": "checker-gap-bypass-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/b469/sixth/checker-gap-bypass.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "checker-gap-bypass-emitted",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "js",
+          "/workspace/wave-12/b469/sixth/checker-gap-bypass.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-go-oracle",
+        "args": [
+          "go",
+          "run",
+          "/workspace/adamic/stage1/cohere/typeaware/wave12_sixth/quote_oracle.go"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-native-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/quote-check.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/quote-native"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-native-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/quote-native"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-native-asan-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/quote-check.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/quote-native-asan",
+          "--sanitize"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-native-asan-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/quote-native-asan"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-source-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/b469/sixth/quote-check.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-emitted-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "js",
+          "/workspace/wave-12/b469/sixth/quote-check.a"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-emitted-node",
+        "args": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "/workspace/adamic/oracle/node.mjs",
+          "/workspace/wave-12/b469/sixth/quote-emitted.mjs"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-newline-mutant-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/quote-newline-check.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/quote-newline-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-newline-mutant-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/quote-newline-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-ascii-control-mutant-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/quote-ascii-control-check.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/quote-ascii-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-ascii-control-mutant-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/quote-ascii-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-unicode-control-mutant-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/quote-unicode-control-check.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/quote-unicode-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-unicode-control-mutant-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/quote-unicode-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-supplementary-control-mutant-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/quote-supplementary-control-check.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/quote-supplementary-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-supplementary-control-mutant-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/quote-supplementary-control-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-surrogate-guard-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/quote-surrogate-guard.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/quote-surrogate-guard"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-surrogate-guard-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/quote-surrogate-guard"
+        ],
+        "code": 70
+      },
+      {
+        "name": "quote-surrogate-mutant-build",
+        "args": [
+          "/workspace/wave-12/b469/sixth/adamic",
+          "build",
+          "/workspace/wave-12/b469/sixth/quote-surrogate-mutant-check.a",
+          "-o",
+          "/workspace/wave-12/b469/sixth/quote-surrogate-mutant"
+        ],
+        "code": 0
+      },
+      {
+        "name": "quote-surrogate-mutant-run",
+        "args": [
+          "/workspace/wave-12/b469/sixth/quote-surrogate-mutant"
+        ],
+        "code": 0
+      }
+    ]
+  },
+  "shared": {
+    "parents": [
+      "TestCompilerAndStage1Agree",
+      "TestDecodedOptionsAndMutant",
+      "TestRulesAgree"
+    ],
+    "passed_tests": 3,
+    "skips": 0,
+    "failures": 0
+  },
+  "timings": {
+    "root": {
+      "rounds": [
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 4.95622860200092,
+          "phases": {
+            "load_ns": 631537090,
+            "query_ns": 394526037,
+            "queries": 2641,
+            "first_query_ns": 199513,
+            "run_ns": 4277002197
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.47731595399818616,
+          "phases": {
+            "load_ns": 310066975,
+            "rule_ns": 104235649,
+            "run_ns": 133430105
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.4724693349999143,
+          "phases": {
+            "load_ns": 321495887,
+            "rule_ns": 99372960,
+            "run_ns": 133147343
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 5.220532264000212,
+          "phases": {
+            "load_ns": 356025421,
+            "query_ns": 586438720,
+            "queries": 2641,
+            "first_query_ns": 46326,
+            "run_ns": 4835685843
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 4.676034791998973,
+          "phases": {
+            "load_ns": 444416299,
+            "query_ns": 346141357,
+            "queries": 2641,
+            "first_query_ns": 21660,
+            "run_ns": 4207852038
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.46323540499724913,
+          "phases": {
+            "load_ns": 307675740,
+            "rule_ns": 104932714,
+            "run_ns": 135354353
+          },
+          "bytes": 8014,
+          "sha256": "d3713e4dfc0e1d85fd8bd3f4ee1f62a6ecdf9e9b63ecac535f424114b7707eb4"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 0.5517547710005601,
+          "phases": {
+            "load_ns": 127339262,
+            "query_ns": 44170550,
+            "queries": 1452,
+            "first_query_ns": 188328,
+            "run_ns": 399283348
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.14261709499987774,
+          "phases": {
+            "load_ns": 108795710,
+            "rule_ns": 14677312,
+            "run_ns": 20157444
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.1471954509979696,
+          "phases": {
+            "load_ns": 113436396,
+            "rule_ns": 13714021,
+            "run_ns": 20622075
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 0.4809308779986168,
+          "phases": {
+            "load_ns": 122122558,
+            "query_ns": 35758233,
+            "queries": 1452,
+            "first_query_ns": 69419,
+            "run_ns": 346032759
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 0.5178265169997758,
+          "phases": {
+            "load_ns": 123322293,
+            "query_ns": 44285080,
+            "queries": 1452,
+            "first_query_ns": 118098,
+            "run_ns": 382908334
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.14311698600067757,
+          "phases": {
+            "load_ns": 114077861,
+            "rule_ns": 10960539,
+            "run_ns": 15894741
+          },
+          "bytes": 18903,
+          "sha256": "bb2e849615270d9e8e5b8f73d9426d8b4b0d87ce6b47d5e417c5eaacdeb449d3"
+        }
+      ],
+      "summary": [
+        {
+          "corpus": "compiler",
+          "implementation": "native",
+          "whole_process_median_seconds": 4.95622860200092,
+          "load_median_seconds": 0.444416299,
+          "run_median_seconds": 4.277002197
+        },
+        {
+          "corpus": "compiler",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.4724693349999143,
+          "load_median_seconds": 0.310066975,
+          "run_median_seconds": 0.133430105
+        },
+        {
+          "corpus": "repository",
+          "implementation": "native",
+          "whole_process_median_seconds": 0.5178265169997758,
+          "load_median_seconds": 0.123322293,
+          "run_median_seconds": 0.382908334
+        },
+        {
+          "corpus": "repository",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.14311698600067757,
+          "load_median_seconds": 0.113436396,
+          "run_median_seconds": 0.020157444
+        }
+      ]
+    },
+    "next": {
+      "rounds": [
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 2.721311324999988,
+          "phases": {
+            "load_ns": 326884779,
+            "query_ns": 105058731,
+            "queries": 108,
+            "first_query_ns": 24814,
+            "run_ns": 2225627354
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.4111553599977924,
+          "phases": {
+            "load_ns": 331828824,
+            "rule_ns": 33270672,
+            "run_ns": 62210556
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.41038328500144416,
+          "phases": {
+            "load_ns": 315695136,
+            "rule_ns": 40785560,
+            "run_ns": 77029441
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 2.8433038240000315,
+          "phases": {
+            "load_ns": 315841427,
+            "query_ns": 149575522,
+            "queries": 108,
+            "first_query_ns": 22445,
+            "run_ns": 2363769125
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 2.8154177430005802,
+          "phases": {
+            "load_ns": 328355303,
+            "query_ns": 89942557,
+            "queries": 108,
+            "first_query_ns": 20218,
+            "run_ns": 2310119421
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.5798405759996967,
+          "phases": {
+            "load_ns": 481113392,
+            "rule_ns": 41080115,
+            "run_ns": 76257378
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 0.5367610600005719,
+          "phases": {
+            "load_ns": 149160646,
+            "query_ns": 31200894,
+            "queries": 348,
+            "first_query_ns": 1504086,
+            "run_ns": 356120077
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.1706162240006961,
+          "phases": {
+            "load_ns": 146588302,
+            "rule_ns": 4256595,
+            "run_ns": 9771471
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.1655205200004275,
+          "phases": {
+            "load_ns": 126709518,
+            "rule_ns": 4106313,
+            "run_ns": 9361746
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 0.504563299997244,
+          "phases": {
+            "load_ns": 134622467,
+            "query_ns": 22636720,
+            "queries": 348,
+            "first_query_ns": 73885,
+            "run_ns": 339406336
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 0.4852825899979507,
+          "phases": {
+            "load_ns": 129232725,
+            "query_ns": 23129774,
+            "queries": 348,
+            "first_query_ns": 64653,
+            "run_ns": 323791959
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.1723893570015207,
+          "phases": {
+            "load_ns": 146254565,
+            "rule_ns": 6467373,
+            "run_ns": 11634730
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        }
+      ],
+      "summary": [
+        {
+          "corpus": "compiler",
+          "implementation": "native",
+          "whole_process_median_seconds": 2.8154177430005802,
+          "load_median_seconds": 0.326884779,
+          "run_median_seconds": 2.310119421
+        },
+        {
+          "corpus": "compiler",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.4111553599977924,
+          "load_median_seconds": 0.331828824,
+          "run_median_seconds": 0.076257378
+        },
+        {
+          "corpus": "repository",
+          "implementation": "native",
+          "whole_process_median_seconds": 0.504563299997244,
+          "load_median_seconds": 0.134622467,
+          "run_median_seconds": 0.339406336
+        },
+        {
+          "corpus": "repository",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.1706162240006961,
+          "load_median_seconds": 0.146254565,
+          "run_median_seconds": 0.009771471
+        }
+      ]
+    },
+    "third": {
+      "rounds": [
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 3.5967621640011203,
+          "phases": {
+            "load_ns": 403071251,
+            "query_ns": 205458404,
+            "queries": 79,
+            "first_query_ns": 164162,
+            "run_ns": 2433265240
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.8610258760018041,
+          "phases": {
+            "load_ns": 657798615,
+            "rule_ns": 5023589,
+            "run_ns": 43984868
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.5035234059978393,
+          "phases": {
+            "load_ns": 430048437,
+            "rule_ns": 8756281,
+            "run_ns": 56263087
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 2.820175675999053,
+          "phases": {
+            "load_ns": 355613104,
+            "query_ns": 197008549,
+            "queries": 79,
+            "first_query_ns": 21768,
+            "run_ns": 2300530341
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 2.856782552000368,
+          "phases": {
+            "load_ns": 336304027,
+            "query_ns": 238982974,
+            "queries": 79,
+            "first_query_ns": 20673,
+            "run_ns": 2352935380
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.36050181800237624,
+          "phases": {
+            "load_ns": 304506710,
+            "rule_ns": 5796459,
+            "run_ns": 40188173
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 0.43532122900069226,
+          "phases": {
+            "load_ns": 121190564,
+            "query_ns": 14185776,
+            "queries": 287,
+            "first_query_ns": 64628,
+            "run_ns": 286290827
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.13165052799740806,
+          "phases": {
+            "load_ns": 111682407,
+            "rule_ns": 1339659,
+            "run_ns": 7540211
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.12389663700014353,
+          "phases": {
+            "load_ns": 108977782,
+            "rule_ns": 912438,
+            "run_ns": 7010791
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 0.48194977000093786,
+          "phases": {
+            "load_ns": 123360381,
+            "query_ns": 16690407,
+            "queries": 287,
+            "first_query_ns": 73771,
+            "run_ns": 328132272
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 0.5085520230022667,
+          "phases": {
+            "load_ns": 131552555,
+            "query_ns": 16351765,
+            "queries": 287,
+            "first_query_ns": 67218,
+            "run_ns": 306947407
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.3562394420005148,
+          "phases": {
+            "load_ns": 328555597,
+            "rule_ns": 1297050,
+            "run_ns": 10045062
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        }
+      ],
+      "summary": [
+        {
+          "corpus": "compiler",
+          "implementation": "native",
+          "whole_process_median_seconds": 2.856782552000368,
+          "load_median_seconds": 0.355613104,
+          "run_median_seconds": 2.35293538
+        },
+        {
+          "corpus": "compiler",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.5035234059978393,
+          "load_median_seconds": 0.430048437,
+          "run_median_seconds": 0.043984868
+        },
+        {
+          "corpus": "repository",
+          "implementation": "native",
+          "whole_process_median_seconds": 0.48194977000093786,
+          "load_median_seconds": 0.123360381,
+          "run_median_seconds": 0.306947407
+        },
+        {
+          "corpus": "repository",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.13165052799740806,
+          "load_median_seconds": 0.111682407,
+          "run_median_seconds": 0.007540211
+        }
+      ]
+    },
+    "fourth": {
+      "rounds": [
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 5.056277848998434,
+          "phases": {
+            "load_ns": 458845940,
+            "query_ns": 568821230,
+            "queries": 243,
+            "first_query_ns": 22999,
+            "run_ns": 4348225691
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.6267906680004671,
+          "phases": {
+            "load_ns": 462784744,
+            "rule_ns": 83342105,
+            "run_ns": 145927490
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.47980915700100013,
+          "phases": {
+            "load_ns": 345887635,
+            "rule_ns": 67654929,
+            "run_ns": 116921388
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 3.6602110849999008,
+          "phases": {
+            "load_ns": 438871412,
+            "query_ns": 432856796,
+            "queries": 243,
+            "first_query_ns": 29818,
+            "run_ns": 3023020908
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 3.4743755589988723,
+          "phases": {
+            "load_ns": 344120015,
+            "query_ns": 341817626,
+            "queries": 243,
+            "first_query_ns": 21260,
+            "run_ns": 2921882753
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "compiler",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.4932571210010792,
+          "phases": {
+            "load_ns": 341747856,
+            "rule_ns": 78058925,
+            "run_ns": 131468316
+          },
+          "bytes": 5010,
+          "sha256": "2eb068b178382b431a1f7613833d7d9edcb5e408b8fd60d89a0b2f8c9d0678f6"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "native",
+          "elapsed_seconds": 0.46552553299989086,
+          "phases": {
+            "load_ns": 123764770,
+            "query_ns": 18262508,
+            "queries": 312,
+            "first_query_ns": 135562,
+            "run_ns": 306910145
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 0,
+          "implementation": "go",
+          "elapsed_seconds": 0.13109610399988014,
+          "phases": {
+            "load_ns": 112587167,
+            "rule_ns": 2647108,
+            "run_ns": 10042128
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "go",
+          "elapsed_seconds": 0.14045244199951412,
+          "phases": {
+            "load_ns": 121792218,
+            "rule_ns": 2489852,
+            "run_ns": 10153842
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 1,
+          "implementation": "native",
+          "elapsed_seconds": 0.42074016599872266,
+          "phases": {
+            "load_ns": 105922971,
+            "query_ns": 17458930,
+            "queries": 312,
+            "first_query_ns": 57847,
+            "run_ns": 288600047
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "native",
+          "elapsed_seconds": 0.5155084340003668,
+          "phases": {
+            "load_ns": 115471767,
+            "query_ns": 18193319,
+            "queries": 312,
+            "first_query_ns": 77871,
+            "run_ns": 367587542
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        },
+        {
+          "corpus": "repository",
+          "round": 2,
+          "implementation": "go",
+          "elapsed_seconds": 0.12262882900176919,
+          "phases": {
+            "load_ns": 103666106,
+            "rule_ns": 2803018,
+            "run_ns": 11031540
+          },
+          "bytes": 18485,
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+        }
+      ],
+      "summary": [
+        {
+          "corpus": "compiler",
+          "implementation": "native",
+          "whole_process_median_seconds": 3.6602110849999008,
+          "load_median_seconds": 0.438871412,
+          "run_median_seconds": 3.023020908
+        },
+        {
+          "corpus": "compiler",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.4932571210010792,
+          "load_median_seconds": 0.345887635,
+          "run_median_seconds": 0.131468316
+        },
+        {
+          "corpus": "repository",
+          "implementation": "native",
+          "whole_process_median_seconds": 0.46552553299989086,
+          "load_median_seconds": 0.115471767,
+          "run_median_seconds": 0.306910145
+        },
+        {
+          "corpus": "repository",
+          "implementation": "go",
+          "whole_process_median_seconds": 0.13109610399988014,
+          "load_median_seconds": 0.112587167,
+          "run_median_seconds": 0.010153842
+        }
+      ]
+    }
+  }
+}

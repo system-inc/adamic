@@ -1,0 +1,32 @@
+{
+  "root": [
+    "wave_12_test.go:127: no_redeclare.a mutant exits 0, empty stderr, byte oracle catches byte 48",
+    "wave_12_test.go:127: no_test_on_global_regex.a mutant exits 0, empty stderr, byte oracle catches byte 5520",
+    "wave_12_test.go:127: no_write_only_collection.a mutant exits 0, empty stderr, byte oracle catches byte 9174",
+    "wave_12_test.go:155: released handle panics 70; retaining registry mutant exits 0 and is caught"
+  ],
+  "next": [
+    "agreement_test.go:185: no_process_exit_after_output.a mutant exits 0, empty stderr, byte comparison catches byte 3910",
+    "agreement_test.go:185: no_uncleared_race_timeout.a mutant exits 0, empty stderr, byte comparison catches byte 4565",
+    "agreement_test.go:185: require_blocking_standard_streams.a mutant exits 0, empty stderr, byte comparison catches byte 714",
+    "agreement_test.go:200: ancestry-declaration raw question mutant exits 0, empty stderr, byte comparison catches byte 64",
+    "agreement_test.go:200: signature-body raw question mutant exits 0, empty stderr, byte comparison catches byte 3910",
+    "agreement_test.go:200: import-target raw question mutant exits 0, empty stderr, byte comparison catches byte 13189",
+    "agreement_test.go:219: all three new questions reject released handles with panic 70; registry retention mutant exits 0 and is caught"
+  ],
+  "third": [
+    "agreement_test.go:128: no_new_func.a mutant exits 0, empty stderr, byte comparison catches byte 1407",
+    "agreement_test.go:128: no_new_native_nonconstructor.a mutant exits 0, empty stderr, byte comparison catches byte 57",
+    "agreement_test.go:128: no_new_wrappers.a mutant exits 0, empty stderr, byte comparison catches byte 573",
+    "agreement_test.go:141: declaration-file raw question mutant exits 0, empty stderr, byte comparison catches byte 57",
+    "agreement_test.go:160: new question rejects released handles with panic 70; registry retention mutant exits 0 and is caught"
+  ],
+  "fourth": [
+    "agreement_test.go:135: prefer_regex_literals.a mutant exits 0, empty stderr, byte comparison catches byte 517",
+    "agreement_test.go:135: prefer_rest_params.a mutant exits 0, empty stderr, byte comparison catches byte 5597",
+    "agreement_test.go:135: exhaustive_deps.a mutant exits 0, empty stderr, byte comparison catches byte 6967",
+    "agreement_test.go:135: effect_hook_name.a mutant exits 0, empty stderr, byte comparison catches byte 8339",
+    "agreement_test.go:148: binding-presence raw question mutant exits 0, empty stderr, byte comparison catches byte 58",
+    "agreement_test.go:167: new question rejects released handles with panic 70; registry retention mutant exits 0 and is caught"
+  ]
+}
