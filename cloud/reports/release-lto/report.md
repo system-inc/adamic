@@ -1,7 +1,7 @@
-Built: shipped native release ThinLTO, complete semantic link flags, opt-in release oracle, recursion/FMA mutant proofs; ordinary lanes unchanged.  
-Commits: implementation b2c8836c9934e343f3300fb409524ab213828941; runtime 36669add9db2bbc06d486a58c37024f880e94a75 merged first as 574ce70a58cde3f27715bc8ceadd437ae6dfbc41.  
-Commands and outputs: release oracle 420 fixtures PASS; parse 15.67% and service 13.83% less user time; full good outputs identical.  
-Mutants: link-only tail-call and contraction omissions caught; nonshipping LTO policy mutants caught; compiled AST/service byte changes caught; release-oracle one-byte change caught; instruction-accounting +1 caught.  
+Built: shipped native release ThinLTO, complete semantic link flags, opt-in release oracle, recursion/FMA mutant proofs; ordinary lanes unchanged.
+Commits: implementation b2c8836c9934e343f3300fb409524ab213828941; runtime 36669add9db2bbc06d486a58c37024f880e94a75 merged first as 574ce70a58cde3f27715bc8ceadd437ae6dfbc41.
+Commands and outputs: release oracle 420 fixtures PASS; parse 15.67% and service 13.83% less user time; full good outputs identical.
+Mutants: runtime dtoa.c-only contraction omission and link-only tail-call and contraction omissions caught; nonshipping LTO policy mutants caught; compiled AST/service byte changes caught; release-oracle one-byte change caught; instruction-accounting +1 caught.
 Not covered: complete root/cohere gates, hardware cycles/IPC, host-wide isolation, macOS execution, WASI/TSGo shipping execution, or LTO atop activated SCC stack-check elimination.
 
 # Shipped native release ThinLTO
@@ -255,3 +255,25 @@ placement unchanged**, and names the missing frame-headroom proof. The current
 runtime also still emits stack checks in every function. Calling this an LTO
 measurement atop removed non-recursive checks would be false. Re-run these
 same helpers once the active optimization lands.
+
+## Runtime compilation contraction audit
+
+The developer-tools GCC-lane request is covered alongside the link-step tests
+by TestRuntimeCompilesEveryUnitUnfused. It builds real cold runtime archives
+through RuntimeLibrary for shipped release, ordinary sanitized oracle and
+counted oracle policies, records the actual clang invocations, and checks all
+48 unique runtime C files in each build. The last effective -ffp-contract=
+option must be off; dtoa.c and ieee754.c are explicitly required.
+
+The real mutant wrapper removes only -ffp-contract=off from dtoa.c compilation.
+The archive still builds successfully, then the command audit catches the
+missing protection. This proof does not depend on incidental FMA generation
+in a particular runtime function. The separate release arithmetic fixture
+continues to prove the link-only mutant by changed output on an FMA target.
+
+Command: go test -v -count=1 -timeout 30m ./internal/native
+-run '^Test(RuntimeCompilesEveryUnitUnfused|ReleaseFlagsReachLink|NonShippingFlagsStayIdentical)$'.
+PASS in 15.865s; all three 48-unit audits passed and the dtoa.c mutant was
+caught. Output: [runtime-compile-audit.log](implementation-evidence/runtime-compile-audit.log).
+Only tests and documentation changed; measured production flags and binaries
+remain the same.

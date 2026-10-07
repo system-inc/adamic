@@ -39,6 +39,12 @@ host reports FMA; on arm64 FMA is always available. Node and the protected
 ThinLTO build print three zeros. The missing-option mutant prints
 5.551115123125783e-17, -5.551115123125783e-17 and -8.326672684688674e-19.
 
+TestRuntimeCompilesEveryUnitUnfused makes cold runtime.a builds for shipped
+release, ordinary sanitized oracle and counted oracle policies. It audits the
+actual clang command for every runtime C unit, including dtoa.c and ieee754.c,
+and requires the effective contraction option to be -ffp-contract=off. A real
+dtoa.c-only omission mutant must compile successfully and fail that audit.
+
 The default test/oracle policy remains -O2, or
 -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all when sanitized,
 with existing count/slab/CPU options in their existing order.
