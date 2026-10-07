@@ -50,3 +50,11 @@ Fresh wildcard fetch audited 575 origin refs, all 20 distinct helper claim blobs
 - github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].enterDisconnected
 
 Four consumers tie maximum remaining fan-out: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks. Territory: from_wave1_01/enter_disconnected.a and owned driver/capture/tests/evidence. Preserve incoming OR previous-current reachability, then settle handed-block reachability and current identity using enter; include same-block aliases and reachable-to-unreachable changes. Actual private Go calls on every consumer test suite plus state controls; source Node, emitted JavaScript, sanitized native, compiling comparison-only mutants. No regex or shared harness changes. Current state must have a block, as valid Go builder calls do; nil-current panic text is outside this contract. Push claim before implementation.
+
+## Sixth helper
+
+enterDisconnected green on all three backends and pushed at 7f103900a before this reservation. Fresh wildcard fetch audited 578 origin refs, all 20 distinct helper claim blobs and HELPERS.md; maximum unclaimed fan-out remains four. Claim before code:
+
+- github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isThrowableIdentifier
+
+Four consumers: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks. Territory: from_wave1_01/is_throwable_identifier.a and owned handed-context model/driver/capture/Go tests/evidence. Preserve parent absence, JSX tag identity, binding-element rest/property-name exclusions and object-binding ancestry, declaration-name exclusions, all other numeric parent kinds. The caller supplies the inspected parent identity relationships and numeric kinds, no string-kind dispatch. Compare actual private Go helper on every consumer's upstream test suite plus parsed-source controls and compiling semantic mutants, source Node, emitted JavaScript, sanitized native. No shared harness or regex changes. Push claim before code.
