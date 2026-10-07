@@ -1,0 +1,4 @@
+for (; value += 1;) {}
+if (value = other) {}
+while (value /* = */ = other) {}
+((value = other)) ? yes : no;
