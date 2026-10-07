@@ -1,3 +1,17 @@
+# Permanent JSDoc mutants: third checkpoint
+
+The permanent jsdoc-mutants.py runs from run.sh. Dropping tags at the parser's
+return site still completes on all 81 inputs and retains all 4,149 JSDoc nodes,
+but loses all 3,846 tags; cmp exits 1 against the extended reference. This is
+the same source mutation that left the legacy SHA unchanged. A separate actual
+JSDoc diagnostic code mutation on directed JavaScript input changes exactly
+one row (1110 to 1111); trees and parse diagnostics stay identical, cmp exits 1.
+Reports and logs: evidence/jsdoc-mutants. Full/slice reference remains
+36,429,231 bytes, SHA256 686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+Native status: syntax tree and parse diagnostics identical on Node, JSDoc unverified.
+
+---
+
 # Extended JSDoc dump: second checkpoint
 
 Status until native proof: **syntax tree and parse diagnostics identical on

@@ -74,3 +74,8 @@ All tests and runs write output to logs. No repository-wide gate is claimed.
 The shared declaration slice and full tree match on Node. The native build
 remains blocked; see BLOCKERS.md. WITNESS.md compares only the legacy ordinary
 syntax projection and does not establish JSDoc coverage.
+
+The permanent `jsdoc-mutants.py`, invoked by `run.sh`, requires the real parser's
+no-tags return-site mutation to change the extended dump. It also mutates one
+actual JSDoc diagnostic code on the directed JS corpus, requiring precisely one
+diagnostic row to change. Both mutants must execute successfully and fail cmp.

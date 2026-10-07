@@ -80,6 +80,7 @@ rows['mutant'] ['caught_by'] = 'cmp of complete preorder dump; both Node executi
 (out / 'report.json').write_text(json.dumps(rows, indent=2) + '\n')
 print(json.dumps(rows, indent=2))
 PY
+python3 "$here/jsdoc-mutants.py" "$tree" "$inputs" "$out/jsdoc-mutants" --baseline "$out/node.dump" > "$out/jsdoc-mutants.log" 2>&1
 if [ -n "$native" ]; then
     "$native" "$inputs" "$out/manifest" > "$out/native.dump" 2> "$out/native.stderr"
     cmp "$out/node.dump" "$out/native.dump" > "$out/native-comparison.log" 2>&1
