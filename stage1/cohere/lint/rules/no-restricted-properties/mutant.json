@@ -1,6 +1,6 @@
 {
-  "name": "invent-unconfigured-restriction",
+  "name": "configured-restriction-ignored",
   "file": "rule.a",
-  "from": "if(root < 0) { panic('invalid no-restricted-properties options'); }",
-  "to": "if(root < 0) { panic('invalid no-restricted-properties options'); }\n        this.properties.set('bar', root);"
+  "from": "this.options.field(root, 'Restrictions')",
+  "to": "this.options.field(root, 'IgnoredRestrictions')"
 }
