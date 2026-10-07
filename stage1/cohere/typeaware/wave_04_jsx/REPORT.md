@@ -158,3 +158,7 @@ Ported and independently compared ordered numeric value-attribute extraction, in
 ## Named kind contract correction
 
 The latest user instruction replaces numeric listener metadata with upstream ast.Kind names. All twelve declarations are corrected and independently checked. Actual Descriptor deserialization now succeeds, superseding the earlier numeric registry blocker; source implementation remains unfinished. See [NAMED_KINDS.md](NAMED_KINDS.md). No new claims.
+
+## Landing on b8fb957aa
+
+Preserving merge history resolved the earlier rebase conflict without shared edits. Current main and named harness 41eb6eab2 are adopted, and all six completed-rule and partial-kernel oracles are green again. See [LANDING_B8.md](LANDING_B8.md). JSX source claims remain unfinished; no new claims.
