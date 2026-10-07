@@ -1,0 +1,4 @@
+// test262 built-ins/Array/prototype/indexOf/15.4.4.14-5-10.js, reduced.
+// TypeScript infers {}[]; native object slots cannot hold the numbers.
+const target = {};
+console.log(`${[0, target, 2].indexOf(target, 2)}`);

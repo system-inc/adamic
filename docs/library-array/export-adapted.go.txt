@@ -1,0 +1,15 @@
+package main
+import("os"; "path/filepath"; "encoding/json"; "fmt")
+func main() {
+ root := "/workspace/test262/test"
+ out := "/tmp/library-array-sources"
+ os.MkdirAll(out,0755)
+ encoder := json.NewEncoder(os.Stdout)
+ err := filepath.WalkDir(filepath.Join(root,"built-ins/Array"),func(path string, entry os.DirEntry, err error) error {
+ if err != nil {return err}; if entry.IsDir() || filepath.Ext(path)!=".js" {return nil}
+ rel,_ := filepath.Rel(root,path); data,err:=os.ReadFile(path); if err!=nil{return err}
+ test:=classify(rel,string(data),true)
+ if test.Skip=="" {target:=filepath.Join(out,rel+".ts"); os.MkdirAll(filepath.Dir(target),0755); if err:=os.WriteFile(target,[]byte(test.Program),0644);err!=nil{return err}}
+ return encoder.Encode(test)
+ }); if err!=nil {fmt.Fprintln(os.Stderr,err);os.Exit(1)}
+}
