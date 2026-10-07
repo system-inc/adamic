@@ -186,3 +186,7 @@ See [SOURCE_RULES.md](SOURCE_RULES.md). Both reserved source visitors now match 
 ## Constructed-context source candidate
 
 [CONSTRUCTED_CONTEXT.md](CONSTRUCTED_CONTEXT.md) records the native implementation and retained production-Go satisfies panic. 109/110 inputs match, every input ran under sanitizers, both corpora match, six mutants are caught. Complete parity remains blocked; no new claims.
+
+## Current main typeof landing
+
+[LANDING_D3.md](LANDING_D3.md) records the rebase onto main b6b1538b0 and lint area d3a37422c. Eight completed source-rule oracles are freshly green, including mutants, sanitizers and handles. Constructed-context remains blocked by the retained production-Go satisfies panic; no new claims.
