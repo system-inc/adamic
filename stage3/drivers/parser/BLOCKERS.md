@@ -1,3 +1,47 @@
+# Array.isArray predicate probe: adapted signature green
+
+Merged host-blockers a85a9cb1 into unpushed scratch e54b4179, producing
+80aef697. Compiler rebuild succeeds after scratch conflict resolution.
+The requested native-array-is-array-predicate.a now uses `isArray(value: unknown)`
+instead of `any`, exactly as sanctioned and consistent with adaptation 40.
+The function statements and calls are unchanged; validated slice files were not
+edited. This is a signature-adapted row-8 rerun, not an unchanged eleven-probe run.
+
+Original source on Node, adapted source on Node and native all print
+`true\nfalse\n`, exit 0 with empty stderr. stdout and stderr comparisons exit 0.
+The native binary is 436,368 bytes. A one-byte change to its actual stdout is
+caught (cmp exit 1). TypeScript 6.0.3's emitted JavaScript is byte-identical for
+the original any and adapted unknown signatures. A source mutant negating the
+real Array.isArray return changes the emitted JavaScript and that guard catches
+it (cmp exit 1). Both erased outputs and both mutants are retained.
+
+Focused array-predicate element-contract, narrowing, tuple-refusal and unknown
+observation lower tests pass in 0.356s. No full gate, complete oracle, counts
+gate or sanitizers ran. Probe runtime coverage is direct calls with array and
+object inputs; no complete parser or general narrowing-runtime claim is made.
+
+The merge also imports truthiness, labels and void paths. Conflicts were resolved
+while preserving current checked-cast preflight, namespace and import-cycle
+readiness, detached own-property handling, open numeric/flag enums and Node/record
+bindings. Existing generic predicate-flow naming and instantiated types were
+retained while adding the trusted Array.isArray narrowing. Initial build errors
+for the stale enumElement helper and duplicated export case were resolved using
+the current enum dispatch and incoming named-export handler. Exact ancestry,
+conflict resolutions and scratch merge patch are in evidence/front17/report.json
+and scratch-merge.patch.gz. Compiler changes remain unpushed; no proof bypass
+or temporary source adaptation was added.
+
+Full slice and all-eleven-probe reruns remain held for lane 2. core.ts:204:12 is
+still the last observed first real slice stop. This run establishes row 8 only,
+with the approved signature; no fresh cumulative probe count is claimed.
+Native extended 81-file and 10,406-case acceptance remain unverified.
+
+See evidence/front17/probe/report.json and run-probe.py for commands, exact
+outputs and reproduction (the original Node source is in scratch at the path
+recorded by that report). The emitted original JavaScript is retained in evidence.
+
+---
+
 # Detached own-property and Debug namespace probes: both runtime comparisons green
 
 Merged records-lowering 198ff780 and namespaces-tsc f893faf2 into unpushed

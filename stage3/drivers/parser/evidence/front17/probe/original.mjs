@@ -1,5 +1,6 @@
+"use strict";
 // From TypeScript 6.0.3, src/compiler/core.ts:1750-1753
-function isArray(value: unknown): value is readonly unknown[] {
+function isArray(value) {
     return Array.isArray(value);
 }
 console.log(`${isArray([1])}`);
