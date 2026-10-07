@@ -32,6 +32,7 @@ func TestWave11ListenerDeclarationsAndMutants(t *testing.T) {
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	source := h.write("listener-source.ts", "export {};\n")
 	truth := h.must("listeners-go", exec.Command(oracle, config, source))
+	wave11CheckManifests(h, truth.stdout)
 	got := h.must("listeners-native", exec.Command(binary))
 	if len(truth.stderr) != 0 || len(got.stderr) != 0 || !bytes.Equal(truth.stdout, got.stdout) || bytes.Count(truth.stdout, []byte("\n")) != 15 {
 		t.Fatalf("listener declarations differ from production Go registrations: Go %q native %q", truth.stdout, got.stdout)

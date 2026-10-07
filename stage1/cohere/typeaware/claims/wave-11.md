@@ -163,3 +163,12 @@ API limits are in ../WAVE_11_LISTENERS_REPORT.md. The shared parser still expose
 string kinds and has no numeric handed-node callback API, so the execution-path
 conversion remains pending. Three React reservations remain blocked; no new
 claims were made.
+
+## Landing on main f8013f0b and numeric manifests
+
+Rebased onto current main f8013f0b. All six worker oracle suites, bridge and
+filtered compiler checks passed again; all 35 mutant observations were caught.
+Fifteen completed rules now have numeric rule.json kinds metadata independently
+checked against live Go registrations. Existing string-kind execution awaits
+the shared handed-node API. React source-to-HIR reservations remain blocked;
+no new rules claimed. See ../WAVE_11_F801_REPORT.md for logs and limitations.
