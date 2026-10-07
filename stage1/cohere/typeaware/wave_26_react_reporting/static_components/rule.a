@@ -1,0 +1,136 @@
+import {panic, utf8Length} from 'adamic';
+import {PreferenceStructure} from '../../preference_structure.a';
+import {Diagnostic} from '../../diagnostic.ts';
+import {ReactHIR} from '../react_hir.a';
+import {HIRData} from '../hir_data.a';
+import {StaticComponents} from './index.a';
+
+export class StaticComponentsRule {
+    readonly syntax: PreferenceStructure;
+    readonly data: HIRData;
+    readonly source: string;
+    readonly graphs = new Map<string, number>();
+    readonly nodes = new Map<string, number>();
+    readonly findings: Diagnostic[] = [];
+    constructor(syntax: PreferenceStructure, data: HIRData, source: string) {
+        this.source = source;
+        this.syntax = syntax;
+        this.data = data;
+    }
+    run(): void {
+        for(let i = 0; i < this.syntax.nodes.length; i++) {
+            const node = this.syntax.node(i + 1);
+            this.nodes.set(`${node.kind}:${node.start}:${node.end}`, i + 1);
+        }
+        for(const graph of this.data.items(this.data.root)) {
+            const node = this.data.field(this.data.fields(graph), 'Node');
+            this.graphs.set(this.key(node), graph);
+        }
+        this.walk(1);
+    }
+    key(node: number): string {return `${this.data.s(node, 'Kind')}:${this.data.n(node, 'Pos')}:${this.data.n(node, 'End')}`;}
+    functionLike(kind: string): boolean {return ['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration','GetAccessor','SetAccessor','Constructor'].includes(kind);}
+    walk(id: number): void {
+        const node = this.syntax.node(id);
+        if(this.functionLike(node.kind)) {
+            const graph = this.graphs.get(`${node.kind}:${node.start}:${node.end}`);
+            if(graph !== undefined) {this.analyze(graph);}
+            return;
+        }
+        for(const child of node.children) {this.walk(child);}
+    }
+    jsx(id: number): boolean {
+        if(id === 0) {return false;}
+        const node = this.syntax.node(id);
+        if(['JsxElement','JsxSelfClosingElement','JsxFragment'].includes(node.kind)) {return true;}
+        if(this.functionLike(node.kind) || node.kind === 'ClassDeclaration' || node.kind === 'ClassExpression') {return false;}
+        for(const child of node.children) {if(this.jsx(child)) {return true;}}
+        return false;
+    }
+    analyze(graph: number): void {
+        const d = this.data;
+        const fields = d.fields(graph);
+        const rawNode = d.field(fields, 'Node');
+        const syntaxId = this.nodes.get(this.key(rawNode));
+        const unit = d.n(fields, 'Kind') !== 0 && syntaxId !== undefined && this.jsx(this.syntax.node(syntaxId).role(3));
+        if(!unit) {
+            for(const nested of d.items(d.field(fields, 'Functions'))) {this.analyze(nested);}
+            return;
+        }
+        this.report(this.graphs.get(this.key(rawNode)) ?? graph);
+    }
+    identifier(graph: number, id: number): number {
+        const entries = this.data.items(this.data.field(this.data.fields(graph), 'Identifiers'));
+        const entry = entries[id];
+        if(entry === undefined || this.data.null(entry)) {return -1;}
+        const node = this.data.field(this.data.fields(entry), 'Node');
+        return this.data.null(node) ? -1 : node;
+    }
+    token(node: number): number {
+        const id = this.nodes.get(this.key(node));
+        if(id === undefined) {panic('missing raw HIR syntax node');}
+        return this.syntax.node(id).token;
+    }
+    offset(byte: number): number {
+        let bytes = 0;
+        let at = 0;
+        while(bytes < byte) {
+            const code = this.source.codePointAt(at) ?? panic('invalid raw HIR byte range');
+            bytes += code <= 127 ? 1 : code <= 2047 ? 2 : code <= 65535 ? 3 : 4;
+            at += code > 65535 ? 2 : 1;
+        }
+        if(bytes !== byte) {panic('raw HIR span splits a character');}
+        return at;
+    }
+    report(graph: number): void {
+        const d = this.data;
+        const fields = d.fields(graph);
+        const instructions = d.items(d.field(fields, 'Instructions'));
+        const dynamic = new Map<number, number>();
+        for(const block of d.items(d.field(fields, 'Blocks'))) {
+            const bf = d.fields(block);
+            for(const phi of d.items(d.field(bf, 'Phis'))) {
+                const pf = d.fields(phi);
+                const operands = d.reader.get(d.field(pf, 'Operands')).children;
+                for(const property of operands) {
+                    const pair = d.reader.get(property).children;
+                    const operand = pair[1] ?? panic('missing phi operand');
+                    const creator = dynamic.get(d.place(operand));
+                    if(creator !== undefined) {dynamic.set(d.place(d.field(pf, 'Place')), creator);break;}
+                }
+            }
+            for(const index of d.items(d.field(bf, 'Instructions'))) {
+                const instruction = instructions[d.number(index)] ?? panic('missing HIR instruction');
+                if(d.null(instruction)) {continue;}
+                const inf = d.fields(instruction);
+                const target = d.place(d.field(inf, 'LValue'));
+                const value = d.field(inf, 'Value');
+                const tag = d.tag(value);
+                const vf = d.fields(value);
+                if(tag === 'FunctionExpression') {dynamic.set(target, target);}
+                else if(tag === 'CallExpression' || tag === 'NewExpression') {dynamic.set(target, d.place(d.field(vf, 'Callee')));}
+                else if(tag === 'MethodCall') {dynamic.set(target, d.place(d.field(vf, 'Property')));}
+                else if(tag === 'LoadLocal' || tag === 'StoreLocal') {
+                    const creator = dynamic.get(d.place(d.field(vf, tag === 'LoadLocal' ? 'Place' : 'Value')));
+                    if(creator !== undefined) {
+                        dynamic.set(target, creator);
+                        if(tag === 'StoreLocal') {dynamic.set(d.place(d.field(vf, 'LValue')), creator);}
+                    }
+                }
+                else if(tag === 'JsxExpression') {
+                    const place = d.field(d.fields(d.field(vf, 'Tag')), 'Place');
+                    if(d.null(place)) {continue;}
+                    const creator = dynamic.get(d.place(place));
+                    if(creator === undefined) {continue;}
+                    const creation = this.identifier(graph, creator);
+                    const created = creation < 0 ? '' : this.source.slice(this.offset(this.token(creation)), this.offset(d.n(creation, 'End')));
+                    const node = this.identifier(graph, d.place(place));
+                    const range = d.field(d.fields(place), 'Range');
+                    const start = node < 0 ? d.n(range, 'Pos') : this.token(node);
+                    const end = node < 0 ? d.n(range, 'End') : d.n(node, 'End');
+                    this.findings.push(new StaticComponents().render(created, start, end));
+                }
+            }
+        }
+    }
+}

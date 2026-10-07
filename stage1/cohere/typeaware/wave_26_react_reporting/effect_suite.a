@@ -1,0 +1,33 @@
+import {panic, utf8Length, programArguments, readTextFile, tsgoProgram, tsgoRelease} from 'adamic';
+import {written} from '../../../typescript/parser/nodes.ts';
+import {PreferenceStructure} from '../preference_structure.a';
+import {ReactHIR} from './react_hir.a';
+import {HIRData} from './hir_data.a';
+import {SetStateInEffectRule} from './set_state_in_effect/rule.a';
+const args = programArguments();
+const config = args[0] ?? panic('missing config');
+const manifest = readTextFile(args[1] ?? panic('missing manifest'));
+if(manifest.kind !== 'Ok') {panic('cannot read manifest');}
+const files = manifest.text.split('\n').filter(file => file !== '');
+const program = tsgoProgram(config, files);
+let count = 0;
+for(const file of files) {
+    const source = readTextFile(file);
+    if(source.kind !== 'Ok') {panic('cannot read source');}
+    const syntax = new PreferenceStructure(program, file, utf8Length(source.text));
+    const empty = new HIRData('[]');
+    const prefilter = new SetStateInEffectRule(syntax, empty, source.text);
+    let candidate = false;
+    for(let i = 0; i < syntax.nodes.length; i++) {if(prefilter.unit(i + 1)) {candidate = true;break;}}
+    if(!candidate) {console.log(`file\t${written(file)}`);continue;}
+    const raw = new ReactHIR(program, file, 0, utf8Length(source.text), 'SourceFile', true);
+    const data = new HIRData(raw.serialized);
+    const rule = new SetStateInEffectRule(syntax, data, source.text);
+    rule.run();
+    const lines = rule.findings.map(finding => finding.written()).sort((a, b) => a < b ? -1 : a > b ? 1 : 0);
+    count += lines.length;
+    console.log(`file\t${written(file)}`);
+    for(const line of lines) {console.log(line);}
+}
+console.log(`findings ${count}`);
+tsgoRelease(program);

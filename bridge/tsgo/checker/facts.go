@@ -203,6 +203,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "react-hir": return p.reactHIR(out, c, node, question)
 	case "binding-structure": return p.bindingStructure(out, source, node, question)
 	case "binding-origin": return p.bindingOrigin(out, c, node, question)
 	case "constructor-expression": return p.constructorExpression(out, node, question)

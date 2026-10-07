@@ -149,3 +149,16 @@ JavaScript, sanitizer and diagnostic-only mutant agreement. Their source
 analyses are still unfinished and explicitly refuse with NotYet. This is not
 a completion claim. See wave_26_react_reporting/REPORT.md for the precise
 reporting-only scope and missing HIR engineering work. No further rules claimed.
+
+### Sixth batch native source analyses
+
+The three claimed React rules now have standalone native .a source validators
+in wave_26_react_reporting/*/rule.a and their own suite entry points. An isolated
+raw HIR question provides graph and type facts; all lint decisions are native.
+129 controls and 69 findings, plus 77 compiler and 287 repository files per rule,
+match production Go normally and under sanitizers. Original-source Node agrees.
+Three analysis mutants, raw SSA and released-handle mutants are caught. The
+previous fifteen ports re-green on main e8ba3d5d. See
+wave_26_react_reporting/SOURCE_REPORT.md for commands, complete mutation logs,
+timings and limits. Checker-linked JavaScript emission still refuses in the
+shared CLI; shared registration remains with its owner. No new claims taken.

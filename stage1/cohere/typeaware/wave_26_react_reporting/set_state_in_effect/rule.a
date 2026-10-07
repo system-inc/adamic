@@ -1,0 +1,370 @@
+import {panic, utf8Length} from 'adamic';
+import {PreferenceStructure} from '../../preference_structure.a';
+import {Diagnostic} from '../../diagnostic.ts';
+import {ReactHIR} from '../react_hir.a';
+import {HIRData} from '../hir_data.a';
+import {SetStateInEffect} from './index.a';
+
+export class SetStateInEffectRule {
+    readonly syntax: PreferenceStructure;
+    readonly data: HIRData;
+    readonly source: string;
+    readonly graphs = new Map<string, number>();
+    readonly nodes = new Map<string, number>();
+    readonly findings: Diagnostic[] = [];
+    constructor(syntax: PreferenceStructure, data: HIRData, source: string) {
+        this.source = source;
+        this.syntax = syntax;
+        this.data = data;
+    }
+    run(): void {
+        for(let i = 0; i < this.syntax.nodes.length; i++) {
+            const node = this.syntax.node(i + 1);
+            this.nodes.set(`${node.kind}:${node.start}:${node.end}`, i + 1);
+        }
+        for(const graph of this.data.items(this.data.root)) {
+            const node = this.data.field(this.data.fields(graph), 'Node');
+            this.graphs.set(this.key(node), graph);
+        }
+        this.walk(1);
+    }
+    key(node: number): string {return `${this.data.s(node, 'Kind')}:${this.data.n(node, 'Pos')}:${this.data.n(node, 'End')}`;}
+    functionLike(kind: string): boolean {return ['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration','GetAccessor','SetAccessor','Constructor'].includes(kind);}
+    walk(id: number): void {
+        const node = this.syntax.node(id);
+        if(this.functionLike(node.kind)) {
+            const graph = this.graphs.get(`${node.kind}:${node.start}:${node.end}`);
+            if(graph !== undefined) {this.analyze(graph);}
+            return;
+        }
+        for(const child of node.children) {this.walk(child);}
+    }
+    jsx(id: number): boolean {
+        if(id === 0) {return false;}
+        const node = this.syntax.node(id);
+        if(['JsxElement','JsxSelfClosingElement','JsxFragment'].includes(node.kind)) {return true;}
+        if(this.functionLike(node.kind) || node.kind === 'ClassDeclaration' || node.kind === 'ClassExpression') {return false;}
+        for(const child of node.children) {if(this.jsx(child)) {return true;}}
+        return false;
+    }
+    analyze(graph: number): void {
+        const d = this.data;
+        const rawNode = d.field(d.fields(graph), 'Node');
+        const syntaxId = this.nodes.get(this.key(rawNode));
+        if(syntaxId === undefined || !this.unit(syntaxId)) {
+            for(const nested of d.items(d.field(d.fields(graph), 'Functions'))) {this.analyze(nested);}
+            return;
+        }
+        this.report(this.graphs.get(this.key(rawNode)) ?? graph);
+    }
+    identifier(graph: number, id: number): number {
+        const entries = this.data.items(this.data.field(this.data.fields(graph), 'Identifiers'));
+        const entry = entries[id];
+        if(entry === undefined || this.data.null(entry)) {return -1;}
+        const node = this.data.field(this.data.fields(entry), 'Node');
+        return this.data.null(node) ? -1 : node;
+    }
+    token(node: number): number {
+        const id = this.nodes.get(this.key(node));
+        if(id === undefined) {panic('missing raw HIR syntax node');}
+        return this.syntax.node(id).token;
+    }
+    offset(byte: number): number {
+        let bytes = 0;
+        let at = 0;
+        while(bytes < byte) {
+            const code = this.source.codePointAt(at) ?? panic('invalid raw HIR byte range');
+            bytes += code <= 127 ? 1 : code <= 2047 ? 2 : code <= 65535 ? 3 : 4;
+            at += code > 65535 ? 2 : 1;
+        }
+        if(bytes !== byte) {panic('raw HIR span splits a character');}
+        return at;
+    }
+    hook(name: string): boolean {
+        return name.length >= 4 && name.slice(0, 3) === 'use' && ((name.slice(3, 4) >= 'A' && name.slice(3, 4) <= 'Z') || (name.slice(3, 4) >= '0' && name.slice(3, 4) <= '9'));
+    }
+    upper(name: string): boolean {return name.slice(0, 1) >= 'A' && name.slice(0, 1) <= 'Z';}
+    evidence(id: number): boolean {
+        if(id === 0) {return false;}
+        const n = this.syntax.node(id);
+        if(n.kind.startsWith('Jsx')) {return true;}
+        if(n.kind === 'CallExpression') {
+            const callee = n.role(0);
+            if(callee !== 0) {
+                const c = this.syntax.node(callee);
+                if(c.kind === 'Identifier' && this.hook(c.text)) {return true;}
+                if(c.kind === 'PropertyAccessExpression' && c.role(0) !== 0 && c.role(1) !== 0) {
+                    const object = this.syntax.node(c.role(0));const name = this.syntax.node(c.role(1));
+                    if(object.kind === 'Identifier' && this.upper(object.text) && name.kind === 'Identifier' && this.hook(name.text)) {return true;}
+                }
+            }
+        }
+        if(['FunctionDeclaration','FunctionExpression','ArrowFunction'].includes(n.kind)) {return false;}
+        for(const child of n.children) {if(this.evidence(child)) {return true;}}
+        return false;
+    }
+    unit(id: number): boolean {
+        const n = this.syntax.node(id);
+        let nameId = 0;
+        if(n.kind === 'FunctionDeclaration') {nameId = n.role(1);}
+        else if(n.kind === 'FunctionExpression' || n.kind === 'ArrowFunction') {
+            let p = n.parent;
+            while(p !== 0 && this.syntax.node(p).kind === 'ParenthesizedExpression') {p = this.syntax.node(p).parent;}
+            if(p !== 0 && this.syntax.node(p).kind === 'VariableDeclaration' && this.syntax.skip(this.syntax.node(p).role(0)) === id) {nameId = this.syntax.node(p).role(1);}
+        }
+        if(nameId === 0 || this.syntax.node(nameId).kind !== 'Identifier') {return false;}
+        const name = this.syntax.node(nameId).text;
+        if(!this.hook(name) && !this.upper(name)) {return false;}
+        if(!this.evidence(n.role(3))) {return false;}
+        if(this.hook(name)) {return true;}
+        if(n.parameters.length > 2) {return false;}
+        const first = n.parameters[0];
+        if(first !== undefined) {
+            const p = this.syntax.node(first);
+            if(this.source.slice(this.offset(p.token), this.offset(p.end)).startsWith('...')) {return false;}
+            for(const child of p.children) {
+                if(child !== p.role(0) && child !== p.role(1) && ['ArrayType','BigIntKeyword','BooleanKeyword','ConstructorType','FunctionType','LiteralType','NeverKeyword','NumberKeyword','StringKeyword','SymbolKeyword','TupleType'].includes(this.syntax.node(child).kind)) {return false;}
+            }
+        }
+        const second = n.parameters[1];
+        if(second !== undefined) {
+            const p = this.syntax.node(second).role(1);
+            if(p === 0) {return false;}
+            const name = this.syntax.node(p);
+            if(name.kind !== 'Identifier' || (!name.text.includes('ref') && !name.text.includes('Ref'))) {return false;}
+        }
+        return true;
+    }
+    setter(graph: number, id: number): boolean {
+        const d = this.data;
+        const entry = d.items(d.field(d.fields(graph), 'Identifiers'))[id];
+        return entry !== undefined && !d.null(entry) && d.s(d.fields(entry), 'TypeAliasName') === 'Dispatch';
+    }
+    empty: number[] = [];
+    successors = new Map<number, number[]>();
+    order: number[] = [];
+    visited = new Map<number, boolean>();
+    visit(id: number): void {
+        if(this.visited.has(id)) {return;}
+        this.visited.set(id, true);
+        for(const child of this.successors.get(id) ?? this.empty) {this.visit(child);}
+        this.order.push(id);
+    }
+    intersect(a: number, b: number, immediate: number[]): number {
+        let left = a;let right = b;
+        while(left !== right) {
+            while(left > right) {const next = immediate[left] ?? -1;if(next === -1 || next === left) {return right;}left = next;}
+            while(right > left) {const next = immediate[right] ?? -1;if(next === -1 || next === right) {return left;}right = next;}
+        }
+        return left;
+    }
+    postdominance(graph: number): Map<number, number> {
+        const d = this.data;
+        this.successors.clear();this.order = [];this.visited.clear();
+        for(const block of d.items(d.field(d.fields(graph), 'Blocks'))) {
+            const bf = d.fields(block);const id = d.n(bf, 'Id');
+            if(d.tag(d.field(bf, 'Terminal')) === 'Return') {const targets = this.successors.get(0) ?? this.empty.slice();targets.push(id);this.successors.set(0, targets);}
+            this.successors.set(id, d.items(d.field(bf, 'Predecessors')).map(p => d.number(p)));
+        }
+        this.visit(0);
+        const order = this.order.slice().reverse();
+        const position = new Map<number, number>();
+        for(let i = 0; i < order.length; i++) {position.set(order[i] ?? 0, i);}
+        const immediate = order.map(() => -1);immediate[0] = 0;
+        const predecessors = new Map<number, number[]>();
+        for(const [from, targets] of this.successors) {for(const to of targets) {const values = predecessors.get(to) ?? this.empty.slice();values.push(from);predecessors.set(to, values);}}
+        for(let changed = true; changed;) {
+            changed = false;
+            for(let i = 1; i < order.length; i++) {
+                let next = -1;
+                for(const pred of predecessors.get(order[i] ?? 0) ?? this.empty) {
+                    const index = position.get(pred);
+                    if(index === undefined || immediate[index] === -1) {continue;}
+                    next = next === -1 ? index : this.intersect(index, next, immediate);
+                }
+                if(next !== -1 && immediate[i] !== next) {immediate[i] = next;changed = true;}
+            }
+        }
+        const result = new Map<number, number>();
+        for(let i = 1; i < order.length; i++) {
+            const next = immediate[i] ?? -1;
+            if(next !== -1) {result.set(order[i] ?? 0, order[next] ?? 0);}
+        }
+        return result;
+    }
+    symbol(graph: number, id: number): string {
+        const d = this.data;
+        const entry = d.items(d.field(d.fields(graph), 'Identifiers'))[id];
+        return entry === undefined || d.null(entry) ? '' : d.s(d.fields(entry), 'TypeSymbolName');
+    }
+    first(vf: number): number {
+        const d = this.data;
+        const first = d.items(d.field(vf, 'Args'))[0];
+        if(first === undefined || d.reader.get(d.field(d.fields(first), 'Spread')).raw === 'true') {return -1;}
+        return d.place(d.field(d.fields(first), 'Place'));
+    }
+    captures(vf: number, nested: number, outer: Map<number, number>): Map<number, number> {
+        const d = this.data;
+        const captures = d.items(d.field(vf, 'Captures'));const context = d.items(d.field(d.fields(nested), 'Context'));
+        const inner = new Map<number, number>();
+        for(let i = 0; i < captures.length && i < context.length; i++) {
+            const origin = outer.get(d.place(captures[i] ?? panic('missing capture')));
+            if(origin !== undefined) {inner.set(d.place(context[i] ?? panic('missing context')), origin);}
+        }
+        return inner;
+    }
+    report(graph: number): void {
+        const d = this.data;
+        const fields = d.fields(graph);
+        const instructions = d.items(d.field(fields, 'Instructions'));
+        const setters = new Map<number, number>();
+        for(const block of d.items(d.field(fields, 'Blocks'))) {
+            for(const index of d.items(d.field(d.fields(block), 'Instructions'))) {
+                const instruction = instructions[d.number(index)] ?? panic('missing HIR instruction');if(d.null(instruction)) {continue;}
+                const inf = d.fields(instruction);const target = d.place(d.field(inf, 'LValue'));
+                const value = d.field(inf, 'Value');const tag = d.tag(value);const vf = d.fields(value);
+                if(tag === 'LoadLocal' || tag === 'LoadContext') {
+                    const origin = setters.get(d.place(d.field(vf, 'Place')));if(origin !== undefined) {setters.set(target, origin);}
+                }
+                else if(tag === 'StoreLocal') {
+                    const origin = setters.get(d.place(d.field(vf, 'Value')));if(origin !== undefined) {setters.set(target, origin);setters.set(d.place(d.field(vf, 'LValue')), origin);}
+                }
+                else if(tag === 'FunctionExpression') {
+                    const nested = d.items(d.field(fields, 'Functions'))[d.n(vf, 'Function')];if(nested === undefined || d.null(nested)) {continue;}
+                    let capturesOne = false;
+                    for(const captured of d.items(d.field(vf, 'Captures'))) {const id = d.place(captured);if(setters.has(id) || this.setter(graph, id)) {capturesOne = true;}}
+                    for(const context of d.items(d.field(d.fields(nested), 'Context'))) {const id = d.place(context);if(setters.has(id) || this.setter(nested, id)) {capturesOne = true;}}
+                    if(!capturesOne) {continue;}
+                    const callee = this.find(nested, this.captures(vf, nested, setters));if(callee >= 0) {setters.set(target, callee);}
+                }
+                else if(tag === 'CallExpression' || tag === 'MethodCall') {
+                    const first = this.first(vf);const origin = setters.get(first);if(origin === undefined) {continue;}
+                    const callee = d.place(d.field(vf, tag === 'CallExpression' ? 'Callee' : 'Property'));
+                    const name = this.symbol(graph, callee);
+                    if(name === 'useEffectEvent') {setters.set(target, origin);}
+                    else if(['useEffect','useLayoutEffect','useInsertionEffect'].includes(name)) {this.finding(graph, origin);}
+                }
+            }
+        }
+        for(const nested of d.items(d.field(fields, 'Functions'))) {this.report(nested);}
+    }
+    derived(graph: number, place: number, refs: Map<number, boolean>): boolean {
+        const id = this.data.place(place);return refs.has(id) || this.symbol(graph, id) === 'RefObject';
+    }
+    reads(graph: number, value: number, refs: Map<number, boolean>): boolean {
+        const d = this.data;const tag = d.tag(value);const vf = d.fields(value);
+        let fields: string[] = [];
+        if(tag === 'LoadLocal') {fields = ['Place'];}
+        else if(tag === 'StoreLocal' || tag === 'Destructure' || tag === 'UnaryExpression') {fields = ['Value'];}
+        else if(tag === 'PropertyLoad') {fields = ['Object'];}
+        else if(tag === 'ComputedLoad') {fields = ['Object','Property'];}
+        else if(tag === 'BinaryExpression') {fields = ['Left','Right'];}
+        else if(tag === 'CallExpression') {fields = ['Callee'];}
+        else if(tag === 'MethodCall') {fields = ['Receiver','Property'];}
+        for(const field of fields) {if(this.derived(graph, d.field(vf, field), refs)) {return true;}}
+        if(tag === 'CallExpression' || tag === 'MethodCall') {
+            for(const argument of d.items(d.field(vf, 'Args'))) {if(this.derived(graph, d.field(d.fields(argument), 'Place'), refs)) {return true;}}
+        }
+        return false;
+    }
+    pattern(pattern: number, refs: Map<number, boolean>): void {
+        const d = this.data;const tag = d.tag(pattern);const pf = d.fields(pattern);
+        if(tag === 'PlacePattern') {refs.set(d.place(d.field(pf, 'Place')), true);return;}
+        if(tag === 'ObjectPattern' || tag === 'ArrayPattern') {
+            for(const element of d.items(d.field(pf, tag === 'ObjectPattern' ? 'Properties' : 'Elements'))) {
+                const ef = d.fields(element);const value = d.field(ef, 'Value');if(!d.null(value)) {this.pattern(value, refs);}
+                const def = d.field(ef, 'Default');if(!d.null(def)) {refs.set(d.place(def), true);}
+            }
+            const rest = d.field(pf, 'Rest');if(!d.null(rest)) {refs.set(d.place(rest), true);}
+        }
+    }
+    controlled(graph: number, target: number, tree: Map<number, number>, refs: Map<number, boolean>): boolean {
+        const d = this.data;const blocks = d.items(d.field(d.fields(graph), 'Blocks'));
+        const byId = new Map<number, number>();for(const block of blocks) {byId.set(d.n(d.fields(block), 'Id'), block);}
+        const dominated = new Map<number, boolean>();const visited = new Map<number, boolean>();const queue = [target];
+        for(let at = 0; at < queue.length; at++) {
+            const current = queue[at] ?? 0;if(visited.has(current)) {continue;}visited.set(current, true);
+            const block = byId.get(current);if(block === undefined) {continue;}
+            for(const raw of d.items(d.field(d.fields(block), 'Predecessors'))) {
+                const pred = d.number(raw);const immediate = tree.get(pred) ?? pred;
+                if(immediate === target || dominated.has(immediate)) {dominated.set(pred, true);}
+                queue.push(pred);
+            }
+        }
+        const frontier = new Map<number, boolean>();
+        const ids = [target];for(const [id] of dominated) {ids.push(id);}
+        for(const id of ids) {
+            const block = byId.get(id);if(block === undefined) {continue;}
+            for(const raw of d.items(d.field(d.fields(block), 'Predecessors'))) {const pred = d.number(raw);if(!dominated.has(pred)) {frontier.set(pred, true);}}
+        }
+        for(const [id] of frontier) {
+            const block = byId.get(id);if(block === undefined) {continue;}
+            const terminal = d.field(d.fields(block), 'Terminal');const tag = d.tag(terminal);const tf = d.fields(terminal);
+            if(tag === 'If' || tag === 'Branch' || tag === 'Switch') {
+                if(this.derived(graph, d.field(tf, 'Test'), refs)) {return true;}
+                if(tag === 'Switch') {for(const kase of d.items(d.field(tf, 'Cases'))) {const test = d.field(d.fields(kase), 'Test');if(!d.null(test) && this.derived(graph, test, refs)) {return true;}}}
+            }
+        }
+        return false;
+    }
+    find(graph: number, outer: Map<number, number>): number {
+        const d = this.data;const fields = d.fields(graph);const instructions = d.items(d.field(fields, 'Instructions'));
+        const refs = new Map<number, boolean>();const local = new Map<number, number>();for(const [id, place] of outer) {local.set(id, place);}
+        const tree = this.postdominance(graph);const control = new Map<number, boolean>();
+        for(const block of d.items(d.field(fields, 'Blocks'))) {
+            const bf = d.fields(block);
+            for(const phi of d.items(d.field(bf, 'Phis'))) {
+                const pf = d.fields(phi);
+                for(const property of d.reader.get(d.field(pf, 'Operands')).children) {
+                    const operand = d.reader.get(property).children[1] ?? panic('missing phi operand');
+                    if(refs.has(d.place(operand))) {refs.set(d.place(d.field(pf, 'Place')), true);break;}
+                }
+            }
+            for(const index of d.items(d.field(bf, 'Instructions'))) {
+                const instruction = instructions[d.number(index)] ?? panic('missing HIR instruction');if(d.null(instruction)) {continue;}
+                const inf = d.fields(instruction);const target = d.place(d.field(inf, 'LValue'));
+                const value = d.field(inf, 'Value');const tag = d.tag(value);const vf = d.fields(value);
+                if(tag === 'PropertyLoad' && d.s(vf, 'Property') === 'current' && this.symbol(graph, d.place(d.field(vf, 'Object'))) === 'RefObject') {refs.set(target, true);}
+                if(this.reads(graph, value, refs)) {
+                    refs.set(target, true);
+                    if(tag === 'StoreLocal') {refs.set(d.place(d.field(vf, 'LValue')), true);}
+                    if(tag === 'Destructure') {this.pattern(d.field(vf, 'LValue'), refs);}
+                }
+                if(tag === 'LoadLocal') {const origin = local.get(d.place(d.field(vf, 'Place')));if(origin !== undefined) {local.set(target, origin);}}
+                else if(tag === 'LoadContext') {const place = d.field(vf, 'Place');if(local.has(d.place(place))) {local.set(target, place);}}
+                else if(tag === 'StoreLocal') {const origin = local.get(d.place(d.field(vf, 'Value')));if(origin !== undefined) {local.set(target, origin);local.set(d.place(d.field(vf, 'LValue')), origin);}}
+                else if(tag === 'CallExpression') {
+                    const callee = d.field(vf, 'Callee');const id = d.place(callee);if(!local.has(id) && !this.setter(graph, id)) {continue;}
+                    if(refs.has(this.first(vf))) {return -1;}
+                    const blockId = d.n(bf, 'Id');let answer = control.get(blockId);
+                    if(answer === undefined) {answer = this.controlled(graph, blockId, tree, refs);control.set(blockId, answer);}
+                    if(answer) {return -1;}
+                    return callee;
+                }
+            }
+        }
+        return -1;
+    }
+    finding(graph: number, setter: number): void {
+        const d = this.data;const range = d.field(d.fields(setter), 'Range');const start = d.n(range, 'Pos');const end = d.n(range, 'End');
+        if(start < end) {
+            let token = start;
+            for(const node of this.syntax.nodes) {if(node.start === start && node.end === end && node.kind !== 'SourceFile') {token = node.token;break;}}
+            if(token === start) {token = this.trivia(start, end);}
+            this.findings.push(new SetStateInEffect().render(token, end));return;
+        }
+        const node = this.identifier(graph, d.place(setter));if(node >= 0) {this.findings.push(new SetStateInEffect().render(this.token(node), d.n(node, 'End')));}
+    }
+    trivia(start: number, end: number): number {
+        let i = this.offset(start);const limit = this.offset(end);
+        while(i < limit) {
+            const code = this.source.charCodeAt(i);
+            if([9,10,11,12,13,32,133,160,5760,8232,8233,8239,8287,12288,65279].includes(code) || (code >= 8192 && code <= 8202)) {i++;continue;}
+            if(this.source.slice(i, i + 2) === '//') {i += 2;while(i < limit && ![10,13,8232,8233].includes(this.source.charCodeAt(i))) {i++;}continue;}
+            if(this.source.slice(i, i + 2) === '/*') {i += 2;while(i < limit && this.source.slice(i, i + 2) !== '*/') {i++;}i += 2;continue;}
+            break;
+        }
+        if(i >= limit) {return start;}
+        return utf8Length(this.source.slice(0, i));
+    }
+}

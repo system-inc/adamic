@@ -4,6 +4,10 @@ Checks: five real Go findings and one production-message-helper record match in 
 Mutants: three reporter-ID mutants and one empty-creator branch mutant fail only Go bytes; three removed-analysis-refusal mutants fail the required panic-70 contract.
 Not covered: all three native source analyses, full-rule mutants, native range discovery, corpus agreement, released checker handles for new code or comparable native/Go lint time.
 
+Current progress: standalone native source validators now live in each rule.a.
+See SOURCE_REPORT.md for their production Go comparisons and current limits.
+The remainder records the earlier reporting-only milestone.
+
 The three claimed rules remain unfinished. No new claims were taken. Landing
 readiness was checked before adding these files: origin/main still points to
 e8ba3d5d, and the prior wave 26 branch is rebased, pushed and green at f4bd9c34.

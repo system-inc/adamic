@@ -1,5 +1,5 @@
 # Reporting validator adapted from wave 06. This never proves source analysis.
-"""Validate reporting and explicit refusal only; this is not a completed rule port."""
+"""Validate reporting helpers and the legacy no-input refusal; source validators have separate tests."""
 import pathlib,subprocess,json,os,shutil,re,time,argparse
 ROOT=pathlib.Path(__file__).resolve().parents[4];OWN=pathlib.Path(__file__).resolve().parent
 p=argparse.ArgumentParser();p.add_argument('--scratch',required=True);args=p.parse_args();scratch=pathlib.Path(args.scratch).resolve();scratch.mkdir(parents=True,exist_ok=True);records=[]
@@ -50,4 +50,4 @@ mutant=scratch/'static-fallback-mutant.a';mutant.write_text(text.replace("create
 mutantProbe=scratch/'static-fallback-mutant-probe.a';mutantProbe.write_text(source.replace(str(original),str(mutant)));exe=scratch/'static-fallback-mutant'
 run('static-fallback-mutant-build',[stage0,'build',mutantProbe,'-o',exe]);assert run('static-fallback-mutant-run',[exe])!=truth;assert (scratch/'static-fallback-mutant-run.stderr').read_bytes()==b''
 print('static-components empty-creator branch: diagnostic-only mutant caught by production message bytes',flush=True)
-print('PARTIAL PASS: reporting, JavaScript, sanitizer and refusal only. All three source-analysis ports remain blocked.',flush=True)
+print('REPORTING HELPER PASS: rendering, JavaScript, sanitizer and no-input refusal; source analyses are tested separately.',flush=True)

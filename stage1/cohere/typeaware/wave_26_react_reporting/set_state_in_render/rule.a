@@ -1,0 +1,309 @@
+import {panic, utf8Length} from 'adamic';
+import {PreferenceStructure} from '../../preference_structure.a';
+import {Diagnostic} from '../../diagnostic.ts';
+import {ReactHIR} from '../react_hir.a';
+import {HIRData} from '../hir_data.a';
+import {SetStateInRender} from './index.a';
+
+export class SetStateInRenderRule {
+    readonly syntax: PreferenceStructure;
+    readonly data: HIRData;
+    readonly source: string;
+    readonly graphs = new Map<string, number>();
+    readonly nodes = new Map<string, number>();
+    readonly findings: Diagnostic[] = [];
+    constructor(syntax: PreferenceStructure, data: HIRData, source: string) {
+        this.source = source;
+        this.syntax = syntax;
+        this.data = data;
+    }
+    run(): void {
+        for(let i = 0; i < this.syntax.nodes.length; i++) {
+            const node = this.syntax.node(i + 1);
+            this.nodes.set(`${node.kind}:${node.start}:${node.end}`, i + 1);
+        }
+        for(const graph of this.data.items(this.data.root)) {
+            const node = this.data.field(this.data.fields(graph), 'Node');
+            this.graphs.set(this.key(node), graph);
+        }
+        this.walk(1);
+    }
+    key(node: number): string {return `${this.data.s(node, 'Kind')}:${this.data.n(node, 'Pos')}:${this.data.n(node, 'End')}`;}
+    functionLike(kind: string): boolean {return ['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration','GetAccessor','SetAccessor','Constructor'].includes(kind);}
+    walk(id: number): void {
+        const node = this.syntax.node(id);
+        if(this.functionLike(node.kind)) {
+            const graph = this.graphs.get(`${node.kind}:${node.start}:${node.end}`);
+            if(graph !== undefined) {this.analyze(graph);}
+            return;
+        }
+        for(const child of node.children) {this.walk(child);}
+    }
+    jsx(id: number): boolean {
+        if(id === 0) {return false;}
+        const node = this.syntax.node(id);
+        if(['JsxElement','JsxSelfClosingElement','JsxFragment'].includes(node.kind)) {return true;}
+        if(this.functionLike(node.kind) || node.kind === 'ClassDeclaration' || node.kind === 'ClassExpression') {return false;}
+        for(const child of node.children) {if(this.jsx(child)) {return true;}}
+        return false;
+    }
+    analyze(graph: number): void {
+        const d = this.data;
+        const rawNode = d.field(d.fields(graph), 'Node');
+        const syntaxId = this.nodes.get(this.key(rawNode));
+        if(syntaxId === undefined || !this.unit(syntaxId)) {
+            for(const nested of d.items(d.field(d.fields(graph), 'Functions'))) {this.analyze(nested);}
+            return;
+        }
+        this.report(this.graphs.get(this.key(rawNode)) ?? graph, syntaxId, true, new Map<number, boolean>());
+    }
+    identifier(graph: number, id: number): number {
+        const entries = this.data.items(this.data.field(this.data.fields(graph), 'Identifiers'));
+        const entry = entries[id];
+        if(entry === undefined || this.data.null(entry)) {return -1;}
+        const node = this.data.field(this.data.fields(entry), 'Node');
+        return this.data.null(node) ? -1 : node;
+    }
+    token(node: number): number {
+        const id = this.nodes.get(this.key(node));
+        if(id === undefined) {panic('missing raw HIR syntax node');}
+        return this.syntax.node(id).token;
+    }
+    offset(byte: number): number {
+        let bytes = 0;
+        let at = 0;
+        while(bytes < byte) {
+            const code = this.source.codePointAt(at) ?? panic('invalid raw HIR byte range');
+            bytes += code <= 127 ? 1 : code <= 2047 ? 2 : code <= 65535 ? 3 : 4;
+            at += code > 65535 ? 2 : 1;
+        }
+        if(bytes !== byte) {panic('raw HIR span splits a character');}
+        return at;
+    }
+    hook(name: string): boolean {
+        return name.length >= 4 && name.slice(0, 3) === 'use' && ((name.slice(3, 4) >= 'A' && name.slice(3, 4) <= 'Z') || (name.slice(3, 4) >= '0' && name.slice(3, 4) <= '9'));
+    }
+    upper(name: string): boolean {return name.slice(0, 1) >= 'A' && name.slice(0, 1) <= 'Z';}
+    evidence(id: number): boolean {
+        if(id === 0) {return false;}
+        const n = this.syntax.node(id);
+        if(n.kind.startsWith('Jsx')) {return true;}
+        if(n.kind === 'CallExpression') {
+            const callee = n.role(0);
+            if(callee !== 0) {
+                const c = this.syntax.node(callee);
+                if(c.kind === 'Identifier' && this.hook(c.text)) {return true;}
+                if(c.kind === 'PropertyAccessExpression' && c.role(0) !== 0 && c.role(1) !== 0) {
+                    const object = this.syntax.node(c.role(0));const name = this.syntax.node(c.role(1));
+                    if(object.kind === 'Identifier' && this.upper(object.text) && name.kind === 'Identifier' && this.hook(name.text)) {return true;}
+                }
+            }
+        }
+        if(['FunctionDeclaration','FunctionExpression','ArrowFunction'].includes(n.kind)) {return false;}
+        for(const child of n.children) {if(this.evidence(child)) {return true;}}
+        return false;
+    }
+    unit(id: number): boolean {
+        const n = this.syntax.node(id);
+        let nameId = 0;
+        if(n.kind === 'FunctionDeclaration') {nameId = n.role(1);}
+        else if(n.kind === 'FunctionExpression' || n.kind === 'ArrowFunction') {
+            let p = n.parent;
+            while(p !== 0 && this.syntax.node(p).kind === 'ParenthesizedExpression') {p = this.syntax.node(p).parent;}
+            if(p !== 0 && this.syntax.node(p).kind === 'VariableDeclaration' && this.syntax.skip(this.syntax.node(p).role(0)) === id) {nameId = this.syntax.node(p).role(1);}
+        }
+        if(nameId === 0 || this.syntax.node(nameId).kind !== 'Identifier') {return false;}
+        const name = this.syntax.node(nameId).text;
+        if(!this.hook(name) && !this.upper(name)) {return false;}
+        if(!this.evidence(n.role(3))) {return false;}
+        if(this.hook(name)) {return true;}
+        if(n.parameters.length > 2) {return false;}
+        const first = n.parameters[0];
+        if(first !== undefined) {
+            const p = this.syntax.node(first);
+            if(this.source.slice(this.offset(p.token), this.offset(p.end)).startsWith('...')) {return false;}
+            for(const child of p.children) {
+                if(child !== p.role(0) && child !== p.role(1) && ['ArrayType','BigIntKeyword','BooleanKeyword','ConstructorType','FunctionType','LiteralType','NeverKeyword','NumberKeyword','StringKeyword','SymbolKeyword','TupleType'].includes(this.syntax.node(child).kind)) {return false;}
+            }
+        }
+        const second = n.parameters[1];
+        if(second !== undefined) {
+            const p = this.syntax.node(second).role(1);
+            if(p === 0) {return false;}
+            const name = this.syntax.node(p);
+            if(name.kind !== 'Identifier' || (!name.text.includes('ref') && !name.text.includes('Ref'))) {return false;}
+        }
+        return true;
+    }
+    binding(id: number, name: string): boolean {
+        if(id === 0) {return false;}
+        const n = this.syntax.node(id);
+        if(n.kind === 'Identifier') {return n.text === name;}
+        if(n.kind === 'ObjectBindingPattern' || n.kind === 'ArrayBindingPattern') {
+            for(const child of n.children) {if(this.syntax.node(child).kind === 'BindingElement' && this.binding(this.syntax.node(child).role(1), name)) {return true;}}
+        }
+        return false;
+    }
+    shadows(callee: number, unit: number, name: string): boolean {
+        for(let scope = callee; scope !== 0; scope = this.syntax.node(scope).parent) {
+            const n = this.syntax.node(scope);
+            if(n.kind === 'Block' || this.functionLike(n.kind)) {
+                if(this.functionLike(n.kind)) {
+                    for(const p of n.parameters) {if(this.binding(this.syntax.node(p).role(1), name)) {return true;}}
+                }
+                const body = n.kind === 'Block' ? scope : n.role(3);
+                if(body !== 0 && this.syntax.node(body).kind === 'Block') {
+                    for(const child of this.syntax.node(body).children) {
+                        const statement = this.syntax.node(child);
+                        if(statement.kind === 'VariableStatement') {
+                            for(const list of statement.children) {
+                                for(const declaration of this.syntax.node(list).children) {
+                                    const dec = this.syntax.node(declaration);
+                                    if(dec.kind === 'VariableDeclaration' && this.binding(dec.role(1), name)) {return true;}
+                                }
+                            }
+                        }
+                        else if(['VariableDeclaration','FunctionDeclaration','ClassDeclaration'].includes(statement.kind) && this.binding(statement.role(1), name)) {return true;}
+                    }
+                }
+            }
+            if(scope === unit) {break;}
+        }
+        return false;
+    }
+    memo(graph: number, unit: number): boolean {
+        const d = this.data;
+        const raw = d.field(d.fields(graph), 'Node');
+        const id = this.nodes.get(this.key(raw));
+        if(id === undefined) {return false;}
+        const parent = this.syntax.node(id).parent;
+        if(parent === 0) {return false;}
+        const call = this.syntax.node(parent);
+        if(call.kind !== 'CallExpression' || call.arguments[0] !== id) {return false;}
+        const callee = this.syntax.skip(call.role(0));
+        if(callee === 0) {return false;}
+        const c = this.syntax.node(callee);
+        if(c.kind === 'Identifier') {return c.text === 'useMemo' && !this.shadows(callee, unit, 'useMemo');}
+        if(c.kind !== 'PropertyAccessExpression' || c.role(0) === 0 || c.role(1) === 0) {return false;}
+        const name = this.syntax.node(c.role(1));
+        const objectId = this.syntax.skip(c.role(0));
+        if(objectId === 0) {return false;}
+        const object = this.syntax.node(objectId);
+        // Optional member access carries OptionalChain in the raw syntax flags.
+        if((c.flags & 32) !== 0) {return false;}
+        return name.kind === 'Identifier' && name.text === 'useMemo' && object.kind === 'Identifier' && object.text === 'React' && !this.shadows(callee, unit, 'React');
+    }
+    setter(graph: number, id: number): boolean {
+        const d = this.data;
+        const entry = d.items(d.field(d.fields(graph), 'Identifiers'))[id];
+        return entry !== undefined && !d.null(entry) && d.s(d.fields(entry), 'TypeAliasName') === 'Dispatch';
+    }
+    empty: number[] = [];
+    successors = new Map<number, number[]>();
+    order: number[] = [];
+    visited = new Map<number, boolean>();
+    visit(id: number): void {
+        if(this.visited.has(id)) {return;}
+        this.visited.set(id, true);
+        for(const child of this.successors.get(id) ?? this.empty) {this.visit(child);}
+        this.order.push(id);
+    }
+    intersect(a: number, b: number, immediate: number[]): number {
+        let left = a;let right = b;
+        while(left !== right) {
+            while(left > right) {const next = immediate[left] ?? -1;if(next === -1 || next === left) {return right;}left = next;}
+            while(right > left) {const next = immediate[right] ?? -1;if(next === -1 || next === right) {return left;}right = next;}
+        }
+        return left;
+    }
+    unconditional(graph: number): Map<number, boolean> {
+        const d = this.data;
+        this.successors.clear();this.order = [];this.visited.clear();
+        for(const block of d.items(d.field(d.fields(graph), 'Blocks'))) {
+            const bf = d.fields(block);const id = d.n(bf, 'Id');
+            if(d.tag(d.field(bf, 'Terminal')) === 'Return') {const targets = this.successors.get(0) ?? this.empty.slice();targets.push(id);this.successors.set(0, targets);}
+            this.successors.set(id, d.items(d.field(bf, 'Predecessors')).map(p => d.number(p)));
+        }
+        this.visit(0);
+        const order = this.order.slice().reverse();
+        const position = new Map<number, number>();
+        for(let i = 0; i < order.length; i++) {position.set(order[i] ?? 0, i);}
+        const immediate = order.map(() => -1);immediate[0] = 0;
+        const predecessors = new Map<number, number[]>();
+        for(const [from, targets] of this.successors) {for(const to of targets) {const values = predecessors.get(to) ?? this.empty.slice();values.push(from);predecessors.set(to, values);}}
+        for(let changed = true; changed;) {
+            changed = false;
+            for(let i = 1; i < order.length; i++) {
+                let next = -1;
+                for(const pred of predecessors.get(order[i] ?? 0) ?? this.empty) {
+                    const index = position.get(pred);
+                    if(index === undefined || immediate[index] === -1) {continue;}
+                    next = next === -1 ? index : this.intersect(index, next, immediate);
+                }
+                if(next !== -1 && immediate[i] !== next) {immediate[i] = next;changed = true;}
+            }
+        }
+        const result = new Map<number, boolean>();
+        let current = d.n(d.fields(graph), 'Entry');
+        for(let step = 0; step <= d.items(d.field(d.fields(graph), 'Blocks')).length; step++) {
+            if(current === 0 || result.has(current)) {break;}
+            result.set(current, true);
+            const at = position.get(current);
+            if(at === undefined) {break;}
+            const next = immediate[at] ?? -1;
+            if(next === -1) {break;}
+            current = order[next] ?? 0;
+        }
+        return result;
+    }
+    report(graph: number, unit: number, emit: boolean, known: Map<number, boolean>): boolean {
+        const d = this.data;
+        const fields = d.fields(graph);
+        const unconditional = this.unconditional(graph);
+        const instructions = d.items(d.field(fields, 'Instructions'));
+        let reported = false;
+        for(const block of d.items(d.field(fields, 'Blocks'))) {
+            const bf = d.fields(block);
+            for(const index of d.items(d.field(bf, 'Instructions'))) {
+                const instruction = instructions[d.number(index)] ?? panic('missing HIR instruction');
+                if(d.null(instruction)) {continue;}
+                const inf = d.fields(instruction);
+                const target = d.place(d.field(inf, 'LValue'));
+                const value = d.field(inf, 'Value');const tag = d.tag(value);const vf = d.fields(value);
+                if(tag === 'LoadLocal' || tag === 'LoadContext') {
+                    if(known.has(d.place(d.field(vf, 'Place')))) {known.set(target, true);}
+                }
+                else if(tag === 'StoreLocal') {
+                    if(known.has(d.place(d.field(vf, 'Value')))) {known.set(target, true);known.set(d.place(d.field(vf, 'LValue')), true);}
+                }
+                else if(tag === 'FunctionExpression') {
+                    const nested = d.items(d.field(fields, 'Functions'))[d.n(vf, 'Function')];
+                    if(nested === undefined || d.null(nested)) {continue;}
+                    const captured = d.items(d.field(vf, 'Captures'));
+                    const context = d.items(d.field(d.fields(nested), 'Context'));
+                    const translated = new Map<number, boolean>();
+                    for(let i = 0; i < captured.length && i < context.length; i++) {
+                        const outer = d.place(captured[i] ?? panic('missing capture'));
+                        if(known.has(outer) || this.setter(graph, outer)) {translated.set(d.place(context[i] ?? panic('missing context')), true);}
+                    }
+                    const memo = this.memo(nested, unit);
+                    if(translated.size === 0 && !memo) {continue;}
+                    if(this.report(nested, unit, memo, translated)) {known.set(target, true);}
+                }
+                else if(tag === 'CallExpression') {
+                    if(d.reader.get(d.field(vf, 'Optional')).raw === 'true') {continue;}
+                    const callee = d.place(d.field(vf, 'Callee'));
+                    if(!this.setter(graph, callee) && !known.has(callee)) {continue;}
+                    const memo = this.memo(graph, unit);
+                    if(!memo && !unconditional.has(d.n(bf, 'Id'))) {continue;}
+                    if(emit) {
+                        const node = this.identifier(graph, callee);
+                        if(node >= 0) {this.findings.push(memo ? new SetStateInRender().memo(this.token(node), d.n(node, 'End')) : new SetStateInRender().render(this.token(node), d.n(node, 'End')));}
+                    }
+                    reported = true;
+                }
+            }
+        }
+        return reported;
+    }
+}

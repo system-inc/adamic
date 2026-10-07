@@ -1,0 +1,16 @@
+import {panic, programArguments, readTextFile, tsgoProgram, tsgoRelease, utf8Length} from 'adamic';
+import {ReactHIR} from './react_hir.a';
+const args = programArguments();
+const config = args[0] ?? panic('missing config');
+const input = readTextFile(args[1] ?? panic('missing manifest'));
+if(input.kind !== 'Ok') {panic('cannot read manifest');}
+const files = input.text.split('\n').filter(file => file !== '');
+const program = tsgoProgram(config, files);
+for(const file of files) {
+    const source = readTextFile(file);
+    if(source.kind !== 'Ok') {panic('cannot read source');}
+    console.log(`file\t${file}`);
+    console.log(new ReactHIR(program, file, 0, utf8Length(source.text), 'SourceFile').serialized);
+    console.log(new ReactHIR(program, file, 0, utf8Length(source.text), 'SourceFile', true).serialized);
+}
+tsgoRelease(program);

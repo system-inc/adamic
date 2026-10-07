@@ -1,0 +1,64 @@
+import {panic} from 'adamic';
+import {Reader} from '../../json/parser.ts';
+
+// Indexes into the existing native JSON parser preserve every graph variant.
+export class HIRData {
+    reader = new Reader('');
+    root = 0;
+    constructor(text: string) {
+        const reader = new Reader(text);
+        const root = reader.value(false);
+        reader.skip();
+        if(reader.position !== text.length) {panic('trailing raw HIR data');}
+        this.reader = reader;
+        this.root = root;
+    }
+    field(id: number, name: string): number {
+        const node = this.reader.get(id);
+        if(node.kind !== 'ObjectExpression') {panic('raw HIR object required');}
+        for(const property of node.children) {
+            const pair = this.reader.get(property).children;
+            if(this.string(pair[0] ?? panic('missing graph key')) === name) {return pair[1] ?? panic('missing graph value');}
+        }
+        panic(`missing raw HIR field ${name}`);
+    }
+    items(id: number): readonly number[] {
+        const node = this.reader.get(id);
+        if(node.kind !== 'ArrayExpression') {panic('raw HIR array required');}
+        return node.children;
+    }
+    null(id: number): boolean {return this.reader.get(id).raw === 'null';}
+    number(id: number): number {
+        const node = this.reader.get(id);
+        if(node.kind !== 'NumericLiteral') {panic('raw HIR integer required');}
+        const value = Number(node.raw);
+        if(!Number.isSafeInteger(value) || value < 0) {panic('invalid raw HIR identity');}
+        return value;
+    }
+    string(id: number): string {
+        const node = this.reader.get(id);
+        if(node.kind !== 'StringLiteral') {panic('raw HIR string required');}
+        const raw = node.raw;
+        const parts: string[] = [];
+        for(let i = 1; i < raw.length - 1; i++) {
+            const ch = raw.slice(i, i + 1);
+            if(ch !== '\\') {parts.push(ch);continue;}
+            i++;
+            const escape = raw.slice(i, i + 1);
+            if(escape === 'u') {parts.push(String.fromCharCode(Number.parseInt(raw.slice(i + 1, i + 5), 16)));i += 4;}
+            else if(escape === 'n') {parts.push('\n');}
+            else if(escape === 'r') {parts.push('\r');}
+            else if(escape === 't') {parts.push('\t');}
+            else if(escape === 'b') {parts.push('\b');}
+            else if(escape === 'f') {parts.push('\f');}
+            else if(escape === '"' || escape === '/' || escape === '\\') {parts.push(escape);}
+            else {panic('invalid raw HIR escape');}
+        }
+        return parts.join('');
+    }
+    fields(id: number): number {return this.field(id, 'Fields');}
+    tag(id: number): string {return this.string(this.field(id, 'Tag'));}
+    n(id: number, key: string): number {return this.number(this.field(id, key));}
+    s(id: number, key: string): string {return this.string(this.field(id, key));}
+    place(id: number): number {return this.n(this.fields(id), 'Identifier');}
+}

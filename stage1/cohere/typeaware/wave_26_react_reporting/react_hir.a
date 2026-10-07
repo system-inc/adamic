@@ -1,0 +1,13 @@
+import {tsgoInspect} from 'adamic';
+import {Frames, header} from '../frames.ts';
+
+// Raw serialized graph only. This adapter never returns a lint verdict.
+export class ReactHIR {
+    readonly serialized: string;
+    constructor(program: number, file: string, start: number, end: number, kind: string, memo = false) {
+        const frames = new Frames(tsgoInspect(program, file, start, end, kind, `react-hir\n${memo ? 'memo' : 'plain'}`));
+        header(frames, 'react-hir');
+        this.serialized = frames.field();
+        frames.end();
+    }
+}
