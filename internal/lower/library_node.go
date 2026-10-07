@@ -50,7 +50,7 @@ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
 			}
 		}
 		if module == "" {
-			module = strings.TrimSuffix(path.Base(file.FileName()), ".d.ts")
+			module = strings.TrimSuffix(path.Base(file.FileName().AsString()), ".d.ts")
 		}
 		if !strings.HasPrefix(module, "node:") {
 			module = "node:" + module
