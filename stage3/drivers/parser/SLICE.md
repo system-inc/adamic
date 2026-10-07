@@ -1,3 +1,40 @@
+# Fixed shared slice, 188de02
+
+The shared scanner branch was merged at 6e46a79. This rerun uses the same
+fully adapted area/stage3 tree at 7ad8666 as the previous proof, with all its
+registered adaptations. No parser adaptation was added, no second slicer
+was built, and the gathering tool is exactly the owner's 188de02.
+
+## Step 1 counts
+
+createSourceFile alone: **26 code files, 1,990 code declarations,
+41,657 code-span lines** (namespace wrapper pieces included).
+The dump helper adds flattenDiagnosticMessageText in program.ts: the driver
+has **27 code files, 1,991 code declarations and 41,683
+code-span lines**. These differ slightly from the owner's 10/50-only source;
+this run uses the required fully adapted area source.
+
+Evaluation scaffolding retains 79 modules, including 53 with no reached code
+for the entry-only slice. This does not mean their code was gathered.
+There are 77 export-facade records; including those and wrappers, the entry
+manifest has 2,079 spans and 41,814 copied-span lines. The driver has
+2,080 spans and 41,840 copied-span lines. All spans and all 79
+ordered module import lists pass the shared byte/evaluation audit.
+
+--why reports createTypeChecker and createProgram reached:false. Their
+import-only scaffolding is retained to preserve original module evaluation.
+Detailed manifests, counts, code-file inventories and why results are saved
+in evidence/fixed-slice-*.json and *.json.gz.
+
+Reproduction uses stage3/slice/run.sh with the same entries documented below
+and --why src/compiler/checker.ts:createTypeChecker --why
+src/compiler/program.ts:createProgram. Then run stage3/slice/verify.cjs on
+the output. Raw slices are /tmp/parser-fixed-entry-slice and
+/tmp/parser-fixed-driver-slice. Node and stage0 results follow in separate
+commits.
+
+# Previous tool results, superseded below
+
 # createSourceFile declaration slice
 
 Step 1 uses integration source at 7ad8666 and the shared scanner slice tool
