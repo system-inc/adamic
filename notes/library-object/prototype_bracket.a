@@ -1,0 +1,7 @@
+const value = { plain: 1, '10': 10, '2': 2, '01': 1, '-0': 0 };
+for (const key of ['plain', '10', '2', '01', '-0', '0', 'missing', 'toString']) console.log(`${key}:${value.hasOwnProperty(key)}:${value.propertyIsEnumerable(key)}`);
+console.log(value['toString']());
+console.log(value['toLocaleString']());
+console.log(`${value['valueOf']() === value} ${value['hasOwnProperty']('2')} ${value['propertyIsEnumerable']('01')}`);
+const wrapped = (): string => value.toString();
+console.log(wrapped());

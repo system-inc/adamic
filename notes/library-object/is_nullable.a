@@ -1,0 +1,2 @@
+function same(value: number | null | undefined): boolean { return Object.is(value, undefined); }
+console.log(`${same(null)}`);

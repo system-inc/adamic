@@ -1,0 +1,9 @@
+let order = '';
+function nil(): null { order += 'n'; return null; }
+function absent(): undefined { order += 'u'; return undefined; }
+function object(): { n: number } { order += 'o'; return { n: 1 }; }
+console.log(`${Object.is(nil(), nil())} ${order}`);
+order = '';
+console.log(`${Object.is(nil(), absent())} ${Object.is(absent(), nil())} ${order}`);
+order = '';
+console.log(`${Object.is(nil(), object())} ${Object.is(object(), nil())} ${order}`);

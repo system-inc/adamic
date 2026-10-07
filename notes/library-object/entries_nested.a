@@ -1,0 +1,2 @@
+const value = { '2': { n: 2 }, plain: { n: 1 } };
+for (const [key, entry] of Object.entries(value)) console.log(`${key}:${entry.n}`);

@@ -37,6 +37,19 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/coverage_object_integrity_union.a", true, false},
+	{"internal/oracle/testdata/coverage_object_integrity_return.a", true, false},
+	{"internal/oracle/testdata/coverage_object_stable.a", true, false},
+	{"internal/oracle/testdata/coverage_object_frozen_copy.a", true, false},
+	{"internal/oracle/testdata/coverage_object_nested.a", true, false},
+	{"internal/oracle/testdata/coverage_object_integrity_order.a", true, false},
+	{"internal/oracle/testdata/coverage_object_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_object_primitive_names.a", true, false},
+	{"internal/oracle/testdata/coverage_object_primitive_integrity.a", true, false},
+	{"internal/oracle/testdata/coverage_object_null_order.a", true, false},
+	{"internal/oracle/testdata/coverage_object_shapes.a", true, false},
+	{"internal/oracle/testdata/coverage_object_prototype_keys.a", true, false},
+	{"internal/oracle/testdata/coverage_object_class_queries.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},

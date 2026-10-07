@@ -1,0 +1,16 @@
+class Box {
+ #secret = 1;
+ value = 2;
+ read(): number { return this.#secret; }
+}
+const box = new Box();
+console.log(`${Object.isSealed(box)} ${Object.isFrozen(box)} ${Object.isExtensible(box)} ${box.read()}`);
+function query(value: { readonly value: number }): string {
+ return `${Object.isSealed(value)} ${Object.isFrozen(value)} ${Object.isExtensible(value)}`;
+}
+const plain = { value: 1 };
+console.log(query(plain));
+Object.seal(plain);
+console.log(query(plain));
+Object.freeze(plain);
+console.log(query(plain));

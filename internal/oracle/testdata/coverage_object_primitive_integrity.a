@@ -1,0 +1,8 @@
+console.log(`${Object.is(Object.seal(undefined), undefined)} ${Object.is(Object.preventExtensions(undefined), undefined)}`);
+console.log(`${Object.seal(false)} ${Object.preventExtensions(false)} ${Object.preventExtensions('text')}`);
+console.log(`${Object.is(Object.seal(-0), -0)} ${Object.is(Object.preventExtensions(NaN), NaN)}`);
+console.log(`${Object.isFrozen(null)} ${Object.isFrozen(false)} ${Object.isFrozen('')} ${Object.isFrozen(NaN)}`);
+const closure = (): number => 1;
+const set = new Set<number>();
+console.log(`${Object.isSealed(closure)} ${Object.isFrozen(closure)} ${Object.isExtensible(closure)}`);
+console.log(`${Object.isSealed(set)} ${Object.isFrozen(set)} ${Object.isExtensible(set)}`);

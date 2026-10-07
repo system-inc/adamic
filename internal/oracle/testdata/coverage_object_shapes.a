@@ -1,0 +1,12 @@
+const n = 3;
+const literal = { n, '2': 2, ordinary: 1 };
+const first = (literal);
+const second = first;
+console.log(Object.keys(second).join('|'));
+console.log(Object.getOwnPropertyNames(second).join('|'));
+console.log(Object.values(second).join('|'));
+for (const [key, value] of Object.entries(second)) console.log(`${key}:${value}`);
+const inline = Object.seal({ n, '2': 2 });
+console.log(`${Object.isSealed(inline)} ${Object.isFrozen(inline)} ${Object.isExtensible(inline)}`);
+const prevented = Object.preventExtensions({ n });
+console.log(`${Object.isSealed(prevented)} ${Object.isFrozen(prevented)} ${Object.isExtensible(prevented)}`);

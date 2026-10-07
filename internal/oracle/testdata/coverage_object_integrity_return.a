@@ -1,0 +1,12 @@
+function sealed(): { readonly label: string } {
+ const label = 'made' + '-sealed';
+ return Object.seal({ label });
+}
+function prevented(): { readonly label: string } {
+ const label = 'made' + '-prevented';
+ return Object.preventExtensions({ label });
+}
+const first = sealed();
+const second = prevented();
+console.log(`${first.label} ${Object.isSealed(first)} ${Object.isFrozen(first)} ${Object.isExtensible(first)}`);
+console.log(`${second.label} ${Object.isSealed(second)} ${Object.isFrozen(second)} ${Object.isExtensible(second)}`);

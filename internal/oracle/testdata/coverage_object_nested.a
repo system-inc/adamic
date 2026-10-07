@@ -1,0 +1,15 @@
+const nested = { '10': { n: 10 }, plain: { n: 1 }, '2': { n: 2 } };
+console.log(Object.keys(nested).join('|'));
+console.log(Object.getOwnPropertyNames(nested).join('|'));
+console.log(`${Object.hasOwn(nested, '2')} ${nested.hasOwnProperty('plain')} ${nested.propertyIsEnumerable('10')}`);
+Object.freeze(nested);
+Object.seal(nested);
+Object.preventExtensions(nested);
+nested.plain.n = 7;
+const copy = { ...nested, plain: { n: 8 } };
+console.log(`${nested.plain.n} ${copy.plain.n} ${Object.is(copy.plain, nested.plain)}`);
+console.log(`${Object.isFrozen(nested)} ${Object.isSealed(nested)} ${Object.isExtensible(nested)} ${Object.isFrozen(nested.plain)}`);
+console.log(`${Object.isFrozen(copy)} ${Object.isExtensible(copy)}`);
+console.log(nested.toString());
+console.log(nested.toLocaleString());
+console.log(`${nested.valueOf() === nested}`);
