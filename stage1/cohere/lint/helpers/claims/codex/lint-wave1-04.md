@@ -89,3 +89,18 @@ Delivery 4: scanNumber is implemented and tested. 101,547 cases, 802,813 exact
 Go bytes and both compiling scanner mutants pass on source Node, emitted
 JavaScript and ASan/UBSan native. Complete four-helper gate PASS 35.578s with
 all nine semantic mutants, vet PASS. See from_wave1_04/SCAN_REPORT.md.
+
+5. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix
+   File: helpers/from_wave1_04/number_with_suffix.a.
+   Four consumers: class-order, shorthand, conflicting and unknown Tailwind rules.
+   Highest unclaimed named count after fetching 582 origin refs and reading every
+   one of twenty distinct helper claims plus HELPERS.md. Main is unchanged at
+   c01907a7; rules 20e03b57 are parked and green, helpers 05ec8b0b are green and
+   pushed, including the scanner this helper consumes.
+   Preserve one scanner call, no match when consumption is zero, exact whole
+   remaining-string membership, empty/nil suffix-list behavior and empty suffixes.
+   The scanNumber callback is an explicit dependency, implemented by the held
+   scanner during comparisons. Compare actual Go over all four consumers' fixture
+   domains, grammar/Unicode boundaries and suffix sets on source Node, emitted
+   JavaScript and sanitized native; require compiling semantic mutants.
+   One helper per .a file. Push this claim before code.
