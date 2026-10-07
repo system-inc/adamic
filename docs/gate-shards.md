@@ -27,6 +27,40 @@ writes `merged.json` and the concatenated raw `test.jsonl`. A red merge retains 
 and exits 1. Compare exits 1 for a different test name, verdict, or distinct terminal-event
 count, or for a red merge. Test identity includes both package and the entire Go test name.
 
+## Recursive submodule provenance
+
+Before discovery or reuse of a checkpoint, each shard reads every gitlink recursively
+from the tested `HEAD` tree using `git ls-tree -rz`. Nested pins come from the pinned
+parent commit, even if its checkout is stale. `summary.json` records `Submodules`, sorted
+by repository-relative `Path`, with `Pinned`, `Checked` (the actual `rev-parse HEAD`),
+and `Dirty` for each module. In this tree these are `cohere` and `cohere/TypeScript`.
+An uninitialized module, a checkout differing from its pin, or tracked/untracked dirt
+refuses the shard before any Go discovery or tests. Local submodule ignore settings
+cannot hide changes. The audit is repeated after execution and changes make the shard red.
+
+Merge checks every shard against the tested tree's paths and pins and against other
+shards' checkout records. Missing, duplicate, unexpected, dirty, or conflicting records
+make merge red; conflicts name both shard indices and the submodule. Older summaries
+without recursive provenance cannot certify a tree containing submodules.
+
+`TestShardRefusesStaleRecursiveSubmodules` creates two cohere pins with different nested
+pins, moves the real checkout, and verifies the shard refuses it by name. It also checks
+stale nested checkouts on resume and tracked/untracked dirt. A two-shard miniature gate
+in `TestMergeRejectsDifferentCohereCommits` first merges green, then changes one recorded
+cohere checkout and requires a red merge naming shards 0 and 1 and cohere. No new cache
+is introduced; each invocation, including resume, performs the provenance audit again.
+
+Verified after merging integration at `2adf65c`: 34 named package tests pass with
+`go test -race -count=1 -json ./cmd/adamic-gate`; focused vet and Darwin arm64 test
+cross-compilation pass. Source-overlay mutants removing the shard preflight and the
+merge provenance check each fail their respective real-entry-point regression test.
+Raw JSON, separate stderr, and overlay inputs are in
+`cmd/adamic-gate/evidence/submodule-provenance.tar.gz`. No production gate or Mac
+execution was attempted. Setup reached Go 1.27.1, clang 20.1.8 and Node 24.19.0
+on a box with `nproc=5`, then failed downloading `github.com/klauspost/compress@v1.20.0`
+because the module proxy's Google Storage redirect returned Forbidden. The existing
+toolchain, sourced from `/workspace/adamic-tools/env.sh`, completed these checks.
+
 ## Selection and coverage
 
 Discovery uses `go list ./...` and `go test -json -list . ./...`, including examples and fuzz

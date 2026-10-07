@@ -86,6 +86,7 @@ type summary struct {
 	BuildFlags            string
 	DiskBefore, DiskAfter uint64
 	Errors                []string
+	Submodules            []submoduleRecord
 }
 type merged struct {
 	Version           int
@@ -665,6 +666,13 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if out == "" || index < 0 || index >= count {
 		return errors.New("shard requires -out and 0 <= index < count")
 	}
+	submodules, err := inspectSubmodules(".", "HEAD")
+	if err != nil {
+		return err
+	}
+	if err := requirePinnedSubmodules(submodules); err != nil {
+		return err
+	}
 	root, err := filepath.Abs(scratch)
 	if err != nil {
 		return err
@@ -743,7 +751,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if err := atomicJSON(filepath.Join(out, "run.json"), state); err != nil {
 		return err
 	}
-	s := summary{Version: 1, Plan: p, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk}
+	s := summary{Version: 1, Plan: p, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk, Submodules: submodules}
 	raw, err := os.Create(filepath.Join(out, "test.jsonl"))
 	if err != nil {
 		return err
@@ -973,6 +981,12 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if identityErr != nil || commitErr != nil || statusErr != nil || afterSource != p.Source || afterCommit != p.Commit || status != "" {
 		s.Errors = append(s.Errors, "repository changed during shard execution")
 	}
+	afterSubmodules, submoduleErr := inspectSubmodules(".", p.Commit)
+	if submoduleErr != nil {
+		s.Errors = append(s.Errors, submoduleErr.Error())
+	} else {
+		s.Errors = append(s.Errors, compareSubmodules(submodules, []summary{{Index: index, Submodules: afterSubmodules}})...)
+	}
 
 	s.Results, s.CacheLines, _, err = readLog(filepath.Join(out, "test.jsonl"))
 	if err != nil {
@@ -1134,6 +1148,11 @@ func merge(dirs []string, out string) error {
 		return err
 	}
 	m := merged{Version: 1, Plan: expected}
+	submodules, err := inspectSubmodules(".", expected.Commit)
+	if err != nil {
+		return err
+	}
+	m.Errors = append(m.Errors, compareSubmodules(submodules, summaries)...)
 	seenShard := map[int]bool{}
 	seenTest := map[string]int{}
 	seenRuns := map[string]int{}
