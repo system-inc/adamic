@@ -16,6 +16,13 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/generic_instance_key_" + name + ".a", name != "json", false})
+		}{genericInstanceKeyFixture(name), name != "json", false})
 	}
+}
+
+func genericInstanceKeyFixture(name string) string {
+	if name == "json" {
+		return "internal/oracle/testdata/reland_refused/generic_instance_key_json.a"
+	}
+	return "internal/oracle/testdata/generic_instance_key_" + name + ".a"
 }

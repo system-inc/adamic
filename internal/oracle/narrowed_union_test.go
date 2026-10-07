@@ -75,7 +75,7 @@ func TestNarrowedUnionMemberCheck(t *testing.T) {
 // Ambiguous object tags need a stronger IR predicate before they can be cast safely.
 func TestNarrowedUnionObjectTagRefusal(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/narrowed_union_object_tag.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -83,7 +83,7 @@ func TestNarrowedUnionObjectTagRefusal(t *testing.T) {
 		t.Fatalf("source Node: %#v", node)
 	}
 	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "narrowed_union_object_tag.a") || !strings.Contains(err.Error(), "keep differently held object kinds in separately typed variables") {
+	if err == nil || !strings.Contains(err.Error(), "narrowed_union_object_tag.a") || !strings.Contains(err.Error(), "stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet") {
 		t.Fatalf("want refusal naming the path and fix, got %v", err)
 	}
 }

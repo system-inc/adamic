@@ -46,7 +46,7 @@ func TestGenericUnionFixtureHasSeparateInstances(t *testing.T) {
 
 func TestGenericJSONUnionArrayIsNotYet(t *testing.T) {
 	t.Parallel()
-	source, err := os.ReadFile("../oracle/testdata/generic_instance_key_json.a")
+	source, err := os.ReadFile("../oracle/testdata/reland_refused/generic_instance_key_json.a")
 	if err != nil {
 		t.Fatal(err)
 	}
