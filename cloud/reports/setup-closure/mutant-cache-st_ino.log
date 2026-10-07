@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_every_cache_field (test_setup_modules.Modules.test_every_cache_field)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup_modules.py", line 45, in test_every_cache_field
+    self.assertNotEqual(before,helper.cache_state([str(file)]),name)
+AssertionError: '91dfbf6c0128101d8fabe9e743445c074783f8b8089fc882ad4414e448c947d6' == '91dfbf6c0128101d8fabe9e743445c074783f8b8089fc882ad4414e448c947d6' : st_ino
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

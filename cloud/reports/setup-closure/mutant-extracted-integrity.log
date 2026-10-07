@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_extracted_integrity (test_setup_modules.ClosureChecks.test_extracted_integrity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup_modules.py", line 106, in test_extracted_integrity
+    with self.assertRaisesRegex(ValueError,'archive/extracted checksum mismatch'):helper.verify_selected(record)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

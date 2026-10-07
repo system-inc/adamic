@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_key_components (test_setup_modules.Modules.test_key_components)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup_modules.py", line 22, in test_key_components
+    self.assertNotEqual(before,helper.key(**dict(inputs,**{name:'changed'})),name)
+AssertionError: '1fc4271e4be4cce2cf7db8aa63730dec1c355ea4832987909d1ab03f3f578a54' == '1fc4271e4be4cce2cf7db8aa63730dec1c355ea4832987909d1ab03f3f578a54' : environment
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

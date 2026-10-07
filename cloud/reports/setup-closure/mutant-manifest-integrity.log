@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_go_mod_integrity (test_setup_modules.ClosureChecks.test_go_mod_integrity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup_modules.py", line 111, in test_go_mod_integrity
+    with self.assertRaisesRegex(ValueError,'go.mod checksum mismatch'):helper.verify_selected(record)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

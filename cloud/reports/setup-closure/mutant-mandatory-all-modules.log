@@ -1,0 +1,24 @@
+setup: downloading module dependencies in /tmp/adamic-gate/closure-unreachable-8y0a3xvu/repository
+go: example.invalid/unreachable@v0.0.0: module lookup disabled by GOPROXY=off
+E
+======================================================================
+ERROR: test_unreachable_require_cannot_fail_mandatory_setup (test_setup_modules.ClosureIntegration.test_unreachable_require_cannot_fail_mandatory_setup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup_modules.py", line 143, in test_unreachable_require_cannot_fail_mandatory_setup
+    self.assertIn('(0 downloaded modules)',helper.prepare(repository,root/'tools'))
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/adamic-gate/module-mutants-ag55ulv6/mandatory-all-modules.py", line 164, in prepare
+    return prepare_all(repository, tools)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/adamic-gate/module-mutants-ag55ulv6/mandatory-all-modules.py", line 229, in prepare_all
+    answer = go(['mod', 'download', '-json'], module)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/adamic-gate/module-mutants-ag55ulv6/mandatory-all-modules.py", line 84, in go
+    raise RuntimeError('go ' + ' '.join(command) + ': ' + result.stdout.decode(errors='replace'))
+RuntimeError: go mod download -json: 
+
+----------------------------------------------------------------------
+Ran 1 test in 0.012s
+
+FAILED (errors=1)

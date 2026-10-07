@@ -1,0 +1,12 @@
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: go ready (0.078s)
+setup: node ready (0.085s)
+setup: submodules ready (0.146s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.011s
+setup: markdown dependencies ready (0.166s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/tmp/adamic-gate/closure-proof/worker-tools/llvm/bin/clang) (0.346s)
+setup: module dependencies downloaded and verified gate closure (12 downloaded modules); step-duration=2.426s
+setup: module dependencies ready (2.644s)
+github.com/system-inc/adamic/bridge/tsgo/archive: open /home/agent/.cache/go-build/a7/a72518f69511d3834f9c46d16d7921059c43795c02a05880f138545711b56cab-a: no space left on device

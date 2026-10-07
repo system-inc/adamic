@@ -1,0 +1,11 @@
+....setup: Go proxy failed; retrying configured proxy
+setup: retrying direct with checksum verification
+checksum mismatch.setup: downloading module dependencies in /tmp/adamic-gate/closure-unreachable-q_tb99bv/repository
+go: example.invalid/unreachable@v0.0.0: module lookup disabled by GOPROXY=off
+..setup: downloading module dependencies in /tmp/adamic-gate/tmpt9q5iorb
+
+....
+----------------------------------------------------------------------
+Ran 11 tests in 0.172s
+
+OK

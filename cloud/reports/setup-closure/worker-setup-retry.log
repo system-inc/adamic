@@ -1,0 +1,18 @@
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: go ready (0.071s)
+setup: node ready (0.080s)
+setup: submodules ready (0.127s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.007s
+setup: markdown dependencies ready (0.152s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/tmp/adamic-gate/closure-proof/worker-tools/llvm/bin/clang) (0.310s)
+setup: module dependencies skipped (validated gate closure: 12 downloaded modules); step-duration=1.718s
+setup: module dependencies ready (1.912s)
+setup: go build ready (15.731s)
+setup: test binaries deferred (use --warm-tests) (16.013s)
+setup: build cache warm (16.018s)
+setup: build-flags commit=5794c87661b030d24cee457bbec4900f260e025d nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=false all-modules=false load-before=2.07 3.09 1.79 2/737 217044 load-after=3.49 3.35 1.90 2/738 218044
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (16.084s)
+setup: source /tmp/adamic-gate/closure-proof/worker-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.vuJQIR
