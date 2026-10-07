@@ -1,0 +1,83 @@
+{
+  "branch": "codex/typeaware-wave-30",
+  "remote_tip_before": "5cc0b875d4b92b768b43d011fd6ea8c4190377db",
+  "validated_main": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "validated_code_tip": "da9164d5b815640ff3215afe18779dfac0a52cd5",
+  "commits": [
+    {
+      "before": "0d540f413625f016f20fea39761c7b184f335de6",
+      "after": "045bc18dddd93eedfb199b600eac6bf5d010f58f",
+      "subject": "Port ten inventory-ranked lint rules through the checker bridge"
+    },
+    {
+      "before": "a628406ce4b41795fc4f37da8b81d0241e4994ea",
+      "after": "ef480386921130643aab32e6d6d7be1d940b289c",
+      "subject": "Claim the three rules assigned to type-aware wave 30"
+    },
+    {
+      "before": "333b5ccdcb9652b62b1d39c8d6c7eb80a075b8b6",
+      "after": "5ecbf845fecb6e20e8fb145ebc3c189f4bd77cd7",
+      "subject": "Port ISO date truncation and callback parse-try rules with Go parity evidence"
+    },
+    {
+      "before": "e6496e1a69ab03a7c359d1c2c7fa0e4efc649043",
+      "after": "14bab84e174ebf730469098536eabfbc5c5f00ab",
+      "subject": "Claim the next three unclaimed type-aware rules"
+    },
+    {
+      "before": "a74cf5011cbdbf82f774d9f7b8d5b29166cd2fe7",
+      "after": "dc27f10b3ecc8bfc34cdef574230421b290785d4",
+      "subject": "Port collection misuse and discarded outcome and pure result rules"
+    },
+    {
+      "before": "b64a21b39718519c298af3813f642dd9573852fa",
+      "after": "01603e39a1cfebd25175f1bf2ef1883680b25eb8",
+      "subject": "Record byte parity and failure proofs for the three continuation rules"
+    },
+    {
+      "before": "952a900ca176c5f8ed09eed1ef1c4fe7be900a5b",
+      "after": "6c4c5f5feb54cfa92bc435fdfa3f3d0bc752ec52",
+      "subject": "Claim the next three unclaimed process and timeout rules"
+    },
+    {
+      "before": "80e56233436e93e37b8d31f3213ec18724f282d5",
+      "after": "85b3bbfb3908ca4d58f5598e9176fb72166bc802",
+      "subject": "Port uncleared race timeouts and process output path state"
+    },
+    {
+      "before": "e08f357fefc7c4cd8b86235d82237bf375336e2f",
+      "after": "92849478cc7922465757804d077c2e43653c6492",
+      "subject": "Record timer agreement and remaining process analysis gaps"
+    },
+    {
+      "before": "182d776e24c9bc01f8a76a64576a149882d91ab5",
+      "after": "c74e37ffff133bb32b6f1807f11bddb7792dd23c",
+      "subject": "Port process exit and blocking standard stream rules"
+    },
+    {
+      "before": "2ccc0f30116305b89dd884d08bc2e54942ea7aa4",
+      "after": "3ba3040f4800d529b1922398d1e0a42eb99f8cc4",
+      "subject": "Record completed process rule validation and timings"
+    },
+    {
+      "before": "d84788628d876918817821f85b4fc14c92f82613",
+      "after": "8592bd6fee492330b73192cd28a0fac931a4071b",
+      "subject": "Claim next three available React hook rules"
+    },
+    {
+      "before": "a6c2a932abf06e4d435115df38be300d0c97e9b0",
+      "after": "89ff85942d186b4af17435f7858d28f8b2dccd42",
+      "subject": "Record native JSX and React HIR prerequisites for claimed rules"
+    },
+    {
+      "before": "1f2e7bbc77ae22ab3a0b4979aea613af3b2e3d20",
+      "after": "e1f26c988cddbaf9c3dcae408eb5d6e9ec7a89a1",
+      "subject": "Port independent React rule lattice and scope components"
+    },
+    {
+      "before": "5cc0b875d4b92b768b43d011fd6ea8c4190377db",
+      "after": "da9164d5b815640ff3215afe18779dfac0a52cd5",
+      "subject": "Record partial React component parity and remaining integration gaps"
+    }
+  ]
+}

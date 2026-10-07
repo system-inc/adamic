@@ -1,0 +1,216 @@
+{
+  "landing-oracles": [
+    {
+      "test": "TestWave30NextAgreementAndMutants",
+      "seconds": 156.47
+    },
+    {
+      "test": "TestWave30ProcessGraphAgreement",
+      "seconds": 63.52
+    },
+    {
+      "test": "TestWave30ProcessExitAgreement",
+      "seconds": 57.51
+    },
+    {
+      "test": "TestWave30BlockingStreamsAgreement",
+      "seconds": 72.86
+    },
+    {
+      "test": "TestWave30ReactComponents",
+      "seconds": 13.88
+    },
+    {
+      "test": "TestWave30ReactPrerequisites",
+      "seconds": 6.76
+    },
+    {
+      "test": "TestWave30AgreementAndMutants",
+      "seconds": 65.52
+    },
+    {
+      "test": "TestWave30ThirdAgreementAndMutants",
+      "seconds": 63.28
+    },
+    {
+      "test": "TestWave30ProcessOutputStateAgreement",
+      "seconds": 6.53
+    }
+  ],
+  "landing-base-oracles": [
+    {
+      "test": "TestCoverageAgreementAndMutants",
+      "seconds": 551.15
+    },
+    {
+      "test": "TestCoverageAgreementAndMutants/before",
+      "seconds": 8.68
+    },
+    {
+      "test": "TestCoverageAgreementAndMutants/cast",
+      "seconds": 8.73
+    },
+    {
+      "test": "TestCoverageAgreementAndMutants/methods",
+      "seconds": 8.84
+    },
+    {
+      "test": "TestCoverageAgreementAndMutants/coercion",
+      "seconds": 9.09
+    },
+    {
+      "test": "TestCoverageAgreementAndMutants/caller",
+      "seconds": 9.12
+    },
+    {
+      "test": "TestCoverageAgreementAndMutants/parameter",
+      "seconds": 9.51
+    },
+    {
+      "test": "TestCoverageAgreementAndMutants/invariant",
+      "seconds": 9.31
+    },
+    {
+      "test": "TestCoverageAgreementAndMutants/optional",
+      "seconds": 9.67
+    },
+    {
+      "test": "TestCoverageAgreementAndMutants/alias",
+      "seconds": 8.87
+    },
+    {
+      "test": "TestCoverageAgreementAndMutants/unused",
+      "seconds": 8.83
+    },
+    {
+      "test": "TestTypeAwareAgreementAndMutants",
+      "seconds": 100.41
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants",
+      "seconds": 359.93
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/assignable-types",
+      "seconds": 15.6
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/widened-shape",
+      "seconds": 15.43
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/enum-types",
+      "seconds": 15.64
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/type-symbol",
+      "seconds": 15.67
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/scope-locals",
+      "seconds": 16.21
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/call-returns",
+      "seconds": 16.87
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/property-shape",
+      "seconds": 16.19
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/contextual-shape",
+      "seconds": 16.08
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/symbol-origin",
+      "seconds": 15.94
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/type-origin",
+      "seconds": 15.81
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/property-info",
+      "seconds": 15.45
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/call-count",
+      "seconds": 15.72
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/call-parameters",
+      "seconds": 15.86
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/apparent-shape",
+      "seconds": 16.22
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants/base-shapes",
+      "seconds": 15.52
+    },
+    {
+      "test": "TestVolumeConfigGuardAndMutant",
+      "seconds": 104.9
+    },
+    {
+      "test": "TestPinnedTypeFlags",
+      "seconds": 0.0
+    }
+  ],
+  "landing-six-oracle": [
+    {
+      "test": "TestSixRuleAgreementAndMutants",
+      "seconds": 218.94
+    }
+  ],
+  "landing-final-oracles": [
+    {
+      "test": "TestWave30NextAgreementAndMutants",
+      "seconds": 87.88
+    },
+    {
+      "test": "TestWave30ProcessGraphAgreement",
+      "seconds": 46.82
+    },
+    {
+      "test": "TestWave30ProcessExitAgreement",
+      "seconds": 55.82
+    },
+    {
+      "test": "TestWave30BlockingStreamsAgreement",
+      "seconds": 68.47
+    },
+    {
+      "test": "TestWave30ReactComponents",
+      "seconds": 7.0
+    },
+    {
+      "test": "TestWave30ReactPrerequisites",
+      "seconds": 6.75
+    },
+    {
+      "test": "TestWave30AgreementAndMutants",
+      "seconds": 60.43
+    },
+    {
+      "test": "TestWave30ThirdAgreementAndMutants",
+      "seconds": 53.11
+    },
+    {
+      "test": "TestWave30ProcessOutputStateAgreement",
+      "seconds": 6.11
+    }
+  ],
+  "landing-final-base-oracles": [
+    {
+      "test": "TestCoverageAgreementAndMutants",
+      "seconds": 450.72
+    },
+    {
+      "test": "TestVolumeAgreementAndMutants",
+      "seconds": 116.98
+    }
+  ]
+}

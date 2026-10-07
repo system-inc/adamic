@@ -94,3 +94,9 @@ unported. JSX support exists on codex/stage1-jsx-lint but is not integrated here
 native React HIR/SSA and the reactive memoization pipeline are still required.
 The refreshed wave-04 branch has a later overlapping claim, recorded in
 ../WAVE_30_REACT_COMPONENTS_REPORT.md. No subsequent batch was claimed.
+
+Landing-first update: this unit's only pushed branch was cleanly rebased onto
+origin/main e8ba3d5d. All implemented wave-30 gates, inherited corpus comparisons,
+sanitisers and released handles re-pass; the complete React analyses remain
+partial and no new rules were claimed. See ../WAVE_30_LANDING_REPORT.md and
+validation-wave-30-landing/rebase.json for current commits and failure proofs.
