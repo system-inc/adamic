@@ -511,11 +511,9 @@ bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean 
 
 // A string's UTF-16 view (string.c): length, charCodeAt and trim as JavaScript means them.
 //
-// length is the count of units, once it's been made, inline; and charCodeAt of an ASCII string (its
-// units are its bytes) at an index inside it is that byte, inline, which is what a scanner's loop
-// does. NaN, a negative, past the end, a non-ASCII string (through its index, string_index.c) and a
-// length not yet counted or an index not yet built go to adamic_string_char_code, out of line. A position from 0 up to the
-// length truncates to its index as (size_t) does.
+// length reads the propagated or counted units inline. charCodeAt reads ASCII bytes or a built
+// UTF-16 view inline. An unknown length, an unbuilt index, NaN, a negative or past the end goes
+// to adamic_string_char_code. A position in range truncates to its index as (size_t) does.
 size_t adamic_string_units(const adamic_string *string);
 double adamic_string_char_code(const adamic_string *string, double position);
 static inline double adamic_string_length(const adamic_string *string) {

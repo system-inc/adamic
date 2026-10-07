@@ -74,6 +74,16 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) 
 }
 
 size_t adamic_string_put(char *bytes, size_t written, const adamic_string *part) {
+	// A pair can meet only as ED A0..AF xx at the left boundary and ED B0..BF xx
+	// at the right one. Ordinary appends, including ASCII onto Unicode text, need only a copy.
+	if (written < 3 || part->length < 3 || (unsigned char)bytes[written - 3] != 0xed ||
+		((unsigned char)bytes[written - 2] & 0xf0) != 0xa0 || (unsigned char)part->bytes[0] != 0xed ||
+		((unsigned char)part->bytes[1] & 0xf0) != 0xb0) {
+		if (part->length > 0) {
+			memcpy(bytes + written, part->bytes, part->length);
+		}
+		return written + part->length;
+	}
 	// A string's own halves are joined already, so halves of a pair can meet only where two pieces
 	// do: a lone high surrogate the bytes so far end with, and a lone low one the part begins with.
 	// The part's first three bytes go in first, and only those six are looked at.
