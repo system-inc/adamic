@@ -1,0 +1,104 @@
+case 0
+finding	378	386	thisDestructure	This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.
+finding	415	436	thisDestructure	This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.
+finding	465	471	thisDestructure	This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.
+finding	500	510	thisDestructure	This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.
+fixed	class TestClass {\u000a            constructor() {\u000a              const inConstructor = this;\u000a              const asThis: this = this;\u000a\u000a              const asString = 'this';\u000a              const asArray = [this];\u000a              const asArrayString = ['this'];\u000a            }\u000a\u000a            public act(scope: this = this) {\u000a              const inMemberFunction = this;\u000a              const { act1 } = this;\u000a              const { act2, constructor } = this;\u000a              const [foo1] = this;\u000a              const [foo, bar] = this;\u000a            }\u000a          }
+case 1
+fixed	class Z { p = this; }
+case 2
+finding	6	22	thisDestructure	This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.
+fixed	const [ props, state ] = this;
+case 3
+fixed	const [foo, bar] = this;
+case 4
+fixed	const [foo] = this;
+case 5
+fixed	const self = (0, this);
+case 6
+fixed	const self = (this);
+case 7
+fixed	const self = this as any;
+case 8
+fixed	const self = this satisfies any;
+case 9
+fixed	const self = this!;
+case 10
+fixed	const self = this.foo;
+case 11
+fixed	const self = this;
+case 12
+finding	6	10	thisAssignment	This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+fixed	const self = this;
+case 13
+fixed	const self = this;
+case 14
+fixed	const self = this;
+case 15
+fixed	const self = this;
+case 16
+fixed	const testLambda = () => {\u000a            const inLambda = this;\u000a          };
+case 17
+fixed	const { length } = this;
+case 18
+fixed	const { length, toString } = this;
+case 19
+finding	6	15	thisDestructure	This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.
+fixed	const { props } = this;
+case 20
+fixed	const { props, state } = this;
+case 21
+finding	6	22	thisDestructure	This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.
+fixed	const { props, state } = this;
+case 22
+fixed	declare let foo: any;\u000aconst r = foo === this;
+case 23
+fixed	declare let m: any;\u000am.n.o = this;
+case 24
+fixed	declare let m: any;\u000am['n'] = this;
+case 25
+fixed	function testFunction() {\u000a            let inFunction = this;\u000a          }
+case 26
+fixed	let foo; \u000aconst other =3;\u000a\u000a\u000a\u000afoo = this
+case 27
+fixed	let foo; ((foo)) = this
+case 28
+fixed	let foo; (foo as any) = this
+case 29
+fixed	let foo; (foo satisfies any) = this
+case 30
+fixed	let foo; (foo!) = this
+case 31
+fixed	let foo; (foo) = this
+case 32
+finding	10	15	thisDestructure	This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.
+fixed	let foo; ({foo} = this)
+case 33
+fixed	let foo; [foo] = this
+case 34
+finding	9	14	thisDestructure	This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.
+fixed	let foo; [foo] = this
+case 35
+fixed	let foo; foo += this
+case 36
+fixed	let foo; foo ??= this
+case 37
+fixed	let self;
+case 38
+fixed	this.self = this;
+case 39
+fixed	var b = this, c = this;
+case 40
+fixed	const self = this; a = this; a += this; const { x } = this; (b as T) = this; const other = (this); this.self = this;\u000a
+case 41
+finding	6	10	thisAssignment	This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+fixed	const self = this; a = this; a += this; const { x } = this; (b as T) = this; const other = (this); this.self = this;\u000a
+case 42
+finding	46	51	thisDestructure	This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.
+fixed	const self = this; a = this; a += this; const { x } = this; (b as T) = this; const other = (this); this.self = this;\u000a
+case 43
+finding	6	10	thisAssignment	This binding holds `this` under another name. The alias exists to carry the receiver into a nested `function`, which rebinds `this` to something else, and an arrow function closes over `this` directly and needs no carrier. Every later reader now has to establish which of the two names is the real receiver and whether they are still the same object. Use an arrow function and write `this`.
+finding	46	51	thisDestructure	This pattern pulls members off `this` into local bindings. Each one is read once, at the moment of destructuring, so a later write to the property is invisible here, and a method taken this way has lost its receiver and throws when called. Read through `this` at the point of use instead.
+fixed	const self = this; a = this; a += this; const { x } = this; (b as T) = this; const other = (this); this.self = this;\u000a
+case 44
+fixed	const self = this; a = this; a += this; const { x } = this; (b as T) = this; const other = (this); this.self = this;\u000a
