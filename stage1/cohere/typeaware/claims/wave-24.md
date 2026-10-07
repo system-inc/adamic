@@ -58,3 +58,20 @@ findings in both frozen populations. Main: `ef3d907ecdc4c771b016f7d9c52372def057
 Bridge: `5afbdb83da2ed7ad9815657cd3f6ececd5294bf6`. This update precedes implementation.
 
 No shared registration generator or existing shared test harness will be edited.
+
+## Fourth batch after all nine prior ports were pushed
+
+Previous batch completed, tested and pushed in `09bf947bb040786384d3ef055feb376ea4c0832c`.
+
+Next three eligible checker-dependent rules:
+
+1. `react-hooks/set-state-in-effect`
+2. `react-hooks/set-state-in-render`
+3. `react-hooks/static-components`
+
+Fetched 389 origin refs on October 7, 2026; inspected 33 distinct Markdown
+claim blobs and excluded ports on main/bridge and all claims on all origin
+branches. Full-ranking positions 168, 169 and 170, each zero findings.
+Main: `e011f8f60899586d6373a5ccb07335ad82cfbf3c`.
+Bridge: `5afbdb83da2ed7ad9815657cd3f6ececd5294bf6`.
+This update precedes implementation. No shared harness or generator will be edited.
