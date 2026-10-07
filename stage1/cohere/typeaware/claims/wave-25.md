@@ -18,3 +18,18 @@ rows and therefore does not remove a row from this ranking.
 All three have zero findings on both recorded populations. No replacement is
 selected for the skipped rule. All origin branch tips were fetched and distinct
 stage1/cohere source and claim blobs checked before this claim.
+
+## Next three, October 7 continuation
+
+Checked origin/codex/tsgo-c-library at 5afbdb83da2ed7ad9815657cd3f6ececd5294bf6
+and origin/main at ef3d907ecdc4c771b016f7d9c52372def057a340.
+Fetched all 320 origin refs; inspected the 30 distinct claim blobs.
+These are the first three by descending combined volume, lexical ties,
+excluding ports on those two branches and every rule named in any origin claim.
+
+- nexus/correctness-no-collection-misuse (combined volume 0)
+- nexus/correctness-no-discarded-outcome (combined volume 0)
+- nexus/correctness-no-discarded-pure-result (combined volume 0)
+
+This is a local claim until the claim commit is successfully pushed.
+Implementation is held until that publication, as requested.
