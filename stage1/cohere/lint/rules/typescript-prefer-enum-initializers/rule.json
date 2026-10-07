@@ -1,0 +1,12 @@
+{
+  "name": "@typescript-eslint/prefer-enum-initializers",
+  "kinds": [
+    "EnumDeclaration"
+  ],
+  "visit": "visit",
+  "oracle": "oraclePreferEnumInitializers",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestPreferEnumInitializers",
+  "factory": "create",
+  "class": "Rule"
+}
