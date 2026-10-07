@@ -1,6 +1,6 @@
 {
   "name": "eslint-comments-require-description semantic comparison mutant",
-  "file": "rule.a",
+  "file": "rule.ts",
   "from": "if(description.trim() !== '')",
   "to": "if(false)"
 }

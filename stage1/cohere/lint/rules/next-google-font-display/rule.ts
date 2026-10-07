@@ -1,6 +1,6 @@
 import type { RuleContext } from '../../context.ts';
-import { decode } from './entities.a';
-import { missing, discouraged } from './messages.a';
+import { decode } from './entities.ts';
+import { missing, discouraged } from './messages.ts';
 export class Rule {
     readonly context: RuleContext;
     constructor(context: RuleContext) { this.context = context; }

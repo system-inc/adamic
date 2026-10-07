@@ -141,7 +141,7 @@ func TestRuleContracts(t *testing.T) {
 	}
 	want := command(t, "", goOracle, cases)
 	adapted := file(t, "adapted.json", command(t, "", goOracle, "--ast", cases))
-	entry, err := filepath.Abs("main.a")
+	entry, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -190,7 +190,7 @@ func TestRuleContracts(t *testing.T) {
 			if err = json.Unmarshal(changeData, &mutation); err != nil {
 				t.Fatal(err)
 			}
-			module := filepath.Join(directory, "rule.a")
+			module := filepath.Join(directory, "rule.ts")
 			source, err := os.ReadFile(module)
 			if err != nil {
 				t.Fatal(err)
@@ -198,14 +198,14 @@ func TestRuleContracts(t *testing.T) {
 			if strings.Count(string(source), mutation.From) != 1 {
 				t.Fatal("mutant anchor count")
 			}
-			mutated := file(t, "rule.a", absoluteImports(t, module, []byte(strings.Replace(string(source), mutation.From, mutation.To, 1))))
+			mutated := file(t, "rule.ts", absoluteImports(t, module, []byte(strings.Replace(string(source), mutation.From, mutation.To, 1))))
 			mainData, err := os.ReadFile(entry)
 			if err != nil {
 				t.Fatal(err)
 			}
 			mainData = absoluteImports(t, entry, mainData)
 			mainData = []byte(strings.Replace(string(mainData), filepath.ToSlash(module), filepath.ToSlash(mutated), 1))
-			mutantEntry := file(t, "main.a", mainData)
+			mutantEntry := file(t, "main.ts", mainData)
 			mutantBinary, mutantJS := compile(t, mutantEntry)
 			for i, got := range runSides(t, mutantEntry, mutantBinary, mutantJS, adapted) {
 				if bytes.Equal(got, want) {
@@ -244,7 +244,15 @@ func TestRuleContracts(t *testing.T) {
 func TestSourceCorpora(t *testing.T) {
 	var rows []map[string]any
 	rules := []string{"structure/tailwind-no-physical-direction", "@eslint-community/eslint-comments/require-description", "@next/next/google-font-display"}
-	for _, directory := range []string{filepath.Join(root(t), "stage1"), "/tmp/lint-wave1-typescript/src/compiler"} {
+	directories := []string{filepath.Join(root(t), "stage1"), "/tmp/lint-wave1-typescript/src/compiler"}
+	if os.Getenv("ADAMIC_WAVE1_CORPUS") == "owned" {
+		directories = nil
+		for _, slug := range []string{"structure-tailwind-no-physical-direction", "eslint-comments-require-description", "next-google-font-display"} {
+			directories = append(directories, filepath.Join(root(t), "stage1/cohere/lint/rules", slug))
+		}
+		t.Log("owned changed-source corpus only")
+	}
+	for _, directory := range directories {
 		err := filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {
 			if err != nil {
 				return err
@@ -269,7 +277,7 @@ func TestSourceCorpora(t *testing.T) {
 		}
 	}
 	goOracle := oracle(t)
-	entry, _ := filepath.Abs("main.a")
+	entry, _ := filepath.Abs("main.ts")
 	binary, emitted := compile(t, entry)
 	runner := filepath.Join(root(t), "oracle/node.mjs")
 	for _, rule := range rules {
@@ -327,7 +335,7 @@ func TestSourceCorpora(t *testing.T) {
 // Not parallel: sanitized native builds share the worker CPU and memory budget.
 func TestFixtureRates(t *testing.T) {
 	goOracle := oracle(t)
-	entry, _ := filepath.Abs("main.a")
+	entry, _ := filepath.Abs("main.ts")
 	binary, _ := compile(t, entry)
 	runner := filepath.Join(root(t), "oracle/node.mjs")
 	data, err := os.ReadFile("testdata/cases.json")

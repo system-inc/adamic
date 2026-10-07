@@ -1,6 +1,6 @@
 {
   "name": "next-google-font-display semantic comparison mutant",
-  "file": "rule.a",
+  "file": "rule.ts",
   "from": "['auto', 'block', 'fallback'].includes(display)",
   "to": "['auto', 'fallback'].includes(display)"
 }

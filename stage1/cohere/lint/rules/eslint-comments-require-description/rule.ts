@@ -2,7 +2,7 @@ import { utf8Length } from 'adamic';
 import type { RuleContext } from '../../context.ts';
 import { Finding } from '../../finding.ts';
 import { all } from '../../helpers/comments/all.ts';
-import { message } from './messages.a';
+import { message } from './messages.ts';
 
 function whitespace(char: string): boolean { return char !== '' && char.trim() === ''; }
 function pieces(text: string): string[] {

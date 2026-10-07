@@ -1,5 +1,5 @@
 import type { RuleContext } from '../../context.ts';
-import { message } from './messages.a';
+import { message } from './messages.ts';
 
 function fields(text: string): string[] {
     return text.split(/[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+/).map(value => value ?? '').filter(value => value !== '');
