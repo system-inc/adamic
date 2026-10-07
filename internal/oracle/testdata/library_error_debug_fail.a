@@ -1,0 +1,29 @@
+import type { Stats } from 'node:fs';
+function mark(): void {}
+function fail(message: string, stackCrawlMark: (() => void) | undefined): never {
+ const e = new Error(message);
+ if (Error.captureStackTrace) {
+  Error.captureStackTrace(e, stackCrawlMark || fail);
+ }
+ throw e;
+}
+try {
+ fail('Debug Failure.', undefined);
+} catch (e) {
+ if (e instanceof Error) {
+  console.log(e.message);
+  console.log(e.name);
+ }
+}
+try {
+ fail('passed marker', mark);
+} catch (e) {
+ if (e instanceof Error) {
+  console.log(e.message);
+  console.log(e.name);
+ }
+}
+const e = new Error('unchanged');
+Error.captureStackTrace(e);
+console.log(e.message);
+console.log(e.name);
