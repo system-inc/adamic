@@ -37,3 +37,12 @@ markFinal is rebased onto current main, re-green with both mutants, and pushed a
 ## Retained delivery
 
 Retained helpers: markFinal and markThrown, each on its own .a file with shared stable arena semantics. Their final consumer reruns and joint test pass on current main f8013f0b: 3,106 transitions, 98,252 bytes and six compiling semantic mutants across Node source, emitted JavaScript and sanitized native. Eight dependency occurrences removed across the four listed rules, zero final blockers. No third helper is reserved. enter remains withdrawn. See from_wave1_02/DELIVERY.md for exact commands, counts, adapter boundaries, source corrections and parking status.
+
+## Third retained helper claim
+
+Claim: github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].snapshotForks
+File: from_wave1_02/forks/snapshot_forks.a.
+
+Both own branches were refreshed on current main c01907a70 before selection: helpers c1e716a73 is re-green with six mutants; rules 702db4c9e is parked with green preserved-main oracle and named shared registration blocker. Fetched all 559 origin refs and read all 20 distinct claims plus base reservations and complete readiness JSON. This helper is unclaimed and ties the largest concrete remaining fan-out at four. Same four recorded consumers; zero final blockers alone.
+
+Preserve frame order, exact thrownForked booleans, fresh snapshot storage, empty snapshots and independence from later frame changes. Readonly frame view, no traversal or regex. Compare actual private Go calls from each original consumer suite and explicit nested-try/finally probes through the actual consuming rule when the original corpus has no calls; report those separately. Add alias/state controls, Node source, emitted JavaScript, sanitized native and a compiling semantic mutant. No shared harness edits. Push before code.
