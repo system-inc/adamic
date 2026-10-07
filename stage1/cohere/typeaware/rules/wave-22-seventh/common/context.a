@@ -7,6 +7,7 @@ import type { Bindings } from '../../../bindings.ts';
 export class Context extends Base {
     readonly operators=new Map<number,number>();
     readonly starts=new Map<number,number>();
+    readonly fullStarts:number[]=[];
     readonly ends=new Map<number,number>();
     readonly nativeRanges=new Map<string,number>();
     readonly initializers=new Map<number,number>();
@@ -20,6 +21,7 @@ export class Context extends Base {
         for(let i=0;i<this.sourceCount;i++) {
             const raw=bindings.rules.parser.node(i);const node=this.node(i);
             if(node.kind===Kind.JsxAttribute){this.hasJsxAttributes=true;}
+            this.fullStarts.push(raw.pos);
             this.operators.set(i,node.kind===Kind.BinaryExpression&&node.children.length===3?this.node(node.children[1]??-1).kind:kinds.get(raw.operator)??0);this.starts.set(i,bindings.rules.start(raw));this.ends.set(i,raw.end);
             this.nativeRanges.set(`${node.kind}:${node.pos}:${node.end}`,i);
             this.initializers.set(i,bindings.shape.initializer(i));this.names.set(i,bindings.shape.name(i));
@@ -56,6 +58,9 @@ export class Context extends Base {
         if(node.kind===Kind.ArrowFunction){return node.children.length===0?undefined:this.last(node);}
         for(const id of node.children){const child=this.node(id);if(child.kind===Kind.Block){return child;}}
         return undefined;
+    }
+    fullRaw(node: Node): string {
+        node=this.local(node);const start=this.fullStarts[node.index]??panic('full source start absent from syntax cache');const end=this.ends.get(node.index)??panic('source end absent from syntax cache');return this.source.slice(start,end);
     }
     raw(node: Node): string {
         node=this.local(node);const start=this.starts.get(node.index)??panic('raw key absent from native syntax cache');const end=this.ends.get(node.index)??panic('raw key absent from native syntax cache');
