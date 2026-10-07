@@ -41,3 +41,15 @@ The related rule branch is pushed at de97588de1fd8370cf0d9252d1df0d51f23a2b3f.
 Its core oracle passes on this base, but dynamic option RegExp lowering still
 refuses the Tailwind surface. No additional helper or rule claimed. The full
 repository gate and its seventeen required correctness checks were not run.
+
+Registry-only harness refresh onto area b46914832d70e00847d82d5d221ab7bb24040c53:
+Main remains c7991b900. Ledger unchanged, helper rebase clean. Full owned
+seven-helper actual-Go gate PASS 204.771s; twenty compiling semantic mutants
+caught on source Node, emitted JavaScript and ASan/UBSan native. Helper vet
+passes. Commands: go test ./stage1/cohere/lint/helpers/from_wave1_04 -count=1
+-v -timeout=10m; go vet ./stage1/cohere/lint/helpers/from_wave1_04, with the
+existing toolchain environment. Evidence b469-helper-tests.log and
+b469-helper-vet.log. Helpers still remove 32 prerequisite edges across six
+Tailwind rules; no additional fully helper-ready rule is claimed.
+Related rules pushed at 2b3f09b3e4623da8c4cbcb94bf7069b8857dcde2: core green,
+Tailwind blocked by runtime RegExp lowering. No new claim and no full gate.

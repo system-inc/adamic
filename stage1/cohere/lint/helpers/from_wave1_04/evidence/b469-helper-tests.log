@@ -1,0 +1,181 @@
+=== RUN   TestFractionMatchesGo
+    fraction_test.go:46: 233079 actual Go comparisons across four consumer fixture domains, numeric ratios and all BMP scalar slash-adjacent points
+    fraction_test.go:54: 12044898 exact Go bytes include result and ordered math, scanner and trim calls on three targets
+--- PASS: TestFractionMatchesGo (13.89s)
+=== RUN   TestFractionMutants
+    fraction_test.go:60: 233079 actual Go comparisons across four consumer fixture domains, numeric ratios and all BMP scalar slash-adjacent points
+=== RUN   TestFractionMutants/ignore_math_functions
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught ignore math functions on source Node: line 1 got="0\tfalse\t1\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught ignore math functions on emitted JavaScript: line 1 got="0\tfalse\t1\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught ignore math functions on ASan/UBSan native: line 1 got="0\tfalse\t1\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+=== RUN   TestFractionMutants/accept_an_empty_denominator
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught accept an empty denominator on source Node: line 233070 got="233069\ttrue\t5\tM:1/\tN:1/\tT:/\tT:\tN:" Go="233069\tfalse\t5\tM:1/\tN:1/\tT:/\tT:\tN:"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught accept an empty denominator on emitted JavaScript: line 233070 got="233069\ttrue\t5\tM:1/\tN:1/\tT:/\tT:\tN:" Go="233069\tfalse\t5\tM:1/\tN:1/\tT:/\tT:\tN:"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught accept an empty denominator on ASan/UBSan native: line 233070 got="233069\ttrue\t5\tM:1/\tN:1/\tT:/\tT:\tN:" Go="233069\tfalse\t5\tM:1/\tN:1/\tT:/\tT:\tN:"
+=== RUN   TestFractionMutants/omit_numerator_whitespace_trim
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught omit numerator whitespace trim on emitted JavaScript: line 347 got="346\tfalse\t2\tM:1\\u0000X\tN:1\\u0000X" Go="346\tfalse\t3\tM:1\\u0000X\tN:1\\u0000X\tT:\\u0000X"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught omit numerator whitespace trim on ASan/UBSan native: line 347 got="346\tfalse\t2\tM:1\\u0000X\tN:1\\u0000X" Go="346\tfalse\t3\tM:1\\u0000X\tN:1\\u0000X\tT:\\u0000X"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught omit numerator whitespace trim on source Node: line 347 got="346\tfalse\t2\tM:1\\u0000X\tN:1\\u0000X" Go="346\tfalse\t3\tM:1\\u0000X\tN:1\\u0000X\tT:\\u0000X"
+=== RUN   TestFractionMutants/scan_before_the_math_short_circuit
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught scan before the math short circuit on source Node: line 1 got="0\tfalse\t3\tN:items-center\\u000a    flex\\u000a    gap-2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught scan before the math short circuit on emitted JavaScript: line 1 got="0\tfalse\t3\tN:items-center\\u000a    flex\\u000a    gap-2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+    fraction_test.go:74: compiled and completed cleanly; only Go comparison caught scan before the math short circuit on ASan/UBSan native: line 1 got="0\tfalse\t3\tN:items-center\\u000a    flex\\u000a    gap-2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t2\tM:items-center\\u000a    flex\\u000a    gap-2\tN:items-center\\u000a    flex\\u000a    gap-2"
+--- PASS: TestFractionMutants (49.71s)
+    --- PASS: TestFractionMutants/ignore_math_functions (11.60s)
+    --- PASS: TestFractionMutants/accept_an_empty_denominator (12.21s)
+    --- PASS: TestFractionMutants/omit_numerator_whitespace_trim (11.23s)
+    --- PASS: TestFractionMutants/scan_before_the_math_short_circuit (13.33s)
+=== RUN   TestProjectRootMatchesGo
+    helpers_test.go:206: better-tailwindcss/enforce-consistent-variant-order: 16 captured inputs
+    helpers_test.go:206: better-tailwindcss/no-conflicting-classes: 22 captured inputs
+    helpers_test.go:206: better-tailwindcss/enforce-canonical-classes: 35 captured inputs
+    helpers_test.go:206: better-tailwindcss/enforce-shorthand-classes: 2 captured inputs
+    helpers_test.go:206: better-tailwindcss/no-unknown-classes: 26 captured inputs
+    helpers_test.go:206: better-tailwindcss/enforce-consistent-class-order: 50 captured inputs
+    helpers_test.go:206: 151 fixture inputs plus 2784 controls = 2935 cases
+    helpers_test.go:214: 85445 bytes, 2935 lines identical to actual Go on Node, emitted JS and sanitized native
+--- PASS: TestProjectRootMatchesGo (2.82s)
+=== RUN   TestProjectRootMutants
+    helpers_test.go:219: better-tailwindcss/enforce-consistent-class-order: 50 captured inputs
+    helpers_test.go:219: better-tailwindcss/enforce-consistent-variant-order: 16 captured inputs
+    helpers_test.go:219: better-tailwindcss/no-conflicting-classes: 22 captured inputs
+    helpers_test.go:219: better-tailwindcss/enforce-canonical-classes: 35 captured inputs
+    helpers_test.go:219: better-tailwindcss/enforce-shorthand-classes: 2 captured inputs
+    helpers_test.go:219: better-tailwindcss/no-unknown-classes: 26 captured inputs
+    helpers_test.go:219: 151 fixture inputs plus 2784 controls = 2935 cases
+=== RUN   TestProjectRootMutants/accept_empty_configured_path
+    helpers_test.go:228: accept empty configured path compiled, finished cleanly and was caught only by Go comparison on source Node: line 153 got="152\t.\toptions" Go="152\t\toptions,directory"
+    helpers_test.go:228: accept empty configured path compiled, finished cleanly and was caught only by Go comparison on emitted JavaScript: line 153 got="152\t.\toptions" Go="152\t\toptions,directory"
+    helpers_test.go:228: accept empty configured path compiled, finished cleanly and was caught only by Go comparison on ASan/UBSan native: line 153 got="152\t.\toptions" Go="152\t\toptions,directory"
+=== RUN   TestProjectRootMutants/omit_parent_path_cleaning
+    helpers_test.go:228: omit parent path cleaning compiled, finished cleanly and was caught only by Go comparison on source Node: line 217 got="216\t/server/a/..\toptions" Go="216\t/server\toptions"
+    helpers_test.go:228: omit parent path cleaning compiled, finished cleanly and was caught only by Go comparison on emitted JavaScript: line 217 got="216\t/server/a/..\toptions" Go="216\t/server\toptions"
+    helpers_test.go:228: omit parent path cleaning compiled, finished cleanly and was caught only by Go comparison on ASan/UBSan native: line 217 got="216\t/server/a/..\toptions" Go="216\t/server\toptions"
+=== RUN   TestProjectRootMutants/clean_the_fallback_directory
+    helpers_test.go:228: clean the fallback directory compiled, finished cleanly and was caught only by Go comparison on source Node: line 152 got="151\t.\toptions,directory" Go="151\t\toptions,directory"
+    helpers_test.go:228: clean the fallback directory compiled, finished cleanly and was caught only by Go comparison on emitted JavaScript: line 152 got="151\t.\toptions,directory" Go="151\t\toptions,directory"
+    helpers_test.go:228: clean the fallback directory compiled, finished cleanly and was caught only by Go comparison on ASan/UBSan native: line 152 got="151\t.\toptions,directory" Go="151\t\toptions,directory"
+--- PASS: TestProjectRootMutants (5.28s)
+    --- PASS: TestProjectRootMutants/accept_empty_configured_path (1.27s)
+    --- PASS: TestProjectRootMutants/omit_parent_path_cleaning (1.25s)
+    --- PASS: TestProjectRootMutants/clean_the_fallback_directory (1.20s)
+=== RUN   TestLoadDesignSystemForProgramMatchesGo
+    load_test.go:151: 151 real-program fixture cases and 25 live filesystem controls; six consumers
+    load_test.go:151: real Go success=6 failed=170 nonempty read snapshots=175; 204013 exact bytes
+    load_test.go:158: 176 lines byte identical on source Node, emitted JavaScript and ASan/UBSan native
+--- PASS: TestLoadDesignSystemForProgramMatchesGo (2.48s)
+=== RUN   TestLoadDesignSystemForProgramMutants
+    load_test.go:163: 151 real-program fixture cases and 25 live filesystem controls; six consumers
+    load_test.go:163: real Go success=6 failed=170 nonempty read snapshots=175; 203545 exact bytes
+=== RUN   TestLoadDesignSystemForProgramMutants/discard_recording_snapshot
+    load_test.go:185: compiled, finished cleanly, only Go comparison caught discard recording snapshot on source Node: line 1 got="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\tnull\tnull\tfilesystem,load" Go="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\t[{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/_theme/styles/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0}]\tnull\tfilesystem,load"
+    load_test.go:185: compiled, finished cleanly, only Go comparison caught discard recording snapshot on emitted JavaScript: line 1 got="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\tnull\tnull\tfilesystem,load" Go="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\t[{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/_theme/styles/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0}]\tnull\tfilesystem,load"
+    load_test.go:185: compiled, finished cleanly, only Go comparison caught discard recording snapshot on ASan/UBSan native: line 1 got="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\tnull\tnull\tfilesystem,load" Go="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\t[{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/_theme/styles/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0}]\tnull\tfilesystem,load"
+=== RUN   TestLoadDesignSystemForProgramMutants/snapshot_before_load
+    load_test.go:185: compiled, finished cleanly, only Go comparison caught snapshot before load on source Node: line 1 got="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\t[]\tnull\tfilesystem,load" Go="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\t[{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/_theme/styles/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0}]\tnull\tfilesystem,load"
+    load_test.go:185: compiled, finished cleanly, only Go comparison caught snapshot before load on emitted JavaScript: line 1 got="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\t[]\tnull\tfilesystem,load" Go="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\t[{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/_theme/styles/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0}]\tnull\tfilesystem,load"
+    load_test.go:185: compiled, finished cleanly, only Go comparison caught snapshot before load on ASan/UBSan native: line 1 got="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\t[]\tnull\tfilesystem,load" Go="0\t0\t0\t1no Tailwind entry point found in this project: looked under /tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001\t\t[{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/_theme/styles/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/app/theme.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/app/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/src/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0},{\"Path\":\"/tmp/adamic-gate/TestUnknownIgnoreExemptsProjectClasses1174472423/001/styles/globals.css\",\"Present\":false,\"Size\":0,\"ModifiedNanoseconds\":0}]\tnull\tfilesystem,load"
+--- PASS: TestLoadDesignSystemForProgramMutants (3.39s)
+    --- PASS: TestLoadDesignSystemForProgramMutants/discard_recording_snapshot (0.91s)
+    --- PASS: TestLoadDesignSystemForProgramMutants/snapshot_before_load (0.91s)
+=== RUN   TestScanNumberMatchesGo
+    scan_test.go:49: better-tailwindcss/enforce-consistent-class-order: 148 original fixture literal/field values
+    scan_test.go:49: better-tailwindcss/enforce-shorthand-classes: 69 original fixture literal/field values
+    scan_test.go:49: better-tailwindcss/no-conflicting-classes: 64 original fixture literal/field values
+    scan_test.go:49: better-tailwindcss/no-unknown-classes: 65 original fixture literal/field values
+    scan_test.go:49: 101547 cases: every BMP scalar following an ASCII prefix, every <=5-character word from +-01.eEX and 253 number/suffix combinations
+    scan_test.go:57: 802813 exact Go bytes on source Node, emitted JavaScript and ASan/UBSan native
+--- PASS: TestScanNumberMatchesGo (4.21s)
+=== RUN   TestScanNumberMutants
+    scan_test.go:63: better-tailwindcss/enforce-consistent-class-order: 148 original fixture literal/field values
+    scan_test.go:63: better-tailwindcss/enforce-shorthand-classes: 69 original fixture literal/field values
+    scan_test.go:63: better-tailwindcss/no-conflicting-classes: 64 original fixture literal/field values
+    scan_test.go:63: better-tailwindcss/no-unknown-classes: 65 original fixture literal/field values
+    scan_test.go:63: 101547 cases: every BMP scalar following an ASCII prefix, every <=5-character word from +-01.eEX and 253 number/suffix combinations
+=== RUN   TestScanNumberMutants/accept_a_dot_without_fractional_digits
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught accept a dot without fractional digits on source Node: line 393 got="392\t2" Go="392\t0"
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught accept a dot without fractional digits on emitted JavaScript: line 393 got="392\t2" Go="392\t0"
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught accept a dot without fractional digits on ASan/UBSan native: line 393 got="392\t2" Go="392\t0"
+=== RUN   TestScanNumberMutants/consume_an_incomplete_exponent
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught consume an incomplete exponent on emitted JavaScript: line 416 got="415\t2" Go="415\t1"
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught consume an incomplete exponent on ASan/UBSan native: line 416 got="415\t2" Go="415\t1"
+    scan_test.go:72: compiled and completed cleanly; only Go comparison caught consume an incomplete exponent on source Node: line 416 got="415\t2" Go="415\t1"
+--- PASS: TestScanNumberMutants (15.21s)
+    --- PASS: TestScanNumberMutants/accept_a_dot_without_fractional_digits (7.15s)
+    --- PASS: TestScanNumberMutants/consume_an_incomplete_exponent (7.32s)
+=== RUN   TestNumberWithSuffixMatchesGo
+    suffix_test.go:46: 101547 values x 12 suffix sets = 1218564 actual Go comparisons, four consumer fixture domains
+    suffix_test.go:54: 27938475 exact Go bytes include results, one scanner call and its unchanged argument on all three targets
+--- PASS: TestNumberWithSuffixMatchesGo (18.82s)
+=== RUN   TestNumberWithSuffixMutants
+    suffix_test.go:60: 101547 values x 12 suffix sets = 1218564 actual Go comparisons, four consumer fixture domains
+=== RUN   TestNumberWithSuffixMutants/accept_a_zero-length_numeric_match
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a zero-length numeric match on source Node: line 1 got="0\ttrue\t1\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a zero-length numeric match on emitted JavaScript: line 1 got="0\ttrue\t1\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a zero-length numeric match on ASan/UBSan native: line 1 got="0\ttrue\t1\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+=== RUN   TestNumberWithSuffixMutants/accept_a_suffix_prefix
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a suffix prefix on source Node: line 4155 got="4154\ttrue\t1\t1\\u0000X" Go="4154\tfalse\t1\t1\\u0000X"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a suffix prefix on emitted JavaScript: line 4155 got="4154\ttrue\t1\t1\\u0000X" Go="4154\tfalse\t1\t1\\u0000X"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught accept a suffix prefix on ASan/UBSan native: line 4155 got="4154\ttrue\t1\t1\\u0000X" Go="4154\tfalse\t1\t1\\u0000X"
+=== RUN   TestNumberWithSuffixMutants/scan_twice
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught scan twice on source Node: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught scan twice on emitted JavaScript: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+    suffix_test.go:69: compiled and completed cleanly; only Go comparison caught scan twice on ASan/UBSan native: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2"
+--- PASS: TestNumberWithSuffixMutants (44.68s)
+    --- PASS: TestNumberWithSuffixMutants/accept_a_zero-length_numeric_match (14.36s)
+    --- PASS: TestNumberWithSuffixMutants/accept_a_suffix_prefix (14.96s)
+    --- PASS: TestNumberWithSuffixMutants/scan_twice (14.28s)
+=== RUN   TestTrimLeadingJavaScriptSpaceMatchesGo
+    trim_test.go:105: better-tailwindcss/no-conflicting-classes: 64 original fixture literal/field inputs
+    trim_test.go:105: better-tailwindcss/no-unknown-classes: 65 original fixture literal/field inputs
+    trim_test.go:105: better-tailwindcss/enforce-consistent-class-order: 148 original fixture literal/field inputs
+    trim_test.go:105: better-tailwindcss/enforce-shorthand-classes: 69 original fixture literal/field inputs
+    trim_test.go:105: 63845 total cases, all 63,488 BMP scalar leading points and 25 actual Go whitespace members
+    trim_test.go:113: 883340 exact Go bytes on source Node, emitted JavaScript and ASan/UBSan native
+--- PASS: TestTrimLeadingJavaScriptSpaceMatchesGo (3.49s)
+=== RUN   TestTrimLeadingJavaScriptSpaceMutants
+    trim_test.go:119: better-tailwindcss/enforce-consistent-class-order: 148 original fixture literal/field inputs
+    trim_test.go:119: better-tailwindcss/enforce-shorthand-classes: 69 original fixture literal/field inputs
+    trim_test.go:119: better-tailwindcss/no-conflicting-classes: 64 original fixture literal/field inputs
+    trim_test.go:119: better-tailwindcss/no-unknown-classes: 65 original fixture literal/field inputs
+    trim_test.go:119: 63845 total cases, all 63,488 BMP scalar leading points and 25 actual Go whitespace members
+=== RUN   TestTrimLeadingJavaScriptSpaceMutants/omit_leading_BOM
+    trim_test.go:128: compiled and completed cleanly; only Go comparison caught omit leading BOM on source Node: line 63578 got="63577\t\\ufeffX" Go="63577\tX"
+    trim_test.go:128: compiled and completed cleanly; only Go comparison caught omit leading BOM on emitted JavaScript: line 63578 got="63577\t\\ufeffX" Go="63577\tX"
+    trim_test.go:128: compiled and completed cleanly; only Go comparison caught omit leading BOM on ASan/UBSan native: line 63578 got="63577\t\\ufeffX" Go="63577\tX"
+=== RUN   TestTrimLeadingJavaScriptSpaceMutants/strip_an_extra_suffix_character
+    trim_test.go:128: compiled and completed cleanly; only Go comparison caught strip an extra suffix character on source Node: line 1 got="0\ttems-center\\u000a    flex\\u000a    gap-2" Go="0\titems-center\\u000a    flex\\u000a    gap-2"
+    trim_test.go:128: compiled and completed cleanly; only Go comparison caught strip an extra suffix character on emitted JavaScript: line 1 got="0\ttems-center\\u000a    flex\\u000a    gap-2" Go="0\titems-center\\u000a    flex\\u000a    gap-2"
+    trim_test.go:128: compiled and completed cleanly; only Go comparison caught strip an extra suffix character on ASan/UBSan native: line 1 got="0\ttems-center\\u000a    flex\\u000a    gap-2" Go="0\titems-center\\u000a    flex\\u000a    gap-2"
+--- PASS: TestTrimLeadingJavaScriptSpaceMutants (6.13s)
+    --- PASS: TestTrimLeadingJavaScriptSpaceMutants/omit_leading_BOM (2.73s)
+    --- PASS: TestTrimLeadingJavaScriptSpaceMutants/strip_an_extra_suffix_character (2.67s)
+=== RUN   TestVectorMatchesGo
+    vector_test.go:46: 170369 actual Go comparisons across four consumer fixture domains, numeric triples and all BMP scalar separators
+    vector_test.go:54: 4378863 exact Go bytes include result and lazy scanner call count and arguments on three targets
+--- PASS: TestVectorMatchesGo (7.68s)
+=== RUN   TestVectorMutants
+    vector_test.go:60: 170369 actual Go comparisons across four consumer fixture domains, numeric triples and all BMP scalar separators
+=== RUN   TestVectorMutants/accept_two_components
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept two components on source Node: line 101580 got="101579\tfalse\t2\t1 2 3\t2 3\t" Go="101579\ttrue\t3\t1 2 3\t2 3\t3"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept two components on emitted JavaScript: line 101580 got="101579\tfalse\t2\t1 2 3\t2 3\t" Go="101579\ttrue\t3\t1 2 3\t2 3\t3"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept two components on ASan/UBSan native: line 101580 got="101579\tfalse\t2\t1 2 3\t2 3\t" Go="101579\ttrue\t3\t1 2 3\t2 3\t3"
+=== RUN   TestVectorMutants/accept_a_tab_separator
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept a tab separator on source Node: line 356 got="355\tfalse\t2\t1\\u0009X\tX\t" Go="355\tfalse\t1\t1\\u0009X\t\t"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept a tab separator on emitted JavaScript: line 356 got="355\tfalse\t2\t1\\u0009X\tX\t" Go="355\tfalse\t1\t1\\u0009X\t\t"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept a tab separator on ASan/UBSan native: line 356 got="355\tfalse\t2\t1\\u0009X\tX\t" Go="355\tfalse\t1\t1\\u0009X\t\t"
+=== RUN   TestVectorMutants/ignore_the_trailing_remainder
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught ignore the trailing remainder on source Node: line 165060 got="165059\ttrue\t3\t0 0 1e\t0 1e\t1e" Go="165059\tfalse\t3\t0 0 1e\t0 1e\t1e"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught ignore the trailing remainder on emitted JavaScript: line 165060 got="165059\ttrue\t3\t0 0 1e\t0 1e\t1e" Go="165059\tfalse\t3\t0 0 1e\t0 1e\t1e"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught ignore the trailing remainder on ASan/UBSan native: line 165060 got="165059\ttrue\t3\t0 0 1e\t0 1e\t1e" Go="165059\tfalse\t3\t0 0 1e\t0 1e\t1e"
+=== RUN   TestVectorMutants/scan_twice
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught scan twice on source Node: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2\titems-center\\u000a    flex\\u000a    gap-2\t" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2\t\t"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught scan twice on emitted JavaScript: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2\titems-center\\u000a    flex\\u000a    gap-2\t" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2\t\t"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught scan twice on ASan/UBSan native: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2\titems-center\\u000a    flex\\u000a    gap-2\t" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2\t\t"
+--- PASS: TestVectorMutants (26.96s)
+    --- PASS: TestVectorMutants/accept_two_components (6.28s)
+    --- PASS: TestVectorMutants/accept_a_tab_separator (6.54s)
+    --- PASS: TestVectorMutants/ignore_the_trailing_remainder (6.42s)
+    --- PASS: TestVectorMutants/scan_twice (6.84s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_04	204.771s
