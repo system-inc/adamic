@@ -1,3 +1,11 @@
+# Active helper
+
+`framework_static_reading.a` owns collapse.FrameworkStaticReading. See STATIC_REPORT.md for its API boundary, exact Go comparisons, consumer removals and five semantic mutants.
+
+# Withdrawn constructor evidence
+
+The following description is historical. Its sources and tests were removed after slot 05's earlier reservation became visible. The active helper does not deliver NewTheme.
+
 # Helpers from lint wave 1 slot 06
 
 `new_theme.a` ports Go cohere's `collapse.NewTheme`. Every call returns a fresh record and values map, empty Prefix, nil keyOrder and zero deadKeys. The order view carries an explicit `nil` bit and a values list, because this base's stage 0 refuses `string[] | null`; `nil: true` represents Go's nil slice, distinct from an allocated empty slice with `nil: false`; this constructor does not append, reslice or resolve theme entries. ThemeValue retains the literal value and complete numeric options. Map entries and the record are mutable, matching the upstream store.

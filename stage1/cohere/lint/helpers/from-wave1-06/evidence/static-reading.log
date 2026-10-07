@@ -1,0 +1,31 @@
+=== RUN   TestFrameworkStaticReading
+    static_test.go:156: 157 actual captured sources from all 6 consumers
+    static_test.go:180: 3036 cases, 893 registrations, 75326 identical bytes on Go, source Node, emitted JavaScript and sanitized native
+=== RUN   TestFrameworkStaticReading/wrong-count
+    static_test.go:213: wrong-count caught by Go byte comparison on backend 0 after clean execution
+    static_test.go:213: wrong-count caught by Go byte comparison on backend 1 after clean execution
+    static_test.go:213: wrong-count caught by Go byte comparison on backend 2 after clean execution
+=== RUN   TestFrameworkStaticReading/missing-is-found
+    static_test.go:213: missing-is-found caught by Go byte comparison on backend 0 after clean execution
+    static_test.go:213: missing-is-found caught by Go byte comparison on backend 1 after clean execution
+    static_test.go:213: missing-is-found caught by Go byte comparison on backend 2 after clean execution
+=== RUN   TestFrameworkStaticReading/drop-sort-order
+    static_test.go:213: drop-sort-order caught by Go byte comparison on backend 0 after clean execution
+    static_test.go:213: drop-sort-order caught by Go byte comparison on backend 1 after clean execution
+    static_test.go:213: drop-sort-order caught by Go byte comparison on backend 2 after clean execution
+=== RUN   TestFrameworkStaticReading/copy-sort-order
+    static_test.go:213: copy-sort-order caught by Go byte comparison on backend 0 after clean execution
+    static_test.go:213: copy-sort-order caught by Go byte comparison on backend 1 after clean execution
+    static_test.go:213: copy-sort-order caught by Go byte comparison on backend 2 after clean execution
+=== RUN   TestFrameworkStaticReading/reuse-sorted-record
+    static_test.go:213: reuse-sorted-record caught by Go byte comparison on backend 0 after clean execution
+    static_test.go:213: reuse-sorted-record caught by Go byte comparison on backend 1 after clean execution
+    static_test.go:213: reuse-sorted-record caught by Go byte comparison on backend 2 after clean execution
+--- PASS: TestFrameworkStaticReading (15.99s)
+    --- PASS: TestFrameworkStaticReading/wrong-count (2.23s)
+    --- PASS: TestFrameworkStaticReading/missing-is-found (2.15s)
+    --- PASS: TestFrameworkStaticReading/drop-sort-order (2.26s)
+    --- PASS: TestFrameworkStaticReading/copy-sort-order (2.89s)
+    --- PASS: TestFrameworkStaticReading/reuse-sorted-record (2.46s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-06	15.999s
