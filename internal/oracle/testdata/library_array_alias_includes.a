@@ -1,0 +1,17 @@
+let includes = Array.prototype.includes;
+console.log(`${typeof includes} ${includes.name} ${includes.length} ${includes.prototype === undefined}`);
+console.log(`${includes.call(false, 42)}`);
+function needle(): string {
+	console.log('needle'.repeat(1));
+	return 'n'.repeat(2);
+}
+try {
+	includes.call(undefined, needle());
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+try {
+	includes.call(null, 42);
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}

@@ -1,0 +1,10 @@
+const values: (string | undefined)[] = [undefined, 'a'.repeat(2)];
+try {
+	values.sort((): never => {
+		console.log('compare');
+		throw new Error('stop');
+	});
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+console.log(values.join('|'));

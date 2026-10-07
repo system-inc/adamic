@@ -199,6 +199,14 @@ int adamic_compare_closure(adamic_value left, adamic_value right, void *context)
 	return result < 0 ? -1 : result > 0 ? 1 : 0;
 }
 
+// A never-returning callback completes abruptly. Its return slot is void;
+// TimSort observes adamic_thrown and stops before using this adapter's zero.
+int adamic_compare_never(adamic_value left, adamic_value right, void *context) {
+	adamic_closure *compare = context;
+	(void)compare->code(compare, (adamic_value[]){left, right});
+	return 0;
+}
+
 adamic_value *adamic_array_at_relative(const adamic_array *array, double index) {
 	// array.at(index): ToIntegerOrInfinity, so NaN is 0 and a fraction truncates, then a negative
 	// index counts from the end. Anywhere outside the array is undefined.

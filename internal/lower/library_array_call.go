@@ -54,9 +54,15 @@ func (l *lowering) libraryArrayReceiverCall(node *ast.Node) (ir.Expression, bool
 	proven := l.checker.GetTypeAtLocation(written[0])
 	nullish := proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0
 	of, known := l.representation(proven)
+	if name == "map" && known && of == ir.Object && !nullish {
+		value, err := l.libraryArrayMapOversized(node, written)
+		return value, true, err
+	}
+	functionSource, freshFunction := l.libraryArrayFreshFunctionSource(written[0])
+	functionShift := name == "shift" && freshFunction
 	primitive := known && (of == ir.Number || of == ir.Boolean) && !l.includesNull(proven) && !l.includesUndefined(proven)
 	stringMutation := known && of == ir.String && !l.includesNull(proven) && !l.includesUndefined(proven) && (name == "pop" || name == "push" || name == "shift" || name == "unshift")
-	if !nullish && !primitive && !stringMutation {
+	if !nullish && !primitive && !stringMutation && !functionShift {
 		if name == "indexOf" || name == "lastIndexOf" {
 			return nil, false, nil
 		}
@@ -77,6 +83,9 @@ func (l *lowering) libraryArrayReceiverCall(node *ast.Node) (ir.Expression, bool
 		arguments = append(arguments, value)
 	}
 	b := l.libraryArrayBuilder(arguments)
+	if functionShift {
+		return l.libraryArrayFunctionShift(node, b, functionSource), true, nil
+	}
 	if stringMutation {
 		return l.libraryArrayStringMutation(node, name, b, len(written)-1), true, nil
 	}

@@ -1,0 +1,32 @@
+let calls = 0;
+function callback(): () => number {
+	console.log('callback'.repeat(1));
+	return (): number => { calls += 1; return 1; };
+}
+function context(): string {
+	console.log('context'.repeat(1));
+	return 'ctx'.repeat(2);
+}
+const receiver = {length: Math.pow(2, 32)};
+try {
+	Array.prototype.map.call(receiver, callback(), context());
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+const map = Array.prototype.map;
+try {
+	map.call({length: 4294967296.9, marker: 'm'.repeat(2)}, (): number => 1);
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+try {
+	Array.prototype.map.call({length: 2 ** 40}, (): number => 1);
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+try {
+	Array.prototype.map.call({length: Infinity}, (): number => 1);
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+console.log(`${calls}`);

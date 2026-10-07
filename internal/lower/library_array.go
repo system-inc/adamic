@@ -40,7 +40,7 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 		return l.libraryArrayReduce(node, array, element, name)
 	case "sort":
 		if len(written) != 0 {
-			return l.arraySort(node, array, element)
+			return l.libraryArraySort(node, array, element)
 		}
 		if element != ir.Number && element != ir.Boolean && element != ir.String || l.includesUndefined(l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(receiver))) {
 			return nil, true, l.notYet(node, "default sort requiring object coercion or optional element partitioning")
@@ -93,7 +93,7 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 		if len(written) != 1 || (!ast.IsIdentifier(callback) && callback.Kind != ast.KindArrowFunction) {
 			return nil, true, l.notYet(node, "toSorted with an effectful comparator expression")
 		}
-		return l.arraySort(node, copy, element)
+		return l.libraryArraySort(node, copy, element)
 	}
 	if len(written) < 1 || len(written) > 2 {
 		return nil, true, l.notYet(node, name+" with these arguments")
@@ -445,6 +445,9 @@ var libraryArrayLengths = map[string]float64{
 // includes the library global's identity; an object's method or a shadowed Array is never folded.
 func (l *lowering) libraryArrayMethodName(node *ast.Node) string {
 	node = ast.SkipParentheses(node)
+	if ast.IsIdentifier(node) {
+		return l.libraryArrayAliasName(node)
+	}
 	if node.Kind != ast.KindPropertyAccessExpression {
 		return ""
 	}
@@ -460,6 +463,9 @@ func (l *lowering) libraryArrayMethodName(node *ast.Node) string {
 		return ""
 	}
 	name := access.Name().Text()
+	if name == "isArray" {
+		return "" // isArray belongs to the constructor, not its prototype.
+	}
 	if _, known := libraryArrayLengths[name]; !known {
 		return ""
 	}
@@ -483,6 +489,8 @@ func (l *lowering) libraryArrayObservation(node *ast.Node) (ir.Expression, bool)
 				return ir.NumberConstant{Value: libraryArrayLengths[name]}, true
 			case "name":
 				return ir.StringConstant{Index: l.constant(name)}, true
+			case "prototype":
+				return ir.Undefined{}, true
 			}
 		}
 	}
@@ -491,6 +499,9 @@ func (l *lowering) libraryArrayObservation(node *ast.Node) (ir.Expression, bool)
 
 func (l *lowering) libraryArrayObservedMethod(node *ast.Node) bool {
 	if node.Parent != nil && l.libraryArrayPrototypeLength(node.Parent) {
+		return true
+	}
+	if l.libraryArrayAliasInitializer(node) {
 		return true
 	}
 	if l.libraryArrayExplicitMethod(node) != "" {
@@ -509,7 +520,7 @@ func (l *lowering) libraryArrayObservedMethod(node *ast.Node) bool {
 	if parent.Kind == ast.KindTypeOfExpression {
 		return true
 	}
-	return parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node && parent.AsPropertyAccessExpression().QuestionDotToken == nil && (parent.Name().Text() == "length" || parent.Name().Text() == "name")
+	return parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node && parent.AsPropertyAccessExpression().QuestionDotToken == nil && (parent.Name().Text() == "length" || parent.Name().Text() == "name" || parent.Name().Text() == "prototype") && libraryArrayReadOnlyUse(parent)
 }
 
 // Direct for...of over a standard array iterator keeps the source alive and reads its length

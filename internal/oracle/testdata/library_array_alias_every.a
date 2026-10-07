@@ -1,0 +1,13 @@
+let all = Array.prototype.every;
+console.log(`${typeof all} ${all.name} ${all.length} ${all.prototype === undefined}`);
+let calls = 0;
+console.log(`${all.call(false, (): boolean => { calls += 1; return false; })} ${calls}`);
+try {
+	all.call(null, (): boolean => true);
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+{
+	const allHere = Array.prototype.every;
+	console.log(`${typeof allHere} ${allHere.call(42, (): boolean => false)}`);
+}
