@@ -137,3 +137,14 @@ The shared driver does not yet consume these manifests. No native code changed,
 so the earlier passing oracle/sanitizer gates apply to the identical native
 code. No new rule timing was measured. JSX and numeric node-delivery blockers
 remain unchanged; no new rule was claimed.
+
+## Landing refresh on f8013f0b
+
+Rebased without conflicts onto f8013f0baac41ddc340d76f83bddde38536a8f07.
+Tested code head b2202d42e21a8aeccfd766001d4f7dab1fb88fff. Original full gate PASS
+148.883s. Continuation full gate PASS, including checker and bridge package
+tests. Exact compiler/repository comparisons under sanitizers, six rule mutants
+and seven released-handle probes pass. Numeric listener/native and rule.json
+metadata checks pass with wrong-kind controls. Evidence: validation/landing-f801.
+React JSX integration and shared numeric node delivery remain blocked; no new
+rule claims or speed improvements are asserted.
