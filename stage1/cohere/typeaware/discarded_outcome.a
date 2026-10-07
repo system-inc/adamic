@@ -1,0 +1,44 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { TypeDeclarationAncestry } from './type_declaration_ancestry.a';
+import { outcomeDiscardedMessage } from './nexus_discarded_outcome_messages.a';
+const names = ['JsonParseOutcomeType', 'JsoncParseOutcomeType', 'JsonFileReadOutcomeType', 'JsonFileWriteOutcomeType', 'PackageJsonReadOutcomeType'];
+const suffixes = ['/nexus/source/structured-text/json/Json.ts', '/nexus/source/structured-text/json/Jsonc.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/structured-text/json/JsonFile.ts', '/nexus/source/system/PackageJson.ts'];
+export class DiscardedOutcome {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    typeName(index: number, awaited: boolean): string {
+        const graph = new TypeDeclarationAncestry(this.rules, index, awaited);
+        const unions: number[] = []; const arms: number[][] = []; const aliases: string[] = [];
+        for(const identity of graph.declarations) {
+            const declaration = graph.node(identity); if(declaration.kind !== 'TypeLiteral') { continue; }
+            const unionID = graph.up(declaration.parent); if(unionID === 0) { continue; }
+            const union = graph.node(unionID); if(union.kind !== 'UnionType') { continue; }
+            const aliasID = graph.up(union.parent); if(aliasID === 0) { continue; }
+            const alias = graph.node(aliasID);
+            if(alias.kind !== 'TypeAliasDeclaration' || graph.down(alias.type) !== unionID || alias.parent === 0 || graph.node(alias.parent).kind !== 'SourceFile') { continue; }
+            const known = names.indexOf(alias.name); if(known < 0 || !alias.file.endsWith(suffixes[known] ?? '')) { continue; }
+            let at = unions.indexOf(unionID);
+            if(at < 0) { at = unions.length; unions.push(unionID); const empty: number[] = []; arms.push(empty); aliases.push(alias.name); }
+            const seen = arms[at] ?? panic('missing outcome arms'); if(!seen.includes(identity)) { seen.push(identity); }
+        }
+        for(const name of names) {
+            for(let at = 0; at < unions.length; at++) {
+                if(aliases[at] === name && (arms[at] ?? panic('missing outcome arms')).length === graph.node(unions[at] ?? 0).arms) { return name; }
+            }
+        }
+        return '';
+    }
+    run(): void {
+        const rules = this.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const statement = rules.parser.node(index); if(statement.kind !== 'ExpressionStatement' || (rules.parents[index] ?? -1) < 0) { continue; }
+            let call = rules.skip(statement.children[0] ?? -1); let awaited = false;
+            if(rules.parser.node(call).kind === 'AwaitExpression') { awaited = true; call = rules.skip(rules.parser.node(call).children[0] ?? -1); }
+            if(rules.parser.node(call).kind !== 'CallExpression') { continue; }
+            const name = this.typeName(call, awaited);
+            if(name !== '') { rules.findings.push(new Diagnostic('nexus/correctness-no-discarded-outcome', 'outcomeDiscarded', outcomeDiscardedMessage.replace('{{typeName}}', name), rules.byte(rules.start(statement)), rules.byte(statement.end), '')); }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+// Decode existing raw symbol metadata without pulling other lint rules into this suite.
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class NexusDeclaration {
+    readonly kind: string; readonly library: boolean; readonly parentKind: string; readonly parentName: string;
+    constructor(kind: string, library: boolean, parentKind: string, parentName: string) {
+        this.kind = kind; this.library = library; this.parentKind = parentKind; this.parentName = parentName;
+    }
+}
+export class NexusSymbol {
+    readonly present: boolean; readonly name: string; readonly declarations: readonly NexusDeclaration[];
+    constructor(present: boolean, name: string, declarations: readonly NexusDeclaration[]) { this.present = present; this.name = name; this.declarations = declarations; }
+    library(): boolean { return this.declarations.some((declaration) => declaration.library); }
+}
+export class NexusSymbols {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    symbol(frames: Frames): NexusSymbol {
+        let name = ''; const declarations: NexusDeclaration[] = [];
+        const present = frames.yes();
+        if(present) {
+            frames.natural(); frames.natural(); name = frames.field(); const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                frames.field(); const kind = frames.field(); frames.natural(); frames.natural(); frames.yes();
+                const library = frames.yes(); const parentKind = frames.field(); const parentName = frames.field();
+                frames.natural(); frames.natural(); const tags = frames.natural();
+                for(let tag = 0; tag < tags; tag++) { frames.field(); frames.field(); frames.natural(); frames.natural(); frames.field(); }
+                const parameters = frames.natural(); for(let parameter = 0; parameter < parameters; parameter++) { frames.field(); }
+                declarations.push(new NexusDeclaration(kind, library, parentKind, parentName));
+            }
+        }
+        return new NexusSymbol(present, name, declarations);
+    }
+    node(index: number): NexusSymbol {
+        const frames = new Frames(this.rules.ask(index, 'node-symbol-details')); header(frames, 'node-symbol-details');
+        const symbol = this.symbol(frames); frames.end(); return symbol;
+    }
+    type(index: number, identity: number): NexusSymbol {
+        const frames = new Frames(this.rules.ask(index, `type-symbol-details\n${identity}`)); header(frames, 'type-symbol-details');
+        const symbol = this.symbol(frames); this.symbol(frames); frames.end(); return symbol;
+    }
+}

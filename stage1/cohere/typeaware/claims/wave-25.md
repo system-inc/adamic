@@ -31,5 +31,5 @@ excluding ports on those two branches and every rule named in any origin claim.
 - nexus/correctness-no-discarded-outcome (combined volume 0)
 - nexus/correctness-no-discarded-pure-result (combined volume 0)
 
-This is a local claim until the claim commit is successfully pushed.
-Implementation is held until that publication, as requested.
+Claim commit b9a19759 was pushed before implementation.
+These three are completed in the continuation report; no further rules are claimed.

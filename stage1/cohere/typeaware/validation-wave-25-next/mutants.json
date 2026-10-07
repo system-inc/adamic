@@ -1,0 +1,30 @@
+{
+  "collection-zero": {
+    "stdout_sha256": "1c51c0e697502b27bd687ba58817dba70e2748918d17f4a3230844e5af80abc3",
+    "stdout_bytes": 27208,
+    "stderr_bytes": 0,
+    "exit": 0,
+    "log": "012-collection-zero-run.stdout"
+  },
+  "outcome-incomplete": {
+    "stdout_sha256": "6a95c86a30f5bf0b4fd9bbb42b84133af2a299592bac7da3a505c0135dc22b8a",
+    "stdout_bytes": 29503,
+    "stderr_bytes": 0,
+    "exit": 0,
+    "log": "014-outcome-incomplete-run.stdout"
+  },
+  "pure-callback": {
+    "stdout_sha256": "46cae0ccd4a4a473ee2d30dafb95d5625bebc700a7376fa4eb221b40074e2a37",
+    "stdout_bytes": 29630,
+    "stderr_bytes": 0,
+    "exit": 0,
+    "log": "016-pure-callback-run.stdout"
+  },
+  "released-registry": {
+    "stdout_sha256": "ed887a25a79dad0564409258d22f709ee4aafe8428db91b84a5669b713201284",
+    "stdout_bytes": 38,
+    "stderr_bytes": 0,
+    "exit": 0,
+    "log": "033-released-registry-run.stdout"
+  }
+}

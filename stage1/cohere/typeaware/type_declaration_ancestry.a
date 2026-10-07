@@ -1,0 +1,41 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class AncestryNode {
+    readonly identity: number; readonly parent: number; readonly kind: string; readonly name: string;
+    readonly file: string; readonly type: number; readonly arms: number;
+    constructor(identity: number, parent: number, kind: string, name: string, file: string, type: number, arms: number) {
+        this.identity = identity; this.parent = parent; this.kind = kind; this.name = name;
+        this.file = file; this.type = type; this.arms = arms;
+    }
+}
+export class TypeDeclarationAncestry {
+    readonly declarations: readonly number[]; readonly nodes: readonly AncestryNode[];
+    constructor(rules: Rules, index: number, awaited: boolean) {
+        const frames = new Frames(rules.ask(index, `type-declaration-ancestry\n${awaited ? 'awaited' : 'raw'}`));
+        header(frames, 'type-declaration-ancestry');
+        this.declarations = frames.ids(); const nodes: AncestryNode[] = []; const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            nodes.push(new AncestryNode(frames.natural(), frames.natural(), frames.field(), frames.field(), frames.field(), frames.natural(), frames.natural()));
+        }
+        frames.end(); this.nodes = nodes;
+        for(const declaration of this.declarations) { this.node(declaration); }
+        for(const node of nodes) {
+            if(node.parent !== 0) { this.node(node.parent); }
+            if(node.type !== 0) { this.node(node.type); }
+        }
+    }
+    node(identity: number): AncestryNode {
+        return this.nodes.find((node) => node.identity === identity) ?? panic('missing declaration ancestry identity');
+    }
+    up(identity: number): number {
+        let current = identity;
+        while(current !== 0 && this.node(current).kind === 'ParenthesizedType') { current = this.node(current).parent; }
+        return current;
+    }
+    down(identity: number): number {
+        let current = identity;
+        while(current !== 0 && this.node(current).kind === 'ParenthesizedType') { current = this.node(current).type; }
+        return current;
+    }
+}

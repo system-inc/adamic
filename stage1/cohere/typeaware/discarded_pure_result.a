@@ -1,0 +1,40 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { NexusSymbols } from './nexus_symbols.a';
+import { discardedPureResultMessage } from './nexus_discarded_pure_result_messages.a';
+const strings = ['at', 'charAt', 'charCodeAt', 'codePointAt', 'concat', 'endsWith', 'includes', 'indexOf', 'isWellFormed', 'lastIndexOf', 'match', 'matchAll', 'padEnd', 'padStart', 'replace', 'replaceAll', 'search', 'slice', 'split', 'startsWith', 'substr', 'substring', 'toLocaleLowerCase', 'toLocaleUpperCase', 'toLowerCase', 'toString', 'toUpperCase', 'toWellFormed', 'trim', 'trimEnd', 'trimLeft', 'trimRight', 'trimStart', 'valueOf'];
+const arrays = ['at', 'concat', 'entries', 'flat', 'includes', 'indexOf', 'join', 'keys', 'lastIndexOf', 'slice', 'toReversed', 'toSorted', 'toSpliced', 'values', 'with'];
+export class DiscardedPureResult {
+    readonly rules: Rules; readonly symbols: NexusSymbols;
+    constructor(rules: Rules, symbols: NexusSymbols) { this.rules = rules; this.symbols = symbols; }
+    callable(index: number): boolean {
+        const value = this.rules.skip(index); const node = this.rules.parser.node(value);
+        if(['ArrowFunction', 'FunctionExpression'].includes(node.kind)) { return true; }
+        const graph = types(this.rules.ask(value, 'raw-shape'), 'raw-shape'); if(!graph.present) { return true; }
+        for(const id of graph.parts(graph.root())) {
+            if((graph.type(id).flags & (1 | 2)) !== 0) { return true; }
+            const frames = new Frames(this.rules.ask(value, `call-count\n${id}`)); header(frames, 'call-count'); const count = frames.natural(); frames.end();
+            if(count > 0) { return true; }
+        }
+        return false;
+    }
+    pure(index: number): boolean {
+        const name = this.rules.parser.node(index); if(name.kind !== 'Identifier') { return false; }
+        const symbol = this.symbols.node(index); return symbol.declarations.length > 0 && symbol.declarations.every((declaration) => {
+            if(declaration.kind !== 'MethodSignature' || declaration.parentKind !== 'InterfaceDeclaration' || !declaration.library) { return false; }
+            return declaration.parentName === 'String' ? strings.includes(name.text) : ['Array', 'ReadonlyArray'].includes(declaration.parentName) && arrays.includes(name.text);
+        });
+    }
+    run(): void {
+        const rules = this.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const statement = rules.parser.node(index); if(statement.kind !== 'ExpressionStatement' || (rules.parents[index] ?? -1) < 0) { continue; }
+            const callIndex = rules.skip(statement.children[0] ?? -1); const call = rules.parser.node(callIndex); if(call.kind !== 'CallExpression') { continue; }
+            const callee = rules.parser.node(rules.skip(call.children[0] ?? -1)); if(callee.kind !== 'PropertyAccessExpression' || !this.pure(callee.children[callee.children.length - 1] ?? -1)) { continue; }
+            if(call.list > 0 && call.children.slice(call.children.length - call.list).some((argument) => this.callable(argument))) { continue; }
+            rules.findings.push(new Diagnostic('nexus/correctness-no-discarded-pure-result', 'discardedPureResult', discardedPureResultMessage, rules.byte(rules.start(call)), rules.byte(call.end), ''));
+        }
+    }
+}

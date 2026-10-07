@@ -1,0 +1,47 @@
+{
+  "controls-go.findings.gz": {
+    "sha256": "a02243915adc92751825d1380f3d8cd066327b1f2d7fda0a631364a58039f30e",
+    "bytes": 29080,
+    "command_stdout": "005-controls-go.stdout"
+  },
+  "controls-native.findings.gz": {
+    "sha256": "a02243915adc92751825d1380f3d8cd066327b1f2d7fda0a631364a58039f30e",
+    "bytes": 29080,
+    "command_stdout": "006-controls-native.stdout"
+  },
+  "compiler-go.findings.gz": {
+    "sha256": "71742d9d1712f1358a843224d1f5f9452e1e15c7083c4b848438f340f03cf2fe",
+    "bytes": 5010,
+    "command_stdout": "023-compiler-go.stdout"
+  },
+  "compiler-native.findings.gz": {
+    "sha256": "71742d9d1712f1358a843224d1f5f9452e1e15c7083c4b848438f340f03cf2fe",
+    "bytes": 5010,
+    "command_stdout": "024-compiler-native.stdout"
+  },
+  "repository-go.findings.gz": {
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "bytes": 18485,
+    "command_stdout": "017-repository-go.stdout"
+  },
+  "repository-native.findings.gz": {
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "bytes": 18485,
+    "command_stdout": "018-repository-native.stdout"
+  },
+  "controls-asan.findings.gz": {
+    "sha256": "a02243915adc92751825d1380f3d8cd066327b1f2d7fda0a631364a58039f30e",
+    "bytes": 29080,
+    "command_stdout": "010-controls-asan-native.stdout"
+  },
+  "compiler-asan.findings.gz": {
+    "sha256": "71742d9d1712f1358a843224d1f5f9452e1e15c7083c4b848438f340f03cf2fe",
+    "bytes": 5010,
+    "command_stdout": "026-compiler-asan-native.stdout"
+  },
+  "repository-asan.findings.gz": {
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "bytes": 18485,
+    "command_stdout": "020-repository-asan-native.stdout"
+  }
+}

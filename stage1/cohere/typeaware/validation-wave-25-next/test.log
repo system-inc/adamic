@@ -1,0 +1,17 @@
+=== RUN   TestWave25NextAgreementAndMutants
+    wave_25_next_test.go:196: controls: 29080 identical finding bytes; findings 57
+    wave_25_next_test.go:204: controls-asan: 29080 identical finding bytes; findings 57
+    wave_25_next_test.go:239: collection-zero exits 0; only Go byte oracle catches byte 1462
+    wave_25_next_test.go:239: outcome-incomplete exits 0; only Go byte oracle catches byte 17275
+    wave_25_next_test.go:239: pure-callback exits 0; only Go byte oracle catches byte 26239
+    wave_25_next_test.go:258: repository: 18485 identical finding bytes; findings 0
+    wave_25_next_test.go:259: repository-asan: 18485 identical finding bytes; findings 0
+    wave_25_next_test.go:267: repository native 288.203217ms Go 141.302147ms; tsgo: load_ns=62107377 query_ns=70921684 queries=5981 first_query_ns=180822 run_ns=219516401
+    wave_25_next_test.go:258: compiler: 5010 identical finding bytes; findings 0
+    wave_25_next_test.go:259: compiler-asan: 5010 identical finding bytes; findings 0
+    wave_25_next_test.go:267: compiler native 2.110089634s Go 805.36296ms; tsgo: load_ns=239621942 query_ns=597173945 queries=17539 first_query_ns=5577258 run_ns=1851011417
+    wave_25_next_test.go:278: released ancestry question: panic 70, invalid or released checker handle
+    wave_25_next_test.go:283: released registry mutant exits 0; required panic 70 catches it
+--- PASS: TestWave25NextAgreementAndMutants (74.10s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	74.103s
