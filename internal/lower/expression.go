@@ -24,6 +24,13 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 		}
 		return ir.Number, nil
 	}
+	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+		// A field narrowed to undefined still occupies its declared slot, which may hold a packed
+		// optional number or a different reference kind. Read that representation, not an object.
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			return l.typeOfSymbol(node, field)
+		}
+	}
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
 		return valueType, nil
 	}
@@ -59,7 +66,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
-	case flags&checker.TypeFlagsVoid != 0:
+	case flags&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0:
+		// The singleton undefined uses the existing missing-reference representation. The checker
+		// still proves that its bindings, parameters and results can hold no present object.
 		return ir.Object, true
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
@@ -185,6 +194,16 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil && value.Type() != ir.Weak && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+		if _, constant := value.(ir.Undefined); !constant {
+			if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+				if to, known := l.representation(contextual); known && to != value.Type() && to != ir.Union && (to.IsMaybe() || to.IsReference()) {
+					// Keep effects while converting exact undefined to the destination missing representation.
+					value = ir.Narrow{Value: ir.Box{Value: value}, To: to}
+				}
+			}
+		}
+	}
 	if err == nil {
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
 			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
@@ -222,7 +241,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	read := l.checker.GetTypeAtLocation(node)
 	to, present := ir.Object, false
-	if target, isKnown := l.representation(read); isKnown && target != ir.Weak {
+	if target, isKnown := l.representation(read); isKnown && target != ir.Weak && read.Flags()&checker.TypeFlagsUndefined == 0 {
 		// The checker narrowed it to present (Target & WeakBrand).
 		to, present = target, true
 	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
@@ -484,7 +503,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				parent = parent.Parent
 			}
 			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
-			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && !observing {
+			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && !observing && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined == 0 {
 				// Calls and captured writes can invalidate the checker's narrowing. Check the
 				// held member before casting it, with ordinary IR shared by both backends.
 				name := "object"
