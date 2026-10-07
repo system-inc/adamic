@@ -115,3 +115,14 @@ After explicit wildcard fetch, main remains 39638d9e2 and area remains d65a8f931
     ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-typescript go test ./stage1/cohere/lint -run '^TestCompilerAndStage1Agree$' -count=1 -timeout 15m -v > /tmp/wave1-required-lint-corpus.log 2>&1
 
 FAIL 25.772s, no skip. The test enumerates 368 compiler/stage1 files, then source Node exits 70 with `adamic: panic: NotYet: live Tailwind design-system and program adapter`. The stack identifies shared comparison invocation at lint_test.go:467; the refusal itself is our explicit unknown-class rule missing its live resolver. Retained log: required-input-corpus.log. This confirms a real missing adapter and does not establish native/emitted-JavaScript full corpus agreement. No correctness test deleted, weakened or skipped. Other newly mandatory TypeScript/postcss/graphql external checks were not run by this unit, and no full repository gate is claimed. No new helper claimed; current scoped parity and prior mutants remain the previously recorded checks, not fresh runs in this subsection.
+
+## Main c7991b900 and area b84a9d931 refresh
+
+Explicit wildcard fetch found new main c7991b900 and area b84a9d931. Rebased cleanly onto the area, which includes main, preserving proven-type/compiler/runtime-record changes. Ledger unchanged; losing copies remain removed. No shared lint files changed. Repeated the owned command above: assertion PASS 110.324s and Tailwind PASS 124.858s, all nine compiling semantic/sidecar mutants comparison-only catches across source Node, emitted JavaScript and ASan/UBSan native; owned vet PASS.
+
+Shared reproducer, with required input supplied:
+
+    source /workspace/adamic-tools/env.sh
+    ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-typescript go test ./stage1/cohere/lint -run '^TestCompilerAndStage1Agree$|^TestRulesAgree$|^TestOwnedWitnesses$' -count=1 -timeout 15m -v > /tmp/wave1-b84-shared.log 2>&1
+
+FAIL 165.641s. TestRulesAgree retains the allowLoop strict-decoder routing failure (135.30s). Compiler/stage1 check enumerates 368 files then source Node exits 70 for the missing live Tailwind program/design-system adapter (27.21s). Owned witness fails at the unknown-class zero-finding Go result (3.12s). No skips or relaxed checks. Full landing readiness still blocked; no new claims. Setup ready timings 0s, warm and total 148s, nproc 5. Retained logs b84-owned.log, b84-shared.log, b84-setup.log and b84-vet.log. Other mandatory external checks/full repository gate not run by this unit. Previous coverage boundaries and lack of complete unknown-class/Google Font certificate remain explicit.
