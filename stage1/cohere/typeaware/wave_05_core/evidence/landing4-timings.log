@@ -1,0 +1,15 @@
+repository go 0 0.1313381269974343 findings 0 cohere: load_ns=66366214 rule_ns=1174450 run_ns=47045258
+repository native 0 0.2887874779989943 findings 0 tsgo: load_ns=72747960 query_ns=0 queries=0 first_query_ns=0 run_ns=207820013
+repository native 1 0.28942304399970453 findings 0 tsgo: load_ns=71547050 query_ns=0 queries=0 first_query_ns=0 run_ns=213040980
+repository go 1 0.14051786799973343 findings 0 cohere: load_ns=68613400 rule_ns=1248674 run_ns=56781878
+repository go 2 0.14495433300180594 findings 0 cohere: load_ns=74696786 rule_ns=1093368 run_ns=55394928
+repository native 2 0.3018853620014852 findings 0 tsgo: load_ns=78537854 query_ns=0 queries=0 first_query_ns=0 run_ns=217784767
+repository median {'go': 0.14051786799973343, 'native': 0.28942304399970453}
+compiler go 0 0.2982928189994709 findings 0 cohere: load_ns=233628734 rule_ns=4325915 run_ns=47543294
+compiler native 0 2.0067641669993463 findings 0 tsgo: load_ns=253809725 query_ns=0 queries=0 first_query_ns=0 run_ns=1733188479
+compiler native 1 2.0141322809977282 findings 0 tsgo: load_ns=248361665 query_ns=0 queries=0 first_query_ns=0 run_ns=1746611323
+compiler go 1 0.3369116630019562 findings 0 cohere: load_ns=251762442 rule_ns=4980458 run_ns=62880702
+compiler go 2 0.3225121539981046 findings 0 cohere: load_ns=248761047 rule_ns=4800328 run_ns=50336824
+compiler native 2 2.0164713599988318 findings 0 tsgo: load_ns=266217389 query_ns=0 queries=0 first_query_ns=0 run_ns=1729667219
+compiler median {'go': 0.3225121539981046, 'native': 2.0141322809977282}
+PASS timings, identical counts each round

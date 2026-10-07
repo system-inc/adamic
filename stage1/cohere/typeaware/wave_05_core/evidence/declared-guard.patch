@@ -1,0 +1,11 @@
+--- declared_call_signature.go
++++ declared_call_signature.go
+@@ -8,7 +8,7 @@
+ 
+ // declaredCallSignature exposes signature origins, not contextual-rule judgments.
+ func (p *Program) declaredCallSignature(c *checker.Checker, node *ast.Node, question string) (string, error) {
+-	if question != "declared-call-signature" || (node.Kind != ast.KindCallExpression && node.Kind != ast.KindNewExpression) {
++	if (node.Kind != ast.KindCallExpression && node.Kind != ast.KindNewExpression) {
+ 		return "", fmt.Errorf("declared-call-signature requires a call without suffix")
+ 	}
+ 	out := &fields{}

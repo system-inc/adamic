@@ -1,0 +1,4 @@
+require_await [263, 219, 220, 175, 178, 179, 177] matches Go and driver; numeric metadata mutant caught
+symbol_description [214] matches Go and driver; numeric metadata mutant caught
+valid_typeof [227] matches Go and driver; numeric metadata mutant caught
+PASS three kind-indexed callback declarations; no string-kind comparisons in rule files

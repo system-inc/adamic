@@ -114,5 +114,14 @@ The selected rules do not import high-level IR, SSA or capture-analysis modules.
 They have no implementation on the main/bridge baselines or matching origin
 claim. Selection evidence is wave_05_core/selection.json. These reservations
 are pushed before native implementation. New rule modules use .a, each with
-rule.json numeric kinds and callbacks taking the supplied node. Shared files
-remain untouched.
+rule.json numeric kinds and callbacks taking the supplied node. The shared generator and harness
+remain untouched; raw bridge question registration uses one line per question.
+
+Continuation 3 status: all three rules implemented as numeric handed-node .a
+callbacks and validated against production Go on 106 controls and both frozen
+corpora, including complete suggestions, sanitizer builds, comparison-only
+mutants and released handles. Main advanced to c01907a7; all nine completed
+ports were rebased and revalidated before publication. See
+`../wave_05_core/REPORT.md`. The three React reservations remain PARKED with
+the blockers above; no React verdict parity is claimed. No additional rules
+are reserved by this update.
