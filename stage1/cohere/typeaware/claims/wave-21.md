@@ -70,3 +70,21 @@ Released-reservation-aware continuation completion: all three rules are now
 implemented and validated. See ../WAVE_21_PROCESS_REPORT.md and
 ../validation-wave-21-process/. The previous missing-program-facts blocker was
 resolved with isolated raw bridge questions and three dispatch arms.
+
+## Fourth batch claim
+
+All previously reserved rules are implemented, tested and pushed through
+880f6f6f. Fetched every origin head, audited 347 origin refs and 33 claim
+Markdown files, and checked native sources on main ef3d907e and bridge 5afbdb83.
+Explicitly released promises, spread and lost-update reservations now have
+active wave-22 claims and were skipped. The first three available rules in
+combined descending volume, with lexical ties, are reserved here:
+
+| Full ranking position | Rule | Combined findings |
+| --- | --- | ---: |
+| 146 | no-obj-calls | 0 |
+| 147 | no-object-constructor | 0 |
+| 148 | no-promise-executor-return | 0 |
+
+None is ported on either base branch or named in any fetched origin claim.
+This claim update is pushed before implementation.
