@@ -4,6 +4,8 @@ MayThrow remains monotone; caller readiness, stable/path presence and scalar bou
 Independent precision assertions catch over-approximation; Node and sanitizers hold under-approximation and ownership.
 The final affected gate, mutation results and coverage limits are recorded below.
 
+This is the historical audit against main `5d4c801`, with final counts from `154e646`/`379ea1f`. The later merge of main `e011f8f`, all 29 remaining error rows, all 20 actual existing-fork merge deltas, and the reader's null fixes are audited in [error-reader-integration-report.md](error-reader-integration-report.md). Main's ownership fixes legitimately change some non-throwing counts from the old baseline; the merged branch equals current main for those programs.
+
 Branch: `codex/error-classes-counts`, created from `origin/codex/error-classes` at `d0b644303a201ec319d85bc59a360a16daa6e929`, not from main. Main comparison: `5d4c801`.
 
 Observed: exactly 63 existing rows differed between those commits. All 32 affected programs that execute no throw now equal main in every column, including `object_prototype.a`, which constructs an Error without throwing it. Two additional throwing programs also return exactly to main because their constant Error constructors inline. The remaining 29 rows execute explicit Error throws or generated nominal failures. No previously unchanged main row moves. The tuple order throughout is **allocations, frees, retains, releases, peak live, in regions**; this includes frees as well as every requested metric.
