@@ -1,0 +1,18 @@
+stage1/cohere/lint/helpers/slot05/main.a:8:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/main.a:10:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/main.a:11:7: variable root: number
+stage1/cohere/lint/helpers/slot05/main.a:13:10: function text: (index: number, field: string) => string
+stage1/cohere/lint/helpers/slot05/main.a:13:15: parameter index: number
+stage1/cohere/lint/helpers/slot05/main.a:13:30: parameter field: string
+stage1/cohere/lint/helpers/slot05/main.a:16:10: function number: (index: number, field: string) => number
+stage1/cohere/lint/helpers/slot05/main.a:16:17: parameter index: number
+stage1/cohere/lint/helpers/slot05/main.a:16:32: parameter field: string
+stage1/cohere/lint/helpers/slot05/main.a:19:11: variable file: number
+stage1/cohere/lint/helpers/slot05/main.a:20:11: variable nodes: HelperNode[]
+stage1/cohere/lint/helpers/slot05/main.a:21:11: variable baseNames: string[]
+stage1/cohere/lint/helpers/slot05/main.a:21:77: parameter child: number
+stage1/cohere/lint/helpers/slot05/main.a:22:15: variable index: number
+stage1/cohere/lint/helpers/slot05/main.a:23:301: parameter child: number
+stage1/cohere/lint/helpers/slot05/main.a:25:15: variable query: number
+stage1/cohere/lint/helpers/slot05/main.a:27:74: parameter name: string
+stage1/cohere/lint/helpers/slot05/main.a:29:19: variable result: ImportBindings

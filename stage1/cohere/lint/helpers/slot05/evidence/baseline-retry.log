@@ -1,0 +1,5 @@
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:101: 22412 oracle output lines matched Go, Node and sanitized native
+--- PASS: TestHelpersMatchCohere (15.27s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	15.274s
