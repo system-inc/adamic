@@ -224,13 +224,29 @@ adamic_value *adamic_object_write_field(adamic_object *object, const char *name,
 // A readonly numeric view may see a field made with the undefined-only reference representation.
 adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
-adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
-static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
-	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
+adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (cache->shape != object->shape) {
+		return adamic_object_optional_find(object, name, cache);
+	}
+	if (cache->index == object->shape->count) {
+		return NULL;
+	}
+	return &((adamic_object *)object)->slots[cache->index];
+}
+// Data lookup is also available to emitted accesses whose field name occurs in no static
+// layout. That whole-program proof excludes inherited constructor storage, so the cache
+// hit needs only the shape comparison, without loading a class descriptor.
+static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
 	if (cache->shape == object->shape) {
 		return &((adamic_object *)object)->slots[cache->index];
 	}
 	return adamic_object_find(object, name, cache);
+}
+
+static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
+	return adamic_object_data_field(object, name, cache);
 }
 
 // Static Object methods (library_object.c). Returned collections and freeze own one reference.

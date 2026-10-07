@@ -80,7 +80,7 @@ console.log((missing?.steady ?? -3).toString());
 	generated := C(program)
 	// Semantic parity alone would also pass if the optimization disappeared entirely.
 	lookup := func(name string) bool {
-		return regexp.MustCompile(`adamic_object_field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(generated)
+		return regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(generated)
 	}
 	if lookup("steady") || lookup("label") {
 		t.Fatal("uniform fields still use shape lookup")
@@ -181,7 +181,7 @@ func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
 		t.Fatal(err)
 	}
 	generated := C(program)
-	if !regexp.MustCompile(`adamic_object_field\([^\n]+, "uniform", &adamic_cache_`).MatchString(generated) {
+	if !regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, "uniform", &adamic_cache_`).MatchString(generated) {
 		t.Fatal("regex program specialized a field before named-group layouts entered the proof")
 	}
 	want := runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", path)
