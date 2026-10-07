@@ -1,0 +1,54 @@
+[
+  {
+    "name": "cumulative-2",
+    "checker": 1424,
+    "ratio": {
+      "measurement": "measured on a checker-rejected program",
+      "numerator": 26,
+      "denominator": 78,
+      "fraction": "26/78",
+      "percent": 33.333333333333336
+    },
+    "counts": {
+      "NotYet": 1148,
+      "Refused": 2230,
+      "SkippedDependency": 5,
+      "error": 1,
+      "panic": 0
+    },
+    "variance": 494,
+    "delta": {
+      "NotYet": 116,
+      "Refused": 247,
+      "SkippedDependency": -20,
+      "error": 0,
+      "panic": 0
+    }
+  },
+  {
+    "name": "cumulative-2-nested",
+    "checker": 1424,
+    "ratio": {
+      "measurement": "measured on a checker-rejected program",
+      "numerator": 26,
+      "denominator": 78,
+      "fraction": "26/78",
+      "percent": 33.333333333333336
+    },
+    "counts": {
+      "NotYet": 1146,
+      "Refused": 2230,
+      "SkippedDependency": 5,
+      "error": 1,
+      "panic": 0
+    },
+    "variance": 494,
+    "delta": {
+      "NotYet": 114,
+      "Refused": 247,
+      "SkippedDependency": -20,
+      "error": 0,
+      "panic": 0
+    }
+  }
+]

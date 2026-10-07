@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/fixtures/assertions/discriminant-report.py", line 45, in <module>
+    assert all(w['declarations'] for w in r['writes']), 'unresolved selected property declaration'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unresolved selected property declaration
