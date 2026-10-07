@@ -37,9 +37,10 @@ constructor(contentRectangle: Rectangle, options: { readonly styleMask: readonly
 - `@objc static <selector> <arguments> -> <result>` is a message to the class (a constructor may be one, as `+[NSButton buttonWithTitle:target:action:]` is).
 - `@objc method <selector> <arguments> -> <result>` is a message to the object.
 - `@objc get <selector> -> <result>` and `@objc set <selector> <type>` are a property's getter and setter.
+- `@objc alloc <Class> <selector> <arguments> -> <result>` sends `alloc` to another class, then the init, its result retained: `data.utf8Text()` is `[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]`.
 - `@objc function <symbol> <arguments> -> <result>` is a C function: on its own, as a class's static member, or as an instance member, where the object is its first argument (`CFRunLoopStop(loop)` is `loop.stop()`).
 
-Each argument is `<source>:<type>`, in the selector's order. The source is the Adamic argument's position (`0`), a field of an options object written at the call (`1.styleMask`, or `1.defer?:boolean=no` where the field may be left out), or a constant (`nil`, `yes`, `no`). The types:
+Each argument is `<source>:<type>`, in the selector's order. The source is the Adamic argument's position (`0`), a field of an options object written at the call (`1.styleMask`, or `1.defer?:boolean=no` where the field may be left out), the object the member is called on (`this`), or a constant (`nil`, `yes`, `no`, or a number, `const(4)`). The types:
 
 | Tag | Native | Adamic |
 | --- | --- | --- |
@@ -108,4 +109,5 @@ Each check has been shown to fail: dropping the closure's release in an action's
 - **Cycles through Apple.** An action's closure that captures something holding the control it's attached to is a cycle neither count can see. The cycle finder will treat what a foreign value holds as a slot that reaches anything unless it's `Weak`, and refuse the closing write, as it does for a map's values; a delegate is the test case.
 - **The rest of the bridge:** blocks that return a value or take a block, struct or enumeration; delegates and `NSObject` subclasses written as Adamic classes; rectangles, enumerations and options as results; options objects passed as a value rather than written at the call; compound assignment to an Apple property.
 - **Identity.** Two boxes of the same object aren't `===` yet.
+- **Retained results.** The release of a result that comes back retained (`alloc`, `new`, `copy`) is one line of emitted C that no check counts yet: dropping it would leak without the owed count noticing.
 - **The analyses.** A foreign callee is taken as unknown by region planning; the other analyses read its IR body, which only panics, until every analysis asks one place what a call can do (internal/ir/call_targets.go, landing from codex/call-targets), where a foreign callee will answer unknown. That matters beyond ownership: a foreign call can run Adamic code before it returns (`performClick` runs the button's closure), so nothing may assume a variable is unchanged across one. The native side never keeps a value without retaining it, so the counts hold either way.

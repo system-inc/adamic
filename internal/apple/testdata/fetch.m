@@ -26,6 +26,8 @@ int main(int argc, char **argv) {
 					printf("error: %s\n", error.localizedDescription.UTF8String);
 				} else if (data != nil && response != nil) {
 					printf("bytes: %lu, type: %s, expected: %lld\n", (unsigned long)data.length, response.MIMEType.UTF8String, response.expectedContentLength);
+					NSString *text = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+					printf("text: %s\n", text == nil ? "not UTF-8" : text.UTF8String);
 				}
 				[refused resume];
 			});

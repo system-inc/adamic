@@ -22,10 +22,15 @@ import (
 //	@objc set <selector> <type>                       a property's setter
 //	@objc function <symbol> <arguments> -> <result>   a C function; on an instance member, the
 //	                                                  object is its first argument
+//	@objc alloc <Class> <selector> <arguments> -> <result>
+//	                                                  alloc sent to another class, then the init,
+//	                                                  its result retained ([[NSString alloc]
+//	                                                  initWithData:...] for data.utf8Text())
 //
 // Each argument is <source>:<type>, in the selector's order. The source is the Adamic argument's
 // position (0), a field of an options object written at the call (1.styleMask, or 1.defer?=no
-// when it may be left out), or a constant (nil, yes, no). The types are ir.NativeKind's: double,
+// when it may be left out), the object the member is called on (this), or a constant (nil, yes,
+// no, or a number, const(4)). The types are ir.NativeKind's: double,
 // integer, unsigned, boolean, string, object (object? where nil is a value), rectangle,
 // enum(Name=1,...), options(Name=1,...), action, and block(type,...), a closure Apple calls with
 // those, and a result may be void. A result marked new
@@ -37,7 +42,8 @@ import (
 
 // foreignTag is one parsed @objc tag.
 type foreignTag struct {
-	kind      string // init, static, method, get or set
+	kind      string // init, static, method, get, set, function or alloc
+	class     string // alloc's class
 	selector  string
 	arguments []foreignSource
 	returns   ir.NativeType
@@ -46,7 +52,8 @@ type foreignTag struct {
 
 // foreignSource is one native argument and where its value comes from.
 type foreignSource struct {
-	position int    // the Adamic argument, or -1 for a constant
+	position int    // the Adamic argument, or -1 for a constant or this
+	this     bool   // the object the member is called on
 	field    string // the options object's field, or ""
 	optional bool
 	value    string // a constant's or a missing optional field's native value
@@ -87,6 +94,13 @@ func parseForeignTag(text string) (foreignTag, error) {
 	}
 	tag.kind, tag.selector = words[0], words[1]
 	words = words[2:]
+	if tag.kind == "alloc" {
+		if len(words) < 1 {
+			return tag, errors.New("alloc names a class, then a selector")
+		}
+		tag.class, tag.selector, words = tag.selector, words[0], words[1:]
+		tag.retained = true
+	}
 	switch tag.kind {
 	case "class":
 		return tag, nil
@@ -104,7 +118,7 @@ func parseForeignTag(text string) (foreignTag, error) {
 		tag.arguments = []foreignSource{{position: 0, native: native}}
 		tag.returns = ir.NativeType{Kind: ir.NativeVoid}
 		return tag, nil
-	case "static", "method", "get", "function":
+	case "static", "method", "get", "function", "alloc":
 	default:
 		return tag, fmt.Errorf("%s is not a tag kind", tag.kind)
 	}
@@ -157,6 +171,16 @@ func parseForeignSource(text string) (foreignSource, error) {
 	switch place {
 	case "nil", "yes", "no":
 		source.value = place
+		return source, nil
+	case "this":
+		source.this = true
+		return source, nil
+	}
+	if number, isConstant := strings.CutPrefix(place, "const("); isConstant {
+		if _, err := strconv.ParseFloat(strings.TrimSuffix(number, ")"), 64); err != nil || !strings.HasSuffix(number, ")") {
+			return source, fmt.Errorf("argument %s: const takes a number", text)
+		}
+		source.value = strings.TrimSuffix(number, ")")
 		return source, nil
 	}
 	position, field, hasField := strings.Cut(place, ".")
@@ -293,7 +317,7 @@ func (l *lowering) foreignCall(node *ast.Node) (ir.Expression, bool, error) {
 	if node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		return nil, true, l.notYet(node, "an optional call of an Apple method")
 	}
-	tag, err := l.foreignTag(node, method.Declarations[0], "method", "static", "function")
+	tag, err := l.foreignTag(node, method.Declarations[0], "method", "static", "function", "alloc")
 	if err != nil {
 		return nil, true, err
 	}
@@ -383,6 +407,19 @@ func (l *lowering) foreignSend(node *ast.Node, tag foreignTag, receiver *ast.Nod
 	}
 	isClass := receiverSymbol != nil && receiverSymbol.Flags&ast.SymbolFlagsClass != 0 && isForeign(receiverSymbol)
 	switch {
+	case tag.kind == "alloc":
+		// Made by another class, from this object: the object is a value the init takes.
+		foreign.Kind, foreign.Class = ir.Construct, tag.class
+		if receiver != nil && !isClass {
+			value, err := l.expression(receiver)
+			if err != nil {
+				return nil, err
+			}
+			if value.Type() != ir.Object {
+				return nil, l.notYet(receiver, "an Apple member called on a value held as something other than an object")
+			}
+			values, types, shape = append(values, value), append(types, ir.Object), append(shape, "receiver")
+		}
 	case tag.kind == "function" && (receiver == nil || isClass):
 		// A C function called on its own, or as a class's static member: no receiver.
 		foreign.Kind = ir.CFunction
@@ -405,7 +442,7 @@ func (l *lowering) foreignSend(node *ast.Node, tag foreignTag, receiver *ast.Nod
 			foreign.Kind = ir.CFunction
 		}
 	}
-	if foreign.Kind == ir.ClassMessage || foreign.Kind == ir.Construct {
+	if foreign.Kind == ir.ClassMessage || (foreign.Kind == ir.Construct && foreign.Class == "") {
 		class, err := l.foreignClass(node, l.foreignReceiverClass(receiverSymbol, receiver))
 		if err != nil {
 			return nil, err
@@ -466,6 +503,12 @@ func (l *lowering) foreignSend(node *ast.Node, tag foreignTag, receiver *ast.Nod
 	}
 	for _, source := range tag.arguments {
 		argument := ir.ForeignArgument{Type: source.native, Parameter: -1, Default: source.value}
+		if source.this {
+			if len(shape) == 0 || shape[0] != "receiver" {
+				return nil, l.notYet(node, "an Apple binding that passes this from a member not called on an object")
+			}
+			argument.Parameter = 0
+		}
 		if source.position >= 0 {
 			key := strconv.Itoa(source.position)
 			if source.field != "" {

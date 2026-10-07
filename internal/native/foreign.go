@@ -197,7 +197,7 @@ func (e *emitter) foreignReturn(function ir.Function, result string) {
 	// What Apple promises isn't nil, or what new made, is checked: nil there panics, never trusted.
 	what := cString(strings.TrimSpace(foreign.Class + " " + foreign.Selector))
 	switch {
-	case foreign.Kind == ir.Construct:
+	case foreign.Kind == ir.Construct && foreign.Returns.Kind == ir.NativeObject:
 		e.line("return adamic_apple_box(adamic_apple_constructed(adamic_apple_present(%s, %s)), true);", result, what)
 	case function.Returns == 0:
 	case foreign.Returns.Kind == ir.NativeObject && !foreign.Returns.Nullable:
