@@ -977,8 +977,18 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
+	original := value
+	held := -1
+	if len(storage) > 0 {
+		// The discriminant runs outside the case block's lexical environment.
+		held = len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_value", Type: value.Type(), Function: l.functionIndex})
+		value = ir.Read{Local: held, Of: value.Type()}
+	}
 	lowered := ir.Switch{Value: value}
+	groups := []switchGroup{}
 	tests := []ir.Expression{}
+	defaultPending := false
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
 		isDefault := clause.Kind == ast.KindDefaultClause
 		if !isDefault {
@@ -1000,30 +1010,45 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		if err != nil {
 			return nil, err
 		}
-		if len(body) == 0 && !isDefault {
-			// case 'a': case 'b': share the next body.
+		defaultPending = defaultPending || isDefault
+		if len(body) == 0 {
+			// Empty labels enter the next body, including labels on either side of default.
 			continue
 		}
-		if isDefault {
-			// Cases grouped with default run its body, which is what not matching does anyway.
+		groups = append(groups, switchGroup{tests: tests, body: body, isDefault: defaultPending})
+		if defaultPending {
 			lowered.Default = body
-		} else {
+		}
+		if len(tests) > 0 {
+			// Default is a fallback position, but its grouped tests still compete in source order.
 			lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests, Body: body})
 		}
 		tests = []ir.Expression{}
+		defaultPending = false
 	}
-	if len(storage) == 0 {
-		return []ir.Statement{lowered}, nil
+	if len(tests) > 0 {
+		// A trailing empty label matches and leaves the switch without running default.
+		lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests})
 	}
-	// Evaluate the discriminant outside the switch's lexical environment, before its functions
-	// and storage are created. The generated block owns all bindings until the switch exits.
-	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_value", Type: value.Type(), Function: l.functionIndex})
-	lowered.Value = ir.Read{Local: held, Of: value.Type()}
-	body := []ir.Statement{ir.Declare{Local: held, Value: value}}
-	body = append(body, storage...)
-	body = append(body, lowered)
-	return []ir.Statement{ir.Block{Body: body}}, nil
+	if len(tests) > 0 || defaultPending {
+		groups = append(groups, switchGroup{tests: tests, isDefault: defaultPending})
+	}
+	result := []ir.Statement{lowered}
+	for index, group := range groups {
+		// A default with tests must also have one body, rather than sharing statement
+		// addresses between two branches (flow instrumentation identifies those addresses).
+		if (group.isDefault && len(group.tests) > 0) || (index+1 < len(groups) && len(group.body) > 0 && !switchBodyLeaves(group.body)) {
+			result = l.fallthroughSwitch(value, groups)
+			break
+		}
+	}
+	if held >= 0 {
+		body := []ir.Statement{ir.Declare{Local: held, Value: original}}
+		body = append(body, storage...)
+		body = append(body, result...)
+		result = []ir.Statement{ir.Block{Body: body}}
+	}
+	return result, nil
 }
 
 // arrayMethod lowers array.push(value) and array.join(separator).

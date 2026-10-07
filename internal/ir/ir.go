@@ -1088,15 +1088,17 @@ type (
 	}
 
 	// Switch matches Value against each case's tests in order with ===, and runs the first match's
-	// Body, or Default's when none matches. A break inside a case leaves the switch. (0.1 has no
-	// fallthrough: the checker refuses it.)
+	// Body, or Default's when none matches. A break inside a case leaves the switch. Source
+	// fallthrough is expressed by lowering as entry dispatch followed by sequential guarded bodies.
 	Switch struct {
 		Value   Expression
 		Cases   []Case
 		Default []Statement
 	}
 
-	Break    struct{}
+	// Depth counts the enclosing loops and switches skipped by a labeled break.
+	// Zero is the innermost breakable, as for an unlabeled break.
+	Break    struct{ Depth int }
 	Continue struct{}
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
