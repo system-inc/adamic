@@ -1,0 +1,214 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/constraint_suggestion_wrong
+    lint_test.go:759: constraint_suggestion_wrong caught on Node: case 145 line 2741: port "range 11 12 noUnnecessaryTypeConstraint suggestion-edits:removeOtherConstraint\t12:24:\tRemove the constraint that does nothing.\t11 12", Go "range 11 12 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t12:24:\tRemove the constraint that does nothing.\t11 12"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsconstraint_suggestion_wrong2268886291/016/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	12:24:	Remove the constraint that does nothing.	11 12
+        fixed	function f<T extends any>() {}\u000a
+    lint_test.go:759: constraint_suggestion_wrong caught on emitted JavaScript: case 145 line 2741: port "range 11 12 noUnnecessaryTypeConstraint suggestion-edits:removeOtherConstraint\t12:24:\tRemove the constraint that does nothing.\t11 12", Go "range 11 12 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t12:24:\tRemove the constraint that does nothing.\t11 12"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsconstraint_suggestion_wrong2268886291/016/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	12:24:	Remove the constraint that does nothing.	11 12
+        fixed	function f<T extends any>() {}\u000a
+    lint_test.go:759: constraint_suggestion_wrong caught on native: case 145 line 2741: port "range 11 12 noUnnecessaryTypeConstraint suggestion-edits:removeOtherConstraint\t12:24:\tRemove the constraint that does nothing.\t11 12", Go "range 11 12 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t12:24:\tRemove the constraint that does nothing.\t11 12"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsconstraint_suggestion_wrong2268886291/016/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	12:24:	Remove the constraint that does nothing.	11 12
+        fixed	function f<T extends any>() {}\u000a
+=== RUN   TestMutants/enum_second_suggestion_wrong
+    lint_test.go:759: enum_second_suggestion_wrong caught on Node: case 145 line 2744: port "suggestion\tdefineInitializerSuggestion\tCan be fixed to B = 3\t1", Go "suggestion\tdefineInitializerSuggestion\tCan be fixed to B = 2\t1"
+        Go context:
+          @typescript-eslint/prefer-enum-initializers  The value of the member 'B' should be explicitly defined.
+        
+        range 17 18 defineInitializer suggestions			17 18
+        suggestion	defineInitializerSuggestion	Can be fixed to B = 1	1
+        suggestion-edit	17 18	B = 1
+        suggestion	defineInitializerSuggestion	Can be fixed to B = 2	1
+        suggestion-edit	17 18	B = 2
+        suggestion	defineInitializerSuggestion	Can be fixed to B = 'B'	1
+        suggestion-edit	17 18	B = 'B'
+        /tmp/adamic-gate/TestMutantsenum_second_suggestion_wrong1554498977/016/typescript-prefer-enum-initializers-0.ts:1:21
+    lint_test.go:759: enum_second_suggestion_wrong caught on emitted JavaScript: case 145 line 2744: port "suggestion\tdefineInitializerSuggestion\tCan be fixed to B = 3\t1", Go "suggestion\tdefineInitializerSuggestion\tCan be fixed to B = 2\t1"
+        Go context:
+          @typescript-eslint/prefer-enum-initializers  The value of the member 'B' should be explicitly defined.
+        
+        range 17 18 defineInitializer suggestions			17 18
+        suggestion	defineInitializerSuggestion	Can be fixed to B = 1	1
+        suggestion-edit	17 18	B = 1
+        suggestion	defineInitializerSuggestion	Can be fixed to B = 2	1
+        suggestion-edit	17 18	B = 2
+        suggestion	defineInitializerSuggestion	Can be fixed to B = 'B'	1
+        suggestion-edit	17 18	B = 'B'
+        /tmp/adamic-gate/TestMutantsenum_second_suggestion_wrong1554498977/016/typescript-prefer-enum-initializers-0.ts:1:21
+    lint_test.go:759: enum_second_suggestion_wrong caught on native: case 145 line 2744: port "suggestion\tdefineInitializerSuggestion\tCan be fixed to B = 3\t1", Go "suggestion\tdefineInitializerSuggestion\tCan be fixed to B = 2\t1"
+        Go context:
+          @typescript-eslint/prefer-enum-initializers  The value of the member 'B' should be explicitly defined.
+        
+        range 17 18 defineInitializer suggestions			17 18
+        suggestion	defineInitializerSuggestion	Can be fixed to B = 1	1
+        suggestion-edit	17 18	B = 1
+        suggestion	defineInitializerSuggestion	Can be fixed to B = 2	1
+        suggestion-edit	17 18	B = 2
+        suggestion	defineInitializerSuggestion	Can be fixed to B = 'B'	1
+        suggestion-edit	17 18	B = 'B'
+        /tmp/adamic-gate/TestMutantsenum_second_suggestion_wrong1554498977/016/typescript-prefer-enum-initializers-0.ts:1:21
+=== RUN   TestMutants/core_default_suppressed
+    lint_test.go:759: core_default_suppressed caught on Node: case 145 line 2738: port "fixed\tfunction f(a = 1, b) {}\\u000a", Go "/tmp/adamic-gate/TestMutantscore_default_suppressed1632572310/016/default-param-last-0.ts:1:12"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantscore_default_suppressed1632572310/016/default-param-last-0.ts:1:12
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 16 shouldBeLast 			11 16
+        fixed	function f(a = 1, b) {}\u000a
+    lint_test.go:759: core_default_suppressed caught on emitted JavaScript: case 145 line 2738: port "fixed\tfunction f(a = 1, b) {}\\u000a", Go "/tmp/adamic-gate/TestMutantscore_default_suppressed1632572310/016/default-param-last-0.ts:1:12"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantscore_default_suppressed1632572310/016/default-param-last-0.ts:1:12
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 16 shouldBeLast 			11 16
+        fixed	function f(a = 1, b) {}\u000a
+    lint_test.go:759: core_default_suppressed caught on native: case 145 line 2738: port "fixed\tfunction f(a = 1, b) {}\\u000a", Go "/tmp/adamic-gate/TestMutantscore_default_suppressed1632572310/016/default-param-last-0.ts:1:12"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantscore_default_suppressed1632572310/016/default-param-last-0.ts:1:12
+          default-param-last  A parameter carrying a default or an optional marker sits before a parameter without one, so the default can never be taken: reaching the later parameter obliges every caller to pass something here. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 16 shouldBeLast 			11 16
+        fixed	function f(a = 1, b) {}\u000a
+=== RUN   TestMutants/computed_replacement_wrong
+    lint_test.go:759: computed_replacement_wrong caught on Node: case 145 line 2741: port "range 12 20 unnecessarilyComputedProperty fix\t'different'\t\t12 17", Go "range 12 20 unnecessarilyComputedProperty fix\t'x'\t\t12 17"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantscomputed_replacement_wrong2721661929/016/no-useless-computed-key-0.ts:1:13
+          no-useless-computed-key  Unnecessarily computed property ['x'] found. This property key is wrapped in brackets that compute nothing. The brackets say the name is decided when the code runs, so a reader stops to work out what it evaluates to, and the answer is the literal already written inside them.
+        
+        range 12 20 unnecessarilyComputedProperty fix	'x'		12 17
+        fixed	const v = { 'x': 1 };\u000a
+    lint_test.go:759: computed_replacement_wrong caught on emitted JavaScript: case 145 line 2741: port "range 12 20 unnecessarilyComputedProperty fix\t'different'\t\t12 17", Go "range 12 20 unnecessarilyComputedProperty fix\t'x'\t\t12 17"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantscomputed_replacement_wrong2721661929/016/no-useless-computed-key-0.ts:1:13
+          no-useless-computed-key  Unnecessarily computed property ['x'] found. This property key is wrapped in brackets that compute nothing. The brackets say the name is decided when the code runs, so a reader stops to work out what it evaluates to, and the answer is the literal already written inside them.
+        
+        range 12 20 unnecessarilyComputedProperty fix	'x'		12 17
+        fixed	const v = { 'x': 1 };\u000a
+    lint_test.go:759: computed_replacement_wrong caught on native: case 145 line 2741: port "range 12 20 unnecessarilyComputedProperty fix\t'different'\t\t12 17", Go "range 12 20 unnecessarilyComputedProperty fix\t'x'\t\t12 17"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantscomputed_replacement_wrong2721661929/016/no-useless-computed-key-0.ts:1:13
+          no-useless-computed-key  Unnecessarily computed property ['x'] found. This property key is wrapped in brackets that compute nothing. The brackets say the name is decided when the code runs, so a reader stops to work out what it evaluates to, and the answer is the literal already written inside them.
+        
+        range 12 20 unnecessarilyComputedProperty fix	'x'		12 17
+        fixed	const v = { 'x': 1 };\u000a
+=== RUN   TestMutants/gating_invalid_suppressed
+    lint_test.go:759: gating_invalid_suppressed caught on Node: case 145 line 2738: port "fixed\tfunction f() { 'use memo if(true)'; }\\u000a", Go "/tmp/adamic-gate/TestMutantsgating_invalid_suppressed2826272927/016/react-hooks-gating-0.ts:1:16"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsgating_invalid_suppressed2826272927/016/react-hooks-gating-0.ts:1:16
+          react-hooks/gating  The condition inside `use memo if(...)` is not a JavaScript identifier. React Compiler imports that exact name from the gating module and calls it to decide whether the memoized version of this function runs, so it has to be something importable. A literal like `true`, an expression, or a reserved word cannot be imported, and the compiler rejects the whole file rather than guessing. Name the flag getter and write that identifier instead.
+        
+        range 15 35 invalidGatingDirective 			15 35
+        fixed	function f() { 'use memo if(true)'; }\u000a
+    lint_test.go:759: gating_invalid_suppressed caught on emitted JavaScript: case 145 line 2738: port "fixed\tfunction f() { 'use memo if(true)'; }\\u000a", Go "/tmp/adamic-gate/TestMutantsgating_invalid_suppressed2826272927/016/react-hooks-gating-0.ts:1:16"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsgating_invalid_suppressed2826272927/016/react-hooks-gating-0.ts:1:16
+          react-hooks/gating  The condition inside `use memo if(...)` is not a JavaScript identifier. React Compiler imports that exact name from the gating module and calls it to decide whether the memoized version of this function runs, so it has to be something importable. A literal like `true`, an expression, or a reserved word cannot be imported, and the compiler rejects the whole file rather than guessing. Name the flag getter and write that identifier instead.
+        
+        range 15 35 invalidGatingDirective 			15 35
+        fixed	function f() { 'use memo if(true)'; }\u000a
+    lint_test.go:759: gating_invalid_suppressed caught on native: case 145 line 2738: port "fixed\tfunction f() { 'use memo if(true)'; }\\u000a", Go "/tmp/adamic-gate/TestMutantsgating_invalid_suppressed2826272927/016/react-hooks-gating-0.ts:1:16"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsgating_invalid_suppressed2826272927/016/react-hooks-gating-0.ts:1:16
+          react-hooks/gating  The condition inside `use memo if(...)` is not a JavaScript identifier. React Compiler imports that exact name from the gating module and calls it to decide whether the memoized version of this function runs, so it has to be something importable. A literal like `true`, an expression, or a reserved word cannot be imported, and the compiler rejects the whole file rather than guessing. Name the flag getter and write that identifier instead.
+        
+        range 15 35 invalidGatingDirective 			15 35
+        fixed	function f() { 'use memo if(true)'; }\u000a
+=== RUN   TestMutants/foreign_read_suppressed
+    lint_test.go:759: foreign_read_suppressed caught on Node: case 145 line 2738: port "fixed\tconst p = Foo.propTypes;\\u000a", Go "/tmp/adamic-gate/TestMutantsforeign_read_suppressed2041517939/016/react-forbid-foreign-prop-types-0.ts:1:15"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsforeign_read_suppressed2041517939/016/react-forbid-foreign-prop-types-0.ts:1:15
+          react/forbid-foreign-prop-types  Reading another component's `propTypes` breaks in production. The React production build strips `propTypes` off components to save bytes, so this expression is an object in development and `undefined` in the build users actually run, and the failure lands at runtime in the one environment nobody was testing. Declare the shape where it is used, or export the plain object both components can import.
+        
+        range 14 23 forbiddenPropType 			14 23
+        fixed	const p = Foo.propTypes;\u000a
+    lint_test.go:759: foreign_read_suppressed caught on emitted JavaScript: case 145 line 2738: port "fixed\tconst p = Foo.propTypes;\\u000a", Go "/tmp/adamic-gate/TestMutantsforeign_read_suppressed2041517939/016/react-forbid-foreign-prop-types-0.ts:1:15"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsforeign_read_suppressed2041517939/016/react-forbid-foreign-prop-types-0.ts:1:15
+          react/forbid-foreign-prop-types  Reading another component's `propTypes` breaks in production. The React production build strips `propTypes` off components to save bytes, so this expression is an object in development and `undefined` in the build users actually run, and the failure lands at runtime in the one environment nobody was testing. Declare the shape where it is used, or export the plain object both components can import.
+        
+        range 14 23 forbiddenPropType 			14 23
+        fixed	const p = Foo.propTypes;\u000a
+    lint_test.go:759: foreign_read_suppressed caught on native: case 145 line 2738: port "fixed\tconst p = Foo.propTypes;\\u000a", Go "/tmp/adamic-gate/TestMutantsforeign_read_suppressed2041517939/016/react-forbid-foreign-prop-types-0.ts:1:15"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsforeign_read_suppressed2041517939/016/react-forbid-foreign-prop-types-0.ts:1:15
+          react/forbid-foreign-prop-types  Reading another component's `propTypes` breaks in production. The React production build strips `propTypes` off components to save bytes, so this expression is an object in development and `undefined` in the build users actually run, and the failure lands at runtime in the one environment nobody was testing. Declare the shape where it is used, or export the plain object both components can import.
+        
+        range 14 23 forbiddenPropType 			14 23
+        fixed	const p = Foo.propTypes;\u000a
+--- PASS: TestMutants (403.06s)
+    --- PASS: TestMutants/constraint_suggestion_wrong (171.92s)
+    --- PASS: TestMutants/enum_second_suggestion_wrong (76.20s)
+    --- PASS: TestMutants/core_default_suppressed (34.42s)
+    --- PASS: TestMutants/computed_replacement_wrong (29.71s)
+    --- PASS: TestMutants/gating_invalid_suppressed (33.59s)
+    --- PASS: TestMutants/foreign_read_suppressed (33.59s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	403.237s
