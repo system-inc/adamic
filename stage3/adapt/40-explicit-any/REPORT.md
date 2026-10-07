@@ -121,3 +121,31 @@ was edited. The full uncached Go/ASan gate and the adapted-tree Adamic census
 with its sounder regex declarations were not run. The full upstream stage 3
 suite was run. Source maps and build metadata are outside the JavaScript byte
 claim. Every emitted JavaScript file is inside it.
+
+## Follow-up classification
+
+All remaining 207 tokens are classified into 33 disjoint semantic patterns in
+CLASSIFICATION.md and evidence/classification.json. Each has an exact location,
+observation and proposed rule. The largest class is JSON/config (38), followed
+by phantom brands (36), enum display reflection (23), timer plumbing (16) and
+incomplete constructors/initialization (11). There is no unclassified other.
+
+The largest class requires unknown and checked narrowing at external boundaries,
+then real validated value types internally. Existing raw config property reads
+and writes do not prove those shapes. Extra runtime checks would change the
+JavaScript, so the requested conditional source edit is declined. No further
+adapter, TypeScript source, API reference or consumer edits are made.
+
+classify-check.cjs compares all IDs, locations and source snippets against the
+prior stock AST census, independently partitions every site exactly once, checks
+class counts and their total, and hashes every compiler source against the prior
+after snapshot. Five mutants remove a site, duplicate class membership, alter a
+count, alter a location and append a comment to a scratch copy of real source; each must fail its own check.
+See evidence/classification-check.log. These prove ledger completeness and
+source preservation, not the soundness of proposed replacement types.
+
+The earlier whole-build/oracle/idempotence proof still applies to the unchanged
+three-owner adapter. It was not rerun as a new adaptation proof in this follow-up.
+The remaining count is unchanged at 207, and no new consumer errors are elicited
+because there are no new owner edits. Full native and composition limits above
+remain.

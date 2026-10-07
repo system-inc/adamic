@@ -21,8 +21,10 @@ outside src/compiler. evidence/exploratory-generic-build.log preserves every
 build diagnostic from that rejected contract. The final object parameter is
 chosen from those actual uses at the owning declaration.
 
-The remaining 207 sites have not received the owner-and-consumer analysis needed
-to promise their types. In particular, assertions, dynamic constructors, brands,
+The remaining 207 sites are now classified by semantic pattern in
+[CLASSIFICATION.md](CLASSIFICATION.md), with exact token locations and proposed
+owner rules in evidence/classification.json. They have not received the complete
+owner-and-consumer proof needed to promise their replacement types. In particular, assertions, dynamic constructors, brands,
 JSON pipelines, timers, and heterogeneous callbacks cannot be repaired by a
 uniform replacement. Their reasons identify the outstanding contract work;
 they are incomplete sites, not claims that the adaptation is impossible.
@@ -71,3 +73,12 @@ bucket. No other unit or production compiler file is edited.
 Source snippets in evidence are from Microsoft TypeScript 6.0.3, copyright
 Microsoft Corporation, licensed under Apache-2.0. Upstream source stays in the
 external scratch checkout.
+
+Validate the complete classification and its five failing mutants:
+
+```sh
+node stage3/adapt/40-explicit-any/classify-check.cjs "$tree" > classification-check.log 2>&1
+```
+
+The follow-up stops without new source edits: JSON/config is the largest class
+(38), and its whole-class rule requires checked runtime input narrowing.
