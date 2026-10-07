@@ -25,6 +25,7 @@ func Generate(seed uint64) *Program {
 // Features are the parts of the language the generator can leave out by name, so it can stay inside
 // what an older stage 0 lowered: fuzzing an old commit, a program that's all not-yets tests nothing.
 var Features = []string{
+	"moves",            // inferred task ownership of fresh mutable records, plus exact refusals
 	"field-updates",    // +=, ++ and the rest on a field (holder.value += 1), not plain =
 	"number-tostring",  // (1.5).toString()
 	"number-functions", // Number.parseInt, parseFloat, isInteger, isNaN, isFinite
@@ -47,6 +48,7 @@ var Features = []string{
 	"optional-chains",  // ?. and ?? through a linked list that may end anywhere
 	"number-formats",   // toExponential and toPrecision
 	"array-from",       // Array.from({ length }, callback)
+	"parallel",         // parallelMap over readonly values, plus a share of programs that must be refused
 	"inheritance",      // a subclass, an override, a super call, and a base-typed virtual call
 	"map-keys",         // a number Map and a number Set, including NaN and -0
 	"regex",            // regular expression literals: exec, replace, replaceAll and split
@@ -59,6 +61,11 @@ func GenerateWithout(seed uint64, without []string) *Program {
 	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}}
 	for _, feature := range without {
 		generator.without[feature] = true
+	}
+	// Select the family on a separate stream: adding moves must not perturb
+	// established ordinary seeds into unrelated invalid programs.
+	if generator.allowed("parallel") && generator.allowed("moves") && rand.New(rand.NewPCG(seed, 0x6d6f766573)).IntN(2) == 0 {
+		return generator.movesProgram()
 	}
 	return generator.program()
 }
@@ -220,6 +227,19 @@ func (g *generator) program() *Program {
 
 	for range 2 + g.random.IntN(4) {
 		add(g.function())
+	}
+
+	// Parallel work runs before the random statements, so a later timeout still executed it, and a
+	// refusal is the only parallelMap in the file (preflight reports that one).
+	if section, refusal := g.parallelSection(); len(section) > 0 {
+		program.Refusal = refusal
+		if refusal != "" {
+			add(statement("// parallel-refuse: " + refusal))
+		}
+		for _, part := range section {
+			add(part)
+		}
+		program.Block.Statements = append([]*Statement{statement("import { parallelMap } from 'adamic';")}, program.Block.Statements...)
 	}
 
 	for range 6 + g.random.IntN(14) {

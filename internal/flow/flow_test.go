@@ -43,8 +43,11 @@ func programs(t *testing.T) []string {
 	// are shapes the other programs trace, and its size is what it's for. bitwise_sweep.a records
 	// over a million points and exceeds the same limit in the full gate; bitwise.a covers its loop
 	// and operator shapes here, and the oracle still runs the full sweep.
+	// normalize_coverage_long.a observes every point of million-unit normalized strings.
+	// Its trace would record hundreds of millions of instructions; the smaller normalization
+	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a"
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -80,6 +83,10 @@ func TestEveryFunctionIsInSingleAssignment(t *testing.T) {
 	var functions int
 	for _, path := range programs(t) {
 		program := lowered(t, path)
+		if program.Async != nil {
+			t.Logf("%s: synchronous SSA does not model suspension states; async oracle checks them", path)
+			continue
+		}
 		for function := -1; function < len(program.Functions); function++ {
 			name := "main"
 			if function >= 0 {

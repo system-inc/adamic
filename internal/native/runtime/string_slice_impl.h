@@ -59,17 +59,23 @@ adamic_string *adamic_string_at(const adamic_string *string, double index) {
 adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, double position) {
 	position = isnan(position) ? 0 : trunc(position);
 	adamic_maybe_number missing = {false, 0};
-	size_t length = string->units != 0 ? string->units - 1 : adamic_string_units(string);
+	size_t known = adamic_string_known_units(string);
+	size_t length = known != 0 ? known - 1 : adamic_string_units(string);
 	if (position < 0 || position >= (double)length) {
 		return missing;
 	}
-	if (string->units == string->length + 1) {
+	if (length == string->length) {
 		adamic_maybe_number found = {true, (double)(unsigned char)string->bytes[(size_t)position]};
 		return found;
 	}
-	const uint16_t *bmp = adamic_string_bmp_view(string);
-	if (bmp != NULL) {
-		adamic_maybe_number found = {true, (double)bmp[(size_t)position]};
+	const uint16_t *view = adamic_string_unit_view(string);
+	if (view != NULL) {
+		size_t at = (size_t)position;
+		unsigned point = view[at];
+		if (point >= 0xd800 && point <= 0xdbff && at + 1 < length && view[at + 1] >= 0xdc00 && view[at + 1] <= 0xdfff) {
+			point = 0x10000 + ((point - 0xd800) << 10) + (view[at + 1] - 0xdc00);
+		}
+		adamic_maybe_number found = {true, (double)point};
 		return found;
 	}
 	// At the high half of a pair, the whole code point; anywhere else, the unit.

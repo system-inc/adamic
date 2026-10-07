@@ -34,6 +34,7 @@ var inputFixtures = []struct {
 	writes bool
 }{
 	{"internal/oracle/testdata/read_files.a", nil, false, false},
+	{"internal/oracle/testdata/empty-path.a", nil, false, false},
 	{"internal/oracle/testdata/utf8_sweep.a", nil, false, false},
 	{"internal/oracle/testdata/arguments.a", []string{
 		"plain", "", "with space", "héllo 🌍", "--flag=1",
@@ -324,7 +325,7 @@ func inputLeaksUncached(t *testing.T, how inputRun, program *ir.Program, sanitiz
 	switch runtime.GOOS {
 	case "darwin":
 		binary := filepath.Join(sharedDirectory(t), "program")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+		if err := native.Build(native.C(program), binary, native.Options{Malloc: true}); err != nil {
 			t.Fatal(err)
 		}
 		report := executeInput(t, how, nil, "leaks", append([]string{"--atExit", "--", binary}, how.arguments...)...)

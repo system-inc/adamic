@@ -1,0 +1,89 @@
+// The callback keeps a string key and value that outlive forEach, after the map has let go of them.
+function key(index: number): string { return `key${index}`; }
+function value(index: number): string { return `value${index}`; }
+
+function probe(mode: number): void {
+	const collection = new Map<string, string>();
+	for (let index = 0; index < 8; index += 1) {
+		collection.set(key(index), value(index));
+	}
+	const keptKeys: string[] = [];
+	const keptValues: string[] = [];
+	try {
+		collection.forEach((item, current, owner) => {
+			if (mode === 0) { owner.delete(current); }
+			if (mode === 1 && current === "key0") { owner.delete(key(1)); }
+			if (mode === 2) { owner.clear(); }
+			if (mode === 3) { owner.set(current, `changed${current}`); }
+			if (mode === 4 && current === "key0") {
+				owner.delete(current);
+				owner.set(key(8), value(8));
+			}
+			if (mode === 5) {
+				owner.delete(current);
+				keptKeys.push(current);
+				keptValues.push(item);
+				throw new Error(`deleted ${current} ${item}`);
+			}
+			keptKeys.push(current);
+			keptValues.push(item);
+			console.log(`${mode}: ${current} ${item} ${owner.size}`);
+		});
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`kept ${mode}: ${keptKeys.join(",")} ${keptValues.join(",")}`);
+	console.log(`remaining ${mode}: ${collection.size}`);
+	collection.forEach((item, current) => { console.log(`after ${current} ${item}`); });
+}
+
+function captured(): void {
+	const collection = new Map<string, string>();
+	for (let index = 0; index < 3; index += 1) {
+		collection.set(key(index), value(index));
+	}
+	const readers: (() => string)[] = [];
+	collection.forEach((item, current, owner) => {
+		owner.delete(current);
+		readers.push(() => `${current}=${item}`);
+	});
+	const shown: string[] = [];
+	for (const read of readers) {
+		shown.push(read());
+	}
+	console.log(`captured ${shown.join(" ")} ${collection.size}`);
+}
+
+function lastSaved(): void {
+	const collection = new Map<string, string>();
+	collection.set(key(0), value(0));
+	collection.set(key(1), value(1));
+	let savedKey = "";
+	let savedValue = "";
+	collection.forEach((item, current, owner) => {
+		owner.delete(current);
+		savedKey = current;
+		savedValue = item;
+	});
+	console.log(`saved ${savedKey} ${savedValue} ${collection.size}`);
+}
+
+function nested(): void {
+	const collection = new Map<string, string>();
+	for (let index = 0; index < 3; index += 1) {
+		collection.set(key(index), value(index));
+	}
+	collection.forEach((item, current, owner) => {
+		if (current === "key0") {
+			owner.forEach((innerItem, innerKey) => {
+				console.log(`inner ${current} sees ${innerKey} ${innerItem}`);
+			});
+		}
+		console.log(`outer ${current} ${item} ${owner.size}`);
+	});
+}
+
+for (let mode = 0; mode < 6; mode += 1) { probe(mode); }
+captured();
+lastSaved();
+nested();

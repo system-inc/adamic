@@ -1,0 +1,19 @@
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/nbody_static_collision.a (0.38s)
+        oracle_test.go:600: gate cache node hit
+        oracle_test.go:600: gate cache node hit
+        oracle_test.go:489: gate cache native miss
+        oracle_test.go:482: gate cache native miss
+        oracle_test.go:605: the release build: exit codes differ
+            sanitized: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-3829078264/string_build_impl.h:39:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3829078264/string_build_impl.h:39:21 \n"
+            release:   exit -1, stdout "", stderr ""
+        oracle_test.go:621: exit codes differ
+            node:   exit 0, stdout "instance2!/instance2!/true\nparent1/false\nupdated4/false\nlater6/false|child5/true|child5/true\nlater6/false|child8/true|grand7/true\nshared,flag/shared,flag\n", stderr ""
+            native: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-3829078264/string_build_impl.h:39:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3829078264/string_build_impl.h:39:21 \n"
+        oracle_test.go:496: gate cache native hit
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.386s
+FAIL

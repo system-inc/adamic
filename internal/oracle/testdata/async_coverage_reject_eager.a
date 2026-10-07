@@ -1,0 +1,7 @@
+async function fail(message: string): Promise<never> { throw new Error(`${message}!`); }
+async function relay(message: string): Promise<void> {
+    console.log('relay');
+    await fail(message);
+    console.log('unreachable');
+}
+await relay(`eager${4}`);

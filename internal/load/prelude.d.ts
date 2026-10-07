@@ -7,6 +7,7 @@ declare const console: {
 };
 
 declare module 'adamic' {
+	export function parallelMap<T, R>(items: readonly T[], work: (item: T, index: number) => R): R[];
 	// External checker library. Native build requires --tsgo <archive>; JavaScript is refused.
 	// Paths and positions follow bridge/tsgo/tsgo.h. Release each handle exactly once.
 	export function tsgoProgram(tsconfig: string, files: readonly string[]): number;
