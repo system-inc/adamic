@@ -43,12 +43,18 @@ func programs(t *testing.T) []string {
 	// are shapes the other programs trace, and its size is what it's for. bitwise_sweep.a records
 	// over a million points and exceeds the same limit in the full gate; bitwise.a covers its loop
 	// and operator shapes here, and the oracle still runs the full sweep.
-	// This RegExp fixture is deliberately refused and checked as such by the oracle;
-	// it has no lowered graph to trace. Keep this exclusion explicit so other lowering
-	// failures still fail the flow gate. The process runtime-only probes are
-	// tested through explicit IR by their oracle tests; their source does not lower.
+	// These oracle fixtures are explicitly registered as expected NotYet or deliberately
+	// refused, so they have no accepted IR to trace. The oracle still verifies refusal.
+	// The process runtime-only probes are tested through explicit IR by their oracle
+	// tests; their source does not lower. Keep each exclusion explicit so other lowering
+	// failures still fail the flow gate.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "regexp_native_write_groups_compound_missing.a" || filepath.Base(path) == "node_process_errors.a" || filepath.Base(path) == "node_process_directory_mutation.a" || filepath.Base(path) == "node_process_environment_mutation.a"
+		switch filepath.Base(path) {
+		case "regexp_surrogate_limit_refused.a", "regexp_surrogate_nested_limit_refused.a", "regexp_native_write_groups_compound_missing.a",
+			"node_process_errors.a", "node_process_directory_mutation.a", "node_process_environment_mutation.a":
+			return true
+		}
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
