@@ -1,0 +1,23 @@
+class Leaf {
+	readonly value: number;
+	constructor(value: number) {
+		this.value = value;
+	}
+}
+class Branch {
+	readonly label: string;
+	constructor(label: string) {
+		this.label = label;
+	}
+}
+function isLeaf(node: Leaf | Branch): node is Leaf {
+	return node instanceof Leaf;
+}
+function show(node: Leaf | Branch): string {
+	if (isLeaf(node)) {
+		return `leaf ${node.value + 1}`;
+	}
+	return `branch ${node.label}`;
+}
+console.log(show(new Leaf(3)));
+console.log(show(new Branch('oak')));
