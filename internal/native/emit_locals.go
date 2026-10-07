@@ -62,7 +62,11 @@ func (e *emitter) store(local int, value string, owned bool) {
 // checkReady panics as JavaScript throws when a global is touched before its declaration has run.
 func (e *emitter) checkReady(local int) {
 	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
-	e.line("if (!%s) {", readyName(local))
+	ready := readyName(local)
+	if cell := e.cellReference(local); cell != "" {
+		ready = cell + "->ready"
+	}
+	e.line("if (!%s) {", ready)
 	e.line("\tstatic const char message[] = %s;", cString(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")
 	e.line("}")
@@ -80,6 +84,9 @@ func (e *emitter) read(read ir.Read) string {
 	// A reference its consumer lends needs no count: nothing can run before it's used (borrow.go).
 	lent := e.lendable && lendable(read.Of)
 	if slot := e.cellSlot(read.Local); slot != "" {
+		if read.Checked {
+			e.checkReady(read.Local)
+		}
 		// A captured variable may change under a call later in the statement (a closure that
 		// writes it), so, like a global, it's copied the moment JavaScript reads it.
 		value := unslotted(read.Of, slot+"."+member(read.Of))
@@ -121,6 +128,11 @@ func (e *emitter) declareLocal(local int, value string, owned bool) {
 		e.line("int64_t %s = (int64_t)%s;", e.localName(local), value)
 		return
 	}
+	if declared.Captured && declared.Preallocated {
+		e.store(local, value, owned)
+		e.line("%s->ready = true;", e.cellReference(local))
+		return
+	}
 	if declared.Captured {
 		e.makeCell(local, value, owned)
 		return
@@ -140,6 +152,11 @@ func (e *emitter) declareLocal(local int, value string, owned bool) {
 // makeCell declares a captured local's cell, holding value (retained unless owned).
 func (e *emitter) makeCell(local int, value string, owned bool) {
 	declared := e.program.Locals[local]
+	if declared.EnvironmentCell {
+		e.store(local, value, owned)
+		e.line("%s->ready = true;", e.cellReference(local))
+		return
+	}
 	if declared.Type.IsReference() && !owned {
 		value = retained(value)
 	}
@@ -175,4 +192,18 @@ func (e *emitter) cellReference(local int) string {
 		}
 	}
 	return e.cellName(local)
+}
+
+// allocateEnvironment emits the one IR frame site; slot names borrow its storage.
+func (e *emitter) allocateEnvironment(cells []int) {
+	if len(cells) == 0 {
+		return
+	}
+	environment := e.temporary()
+	e.line("adamic_environment *%s = adamic_environment_new(%d);", environment, len(cells))
+	e.hold(environment)
+	for position, local := range cells {
+		e.line("adamic_cell *%s = &%s->cells[%d];", e.cellName(local), environment, position)
+		e.line("%s->references = %t;", e.cellName(local), e.program.Locals[local].Type.IsReference())
+	}
 }

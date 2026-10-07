@@ -79,6 +79,14 @@ type Function struct {
 	// captured variables it reaches through its cells, in order.
 	Closure     bool
 	Environment []int
+	// NestedParent is the enclosing function plus one for a named nested declaration.
+	NestedParent int
+	// ForwardedNestedParent identifies a named group called directly from this
+	// anonymous closure. Its complete shared layout is forwarded after lowering.
+	ForwardedNestedParent int
+	// FrameEnvironment is the layout of the single entry allocation for this frame.
+	FrameEnvironment []int
+	NestedFrame      bool
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
@@ -173,6 +181,12 @@ type Local struct {
 
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
+	// Preallocated cells exist before their source initializer executes.
+	Preallocated bool
+	// EnvironmentCell is an interior slot of its function's FrameEnvironment.
+	EnvironmentCell bool
+	// NestedFunction is the named declaration this binding holds, plus one.
+	NestedFunction int
 
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
@@ -579,6 +593,8 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
+		// Direct is a sibling code target plus one, sharing Closure as its environment.
+		Direct    int
 		Closure   Expression
 		Arguments []Expression
 		Returns   Type
@@ -993,10 +1009,15 @@ type (
 		Value  Expression
 	}
 
+	// AllocateEnvironment is one frame allocation site, visible to future placement analysis.
+	AllocateEnvironment struct{ Cells []int }
+
 	// Declare introduces a local with its first value.
 	Declare struct {
-		Local int
-		Value Expression
+		// Uninitialized allocates only a captured cell, with its ready bit clear.
+		Uninitialized bool
+		Local         int
+		Value         Expression
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
@@ -1124,23 +1145,24 @@ type Case struct {
 	Body  []Statement
 }
 
-func (WriteLine) statement()   {}
-func (Declare) statement()     {}
-func (Assign) statement()      {}
-func (Evaluate) statement()    {}
-func (Panic) statement()       {}
-func (SetProperty) statement() {}
-func (SetIndex) statement()    {}
-func (Return) statement()      {}
-func (If) statement()          {}
-func (Loop) statement()        {}
-func (Block) statement()       {}
-func (ForOf) statement()       {}
-func (Switch) statement()      {}
-func (Break) statement()       {}
-func (Continue) statement()    {}
-func (Throw) statement()       {}
-func (Try) statement()         {}
+func (WriteLine) statement()           {}
+func (AllocateEnvironment) statement() {}
+func (Declare) statement()             {}
+func (Assign) statement()              {}
+func (Evaluate) statement()            {}
+func (Panic) statement()               {}
+func (SetProperty) statement()         {}
+func (SetIndex) statement()            {}
+func (Return) statement()              {}
+func (If) statement()                  {}
+func (Loop) statement()                {}
+func (Block) statement()               {}
+func (ForOf) statement()               {}
+func (Switch) statement()              {}
+func (Break) statement()               {}
+func (Continue) statement()            {}
+func (Throw) statement()               {}
+func (Try) statement()                 {}
 
 func (p *Program) HasInheritance() bool {
 	for _, class := range p.Classes {

@@ -46,3 +46,11 @@ adamic_maybe_number adamic_maybe_number_unpack(double packed) {
 	}
 	return (adamic_maybe_number){true, packed};
 }
+
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value) {
+ return value.present ? (uint8_t)value.boolean : 2;
+}
+
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed) {
+ return (adamic_maybe_boolean){packed != 2, packed == 1};
+}
