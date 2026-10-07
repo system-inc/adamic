@@ -54,6 +54,9 @@ func prepareJSONTypes() (string, error) {
 	if output, err := command.CombinedOutput(); err != nil {
 		return "", fmt.Errorf("building oracle/json_types.go before fixtures: %w\n%s", err, output)
 	}
+	if err := os.Chmod(binary, 0755); err != nil {
+		return "", err
+	}
 	contents, err := os.ReadFile(binary)
 	if err != nil {
 		return "", err
