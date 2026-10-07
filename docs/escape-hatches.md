@@ -1128,6 +1128,40 @@ Tagged (c) lands first. Untagged checked views have a deadline of 18:00 UTC on
 October 8. If that step cannot finish, report it early with the highest-exposure
 untagged locations, clearly distinguishing static counts from measured hot paths.
 
+### Implementation progress, October 7
+
+The ruling above is decided; default checked-view cast lowering is still unfinished.
+The previous `ADAMIC_INTERFACE_DOWNCASTS` implementation remains an archived, opt-in
+construction-gated prototype until the replacement is complete. It does not implement
+this ruling. Required-field backend primitives now use the non-null worker's shared
+initialization state from `6ae58a0`; there is no second initialization representation.
+They independently check presence, initialization, and physical field representation,
+with the prescribed field-read diagnostic and exit 70. Primitive fixtures cover
+numbers, booleans, strings and operand evaluation. This is groundwork, not admission
+of the 1,758 tagged casts. Logical union conversions, literal/class contracts, view
+propagation, staged additions to native layouts, type-changing writes and proof erasure
+must be complete before replacing the existing cast gate.
+
+The additional native representation storage is exactly one byte per physical field,
+following the worker's existing one-byte initialization state. Heap storage is
+`sizeof(adamic_object) + field_count * (sizeof(adamic_value) + 2)` before allocator
+rounding; region storage rounds that size up to a multiple of 16. A checked required
+read makes one runtime helper call, performs cached own-name lookup, reads initialization
+and representation bytes, and validates a referenced value's heap kind before using
+it. A cache miss compares field names linearly; a hit does not scan. A successful
+primitive check allocates nothing. Reference reads currently retain and later release
+the value. Failure formatting allocates a message before the exit-70 panic. JavaScript
+checks own presence, the shared readiness WeakMap, and the value's built-in runtime
+kind; diagnostic type names are allocated once for the program. These are primitive
+costs, not the requested post-erasure counts or release timings for tsc slices.
+
+The exact 69 cumulative latent refusals from `70456b7` are audited separately in
+`stage3/interface-downcasts/latent-targets.json`: 44 object targets without direct
+callable members, 18 unions, 3 objects with direct callable members, 2 type parameters,
+1 array and 1 scalar/other target. Inherited array/string methods are separated from
+callable object contracts. This is the baseline on a checker-rejected program, not
+the final list of refused shapes after checked views. The latter remains pending.
+
 ## Non-null assertion implementation
 
 `e!` now lowers through the existing nullish coalescing panic path. It evaluates

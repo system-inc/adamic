@@ -104,6 +104,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
 	}
 	for index, field := range literal.Fields {
+		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
 		if field.Uninitialized {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
 		}

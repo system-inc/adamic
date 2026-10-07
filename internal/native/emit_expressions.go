@@ -112,6 +112,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
+		if expression.View != "" {
+			return e.viewField(expression)
+		}
 		if expression.Readiness == "" {
 			if taken, ok := e.take(expression); ok {
 				return taken

@@ -647,6 +647,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return object
 	case ir.Property:
+		if expression.View != "" {
+			return fmt.Sprintf("adamicViewField(%s, %s, %s, %d)", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.Of)
+		}
 		if expression.Readiness != "" {
 			return fmt.Sprintf("adamicReadField(%s, %s, %s, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.Readiness), expression.Optional)
 		}

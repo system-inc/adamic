@@ -7,12 +7,13 @@
 #include <stdlib.h>
 
 adamic_object *adamic_object_new(const adamic_shape *shape) {
-	adamic_object *object = adamic_allocate(sizeof *object + shape->count * (sizeof object->slots[0] + 1), adamic_kind_object);
+	adamic_object *object = adamic_allocate(sizeof *object + shape->count * (sizeof object->slots[0] + 2), adamic_kind_object);
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
+	memset(adamic_object_field_types(object), 0, shape->count);
 	return object;
 }
 
@@ -26,6 +27,7 @@ adamic_object *adamic_object_copy(const adamic_object *source) {
 		object->slots[index] = accessor == NULL ? *adamic_object_field(source, shape->names[index], &cache) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
 		if (accessor == NULL) {
 			adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];
+			adamic_object_field_types(object)[index] = adamic_object_field_types(source)[cache.index];
 		}
 		if (shape->references[index] && accessor == NULL) {
 			adamic_retain(object->slots[index].reference);
@@ -142,4 +144,30 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 	adamic_slot_cache cache = {NULL, 0};
 	(void)adamic_object_field(object, name, &cache);
 	adamic_object_initialized(object)[cache.index] = initialized;
+}
+
+// Required-field contract checks use the shared readiness bitmap. Representation evidence is
+// checked before reading any union member, including before following a possible reference.
+adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
+	adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+	const char *failure = "is not initialized";
+	if (slot != NULL && adamic_object_initialized(object)[cache->index]) {
+		unsigned char actual = adamic_object_field_types(object)[cache->index];
+		// These codes are IR representations, not logical kinds. No conversion is implied.
+		if (actual == wanted && wanted >= 1 && wanted <= 6) {
+			if (wanted <= 2) { return *slot; }
+			const adamic_heap *reference = slot->reference;
+			enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : adamic_kind_map;
+			if (reference != NULL && reference->kind == kind) { return *slot; }
+		}
+		failure = NULL;
+	}
+	size_t capacity = strlen(expression) + strlen(type) + 80;
+	char *message = malloc(capacity);
+	if (message == NULL) {
+		static const char oom[] = "out of memory";
+		adamic_panic(oom, sizeof oom - 1);
+	}
+	int length = failure != NULL ? snprintf(message, capacity, "field read failed: %s %s", expression, failure) : snprintf(message, capacity, "field read failed: %s is not a %s", expression, type);
+	adamic_panic(message, (size_t)length);
 }
