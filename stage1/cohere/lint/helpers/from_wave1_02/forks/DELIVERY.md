@@ -40,3 +40,38 @@ Landing first was applied before these claims: existing markers rebased cleanly 
 Selection audits read all origin claim blobs: snapshot claim after 559 refs/20 distinct contents; restore after 565 refs/20. Post-push audits found no competing earlier claim for either retained helper. Setup on this main base passed with tools/submodules 0s each, cache warm 100s, total 100s, nproc 5 and cpu.max 400000 100000. Initial runner never[] refusal is retained and corrected; it earns no mutant credit. No new Go regex exists in either helper, no handwritten matcher was added, and no node-kind string dispatch was introduced.
 
 No additional helper is reserved. Rebase and land the parked rule branch before further claims when the harness commit is named.
+
+
+## Current main refresh, 2026-10-07
+
+Rebased all eighteen owned helper commits cleanly onto origin/main
+b8fb957aa839a9e8cb0b54279dd9864fa317bd30. Incoming inherited static field
+compiler changes were retained. No shared harness file changed.
+
+Reran final/verify.py, thrown/verify.py, verify_joint.py,
+forks/verify_snapshot.py and forks/verify_restore.py, each writing directly
+to its own log. All five verifiers PASS. Source Node, emitted JavaScript and
+sanitized native match actual Go consumer observations: marker and joint
+98,252 bytes plus fork pair 113,214 bytes, total 211,466 bytes from 7,432
+observations. All twelve semantic mutants compile and execute cleanly and
+are caught only by comparison: marker unreachable/final guards; thrown
+unreachable/thrown guards and final flag; joint wrong destination list;
+snapshot inverted bits, reversed order and reused storage; restore inverted
+bits, suffix clobbering and reversed shared-frame writes. Buffer reuse still
+passes the ordinary 864-byte comparison; the retained-snapshot comparison
+alone fails. Reversed restore still passes unique-frame 105,613 bytes;
+shared-frame identity comparison alone fails. Logs: ../evidence/main-b8fb957a-*.log.
+
+The same four consumers remain: array-callback-return, consistent-return,
+no-unreachable-loop and react-hooks/rules-of-hooks. Sixteen helper dependency
+occurrences removed in total, zero whole rules newly helper-ready. Full CFG,
+whole-rule findings/fixes, throughput and full repository gate remain outside
+this proof. No regex exists in these helpers and no kind dispatch was added.
+
+Rule landing branch codex/lint-wave1-02-land is pushed at 1cb4def8d with
+current main integrated and named harness ab70f38d4 retained. Its renewed
+TestOwnedWitnesses gate FAIL 3.168s: no-restricted-types defaults ban nothing
+but the shared witness gate supplies no Types configuration. Previous shared
+all-row option-isolation failure remains recorded there. The rule branch is
+not newly green or landing-certified. No additional helper is claimed until
+that landing gate is resolved. Main and area branches were not pushed.

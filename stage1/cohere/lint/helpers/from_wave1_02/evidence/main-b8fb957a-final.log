@@ -1,0 +1,10 @@
+array-callback-return 203 actual calls
+consistent-return 103 actual calls
+no-unreachable-loop 2419 actual calls
+react-hooks-rules-of-hooks 127 actual calls
+controls 32 actual calls
+baseline 87942 bytes True True True
+mutant-omit-unreachable-guard 87942 bytes False False False
+mutant-omit-final-guard 87942 bytes False False False
+PASS: actual calls from all four consumer suites; two compiling semantic mutants caught only by byte comparison.
+workdir /tmp/adamic-gate/wave02-final-ur0g5d3_
