@@ -1,0 +1,61 @@
+package native
+
+import (
+	"fmt"
+	"github.com/system-inc/adamic/internal/ir"
+	"strings"
+)
+
+// Producer certificates are selected by immutable generated code identity. This
+// closed-program adapter needs no inferred Function.length, view-supplied
+// implementation ID, heap mutation or second closure calling convention.
+func (e *emitter) emitViewCallableCertificate(property ir.Property, value string) string {
+	e.declarations = append(e.declarations, "#include \"view_callables_contract.h\"")
+	expected := e.viewCallableExpected(property)
+	recorded := e.temporary()
+	e.line("const adamic_callable_signature *%s = NULL;", recorded)
+	for index, function := range e.program.Functions {
+		if !function.Closure || function.Receiver {
+			continue
+		}
+		parameters := make([]ir.Type, len(function.Parameters))
+		for i, local := range function.Parameters {
+			parameters[i] = e.program.Locals[local].Type
+		}
+		signature := e.viewCallableSignature(parameters, function.Returns, function.Name)
+		e.line("if (%s != NULL && %s->heap.kind == adamic_kind_closure && %s->code == %s) %s = %s;", value, value, value, e.functionName(index), recorded, signature)
+	}
+	return emitViewCallableShape(value, recorded, expected, property.View, property.Absent)
+}
+
+func (e *emitter) viewCallableExpected(property ir.Property) string {
+	id := property.ViewContract
+	if id == 0 || int(id) > len(e.program.ViewContracts) {
+		return "NULL"
+	}
+	contract := e.program.ViewContracts[id-1]
+	if contract.Kind != ir.ViewCallable || contract.Result == 0 {
+		return "NULL"
+	}
+	parameters := make([]ir.Type, len(contract.Parameters))
+	for i, child := range contract.Parameters {
+		parameters[i] = e.program.ViewContracts[child-1].Of
+	}
+	return e.viewCallableSignature(parameters, e.program.ViewContracts[contract.Result-1].Of, contract.Name)
+}
+
+func (e *emitter) viewCallableSignature(parameters []ir.Type, result ir.Type, name string) string {
+	signature := e.temporary()
+	parameterName := "NULL"
+	if len(parameters) != 0 {
+		parameterName = e.temporary()
+		values := make([]string, len(parameters))
+		for i, of := range parameters {
+			values[i] = fmt.Sprint(of)
+		}
+		e.declarations = append(e.declarations, fmt.Sprintf("static const unsigned char %s[] = {%s};", parameterName, strings.Join(values, ", ")))
+	}
+	// Zero remains unknown. Void producer signatures cannot satisfy a valued result.
+	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_callable_signature %s = {%d, %s, %d, %s};", signature, len(parameters), parameterName, result, cString(name)))
+	return "&" + signature
+}

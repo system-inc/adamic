@@ -394,3 +394,49 @@ advertised arity. Function.Returns zero means void in existing IR; it must not
 be copied as the helper's zero/unknown signature code. A void descriptor needs
 an explicit agreed representation before enabling that family. Count-row and
 real-source read-time failure registration remain central owner handoffs.
+
+## Lane 5 read adapter handoff to views-integration
+
+Coordination supersedes the individual-lane merge instructions above: lane 5
+merges only codex/views-integration after its integrator publishes a tip. On this
+checkpoint that remote branch is not yet published. Do not merge fetched lazy or
+closure tips directly. The 11,648 explicit witnesses remain an Unknown-fallback
+upper bound; remeasure what viewed values can reach after lazy provenance lands.
+
+New lane 5 territory: internal/lower/view_callables_read.go and tests;
+internal/native/view_callables_signature.go and tests;
+internal/javascript/view_callables_signature.go and tests;
+lane5/run-read-adapter-mutants.py. JavaScript's owned viewCallablesRuntime now
+includes the shape runtime. The native certificate emitter includes its header
+in generated declarations. No shared owner file was changed.
+
+Concrete integration hooks requested:
+
+- At the shared callable read with KnownViewed or Unknown provenance, call
+  `l.prepareViewCallableRead(node, declared)` and propagate its error at that read.
+  Install the returned id on Property.ViewContract. This strips only optional
+  undefined and builds representation descriptors without walking object members
+  of argument/result types. It must not be called from cast admission or from the
+  global same-name field scan. Keep the existing refusal until all its reads
+  have equivalent runtime coverage; removing the scan alone is unsound.
+- After shared presence, readiness and storage-kind validation, snapshot the
+  callable, then use `e.emitViewCallableCertificate(property, value)` on both
+  backends before capturing or calling it. Native `value` must be an evaluated
+  C name; JS snapshots with a one-argument arrow wrapper. Check every read path,
+  including native viewField and dynamic method-call lookup. Existing owned
+  callable lookup still follows the previous proof path until these hooks land.
+- Optional absence must be returned by the shared read, not passed through the
+  old required-field helper. Native NULL may represent confirmed undefined only;
+  present null cannot be excused as optional. Pass Property.Absent appropriately.
+- The adapter selects immutable producer descriptors by generated closure code
+  identity and IR parameter/result representations. It neither guesses arity
+  from calls nor uses declared view metadata as a producer certificate. Unknown
+  code, Receiver closures and class method thunks remain uncertified. Use the
+  reconciled closure ABI for eventual receiver/method certificates; do not treat
+  the current fixed ordinary-closure adapter as coverage for them. Void remains
+  unknown. Table emission is deliberately a correctness-first prototype, with
+  per-read tables; compact it after the integration protocol is stable.
+
+All adapters are tested, but none certifies a corpus pair without the shared
+source-read hooks. Three new semantic mutants catch forged producer descriptors
+(native and JavaScript) and eager argument/result object-member traversal.
