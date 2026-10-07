@@ -1,0 +1,9 @@
+=== RUN   TestRegExpSurrogateCounts
+    regexp_remaining_test.go:25: gate cache native miss
+    regexp_remaining_test.go:52: | internal/oracle/testdata/regexp_surrogate_methods.a | 567 | 567 | 428 | 513 | 20 | 0 |
+--- PASS: TestRegExpSurrogateCounts (0.25s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.260s

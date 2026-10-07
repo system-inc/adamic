@@ -3,6 +3,7 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
+	"strings"
 )
 
 // Recognize well-known keys by library Symbol identity, never by spelling alone.
@@ -86,19 +87,18 @@ func (l *lowering) regexProtocol(node *ast.Node) (ir.Expression, bool, error) {
 		}
 	case "split":
 		if len(arguments) == 1 {
-			arguments = append(arguments, ir.NumberConstant{Value: 4294967295})
+			arguments = append(arguments, ir.Undefined{})
 		}
+		undefined := false
 		if len(arguments) == 2 {
-			if _, undefined := arguments[1].(ir.Undefined); undefined {
-				arguments[1] = ir.NumberConstant{Value: 4294967295}
-			}
-			if arguments[1].Type() == ir.MaybeNumber {
-				arguments[1] = ir.Coalesce{Value: arguments[1], Fallback: ir.NumberConstant{Value: 4294967295}, Of: ir.Number}
-			}
+			_, undefined = arguments[1].(ir.Undefined)
 		}
-		if len(arguments) != 2 || arguments[1].Type() != ir.Number {
+		if len(arguments) != 2 || !undefined && arguments[1].Type() != ir.Number && arguments[1].Type() != ir.MaybeNumber {
 			return nil, true, l.notYet(node, "RegExp Symbol split limit other than a number")
 		}
+	}
+	if name == "split" && !l.regexSplitLimitProven(receiver, arguments[1]) {
+		return nil, true, l.notYet(node, "RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion")
 	}
 	if name != "replace" && name != "replaceCallback" && name != "split" && len(arguments) != 1 {
 		return nil, true, l.notYet(node, "RegExp Symbol protocol with extra arguments")
@@ -113,4 +113,89 @@ func (l *lowering) regexStringValue(node *ast.Node, value ir.Expression) ir.Expr
 		return ir.RegExpCall{Value: value, Method: "toString", Returns: ir.String}
 	}
 	return value
+}
+
+// Node's u split path depends on its unobservable Smi/HeapNumber limit tag.
+// Only immediate small integer literals prove that tag. Other flags and
+// patterns without these assertions have no observable candidate-scan difference.
+func (l *lowering) regexSplitLimitProven(receiver *ast.Node, limit ir.Expression) bool {
+	if _, ok := limit.(ir.Undefined); ok {
+		return true
+	}
+	if _, ok := limit.(ir.NumberConstant); ok {
+		return true
+	}
+	return l.regexSplitPatternsSafe(receiver, 0)
+}
+
+// A loop over an immutable list of constant regexes can prove the absence of
+// the V8-sensitive shapes without refusing its ordinary dynamic split limits.
+func (l *lowering) regexSplitPatternsSafe(node *ast.Node, depth int) bool {
+	if depth > 32 {
+		return false
+	}
+	pattern, flags, known := l.constantRegExp(node, 0)
+	if known {
+		return !strings.Contains(flags, "u") || !strings.Contains(pattern, `\B`) && !strings.Contains(pattern, `(?!\W)`)
+	}
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindArrayLiteralExpression {
+		for _, item := range node.AsArrayLiteralExpression().Elements.Nodes {
+			if !l.regexSplitPatternsSafe(item, depth+1) {
+				return false
+			}
+		}
+		return true
+	}
+	if !ast.IsIdentifier(node) {
+		return false
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return false
+	}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || !l.regexStableBinding(symbol, declaration) {
+		return false
+	}
+	if declaration.AsVariableDeclaration().Initializer != nil {
+		if !l.regexSplitArrayReadOnly(symbol, declaration) {
+			return false
+		}
+		return l.regexSplitPatternsSafe(declaration.AsVariableDeclaration().Initializer, depth+1)
+	}
+	parent := declaration.Parent.Parent
+	if parent != nil && parent.Kind == ast.KindForOfStatement {
+		return l.regexSplitPatternsSafe(parent.AsForInOrOfStatement().Expression, depth+1)
+	}
+	return false
+}
+
+func (l *lowering) regexSplitArrayReadOnly(symbol *ast.Symbol, declaration *ast.Node) bool {
+	modules, err := l.moduleOrder(l.program.Files()[0])
+	if err != nil {
+		return false
+	}
+	safe := true
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if !safe {
+			return true
+		}
+		if ast.IsIdentifier(node) && l.symbol(node) == symbol && node != declaration.Name() {
+			parent := node.Parent
+			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+				node, parent = parent, parent.Parent
+			}
+			if parent == nil || parent.Kind != ast.KindForOfStatement || parent.AsForInOrOfStatement().Expression != node {
+				safe = false
+				return true
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		visit(module.AsNode())
+	}
+	return safe
 }

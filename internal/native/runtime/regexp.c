@@ -870,7 +870,7 @@ double adamic_regex_search(adamic_string *input, adamic_object *regex) {
 	regex->slots[1].number = previous;
 	return result;
 }
-adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit_value) {
+adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit_value, bool default_limit) {
 	adamic_array *result = adamic_array_new(0, true);
 	uint32_t limit = (uint32_t)adamic_shift_right_unsigned(limit_value, 0);
 	if (limit == 0)
@@ -892,7 +892,11 @@ adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, dou
 		copy->slots[1].number = (double)at;
 		ptrdiff_t *spans = regex_execute(copy, units, length, true, &steps);
 		if (spans == NULL) {
-			at = regex_advance(units, length, at, p->flags & 4);
+			// V8's split fast path scans UTF-16 candidates, unlike ECMA-262
+			// 22.2.6.14's AdvanceStringIndex. A HeapNumber limit uses its generic
+			// path under u; v retains code-unit candidate scanning there too.
+			at = default_limit || (p->flags & 64) ? at + 1
+				: regex_advance(units, length, at, p->flags & 4);
 			continue;
 		}
 		size_t end = (size_t)spans[1];
@@ -1073,7 +1077,7 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 	if (global) regex->slots[1].number = 0;
 	adamic_array *matches = adamic_array_new(0, true);
 	size_t length;
-	uint16_t *units = regex_input(input, &length);
+	const uint16_t *units = regex_input(input, &length);
 	for (;;) {
 		adamic_array *match = adamic_regex_exec(regex, input);
 		if (match == NULL) break;
@@ -1082,7 +1086,7 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 		if (adamic_string_length(match->elements[0].reference) == 0)
 			regex->slots[1].number = (double)regex_advance(units, length, regex_to_length(regex->slots[1].number), p->flags & 4);
 	}
-	free(units);
+	regex_input_free(input, units);
 	adamic_array *pieces = adamic_array_new(0, true);
 	size_t previous = 0;
 	for (size_t k = 0; k < matches->length; k++) {

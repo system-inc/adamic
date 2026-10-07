@@ -21,6 +21,12 @@ type regularProgram struct {
 
 func (p *Program) compileRegular() *regularProgram {
 	for _, i := range p.code {
+		// Irregexp can accept a Unicode \B at a pair interior. The regular
+		// candidate finder walks code points, so these patterns need the VM's
+		// V8-compatible code-unit search (ECMA-262 22.2.2.2 has no interior).
+		if i.op == opAssert && i.assertion == NotWordBoundary && unicodeMode(i.flags) {
+			return nil
+		}
 		if i.op == opReference || i.op == opLook {
 			return nil
 		}
