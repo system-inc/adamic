@@ -1,0 +1,4 @@
+const original = { x: 1, y: 'wrong' };
+const view: { x: number } = original;
+function take(value: { x: number; y?: number }): void { console.log(typeof value.y); }
+take(view);

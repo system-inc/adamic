@@ -1,0 +1,5 @@
+class Point { x = 1; }
+const source = new Point();
+const wider: { x: number; y?: number } = source;
+console.log(typeof wider.y);
+console.log(`${wider.x}`);
