@@ -14,3 +14,17 @@ lexically by full rule name:
 All origin heads fetched before selection. No existing claim or implementation
 was found for these names. Count logs and inventory descriptors are evidence of
 selection, not implementations. New Adamic sources will use .a.
+
+## Continuation claim
+
+Fetched all 320 origin refs on 2026-10-07 after pushing 2467cd3a.
+The combined 197-rule checker ranking was checked against main and the bridge
+branch's 26 existing ports and 32 Markdown claim files on all origin branches.
+The first three remaining names, all with combined volume zero, are:
+
+- nexus/correctness-no-global-listener-target-assertion
+- nexus/correctness-no-leaked-number-render
+- nexus/correctness-no-mock-on-module-namespace
+
+Reserved for this continuation before implementation. Inventory/count records
+were excluded from implementation checks.
