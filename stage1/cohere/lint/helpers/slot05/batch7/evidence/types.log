@@ -1,0 +1,52 @@
+stage1/cohere/lint/helpers/slot05/batch7/main.a:8:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/batch7/main.a:10:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/batch7/main.a:10:49: variable root: number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:12:10: function text: (index: number, field: string) => string
+stage1/cohere/lint/helpers/slot05/batch7/main.a:12:15: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:12:30: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch7/main.a:13:10: function compareBytes: (a: string, b: string) => number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:13:23: parameter a: string
+stage1/cohere/lint/helpers/slot05/batch7/main.a:13:34: parameter b: string
+stage1/cohere/lint/helpers/slot05/batch7/main.a:14:11: variable length: number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:15:13: variable i: number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:15:45: variable delta: number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:18:10: function printAxis: (axis: AxisReadings) => void
+stage1/cohere/lint/helpers/slot05/batch7/main.a:18:20: parameter axis: AxisReadings
+stage1/cohere/lint/helpers/slot05/batch7/main.a:22:11: variable row: number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:23:11: variable mode: string
+stage1/cohere/lint/helpers/slot05/batch7/main.a:23:43: variable source: string
+stage1/cohere/lint/helpers/slot05/batch7/main.a:25:15: variable axis: AxisReadings
+stage1/cohere/lint/helpers/slot05/batch7/main.a:26:15: variable old: Descriptor
+stage1/cohere/lint/helpers/slot05/batch7/main.a:27:15: variable descriptors: Map<string, Descriptor>
+stage1/cohere/lint/helpers/slot05/batch7/main.a:28:15: variable alias: Map<string, Descriptor>
+stage1/cohere/lint/helpers/slot05/batch7/main.a:29:15: variable roots: { name: string; functional: boolean; }[]
+stage1/cohere/lint/helpers/slot05/batch7/main.a:31:15: variable first: Descriptor
+stage1/cohere/lint/helpers/slot05/batch7/main.a:38:15: variable entries: string[]
+stage1/cohere/lint/helpers/slot05/batch7/main.a:38:76: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:39:15: variable memberships: { namespace: string; keys: string[]; }[]
+stage1/cohere/lint/helpers/slot05/batch7/main.a:39:83: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:39:175: parameter k: number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:40:15: variable membership: (namespace: string) => readonly string[]
+stage1/cohere/lint/helpers/slot05/batch7/main.a:40:29: parameter namespace: string
+stage1/cohere/lint/helpers/slot05/batch7/main.a:41:23: variable item: { namespace: string; keys: string[]; }
+stage1/cohere/lint/helpers/slot05/batch7/main.a:44:15: variable oldList: string[]
+stage1/cohere/lint/helpers/slot05/batch7/main.a:44:42: variable oldMap: Map<string, Map<string, boolean>>
+stage1/cohere/lint/helpers/slot05/batch7/main.a:44:98: variable oldSet: Map<string, boolean>
+stage1/cohere/lint/helpers/slot05/batch7/main.a:45:15: variable table: { namespaces: string[]; keysByNamespace: Map<string, Map<string, boolean>>; }
+stage1/cohere/lint/helpers/slot05/batch7/main.a:47:19: variable namespace: string
+stage1/cohere/lint/helpers/slot05/batch7/main.a:48:43: variable set: Map<string, boolean>
+stage1/cohere/lint/helpers/slot05/batch7/main.a:49:19: variable keys: string[]
+stage1/cohere/lint/helpers/slot05/batch7/main.a:49:50: variable key: string
+stage1/cohere/lint/helpers/slot05/batch7/main.a:50:54: variable key: string
+stage1/cohere/lint/helpers/slot05/batch7/main.a:54:15: variable definitions: UtilityDefinition[]
+stage1/cohere/lint/helpers/slot05/batch7/main.a:55:15: variable normalized: string[]
+stage1/cohere/lint/helpers/slot05/batch7/main.a:55:82: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:56:13: variable index: number
+stage1/cohere/lint/helpers/slot05/batch7/main.a:57:15: variable normalize: (definition: UtilityDefinition) => void
+stage1/cohere/lint/helpers/slot05/batch7/main.a:57:28: parameter definition: UtilityDefinition
+stage1/cohere/lint/helpers/slot05/batch7/main.a:58:15: variable theme: { marker: string; present: boolean; }
+stage1/cohere/lint/helpers/slot05/batch7/main.a:58:63: variable evaluator: UtilityEvaluator
+stage1/cohere/lint/helpers/slot05/batch7/main.a:59:19: variable definition: UtilityDefinition
+stage1/cohere/lint/helpers/slot05/batch7/main.a:61:15: variable last: UtilityDefinition
+stage1/cohere/lint/helpers/slot05/batch7/main.a:63:15: variable second: UtilityEvaluator
+stage1/cohere/lint/helpers/slot05/batch7/main.a:64:15: variable nilTheme: UtilityEvaluator

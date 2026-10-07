@@ -1,0 +1,14 @@
+export interface Reading { order: readonly number[]; count: number }
+export interface AxisReadings { byTypePresent: boolean; byNamespacePresent: boolean; fallback: Reading; emptyPresent: boolean }
+export interface Descriptor { root: string; typeList: readonly string[]; typeListPresent: boolean; byLiteralPresent: boolean; absent: AxisReadings; alpha: AxisReadings; themed: AxisReadings; perDeclaration: boolean }
+export interface UtilityRoot { name: string; functional: boolean }
+// The map and untouched descriptor aliases survive. Declining descriptors have Go's nil/zero fields.
+export function addRepositoryFunctionalRoots(descriptors: Map<string, Descriptor>, roots: readonly UtilityRoot[]): void {
+    for(const root of roots) {
+        if(!root.functional) { continue; }
+        descriptors.set(root.name, {root: root.name, typeList: [], typeListPresent: false, byLiteralPresent: false,
+            absent: {byTypePresent: false, byNamespacePresent: false, fallback: {order: [], count: 0}, emptyPresent: false},
+            alpha: {byTypePresent: false, byNamespacePresent: false, fallback: {order: [], count: 0}, emptyPresent: false},
+            themed: {byTypePresent: false, byNamespacePresent: false, fallback: {order: [], count: 0}, emptyPresent: false}, perDeclaration: true});
+    }
+}

@@ -1,0 +1,46 @@
+=== RUN   TestSlot05FunctionalRoots
+    helper_test.go:53: 6 consumers, 639 distinct test-file literals, 1292 cases
+    helper_test.go:63: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:118: table_add_repository_functional_roots.a mutant "if(!root.functional)" -> "if(false)" caught at verdict 24: mutant "true", Go "false"
+    helper_test.go:118: table_add_repository_functional_roots.a mutant "perDeclaration: true" -> "perDeclaration: false" caught at verdict 6: mutant "false", Go "true"
+    helper_test.go:118: table_add_repository_functional_roots.a mutant "if(!root.functional) { continue; }" -> "if(!root.functional || descriptors.has(root.name)) { continue; }" caught at verdict 2: mutant "true", Go "false"
+    helper_test.go:118: table_add_repository_functional_roots.a mutant "if(!root.functional) { continue; }" -> "if(!root.functional || descriptors.get(root.name)?.perDeclaration === true) { continue; }" caught at verdict 26: mutant "true", Go "false"
+--- PASS: TestSlot05FunctionalRoots (5.20s)
+=== RUN   TestSlot05ThemeNamespaces
+    helper_test.go:53: 6 consumers, 639 distinct test-file literals, 1292 cases
+    helper_test.go:63: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:118: table_add_theme_namespaces.a mutant "return rightLength - leftLength" -> "return leftLength - rightLength" caught at verdict 2: mutant "--a", Go "--font-weight"
+    helper_test.go:118: table_add_theme_namespaces.a mutant "if(keys.length === 0)" -> "if(false)" caught at verdict 1: mutant "12", Go "8"
+    helper_test.go:118: table_add_theme_namespaces.a mutant "return difference;" -> "return -difference;" caught at verdict 12: mutant "--😀", Go "--aaaa"
+    helper_test.go:118: table_add_theme_namespaces.a mutant "const leftLength = utf8Length(left); const rightLength = utf8Length(right);" -> "const leftLength = left.length; const rightLength = right.length;" caught at verdict 18: mutant "--a", Go "--é"
+    helper_test.go:118: table_add_theme_namespaces.a mutant "const keysByNamespace = new Map<string, Map<string, boolean>>();" -> "const keysByNamespace = table.keysByNamespace;" caught at verdict 30: mutant "10", Go "1"
+--- PASS: TestSlot05ThemeNamespaces (13.31s)
+=== RUN   TestSlot05UtilityEvaluator
+    helper_test.go:53: 6 consumers, 639 distinct test-file literals, 1292 cases
+    helper_test.go:63: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:118: new_utility_evaluator.a mutant "normalize(definition);" -> "if(false) { normalize(definition); }" caught at verdict 1: mutant "--value(--spacing)", Go "--value(--spacing-*)"
+    helper_test.go:118: new_utility_evaluator.a mutant "byName.set(definition.name, definition);" -> "if(!byName.has(definition.name)) { byName.set(definition.name, definition); }" caught at verdict 7: mutant "false", Go "true"
+--- PASS: TestSlot05UtilityEvaluator (3.75s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch7	22.266s

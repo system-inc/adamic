@@ -1,0 +1,39 @@
+=== RUN   TestSlot05FunctionalRoots
+    helper_test.go:53: 6 consumers, 639 distinct test-file literals, 1292 cases
+    helper_test.go:63: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:77: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch7/new_utility_evaluator.a:6:37: stage 0 can't lower a value of type EvaluatorTheme | null yet
+--- FAIL: TestSlot05FunctionalRoots (1.56s)
+=== RUN   TestSlot05ThemeNamespaces
+    helper_test.go:53: 6 consumers, 639 distinct test-file literals, 1292 cases
+    helper_test.go:63: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:77: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch7/new_utility_evaluator.a:6:37: stage 0 can't lower a value of type EvaluatorTheme | null yet
+--- FAIL: TestSlot05ThemeNamespaces (0.59s)
+=== RUN   TestSlot05UtilityEvaluator
+    helper_test.go:53: 6 consumers, 639 distinct test-file literals, 1292 cases
+    helper_test.go:63: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:77: /workspace/adamic/stage1/cohere/lint/helpers/slot05/batch7/new_utility_evaluator.a:6:37: stage 0 can't lower a value of type EvaluatorTheme | null yet
+--- FAIL: TestSlot05UtilityEvaluator (0.41s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch7	2.558s
+FAIL

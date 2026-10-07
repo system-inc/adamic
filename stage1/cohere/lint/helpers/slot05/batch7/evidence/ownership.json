@@ -1,0 +1,15 @@
+{
+  "claim": "e0b95155d759f07881ef6b6acd9ec584851e2ca4",
+  "claim_time": "2026-10-07T03:12:38Z",
+  "base_main": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "previous_landing_ready": "474d08829d7e41d461973e8621e799d4a9f52580",
+  "branches_checked": 18,
+  "later_overlapping_claim": "e283cc2317a01b30dadd0831c5635a81c594e7d2",
+  "later_time": "2026-10-07T03:13:26Z",
+  "later_branch": "codex/lint-helpers-02",
+  "retained_under_earliest_claim_rule": [
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryFunctionalRoots",
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addThemeNamespaces",
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewUtilityEvaluator"
+  ]
+}

@@ -1,0 +1,66 @@
+import { panic, readTextFile, programArguments, utf8At, utf8Length } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { addRepositoryFunctionalRoots } from './table_add_repository_functional_roots.a';
+import type { Descriptor, AxisReadings } from './table_add_repository_functional_roots.a';
+import { addThemeNamespaces } from './table_add_theme_namespaces.a';
+import { newUtilityEvaluator } from './new_utility_evaluator.a';
+import type { UtilityDefinition } from './new_utility_evaluator.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
+function compareBytes(a: string, b: string): number {
+    const length = Math.min(utf8Length(a), utf8Length(b));
+    for(let i = 0; i < length; i++) { const delta = utf8At(a, i) - utf8At(b, i); if(delta !== 0) { return delta; } }
+    return utf8Length(a) - utf8Length(b);
+}
+function printAxis(axis: AxisReadings): void {
+    console.log(`${!axis.byTypePresent}`); console.log(`${!axis.byNamespacePresent}`);
+    console.log(`${axis.fallback.order.length}`); console.log(`${axis.fallback.count}`); console.log(`${!axis.emptyPresent}`);
+}
+for(const row of json.node(root).children) {
+    const mode = text(row, 'mode'); const source = text(row, 'source');
+    if(mode === 'roots') {
+        const axis: AxisReadings = {byTypePresent: false, byNamespacePresent: false, fallback: {order: [], count: 0}, emptyPresent: false};
+        const old: Descriptor = {root: 'original', typeList: ['color'], typeListPresent: true, byLiteralPresent: false, absent: axis, alpha: axis, themed: axis, perDeclaration: false};
+        const descriptors = new Map<string, Descriptor>(); descriptors.set(source, old); descriptors.set('untouched', old);
+        const alias = descriptors;
+        const roots = [{name: source, functional: true}, {name: 'static-only', functional: false}, {name: 'disabled', functional: false}];
+        addRepositoryFunctionalRoots(descriptors, roots);
+        const first = descriptors.get(source) ?? panic('missing descriptor');
+        console.log(`${alias.get(source) === first}`); console.log(`${first === old}`); console.log(`${descriptors.get('untouched') === old}`);
+        console.log(first.root); console.log(`${first.perDeclaration}`); console.log(`${!first.typeListPresent}`); console.log(`${!first.byLiteralPresent}`);
+        printAxis(first.absent); printAxis(first.alpha); printAxis(first.themed);
+        console.log(`${descriptors.has('static-only')}`); console.log(`${descriptors.has('disabled')}`);
+        addRepositoryFunctionalRoots(descriptors, roots); console.log(`${first === descriptors.get(source)}`); console.log(old.root); console.log(`${old.typeList.length}`);
+    } else if(mode === 'namespace') {
+        const entries = json.node(json.field(row, 'entries')).children.map(c => json.node(c).text);
+        const memberships = json.node(json.field(row, 'membership')).children.map(c => ({namespace: text(c, 'namespace'), keys: json.node(json.field(c, 'keys')).children.map(k => json.node(k).text)}));
+        const membership = (namespace: string): readonly string[] => {
+            for(const item of memberships) { if(item.namespace === namespace) { return item.keys; } }
+            return [];
+        };
+        const oldList = ['stale']; const oldMap = new Map<string, Map<string, boolean>>(); const oldSet = new Map<string, boolean>(); oldSet.set('old', true); oldMap.set('stale', oldSet);
+        const table = {namespaces: oldList, keysByNamespace: oldMap}; addThemeNamespaces(table, entries, membership);
+        console.log(`${table.namespaces.length}`);
+        for(const namespace of table.namespaces) {
+            console.log(namespace); const set = table.keysByNamespace.get(namespace) ?? panic('missing namespace');
+            const keys: string[] = []; for(const key of set.keys()) { keys.push(key); } keys.sort(compareBytes);
+            console.log(`${keys.length}`); for(const key of keys) { console.log(key); }
+        }
+        table.keysByNamespace.set('mutated', new Map<string, boolean>()); console.log(`${oldMap.size}`); console.log(oldList[0] ?? '');
+    } else if(mode === 'evaluator') {
+        const definitions: UtilityDefinition[] = [{name: source, body: '--value(--spacing)'}, {name: 'other', body: source.slice(5)}, {name: source, body: '--modifier( --color )'}, {name: '', body: '--value( --spacing-\\* )'}];
+        const normalized = json.node(json.field(row, 'normalized')).children.map(c => json.node(c).text);
+        let index = 0;
+        const normalize = (definition: UtilityDefinition): void => { definition.body = normalized[index] ?? panic('missing normalization result'); index++; };
+        const theme = {marker: 'theme', present: true}; const evaluator = newUtilityEvaluator(theme, definitions, normalize);
+        for(const definition of definitions) { console.log(definition.body); }
+        console.log(`${evaluator.theme === theme}`); console.log(`${evaluator.definitions.get(source) === definitions[2]}`); console.log(`${evaluator.definitions.get('other') === definitions[1]}`); console.log(`${evaluator.definitions.size}`);
+        const last = definitions[2] ?? panic('missing definition'); last.body = 'alias mutation'; console.log(evaluator.definitions.get(source)?.body ?? '');
+        evaluator.definitions.set('new', definitions[0] ?? panic('missing definition'));
+        const second = newUtilityEvaluator(theme, [], normalize); console.log(`${second.definitions.size}`); console.log(`${second.theme === theme}`);
+        const nilTheme = newUtilityEvaluator({marker: '', present: false}, [], normalize); console.log(`${!nilTheme.theme.present}`);
+    } else { panic('unsupported mode'); }
+}

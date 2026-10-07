@@ -1,0 +1,13 @@
+export interface UtilityDefinition { name: string; body: string }
+export interface EvaluatorTheme { marker: string; present: boolean }
+export interface UtilityEvaluator { theme: EvaluatorTheme; definitions: Map<string, UtilityDefinition> }
+// Normalization mutates each definition's own nodes. The node representation belongs to that dependency.
+// body is an opaque normalization handle, never parsed here. Nil definitions are refused by the Go constructor.
+export function newUtilityEvaluator(theme: EvaluatorTheme, definitions: readonly UtilityDefinition[], normalize: (definition: UtilityDefinition) => void): UtilityEvaluator {
+    const byName = new Map<string, UtilityDefinition>();
+    for(const definition of definitions) {
+        normalize(definition);
+        byName.set(definition.name, definition);
+    }
+    return {theme, definitions: byName};
+}

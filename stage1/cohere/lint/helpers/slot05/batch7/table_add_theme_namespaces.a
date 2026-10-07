@@ -1,0 +1,35 @@
+import { utf8At, utf8Length } from 'adamic';
+export interface NamespaceTable { namespaces: string[]; keysByNamespace: Map<string, Map<string, boolean>> }
+// Entries and membership are the Theme's existing public methods, including prefix and ignored-key behavior.
+export function addThemeNamespaces(table: NamespaceTable, entryKeys: readonly string[], keysInNamespace: (namespace: string) => readonly string[]): void {
+    const candidates = new Map<string, boolean>();
+    for(const key of entryKeys) {
+        if(!key.startsWith('--')) { continue; }
+        const segments = key.slice(2).split('-');
+        let prefix = '--';
+        for(let index = 0; index < segments.length - 1; index++) {
+            if(index > 0) { prefix += '-'; }
+            prefix += segments[index] ?? '';
+            candidates.set(prefix, true);
+        }
+    }
+    const keysByNamespace = new Map<string, Map<string, boolean>>();
+    const namespaces: string[] = [];
+    for(const prefix of candidates.keys()) {
+        const keys = keysInNamespace(prefix);
+        if(keys.length === 0) { continue; }
+        const set = new Map<string, boolean>();
+        for(const key of keys) { set.set(key, true); }
+        keysByNamespace.set(prefix, set); namespaces.push(prefix);
+    }
+    namespaces.sort((left, right) => {
+        const leftLength = utf8Length(left); const rightLength = utf8Length(right);
+        if(leftLength !== rightLength) { return rightLength - leftLength; }
+        for(let index = 0; index < leftLength; index++) {
+            const difference = utf8At(left, index) - utf8At(right, index);
+            if(difference !== 0) { return difference; }
+        }
+        return 0;
+    });
+    table.keysByNamespace = keysByNamespace; table.namespaces = namespaces;
+}
