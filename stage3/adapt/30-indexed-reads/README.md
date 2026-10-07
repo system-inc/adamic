@@ -3,7 +3,8 @@
 The adapter covers the three core/utilities files plus parser.ts, scanner.ts,
 all ten factory files, debug.ts, and path.ts. The cumulative ledger has 227
 required-read assertions, four U-zero operands, and 89 declines across 17 files;
-per-wave evidence follows. The parser slice ownership audit remains incomplete.
+per-wave evidence follows. Scanner slice coverage is complete; the parser slice
+audit is held until namespace-member slicing lands.
 
 The first wave changed `src/compiler/core.ts`, `utilities.ts`, and
 `utilitiesPublic.ts` in TypeScript 6.0.3, pinned at
@@ -52,8 +53,11 @@ ledger rather than blanket-asserting every indexed expression.
 ## Wave 3 ownership notice
 
 Program partition: adaptation 30 now owns `src/compiler/debug.ts` and
-`src/compiler/path.ts`; remove these two files from partition 32. Slice closure
-coverage is being audited against the published 30/31/32/33 ownership lists.
+`src/compiler/path.ts`; remove these two files from partition 32. Ownership
+supplied by the user: 31 owns checker.ts; 33 owns emitter.ts, sourcemap.ts,
+transformer.ts, visitorPublic.ts, and transformers/; 32 owns every remaining
+top-level src/compiler/*.ts outside 30 and 31/33. The scanner closure is covered.
+The parser audit is on hold until namespace-member slicing lands.
 
 ## Tree and scope
 
@@ -636,13 +640,12 @@ core.ts, scanner.ts, or utilities.ts, which 30 covers. Its remaining files
 the generated diagnostics, and types.ts) have no reached indexed expressions.
 Debug's reached assertions have none either.
 
-Parser: **1,715 indexed expressions, zero unreviewed candidates within 30**,
-but **988 possibly-undefined review candidates outside 30**. The published
-branches do not supply adapters or file ownership lists for 31, 32, and 33.
-I have not verified those partitions' coverage or assigned additional unowned
-files: without their ownership lists, doing so could duplicate another worker's
-partition. This part is incomplete. The audit preserves each candidate and its
-file so the next pass can join the ownership lists without another survey.
+At the third-wave checkpoint, the parser audit found **1,715 indexed expressions,
+zero unreviewed candidates within 30**, and **988 possibly-undefined candidates
+outside 30**. Ownership had not yet been supplied, so external coverage was
+unverified. The user subsequently supplied the ownership map above and asked
+to hold the parser audit until namespace-member slicing lands. Its historical
+audit artifacts remain unchanged; no parser audit was rerun in this follow-up.
 
 ### Third-wave site ledger
 
@@ -695,3 +698,64 @@ file so the next pass can join the ownership lists without another survey.
 | path.ts:1017:50 | `toComponents[start]` | U-parallel | assert | Both populated parsed component lists bound start before canonicalizing the shared position. |
 | path.ts:1076:28 | `pathComponents[0]` | U-endpoint | assert | getPathComponentsRelativeTo returns a populated root-first list in either branch, including an empty root for relative paths. |
 | utilities.ts:9402:9 | `options[option.name]` | U-table | decline | The unknown-returning option query deliberately forwards an absent option; its consumers decide defaults or compare absence. |
+
+## Scanner slice coverage completed with supplied ownership
+
+This follow-up audits the same eight-file, 91-declaration createScanner slice,
+including ScriptTarget and SyntaxKind. It checks **29 indexed expressions**:
+**11 existing assertions**, **three documented declines**, **six pure stores**,
+and **nine uses whose types already support their original operation**.
+There are **zero unresolved sites** and no adapter or site-ledger changes.
+Presence assertions remain construction/caller obligations; the census is
+limited to the five requested codes.
+
+| Slice file | Owner | Indexed expressions |
+| --- | --- | ---: |
+| commandLineParser.ts | 32 | 0 |
+| core.ts | 30 | 14 |
+| corePublic.ts | 32 | 0 |
+| debug.ts | 30 | 0 |
+| diagnosticInformationMap.generated.ts | 32 | 0 |
+| scanner.ts | 30 | 11 |
+| types.ts | 32 | 0 |
+| utilities.ts | 30 | 4 |
+
+`scanner-coverage-owner-sites.json` contains explicit lists for 31, 32, 33, and
+unassigned files. **All four lists are empty**: the outside files have no
+indexed expressions in their reached slice declarations. The audit now assigns
+file ownership using the supplied map and lists every outside indexed expression,
+including pure stores and already accepted reads, for its owner. It never edits
+an outside file or treats ownership alone as proof of a required read.
+
+The actual gathered slice was checked by the unchanged Adamic loader: **eight
+roots, all five requested codes zero**. A scratch before control removes exactly
+the slice's 11 adaptation-30 indexed assertions; its census is **10 findings**
+(one TS2345 and nine TS2532). Afterward it is **0**. Core contributes 3 -> 0,
+scanner 4 -> 0, utilities 3 -> 0; the other five files stay zero. Full diagnostic
+chains are in `scanner-coverage-census-{before,after}.json`. Stock TypeScript
+emits identical JavaScript before/after for every gathered file.
+
+The rerun mutant replaces scanner.ts:360's `map[0]!` with `(map[0] ?? 0)`, using
+a matching regenerated manifest. The audit rejects it with `required assertion
+missing: src/compiler/scanner.ts:360`, exit 1. The gathered slice's five-code
+census **misses the mutant**, still zero; its JSON is retained separately.
+
+The full 17-file site contract, emitted-JavaScript comparison, and idempotence
+checks passed again. All 17 adapted source hashes equal `wave3-proof.json`.
+Since the adapted tree is unchanged, the prior default oracle result applies:
+106,367 passing and a zero-byte baseline diff. The full oracle was not rerun
+for this audit-tool/report-only change. The parser audit remains on hold.
+
+Commands, each redirected to a scratch log:
+
+```sh
+CENSUS_TYPESCRIPT=/path/to/typescript node stage3/adapt/30-indexed-reads/slice-audit.cjs <full-tree> <scanner-slice>/slice.json <audit.json>
+bash stage3/adapt/30-indexed-reads/census.sh <scanner-slice> <census-out> --scanner-slice
+CENSUS_TYPESCRIPT=/path/to/typescript node stage3/adapt/30-indexed-reads/adapt.cjs --check <full-tree>
+CENSUS_TYPESCRIPT=/path/to/typescript node stage3/adapt/30-indexed-reads/verify.cjs <before-tree> <full-tree>
+```
+
+Evidence: `scanner-coverage-audit.json`, `scanner-coverage-proof.json`, census
+JSON, and the owner-site lists. Delivery stays on codex/stage3-indexed-reads;
+main is reserved for @system_adamic_integration. No force-push or rebase of a
+pushed branch is allowed; bring new main work in with a merge of origin/main.
