@@ -1,0 +1,125 @@
+[
+  {
+    "corpus": "controls",
+    "implementation": "go",
+    "bytes": 42541,
+    "sha256": "bc0eb3849ea7586d678fc994d17cd6108fa79778be8650378786fbc004b6ef62",
+    "findings": 173,
+    "fixes": 69,
+    "suggestions": 7,
+    "byrule": {
+      "@typescript-eslint/consistent-indexed-object-style": 69,
+      "@typescript-eslint/prefer-for-of": 78,
+      "no-undef-init": 26
+    }
+  },
+  {
+    "corpus": "controls",
+    "implementation": "native",
+    "bytes": 42541,
+    "sha256": "bc0eb3849ea7586d678fc994d17cd6108fa79778be8650378786fbc004b6ef62",
+    "findings": 173,
+    "fixes": 69,
+    "suggestions": 7,
+    "byrule": {
+      "@typescript-eslint/consistent-indexed-object-style": 69,
+      "@typescript-eslint/prefer-for-of": 78,
+      "no-undef-init": 26
+    }
+  },
+  {
+    "corpus": "controls",
+    "implementation": "asan",
+    "bytes": 42541,
+    "sha256": "bc0eb3849ea7586d678fc994d17cd6108fa79778be8650378786fbc004b6ef62",
+    "findings": 173,
+    "fixes": 69,
+    "suggestions": 7,
+    "byrule": {
+      "@typescript-eslint/consistent-indexed-object-style": 69,
+      "@typescript-eslint/prefer-for-of": 78,
+      "no-undef-init": 26
+    }
+  },
+  {
+    "corpus": "repository",
+    "implementation": "go",
+    "bytes": 22753,
+    "sha256": "8322fea1a70bb6fc48a60a0ccb05618cd2d5d38b1f3e1966a1b16fe4aa111719",
+    "findings": 16,
+    "fixes": 14,
+    "suggestions": 0,
+    "byrule": {
+      "no-undef-init": 14,
+      "@typescript-eslint/prefer-for-of": 2
+    }
+  },
+  {
+    "corpus": "repository",
+    "implementation": "native",
+    "bytes": 22753,
+    "sha256": "8322fea1a70bb6fc48a60a0ccb05618cd2d5d38b1f3e1966a1b16fe4aa111719",
+    "findings": 16,
+    "fixes": 14,
+    "suggestions": 0,
+    "byrule": {
+      "no-undef-init": 14,
+      "@typescript-eslint/prefer-for-of": 2
+    }
+  },
+  {
+    "corpus": "repository",
+    "implementation": "asan",
+    "bytes": 22753,
+    "sha256": "8322fea1a70bb6fc48a60a0ccb05618cd2d5d38b1f3e1966a1b16fe4aa111719",
+    "findings": 16,
+    "fixes": 14,
+    "suggestions": 0,
+    "byrule": {
+      "no-undef-init": 14,
+      "@typescript-eslint/prefer-for-of": 2
+    }
+  },
+  {
+    "corpus": "compiler",
+    "implementation": "go",
+    "bytes": 9282,
+    "sha256": "3f34bb3e83448be0c1aa88097b54871656fd10a2d03c5bb89e73e1c284d91643",
+    "findings": 24,
+    "fixes": 13,
+    "suggestions": 0,
+    "byrule": {
+      "@typescript-eslint/consistent-indexed-object-style": 12,
+      "@typescript-eslint/prefer-for-of": 11,
+      "no-undef-init": 1
+    }
+  },
+  {
+    "corpus": "compiler",
+    "implementation": "native",
+    "bytes": 9282,
+    "sha256": "3f34bb3e83448be0c1aa88097b54871656fd10a2d03c5bb89e73e1c284d91643",
+    "findings": 24,
+    "fixes": 13,
+    "suggestions": 0,
+    "byrule": {
+      "@typescript-eslint/consistent-indexed-object-style": 12,
+      "@typescript-eslint/prefer-for-of": 11,
+      "no-undef-init": 1
+    }
+  },
+  {
+    "corpus": "compiler",
+    "implementation": "asan",
+    "bytes": 9282,
+    "sha256": "3f34bb3e83448be0c1aa88097b54871656fd10a2d03c5bb89e73e1c284d91643",
+    "findings": 24,
+    "fixes": 13,
+    "suggestions": 0,
+    "byrule": {
+      "@typescript-eslint/consistent-indexed-object-style": 12,
+      "@typescript-eslint/prefer-for-of": 11,
+      "no-undef-init": 1
+    }
+  }
+]

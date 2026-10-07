@@ -1,0 +1,24 @@
+=== RUN   TestWave07AgreementAndMutants
+    wave_07_test.go:151: excluded empty-index-signature recovery control: "\ninterface Foo {\n  [];\n}\n    "
+    wave_07_test.go:151: excluded empty-index-signature recovery control: "type Foo = { [] };"
+    wave_07_test.go:162: controls: 283 extracted sources, 283 parse-valid
+    wave_07_test.go:163: controls: 42541 identical finding bytes; findings 173
+    wave_07_test.go:171: controls-asan: 42541 identical finding bytes; findings 173
+    wave_07_test.go:183: undef: exit 0, empty stderr, independent Go bytes catch byte 15180
+    wave_07_test.go:183: forof: exit 0, empty stderr, independent Go bytes catch byte 541
+    wave_07_test.go:183: indexed: exit 0, empty stderr, independent Go bytes catch byte 164
+    wave_07_test.go:183: graph: exit 0, empty stderr, independent Go bytes catch byte 219
+    wave_07_test.go:195: Go graph symbol mutant: exit 0, empty stderr, independent Go bytes catch byte 8055
+    wave_07_test.go:203: repository: 22753 identical finding bytes; findings 16
+    wave_07_test.go:204: repository-asan: 22753 identical finding bytes; findings 16
+    wave_07_test.go:213: repository: Go process 119.467365ms, native process 255.444946ms; Go cohere: load_ns=58443564 rule_ns=3759272 run_ns=47485634
+         native tsgo: load_ns=59480156 query_ns=13312732 queries=409 first_query_ns=59750 run_ns=189703976
+    wave_07_test.go:203: compiler: 9282 identical finding bytes; findings 24
+    wave_07_test.go:204: compiler-asan: 9282 identical finding bytes; findings 24
+    wave_07_test.go:213: compiler: Go process 306.005208ms, native process 1.947299062s; Go cohere: load_ns=226783870 rule_ns=20960300 run_ns=60101679
+         native tsgo: load_ns=236957669 query_ns=200683762 queries=1278 first_query_ns=3216877 run_ns=1692651829
+    wave_07_test.go:226: released program: panic 70, invalid or released checker handle
+    wave_07_test.go:234: released-registry mutant: exit 0, caught by required panic 70
+--- PASS: TestWave07AgreementAndMutants (74.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	74.085s
