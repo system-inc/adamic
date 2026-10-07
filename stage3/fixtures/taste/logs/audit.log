@@ -1,0 +1,4 @@
+20 Node observations; native matches: [('01_diagnostic_code.a', 'taste'), ('03_diagnostic_file.a', 'taste'), ('04_jsx_runtime.a', 'taste'), ('10_global_import_meta.a', 'taste'), ('17_binder_flow.a', 'taste'), ('18_named_export.a', 'taste'), ('19_deprecated_flags.a', 'taste')]
+Outcome flips: ['comma', 'double_not', 'label_break', 'logical_assignment', 'named_export', 'object_condition', 'operand', 'star_export', 'string_condition', 'void']
+Output mutant caught: byte comparison rejected a deleted output byte
+Schema mutant caught: schema rejected an extra key
