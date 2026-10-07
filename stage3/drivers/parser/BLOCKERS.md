@@ -1,3 +1,42 @@
+# Overload and marker fixes rerun: red at sameMap
+
+Scratch d1ed400a contains proven-predicates 5588a3b and census-small-families
+bde0030, plus all previous integration inputs. The scratch merge is unpushed.
+Its one lowering conflict was verifier naming: keep proveFlowPredicate while
+adding censusPredicateMarkerContract. No compiler proof bypasses or source
+stubs are present in this rerun. SDK and loader compatibility remain scratch-only.
+
+Validated parser-temp65-slice: C emission, split off, split on and repeat all
+exit 1 at src/compiler/core.ts:195:37: sameMap's
+`array.slice(0, i) as unknown[] as U[]` is a cast the runtime cannot check.
+The real first stop is now row 2; rows 1 and 4 are cleared in the actual slice.
+C size, clang time, binary size, native timings and both native references are
+unavailable. Repeat has zero cache objects, so it is not a warm-cache result.
+
+All eleven unchanged original probes were rerun: 3/11 pass, rows 1, 4 and 9.
+Their native exit/stdout/stderr match Node byte for byte, and all three one-byte
+native-output mutants are caught (cmp 1). The other eight remain compile refusals.
+These three reduced probes admit declarations and print their existing markers;
+they are not the full parser runtime witness. Row 10's original cast probe stays
+unchanged and refused; adaptation 65 removes that cast in the validated slice.
+This is not a regression of adaptation 65. Row 6 remains exactly as upstream
+wrote it, pending the compiler SHA for the arguments.length ruling.
+
+Predicate/overload focused tests pass (4.530s). The broader focused selection
+has one failure: TestCensusPredicateMarkerKeepsProofBoundaries expects Refused
+for a live predicate callback but receives a union-lowering NotYet. The exact
+source and standalone reproduction are native-marker-live-boundary.a; its
+build refuses at 4:12, and Node exits zero with boundary declaration loaded.
+No compiler fix or weaker test expectation was applied. This diagnostic failure
+is recorded separately from the parser's first source stop; no full gate claimed.
+
+Evidence and replay: evidence/front11/{inputs,build,probes,boundary-test}.json
+and compressed logs. probe-stops.py COMPILER SCRATCH NEW_OUTPUT reruns the eleven
+sources, the strict comparisons and byte mutants. measure-builds.py reruns split
+modes on the entry path in build.json. No native parser dump is claimed.
+
+---
+
 # Adaptation 65 validated; waiting for compiler implementations
 
 65-temporary-node-process-cast is implemented and checked with library's loader
