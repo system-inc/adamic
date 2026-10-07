@@ -1,5 +1,5 @@
 Built: merged ba59427c; source selectors and three owner-hook handoffs; 12 source cases pass with an overlay.
-Commits: integration base ba59427ccc7afecae29a305c41e6e9c7867e5610; source checkpoint follows in this branch's Git history.
+Commits: integration base ba59427ccc7afecae29a305c41e6e9c7867e5610; source checkpoint 55b3fdef; evidence checkpoint follows in this branch's Git history.
 Commands: overlay source/component oracle 4.509s; scoped lower/JS/native 1.058s/0.858s/3.875s; production frontier 1.436s, source dispatch explicitly skipped.
 Mutants: skip native/JS selection, accept native/JS wrong tags, drop lowered nested guards; all five caught by exact source pins and restored.
 Uncovered: production hooks and unchanged tsc pairs; exact family pairs/reads remaining are unmeasured, not zero.
