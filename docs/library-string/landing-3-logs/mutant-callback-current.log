@@ -1,0 +1,7 @@
+--- FAIL: TestKnownRegexCallbacksUseOrdinaryCallEffects (0.00s)
+    regexp_test.go:101: replaceCallback lost callback operand escape effects: [{Kind:1 Site:1 Name:next Function:0 Proven:true Why:}] vs [{Kind:1 Site:1 Name:next Function:0 Proven:false Why:the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here, where tree is called from the top level}]
+    regexp_test.go:101: replaceAllCallback lost callback operand escape effects: [{Kind:1 Site:1 Name:next Function:0 Proven:true Why:}] vs [{Kind:1 Site:1 Name:next Function:0 Proven:false Why:the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here, where tree is called from the top level}]
+    regexp_test.go:101: symbol:replaceCallback lost callback operand escape effects: [{Kind:1 Site:1 Name:next Function:0 Proven:true Why:}] vs [{Kind:1 Site:1 Name:next Function:0 Proven:false Why:the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here, where tree is called from the top level}]
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	0.012s
+FAIL

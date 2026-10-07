@@ -1,0 +1,17 @@
+ok  	github.com/system-inc/adamic/internal/load	2.374s
+--- FAIL: TestCallTargetReaders (31.46s)
+    call_targets_guard_test.go:166: unapproved call-target read internal/lower/regexp_diagnostics.go:regexpDiagnosticLeaves:ArraySort.Comparator at /workspace/adamic/internal/lower/regexp_diagnostics.go:79:96; use CallTargets or ClosureTargets
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	31.515s
+ok  	github.com/system-inc/adamic/internal/lower	40.636s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+--- FAIL: TestBuiltinErrorBorrowEffects (0.00s)
+    element_borrow_test.go:123: builtin error operand call did not end borrow: ir.BuiltinError
+    element_borrow_test.go:123: builtin error operand call did not end borrow: ir.ErrorIs
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	279.371s
+ok  	github.com/system-inc/adamic/internal/flow	152.614s
+ok  	github.com/system-inc/adamic/internal/fresh	59.931s
+ok  	github.com/system-inc/adamic/internal/regexp	15.400s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	171.071s
+FAIL
