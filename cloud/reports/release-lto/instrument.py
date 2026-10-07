@@ -8,7 +8,17 @@ def verify_output(text, expected):
 s=Path(sys.argv[1]).resolve(); hf=s/'tools/usr/bin/hyperfine'
 commands={'native': [s/'baseline/parse','--manifest',s/'compiler.txt','--count'], 'go':[s/'go-parse','--manifest',s/'compiler.txt','--count'], 'thin':[s/'thin/parse','--manifest',s/'compiler.txt','--count'], 'service-base':[s/'baseline/service','/tmp/wasm-requests-profile/requests.jsonl','run'], 'service-thin':[s/'thin/service','/tmp/wasm-requests-profile/requests.jsonl','run']}
 os.environ['GOMAXPROCS']='1'; results={}
-for group,names,count in [('instrument',['native','go'],10),('lto-parse',['native','thin'],5),('lto-service',['service-base','service-thin'],5)]:
+groups = [('instrument',['native','go'],10),('lto-parse',['native','thin'],5),('lto-service',['service-base','service-thin'],5)]
+if len(sys.argv) > 2 and sys.argv[2] == '--lto-only':
+ groups = groups[1:]
+for group,names,count in groups:
+ for name in names:
+  with (s / ('warm-' + group + '-' + name + '.stdout')).open('wb') as out, (s / ('warm-' + group + '-' + name + '.stderr')).open('wb') as err:
+   subprocess.run(['taskset','-c','3',*map(str,commands[name])],stdout=out,stderr=err,check=True)
+  expected_out = b'7394547\n' if name.startswith('service-') else b'0\n'
+  expected_err = b'serve:start\nserve:stop\n' if name.startswith('service-') else b''
+  if (s / ('warm-' + group + '-' + name + '.stdout')).read_bytes() != expected_out or (s / ('warm-' + group + '-' + name + '.stderr')).read_bytes() != expected_err:
+   raise RuntimeError('MISCOMPILE: pinned warmup output differs')
  rows=[]
  for i in range(count):
   row={'round':i+1,'order':names if i%2==0 else names[::-1]}
