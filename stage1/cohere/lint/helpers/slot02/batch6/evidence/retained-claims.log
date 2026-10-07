@@ -1,0 +1,25 @@
+All branches checked: 18
+origin/codex/lint-helpers 95100eb440b47f3f18e960c6f5b49cadf0dc1d9d
+origin/codex/lint-helpers-01 672cadc9a4b1f131590bab1e2b5e17a3c251bfc9
+origin/codex/lint-helpers-02 77676686f91a9fdaf9ba16ff578ab3ecd42d6ec9
+MATCH *stylesheetCollector.loadFile origin/codex/lint-helpers-02 stage1/cohere/lint/helpers/claims/02.md
+MATCH *stylesheetCollector.resolveImport origin/codex/lint-helpers-02 stage1/cohere/lint/helpers/claims/02.md
+MATCH *stylesheetCollector.ingestCustomVariant origin/codex/lint-helpers-02 stage1/cohere/lint/helpers/claims/02.md
+origin/codex/lint-helpers-03 962fd494688679692c39b76379f0b4be34c7f956
+origin/codex/lint-helpers-04 28d74b69b4d7087984db2f01ae14fbec8f7b8b0d
+origin/codex/lint-helpers-05 85c71d96a8ccfc08b15de83e0e3edc7dc49d20e1
+origin/codex/lint-helpers-from-codex-lint-wave1-03 3ffbf7a328b72208cfc91cab9866d192369fe760
+origin/codex/lint-helpers-from-codex-lint-wave1-14 ad7a2ddd1aab0f5ef25673b9f8f7de20cf7de74e
+origin/codex/lint-helpers-from-codex/lint-wave1-04 b272eab3c6e4395a7b68bd4811c63bd12541e73a
+origin/codex/lint-helpers-from-codex/lint-wave1-06 89d97f55f6469b30c6aeb81b7dfa20ba5707236a
+origin/codex/lint-helpers-from-codex/lint-wave1-09 fc431aca8db4c443cc6f45fe7c8e7ed5ba0730cb
+origin/codex/lint-helpers-from-codex/lint-wave1-10 84ff616e18fb6dd698abc9492cef3224ec432025
+origin/codex/lint-helpers-from-codex/lint-wave1-11 ea83843e7f203e66035f97bd3f1ce3eff9def54c
+origin/codex/lint-helpers-from-codex/lint-wave1-15 b28c05998fd28afb85da82464ac9e695d6139853
+origin/codex/lint-helpers-from-lint-wave1-05 5e3bbb2b7523fb03e1fc21228090ace8ddec6cdc
+origin/codex/lint-helpers-from-lint-wave1-08 1021f3f1584f892c5dd2fd5e9a7c574affe36bcf
+origin/codex/lint-helpers-from-lint-wave1-12 b32ed264df65f493965eecb7d4d7038b73543738
+origin/codex/lint-helpers-from-lint-wave1-13 7cbe5608d17c9b12e185b048857305450c3a247f
+PASS: all three retained symbols uniquely claimed on slot 02
+Current main: e8ba3d5d81de4d3773c723914fccd4c76248b965
+PASS: branch contains current main

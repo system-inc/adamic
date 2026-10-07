@@ -1,0 +1,55 @@
+=== RUN   TestSlot02Batch6
+    slot02_batch6_test.go:75: tailwind/collapse.NewUtilityEvaluator: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*Table.addRepositoryFunctionalRoots: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.ingestCustomVariant: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:123: 157 captured inputs; 1625 variant params; 1629 repository roots; 61 evaluator cases
+    slot02_batch6_test.go:152: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch6/normalization_required
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 7388: got "definition:true"; Go "normalize:0"
+=== RUN   TestSlot02Batch6/normalization_once_per_occurrence
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 7389: got "normalize:0"; Go "normalize:1"
+=== RUN   TestSlot02Batch6/last_duplicate_wins
+    slot02_batch6_test.go:203: compiled semantic mutant survived
+=== RUN   TestSlot02Batch6/definition_identity
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 7393: got "identity:-1:same:[{\"Kind\":\"declaration\",\"Selector\":\"\",\"Name\":\"\",\"Params\":\"\",\"Property\":\"--x\",\"Value\":\"--value(--spacing-*)\",\"ValuePresent\":true,\"Important\":false,\"Context\":null,\"Nodes\":null}]"; Go "identity:0:same:[{\"Kind\":\"declaration\",\"Selector\":\"\",\"Name\":\"\",\"Params\":\"\",\"Property\":\"--x\",\"Value\":\"--value(--spacing-*)\",\"ValuePresent\":true,\"Important\":false,\"Context\":null,\"Nodes\":null}]"
+=== RUN   TestSlot02Batch6/theme_identity
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 7382: got "evaluator:false:0"; Go "evaluator:true:0"
+=== RUN   TestSlot02Batch6/functional_value_not_presence
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 4903: got "table:1630"; Go "table:818"
+=== RUN   TestSlot02Batch6/functional_not_static
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 4903: got "table:545"; Go "table:818"
+=== RUN   TestSlot02Batch6/zero_descriptor_fields
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 4907: got "fields:collision:true:false:false"; Go "fields:collision:true:true:false"
+=== RUN   TestSlot02Batch6/descriptor_root
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 4907: got "fields:collisionwrong:true:true:false"; Go "fields:collision:true:true:false"
+=== RUN   TestSlot02Batch6/declining_descriptor
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 4907: got "fields:collision:false:true:false"; Go "fields:collision:true:true:false"
+=== RUN   TestSlot02Batch6/overwrite_collisions
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 4907: got "fields:original:false:false:false"; Go "fields:collision:true:true:false"
+=== RUN   TestSlot02Batch6/go_whitespace_includes_NEL
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 4828: got "variant:2:1:\u0085dark-*\u0085:32"; Go "variant:2:1:dark-*:32"
+=== RUN   TestSlot02Batch6/go_whitespace_excludes_BOM
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 4894: got "variant:2:1:dark-*:32"; Go "variant:2:1:\ufeffdark-*:32"
+=== RUN   TestSlot02Batch6/functional_suffix
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 7: got "added:dark-*:true"; Go "added:dark:true"
+=== RUN   TestSlot02Batch6/empty_root_skipped
+    slot02_batch6_test.go:208: compiled semantic mutant caught at line 1: got "variant:2:1::32"; Go "variant:1:1::32"
+--- FAIL: TestSlot02Batch6 (39.00s)
+    --- PASS: TestSlot02Batch6/normalization_required (2.20s)
+    --- PASS: TestSlot02Batch6/normalization_once_per_occurrence (2.35s)
+    --- FAIL: TestSlot02Batch6/last_duplicate_wins (2.12s)
+    --- PASS: TestSlot02Batch6/definition_identity (2.44s)
+    --- PASS: TestSlot02Batch6/theme_identity (1.93s)
+    --- PASS: TestSlot02Batch6/functional_value_not_presence (1.92s)
+    --- PASS: TestSlot02Batch6/functional_not_static (2.11s)
+    --- PASS: TestSlot02Batch6/zero_descriptor_fields (2.00s)
+    --- PASS: TestSlot02Batch6/descriptor_root (2.26s)
+    --- PASS: TestSlot02Batch6/declining_descriptor (2.04s)
+    --- PASS: TestSlot02Batch6/overwrite_collisions (1.95s)
+    --- PASS: TestSlot02Batch6/go_whitespace_includes_NEL (2.07s)
+    --- PASS: TestSlot02Batch6/go_whitespace_excludes_BOM (2.13s)
+    --- PASS: TestSlot02Batch6/functional_suffix (2.14s)
+    --- PASS: TestSlot02Batch6/empty_root_skipped (2.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	39.013s
+FAIL

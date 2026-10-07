@@ -1,0 +1,11 @@
+=== RUN   TestSlot02Batch6
+    slot02_batch6_test.go:75: tailwind/collapse.NewUtilityEvaluator: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*Table.addRepositoryFunctionalRoots: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.ingestCustomVariant: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:123: 157 captured inputs; 1334 variant params; 1339 repository roots; 53 evaluator cases
+    slot02_batch6_test.go:151: /workspace/adamic/stage1/cohere/lint/helpers/slot02/batch6/ingest_custom_variant.a:22:26: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+--- FAIL: TestSlot02Batch6 (6.18s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	6.185s
+FAIL

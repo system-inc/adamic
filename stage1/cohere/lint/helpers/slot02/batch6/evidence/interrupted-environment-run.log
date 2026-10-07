@@ -1,0 +1,23 @@
+=== RUN   TestSlot02Batch6
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.loadFile: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.resolveImport: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.ingestCustomVariant: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:130: 157 captured inputs; 1625 variant params; 1633 import params; 3456 file loads
+    slot02_batch6_test.go:159: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch6/visiting_is_a_stack
+    slot02_batch6_test.go:215: compiled semantic mutant caught at line 12743: got "state:true:true:1"; Go "state:false:true:1"
+=== RUN   TestSlot02Batch6/ingest_sees_visiting
+    slot02_batch6_test.go:215: compiled semantic mutant caught at line 12741: got "ingest-state:false:true:true"; Go "ingest-state:true:true:true"
+=== RUN   TestSlot02Batch6/stylesheet_append_precedes_ingest
+    slot02_batch6_test.go:215: compiled semantic mutant caught at line 12741: got "ingest-state:true:false:true"; Go "ingest-state:true:true:true"
+=== RUN   TestSlot02Batch6/read_error_unwrap_cause
+    slot02_batch6_test.go:215: compiled semantic mutant caught at line 12748: got "end-error"; Go "error:open /tmp/adamic-gate/slot02-b6-graphs-3429028843/sheet-0.css-missing: no such file or directory"
+=== RUN   TestSlot02Batch6/read_error_cleanup
+    slot02_batch6_test.go:215: compiled semantic mutant caught at line 12751: got "state:true:true:0"; Go "state:false:true:0"
+=== RUN   TestSlot02Batch6/cycle_guard
+    slot02_batch6_test.go:215: compiled semantic mutant caught at line 12753: got "load-call:read:/tmp/adamic-gate/slot02-b6-graphs-3429028843/sheet-0.css"; Go "error:circular @import: /tmp/adamic-gate/slot02-b6-graphs-3429028843/sheet-0.css imports itself"
+=== RUN   TestSlot02Batch6/strip_all_edge_quotes
+    slot02_batch6_test.go:215: compiled semantic mutant caught at line 4909: got "resolve:1:\"foo.css\":/repo/styles"; Go "resolve:1:foo.css:/repo/styles"
+=== RUN   TestSlot02Batch6/source_modifier_accepted
+    slot02_batch6_test.go:215: compiled semantic mutant caught at line 4909: got "resolve:0::"; Go "resolve:1:foo.css:/repo/styles"
+=== RUN   TestSlot02Batch6/unsupported_modifier_refuses

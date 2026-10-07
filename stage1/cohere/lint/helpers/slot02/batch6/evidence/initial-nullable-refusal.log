@@ -1,0 +1,10 @@
+=== RUN   TestSlot02Batch6
+    slot02_batch6_test.go:75: tailwind/collapse.NewUtilityEvaluator: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*Table.addRepositoryFunctionalRoots: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.ingestCustomVariant: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:123: 157 captured inputs; 1624 variant params; 1628 repository roots; 61 evaluator cases
+    slot02_batch6_test.go:151: /workspace/adamic/stage1/cohere/lint/helpers/slot02/batch6/new_utility_evaluator.a:10:5: stage 0 can't lower a value of type UtilityTheme | null yet
+--- FAIL: TestSlot02Batch6 (1.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	1.143s
+FAIL

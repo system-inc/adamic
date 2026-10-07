@@ -1,0 +1,14 @@
+All branches checked: 18
+origin/codex/lint-helpers 95100eb440b47f3f18e960c6f5b49cadf0dc1d9d
+origin/codex/lint-helpers-01 3475c2a312e716e359da6d4cf65aea7dd3a8312d
+origin/codex/lint-helpers-02 e283cc2317a01b30dadd0831c5635a81c594e7d2
+MATCH NewUtilityEvaluator origin/codex/lint-helpers-02 stage1/cohere/lint/helpers/claims/02.md
+MATCH *Table.addRepositoryFunctionalRoots origin/codex/lint-helpers-02 stage1/cohere/lint/helpers/claims/02.md
+MATCH *stylesheetCollector.ingestCustomVariant origin/codex/lint-helpers-02 stage1/cohere/lint/helpers/claims/02.md
+origin/codex/lint-helpers-03 48303f85d2faf8159df5df957b4fd93a683bd200
+origin/codex/lint-helpers-04 bc590dc52265f190d0833ce4582ac52b0a7deeb4
+origin/codex/lint-helpers-05 66a88f6e2e25d7e3e93d5092f931ce5b45ffe7bf
+MATCH NewUtilityEvaluator origin/codex/lint-helpers-05 stage1/cohere/lint/helpers/claims/05.md
+Traceback (most recent call last):
+  File "<stdin>", line 12, in <module>
+AssertionError: ('NewUtilityEvaluator', 'origin/codex/lint-helpers-05', 'stage1/cohere/lint/helpers/claims/05.md')

@@ -1,0 +1,14 @@
+=== RUN   TestSlot02Batch6
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.loadFile: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.resolveImport: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.ingestCustomVariant: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:114: go [build -overlay=/tmp/adamic-gate/TestSlot02Batch62932068938/003/cases.json -o /tmp/adamic-gate/TestSlot02Batch62932068938/004/oracle /workspace/adamic/cohere/adamic_slot02_batch6.go]: exit status 1
+        # github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse
+        ../stage1/cohere/lint/helpers/slot02/batch6/testdata/collapse_export.go:80:2: undefined: Slot02B6NormalizeTrace
+        ../stage1/cohere/lint/helpers/slot02/batch6/testdata/collapse_export.go:80:34: undefined: Slot02B6NormalizeTrace
+        ../stage1/cohere/lint/helpers/slot02/batch6/testdata/collapse_export.go:80:58: undefined: Slot02B6DefinitionIDs
+        /tmp/adamic-gate/TestSlot02Batch62932068938/002/design_system.go:77:2: "os" imported and not used
+--- FAIL: TestSlot02Batch6 (0.16s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	0.171s
+FAIL

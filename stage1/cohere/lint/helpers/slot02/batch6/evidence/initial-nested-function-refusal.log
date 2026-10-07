@@ -1,0 +1,10 @@
+=== RUN   TestSlot02Batch6
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.loadFile: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.resolveImport: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:75: tailwind/collapse.*stylesheetCollector.ingestCustomVariant: 6 consumers with actual runtime capture
+    slot02_batch6_test.go:130: 157 captured inputs; 1625 variant params; 1633 import params; 3456 file loads
+    slot02_batch6_test.go:158: /workspace/adamic/stage1/cohere/lint/helpers/slot02/batch6/main.a:115:26: stage 0 can't lower reading take yet
+--- FAIL: TestSlot02Batch6 (1.59s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	1.595s
+FAIL
