@@ -11,23 +11,31 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"sync"
 	"syscall"
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// engine is one checkout's adamic command and its runtime, compiled once. Each test is then
-// `adamic c` plus a link, the way the fuzzer avoids compiling the runtime per program.
+// engine owns one checkout's compiler, keyed runtime archive and observation cache. Each worker
+// owns a compiler process; tests are classified and their observations reduced in serial order.
 type engine struct {
-	test262 string
-	work    string
-	adamic  string
-	runtime []string
-	include string
-	flags   []string
-	log     io.Writer
-	adapt   bool
+	test262     string
+	work        string
+	adamic      string
+	runtime     []string
+	include     string
+	flags       []string
+	log         io.Writer
+	adapt       bool
+	jobs        int
+	runtimeKey  string
+	cache       *resultCache
+	nodeVersion string
+	context     string
+	compiler    *compilerWorker
+	inProcess   bool
 }
 
 func prepare(root string, test262 string, work string) (*engine, error) {
@@ -44,30 +52,22 @@ func prepare(root string, test262 string, work string) (*engine, error) {
 	// Sanitizers, as the oracle compiles: a native memory bug is a crash, not a pass. Leaks are not
 	// compared to Node (the process exits either way), so leak detection stays off at run time.
 	flags := native.Flags(native.Options{Sanitize: true})
-	sources, err := filepath.Glob(filepath.Join(include, "*.c"))
+	library, err := native.RuntimeLibrary(include, native.Options{Sanitize: true})
 	if err != nil {
 		return nil, err
 	}
-	sort.Strings(sources)
-	runtimeDir := filepath.Join(work, "runtime")
-	if err := os.MkdirAll(runtimeDir, 0o755); err != nil {
+	cache, version, context, err := prepareCache()
+	if err != nil {
 		return nil, err
 	}
-	var objects []string
-	for _, source := range sources {
-		object := filepath.Join(runtimeDir, strings.TrimSuffix(filepath.Base(source), ".c")+".o")
-		arguments := append(append([]string{}, flags...), "-c", source, "-o", object)
-		if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
-			return nil, fmt.Errorf("compiling %s: %w\n%s", filepath.Base(source), err, output)
-		}
-		objects = append(objects, object)
-	}
 	return &engine{
-		test262: test262,
-		work:    work,
-		adamic:  adamic,
-		runtime: objects,
-		include: include,
+		test262:    test262,
+		work:       work,
+		adamic:     adamic,
+		runtime:    native.RuntimeLinkFlags(library),
+		runtimeKey: filepath.Base(filepath.Dir(library)),
+		cache:      cache, nodeVersion: version, context: context,
+		include: filepath.Dir(library),
 		flags:   flags,
 		log:     os.Stderr,
 	}, nil
@@ -89,6 +89,10 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 	}
 	report := filterReport{Path: filter}
 	attempted := 0
+	tests := make([]classified, len(files))
+	results := make([]result, len(files))
+	ready := make([]chan struct{}, len(files))
+	indices := make([]int, 0, len(files))
 	for index, file := range files {
 		source, err := os.ReadFile(file)
 		if err != nil {
@@ -99,40 +103,124 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 			relative = file
 		}
 		relative = filepath.ToSlash(relative)
-		classified := classify(relative, string(source), e.adapt)
-		var one result
-		if classified.Skip != "" {
-			one = result{Path: relative, Directory: classified.Directory, Kind: outcomeSkipped, Reason: classified.Skip}
+		test := classify(relative, string(source), e.adapt)
+		tests[index] = test
+		ready[index] = make(chan struct{})
+		if test.Skip != "" {
+			results[index] = result{Path: relative, Directory: test.Directory, Kind: outcomeSkipped, Reason: test.Skip}
+			close(ready[index])
 		} else if classifyOnly || (limit > 0 && attempted >= limit) {
-			one = result{Path: relative, Directory: classified.Directory, Kind: outcomeUnrun, Reason: "not run"}
+			results[index] = result{Path: relative, Directory: test.Directory, Kind: outcomeUnrun, Reason: "not run"}
+			close(ready[index])
 		} else {
 			attempted++
-			one = e.attempt(classified)
-			if one.Kind == outcomeCrashed {
-				one.Reason = withCrashPath(one.Path, one.Reason)
+			indices = append(indices, index)
+		}
+	}
+	jobs := e.jobs
+	if jobs < 1 {
+		jobs = 1
+	}
+	if jobs > len(indices) {
+		jobs = len(indices)
+	}
+	queue := make(chan int)
+	var workers sync.WaitGroup
+	locals := make([]engine, jobs)
+	for worker := 0; worker < jobs; worker++ {
+		local := *e
+		// Preserve the serial artifact path when there is just one worker.
+		if jobs > 1 {
+			local.work = filepath.Join(e.work, fmt.Sprintf("worker-%d", worker))
+			if err := os.MkdirAll(local.work, 0755); err != nil {
+				return report, err
 			}
 		}
-		report.add(one)
+		locals[worker] = local
+	}
+	for worker := range locals {
+		local := locals[worker]
+		workers.Go(func() {
+			if local.inProcess {
+				local.compiler = &compilerWorker{}
+				defer local.compiler.close()
+			}
+			for index := range queue {
+				one := local.attempt(tests[index])
+				if one.Kind == outcomeCrashed {
+					one.Reason = withCrashPath(one.Path, one.Reason)
+				}
+				results[index] = one
+				close(ready[index])
+			}
+		})
+	}
+	go func() {
+		for _, index := range indices {
+			queue <- index
+		}
+		close(queue)
+	}()
+	for index := range files {
+		<-ready[index]
+		report.add(results[index])
 		if (index+1)%50 == 0 || index+1 == len(files) {
 			fmt.Fprintf(e.log, "%s %d/%d pass=%d fail=%d refused=%d crashed=%d skipped=%d\n",
 				filter, index+1, len(files), report.Pass, report.Fail, report.Refused, report.Crashed, report.Skipped)
 		}
 	}
+	workers.Wait()
 	report.finish()
 	return report, nil
 }
 
+// Stable paths are part of both execution commands, not omitted from their keys. The lock
+// keeps concurrent invocations from overwriting a program while another invocation runs it.
+func (e *engine) programDirectory(test classified) string {
+	if e.cache == nil {
+		return e.work
+	}
+	return filepath.Join(e.cache.directory, "programs", cacheKey(test.Program, e.context, e.runtimeKey))
+}
+
 func (e *engine) attempt(test classified) result {
 	base := result{Path: test.Path, Directory: test.Directory, Adaptations: test.Adaptations}
-	typescript := filepath.Join(e.work, "program.ts")
-	module := filepath.Join(e.work, "program.mts")
+	directory := e.programDirectory(test)
+	if err := os.MkdirAll(directory, 0700); err != nil {
+		base.Kind = outcomeCrashed
+		base.Reason = err.Error()
+		return base
+	}
+	lock, err := os.OpenFile(filepath.Join(directory, ".lock"), os.O_CREATE|os.O_RDWR, 0600)
+	if err != nil {
+		base.Kind = outcomeCrashed
+		base.Reason = err.Error()
+		return base
+	}
+	defer lock.Close()
+	if err := syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
+		base.Kind = outcomeCrashed
+		base.Reason = err.Error()
+		return base
+	}
+	defer syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
+	typescript := filepath.Join(directory, "program.a")
+	module := filepath.Join(directory, "program.mts")
 	if err := os.WriteFile(typescript, []byte(test.Program), 0o644); err != nil {
 		return result{Path: test.Path, Directory: test.Directory, Kind: outcomeCrashed, Reason: err.Error()}
 	}
 	if err := os.WriteFile(module, []byte(test.Program), 0o644); err != nil {
 		return result{Path: test.Path, Directory: test.Directory, Kind: outcomeCrashed, Reason: err.Error()}
 	}
-	lowered := runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", typescript)
+	var lowered execution
+	if e.compiler != nil {
+		lowered = e.compiler.compile(typescript)
+		if lowered.Exit == -1 && !lowered.TimedOut {
+			lowered = runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", typescript)
+		}
+	} else {
+		lowered = runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", typescript)
+	}
 	kind, reason := compileClass(lowered.Stderr, lowered.Exit, lowered.TimedOut)
 	if kind == "refused" {
 		base.Kind = outcomeRefused
@@ -144,28 +232,41 @@ func (e *engine) attempt(test classified) result {
 		base.Reason = reason
 		return base
 	}
-	cPath := filepath.Join(e.work, "program.c")
+	cPath := filepath.Join(directory, "program.c")
 	if err := os.WriteFile(cPath, []byte(lowered.Stdout), 0o644); err != nil {
 		base.Kind = outcomeCrashed
 		base.Reason = err.Error()
 		return base
 	}
-	binary := filepath.Join(e.work, "program.bin")
+	binary := filepath.Join(directory, "program.bin")
 	arguments := append(append([]string{}, e.flags...), "-I", e.include, "-o", binary, cPath)
 	arguments = append(arguments, e.runtime...)
 	arguments = append(arguments, "-lm")
-	linked := runCommand(2*time.Minute, nil, "clang", arguments...)
-	if linked.Exit != 0 || linked.TimedOut {
+	nativeCommand := cacheKey(cacheKey(arguments...), binary, "15s", "2m", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
+	key := nativeResultKey(lowered.Stdout, e.runtimeKey, nativeCommand, e.context)
+	linkFailed := false
+	nativeRun := e.cache.observe(key, func() (execution, bool) {
+		linked := runCommand(2*time.Minute, nil, "clang", arguments...)
+		if linked.Exit != 0 || linked.TimedOut {
+			linkFailed = true
+			return linked, false
+		}
+		defer os.Remove(binary)
+		return runCommand(15*time.Second, nativeEnvironment, binary), true
+	})
+	// A link failure is a compiler crash rather than a native execution verdict.
+	// Only successful links publish observations, so a hit always holds a real execution.
+	// Link stderr has the same classification as the original runner.
+	if linkFailed {
 		base.Kind = outcomeCrashed
-		base.Reason = "clang: " + firstLine(linked.Stderr)
+		base.Reason = "clang: " + firstLine(nativeRun.Stderr)
 		return base
 	}
-	defer os.Remove(binary)
-	nativeRun := runCommand(15*time.Second, []string{
-		"ASAN_OPTIONS=detect_leaks=0:abort_on_error=1:halt_on_error=1",
-		"UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1",
-	}, binary)
-	nodeRun := runCommand(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module)
+	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, "15s", fmt.Sprint(outputLimit))
+	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.context)
+	nodeRun := e.cache.observe(nodeKey, func() (execution, bool) {
+		return runCommand(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module), true
+	})
 	decided := decide(verdictInput{
 		NegativePhase: test.NegativePhase,
 		NegativeType:  test.NegativeType,
@@ -175,6 +276,11 @@ func (e *engine) attempt(test classified) result {
 	base.Kind = decided.Kind
 	base.Reason = decided.Reason
 	return base
+}
+
+var nativeEnvironment = []string{
+	"ASAN_OPTIONS=detect_leaks=0:abort_on_error=1:halt_on_error=1",
+	"UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1",
 }
 
 const outputLimit = 256 << 10

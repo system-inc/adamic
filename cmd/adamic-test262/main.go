@@ -19,7 +19,7 @@
 // != where both sides already have the same type, and throw new Test262Error to throw new Error
 // when nothing observes the constructor. The checkout is not modified.
 //
-// Tests run one at a time. The runtime is built with the address and undefined-behavior sanitizers.
+// Tests run concurrently and their results are printed in serial order. The runtime is built with the address and undefined-behavior sanitizers.
 package main
 
 import (
@@ -27,6 +27,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"runtime"
 	"strings"
 )
 
@@ -43,6 +44,8 @@ func run(arguments []string) int {
 	asJSON := flags.Bool("json", false, "write the report as JSON on stdout; the table goes to stderr")
 	classifyOnly := flags.Bool("classify-only", false, "classify every test and do not compile or run")
 	adapt := flags.Bool("adapt", false, "rewrite test262 style in memory (var to let, callback params, strict equality, Test262Error) and count each rewrite")
+	subprocess := flags.Bool("compiler-subprocess", false, "start adamic c for each test (reference path; also used with an explicit -root)")
+	jobs := flags.Int("jobs", runtime.GOMAXPROCS(0), "number of concurrent tests")
 	limit := flags.Int("limit", 0, "run at most this many attempted tests per filter (0 is all)")
 	flags.Usage = func() {
 		fmt.Fprintf(os.Stderr, "usage: adamic-test262 [flags] <filter>...\n\n")
@@ -50,6 +53,10 @@ func run(arguments []string) int {
 		flags.PrintDefaults()
 	}
 	if err := flags.Parse(arguments); err != nil {
+		return 2
+	}
+	if *jobs < 1 {
+		fmt.Fprintln(os.Stderr, "jobs must be positive")
 		return 2
 	}
 	if *test262 == "" || flags.NArg() == 0 {
@@ -77,6 +84,13 @@ func run(arguments []string) int {
 		prepared = &engine{test262: *test262, log: os.Stderr, adapt: *adapt}
 	}
 	prepared.adapt = *adapt
+	prepared.jobs = *jobs
+	prepared.inProcess = !*subprocess
+	flags.Visit(func(flag *flag.Flag) {
+		if flag.Name == "root" {
+			prepared.inProcess = false
+		}
+	})
 	document := reportDocument{Test262: *test262, Commit: test262Commit(*test262), Adapt: *adapt}
 	for _, filter := range flags.Args() {
 		report, err := prepared.runFilter(filter, *limit, *classifyOnly)
