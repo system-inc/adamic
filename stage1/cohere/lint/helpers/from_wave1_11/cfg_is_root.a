@@ -1,0 +1,5 @@
+// Numeric SyntaxKind metadata from the pinned Go parser. No node refetch or kind strings.
+export function isCfgRoot(kind: number, hasInitializer: boolean): boolean {
+    if(kind === 173) { return hasInitializer; }
+    return [220, 176, 177, 263, 219, 178, 175, 179, 307].includes(kind);
+}

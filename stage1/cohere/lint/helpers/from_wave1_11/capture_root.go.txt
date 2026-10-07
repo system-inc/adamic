@@ -1,0 +1,11 @@
+package control_flow_graph
+import("encoding/json";"os";"sync";"github.com/microsoft/TypeScript/tsc/shim/ast")
+var wave11RootCaptureLock sync.Mutex
+func IsRoot(node *ast.Node)bool{
+ initializer:=node.Kind==ast.KindPropertyDeclaration&&node.AsPropertyDeclaration().Initializer!=nil
+ result:=wave11OriginalIsRoot(node)
+ row:=struct{Kind int `json:"kind"`;Initializer bool `json:"initializer"`;Result bool `json:"result"`}{int(node.Kind),initializer,result}
+ wave11RootCaptureLock.Lock();defer wave11RootCaptureLock.Unlock()
+ file,err:=os.OpenFile(os.Getenv("WAVE11_ROOT_CAPTURE"),os.O_CREATE|os.O_WRONLY|os.O_APPEND,0600);if err!=nil{panic(err)};defer file.Close();if err=json.NewEncoder(file).Encode(row);err!=nil{panic(err)}
+ return result
+}

@@ -1,0 +1,346 @@
+=== RUN   TestConsistentReturnFires
+=== PAUSE TestConsistentReturnFires
+=== RUN   TestConsistentReturnStaysSilent
+=== PAUSE TestConsistentReturnStaysSilent
+=== RUN   TestConsistentReturnAddedCases
+=== PAUSE TestConsistentReturnAddedCases
+=== RUN   TestConsistentReturnDecoderRoundTrip
+=== PAUSE TestConsistentReturnDecoderRoundTrip
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken
+=== RUN   TestConsistentReturnHandlesATryWithADeclarationAndAFinally
+=== PAUSE TestConsistentReturnHandlesATryWithADeclarationAndAFinally
+=== CONT  TestConsistentReturnFires
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_else_return;_}
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_else_return;_}
+=== RUN   TestConsistentReturnFires/var_foo_=_()_=>_{_if_(true)_return_true;_else_return;_}
+=== PAUSE TestConsistentReturnFires/var_foo_=_()_=>_{_if_(true)_return_true;_else_return;_}
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return;_else_return_false;_}
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return;_else_return_false;_}
+=== CONT  TestConsistentReturnDecoderRoundTrip
+=== CONT  TestConsistentReturnHandlesATryWithADeclarationAndAFinally
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_static_foo()_{_if_(a)_return_true;_}_}
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_static_foo()_{_if_(a)_return_true;_}_}
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_get_foo()_{_if_(a)_return_true;_}_}
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_get_foo()_{_if_(a)_return_true;_}_}
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_async_foo()_{_if_(a)_return_true;_}_}
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_async_foo()_{_if_(a)_return_true;_}_}
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_*foo()_{_if_(a)_return_true;_}_}
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_*foo()_{_if_(a)_return_true;_}_}
+=== RUN   TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/var_o_=_{_async_foo()_{_if_(a)_return_true;_}_};
+=== PAUSE TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/var_o_=_{_async_foo()_{_if_(a)_return_true;_}_};
+=== CONT  TestConsistentReturnStaysSilent
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_true;_else_return_false;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_true;_else_return_false;_}
+=== RUN   TestConsistentReturnStaysSilent/f(function()_{_return;_})
+=== PAUSE TestConsistentReturnStaysSilent/f(function()_{_return;_})
+=== RUN   TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_})
+=== PAUSE TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_})
+=== CONT  TestConsistentReturnAddedCases
+=== RUN   TestConsistentReturnAddedCases/a_static_method_renders_static_before_method
+--- PASS: TestConsistentReturnHandlesATryWithADeclarationAndAFinally (0.00s)
+=== RUN   TestConsistentReturnFires/f(function()_{_if_(true)_return_true;_else_return;_})
+=== PAUSE TestConsistentReturnFires/f(function()_{_if_(true)_return_true;_else_return;_})
+=== RUN   TestConsistentReturnDecoderRoundTrip/an_empty_object
+=== RUN   TestConsistentReturnFires/f(function()_{_if_(true)_return;_else_return_false;_})
+=== PAUSE TestConsistentReturnFires/f(function()_{_if_(true)_return;_else_return_false;_})
+=== PAUSE TestConsistentReturnDecoderRoundTrip/an_empty_object
+=== RUN   TestConsistentReturnFires/f(a_=>_{_if_(true)_return;_else_return_false;_})
+=== PAUSE TestConsistentReturnFires/f(a_=>_{_if_(true)_return;_else_return_false;_})
+=== PAUSE TestConsistentReturnAddedCases/a_static_method_renders_static_before_method
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_static_foo()_{_if_(a)_return_true;_}_}
+=== RUN   TestConsistentReturnAddedCases/a_private_method_renders_an_unquoted_hash_name
+=== RUN   TestConsistentReturnDecoderRoundTrip/an_explicit_false
+=== PAUSE TestConsistentReturnAddedCases/a_private_method_renders_an_unquoted_hash_name
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_undefined;_}
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_undefined;_}
+=== RUN   TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_else_return;_})
+=== PAUSE TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_else_return;_})
+=== PAUSE TestConsistentReturnDecoderRoundTrip/an_explicit_false
+=== RUN   TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return_true;_else_return_false;_})
+=== PAUSE TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return_true;_else_return_false;_})
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return_true;_}_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return_true;_}_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return;_}_return_false;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return;_}_return_false;_}
+=== RUN   TestConsistentReturnStaysSilent/function_Foo()_{_if_(!(this_instanceof_Foo))_return_new_Foo();_}
+=== PAUSE TestConsistentReturnStaysSilent/function_Foo()_{_if_(!(this_instanceof_Foo))_return_new_Foo();_}
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_*foo()_{_if_(a)_return_true;_}_}
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/var_o_=_{_async_foo()_{_if_(a)_return_true;_}_};
+=== RUN   TestConsistentReturnAddedCases/static_and_private_compose_in_that_order
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_async_foo()_{_if_(a)_return_true;_}_}
+=== CONT  TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_get_foo()_{_if_(a)_return_true;_}_}
+=== PAUSE TestConsistentReturnAddedCases/static_and_private_compose_in_that_order
+--- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken (0.00s)
+    --- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_static_foo()_{_if_(a)_return_true;_}_} (0.00s)
+    --- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_*foo()_{_if_(a)_return_true;_}_} (0.00s)
+    --- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/var_o_=_{_async_foo()_{_if_(a)_return_true;_}_}; (0.00s)
+    --- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_async_foo()_{_if_(a)_return_true;_}_} (0.00s)
+    --- PASS: TestConsistentReturnSpanPointsAtTheKeyNotTheFirstToken/class_A_{_get_foo()_{_if_(a)_return_true;_}_} (0.00s)
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_undefined;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_undefined;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_void_0;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_void_0;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_undefined;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_undefined;_}
+=== RUN   TestConsistentReturnDecoderRoundTrip/an_explicit_true
+=== PAUSE TestConsistentReturnDecoderRoundTrip/an_explicit_true
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_void_0;_}
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_void_0;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_void_0;_}
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_void_0;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return_void_0;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return_void_0;_}
+=== RUN   TestConsistentReturnAddedCases/an_async_function_renders_async
+=== PAUSE TestConsistentReturnAddedCases/an_async_function_renders_async
+=== CONT  TestConsistentReturnDecoderRoundTrip/an_empty_object
+=== RUN   TestConsistentReturnAddedCases/a_generator_renders_generator
+=== PAUSE TestConsistentReturnAddedCases/a_generator_renders_generator
+=== RUN   TestConsistentReturnAddedCases/async_and_generator_compose_in_that_order
+=== PAUSE TestConsistentReturnAddedCases/async_and_generator_compose_in_that_order
+=== CONT  TestConsistentReturnDecoderRoundTrip/an_explicit_true
+=== RUN   TestConsistentReturnAddedCases/a_getter_renders_getter_and_not_method
+=== PAUSE TestConsistentReturnAddedCases/a_getter_renders_getter_and_not_method
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return_undefined;_return_true;_}
+=== CONT  TestConsistentReturnDecoderRoundTrip/an_explicit_false
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return_undefined;_return_true;_}
+=== RUN   TestConsistentReturnAddedCases/a_setter_renders_setter
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(true)_return_void_0;_return_true;_}
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(true)_return_void_0;_return_true;_}
+=== PAUSE TestConsistentReturnAddedCases/a_setter_renders_setter
+=== RUN   TestConsistentReturnFires/if_(true)_{_return_1;_}_return;
+=== RUN   TestConsistentReturnAddedCases/an_object_literal_getter_renders_the_same_as_a_class_one
+=== PAUSE TestConsistentReturnFires/if_(true)_{_return_1;_}_return;
+=== PAUSE TestConsistentReturnAddedCases/an_object_literal_getter_renders_the_same_as_a_class_one
+=== RUN   TestConsistentReturnFires/function_foo()_{_if_(a)_return_true;_}
+=== RUN   TestConsistentReturnAddedCases/a_class_constructor_is_exempt_from_the_end_judgment
+=== PAUSE TestConsistentReturnFires/function_foo()_{_if_(a)_return_true;_}
+=== PAUSE TestConsistentReturnAddedCases/a_class_constructor_is_exempt_from_the_end_judgment
+=== RUN   TestConsistentReturnFires/function__foo()_{_if_(a)_return_true;_}
+=== PAUSE TestConsistentReturnFires/function__foo()_{_if_(a)_return_true;_}
+=== RUN   TestConsistentReturnFires/f(function_foo()_{_if_(a)_return_true;_});
+--- PASS: TestConsistentReturnDecoderRoundTrip (0.00s)
+    --- PASS: TestConsistentReturnDecoderRoundTrip/an_empty_object (0.00s)
+    --- PASS: TestConsistentReturnDecoderRoundTrip/an_explicit_true (0.00s)
+    --- PASS: TestConsistentReturnDecoderRoundTrip/an_explicit_false (0.00s)
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return;_}
+=== RUN   TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return_undefined;_}
+=== PAUSE TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return_undefined;_}
+=== RUN   TestConsistentReturnStaysSilent/var_x_=_()_=>_{__return_{};_};
+=== PAUSE TestConsistentReturnStaysSilent/var_x_=_()_=>_{__return_{};_};
+=== RUN   TestConsistentReturnStaysSilent/if_(true)_{_return_1;_}_return_0;
+=== PAUSE TestConsistentReturnStaysSilent/if_(true)_{_return_1;_}_return_0;
+=== RUN   TestConsistentReturnStaysSilent/class_Foo_{_constructor()_{_if_(true)_return_foo;_}_}
+=== PAUSE TestConsistentReturnStaysSilent/class_Foo_{_constructor()_{_if_(true)_return_foo;_}_}
+=== RUN   TestConsistentReturnStaysSilent/var_Foo_=_class_{_constructor()_{_if_(true)_return_foo;_}_}
+=== PAUSE TestConsistentReturnStaysSilent/var_Foo_=_class_{_constructor()_{_if_(true)_return_foo;_}_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_return;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_void_0;_}
+=== CONT  TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_else_return;_})
+=== PAUSE TestConsistentReturnFires/f(function_foo()_{_if_(a)_return_true;_});
+=== RUN   TestConsistentReturnAddedCases/a_class_constructor_is_NOT_exempt_from_the_per-return_judgment
+=== PAUSE TestConsistentReturnAddedCases/a_class_constructor_is_NOT_exempt_from_the_per-return_judgment
+=== RUN   TestConsistentReturnFires/f(function()_{_if_(a)_return_true;_});
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_true;_else_return_false;_}
+=== RUN   TestConsistentReturnAddedCases/a_class_expression_constructor_behaves_the_same_way
+=== PAUSE TestConsistentReturnFires/f(function()_{_if_(a)_return_true;_});
+=== RUN   TestConsistentReturnFires/f(()_=>_{_if_(a)_return_true;_});
+=== PAUSE TestConsistentReturnFires/f(()_=>_{_if_(a)_return_true;_});
+=== PAUSE TestConsistentReturnAddedCases/a_class_expression_constructor_behaves_the_same_way
+=== CONT  TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_})
+=== RUN   TestConsistentReturnFires/var_obj_=_{foo()_{_if_(a)_return_true;_}};
+=== PAUSE TestConsistentReturnFires/var_obj_=_{foo()_{_if_(a)_return_true;_}};
+=== RUN   TestConsistentReturnFires/class_A_{foo()_{_if_(a)_return_true;_}};
+=== PAUSE TestConsistentReturnFires/class_A_{foo()_{_if_(a)_return_true;_}};
+=== RUN   TestConsistentReturnFires/if_(a)_return_true;
+=== PAUSE TestConsistentReturnFires/if_(a)_return_true;
+=== RUN   TestConsistentReturnFires/class_A_{_CapitalizedFunction()_{_if_(a)_return_true;_}_}
+=== PAUSE TestConsistentReturnFires/class_A_{_CapitalizedFunction()_{_if_(a)_return_true;_}_}
+=== RUN   TestConsistentReturnFires/({_constructor()_{_if_(a)_return_true;_}_});
+=== PAUSE TestConsistentReturnFires/({_constructor()_{_if_(a)_return_true;_}_});
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return;_}
+=== RUN   TestConsistentReturnAddedCases/the_constructor_name_renders_no_modifiers
+=== PAUSE TestConsistentReturnAddedCases/the_constructor_name_renders_no_modifiers
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return;_}_return_false;_}
+=== RUN   TestConsistentReturnAddedCases/an_object_literal_method_named_constructor_is_NOT_exempt
+=== PAUSE TestConsistentReturnAddedCases/an_object_literal_method_named_constructor_is_NOT_exempt
+=== RUN   TestConsistentReturnAddedCases/a_function_expression_on_a_property_renders_as_a_method
+=== PAUSE TestConsistentReturnAddedCases/a_function_expression_on_a_property_renders_as_a_method
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_undefined;_}
+=== CONT  TestConsistentReturnStaysSilent/function_Foo()_{_if_(!(this_instanceof_Foo))_return_new_Foo();_}
+=== RUN   TestConsistentReturnAddedCases/a_class_field_holding_a_function_renders_as_a_method
+=== PAUSE TestConsistentReturnAddedCases/a_class_field_holding_a_function_renders_as_a_method
+=== RUN   TestConsistentReturnAddedCases/a_quoted_key_renders_its_cooked_name
+=== PAUSE TestConsistentReturnAddedCases/a_quoted_key_renders_its_cooked_name
+=== RUN   TestConsistentReturnAddedCases/a_computed_key_whose_value_is_static_renders_it
+=== PAUSE TestConsistentReturnAddedCases/a_computed_key_whose_value_is_static_renders_it
+=== RUN   TestConsistentReturnAddedCases/a_computed_key_whose_value_is_not_static_renders_no_name
+=== PAUSE TestConsistentReturnAddedCases/a_computed_key_whose_value_is_not_static_renders_no_name
+=== CONT  TestConsistentReturnStaysSilent/if_(true)_{_return_1;_}_return_0;
+=== CONT  TestConsistentReturnStaysSilent/var_Foo_=_class_{_constructor()_{_if_(true)_return_foo;_}_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return_true;_}_return;_}
+=== CONT  TestConsistentReturnStaysSilent/var_x_=_()_=>_{__return_{};_};
+=== RUN   TestConsistentReturnAddedCases/an_async_arrow_renders_async_arrow_function
+=== CONT  TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return_true;_else_return_false;_})
+=== PAUSE TestConsistentReturnAddedCases/an_async_arrow_renders_async_arrow_function
+=== RUN   TestConsistentReturnAddedCases/a_trailing_throw_makes_the_end_unreachable
+=== PAUSE TestConsistentReturnAddedCases/a_trailing_throw_makes_the_end_unreachable
+=== RUN   TestConsistentReturnAddedCases/an_else-throw_makes_the_end_unreachable
+=== PAUSE TestConsistentReturnAddedCases/an_else-throw_makes_the_end_unreachable
+=== RUN   TestConsistentReturnAddedCases/an_infinite_loop_makes_the_end_unreachable
+=== PAUSE TestConsistentReturnAddedCases/an_infinite_loop_makes_the_end_unreachable
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_}
+=== RUN   TestConsistentReturnAddedCases/a_call_that_never_returns_does_not_make_the_end_unreachable
+=== PAUSE TestConsistentReturnAddedCases/a_call_that_never_returns_does_not_make_the_end_unreachable
+=== CONT  TestConsistentReturnStaysSilent/f(function()_{_return;_})
+=== RUN   TestConsistentReturnAddedCases/a_union_return_type_does_not_exempt_the_function
+=== PAUSE TestConsistentReturnAddedCases/a_union_return_type_does_not_exempt_the_function
+=== RUN   TestConsistentReturnAddedCases/an_ES5_constructor_is_exempt_by_its_capitalised_name
+=== PAUSE TestConsistentReturnAddedCases/an_ES5_constructor_is_exempt_by_its_capitalised_name
+=== RUN   TestConsistentReturnAddedCases/a_leading_underscore_is_not_a_capital
+=== PAUSE TestConsistentReturnAddedCases/a_leading_underscore_is_not_a_capital
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return;_}
+=== RUN   TestConsistentReturnAddedCases/a_capitalised_METHOD_is_not_an_ES5_constructor
+=== PAUSE TestConsistentReturnAddedCases/a_capitalised_METHOD_is_not_an_ES5_constructor
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return_void_0;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return_undefined;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_void_0;_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return;_}
+=== CONT  TestConsistentReturnFires/({_constructor()_{_if_(a)_return_true;_}_});
+=== CONT  TestConsistentReturnStaysSilent/class_Foo_{_constructor()_{_if_(true)_return_foo;_}_}
+=== CONT  TestConsistentReturnFires/class_A_{_CapitalizedFunction()_{_if_(a)_return_true;_}_}
+=== CONT  TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_undefined;_}
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_else_return;_}
+=== CONT  TestConsistentReturnFires/if_(a)_return_true;
+=== CONT  TestConsistentReturnFires/class_A_{foo()_{_if_(a)_return_true;_}};
+=== CONT  TestConsistentReturnFires/var_obj_=_{foo()_{_if_(a)_return_true;_}};
+=== CONT  TestConsistentReturnFires/f(()_=>_{_if_(a)_return_true;_});
+--- PASS: TestConsistentReturnStaysSilent (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_void_0;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_true;_else_return_false;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_else_return;_}) (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return;_}) (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return;_}_return_false;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_Foo()_{_if_(!(this_instanceof_Foo))_return_new_Foo();_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_5;_else_return_undefined;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/if_(true)_{_return_1;_}_return_0; (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/var_Foo_=_class_{_constructor()_{_if_(true)_return_foo;_}_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_function_bar()_{_return_true;_}_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/var_x_=_()_=>_{__return_{};_}; (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/f(function()_{_if_(true)_return_true;_else_return_false;_}) (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/f(function()_{_return;_}) (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return_undefined;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_void_0;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_void_0;_else_return;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return_undefined;_else_return_void_0;_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/class_Foo_{_constructor()_{_if_(true)_return_foo;_}_} (0.00s)
+    --- PASS: TestConsistentReturnStaysSilent/function_foo()_{_if_(true)_return;_else_return_undefined;_} (0.00s)
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(a)_return_true;_}
+=== CONT  TestConsistentReturnFires/f(function()_{_if_(a)_return_true;_});
+=== CONT  TestConsistentReturnFires/f(function_foo()_{_if_(a)_return_true;_});
+=== CONT  TestConsistentReturnFires/if_(true)_{_return_1;_}_return;
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return_void_0;_return_true;_}
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_void_0;_}
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_undefined;_}
+=== CONT  TestConsistentReturnFires/f(a_=>_{_if_(true)_return;_else_return_false;_})
+=== CONT  TestConsistentReturnFires/f(function()_{_if_(true)_return;_else_return_false;_})
+=== CONT  TestConsistentReturnFires/f(function()_{_if_(true)_return_true;_else_return;_})
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return;_else_return_false;_}
+=== CONT  TestConsistentReturnFires/var_foo_=_()_=>_{_if_(true)_return_true;_else_return;_}
+=== CONT  TestConsistentReturnAddedCases/a_static_method_renders_static_before_method
+=== CONT  TestConsistentReturnFires/function_foo()_{_if_(true)_return_undefined;_return_true;_}
+=== CONT  TestConsistentReturnAddedCases/a_function_expression_on_a_property_renders_as_a_method
+=== CONT  TestConsistentReturnAddedCases/a_leading_underscore_is_not_a_capital
+=== CONT  TestConsistentReturnAddedCases/an_ES5_constructor_is_exempt_by_its_capitalised_name
+=== CONT  TestConsistentReturnFires/function__foo()_{_if_(a)_return_true;_}
+=== CONT  TestConsistentReturnAddedCases/a_capitalised_METHOD_is_not_an_ES5_constructor
+=== CONT  TestConsistentReturnAddedCases/a_call_that_never_returns_does_not_make_the_end_unreachable
+=== CONT  TestConsistentReturnAddedCases/a_union_return_type_does_not_exempt_the_function
+=== CONT  TestConsistentReturnAddedCases/an_infinite_loop_makes_the_end_unreachable
+=== CONT  TestConsistentReturnAddedCases/an_else-throw_makes_the_end_unreachable
+=== CONT  TestConsistentReturnAddedCases/a_trailing_throw_makes_the_end_unreachable
+=== CONT  TestConsistentReturnAddedCases/an_async_arrow_renders_async_arrow_function
+=== CONT  TestConsistentReturnAddedCases/a_computed_key_whose_value_is_static_renders_it
+=== CONT  TestConsistentReturnAddedCases/a_computed_key_whose_value_is_not_static_renders_no_name
+=== CONT  TestConsistentReturnAddedCases/a_quoted_key_renders_its_cooked_name
+=== CONT  TestConsistentReturnAddedCases/a_class_field_holding_a_function_renders_as_a_method
+=== CONT  TestConsistentReturnAddedCases/a_setter_renders_setter
+=== CONT  TestConsistentReturnAddedCases/the_constructor_name_renders_no_modifiers
+--- PASS: TestConsistentReturnFires (0.00s)
+    --- PASS: TestConsistentReturnFires/({_constructor()_{_if_(a)_return_true;_}_}); (0.00s)
+    --- PASS: TestConsistentReturnFires/class_A_{_CapitalizedFunction()_{_if_(a)_return_true;_}_} (0.00s)
+    --- PASS: TestConsistentReturnFires/var_obj_=_{foo()_{_if_(a)_return_true;_}}; (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_else_return;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/class_A_{foo()_{_if_(a)_return_true;_}}; (0.00s)
+    --- PASS: TestConsistentReturnFires/if_(a)_return_true; (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(a)_return_true;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/f(()_=>_{_if_(a)_return_true;_}); (0.00s)
+    --- PASS: TestConsistentReturnFires/f(function_foo()_{_if_(a)_return_true;_}); (0.00s)
+    --- PASS: TestConsistentReturnFires/if_(true)_{_return_1;_}_return; (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return_void_0;_return_true;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/f(function()_{_if_(a)_return_true;_}); (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_void_0;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return_true;_return_undefined;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/f(function()_{_if_(true)_return;_else_return_false;_}) (0.00s)
+    --- PASS: TestConsistentReturnFires/f(function()_{_if_(true)_return_true;_else_return;_}) (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return;_else_return_false;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/f(a_=>_{_if_(true)_return;_else_return_false;_}) (0.00s)
+    --- PASS: TestConsistentReturnFires/var_foo_=_()_=>_{_if_(true)_return_true;_else_return;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/function_foo()_{_if_(true)_return_undefined;_return_true;_} (0.00s)
+    --- PASS: TestConsistentReturnFires/function__foo()_{_if_(a)_return_true;_} (0.00s)
+=== CONT  TestConsistentReturnAddedCases/a_class_expression_constructor_behaves_the_same_way
+=== CONT  TestConsistentReturnAddedCases/an_object_literal_method_named_constructor_is_NOT_exempt
+=== CONT  TestConsistentReturnAddedCases/a_class_constructor_is_NOT_exempt_from_the_per-return_judgment
+=== CONT  TestConsistentReturnAddedCases/a_class_constructor_is_exempt_from_the_end_judgment
+=== CONT  TestConsistentReturnAddedCases/an_object_literal_getter_renders_the_same_as_a_class_one
+=== CONT  TestConsistentReturnAddedCases/async_and_generator_compose_in_that_order
+=== CONT  TestConsistentReturnAddedCases/a_generator_renders_generator
+=== CONT  TestConsistentReturnAddedCases/static_and_private_compose_in_that_order
+=== CONT  TestConsistentReturnAddedCases/a_getter_renders_getter_and_not_method
+=== CONT  TestConsistentReturnAddedCases/an_async_function_renders_async
+=== CONT  TestConsistentReturnAddedCases/a_private_method_renders_an_unquoted_hash_name
+--- PASS: TestConsistentReturnAddedCases (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_function_expression_on_a_property_renders_as_a_method (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_static_method_renders_static_before_method (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_ES5_constructor_is_exempt_by_its_capitalised_name (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_leading_underscore_is_not_a_capital (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_capitalised_METHOD_is_not_an_ES5_constructor (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_union_return_type_does_not_exempt_the_function (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_call_that_never_returns_does_not_make_the_end_unreachable (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_else-throw_makes_the_end_unreachable (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_trailing_throw_makes_the_end_unreachable (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_computed_key_whose_value_is_static_renders_it (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_async_arrow_renders_async_arrow_function (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_quoted_key_renders_its_cooked_name (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_class_field_holding_a_function_renders_as_a_method (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_setter_renders_setter (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/the_constructor_name_renders_no_modifiers (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_infinite_loop_makes_the_end_unreachable (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_class_constructor_is_NOT_exempt_from_the_per-return_judgment (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_object_literal_method_named_constructor_is_NOT_exempt (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_class_constructor_is_exempt_from_the_end_judgment (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_class_expression_constructor_behaves_the_same_way (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_computed_key_whose_value_is_not_static_renders_no_name (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/static_and_private_compose_in_that_order (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_object_literal_getter_renders_the_same_as_a_class_one (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/an_async_function_renders_async (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_getter_renders_getter_and_not_method (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_private_method_renders_an_unquoted_hash_name (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/async_and_generator_compose_in_that_order (0.00s)
+    --- PASS: TestConsistentReturnAddedCases/a_generator_renders_generator (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.012s

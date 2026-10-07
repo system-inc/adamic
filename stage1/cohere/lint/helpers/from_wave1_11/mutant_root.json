@@ -1,0 +1,6 @@
+{
+  "name": "property_initializer_guard_lost",
+  "file": "cfg_is_root.a",
+  "from": "return hasInitializer;",
+  "to": "return true;"
+}
