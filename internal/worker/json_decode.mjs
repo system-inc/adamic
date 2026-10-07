@@ -145,67 +145,124 @@ function parseWorkerJsonFast(text) {
 	return parsed;
 }
 
-export function decodeJson(text, descriptor) {
-	const units = (encoded, fallback = '') => encoded === undefined ? fallback : encoded.map(unit => String.fromCharCode(unit)).join('');
-	const jsonKind = value => value === null ? 'null' : Array.isArray(value) ? 'array' : typeof value;
-	const missing = (path, name) => { throw new WorkerJsonError(`at ${path}: missing field ${name}`); };
-	const mismatch = (node, path, value) => { throw new WorkerJsonError(`at ${path}: expected ${node.expected}, found ${jsonKind(value)}`); };
-	function matches(node, value) {
-		if (node.kind === 'literal') {
-			if (node.of === 3) return typeof value === 'string' && value === units(node.literalUnits);
-			if (node.of === 1) return typeof value === 'number' && value === Number(node.numberText);
-			return typeof value === 'boolean' && value === (node.boolean ?? false);
-		}
-		return node.kind === jsonKind(value);
+const workerDecodeWalkers = new WeakMap();
+const workerJsonUnits = (encoded, fallback = '') => encoded === undefined ? fallback : encoded.map(unit => String.fromCharCode(unit)).join('');
+const workerJsonKind = value => value === null ? 'null' : Array.isArray(value) ? 'array' : typeof value;
+function workerJsonMissing(path, name) { throw new WorkerJsonError(`at ${path}: missing field ${name}`); }
+function workerJsonMismatch(expected, path, value) { throw new WorkerJsonError(`at ${path}: expected ${expected}, found ${workerJsonKind(value)}`); }
+
+function compileWorkerDecode(descriptor) {
+	const readers = [];
+	const matches = [];
+	const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+	function literal(node) {
+		if (node.of === 3) return workerJsonUnits(node.literalUnits);
+		if (node.of === 1) return Number(node.numberText);
+		return node.boolean ?? false;
 	}
-	function validate(index, value, path) {
+	function compile(index) {
+		if (readers[index]) return readers[index];
+		let read;
+		// Install a forward reference before descending, for recursive graphs.
+		readers[index] = (value, path) => read(value, path);
 		const node = descriptor.nodes[index];
+		const expected = node.expected;
 		switch (node.kind) {
-			case 'number': case 'boolean': case 'string': case 'literal':
-				if (!matches(node, value)) mismatch(node, path, value);
-				return value;
-			case 'array':
-				if (!Array.isArray(value)) mismatch(node, path, value);
-				return value.map((element, index) => validate(node.children[0], element, `${path}[${index}]`));
-			case 'tuple':
-				if (!Array.isArray(value) || value.length !== node.fields.length) mismatch(node, path, value);
-				return node.fields.map((field, index) => validate(field.node, value[index], `${path}[${index}]`));
+			case 'number': matches[index] = value => typeof value === 'number'; break;
+			case 'string': matches[index] = value => typeof value === 'string'; break;
+			case 'boolean': matches[index] = value => typeof value === 'boolean'; break;
+			case 'literal': { const wanted = literal(node); matches[index] = value => value === wanted; break; }
+			case 'array': case 'tuple': matches[index] = Array.isArray; break;
+			case 'object': matches[index] = object; break;
+		}
+		switch (node.kind) {
+			case 'number': case 'string': case 'boolean': case 'literal': {
+				const accepts = matches[index];
+				read = (value, path) => { if (!accepts(value)) workerJsonMismatch(expected, path, value); return value; };
+				break;
+			}
+			case 'array': {
+				const element = compile(node.children[0]);
+				read = (value, path) => {
+					if (!Array.isArray(value)) workerJsonMismatch(expected, path, value);
+					return value.map((value, index) => element(value, `${path}[${index}]`));
+				};
+				break;
+			}
+			case 'tuple': {
+				const fields = node.fields.map(field => compile(field.node));
+				read = (value, path) => {
+					if (!Array.isArray(value) || value.length !== fields.length) workerJsonMismatch(expected, path, value);
+					return fields.map((field, index) => field(value[index], `${path}[${index}]`));
+				};
+				break;
+			}
 			case 'object': {
-				if (jsonKind(value) !== 'object') mismatch(node, path, value);
-				const result = {};
-				for (const field of node.fields) {
-					const name = units(field.nameUnits, field.name);
-					if (!Object.hasOwn(value, name)) {
-						if (field.optional) continue;
-						missing(path, name);
+				const fields = node.fields.map(field => {
+					const name = workerJsonUnits(field.nameUnits, field.name);
+					const set = name === '__proto__'
+						? (result, value) => Object.defineProperty(result, name, { value, enumerable: true, writable: true, configurable: true })
+						: (result, value) => { result[name] = value; };
+					return { name, optional: field.optional, read: compile(field.node), set };
+				});
+				read = (value, path) => {
+					if (!object(value)) workerJsonMismatch(expected, path, value);
+					const result = {};
+					for (const field of fields) {
+						const name = field.name;
+						if (!Object.hasOwn(value, name)) {
+							if (field.optional) continue;
+							workerJsonMissing(path, name);
+						}
+						field.set(result, field.read(value[name], `${path}.${name}`));
 					}
-					Object.defineProperty(result, name, { value: validate(field.node, value[name], `${path}.${name}`), enumerable: true, writable: true, configurable: true });
-				}
-				return result;
+					return result;
+				};
+				break;
 			}
 			case 'union': {
-				const children = node.children.map(index => ({ index, schema: descriptor.nodes[index] }));
-				if (jsonKind(value) === 'object') {
-					const objects = children.filter(child => child.schema.kind === 'object');
-					if (objects.length === 1) return validate(objects[0].index, value, path);
-					if (objects.length > 1) {
-						const name = units(node.discriminantUnits, node.discriminant);
-						if (!Object.hasOwn(value, name)) missing(path, name);
-						for (const child of objects) {
-							const field = child.schema.fields.find(field => units(field.nameUnits, field.name) === name);
-							if (matches(descriptor.nodes[field.node], value[name])) return validate(child.index, value, path);
-						}
-						mismatch(node, `${path}.${name}`, value[name]);
-					}
+				const children = node.children.map(index => ({ read: compile(index), accepts: matches[index] }));
+				const objects = node.children.filter(index => descriptor.nodes[index].kind === 'object');
+				const objectRead = objects.length === 1 ? compile(objects[0]) : undefined;
+				const tag = workerJsonUnits(node.discriminantUnits, node.discriminant);
+				const branches = new Map();
+				if (objects.length > 1) for (const index of objects) {
+					const field = descriptor.nodes[index].fields.find(field => workerJsonUnits(field.nameUnits, field.name) === tag);
+					branches.set(literal(descriptor.nodes[field.node]), compile(index));
 				}
-				for (const child of children) if (matches(child.schema, value)) return validate(child.index, value, path);
-				mismatch(node, path, value);
+				read = (value, path) => {
+					if (object(value)) {
+						if (objectRead) return objectRead(value, path);
+						if (branches.size) {
+							if (!Object.hasOwn(value, tag)) workerJsonMissing(path, tag);
+							const branch = branches.get(value[tag]);
+							if (branch) return branch(value, path);
+							workerJsonMismatch(expected, `${path}.${tag}`, value[tag]);
+						}
+					}
+					for (const child of children) if (child.accepts(value)) return child.read(value, path);
+					workerJsonMismatch(expected, path, value);
+				};
+				matches[index] = value => children.some(child => child.accepts(value));
+				break;
 			}
 			default: throw new Error(`Unsupported decodeJson descriptor kind: ${node.kind}`);
 		}
+		readers[index] = read;
+		return read;
 	}
+	return compile(descriptor.root);
+}
+
+export function decodeJson(text, descriptor) {
 	try {
-		return { kind: 'Ok', value: validate(descriptor.root, parseWorkerJsonFast(text), '$') };
+		const value = parseWorkerJsonFast(text);
+		let walker = workerDecodeWalkers.get(descriptor);
+		if (!walker) {
+			walker = compileWorkerDecode(descriptor);
+			workerDecodeWalkers.set(descriptor, walker);
+		}
+		return { kind: 'Ok', value: walker(value, '$') };
 	} catch (error) {
 		if (!(error instanceof WorkerJsonError)) throw error;
 		return { kind: 'Error', message: error.message };

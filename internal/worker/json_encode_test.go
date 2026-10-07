@@ -105,7 +105,7 @@ func TestWorkerEncodeJSON(t *testing.T) {
 	}
 	mutants := []struct{ name, before, after string }{
 		{"omit-falsy-optional", "field.optional && value[name] === undefined", "field.optional && !value[name]"},
-		{"reverse-fields", "const entries = [];\n\t\t\t\tfor (const field of node.fields) {", "const entries = [];\n\t\t\t\tfor (const field of [...node.fields].reverse()) {"},
+		{"reverse-fields", "const entries = [];\n\t\t\t\t\tfor (const field of fields) {", "const entries = [];\n\t\t\t\t\tfor (const field of [...fields].reverse()) {"},
 		{"replace-lone-surrogate", "return JSON.stringify(value);", "return JSON.stringify(typeof value === 'string' ? value.replace(/[\\uD800-\\uDFFF]/g, '\\uFFFD') : value);"},
 		{"write-infinity", "return JSON.stringify(value);", "return typeof value === 'number' && !Number.isFinite(value) ? String(value) : JSON.stringify(value);"},
 	}

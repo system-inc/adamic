@@ -9,6 +9,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const oldRevision = process.argv[2] ?? '64d8dc2';
 const computeRevision = process.argv[3] ?? '9aa73a2';
+const fastRevision = process.argv[4] ?? '0817c3d';
 const scratch = mkdtempSync(join(tmpdir(), 'worker-json-quote-bench-'));
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
 try {
@@ -29,26 +30,31 @@ try {
 	assert.ok(index >= 0, 'missing successful quote-100 request');
 	const body = requests[index].body;
 	const response = JSON.parse(responses[index].body);
-	for (const name of ['json_decode.mjs', 'json_encode.mjs']) writeFileSync(join(scratch, name), git('show', `${oldRevision}:internal/worker/${name}`));
-	const oldDecode = (await import(pathToFileURL(join(scratch, 'json_decode.mjs')))).decodeJson;
-	const oldEncode = (await import(pathToFileURL(join(scratch, 'json_encode.mjs')))).encodeJson;
-	const newDecode = (await import(new URL('./json_decode.mjs', import.meta.url))).decodeJson;
-	const newEncode = (await import(new URL('./json_encode.mjs', import.meta.url))).encodeJson;
-	assert.deepEqual(newDecode(body, order), oldDecode(body, order));
-	assert.equal(newDecode(body, order).kind, 'Ok');
-	assert.equal(oldEncode(response, quote), responses[index].body);
-	assert.equal(newEncode(response, quote), responses[index].body);
+	async function codecs(revision) {
+		for (const name of ['json_decode.mjs', 'json_encode.mjs']) writeFileSync(join(scratch, revision + '-' + name), git('show', `${revision}:internal/worker/${name}`));
+		return { decode: (await import(pathToFileURL(join(scratch, revision + '-json_decode.mjs')))).decodeJson,
+			encode: (await import(pathToFileURL(join(scratch, revision + '-json_encode.mjs')))).encodeJson };
+	}
+	const old = await codecs(oldRevision), fast = await codecs(fastRevision);
+	const current = { decode: (await import(new URL('./json_decode.mjs', import.meta.url))).decodeJson,
+		encode: (await import(new URL('./json_encode.mjs', import.meta.url))).encodeJson };
+	for (const codec of [old, fast, current]) {
+		assert.deepEqual(codec.decode(body, order), old.decode(body, order));
+		assert.equal(codec.decode(body, order).kind, 'Ok');
+		assert.equal(codec.encode(response, quote), responses[index].body);
+	}
 	let sink;
 	const tasks = [
-		['decode-old', () => oldDecode(body, order)], ['decode-new', () => newDecode(body, order)],
-		['encode-old', () => oldEncode(response, quote)], ['encode-new', () => newEncode(response, quote)],
+		['decode-old', () => old.decode(body, order)], ['decode-fast', () => fast.decode(body, order)], ['decode-new', () => current.decode(body, order)],
+		['encode-old', () => old.encode(response, quote)], ['encode-fast', () => fast.encode(response, quote)], ['encode-new', () => current.encode(response, quote)],
 	];
 	for (const [, call] of tasks) for (let i = 0; i < 2000; i++) sink = call();
 	const samples = Object.fromEntries(tasks.map(([name]) => [name, []]));
-	// Alternate old/new batch order each round to distribute drift. Each timed
+	// Rotate the three version orders each round to distribute drift. Each timed
 	// batch contains 10,000 calls; no compiler or file I/O occurs inside timing.
 	for (let round = 0; round < 5; round++) {
-		const ordered = round % 2 ? [tasks[1], tasks[0], tasks[3], tasks[2]] : tasks;
+		const offset = round % 3;
+		const ordered = [0,1,2].map(i => tasks[(i + offset) % 3]).concat([0,1,2].map(i => tasks[3 + (i + offset) % 3]));
 		for (const [name, call] of ordered) {
 			const start = performance.now();
 			for (let i = 0; i < 10000; i++) sink = call();
@@ -57,7 +63,7 @@ try {
 	}
 	assert.ok(sink);
 	const best = Object.fromEntries(Object.entries(samples).map(([name, times]) => [name, Math.min(...times)]));
-	console.log(JSON.stringify({ node: process.version, oldRevision, computeRevision, requestIndex: index,
+	console.log(JSON.stringify({ node: process.version, oldRevision, fastRevision, computeRevision, requestIndex: index,
 		items: 100, bodyBytes: Buffer.byteLength(body), iterations: 10000, rounds: 5, samplesMs: samples, bestMs: best,
 		bestMicrosecondsPerCall: Object.fromEntries(Object.entries(best).map(([name, ms]) => [name, ms / 10])),
 		decodeSpeedup: best['decode-old'] / best['decode-new'], encodeSpeedup: best['encode-old'] / best['encode-new'] }, null, 2));

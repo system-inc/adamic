@@ -79,11 +79,11 @@ func TestWorkerDecodeJSON(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				before := "validate(descriptor.root, parseWorkerJsonFast(text), '$')"
+				before := "const value = parseWorkerJsonFast(text);"
 				if strings.Count(string(runtime), before) != 1 {
 					t.Fatal("fast parser call target changed")
 				}
-				write(t, runtimePath, strings.Replace(string(runtime), before, "validate(descriptor.root, parseWorkerJson(text), '$')", 1))
+				write(t, runtimePath, strings.Replace(string(runtime), before, "const value = parseWorkerJson(text);", 1))
 				legacy := run("node", "internal/worker/json_decode_run.mjs", filepath.Join(generated, "handler.mjs"))
 				if !bytes.Equal(expected, legacy) {
 					t.Fatalf("legacy parser differs from native:\nnative: %s\nlegacy: %s", expected, legacy)
@@ -117,10 +117,11 @@ func TestWorkerDecodeJSON(t *testing.T) {
 	}
 	mutants := []struct{ name, before, after string }{
 		{"duplicate-first", "object[key] = value(depth + 1);", "const parsed = value(depth + 1); if (!Object.hasOwn(object, key)) object[key] = parsed;"},
+		{"wrong-descriptor-cache", "workerDecodeWalkers.get(descriptor)", "workerDecodeWalkers.get(workerDecodeWalkers)"},
 		{"skip-depth-scan", "if (!withinWorkerJsonDepth(text)) return parseWorkerJson(text);", ""},
 		{"depth-128-accepted", "if (depth >= 128)", "if (depth >= 129)"},
 		{"missing-required", "if (field.optional) continue;", "if (field.optional || name === 'required') continue;"},
-		{"reject-extra", "const result = {};", "const result = {}; if (Object.keys(value).some(name => !node.fields.some(field => units(field.nameUnits, field.name) === name))) mismatch(node, path, value);"},
+		{"reject-extra", "const result = {};", "const result = {}; if (Object.keys(value).some(name => !fields.some(field => field.name === name))) workerJsonMismatch(expected, path, value);"},
 		{"reword-error", "missing field ${name}", "required field ${name} is missing"},
 	}
 	for _, mutant := range mutants {
@@ -131,6 +132,9 @@ func TestWorkerDecodeJSON(t *testing.T) {
 			mutated := strings.ReplaceAll(string(original), mutant.before, mutant.after)
 			// V8 owns duplicate selection on success. Retain the old duplicate
 			// mutant as an explicit fallback-parser regression check.
+			if mutant.name == "wrong-descriptor-cache" {
+				mutated = strings.Replace(mutated, "workerDecodeWalkers.set(descriptor, walker)", "workerDecodeWalkers.set(workerDecodeWalkers, walker)", 1)
+			}
 			if mutant.name == "duplicate-first" {
 				mutated = strings.Replace(mutated, "parsed = JSON.parse(text);", "parsed = parseWorkerJson(text);", 1)
 			}
