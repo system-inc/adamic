@@ -75,6 +75,47 @@ func TestListing(t *testing.T){entries,e:=os.ReadDir("../oracle/fixtures");if e!
 	if output := selectPackages(recordPath); output != "" {
 		t.Fatalf("unchanged fixture main selected packages: %s", output)
 	}
+	if output, err := execute("record", "-out", recordPath); err == nil || !strings.Contains(output, "record already complete") {
+		t.Fatalf("completed reference was silently reused as a fresh run: %v %s", err, output)
+	}
+	checkpointBytes, err := os.ReadFile(recordPath + ".partial")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var checkpoint recordCheckpoint
+	if err := json.Unmarshal(checkpointBytes, &checkpoint); err != nil {
+		t.Fatal(err)
+	}
+	readerEvents := checkpoint.Record.Packages["affected-command-proof/pkg"].Events
+	referenceBytes, err := os.ReadFile(readerEvents)
+	if err != nil {
+		t.Fatal(err)
+	}
+	writeInput(t, readerEvents, string(referenceBytes)+"tampered\n")
+	if output, err := execute("record", "-out", recordPath); err == nil || !strings.Contains(output, "reference log changed") {
+		t.Fatalf("resume accepted tampered evidence: %v %s", err, output)
+	}
+	writeInput(t, readerEvents, string(referenceBytes))
+	checkpoint.Record.Complete = false
+	delete(checkpoint.Record.Packages, "affected-command-proof/quiet")
+	delete(checkpoint.Record.EventHashes, "affected-command-proof/quiet")
+	if err := atomicJSON(recordPath+".partial", checkpoint); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Remove(recordPath); err != nil {
+		t.Fatal(err)
+	}
+	if output := selectPackages(recordPath + ".partial"); !strings.Contains(output, "affected-command-proof/pkg") || !strings.Contains(output, "affected-command-proof/quiet") {
+		t.Fatal("incomplete evidence allowed skipping")
+	}
+	if output, err := execute("record", "-out", recordPath); err != nil || !strings.Contains(output, "resume 1/2") {
+		t.Fatalf("resume failed: %v %s", err, output)
+	}
+	afterResume, err := os.ReadFile(readerEvents)
+	if err != nil || string(afterResume) != string(referenceBytes) {
+		t.Fatal("resume reran the completed reference package")
+	}
+	t.Log("checkpoint resumed pending package; corrupted event log rejected; incomplete record selected all")
 	writeInput(t, filepath.Join(root, "docs", "README.md"), "after")
 	if output := selectPackages(recordPath); output != "" {
 		t.Fatalf("unread docs byte selected packages: %s", output)
@@ -176,7 +217,7 @@ func TestListing(t *testing.T){entries,e:=os.ReadDir("../oracle/fixtures");if e!
 	}
 	mutantRoot := t.TempDir()
 	writeInput(t, filepath.Join(mutantRoot, "go.mod"), "module affected-selector-mutant\n\ngo 1.27\n")
-	for _, name := range []string{"main.go", "trace.go", "observer/notify.c"} {
+	for _, name := range []string{"main.go", "trace.go", "record.go", "observer/notify.c"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -208,4 +249,35 @@ func TestListing(t *testing.T){entries,e:=os.ReadDir("../oracle/fixtures");if e!
 	if output := selectPackages(filepath.Join(t.TempDir(), "missing.json")); !strings.Contains(output, "affected-command-proof/quiet\n") {
 		t.Fatal("missing record failed to select all")
 	}
+	// Resume reuses evidence only within one unfinished reference. Prove its
+	// event integrity key matters with a separately compiled validator mutant.
+	writeInput(t, filepath.Join(root, "docs", "README.md"), "before")
+	if err := atomicJSON(recordPath+".partial", checkpoint); err != nil {
+		t.Fatal(err)
+	}
+	writeInput(t, readerEvents, string(referenceBytes)+`{"Action":"output","Package":"affected-command-proof/pkg","Output":"tampered\n"}`+"\n")
+	if output, err := execute("record", "-out", recordPath); err == nil || !strings.Contains(output, "reference log changed") {
+		t.Fatalf("event integrity control failed: %v %s", err, output)
+	}
+	validatorPath := filepath.Join(mutantRoot, "record.go")
+	validator, err := os.ReadFile(validatorPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	key := "digest(contents) != record.EventHashes[name]"
+	if strings.Count(string(validator), key) != 1 {
+		t.Fatal("event integrity mutant target missing")
+	}
+	writeInput(t, validatorPath, strings.Replace(string(validator), key, "digest(contents) != digest(contents)", 1))
+	if err := logged(mutantRoot, mutantBinary+".resume-build.log", "go", "build", "-o", mutantBinary, "."); err != nil {
+		t.Fatal(err)
+	}
+	if output, err := executeBinary(mutantBinary, "record", "-out", recordPath); err != nil {
+		t.Fatalf("integrity mutant did not accept corrupted reference: %v %s", err, output)
+	}
+	corrupted, err := os.ReadFile(readerEvents)
+	if err != nil || digest(corrupted) == checkpoint.Record.EventHashes["affected-command-proof/pkg"] {
+		t.Fatal("independent event hash failed to catch resume mutant")
+	}
+	t.Log("compiled resume mutant dropped event hash and accepted corrupted evidence; independent reference hash caught it")
 }

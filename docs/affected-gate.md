@@ -31,6 +31,29 @@ control checks observer compatibility before tracing Adamic packages. An older d
 is not overwritten on failure, so integration must check the command's exit status
 and the record's commit before publishing it as the new green-main artifact.
 
+Recording now checkpoints each finished package to `FILE.partial` and fsyncs a
+cumulative, original JSON event stream at `FILE.reference.jsonl`. The partial
+record includes the fixed commit, whole repository inventory, package plan,
+toolchain/environment identity, closures and per-package event hashes. Resume
+with the same `-out`: it validates that evidence and runs only unfinished packages.
+Incomplete or failed references never justify a skip. A failed package makes that
+reference attempt failed; a completed reference requires a new destination for a
+fresh run. Four package workers share the box by default (`-jobs 4`).
+
+Pin a known main ancestor when integration may advance `origin/main`:
+
+```sh
+/tmp/adamic-affected record -main e011f8f60899586d6373a5ccb07335ad82cfbf3c -jobs 4 -out /tmp/main-inputs.json > /tmp/record.stdout 2> /tmp/record.stderr
+```
+
+The test binary runs directly with `-test.v=test2json -test.timeout=30m` and
+`ADAMIC_GATE_UNCACHED=1`. A separate stdin-mode `go tool test2json` converts its
+complete output into the JSON log. Command-mode test2json calls `ignoreSignals`
+before exec, which changes inherited SIGINT behavior. The first reference attempt
+failed the actual oracle interrupt test for that reason; it was retained separately
+and never published. The direct runner passed all three signal cases. Record format
+4 and the invocation identity prevent mixing the two harnesses on resume.
+
 On a branch:
 
 ```sh

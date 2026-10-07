@@ -18,7 +18,7 @@ import (
 	"unicode/utf8"
 )
 
-const formatVersion = 2
+const formatVersion = 4
 
 type packageInfo struct {
 	ImportPath, Dir                                          string
@@ -33,11 +33,15 @@ type closure struct {
 	Events    string
 }
 type recordFile struct {
-	Version   int
-	Commit    string
-	Toolchain map[string]string
-	Submodule string
-	Packages  map[string]closure
+	Version     int
+	Commit      string
+	Toolchain   map[string]string
+	Submodule   string
+	Packages    map[string]closure
+	Complete    bool
+	Reference   string
+	EventHashes map[string]string
+	WallSeconds float64
 }
 
 func main() {
@@ -58,6 +62,8 @@ func run(args []string) error {
 	flags := flag.NewFlagSet(args[0], flag.ContinueOnError)
 	out := flags.String("out", "", "record destination outside repository")
 	input := flags.String("record", "", "green-main record")
+	jobs := flags.Int("jobs", 4, "maximum simultaneous uncached package runs")
+	mainRef := flags.String("main", "origin/main", "fixed main commit or reference")
 	if err := flags.Parse(args[1:]); err != nil {
 		return err
 	}
@@ -80,156 +86,14 @@ func run(args []string) error {
 		if inside(root, destination) {
 			return fmt.Errorf("record must live outside repository")
 		}
-		status, err := command(root, "git", "status", "--porcelain")
-		if err != nil {
-			return err
-		}
-		if len(status) != 0 {
-			return fmt.Errorf("record requires a clean checkout")
-		}
-		commit, err := command(root, "git", "rev-parse", "HEAD")
-		if err != nil {
-			return err
-		}
-		main, err := command(root, "git", "rev-parse", "origin/main")
-		if err != nil {
-			return err
-		}
-		if !bytes.Equal(commit, main) {
-			return fmt.Errorf("record requires HEAD = origin/main")
-		}
-		tools, err := toolchain(root)
-		if err != nil {
-			return err
-		}
-		submodule, err := submoduleIdentity(root)
-		if err != nil {
-			return err
-		}
-		record := recordFile{formatVersion, strings.TrimSpace(string(commit)), tools, submodule, map[string]closure{}}
-		initial := map[string]string{}
-		if err := tree(root, root, initial); err != nil {
-			return err
-		}
-		logs := destination + ".logs"
-		if err := os.MkdirAll(logs, 0755); err != nil {
-			return err
-		}
-		logs, err = os.MkdirTemp(logs, "run-")
-		if err != nil {
-			return err
-		}
-		observer, err := buildNotificationObserver(logs)
-		if err != nil {
-			return err
-		}
-		for _, pkg := range packages {
-			if pkg.ImportPath == "github.com/system-inc/adamic/internal/native" {
-				if err := observerCompatible(logs, observer); err != nil {
-					return err
-				}
-				break
-			}
-		}
-		// All package runs are uncached. Publish nothing until every package is green.
-		for index, pkg := range packages {
-			fmt.Fprintf(os.Stderr, "record %d/%d %s\n", index+1, len(packages), pkg.ImportPath)
-			static, err := staticInputs(root, pkg.ImportPath)
-			if err != nil {
-				return err
-			}
-			stem := filepath.Join(logs, fmt.Sprintf("%03d", index))
-			binary := stem + ".test"
-			if err := logged(root, stem+".build.log", "go", "test", "-c", "-o", binary, pkg.ImportPath); err != nil {
-				return err
-			}
-			value := closure{Static: static, Observed: map[string]string{}}
-			dependencies, err := list(root, "-deps", "-test", pkg.ImportPath)
-			if err != nil {
-				return err
-			}
-			for _, dependency := range dependencies {
-				if inside(root, dependency.Dir) && len(dependency.CgoFiles) > 0 {
-					value.Uncertain = append(value.Uncertain, "repository cgo inputs may include headers outside Go's file list")
-				}
-			}
-			if _, err := os.Stat(binary); os.IsNotExist(err) {
-				record.Packages[pkg.ImportPath] = value
-				continue
-			} else if err != nil {
-				return err
-			}
-			value.Events = stem + ".jsonl"
-			if err := tracedRun(root, pkg, binary, stem, &value, observer); err != nil {
-				return err
-			}
-			for path, after := range value.Observed {
-				before, present := initial[path]
-				if !present {
-					before = "missing"
-				}
-				if before != after {
-					return fmt.Errorf("observed input changed during record: %s", path)
-				}
-			}
-			// Reject inputs changed by tests or a concurrent editor.
-			after, err := staticInputs(root, pkg.ImportPath)
-			if err != nil {
-				return err
-			}
-			if !reflect.DeepEqual(static, after) {
-				return fmt.Errorf("static inputs changed during %s", pkg.ImportPath)
-			}
-			record.Packages[pkg.ImportPath] = value
-		}
-		after, err := toolchain(root)
-		if err != nil {
-			return err
-		}
-		if !reflect.DeepEqual(tools, after) {
-			return fmt.Errorf("toolchain changed during record")
-		}
-		afterSubmodule, err := submoduleIdentity(root)
-		if err != nil {
-			return err
-		}
-		if submodule != afterSubmodule {
-			return fmt.Errorf("submodule changed during record")
-		}
-		for name, value := range record.Packages {
-			current, err := staticInputs(root, name)
-			if err != nil || !reflect.DeepEqual(value.Static, current) || changed(root, value.Observed) {
-				return fmt.Errorf("inputs changed before publishing record for %s", name)
-			}
-		}
-		status, err = command(root, "git", "status", "--porcelain")
-		if err != nil || len(status) != 0 {
-			return fmt.Errorf("checkout changed during record")
-		}
-		encoded, err := json.MarshalIndent(record, "", "  ")
-		if err != nil {
-			return err
-		}
-		temporary, err := os.CreateTemp(filepath.Dir(destination), ".affected-")
-		if err != nil {
-			return err
-		}
-		defer os.Remove(temporary.Name())
-		if _, err := temporary.Write(encoded); err != nil {
-			temporary.Close()
-			return err
-		}
-		if err := temporary.Close(); err != nil {
-			return err
-		}
-		return os.Rename(temporary.Name(), destination)
+		return recordMain(root, destination, packages, *jobs, *mainRef)
 	case "select":
 		if *input == "" {
 			return fmt.Errorf("-record is required")
 		}
 		contents, readErr := os.ReadFile(*input)
 		var record recordFile
-		invalid := readErr != nil || json.Unmarshal(contents, &record) != nil || record.Version != formatVersion || record.Packages == nil
+		invalid := readErr != nil || json.Unmarshal(contents, &record) != nil || record.Version != formatVersion || !record.Complete || record.Packages == nil
 		tools, toolErr := toolchain(root)
 		submodule, subErr := submoduleIdentity(root)
 		all := invalid || toolErr != nil || subErr != nil || !reflect.DeepEqual(record.Toolchain, tools) || record.Submodule != submodule
@@ -462,6 +326,7 @@ func toolchain(root string) (map[string]string, error) {
 	values["environment SHA256"] = digest([]byte(strings.Join(environment, "\x00")))
 	values["uid"] = fmt.Sprint(os.Getuid())
 	values["observer implementation SHA256"] = digest([]byte(notificationSource))
+	values["test invocation"] = "direct binary; stdin test2json; -test.v=test2json -test.timeout=30m"
 	return values, nil
 }
 func submoduleIdentity(root string) (string, error) {

@@ -10,6 +10,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"unicode/utf8"
 )
 
 //go:embed observer/notify.c
@@ -43,14 +44,43 @@ func tracedRun(root string, pkg packageInfo, binary, stem string, value *closure
 	// Seccomp notifications are inherited by the whole process tree without
 	// ptrace, so LeakSanitizer remains enabled. The decoder also accepts the
 	// equivalent pathname/descriptor annotations produced by strace -yy.
-	args := []string{"-o", stem + ".trace", "--", "go", "tool", "test2json", "-t", "-p", pkg.ImportPath, binary, "-test.v=test2json", "-test.timeout=30m"}
+	// Command-mode test2json ignores signals before exec, changing native's
+	// inherited SIGINT disposition. Convert stdin instead, with no test child.
+	reader, writer, err := os.Pipe()
+	if err != nil {
+		return err
+	}
+	defer reader.Close()
+	defer writer.Close()
+	converter := exec.Command("go", "tool", "test2json", "-t", "-p", pkg.ImportPath)
+	converter.Dir = pkg.Dir
+	converter.Stdin = reader
+	converter.Stdout = events
+	converter.Stderr = errors
+	if err := converter.Start(); err != nil {
+		return err
+	}
+	reader.Close()
+	args := []string{"-o", stem + ".trace", "--", binary, "-test.v=test2json", "-test.timeout=30m"}
 	command := exec.Command(observer, args...)
 	command.Dir = pkg.Dir
 	command.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1")
-	command.Stdout = events
-	command.Stderr = errors
-	if err := command.Run(); err != nil {
-		return fmt.Errorf("traced uncached %s: %w; see %s and %s.stderr", pkg.ImportPath, err, value.Events, stem)
+	command.Stdout = writer
+	command.Stderr = writer
+	startErr := command.Start()
+	writer.Close()
+	var runErr error
+	if startErr == nil {
+		runErr = command.Wait()
+	} else {
+		runErr = startErr
+	}
+	conversionErr := converter.Wait()
+	if runErr != nil {
+		return fmt.Errorf("traced uncached %s: %w; see %s and %s.stderr", pkg.ImportPath, runErr, value.Events, stem)
+	}
+	if conversionErr != nil {
+		return fmt.Errorf("test event conversion: %w", conversionErr)
 	}
 	traces, err := filepath.Glob(stem + ".trace")
 	if err != nil {
@@ -67,7 +97,7 @@ func tracedRun(root string, pkg packageInfo, binary, stem string, value *closure
 		scanner := bufio.NewScanner(file)
 		scanner.Buffer(make([]byte, 65536), 16<<20)
 		for scanner.Scan() {
-			observeLine(root, pkg.Dir, scanner.Text(), value)
+			collectLine(root, pkg.Dir, scanner.Text(), value)
 		}
 		err = scanner.Err()
 		file.Close()
@@ -75,9 +105,34 @@ func tracedRun(root string, pkg packageInfo, binary, stem string, value *closure
 			value.Uncertain = append(value.Uncertain, "trace decode: "+err.Error())
 		}
 	}
-	return nil
+	// The closure is a set of paths, not a list of opens. Hash each member of
+	// that union once after the process tree exits; initial and final snapshots
+	// still reject changed inputs. No test result or content hash is reused.
+	for key := range value.Observed {
+		path := key
+		if !filepath.IsAbs(path) {
+			path = filepath.Join(root, path)
+		}
+		if err := add(root, path, value.Observed); err != nil {
+			delete(value.Observed, key)
+			value.Uncertain = append(value.Uncertain, "observed input: "+err.Error())
+		}
+	}
+	return events.Sync()
 }
 func observeLine(root, cwd, line string, value *closure) {
+	decodeLine(root, cwd, line, value, func(path string) error { return add(root, path, value.Observed) })
+}
+func collectLine(root, cwd, line string, value *closure) {
+	decodeLine(root, cwd, line, value, func(path string) error {
+		if !utf8.ValidString(path) {
+			return fmt.Errorf("input pathname is not valid UTF-8")
+		}
+		value.Observed[inputPath(root, path)] = ""
+		return nil
+	})
+}
+func decodeLine(root, cwd, line string, value *closure, addPath func(string) error) {
 	if strings.HasPrefix(line, "+++") || strings.HasPrefix(line, "---") {
 		return
 	}
@@ -163,13 +218,13 @@ func observeLine(root, cwd, line string, value *closure) {
 		if gitMetadata {
 			continue
 		}
-		if err := add(root, path, value.Observed); err != nil {
+		if err := addPath(path); err != nil {
 			value.Uncertain = append(value.Uncertain, "observed input: "+err.Error())
 		}
 		// Missing probes can change their error when a parent changes type,
 		// permissions or symlink target, even while the leaf stays missing.
 		for parent := filepath.Dir(path); inside(root, parent); parent = filepath.Dir(parent) {
-			if err := add(root, parent, value.Observed); err != nil {
+			if err := addPath(parent); err != nil {
 				value.Uncertain = append(value.Uncertain, "observed parent: "+err.Error())
 			}
 			if parent == root {

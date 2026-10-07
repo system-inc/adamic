@@ -308,3 +308,41 @@ func TestNodeObservationFailsClosed(t *testing.T) {
 		t.Fatal("unsupported asynchronous input did not fail closed")
 	}
 }
+
+func TestObservedPathUnionKeyMutant(t *testing.T) {
+	root := t.TempDir()
+	for _, directory := range []string{"left", "right"} {
+		writeInput(t, filepath.Join(root, directory, "value.a"), "before")
+	}
+	value := closure{Observed: map[string]string{}}
+	for _, directory := range []string{"left", "right", "left"} {
+		path := filepath.Join(root, directory, "value.a")
+		collectLine(root, root, `openat(AT_FDCWD<`+root+`>, "`+directory+`/value.a", O_RDONLY) = entry<`+path+`>`, &value)
+	}
+	if len(value.Uncertain) > 0 {
+		t.Fatal(value.Uncertain)
+	}
+	mutant := map[string]string{}
+	for key := range value.Observed {
+		// Drop the directory part of the union key. Hashes are still computed
+		// fresh, but they now describe the wrong filesystem inputs.
+		if err := add(root, filepath.Join(root, filepath.Base(key)), mutant); err != nil {
+			t.Fatal(err)
+		}
+		if err := add(root, filepath.Join(root, key), value.Observed); err != nil {
+			t.Fatal(err)
+		}
+	}
+	writeInput(t, filepath.Join(root, "right", "value.a"), "after")
+	if !changed(root, value.Observed) {
+		t.Fatal("full path union missed changed bytes")
+	}
+	if changed(root, mutant) {
+		t.Fatal("path-key mutant did not wrongly skip")
+	}
+	bytes, err := os.ReadFile(filepath.Join(root, "right", "value.a"))
+	if err != nil || string(bytes) == "before" {
+		t.Fatal("independent file read failed to catch path-key mutant")
+	}
+	t.Log("path union mutant dropped directories; independent file bytes caught its wrongful skip")
+}
