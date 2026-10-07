@@ -12,8 +12,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/enums/01_token_range.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/enums/01_token_range.a:5:1: Adamic 0.1 refuses enum; use a union of string literals, like 'Circle' | 'Square'"
     }
   },
   {
@@ -29,8 +29,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/enums/02_node_range.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/enums/02_node_range.a:5:1: Adamic 0.1 refuses enum; use a union of string literals, like 'Circle' | 'Square'"
     }
   },
   {
@@ -46,8 +46,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/enums/03_jsdoc_range.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/enums/03_jsdoc_range.a:5:1: Adamic 0.1 refuses enum; use a union of string literals, like 'Circle' | 'Square'"
     }
   },
   {
@@ -63,8 +63,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/enums/04_parse_tree_mask.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/enums/04_parse_tree_mask.a:5:1: Adamic 0.1 refuses enum; use a union of string literals, like 'Circle' | 'Square'"
     }
   },
   {
@@ -80,8 +80,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/enums/05_local_export_flags.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/enums/05_local_export_flags.a:5:1: Adamic 0.1 refuses enum; use a union of string literals, like 'Circle' | 'Square'"
     }
   },
   {
@@ -97,8 +97,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/enums/06_set_node_flags.a:6:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/enums/06_set_node_flags.a:6:1: Adamic 0.1 refuses enum; use a union of string literals, like 'Circle' | 'Square'"
     }
   },
   {
@@ -117,8 +117,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/enums/07_regex_array_map.a:20:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/enums/07_regex_array_map.a:7:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/enums/07_regex_array_map.a:7:1: Adamic 0.1 refuses enum; use a union of string literals, like 'Circle' | 'Square'"
     }
   },
   {
@@ -135,7 +135,7 @@
     },
     "stage0": {
       "outcome": "Checker",
-      "what": "stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:7:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "what": "stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'."
     }
   },
   {
@@ -151,8 +151,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/enums/09_symbol_exclusion_mask.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/enums/09_symbol_exclusion_mask.a:5:1: Adamic 0.1 refuses enum; use a union of string literals, like 'Circle' | 'Square'"
     }
   },
   {
@@ -168,8 +168,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/enums/10_string_enum.a:5:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/enums/10_string_enum.a:5:1: Adamic 0.1 refuses enum; use a union of string literals, like 'Circle' | 'Square'"
     }
   },
   {
@@ -187,7 +187,7 @@
     },
     "stage0": {
       "outcome": "Checker",
-      "what": "stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/syntax-kind-support.a:3:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "what": "stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'."
     }
   },
   {
@@ -203,8 +203,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/enums/12_diagnostic_reverse_lookup.a:4:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/enums/12_diagnostic_reverse_lookup.a:4:1: Adamic 0.1 refuses enum; use a union of string literals, like 'Circle' | 'Square'"
     }
   },
   {
@@ -222,8 +222,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/enums/13_regex_map_keys.a:19:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.\nstage3/fixtures/enums/13_regex_map_keys.a:6:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/enums/13_regex_map_keys.a:6:1: Adamic 0.1 refuses enum; use a union of string literals, like 'Circle' | 'Square'"
     }
   }
 ]
