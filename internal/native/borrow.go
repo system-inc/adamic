@@ -136,9 +136,8 @@ func eachOperand(expression ir.Expression, visit func(ir.Expression)) {
 // touches also rejects unknown closure and callback effects. Reads of the global
 // are conservatively refused along with writes.
 func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
-	parameters := e.program.Functions[call.Function].Parameters
 	read, ok := call.Arguments[index].(ir.Read)
-	if !ok || index >= len(parameters) || !e.program.Locals[read.Local].Global || !lendable(read.Of) || !e.program.Locals[parameters[index]].Borrowed || e.reuse.consumed[parameters[index]] {
+	if !ok || !e.program.Locals[read.Local].Global || !lendable(read.Of) {
 		return "", false
 	}
 	for _, argument := range call.Arguments[index+1:] {
@@ -147,7 +146,8 @@ func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
 		}
 	}
 	for _, target := range e.program.CallTargets(call) {
-		if touches(e.program, target, read.Local, map[int]bool{}) || !e.program.Locals[e.program.Functions[target].Parameters[index]].Borrowed || e.reuse.consumed[e.program.Functions[target].Parameters[index]] {
+		parameters := e.program.Functions[target].Parameters
+		if index >= len(parameters) || touches(e.program, target, read.Local, map[int]bool{}) || !e.program.Locals[parameters[index]].Borrowed || e.reuse.consumed[parameters[index]] {
 			return "", false
 		}
 	}

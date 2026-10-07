@@ -29,7 +29,7 @@ cases += [
  ('global-virtual-targets',paths[1],'e.program.CallTargets(call)','[]int{call.Function}',oracle),
  ('iterator-transfer',paths[2],'held, e.kept(iterable))','held, func() string { for _, owned := range e.owned { if owned == iterable { return iterable } }; return e.kept(iterable) }())',oracle),
  ('error-construction',paths[0],'ir.MakeClosure, ir.MakeError, ir.Defined','ir.MakeClosure, ir.Defined',plan),
- ('global-disabled',paths[1],'parameters := e.program.Functions[call.Function].Parameters','if true { return "", false }; parameters := e.program.Functions[call.Function].Parameters',['go','test','./internal/native','-run','TestGlobalArgumentLending','-count=1']),
+ ('global-disabled',paths[1],'func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {','func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) { if true { return "", false };',['go','test','./internal/native','-run','TestGlobalArgumentLending','-count=1']),
 ]
 cases += [('element-virtual-call',paths[0],'expression.Virtual == 0 && !changing[expression.Function]','!changing[expression.Function]',['go','test','./internal/oracle','-run','TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_virtual_store','-count=1'])]
 selected = os.environ.get('ADAMIC_LOOP_MUTANTS', '').split(',')

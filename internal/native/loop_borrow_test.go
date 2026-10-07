@@ -98,13 +98,13 @@ func TestGlobalArgumentLending(t *testing.T) {
 			if !ok || !program.Locals[read.Local].Global || read.Of != ir.Object {
 				continue
 			}
-			want := program.Functions[call.Function].Name == "read" && call.Virtual == 0
+			want := program.Functions[program.CallTargets(call)[0]].Name == "read" && call.Virtual == 0
 			for _, later := range call.Arguments[index+1:] {
 				want = want && pure(later)
 			}
 			_, lent := emitter.lentArgument(call, index)
 			if lent != want {
-				t.Errorf("%s virtual %d argument %d lent %t, want %t", program.Functions[call.Function].Name, call.Virtual, index, lent, want)
+				t.Errorf("%s virtual %d argument %d lent %t, want %t", program.Functions[program.CallTargets(call)[0]].Name, call.Virtual, index, lent, want)
 			}
 			checked++
 		}
@@ -200,7 +200,7 @@ func TestLoopCallCoverage(t *testing.T) {
 			return
 		}
 		_, lent := caller.lentArgument(call, 0)
-		switch program.Functions[call.Function].Name {
+		switch program.Functions[program.CallTargets(call)[0]].Name {
 		case "reportQuiet":
 			lentQuiet++
 			if !lent {
