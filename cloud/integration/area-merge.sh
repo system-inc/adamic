@@ -212,6 +212,31 @@ if [ "${#packages[@]}" -gt 0 ] || [ "$compiler" = yes ] || [ -n "$oraclePattern"
 		fi
 	fi
 fi
+# Stage 3's adaptations are .cjs, .py, .json and .sh, so no Go test sees them: a change under
+# stage3/ applies every adaptation to tsc and runs upstream's whole suite on the result, which
+# must pass exactly the expected count with no baseline differences beyond the sanctioned ones.
+if printf '%s\n' "$changed" | grep -q '^stage3/'; then
+	expectedPassing=${ADAMIC_STAGE3_EXPECTED_PASSING:-106367}
+	sanctioned=${ADAMIC_STAGE3_SANCTIONED_DIFFS:-api/typescript.d.ts}
+	if ! bash stage3/apply.sh "$logs/stage3-tree" >"$logs/stage3-apply.log" 2>&1; then
+		echo "stage3/apply.sh failed on the merged tree: $logs/stage3-apply.log"
+		status=1
+	else
+		stage3/oracle/run.sh "$logs/stage3-tree" "$logs/stage3-oracle" >"$logs/stage3-oracle.log" 2>&1 || true
+		python3 -c 'import json,sys
+report = json.load(open(sys.argv[1]))
+expected = int(sys.argv[2])
+sanctioned = [name for name in sys.argv[3].split(",") if name]
+passing = report.get("counts", {}).get("passing", 0)
+differences = report.get("baseline_diffs") or []
+unsanctioned = [d for d in differences if not any(name in str(d) for name in sanctioned)]
+print("stage3 upstream suite: %d passing (expected %d), %d baseline differences, %d unsanctioned" % (passing, expected, len(differences), len(unsanctioned)))
+for d in unsanctioned:
+    print("  unsanctioned baseline difference: %s" % d)
+sys.exit(0 if passing == expected and not unsanctioned else 1)' "$logs/stage3-oracle/report.json" "$expectedPassing" "$sanctioned" || status=1
+	fi
+	echo "ran: stage3/apply.sh and stage3/oracle/run.sh on the merged tree"
+fi
 if [ "$oracle" = test262 ] && [ "${#filters[@]}" -gt 0 ]; then
 	if [ -z "${ADAMIC_TEST262:-}" ]; then
 		echo "test262 filters named but ADAMIC_TEST262 is unset"
