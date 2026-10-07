@@ -29,7 +29,7 @@ exact `lower.NotYet.What` refusal. A gap closing therefore fails the gap test.
 | [3_optional_boolean.ts](gaps/3_optional_boolean.ts)       | `true`      | `a field of type boolean \| undefined`                 | Quoted value and presence bit.                 |
 | [4_array_from_iterator.ts](gaps/4_array_from_iterator.ts) | `a`         | `Array.from with other than { length } and a callback (write Array.from({ length: count }, (_, index) => value))` | Explicit map-key collection loop.              |
 | [5_conditional_panic.ts](gaps/5_conditional_panic.ts)     | `a`         | `reading panic`                                        | Guard helper calls panic in its own statement. |
-| [6_undefined_case.ts](gaps/6_undefined_case.ts)           | `a`         | `a case that isn't a constant`                         | Narrow undefined before the switch.            |
+| [6_undefined_case.ts](gaps/6_undefined_case.ts)           | `a`         | `a case whose type differs from the switch's`                         | Narrow undefined before the switch.            |
 
 Methods are ordered callee first, and parenthesis recursion is integrated into
 `Parser.parse`, following the GraphQL slice's workaround for forward method

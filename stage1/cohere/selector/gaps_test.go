@@ -17,7 +17,7 @@ import (
 // it records (badC), or closed (neither), when it must lower and print natively what it prints on Node,
 // leaking nothing. So when a gap moves, this test says so, and the port's workaround for it can go.
 var gaps = []struct{ path, notYet, badC, stdout string }{
-	{path: "gaps/6_undefined_case.ts", notYet: "a case that isn't a constant", stdout: "a\n"},
+	{path: "gaps/6_undefined_case.ts", notYet: "a case whose type differs from the switch's", stdout: "a\n"},
 	{path: "gaps/1_multiple_push.ts", notYet: "push with other than one value", stdout: "ab\n"},
 	{path: "gaps/2_mixed_field.ts", notYet: "a field of type string | boolean | undefined", stdout: "true\n"},
 	{path: "gaps/3_optional_boolean.ts", notYet: "a field of type boolean | undefined", stdout: "true\n"},
