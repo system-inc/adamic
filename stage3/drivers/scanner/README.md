@@ -69,10 +69,11 @@ the proposed 86. Those legacy plans and results remain historical evidence.
 unknown parameter still cannot lower. The latest compiler tips and scratch
 integration SHA are recorded in evidence/native-live-feature-refs.json.
 
-The latest front-2/import-cycles/library-loader attempt stops at the reached
-MapLike index signature in corePublic.ts:9:5. The cycle probe prints 1 natively;
+The latest front-2 860a0d5 plus records-lowering/runtime-records attempt admits
+MapLike's type-only index signature: its unchanged probe prints ok natively.
+The scanner now stops at Debug.fail's Error-as-any cast, debug.ts:14:14.
 Node's 509,014 tokens still match the full tree. See BLOCKERS.md and
-evidence/front2-run.json. No native scanner diff or ownership pass is claimed.
+evidence/records-run.json. No native scanner diff or ownership pass is claimed.
 
 ## Native comparison and measurement
 

@@ -1,5 +1,44 @@
 # Scanner blockers
 
+## October 7: records closes MapLike, next real gate is Error's any cast
+
+Scratch 06b7f7b3 contains newest area/stage3 4ad53a4, front-2 860a0d5
+(which includes import-cycles 779ff9d), library/qualified-as-const 8280fd08,
+records-lowering 70fb62b1 and runtime-records 754e6667, retaining prior scanner
+features. All five requested tips are ancestors. Compiler rebuild succeeds.
+
+**MapLike blocker closed:** unchanged probes/index-signature-type-only.a
+compiles and prints `ok` natively, identical to Node. The pure mutable
+string-indexed type-only declaration is admitted; this probe needs no additional
+compiler fix. Changing one byte of this probe's native output is caught by
+diff (exit 1), scoped to the probe rather than scanner output.
+
+**RED, exact next real failure:** `debug.ts:14:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)`.
+The expression is `(Error as any)` in Debug.fail's captureStackTrace condition.
+The existing unmodified error-constructor-value.a is the minimal program:
+Node prints `captureStackTrace available`; this compiler refuses its cast at
+2:6. Error as a value is implemented in the scratch merge; the checked-cast
+preflight now refuses the cast to any before the Error value lowering gets it.
+The source also has the same cast in the subsequent capture call. No Error
+stub, removed capture operation, or unchecked compiler admission was added.
+As previously assigned, removal of these casts after admitting the pinned Node
+declarations belongs to adaptation 40's unit, not a scanner source bypass.
+
+Records merge lowering conflicts: expression.go combines recordExpression with
+enum/namespace/Error dispatch; refusals.go replaces the blanket index-signature
+refusal with recordLiteralRead, recordStorageView, recordElement and delete
+admission while preserving all existing feature checks. The runtime branch was
+already an ancestor of records-lowering. Updating front-2 conflicts only in
+oracle counts. Two scratch rooted-filename API conversions were needed in
+expression.go and records.go. No compiler edit or scratch merge was pushed.
+
+The unstubbed scanner still emits 509,014 Node tokens over all 81 files; the
+full-tree diff is empty (exit 0). Token end+1 mutant is caught (exit 1). Native
+scanner binary, token diff, timings and size remain unavailable at this refusal;
+perf is not installed. No further stub discovery or full compiler gate was run.
+Evidence: records-run.json and records-*.log/.diff.
+
+
 ## October 7: front-2 plus explicit import-cycles and library loader, real run
 
 **RED, exact first failure:** `corePublic.ts:9:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added`.
