@@ -1,0 +1,12 @@
+package tailwind
+import "fmt"
+func Wave08NewTheme(key string) string {
+ left,right:=NewTheme(),NewTheme()
+ output:=fmt.Sprintf("%t %d %d %d\n",left.Prefix=="",len(left.values),len(left.keyOrder),left.deadKeys)
+ values,order:=left.values,left.keyOrder
+ values[key]=themeValue{value:key,options:4};order=append(order,key);left.keyOrder=order;left.Prefix="changed";left.deadKeys=2
+ _,found:=left.values[key]
+ output+=fmt.Sprintf("%t %t %t %d %d %d\n",found,left.keyOrder[0]==key,right.Prefix=="",len(right.values),len(right.keyOrder),right.deadKeys)
+ third:=NewTheme()
+ return output+fmt.Sprintf("%t %d %d %d\n",third.Prefix=="",len(third.values),len(third.keyOrder),third.deadKeys)
+}

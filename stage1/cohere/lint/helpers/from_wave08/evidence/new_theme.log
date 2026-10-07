@@ -1,0 +1,21 @@
+=== RUN   TestNewTheme
+    helpers_test.go:117: better-tailwindcss/enforce-canonical-classes: 264 fixture literals
+    helpers_test.go:117: better-tailwindcss/enforce-consistent-class-order: 376 fixture literals
+    helpers_test.go:117: better-tailwindcss/enforce-consistent-variant-order: 112 fixture literals
+    helpers_test.go:117: better-tailwindcss/enforce-shorthand-classes: 133 fixture literals
+    helpers_test.go:117: better-tailwindcss/no-conflicting-classes: 255 fixture literals
+    helpers_test.go:117: better-tailwindcss/no-unknown-classes: 244 fixture literals
+    helpers_test.go:117: 1391 constructor probes
+=== RUN   TestNewTheme/false
+    helpers_test.go:167: Node matched Go: 59813 bytes
+    helpers_test.go:167: JavaScript matched Go: 59813 bytes
+    helpers_test.go:167: native matched Go: 59813 bytes
+=== RUN   TestNewTheme/true
+    helpers_test.go:165: compiled semantic mutant caught on Node
+    helpers_test.go:165: compiled semantic mutant caught on JavaScript
+    helpers_test.go:165: compiled semantic mutant caught on native
+--- PASS: TestNewTheme (37.88s)
+    --- PASS: TestNewTheme/false (28.12s)
+    --- PASS: TestNewTheme/true (8.73s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave08	37.902s

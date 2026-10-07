@@ -1,0 +1,18 @@
+import {panic, programArguments, readTextFile} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {newTheme} from './theme_new.a';
+const input = readTextFile(programArguments()[0] ?? panic('cases path'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const child of json.node(root).children) {
+    const key = json.node(child).text;
+    const left = newTheme(); const right = newTheme();
+    console.log(`${left.prefix === ''} ${left.values.size} ${left.keyOrder.length} ${left.deadKeys}`);
+    const map = left.values; const order = left.keyOrder;
+    map.set(key, {value: key, options: 4}); order.push(key); left.prefix = 'changed'; left.deadKeys = 2;
+    console.log(`${left.values.has(key)} ${left.keyOrder[0] === key} ${right.prefix === ''} ${right.values.size} ${right.keyOrder.length} ${right.deadKeys}`);
+    const third = newTheme();
+    console.log(`${third.prefix === ''} ${third.values.size} ${third.keyOrder.length} ${third.deadKeys}`);
+}

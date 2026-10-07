@@ -1,0 +1,12 @@
+// Go NewTheme allocates a fresh map. Its nil order slice has zero entries;
+// the adapter uses a fresh empty array so later insertion stays writable.
+export interface ThemeEntry { readonly value: string; readonly options: number; }
+export interface ThemeStore {
+    prefix: string;
+    values: Map<string, ThemeEntry>;
+    keyOrder: string[];
+    deadKeys: number;
+}
+export function newTheme(): ThemeStore {
+    return {prefix: '', values: new Map<string, ThemeEntry>(), keyOrder: [], deadKeys: 0};
+}
