@@ -1,0 +1,2 @@
+declare const p:string;RegExp(p,'\ud800🌍\udc00');RegExp(p,'�');RegExp(p,'\ufffd');
+export {};

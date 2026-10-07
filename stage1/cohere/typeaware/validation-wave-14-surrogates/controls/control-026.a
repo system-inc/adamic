@@ -1,0 +1,2 @@
+declare const p:string;declare const flags:string;RegExp(p,flags);RegExp(p,('ii'));RegExp((p),'ii');
+export {};

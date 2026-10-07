@@ -211,15 +211,31 @@ export class NoInvalidRegexp {
         return "'" + value + "'";
     }
     flags(text: string): string {
+        // typescript-go stores an unpaired UTF-16 unit as three WTF-8 bytes.
+        // Go's rune walk and canonical output each replace every invalid byte.
+        // Valid surrogate pairs are already combined by both scanners.
+        let decoded = '';
+        for(let at = 0; at < text.length; at++) {
+            const high = text.charCodeAt(at);
+            const low = text.charCodeAt(at + 1);
+            if(high >= 0xd800 && high <= 0xdbff && low >= 0xdc00 && low <= 0xdfff) {
+                decoded += text.slice(at, at + 2);
+                at++;
+            }
+            else if(high >= 0xd800 && high <= 0xdfff) {
+                decoded += '\ufffd\ufffd\ufffd';
+            }
+            else {
+                decoded += text.slice(at, at + 1);
+            }
+        }
+        text = decoded;
         const remaining: string[] = [];
         const seen: string[] = [];
         for(let at = 0; at < text.length; at++) {
             const high = text.charCodeAt(at);
             const low = text.charCodeAt(at + 1);
             const width = high >= 0xd800 && high <= 0xdbff && low >= 0xdc00 && low <= 0xdfff ? 2 : 1;
-            if((high >= 0xd800 && high <= 0xdbff && width === 1) || (high >= 0xdc00 && high <= 0xdfff)) {
-                panic('NotYet: lone-surrogate constructor flags need matching Go string decoding');
-            }
             const flag = text.slice(at, at + width);
             at += width - 1;
             if('dgimsuvy'.includes(flag) && !seen.includes(flag)) {

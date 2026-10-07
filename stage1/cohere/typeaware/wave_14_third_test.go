@@ -83,6 +83,9 @@ func TestWave14ThirdAgreementAndMutants(t *testing.T) {
 		"const value=/[à́]/u;",
 		`const value=/[\n̅]/u;`,
 		"/* 世界 🌍 */\r\nconst value=/[Á👍]/;\r\n",
+		`declare const p:string;RegExp(p,'\ud800');RegExp(p,'\udc00');RegExp(p,'\ud800\udc00');RegExp(p,'\u{10000}');`,
+		`declare const p:string;RegExp(p,'\ud800gii');RegExp(p,'\udc00uv');RegExp(p,'\ud800\ud800');RegExp(p,'\udc00\ud800');`,
+		`declare const p:string;RegExp(p,'\ud800🌍\udc00');RegExp(p,'�');RegExp(p,'\ufffd');`,
 	}
 	var paths []string
 	for i, source := range controls {
@@ -102,6 +105,7 @@ func TestWave14ThirdAgreementAndMutants(t *testing.T) {
 		{"label", "no_label_var.a", "!new ScopeSymbols(this.rules, at).names.includes(label)", "new ScopeSymbols(this.rules, at).names.includes(label)"},
 		{"flags", "no_invalid_regexp.a", "if('dgimsuvy'.includes(flag)) {", "if('never'.includes(flag)) {"},
 		{"unicode-quote", "no_invalid_regexp.a", "code >= 128 && !this.printable(code)", "code >= 128 && this.printable(code)"},
+		{"surrogate-decoding", "no_invalid_regexp.a", `decoded += '\ufffd\ufffd\ufffd';`, `decoded += '\ufffd';`},
 		{"class", "no_misleading_character_class.a", "this.combining(current.value) && !this.combining(previous.value)", "this.combining(previous.value) && !this.combining(current.value)"},
 	} {
 		unused := wave14NextMutant(h, stage0, archive, m.name, m.file, m.from, m.to)
@@ -134,7 +138,6 @@ func TestWave14ThirdAgreementAndMutants(t *testing.T) {
 		}
 	}
 	for _, gap := range []struct{ name, source, id, reason string }{
-		{"flag-decoding", `declare const p:string;RegExp(p,'\ud800');`, "invalidRegexp", "lone-surrogate constructor flags"},
 		{"label-parser", "undefined: for(;;) {break undefined;}", "identifierClashWithLabel", "parser slice expected semicolon"},
 		{"pattern", "new RegExp('[');", "invalidRegexp", "native ECMAScript pattern validation"},
 		{"constructor", "new RegExp('[Á]');", "combiningClass", "native constructor reference tracking"},

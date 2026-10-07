@@ -89,3 +89,16 @@ shared parser gap; string-pattern validation, constructor reference/source
 mapping and lone-surrogate flags are explicit refused dependency paths. These
 are demonstrated by independent Go-positive witnesses. No further batch is
 claimed. See ../WAVE_14_THIRD_REPORT.md.
+
+## Surrogate flags completed on resume
+
+Fetched origin and removed the lone-surrogate flags refusal in the owned native
+rule. Three additional .a controls bring the supported comparison to 54 inputs,
+60 findings and 19,352 identical bytes in normal and sanitizer builds. Six
+compiled comparison-only mutants and the released-handle mutant are caught.
+Both frozen corpora still agree. The rule suite passes in 99.844 s.
+Undefined labels, native pattern validation and constructor tracking/source
+mapping remain explicit Go-positive boundaries; real JSX remains blocked in the
+preceding batch. No further rules are claimed while these incomplete paths
+remain. See ../WAVE_14_SURROGATE_REPORT.md for the current commands, evidence and
+native-versus-Go timing.
