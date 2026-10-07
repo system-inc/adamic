@@ -1,0 +1,16 @@
+import type {ThemeStore} from './theme_new.a';
+// The caller supplies Go's ignored namespace list and the owned deletion operation.
+// Collection must finish before any removal mutates the ordered store.
+export function clearNamespace(theme: ThemeStore, namespace: string, clearOptions: number, ignored: readonly string[], remove: (key: string) => void): void {
+    const doomed: string[] = [];
+    for(const key of theme.keyOrder) {
+        if(key === '') { continue; }
+        const entry = theme.values.get(key);
+        if(entry === undefined || !key.startsWith(namespace)) { continue; }
+        if(clearOptions !== 0 && (entry.options & clearOptions) !== clearOptions) { continue; }
+        let exempt = false;
+        for(const prefix of ignored) { if(key.startsWith(prefix)) { exempt = true; break; } }
+        if(!exempt) { doomed.push(key); }
+    }
+    for(const key of doomed) { remove(key); }
+}

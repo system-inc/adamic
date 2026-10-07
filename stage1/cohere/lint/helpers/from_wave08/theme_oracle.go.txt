@@ -10,3 +10,16 @@ func Wave08NewTheme(key string) string {
  third:=NewTheme()
  return output+fmt.Sprintf("%t %d %d %d\n",third.Prefix=="",len(third.values),len(third.keyOrder),third.deadKeys)
 }
+func Wave08ClearNamespace(sample string) string {
+ output:=""
+ for _,namespace:=range []string{"--color","--font","--text","","--grid-row"}{
+ for _,options:=range []ThemeOptions{0,1,2,4,8,16,3,31}{
+ theme:=NewTheme();keys:=[]string{"--color-a","--colorful-b","--font-a","--font-weight-bold","--font-weightless","--font-size-sm","--text-a","--text-color-a","--grid-row-a","--grid-row-start-a","--color-"+sample,sample}
+ for i,key:=range keys{if _,found:=theme.values[key];!found{theme.keyOrder=append(theme.keyOrder,key)};theme.values[key]=themeValue{value:"value",options:ThemeOptions(i%8)}}
+ theme.ClearNamespace(namespace,options)
+ present:="";for i,key:=range keys{if i>0{present+=","};_,found:=theme.values[key];present+=fmt.Sprint(found)}
+ order:="";for i,key:=range theme.keyOrder{if i>0{order+=","};index:=-1;for j,k:=range keys{if key==k{index=j;break}};order+=fmt.Sprint(index)}
+ output+=fmt.Sprintf("%d %d %d %s %s\n",len(theme.values),theme.deadKeys,len(theme.keyOrder),present,order)
+ }}
+ return output
+}

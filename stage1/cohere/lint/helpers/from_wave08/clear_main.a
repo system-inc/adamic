@@ -1,0 +1,44 @@
+import {panic, programArguments, readTextFile} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {newTheme} from './theme_new.a';
+import {clearNamespace} from './theme_clear_namespace.a';
+const input = readTextFile(programArguments()[0] ?? panic('cases path'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const child of json.node(root).children) {
+    const sample = json.node(child).text;
+    for(const namespace of ['--color', '--font', '--text', '', '--grid-row']) {
+        for(const options of [0, 1, 2, 4, 8, 16, 3, 31]) {
+            const theme = newTheme();
+            const keys = ['--color-a', '--colorful-b', '--font-a', '--font-weight-bold', '--font-weightless', '--font-size-sm', '--text-a', '--text-color-a', '--grid-row-a', '--grid-row-start-a', '--color-' + sample, sample];
+            for(let i = 0; i < keys.length; i++) {
+                const key = keys[i] ?? panic('key');
+                if(!theme.values.has(key)) { theme.keyOrder.push(key); }
+                theme.values.set(key, {value: 'value', options: i % 8});
+            }
+            let ignored: string[] = [];
+            if(namespace === '--font') { ignored = ['--font-weight', '--font-size']; }
+            else if(namespace === '--text') { ignored = ['--text-color', '--text-decoration-color', '--text-decoration-thickness', '--text-indent', '--text-shadow', '--text-underline-offset']; }
+            else if(namespace === '--grid-row') { ignored = ['--grid-row-start', '--grid-row-end']; }
+            // Test-only deletion adapter reproduces the externally owned Go store operation.
+            clearNamespace(theme, namespace, options, ignored, key => {
+                if(!theme.values.has(key)) { return; }
+                theme.values.delete(key);
+                for(let i = theme.keyOrder.length - 1; i >= 0; i--) {
+                    if(theme.keyOrder[i] === key) { theme.keyOrder[i] = ''; break; }
+                }
+                theme.deadKeys++;
+                if(theme.deadKeys > theme.values.size) {
+                    const live: string[] = [];
+                    for(const existing of theme.keyOrder) { if(existing !== '' && theme.values.has(existing)) { live.push(existing); } }
+                    theme.keyOrder = live; theme.deadKeys = 0;
+                }
+            });
+            const present: string[] = []; const order: number[] = [];
+            for(const key of keys) { present.push(`${theme.values.has(key)}`); }
+            for(const key of theme.keyOrder) { order.push(keys.indexOf(key)); }
+            console.log(`${theme.values.size} ${theme.deadKeys} ${theme.keyOrder.length} ${present.join(',')} ${order.join(',')}`);
+        }
+    }
+}

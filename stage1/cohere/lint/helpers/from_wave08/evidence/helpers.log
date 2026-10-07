@@ -1,0 +1,40 @@
+=== RUN   TestNewTheme
+    helpers_test.go:123: better-tailwindcss/enforce-canonical-classes: 264 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-class-order: 376 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-variant-order: 112 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-shorthand-classes: 133 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-conflicting-classes: 255 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-unknown-classes: 244 fixture literals
+    helpers_test.go:123: 1391 constructor probes
+=== RUN   TestNewTheme/false
+    helpers_test.go:180: Node matched Go: 59813 bytes
+    helpers_test.go:180: JavaScript matched Go: 59813 bytes
+    helpers_test.go:180: native matched Go: 59813 bytes
+=== RUN   TestNewTheme/true
+    helpers_test.go:178: compiled semantic mutant caught on Node
+    helpers_test.go:178: compiled semantic mutant caught on JavaScript
+    helpers_test.go:178: compiled semantic mutant caught on native
+--- PASS: TestNewTheme (2.83s)
+    --- PASS: TestNewTheme/false (1.39s)
+    --- PASS: TestNewTheme/true (1.21s)
+=== RUN   TestClearNamespace
+    helpers_test.go:123: better-tailwindcss/enforce-canonical-classes: 264 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-class-order: 376 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-variant-order: 112 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-shorthand-classes: 133 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-conflicting-classes: 255 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-unknown-classes: 244 fixture literals
+    helpers_test.go:123: 1391 constructor probes
+=== RUN   TestClearNamespace/false
+    helpers_test.go:180: Node matched Go: 5277288 bytes
+    helpers_test.go:180: JavaScript matched Go: 5277288 bytes
+    helpers_test.go:180: native matched Go: 5277288 bytes
+=== RUN   TestClearNamespace/true
+    helpers_test.go:178: compiled semantic mutant caught on Node
+    helpers_test.go:178: compiled semantic mutant caught on JavaScript
+    helpers_test.go:178: compiled semantic mutant caught on native
+--- PASS: TestClearNamespace (9.85s)
+    --- PASS: TestClearNamespace/false (4.18s)
+    --- PASS: TestClearNamespace/true (4.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave08	12.686s

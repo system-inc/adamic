@@ -97,6 +97,12 @@ func cases(t *testing.T, root string) string {
 	return output
 }
 func TestNewTheme(t *testing.T) {
+	compareHelper(t, "theme_new.a", "main.a", "deadKeys: 0", "deadKeys: 1", "new")
+}
+func TestClearNamespace(t *testing.T) {
+	compareHelper(t, "theme_clear_namespace.a", "clear_main.a", "!key.startsWith(namespace)", "!key.startsWith(namespace + \"-\")", "clear")
+}
+func compareHelper(t *testing.T, helperName, mainName, anchor, replacement, mode string) {
 	// Not parallel: baseline and mutants compile large sanitizer drivers on the same worker.
 	root, err := filepath.Abs("../../../../..")
 	if err != nil {
@@ -115,23 +121,30 @@ func TestNewTheme(t *testing.T) {
 	goBinary := filepath.Join(scratch, "oracle")
 	run(t, cohere, "go", "build", "-overlay="+overlayPath, "-o", goBinary, virtual)
 	inputs := cases(t, root)
-	want := run(t, "", goBinary, inputs)
+	want := run(t, "", goBinary, inputs, mode)
 	for _, mutant := range []bool{false, true} {
 		t.Run(strconv.FormatBool(mutant), func(t *testing.T) {
 			dir := t.TempDir()
-			helper, err := os.ReadFile("theme_new.a")
+			helper, err := os.ReadFile(helperName)
 			if err != nil {
 				t.Fatal(err)
 			}
 			if mutant {
-				old := "deadKeys: 0"
+				old := anchor
 				if strings.Count(string(helper), old) != 1 {
 					t.Fatal("mutant anchor")
 				}
-				helper = []byte(strings.Replace(string(helper), old, "deadKeys: 1", 1))
+				helper = []byte(strings.Replace(string(helper), old, replacement, 1))
 			}
-			write(t, filepath.Join(dir, "theme_new.a"), helper)
-			main, err := os.ReadFile("main.a")
+			write(t, filepath.Join(dir, helperName), helper)
+			if helperName != "theme_new.a" {
+				dependency, err := os.ReadFile("theme_new.a")
+				if err != nil {
+					t.Fatal(err)
+				}
+				write(t, filepath.Join(dir, "theme_new.a"), dependency)
+			}
+			main, err := os.ReadFile(mainName)
 			if err != nil {
 				t.Fatal(err)
 			}

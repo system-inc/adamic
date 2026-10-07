@@ -1,0 +1,31 @@
+{
+  "refs_scanned": 403,
+  "claim_paths": [
+    "refs/remotes/origin/codex/lint-helpers-01:stage1/cohere/lint/helpers/claims/01.md",
+    "refs/remotes/origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/claims/02.md",
+    "refs/remotes/origin/codex/lint-helpers-03:stage1/cohere/lint/helpers/claims/03.md",
+    "refs/remotes/origin/codex/lint-helpers-04:stage1/cohere/lint/helpers/claims/04.md",
+    "refs/remotes/origin/codex/lint-helpers-05:stage1/cohere/lint/helpers/claims/05.md",
+    "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-03:stage1/cohere/lint/helpers/claims/codex-lint-wave1-03.md",
+    "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-14:stage1/cohere/lint/helpers/claims/codex-lint-wave1-14.md",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-04:stage1/cohere/lint/helpers/claims/codex/lint-wave1-04.md",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-06:stage1/cohere/lint/helpers/claims/codex/lint-wave1-06.md",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-10:stage1/cohere/lint/helpers/claims/codex/lint-wave1-10.md",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-11:stage1/cohere/lint/helpers/claims/codex/lint-wave1-11.md",
+    "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-15:stage1/cohere/lint/helpers/claims/codex/lint-wave1-15.md",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-05:stage1/cohere/lint/helpers/claims/lint-wave1-05.md",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-08:stage1/cohere/lint/helpers/claims/lint-wave1-08.md",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-12:stage1/cohere/lint/helpers/claims/lint-wave1-12.md",
+    "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-13:stage1/cohere/lint/helpers/claims/lint-wave1-13.md"
+  ],
+  "selected": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.ClearNamespace",
+  "consumers": [
+    "better-tailwindcss/enforce-canonical-classes",
+    "better-tailwindcss/enforce-consistent-class-order",
+    "better-tailwindcss/enforce-consistent-variant-order",
+    "better-tailwindcss/enforce-shorthand-classes",
+    "better-tailwindcss/no-conflicting-classes",
+    "better-tailwindcss/no-unknown-classes"
+  ],
+  "duplicate_withdrawn": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewVariantRegistry"
+}
