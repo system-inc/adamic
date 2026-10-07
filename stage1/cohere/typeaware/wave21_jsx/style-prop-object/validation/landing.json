@@ -1,0 +1,15 @@
+{
+  "main": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+  "pushed_claim": "81cf0cfa73aa15df08ecbe261b6ad68326befdd7",
+  "rule_seconds": 81.507,
+  "prerequisites_seconds": 10.46,
+  "valid_controls": 82,
+  "control_native_seconds": 0.049822,
+  "control_go_seconds": 0.139436,
+  "raw_preparation_seconds": 0.034981,
+  "compiler_native_seconds": 6.085266,
+  "compiler_go_seconds": 0.282518,
+  "repository_native_seconds": 0.805371,
+  "repository_go_seconds": 0.125324,
+  "native_source_pipeline": "blocked on shared JSX parsing and shared node/checker adaptation; raw metadata is test-only"
+}

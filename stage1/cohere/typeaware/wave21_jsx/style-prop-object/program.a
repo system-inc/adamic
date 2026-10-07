@@ -1,0 +1,20 @@
+import {panic,programArguments,readTextFile} from 'adamic';
+import {Syntax,Node} from '../syntax.a';
+import {written} from '../../../../typescript/parser/nodes.ts';
+import {check} from './rule.a';
+function read(path:string):string{const result=readTextFile(path);if(result.kind==='Error'){return panic(result.message);}return result.text;}
+function numbers(text:string):number[]{const result:number[]=[];if(text===''){return result;}for(const value of text.split(',')){result.push(Number(value));}return result;}
+function text(value:string):string{let out='';for(const unit of numbers(value)){out+=String.fromCharCode(unit);}return out;}
+function run(path:string,allow:readonly string[],typed:boolean):number{
+ const lines=read(path).split('\n');const s=new Syntax(text(lines[0]??panic('missing display path')),typed);const primaryRaw=lines[1]??panic('missing canonical path');const primary=text(primaryRaw);
+ for(let i=2;i<lines.length;i++){const row=lines[i]??'';if(row===''){continue;}const fields=row.split('\t');if(fields.length!==21){panic('invalid raw syntax record');}
+  const node=new Node(Number(fields[0]??''),Number(fields[1]??''),Number(fields[2]??''),Number(fields[3]??''),Number(fields[4]??''),(fields[5]??'')===primaryRaw?primary:text(fields[5]??''),text(fields[6]??''),'');
+  if(node.id!==s.nodes.length+1){panic('invalid raw syntax identity');}
+  node.parent=Number(fields[7]??'');node.name=Number(fields[8]??'');node.propertyName=Number(fields[9]??'');node.expression=Number(fields[10]??'');node.initializer=Number(fields[11]??'');node.tag=Number(fields[12]??'');node.attributes=Number(fields[13]??'');node.module=Number(fields[14]??'');node.symbol=Number(fields[15]??'');node.shorthandSymbol=Number(fields[16]??'');
+  for(const id of numbers(fields[17]??'')){node.args.push(id);}for(const id of numbers(fields[18]??'')){node.children.push(id);}for(const id of numbers(fields[19]??'')){node.declarations.push(id);}for(const id of numbers(fields[20]??'')){node.elements.push(id);}s.nodes.push(node);
+ }
+ for(const node of s.nodes){if(node.file!==primary){continue;}switch(node.kind){case 292:case 214:check(s,node,allow);break;}}
+ const findings:string[]=[];for(const finding of s.findings){findings.push(finding.written());}findings.sort((a,b)=>a<b?-1:a>b?1:0);console.log('file\t'+written(s.file));for(const finding of findings){console.log(finding);}return findings.length;
+}
+const args=programArguments();const manifest=args[0]??panic('missing raw-syntax manifest');const allow:string[]=[];let typed=true;for(let i=1;i<args.length;i++){const argument=args[i]??'';if(argument==='--untyped'){typed=false;}if(argument.startsWith('--allow=')){allow.push(argument.slice(8));}}
+let count=0;for(const path of read(manifest).split('\n')){if(path!==''){count+=run(path,allow,typed);}}console.log(`findings ${count}`);

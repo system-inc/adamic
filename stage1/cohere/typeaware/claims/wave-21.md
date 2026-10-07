@@ -226,3 +226,14 @@ high-level IR, single-assignment or capture analysis. JSX parsing and shared
 checker/node integration remain dependencies; the createElement and identifier
 logic will also be ported. This claim is pushed before writing its implementation.
 No additional available rule is omitted to manufacture a three-rule batch.
+
+Final rule native-core status: style-prop-object is implemented in its owned
+wave21_jsx/style-prop-object directory, including JSX, createElement, all pragma
+bindings, first declarations and shorthand. All 82 controls in three profiles,
+source/emitted Node, full raw-AST frozen corpora, sanitizers, a byte-only native
+rule mutant and real released-handle checks pass. Native JSX parsing refuses
+the source witness at byte 5, and shared node/checker adaptation and production
+registration are not connected. This is a partial source port with its complete
+prepared-AST core pushed; the reservation is retained, not released. See the
+owned README and validation logs for exact times and coverage. No further rule
+is available in the audited ranking, and no further claim is taken.

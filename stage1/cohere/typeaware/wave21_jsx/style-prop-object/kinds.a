@@ -1,0 +1,5 @@
+// Raw test-provider AST tags, independently checked against the pinned Go AST.
+export const NumericLiteral=8;
+export const BigIntLiteral=9;
+export const TrueKeyword=111;
+export const FalseKeyword=96;

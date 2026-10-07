@@ -1,0 +1,56 @@
+import {Syntax,Node} from '../syntax.a';
+import {Identifier as K_Identifier, StringLiteral as K_StringLiteral, RegularExpressionLiteral as K_RegularExpressionLiteral, PropertyAccessExpression as K_PropertyAccessExpression, CallExpression as K_CallExpression, ImportSpecifier as K_ImportSpecifier, NamedImports as K_NamedImports, ImportClause as K_ImportClause, ImportDeclaration as K_ImportDeclaration, BindingElement as K_BindingElement, ObjectBindingPattern as K_ObjectBindingPattern, VariableDeclaration as K_VariableDeclaration, ObjectLiteralExpression as K_ObjectLiteralExpression, JsxAttributes as K_JsxAttributes, JsxAttribute as K_JsxAttribute, JsxExpression as K_JsxExpression, PropertyAssignment as K_PropertyAssignment, ShorthandPropertyAssignment as K_ShorthandPropertyAssignment} from '../kinds.a';
+import {NumericLiteral as K_NumericLiteral, BigIntLiteral as K_BigIntLiteral, TrueKeyword as K_TrueKeyword, FalseKeyword as K_FalseKeyword} from './kinds.a';
+export const syntaxKinds:readonly string[]=['JsxAttribute','CallExpression'];
+function literal(s:Syntax,id:number):boolean {
+ if(id===0){return false;}const kind=s.get(id).kind;
+ return kind===K_StringLiteral||kind===K_NumericLiteral||kind===K_BigIntLiteral||kind===K_RegularExpressionLiteral||kind===K_TrueKeyword||kind===K_FalseKeyword;
+}
+function report(s:Syntax,node:Node):void{s.add('style-prop-object','stylePropNotObject','Style prop value must be an object',node);}
+function identifier(s:Syntax,node:Node,shorthand:number):void {
+ if(!s.hasChecker){return;}const declarations=shorthand===0?node.declarations:s.get(shorthand).declarations;
+ if(declarations.length===0){return;}const declaration=s.get(declarations[0]??0);
+ if(declaration.kind===K_VariableDeclaration&&literal(s,s.parens(declaration.initializer))){report(s,node);}
+}
+function requireReact(s:Syntax,node:Node):boolean {
+ if(node.kind!==K_CallExpression||!s.named(node.expression,'require')||node.args.length===0){return false;}
+ const argument=s.get(node.args[0]??0);return argument.kind===K_StringLiteral&&argument.text==='react';
+}
+function initializerReact(s:Syntax,id:number):boolean {
+ if(id===0){return false;}const node=s.get(id);
+ if(node.kind===K_Identifier){return node.text==='React';}
+ if(node.kind===K_PropertyAccessExpression){return node.expression!==0&&(s.named(node.expression,'React')||requireReact(s,s.get(node.expression)));}
+ return node.kind===K_CallExpression&&requireReact(s,node);
+}
+function declarationReact(s:Syntax,node:Node):boolean {
+ if(node.kind===K_ImportSpecifier){let id=node.parent;if(id===0||s.get(id).kind!==K_NamedImports){return false;}id=s.get(id).parent;if(id===0||s.get(id).kind!==K_ImportClause){return false;}id=s.get(id).parent;if(id===0||s.get(id).kind!==K_ImportDeclaration){return false;}const module=s.get(id).module;return module!==0&&s.get(module).kind===K_StringLiteral&&s.get(module).text==='react';}
+ if(node.kind===K_BindingElement){if(node.parent===0){return false;}const pattern=s.get(node.parent);if(pattern.kind!==K_ObjectBindingPattern||pattern.parent===0){return false;}const variable=s.get(pattern.parent);return variable.kind===K_VariableDeclaration&&initializerReact(s,variable.initializer);}
+ return node.kind===K_VariableDeclaration&&initializerReact(s,node.initializer);
+}
+function pragmaCall(s:Syntax,node:Node):boolean {
+ const id=s.parens(node.expression);if(id===0){return false;}const callee=s.get(id);
+ if(callee.kind===K_PropertyAccessExpression){return s.named(callee.name,'createElement')&&s.named(callee.expression,'React');}
+ if(callee.kind!==K_Identifier||callee.text!=='createElement'){return false;}
+ for(const id of callee.declarations){if(declarationReact(s,s.get(id))){return true;}}return false;
+}
+// The driver hands this node only for the named listeners declared in rule.json.
+export function check(s:Syntax,node:Node,allow:readonly string[]):void {
+ if(node.kind===K_JsxAttribute){
+  if(!s.named(node.name,'style')||node.initializer===0){return;}
+  if(node.parent!==0){const attributes=s.get(node.parent);if(attributes.kind===K_JsxAttributes&&attributes.parent!==0){const tag=s.get(attributes.parent).tag;if(tag!==0){const name=s.get(tag);if(name.kind===K_Identifier&&allow.includes(name.text)){return;}}}}
+  const initial=s.get(node.initializer);if(initial.kind!==K_JsxExpression){report(s,node);return;}
+  const value=s.parens(initial.expression);if(value===0||literal(s,value)){report(s,node);return;}
+  const expression=s.get(value);if(expression.kind===K_Identifier){identifier(s,expression,0);}return;
+ }
+ if(!s.hasChecker||!pragmaCall(s,node)||node.args.length<2){return;}
+ const first=s.get(node.args[0]??0);if(first.kind===K_Identifier&&allow.includes(first.text)){return;}
+ const properties=s.get(node.args[1]??0);if(properties.kind!==K_ObjectLiteralExpression){return;}
+ for(const id of properties.children){const property=s.get(id);let value=0;let shorthand=0;
+  if(property.kind===K_PropertyAssignment){if(!s.named(property.name,'style')){continue;}value=property.initializer;}
+  else if(property.kind===K_ShorthandPropertyAssignment){if(!s.named(property.name,'style')){continue;}value=property.name;shorthand=id;}
+  else{continue;}
+  value=s.parens(value);if(value===0){continue;}const expression=s.get(value);
+  if(expression.kind===K_Identifier){identifier(s,expression,shorthand);return;}
+  if(literal(s,value)){report(s,expression);}return;
+ }
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "mode": "default",
+    "flavor": "native",
+    "bytes": 7985,
+    "sha256": "2772df9f5ea343041c37960865daf12247a09108fd090677c2504696327436e8"
+  },
+  {
+    "mode": "default",
+    "flavor": "asan",
+    "bytes": 7985,
+    "sha256": "2772df9f5ea343041c37960865daf12247a09108fd090677c2504696327436e8"
+  },
+  {
+    "mode": "default",
+    "flavor": "source-node",
+    "bytes": 7985,
+    "sha256": "2772df9f5ea343041c37960865daf12247a09108fd090677c2504696327436e8"
+  },
+  {
+    "mode": "default",
+    "flavor": "emitted-node",
+    "bytes": 7985,
+    "sha256": "2772df9f5ea343041c37960865daf12247a09108fd090677c2504696327436e8"
+  },
+  {
+    "mode": "allowed",
+    "flavor": "native",
+    "bytes": 5973,
+    "sha256": "b1f697453d7ad677d4bf8f77e73b3e767c0e55da76c93abf8d1253a099616a2b"
+  },
+  {
+    "mode": "allowed",
+    "flavor": "asan",
+    "bytes": 5973,
+    "sha256": "b1f697453d7ad677d4bf8f77e73b3e767c0e55da76c93abf8d1253a099616a2b"
+  },
+  {
+    "mode": "allowed",
+    "flavor": "source-node",
+    "bytes": 5973,
+    "sha256": "b1f697453d7ad677d4bf8f77e73b3e767c0e55da76c93abf8d1253a099616a2b"
+  },
+  {
+    "mode": "allowed",
+    "flavor": "emitted-node",
+    "bytes": 5973,
+    "sha256": "b1f697453d7ad677d4bf8f77e73b3e767c0e55da76c93abf8d1253a099616a2b"
+  },
+  {
+    "mode": "untyped",
+    "flavor": "native",
+    "bytes": 5598,
+    "sha256": "4050ffcdb828b1fd3ab0f7b85a5a74cddd17daa92cfd869a6dc9f85f935deb7e"
+  },
+  {
+    "mode": "untyped",
+    "flavor": "asan",
+    "bytes": 5598,
+    "sha256": "4050ffcdb828b1fd3ab0f7b85a5a74cddd17daa92cfd869a6dc9f85f935deb7e"
+  },
+  {
+    "mode": "untyped",
+    "flavor": "source-node",
+    "bytes": 5598,
+    "sha256": "4050ffcdb828b1fd3ab0f7b85a5a74cddd17daa92cfd869a6dc9f85f935deb7e"
+  },
+  {
+    "mode": "untyped",
+    "flavor": "emitted-node",
+    "bytes": 5598,
+    "sha256": "4050ffcdb828b1fd3ab0f7b85a5a74cddd17daa92cfd869a6dc9f85f935deb7e"
+  },
+  {
+    "mode": "compiler",
+    "flavor": "native",
+    "bytes": 5087,
+    "sha256": "04ba1ff218e16121aa64bcb3ba27e1f25c1a7e541c789366a26294ef09eeb810"
+  },
+  {
+    "mode": "compiler",
+    "flavor": "asan",
+    "bytes": 5087,
+    "sha256": "04ba1ff218e16121aa64bcb3ba27e1f25c1a7e541c789366a26294ef09eeb810"
+  },
+  {
+    "mode": "repository",
+    "flavor": "native",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "mode": "repository",
+    "flavor": "asan",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  }
+]
