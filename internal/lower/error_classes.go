@@ -201,6 +201,10 @@ func (l *lowering) errorCause(node *ast.Node, args []*ast.Node) (ir.Expression, 
 		}
 		l.errorInstance("Error").errorCauses = append(l.errorInstance("Error").errorCauses, l.concrete(proven))
 		result = fit(value, ir.Union)
+		if boxed, ok := result.(ir.Box); ok && l.includesNull(proven) {
+			boxed.Nullable = true
+			result = boxed
+		}
 	}
 	return result, nil
 }
@@ -240,14 +244,17 @@ func (l *lowering) errorPrototypeCall(node *ast.Node) (ir.Expression, bool, erro
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "receiver", Type: value.Type(), Function: index})
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "Error_prototype_toString", Parameters: []int{local}, Returns: ir.String})
 	read := ir.Read{Local: local, Of: value.Type()}
-	if value.Type() != ir.Object {
+	_, nullReceiver := value.(ir.Null)
+	if value.Type() != ir.Object || nullReceiver {
 		var text ir.Expression
-		switch value.Type() {
-		case ir.Number:
+		switch {
+		case nullReceiver:
+			text = ir.StringConstant{Index: l.constant("null")}
+		case value.Type() == ir.Number:
 			text = ir.NumberToString{Value: read}
-		case ir.Boolean:
+		case value.Type() == ir.Boolean:
 			text = ir.BooleanToString{Value: read}
-		case ir.String:
+		case value.Type() == ir.String:
 			text = ir.Coalesce{Value: read, Fallback: ir.StringConstant{Index: l.constant("undefined")}, Of: ir.String}
 		default:
 			return nil, true, l.notYet(node, "Error.prototype.toString on this receiver representation")

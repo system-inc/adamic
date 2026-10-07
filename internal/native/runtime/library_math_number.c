@@ -101,6 +101,7 @@ done:
 double adamic_number_from_union(const adamic_heap *value) {
  if (value == NULL) return NAN;
  switch (value->kind) {
+ case adamic_kind_null: return 0;
  case adamic_kind_number: return ((const adamic_number_box *)value)->number;
  case adamic_kind_boolean: return ((const adamic_boolean_box *)value)->boolean ? 1 : 0;
  case adamic_kind_string: return adamic_number_from_string((const adamic_string *)value);

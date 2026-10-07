@@ -26,11 +26,17 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.RegExpProperty:
 		return e.regexProperty(expression)
 	case ir.Null:
+		if expression.Of == ir.Union {
+			return "&adamic_box_null"
+		}
 		return "NULL"
 	case ir.IsNull:
 		if expression.AlwaysFalse {
 			e.value(expression.Value)
 			return "false"
+		}
+		if expression.Value.Type() == ir.Union {
+			return fmt.Sprintf("(%s == &adamic_box_null)", e.value(expression.Value))
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:
@@ -159,6 +165,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.MaybeToString:
 		return e.maybeToString(expression.Value)
 	case ir.Box:
+		if expression.Nullable {
+			value := e.value(expression.Value)
+			return fmt.Sprintf("(%s == NULL ? &adamic_box_null : (adamic_heap *)%s)", value, value)
+		}
 		return e.box(expression.Value)
 	case ir.MakeError:
 		return e.own(ir.Object, fmt.Sprintf("adamic_error_new(%s)", e.value(expression.Message)))

@@ -3,6 +3,7 @@ package oracle
 import (
 	"errors"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"testing"
 
@@ -11,7 +12,7 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/4ddd17f_opt_3.a", "internal/oracle/testdata/047cb0d_narrowed_in_try.a", "internal/oracle/testdata/9984394_lib_dispatch.a", "internal/oracle/testdata/9984394_defined_in_try.a", "internal/oracle/testdata/catchability-limits/d96d304_try_stack.a", "internal/oracle/testdata/catchability-limits/d96d304_try_repeat.a", "internal/oracle/testdata/catchability-limits/d96d304_try_pad.a", "internal/oracle/testdata/catchability-limits/d96d304_try_finally_concat.a", "internal/oracle/testdata/57f2d04_with_frozen.a"} {
+	for _, path := range []string{"internal/oracle/testdata/coverage_error_nullable_cause.a", "internal/oracle/testdata/coverage_error_cause_null.a", "internal/oracle/testdata/coverage_error_prototype_null.a", "internal/oracle/testdata/4ddd17f_opt_3.a", "internal/oracle/testdata/047cb0d_narrowed_in_try.a", "internal/oracle/testdata/9984394_lib_dispatch.a", "internal/oracle/testdata/9984394_defined_in_try.a", "internal/oracle/testdata/catchability-limits/d96d304_try_stack.a", "internal/oracle/testdata/catchability-limits/d96d304_try_repeat.a", "internal/oracle/testdata/catchability-limits/d96d304_try_pad.a", "internal/oracle/testdata/catchability-limits/d96d304_try_finally_concat.a", "internal/oracle/testdata/57f2d04_with_frozen.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -234,5 +235,87 @@ func TestRuntimeStackCatchFinally(t *testing.T) {
 	}
 	if difference := disagreement(want, onJavaScriptBackend(t, program)); difference != "" {
 		t.Fatal(difference)
+	}
+}
+
+// These mutants preserve successful compilation and exit 0. Only Node's
+// observable null identity or incompatible-receiver output distinguishes them.
+func TestReaderNullMutants(t *testing.T) {
+	t.Parallel()
+	for _, mutant := range []struct {
+		name, fixture string
+		change        func(any) any
+	}{
+		{"drop nullable reference tag", "coverage_error_nullable_cause.a", func(value any) any {
+			if boxed, ok := value.(ir.Box); ok && boxed.Nullable {
+				boxed.Nullable = false
+				return boxed
+			}
+			return value
+		}},
+		{"drop boxed null tag", "coverage_error_cause_null.a", func(value any) any {
+			if null, ok := value.(ir.Null); ok && null.Of == ir.Union {
+				return ir.Undefined{Of: ir.Union}
+			}
+			return value
+		}},
+		{"fold unknown null comparison", "coverage_error_cause_null.a", func(value any) any {
+			if test, ok := value.(ir.IsNull); ok && test.Value.Type() == ir.Union {
+				test.AlwaysFalse = true
+				return test
+			}
+			return value
+		}},
+		{"null prototype receiver returns Error", "coverage_error_prototype_null.a", func(value any) any {
+			if _, ok := value.(ir.Throw); ok {
+				return ir.Return{Value: ir.StringConstant{Index: 0}}
+			}
+			return value
+		}},
+	} {
+		t.Run(mutant.name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", mutant.fixture))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := onNode(t, path)
+			changed := false
+			rewrite := func(value any) any {
+				next := mutant.change(value)
+				if mutant.fixture == "coverage_error_prototype_null.a" {
+					if returned, ok := next.(ir.Return); ok {
+						returned.Value = ir.StringConstant{Index: errorString(program, "Error")}
+						next = returned
+					}
+				}
+				changed = changed || !reflect.DeepEqual(value, next)
+				return next
+			}
+			program.Main = errorRewrite(reflect.ValueOf(program.Main), rewrite).Interface().([]ir.Statement)
+			for index := range program.Functions {
+				if mutant.fixture == "coverage_error_prototype_null.a" && program.Functions[index].Name != "Error_prototype_toString" {
+					continue
+				}
+				program.Functions[index].Body = errorRewrite(reflect.ValueOf(program.Functions[index].Body), rewrite).Interface().([]ir.Statement)
+			}
+			if !changed {
+				t.Fatal("mutant changed nothing")
+			}
+			got, _ := natively(t, program)
+			for backend, observation := range map[string]run{"native": got, "JavaScript": onJavaScriptBackend(t, program)} {
+				if backend == "JavaScript" && mutant.fixture == "coverage_error_nullable_cause.a" {
+					continue
+				}
+				if observation.exitCode != 0 || string(observation.stdout) == string(want.stdout) {
+					t.Fatalf("%s mutant must be caught by stdout at exit 0: %+v", backend, observation)
+				}
+				t.Logf("%s caught by stdout: Node %q, mutant %q", backend, want.stdout, observation.stdout)
+			}
+		})
 	}
 }
