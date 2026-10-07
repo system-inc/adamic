@@ -94,3 +94,16 @@ func TestDebugNamespaceMergesStayNotYet(t *testing.T) {
 		})
 	}
 }
+
+func TestNamespaceReturnedAssignmentLimits(t *testing.T) {
+	for _, source := range []string{
+		"namespace N {let text=''; export function set():string{return text='built'.repeat(2);}}",
+		"namespace N {let optional:number|undefined; export function set():number{return optional=1;}}",
+	} {
+		_, err := lowerSource(t, source)
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "only scalar singleton assignment is proven") {
+			t.Fatalf("got %v, want the scalar returned-assignment boundary", err)
+		}
+	}
+}

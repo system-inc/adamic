@@ -155,6 +155,9 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
 	}
+	if statements, handled, err := l.namespaceReturnAssignment(expression); handled {
+		return statements, err
+	}
 	value, err := l.expression(expression)
 	if err != nil {
 		return nil, err
