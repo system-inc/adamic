@@ -1,0 +1,18 @@
+One upstream JSX case excluded and independently probed below.
+Captured original asserted tests: {"@next/next/no-assign-module-variable": 13, "@typescript-eslint/default-param-last": 115, "structure/tailwind-no-physical-direction": 53}
+Go JSX finding reproduced; source Node, emitted JavaScript and sanitized native explicitly refuse it.
+fixtures: Go/Node/emitted JavaScript/sanitized native identical, 51192 bytes
+Corpus: 348 files, 1044 file/rule pairs
+corpus: Go/Node/emitted JavaScript/sanitized native identical, 39671239 bytes
+next-no-assign-module-variable mutant caught on Node: successful compile and exit, differing output only
+next-no-assign-module-variable mutant caught on JavaScript: successful compile and exit, differing output only
+next-no-assign-module-variable mutant caught on native: successful compile and exit, differing output only
+typescript-default-param-last mutant caught on Node: successful compile and exit, differing output only
+typescript-default-param-last mutant caught on JavaScript: successful compile and exit, differing output only
+typescript-default-param-last mutant caught on native: successful compile and exit, differing output only
+structure-tailwind-no-physical-direction mutant caught on Node: successful compile and exit, differing output only
+structure-tailwind-no-physical-direction mutant caught on JavaScript: successful compile and exit, differing output only
+structure-tailwind-no-physical-direction mutant caught on native: successful compile and exit, differing output only
+Literal interpolation mutant caught on Node: successful compile and exit, differing output only
+Literal interpolation mutant caught on JavaScript: successful compile and exit, differing output only
+Literal interpolation mutant caught on native: successful compile and exit, differing output only
