@@ -1,0 +1,6 @@
+import { panic } from 'adamic';
+// The Go helper takes a byte. Refuse values its parameter cannot represent.
+export function collapseIsHexDigit(character: number): boolean {
+    if (!Number.isInteger(character) || character < 0 || character > 255) { panic('hex digit input must be a byte'); }
+    return (character >= 48 && character <= 57) || (character >= 97 && character <= 102) || (character >= 65 && character <= 70);
+}

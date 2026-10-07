@@ -70,7 +70,8 @@ func slot01Wave4Fixture(t *testing.T, dependency string, consumers int, mode str
 	}
 	source, _ := filepath.Abs("testdata/slot01_wave4_oracle.go")
 	virtual := filepath.Join(root, "adamic_slot01_wave4.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
+	bridge, _ := filepath.Abs("testdata/slot01_wave4_collapse.go")
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_slot01_wave4.go"): bridge}})
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
@@ -112,7 +113,7 @@ func slot01Wave4Check(t *testing.T, dependency, mode, file, old, replacement str
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, mode), want)
 	t.Logf("%d Go output lines matched source Node, native and emitted JavaScript", bytes.Count(want, []byte("\n")))
 	dir := t.TempDir()
-	for _, name := range []string{"slot01_wave4_main.a", "jsx_string_attribute_value.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave4_main.a", "jsx_string_attribute_value.a", "collapse_is_hex_digit.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -138,4 +139,9 @@ func slot01Wave4Check(t *testing.T, dependency, mode, file, old, replacement str
 		t.Fatal("compiled mutant survived")
 	}
 	slot01MutantWitness(t, mutant, want, file)
+}
+
+// Not parallel: bounded Go capture and sanitizer builds.
+func TestSlot01Wave4HexMatchesCohere(t *testing.T) {
+	slot01Wave4Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit", "hex", "collapse_is_hex_digit.a", "character <= 70", "character < 70")
 }

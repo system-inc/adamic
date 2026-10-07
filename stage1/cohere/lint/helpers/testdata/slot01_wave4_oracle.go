@@ -9,6 +9,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/system-inc/cohere/internal/lint/ecmascript/jsx"
 	"github.com/system-inc/cohere/internal/lint/ecmascript/text"
+	collapse "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse"
 	goast "go/ast"
 	goparser "go/parser"
 	"go/token"
@@ -98,6 +99,23 @@ func main() {
 		fixtureCount += found
 	}
 
+	if os.Args[4] == "hex" {
+		count := 0
+		for _, source := range sources {
+			for _, character := range []byte(source) {
+				must(encode.Encode(character))
+				fmt.Fprintln(expected, collapse.AdamicWave4Hex(character))
+				count++
+			}
+		}
+		for value := 0; value < 256; value++ {
+			must(encode.Encode(value))
+			fmt.Fprintln(expected, collapse.AdamicWave4Hex(byte(value)))
+			count++
+		}
+		fmt.Fprintf(os.Stderr, "%d fixture strings; %d byte queries, all 256 byte values\n", fixtureCount, count)
+		return
+	}
 	queries := 0
 	must(encode.Encode([]any{"Other", [][]any{}, "href"}))
 	fmt.Fprintln(expected, false)
