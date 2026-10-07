@@ -25,7 +25,7 @@ function run(row: string, countOnly: boolean): number {
     const root = parser.file();
     const parents: number[] = [];
     for(const node of parser.nodes) { parents.push(-1); }
-    const context = new RuleContext(source, parser, new Scanner(source), '', '', '', false, parents, settings);
+    const context = new RuleContext(source, parser, new Scanner(source), '', '', '', false, parents, settings, root);
     const rule = create(context);
     ancestry(context, parents, root, -1);
     visit(context, rule, root);
