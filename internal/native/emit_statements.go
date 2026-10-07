@@ -63,6 +63,8 @@ func (e *emitter) statementAt(at *ir.Statement) {
 
 func (e *emitter) statement(statement ir.Statement) {
 	switch statement := statement.(type) {
+	case ir.Debugger:
+		// No debugger is attached to native builds, so emit no instruction or trap.
 	case ir.WriteLine:
 		stream := "adamic_stdout"
 		if statement.Stream == ir.Stderr {
