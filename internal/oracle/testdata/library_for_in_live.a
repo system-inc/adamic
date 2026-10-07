@@ -1,0 +1,45 @@
+interface Trio { a: number; b: number; c: number }
+let current: Trio = { a: 1, b: 2, c: 3 };
+const snap: string[] = [];
+for (const key in current) {
+	snap.push(key);
+	if (key === 'a') {
+		current = { a: 8, b: 9, c: 7 };
+	}
+}
+console.log(snap.join('|'));
+console.log(`${current.a} ${current.b} ${current.c}`);
+
+const live: Trio = { a: 1, b: 2, c: 3 };
+const order: string[] = [];
+for (const key in live) {
+	order.push(key);
+	if (key === 'b') {
+		live.a = 10;
+		live.c = 30;
+	}
+}
+console.log(order.join('|'));
+console.log(`${live.a} ${live.b} ${live.c}`);
+
+interface Hole { keep: string; blank: string | undefined; tail: string }
+const holes: Hole = { keep: 'yes', blank: 'was', tail: 'end' };
+const holeKeys: string[] = [];
+for (const key in holes) {
+	holeKeys.push(key);
+	if (key === 'keep') {
+		holes.blank = undefined;
+	}
+}
+console.log(holeKeys.join('|'));
+console.log(`${holes.keep}|${holes.blank}|${holes.tail}`);
+
+const staged = { b: 'old', added: 'none', '2': 'two' };
+staged.added = 'later';
+staged.b = 'now';
+const stagedKeys: string[] = [];
+for (const key in staged) {
+	stagedKeys.push(key);
+}
+console.log(stagedKeys.join('|'));
+console.log(`${staged.b} ${staged.added}`);
