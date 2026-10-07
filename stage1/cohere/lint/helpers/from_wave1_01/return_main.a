@@ -1,0 +1,10 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { returnFrame } from './return_frame.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('missing input'));
+if(input.kind === 'Error') { panic(input.message); }
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const text = line === '.' ? '' : line;
+    console.log(`${returnFrame(text.split('').map(value => value === '1'))}`);
+}

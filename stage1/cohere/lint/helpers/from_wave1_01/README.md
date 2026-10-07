@@ -1,4 +1,4 @@
-# CFG enter helper
+# CFG state helpers
 
 Claim d6fbc1351 was pushed before code on codex/lint-helpers-from-lint-wave1-01, based on origin/codex/lint-helpers. The parked rule branch is 850fcdd0f.
 
@@ -11,3 +11,5 @@ Run with source /workspace/adamic-tools/env.sh, then redirect all output:
     go test ./stage1/cohere/lint/helpers/from_wave1_01 -count=1 -timeout 15m -v > /tmp/enter-tests.log 2>&1
 
 One helper per .a file. No finding.ts, context.ts, main.ts, registry generator, shared oracle or shared comparison changes.
+
+return_frame.a exports returnFrame(frames), where each boolean projects hasFinally in an enclosing try frame, in outer-to-inner order. Return the highest true index or -1. No input mutation or try/catch position inspection occurs. The Go capture uses the actual private function with a deferred post-return observer, so existing return expressions still decide the oracle result. Independent controls enumerate every boolean stack of lengths zero through eight, twice for try/catch positions: 1,022 cases. No nil-frame panic or entire CFG builder port is claimed.

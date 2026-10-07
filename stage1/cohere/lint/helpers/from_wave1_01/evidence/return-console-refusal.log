@@ -1,0 +1,6 @@
+=== RUN   TestReturnFrameMatchesGo
+    return_frame_test.go:21: /workspace/adamic/stage1/cohere/lint/helpers/from_wave1_01/return_main.a:9:17: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+--- FAIL: TestReturnFrameMatchesGo (34.62s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	34.622s
+FAIL

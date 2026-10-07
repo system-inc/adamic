@@ -1,0 +1,7 @@
+// Input projects only hasFinally, the sole frame field inspected by Go.
+export function returnFrame(frames: readonly boolean[]): number {
+    for(let index = frames.length - 1; index >= 0; index--) {
+        if(frames[index] === true) { return index; }
+    }
+    return -1;
+}

@@ -1,0 +1,6 @@
+=== RUN   TestReturnFrameMatchesGo
+    return_frame_test.go:21: /workspace/adamic/stage1/cohere/lint/helpers/from_wave1_01/return_frame.a:4:12: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0
+--- FAIL: TestReturnFrameMatchesGo (8.56s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	8.564s
+FAIL
