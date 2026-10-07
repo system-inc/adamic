@@ -44,3 +44,5 @@ let result = text;
 for (const edit of edits.sort((a, b) => b.start - a.start)) result = result.slice(0, edit.start) + edit.value + result.slice(edit.end);
 if (result !== text) fs.writeFileSync(file, result);
 console.log(JSON.stringify({owners: edits.filter(e => e.value !== '<T>').length, removed: edits.filter(e => e.value !== '<T>').length}));
+
+require('./classes.cjs').apply(path.resolve(process.argv[2]));

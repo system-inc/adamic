@@ -1,5 +1,9 @@
 # Explicit any owner adaptation (partial)
 
+Current progress: 39 tokens removed, 171 left. See [PROGRESS.md](PROGRESS.md)
+for the combined 10+30+40 proof and reproduction. The section below records
+the original three-owner proof and its historical commands.
+
 This unit currently removes three of the 210 explicit any tokens in 28 original
 TypeScript 6.0.3 compiler files. It does not complete the unit's requested census.
 There are 207 tokens left, each retained in evidence/sites.json with a reason.

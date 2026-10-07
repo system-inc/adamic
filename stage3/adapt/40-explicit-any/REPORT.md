@@ -149,3 +149,15 @@ three-owner adapter. It was not rerun as a new adaptation proof in this follow-u
 The remaining count is unchanged at 207, and no new consumer errors are elicited
 because there are no new owner edits. Full native and composition limits above
 remain.
+
+## Type-only brand class
+
+Applied all 36 brand sites after classification, on the combined 10+30+40
+tree with 20 excluded. PROGRESS.md and evidence/brands record the current
+proof; the 207-token statements above are historical. No runtime checks or
+consumer changes were made. Census is now 171.
+
+Brand-class full oracle: 106,367 passing, zero failing/pending, baseline.diff
+0 bytes. Real API-reference mutant: one failed test and one baseline diff,
+then exact restoration and zero remaining baseline differences. See
+evidence/brands/oracle-report.json and baseline-restoration.json.
