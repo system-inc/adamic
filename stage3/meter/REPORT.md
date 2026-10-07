@@ -176,3 +176,79 @@ is retained locally compressed in main/area, excluded from Git as before.
 No compiler, runner, bucket fixture or adaptation was edited. The complete
 integration gate, native compiler execution and cron installation were not
 part of this meter-only change.
+
+
+## Latent lowering meter follow-up
+
+Branched from origin/area/stage3 e39a299323cad76aea44ec71ca7b740130323d4c.
+Only stage3/meter changed. The twice-daily script builds the existing latent
+census with its scratch Go overlay, then runs it after each tree's ordinary
+checker census with LATENT_ASSERT_NO_OUTPUT=1. No production compiler files
+or latent tool files were edited, and no backend is invoked.
+
+Fresh run: runs/20261007T062959Z.tb10Z0/report.md and report.json.
+Main b8fb957aa839a9e8cb0b54279dd9864fa317bd30: checker whole 0/78,
+own 22/78; latent NotYet 2059, Refused 2140.
+Area e39a299323cad76aea44ec71ca7b740130323d4c: checker whole 1/79,
+own 25/79; latent NotYet 2075, Refused 2104.
+Both latent ledgers are labeled "measured on a checker-rejected program".
+Each has four SkippedDependency sites, zero errors and zero panics.
+Top ten reasons follow the checker table. JSON retains full reason counts and
+adds latent_lowering to each tree; the root retains the area observation.
+Counts use unique (kind, where, reason, text) sites, matching the latent tool.
+
+Commands, each with output redirected to its own log:
+
+```sh
+bash cloud/setup.sh > /tmp/meter-lowering-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+bash stage3/meter/twice-daily.sh > /tmp/meter-lowering-run.log 2>&1
+CENSUS_BINARY=/tmp/adamic-gate/stage3-meter.JeZTWq/census LATENT_CENSUS_BINARY=/tmp/adamic-gate/stage3-meter.JeZTWq/latent-census python3 -m unittest discover -s stage3/meter -p '*_test.py' > /tmp/meter-lowering-tests.log 2>&1
+go vet ./stage3/census/tool ./stage3/census/latent/tool > /tmp/meter-lowering-vet.log 2>&1
+bash -n stage3/meter/twice-daily.sh
+git diff --check
+```
+
+Both complete checker/latent phases pass, including the no-IR and disabled
+production-loader guards on both real trees. Nineteen tests pass with no skips.
+Vet, shell syntax and whitespace checks pass. Setup: Go/clang/Node ready at 0s;
+submodules at 18s; cache warm and done at 260s; nproc 5, cgroup quota
+400000/100000, 17.6 GB. Toolchain remains Go 1.27.1, clang 20.1.8, Node 24.19.0.
+
+The preservation audit imports report.py from the base commit, renders the
+same two raw checker censuses, and compares every existing JSON field and the
+entire checker headline/table prefix against the new report. They match exactly.
+The latent headers' full diagnostics also equal the ordinary whole-program
+checker diagnostics exactly on both trees. See checker-preservation.log.
+
+The real planted-NotYet test starts with a rejected function, an eligible
+function with an existing NotYet, an eligible non-null assertion producing
+Refused, and an eligible target function. LATENT_MUTANT_FUNCTION=target plants
+one extra overlay-only NotYet. Only "NotYet: latent planted extra NotYet"
+increases, by one; every other reason and Refused total stays fixed.
+A synthetic duplicate event also proves headline deduplication.
+A scratch report.py mutant attributes every finding to "existing". Both named
+planted-NotYet tests fail only their reason-count assertions, without setup
+errors. The live report code and compiler remain unchanged by the mutant.
+See tests.log and mutants.log for the passing baseline and expected catches.
+
+Limits: observations on checker-rejected programs are not successful lowering.
+Diagnosed function bodies and dependencies can be skipped; each eligible unit
+can stop at its first lowering error. Final module order, ownership and backend
+passes remain outside this measurement. The full integration gate and native
+execution were not run for this meter-only change. No cron or messaging was
+installed, and only the named meter branch is pushed.
+
+
+Ownership addition: owners.json contains the supplied worker/branch assignments.
+Exact reason text wins over the longest prefix; the explicit "seen as" entry
+matches the phrase inside variance reasons. Unmatched rows print OWNER BLANK
+and are listed first under Unowned, grouped by exact reason across both trees.
+The first ten are visible; a collapsible table retains every remaining row.
+Top-ten tables are grouped by exact reason, with owner and separate kind counts.
+Owner grouping changes no checker number, latent total or exact reason count.
+The new unknown-owner test checks OWNER BLANK and placement under Unowned;
+a separate paired-report assertion checks Unowned precedes the latent tables.
+An independent scratch mutant claims an unmatched owner, and that test catches
+it only through the owner assertion. Prefix, variance and cross-kind grouping
+checks also pass. The ownership-aware suite passes all nineteen tests, no skips.
