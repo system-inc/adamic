@@ -586,6 +586,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		r := e.program.Regexps[expression.Index]
 		return "new RegExp(" + quote(r.Pattern) + ", " + quote(r.Flags) + ")"
 	case ir.RegExpCall:
+		if expression.Replacement != nil {
+			return e.regexReplacement(expression)
+		}
 		if expression.Method == "iteratorDone" {
 			return e.value(expression.Value) + ".done"
 		}

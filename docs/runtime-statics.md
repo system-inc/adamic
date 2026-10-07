@@ -459,3 +459,9 @@ not the safety of the rows explicitly marked unsafe.
 - `runtime-file:node_process.c`
 - `runtime-file:node_process.h`
 - `runtime-file:process.c`
+
+## Functional RegExp replacement
+
+- `runtime-file:regexp_replace.c`
+
+The replacement unit has no static or global data. Match arrays, callback argument arrays and replacement pieces belong to each invocation.

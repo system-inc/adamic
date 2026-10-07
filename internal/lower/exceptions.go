@@ -173,6 +173,10 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			if l.result.CallMayThrow(node) {
 				found = true
 			}
+		case ir.RegExpCall:
+			if node.Replacement != nil && l.result.ClosuresMayThrow {
+				found = true
+			}
 		case ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
 			// A call through a function value, written out or made by the runtime's loop.
 			if l.result.ClosuresMayThrow {
@@ -228,6 +232,9 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				failing = "Object.assign into a potentially frozen object"
 			}
 		case ir.RegExpCall:
+			if node.Replacement != nil {
+				callsClosures = true
+			}
 			if node.Method == "replaceAll" || node.Method == "matchAll" {
 				failing = "RegExp global-flag validation"
 			}

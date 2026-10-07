@@ -349,7 +349,7 @@ func (l *lowering) stringReadOnlyArgument(node *ast.Node) bool {
 }
 
 func (l *lowering) refuseStringWidening(node *ast.Node) error {
-	if l.stringReadOnlyArgument(node) {
+	if l.stringReadOnlyArgument(node) || l.regexReplacementArgument(node) {
 		return nil
 	}
 	return l.refuseWidening(node)

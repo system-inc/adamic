@@ -11,7 +11,7 @@ import (
 func TestRegExpNativeRefusals(t *testing.T) {
 	for _, source := range []string{
 		"const matches = /a{18446744073709551616}/.test('a');",
-		"console.log('a'.replace(/a/, (value: string) => value));",
+		"console.log('a'.replace(/a/, (value: string) => ({value})));",
 		"try { console.log('a'.replaceAll(/a/, 'b')); } catch {}",
 		"const regex = /a/; regex.exec = (input: string): RegExpExecArray | null => null;",
 		"const regex = /a/; const copy = {...regex};",
