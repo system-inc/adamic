@@ -64,4 +64,4 @@ for(let i=0;i<5;i++){
  const round={round:i+1,order:orders[i],before,after:machine(),observations};rounds.push(round);console.log(JSON.stringify(round));
 }
 const best=Object.fromEntries(orders[0].map(entry=>[entry,100000/Math.min(...rounds.map(r=>r.observations[entry].milliseconds))*1000]));
-await writeFile('cloud/reports/decode-ascii/results.json',JSON.stringify({corpus,node:process.version,rounds,best},null,2)+'\n');console.log(JSON.stringify({best}));
+await writeFile(process.env.ADAMIC_DECODE_RESULTS??'cloud/reports/decode-ascii/results.json',JSON.stringify({corpus,node:process.version,rounds,best},null,2)+'\n');console.log(JSON.stringify({best}));

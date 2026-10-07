@@ -125,6 +125,9 @@ static adamic_string *decode(const unsigned char *bytes, size_t length) {
 		size += encoded_size(point);
 	}
 	adamic_string *string = new_string(size);
+	if (ascii == length) {
+		string->units = length + 1;
+	}
 	unsigned char *cursor = (unsigned char *)string->bytes;
 	if (ascii != 0) {
 		memcpy(cursor, bytes, ascii);

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import hashlib, json, pathlib, subprocess, sys
+import hashlib, json, pathlib, subprocess, sys, os
 root=pathlib.Path.cwd(); scratch=pathlib.Path('/tmp/decode-ascii'); stage=sys.argv[1]
 out=scratch/('objects-'+stage); out.mkdir(exist_ok=True)
 for source in sorted((root/'internal/native/runtime').glob('*.c')):
@@ -10,5 +10,5 @@ if stage=='after':
         before=(scratch/'objects-before'/obj.name).read_bytes(); after=obj.read_bytes()
         rows.append(dict(object=obj.name,identical=before==after,before=hashlib.sha256(before).hexdigest(),after=hashlib.sha256(after).hexdigest()))
     assert [r['object'] for r in rows if not r['identical']]==['input.o']
-    (root/'cloud/reports/decode-ascii/objects.json').write_text(json.dumps(rows,indent=2)+'\n')
+    (root/os.environ.get('ADAMIC_DECODE_OBJECT_RESULTS','cloud/reports/decode-ascii/objects.json')).write_text(json.dumps(rows,indent=2)+'\n')
     print(f"{len(rows)-1}/{len(rows)-1} non-input objects byte-identical; input.o differs")

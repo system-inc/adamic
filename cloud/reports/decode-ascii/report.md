@@ -1,3 +1,64 @@
+Added the ASCII cache: units = length + 1 exactly when the scan consumes the complete input; otherwise units stays 0.
+Branch codex/decode-ascii, extending 4eb5187; string-views ba9c9ef tested as a clean scratch merge, compiler fixed.
+Both runtime variants passed 95,694,560 cases per target with native ASan/UBSan and WASI; all requested gates passed.
+False-ASCII mutant failed UTF-16 indexing (195 instead of 233); omitted-cache mutant failed metadata; all six mutants caught.
+Best standalone Wasm/native: 9,235/11,917 req/s; merged: 13,804/19,753; the cache flag’s isolated speedup was not measured.
+
+**Cache follow-up**
+
+The addition to input.c is three lines after allocation: only `ascii == length` sets `string->units = length + 1`. The ASCII prefix scan already establishes that every input byte is < 0x80. That includes empty input and NULs; decoded length equals input length on that path, so this is exactly the representation’s ASCII flag. Non-ASCII paths retain new_string’s units = 0. No other runtime source was modified on the pushed branch.
+
+The decoder test now independently classifies every corpus input by its bytes, asserts that all-ASCII results have units == decoded length + 1, and asserts that every non-ASCII result is unflagged and still has units = 0. A separate fresh decode of `é😀` checks charCodeAt results E9/D83D/DE00 before the metadata assertions. This holds the cache to JavaScript UTF-16 indexing, not just to a stored number.
+
+Standalone final test: native ASan/UBSan 175.23s, WASI 42.44s, total 227.387s. Cleanly merged runtime: native ASan/UBSan 174.69s, WASI 37.52s, total 229.543s. Every target/variant printed `prefixes=92014 cases=95694560 Node and baseline identical`. The bounded longer-prefix coverage remains as described in the historical section below.
+
+The false-flag mutant changes only the flag condition to true, setting length + 1 on non-ASCII input. Its first failure was `decode indexing mismatch index=0 actual=195 expected=233`: byte C3 instead of code unit E9. It failed before any metadata assertion, with no sanitizer error. An omission mutant disables cache initialization and fails on empty ASCII input: `decode cache mismatch record=0 run=0 offset=0 ascii=1 units=0 bytes=0`. The original byte-80, one-byte-late and dropped-byte mutants now fail the stronger cache assertions; the word over-read still fails with ASan. All six compiled successfully and exited 1 at their intended checks. Failure excerpts are in cache-mutants.json.
+
+The new object comparison again compiled all 48 native runtime objects at -O2. **47/47 non-input objects remain byte-identical** on this branch, with only input.o different; cache-objects.json preserves hashes. This comparison concerns the standalone code change, not the extra runtime changes in the scratch merged variant.
+
+**Combined runtime and rates**
+
+Fetched exact string-views commit `ba9c9ef87e38d5369e0eaa1b0b6d24f93bbd227a`. A conflict-free `git merge-tree` with the prior decode commit produced tree `77f739c8f0ea4061fcfc8aa5b6596f67c50bf968`; the pending cache version of input.c was overlaid because string-views has no input.c delta. The four additional runtime files are directory.c, string_search_impl.h, string_share.c and string_slice_impl.h. There are no compiler changes in this combination. This merged runtime was tested and measured in scratch; its extra files are not changes on this worker branch. cache-merge.json records the tree, input hash and scope.
+
+One quiet interleaved best-of-five run, same accepted 100,000 requests and compiler as the original report. Both standalone and combined native/Wasm variants verified every response byte against Node outside timing; timed loops checked checksum 7,394,547. Wasm used one instance per variant. Native timing brackets only the warmed serve loop; whole-process times including read/split and warmup are retained in cache-results.json. No other build, test or analysis ran during the rounds. Machine: AMD EPYC 9V74, Debian 13, Node 24.19.0, clang 20.1.8, WASI SDK 27; nproc 5 and cgroup CPU quota four CPU equivalents.
+
+| Round | Order (SW/CW/SN/CN = standalone/combined Wasm/native) | Load before / after | nproc before / after | SW req/s | CW req/s | SN req/s | CN req/s |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 1 | SW, CW, SN, CN | 1.00 / 1.00 | 5 / 5 | 9,191 | 13,804 | 11,825 | 19,753 |
+| 2 | CN, SN, CW, SW | 1.00 / 1.00 | 5 / 5 | 9,093 | 13,203 | 11,917 | 19,667 |
+| 3 | CW, SN, SW, CN | 1.00 / 1.00 | 5 / 5 | 9,235 | 13,537 | 11,373 | 19,051 |
+| 4 | SN, SW, CN, CW | 1.00 / 1.00 | 5 / 5 | 8,697 | 13,727 | 11,627 | 18,147 |
+| 5 | SW, CN, CW, SN | 1.00 / 1.00 | 5 / 5 | 9,106 | 12,225 | 11,779 | 18,770 |
+
+| Runtime | Best Wasm req/s (100k serve time) | Best native req/s (100k serve time) |
+|---|---:|---:|
+| ASCII cache alone | 9,234.60 (10.828841s) | 11,916.60 (8.391659s) |
+| ASCII cache + string-views | 13,803.93 (7.244314s) | 19,753.13 (5.062488s) |
+
+Observed: the combined runtime was faster in all five rounds for both targets; best rates increased 49.5% for Wasm and 65.8% for native relative to standalone. Both variants include the cache change. This is the combined result of the additional runtime changes, not a measurement of the flag’s isolated contribution. The older scan-only rates (8,610 Wasm, 11,732 native) were a separate run; no controlled cache-only speedup is inferred from them. No new CPU profile was captured for this addition.
+
+**Follow-up validation and reproduction**
+
+Logs: cache-only-oracle.log, cache-combined-oracle.log, cache-native-gate.log, cache-wasi-gate.log, cache-wasi-integration.log, cache-mutants.log, cache-vet.log and cache-gofmt.log, all under /tmp/decode-ascii. Uncached native/input oracle passed in 110.440s; WASI oracle passed in 167.694s; WASI integration passed in 28.896s. Vet, gofmt and diff checks passed. No full repository gate was run.
+
+```bash
+source /workspace/adamic-tools/env.sh
+ADAMIC_TEST_WASI=1 go test ./internal/native -run "^TestDecodeASCII$" -count=1 -v -timeout 30m > /tmp/decode-ascii/cache-only-oracle.log 2>&1
+python3 internal/native/decode_ascii/mutants.py > /tmp/decode-ascii/cache-mutants.log 2>&1
+git fetch origin codex/string-views codex/wasm-requests-profile
+bash cloud/reports/decode-ascii/build.sh > /tmp/decode-ascii/cache-prepare.log 2>&1
+python3 cloud/reports/decode-ascii/cache-build.py > /tmp/decode-ascii/cache-build.log 2>&1
+ADAMIC_DECODE_RUNTIME=/tmp/decode-ascii/cache-combined-runtime ADAMIC_TEST_WASI=1 go test ./internal/native -run "^TestDecodeASCII$" -count=1 -v -timeout 30m > /tmp/decode-ascii/cache-combined-oracle.log 2>&1
+# After all other work finishes:
+ADAMIC_DECODE_RESULTS=cloud/reports/decode-ascii/cache-results.json node --disable-warning=ExperimentalWarning cloud/reports/decode-ascii/measure.mjs measure > /tmp/decode-ascii/cache-measure.log 2>&1
+```
+
+In cache-results.json, “before” means standalone cache and “after” means cache plus string-views; its variants field records this explicitly. Full measured artifact hashes are included. The new preparation script reconstructs the merged snapshot without editing the checkout.
+
+**Historical scan-only unit at 4eb5187**
+
+The following records the original scan-only implementation and experiment before cache initialization was added. Its commands and artifact hashes describe that commit; the cache follow-up above describes the current code.
+
 Implemented a bounded leading-ASCII copy in input.c for every target, preserving the existing tail decoder.
 Base 4d86c305 (area/runtime); claim 54ec0b1 pushed first on codex/decode-ascii; only input.c changes in runtime.
 Native ASan/UBSan and WASI pass 95,694,560 cases each; requested gates pass; 47 other objects byte-identical.
