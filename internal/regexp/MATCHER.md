@@ -122,12 +122,12 @@ that compiled strings stay immutable.
 All four requested real implementation mutants were run and restored. The
 Node capture/index oracle, rather than compilation, caught them:
 
-| Mutant | Oracle failures | Witness |
-|---|---:|---|
-| Greedy becomes lazy | 12 | `a+` on `aaa`: span `[0,1]` instead of `[0,3]` |
-| Captures not reset on repetition | 1 | `(a\|(b))+` on `aba`: capture 2 retains `[1,2]` instead of undefined |
-| Lookbehind runs forwards | 2 | `(?<=([ab]+)([bc]+))$` on `abc`: fails instead of captures `[0,1]`, `[1,3]` |
-| Folding ignores the u/v distinction | 2 | `k` with `i` matches Kelvin sign, which Node rejects |
+| Mutant                              | Oracle failures | Witness                                                                     |
+| ----------------------------------- | --------------: | --------------------------------------------------------------------------- |
+| Greedy becomes lazy                 |              12 | `a+` on `aaa`: span `[0,1]` instead of `[0,3]`                              |
+| Captures not reset on repetition    |               1 | `(a\|(b))+` on `aba`: capture 2 retains `[1,2]` instead of undefined        |
+| Lookbehind runs forwards            |               2 | `(?<=([ab]+)([bc]+))$` on `abc`: fails instead of captures `[0,1]`, `[1,3]` |
+| Folding ignores the u/v distinction |               2 | `k` with `i` matches Kelvin sign, which Node rejects                        |
 
 Three additional mutants were caught: aliasing provider string storage fails
 `TestMatcherProviderSnapshot` against Node; treating an instruction-limit error
