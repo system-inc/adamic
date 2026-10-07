@@ -103,3 +103,8 @@ corpora with Go, run sanitizer comparisons, kill all six rule mutants and
 exercise seven released-handle questions with registry-retention mutants.
 Logs and continuation command records are in validation/landing.
 No new React implementation is claimed; JSX integration remains outside scope.
+
+Main advanced during the first gate. Rebased again onto e8ba3d5d81de4d3773c723914fccd4c76248b965
+and reran both full gates on code head 76493d0bce37f2d70b4001cf5556a9e461874e2f.
+Original gate PASS 139.718s; continuation gate PASS, including package tests.
+Final logs and command records are in validation/landing.
