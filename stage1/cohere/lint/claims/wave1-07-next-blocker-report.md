@@ -28,3 +28,20 @@ Commands wrote output directly to logs:
 - In cohere, go test ./internal/lint/rules/core -run '^(TestConsistentReturn|TestConstructorSuper|TestDefaultCase)' -count=1 -v: 31 top-level tests passed, package PASS in 0.019s. These prove the upstream reference tests run, not that an Adamic port exists.
 
 The full repository gate and new-trio Node/emitted-JavaScript/sanitized-native parity, mutants and findings/s measurements were not run and are not claimed. Raw setup, tests, selection and dependency evidence are retained beside this report. The previous statement that nothing remained unclaimed is superseded by this correction.
+
+
+## Subsequent environment resume
+
+Rechecked the claimed trio and compatible shared dependency; no new rule implementation was added.
+Existing claim ae8e7213 and blocker report 88417969 were already pushed; this evidence is committed separately.
+Fresh all-head fetch inspected 355 origin refs and 103 distinct stage1 trees; setup PASS in 30s, nproc 5.
+No new mutant, parity test or throughput measurement is claimed because no executable rule source changed.
+The same consistent-return shared-judgment/graph dependency remains unavailable; no further claims taken.
+
+The new environment was checked with the cloud-environment-runtime skill. HTTP policy is enforced and the runtime is ready. The existing branch is clean and its push reported Everything up-to-date before work. Main remains ef3d907e and shared harness remains f4d98cab.
+
+The refreshed scan now finds a third graph projection, origin/codex/typeaware-wave-07's wave07_control_flow.a. It calls bindings.rules.ask(root, 'wave07-control-flow') and reads externally supplied graph blocks/events, just as the two earlier candidates read their external frames. All three sources and their exact branch commits are preserved in resume-audit.json. None supplies compatible consistentreturn.Judge or an independently built control_flow_graph.Build/EndReachable result through this lint unit's RuleContext. The current RuleContext was reread and its source hash recorded; it still has no graph-query bridge.
+
+Setup printed Go ready 0s, clang ready 0s, Node ready 0s, submodules ready 0s, build cache warm 30s, done 30s on 5 processors; nproc separately printed 5. Setup compiles the existing package/test graph without executing rule parity tests. No upstream-test rerun or new-trio certification is claimed. Previous parity, mutant and throughput evidence belongs to the earlier completed rules.
+
+The earlier user instruction to stop on other dependency gaps still applies. Shared context, helpers, parser, harness and compiler were left untouched. consistent-return remains blocked; constructor-super and default-case remain reserved and unstarted after that dependency stop. The current source state also leaves the prior Google Font independent JSX-parser limitation unchanged. The unit is not declared complete and the syntax-only queue is not declared exhausted.

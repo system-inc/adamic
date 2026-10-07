@@ -1,0 +1,35 @@
+{
+  "origin_refs": 355,
+  "stage1_trees": 103,
+  "main": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "harness": "f4d98cab50048692781da3599131317dc569d466",
+  "graph_candidates": [
+    {
+      "ref": "origin/codex/typeaware-wave-01",
+      "commit": "98f1cd3230075b5363f0736395db9c5b88e5fe22",
+      "path": "stage1/cohere/typeaware/wave_01_next/syntax_flow_graph.a",
+      "source": "import type { Context } from './context.a';\nimport { Frames, header } from '../frames.ts';\nimport { FlowBlock } from './flow_block.a';\nimport { FlowEvent } from './flow_event.a';\nexport function syntaxFlowGraph(fileContext: Context, root: number): FlowBlock[] {\n    const frames = new Frames(fileContext.bindings.rules.ask(root, 'syntax-flow-graph'));\n    header(frames, 'syntax-flow-graph');\n    frames.yes();\n    const count = frames.natural();\n    const blocks: FlowBlock[] = [];\n    for(let at = 0; at < count; at++) {\n        const reachable = frames.yes();\n        const final = frames.yes();\n        frames.yes();\n        const successors = frames.ids();\n        const eventCount = frames.natural();\n        const flowEvents: FlowEvent[] = [];\n        for(let event = 0; event < eventCount; event++) {\n            const write = frames.yes();\n            const kind = frames.field();\n            const start = frames.natural();\n            const end = frames.natural();\n            flowEvents.push(new FlowEvent(fileContext.locate(kind, start, end), write));\n        }\n        blocks.push(new FlowBlock(reachable, final, successors, flowEvents));\n    }\n    frames.end();\n    return blocks;\n}\n"
+    },
+    {
+      "ref": "origin/codex/typeaware-wave-07",
+      "commit": "158557b6f3dff9119864e43df1a324c066a05b60",
+      "path": "stage1/cohere/typeaware/wave07_continuation/wave07_control_flow.a",
+      "source": "import { panic } from 'adamic';\nimport type { Bindings } from '../bindings.ts';\nimport { Frames, header } from '../frames.ts';\nimport { FlowBlock } from './flow_block.a';\n\nexport class ControlFlow {\n    readonly blocks: FlowBlock[] = [];\n    constructor(bindings: Bindings, root: number) {\n        const frames = new Frames(bindings.rules.ask(root, 'wave07-control-flow'));\n        header(frames, 'wave07-control-flow');\n        const count = frames.natural();\n        if(count === 0) {\n            panic('empty structural control flow');\n        }\n        for(let at = 0; at < count; at++) {\n            const reachable = frames.yes();\n            const successors = frames.ids();\n            if(successors.some((index) => index >= count)) {\n                panic('invalid structural control-flow edge');\n            }\n            const events: number[] = [];\n            const size = frames.natural();\n            for(let event = 0; event < size; event++) {\n                const kind = frames.field();\n                const start = frames.natural();\n                const end = frames.natural();\n                events.push(\n                    bindings.spans.get(`${kind}:${start}:${end}`) ?? panic('structural event absent from native tree'),\n                );\n            }\n            this.blocks.push(new FlowBlock(reachable, successors, events));\n        }\n        frames.end();\n    }\n}\n"
+    },
+    {
+      "ref": "origin/codex/typeaware-wave-25",
+      "commit": "abdad124e6a18e98fe71d3404b91a2c56cfc8d7a",
+      "path": "stage1/cohere/typeaware/syntax_control_flow.a",
+      "source": "import { panic } from 'adamic';\nimport { Frames, header } from './frames.ts';\nimport type { SyntaxProjection } from './syntax_projection.a';\nexport class SyntaxEvent {\n    readonly hook: number; readonly node: number;\n    constructor(hook: number, node: number) { this.hook = hook; this.node = node; }\n}\nexport class SyntaxBlock {\n    readonly reachable: boolean; readonly successors: readonly number[]; readonly events: readonly SyntaxEvent[];\n    constructor(frames: Frames) {\n        this.reachable = frames.yes(); this.successors = frames.ids(); const count = frames.natural(); const events: SyntaxEvent[] = [];\n        for(let at = 0; at < count; at++) { events.push(new SyntaxEvent(frames.natural(), frames.natural())); } this.events = events;\n    }\n}\nexport class SyntaxControlFlow {\n    readonly blocks: readonly SyntaxBlock[];\n    constructor(syntax: SyntaxProjection, root: number) {\n        const frames = new Frames(syntax.ask(root, 'syntax-control-flow')); header(frames, 'syntax-control-flow'); const count = frames.natural(); const blocks: SyntaxBlock[] = [];\n        for(let at = 0; at < count; at++) { blocks.push(new SyntaxBlock(frames)); } frames.end(); this.blocks = blocks;\n        if(count === 0) { panic('empty control flow graph'); }\n        for(const block of blocks) {\n            for(const next of block.successors) { if(next >= count) { panic('invalid control flow successor'); } }\n            for(const event of block.events) { if(event.hook > 1) { panic('invalid syntax hook'); } syntax.node(event.node); }\n        }\n    }\n    block(index: number): SyntaxBlock { return this.blocks[index] ?? panic('missing control flow block'); }\n}\n"
+    }
+  ],
+  "status": "compatible stage1 judgment/graph dependency still unavailable",
+  "assessment": "All three candidates decode external type-aware graph frames via ask; none independently builds the graph through the current lint RuleContext.",
+  "context_sha256": "1f89a78ea06470610971a29f666eb89fbba2bce66f74aa8ba2cb03a7c1bba388",
+  "no_new_claims": true,
+  "claimed_trio": [
+    "consistent-return",
+    "constructor-super",
+    "default-case"
+  ]
+}

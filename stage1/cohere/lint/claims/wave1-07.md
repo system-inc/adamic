@@ -89,3 +89,6 @@ A fresh executable-source scan also found no origin implementation for these nam
 
 
 Corrected continuation outcome: claim ae8e7213 was pushed before code. consistent-return needs consistentreturn.Judge and its control_flow_graph.Build/EndReachable judgment; the two origin graph modules found are type-aware bridge projections unavailable through the stage1 lint RuleContext. This is a shared-helper dependency gap, so the earlier stop instruction applies. No new rule code, parity, mutant or throughput claim is made. constructor-super and default-case remain reserved and unstarted; no further claims taken. See wave1-07-next-blocker-report.md and wave1-07-next-dependency-evidence/ for the corrected selection, source evidence, setup and upstream reference tests.
+
+
+Dependency resume: fetched all 355 origin refs and inspected 103 distinct stage1 trees. A third graph projection exists on origin/codex/typeaware-wave-07, but it also requires an external bindings.rules.ask bridge unavailable in this lint context. The consistent-return shared judgment/graph blocker remains. No new code or additional claims; constructor-super and default-case remain reserved and unstarted. Refreshed setup and source/branch evidence are in wave1-07-next-dependency-evidence/resume-*. See the appended continuation in wave1-07-next-blocker-report.md.
