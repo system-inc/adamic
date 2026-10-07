@@ -1,5 +1,5 @@
 Built three small guarded WASI hooks; the combined build remains blocked outside W7's territory.
-SHAs: claim 2f8c5f3; concurrency merge fba6fd2; runtime-area merge b9052ec; final worker SHA is reported on push.
+SHAs: claim 2f8c5f3; concurrency merge fba6fd2; runtime-area merge b9052ec; hooks/evidence commit ad25e62; final log receipt SHA is reported on push.
 Checks: 50/50 native objects identical; native oracle 514 pass; WASI before/after each 751 fail, 1 pass.
 Mutants: native TLS global caught by TSan exit 66; pthread-create stub returns ENXIO; reverse WASI mutant unrun.
 Not covered: green WASI execution, completed pool mutant, sibling async/moves/scaling, whole-repo gate or speed.
