@@ -1,0 +1,28 @@
+{
+  "compiler": {
+    "go": {
+      "process_ns": 406994930,
+      "load_ns": 319232738,
+      "run_ns": 58864385
+    },
+    "native": {
+      "process_ns": 1861265849,
+      "load_ns": 334088365,
+      "run_ns": 1513268490
+    },
+    "native_over_go": 4.573191732388411
+  },
+  "repository": {
+    "go": {
+      "process_ns": 171307987,
+      "load_ns": 85832025,
+      "run_ns": 66973490
+    },
+    "native": {
+      "process_ns": 307863804,
+      "load_ns": 85139920,
+      "run_ns": 217621627
+    },
+    "native_over_go": 1.7971363121557198
+  }
+}
