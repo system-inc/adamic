@@ -1,0 +1,143 @@
+=== RUN   TestWave13ReturnsCorpusAndBackends
+    lint_test.go:293: independent upstream core: ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.083s
+    lint_test.go:293: independent upstream next: ok  	github.com/system-inc/cohere/internal/lint/rules/next	0.006s
+    lint_test.go:293: independent upstream nexus: ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.015s
+    lint_test.go:293: independent upstream tailwind: ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.013s
+    lint_test.go:293: independent upstream typescript: ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.023s
+    lint_test.go:333: EXPLICIT GAP: JSX case from /repository/source/ConsistencyNoReturnVoid.tsx for nexus/consistency-no-return-void; upstream Go test passed but stage1 parser has no JSX adapter
+    lint_test.go:349: cohere cases: 785 unique source/rule/options combinations
+    lint_test.go:673: no-constructor-return: 53 upstream cases and 237 compiler/stage1 files (.ts and .a)
+    lint_test.go:839: supported 291 rows; explicit parser gaps 0
+    lint_test.go:676: Go, Node, native identical: 12405064 bytes
+    lint_test.go:681: no-constructor-return emitted JavaScript identical: 12405064 bytes
+    lint_test.go:704: no-constructor-return round 1 Go 0.213724s findings=26
+    lint_test.go:704: no-constructor-return round 1 native 1.311520s findings=26
+    lint_test.go:704: no-constructor-return round 1 Node 0.940348s findings=26
+    lint_test.go:704: no-constructor-return round 2 Go 0.222575s findings=26
+    lint_test.go:704: no-constructor-return round 2 native 1.352415s findings=26
+    lint_test.go:704: no-constructor-return round 2 Node 0.904354s findings=26
+    lint_test.go:704: no-constructor-return round 3 Go 0.204228s findings=26
+    lint_test.go:704: no-constructor-return round 3 native 1.264000s findings=26
+    lint_test.go:704: no-constructor-return round 3 Node 0.865047s findings=26
+    lint_test.go:712: no-constructor-return Go 127.31 findings/s (26 findings, 0.204228s)
+    lint_test.go:712: no-constructor-return native 20.57 findings/s (26 findings, 1.264000s)
+    lint_test.go:712: no-constructor-return Node 30.06 findings/s (26 findings, 0.865047s)
+    lint_test.go:673: no-delete-var: 9 upstream cases and 237 compiler/stage1 files (.ts and .a)
+    lint_test.go:839: supported 247 rows; explicit parser gaps 0
+    lint_test.go:676: Go, Node, native identical: 12390714 bytes
+    lint_test.go:681: no-delete-var emitted JavaScript identical: 12390714 bytes
+    lint_test.go:704: no-delete-var round 1 Go 0.244795s findings=4
+    lint_test.go:704: no-delete-var round 1 native 1.357321s findings=4
+    lint_test.go:704: no-delete-var round 1 Node 0.859509s findings=4
+    lint_test.go:704: no-delete-var round 2 Go 0.228508s findings=4
+    lint_test.go:704: no-delete-var round 2 native 1.385345s findings=4
+    lint_test.go:704: no-delete-var round 2 Node 0.941419s findings=4
+    lint_test.go:704: no-delete-var round 3 Go 0.217641s findings=4
+    lint_test.go:704: no-delete-var round 3 native 1.302210s findings=4
+    lint_test.go:704: no-delete-var round 3 Node 0.937795s findings=4
+    lint_test.go:712: no-delete-var Go 18.38 findings/s (4 findings, 0.217641s)
+    lint_test.go:712: no-delete-var native 3.07 findings/s (4 findings, 1.302210s)
+    lint_test.go:712: no-delete-var Node 4.65 findings/s (4 findings, 0.859509s)
+    lint_test.go:673: no-eq-null: 14 upstream cases and 237 compiler/stage1 files (.ts and .a)
+    lint_test.go:839: supported 252 rows; explicit parser gaps 0
+    lint_test.go:676: Go, Node, native identical: 12391662 bytes
+    lint_test.go:681: no-eq-null emitted JavaScript identical: 12391662 bytes
+    lint_test.go:704: no-eq-null round 1 Go 0.214270s findings=8
+    lint_test.go:704: no-eq-null round 1 native 1.354973s findings=8
+    lint_test.go:704: no-eq-null round 1 Node 0.965203s findings=8
+    lint_test.go:704: no-eq-null round 2 Go 0.211790s findings=8
+    lint_test.go:704: no-eq-null round 2 native 1.388087s findings=8
+    lint_test.go:704: no-eq-null round 2 Node 0.961117s findings=8
+    lint_test.go:704: no-eq-null round 3 Go 0.209114s findings=8
+    lint_test.go:704: no-eq-null round 3 native 1.305371s findings=8
+    lint_test.go:704: no-eq-null round 3 Node 0.974092s findings=8
+    lint_test.go:712: no-eq-null Go 38.26 findings/s (8 findings, 0.209114s)
+    lint_test.go:712: no-eq-null native 6.13 findings/s (8 findings, 1.305371s)
+    lint_test.go:712: no-eq-null Node 8.32 findings/s (8 findings, 0.961117s)
+--- PASS: TestWave13ReturnsCorpusAndBackends (202.26s)
+=== RUN   TestWave13ReturnsMutants
+=== RUN   TestWave13ReturnsMutants/no-constructor-return-semantic-mutant
+    lint_test.go:762: no-constructor-return-semantic-mutant caught only by comparison on Node: case 0 line 2: port "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant1395087214/001/no-constructor-return-0.ts:1:46", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant1395087214/001/no-constructor-return-0.ts:1:59"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant1395087214/001/no-constructor-return-0.ts:1:59
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 58 67 noConstructorReturn 		
+        fixed	class C { constructor() { const fn = () => { return 2; }; return 1; } }\u000a
+    lint_test.go:762: no-constructor-return-semantic-mutant caught only by comparison on native: case 0 line 2: port "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant1395087214/001/no-constructor-return-0.ts:1:46", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant1395087214/001/no-constructor-return-0.ts:1:59"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant1395087214/001/no-constructor-return-0.ts:1:59
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 58 67 noConstructorReturn 		
+        fixed	class C { constructor() { const fn = () => { return 2; }; return 1; } }\u000a
+    lint_test.go:762: no-constructor-return-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant1395087214/001/no-constructor-return-0.ts:1:46", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant1395087214/001/no-constructor-return-0.ts:1:59"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant1395087214/001/no-constructor-return-0.ts:1:59
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 58 67 noConstructorReturn 		
+        fixed	class C { constructor() { const fn = () => { return 2; }; return 1; } }\u000a
+=== RUN   TestWave13ReturnsMutants/no-delete-var-semantic-mutant
+    lint_test.go:762: no-delete-var-semantic-mutant caught only by comparison on Node: case 0 line 2: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant340015595/001/no-delete-var-0.ts:1:29"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant340015595/001/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 		
+        fixed	function f(value: number) { delete (value); }\u000a
+    lint_test.go:762: no-delete-var-semantic-mutant caught only by comparison on native: case 0 line 2: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant340015595/001/no-delete-var-0.ts:1:29"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant340015595/001/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 		
+        fixed	function f(value: number) { delete (value); }\u000a
+    lint_test.go:762: no-delete-var-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant340015595/001/no-delete-var-0.ts:1:29"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant340015595/001/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 		
+        fixed	function f(value: number) { delete (value); }\u000a
+=== RUN   TestWave13ReturnsMutants/no-eq-null-semantic-mutant
+    lint_test.go:762: no-eq-null-semantic-mutant caught only by comparison on Node: case 0 line 2: port "fixed\tif ((null) == value) use(value);\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant2599000228/001/no-eq-null-0.ts:1:5"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant2599000228/001/no-eq-null-0.ts:1:5
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 4 19 unexpected 		
+        fixed	if ((null) == value) use(value);\u000a
+    lint_test.go:762: no-eq-null-semantic-mutant caught only by comparison on native: case 0 line 2: port "fixed\tif ((null) == value) use(value);\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant2599000228/001/no-eq-null-0.ts:1:5"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant2599000228/001/no-eq-null-0.ts:1:5
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 4 19 unexpected 		
+        fixed	if ((null) == value) use(value);\u000a
+    lint_test.go:762: no-eq-null-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tif ((null) == value) use(value);\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant2599000228/001/no-eq-null-0.ts:1:5"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant2599000228/001/no-eq-null-0.ts:1:5
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 4 19 unexpected 		
+        fixed	if ((null) == value) use(value);\u000a
+--- PASS: TestWave13ReturnsMutants (45.64s)
+    --- PASS: TestWave13ReturnsMutants/no-constructor-return-semantic-mutant (14.84s)
+    --- PASS: TestWave13ReturnsMutants/no-delete-var-semantic-mutant (14.60s)
+    --- PASS: TestWave13ReturnsMutants/no-eq-null-semantic-mutant (13.97s)
+=== RUN   TestWave13ReturnsOwnedWitnesses
+    lint_test.go:915: Go, Node, native identical: 4089 bytes
+    lint_test.go:932: selected and all-rule owned witnesses match on all three backends: 6 rows
+--- PASS: TestWave13ReturnsOwnedWitnesses (16.97s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	264.886s
