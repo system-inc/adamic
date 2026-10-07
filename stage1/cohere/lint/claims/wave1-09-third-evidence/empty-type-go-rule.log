@@ -1,0 +1,11 @@
+case 0
+/workspace/adamic/stage1/cohere/lint/claims/wave1-09-third-evidence/empty-type.ts.txt:1:14
+  @typescript-eslint/no-empty-object-type  `{}` does not mean an empty object. It means any value that is not null or undefined, so a string and a number both satisfy it. That is almost never what the author intended, and the two readings are impossible to tell apart at a glance. Use `object` for any non-primitive, or `unknown` for genuinely any value.
+
+panic: unexpected suggestion shape
+
+goroutine 1 [running]:
+main.run({0x1d8c07e52180?, 0x1d8c07e79080?}, 0x0, 0x1d8c07e79080)
+	/workspace/adamic/cohere/wave109_oracle.go:70 +0x8f8
+main.main()
+	/workspace/adamic/cohere/wave109_oracle.go:143 +0x2f7
