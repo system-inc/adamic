@@ -18,6 +18,9 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
   - String well-formed Unicode (`runtime/string_wellformed.c`, after
     src/builtins/string-iswellformed.tq and src/builtins/string-towellformed.tq,
     adapted to canonical WTF-8 storage);
+  - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
+    src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
+    V8 13.6.233.17);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
