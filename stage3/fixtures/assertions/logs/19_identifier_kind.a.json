@@ -1,0 +1,22 @@
+{
+  "command": [
+    "go",
+    "run",
+    "./cmd/adamic",
+    "build",
+    "stage3/fixtures/assertions/19_identifier_kind.a",
+    "-o",
+    "/tmp/adamic-gate/assertions-observe-18fowr2x/program"
+  ],
+  "build": {
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/assertions/19_identifier_kind.a:14:13: stage 0 can't lower a case that isn't a constant yet\nexit status 1\n",
+    "exit": 1
+  },
+  "node": {
+    "stdout": "name\nname\nmissing\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "native": null
+}

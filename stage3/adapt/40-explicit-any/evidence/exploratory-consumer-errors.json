@@ -1,0 +1,128 @@
+[
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 1716,
+    "column": 130,
+    "code": 2345,
+    "message": "Argument of type 'CommandLineOption' is not assignable to parameter of type 'MapLike<unknown>'.\n  Type 'CommandLineOptionOfStringType' is not assignable to type 'MapLike<unknown>'."
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "line": 1354,
+    "column": 29,
+    "code": 2345,
+    "message": "Argument of type 'T' is not assignable to parameter of type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'."
+  },
+  {
+    "file": "src/compiler/debug.ts",
+    "line": 372,
+    "column": 30,
+    "code": 2345,
+    "message": "Argument of type 'AnyFunction' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type 'AnyFunction'."
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 6138,
+    "column": 54,
+    "code": 2345,
+    "message": "Argument of type 'SourceFile' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type 'SourceFile'."
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 6400,
+    "column": 29,
+    "code": 2345,
+    "message": "Argument of type 'T' is not assignable to parameter of type 'MapLike<unknown>'.\n  Type 'Node' is not assignable to type 'MapLike<unknown>'."
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 6400,
+    "column": 57,
+    "code": 2345,
+    "message": "Argument of type 'T' is not assignable to parameter of type 'MapLike<unknown>'.\n  Type 'Node' is not assignable to type 'MapLike<unknown>'."
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 362,
+    "column": 22,
+    "code": 2345,
+    "message": "Argument of type 'PackageJson' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type 'PackageJson'."
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 953,
+    "column": 25,
+    "code": 2345,
+    "message": "Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 2711,
+    "column": 95,
+    "code": 2345,
+    "message": "Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+  },
+  {
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 3103,
+    "column": 26,
+    "code": 2345,
+    "message": "Argument of type 'never[] | PackageJsonPathFields' is not assignable to parameter of type 'MapLike<unknown>'.\n  Type 'never[]' is not assignable to type 'MapLike<unknown>'."
+  },
+  {
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1488,
+    "column": 24,
+    "code": 2345,
+    "message": "Argument of type 'readonly T[]' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type 'readonly T[]'."
+  },
+  {
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1488,
+    "column": 53,
+    "code": 2345,
+    "message": "Argument of type 'readonly T[]' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type 'readonly T[]'."
+  },
+  {
+    "file": "src/services/formatting/rules.ts",
+    "line": 474,
+    "column": 54,
+    "code": 2345,
+    "message": "Argument of type 'FormatCodeSettings' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type 'FormatCodeSettings'."
+  },
+  {
+    "file": "src/services/formatting/rules.ts",
+    "line": 478,
+    "column": 54,
+    "code": 2345,
+    "message": "Argument of type 'FormatCodeSettings' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type 'FormatCodeSettings'."
+  },
+  {
+    "file": "src/services/formatting/rules.ts",
+    "line": 482,
+    "column": 56,
+    "code": 2345,
+    "message": "Argument of type 'FormatCodeSettings' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type 'FormatCodeSettings'."
+  },
+  {
+    "file": "src/services/formatting/rules.ts",
+    "line": 486,
+    "column": 56,
+    "code": 2345,
+    "message": "Argument of type 'FormatCodeSettings' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type 'FormatCodeSettings'."
+  },
+  {
+    "file": "src/services/formatting/rules.ts",
+    "line": 490,
+    "column": 56,
+    "code": 2345,
+    "message": "Argument of type 'FormatCodeSettings' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type 'FormatCodeSettings'."
+  },
+  {
+    "file": "src/services/stringCompletions.ts",
+    "line": 1394,
+    "column": 33,
+    "code": 2345,
+    "message": "Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+  }
+]

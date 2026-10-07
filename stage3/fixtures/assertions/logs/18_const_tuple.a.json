@@ -1,0 +1,26 @@
+{
+  "command": [
+    "go",
+    "run",
+    "./cmd/adamic",
+    "build",
+    "stage3/fixtures/assertions/18_const_tuple.a",
+    "-o",
+    "/tmp/adamic-gate/assertions-observe-18fowr2x/program"
+  ],
+  "build": {
+    "stdout": "",
+    "stderr": "",
+    "exit": 0
+  },
+  "node": {
+    "stdout": "1\n7\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "native": {
+    "stdout": "1\n7\n",
+    "stderr": "",
+    "exit": 0
+  }
+}

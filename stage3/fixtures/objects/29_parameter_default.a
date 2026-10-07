@@ -1,0 +1,19 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10053
+// Census reason: a destructured parameter beside a parameter with a default
+interface SourceFile { imports: readonly {text: string}[]; }
+function hasJSFileExtension(text: string): boolean { return text.endsWith(".js"); }
+function hasTSFileExtension(text: string): boolean { return text.endsWith(".ts"); }
+function or(a: (text: string) => boolean, b: (text: string) => boolean): (text: string) => boolean { return text => a(text) || b(text); }
+function pathIsRelative(text: string): boolean { return text.startsWith("./") || text.startsWith("../"); }
+const extensionsNotSupportingExtensionlessResolution = [".json"];
+function fileExtensionIsOneOf(text: string, extensions: string[]): boolean { return extensions.some(extension => text.endsWith(extension)); }
+function firstDefined<T, U>(items: readonly T[], callback: (item: T) => U | undefined): U | undefined { for (const item of items) { const value=callback(item); if(value !== undefined) return value; } return undefined; }
+function usesExtensionsOnImports({ imports }: SourceFile, hasExtension: (text: string) => boolean = or(hasJSFileExtension, hasTSFileExtension)): boolean {
+    return firstDefined(imports, ({ text }) =>
+        pathIsRelative(text) && !fileExtensionIsOneOf(text, extensionsNotSupportingExtensionlessResolution)
+            ? hasExtension(text)
+            : undefined) || false;
+}
+console.log(`${usesExtensionsOnImports({imports: [{text: "./lib.js"}]})}`);
+console.log(`${usesExtensionsOnImports({imports: [{text: "node"}]})}`);
+console.log(`${usesExtensionsOnImports({imports: [{text: "./lib.ts"}]}, hasJSFileExtension)}`);
