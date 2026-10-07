@@ -156,7 +156,8 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	t = l.concrete(t)
 	// Generic instantiations with the same Union representation share a body. Even a scalar
 	// first call could therefore supply its descriptor to a later container union (probe B).
-	// Refuse generic unions before that body is cached, until JSON has a metadata-specific key.
+	// Refuse mixed generic unions before that body is cached, until JSON has a metadata-specific key.
+	// Nullable generic keys retain the concrete type and empty case, so their schemas are distinct.
 	if generic && t.Flags()&checker.TypeFlagsUnion != 0 && !l.includesNull(t) && !l.includesUndefined(t) {
 		return nil, l.notYet(node, "JSON.stringify a generic union without per-instantiation container metadata")
 	}
