@@ -1,0 +1,16 @@
+=== RUN   TestSlot01Wave3ComponentMatchesCohere
+    slot01_wave3_test.go:164: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/structure/consistency_require_matching_file_name_test.go: 172 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_const_assignment_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_destructuring_test.go: 52 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_display_name_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_separate_named_export_test.go: 65 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_named_export_test.go: 76 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_properties_type_suffix_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_hook_no_properties_in_dependencies_test.go: 56 string inputs
+        568 fixture strings; 1115624 component-name queries; Unicode 17.0.0
+    slot01_wave3_test.go:164: 1115624 Go output lines match Node and sanitized native
+    slot01_wave3_test.go:164: compiled react_likely_component_name.a mutant caught at output line 580: got "false", Go "true"
+--- PASS: TestSlot01Wave3ComponentMatchesCohere (41.44s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	41.449s

@@ -1,0 +1,19 @@
+=== RUN   TestSlot01Wave3AttributeMatchesCohere
+    slot01_wave3_test.go:15: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        956 fixture strings; 962 source batches; 720 helper queries
+    slot01_wave3_test.go:15: 1432 Go output lines match Node and sanitized native
+    slot01_wave3_test.go:15: compiled tailwind_attribute_values.a mutant caught at output line 5: got "1 0", Go "0 0"
+--- PASS: TestSlot01Wave3AttributeMatchesCohere (9.66s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	9.674s

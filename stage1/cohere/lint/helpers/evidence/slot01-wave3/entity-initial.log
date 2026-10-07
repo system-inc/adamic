@@ -1,0 +1,32 @@
+=== RUN   TestSlot01Wave3EntityMatchesCohere
+    slot01_wave3_test.go:152: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_before_interactive_script_outside_document_test.go: 114 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_unwanted_polyfillio_test.go: 104 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/boundary_no_project_theme_value_test.go: 74 string inputs
+        863 fixture strings; 8044 entity queries; 253 pinned named entities
+    slot01_wave3_test.go:152: 24134 Go output lines match Node and sanitized native
+    slot01_wave3_test.go:152: compiled text_decode_entity.a mutant caught at output line 20: got "0", Go "38,35,49,49,49,52,49,49,50,59"
+--- PASS: TestSlot01Wave3EntityMatchesCohere (7.31s)
+=== RUN   TestSlot01Wave3EntitySurrogateMutant
+    slot01_wave3_test.go:155: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_before_interactive_script_outside_document_test.go: 114 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_unwanted_polyfillio_test.go: 104 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/boundary_no_project_theme_value_test.go: 74 string inputs
+        863 fixture strings; 8044 entity queries; 253 pinned named entities
+    slot01_wave3_test.go:155: 24134 Go output lines match Node and sanitized native
+    slot01_wave3_test.go:155: compiled text_decode_entity.a mutant caught at output line 5384: got "55832", Go "65533"
+--- PASS: TestSlot01Wave3EntitySurrogateMutant (4.92s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	12.230s

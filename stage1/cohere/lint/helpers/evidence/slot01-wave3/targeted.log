@@ -1,0 +1,109 @@
+=== RUN   TestSlot01Wave3AttributeMatchesCohere
+    slot01_wave3_test.go:19: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        956 fixture strings; 962 source batches; 720 helper queries
+    slot01_wave3_test.go:19: 1432 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:19: compiled tailwind_attribute_values.a mutant caught at output line 5: got "1 0", Go "0 0"
+--- PASS: TestSlot01Wave3AttributeMatchesCohere (5.87s)
+=== RUN   TestSlot01Wave3EntityMatchesCohere
+    slot01_wave3_test.go:161: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_before_interactive_script_outside_document_test.go: 114 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_unwanted_polyfillio_test.go: 104 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/boundary_no_project_theme_value_test.go: 74 string inputs
+        863 fixture strings; 8044 entity queries; 253 pinned named entities
+    slot01_wave3_test.go:161: 24134 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:161: compiled text_decode_entity.a mutant caught at output line 20: got "0", Go "38,35,49,49,49,52,49,49,50,59"
+--- PASS: TestSlot01Wave3EntityMatchesCohere (5.99s)
+=== RUN   TestSlot01Wave3EntitySurrogateMutant
+    slot01_wave3_test.go:164: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_before_interactive_script_outside_document_test.go: 114 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_unwanted_polyfillio_test.go: 104 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/boundary_no_project_theme_value_test.go: 74 string inputs
+        863 fixture strings; 8044 entity queries; 253 pinned named entities
+    slot01_wave3_test.go:164: 24134 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:164: compiled text_decode_entity.a mutant caught at output line 5384: got "55832", Go "65533"
+--- PASS: TestSlot01Wave3EntitySurrogateMutant (6.03s)
+=== RUN   TestSlot01Wave3ComponentMatchesCohere
+    slot01_wave3_test.go:169: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/structure/consistency_require_matching_file_name_test.go: 172 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_const_assignment_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_destructuring_test.go: 52 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_display_name_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_separate_named_export_test.go: 65 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_named_export_test.go: 76 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_properties_type_suffix_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_hook_no_properties_in_dependencies_test.go: 56 string inputs
+        568 fixture strings; 1115624 component-name queries; Unicode 17.0.0
+    slot01_wave3_test.go:169: 1115624 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:169: compiled react_likely_component_name.a mutant caught at output line 580: got "false", Go "true"
+--- PASS: TestSlot01Wave3ComponentMatchesCohere (39.34s)
+=== RUN   TestSlot01Wave3AttributeFalseValueMutant
+    slot01_wave3_test.go:191: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_important_position_test.go: 37 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variable_syntax_test.go: 39 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_duplicate_classes_test.go: 80 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unnecessary_whitespace_test.go: 75 string inputs
+        956 fixture strings; 962 source batches; 720 helper queries
+    slot01_wave3_test.go:191: 1432 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:191: compiled tailwind_attribute_values.a mutant caught at output line 5: got "1 0", Go "0 0"
+--- PASS: TestSlot01Wave3AttributeFalseValueMutant (5.70s)
+=== RUN   TestSlot01Wave3EntityNamedTableMutant
+    slot01_wave3_test.go:194: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_before_interactive_script_outside_document_test.go: 114 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_unwanted_polyfillio_test.go: 104 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/boundary_no_project_theme_value_test.go: 74 string inputs
+        863 fixture strings; 8044 entity queries; 253 pinned named entities
+    slot01_wave3_test.go:194: 24134 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:194: compiled text_decode_entity.a mutant caught at output line 50: got "38,97,109,112,59", Go "38"
+--- PASS: TestSlot01Wave3EntityNamedTableMutant (5.81s)
+=== RUN   TestSlot01Wave3ComponentStrideMutant
+    slot01_wave3_test.go:199: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/structure/consistency_require_matching_file_name_test.go: 172 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_const_assignment_test.go: 47 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_destructuring_test.go: 52 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_display_name_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_no_separate_named_export_test.go: 65 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_named_export_test.go: 76 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_component_require_properties_type_suffix_test.go: 50 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/structure/react_hook_no_properties_in_dependencies_test.go: 56 string inputs
+        568 fixture strings; 1115624 component-name queries; Unicode 17.0.0
+    slot01_wave3_test.go:199: 1115624 Go output lines match Node, sanitized native and emitted JavaScript
+    slot01_wave3_test.go:199: compiled react_likely_component_name.a mutant caught at output line 584: got "true", Go "false"
+--- PASS: TestSlot01Wave3ComponentStrideMutant (39.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	107.976s

@@ -27,3 +27,5 @@ Every delivered helper has a compiling semantic mutant: omit backslash normaliza
 `slot01_readiness.json` lists each consumer and its residual blockers. File context removes the last listed helper for three rules. The other helpers remove dependencies but do not make any rule completely helper-ready alone. No rule is marked implemented.
 
 The next three delivered helpers are documented in [SLOT01_WAVE2_README.md](SLOT01_WAVE2_README.md), with a separate report and readiness increment.
+
+The third batch is documented in [SLOT01_WAVE3_README.md](SLOT01_WAVE3_README.md), with its own Go/Node/native/emitted-JavaScript evidence and readiness increment.
