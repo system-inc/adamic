@@ -82,3 +82,19 @@ and origin/codex/tsgo-c-library are:
 
 These three are reserved for wave 02. No implementation precedes this claim
 commit and push. Base bridge tip: 5afbdb83; main tip: ef3d907e.
+
+### Continuation 3 selection correction
+
+The first scan used substring matches. An exact rule-token audit found that
+`prefer-promise-reject-errors` had been incorrectly excluded by a claim for the
+different `@typescript-eslint/prefer-promise-reject-errors` rule. The correct
+three, against the same initial origin snapshot, are:
+
+- prefer-promise-reject-errors (combined volume 0)
+- prefer-regex-literals (combined volume 0)
+- prefer-rest-params (combined volume 0)
+
+The core promise-rejection rule is reserved by this correction before any code
+for it. The prior exhaustive-deps reservation is released; its already-written
+native default implementation and JSX parser failures will be retained as
+reviewable supplemental work, not presented as a completed extra allocation.
