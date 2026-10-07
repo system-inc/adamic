@@ -1,0 +1,18 @@
+{
+  "number": 5,
+  "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+  "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-2mkd75p8/entry-05",
+  "setup_seconds": 28.076880206999704,
+  "ok": true,
+  "check_seconds": 34.10159448499962,
+  "cleanup_seconds": 0.7901398129997688,
+  "wall_seconds": 64.8577653100001,
+  "load_before": "2.68 3.61 3.68 3/276 146669",
+  "load_after": "7.89 4.79 4.07 5/333 148426",
+  "messages": [
+    "05 spread-method-reuse: applies-and-fails-as-recorded",
+    "05 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "05 wall=64.858s setup=28.077s check=34.102s cleanup=0.790s load=2.68 3.61 3.68 3/276 146669 -> 7.89 4.79 4.07 5/333 148426"
+  ]
+}

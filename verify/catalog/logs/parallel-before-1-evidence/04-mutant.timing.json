@@ -1,0 +1,1 @@
+{"seconds": 9.261954556000092, "load_before": "3.16 4.12 3.84 1/262 144927", "load_after": "3.30 4.13 3.84 1/264 145035", "command": ["go", "test", "-count=1", "./internal/oracle", "-run", "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$"]}

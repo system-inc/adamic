@@ -1,0 +1,18 @@
+{
+  "number": 12,
+  "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "worktree": "/tmp/adamic-gate/adamic-catalog-worktree-2mkd75p8/entry-12",
+  "setup_seconds": 31.04190336800002,
+  "ok": true,
+  "check_seconds": 14.203282371000569,
+  "cleanup_seconds": 0.474171947999821,
+  "wall_seconds": 47.49566680299995,
+  "load_before": "6.91 4.85 4.11 11/397 149902",
+  "load_after": "6.13 4.93 4.18 1/332 150727",
+  "messages": [
+    "12 refuse-suppression-directives: applies-and-fails-as-recorded",
+    "12 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965",
+    "12 wall=47.496s setup=31.042s check=14.203s cleanup=0.474s load=6.91 4.85 4.11 11/397 149902 -> 6.13 4.93 4.18 1/332 150727"
+  ]
+}

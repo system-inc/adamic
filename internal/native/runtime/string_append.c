@@ -32,12 +32,14 @@ static adamic_string *grown(size_t length, size_t capacity) {
 
 adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_string *const parts[]) {
 	size_t length = string->length, added = 0;
+	size_t units = adamic_string_units(string);
 	for (size_t index = 0; index < count; index++) {
 		if (parts[index]->length > SIZE_MAX / 2 - length - added) {
 			static const char message[] = "string too long";
 			adamic_panic(message, sizeof message - 1);
 		}
 		added += parts[index]->length;
+		units += adamic_string_units(parts[index]);
 	}
 	// A string's UTF-16 units are never more than its bytes, so only a long one needs counting.
 	if (length + added > ADAMIC_STRING_MAX_UNITS) {
@@ -82,6 +84,8 @@ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_
 		written = adamic_string_put((char *)result->bytes, written, parts[index]);
 	}
 	result->length = written;
+	// A non-ASCII part clears the ASCII fact even when the original allocation is reused.
+	result->units = units + 1;
 	if (result != string) {
 		adamic_release(string);
 	}
