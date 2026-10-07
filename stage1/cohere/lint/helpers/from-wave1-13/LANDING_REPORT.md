@@ -1,4 +1,4 @@
-Built: the three retained helpers rebased cleanly onto landed area/stage1-lint d65a8f931; no new claims.
+Built: the three retained helpers rebased cleanly onto landed area/stage1-lint b84a9d931; no new claims.
 Commits: this area validation follows previously pushed helper c88a20178; the owned rule rebase also completed cleanly.
 Commands: all three owned helper packages and vet PASS after the area rebase; 4,470 cases and 820,676 Go bytes match again.
 Mutants: all twelve helper semantic mutants compiled and were caught on source Node, emitted JavaScript and sanitized native.
@@ -60,3 +60,11 @@ Fresh commands: go test ./stage1/cohere/lint/helpers/from-wave1-13/at-rule ./sta
 Area advanced to d65a8f931c98655936ae04c6899f38f14862b73e, adding native heap, string-build and string-search changes with runtime-profile evidence. Both owned branches rebased cleanly again. All three helper packages and all twelve compiling semantic mutants passed again on the new runtime: 4,470 cases and 820,676 matching Go bytes; helper vet passed with empty output. Logs are evidence/area-latest-helper-tests.log and evidence/area-latest-helper-vet.log. The uncached TestRuntimeLastIndexOfMatchesNode also passed: Node, emitted JavaScript, release and sanitized native agree on 758 bytes, native cache hits=0 misses=3 and Node hits=0 misses=2.
 
 The actual shared rule witness gate passes its supported inputs, but TestRulesAgree still refuses the Go-valid top-level await delay. A JSX file with an automatic return-void fix loses JSX mode during fixed-source reparsing; the clean JSX callback itself agrees when no fix is applied. The owned rule AREA_REPORT.md retains exact inputs and failed evidence. A frontend blocker remains beyond the only-harness parking exception, so no helper is newly claimed. Historical compatibility-overlay counts above remain historical.
+
+## Main c7991b900 and area b84a9d931
+
+Fetched all origin heads; main advanced to c7991b900362796aefd111474e65eb5398e91953 and area to b84a9d9314b65d3d0261ee017e233287b4f071da. The area contains current main. Its dedup ledger remains byte-identical to the complete pinned ledger already read and applied. Both owned branches rebased cleanly, retaining the proven-predicate/lowering changes and record runtime changes without editing shared files.
+
+All three owned direct-helper packages passed again with -count=1 -v -timeout=10m: 4,470 cases, 820,676 matching Go bytes and twelve compiling semantic mutants caught across source Node, emitted JavaScript and sanitized native. Owned helper vet passed with empty output. Full fresh logs are evidence/b84-helper-tests.log and evidence/b84-helper-vet.log. No correctness test in this selected suite skipped. The three helper contracts and six consuming Tailwind rule families are unchanged: eighteen dependency occurrences removed, zero final blockers removed. Full consuming-rule parity and the other required stage1 correctness packages are not claimed.
+
+No new helper is claimed while the real shared rule gate is being revalidated with ADAMIC_TYPESCRIPT_SOURCE pointing to the actual pinned TypeScript checkout. The existing top-level-await and JSX fixed-source reparsing blockers remain documented in the owned rule AREA_REPORT.md. Earlier sections above describe earlier measured bases.
