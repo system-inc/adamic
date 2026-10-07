@@ -1,0 +1,82 @@
+{
+  "controls": {
+    "bytes": 124610,
+    "findings": 208,
+    "rules": {
+      "no-eval": 54,
+      "no-extend-native": 95,
+      "no-func-assign": 59
+    },
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "custom-declarations": {
+    "bytes": 2725,
+    "findings": 5,
+    "rules": {
+      "no-eval": 2,
+      "no-extend-native": 2,
+      "no-func-assign": 1
+    },
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "repository": {
+    "bytes": 18485,
+    "findings": 0,
+    "rules": {},
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "compiler": {
+    "bytes": 5318,
+    "findings": 0,
+    "rules": {},
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "options-0": {
+    "bytes": 102625,
+    "findings": 169,
+    "rules": {
+      "no-eval": 15,
+      "no-extend-native": 95,
+      "no-func-assign": 59
+    },
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "options-1": {
+    "bytes": 107099,
+    "findings": 168,
+    "rules": {
+      "no-eval": 54,
+      "no-extend-native": 55,
+      "no-func-assign": 59
+    },
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "options-2": {
+    "bytes": 124610,
+    "findings": 208,
+    "rules": {
+      "no-eval": 54,
+      "no-extend-native": 95,
+      "no-func-assign": 59
+    },
+    "fixes": 0,
+    "suggestions": 0
+  },
+  "options-3": {
+    "bytes": 88619,
+    "findings": 137,
+    "rules": {
+      "no-eval": 15,
+      "no-extend-native": 63,
+      "no-func-assign": 59
+    },
+    "fixes": 0,
+    "suggestions": 0
+  }
+}

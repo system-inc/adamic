@@ -1,0 +1,26 @@
+=== RUN   TestWave23CoreAgreementAndMutants
+    wave_23_core_test.go:147: controls: 124610 identical finding bytes; findings 208
+    wave_23_core_test.go:155: controls-asan: 124610 identical finding bytes; findings 208
+    wave_23_core_test.go:164: options [--allow-indirect-eval] native: 102625 identical bytes
+    wave_23_core_test.go:164: options [--allow-indirect-eval] asan: 102625 identical bytes
+    wave_23_core_test.go:164: options [--except-native=Array --except-native=Object] native: 107099 identical bytes
+    wave_23_core_test.go:164: options [--except-native=Array --except-native=Object] asan: 107099 identical bytes
+    wave_23_core_test.go:164: options [--except-native=unknown] native: 124610 identical bytes
+    wave_23_core_test.go:164: options [--except-native=unknown] asan: 124610 identical bytes
+    wave_23_core_test.go:164: options [--allow-indirect-eval --except-native=String --except-native=Array] native: 88619 identical bytes
+    wave_23_core_test.go:164: options [--allow-indirect-eval --except-native=String --except-native=Array] asan: 88619 identical bytes
+    wave_23_core_test.go:177: eval mutant: exit 0, empty stderr, byte oracle catches byte 4110
+    wave_23_core_test.go:177: extend mutant: exit 0, empty stderr, byte oracle catches byte 8768
+    wave_23_core_test.go:177: func mutant: exit 0, empty stderr, byte oracle catches byte 71837
+    wave_23_core_test.go:187: repository: 18485 identical finding bytes; findings 0
+    wave_23_core_test.go:188: repository-asan: 18485 identical finding bytes; findings 0
+    wave_23_core_test.go:196: repository timing: native 333.443409ms, Go 140.781722ms; native stderr tsgo: load_ns=78772466 query_ns=30821073 queries=633 first_query_ns=224749 run_ns=248426684
+        ; Go stderr cohere: load_ns=68632388 rule_ns=10056513 run_ns=55272094
+    wave_23_core_test.go:187: compiler: 5318 identical finding bytes; findings 0
+    wave_23_core_test.go:188: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_23_core_test.go:196: compiler timing: native 3.232208997s, Go 407.292686ms; native stderr tsgo: load_ns=268154955 query_ns=276514546 queries=9190 first_query_ns=4446859 run_ns=2940256999
+        ; Go stderr cohere: load_ns=251867521 rule_ns=73039220 run_ns=135278299
+    wave_23_core_test.go:216: released handle: normal exit 70; registry mutant caught by required released-handle error
+--- PASS: TestWave23CoreAgreementAndMutants (74.71s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	74.712s
