@@ -32,6 +32,10 @@ fixtures otherwise), and test262 on the filters you name for the library area, a
 pushes the area only when all of that passes. It keeps one worktree per area under
 `ADAMIC_AREA_WORKTREES` (default `~/.adamic-areas`) and never touches main.
 
+Run on a Mac, those fast tests don't cover leaks: `leaks --atExit` can't see into the size-class
+allocator, and a leak mutant survives it (d56d8c3). Leak coverage comes from LeakSanitizer in main's
+Linux gate, so an area green on a Mac is never the last word on memory.
+
 ## Main
 
 Only integration moves main, and only to a sha whose whole gate ran green and uncached
