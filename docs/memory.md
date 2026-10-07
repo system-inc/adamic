@@ -72,9 +72,7 @@ adamic_temporary_12->reference = adamic_temporary_9;
 /* ... */
 adamic_release(adamic_local_0_item);
 /* ... */
-adamic_object * adamic_temporary_18 = adamic_retain(((adamic_object *)adamic_object_field(adamic_local_1_item, "next", &adamic_cache_17)->reference));
-/* ... */
-adamic_release(adamic_temporary_18);
+adamic_object * adamic_temporary_18 = ((adamic_object *)adamic_object_data_field(adamic_local_1_item, "next", &adamic_cache_17)->reference);
 /* ... */
 adamic_object * adamic_local_2_head = NULL;
 /* ... */
@@ -95,11 +93,11 @@ adamic_release(adamic_local_2_head);
 
 | Fixture | Allocations | Frees | Retains | Releases | Peak live | In regions |
 |---|---:|---:|---:|---:|---:|---:|
-| internal/oracle/testdata/memory_examples/list.a | 7 | 7 | 12 | 22 | 5 | 0 |
+| internal/oracle/testdata/memory_examples/list.a | 7 | 7 | 6 | 16 | 5 | 0 |
 
 The output is `6` then `12`: three nodes are allocated while prepending, and the map's three spreads reuse them because the dead local `head` is moved into a consumed parameter, each node is unique, unfrozen and has no Weak handle, and each replaced `next` field moves into the recursive call.
 The other four allocations and frees are two number strings and two concatenations for output, giving seven allocations and seven frees, with peak five (three nodes plus two output strings) and no regions.
-The twelve retains are three prepend links (including NULL), six `next` reads across the two walks, and three reuse retains; the twenty-two releases are three old heads, six walk temporaries, four consumed map arguments (including NULL), three replaced links, four output temporaries and two locals at scope exit.
+The six retains are three prepend links (including NULL) and three reuse retains; the six `next` reads across the two walks are borrowed, since the node they come from stays alive for the call (a stable strong field chain), so they take no count. The sixteen releases are three old heads, four consumed map arguments (including NULL), three replaced links, four output temporaries and two locals at scope exit.
 
 ### 2. A tree whose parent is Weak
 
@@ -400,11 +398,11 @@ adamic_release(adamic_local_0_text);
 
 | Fixture | Allocations | Frees | Retains | Releases | Peak live | In regions |
 |---|---:|---:|---:|---:|---:|---:|
-| internal/oracle/testdata/memory_examples/strings.a | 16 | 16 | 2 | 17 | 7 | 0 |
+| internal/oracle/testdata/memory_examples/strings.a | 14 | 14 | 2 | 17 | 5 | 0 |
 
-Nine owned string allocations grow the 160 one-byte appends geometrically; appends within the available capacity reuse the unique owned string, and `runtime/string_share.c` makes one shared slice header for this 128-byte slice (at least 64 bytes and at least a quarter of the owner).
+Nine owned string allocations grow the 160 one-byte appends geometrically; appends within the available capacity reuse the unique owned string, and `runtime/string_share.c` makes one shared slice header for this 128-byte slice (its owner's header and bytes are under eight times the slice's).
 Appending to this shared slice copies because its bytes belong to its owner and its capacity is zero: `runtime/string_append.c` requires `length + added <= capacity` before writing in place, fixed in `7b6f986` and held by `shared_slice_append.a`; Node and native now both print `160 129 x !`, with the generated C above unchanged at the merged runtime.
-The sixteen allocations and frees are nine grown owners, one slice header, one owned copy for the slice append and five output strings (two numbers, two characters and one concatenation), with peak seven, no regions, two retains (initial immortal empty string and slice owner) and seventeen releases (nine replaced loop strings, the replaced slice header, five output temporaries and the two locals).
+The fourteen allocations and frees are nine grown owners, one slice header, one owned copy for the slice append and three output strings (two numbers and one concatenation); the two characters are the runtime's immortal ASCII strings and allocate nothing. Peak is five, with no regions, two retains (initial immortal empty string and slice owner) and seventeen releases (nine replaced loop strings, the replaced slice header, five output temporaries and the two locals).
 
 ### Checking the documented counts
 

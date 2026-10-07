@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -53,7 +54,7 @@ func TestMemoryExampleCountsMatchDocumentation(t *testing.T) {
 			}
 			name, arguments := pinnedStack(binary)
 			result := execute(t, name, arguments...)
-			match := countsLine.FindSubmatch(result.stderr)
+			match := leakcheck.CountsLine.FindSubmatch(result.stderr)
 			if result.exitCode != 0 || match == nil {
 				t.Fatalf("counted exit %d: %s", result.exitCode, result.stderr)
 			}
