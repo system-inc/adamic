@@ -73,7 +73,8 @@ class WarmingKey(unittest.TestCase):
                      repository / "cloud/markdown-width/package.json",
                      repository / "cloud/markdown-width/package-lock.json",
                      repository / "cloud/markdown-width/npm-bootstrap.json",
-                     repository / "cloud/setup-markdown-width.py"]
+                     repository / "cloud/setup-markdown-width.py", repository / "cloud/setup-stage3-api.py",
+                     repository / "stage3/api/package.json", repository / "stage3/api/package-lock.json"]
             for file in paths:
                 file.parent.mkdir(parents=True, exist_ok=True)
                 file.write_text("manifest\n")
@@ -123,7 +124,7 @@ class SetupIntegration(unittest.TestCase):
         print("integration logs:", scratch, flush=True)
         repository = scratch / "repository"
         (repository / "cloud").mkdir(parents=True)
-        for name in ["setup.sh", "setup-key.py", "setup-markdown-width.py", "setup-modules.py"]:
+        for name in ["setup.sh", "setup-key.py", "setup-markdown-width.py", "setup-stage3-api.py", "setup-modules.py", "setup-node.py", "node-pin.json"]:
             shutil.copyfile(KEY_MODULE if name == "setup-key.py" else SOURCE / name,
                             repository / "cloud" / name)
         shutil.copytree(SOURCE / "markdown-width", repository / "cloud/markdown-width")

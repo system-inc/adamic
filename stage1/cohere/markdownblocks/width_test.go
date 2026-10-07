@@ -14,6 +14,17 @@ import (
 
 // Not parallel: the exhaustive scalar corpus and sanitizer builds have a large peak working set.
 func TestMarkdownUnicodeWidths(t *testing.T) {
+	widthDependencies := os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS")
+	if widthDependencies == "" {
+		widthDependencies = "/tmp/adamic-markdown-width"
+	}
+	// Check before corpus generation and the Go oracle build, so missing npm packages fail immediately.
+	for _, module := range []string{"emoji-regex", "get-east-asian-width", "narrow-emojis"} {
+		path := filepath.Join(widthDependencies, "node_modules", module, "index.js")
+		if _, err := os.Stat(path); err != nil {
+			t.Fatalf("missing Markdown width oracle module %s at %s: %v; run bash cloud/setup.sh and source its env.sh", module, path, err)
+		}
+	}
 	root, e := filepath.Abs(repository)
 	if e != nil {
 		t.Fatal(e)
@@ -41,10 +52,6 @@ func TestMarkdownUnicodeWidths(t *testing.T) {
 	}
 	for _, text := range []string{"👩🏽‍⚕️", "👨🏻‍❤️‍💋‍👨🏿", "🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f", "👩‍👩‍👧‍👦", "🏳️‍🌈", "🧑🏿‍🦽‍➡️", "a\x7f", "中\x7f"} {
 		inputs = append(inputs, auditInput{Name: "long/" + text, Text: text})
-	}
-	widthDependencies := os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS")
-	if widthDependencies == "" {
-		widthDependencies = "/tmp/adamic-markdown-width"
 	}
 	dir := t.TempDir()
 	escape := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)

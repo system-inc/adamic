@@ -23,7 +23,8 @@ SIZE = 100 << 20
 VARIABLES = {'ADAMIC_TYPESCRIPT_SOURCE': 'typescript', 'ADAMIC_CSS_LIBRARY': 'css',
              'ADAMIC_GRAPHQL_LIBRARY': 'graphql', 'ADAMIC_MEDIA_QUERY_LIBRARY': 'media-query',
              'ADAMIC_SELECTOR_LIBRARY': 'selector', 'ADAMIC_VALUES_LIBRARY': 'values',
-             'ADAMIC_JSON_PRETTIER': 'json-prettier', 'ADAMIC_CSS_PRINTER_LIBRARY': 'css-printer',
+             'ADAMIC_GRAPHQL_PRETTIER': 'css-printer', 'ADAMIC_JSON_PRETTIER': 'json-prettier', 'ADAMIC_CSS_PRINTER_LIBRARY': 'css-printer',
+             'ADAMIC_ESTREE_LIBRARY': 'css-printer', 'ADAMIC_TS_PRETTIER': 'css-printer', 'ADAMIC_YAML_LIBRARY': 'css-printer',
              'ADAMIC_GITIGNORE_LARGEST': 'gitignore/.gitignore',
              'ADAMIC_CLANG_TSGO_ARCHIVE': 'checker/tsgo.a'}
 ARCHIVE_FLAGS = ['-trimpath', '-buildvcs=false', '-buildmode=c-archive']
@@ -202,7 +203,7 @@ def main():
     tasks = {'corpora': [('TypeScript source', lambda: typescript(root)), ('100 MiB gitignore', lambda: gitignore(root))],
              'archive': [('checker archive', lambda: archive(repository, root))],
              'npm': [(name, lambda name=name: npm.prepare(SOURCE / 'gate-inputs' / name, root / name, node))
-                     for name in VARIABLES.values() if (SOURCE / 'gate-inputs' / name).is_dir()]}
+                     for name in dict.fromkeys(VARIABLES.values()) if (SOURCE / 'gate-inputs' / name).is_dir()]}
     for name, action in tasks[phase]:
         started = time.monotonic()
         answer = action()

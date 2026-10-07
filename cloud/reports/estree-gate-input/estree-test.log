@@ -1,0 +1,9 @@
+=== RUN   TestOriginalLibraries
+    estree_test.go:315: raw: 78 files, 78 identical, 0 differing
+    estree_test.go:312: proved postprocessed case 38 known gap for "x\u00a0;"
+    estree_test.go:312: proved postprocessed case 39 known gap for "x\u2028;"
+    estree_test.go:312: proved postprocessed case 40 known gap for "x\r\n;"
+    estree_test.go:315: postprocessed: 78 files, 75 identical, 3 differing
+--- PASS: TestOriginalLibraries (9.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	9.073s

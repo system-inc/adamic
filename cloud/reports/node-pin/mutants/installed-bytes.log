@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_warm_corruption_modes_uncached_and_pin_bytes (cloud.test_node_setup.NodeSetup.test_warm_corruption_modes_uncached_and_pin_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_node_setup.py", line 71, in test_warm_corruption_modes_uncached_and_pin_bytes
+    self.assertIn('installed (published SHA-256 verified)', node.prepare(tools))
+AssertionError: 'installed (published SHA-256 verified)' not found in 'node v24.19.0 skipped (validated version, checksum and installed bytes)'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=1)

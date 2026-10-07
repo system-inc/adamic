@@ -1,0 +1,80 @@
+=== RUN   TestPrinterUpstreamPreflight
+=== RUN   TestPrinterUpstreamPreflight/defaults
+    printer_test.go:96: repository and submodules: 0 .graphql files
+=== RUN   TestPrinterUpstreamPreflight/defaults/npm_Prettier
+    printer_test.go:130: known upstream difference case 717: source ">", Go "error\tSyntax Error: Unexpected <EOF>. (1:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 1482: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2381: source ">\\n\\r", Go "error\tSyntax Error: Unexpected <EOF>. (3:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2934: source ">\\r", Go "error\tSyntax Error: Unexpected <EOF>. (2:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 3526: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:138: 3564 texts: 2513 byte-identical formatted, 1046 shared refusals, 5 known whitespace differences, 0 unexpected differences
+=== RUN   TestPrinterUpstreamPreflight/defaults/embedded_fork
+    printer_test.go:130: known upstream difference case 717: source ">", Go "error\tSyntax Error: Unexpected <EOF>. (1:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 1482: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2381: source ">\\n\\r", Go "error\tSyntax Error: Unexpected <EOF>. (3:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2934: source ">\\r", Go "error\tSyntax Error: Unexpected <EOF>. (2:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 3526: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:138: 3564 texts: 2513 byte-identical formatted, 1046 shared refusals, 5 known whitespace differences, 0 unexpected differences
+=== RUN   TestPrinterUpstreamPreflight/narrow
+    printer_test.go:96: repository and submodules: 0 .graphql files
+=== RUN   TestPrinterUpstreamPreflight/narrow/npm_Prettier
+    printer_test.go:130: known upstream difference case 717: source ">", Go "error\tSyntax Error: Unexpected <EOF>. (1:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 1482: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2381: source ">\\n\\r", Go "error\tSyntax Error: Unexpected <EOF>. (3:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2934: source ">\\r", Go "error\tSyntax Error: Unexpected <EOF>. (2:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 3526: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:138: 3564 texts: 2513 byte-identical formatted, 1046 shared refusals, 5 known whitespace differences, 0 unexpected differences
+=== RUN   TestPrinterUpstreamPreflight/narrow/embedded_fork
+    printer_test.go:130: known upstream difference case 717: source ">", Go "error\tSyntax Error: Unexpected <EOF>. (1:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 1482: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2381: source ">\\n\\r", Go "error\tSyntax Error: Unexpected <EOF>. (3:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2934: source ">\\r", Go "error\tSyntax Error: Unexpected <EOF>. (2:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 3526: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:138: 3564 texts: 2513 byte-identical formatted, 1046 shared refusals, 5 known whitespace differences, 0 unexpected differences
+=== RUN   TestPrinterUpstreamPreflight/tight
+    printer_test.go:96: repository and submodules: 0 .graphql files
+=== RUN   TestPrinterUpstreamPreflight/tight/npm_Prettier
+    printer_test.go:130: known upstream difference case 717: source ">", Go "error\tSyntax Error: Unexpected <EOF>. (1:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 1482: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2381: source ">\\n\\r", Go "error\tSyntax Error: Unexpected <EOF>. (3:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2934: source ">\\r", Go "error\tSyntax Error: Unexpected <EOF>. (2:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 3526: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:138: 3564 texts: 2513 byte-identical formatted, 1046 shared refusals, 5 known whitespace differences, 0 unexpected differences
+=== RUN   TestPrinterUpstreamPreflight/tight/embedded_fork
+    printer_test.go:130: known upstream difference case 717: source ">", Go "error\tSyntax Error: Unexpected <EOF>. (1:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 1482: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2381: source ">\\n\\r", Go "error\tSyntax Error: Unexpected <EOF>. (3:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2934: source ">\\r", Go "error\tSyntax Error: Unexpected <EOF>. (2:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 3526: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:138: 3564 texts: 2513 byte-identical formatted, 1046 shared refusals, 5 known whitespace differences, 0 unexpected differences
+=== RUN   TestPrinterUpstreamPreflight/tabs
+    printer_test.go:96: repository and submodules: 0 .graphql files
+=== RUN   TestPrinterUpstreamPreflight/tabs/npm_Prettier
+    printer_test.go:130: known upstream difference case 717: source ">", Go "error\tSyntax Error: Unexpected <EOF>. (1:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 1482: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2381: source ">\\n\\r", Go "error\tSyntax Error: Unexpected <EOF>. (3:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2934: source ">\\r", Go "error\tSyntax Error: Unexpected <EOF>. (2:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 3526: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:138: 3564 texts: 2513 byte-identical formatted, 1046 shared refusals, 5 known whitespace differences, 0 unexpected differences
+=== RUN   TestPrinterUpstreamPreflight/tabs/embedded_fork
+    printer_test.go:130: known upstream difference case 717: source ">", Go "error\tSyntax Error: Unexpected <EOF>. (1:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 1482: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2381: source ">\\n\\r", Go "error\tSyntax Error: Unexpected <EOF>. (3:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 2934: source ">\\r", Go "error\tSyntax Error: Unexpected <EOF>. (2:1)", Prettier "ok\t"
+    printer_test.go:130: known upstream difference case 3526: source "> ", Go "error\tSyntax Error: Unexpected <EOF>. (1:2)", Prettier "ok\t"
+    printer_test.go:138: 3564 texts: 2513 byte-identical formatted, 1046 shared refusals, 5 known whitespace differences, 0 unexpected differences
+--- PASS: TestPrinterUpstreamPreflight (23.91s)
+    --- PASS: TestPrinterUpstreamPreflight/defaults (12.33s)
+        --- PASS: TestPrinterUpstreamPreflight/defaults/npm_Prettier (1.67s)
+        --- PASS: TestPrinterUpstreamPreflight/defaults/embedded_fork (1.10s)
+    --- PASS: TestPrinterUpstreamPreflight/narrow (3.85s)
+        --- PASS: TestPrinterUpstreamPreflight/narrow/npm_Prettier (1.51s)
+        --- PASS: TestPrinterUpstreamPreflight/narrow/embedded_fork (1.09s)
+    --- PASS: TestPrinterUpstreamPreflight/tight (3.82s)
+        --- PASS: TestPrinterUpstreamPreflight/tight/npm_Prettier (1.56s)
+        --- PASS: TestPrinterUpstreamPreflight/tight/embedded_fork (1.06s)
+    --- PASS: TestPrinterUpstreamPreflight/tabs (3.92s)
+        --- PASS: TestPrinterUpstreamPreflight/tabs/npm_Prettier (1.55s)
+        --- PASS: TestPrinterUpstreamPreflight/tabs/embedded_fork (1.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql/printer	23.918s

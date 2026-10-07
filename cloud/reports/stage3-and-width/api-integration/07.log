@@ -1,0 +1,14 @@
+npm warn tarball tarball data for @types/node@https://registry.npmjs.org/@types/node/-/node-25.3.3.tgz (sha512-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==) seems to be corrupted. Trying again.
+npm warn tarball tarball data for @types/node@https://registry.npmjs.org/@types/node/-/node-25.3.3.tgz (sha512-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==) seems to be corrupted. Trying again.
+npm error code EINTEGRITY
+npm error sha512-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== integrity checksum failed when using sha512: wanted sha512-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== but got sha512-DpzbrH7wIcBaJibpKo9nnSQL0MTRdnWttGyE5haGwK86xgMOkFLp7vEyfQPGLOJh5wNYiJ3V9PmUMDhV9u8kkQ==. (443442 bytes)
+npm error A complete log of this run can be found in: /tmp/adamic-gate/stage3-setup-proof-xcigi0hj/tools/stage3-npm-lobpnu4h/cache/_logs/2026-10-07T05_54_06_931Z-debug-0.log
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/setup-stage3-api.py", line 89, in <module>
+    answer = prepare(*sys.argv[1:])
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/cloud/setup-stage3-api.py", line 75, in prepare
+    subprocess.run([node, str(scratch / 'package/bin/npm-cli.js'), 'ci', '--prefix', str(api),
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/workspace/adamic-tools/bin/node', '/tmp/adamic-gate/stage3-setup-proof-xcigi0hj/tools/stage3-npm-lobpnu4h/package/bin/npm-cli.js', 'ci', '--prefix', '/tmp/adamic-gate/stage3-setup-proof-xcigi0hj/repository/stage3/api', '--cache', '/tmp/adamic-gate/stage3-setup-proof-xcigi0hj/tools/stage3-npm-lobpnu4h/cache', '--ignore-scripts', '--no-audit', '--no-fund', '--fetch-retries=0', '--global=false', '--dry-run=false', '--install-strategy=hoisted', '--registry=https://registry.npmjs.org']' returned non-zero exit status 1.

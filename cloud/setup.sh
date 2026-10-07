@@ -9,13 +9,17 @@
 # Go checks its own content-addressed action cache before a warming stamp can skip linking.
 # Test binaries are optional because most workers need one package.
 #
-# Nothing here is needed on a Mac: Xcode's clang and leaks already do this job there.
+# On macOS, use the portable preparation lane with Xcode clang and an installed Go.
 set -euo pipefail
 
 scriptDirectory=${BASH_SOURCE[0]%/*}
 [ "$scriptDirectory" != "${BASH_SOURCE[0]}" ] || scriptDirectory=.
 repository=$(cd -- "$scriptDirectory/.." && pwd)
 cloudSource="$repository/cloud"
+# macOS ships Bash 3.2 and no GNU timeout/flock; dispatch before using Linux shell tools.
+if [ "$(uname -s)" = Darwin ]; then
+	exec python3 "$repository/internal/boundedrun/python.py" "$cloudSource/setup-darwin.py" "$@"
+fi
 # shellcheck source=../internal/boundedrun/shell.sh
 source "$repository/internal/boundedrun/shell.sh"
 # A clean main worktree can use this installer without copying source into it.
@@ -46,6 +50,11 @@ step() {
 
 tools=${ADAMIC_TOOLS:-/opt/adamic-tools}
 mkdir -p "$tools/bin" 2> /dev/null || { tools=$HOME/.adamic-tools && mkdir -p "$tools/bin"; }
+# Keep the pinned Node traversable even if a fallback tool directory was under /root.
+if python3 -c 'import pathlib,sys;sys.exit(not pathlib.Path(sys.argv[1]).resolve().is_relative_to("/root"))' "$tools"; then
+ tools="/tmp/adamic-gate/tools-$(printf '%s' "$tools" | sha256sum | cut -d' ' -f1)"
+ mkdir -p "$tools/bin"
+fi
 gate=/tmp/adamic-gate
 # The input tests drop to uid 65534 when run as root, so everything they touch must be traversable
 # by that user: the temporary directory, and the Node they run.
@@ -118,29 +127,18 @@ bounded 30 "$clang" --version | head -n 1
 step "clang ready ($clang)"
 }
 
-# Node 24, outside /root.
+# Pinned Node, downloaded and checksum verified even when another version is on PATH.
 prepareNode() {
-if ! bounded 30 "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
-	existing=""
-	for candidate in $(command -v node || true) /root/.nvm/versions/node/v24*/bin/node; do
-		if [ -x "$candidate" ] && bounded 30 "$candidate" --version | grep -q '^v24\.'; then
-			existing=$candidate
-			break
-		fi
-	done
-	if [ -n "$existing" ]; then
-		install -m 755 "$existing" "$tools/bin/node"
-	else
-		nodeVersion=$(bounded 600 curl -fsSL https://nodejs.org/dist/index.json | bounded 30 python3 -c 'import json, sys; print(next(r["version"] for r in json.load(sys.stdin) if r["version"].startswith("v24.")))')
-		bounded 600 curl -fsSL "https://nodejs.org/dist/$nodeVersion/node-$nodeVersion-linux-$nodeArchitecture.tar.xz" | bounded 600 tar --no-same-owner -xJ -C "$tools" --strip-components 2 --wildcards '*/bin/node'
-		mv "$tools/node" "$tools/bin/node"
-	fi
-fi
+bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-node.py" "$tools" > "$run/node.log" 2>&1 || { cat "$run/node.log"; return 1; }
+cat "$run/node.log"
 bounded 30 "$tools/bin/node" --version
 step "node ready"
 bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-markdown-width.py" "$cloudSource/markdown-width" "$markdownDependencies" "$tools/bin/node" > "$run/markdown.log" 2>&1 || { cat "$run/markdown.log"; return 1; }
 cat "$run/markdown.log"
 step "markdown dependencies ready"
+bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-stage3-api.py" "$repository" "$tools" "$tools/bin/node" > "$run/stage3.log" 2>&1 || { cat "$run/stage3.log"; return 1; }
+cat "$run/stage3.log"
+step "stage3 API dependencies checked"
 if "$gateInputs"; then
 	bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-gate-inputs.py" npm "$repository" "$gateInputsRoot" "$tools/bin/node" > "$run/gate-npm.log" 2>&1 || { cat "$run/gate-npm.log"; return 1; }
 	cat "$run/gate-npm.log"
@@ -153,6 +151,7 @@ prepareGoAndSignal() {
 	prepareGo
 	: > "$run/go-ready"
 	trap - EXIT
+
 }
 
 prepareSubmodules() {
@@ -237,7 +236,7 @@ if "$gateInputs"; then
 	bounded 30 python3 "$cloudSource/setup-gate-inputs.py" env "$repository" "$gateInputsRoot" "$tools/bin/node" >> "$tools/env.sh"
 else
 	# A later ordinary setup must not inherit a previous opt-in gate seat.
-	echo "unset ADAMIC_TYPESCRIPT_SOURCE ADAMIC_CSS_LIBRARY ADAMIC_GRAPHQL_LIBRARY ADAMIC_MEDIA_QUERY_LIBRARY ADAMIC_SELECTOR_LIBRARY ADAMIC_VALUES_LIBRARY ADAMIC_JSON_PRETTIER ADAMIC_CSS_PRINTER_LIBRARY ADAMIC_GITIGNORE_LARGEST ADAMIC_CLANG_TSGO_ARCHIVE" >> "$tools/env.sh"
+	echo "unset ADAMIC_GRAPHQL_PRETTIER ADAMIC_ESTREE_LIBRARY ADAMIC_YAML_LIBRARY ADAMIC_TS_PRETTIER ADAMIC_TYPESCRIPT_SOURCE ADAMIC_CSS_LIBRARY ADAMIC_GRAPHQL_LIBRARY ADAMIC_MEDIA_QUERY_LIBRARY ADAMIC_SELECTOR_LIBRARY ADAMIC_VALUES_LIBRARY ADAMIC_JSON_PRETTIER ADAMIC_CSS_PRINTER_LIBRARY ADAMIC_GITIGNORE_LARGEST ADAMIC_CLANG_TSGO_ARCHIVE" >> "$tools/env.sh"
 fi
 grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
 # shellcheck disable=SC1091
@@ -283,3 +282,8 @@ echo "setup: build-flags commit=$(bounded 30 git -C "$repository" rev-parse HEAD
 step "done on $(nproc) processors (cgroup cpu.max: $cpuQuota), $memory"
 echo "setup: source $tools/env.sh"
 echo "setup: logs $run"
+# Refuse drift even if preparation succeeded earlier in this run.
+finalNodeVersion=$(bounded 30 node --version)
+expectedNodeVersion=$(bounded 30 python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["version"])' "$cloudSource/node-pin.json")
+[ "$finalNodeVersion" = "$expectedNodeVersion" ] || { echo "setup: node got $finalNodeVersion, want $expectedNodeVersion" >&2; exit 1; }
+echo "setup: node $finalNodeVersion"

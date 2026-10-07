@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_shared_prettier_exports_and_typescript_pin (__main__.Inputs.test_shared_prettier_exports_and_typescript_pin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_gate_inputs.py", line 29, in test_shared_prettier_exports_and_typescript_pin
+    self.assertIn('ADAMIC_YAML_LIBRARY', exports)
+AssertionError: 'ADAMIC_YAML_LIBRARY' not found in {'ADAMIC_TYPESCRIPT_SOURCE': '/tmp/tmptxtcwekg/typescript', 'ADAMIC_CSS_LIBRARY': '/tmp/tmptxtcwekg/css', 'ADAMIC_GRAPHQL_LIBRARY': '/tmp/tmptxtcwekg/graphql', 'ADAMIC_MEDIA_QUERY_LIBRARY': '/tmp/tmptxtcwekg/media-query', 'ADAMIC_SELECTOR_LIBRARY': '/tmp/tmptxtcwekg/selector', 'ADAMIC_VALUES_LIBRARY': '/tmp/tmptxtcwekg/values', 'ADAMIC_JSON_PRETTIER': '/tmp/tmptxtcwekg/json-prettier', 'ADAMIC_CSS_PRINTER_LIBRARY': '/tmp/tmptxtcwekg/css-printer', 'ADAMIC_TS_PRETTIER': '/tmp/tmptxtcwekg/css-printer', 'ADAMIC_GITIGNORE_LARGEST': '/tmp/tmptxtcwekg/gitignore/.gitignore', 'ADAMIC_CLANG_TSGO_ARCHIVE': '/tmp/tmptxtcwekg/checker/tsgo.a'}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
