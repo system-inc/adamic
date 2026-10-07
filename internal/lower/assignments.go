@@ -29,7 +29,7 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		value, err := l.expression(target)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
 	}
-	if target.Kind == ast.KindPropertyAccessExpression {
+	if target.Kind == ast.KindPropertyAccessExpression && !l.namespaceMember(target) {
 		if isCompound {
 			return l.updateProperty(node, target, operator, binary.Right)
 		}
@@ -47,7 +47,7 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return l.updateIndex(node, target, operator, binary.Right)
 	}
 	local, isLocal := l.local(target)
-	if !ast.IsIdentifier(target) || !isLocal {
+	if (!ast.IsIdentifier(target) && !l.namespaceMember(target)) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
 	}
 	if l.caught[l.symbol(target)] {
@@ -74,7 +74,7 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 			return nil, err
 		}
 	}
-	return []ir.Statement{ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local)}}, nil
+	return []ir.Statement{ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local) && !l.result.Locals[local].NamespaceState}}, nil
 }
 
 // tupleField reads element index of the tuple held in the local held, as the tuple's element type
@@ -165,7 +165,7 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		value, err := l.expression(operand)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
 	}
-	if operand.Kind == ast.KindPropertyAccessExpression {
+	if operand.Kind == ast.KindPropertyAccessExpression && !l.namespaceMember(operand) {
 		step := ast.KindPlusToken
 		if operator == ast.KindMinusMinusToken {
 			step = ast.KindMinusToken
@@ -173,7 +173,7 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		return l.updateProperty(node, operand, step, nil)
 	}
 	local, isLocal := l.local(operand)
-	if !ast.IsIdentifier(operand) || !isLocal {
+	if (!ast.IsIdentifier(operand) && !l.namespaceMember(operand)) || !isLocal {
 		return nil, l.notYet(operand, "incrementing "+describe(operand))
 	}
 	step := ir.Add

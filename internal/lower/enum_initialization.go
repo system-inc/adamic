@@ -28,7 +28,7 @@ func (l *lowering) enumInitialization(modules []*ast.SourceFile) error {
 		return false
 	}
 	for _, module := range modules {
-		for _, statement := range module.Statements.Nodes {
+		for _, statement := range namespaceDeclarations(module.Statements.Nodes) {
 			if statement.Kind == ast.KindEnumDeclaration {
 				initialized[statement] = true
 				continue

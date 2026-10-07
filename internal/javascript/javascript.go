@@ -358,7 +358,7 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 		if e.program.Locals[statement.Local].Global {
 			e.line("%s = %s;", e.name(statement.Local), value)
-			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized)
+			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized && (!e.program.Locals[statement.Local].NamespaceState || statement.Value != nil))
 			if e.program.Locals[statement.Local].Uninitialized {
 				e.line("%s_declared = true;", readyName(statement.Local))
 			}
@@ -388,6 +388,9 @@ func (e *emitter) statement(at *ir.Statement) {
 			value = temporary
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
+		if e.program.Locals[statement.Local].NamespaceState && !e.program.Locals[statement.Local].Uninitialized {
+			e.line("%s = true;", readyName(statement.Local))
+		}
 		if e.program.Locals[statement.Local].Uninitialized {
 			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 		}

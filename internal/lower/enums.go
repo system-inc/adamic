@@ -386,11 +386,8 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 			}
 		}
 	}
-	if node.Kind == ast.KindParameter && ast.HasSyntacticModifier(node, ast.ModifierFlagsParameterPropertyModifier) {
-		return &Refused{Where: l.program.Where(node), What: "a parameter property", Fix: "declare a field and assign it in the constructor"}
-	}
 	if node.Kind == ast.KindEnumDeclaration {
-		if node.Parent.Kind != ast.KindSourceFile {
+		if node.Parent.Kind != ast.KindSourceFile && node.Parent.Kind != ast.KindModuleBlock {
 			return l.notYet(node, "an enum inside a function or block; declare it at module scope")
 		}
 		symbol := l.symbol(node.Name())

@@ -23,6 +23,8 @@ func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
 // statement lowers one statement to none, one or several.
 func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	switch node.Kind {
+	case ast.KindModuleDeclaration:
+		return l.namespaceBody(node)
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
@@ -185,6 +187,9 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if l.isPanicCall(expression) || l.isProcessExit(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
+	}
+	if statements, handled, err := l.namespaceReturnAssignment(expression); handled {
+		return statements, err
 	}
 	value, err := l.expression(expression)
 	if err != nil {

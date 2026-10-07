@@ -98,7 +98,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	// A destructured parameter, ([key, value]) or ({ x, y }), arrives whole in a parameter of its own,
 	// and its names are declared from it before the body runs.
 	patterns := []patterned{}
-	for _, parameter := range declaration.Parameters() {
+	for position, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
 		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
 			incoming := len(l.result.Locals)
@@ -118,6 +118,12 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		local, err := l.declareLocal(parameter.Name())
 		if err != nil {
 			return err
+		}
+		if parameterProperty(parameter) {
+			// The binder gives a parameter property both a field symbol and a lexical parameter
+			// symbol. Reads and assignments in the body refer to the latter.
+			parameters := l.checker.GetSignatureFromDeclaration(declaration).Parameters()
+			l.locals[parameters[position]] = local
 		}
 		if function.Closure && censusCallableSlotless(l.result.Locals[local].Type) {
 			// Its arguments are each one adamic_value.
@@ -211,6 +217,11 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 			prologue = append(prologue, ir.Declare{Local: parameter.local, Uninitialized: true}, ir.If{Condition: ir.IsUndefined{Value: incoming}, Then: fallback, Else: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
 			continue
 		}
+		if declaration.Kind == ast.KindConstructor {
+			if err = l.parameterPropertyDefault(declaration, parameter.initializer); err != nil {
+				break
+			}
+		}
 		var fallback ir.Expression
 		if fallback, err = l.expression(parameter.initializer); err != nil {
 			break
@@ -226,6 +237,14 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	if err != nil {
 		l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
 		return err
+	}
+	if declaration.Kind == ast.KindConstructor && l.instance.base == nil {
+		assigned, assignErr := l.parameterPropertyStores(declaration.Parent, this)
+		if assignErr != nil {
+			l.function, l.this, l.functionIndex = outer, outerThis, outerIndex
+			return assignErr
+		}
+		prologue = append(prologue, assigned...)
 	}
 	if body.Kind == ast.KindBlock {
 		lowered, err = l.statements(body.AsBlock().Statements.Nodes)

@@ -81,7 +81,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		owned := e.taken(value)
 		if local.Global {
 			e.store(statement.Local, value, owned)
-			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized)
+			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized && (!local.NamespaceState || statement.Value != nil))
 			if local.Uninitialized {
 				e.line("%s_declared = true;", readyName(statement.Local))
 			}
@@ -132,6 +132,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		// The store is the statement's last write: nothing after it can assign the variable again
 		// while the statement still reads the value, so what the statement owns, the variable takes.
 		e.store(statement.Local, value, e.taken(value))
+		if e.program.Locals[statement.Local].NamespaceState && !e.program.Locals[statement.Local].Uninitialized {
+			e.line("%s = true;", readyName(statement.Local))
+		}
 		if e.program.Locals[statement.Local].Uninitialized {
 			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 		}
