@@ -114,6 +114,26 @@
     ]
   },
   {
+    "file": "internal/lower/optional_widening_census_test.go",
+    "test": "TestOptionalWideningCensus",
+    "id": "TestOptionalWideningCensus:6db2c24faa7463ea36fb143a758faf5111de53a4d3f94c7e93eaf86c24f8af9e",
+    "line": 28,
+    "condition": "configPath == \"\"",
+    "reads": [
+      "os.Getenv(\"OPTIONAL_WIDENING_CONFIG\")",
+      "os.Getenv(\"OPTIONAL_WIDENING_OUTPUT\")"
+    ],
+    "callers": [
+      "TestOptionalWideningCensus"
+    ],
+    "message": "\"set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project\"",
+    "class": "measurement",
+    "provides": "Opt-in inventory of a project's optional-widening sites (OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT); measurement, never a required input of the gate.",
+    "opt_in_off": [
+      "OPTIONAL_WIDENING_CONFIG"
+    ]
+  },
+  {
     "file": "internal/lower/prototype_test.go",
     "test": "nodePrototypeMembers",
     "id": "TestInheritedLibraryReadsNeverLoadOwnFields,TestNullishPrototypeReadsAreRejectedByChecker:c7462b9a2227a7a13105687b1b5da770404c35e872a8a6f92c8fdc51eb949e59",
