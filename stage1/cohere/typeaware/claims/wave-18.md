@@ -218,3 +218,13 @@ The shared parser now supports JSX; owned probes were updated, while
 the four named HIR/SSA/capture analysis claims remain parked. Audit of
 423 actual origin heads and 33 claim blobs finds no unclaimed ranked rule.
 See wave_18_component_props/AREA_LANDING_REPORT.md and validation-area.
+
+## Landing on lint area d65a8f931
+
+Rebased onto the advanced runtime area d65a8f931, with current fetched
+main 39638d9e included. Six owned suites pass together in 862.181s;
+standalone groups, sanitizer, released handles, mutants, shared harness,
+parked reporters, uncached Node including runtime search, and vet pass.
+Four named analysis claims remain parked. Refreshed 433-head audit of
+all 197 ranked rules finds no unclaimed entry. No new claim made.
+See wave_18_component_props/LANDING_D65A_REPORT.md and validation-d65a.
