@@ -1,0 +1,13 @@
+[codex/typeaware-wave-11 9e06b6bb] Port throw backreference and arrow callback rules
+ 12 files changed, 1043 insertions(+)
+ create mode 100644 bridge/tsgo/checker/symbol_declaration_provenance.go
+ create mode 100644 bridge/tsgo/checker/symbol_declaration_provenance_test.go
+ create mode 100644 stage1/cohere/typeaware/WAVE_11_FIFTH_NOTICE.md
+ create mode 100644 stage1/cohere/typeaware/no_throw_literal.a
+ create mode 100644 stage1/cohere/typeaware/no_useless_backreference.a
+ create mode 100644 stage1/cohere/typeaware/prefer_arrow_callback.a
+ create mode 100644 stage1/cohere/typeaware/symbol_declaration_provenance.a
+ create mode 100644 stage1/cohere/typeaware/testdata/oracle_wave_11_fifth.go
+ create mode 100644 stage1/cohere/typeaware/wave_11_fifth_suite.a
+ create mode 100644 stage1/cohere/typeaware/wave_11_fifth_support.a
+ create mode 100644 stage1/cohere/typeaware/wave_11_fifth_test.go

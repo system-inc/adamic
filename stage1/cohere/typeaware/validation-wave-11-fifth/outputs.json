@@ -1,0 +1,86 @@
+{
+  "controls-go.stdout.gz": {
+    "bytes": 95808,
+    "sha256": "358cda570012d73efbeca52c160d8a98674a7302da540717d29926cad1789493",
+    "findings": {
+      "no-useless-backreference": 127,
+      "no-throw-literal": 29,
+      "prefer-arrow-callback": 103
+    },
+    "findings_with_repairs": 87,
+    "repairs": 216,
+    "suggestions": 0
+  },
+  "controls-native.stdout.gz": {
+    "bytes": 95808,
+    "sha256": "358cda570012d73efbeca52c160d8a98674a7302da540717d29926cad1789493",
+    "findings": {
+      "no-useless-backreference": 127,
+      "no-throw-literal": 29,
+      "prefer-arrow-callback": 103
+    },
+    "findings_with_repairs": 87,
+    "repairs": 216,
+    "suggestions": 0
+  },
+  "controls-asan.stdout.gz": {
+    "bytes": 95808,
+    "sha256": "358cda570012d73efbeca52c160d8a98674a7302da540717d29926cad1789493",
+    "findings": {
+      "no-useless-backreference": 127,
+      "no-throw-literal": 29,
+      "prefer-arrow-callback": 103
+    },
+    "findings_with_repairs": 87,
+    "repairs": 216,
+    "suggestions": 0
+  },
+  "repository-go.stdout.gz": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "findings": {},
+    "findings_with_repairs": 0,
+    "repairs": 0,
+    "suggestions": 0
+  },
+  "repository-native.stdout.gz": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "findings": {},
+    "findings_with_repairs": 0,
+    "repairs": 0,
+    "suggestions": 0
+  },
+  "repository-asan.stdout.gz": {
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "findings": {},
+    "findings_with_repairs": 0,
+    "repairs": 0,
+    "suggestions": 0
+  },
+  "compiler-go.stdout.gz": {
+    "bytes": 5318,
+    "sha256": "51b297a8e6a04711f691f1aa6246acd95f6bf719f3d003bf18c7c27aeeb5874c",
+    "findings": {},
+    "findings_with_repairs": 0,
+    "repairs": 0,
+    "suggestions": 0
+  },
+  "compiler-native.stdout.gz": {
+    "bytes": 5318,
+    "sha256": "51b297a8e6a04711f691f1aa6246acd95f6bf719f3d003bf18c7c27aeeb5874c",
+    "findings": {},
+    "findings_with_repairs": 0,
+    "repairs": 0,
+    "suggestions": 0
+  },
+  "compiler-asan.stdout.gz": {
+    "bytes": 5318,
+    "sha256": "51b297a8e6a04711f691f1aa6246acd95f6bf719f3d003bf18c7c27aeeb5874c",
+    "findings": {},
+    "findings_with_repairs": 0,
+    "repairs": 0,
+    "suggestions": 0
+  }
+}

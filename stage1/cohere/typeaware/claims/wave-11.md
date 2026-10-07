@@ -107,3 +107,11 @@ these three:
 This claim is pushed before implementation. New native sources use .a. Shared
 registration generator and shared harness remain untouched. Complete findings,
 fixes and suggestions are compared with unchanged production Go rules.
+
+Fifth batch completed in `9e06b6bb`: the three native production-default rule
+ports have complete-byte findings/fix agreement, normal and sanitized corpus
+comparisons, per-rule and judgment mutants, a raw-query mutant and released-handle
+checks. One isolated symbol-declaration provenance question was added. Evidence,
+strict-parser exclusions and option/JavaScript coverage limits are in
+../WAVE_11_FIFTH_REPORT.md. All fifteen reservations have native implementations
+and evidence. This completion update reserves no additional rules.
