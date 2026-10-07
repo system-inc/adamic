@@ -1,0 +1,52 @@
+From https://github.com/system-inc/adamic
+   48142af3c..e35c53e4e  area/compiler           -> origin/area/compiler
+   14e837281..b89cf4267  area/developer-tools    -> origin/area/developer-tools
+   6b776088c..8b2f78bde  area/library            -> origin/area/library
+   be2e9c161..c073c8d3a  area/platforms          -> origin/area/platforms
+   8cb9d252a..f95565635  area/runtime            -> origin/area/runtime
+   f8013f0ba..c01907a70  area/stage1-format      -> origin/area/stage1-format
+   f8013f0ba..c01907a70  area/stage1-lint        -> origin/area/stage1-lint
+   7359930d2..b35259e3d  area/stage3             -> origin/area/stage3
+   b5a3aba7a..f40ea763f  cloud/integrate-16      -> origin/cloud/integrate-16
+ * [new branch]          cloud/integrate-fix-ist-3 -> origin/cloud/integrate-fix-ist-3
+ * [new branch]          cloud/speculate-2310d-1 -> origin/cloud/speculate-2310d-1
+ * [new branch]          cloud/speculate-2310d-2 -> origin/cloud/speculate-2310d-2
+ * [new branch]          cloud/speculate-2310r-1 -> origin/cloud/speculate-2310r-1
+ * [new branch]          cloud/speculate-2310r-2 -> origin/cloud/speculate-2310r-2
+   489554b8e..ec5f84a91  codex/emitter-speed     -> origin/codex/emitter-speed
+ * [new branch]          codex/json-encode       -> origin/codex/json-encode
+   11f744c86..54013ad75  codex/lint-helpers-01   -> origin/codex/lint-helpers-01
+   8c05a3796..ba863481c  codex/lint-helpers-04   -> origin/codex/lint-helpers-04
+   3d6341d2d..9c1a8401c  codex/lint-helpers-05   -> origin/codex/lint-helpers-05
+ + 11626368d...5b36321d6 codex/lint-helpers-from-codex/lint-wave1-02 -> origin/codex/lint-helpers-from-codex/lint-wave1-02  (forced update)
+   beeb65330..a01eb0a03  codex/lint-helpers-from-codex/lint-wave1-04 -> origin/codex/lint-helpers-from-codex/lint-wave1-04
+   e091b40a8..f7976d175  codex/lint-helpers-from-codex/lint-wave1-11 -> origin/codex/lint-helpers-from-codex/lint-wave1-11
+   e4526d934..0a1b49d93  codex/lint-helpers-from-codex/lint-wave1-15 -> origin/codex/lint-helpers-from-codex/lint-wave1-15
+   7b85efb89..383221b46  codex/lint-helpers-from-lint-wave1-01 -> origin/codex/lint-helpers-from-lint-wave1-01
+   a71683ad4..e220d1d50  codex/lint-helpers-from-lint-wave1-05 -> origin/codex/lint-helpers-from-lint-wave1-05
+   9a4b8818e..bdbaf59f2  codex/lint-helpers-from-lint-wave1-12 -> origin/codex/lint-helpers-from-lint-wave1-12
+ * [new branch]          codex/lint-regex        -> origin/codex/lint-regex
+ + 99c66e1e3...ebdc5a5c7 codex/lint-wave1-04     -> origin/codex/lint-wave1-04  (forced update)
+ + c7cecebbf...54cbb04b2 codex/lint-wave1-05     -> origin/codex/lint-wave1-05  (forced update)
+ + 0fe630203...1d09e38cc codex/lint-wave1-11     -> origin/codex/lint-wave1-11  (forced update)
+   86677c12a..2cdf8dd3f  codex/parse-speed       -> origin/codex/parse-speed
+ * [new branch]          codex/require-builtins-2 -> origin/codex/require-builtins-2
+ * [new branch]          codex/stable-emitter-names -> origin/codex/stable-emitter-names
+   8aa74f077..ba98c0cea  codex/stage3-indexed-reads -> origin/codex/stage3-indexed-reads
+   5c7fdef36..c9b660bcf  codex/stage3-indexed-reads-emit -> origin/codex/stage3-indexed-reads-emit
+   5216bb5da..9af605959  codex/stage3-indexed-reads-program -> origin/codex/stage3-indexed-reads-program
+   fcfd9568c..f50c262e5  codex/typeaware-wave-01 -> origin/codex/typeaware-wave-01
+   8da31dc33..ef171d86a  codex/typeaware-wave-04 -> origin/codex/typeaware-wave-04
+   341bd4de9..0687e7ccc  codex/typeaware-wave-06 -> origin/codex/typeaware-wave-06
+   a94250624..c58b587b0  codex/typeaware-wave-09 -> origin/codex/typeaware-wave-09
+   f228409aa..3da4b417b  codex/typeaware-wave-14 -> origin/codex/typeaware-wave-14
+   034aeba7a..ce2877d3c  codex/typeaware-wave-17 -> origin/codex/typeaware-wave-17
+   e7dbe26a3..10036cc42  codex/typeaware-wave-25 -> origin/codex/typeaware-wave-25
+   991a851a5..ed3e28bf5  codex/typeaware-wave-29 -> origin/codex/typeaware-wave-29
+   1f12ffd47..70ffa3fb9  codex/typeaware-wave-30 -> origin/codex/typeaware-wave-30
+   07b2b0b78..0919e646a  codex/workers-bridge    -> origin/codex/workers-bridge
+   8f4da8e0f..09ee7ffc4  codex/workers-split-boundary -> origin/codex/workers-split-boundary
+ * [new branch]          coverage/records-lowering -> origin/coverage/records-lowering
+ + 1b9a985cc...8c2c12a0f gate-logs/2e165469ec95/shard-4 -> origin/gate-logs/2e165469ec95/shard-4  (forced update)
+ * [new branch]          gate-logs/2e165469ec95/shard-7 -> origin/gate-logs/2e165469ec95/shard-7
+   f8013f0ba..c01907a70  main                    -> origin/main

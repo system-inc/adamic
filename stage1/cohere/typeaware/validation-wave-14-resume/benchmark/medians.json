@@ -1,0 +1,38 @@
+{
+  "compiler": {
+    "nativeSeconds": 1.7358505019983568,
+    "goSeconds": 0.3297130620012467,
+    "nativeOverGo": 5.264730767602386,
+    "findings": 0
+  },
+  "repository": {
+    "nativeSeconds": 0.2397650689999864,
+    "goSeconds": 0.12782504500137293,
+    "nativeOverGo": 1.875728414548269,
+    "findings": 0
+  },
+  "controls": {
+    "nativeSeconds": 0.021807851000630762,
+    "goSeconds": 0.029908085001807194,
+    "nativeOverGo": 0.7291623987063373,
+    "findings": 60
+  },
+  "constructors": {
+    "nativeSeconds": 0.023934969001857098,
+    "goSeconds": 0.03286529500110191,
+    "nativeOverGo": 0.7282748869606861,
+    "findings": 58
+  },
+  "upstream": {
+    "nativeSeconds": 0.023395256001094822,
+    "goSeconds": 0.03373379399999976,
+    "nativeOverGo": 0.6935257860736028,
+    "findings": 89
+  },
+  "patterns": {
+    "nativeSeconds": 0.02740524199907668,
+    "goSeconds": 0.03730895500120823,
+    "nativeOverGo": 0.734548635795057,
+    "findings": 36
+  }
+}

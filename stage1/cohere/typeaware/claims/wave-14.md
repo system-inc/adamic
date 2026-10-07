@@ -165,3 +165,14 @@ difference and declaration mutant checks are retained in
 ../WAVE_14_REGEX_CONTRACT_REPORT.md and validation-wave-14-regex-contract.
 The leaked-render gap is JSX parsing, not IR, single assignment or captures,
 so its claim is not falsely marked parked on those analyses.
+
+## Landing refresh on main c01907a7
+
+Rebased cleanly onto current main c01907a7 at tested source 3605a6fe.
+All owned byte-oracle suites pass again in 426.726 s, with twenty semantic
+mutants, nine declaration mutants, sanitizers and released-handle checks.
+Bridge, filtered uncached Node and vet pass. The 741-constructor matrix agrees.
+Shared regex table 071fb012 has no applicable owned-rule rows and confirms
+the dynamic constructor gap. No new matcher, shared-file edits or new claims.
+Remaining regex, JSX, label and numeric-dispatch boundaries are unchanged.
+See ../WAVE_14_RESUME_REPORT.md and validation-wave-14-resume.
