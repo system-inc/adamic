@@ -1,0 +1,558 @@
+[
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "declare interface Base {}\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "declare namespace BaseAndDerived {\n  type Base = typeof base;\n  export interface Derived extends Base {}\n}\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export const Result = JSON.stringify({});\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export const Value = {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "export declare interface Base {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "export default interface Base {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "export default interface Derived extends Base {}\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export function run({ a } = { a: 1 }) {\n    return a;\n}\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export interface Base extends Array<number> {}\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export interface Base {\n    name: string;\n}\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export interface Base {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "export interface Base {}\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export let value: { name: string };\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export let value: {};\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export type Base = { name: string };\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export type Base = {} | null;\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export type Base = {};\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "export type MyUnion<T> = T | {};\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "interface A {\n    a: string;\n}\ninterface B {\n    b: string;\n}\ninterface C {\n    c: string;\n}\nexport interface All extends A, B, C {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "with-single-extends",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface A { a: 1 }\ninterface B { b: 1 }\ninterface C extends A, B {}\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base extends Array<number | {}> {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base extends Array<number> {}\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "interface Base {\n    name: string;\n}\nexport interface Derived extends Base {}\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "interface Base {\n    name: string;\n}\nexport type Expanded = Base & {};\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "interface Base {\n    name: string;\n}\ninterface Derived {\n    age: number;\n}\nexport interface Both extends Base, Derived {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {\n  name: string;\n}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {\n  name: string;\n}\n\ninterface Derived extends Base {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "with-single-extends",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {\n  name: string;\n}\n\ninterface Derived extends Base {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {\n  name: string;\n}\n\ninterface Derived {\n  age: number;\n}\n\n// valid because extending multiple interfaces can be used instead of a union type\ninterface Both extends Base, Derived {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {\n  name: string;\n}\ndeclare interface Derived extends Base {}\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {\n  props: string;\n}\n\ninterface Derived extends Base {}\n\nclass Derived {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "with-single-extends",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {\n  props: string;\n}\n\ninterface Derived extends Base {}\n\nclass Derived {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {\n  props: string;\n}\n\ninterface Derived extends Base {}\n\nclass Other {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {\n  props: string;\n}\n\ninterface Derived extends Base {}\n\nconst derived = class Derived {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {\n  props: string;\n}\n\ninterface Derived extends Base {}\n\ninterface Derived {\n  name: string;\n}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "always",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never",
+      "allowWithName": ".*Props$"
+    },
+    "sourceText": "interface Base {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never",
+      "allowWithName": "Base"
+    },
+    "sourceText": "interface Base {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {}\n\nfunction foo() {\n  interface Base {\n    name: string;\n  }\n}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {}\n\ninterface Base {\n  name: string;\n}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {}\n\ninterface Base {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {}\nnamespace Base {}\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base {}\n{\n  class Base {}\n}\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base<T extends string = 'a'> /* note */ {}\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base<T> extends Derived<T> {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base<T> {\n  value: T;\n}\nexport declare interface Derived<T> extends Base<T> {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Base<T> {}\nclass Base<T> {}\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never",
+      "allowWithName": "Props$"
+    },
+    "sourceText": "interface BaseProps {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Derived {\n  property: string;\n}\ninterface Base extends Array<Derived> {}\n"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": null,
+    "sourceText": "interface Derived<T> {\n    value: T;\n}\nexport interface Base<T> extends Derived<T> {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "interface Window {}\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never",
+      "allowWithName": "Base"
+    },
+    "sourceText": "interface XBaseY {}\ntype XBaseZ = {};\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "let value: Array<{}>;\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "let value: Object;\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "let value: object;\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "let value: { inner: true };\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "let value: {/* ... */};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "let value: {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "namespace N {\n  interface Base {}\n  class Base {}\n}\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "switch (1 as number) {\n  case 1:\n    interface Base {}\n    break;\n  default:\n    class Base {}\n}\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "type A = B & ({});\ntype B = { b: 1 };\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never",
+      "allowWithName": "Base"
+    },
+    "sourceText": "type Base = {} | null;\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "always"
+    },
+    "sourceText": "type Base = {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never",
+      "allowWithName": "Base"
+    },
+    "sourceText": "type Base = {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never",
+      "allowWithName": "Mismatch"
+    },
+    "sourceText": "type Base = {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "type Base = {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never",
+      "allowWithName": "Props$"
+    },
+    "sourceText": "type BaseProps = ({});\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never",
+      "allowWithName": "Props$"
+    },
+    "sourceText": "type BaseProps = {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never",
+      "allowWithName": "\\u{E9}$"
+    },
+    "sourceText": "type Café = {};\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "type M = { [K in 'a']: {} };\nexport {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "type MyNonNullable<T> = T & {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "type MyUnion<T> = T | {};\n"
+  },
+  {
+    "file": "/captured/file.ts",
+    "options": {
+      "allowInterfaces": "never",
+      "allowObjectTypes": "never"
+    },
+    "sourceText": "type R = Record<string, unknown>;\ninterface Base extends R {}\n"
+  },
+  {
+    "file": "/source.ts",
+    "options": null,
+    "sourceText": "interface A {}\ninterface B extends A {}\ntype C = {};\ntype D = A & {};\n"
+  }
+]

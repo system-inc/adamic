@@ -1,0 +1,5 @@
+typescript-no-empty-object-type findings and full suggestions identical 75 cases 30993 bytes
+typescript-no-empty-object-type mutant empty interfaces permitted by default caught only by comparison on Node
+typescript-no-empty-object-type native/JavaScript lowering blocked; retained source, Node comparison and mutant
+typescript-no-empty-object-type compiler and stage1 identical 236 files
+typescript-no-empty-object-type rates {'Go': {'seconds': 0.170107640000424, 'findings': 28, 'findings_per_second': 164.60166045411134}, 'Node': {'seconds': 0.7925433090003935, 'findings': 28, 'findings_per_second': 35.329299587823655}}
