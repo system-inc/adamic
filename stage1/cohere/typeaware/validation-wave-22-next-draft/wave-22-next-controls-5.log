@@ -1,0 +1,6 @@
+=== RUN   TestWave22NextAgreement
+    wave_22_next_test.go:126: controls: 373 accepted, 16 rejected by independent parser (including JSX under .a)
+    wave_22_next_test.go:128: controls: 66282 identical finding bytes; findings 276
+--- PASS: TestWave22NextAgreement (12.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	12.787s
