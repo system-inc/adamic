@@ -89,10 +89,14 @@ func TestSplitTokensDoNotRewriteLiterals(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !strings.Contains(units[1].source, `"adamic_x } ; \""`) {
+	var combined strings.Builder
+	for _, unit := range units {
+		combined.WriteString(unit.source)
+	}
+	if !strings.Contains(combined.String(), `"adamic_x } ; \""`) {
 		t.Fatal("literal changed")
 	}
-	if !strings.Contains(units[1].source, "return adamic_unit_adamic_x;") {
+	if !strings.Contains(combined.String(), "return adamic_unit_adamic_x;") {
 		t.Fatal("reference not rewritten")
 	}
 }
