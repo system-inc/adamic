@@ -75,3 +75,17 @@ All three fourth-batch rules are ported as .a, compared byte for byte with Go
 on positive controls and both frozen corpora, tested with per-rule repair
 mutants and sanitizers, and committed with WAVE_22_FOURTH_REPORT.md. All twelve
 claims on this branch are complete. No additional rules were claimed.
+
+## Fifth batch claim
+
+All twelve earlier rules were completed, tested and pushed through 7f3b9262
+before fetching every origin head again. After excluding base/main ports and
+names in every origin Markdown claim, the first available rules are:
+
+1. `react-hooks/set-state-in-effect`
+2. `react-hooks/set-state-in-render`
+3. `react-hooks/static-components`
+
+These zero-volume rules are reserved for this branch. This claim is pushed
+before implementation. The fetched refs and inventory are recorded in
+validation-wave-22-fifth/selection.json.
