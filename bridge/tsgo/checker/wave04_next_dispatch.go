@@ -2,6 +2,7 @@ package checker
 
 import (
 	"context"
+	"fmt"
 	"strings"
 )
 
@@ -30,6 +31,6 @@ func (p *Program) InspectWave04Next(file string, start, end uint64, kind, questi
 	case "wave04-next-resolved-signature-declaration":
 		return p.wave04NextResolvedSignatureDeclaration(out, c, node, question)
 	default:
-		return p.Inspect(file, start, end, kind, question)
+		return "", fmt.Errorf("unsupported checker question: %s", question)
 	}
 }

@@ -49,4 +49,9 @@ func TestWave04NextModuleAndSourceContext(t *testing.T) {
 	if got[3+2*4+3] != "0" || got[3+4*4+3] != "1" {
 		t.Fatalf("top-level versus nested await: %v", got)
 	}
+	_, err = p.InspectWave04Next(source, 0, uint64(len(text)), "SourceFile", "wave04-next-unknown")
+	if err == nil || !strings.Contains(err.Error(), "unsupported checker question") {
+		t.Fatalf("unknown private question must reject: %v", err)
+	}
+
 }

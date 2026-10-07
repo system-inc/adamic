@@ -109,3 +109,14 @@ therefore preserved for those helper modules outside the repository. All new
 Adamic implementation files remain `.a`. Supporting `.a` consumer modules and
 shared suite registration remains the integration worker's territory. Claims
 here refer to the shipped private suite, not new registrations in the shared CLI.
+
+## Final private-dispatch rejection check
+
+The private adapter now rejects unknown `wave04-next-` questions directly,
+rather than entering the production dispatcher while still holding its checker
+lease. The added unknown-question control passes with all checker tests in
+0.090s. A nil-error-return mutant compiles and fails only the assertion
+`unknown private question must reject: <nil>`; both logs are preserved.
+This last change affects the unsupported-question path. Corpus artifacts above
+record the supported-question suite before this rejection-only adjustment;
+the supported four dispatch cases were not altered.
