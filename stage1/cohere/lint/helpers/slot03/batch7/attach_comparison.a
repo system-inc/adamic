@@ -1,0 +1,5 @@
+import {type Registry, type Comparison} from './registry.a';
+export function attachComparison(state: Registry, order: number, comparison: Comparison | undefined): void {
+ if(comparison === undefined) { return; }
+ state.comparisons.set(order, comparison);
+}

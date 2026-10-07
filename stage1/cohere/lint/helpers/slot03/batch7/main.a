@@ -1,0 +1,41 @@
+import {programArguments, readTextFile, panic} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {newVariantRegistry} from './new_variant_registry.a';
+import {register} from './register.a';
+import {attachComparison} from './attach_comparison.a';
+import {type Registry} from './registry.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse(); if(root < 0) { panic(json.error); }
+function compareOne(left: number, right: number): number { return left - right; }
+function compareTwo(left: number, right: number): number { return right - left + 7; }
+function snapshot(state: Registry, name: string, order: number): void {
+ const value = state.registrations.get(name);
+ console.log(`${state.lastOrder}:${state.groupPresent}:${state.groupOrder}:${state.registrations.size}:${state.comparisons.size}`);
+ if(value === undefined) { console.log('missing'); } else {
+  let units = ''; for(let i=0;i<value.name.length;i++) { units += `${value.name.charCodeAt(i)},`; }
+  console.log(`${units}:${value.order}:${value.kind}`);
+ }
+ const callback = state.comparisons.get(order);
+ console.log(callback === undefined ? 'missing' : `${callback(3, 11)}`);
+}
+for(const row of json.node(json.field(root, 'cases')).children) {
+ const name = json.node(json.field(row, 'name')).text;
+ const kind = json.node(json.field(row, 'kind')).text;
+ const order = json.node(json.field(row, 'order')).number;
+ const state = newVariantRegistry();
+ const other = newVariantRegistry();
+ snapshot(state, name, order);
+ state.lastOrder = json.node(json.field(row, 'last')).number;
+ state.groupPresent = json.node(json.field(row, 'present')).text === 'true';
+ state.groupOrder = state.groupPresent ? order : 0;
+ register(state, name, kind); snapshot(state, name, order);
+ register(state, name, 'replacement'); snapshot(state, name, order);
+ register(state, name + ':other', 'static'); snapshot(state, name + ':other', order);
+ attachComparison(state, order, compareOne); snapshot(state, name, order);
+ attachComparison(state, order, undefined); snapshot(state, name, order);
+ attachComparison(state, order, compareTwo); snapshot(state, name, order);
+ attachComparison(state, order + 1, compareOne); snapshot(state, name, order + 1);
+ snapshot(other, name, order);
+}

@@ -1,0 +1,4 @@
+import {type Registry, type Registration, type Comparison} from './registry.a';
+export function newVariantRegistry(): Registry {
+ return {registrations: new Map<string, Registration>(), comparisons: new Map<number, Comparison>(), lastOrder: 0, groupPresent: false, groupOrder: 0};
+}

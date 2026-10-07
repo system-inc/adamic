@@ -1,0 +1,32 @@
+=== RUN   TestBatch7Helpers
+    batch7_test.go:46: line 4: got "83:false:-17:1:0" Go "83:false:0:1:0"
+--- FAIL: TestBatch7Helpers (11.82s)
+=== RUN   TestBatch7Mutants
+=== RUN   TestBatch7Mutants/new_variant_registry.a
+    batch7_test.go:85: compiled semantic mutant caught at line 1: got "1:false:0:0:0" Go "0:false:0:0:0"
+=== RUN   TestBatch7Mutants/new_variant_registry.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 4: got "83:false:-17:1:0" Go "83:false:0:1:0"
+=== RUN   TestBatch7Mutants/register.a
+    batch7_test.go:85: compiled semantic mutant caught at line 8: got ":84:replacement" Go ":83:replacement"
+=== RUN   TestBatch7Mutants/register.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 680: got ":83:static" Go ":-17:static"
+=== RUN   TestBatch7Mutants/register.a#02
+    batch7_test.go:85: compiled semantic mutant caught at line 679: got "-17:true:-17:1:0" Go "82:true:-17:1:0"
+=== RUN   TestBatch7Mutants/attach_comparison.a
+    batch7_test.go:85: compiled semantic mutant caught at line 16: got "84:false:0:2:0" Go "84:false:0:2:1"
+=== RUN   TestBatch7Mutants/attach_comparison.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 21: got "-8" Go "15"
+=== RUN   TestBatch7Mutants/attach_comparison.a#02
+    batch7_test.go:85: compiled semantic mutant caught at line 15: got "missing" Go "-8"
+--- PASS: TestBatch7Mutants (57.21s)
+    --- PASS: TestBatch7Mutants/new_variant_registry.a (7.12s)
+    --- PASS: TestBatch7Mutants/new_variant_registry.a#01 (8.05s)
+    --- PASS: TestBatch7Mutants/register.a (6.58s)
+    --- PASS: TestBatch7Mutants/register.a#01 (6.88s)
+    --- PASS: TestBatch7Mutants/register.a#02 (7.06s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a (6.11s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a#01 (7.04s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a#02 (6.90s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	69.043s
+FAIL

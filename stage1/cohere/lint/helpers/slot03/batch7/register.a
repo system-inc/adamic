@@ -1,0 +1,11 @@
+import {type Registry} from './registry.a';
+export function register(state: Registry, name: string, kind: string): void {
+ const existing = state.registrations.get(name);
+ if(existing !== undefined) {
+  state.registrations.set(name, {name: existing.name, order: existing.order, kind});
+  return;
+ }
+ const order = state.groupPresent ? state.groupOrder : state.lastOrder + 1;
+ if(!state.groupPresent) { state.lastOrder = order; }
+ state.registrations.set(name, {name, order, kind});
+}

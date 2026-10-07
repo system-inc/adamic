@@ -1,0 +1,4 @@
+export type Registration = {name: string; order: number; kind: string};
+// Variant indices are opaque adapter handles; attachment never inspects them.
+export type Comparison = (left: number, right: number) => number;
+export type Registry = {registrations: Map<string, Registration>; comparisons: Map<number, Comparison>; lastOrder: number; groupPresent: boolean; groupOrder: number};

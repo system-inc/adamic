@@ -1,0 +1,31 @@
+=== RUN   TestBatch7Helpers
+    batch7_test.go:49: 415800 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch7Helpers (11.50s)
+=== RUN   TestBatch7Mutants
+=== RUN   TestBatch7Mutants/new_variant_registry.a
+    batch7_test.go:85: compiled semantic mutant caught at line 1: got "1:false:0:0:0" Go "0:false:0:0:0"
+=== RUN   TestBatch7Mutants/new_variant_registry.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 25: got "84:false:0:2:2" Go "0:false:0:0:0"
+=== RUN   TestBatch7Mutants/register.a
+    batch7_test.go:85: compiled semantic mutant caught at line 8: got ":84:replacement" Go ":83:replacement"
+=== RUN   TestBatch7Mutants/register.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 680: got ":83:static" Go ":-17:static"
+=== RUN   TestBatch7Mutants/register.a#02
+    batch7_test.go:85: compiled semantic mutant caught at line 679: got "-17:true:-17:1:0" Go "82:true:-17:1:0"
+=== RUN   TestBatch7Mutants/attach_comparison.a
+    batch7_test.go:85: compiled semantic mutant caught at line 16: got "84:false:0:2:0" Go "84:false:0:2:1"
+=== RUN   TestBatch7Mutants/attach_comparison.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 21: got "-8" Go "15"
+=== RUN   TestBatch7Mutants/attach_comparison.a#02
+    batch7_test.go:85: compiled semantic mutant caught at line 15: got "missing" Go "-8"
+--- PASS: TestBatch7Mutants (66.06s)
+    --- PASS: TestBatch7Mutants/new_variant_registry.a (7.57s)
+    --- PASS: TestBatch7Mutants/new_variant_registry.a#01 (8.96s)
+    --- PASS: TestBatch7Mutants/register.a (7.83s)
+    --- PASS: TestBatch7Mutants/register.a#01 (7.85s)
+    --- PASS: TestBatch7Mutants/register.a#02 (8.38s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a (7.71s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a#01 (7.87s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a#02 (8.39s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	77.577s
