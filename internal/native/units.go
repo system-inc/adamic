@@ -360,6 +360,10 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 }
 
 func buildUnits(source, output string, options Options) error {
+	return buildUnitsWithLibrary(source, output, options, "", nil)
+}
+
+func buildUnitsWithLibrary(source, output string, options Options, library string, extraLinkFlags []string) error {
 	header, units, err := splitC(source)
 	if err != nil {
 		return err
@@ -369,9 +373,11 @@ func buildUnits(source, output string, options Options) error {
 		return err
 	}
 	defer os.RemoveAll(directory)
-	library, err := RuntimeLibrary("", options)
-	if err != nil {
-		return err
+	if library == "" {
+		library, err = RuntimeLibrary("", options)
+		if err != nil {
+			return err
+		}
 	}
 	compiler, err := exec.LookPath("clang")
 	if err != nil {
@@ -442,6 +448,7 @@ func buildUnits(source, output string, options Options) error {
 	arguments := append(Flags(options), "-o", output)
 	arguments = append(arguments, objects...)
 	arguments = append(arguments, RuntimeLinkFlags(library)...)
+	arguments = append(arguments, extraLinkFlags...)
 	arguments = append(arguments, "-lm")
 	if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
 		return fmt.Errorf("native: linking units: %w\n%s", err, output)

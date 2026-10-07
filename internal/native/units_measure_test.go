@@ -54,8 +54,15 @@ func TestMeasureClangUnits(t *testing.T) {
 				t.Fatal(err)
 			}
 			tracePath := filepath.Join(directory, program+"-"+loop+".json")
-			args := append(Flags(options), "-ftime-trace="+tracePath, "-ftime-trace-granularity=500", "-I", filepath.Dir(library), "-o", binary, filename)
+			args := Flags(options)
+			if trace {
+				args = append(args, "-ftime-trace="+tracePath, "-ftime-trace-granularity=500")
+			}
+			args = append(args, "-I", filepath.Dir(library), "-o", binary, filename)
 			args = append(args, RuntimeLinkFlags(library)...)
+			if program == "cohere-typeaware" {
+				args = append(args, filepath.Join(directory, "tsgo.a"), "-lpthread", "-ldl")
+			}
 			args = append(args, "-lm")
 			command = "clang " + strings.Join(args, " ")
 			started = time.Now()
@@ -73,7 +80,7 @@ func TestMeasureClangUnits(t *testing.T) {
 		}
 		t.Logf("%s %s round=%d jobs=%d %.6fs", program, loop, round, options.Jobs, elapsed)
 	}
-	for _, program := range []string{"lint-harness", "typescript-parser", "cohere-json"} {
+	for _, program := range []string{"lint-harness", "typescript-parser", "cohere-typeaware", "cohere-json"} {
 		data, err := os.ReadFile(filepath.Join(directory, program+".c"))
 		if err != nil {
 			t.Fatal(err)
@@ -111,7 +118,13 @@ func TestMeasureClangUnits(t *testing.T) {
 			name    string
 			options Options
 		}{{"sanitized", Options{Sanitize: true}}, {"release", Options{}}, {"counted", Options{Count: true}}} {
-			if _, err := RuntimeLibrary("", mode.options); err != nil {
+			var err error
+			if program == "cohere-typeaware" {
+				_, err = splitTSGoRuntime(mode.options)
+			} else {
+				_, err = RuntimeLibrary("", mode.options)
+			}
+			if err != nil {
 				t.Fatal(err)
 			}
 			run(program, mode.name+"-trace", 0, mode.options, source, true)
