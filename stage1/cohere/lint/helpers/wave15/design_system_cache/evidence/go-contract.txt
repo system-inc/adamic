@@ -1,0 +1,10 @@
+=== RUN   TestDesignSystemIsBuiltOncePerProgram
+--- PASS: TestDesignSystemIsBuiltOncePerProgram (0.03s)
+=== RUN   TestDesignSystemCacheKeyIsTheProgram
+--- PASS: TestDesignSystemCacheKeyIsTheProgram (0.04s)
+=== RUN   TestDesignSystemFailedBuildIsCachedToo
+--- PASS: TestDesignSystemFailedBuildIsCachedToo (0.02s)
+=== RUN   TestDesignSystemIsSafeUnderTheParallelWalk
+--- PASS: TestDesignSystemIsSafeUnderTheParallelWalk (0.02s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.122s

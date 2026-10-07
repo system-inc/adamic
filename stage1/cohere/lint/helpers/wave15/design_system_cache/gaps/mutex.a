@@ -1,0 +1,6 @@
+// Required by Go DesignSystemForProgram's parallel build-once contract.
+import { Mutex } from 'adamic';
+const mutex = new Mutex();
+mutex.lock();
+mutex.unlock();
+console.log('locked');

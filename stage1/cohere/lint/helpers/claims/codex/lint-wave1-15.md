@@ -81,3 +81,9 @@ parseFlags is tested and pushed at e9665116f. Refetched every origin branch agai
 - github.com/system-inc/cohere/internal/lint/rules/tailwind.DesignSystemForProgram
 
 Six consumers: better-tailwindcss/enforce-canonical-classes, enforce-consistent-class-order, enforce-consistent-variant-order, enforce-shorthand-classes, no-conflicting-classes and no-unknown-classes. Preserve nil-program errors, immutable program identity as the cache key, successful and failed result reuse, recorded read sets and mutex-protected build-once behavior for parallel callers. Slot 05's earlier blocker identifies missing Program/RecordingFS/loaded-result/mutex APIs; recheck on current main before delivering any implementation. Do not weaken the contract or edit shared harness/compiler files. Proposed owned location: wave15/design_system_cache/. Claim precedes code.
+
+## Cache boundary and release
+
+Withdrawn: DesignSystemForProgram. The current-main probe again refuses Mutex with TS2305 and emits no binary. Go's four focused cache tests pass, establishing identity, failed-result reuse and parallel build-once behavior that a serial substitute would not preserve. No production cache source or readiness claim is delivered. The reservation is released for a worker with the required program/filesystem/loaded-result and synchronization APIs. Stop at this measured prerequisite boundary; other helpers remain unclaimed. See wave15/design_system_cache/REPORT.md.
+
+Final retained helpers: parseCSSString, parseCSSDeclaration and regexp.parseFlags, all independently four-way tested and pushed. No shared harness or compiler files are edited.
