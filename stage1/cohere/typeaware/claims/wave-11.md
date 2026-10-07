@@ -36,3 +36,8 @@ All three have zero compiler and repository counts. No port on main or the
 bridge branch and no origin claim names these rules. Native sources use `.a`;
 positive controls, independent Go byte comparisons and per-rule mutants are
 required. Continue on codex/typeaware-wave-11, without changing base history.
+
+Continuation completed in `5ff9e4e6`: all three reserved rules have normal and
+sanitized byte agreement with unchanged Go production rules, positive controls,
+per-rule mutants, raw-question mutants and released-handle checks. Evidence and
+limits are in ../WAVE_11_NEXT_REPORT.md. No further claims after Ahra's correction.

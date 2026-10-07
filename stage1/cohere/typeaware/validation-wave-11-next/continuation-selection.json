@@ -1,0 +1,1520 @@
+{
+  "origin_refs": 320,
+  "distinct_trees": 315,
+  "main": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "bridge": "5afbdb83da2ed7ad9815657cd3f6ececd5294bf6",
+  "baseline_ports": [
+    "@typescript-eslint/consistent-return",
+    "@typescript-eslint/method-signature-style",
+    "@typescript-eslint/no-confusing-void-expression",
+    "@typescript-eslint/no-shadow",
+    "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+    "@typescript-eslint/no-unsafe-argument",
+    "@typescript-eslint/no-unsafe-assignment",
+    "@typescript-eslint/no-unsafe-declaration-merging",
+    "@typescript-eslint/no-unsafe-enum-comparison",
+    "@typescript-eslint/no-unsafe-member-access",
+    "@typescript-eslint/no-unsafe-type-assertion",
+    "@typescript-eslint/no-unsafe-unary-minus",
+    "@typescript-eslint/no-unused-vars",
+    "@typescript-eslint/prefer-nullish-coalescing",
+    "@typescript-eslint/related-getter-setter-pairs",
+    "@typescript-eslint/restrict-plus-operands",
+    "@typescript-eslint/switch-exhaustiveness-check",
+    "@typescript-eslint/unbound-method",
+    "adamic/invariant-mutable",
+    "adamic/no-optional-widening",
+    "adamic/no-unchecked-cast",
+    "nexus/consistency-no-property-alias",
+    "nexus/correctness-no-caller-data-mutation",
+    "no-implicit-coercion",
+    "no-param-reassign",
+    "no-use-before-define"
+  ],
+  "claims": [
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-01",
+      "path": "stage1/cohere/typeaware/claims/wave-01.md",
+      "sha256": "6971f83776058e060363192e15d333689888057b82977a4577f02a407182742d",
+      "names": [
+        "@typescript-eslint/no-deprecated",
+        "nexus/correctness-no-implicit-return",
+        "no-else-return"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-02",
+      "path": "stage1/cohere/typeaware/claims/wave-02.md",
+      "sha256": "9046fd558c22ec3ff2ead00409faa2ea69094628641b315fefb4dd19aedaa73c",
+      "names": [
+        "@typescript-eslint/no-unsafe-return",
+        "logical-assignment-operators",
+        "nexus/correctness-no-nullish-stripping-assertion"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-03",
+      "path": "stage1/cohere/typeaware/claims/wave-03.md",
+      "sha256": "7d0bdfbe67bf447f741c2105d45a365f640d21119dc51ded2c9bcb2618ce23fe",
+      "names": [
+        "@typescript-eslint/consistent-type-imports",
+        "@typescript-eslint/no-unnecessary-template-expression",
+        "@typescript-eslint/no-unsafe-call"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-04",
+      "path": "stage1/cohere/typeaware/claims/wave-04.md",
+      "sha256": "d4f94f78f92ffce47b3e5c064690b4e7e6ebf17afbd672ebd6d70aceeda71c4b",
+      "names": [
+        "@typescript-eslint/strict-void-return",
+        "nexus/consistency-require-constant-casing",
+        "nexus/consistency-require-matching-return-type"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-05",
+      "path": "stage1/cohere/typeaware/claims/wave-05.md",
+      "sha256": "0e60ce02d813f216958d724de2b9a0e14c1944934e13f0b97f6e161bf736c0f1",
+      "names": [
+        "@typescript-eslint/no-unnecessary-type-parameters",
+        "@typescript-eslint/restrict-template-expressions",
+        "no-useless-assignment"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-06",
+      "path": "stage1/cohere/typeaware/claims/wave-06.md",
+      "sha256": "b05d2e937bd38830ee21d1d53b8ffda6c2830b4f0f2c8604048a2d9dc9d2f17c",
+      "names": [
+        "@typescript-eslint/no-duplicate-type-constituents",
+        "adamic/nominal-class",
+        "no-useless-return"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-07",
+      "path": "stage1/cohere/typeaware/claims/wave-07.md",
+      "sha256": "f8a46cfdf5535f8676aefb6e9e2166200f164af755c97099644298b59eb381cb",
+      "names": [
+        "@typescript-eslint/consistent-indexed-object-style",
+        "@typescript-eslint/prefer-for-of",
+        "no-undef-init"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-08",
+      "path": "stage1/cohere/typeaware/claims/wave-08.md",
+      "sha256": "2b439d4bef256efb6b342e18bf6e2e9172b72b220423a7e3f8a922bc9e0db9c4",
+      "names": [
+        "@typescript-eslint/no-require-imports",
+        "nexus/correctness-no-import-cycle-load-time-read",
+        "no-loop-func"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-09",
+      "path": "stage1/cohere/typeaware/claims/wave-09.md",
+      "sha256": "19b445c5062b5dea03cea53e6572c14b85185a38f5eeaa7c5e05144e541dcea7",
+      "names": [
+        "@typescript-eslint/non-nullable-type-assertion-style",
+        "prefer-const",
+        "radix"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-10",
+      "path": "stage1/cohere/typeaware/claims/wave-10.md",
+      "sha256": "bd9379f234ef1a0e06dd7a4409891fa736099326caa24b22cb0fca12f017a398",
+      "names": [
+        "@typescript-eslint/no-redundant-type-constituents",
+        "@typescript-eslint/prefer-includes",
+        "no-unmodified-loop-condition"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-11",
+      "path": "stage1/cohere/typeaware/claims/wave-11.md",
+      "sha256": "c681dcaafe3149fe1b15e701044cf4235a8c2f26130c9afba66d76d44260af50",
+      "names": [
+        "@typescript-eslint/no-for-in-array",
+        "@typescript-eslint/prefer-regexp-exec",
+        "nexus/correctness-no-identical-branches"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-12",
+      "path": "stage1/cohere/typeaware/claims/wave-12.md",
+      "sha256": "4366a02aa3b0797f6b9ddb46363684ddf55598c3bf10d28ed65529e622e14177",
+      "names": [
+        "@typescript-eslint/no-redeclare",
+        "nexus/correctness-no-test-on-global-regex",
+        "nexus/correctness-no-write-only-collection"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-13",
+      "path": "stage1/cohere/typeaware/claims/wave-13.md",
+      "sha256": "9347233c0d05713d73cc6831c08c9905ee8a322effe165bf4894fb2e7b026ea7",
+      "names": [
+        "@typescript-eslint/consistent-type-exports",
+        "no-unassigned-vars",
+        "preserve-caught-error"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-14",
+      "path": "stage1/cohere/typeaware/claims/wave-14.md",
+      "sha256": "49db6d67a600260b4b633dee2b12b6bcdf423dd67ed8e6e8c31febaffe8e5ab0",
+      "names": [
+        "@typescript-eslint/no-array-delete",
+        "@typescript-eslint/no-base-to-string",
+        "@typescript-eslint/no-extraneous-class"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-15",
+      "path": "stage1/cohere/typeaware/claims/wave-15.md",
+      "sha256": "ba523e8b536114e1daa047fd713c160eaf1235800f0af90638cba3785c02d513",
+      "names": [
+        "@typescript-eslint/no-useless-default-assignment",
+        "@typescript-eslint/prefer-find",
+        "@typescript-eslint/require-array-sort-compare"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-16",
+      "path": "stage1/cohere/typeaware/claims/wave-16.md",
+      "sha256": "7f65ef88afe9ae4a81ea274668aab830c3fc5466c398026a7186d6ee27fa7b3e",
+      "names": [
+        "no-import-assign",
+        "prefer-exponentiation-operator",
+        "use-isnan"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-17",
+      "path": "stage1/cohere/typeaware/claims/wave-17.md",
+      "sha256": "52c6db6beb203fed52c2f17128464003e017c6cc1a8bf41d45e8402616ed92e3",
+      "names": [
+        "@next/next/no-async-client-component",
+        "@next/next/no-duplicate-head",
+        "@next/next/no-script-component-in-head"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-18",
+      "path": "stage1/cohere/typeaware/claims/wave-18.md",
+      "sha256": "2e5542b9fee936f35bc469754de036affba51488e2841787f26d4e5fea5eb278",
+      "names": [
+        "@next/next/no-title-in-document-head",
+        "@typescript-eslint/await-thenable",
+        "@typescript-eslint/class-literal-property-style"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-19",
+      "path": "stage1/cohere/typeaware/claims/wave-19.md",
+      "sha256": "8a9b0e77d56e58bfab7f89e4b2a7b6400b55bb0928714b5a0e6e4307c0d348f3",
+      "names": [
+        "@typescript-eslint/consistent-generic-constructors",
+        "@typescript-eslint/dot-notation",
+        "@typescript-eslint/no-array-constructor"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-20",
+      "path": "stage1/cohere/typeaware/claims/wave-20.md",
+      "sha256": "3d8afdd6ff10f71cd0319ec7a9002c791ba5eb4d0676361c8215095aa937d64e",
+      "names": [
+        "@typescript-eslint/no-floating-promises",
+        "@typescript-eslint/no-implied-eval",
+        "@typescript-eslint/no-meaningless-void-operator"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-21",
+      "path": "stage1/cohere/typeaware/claims/wave-21.md",
+      "sha256": "af48a7a1a46cea50517117062598ebde33496f5ca16f24848848dd8daf6baf4d",
+      "names": [
+        "@typescript-eslint/no-misused-promises",
+        "@typescript-eslint/no-misused-spread",
+        "@typescript-eslint/no-mixed-enums"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-22",
+      "path": "stage1/cohere/typeaware/claims/wave-22.md",
+      "sha256": "4eb9f30c67a43e562f3a880cb0d9d0fb0bf9aae4928351b8821848a3f13de4bd",
+      "names": [
+        "@typescript-eslint/no-non-null-asserted-nullish-coalescing",
+        "@typescript-eslint/no-unnecessary-qualifier",
+        "@typescript-eslint/no-unused-private-class-members"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-23",
+      "path": "stage1/cohere/typeaware/claims/wave-23.md",
+      "sha256": "f7fc9cb66b122914c682692213a5002475fcff0d8ed5b73fb8d5cb720b61553e",
+      "names": [
+        "@typescript-eslint/only-throw-error",
+        "@typescript-eslint/prefer-promise-reject-errors",
+        "@typescript-eslint/prefer-reduce-type-parameter"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-24",
+      "path": "stage1/cohere/typeaware/claims/wave-24.md",
+      "sha256": "cb24fa0718470244bb14bfe989133be4e0745ab3ec27fddfd939c949e9fff8a7",
+      "names": [
+        "@typescript-eslint/prefer-return-this-type",
+        "@typescript-eslint/return-await",
+        "@typescript-eslint/use-unknown-in-catch-callback-variable"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-25",
+      "path": "stage1/cohere/typeaware/claims/wave-25.md",
+      "sha256": "27de243838d4f094ff8fb8893fd89da31f6856d77d748299d2120a9b4d54b6a2",
+      "names": [
+        "accessor-pairs",
+        "base/correctness-require-graphql-nullable-parity",
+        "base/correctness-require-matching-inject-type"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-26",
+      "path": "stage1/cohere/typeaware/claims/wave-26.md",
+      "sha256": "6bc6678ebc67268ae0ea811ac4fa18fb0ff69b59a296d3750a5c1415fdff06a4",
+      "names": [
+        "base/correctness-require-matching-operation-context",
+        "base/correctness-require-matching-provider-return",
+        "base/correctness-require-optional-relation"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-27",
+      "path": "stage1/cohere/typeaware/claims/wave-27.md",
+      "sha256": "7d35c1b95db0fd94d47e8510a3a3e8ed588b8fce2acc1429a37e9150b2b8fca0",
+      "names": [
+        "base/correctness-require-orm-column-nullable-parity",
+        "base/correctness-require-serializable-nullable-parity",
+        "base/correctness-require-verify-array-parity"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-28",
+      "path": "stage1/cohere/typeaware/claims/wave-28.md",
+      "sha256": "c3ad74ae8ac272cca97d549dc4361f398086291e9d0af6fd205385fd3da83eb2",
+      "names": [
+        "base/correctness-require-verify-optional-parity",
+        "block-scoped-var",
+        "getter-return"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-29",
+      "path": "stage1/cohere/typeaware/claims/wave-29.md",
+      "sha256": "7cec7061d960ac8ab2859ab7d5a9b668dcb2aa150d1bf1e09c0623a822b0cd12",
+      "names": [
+        "id-denylist",
+        "id-match",
+        "nexus/concurrency-no-check-then-write"
+      ]
+    },
+    {
+      "branch": "refs/remotes/origin/codex/typeaware-wave-30",
+      "path": "stage1/cohere/typeaware/claims/wave-30.md",
+      "sha256": "443bb75d9582538565afb7b3fd4bb4e466138e15d46feecaf64b10716e390b66",
+      "names": [
+        "nexus/concurrency-no-lost-update",
+        "nexus/consistency-no-iso-string-date-cut",
+        "nexus/correctness-no-callback-in-parse-try"
+      ]
+    }
+  ],
+  "ranking": [
+    {
+      "rule": "no-use-before-define",
+      "volume": 7843,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-type-assertion",
+      "volume": 3870,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "adamic/no-unchecked-cast",
+      "volume": 3586,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-member-access",
+      "volume": 2777,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-argument",
+      "volume": 1760,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/prefer-nullish-coalescing",
+      "volume": 1422,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-shadow",
+      "volume": 1198,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-enum-comparison",
+      "volume": 1000,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "no-implicit-coercion",
+      "volume": 924,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-caller-data-mutation",
+      "volume": 820,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "no-param-reassign",
+      "volume": 678,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-assignment",
+      "volume": 623,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "adamic/invariant-mutable",
+      "volume": 575,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-confusing-void-expression",
+      "volume": 484,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/consistent-return",
+      "volume": 434,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/switch-exhaustiveness-check",
+      "volume": 424,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "adamic/no-optional-widening",
+      "volume": 287,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "nexus/consistency-no-property-alias",
+      "volume": 282,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/unbound-method",
+      "volume": 281,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unused-vars",
+      "volume": 266,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-implicit-return",
+      "volume": 251,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-deprecated",
+      "volume": 238,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "no-else-return",
+      "volume": 202,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "logical-assignment-operators",
+      "volume": 143,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-return",
+      "volume": 126,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-nullish-stripping-assertion",
+      "volume": 97,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-call",
+      "volume": 95,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/consistent-type-imports",
+      "volume": 85,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-template-expression",
+      "volume": 84,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "nexus/consistency-require-constant-casing",
+      "volume": 84,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "nexus/consistency-require-matching-return-type",
+      "volume": 74,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/strict-void-return",
+      "volume": 56,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-type-parameters",
+      "volume": 31,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "no-useless-assignment",
+      "volume": 29,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/restrict-template-expressions",
+      "volume": 23,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "adamic/nominal-class",
+      "volume": 20,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-duplicate-type-constituents",
+      "volume": 19,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "no-useless-return",
+      "volume": 16,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "no-undef-init",
+      "volume": 15,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/prefer-for-of",
+      "volume": 13,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/consistent-indexed-object-style",
+      "volume": 12,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "no-loop-func",
+      "volume": 11,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-import-cycle-load-time-read",
+      "volume": 10,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-require-imports",
+      "volume": 9,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "prefer-const",
+      "volume": 7,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "radix",
+      "volume": 7,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/non-nullable-type-assertion-style",
+      "volume": 4,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "no-unmodified-loop-condition",
+      "volume": 4,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-redundant-type-constituents",
+      "volume": 3,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/prefer-includes",
+      "volume": 3,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/prefer-regexp-exec",
+      "volume": 3,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-identical-branches",
+      "volume": 3,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-for-in-array",
+      "volume": 2,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-redeclare",
+      "volume": 2,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+      "volume": 2,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-unary-minus",
+      "volume": 2,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-test-on-global-regex",
+      "volume": 2,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-write-only-collection",
+      "volume": 2,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "no-unassigned-vars",
+      "volume": 2,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "preserve-caught-error",
+      "volume": 2,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/consistent-type-exports",
+      "volume": 1,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-array-delete",
+      "volume": 1,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-base-to-string",
+      "volume": 1,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-extraneous-class",
+      "volume": 1,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-useless-default-assignment",
+      "volume": 1,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/prefer-find",
+      "volume": 1,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/require-array-sort-compare",
+      "volume": 1,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/restrict-plus-operands",
+      "volume": 1,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "no-import-assign",
+      "volume": 1,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "prefer-exponentiation-operator",
+      "volume": 1,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "use-isnan",
+      "volume": 1,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@next/next/no-async-client-component",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@next/next/no-duplicate-head",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@next/next/no-script-component-in-head",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@next/next/no-title-in-document-head",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/await-thenable",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/class-literal-property-style",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/consistent-generic-constructors",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/dot-notation",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-array-constructor",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-floating-promises",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-implied-eval",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-meaningless-void-operator",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-misused-promises",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-misused-spread",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-mixed-enums",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-non-null-asserted-nullish-coalescing",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unnecessary-qualifier",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unsafe-declaration-merging",
+      "volume": 0,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/no-unused-private-class-members",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/only-throw-error",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/prefer-promise-reject-errors",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/prefer-reduce-type-parameter",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/prefer-return-this-type",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/related-getter-setter-pairs",
+      "volume": 0,
+      "excluded": "baseline port",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/return-await",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "@typescript-eslint/use-unknown-in-catch-callback-variable",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "accessor-pairs",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "base/correctness-require-graphql-nullable-parity",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "base/correctness-require-matching-inject-type",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "base/correctness-require-matching-operation-context",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "base/correctness-require-matching-provider-return",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "base/correctness-require-optional-relation",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "base/correctness-require-orm-column-nullable-parity",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "base/correctness-require-serializable-nullable-parity",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "base/correctness-require-verify-array-parity",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "base/correctness-require-verify-optional-parity",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "block-scoped-var",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "getter-return",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "id-denylist",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "id-match",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "nexus/concurrency-no-check-then-write",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "nexus/concurrency-no-lost-update",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "nexus/consistency-no-iso-string-date-cut",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-callback-in-parse-try",
+      "volume": 0,
+      "excluded": "named in origin claim",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-collection-misuse",
+      "volume": 0,
+      "excluded": "",
+      "selected": true
+    },
+    {
+      "rule": "nexus/correctness-no-discarded-outcome",
+      "volume": 0,
+      "excluded": "",
+      "selected": true
+    },
+    {
+      "rule": "nexus/correctness-no-discarded-pure-result",
+      "volume": 0,
+      "excluded": "",
+      "selected": true
+    },
+    {
+      "rule": "nexus/correctness-no-global-listener-target-assertion",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-leaked-number-render",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-mock-on-module-namespace",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-process-exit-after-output",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-no-uncleared-race-timeout",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-require-blocking-standard-streams",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-require-child-process-error-listener",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "nexus/correctness-require-response-status-check",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "nexus/performance-no-independent-await-in-loop",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "nexus/security-no-interpolated-shell-command",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "nexus/security-no-interpolated-sql-string",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-alert",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-class-assign",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-const-assign",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-constant-binary-expression",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-eval",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-extend-native",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-func-assign",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-global-assign",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-implicit-globals",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-implied-eval",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-invalid-regexp",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-label-var",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-misleading-character-class",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-new-func",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-new-native-nonconstructor",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-new-wrappers",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-obj-calls",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-object-constructor",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-promise-executor-return",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-restricted-globals",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-setter-return",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-shadow-restricted-names",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-throw-literal",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "no-useless-backreference",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "prefer-arrow-callback",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "prefer-numeric-literals",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "prefer-object-has-own",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "prefer-object-spread",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "prefer-promise-reject-errors",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "prefer-regex-literals",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "prefer-rest-params",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/exhaustive-deps",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/globals",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/immutability",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/no-deriving-state-in-effects",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/preserve-manual-memoization",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/purity",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/refs",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/set-state-in-effect",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/set-state-in-render",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/static-components",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/unsupported-syntax",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react-hooks/use-memo",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/boolean-prop-naming",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/button-has-type",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/checked-requires-onchange-or-readonly",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/display-name",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/forbid-elements",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/forbid-prop-types",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/iframe-missing-sandbox",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/jsx-fragments",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/jsx-no-constructed-context-values",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/jsx-no-undef",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/no-adjacent-inline-elements",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/no-array-index-key",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/no-danger-with-children",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/no-multi-comp",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/no-namespace",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/no-object-type-as-default-prop",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/no-unstable-nested-components",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/sort-default-props",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/static-property-placement",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "react/style-prop-object",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "require-atomic-updates",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "require-await",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "structure/react-hook-no-any-type",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "symbol-description",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    },
+    {
+      "rule": "valid-typeof",
+      "volume": 0,
+      "excluded": "",
+      "selected": false
+    }
+  ]
+}

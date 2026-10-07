@@ -1,0 +1,57 @@
+{
+  "outputs": {
+    "controls-go.stdout.gz": {
+      "bytes": 29046,
+      "sha256": "317cc7ad006b6bde4a3cd8c598e4661898ead2207500a7858e6ab62f8b257fa1"
+    },
+    "controls-native.stdout.gz": {
+      "bytes": 29046,
+      "sha256": "317cc7ad006b6bde4a3cd8c598e4661898ead2207500a7858e6ab62f8b257fa1"
+    },
+    "controls-asan.stdout.gz": {
+      "bytes": 29046,
+      "sha256": "317cc7ad006b6bde4a3cd8c598e4661898ead2207500a7858e6ab62f8b257fa1"
+    },
+    "repository-go.stdout.gz": {
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    "repository-native.stdout.gz": {
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    "repository-asan.stdout.gz": {
+      "bytes": 18485,
+      "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+    },
+    "compiler-go.stdout.gz": {
+      "bytes": 5318,
+      "sha256": "51b297a8e6a04711f691f1aa6246acd95f6bf719f3d003bf18c7c27aeeb5874c"
+    },
+    "compiler-native.stdout.gz": {
+      "bytes": 5318,
+      "sha256": "51b297a8e6a04711f691f1aa6246acd95f6bf719f3d003bf18c7c27aeeb5874c"
+    },
+    "compiler-asan.stdout.gz": {
+      "bytes": 5318,
+      "sha256": "51b297a8e6a04711f691f1aa6246acd95f6bf719f3d003bf18c7c27aeeb5874c"
+    }
+  },
+  "counts": {
+    "controls": {
+      "nexus/correctness-no-collection-misuse": 40,
+      "nexus/correctness-no-discarded-outcome": 10,
+      "nexus/correctness-no-discarded-pure-result": 17
+    },
+    "repository": {
+      "nexus/correctness-no-collection-misuse": 0,
+      "nexus/correctness-no-discarded-outcome": 0,
+      "nexus/correctness-no-discarded-pure-result": 0
+    },
+    "compiler": {
+      "nexus/correctness-no-collection-misuse": 0,
+      "nexus/correctness-no-discarded-outcome": 0,
+      "nexus/correctness-no-discarded-pure-result": 0
+    }
+  }
+}
