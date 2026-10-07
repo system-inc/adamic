@@ -116,3 +116,18 @@ No new checker question or shared-file edit was needed. Complete evidence and
 native versus Go timings are in [the fourth report](../WAVE_17_FOURTH_REPORT.md).
 The previously documented shared unknown-request mutant and JSX parser gaps
 remain; no rule in this batch is blocked by them.
+
+## Fifth batch claim
+
+The fourth batch is pushed at ca3ed859. A fresh October 7 fetch inspected
+389 origin refs and 33 unique Markdown claim blobs. The first eligible entries
+in the combined checker-dependent by-volume ranking are:
+
+- `react-hooks/unsupported-syntax` (global rank 171, 0 findings)
+- `react-hooks/use-memo` (global rank 172, 0 findings)
+- `react/boolean-prop-naming` (global rank 173, 0 findings)
+
+Earlier entries were skipped as ported or claimed. These three are neither
+ported on origin/main or origin/codex/tsgo-c-library nor claimed on any fetched
+origin branch. The complete audit is validation-wave-17-fifth/selection.json.
+This claim is pushed before implementation on codex/typeaware-wave-17.
