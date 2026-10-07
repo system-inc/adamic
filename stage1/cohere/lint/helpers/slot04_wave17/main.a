@@ -1,0 +1,15 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { isColor } from './color.a';
+import { isNamedColor } from './named_color.a';
+import { isLength } from './length.a';
+function text(c: OptionsJson,row: number,name: string): string {const n=c.node(row);const i=n.keys.indexOf(name);if(i<0){panic('field');}return c.node(n.children[i] ?? panic('value')).text;}
+const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}
+const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+for(const row of c.node(root).children){
+ const value=text(c,row,'Source');
+ const lower=(source: string): string => {if(source===value){return text(c,row,'Lowered');}if(source===value.trim()){return text(c,row,'TrimLowered');}return panic('unexpected lowercase input');};
+ const numeric=(source: string,suffixes: readonly string[]): boolean => {if(source!==value){panic('unexpected number input');}return text(c,row,'NumberPresent')==='true' && suffixes.includes(text(c,row,'NumberTail'));};
+ const math=(source: string): boolean => {if(source!==value){panic('unexpected math input');}return text(c,row,'Math')==='true';};
+ console.log(`${isColor(value,lower)}|${isNamedColor(value,lower)}|${isLength(value,numeric,math)}`);
+}

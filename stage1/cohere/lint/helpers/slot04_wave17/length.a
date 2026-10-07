@@ -1,0 +1,7 @@
+const lengthUnits: readonly string[] = ['cm','mm','Q','in','pc','pt','px','em','ex','ch','rem','lh','rlh','vw','vh','vmin','vmax','vb','vi','svw','svh','lvw','lvh','dvw','dvh','cqw','cqh','cqi','cqb','cqmin','cqmax'];
+const spacingFunction = /^--spacing\(/i;
+export function isLength(value: string,numberWithSuffix: (source: string,suffixes: readonly string[]) => boolean,hasMathFunction: (source: string) => boolean): boolean {
+    if(numberWithSuffix(value,lengthUnits)){return true;}
+    if(spacingFunction.test(value)){return true;}
+    return hasMathFunction(value);
+}

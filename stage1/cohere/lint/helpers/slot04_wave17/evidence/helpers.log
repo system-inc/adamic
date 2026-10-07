@@ -1,0 +1,81 @@
+=== RUN   TestColorLengthGoNodeNativeJavaScript
+=== RUN   TestColorLengthGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 1909 color/length predicate observations
+=== RUN   TestColorLengthGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 112 color/length predicate observations
+=== RUN   TestColorLengthGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 5 color/length predicate observations
+--- PASS: TestColorLengthGoNodeNativeJavaScript (3.93s)
+    --- PASS: TestColorLengthGoNodeNativeJavaScript/witnesses.json (0.83s)
+    --- PASS: TestColorLengthGoNodeNativeJavaScript/consumers.json (0.28s)
+    --- PASS: TestColorLengthGoNodeNativeJavaScript/calls.json (0.18s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/named_color.alower(value)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/named_color.a"black"
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/named_color.alower(value)#01
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/color.a/^#/
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/color.a/^(rgba?
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/color.a\(/i
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/color.argba?
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/length.aif(numberWithSuffix(value,lengthUnits)){return_true;}
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/length.a'Q'
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/length.a/^--spacing
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/length.a\(/i
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/length.areturn_hasMathFunction(value)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (21.98s)
+    --- PASS: TestCompilingMutants/named_color.alower(value) (1.81s)
+    --- PASS: TestCompilingMutants/named_color.a"black" (1.88s)
+    --- PASS: TestCompilingMutants/named_color.alower(value)#01 (1.77s)
+    --- PASS: TestCompilingMutants/color.a/^#/ (1.76s)
+    --- PASS: TestCompilingMutants/color.a/^(rgba? (1.72s)
+    --- PASS: TestCompilingMutants/color.a\(/i (1.80s)
+    --- PASS: TestCompilingMutants/color.argba? (1.67s)
+    --- PASS: TestCompilingMutants/length.aif(numberWithSuffix(value,lengthUnits)){return_true;} (1.86s)
+    --- PASS: TestCompilingMutants/length.a'Q' (1.77s)
+    --- PASS: TestCompilingMutants/length.a/^--spacing (1.98s)
+    --- PASS: TestCompilingMutants/length.a\(/i (1.77s)
+    --- PASS: TestCompilingMutants/length.areturn_hasMathFunction(value) (1.78s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+--- PASS: TestConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave17	25.931s

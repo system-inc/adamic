@@ -1,0 +1,7 @@
+import { isNamedColor } from './named_color.a';
+const hexPrefix = /^#/;
+// Non-Unicode i preserves Go's fixed-byte prefix behavior for non-ASCII letters.
+const colorFunction = /^(rgba?|hsla?|hwb|color|(ok)?(lab|lch)|light-dark|color-mix|--alpha)\(/i;
+export function isColor(value: string,lower: (source: string) => string): boolean {
+    return hexPrefix.test(value) || colorFunction.test(value) || isNamedColor(value,lower);
+}
