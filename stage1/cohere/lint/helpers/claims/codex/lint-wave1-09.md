@@ -21,3 +21,12 @@ Consumers whose dependency occurrence is removed:
 - better-tailwindcss/no-unknown-classes
 
 No consumer loses its last blocker from this helper alone; this is helper parity, not a whole-rule findings or fixes claim.
+
+## Second helper
+
+Prior helper delivered and pushed at f1c61f9e, with gate logs pushed in the following evidence commit. Refreshed all 417 origin references and all 17 distinct helper claim blobs before selecting this six-consumer tie.
+
+Claim: github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort
+File: from_wave1_09/property_sort.a.
+
+Preserve the breadth-first queue, declaration visit trace, absent-value skip, one-way known --tw-sort latch, count independent of latch, deduplicated ascending property positions and untouched input. Use an acyclic node arena and an injected PropertyOrder map exported from actual Go. Compare actual private Go helper over each consumer test source, every framework static and nested/latch controls on source Node, emitted JavaScript and sanitized native. Prove with compiling semantic mutants. Same six consumers as above; zero last blockers removed alone. Push this claim before code.
