@@ -1,3 +1,24 @@
+# JSDoc blind spot proved: first checkpoint
+
+Status: **syntax tree and parse diagnostics identical on Node, JSDoc unverified**.
+The legacy 35,456,964-byte SHA256 2014ef06... dump does not establish JSDoc
+correctness: forEachChild does not visit node.jsDoc, and the driver prints only
+parseDiagnostics. It emits zero attached JSDoc/tag nodes and no jsDocDiagnostics.
+
+In a scratch slice, parseJSDocCommentWorker.doJSDocScan still consumes all tags
+but returns undefined tagsArray to createJSDocComment. A positive TS @param
+control changes from one comment/one tag to one comment/zero tags. The full
+81-file corpus legacy dump nevertheless remains byte-identical (cmp 0),
+35,456,964 bytes, SHA256
+2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5.
+This is an effective mutant that the old oracle fails to detect. Exact evidence
+is in evidence/jsdoc-blind-spot/report.json. No native JSDoc proof is claimed.
+
+Next checkpoint extends the driver before regenerating full-tree and slice
+references; the old SHA remains historical, not the native acceptance target.
+
+---
+
 # Found behind a stub: follow-on Map initialization stops
 
 This is exploratory evidence, not a source adaptation and not a native proof.
