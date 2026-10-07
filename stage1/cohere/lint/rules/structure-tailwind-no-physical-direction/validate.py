@@ -50,5 +50,6 @@ oracle=oracle.replace('\tresult, err := edit.FixText', '\tfor _, d := range diag
 (scratch/'oracle.go').write_text(oracle)
 replacements={str(repository/relative):str(scratch/relative) for relative in paths}
 replacements[str(repository/'stage1/cohere/lint/wave10_overlay_test.go')] = str(owned/'validation_test.go.txt')
+replacements[str(repository/'stage1/cohere/lint/owned_original_test.go')] = str(repository/'stage1/cohere/lint/rules/sort-vars/validation_test.go.txt')
 (scratch/'overlay.json').write_text(json.dumps({'Replace':replacements}))
 print('overlay='+str(scratch/'overlay.json'))
