@@ -212,3 +212,7 @@ Bridge, filtered uncached Node including runtime last-index-of, registry
 and vet pass. Real JSX remains green. Zero ranked rules are unclaimed;
 no new reservations. Regex validation and undefined labels remain incomplete.
 See ../WAVE_14_AREA_REFRESH_REPORT.md and validation-wave-14-area-refresh.
+
+## Latest landing refresh, October 7
+
+Rebased onto area b84a9d93 and current main c7991b90. Tested source a6e9ab6ba: owned oracle PASS 474.949s, bridge, uncached Node and five new proven fixtures, registry and vet pass. Twenty-one semantic byte mutants caught; ownership and sanitizer checks pass. No new claim; all-origin audit leaves no candidates. Remaining regex and undefined-label boundaries and full-stage exclusions are recorded in WAVE_14_LATEST_REPORT.md.

@@ -1,0 +1,29 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a
+--- PASS: TestNativeAgreesWithNode (0.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_class_guards.a (32.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_guards.a (32.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_satisfies.a (32.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_assertions.a (33.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a (33.05s)
+PASS
+gate cache: native hits=0 misses=15
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	33.137s
