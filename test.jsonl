@@ -37451,3 +37451,38 @@
 {"Time":"2026-10-07T20:46:51.021663401Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxParserGapIsExplicit","Elapsed":20.24}
 {"Time":"2026-10-07T20:46:51.021671544Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant"}
 {"Time":"2026-10-07T20:46:51.021673867Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Output":"=== RUN   TestJsxAdapterGuardMutant\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:47:07.197421872Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Output":"    comments_test.go:255: compiled adapter-guard mutant finishes the unsupported JSX input with exit 0; the explicit-refusal check requires exit 70 and catches it\n"}
+{"Time":"2026-10-07T20:47:07.197469503Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Output":"--- PASS: TestJsxAdapterGuardMutant (16.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:47:07.197479088Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestJsxAdapterGuardMutant","Elapsed":16.18}
+{"Time":"2026-10-07T20:47:07.197485037Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:47:07.20276775Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/comments\t206.220s\n"}
+{"Time":"2026-10-07T20:47:07.202805136Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Elapsed":206.22}
+{"Time":"2026-10-07T20:47:07.311372636Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes"}
+{"Time":"2026-10-07T20:47:07.311403963Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes","Output":"?   \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes\t[no test files]\n"}
+{"Time":"2026-10-07T20:47:07.311432566Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes","Elapsed":0}
+{"Time":"2026-10-07T20:47:07.476691183Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities"}
+{"Time":"2026-10-07T20:47:07.476743702Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities","Output":"?   \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities\t[no test files]\n"}
+{"Time":"2026-10-07T20:47:07.476752065Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities","Elapsed":0}
+{"Time":"2026-10-07T20:47:07.668702779Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width"}
+{"Time":"2026-10-07T20:47:07.668734376Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width","Output":"?   \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width\t[no test files]\n"}
+{"Time":"2026-10-07T20:47:07.668741807Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width","Elapsed":0}
+{"Time":"2026-10-07T20:47:19.920216345Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline"}
+{"Time":"2026-10-07T20:47:19.934762264Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestDelimiterExpressionMatchesNode"}
+{"Time":"2026-10-07T20:47:19.934818868Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestDelimiterExpressionMatchesNode","Output":"=== RUN   TestDelimiterExpressionMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:47:19.93482643Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestDelimiterExpressionMatchesNode","Output":"=== PAUSE TestDelimiterExpressionMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:47:19.934828463Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestDelimiterExpressionMatchesNode"}
+{"Time":"2026-10-07T20:47:19.934832389Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInline"}
+{"Time":"2026-10-07T20:47:19.93483972Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInline","Output":"=== RUN   TestMarkdownInline\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:47:19.934843796Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInline","Output":"=== PAUSE TestMarkdownInline\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:47:19.934850586Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInline"}
+{"Time":"2026-10-07T20:47:19.934852569Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestDelimiterExpressionMatchesNode"}
+{"Time":"2026-10-07T20:47:19.934854282Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestDelimiterExpressionMatchesNode","Output":"=== CONT  TestDelimiterExpressionMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:47:19.934856335Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInline"}
+{"Time":"2026-10-07T20:47:19.934857877Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestMarkdownInline","Output":"=== CONT  TestMarkdownInline\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:47:20.907441949Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdowninline","Test":"TestDelimiterExpressionMatchesNode","Output":"--- PASS: TestDelimiterExpressionMatchesNode (0.97s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:47:27.923743766Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees","Output":"    lint_test.go:399: cohere cases: 2017 unique source/rule/options combinations\n"}
+{"Time":"2026-10-07T20:47:56.157774311Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees","Output":"    jsx_integration_test.go:150: 54 captured cohere JSX sources: 45527 identical whole-tree bytes\n"}
+{"Time":"2026-10-07T20:47:56.274704758Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees","Output":"--- PASS: TestJsxLintTrees (139.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:47:56.274750907Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees","Elapsed":139.18}
+{"Time":"2026-10-07T20:47:56.274763956Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgree"}
+{"Time":"2026-10-07T20:47:56.274767842Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgree","Output":"=== RUN   TestRulesAgree\n","OutputType":"frame"}
