@@ -1,0 +1,51 @@
+=== RUN   TestWave15FourthArrowAgreementAndMutants
+    wave_15_arrow_test.go:54: controls: 3205 identical finding bytes; findings 9
+    wave_15_arrow_test.go:57: controls-asan: 3205 identical finding bytes; findings 9
+=== RUN   TestWave15FourthArrowAgreementAndMutants/arrow
+    wave_15_arrow_test.go:97: arrow: exit 0, independent Go bytes catch byte 328
+=== NAME  TestWave15FourthArrowAgreementAndMutants
+    wave_15_arrow_test.go:109: repository: 18485 identical finding bytes; findings 0
+    wave_15_arrow_test.go:110: repository-asan: 18485 identical finding bytes; findings 0
+    wave_15_arrow_test.go:118: repository native=243.322468ms Go=123.221118ms; tsgo: load_ns=68735227 query_ns=3952984 queries=25 first_query_ns=676074 run_ns=168640277
+         cohere: load_ns=66301273 rule_ns=5136921 run_ns=43954998
+    wave_15_arrow_test.go:109: compiler-native: exit status 70
+        file	/workspace/wave-15-typescript/src/compiler/_namespaces/ts.moduleSpecifiers.ts
+        file	/workspace/wave-15-typescript/src/compiler/_namespaces/ts.performance.ts
+        file	/workspace/wave-15-typescript/src/compiler/_namespaces/ts.ts
+        file	/workspace/wave-15-typescript/src/compiler/binder.ts
+        file	/workspace/wave-15-typescript/src/compiler/builder.ts
+        file	/workspace/wave-15-typescript/src/compiler/builderPublic.ts
+        file	/workspace/wave-15-typescript/src/compiler/builderState.ts
+        file	/workspace/wave-15-typescript/src/compiler/builderStatePublic.ts
+        file	/workspace/wave-15-typescript/src/compiler/checker.ts
+        file	/workspace/wave-15-typescript/src/compiler/commandLineParser.ts
+        file	/workspace/wave-15-typescript/src/compiler/core.ts
+        file	/workspace/wave-15-typescript/src/compiler/corePublic.ts
+        file	/workspace/wave-15-typescript/src/compiler/debug.ts
+        file	/workspace/wave-15-typescript/src/compiler/emitter.ts
+        file	/workspace/wave-15-typescript/src/compiler/executeCommandLine.ts
+        file	/workspace/wave-15-typescript/src/compiler/expressionToTypeNode.ts
+        file	/workspace/wave-15-typescript/src/compiler/factory/baseNodeFactory.ts
+        file	/workspace/wave-15-typescript/src/compiler/factory/emitHelpers.ts
+        file	/workspace/wave-15-typescript/src/compiler/factory/emitNode.ts
+        file	/workspace/wave-15-typescript/src/compiler/factory/nodeChildren.ts
+        file	/workspace/wave-15-typescript/src/compiler/factory/nodeConverters.ts
+        file	/workspace/wave-15-typescript/src/compiler/factory/nodeFactory.ts
+        file	/workspace/wave-15-typescript/src/compiler/factory/nodeTests.ts
+        file	/workspace/wave-15-typescript/src/compiler/factory/parenthesizerRules.ts
+        file	/workspace/wave-15-typescript/src/compiler/factory/utilities.ts
+        file	/workspace/wave-15-typescript/src/compiler/factory/utilitiesPublic.ts
+        file	/workspace/wave-15-typescript/src/compiler/moduleNameResolver.ts
+        file	/workspace/wave-15-typescript/src/compiler/moduleSpecifiers.ts
+        
+        adamic: panic: Unhandled case in Node.Text: *ast.ComputedPropertyName
+--- FAIL: TestWave15FourthArrowAgreementAndMutants (39.25s)
+    --- PASS: TestWave15FourthArrowAgreementAndMutants/arrow (5.12s)
+=== RUN   TestWave15FourthBackreferenceAgreementAndMutants
+    wave_15_backreference_test.go:31: wave15: exit status 1
+        
+        adamic: /workspace/adamic/stage1/cohere/typeaware/no_useless_backreference.a:40:40: stage 0 can't lower reading Number yet
+--- FAIL: TestWave15FourthBackreferenceAgreementAndMutants (3.71s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	42.964s
+FAIL

@@ -74,3 +74,9 @@ existing main/bridge ports and every origin claim, the first three are:
 
 Main and bridge matches are inventory/count records only. Reserved before code.
 Prior regex shared-helper gaps remain; no shared helper files will be edited.
+
+Fourth reservation status: c0c3445b implements throw and arrow callback rules
+with full byte comparisons on both frozen corpora. Backreference independent
+scanner/judgments are implemented and tested; full corpus integration remains
+blocked by shared RegexSyntax and reference/constant helpers. See
+WAVE_15_FOURTH_REPORT.md for exact refusals and evidence. No further claims.
