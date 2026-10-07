@@ -1,0 +1,23 @@
+// The throw releases local parents while escaped views remain counted.
+function escape(word: string, items: string[], map: Map<string, string>, object: { text: string }): void {
+    const parent = `${word}/body/end`;
+    const outer = parent.slice(1, 10);
+    items.push(outer.substring(1, 5));
+    map.set(parent.slice(0, 2), outer.slice(-4));
+    object.text = parent.substring(3, 8);
+    throw new Error(outer.slice(2, 6));
+}
+for (const word of ['abc', 'é世', '🌍x']) {
+    const items: string[] = [];
+    const map = new Map<string, string>();
+    const object = { text: '' };
+    try {
+        escape(word, items, map, object);
+    } catch (error) {
+        console.log(error instanceof Error ? error.message : 'unknown');
+        console.log(`${items.join('|')} ${object.text}`);
+        for (const [key, value] of map) { console.log(`${key}:${value}`); }
+    } finally {
+        console.log(`${items.length} ${object.text.charCodeAt(0)}`);
+    }
+}
