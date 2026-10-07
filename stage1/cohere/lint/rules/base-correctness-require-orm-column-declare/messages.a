@@ -1,0 +1,6 @@
+// Catalog subset copied from the Go-generated resolved policy catalog.
+import { PolicyMessage } from '../../helpers/policy_message.ts';
+const policy = new PolicyMessage("{\"base/correctness-require-orm-column-declare\":{\"missingDeclare\":{\"Text\":\"Property '{{propertyName}}' decorated with @{{decoratorName}}() must use 'declare' (e.g. `declare {{propertyName}}: ...`)\",\"Options\":null}}}");
+export function message(propertyName: string, decoratorName: string): string {
+    return policy.render('base/correctness-require-orm-column-declare', 'missingDeclare', new Map<string, string>([['propertyName', propertyName], ['decoratorName', decoratorName]]), []);
+}

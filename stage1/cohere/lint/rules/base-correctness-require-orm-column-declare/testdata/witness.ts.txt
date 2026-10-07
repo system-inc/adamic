@@ -1,0 +1,1 @@
+class E { @OrmColumn bare: string; @OrmPrimaryKey() id: number; @OrmColumn() declare quiet: string; }

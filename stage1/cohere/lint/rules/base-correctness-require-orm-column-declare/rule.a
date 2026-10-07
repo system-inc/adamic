@@ -1,0 +1,40 @@
+// Port of Go cohere's property listener. Decorator order determines the message.
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const context = this.context;
+        const children = context.node(index).children;
+        if(children.some(child => context.node(child).kind === 'DeclareKeyword')) { return; }
+        let decorator = '';
+        let key = -1;
+        for(const child of children) {
+            const node = context.node(child);
+            if(node.kind === 'Decorator') {
+                let expression = node.children[0] ?? panic('decorator expression');
+                if(context.node(expression).kind === 'CallExpression') {
+                    expression = context.node(expression).children[0] ?? panic('decorator callee');
+                }
+                const callee = context.node(expression);
+                if(decorator === '' && callee.kind === 'Identifier' && [
+                    'OrmColumn', 'OrmPrimaryKey', 'OrmPrimaryAutoColumn', 'OrmCreateDateColumn',
+                    'OrmUpdateDateColumn', 'OrmColumnIndex', 'OrmColumnUnique', 'OrmColumnUniqueIndex',
+                ].includes(callee.text)) { decorator = callee.text; }
+                continue;
+            }
+            if(key < 0 && !node.kind.endsWith('Keyword')) { key = child; }
+        }
+        if(decorator === '' || key < 0) { return; }
+        if(context.node(key).kind === 'ComputedPropertyName') {
+            key = context.node(key).children[0] ?? panic('computed key');
+        }
+        const name = context.node(key).kind === 'Identifier' ? context.node(key).text : '<computed>';
+        context.report(key, 'base/correctness-require-orm-column-declare', 'missingDeclare',
+            message(name, decorator), '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

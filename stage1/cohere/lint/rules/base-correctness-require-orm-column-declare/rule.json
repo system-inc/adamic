@@ -1,0 +1,12 @@
+{
+  "name": "base/correctness-require-orm-column-declare",
+  "kinds": [
+    "PropertyDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleOrmColumnDeclare",
+  "upstreamPackage": "base",
+  "upstreamTest": "TestOrmColumnRequiresDeclare"
+}

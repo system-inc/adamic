@@ -1,0 +1,6 @@
+{
+  "name": "orm_bare_decorator_ignored",
+  "file": "rule.a",
+  "from": "if(context.node(expression).kind === 'CallExpression') {",
+  "to": "if(context.node(expression).kind !== 'CallExpression') { continue; }\n                if(context.node(expression).kind === 'CallExpression') {"
+}
