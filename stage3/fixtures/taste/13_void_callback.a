@@ -1,0 +1,9 @@
+// From TypeScript 6.0.3, src/compiler/moduleNameResolver.ts:610
+// Census reason: the void operator
+interface Diagnostic {message: string;}
+const diagnostics: Diagnostic[] = [];
+const reportDiagnostic: (diag: Diagnostic) => void = diag => void diagnostics.push(diag);
+const result = reportDiagnostic({message: "Cannot find module"});
+console.log(String(result));
+console.log(String(diagnostics.length));
+console.log(diagnostics[0]?.message ?? "missing");

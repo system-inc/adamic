@@ -1,0 +1,15 @@
+// From TypeScript 6.0.3, src/compiler/sys.ts:175
+// Census reason: a spread after the first field
+interface Levels { Low: number; Medium: number; High: number; }
+let pollingIntervalChanged = true;
+let overrides: Partial<Levels> | undefined = { Low: 100 };
+function getCustomLevels(_baseVariable: string): Partial<Levels> | undefined { return overrides; }
+function createPollingIntervalBasedLevels(levels: Levels): Levels { return levels; }
+    function getCustomPollingBasedLevels(baseVariable: string, defaultLevels: Levels) {
+        const customLevels = getCustomLevels(baseVariable);
+        return (pollingIntervalChanged || customLevels) &&
+            createPollingIntervalBasedLevels(customLevels ? { ...defaultLevels, ...customLevels } : defaultLevels);
+    }
+console.log(`${getCustomPollingBasedLevels("TSC_WATCH_POLLINGINTERVAL", { Low: 250, Medium: 500, High: 2000 }) && "changed"}`);
+const result = getCustomPollingBasedLevels("TSC_WATCH_POLLINGINTERVAL", { Low: 250, Medium: 500, High: 2000 });
+if (result) console.log(`${result.Low}:${result.Medium}:${result.High}`);

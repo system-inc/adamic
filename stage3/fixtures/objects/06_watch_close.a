@@ -1,0 +1,36 @@
+// From TypeScript 6.0.3, src/compiler/sys.ts:261
+// From TypeScript 6.0.3, src/compiler/sys.ts:466
+// Census reason: post-creation properties
+type FileWatcherCallback = (fileName: string) => void;
+type PollingInterval = number;
+interface FileWatcher { close: () => void; }
+interface WatchedFileWithUnchangedPolls { fileName: string; callback: FileWatcherCallback; unchangedPolls: number; mtime: number; isClosed?: boolean; }
+const host = { mtime: 1 };
+const watchedFiles: WatchedFileWithUnchangedPolls[] = [];
+function getModifiedTime(host: {mtime: number}, _name: string): number { return host.mtime; }
+function addToPollingIntervalQueue(_file: WatchedFileWithUnchangedPolls, _interval: number): void {}
+function unorderedRemoveItem<T>(items: T[], item: T): void { const i = items.indexOf(item); if (i >= 0) items.splice(i, 1); }
+    function watchFile(fileName: string, callback: FileWatcherCallback, defaultPollingInterval: PollingInterval): FileWatcher {
+        const file: WatchedFileWithUnchangedPolls = {
+            fileName,
+            callback,
+            unchangedPolls: 0,
+            mtime: getModifiedTime(host, fileName),
+        };
+        watchedFiles.push(file);
+
+        addToPollingIntervalQueue(file, defaultPollingInterval);
+        return {
+            close: () => {
+                file.isClosed = true;
+                // Remove from watchedFiles
+                unorderedRemoveItem(watchedFiles, file);
+                // Do not update polling interval queue since that will happen as part of polling
+            },
+        };
+    }
+
+const watcher = watchFile("app.ts", () => {}, 250);
+const file = watchedFiles[0];
+watcher.close();
+console.log(`${file?.isClosed}:${watchedFiles.length}`);

@@ -1,0 +1,46 @@
+{
+  "roots": 78,
+  "codes": [
+    2345,
+    18048,
+    2532,
+    2322,
+    2538
+  ],
+  "counts": {
+    "transformers/ts.ts": {
+      "TS2345": 0,
+      "TS18048": 2,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 1
+    },
+    "transformers/es2015.ts": {
+      "TS2345": 1,
+      "TS18048": 0,
+      "TS2532": 4,
+      "TS2322": 0,
+      "TS2538": 0
+    },
+    "transformers/declarations.ts": {
+      "TS2345": 1,
+      "TS18048": 0,
+      "TS2532": 1,
+      "TS2322": 0,
+      "TS2538": 0
+    }
+  },
+  "total": 10,
+  "diagnostics": [
+    "src/compiler/transformers/declarations.ts:1465:40: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/transformers/declarations.ts:1678:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.\n  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.",
+    "src/compiler/transformers/es2015.ts:2803:38: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/transformers/es2015.ts:3046:64: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/transformers/es2015.ts:4437:29: error TS2345: Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.\n  Type 'undefined' is not assignable to type 'Statement'.",
+    "src/compiler/transformers/es2015.ts:4691:34: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/transformers/es2015.ts:4693:13: error TS2532: Object is possibly 'undefined'.",
+    "src/compiler/transformers/ts.ts:1351:45: error TS2538: Type 'undefined' cannot be used as an index type.",
+    "src/compiler/transformers/ts.ts:1352:97: error TS18048: 'superStatementIndex' is possibly 'undefined'.",
+    "src/compiler/transformers/ts.ts:1379:80: error TS18048: 'superStatementIndex' is possibly 'undefined'."
+  ]
+}
