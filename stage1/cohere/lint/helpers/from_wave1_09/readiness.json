@@ -4,7 +4,6 @@
     "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.propertySort",
     "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ParseValue"
   ],
-  "removed_dependency_occurrences": 18,
   "fully_unblocked_rules": [],
   "consumers": [
     {
@@ -1162,5 +1161,12 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.writeValueCss"
       ]
     }
+  ],
+  "potential_removed_dependency_occurrences": 18,
+  "confirmed_removed_dependency_occurrences": 0,
+  "status": "bounded_four_way_candidates_live_consumer_gate_blocked",
+  "blockers": [
+    "Original six consumer suites require absent Tailwind installation and Kirk-local theme corpus; all actual helper call counts are zero.",
+    "Next loader cannot preserve Go invalid file bytes through readTextFile; loader reservation withdrawn."
   ]
 }
