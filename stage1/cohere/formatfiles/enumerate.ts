@@ -5,19 +5,18 @@
 // Where the port differs from the Go, and why:
 //
 //   - The format options. The Go's Enumerate starts by calling formatoptions.Resolve(root), which walks
-//     up from the root reading settings files as JSON, and 0.1 has no JSON. The port takes Resolve's
-//     answer as given (Resolution): the house ignore list and whether one was declared. The test's Go
+//     up from the root reading settings files as JSON, and 0.1 refuses JSON.parse. The port takes Resolve's
+//     answer as given (Resolution): the house ignore list, its declaration and lint globs. The test's Go
 //     side calls Resolve on each tree and writes its answer into the cases, so the port is held to the
-//     Go's walk with the Go's own resolution. The ignorePatterns layer matches lint's globs
-//     (internal/lint/configuration), which this slice doesn't carry: a resolution whose settings name
-//     none is ported whole (the layer is there, and covers nothing), and one that names any is a panic,
-//     said out loud.
+//     Go's walk with the Go's own resolution. The ignorePatterns layer uses the lint glob port in ../config/glob.ts,
+//     relative to the settings directory, with the Go's restriction on directory pruning.
 //   - Git's ignore rules are the gitignore slice's port, reading a WorkingTree from disk (disk.ts).
 //   - Go's filepath.Walk and filepath.WalkDir are written out here, as Go defines them, over fileStatus
 //     and readDirectory (walkTree and walkDirectories). Their callbacks' errors are the WalkStep union.
 //   - Go's maps (IgnoredByLayer, DeclinedExtensions) are Maps; their printing order is the driver's.
 
 import { panic, readDirectory } from 'adamic';
+import { LintGlob } from '../config/glob.ts';
 import { compilePatterns, ExcludeFile, IgnoreFileName, newMatcher, type Matcher, type Patterns } from '../gitignore/gitignore.ts';
 import { base, clean, dir } from '../gitignore/path.ts';
 import { DiskTree, lstat, statExists, statIsDirectory, type LinkStatus } from './disk.ts';
@@ -67,16 +66,23 @@ export class Enumeration {
 // What Enumerate gives: the enumeration, or the Go's error.
 export type Enumerated = { readonly kind: 'Ok'; readonly enumeration: Enumeration } | { readonly kind: 'Error'; readonly message: string };
 
-// enumerate.go: ignoreLayer, one of the project's ignore lists after git's. Only the house list is
-// ported (above).
-interface IgnoreLayer {
-	readonly name: string;
-	readonly lines: Patterns;
-}
+// enumerate.go: ignoreLayer, the house lines or the lint globs after git's.
+type IgnoreLayer =
+	| { readonly kind: 'Lines'; readonly name: string; readonly lines: Patterns }
+	| { readonly kind: 'Globs'; readonly name: string; readonly patterns: readonly string[]; readonly globs: readonly LintGlob[]; readonly from: string };
 
 // enumerate.go: (ignoreLayer).covers, whether the layer excludes a path relative to the walk root.
-function covers(layer: IgnoreLayer, relative: string, directory: boolean): boolean {
-	return layer.lines.ignored(relative, directory)[0];
+function covers(layer: IgnoreLayer, root: string, relative: string, directory: boolean): boolean {
+	if (layer.kind === 'Lines') { return layer.lines.ignored(relative, directory)[0]; }
+	const fromSettings = rel(layer.from, join(root, relative));
+	if (fromSettings === '' || fromSettings === '..' || fromSettings.startsWith('../')) { return false; }
+	for (let index = 0; index < layer.globs.length; index++) {
+		const pattern = layer.patterns[index] ?? panic('formatfiles: no pattern for a compiled glob');
+		if (directory && pattern !== '**' && !pattern.endsWith('/**')) { continue; }
+		const glob = layer.globs[index] ?? panic('formatfiles: no compiled glob');
+		if (glob.matches(fromSettings)) { return true; }
+	}
+	return false;
 }
 
 // What a walk's callback returns: go on, skip this directory (filepath.SkipDir), or stop with an error.
@@ -260,7 +266,7 @@ export function nestedRepositoriesBelow(root: string): { readonly kind: 'Ok'; re
 
 // enumerate.go: Enumerate walks a project root and returns the files handles accepts. The layers, in
 // order: git's ignore rules, read as git reads them; the house list, read with the same syntax; and the
-// project's ignorePatterns (not ported, above). Each is counted separately, so a misconfigured layer
+// project's ignorePatterns. Each is counted separately, so a misconfigured layer
 // shows as a suspicious zero rather than as a slightly smaller total.
 export function enumerate(root: string, resolution: Resolution, handles: (fileName: string) => boolean): Enumerated {
 	const enumeration = new Enumeration(root);
@@ -292,15 +298,12 @@ export function enumerate(root: string, resolution: Resolution, handles: (fileNa
 		if (house.kind === 'Error') {
 			return { kind: 'Error', message: house.error.message };
 		}
-		layers.push({ name: HouseIgnoreLayer, lines: house.value });
+		layers.push({ kind: 'Lines', name: HouseIgnoreLayer, lines: house.value });
 	}
-	// The ignorePatterns layer, when settings govern root from inside its repository. With no globs it
-	// covers nothing, so it is counted and never asked.
+	// The ignorePatterns layer applies only inside the repository governed by the settings.
 	if (resolution.source !== '' && !repositoryBoundaryBetween(root, dir(resolution.source))) {
-		if (resolution.ignorePatterns.length > 0) {
-			panic(`the ignorePatterns of ${resolution.source} are lint's globs, which this port doesn't carry`);
-		}
-		enumeration.ignoredByLayer.set(IgnorePatternsLayer, 0);
+		layers.push({ kind: 'Globs', name: IgnorePatternsLayer, patterns: resolution.ignorePatterns,
+			globs: resolution.ignorePatterns.map((pattern) => new LintGlob(pattern)), from: dir(resolution.source) });
 	}
 	for (const layer of layers) {
 		enumeration.ignoredByLayer.set(layer.name, 0);
@@ -342,7 +345,7 @@ export function enumerate(root: string, resolution: Resolution, handles: (fileNa
 				return skipDirectory;
 			}
 			for (const layer of layers) {
-				if (covers(layer, relative, true)) {
+				if (covers(layer, root, relative, true)) {
 					count(layer.name);
 					return skipDirectory;
 				}
@@ -369,7 +372,7 @@ export function enumerate(root: string, resolution: Resolution, handles: (fileNa
 			return proceed;
 		}
 		for (const layer of layers) {
-			if (covers(layer, relative, false)) {
+			if (covers(layer, root, relative, false)) {
 				count(layer.name);
 				return proceed;
 			}
