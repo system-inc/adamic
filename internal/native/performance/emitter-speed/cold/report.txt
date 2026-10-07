@@ -1,0 +1,47 @@
+Built shared cold, noinline failure helpers for generated stops, casts, array bounds, field writes and allocation failure; field ownership and switch lowering unchanged.
+Commits: landing 35df51c1ff1040d9063f0e0a2e85b64e2023f88b merged main c7991b9; claim 92ee529; implementation 0b8e870, pushed on codex/emitter-speed.
+Commands/output: uncached native/oracle PASS, allocation pin PASS, vet/format clean, batch 8 cmp equal; release -O2: I1 misses -14.49%, Ir -0.71%, best-of-ten user time -4.21%.
+Mutants: frozen guard omission caught by Node oracle; altered cast/shrink stop caught by Node oracle; altered allocation message caught by pinned test; 26 profile-accounting mutants rejected.
+Not covered: hardware cache counters/cycles, full repository test suite, W6, separate per-helper attribution, new switch lowering, or the original one-third compiler-share target.
+
+Landing first
+Current origin/main was merged cleanly and pushed at 35df51c1ff1040d9063f0e0a2e85b64e2023f88b before this unit. Landing uncached native 152.133s and oracle 144.518s passed; go vet ./... and formatting passed. The requested one-line tip report was sent then. A short cold-helper claim was pushed before building. The earlier field and sieve reports remain separate; do not compare their old-main baselines with this current-main experiment as an isolated effect.
+
+Implementation and boundaries
+emit_speed.go emits content-deduplicated static ADAMIC_COLD _Noreturn helpers. Generated cast, unwrap, TDZ and array-shrink stops share a helper per exact message. Field stores combine the existing null and public frozen conditions into one cold call per property; private names remain exempt from frozen checks. Evaluation order and retain-new/store/release-old order are unchanged, including aliasing. No names or temporary/cache counter allocation mechanisms changed.
+Invalid scalar-array writes share adamic_array_write_failure, preserving runtime formatting and exit status. Existing runtime panic, stack overflow and unreachable declarations are cold/noinline. Standard array allocation failures and three allocator-entry failures call adamic_out_of_memory. Allocation-failure bodies were explicitly authorized by this unit; destruction-side allocation paths, retain/release, character reads and field-read plumbing were not edited. Existing dynamic-message panic and checkDefined sites still call the shared cold panic function; not every message setup is deduplicated. No checks were elided and no source switches were changed. Object layout is unchanged.
+
+Build flags for every measurement below
+See flags.txt for the complete clang 20.1.8 release flags: -std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2. No -g, sanitizer, counting, LTO or PGO. Runtime archive uses the same flags; link -lm. Go 1.27.1 builds the compiler; Node 24.19.0 is the external oracle.
+Before compiler was built from 92ee529 (same code as landing 35df51c); after from implementation 0b8e870's code, before a whitespace-only indentation cleanup and addition of the allocation test. The measured emitted C and binary hashes are pinned in binaries.json. Corpus/driver are unchanged from ../report.txt and SPLIT.md: scratch/emitter-speed/batch8/parse.a, 77-file scratch/emitter-speed/compiler.txt. Both profiles output 0 followed by newline and exit 0. Raw emitted C and profiles are archived gzip-compressed without changes.
+
+Callgrind 3.24.0 flags for both sequential runs:
+--tool=callgrind --cache-sim=yes --branch-sim=yes --I1=32768,8,64 --D1=32768,8,64 --LL=268435456,1,64 --callgrind-out-file=PATH
+This matches the supplied model, not physical hardware: 32KiB eight-way I1/D1, 64-byte lines; 256MiB direct-mapped LL. Warnings including brk overflow are preserved in profile stderr. Results are simulations, not measured cache events or cycles.
+
+Whole parse, release flags and model above
+Metric                             Before             After           Change
+Self/footer instructions       7,943,271,760      7,886,875,963       -0.71%
+L1 instruction misses             74,988,307         64,120,094      -14.49%
+L1 data read+write misses           20,961,639         20,886,816       -0.36%
+Branch mispredictions Bcm+Bim       47,004,719         49,283,157       +4.85%
+Whole executable .text bytes          508,046            506,718       -0.26%
+Emitted C bytes                     2,188,075          2,161,882       -1.20%
+
+The emitted after C has 66 shared generated cold functions; direct adamic_panic call lines fall from 492 to 105. These static source counts are not dynamic instruction counts. objdump confirms out-of-line calls to adamic_cold_* symbols. Whole .text includes both hot and cold code; no hot-only section size is claimed. GNU objcopy --only-section=.text -O binary measured the text sizes. Model conflicts and placement can change: no experiment establishes that total text size alone caused the miss reduction. The increased branch misprediction count is an observed tradeoff.
+All 13 self-event sums match each profile's totals footer. Summary Ir is exactly two higher for both profiles; all other summary events match. The table uses reconciled self/footer values. ../cache/summarize.py checks this and rejects each footer event incremented by one (13 mutants per profile).
+
+User time, same release flags above, best of ten
+Before 0.913762s; after 0.875306s: 4.2085% less direct-child user time.
+Best wall time, independently selected: before 0.942046998s; after 0.913870340s.
+Ten interleaved pairs alternate before/after order, affinity taskset -c 3; CPU allowance 0-4, quota 400000/100000 (4 CPUs). No concurrent builds, tests or profilers during timing. timing.py uses the sieve bench's wait4 helper to collect direct-child rusage. Every timed process exits 0, stdout 0 newline, stderr empty. timings.json retains all samples and load before/after. This is a shared worker timing result, not a guarantee on other machines.
+
+Correctness and mutants
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -count=1 -timeout 30m > scratch/emitter-speed/cold/gate.log 2>&1
+PASS native 145.308s, oracle 139.156s, including both oracle backends. Newly added TestColdAllocationFailure was run separately and passed in 6.974s. It replaces malloc with a failing allocator, verifies buffered stdout before newline, exact stderr adamic: panic: out of memory newline and exit 70. Existing field/scalar pinned tests passed separately (9.327s). go vet ./... passed; gofmt -l on changed Go files returned no filenames; git diff --check passed. Test output was logged, never piped.
+Release batch8-after --manifest scratch/emitter-speed/compiler.txt was compared with retained independent Go batch 8 output: cmp exited 0, stderr empty. Output 11,444,678 bytes; SHA256 fc2df7405f773b1234ad1edf4d14d8f60da68be59666460651782529effd9322.
+Frozen mutant replaces the combined frozen condition with false: filtered NativeAgreesWithNode library_object_freeze_write and library_object_freeze_alias FAIL (7.203s), Node exit70 versus native exit0. Stop mutant changes shared coldStop message: cast_fails and map_shrinks FAIL (0.496s), exact stderr mismatch with exit70 preserved. Allocation mutant changes out of memory to out of memories: TestColdAllocationFailure FAIL (2.568s), exact stderr mismatch with stdout and exit70 preserved. All mutant sources and logs are archived. Use Go overlay Replace emit_speed.go with frozen-mutant.go or stop-mutant.go, and runtime/adamic.c with allocation-mutant.c; run the corresponding filters above with uncached -count=1. Prior ownership/type/presence mutants are in parent reports, not rerun here.
+
+Reproduction
+From repo root, source /workspace/adamic-tools/env.sh. Build Go compiler before at 92ee529 and after at 0b8e870 in separate checkouts with go build -o COMPILER ./cmd/adamic. COMPILER build scratch/emitter-speed/batch8/parse.a -o BINARY; COMPILER c scratch/emitter-speed/batch8/parse.a > emitted.c. Corpus and driver provenance are in the parent report; do not copy cohere sources.
+profile.py records exact invocation and VALGRIND_LIB for the locally extracted Valgrind. timing.py records exact taskset and wait4 commands. Their scratch paths refer to retained workspace binaries; rebuild corresponding paths or adjust them to the two checkouts. Decompress raw profiles then run ../cache/summarize.py to regenerate summaries. Field stores and the sieve wins are already in the landing commit available to area/compiler. W6 remains queued; switch/loop/tag shape remains with its assigned worker.

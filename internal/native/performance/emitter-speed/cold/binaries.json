@@ -1,0 +1,38 @@
+{
+  "compiler-before": {
+    "sha256": "9f8234df026944b06e349ba9af86110b0faa1c27849890a1ea07367c882401b2",
+    "bytes": 30736548
+  },
+  "compiler-after": {
+    "sha256": "c4409d8d2be2b35d4d013d2f86e592cf9ae917d63baad2fb3cbcea145ffc64e9",
+    "bytes": 30737462
+  },
+  "before": {
+    "sha256": "1b937c3ac365d0bc25566068904c501345f7222714c79ceb90e4e81c2ba5890a",
+    "bytes": 963064
+  },
+  "after": {
+    "sha256": "49f8411de4ff75640ade5fc04dea3196af6c0709fa927dd826a56c4d8d117dee",
+    "bytes": 963736
+  },
+  "before.c": {
+    "sha256": "7007f1d7203c14330d602ddd435ac29a266e3936e0502e60c2b037747d14608d",
+    "bytes": 2188075
+  },
+  "after.c": {
+    "sha256": "ae019255aa7a794bc89a0cf2c0e9888b638843f33274cdedec92fad7b2b8efd5",
+    "bytes": 2161882
+  },
+  "before.text": {
+    "sha256": "db64a5c7f5b5d59785e370926304248481bbf007e110f17a50c65cb5195cc3aa",
+    "bytes": 508046
+  },
+  "after.text": {
+    "sha256": "2e2aac19e6e6a1f583f57c1cb8774027029b6bb8e230da51ead86e435f9dcc21",
+    "bytes": 506718
+  },
+  "batch8-after.stdout": {
+    "sha256": "fc2df7405f773b1234ad1edf4d14d8f60da68be59666460651782529effd9322",
+    "bytes": 11444678
+  }
+}
