@@ -1,0 +1,85 @@
+=== RUN   TestDeterministicRegeneration
+=== PAUSE TestDeterministicRegeneration
+=== RUN   TestDescriptorRejections
+=== PAUSE TestDescriptorRejections
+=== RUN   TestDuplicateOracleAdapter
+=== PAUSE TestDuplicateOracleAdapter
+=== RUN   TestAdamicRuleModule
+=== PAUSE TestAdamicRuleModule
+=== CONT  TestDeterministicRegeneration
+=== CONT  TestAdamicRuleModule
+=== CONT  TestDuplicateOracleAdapter
+=== CONT  TestDescriptorRejections
+=== RUN   TestDescriptorRejections/duplicate_public_name
+=== PAUSE TestDescriptorRejections/duplicate_public_name
+=== RUN   TestDescriptorRejections/unknown_field
+=== PAUSE TestDescriptorRejections/unknown_field
+=== RUN   TestDescriptorRejections/missing_named_export
+=== PAUSE TestDescriptorRejections/missing_named_export
+=== RUN   TestDescriptorRejections/bad_kind
+=== PAUSE TestDescriptorRejections/bad_kind
+=== RUN   TestDescriptorRejections/missing_oracle_export
+=== PAUSE TestDescriptorRejections/missing_oracle_export
+=== RUN   TestDescriptorRejections/no_listener
+=== PAUSE TestDescriptorRejections/no_listener
+=== RUN   TestDescriptorRejections/missing_factory
+=== PAUSE TestDescriptorRejections/missing_factory
+=== RUN   TestDescriptorRejections/missing_class
+=== PAUSE TestDescriptorRejections/missing_class
+=== RUN   TestDescriptorRejections/missing_finish_hook
+=== PAUSE TestDescriptorRejections/missing_finish_hook
+=== RUN   TestDescriptorRejections/unsafe_public_name
+=== PAUSE TestDescriptorRejections/unsafe_public_name
+=== CONT  TestDescriptorRejections/duplicate_public_name
+=== CONT  TestDescriptorRejections/no_listener
+=== NAME  TestDescriptorRejections/duplicate_public_name
+    registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsduplicate_public_name3305700625/001/rules/boundaries-dependencies/rule.json: missing witness
+=== NAME  TestDeterministicRegeneration
+    registry_test.go:44: /tmp/adamic-gate/TestDeterministicRegeneration1758663673/001/rules/boundaries-dependencies/rule.json: missing witness
+=== CONT  TestDescriptorRejections/unsafe_public_name
+--- FAIL: TestDeterministicRegeneration (0.07s)
+=== CONT  TestDescriptorRejections/missing_finish_hook
+=== NAME  TestAdamicRuleModule
+    registry_test.go:159: /tmp/adamic-gate/TestAdamicRuleModule3737448445/001/rules/boundaries-dependencies/rule.json: missing witness
+=== NAME  TestDuplicateOracleAdapter
+    registry_test.go:145: duplicate adapter mutant survived: /tmp/adamic-gate/TestDuplicateOracleAdapter4227692207/001/rules/boundaries-dependencies/rule.json: missing witness
+=== NAME  TestDescriptorRejections/no_listener
+    registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsno_listener789540863/001/rules/boundaries-dependencies/rule.json: missing witness
+--- FAIL: TestAdamicRuleModule (0.16s)
+=== CONT  TestDescriptorRejections/missing_class
+=== CONT  TestDescriptorRejections/missing_factory
+--- FAIL: TestDuplicateOracleAdapter (0.16s)
+=== NAME  TestDescriptorRejections/unsafe_public_name
+    registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsunsafe_public_name4048551069/001/rules/boundaries-dependencies/rule.json: missing witness
+=== CONT  TestDescriptorRejections/missing_oracle_export
+=== CONT  TestDescriptorRejections/bad_kind
+=== NAME  TestDescriptorRejections/missing_oracle_export
+    registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsmissing_oracle_export87261712/001/rules/boundaries-dependencies/rule.json: missing witness
+=== CONT  TestDescriptorRejections/missing_named_export
+=== NAME  TestDescriptorRejections/missing_finish_hook
+    registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsmissing_finish_hook339619881/001/rules/boundaries-dependencies/rule.json: missing witness
+=== CONT  TestDescriptorRejections/unknown_field
+=== NAME  TestDescriptorRejections/missing_factory
+    registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsmissing_factory1237644011/001/rules/boundaries-dependencies/rule.json: missing witness
+=== NAME  TestDescriptorRejections/missing_named_export
+    registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsmissing_named_export3388496127/001/rules/boundaries-dependencies/rule.json: missing witness
+=== NAME  TestDescriptorRejections/missing_class
+    registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsmissing_class2944374172/001/rules/boundaries-dependencies/rule.json: missing witness
+=== NAME  TestDescriptorRejections/unknown_field
+    registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsunknown_field2879703410/001/rules/boundaries-dependencies/rule.json: missing witness
+=== NAME  TestDescriptorRejections/bad_kind
+    registry_test.go:117: mutant survived or wrong failure: /tmp/adamic-gate/TestDescriptorRejectionsbad_kind2067630566/001/rules/boundaries-dependencies/rule.json: missing witness
+--- FAIL: TestDescriptorRejections (0.00s)
+    --- FAIL: TestDescriptorRejections/duplicate_public_name (0.06s)
+    --- FAIL: TestDescriptorRejections/no_listener (0.17s)
+    --- FAIL: TestDescriptorRejections/unsafe_public_name (0.09s)
+    --- FAIL: TestDescriptorRejections/missing_oracle_export (0.02s)
+    --- FAIL: TestDescriptorRejections/missing_finish_hook (0.17s)
+    --- FAIL: TestDescriptorRejections/missing_factory (0.18s)
+    --- FAIL: TestDescriptorRejections/missing_named_export (0.17s)
+    --- FAIL: TestDescriptorRejections/missing_class (0.21s)
+    --- FAIL: TestDescriptorRejections/bad_kind (0.21s)
+    --- FAIL: TestDescriptorRejections/unknown_field (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/registry	0.432s
+FAIL
