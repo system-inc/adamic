@@ -70,3 +70,17 @@ Consumers, four dependency entries and zero complete rule blocker sets removed a
 - @typescript-eslint/no-empty-object-type
 - no-restricted-exports
 - no-restricted-imports
+
+## Second retained helper
+
+Both owned branches are now rebased onto origin/main 39638d9e278d38bb5aeae887f46d55a70e47aaad, re-green and pushed: parked rules 48b945b3702152030c2ad6c3c3a278750b305397 and retained helper 804b2979bac2156fa3cdb81ae124cd114648a73c.
+
+Claim: github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeUnicodeEscape
+File: slot14/regexp_decode_unicode_escape.a.
+Refetched all 610 origin heads and inspected all 20 distinct recursive helper claim contents plus HELPERS.md reservations. This symbol ties the highest unclaimed concrete fan-out at four and uses the already delivered fixed-hex helper. Push before code. Preserve fixed Unicode escape delegation, Unicode-only brace syntax, first closing brace, exact byte width, uint32 parsing and MaxRune bounds, exact error bytes and decoded defaults. Compare the actual private Go helper across all four consumer suites, captured targeted paths and bounded controls, source Node, emitted JavaScript and sanitized native with a compiling semantic mutant.
+
+Consumers, four additional dependency entries, zero complete blocker sets removed alone:
+- @next/next/no-html-link-for-pages
+- @typescript-eslint/no-empty-object-type
+- no-restricted-exports
+- no-restricted-imports
