@@ -44,6 +44,8 @@ func build(path, output string, arguments []string) int {
 		} else {
 			err = native.BuildTSGo(source, output, archive, options)
 		}
+	} else if native.UsesApple(program) {
+		err = native.BuildApple(native.C(program), output, options)
 	} else {
 		err = native.Build(native.C(program), output, options)
 	}
