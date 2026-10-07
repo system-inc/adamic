@@ -30,3 +30,11 @@ Prior helpers green again on current main c01907a70 and pushed at 2534ca1b8; par
 - github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].throwFrame
 
 Four consumers tie the highest remaining fan-out: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks. Territory: from_wave1_01/throw_frame.a plus owned model/driver/Go capture/test/evidence. Preserve the innermost try frame or catch frame with finally; other tryPosition values do not match. Actual private Go on every consumer's fixture suite, bounded exhaustive frames and all uint8 positions; compiling mutants, source Node, emitted JavaScript, sanitized native. No regex required; no shared harness files touched. Push claim before implementation.
+
+## Fourth helper
+
+throwFrame green and pushed at 50a340ca5 before this reservation. Fresh wildcard fetch audited 561 refs, all 20 helper claim blobs and HELPERS.md reservations. Both owned branches retain current-main c01907a70 ancestry and pushed green scoped results. Claim before code:
+
+- github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.throwTarget
+
+Four consumers tie the maximum: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks. Territory: from_wave1_01/throw_target.a and owned target data/driver/oracle/evidence. Preserve actual catch/finally block identity and nil targets; prefer catch only in try position with a non-nil catch. Real private Go on all consumers and exhaustive position/entry/alias controls; source Node, emitted JavaScript, sanitized native and compiling mutants. No regex or shared harness changes. Push before implementation.
