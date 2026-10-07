@@ -1,0 +1,46 @@
+import { TypeOperations } from './type_operations.a';
+import type { Bindings } from './bindings.ts';
+import type { Types } from './types.ts';
+
+// Promise predicates are native judgments over call signatures and properties.
+export class PromiseTypes {
+    readonly operations: TypeOperations;
+    constructor(bindings: Bindings) { this.operations = new TypeOperations(bindings); }
+    callable(index: number, facts: Types, identity: number): boolean {
+        const apparent = this.operations.type(index, 'apparent', identity);
+        return apparent.parts(apparent.root()).some((part) => this.operations.signatures(index, part).signatures.length > 0);
+    }
+    thenPart(index: number, identity: number): boolean {
+        const then = this.operations.type(index, 'property', identity, 'then');
+        if(!then.present) { return false; }
+        for(const part of then.parts(then.root())) {
+            const signatures = this.operations.signatures(index, part);
+            if(signatures.signatures.some((signature) => signature.parameters.length > 0 &&
+                this.callable(index, signatures.types, signature.parameters[0] ?? 0))) { return true; }
+        }
+        return false;
+    }
+    thenable(index: number, identity: number, all = false): boolean {
+        const apparent = this.operations.type(index, 'apparent', identity);
+        const parts = apparent.parts(apparent.root());
+        return all ? parts.every((part) => this.thenPart(index, part)) : parts.some((part) => this.thenPart(index, part));
+    }
+    returns(index: number, identity: number): boolean {
+        const facts = this.operations.type(index, 'apparent', identity);
+        return facts.parts(facts.root()).some((part) => {
+            const calls = this.operations.signatures(index, part);
+            return calls.signatures.some((signature) => this.thenable(index, signature.returned));
+        });
+    }
+    void(index: number, facts: Types, identity: number): boolean {
+        let had = false;
+        for(const part of facts.parts(facts.type(identity))) {
+            const calls = this.operations.signatures(index, part);
+            for(const signature of calls.signatures) {
+                if(this.thenable(index, signature.returned)) { return false; }
+                had = had || (calls.types.type(signature.returned).flags & 16) !== 0;
+            }
+        }
+        return had;
+    }
+}
