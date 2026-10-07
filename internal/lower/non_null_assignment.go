@@ -13,10 +13,6 @@ func nonNullAssignmentTarget(node *ast.Node) *ast.Node {
 	return nil
 }
 
-func logicalAssignment(kind ast.Kind) bool {
-	return kind == ast.KindAmpersandAmpersandEqualsToken || kind == ast.KindBarBarEqualsToken || kind == ast.KindQuestionQuestionEqualsToken
-}
-
 // Hold the receiver and index before reading, and hold the checked read before the
 // RHS runs. The final store uses those same held values even when a call mutates them.
 func (l *lowering) nonNullUpdate(node, assertion, target *ast.Node, operator ast.Kind) ([]ir.Statement, error) {

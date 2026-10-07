@@ -172,11 +172,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "Refused",
-      "diagnostic": "adamic: /tmp/fs-combined-pristine-host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+      "diagnostic": "adamic: /tmp/fs-combined-pristine-host/14_getCurrentDirectory.a:15:24: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined\n"
     },
     "javascript": {
       "stage": "Refused",
-      "diagnostic": "adamic: /tmp/fs-combined-pristine-host/14_getCurrentDirectory.a:10:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function callback() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+      "diagnostic": "adamic: /tmp/fs-combined-pristine-host/14_getCurrentDirectory.a:15:24: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined\n"
     }
   },
   {

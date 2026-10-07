@@ -19,7 +19,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 11_setModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 12_deleteFile.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 13_createDirectory.a | Checker | Checker | NotYet | NotYet | unknown errorCode observation at 72:19 | Compiler, regression from a85a9cb1 |
-| 14_getCurrentDirectory.a | Refused | Refused | Refused | Refused | memoize callback capture cycle at 12:28 | Compiler / runtime |
+| 14_getCurrentDirectory.a | Refused | Refused | Refused | Refused | exactly undefined non-null assertion at 17:24 | Compiler / adaptation ruling |
 | 15_getExecutingFilePath.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 16_getEnvironmentVariable.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 17_write.a | Agrees | Agrees | Agrees | Agrees | None | None |
@@ -106,3 +106,26 @@ Validation after merging:
 - Private Go overlay brand-test mutant tests undefined instead of the actual argument. Builds successfully; Node reports exit 0 while native and JS report exit 70 after incorrect false results. Both Node comparisons catch it; no compiler or sanitizer error. Working source unchanged.
 - `ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^(TestWASIEmptySymlinkAgreesWithNode|TestWASIInputAgreesWithNode|TestWASIHostRuntimeRefusals|TestWASIFileAgreesWithNode)$' -count=1 -timeout 15m -v`: PASS, 21.546s, including empty-symlink controls and the removed-adapter Node mutant. Existing explicit target skips are not counted as passes.
 - Full go test ./..., full language WASI and counts regeneration were not run. Earlier gate limitations remain documented. This remains a proof branch; no main/area push, no rebase and no force push.
+
+## Final recount including ed6e30e2
+
+Merge 904b2258 brings compiler non-null-narrowed-number ed6e30e2 and its newer typed-array/compiler ancestry into the proof. Conflicts preserve both host operations and typed-array dispatch, both Date and typed-array representations, Buffer contextual views and typed-array set arguments, fresh analyses and all unique fixture/count rows. One identical logicalAssignment helper was duplicated by the two compiler branches; the existing helper is retained and the incoming duplicate removed.
+
+All 25 adapted fixtures at 7218520a and 25 pristine controls were rerun on both backends after this merge: still 19/25 adapted, 15/25 pristine. Fixture 11 is green on both backends, as are 06, 07 and 10. The errorCode regressions from a85a9cb1 remain in 05 and 13. Fixture 25 still has an any parameter and remains refused at the predicate proof.
+
+The prior native-only narrowed-number gate stop is resolved. non_null_narrowed_scalar.a builds and executes on native and JS, both print 0 and compare byte-for-byte with source Node. The old double != NULL compiler diagnostic is historical, not a current blocker.
+
+Fixture 14's first blocker now precedes the capture cycle:
+```
+adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:17:24: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined
+```
+This is ed6e30e2's explicit exact-nullish assertion ruling applied to the source's callback = undefined! write. No adaptation was added here.
+
+Final checks:
+
+- All adapted and pristine fixtures rerun in fs_predicate_nonnull_adapted.log and fs_predicate_nonnull_original.log; exit 1 solely for named blocked fixtures, no output mismatches.
+- `go test ./internal/lower ./internal/fresh -run 'TestNonNull|TestExactlyNullish|TestNodeFSFile|TestArrayPredicate|TestUnknownArrayPredicate' -count=1 -timeout 10m`: PASS, lower 7.442s, fresh 0.024s.
+- `ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^(TestWASIEmptySymlinkAgreesWithNode|TestWASIInputAgreesWithNode|TestWASIHostRuntimeRefusals|TestWASIFileAgreesWithNode|TestImpossibleNonNullFixturesAreRefused|TestPossibleNonNullStopsAtAssertion)$' -count=1 -timeout 15m -v`: PASS, 51.857s. Whole runtime archive, empty-symlink Node mutant, all selected WASI host tests and exact-nullish/possible assertion checks pass. Explicit target skips remain excluded from success counts.
+
+- Full `go test ./internal/flow -count=1 -timeout 10m`: FAIL, 109.401s. The program sweep includes incoming non_null_deinitialize_* fixtures now explicitly refused by ed6e30e2's exact-nullish assertion ruling; it cannot lower them for SSA/range/trace checks. Full diagnostics, including all other flow findings, are in fs_predicate_nonnull_flow.log. No flow success or full repository gate success is claimed.
+- `git diff --check`: PASS. No new POSIX runtime calls were added; merged runtime archive passes the WASI host leg. These compiler branches remain proof inputs, not area/main landings.
