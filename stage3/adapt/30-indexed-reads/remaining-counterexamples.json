@@ -1,0 +1,41 @@
+{
+  "status": "pass: declines supported by counterexamples",
+  "indexedGetter": {
+    "reads": 2,
+    "length": 1,
+    "own": true,
+    "value": "undefined"
+  },
+  "pushGetter": {
+    "reads": 0,
+    "length": 1,
+    "own": true,
+    "value": "undefined"
+  },
+  "cache_mutant": "Node values/read traces differ in both cases",
+  "missingSetMethods": [
+    "union",
+    "intersection",
+    "difference",
+    "symmetricDifference",
+    "isSubsetOf",
+    "isSupersetOf",
+    "isDisjointFrom"
+  ],
+  "externalSetConsumer": "src/server/session.ts:512 requires Set<DocumentSpan>",
+  "genericWrites": {
+    "localSymbol": {
+      "stock_diagnostics": 0,
+      "declared_required_member": "{ proof: true }",
+      "actual_Node_value": "undefined",
+      "conclusion": "stock acceptance of the wider constraint does not prove the narrower T's return/write contract"
+    },
+    "typeExpression": {
+      "stock_diagnostics": 0,
+      "declared_required_member": "{ proof: true }",
+      "actual_Node_value": "undefined",
+      "conclusion": "stock acceptance of the wider constraint does not prove the narrower T's return/write contract"
+    }
+  },
+  "source_repairs": 0
+}
