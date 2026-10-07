@@ -1,0 +1,255 @@
+{
+  "version": "6.0.3",
+  "sourceFiles": 78,
+  "diagnostics": [
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1503,
+      "code": 2488,
+      "message": "Type 'never' must have a '[Symbol.iterator]()' method that returns an iterator."
+    }
+  ],
+  "count": 30,
+  "writes": [
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1424,
+      "column": 16,
+      "field": "length",
+      "view": "IncrementalBuildInfoRoot[]",
+      "text": "root.length = root.length - 1"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1974,
+      "column": 9,
+      "field": "length",
+      "view": "Signature[]",
+      "text": "candidates.length = 0"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 8129,
+      "column": 25,
+      "field": "length",
+      "view": "TrackedSymbol[]",
+      "text": "trackedSymbols.length = trackedSymbolsTop"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 8132,
+      "column": 25,
+      "field": "length",
+      "view": "(() => void)[]",
+      "text": "unreportedErrors.length = unreportedErrorsTop"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16171,
+      "column": 13,
+      "field": "length",
+      "view": "Type[]",
+      "text": "result.length = typeParameters!.length"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 307,
+      "column": 5,
+      "field": "length",
+      "view": "T[]",
+      "text": "array.length = outIndex"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 312,
+      "column": 5,
+      "field": "length",
+      "view": "unknown[]",
+      "text": "array.length = 0"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1596,
+      "column": 13,
+      "field": "length",
+      "view": "(T | undefined)[]",
+      "text": "elements.length = newLength"
+    },
+    {
+      "file": "src/compiler/factory/emitNode.ts",
+      "line": 308,
+      "column": 9,
+      "field": "length",
+      "view": "EmitHelper[]",
+      "text": "sourceEmitHelpers.length -= helpersRemoved"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 3370,
+      "column": 9,
+      "field": "operator",
+      "view": "Mutable<PrefixUnaryExpression>",
+      "text": "node.operator = operator"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 4658,
+      "column": 9,
+      "field": "isTypeOnly",
+      "view": "Mutable<ImportEqualsDeclaration>",
+      "text": "node.isTypeOnly = isTypeOnly"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 4732,
+      "column": 9,
+      "field": "isTypeOnly",
+      "view": "Mutable<ImportClause>",
+      "text": "node.isTypeOnly = phaseModifier === SyntaxKind.TypeKeyword"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 4897,
+      "column": 9,
+      "field": "isTypeOnly",
+      "view": "Mutable<ImportSpecifier>",
+      "text": "node.isTypeOnly = isTypeOnly"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 4956,
+      "column": 9,
+      "field": "isTypeOnly",
+      "view": "Mutable<ExportDeclaration>",
+      "text": "node.isTypeOnly = isTypeOnly"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 5016,
+      "column": 9,
+      "field": "isTypeOnly",
+      "view": "Mutable<ExportSpecifier>",
+      "text": "node.isTypeOnly = isTypeOnly"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2283,
+      "column": 17,
+      "field": "length",
+      "view": "DiagnosticWithDetachedLocation[]",
+      "text": "parseDiagnostics.length = saveParseDiagnosticsLength"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8867,
+      "column": 13,
+      "field": "length",
+      "view": "DiagnosticWithDetachedLocation[]",
+      "text": "parseDiagnostics.length = saveParseDiagnosticsLength"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 364,
+      "column": 17,
+      "field": "length",
+      "view": "string[]",
+      "text": "commonPathComponents.length = i"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 371,
+      "column": 13,
+      "field": "length",
+      "view": "string[]",
+      "text": "commonPathComponents.length = sourcePathComponents.length"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 316,
+      "column": 13,
+      "field": "length",
+      "view": "number[]",
+      "text": "mappingCharCodes.length = 0"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 233,
+      "column": 17,
+      "field": "length",
+      "view": "(T | undefined)[]",
+      "text": "queue.length = definedValueCopyToIndex"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 71,
+      "column": 9,
+      "field": "length",
+      "view": "Type[]",
+      "text": "typeCatalog.length = 0"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 163,
+      "column": 9,
+      "field": "length",
+      "view": "{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; }[]",
+      "text": "eventStack.length--"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 170,
+      "column": 9,
+      "field": "length",
+      "view": "{ phase: Phase; name: string; args?: Args | undefined; time: number; separateBeginAndEnd: boolean; }[]",
+      "text": "eventStack.length = 0"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 351,
+      "column": 25,
+      "field": "length",
+      "view": "VariableDeclaration[]",
+      "text": "declarations.length = 0"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8509,
+      "column": 5,
+      "field": "kind",
+      "view": "Mutable<Node>",
+      "text": "this.kind = kind"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8523,
+      "column": 5,
+      "field": "kind",
+      "view": "Mutable<Node>",
+      "text": "this.kind = kind"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8535,
+      "column": 5,
+      "field": "kind",
+      "view": "Mutable<Node>",
+      "text": "this.kind = kind"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 773,
+      "column": 21,
+      "field": "version",
+      "view": "FilePresentOnHost | FilePresenceUnknownOnHost",
+      "text": "hostSourceFile.version = sourceFile.version"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 808,
+      "column": 17,
+      "field": "version",
+      "view": "FilePresenceUnknownOnHost",
+      "text": "(hostSourceFile as FilePresenceUnknownOnHost).version = false"
+    }
+  ]
+}
