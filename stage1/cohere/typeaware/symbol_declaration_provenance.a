@@ -1,0 +1,12 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class SymbolDeclarationFile {
+    readonly path: string; readonly declarationFile: boolean;
+    constructor(path: string, declarationFile: boolean) { this.path = path; this.declarationFile = declarationFile; }
+}
+export function symbolDeclarationProvenance(rules: Rules, index: number, symbol: number): SymbolDeclarationFile[] {
+    const frames = new Frames(rules.ask(index, `symbol-declaration-provenance\n${symbol}`)); header(frames, 'symbol-declaration-provenance');
+    const count = frames.natural(); const result: SymbolDeclarationFile[] = [];
+    for(let at = 0; at < count; at++) { const path = frames.field(); const declarationFile = frames.yes(); result.push(new SymbolDeclarationFile(path, declarationFile)); }
+    frames.end(); return result;
+}

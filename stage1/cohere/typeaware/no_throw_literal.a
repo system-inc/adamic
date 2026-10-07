@@ -1,0 +1,33 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { FifthFacts } from './wave_11_fifth_support.a';
+export class NoThrowLiteral {
+    readonly rules: Rules; readonly facts: FifthFacts;
+    constructor(rules: Rules, facts: FifthFacts) { this.rules = rules; this.facts = facts; }
+    couldBeError(index: number): boolean {
+        if(index < 0) { return false; }
+        const node = this.rules.parser.node(index);
+        if(['Identifier', 'CallExpression', 'NewExpression', 'PropertyAccessExpression', 'ElementAccessExpression', 'TaggedTemplateExpression', 'YieldExpression', 'AwaitExpression'].includes(node.kind)) { return true; }
+        if(node.kind === 'BinaryExpression') {
+            const operator = this.rules.parser.node(node.children[1] ?? -1).kind;
+            if(['EqualsToken', 'AmpersandAmpersandEqualsToken', 'AmpersandAmpersandToken', 'CommaToken'].includes(operator)) { return this.couldBeError(node.children[2] ?? -1); }
+            if(['BarBarEqualsToken', 'QuestionQuestionEqualsToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator)) { return this.couldBeError(node.children[0] ?? -1) || this.couldBeError(node.children[2] ?? -1); }
+        }
+        if(node.kind === 'ConditionalExpression') { return this.couldBeError(node.children[2] ?? -1) || this.couldBeError(node.children[4] ?? -1); }
+        return false;
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'ThrowStatement' || (this.rules.parents[index] ?? -1) < 0 || node.children.length === 0) { continue; }
+            const argument = node.children[0] ?? -1; const value = this.rules.parser.node(argument);
+            let id = ''; let message = '';
+            if(!this.couldBeError(argument)) {
+                id = 'object'; message = 'This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead.';
+            } else if(value.kind === 'Identifier' && value.text === 'undefined' && !this.facts.sourceShadow(argument)) {
+                id = 'undef'; message = 'This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead.';
+            }
+            if(id !== '') { this.rules.findings.push(new Diagnostic('no-throw-literal', id, message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), '')); }
+        }
+    }
+}

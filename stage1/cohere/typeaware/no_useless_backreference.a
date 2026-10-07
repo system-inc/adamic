@@ -1,0 +1,235 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Bindings } from './bindings.ts';
+import { Reassign } from './reassign.ts';
+import { FifthFacts } from './wave_11_fifth_support.a';
+class RegexEnclosure { readonly kind: string; readonly negative: boolean; constructor(kind: string, negative: boolean) { this.kind = kind; this.negative = negative; } }
+class RegexSpan { readonly name: string; readonly number: number; readonly start: number; end: number; readonly path: number[]; constructor(name: string, number: number, start: number, end: number, path: number[]) { this.name = name; this.number = number; this.start = start; this.end = end; this.path = path; } }
+class ConstantValue { readonly text: string; readonly string: boolean; readonly known: boolean; constructor(text = '', string = false, known = false) { this.text = text; this.string = string; this.known = known; } }
+class BackreferencePattern {
+    readonly pattern: string; readonly uv: boolean; readonly v: boolean;
+    readonly nodes: RegexEnclosure[] = []; readonly groups: RegexSpan[] = []; readonly references: RegexSpan[] = [];
+    readonly stack: number[] = []; readonly groupStack: number[] = []; readonly alternatives: number[] = [];
+    constructor(pattern: string, flags: string) { this.pattern = pattern; this.uv = flags.includes('u') || flags.includes('v'); this.v = flags.includes('v'); }
+    push(kind: string, negative = false): void { this.nodes.push(new RegexEnclosure(kind, negative)); this.stack.push(this.nodes.length - 1); }
+    openAlternative(): void { this.push('alternative'); this.alternatives.push(this.stack[this.stack.length - 1] ?? -1); }
+    closeAlternative(): void { this.alternatives.pop(); this.stack.pop(); }
+    hex(text: string): boolean { for(let at = 0; at < text.length; at++) { if(!'0123456789abcdefABCDEF'.includes(text.slice(at, at + 1))) { return false; } } return true; }
+    escape(index: number): number {
+        const text = this.pattern; if(index + 1 >= text.length) { return -1; } const next = text.slice(index + 1, index + 2);
+        if(next === 'x' && index + 3 < text.length && this.hex(text.slice(index + 2, index + 4))) { return index + 4; }
+        if(next === 'u' && index + 5 < text.length && this.hex(text.slice(index + 2, index + 6))) { return index + 6; }
+        if(['u', 'p', 'P', 'q'].includes(next) && this.uv && text.slice(index + 2, index + 3) === '{') { const close = text.indexOf('}', index + 3); if(close >= 0) { return close + 1; } }
+        if(next === 'c' && index + 2 < text.length) { return index + 3; }
+        return index + 2;
+    }
+    classEnd(index: number): number {
+        const text = this.pattern; let depth = 1;
+        for(let at = index + 1; at < text.length;) {
+            const char = text.slice(at, at + 1);
+            if(char === '\\') { at = this.escape(at); if(at < 0) { return -1; } }
+            else if(char === '[' && this.v) { depth++; at++; }
+            else if(char === ']') { depth--; at++; if(depth === 0) { return at; } }
+            else { at++; }
+        }
+        return -1;
+    }
+    run(): boolean {
+        const text = this.pattern; this.push('group'); this.openAlternative();
+        for(let at = 0; at < text.length;) {
+            const char = text.slice(at, at + 1);
+            if(char === '\\') {
+                if(at + 1 >= text.length) { return false; } const next = text.slice(at + 1, at + 2);
+                if('123456789'.includes(next)) {
+                    let end = at + 1; let value = 0;
+                    while(end < text.length && '0123456789'.includes(text.slice(end, end + 1))) { value = value * 10 + text.charCodeAt(end) - 48; end++; }
+                    this.references.push(new RegexSpan('', value, at, end, this.stack.slice())); at = end;
+                } else if(next === 'k' && text.slice(at + 2, at + 3) === '<' && text.indexOf('>', at + 3) >= 0) {
+                    const end = text.indexOf('>', at + 3) + 1; this.references.push(new RegexSpan(text.slice(at + 3, end - 1), 0, at, end, this.stack.slice())); at = end;
+                } else { at = this.escape(at); if(at < 0) { return false; } }
+            } else if(char === '[') { at = this.classEnd(at); if(at < 0) { return false; } }
+            else if(char === '(') {
+                let kind = 'capture'; let negative = false; let name = ''; let next = at + 1;
+                if(text.slice(next, next + 1) === '?') {
+                    const prefix = text.slice(next + 1, next + 2);
+                    if(prefix === ':') { kind = 'group'; next += 2; }
+                    else if(prefix === '=' || prefix === '!') { kind = 'ahead'; negative = prefix === '!'; next += 2; }
+                    else if(prefix === '<' && ['=', '!'].includes(text.slice(next + 2, next + 3))) { kind = 'behind'; negative = text.slice(next + 2, next + 3) === '!'; next += 3; }
+                    else if(prefix === '<') { const close = text.indexOf('>', next + 2); if(close < 0) { kind = 'group'; next += 2; } else { name = text.slice(next + 2, close); next = close + 1; } }
+                    else { kind = 'group'; next += 2; }
+                }
+                this.push(kind, negative);
+                if(kind === 'capture') { this.groups.push(new RegexSpan(name, 0, at, 0, this.stack.slice())); this.groupStack.push(this.groups.length - 1); } else { this.groupStack.push(-1); }
+                this.openAlternative(); at = next;
+            } else if(char === ')') {
+                if(this.groupStack.length === 0) { return false; } this.closeAlternative(); const group = this.groupStack.pop() ?? -1;
+                if(group >= 0) { const captured = this.groups[group]; if(captured !== undefined) { captured.end = at + 1; } } this.stack.pop(); at++;
+            } else if(char === '|') { this.closeAlternative(); this.openAlternative(); at++; }
+            else { at++; }
+        }
+        return this.groupStack.length === 0;
+    }
+    wellFormed(): boolean {
+        const named = this.groups.some((group) => group.name !== '');
+        for(const reference of this.references) {
+            if(reference.name !== '') { if((named || this.uv) && !this.groups.some((group) => group.name === reference.name)) { return false; } }
+            else if(this.uv && reference.number > this.groups.length) { return false; }
+        }
+        if(this.uv) {
+            const text = this.pattern;
+            for(let at = 0; at < text.length;) {
+                const char = text.slice(at, at + 1);
+                if(char === '\\') { at = this.escape(at); if(at < 0) { return false; } }
+                else if(char === '[') { at = this.classEnd(at); if(at < 0) { return false; } }
+                else {
+                    if(char === '{') {
+                        let next = at + 1; const start = next;
+                        while(next < text.length && '0123456789'.includes(text.slice(next, next + 1))) { next++; }
+                        if(next === start) { return false; }
+                        if(text.slice(next, next + 1) === ',') { next++; while(next < text.length && '0123456789'.includes(text.slice(next, next + 1))) { next++; } }
+                        if(text.slice(next, next + 1) !== '}') { return false; }
+                    }
+                    at++;
+                }
+            }
+        }
+        return true;
+    }
+    classify(reference: RegexSpan, group: RegexSpan): string {
+        if(group.start <= reference.start && reference.end <= group.end) { return 'nested'; }
+        let common = 1; while(common < reference.path.length && common < group.path.length && reference.path[common] === group.path[common]) { common++; }
+        const cut = group.path.slice(common); let backwards = false;
+        for(let at = common - 1; at >= 0; at--) { const node = this.nodes[reference.path[at] ?? -1]; if(node !== undefined && ['ahead', 'behind'].includes(node.kind)) { backwards = node.kind === 'behind'; break; } }
+        const first = this.nodes[cut[0] ?? -1]; if(first !== undefined && first.kind === 'alternative') { return 'disjunctive'; }
+        if(!backwards && reference.end <= group.start) { return 'forward'; }
+        if(backwards && group.end <= reference.start) { return 'backward'; }
+        for(const index of cut) { const node = this.nodes[index]; if(node !== undefined && node.negative && ['ahead', 'behind'].includes(node.kind)) { return 'intoNegativeLookaround'; } }
+        return '';
+    }
+}
+export class NoUselessBackreference {
+    readonly rules: Rules; readonly facts: FifthFacts; readonly bindings: Bindings; readonly writes: Reassign;
+    readonly references = new Map<string, number[]>(); readonly following: number[] = []; readonly calls: number[] = []; readonly empty: number[] = [];
+    constructor(rules: Rules, facts: FifthFacts, bindings: Bindings, writes: Reassign) { this.rules = rules; this.facts = facts; this.bindings = bindings; this.writes = writes; }
+    constant(index: number, scope = true, following: number[] = []): ConstantValue {
+        if(index < 0) { return new ConstantValue(); } index = this.rules.skip(index); const node = this.rules.parser.node(index);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) { return new ConstantValue(node.text, true, true); }
+        if(node.kind === 'NumericLiteral') { return new ConstantValue(node.text, false, true); }
+        if(['TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(node.kind)) { return new ConstantValue(node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : 'null', false, true); }
+        if(scope && node.kind === 'RegularExpressionLiteral') { return new ConstantValue(node.text, true, true); }
+        if(scope && node.kind === 'Identifier') {
+            const symbol = this.facts.symbol(index, true); if(symbol === 0 || following.includes(symbol)) { return new ConstantValue(); }
+            const declarations = this.bindings.list(index, 'binding-declarations', false); if(declarations.length !== 1) { return new ConstantValue(); }
+            const declaration = declarations[0] ?? -1; const declared = this.rules.parser.node(declaration); if(declared.kind !== 'VariableDeclaration') { return new ConstantValue(); }
+            const initializer = this.bindings.shape.initializer(declaration); const parent = this.rules.parents[declaration] ?? -1;
+            if(initializer < 0 || parent < 0 || this.rules.parser.node(parent).kind !== 'VariableDeclarationList') { return new ConstantValue(); }
+            const list = this.rules.parser.node(parent);
+            if(!['2', '6'].includes(list.semantic)) {
+                for(const reference of this.references.get(node.text) ?? this.empty) { if(this.writes.writes(reference) && this.facts.symbol(reference, true) === symbol) { return new ConstantValue(); } }
+            }
+            return this.constant(initializer, true, [...following, symbol]);
+        }
+        if(node.kind === 'BinaryExpression' && this.rules.parser.node(node.children[1] ?? -1).kind === 'PlusToken') {
+            const left = this.constant(node.children[0] ?? -1, scope, following); const right = this.constant(node.children[2] ?? -1, scope, following);
+            return left.known && right.known && (left.string || right.string) ? new ConstantValue(left.text + right.text, true, true) : new ConstantValue();
+        }
+        if(node.kind === 'TemplateExpression') {
+            let text = this.rules.parser.node(node.children[0] ?? -1).text;
+            for(const spanIndex of node.children.slice(1)) { const span = this.rules.parser.node(spanIndex); const value = this.constant(span.children[0] ?? -1, scope, following); if(!value.known) { return new ConstantValue(); } text += value.text + this.rules.parser.node(span.children[1] ?? -1).text; }
+            return new ConstantValue(text, true, true);
+        }
+        return new ConstantValue();
+    }
+    valueReference(index: number): boolean {
+        const parent = this.rules.parents[index] ?? -1; if(parent < 0) { return false; } const node = this.rules.parser.node(parent);
+        if(['TypeReference', 'TypeQuery', 'QualifiedName', 'LabeledStatement', 'BreakStatement', 'ContinueStatement', 'ImportSpecifier', 'JsxAttribute'].includes(node.kind)) { return false; }
+        if(node.kind === 'ShorthandPropertyAssignment') { return true; }
+        return !this.bindings.declaring(index);
+    }
+    target(index: number, level: number): void {
+        if(index < 0) { return; } index = this.rules.skip(index); const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            const symbol = this.facts.symbol(index, true); if(symbol === 0 || this.following.includes(symbol)) { return; }
+            this.following.push(symbol);
+            for(const reference of this.references.get(node.text) ?? this.empty) { if(this.facts.symbol(reference, true) === symbol) { this.follow(reference, level); } }
+            this.following.pop();
+        } else if(node.kind === 'ObjectBindingPattern' && level === 0) {
+            for(const elementIndex of node.children) {
+                const element = this.rules.parser.node(elementIndex); if(element.children.some((child) => this.rules.parser.node(child).kind === 'DotDotDotToken')) { continue; }
+                const name = this.bindings.shape.name(elementIndex); const names = element.children.filter((child) => child !== this.bindings.shape.initializer(elementIndex)); const key = names.length > 1 ? names[0] ?? -1 : name;
+                if(this.key(key) === 'RegExp') { this.target(name, 1); }
+            }
+        } else if(node.kind === 'ObjectLiteralExpression' && level === 0) {
+            for(const memberIndex of node.children) { const member = this.rules.parser.node(memberIndex); if(['PropertyAssignment', 'ShorthandPropertyAssignment'].includes(member.kind) && this.key(member.children[0] ?? -1) === 'RegExp') { this.target(member.kind === 'PropertyAssignment' ? member.children[member.children.length - 1] ?? -1 : member.children[0] ?? -1, 1); } }
+        } else if(node.kind === 'BinaryExpression' && this.rules.parser.node(node.children[1] ?? -1).kind === 'EqualsToken') { this.target(node.children[0] ?? -1, level); }
+    }
+    key(index: number): string {
+        if(index < 0) { return ''; } const node = this.rules.parser.node(index);
+        if(['Identifier', 'StringLiteral', 'NumericLiteral'].includes(node.kind)) { return node.text; }
+        return node.kind === 'ComputedPropertyName' ? this.constant(node.children[0] ?? -1, false).text : '';
+    }
+    follow(index: number, level: number): void {
+        let current = index;
+        while(current >= 0) {
+            const parent = this.rules.parents[current] ?? -1; if(parent < 0) { return; } const node = this.rules.parser.node(parent);
+            if(['ParenthesizedExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'NonNullExpression', 'ExpressionWithTypeArguments'].includes(node.kind) || (node.kind === 'ConditionalExpression' && node.children[0] !== current)) { current = parent; continue; }
+            if(node.kind === 'BinaryExpression') {
+                const operator = this.rules.parser.node(node.children[1] ?? -1).kind;
+                if(['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken'].includes(operator) || (operator === 'CommaToken' && node.children[2] === current)) { current = parent; continue; }
+                if(node.children[2] === current && ['EqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator)) { this.target(node.children[0] ?? -1, level); current = parent; continue; }
+                return;
+            }
+            if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind) && node.children[0] === current && level === 0) {
+                const keyIndex = node.children[node.children.length - 1] ?? -1;
+                const name = node.kind === 'PropertyAccessExpression' ? this.rules.parser.node(keyIndex).text : this.constant(keyIndex, false).text;
+                if(name === 'RegExp') { this.follow(parent, 1); } return;
+            }
+            if(['CallExpression', 'NewExpression'].includes(node.kind) && node.children[0] === current && level === 1) { this.calls.push(parent); return; }
+            if(['VariableDeclaration', 'Parameter', 'BindingElement'].includes(node.kind) && this.bindings.shape.initializer(parent) === current) { this.target(this.bindings.shape.name(parent), level); }
+            if(node.kind === 'ShorthandPropertyAssignment' && node.children[node.children.length - 1] === current && node.children.length > 1) { this.target(node.children[0] ?? -1, level); }
+            return;
+        }
+    }
+    track(): void {
+        for(const name of ['RegExp', 'global', 'globalThis', 'self', 'window']) {
+            const refs = (this.references.get(name) ?? this.empty).filter((index) => !this.facts.sourceShadow(index, true));
+            if(refs.some((index) => this.writes.writes(index))) { continue; }
+            for(const index of refs) { this.follow(index, name === 'RegExp' ? 1 : 0); }
+        }
+    }
+    pattern(index: number, pattern: string, flags: string): void {
+        const scanned = new BackreferencePattern(pattern, flags); if(!scanned.run() || !scanned.wellFormed()) { return; }
+        for(const reference of scanned.references) {
+            const groups = reference.name === '' ? scanned.groups.filter((group, at) => reference.number === at + 1) : scanned.groups.filter((group) => group.name === reference.name);
+            if(groups.length === 0) { continue; }
+            const ids = groups.map((group) => scanned.classify(reference, group)); if(ids.includes('')) { continue; }
+            const same = ids.map((id, at) => id === 'disjunctive' ? -1 : at).filter((at) => at >= 0); const picked = same.length > 0 ? same : ids.map((id, at) => at);
+            const first = picked[0] ?? -1; const id = ids[first] ?? ''; const group = groups[first]; if(group === undefined) { continue; }
+            let reason = '';
+            if(id === 'nested') { reason = 'encloses the reference and so has captured nothing yet when it is reached'; }
+            if(id === 'disjunctive') { reason = 'sits in a different branch of the same disjunction, and only one branch ever runs'; }
+            if(id === 'forward') { reason = 'appears later in the pattern, and matching runs left to right'; }
+            if(id === 'backward') { reason = 'appears earlier in a lookbehind, which matches right to left'; }
+            if(id === 'intoNegativeLookaround') { reason = 'sits in a negative lookaround, so it only runs on a path that then fails'; }
+            const others = picked.length - 1;
+            const also = others === 1 ? ' (and so does one other group of that name)' : others > 1 ? ` (and so do ${others} other groups of that name)` : '';
+            const message = `The backreference ${pattern.slice(reference.start, reference.end)} can never match, because ${pattern.slice(group.start, group.end)} ${reason}${also}. It matches the empty string instead of failing, so the pattern quietly matches more than it looks like it does.`;
+            const node = this.rules.parser.node(index);
+            this.rules.findings.push(new Diagnostic('no-useless-backreference', id, message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index); if((this.rules.parents[index] ?? -1) < 0) { continue; }
+            if(node.kind === 'Identifier' && this.valueReference(index)) { const fresh: number[] = []; const refs = this.references.get(node.text) ?? fresh; refs.push(index); this.references.set(node.text, refs); }
+            if(node.kind === 'RegularExpressionLiteral') { const end = node.text.lastIndexOf('/'); const pattern = node.text.slice(1, end); if(pattern !== '') { this.pattern(index, pattern, node.text.slice(end + 1)); } }
+        }
+        if(!this.rules.scanner.text.includes('RegExp')) { return; } this.track();
+        for(const index of this.calls) {
+            const node = this.rules.parser.node(index); if(node.list <= 0) { continue; } const first = node.children.length - node.list;
+            const pattern = this.constant(node.children[first] ?? -1); if(!pattern.known) { continue; }
+            const flags = node.list > 1 ? this.constant(node.children[first + 1] ?? -1).text : '';
+            this.pattern(index, pattern.text, flags);
+        }
+    }
+}

@@ -1,0 +1,21 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { symbolDeclarationProvenance } from './symbol_declaration_provenance.a';
+import { declarationLineage } from './declaration_lineage.a';
+export class FifthFacts {
+    readonly rules: Rules; readonly raw = new Map<number, number>(); readonly reads = new Map<number, number>();
+    constructor(rules: Rules) { this.rules = rules; }
+    symbol(index: number, read = false): number {
+        if(!this.raw.has(index)) {
+            const frames = new Frames(this.rules.ask(index, 'symbol-identities')); header(frames, 'symbol-identities');
+            const raw = frames.natural(); frames.natural(); frames.yes(); const local = frames.natural(); const shorthand = frames.natural(); frames.end();
+            this.raw.set(index, raw); this.reads.set(index, shorthand !== 0 ? shorthand : local !== 0 ? local : raw);
+        }
+        return (read ? this.reads : this.raw).get(index) ?? 0;
+    }
+    sourceShadow(index: number, read = false): boolean {
+        if(read) { return symbolDeclarationProvenance(this.rules, index, this.symbol(index, true)).some((declaration) => !declaration.declarationFile); }
+        return declarationLineage(this.rules, index).some((chain) => chain.nodes.some((node, at) => at === 0 && !node.declarationFile));
+    }
+    declared(index: number): boolean { return declarationLineage(this.rules, index).length > 0; }
+}
