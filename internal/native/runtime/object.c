@@ -44,6 +44,7 @@ void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape
 	}
 	uint64_t packed = index <= UINT16_MAX ? pointer | ((uint64_t)index << 48) : 0;
 	__atomic_store_n(&cache->packed, packed, __ATOMIC_RELAXED);
+	ADAMIC_TSAN_PAUSE(adamic_tsan_cache_publication);
 }
 
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {

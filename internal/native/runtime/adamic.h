@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <stdatomic.h>
 #include "count.h"
+#include "tsan_test.h"
 
 #include <math.h>
 
@@ -68,7 +69,7 @@ static inline void *adamic_retain(void *value) {
 	adamic_heap *heap = value;
 	if (heap != NULL && !adamic_is_shared(heap)) {
 		size_t count = heap->references;
-		if (count > 0) { heap->references = count + 1; return value; }
+		if (count > 0) { ADAMIC_TSAN_PAUSE(adamic_tsan_plain_count); heap->references = count + 1; return value; }
 	}
 	return adamic_retain_slow(value);
 }

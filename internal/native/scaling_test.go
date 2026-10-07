@@ -65,7 +65,11 @@ func scalingSnapshot(t *testing.T, harness, file string, rewrite func(string) st
 	if err := os.WriteFile(path, source, 0600); err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(directory, "harness")
+	name := "harness"
+	if options.ThreadSanitize {
+		name += "-tsan"
+	}
+	binary := filepath.Join(directory, name)
 	arguments := append(Flags(options), "-I", filepath.Dir(library), path, "-o", binary)
 	arguments = append(arguments, RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")

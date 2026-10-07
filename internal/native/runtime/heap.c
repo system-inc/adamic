@@ -203,6 +203,7 @@ static void give(void *slot, uint32_t number) {
 		give_local(slot, each);
 		return;
 	}
+	ADAMIC_TSAN_PAUSE(adamic_tsan_remote_free);
 	remote_slot *node = malloc(sizeof *node);
 	if (node == NULL) { adamic_panic("out of memory", 13); }
 	node->slot = slot;
@@ -260,7 +261,7 @@ void *adamic_retain_slow(void *value) {
 		// Clang's native intptr_t conversion makes shared counts negative. One test covers both
 		// sharing and zero, so the ordinary positive-count path keeps one branch and plain stores.
 		if ((intptr_t)count > 0) { heap->references = count + 1; }
-		else if (count != 0 && count != ADAMIC_SHARED) { __atomic_fetch_add(&heap->references, 1, __ATOMIC_RELAXED); }
+		else if (count != 0 && count != ADAMIC_SHARED) { ADAMIC_TSAN_PAUSE(adamic_tsan_shared_count); __atomic_fetch_add(&heap->references, 1, __ATOMIC_RELAXED); }
 	}
 	return value;
 }

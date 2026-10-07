@@ -8,7 +8,8 @@ report, not merely crash or time out.
 Claimed files: internal/native/parallel_test.go, internal/native/scaling_test.go,
 new internal/native race-check test helpers, internal/native/testdata/parallel/*.c,
 internal/native/native.go (TSan-only flag), internal/native/runtime/adamic.h,
-internal/native/runtime/heap.c, internal/native/runtime/parallel.c, new runtime
+internal/native/runtime/heap.c, internal/native/runtime/parallel.c,
+internal/native/runtime/object.c (cache publication hook), new runtime
 TSan hook files, and internal/oracle/parallel_test.go. No lowering or JavaScript
 changes. Release and ASan builds must contain no hook code; release objects are
 compared byte for byte with the parent.

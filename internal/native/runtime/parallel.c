@@ -4,6 +4,9 @@
 #define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include "parallel.h"
+#ifdef ADAMIC_TSAN_TEST
+#include <time.h>
+#endif
 #include <errno.h>
 #include <pthread.h>
 #include <signal.h>
@@ -54,6 +57,26 @@ static size_t thread_count;
 static size_t created;
 static bool stopping;
 static _Thread_local size_t worker_index;
+
+#ifdef ADAMIC_TSAN_TEST
+// Sleep changes scheduling, never happens-before. Bounded per-thread budgets
+// keep the million-element fixture cheap. There is no hook in other builds.
+void adamic_tsan_pause(enum adamic_tsan_point point) {
+	static _Thread_local bool initialized, enabled;
+	static _Thread_local unsigned visits[adamic_tsan_points];
+	if (!initialized) {
+		const char *option = getenv("ADAMIC_TSAN_PERTURB");
+		enabled = option != NULL && strcmp(option, "1") == 0;
+		initialized = true;
+	}
+	if (!enabled || visits[point] >= 64) { return; }
+	visits[point]++;
+	int saved = errno;
+	struct timespec delay = {0, 100000};
+	nanosleep(&delay, NULL);
+	errno = saved;
+}
+#endif
 
 // Linux affinity and cgroup v2/v1 quotas cap online CPUs; macOS uses online CPUs.
 // An explicit override always wins.
@@ -200,6 +223,7 @@ static void *worker_main(void *given) {
 		while (!stopping && !claim(&scope, &from, &end)) { pthread_cond_wait(&changed, &scheduler); }
 		if (stopping) { break; }
 		pthread_mutex_unlock(&scheduler);
+		ADAMIC_TSAN_PAUSE(adamic_tsan_claim);
 		execute_range(scope, from, end);
 		pthread_mutex_lock(&scheduler);
 	}
@@ -251,6 +275,7 @@ adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, boo
 	pthread_once(&started, start);
 	adamic_share(items);
 	adamic_share(work);
+	ADAMIC_TSAN_PAUSE(adamic_tsan_publication);
 	adamic_array *results = adamic_array_new(items->length, references);
 	results->length = items->length;
 	if (items->length != 0) { memset(results->elements, 0, items->length * sizeof *results->elements); }
@@ -279,6 +304,7 @@ adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, boo
 		size_t from, end;
 		if (!claim(&next, &from, &end)) { pthread_cond_wait(&changed, &scheduler); continue; }
 		pthread_mutex_unlock(&scheduler);
+		ADAMIC_TSAN_PAUSE(adamic_tsan_claim);
 		execute_range(next, from, end);
 		pthread_mutex_lock(&scheduler);
 	}
