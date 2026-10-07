@@ -84,7 +84,7 @@ The zero corpus counts are backed by positive and negative controls, not treated
 as sufficient evidence alone. Every comparison preserves duplicate findings,
 messages, byte spans, fixes and complete suggestions. DOM controls agree too.
 Controls include shadowing, nested functions, shorthand reads, optional access,
-callback identity, TypeScript assertions, Unicode/CRLF offsets, alias cycles,
+callback identity, TypeScript assertions, Unicode/CRLF offsets, alias propagation,
 comments, escapes, flags and invalid patterns. A merged String namespace control
 pins Go's first-declaration origin test for String.raw; Promise uses all origins.
 
