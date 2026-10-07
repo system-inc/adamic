@@ -1,0 +1,10 @@
+enum SyntaxKind { First, Last }
+function describe(box: { readonly value: SyntaxKind }): number {
+    if (box.value === SyntaxKind.First) { return 10; }
+    if (box.value === SyntaxKind.Last) { return 20; }
+    const unreachable: never = box.value;
+    return 99;
+}
+function other(): number { return 42; }
+console.log('before');
+console.log(`${describe({value: other()})}`);

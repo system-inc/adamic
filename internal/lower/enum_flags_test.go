@@ -8,7 +8,7 @@ import (
 
 const flagDeclaration = "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, High = 1 << 30, Both = A | B } "
 
-func TestFlagEnumsRefused(t *testing.T) {
+func TestFlagEnumsOpen(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
 		{"complement", flagDeclaration + "const value: Flags = ~Flags.A;", "enum-flags"},
@@ -37,9 +37,13 @@ func TestFlagEnumsRefused(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, probe.source)
-			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.reason) || refused.Fix == "" {
-				t.Fatalf("got %v, want Refused with %q and fix", err, probe.reason)
+			if probe.name == "narrowed_member" || probe.name == "member_slot" {
+				var refused *Refused
+				if !errors.As(err, &refused) {
+					t.Fatalf("want literal promise refusal, got %v", err)
+				}
+			} else if err != nil {
+				t.Fatal(err)
 			}
 		})
 	}
@@ -123,9 +127,13 @@ func TestFlagEnumAliasBoundaries(t *testing.T) {
 		flagDeclaration + "interface Node { flags: Flags } type Mutable<T> = { -readonly [K in keyof T]: T[K] }; function set<T extends Node>(node: T, flags: Flags): void { (node as Mutable<T>).flags = flags; }",
 	} {
 		_, err := lowerSource(t, source)
-		var refused *Refused
-		if !errors.As(err, &refused) {
-			t.Fatalf("want Refused, got %v for %s", err, source)
+		if strings.Contains(source, "Mutable<T>") || strings.Contains(source, "flags: Flags.A") {
+			var refused *Refused
+			if !errors.As(err, &refused) {
+				t.Fatalf("want Refused, got %v for %s", err, source)
+			}
+		} else if err != nil {
+			t.Fatal(err)
 		}
 	}
 }

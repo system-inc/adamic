@@ -1,0 +1,264 @@
+[
+  {
+    "file": "01_token_range.a",
+    "sha256": "95ee169be79459b4b7a8d8eecf57f430497c48ff24d3c736dbbf7aad59867ce3",
+    "node": {
+      "stdout": "0: true\n101: true\n166: true\n167: false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "",
+    "native": {
+      "stdout": "0: true\n101: true\n166: true\n167: false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "javascript": {
+      "stdout": "0: true\n101: true\n166: true\n167: false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true,
+    "outcome": "Compiles",
+    "leaks": "clean"
+  },
+  {
+    "file": "02_node_range.a",
+    "sha256": "cd09a69d0c0d5d8568730489599cd8b41104cd5680b0ea36e90fdc2805bede49",
+    "node": {
+      "stdout": "166: false\n167: true\n308: true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "",
+    "native": {
+      "stdout": "166: false\n167: true\n308: true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "javascript": {
+      "stdout": "166: false\n167: true\n308: true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true,
+    "outcome": "Compiles",
+    "leaks": "clean"
+  },
+  {
+    "file": "03_jsdoc_range.a",
+    "sha256": "06390fb262cb0228cbb7dd040ec5e2d6b1ced09300bdaf992534a18969a0c687",
+    "node": {
+      "stdout": "310: true\n352: true\n308: false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "",
+    "native": {
+      "stdout": "310: true\n352: true\n308: false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "javascript": {
+      "stdout": "310: true\n352: true\n308: false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true,
+    "outcome": "Compiles",
+    "leaks": "clean"
+  },
+  {
+    "file": "04_parse_tree_mask.a",
+    "sha256": "ac0c1d5ce3be703093fb7773a5c1fb016aab0f922b4ff2e254e6eb4fb4bd0a4e",
+    "node": {
+      "stdout": "0: true\n3: true\n65552: false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "",
+    "native": {
+      "stdout": "0: true\n3: true\n65552: false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "javascript": {
+      "stdout": "0: true\n3: true\n65552: false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true,
+    "outcome": "Compiles",
+    "leaks": "clean"
+  },
+  {
+    "file": "05_local_export_flags.a",
+    "sha256": "62eb8aad6d59f392a69446423f2bd10692f55ccb99eebc258f7b011087689d8a",
+    "node": {
+      "stdout": "16\n1049104\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "",
+    "native": {
+      "stdout": "16\n1049104\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "javascript": {
+      "stdout": "16\n1049104\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true,
+    "outcome": "Compiles",
+    "leaks": "clean"
+  },
+  {
+    "file": "06_set_node_flags.a",
+    "sha256": "e39964829079af9470b0224e44f0fdefcdbfc2beb5a9affc5416c3d3a2a040c0",
+    "node": {
+      "stdout": "1\n3\nundefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/enums/06_set_node_flags.a:79:10: Adamic 0.1 refuses a value of type T seen as Mutable<T>, which can write T[\"flags\"] where NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "outcome": "Refused"
+  },
+  {
+    "file": "07_regex_array_map.a",
+    "sha256": "e9a156cfc4313cf3f8877ddedd752be1ec1478b979377f7a6afc3c45d272bb30",
+    "node": {
+      "stdout": "1: 100\n64: 118\n128: 121\n96: undefined\n100: 1\n117: 32\n121: 128\n97: undefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "",
+    "native": {
+      "stdout": "",
+      "stderr": "adamic: panic: index 1 is outside an array of length 0\n",
+      "exit": 70
+    },
+    "javascript": {
+      "stdout": "",
+      "stderr": "adamic: panic: index 1 is outside an array of length 0\n",
+      "exit": 70
+    },
+    "matches_node": false,
+    "outcome": "CheckedStop"
+  },
+  {
+    "file": "08_debug_format_enum.a",
+    "sha256": "4cce50c107a9b03008daed694c2d72cfc4ea81a09896b555081f3a3f4a19fa51",
+    "node": {
+      "stdout": "Warning\nError\n99\nError|Suggestion|Message\nError\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'.\n",
+    "outcome": "Checker"
+  },
+  {
+    "file": "09_symbol_exclusion_mask.a",
+    "sha256": "039d13b8706f32b9bb8403c0b4f3e11f2fde06784b446ca0d497f3dbdb67fe25",
+    "node": {
+      "stdout": "110735\n110735\n-33554433\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "",
+    "native": {
+      "stdout": "110735\n110735\n-33554433\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "javascript": {
+      "stdout": "110735\n110735\n-33554433\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true,
+    "outcome": "Compiles",
+    "leaks": "clean"
+  },
+  {
+    "file": "10_string_enum.a",
+    "sha256": "4f3faaf0f5c456260a5072ae4c8bb07a3832e724f65a10101154a0094e823da4",
+    "node": {
+      "stdout": "index.ts: .d.ts\nindex.mts: .d.mts\nindex.cjs: .d.cts\ndata.json: .d.json.ts\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "",
+    "native": {
+      "stdout": "index.ts: .d.ts\nindex.mts: .d.mts\nindex.cjs: .d.cts\ndata.json: .d.json.ts\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "javascript": {
+      "stdout": "index.ts: .d.ts\nindex.mts: .d.mts\nindex.cjs: .d.cts\ndata.json: .d.json.ts\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true,
+    "outcome": "Compiles",
+    "leaks": "clean"
+  },
+  {
+    "file": "11_format_syntax_kind.a",
+    "sha256": "a5aadf7b7062a9731d838082cf380896d5cbd3e76b96bb5c8ce6568e0fbde5fa",
+    "node": {
+      "stdout": "Unknown\nIdentifier\nQualifiedName\nUnknown\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'.\n",
+    "outcome": "Checker"
+  },
+  {
+    "file": "12_diagnostic_reverse_lookup.a",
+    "sha256": "849a662bba7684b479e5f0b9e22fafef016351b3bb1e19d9b934e28e83904914",
+    "node": {
+      "stdout": "warning\nWarning\nerror\nError\nsuggestion\nSuggestion\nmessage\nMessage\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "",
+    "native": {
+      "stdout": "warning\nWarning\nerror\nError\nsuggestion\nSuggestion\nmessage\nMessage\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "javascript": {
+      "stdout": "warning\nWarning\nerror\nError\nsuggestion\nSuggestion\nmessage\nMessage\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true,
+    "outcome": "Compiles",
+    "leaks": "clean"
+  },
+  {
+    "file": "13_regex_map_keys.a",
+    "sha256": "38859c6e0ee063dc651d084b791eec975b331ca124673b8868a18b3acc25fc2e",
+    "node": {
+      "stdout": "6\n2\nundefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "diagnostic": "",
+    "native": {
+      "stdout": "6\n2\nundefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "javascript": {
+      "stdout": "6\n2\nundefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true,
+    "outcome": "Compiles",
+    "leaks": "clean"
+  }
+]

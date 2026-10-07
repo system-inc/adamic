@@ -977,6 +977,21 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		return nil, err
 	}
 	lowered := ir.Switch{Value: value}
+	prefix := []ir.Statement{}
+	identity := l.enumIdentity(l.checker.GetTypeAtLocation(statement.Expression))
+	checkedDefault := l.numericEnum(identity) && l.enumSwitchCovered(node) && !l.enumDefaultUnreachable(node)
+	var neverCheck ir.Statement
+	if checkedDefault {
+		// The unmatched edge is never to the checker, including an implicit default. Hold the
+		// scrutinee once so the check names the original value without repeating its effects.
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "enum_switch_value", Type: value.Type(), Function: l.functionIndex})
+		prefix = append(prefix, ir.Declare{Local: local, Value: value})
+		value = ir.Read{Local: local, Of: value.Type()}
+		lowered.Value = value
+		neverCheck = ir.Evaluate{Value: l.enumNeverCheck(statement.Expression, value, identity)}
+		lowered.Default = []ir.Statement{neverCheck}
+	}
 	tests := []ir.Expression{}
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
 		for _, inner := range clause.AsCaseOrDefaultClause().Statements.Nodes {
@@ -1017,13 +1032,29 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		if isDefault {
 			// Cases grouped with default run its body, which is what not matching does anyway.
+			if checkedDefault {
+				check := neverCheck
+				if len(tests) > 0 {
+					var matched ir.Expression
+					for _, test := range tests {
+						equal := ir.Binary{Operator: ir.Equal, Left: value, Right: test}
+						if matched == nil {
+							matched = equal
+						} else {
+							matched = ir.Binary{Operator: ir.Or, Left: matched, Right: equal}
+						}
+					}
+					check = ir.If{Condition: matched, Else: []ir.Statement{neverCheck}}
+				}
+				body = append([]ir.Statement{check}, body...)
+			}
 			lowered.Default = body
 		} else {
 			lowered.Cases = append(lowered.Cases, ir.Case{Tests: tests, Body: body})
 		}
 		tests = []ir.Expression{}
 	}
-	return []ir.Statement{lowered}, nil
+	return append(prefix, lowered), nil
 }
 
 // arrayMethod lowers array.push(value) and array.join(separator).
@@ -1465,7 +1496,11 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	if slotless(of) {
 		return nil, l.notYet(property, "a field from a "+typeName(of)+" variable")
 	}
-	return ir.Read{Local: local, Of: of, Checked: l.checked(local)}, nil
+	read := ir.Read{Local: local, Of: of, Checked: l.checked(local)}
+	if identity := l.enumNeverIdentity(property.Name(), map[*ast.Node]bool{}); identity != nil {
+		return l.enumNeverCheck(property.Name(), read, identity), nil
+	}
+	return read, nil
 }
 
 // stringMethods are the string methods stringCall lowers: the types of their arguments, and how many

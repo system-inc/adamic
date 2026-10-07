@@ -136,7 +136,9 @@ func TestEnumCleanupMutant(t *testing.T) {
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	// Dead compiler temporaries may still resemble roots in registers or the returned main stack.
+	// Global roots remain enabled, so the emitted global clearing is still required.
+	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "LSAN_OPTIONS=use_stacks=0:use_registers=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 	if !strings.Contains(string(result.stderr), "LeakSanitizer: detected memory leaks") {
 		t.Fatalf("enum cleanup mutant not caught: exit %d, stderr %s", result.exitCode, result.stderr)
 	}

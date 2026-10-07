@@ -13,7 +13,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"01_token_range.a", "02_node_range.a", "03_jsdoc_range.a", "04_parse_tree_mask.a", "10_string_enum.a", "12_diagnostic_reverse_lookup.a", "13_regex_map_keys.a"} {
+	for _, name := range []string{"01_token_range.a", "02_node_range.a", "03_jsdoc_range.a", "04_parse_tree_mask.a", "05_local_export_flags.a", "09_symbol_exclusion_mask.a", "10_string_enum.a", "12_diagnostic_reverse_lookup.a", "13_regex_map_keys.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -25,6 +25,12 @@ func init() {
 		lowers  bool
 		checked bool
 	}{"internal/oracle/testdata/enums_names.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{
+		"stage3/fixtures/enums/07_regex_array_map.a", true, true,
+	})
 }
 
 // Keep the original upstream contracts intact. These boundaries require source adaptation,
@@ -35,10 +41,7 @@ func TestStage3EnumBoundaries(t *testing.T) {
 		name, rule string
 		checker    bool
 	}{
-		{"05_local_export_flags.a", "enum-members", false},
 		{"06_set_node_flags.a", "invariant-mutable", false},
-		{"07_regex_array_map.a", "invariant-mutable", false},
-		{"09_symbol_exclusion_mask.a", "enum-members", false},
 		{"08_debug_format_enum.a", "TS2532", true},
 		{"11_format_syntax_kind.a", "TS2532", true},
 	} {
@@ -59,6 +62,28 @@ func TestStage3EnumBoundaries(t *testing.T) {
 				t.Fatalf("want boundary %s, got %v", probe.rule, err)
 			}
 		})
+	}
+}
+
+func TestStage3EnumSparseArrayBoundary(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enums/07_regex_array_map.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := run{stderr: []byte("adamic: panic: index 1 is outside an array of length 0\n"), exitCode: 70}
+	native, _ := natively(t, program)
+	for name, result := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, result); difference != "" {
+			t.Errorf("%s: %s; %+v", name, difference, result)
+		}
+	}
+	if node := onNode(t, path); node.exitCode != 0 {
+		t.Fatalf("Node must grow its sparse array: %+v", node)
 	}
 }
 

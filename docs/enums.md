@@ -1,5 +1,9 @@
 # Enums in Adamic 0.2
 
+The current decision is [Numeric enums are open](#numeric-enums-are-open).
+It supersedes the numeric closed-domain and flag-domain decisions recorded below.
+The earlier decisions and their verification records are retained as history.
+
 Decision for Kirk, October 6, 2026: admit constant-valued numeric and string
 enums, const enums, and enum member types. Keep enum values a closed union of
 that declaration's members. Disable `erasableSyntaxOnly` in both
@@ -483,3 +487,215 @@ go vet ./... > /tmp/stage3-enums-vet-restored.log 2>&1
 gofmt -l cmd internal > /tmp/stage3-enums-format-restored.log
 git diff --check > /tmp/stage3-enums-diff-restored.log
 ```
+
+## Numeric enums are open
+
+Ruling by @system_adamic, October 7, 2026: a numeric enum is a number with named
+constants. Any value typed as `number` can be assigned to it. The numeric closed
+union, flag subset domain, non-negative bound and numeric declaration identity
+restrictions are removed. String enums remain closed. A heterogeneous enum is
+not an entirely numeric enum and retains the preceding representation limits.
+TypeScript's checker still decides whether the source itself is well typed.
+
+Arithmetic, ranges, casts from numbers, increments and compound updates work.
+Flag operators retain JavaScript's ToInt32 behavior. OR, XOR, AND, complement
+and shifts can produce signed numbers, and their results can be stored in a
+numeric enum slot. `1 << 31` is admitted. Combining members from two numeric
+enums produces a number that can be stored in either enum when the checker
+admits the assignment. These accepted programs supersede the earlier refusal
+examples:
+
+```ts
+enum SyntaxKind { First, Last }
+enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Sign = 1 << 31 }
+function kind(value: number): SyntaxKind { return value as SyntaxKind; }
+let value: SyntaxKind = kind(42);
+value++;
+value += 7;
+value <<= 1;
+const inRange = value >= SyntaxKind.First && value <= SyntaxKind.Last;
+const combined: Flags = Flags.A | Flags.B;
+const masked: Flags = combined & ~Flags.A;
+const complement: Flags = ~Flags.A;
+```
+
+Reverse numeric lookup remains `string | undefined`: an unnamed number or
+combination has no reverse property. Enum objects themselves retain exact shape
+and immutable named constants. Structural copies cannot acquire `typeof E`.
+`Object.assign(E, { A: value })` is refused with `adamic/enum-object`; copy into
+an ordinary object before writing it. This preserves reverse mapping and the
+member-origin proof described below. Ordinary enum name enumeration still works
+through `Object.keys` and `for...in`; Debug's enumeration is not treated as a
+numeric reverse lookup.
+
+### Never is checked
+
+The checker can narrow a numeric enum to `never` after excluding its declared
+members, even though another number can exist at runtime. Each such read gets a
+non-returning check in ordinary typed IR. Native and generated JavaScript both
+exit 70 with, for example:
+
+```text
+adamic: panic: unreachable value 42 for numeric enum SyntaxKind
+```
+
+The unmatched edge of a switch covering the checker's possible members gets the
+same check, including an implicit default. A switch listing only some members
+can use an ordinary default; string switches retain their closed coverage rule.
+The checked switch stores its scrutinee once, so a call or lookup with effects
+is not repeated by the diagnostic. The never-default idiom lowers. If chains,
+field reads, optional enum values, increments, compound reads and numeric never
+returns into a string slot use the same check. Non-enum `never` handling is not
+opened by this change.
+
+A numeric default is erased only when coverage is complete and its value came
+from an actual member, directly or through an immutable `const` alias. A type
+annotation, parameter, mutable slot, numeric literal, cast, arithmetic result
+or flag combination is not that proof. Proofs are conservative: checking a
+parameter against a member does not currently erase later checks automatically.
+
+```ts
+enum E { A, B }
+function describe(value: E): void {
+    switch (value) {
+        case E.A: return;
+        case E.B: return;
+        default: { const unreachable: never = value; console.log('unreachable'); }
+    }
+}
+function other(): number { return 42; }
+describe(other()); // Accepted source, checked stop 70 in both backends.
+describe(E.A);    // Accepted, agrees with Node.
+
+const member: E = E.A;
+switch (member) {
+    case E.A: break;
+    default: { const unreachable: never = member; console.log(`${unreachable}`); }
+} // The default is erased with a member-origin proof.
+```
+
+Programs still refused include an arbitrary string cast to a string enum,
+a string member from another declaration, an uncheckable `as never`, a write
+into the runtime enum object and an unproven write through `Mutable<T>`.
+String enum switches missing members still need a default or the missing cases.
+Computed/non-finite declarations, ambient or merged definitions, and unsupported
+mixed representation switches retain their named limits. This ruling does not
+turn off checker errors or admit `any`.
+
+### Original TypeScript fixtures
+
+The original thirteen sources are unchanged. `open-results.json` records fresh
+source Node, generated JavaScript and ASan/UBSan observations; every program
+that finishes also passed LeakSanitizer. Before is `246ecc0`, after the two
+integration merges and before this ruling. The original fixture audit was
+6 matches, 5 refusals and 2 checker failures; the first implementation reached
+7 matches, 4 refusals and 2 checker failures.
+
+| Fixture | Before ruling | After ruling |
+| --- | --- | --- |
+| 01 token range | Node match | Node match |
+| 02 node range | Node match | Node match |
+| 03 JSDoc range | Node match | Node match |
+| 04 parse tree mask | Node match | Node match |
+| 05 local/export signed SymbolFlags | Refused | Node match |
+| 06 generic setNodeFlags | Refused | Refused: Mutable<T> cannot prove its field's write contract. |
+| 07 regex reverse array map | Refused | Compiles; pinned stop 70 on index 1 of an empty array. |
+| 08 Debug formatter | Checker | Checker: TS2532; unchecked array reads and any remain. |
+| 09 signed exclusion mask | Refused | Node match |
+| 10 string enum | Node match | Node match |
+| 11 SyntaxKind formatter | Checker | Checker: TS2532; unchecked array reads and any remain. |
+| 12 diagnostic reverse lookup | Node match | Node match |
+| 13 regex Map keys | Node match | Node match |
+
+That is 7 Node matches, 0 checked stops, 4 refusals and 2 checker failures before;
+9 Node matches, 1 checked stop, 1 refusal and 2 checker failures after. Ten
+sources now compile, but the sparse-array program is not a Node-equivalent
+completion. Its existing array safety boundary remains in force.
+
+05 and 09 also exposed their original optional-object ternary condition after
+the enum restriction was removed. The small `control.go` hook lowers an optional
+object to a presence test, evaluating it once. Numbers and strings still require
+explicit boolean comparisons. Both original signed-mask fixtures now match Node
+byte for byte in native release, sanitized native and generated JavaScript.
+
+### Ruling verification and mutants
+
+Nine new `enums_open*.a` fixtures cover arithmetic, ranges, number assertions,
+signed and combined flags, fields, arrays, Map values, member-only switches,
+explicit and implicit never branches, if chains, optional values and updates.
+The seven firing fixtures have exact exit, stdout and value/enum stderr assertions
+in both backends. The implicit-default fixture proves a side-effecting scrutinee
+is evaluated once. Successful fixtures retain the full Node/release/sanitizer/leak
+comparison.
+
+All eleven temporary compiler mutants were restored. Every catch is an assertion
+or observed runtime disagreement, and no build failure is counted:
+
+| Mutant | Named catch | Observation |
+| --- | --- | --- |
+| Remove never panic, return the value | TestNumericEnumNeverPinned | Both backends exit 0 and print unreachable/after; required exit is 70. |
+| Erase default without a member-origin proof | TestNumericEnumNeverPinned | Both backends exit 0 and print after; required exit is 70. |
+| Close numeric assignability again | TestNumericEnumsAreOpen/arithmetic | Lowering refuses the arithmetic return with the old closed-union message. |
+| Invert optional-object presence | TestNativeAgreesWithNode/stage3/fixtures/enums/05 | Native and JavaScript stop where source Node exits 0. |
+| Permit runtime enum mutation | TestEnumSlotViews/object_assign | Expected refusal disappears. |
+| Repeat switch scrutinee effects | TestNumericEnumNeverPathsPinned/implicit | Lookup is printed three times instead of once. |
+| Omit numeric never increment check | TestNumericEnumNeverPathsPinned/update | Both backends exit 0 instead of 70. |
+
+The existing six semantic mutants, name-order mutant and cleanup mutant remain
+held by their original checks. The cleanup mutant now disables conservative dead
+stack/register roots in LeakSanitizer, retaining global roots; this prevents a
+stale temporary from hiding a deliberately leaked enum object.
+
+Counts add twelve rows: nine new fixtures, signed fixtures 05 and 09, and the
+checked sparse-array fixture 07. Every pre-existing row's numbers are unchanged.
+Stops intentionally retain what they held when panic ended the process; programs
+that finish have equal allocations/frees and clean leak checks.
+
+Full lower/load passed in 13.017s and 1.088s, counts regeneration in 28.850s.
+Vet, formatting and whitespace logs are empty. Final uncached oracle and counts
+results, both integration SHAs, all conflict resolutions and inherited counts
+rows are recorded in [the integration report](verification/enums-open/report.md).
+No main or area branch was merged into or pushed. Only the two requested codex
+feature branches were pushed; the ruling commits belong to codex/flag-enums.
+
+### Numeric literal promises
+
+The whole numeric enum is open. A member-specific annotation such as `Kind.A`
+in a multi-member enum still promises that literal value. It cannot accept an
+unproven number or rely on excluding other members from an open enum. Likewise,
+assigning an open singleton enum to a plain numeric literal requires a proof.
+These programs are refused with `adamic/enum-literal`; widen the destination to
+the whole enum or number, or compare and return the actual literal constant.
+
+```typescript
+enum Kind { A, B }
+function numeric(): number { return 1; }
+const tag: Kind.A = numeric(); // Refused.
+function remaining(k: Kind): Kind.A {
+  if (k === Kind.B) return Kind.A;
+  return k; // Refused: another number may remain.
+}
+```
+
+A singleton enum remains open, so its whole type cannot prove an object's
+literal discriminant. Refinements of an object union carrying such a field are
+conservatively refused with `adamic/enum-tag`. Use member-specific tags from a
+multi-member enum, string enums, or ordinary literal tags. An adversarial probe
+used an object declared with string payload and enum tag A, stored numeric B in
+that open tag, and entered the checker's numeric-payload branch. Source Node
+printed `text1`; the unguarded native code printed `1`. This observation requires
+a soundness boundary beyond numeric-enum narrowing to never.
+
+`TestNumericEnumLiteralPromises` covers member slots, excluded-member narrowing,
+plain literals and singleton object tags. `TestNumericEnumsAreOpen` also proves
+singleton numeric assignments and genuine member-tagged object unions compile.
+Three additional mutants permit arbitrary numbers in member slots, trust an
+excluded-member narrowing, and trust open singleton object tags. Each removes
+the corresponding named refusal and fails its test without a build failure.
+
+Array element reads also recover their declared enum element type before flow
+narrowing. `enums_open_never_index.a` pins an out-of-domain array value at the
+never binding in both backends. Removing that recovery makes
+`TestNumericEnumNeverPathsPinned/index` fail at lowering, without a Go or C build
+failure. `TestNumericEnumsAreOpen/coalesce` preserves optional enum Map values
+through nullish coalescing; absence is checked separately from numeric values.

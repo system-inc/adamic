@@ -120,3 +120,19 @@ The merge retained enum and accessor initialization hooks, enum and nominal
 class invariance checks, enum and definite-assignment refusals, and both counts
 row sets. [docs/enums.md](../../../docs/enums.md#typescript-source-fixtures)
 records validation commands, timings and the six compiler mutants.
+
+## Numeric enum ruling follow-up
+
+Numeric enums are now open numbers, with checked unreachable branches when the
+checker narrows them to never. The unchanged fixture set advances from 7 Node
+matches, 4 Refused and 2 Checker to 9 Node matches, 1 checked stop, 1 Refused and
+2 Checker. Ten fixtures compile. `open-results.json` records fresh observations
+for source Node, generated JavaScript and sanitized native, plus successful-run
+leak checks. The full oracle also checks native release.
+
+05 and 09 now match Node, including signed masks. 07 passes numeric Map widening
+but reaches the existing sparse-array boundary: writing index 1 into an empty
+array stops at 70 in both backends. 06 still cannot prove the generic Mutable<T>
+write contract. 08 and 11 still fail TS2532 and retain unproven any/index contracts.
+Enum name enumeration is supported; it is separate from numeric reverse lookup,
+which remains string | undefined. See docs/enums.md for the ruling and mutants.

@@ -12,7 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestEnumsRefuseOpenNumericValues(t *testing.T) {
+func TestEnumSlotViews(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
 		{"variable", "enum E { A, B } function open(n: number): E { return n; }"},
@@ -27,9 +27,9 @@ func TestEnumsRefuseOpenNumericValues(t *testing.T) {
 		{"array alias", "enum E { A, B } const values: E[] = [E.A]; const numbers: number[] = values; numbers.push(77);"},
 		{"readonly into enum array", "enum E { A, B } function run(values: readonly number[]): void { const members: readonly E[] = values; }"},
 		{"function view", "enum E { A, B } const open = (n: number): number => n; const closed: (e: E) => E = open;"},
-		{"object assign", "enum E { A, B } function run(n: number): void { Object.assign(E, { A: n }); }"},
+		{"object assign", "enum E { A, B } function run(n: number): void { Object.assign(E, { A: E.A }); }"},
 		{"override", "enum E { A, B } class Base { read(n: number): void {} } class Derived extends Base { override read(n: E): void {} }"},
-		{"class field", "enum E { A, B } function run(n: number): void { class Box { value: E = n; } }"},
+		{"class field", "enum E { A, B } class Box { value: E; constructor(n: number) { this.value = n; } }"},
 		{"optional union", "enum E { A, B } function run(n: number): void { const value: E | undefined = n; }"},
 		{"map alias", "enum E { A, B } const members = new Map<string, E>(); const numbers: Map<string, number> = members; numbers.set('x', 77);"},
 		{"mutable field alias", "enum E { A, B } const box: { value: E } = { value: E.A }; const wide: { value: number } = box; wide.value = 77;"},
@@ -42,6 +42,13 @@ func TestEnumsRefuseOpenNumericValues(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, probe.source)
+			closed := strings.Contains(probe.name, "enum object") || probe.name == "object assign"
+			if !closed {
+				if err != nil {
+					t.Fatal(err)
+				}
+				return
+			}
 			var refused *Refused
 			if !errors.As(err, &refused) {
 				t.Fatalf("got %v, want Refused", err)
@@ -56,7 +63,6 @@ func TestEnumsRefuseOpenNumericValues(t *testing.T) {
 func TestEnumSwitchExhaustiveness(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		"enum E { A, B } function show(e: E): void { switch (e) { case E.A: break; } }",
 		"enum E { A = 'a', B = 'b' } function show(e: E): void { switch (e) { case E.A: break; } }",
 	} {
 		_, err := lowerSource(t, source)
@@ -66,6 +72,7 @@ func TestEnumSwitchExhaustiveness(t *testing.T) {
 		}
 	}
 	for _, source := range []string{
+		"enum E { A, B } function show(e: E): void { switch (e) { case E.A: break; } }",
 		"enum E { A, B } function show(e: E): void { switch (e) { case E.A: break; default: break; } }",
 		"enum E { A, Alias = A, B } function show(e: E): void { switch (e) { case E.A: break; case E.B: break; } }",
 		"enum E { A, B } function show(e: E.A): void { switch (e) { case E.A: break; } }",
@@ -139,7 +146,7 @@ func TestEnumIdentityAcrossModules(t *testing.T) {
 	t.Parallel()
 	main := filepath.Join(t.TempDir(), "main.a")
 	other := filepath.Join(filepath.Dir(main), "other.a")
-	for name, source := range map[string]string{main: "import { E as Other } from './other.a'; enum E { A, B } const value: E = Other.A;", other: "export enum E { A, B }"} {
+	for name, source := range map[string]string{main: "import { E as Other } from './other.a'; enum E { A = 'a', B = 'b' } const value: E = Other.A;", other: "export enum E { A = 'a', B = 'b' }"} {
 		if err := os.WriteFile(name, []byte(source), 0644); err != nil {
 			t.Fatal(err)
 		}

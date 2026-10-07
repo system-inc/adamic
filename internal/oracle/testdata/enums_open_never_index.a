@@ -1,0 +1,12 @@
+enum SyntaxKind { First, Last }
+function show(values: SyntaxKind[]): number {
+    if (values[0] === undefined) return 0;
+    if (values[0] === SyntaxKind.First) return 1;
+    if (values[0] === SyntaxKind.Last) return 2;
+    const unreachable: never = values[0];
+    return 3;
+}
+function numeric(): number { return 42; }
+const values: SyntaxKind[] = [numeric()];
+console.log('before');
+console.log(`${show(values)}`);

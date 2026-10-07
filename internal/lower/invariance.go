@@ -48,6 +48,17 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		return nil
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if l.openNumericEnumType(to) {
+		for _, member := range l.definedMembers(from) {
+			if !l.enumAssignable(member, to) {
+				return &widening{source: from, target: to, enum: true}
+			}
+		}
+		return nil
+	}
+	if to.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.openNumericEnumType(from) {
+		return &widening{source: from, target: to, enum: true}
+	}
 	if members := l.definedMembers(from); len(members) > 1 {
 		// A union is any one of its members, each seen as the target.
 		for _, member := range members {
@@ -453,8 +464,11 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		if enumObjectSymbol(found.target) != nil {
 			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}
 		}
-		if l.flagEnum(l.enumIdentity(found.target)) {
+		if l.flagEnum(l.enumIdentity(found.target)) && !l.numericEnum(l.enumIdentity(found.target)) {
 			return l.flagWriteRefusal(node, found.target)
+		}
+		if l.numericEnum(l.enumIdentity(found.target)) || l.numericEnum(l.enumIdentity(found.source)) {
+			return &Refused{Where: l.program.Where(node), What: "an unproven value assigned to a numeric literal or enum member slot " + l.checker.TypeToString(found.target), Fix: "compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"}
 		}
 		return &Refused{Where: l.program.Where(node), What: "an arbitrary number or a value from another enum assigned to " + l.checker.TypeToString(found.target) + "; its members are a closed union", Fix: "use a declared member of this enum, or compare the number with its members and return the matching member (adamic/enum-members)"}
 	}
@@ -480,7 +494,20 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 // covariant, and only what's inside it, held elsewhere too, is walked as a view.
 func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
 	node = ast.SkipParentheses(node)
-	if found := l.flagMemberWidened(node, contextual); found != nil {
+	// A numeric enum read narrowed to never has a non-returning IR check at this exact site.
+	// It cannot write a value into the contextual slot, including a closed string-enum slot.
+	if own.Flags()&checker.TypeFlagsNever != 0 && l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
+		return nil
+	}
+	targetLiteral := (contextual.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(contextual))) && !l.openNumericEnumType(contextual)
+	if targetLiteral {
+		if declared := l.enumStoredType(node); declared != nil {
+			if l.openNumericEnumType(declared) && !l.enumMemberOrigin(node, l.enumIdentity(declared), map[*ast.Node]bool{}) {
+				return &widening{source: declared, target: contextual, enum: true}
+			}
+		}
+	}
+	if found := l.flagMemberWidened(node, contextual); found != nil && !l.numericEnum(l.enumIdentity(found.target)) {
 		return found
 	}
 	if target := l.flagTarget(contextual); target != nil && l.flagDomain(node, target) {
