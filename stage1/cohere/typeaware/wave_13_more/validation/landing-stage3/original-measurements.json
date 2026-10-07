@@ -1,0 +1,18 @@
+{
+  "compiler": {
+    "bytes": 7087,
+    "go_seconds": 2.638352061,
+    "go_stderr": "cohere: load_ns=596236354 rule_ns=1965871584 run_ns=2017348106\n",
+    "native_seconds": 7.5020332960000005,
+    "native_stderr": "tsgo: load_ns=388828742 query_ns=1160091416 queries=54960 first_query_ns=636698 run_ns=7065857774\n",
+    "summary": "findings 4"
+  },
+  "repository": {
+    "bytes": 19144,
+    "go_seconds": 0.196240674,
+    "go_stderr": "cohere: load_ns=127429801 rule_ns=1876463 run_ns=45304317\n",
+    "native_seconds": 0.713007987,
+    "native_stderr": "tsgo: load_ns=376012015 query_ns=16042687 queries=41 first_query_ns=510466 run_ns=322024864\n",
+    "summary": "findings 1"
+  }
+}
