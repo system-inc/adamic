@@ -106,3 +106,9 @@ eight implemented behavior ports. All nine existing oracle gates and eight new
 listener-comparison mutants pass on unchanged origin/main e8ba3d5d. Numeric
 ParseNode/handed-node driver APIs and complete React analysis prerequisites remain
 blocked shared work; no new rules are claimed. See ../WAVE_30_LISTENERS_REPORT.md.
+
+Landing refresh: wave-30 was cleanly rebased onto origin/main f8013f0b after main
+advanced. All ten wave-30 gates, bridge checks and fifteen filtered Node oracle
+fixtures pass again, including twenty-one comparison mutants. No new claims or
+implementation edits were made; shared numeric-dispatch and full React analysis
+prerequisites remain blocked. See ../WAVE_30_RELAND_REPORT.md and its rebase map.
