@@ -1,0 +1,23 @@
+=== RUN   TestWave11EighthAgreementAndMutants
+    wave_11_eighth_test.go:129: numeric manifests match live production Go listeners
+    wave_11_eighth_test.go:159: controls 250 parse-clean 250
+    wave_11_eighth_test.go:161: controls: 45201 identical finding bytes; findings 193
+    wave_11_eighth_test.go:169: controls-asan: 45201 identical finding bytes; findings 193
+    wave_11_eighth_test.go:217: danger-property mutant exit 0 empty stderr, Go bytes catch byte 1071
+    wave_11_eighth_test.go:217: namespace-colon mutant exit 0 empty stderr, Go bytes catch byte 2576
+    wave_11_eighth_test.go:217: component-first mutant exit 0 empty stderr, Go bytes catch byte 4879
+    wave_11_eighth_test.go:227: raw whitespace mutant exit 0 empty stderr, Go bytes catch byte 1027
+    wave_11_eighth_test.go:238: raw uppercase mutant exit 0 empty stderr, Go bytes catch byte 4879
+    wave_11_eighth_test.go:259: repository: 18485 identical finding bytes; findings 0
+    wave_11_eighth_test.go:260: repository-asan: 18485 identical finding bytes; findings 0
+    wave_11_eighth_test.go:265: repository go process 176.369939ms cohere: load_ns=88053056 rule_ns=6689459 run_ns=55364232
+    wave_11_eighth_test.go:265: repository native process 1.916274986s tsgo: load_ns=142171457 query_ns=751941046 queries=287 first_query_ns=5766589 run_ns=1761838996
+    wave_11_eighth_test.go:259: compiler: 5318 identical finding bytes; findings 0
+    wave_11_eighth_test.go:260: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_11_eighth_test.go:265: compiler go process 367.349482ms cohere: load_ns=275388044 rule_ns=28134659 run_ns=66177473
+    wave_11_eighth_test.go:265: compiler native process 8.431379037s tsgo: load_ns=250796491 query_ns=3767052556 queries=77 first_query_ns=43656 run_ns=8136909513
+    wave_11_eighth_test.go:275: released handle rejected with panic 70
+    wave_11_eighth_test.go:280: released registry mutant exits 0, caught by required panic 70
+--- PASS: TestWave11EighthAgreementAndMutants (135.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	135.017s
