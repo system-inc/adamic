@@ -1,0 +1,21 @@
+=== RUN   TestSlot02Batch3
+    slot02_batch3_test.go:75: react.IsEs5ComponentCall: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:75: react.isCreateClassName: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:75: tailwind/collapse.isMathFunctionName: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:126: 583 captured inputs; 580 distinct parsed sources; 11627 nodes; 371 factory names; 1247 math names
+    slot02_batch3_test.go:155: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch3/standalone_factory
+    slot02_batch3_test.go:199: compiled semantic mutant caught at line 117: got "name:false"; Go "name:true"
+=== RUN   TestSlot02Batch3/bare_factory_calls
+    slot02_batch3_test.go:199: compiled semantic mutant caught at line 431: got "call:false:0:-1:"; Go "call:true:0:-1:"
+=== RUN   TestSlot02Batch3/math_exact_membership
+    slot02_batch3_test.go:199: compiled semantic mutant caught at line 12001: got "math:true"; Go "math:false"
+=== RUN   TestSlot02Batch3/math_calc_table_entry
+    slot02_batch3_test.go:199: compiled semantic mutant caught at line 12341: got "math:true"; Go "math:false"
+--- PASS: TestSlot02Batch3 (24.82s)
+    --- PASS: TestSlot02Batch3/standalone_factory (4.01s)
+    --- PASS: TestSlot02Batch3/bare_factory_calls (3.76s)
+    --- PASS: TestSlot02Batch3/math_exact_membership (4.18s)
+    --- PASS: TestSlot02Batch3/math_calc_table_entry (3.57s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	24.828s

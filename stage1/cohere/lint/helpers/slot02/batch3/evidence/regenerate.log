@@ -1,0 +1,29 @@
+Capture completed with known external Tailwind/corpus failures; this is not a passing Go rule-package gate.
+{
+  "symbols": [
+    "react.IsEs5ComponentCall",
+    "react.isCreateClassName",
+    "tailwind/collapse.isMathFunctionName"
+  ],
+  "rules": [
+    "better-tailwindcss/enforce-canonical-classes",
+    "better-tailwindcss/enforce-consistent-class-order",
+    "better-tailwindcss/enforce-consistent-variant-order",
+    "better-tailwindcss/enforce-shorthand-classes",
+    "better-tailwindcss/no-conflicting-classes",
+    "better-tailwindcss/no-unknown-classes",
+    "react/no-did-mount-set-state",
+    "react/no-direct-mutation-state",
+    "react/no-this-in-sfc",
+    "react/prefer-es6-class",
+    "react/prefer-stateless-function",
+    "react/require-render-return"
+  ],
+  "sources": 583,
+  "packages": [
+    "./internal/lint/rules/react",
+    "./internal/lint/rules/tailwind"
+  ],
+  "capture_gate_exit": 1,
+  "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+}

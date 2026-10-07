@@ -1,0 +1,24 @@
+=== RUN   TestSlot02Batch3
+    slot02_batch3_test.go:75: jsx.StringAttributeValue: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:75: react.IsEs5ComponentCall: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:75: react.isCreateClassName: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:141: 628 captured inputs; 581 distinct parsed sources; 14139 nodes; 421 factory names; 607 attribute queries x 15 targets x 3 matchers; 183 decoder and 405 matcher prerequisite answers
+    slot02_batch3_test.go:170: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch3/standalone_factory
+    slot02_batch3_test.go:215: compiled semantic mutant caught at line 208: got "name:false"; Go "name:true"
+=== RUN   TestSlot02Batch3/bare_factory_calls
+    slot02_batch3_test.go:215: compiled semantic mutant caught at line 481: got "call:false:0:-1:"; Go "call:true:0:-1:"
+=== RUN   TestSlot02Batch3/literal-only_initializer
+    slot02_batch3_test.go:215: compiled semantic mutant caught at line 27522: got "attribute:true:1:1:"; Go "attribute:false:1:0:"
+=== RUN   TestSlot02Batch3/first_match
+    slot02_batch3_test.go:215: compiled semantic mutant caught at line 28062: got "attribute:false:2:0:"; Go "attribute:false:1:0:"
+=== RUN   TestSlot02Batch3/entity_decoding
+    slot02_batch3_test.go:215: compiled semantic mutant caught at line 26937: got "attribute:true:1:0:https://fonts.googleapis.com/css2?family=Krona+One"; Go "attribute:true:1:1:https://fonts.googleapis.com/css2?family=Krona+One"
+--- PASS: TestSlot02Batch3 (40.90s)
+    --- PASS: TestSlot02Batch3/standalone_factory (5.37s)
+    --- PASS: TestSlot02Batch3/bare_factory_calls (5.16s)
+    --- PASS: TestSlot02Batch3/literal-only_initializer (5.09s)
+    --- PASS: TestSlot02Batch3/first_match (5.54s)
+    --- PASS: TestSlot02Batch3/entity_decoding (5.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	40.913s

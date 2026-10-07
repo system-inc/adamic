@@ -1,0 +1,495 @@
+origin/codex/lint-helpers-01 stage1/cohere/lint/helpers/claims/01.md
+# Slot 01 helper claim
+
+Branch: codex/lint-helpers-01. Base: origin/codex/lint-helpers at 29990b4.
+
+Withdrawn: react.isIdentifierNamed. Four workers reserved it concurrently; slot 01 yields. No implementation of that symbol will be delivered.
+
+1. github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor
+   File: structure_file_context.a. 18 remaining consumers; three final blockers removed.
+   Selected after refreshing all six origin helper branches: comments, identifier, ElementParts and AttributeName are reserved. Claim precedes implementation.
+
+Fetched all origin codex/lint-helpers* branches before claiming. The comment bundle is already claimed in ../HELPERS.md on codex/lint-helpers and is excluded even though its claim predates claims/.
+
+Build one helper at a time. Re-fetch and rank unclaimed dependencies before each next claim. Use parser-derived arena nodes, preserving kind, decoded identifier text, parenthesis children and null. Compare the real Go helper through an overlay on every consuming rule's fixture inputs, plus shape controls, Node and sanitized native. Require a compiling semantic mutant.
+
+FileContextFor race resolution: slot 01 claim 751526e (00:23:54 UTC) precedes slot 03 f600f2c (00:24:05 UTC). Slot 01 retains FileContextFor. React identifier remains released; the remaining earlier claims also yielded it, so a later slot may reclaim it explicitly.
+
+2. github.com/system-inc/cohere/internal/lint/ecmascript/react.isComponentBaseName
+   File: react_component_base_name.a. 14 remaining consumers; zero final blockers alone.
+   Selected after all-six-branch refresh: imports.BindingsOf and property.Name are now reserved. Tied at 14 with IsEs6ComponentClass and isComponentBase; select their smallest shared prerequisite first. Claim precedes code.
+
+Second-helper collision: slot 03's component-base-name claim 66e752b (00:26:01 UTC) precedes slot 01's 2050553 (00:26:12 UTC). Slot 01 withdraws isComponentBaseName and will not deliver it, despite a passing local comparison. isComponentBase is now claimed by slots 04/05.
+
+2. github.com/system-inc/cohere/internal/lint/ecmascript/react.IsEs6ComponentClass
+   File: react_es6_component_class.a. 14 remaining consumers, zero final blockers alone.
+   Highest unclaimed count after fetching and inspecting all six remote claims. Class and heritage kinds are checked before access; the externally owned isComponentBase predicate is an explicit function dependency. The Go oracle supplies its real answers for isolated testing. Claim precedes implementation.
+
+ES6 class race resolution: slot 01 bf6e048 at 00:27:33 UTC precedes slot 03 121a6c3 at 00:27:52 UTC. Slot 01 retains IsEs6ComponentClass.
+
+3. github.com/system-inc/cohere/internal/lint/rules/tailwind.DefaultClassLiteralSettings
+   File: tailwind_default_class_literal_settings.a. 12 remaining consumers, zero final blockers alone.
+   Selected after fetching and inspecting all six branches. Every higher-count dependency is reserved, and tailwind.isSpace is reserved. This ties the unclaimed Tailwind reader/key/listener infrastructure at 12; select the default-settings prerequisite first. Preserve all ordered lists and fresh independently mutable arrays on every call. Claim precedes code.
+
+## Final active ownership
+
+Delivered and validated on slot 01:
+
+- structure.FileContextFor: 18 consumers, 3 final blockers removed.
+- react.IsEs6ComponentClass: 14 consumers, 0 final blockers removed alone.
+- tailwind.DefaultClassLiteralSettings: 12 consumers, 0 final blockers removed alone.
+
+react.isIdentifierNamed and react.isComponentBaseName are withdrawn here and no duplicate files are delivered. Complete helper package PASS in 65.010s; six delivered semantic mutants caught. See ../SLOT01_REPORT.md and ../slot01_readiness.json for commands, evidence, all consumers and residual blockers.
+
+## Next three helpers, continuation
+
+4. github.com/system-inc/cohere/internal/lint/rules/tailwind.NewClassLiteralReader
+   File: tailwind_new_class_literal_reader.a. 12 remaining consumers, zero final blockers alone.
+   Fetched every origin codex/lint-helpers* branch and read every claims file. Every higher-count symbol and all other 12-consumer Tailwind prerequisites are reserved, including ClassLiteralReaderFor on slot 02 and compiledClassLiteralReader on slot 04. This is the highest unclaimed count. Preserve deduplicated attribute/callee maps, ordered successful pattern compilations, skipped invalid patterns and nil unbound values. regexp.Compile is an explicit compiler dependency, as the cache helpers expose their factory dependency. Compare the actual Go reader representation and its pattern behavior via an oracle-only overlay, Node and sanitized native, with a compiling semantic mutant. Claim pushed before implementation.
+
+Factory collision: slot 01 c250b83 precedes slot 05 cba50e2. Slot 01 retains the factory. Native unbound state is represented by valuesBound=false; regexp compilation uses an explicit {valid, pattern} result because stage 0 cannot lower undefined/null values.
+
+5. github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.classValuesIn
+   File: tailwind_class_values_in.a. 11 remaining consumers.
+   All six remote branches refreshed and complete claims read. JSX intrinsic matching and holeEdges are now reserved by slot 03. This memoization helper ties the remaining Tailwind traversal helpers at the highest unclaimed count. Preserve unbound fresh reads, bound node-identity cache sharing, empty-result caching and distinct-node isolation. The externally owned readClassValues dispatcher is an explicit callback. Claim pushed before code.
+
+6. github.com/system-inc/cohere/internal/lint/rules/tailwind.classLiteralFrom
+   File: tailwind_class_literal_from.a. 11 remaining consumers.
+   Refreshed all six origin helper branches and read all claims, including slot 05's factory withdrawal. All larger counts are reserved; this literal constructor ties the remaining traversal helpers at 11. Preserve decoded text, node identity, origin, zero edges, token-start rather than trivia-start ranges, and the shorter-than-two range guard. The shared parser/token-range adapter supplies the actual TokenRange explicitly. Compare real Go on every consumer fixture, whitespace, escapes, Unicode and unterminated literals; run compiling quote-strip and short-range mutants. Claim pushed before code.
+
+Continuation completed: factory, memoization and literal construction are delivered in c986bcc. Entire helper package PASS in 115.500s; all eight new semantic mutants compiled and were caught, alongside the six prior slot 01 and four inherited mutants. Vet is clean; filtered uncached input oracle PASS in 1.036s. See ../SLOT01_WAVE2_REPORT.md and ../slot01_wave2_readiness.json for every consumer, command and limit. No further helper is claimed; stop here under Ahra's correction.
+
+## Third batch
+
+7. github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues
+   File: tailwind_attribute_values.a. 11 remaining consumers.
+   All six origin helper branches fetched and claims checked. The three remaining 11-consumer helpers are attributeValues, classValuesUnder and collectClassValues. Select the attribute surface first. Preserve AST assertion/refusal, exact name.Text matching and Attribute-origin initializer delegation, including nil initializer. classValuesUnder is an explicit dependency. Compare every consuming rule fixture through real Go, Node and sanitized native; run a compiling name-membership mutant. Claim pushed before code. Existing shared registration and rule harness remain untouched; new slot-owned harness files only.
+
+8. github.com/system-inc/cohere/internal/lint/ecmascript/text.decodeEntity
+   File: text_decode_entity.a. 9 remaining consumers.
+   Attribute reader e31de1d is tested and pushed; earliest claim ad07122 retained, later slot 03/04 duplicates yield. Refreshed all six branches and inspected claims. All remaining 11- and 10-consumer helpers are now reserved, and hexValue is reserved by slot 03. decodeEntity ties UnescapeStringLiteralText at the highest unclaimed count. Preserve named-entity table lookup, decimal/hex parsing and overflow/rune validity checks. The externally generated entity table is explicit input data, not a guessed browser table. Compare actual Go on every consumer fixture and numeric/name controls, Node and sanitized native; run a compiling semantic mutant. Claim pushed before code.
+
+9. github.com/system-inc/cohere/internal/lint/ecmascript/react.IsLikelyComponentName
+   File: react_likely_component_name.a. 8 remaining consumers.
+   Entity decoder 1d106df is tested and pushed, including a surrogate-value mutant caught by UTF-16 observations. Refreshed all six origin helper branches and checked claims. UnescapeStringLiteralText is now reserved by slots 03/04, and every higher-count helper is reserved. This is the sole highest-count unclaimed helper. Preserve Go's exact leading-name check, including non-ASCII byte behavior and empty names. Compare every consumer fixture and exhaustive leading-code-point controls with actual Go, Node and sanitized native; run a compiling semantic mutant. Claim pushed before code.
+
+Component-name contract clarification after reading names.go whole: Go checks the first decoded Unicode rune with unicode.IsUpper (category Lu), not a UTF-8 byte or ASCII range. Ship data generated from the same Go toolchain's unicode.Upper range tables and version, with exhaustive scalar comparison. No JavaScript casing heuristic is substituted.
+
+Third batch completed: attributeValues (e31de1d), decodeEntity (1d106df) and IsLikelyComponentName (0ca32ea), one helper per .a file plus two generated data constants. Complete helper package PASS in 228.362s (22 top-level tests); all seven new and 18 prior/inherited semantic mutants compiled and were caught. Go observations match source Node, sanitized native and emitted JavaScript for this batch. Vet is clean; filtered uncached oracle PASS in 1.106s. No further helper is claimed. All three implementations, the clarification and report/evidence are pushed through 3d69400. The final retry resolved the earlier GitHub authentication failure; no patch fallback is needed. See ../SLOT01_WAVE3_REPORT.md and ../slot01_wave3_readiness.json for every consumer, residual blocker, command and limit.
+
+## Fourth batch
+
+10. github.com/system-inc/cohere/internal/lint/ecmascript/jsx.StringAttributeValue
+   File: jsx_string_attribute_value.a. Six consumers. All origin helper branches fetched and claims checked. The seven-consumer strict-option entry is a per-rule schema gap, not a named shared helper (as established in the base report). All larger named helpers are reserved. Preserve the actual JSX initializer/string extraction and entity decoding behavior; decoding is an explicit dependency. Compare every consumer fixture against actual Go, source Node, native and emitted JavaScript, with a compiling mutant. Claim pushed before code.
+
+11. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isHexDigit
+   File: collapse_is_hex_digit.a. Six consumers. JSX reader is tested and pushed. All six origin branches refreshed and complete claims checked; React ES5 call and factory-name helpers are now reserved by slots 02/04. This leaf ties the remaining Collapse infrastructure at the highest unclaimed named count. Exact ASCII hexadecimal byte predicate, all 256 bytes and every consumer's input bytes against actual Go, source Node, native and emitted JavaScript, with a compiling uppercase-F mutant. Claim pushed before code.
+
+12. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Node.IsContainer
+   File: collapse_node_is_container.a. Six consumers. Hex predicate is tested and pushed. Refreshed every origin helper branch and checked every claim. All larger named counts are reserved; this ties remaining Collapse helpers at six. Preserve exactly rule, at-rule, context and at-root; declaration, comment, empty and unknown kinds return false. Compare actual Go over every consumer string, parsed CSS nodes and kind controls, Node source, emitted JavaScript and sanitized native. Compiling mutant omits context. Claim pushed before code. A non-null typed node is required, as Go's nil receiver panics.
+origin/codex/lint-helpers-02 stage1/cohere/lint/helpers/claims/02.md
+# Slot 02 helper claims
+
+Branch: codex/lint-helpers-02. Base: origin/codex/lint-helpers at 29990b47913aa77d542045194b512484af995d29.
+
+Withdrawn after remote refresh: github.com/system-inc/cohere/internal/lint/ecmascript/react.isIdentifierNamed
+   Earlier remote claim 41a6089 on slot 05 takes precedence; slot 02 does not deliver this helper.
+   Highest unclaimed symbol by remaining-rule consumer count: 25.
+   No complete rule loses its final blocker from this symbol alone.
+
+Checked every origin codex/lint-helpers* branch after explicit wildcard fetch. At selection only codex/lint-helpers existed; no claims/ files existed. The comments bundle is reserved by HELPERS.md and is excluded.
+
+Ranking uses the number of remaining rules listing each symbol, not an unsupported claim that each consumer becomes completely helper-ready. Go cohere decides behavior; new Adamic sources use .a.
+
+1. github.com/system-inc/cohere/internal/lint/ecmascript/jsx.AttributeName
+   File: helpers/jsx_attribute_name.a. 21 remaining consumers, zero final blockers alone.
+   Selected after wildcard fetch and inspection of claims on all six helper branches. Comments and ElementParts are reserved. Claim precedes implementation.
+
+2. github.com/system-inc/cohere/internal/lint/ecmascript/property.Name
+   File: helpers/property_name.a. 14 remaining consumers; two final blockers alone.
+   Selected after all-six-branch wildcard fetch: BindingsOf is now claimed by slot 05 and FileContextFor by slots 01/03. Tied at 14 with React class predicates; property.Name has two final blockers while those have zero. Claim precedes implementation.
+
+AttributeName claim b25d3cd precedes slot 05's b73ec42 by one second; slot 05 has withdrawn its duplicate. Identifier is withdrawn here regardless of later ownership changes elsewhere.
+
+Withdrawn: github.com/system-inc/cohere/internal/lint/rules/tailwind.isSpace
+   File: helpers/tailwind_is_space.a. 12 remaining consumers; zero final blockers alone.
+   Selected after another all-six-branch wildcard fetch and claim inspection. All 14-consumer React predicates are now reserved. This leaf ties six class-literal helpers for the highest unclaimed count at 12; build the leaf without claiming their broader readers. Go rune behavior, consumer source whitespace, exhaustive Unicode scalar values and a compiling semantic mutant. Claim precedes implementation.
+
+Whitespace race resolution: slot 03 claim 6cdb955 at 00:29:23 UTC precedes slot 02 claim 3160199 at 00:29:35 UTC. The local comparison passed but the duplicate will not be delivered or counted.
+
+3. github.com/system-inc/cohere/internal/lint/rules/tailwind.ClassLiteralReaderFor
+   File: helpers/tailwind_reader_for.a. 12 remaining consumers; zero final blockers alone.
+   Selected after final all-six-branch fetch and complete claims inspection. Default settings, settings key, whitespace, listeners and the compiled reader cache are reserved. This ties NewClassLiteralReader for the highest unclaimed count. Preserve same-file sharing, cross-file isolation, nil-cache fresh binding, and shared compiled data with fresh values maps. The externally owned settings-key and compiled-reader helpers are explicit function dependencies. Claim precedes implementation.
+
+## Next three helpers
+
+All six origin codex/lint-helpers* branches fetched and their complete claims inspected on this continuation. All 11-consumer dependencies and higher counts are reserved. These are the three unclaimed helpers tied at the highest remaining count, 10. Claims are pushed before implementation. Each helper will be compared with real Go cohere, Node source and sanitized native with a compiling semantic mutant. Prerequisites owned by other slots remain explicit dependencies.
+
+4. github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn
+   File: slot02/batch2/class_literals_in.a. 10 remaining consumers. Preserve the literal slice returned by classValuesIn without copying or including templates. classValuesIn is an explicit dependency.
+5. github.com/system-inc/cohere/internal/lint/rules/tailwind.SplitClasses
+   File: slot02/batch2/split_classes.a. 10 remaining consumers. Preserve Go strings.Fields Unicode whitespace and drop whole fields containing ${, not JavaScript trim semantics.
+6. github.com/system-inc/cohere/internal/lint/ecmascript/react.IsNamespacedMember
+   File: slot02/batch2/namespaced_member.a. 10 remaining consumers. Preserve nil/kind guards, exact React identifier base, Identifier-only member names and lazy predicate invocation.
+
+Continuation completed: ClassLiteralsIn, SplitClasses and IsNamespacedMember are delivered in 9221c9b. Full helper package PASS 155.304s; four new compiling semantic mutants caught against actual Go on Node source, emitted JavaScript and sanitized native, plus all seven previous mutants. Capture includes every one of the 20 consumers and regenerates byte for byte. Tailwind external live/corpus gates fail separately and are not claimed passed. See slot02/batch2/REPORT.md, RULES.md and readiness.json. No further helper is claimed.
+
+## Third helper batch
+
+Fetched and read every claims file on all six origin codex/lint-helpers* branches. Every concrete unclaimed helper with more than six consumers is already reserved. The seven-consumer ledger label "strict option decoding and schema validation" is remaining rule-local custom configuration work beyond the four original option helpers, not an unclaimed Go helper symbol; those original helpers already exist. Choose three concrete symbols tied at the highest unclaimed count, six. Push this update before implementation.
+
+7. github.com/system-inc/cohere/internal/lint/ecmascript/jsx.StringAttributeValue
+   File: slot02/batch3/string_attribute_value.a. Six consumers. Preserve first-match behavior, spread/name guards, literal-only initializer, and Go entity unescaping through the externally owned text helper.
+8. github.com/system-inc/cohere/internal/lint/ecmascript/react.IsEs5ComponentCall
+   File: slot02/batch3/es5_component_call.a. Six consumers. Preserve bare and React-namespaced factory calls, nested callee parentheses and exact createClass/createReactClass matching. isIdentifierNamed is an explicit prerequisite.
+9. github.com/system-inc/cohere/internal/lint/ecmascript/react.isCreateClassName
+   File: slot02/batch3/create_class_name.a. Six consumers. Accept exactly createClass and createReactClass. Real Go private helper decides every test name.
+
+Each helper gets actual consumer inputs, real Go oracle, Node source, emitted JavaScript and sanitized native comparisons with a compiling semantic mutant. No further helper is claimed in this batch.
+origin/codex/lint-helpers-03 stage1/cohere/lint/helpers/claims/03.md
+# Slot 03 helper claim
+
+Branch: codex/lint-helpers-03. Base: origin/codex/lint-helpers (29990b4, first four helpers at 5d13f5b).
+
+First helper: github.com/system-inc/cohere/internal/lint/ecmascript/react.isIdentifierNamed.
+
+Selected by remaining consumer count in readiness.json: 25 rules, the largest unclaimed symbol count. It removes a dependency, but alone completes no rule's helper set. All origin codex/lint-helpers* branches were fetched and checked before this claim. The only remote helper branch was codex/lint-helpers; its HELPERS.md already claims the comment collection bundle, which this slot excludes even though it is not under claims/.
+
+One helper per .a file; compare real Go cohere behavior with Node and sanitized native and run a compiling semantic mutant. Later helpers will be claimed here before code is written, after refreshing remote claims.
+
+## Remote claim race resolved
+
+Identifier claim withdrawn. Slots 01, 02, 03 and 05 raced while only the shared branch was visible. Slot 03 yields react.isIdentifierNamed to slot 01; no identifier implementation will be delivered here.
+
+1. github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor
+   File: slot03/file_context.a. 18 remaining consumers; three final blockers removed alone.
+   Selected after wildcard fetch and inspection of all six branches' claims: comments, identifier matching, JSX ElementParts and JSX AttributeName are reserved. This is the highest unclaimed remaining consumer count. Compare all nine flags against Go on every consumer's actual fixture filenames and synthetic path controls. Claim is pushed before code.
+
+## Second race resolved
+
+FileContextFor withdrawn: slot 01 claim 751526e at 00:23:54 UTC precedes slot 03 f600f2c at 00:24:05 UTC. No file-context implementation will be delivered. Identifier ownership is restored to slot 05 under its earliest original commit 41a6089.
+
+1. github.com/system-inc/cohere/internal/lint/ecmascript/react.isComponentBaseName
+   File: slot03/component_base_name.a. 14 remaining consumers, zero final blockers alone.
+   Selected after fetching all six remote helper branches and reading every claims file. BindingsOf and property.Name are now also claimed. This leaf ties the two React class predicates for the highest unclaimed consumer count. Build the leaf first, then recheck remote claims before moving upward. Exact Go name matching, real consumer fixture names, Node/native comparison and a compiling semantic mutant.
+
+## Confirmed ownership and first result
+
+Slot 03 retains isComponentBaseName: claim 66e752b at 00:26:01 UTC precedes slot 01's later duplicate 2050553 at 00:26:12 UTC. The leaf is built and compared against real Go on all 14 consumer corpora (1,199 captured inputs, 507 distinct name verdicts). Node and sanitized native pass; dropping PureComponent is caught at output line 134.
+
+2. github.com/system-inc/cohere/internal/lint/ecmascript/react.IsEs6ComponentClass
+   File: slot03/es6_component_class.a. 14 remaining consumers, zero final blockers alone.
+   Refreshed all six branches after the leaf passed. isComponentBase is claimed by slots 04/05; the class predicate is the sole unclaimed 14-consumer symbol. Its externally owned base predicate is an explicit function dependency. Use Go AST named heritage/type fields, not child traversal guesses. Claim pushed before implementation.
+
+## Class predicate race resolved
+
+IsEs6ComponentClass withdrawn: slot 01 bf6e048 at 00:27:33 UTC precedes slot 03 121a6c3 at 00:27:52 UTC. Slot 03's local comparison and semantic mutant passed, but this duplicate will not be delivered or counted.
+
+2. github.com/system-inc/cohere/internal/lint/rules/tailwind.isSpace
+   File: slot03/tailwind_space.a. 12 remaining consumers, zero final blockers alone.
+   Selected after refreshing all six branches and reading their claims. All 14-consumer React predicates are reserved; this leaf ties the Tailwind reader infrastructure at the highest unclaimed count. Go recognizes exactly six ASCII whitespace runes, not Unicode whitespace. Compare all Unicode scalar values, consumer fixture characters, Node source and sanitized native, with a compiling semantic mutant. Claim pushed before implementation.
+
+## Whitespace result and final claim
+
+Slot 03 retains tailwind.isSpace: 6cdb955 at 00:29:23 UTC precedes slot 02's 3160199 at 00:29:35 UTC and slot 04's 8def8f3 at 00:29:40 UTC. The helper and its compiling mutant passed: 1,114,947 output lines matched Go, Node source and sanitized native; dropping vertical tab is caught at line 847. Captured inputs cover all 26 consumers of the two delivered helpers; upstream live Tailwind rule-package gates remain failed for unavailable external installations/corpora.
+
+3. github.com/system-inc/cohere/internal/lint/rules/tailwind.ListenerKinds
+   File: slot03/listener_kinds.a. 12 remaining consumers, zero final blockers alone.
+   Refreshed all six remote branches after whitespace tests passed, reading every claim. DefaultClassLiteralSettings and ClassLiteralSettings.key are also reserved; ListenerKinds ties the remaining reader infrastructure at 12, the highest unclaimed count. Preserve ordered kinds and a fresh mutable list per call. Go's public helper decides the values; Node/native compare and compiling value/freshness mutants. Claim pushed before implementation.
+
+## Final active ownership
+
+Delivered by slot 03: react.isComponentBaseName (14 consumers), tailwind.isSpace (12 consumers), tailwind.ListenerKinds (12 consumers). There are 26 unique consumers and 38 dependencies removed, with zero final helper blockers removed by this slot alone.
+
+Listener ownership: c8bfb9c at 00:33:54 UTC precedes slot 04's 31b6537 at 00:34:09 UTC; slot 04 has withdrawn it. React identifier, FileContextFor and IsEs6ComponentClass remain withdrawn here. No duplicate implementation of those symbols is delivered. See slot03/README.md, slot03/readiness.json and slot03/REPORT.md for exact consumers, conservative remaining dependencies and evidence.
+
+## Continuation
+
+4. github.com/system-inc/cohere/internal/lint/ecmascript/jsx.IsIntrinsicElementNamed
+   File: slot03/batch2/intrinsic_element_named.a. 11 remaining consumers.
+   Fetched all six origin helper branches and read every claim. Every higher-count dependency is reserved, including NewClassLiteralReader on slots 01/05. This ties the unclaimed Tailwind traversal helpers at 11. Preserve nil/kind guards and exact identifier text. Real Go parser fixtures, Node source, sanitized native and a compiling semantic mutant. Claim pushed before code.
+
+5. github.com/system-inc/cohere/internal/lint/rules/tailwind.holeEdges
+   File: slot03/batch2/hole_edges.a. 11 remaining consumers.
+   JSX predicate Go/Node/native comparison and compiling mutant passed. Refreshed every origin helper branch and read all claims again. All higher-count helpers remain reserved. This ties Tailwind traversal helpers at the highest unclaimed count. Preserve empty-boundary inheritance, first/last-hole distinctions and Go byte-boundary ASCII whitespace. Reuse the delivered isSpace dependency. Claim pushed before code.
+
+6. github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.readClassValues
+   File: slot03/batch2/read_class_values.a. 11 remaining consumers.
+   Hole edges matched real Go, Node and sanitized native; its inheritance mutant was caught. Refreshed all six remote branches and read all claims. NewClassLiteralReader and classValuesIn are now reserved by slot 01. The dispatcher ties the remaining traversal helpers at the highest unclaimed count. Preserve nil/unsupported empty results and exact attribute/call/variable delegation with the same node. The externally owned surface readers are explicit callbacks. Observe actual Go delegate routes using an oracle-only overlay and actual Go surface values; run a compiling route mutant. Claim pushed before code.
+
+## Continuation ownership and validated implementation
+
+Slot 03 retains readClassValues: ce7f300 at 00:48:49 UTC precedes slot 05's dd9e8c3 at 00:48:53 UTC. The late duplicate was found during the post-implementation all-branch refresh. No claims here are withdrawn in this continuation.
+
+Delivered continuation: jsx.IsIntrinsicElementNamed, tailwind.holeEdges, tailwind.*ClassLiteralReader.readClassValues. Each removes a dependency from 11 rules, with 22 distinct consumers and 33 dependency edges removed, zero final blockers alone. All three matched real Go, Node source and sanitized native; compiling semantic mutants were caught. Runtime capture reproduces byte for byte. See slot03/batch2/REPORT.md and readiness.json for rules, commands and limits.
+
+## Third batch
+
+7. github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues
+   File: slot03/batch3/attribute_values.a. 11 remaining consumers.
+   All six delivered slot 03 helpers are tested and pushed. Fetched every origin codex/lint-helpers* branch and read every claim. All larger counts, classValuesIn, readClassValues, classLiteralFrom, calleeValues, variableValues and holeEdges are reserved. This ties classValuesUnder and collectClassValues at the highest unclaimed count. Preserve the JSX attribute/name guards, exact configured-name membership and initializer delegation with Attribute origin. classValuesUnder is an explicit dependency. Compare actual Go on every consumer fixture and settings controls, Node source and sanitized native; run a compiling semantic mutant. Wrong-kind calls refuse rather than silently accepting an invalid private-helper precondition. Claim pushed before code.
+
+Attribute reader withdrawn: slot 01 ad07122 at 00:59:17 UTC precedes slot 03 5142004 at 00:59:39 UTC and slot 04 0582ef8 at 00:59:43 UTC. The local real-Go/Node/native comparison and two compiling mutants passed, but this duplicate will not be delivered or counted.
+
+7. github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue
+   File: slot03/batch3/hex_value.a. 9 remaining consumers.
+   After the attribute collision, fetched all six branches and read every claim. Slot 04 reserves classValuesUnder/collectClassValues; slot 02 reserves all three 10-consumer helpers. This ties the two text decoding helpers at the highest unclaimed count. Exact ASCII hexadecimal byte conversion with -1 for all other bytes. Compare every consumer fixture and exhaustive byte controls against real Go, Node source and sanitized native; run a compiling semantic mutant. Claim pushed before code.
+
+hexValue contract clarification: Go takes a decoded rune, not a byte. The implementation accepts signed rune code points and matches Go over every code point 0..0x10FFFF plus signed-int32 extremes and consumer-source runes. The uppercase-F mutant compiled and was caught at line 43.
+
+8. github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText
+   File: slot03/batch3/unescape_string_literal_text.a. 9 remaining consumers.
+   hexValue is built and tested. Re-fetched every origin helper branch and checked every complete claims file. decodeEntity is now reserved by slot 01; every higher-count helper is reserved. This is the sole highest-count unclaimed helper. Preserve first-semicolon scanning, single-ampersand fallback, decoded substitution and one-pass behavior without re-decoding replacements. decodeEntity is an explicit callback dependency. Compare real Go on all nine consumer fixture inputs, decoded parser texts and entity controls, Node source and sanitized native; run a compiling semantic mutant. Claim pushed before code.
+
+Slot 03 retains UnescapeStringLiteralText: c584145 at 01:03:44 UTC precedes slot 04's 502d072 at 01:03:48 UTC. Go/Node/emitted-JavaScript/sanitized-native comparison and the substitution mutant passed. Shell Git authentication stopped working after this claim push; the GitHub connector still has repository push access, so publication and claim refresh use its Git API without force updates.
+
+9. github.com/system-inc/cohere/internal/lint/ecmascript/jsx.MatchExactly
+   File: slot03/batch3/match_exactly.a. 7 remaining consumers.
+   Unescape is built and tested. Refreshed claims directories and every claims file across all six origin helper branches through the GitHub API after shell Git authentication failed. IsLikelyComponentName is now reserved by slot 01, and every larger-count helper is reserved. This ties NormalizedFileName, IsHookName and parameterNodes for the highest unclaimed count. Exact case-sensitive string equality, including empty names and Unicode normalization distinctions. Compare real Go across every consumer fixture and synthetic controls, Node source, emitted JavaScript and sanitized native; run a compiling semantic mutant. Publish this claim before code.
+
+MatchExactly withdrawn: slot 05 470ddd3 at 01:09:43 UTC precedes the API-published slot 03 be16b65 at 01:11:33 UTC. The passing local duplicate and its mutant are not delivered or counted. Shell Git fetch now works again after the credential failure, and subsequent publication can use normal fast-forward pushes.
+
+9. github.com/system-inc/cohere/internal/lint/rules/structure.parameterNodes
+   File: slot03/batch3/parameter_nodes.a. 7 remaining consumers.
+   Refreshed every helper branch and every complete claim through the API, then successfully fetched origin again. MatchExactly, NormalizedFileName and IsHookName belong to slot 05. This is the sole highest-count unclaimed Go symbol; the equal-count generic strict-option blocker is per-rule decoding already discussed in the base report, not an additional named helper. Preserve nil-list emptiness, node order/identity and shared backing-array behavior for present lists. Compare real Go on every consumer fixture and mutation controls, Node source, emitted JavaScript and sanitized native; run compiling semantic mutants. Claim pushed before code.
+
+## Third batch validated ownership
+
+Delivered: text.hexValue (9 consumers), text.UnescapeStringLiteralText (9), structure.parameterNodes (7). These remove 25 dependency edges across 16 distinct rules, with zero final blockers removed by this batch alone. AttributeValues and MatchExactly remain withdrawn; no duplicate implementation is delivered. All three match real Go, Node source, emitted JavaScript and sanitized native; all four compiling semantic mutants are caught. The complete nine-helper regression gate passes in 152.213s, with eleven semantic mutants and the coverage mutant rejected. See slot03/batch3/REPORT.md and readiness.json for exact consumers, commands, observations and adapter limits.
+origin/codex/lint-helpers-04 stage1/cohere/lint/helpers/claims/04.md
+# Slot 04 helper claims
+
+Branch: codex/lint-helpers-04. Base: origin/codex/lint-helpers at 29990b47913aa77d542045194b512484af995d29.
+
+1. github.com/system-inc/cohere/internal/lint/ecmascript/jsx.ElementParts
+   File: jsx_element_parts.a. 24 remaining rule consumers; one final blocker removed (@next/next/no-img-element).
+
+Explicit wildcard fetch checked every origin codex/lint-helpers* branch. Slots 01, 02, 03 and 05 all claim react.isIdentifierNamed. Comments are reserved in HELPERS.md on the shared branch. ElementParts has the largest remaining unclaimed consumer count. Claims are pushed before implementation. Each later helper is selected after refreshing all remote claims.
+
+Go cohere is the behavior oracle. Compare parser-derived node identities across every consumer's fixture inputs with Node source and sanitized native. One helper per .a file, with a compiling semantic mutant per helper. Dependency removals are distinct from complete rule implementations.
+
+2. github.com/system-inc/cohere/internal/lint/ecmascript/react.isComponentBase
+   File: react_component_base.a. 14 remaining consumers; zero final blockers alone.
+   After refreshing all six branches, jsx.AttributeName, structure.FileContextFor,
+   imports.BindingsOf, property.Name and react.isComponentBaseName are reserved.
+   This ties IsEs6ComponentClass at the highest remaining count. Build the lower
+   predicate first. Its two externally owned leaf predicates are explicit function
+   dependencies, rather than additional helpers claimed or copied by this slot.
+
+## Component-base collision resolved
+
+Withdrawn: react.isComponentBase. Slot 05's c4c5bb7 at 00:26:47 UTC
+precedes this slot's 8392118 at 00:26:54 UTC. Its implementation and all
+React-only harness files are excluded from delivery. The passing comparison
+and mutant are not counted as one of this slot's three delivered helpers.
+
+2. github.com/system-inc/cohere/internal/lint/rules/tailwind.isSpace
+   File: tailwind_is_space.a. 12 remaining consumers, zero final blockers alone.
+   IsEs6ComponentClass is now reserved by slots 01/03. All six origin branches
+   were refreshed and read. Seven Tailwind prerequisites tie at 12, the largest
+   unclaimed count; choose this independent leaf. Go's six ASCII runes decide,
+   rather than JavaScript trim or Unicode whitespace. Claim precedes code.
+
+## Space predicate collision resolved before implementation
+
+Withdrawn: tailwind.isSpace. Slot 03's 6cdb955 at 00:29:23 UTC precedes
+slot 02's 3160199 at 00:29:35 UTC and this slot's 8def8f3 at 00:29:40 UTC.
+No space predicate code was written here.
+
+2. github.com/system-inc/cohere/internal/lint/rules/tailwind.ClassLiteralSettings.key
+   File: tailwind_settings_key.a. 12 remaining consumers, zero final blockers alone.
+   Refreshed every helper branch and checked every claim. Default settings and
+   isSpace are now reserved; this pure ordered encoding ties reader/listener
+   infrastructure for the highest unclaimed consumer count. Preserve Go's NUL
+   terminators and SOH separators, including its behavior on embedded separators.
+   Claim pushed before code.
+
+3. github.com/system-inc/cohere/internal/lint/rules/tailwind.ListenerKinds
+   File: tailwind_listener_kinds.a. 12 remaining consumers, zero final blockers alone.
+   After helper two passed, all six remote helper branches were fetched and
+   their complete claims read. This ties the unclaimed reader infrastructure
+   for the highest consumer count. Return all three kinds in Go's order and
+   allocate a fresh list each call. Claim precedes implementation.
+
+## Listener collision resolved before implementation
+
+Withdrawn: tailwind.ListenerKinds. Slot 03 c8bfb9c at 00:33:54 UTC precedes
+this slot 31b6537 at 00:34:09 UTC. No listener helper code was written here.
+
+3. github.com/system-inc/cohere/internal/lint/rules/tailwind.compiledClassLiteralReader
+   File: tailwind_compiled_reader.a. 12 remaining consumers, zero final blockers alone.
+   Refreshed every origin helper branch. This ties the unclaimed reader factory
+   and file cache for the highest consumer count. Preserve process-lifetime
+   sharing by settings key. The externally owned reader factory is a function
+   dependency; an explicit cache instance represents Go's process-global map.
+   Callers must share one instance per run. Claim pushed before implementation.
+
+## Continuation: next three helpers
+
+The first three delivered helpers are tested and pushed in 27ffb6a and ee19f71.
+Fetched every origin codex/lint-helpers* branch and read all complete claims.
+All greater-than-11 consumer symbols are reserved. These three tie at 11,
+the largest unclaimed count. Reserve this connected traversal set before code:
+
+4. github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues
+   File: slot04_wave2/attribute_values.a. 11 consumers. Preserve raw attribute
+   name text matching and initializer delegation with Attribute origin.
+5. github.com/system-inc/cohere/internal/lint/rules/tailwind.classValuesUnder
+   File: slot04_wave2/class_values_under.a. 11 consumers. Fresh result, false
+   outer edges and ordered collection, including nil and unsupported nodes.
+6. github.com/system-inc/cohere/internal/lint/rules/tailwind.collectClassValues
+   File: slot04_wave2/collect_class_values.a. 11 consumers. Exact value-position
+   traversal, append semantics, template records and inherited hole edges.
+
+One helper per .a file. External classLiteralFrom and holeEdges are explicit
+function dependencies, not duplicated implementations. Actual Go parser fields
+and actual dependency results supply the adapter. Node source and sanitized
+native compare against actual Go on every consumer corpus and shape controls.
+A compiling semantic mutant is required for each helper. No shared harness or
+registration generator edits; all continuation files live in slot04_wave2/.
+
+## Attribute collision resolved
+
+Withdrawn: attributeValues. Slot 01 ad07122 at 00:59:17 UTC precedes
+slot 03 5142004 and this slot 0582ef8 at 00:59:43 UTC. The local duplicate
+is excluded from delivery and not counted. Retain classValuesUnder and
+collectClassValues. All six remote branches were fetched and read again.
+Slot 02 reserves all three 10-consumer helpers. Slot 01 reserves decodeEntity
+and slot 03 reserves hexValue. Highest unclaimed symbol is therefore:
+
+4. github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText
+   File: slot04_wave2/unescape_string_literal_text.a. Nine remaining consumers.
+   Exact ampersand and first-semicolon scan, preserving failed references and
+   single-pass replacement. decodeEntity is an explicit function dependency
+   supplied by its separately owned helper. Compare actual Go on all consumer
+   sources and parser string fields plus entity/Unicode controls; Node source
+   and sanitized native, with a compiling semantic mutant. Claim precedes code.
+
+## Authentication recovery and text-scanner collision
+
+7904fda and 535bd31 are now pushed. Final all-branch refresh revealed slot 03
+c584145 claimed UnescapeStringLiteralText at 01:03:44 UTC, before our 502d072
+at 01:03:48 UTC. Withdraw that duplicate and remove its files from the final
+branch tree; its historical evidence is not counted as a delivered helper.
+classValuesUnder and collectClassValues retain unique ownership and are done.
+
+## Next batch
+
+All six origin helper branches fetched and every claim inspected. Every named
+helper above six consumers is reserved. The generic seven-consumer strict
+option item is per-rule work, not another named shared helper. Select these
+three independent/connected leaves among the highest unclaimed six-count tie:
+
+7. github.com/system-inc/cohere/internal/lint/ecmascript/jsx.StringAttributeValue
+   File: slot04_wave3/string_attribute_value.a. Six consumers. Preserve first
+   matching property semantics, including nonliteral stopping and decoded empty
+   strings. AttributeName, name matcher and unescape are explicit dependencies.
+8. github.com/system-inc/cohere/internal/lint/ecmascript/react.IsEs5ComponentCall
+   File: slot04_wave3/es5_component_call.a. Six consumers. Exact call/callee
+   kinds, skipped callee parentheses and React-only namespace. isIdentifierNamed
+   and the factory-name leaf are explicit dependencies.
+9. github.com/system-inc/cohere/internal/lint/ecmascript/react.isCreateClassName
+   File: slot04_wave3/create_class_name.a. Six consumers. Exact two names.
+
+Claim pushed before code. Real Go fixtures from every consumer, boundary
+controls, Node source, emitted JavaScript and sanitized native comparisons;
+compiling semantic mutants. Only slot-owned directories and this claim change.
+
+## Six-consumer collisions resolved
+
+Withdraw StringAttributeValue: slot 01 6ed891f at 01:19:38 UTC precedes
+slot 02 972f103 at 01:20:12 and our 2053731 at 01:20:22. Withdraw both
+IsEs5ComponentCall and isCreateClassName to slot 02's earlier 972f103.
+All three local Go/source Node/emitted JS/sanitized-native comparisons and
+six compiling mutants passed; these duplicates are excluded and not counted.
+
+Fetched all six branches again and checked complete claims. These three
+Collapse leaves remain unclaimed and tie at the highest available count, six:
+
+7. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isJavaScriptSpace
+   File: slot04_wave3_space/javascript_space.a. Six consumers. Exact Go rune
+   set, including BOM and U+2000..200A, rejecting NEL/zero-width space.
+8. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBlank
+   File: slot04_wave3_space/blank.a. Six consumers. Empty or all ECMAScript
+   whitespace; use the preceding owned predicate without trim substitution.
+9. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator
+   File: slot04_wave3_space/value_separator.a. Six consumers. Exact byte set,
+   distinct from whitespace and slash. Compare every byte and consumer bytes.
+
+Claim pushed before code. Exhaustive rune/byte domains, every consumer source
+and parsed literal, boundary strings, actual Go private helpers, Node source,
+emitted JavaScript, ASan/UBSan and compiling semantic mutants. No new shared
+harness or generator edits.
+origin/codex/lint-helpers-05 stage1/cohere/lint/helpers/claims/05.md
+# Slot 05
+
+Branch: codex/lint-helpers-05.
+
+Claimed before implementation:
+
+Withdrawn: react.isIdentifierNamed. Slots 01, 02, 03 and 05 raced before their branches were visible; slot 05 yields its duplicate. No identifier implementation will be delivered.
+
+Withdrawn: jsx.AttributeName. Slot 02 claim b25d3cd was committed one second before slot 05 claim b73ec42. Slot 05 yields; no duplicate helper delivered.
+
+1. github.com/system-inc/cohere/internal/lint/ecmascript/imports.BindingsOf (15 remaining rule consumers). File: slot05/import_bindings.a. Claimed before implementation. At refresh comments, react identifier, JSX ElementParts, JSX AttributeName and structure FileContextFor are reserved. Earliest claim commit wins a concurrent collision; later slots yield.
+
+Selection: fetched all origin codex/lint-helpers* branches and checked their claims. At reservation only origin/codex/lint-helpers existed and carried no claims. Counts are dependency removals, not complete rule implementations.
+
+## Ownership resolution
+
+All other identifier claimants have now withdrawn. The first identifier claim commit was slot 05 at 00:20:44 UTC (41a6089), before slot 03 at 00:20:46, slot 01 at 00:20:55 and slot 02 at 00:21:01. Slot 05 restores react.isIdentifierNamed under that earliest-commit rule and will deliver it as helper 1. No other slot should restore this claim. imports.BindingsOf remains reserved for helper 2, with no code yet written for it.
+
+3. github.com/system-inc/cohere/internal/lint/ecmascript/react.isComponentBase (14 remaining consumers). File: slot05/react_component_base.a. Selected after fetching and reading all six branch claims: property.Name and isComponentBaseName are reserved. This ties IsEs6ComponentClass for the most unclaimed consumers; choose its prerequisite first. Identifier implementation, Node/native parity and mutant passed before this reservation. Import binding implementation is written and its comparison is running. No component-base code precedes this push.
+
+## Final active ownership
+
+1. react.isIdentifierNamed, 25 consumers, first reserved by 41a6089 and definitively restored by 32385e2.
+2. imports.BindingsOf, 15 consumers, reserved by 024ba20.
+3. react.isComponentBase, 14 consumers, reserved by c4c5bb7 at 00:26:47 UTC, before slot 04 claim 8392118 at 00:26:54 UTC. Slot 05 retains it. The separately owned isComponentBaseName leaf is a function dependency, not copied into this helper.
+
+JSX AttributeName remains withdrawn. The earlier withdrawal of the identifier is superseded by the final active ownership above.
+
+## Second batch
+
+4. github.com/system-inc/cohere/internal/lint/rules/tailwind.NewClassLiteralReader
+   File: slot05/batch2/tailwind_new_reader.a. 12 remaining consumers.
+   Selected after fetching every origin codex/lint-helpers* branch and reading every claim. All higher-count symbols and the other six 12-consumer Tailwind prerequisites are reserved. Preserve deduplicated name maps, ordered successfully compiled patterns, invalid-pattern skipping, fresh unbound readers, and settings snapshot independence. Go regexp compilation is an explicit external dependency. Claim precedes code.
+
+Factory withdrawn: slot 01 c250b83 precedes slot 05 cba50e2. No duplicate factory implementation is delivered or counted.
+
+4. github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.readClassValues
+   File: slot05/batch2/tailwind_read_class_values.a. 11 consumers.
+   Refreshed and read claims from all six origin helper branches. Comments are reserved in shared HELPERS.md; all higher counts are reserved, as are JSX intrinsic matching, holeEdges and classValuesIn. This dispatcher ties remaining traversal helpers at the highest unclaimed count. Preserve nil/default empty values and exact JSX attribute/call/variable dispatch. The separately owned attributeValues, calleeValues and variableValues implementations are explicit callback dependencies, with their real Go results supplied by an oracle overlay. Claim pushed before code.
+
+5. github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.calleeValues
+   File: slot05/batch2/tailwind_callee_values.a. 11 consumers.
+   Dispatcher Go/Node/native comparison and compiled mutant passed. Refreshed every origin helper branch and inspected every claim. This ties the remaining Tailwind traversal helpers at the highest unclaimed count. Match only the callee's own Identifier text, require a present arguments list, collect all arguments in order with Callee origin and false edges. collectClassValues is an explicit callback dependency. Claim pushed before code.
+
+6. github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.variableValues
+   File: slot05/batch2/tailwind_variable_values.a. 11 consumers.
+   Refreshed every origin helper branch and read every claim while callee oracle checks run. This ties attributeValues, classValuesUnder and collectClassValues at the highest unclaimed count. Preserve the declaration/initializer and identifier-name guards, ordered regex matching with first-match short circuit, and Variable-origin classValuesUnder. Regex MatchString and classValuesUnder are explicit externally owned dependencies. Nil/wrong-kind inputs explicitly refuse like Go's private AST assertions. Claim pushed before code.
+
+Dispatcher withdrawn: slot 03 ce7f300 at 00:48:49 UTC precedes slot 05 dd9e8c3 at 00:48:53 UTC. Its local comparison and compiling mutant passed, but no duplicate dispatcher implementation is delivered or counted.
+
+## Retained continuation ownership
+
+- calleeValues: f5028c4, 11 consumers.
+- variableValues: 7b33442, 11 consumers.
+
+NewClassLiteralReader and readClassValues are withdrawn. Ahra's correction says to finish existing claims and claim nothing more. No replacement is reserved; the continuation stops with two uniquely owned helpers and reports the third slot blocked by an earlier reservation.
+
+## Third batch
+
+7. github.com/system-inc/cohere/internal/lint/ecmascript/jsx.MatchExactly
+   File: slot05/batch3/jsx_match_exactly.a. Seven consumers.
+   All six origin helper branches refreshed and claims inspected. All higher-count symbols are reserved; this exact comparator ties remaining seven-consumer helpers. Preserve exact strings including Unicode, NUL and empty inputs; real Go oracle, all consumer test-file literals, Node, sanitized native and compiling semantic mutant. Claim pushed before code. The latest user request authorizes new helpers after the retained claims were tested and pushed at bf07786.
+
+8. github.com/system-inc/cohere/internal/lint/ecmascript/imports.NormalizedFileName
+   File: slot05/batch3/imports_normalized_file_name.a. Seven consumers.
+   Exact matcher passed Go/Node/sanitized-native and its compiling mutant. Refetched all six remote helper branches and read every claim; this ties IsHookName and parameterNodes for the highest unclaimed implemented-symbol count. Preserve nil as empty and replace every backslash with slash, with no other path cleaning. Use actual Go SourceFile filenames, consumer literals and path controls; compiling mutant drops later replacements. Claim pushed before code.
+
+9. github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookName
+   File: slot05/batch3/react_is_hook_name.a. Seven consumers.
+   All six remote helper branches refreshed and claims inspected while filename checks run. All higher counts are reserved; this ties parameterNodes for the largest remaining unclaimed Go symbol. Preserve exact use prefix and Go Unicode uppercase classification, including non-ASCII and supplementary characters and rejecting digits. Generate a pinned Go Unicode range table inside the helper file; compare every scalar value and consumer source/decoded names against actual Go. Compiling mutant drops the non-ASCII uppercase path. Claim pushed before code.
+
+Third-batch collision resolution: slot 05 retains jsx.MatchExactly. Its 470ddd3 claim at 01:09:43 UTC precedes slot 03 be16b65 at 01:11:33 UTC (the latter commit records 19:11:33 at UTC-06:00). All three slot 05 third-batch helpers passed actual Go, Node source and sanitized native comparison, with compiling mutants caught. No fourth helper is claimed.

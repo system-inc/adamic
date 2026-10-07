@@ -1,0 +1,25 @@
+ok  	github.com/system-inc/cohere/internal/lint/rules/react	5.892s
+--- FAIL: TestUnknownClassFixturesActuallyRan (0.00s)
+    no_unknown_classes_test.go:584: no installed tailwindcss found from /Users/kirkouimet/Projects/ahra/app/_theme/styles, so every fixture in this file skipped and the package still reported ok. Either the search root is wrong or this machine has no Tailwind to test against; both need a human, and neither should read as a pass
+--- FAIL: TestConflictFixturesActuallyRan (0.00s)
+    no_conflicting_classes_test.go:453: no installed tailwindcss found from /Users/kirkouimet/Projects/ahra/app/_theme/styles, so every fixture in this file skipped and the package still reported ok. Either the search root is wrong or this machine has no Tailwind to test against; both need a human, and neither should read as a pass
+--- FAIL: TestConflictingClassesPlacementIsAccountedFor (0.24s)
+    live_placement_test.go:383: no-conflicting-classes: asked about 0 classes, resolved 0, reported 0 findings
+    live_placement_test.go:392: the rule resolved 0 classes to a property set and the corpus resolves 11,389; a population that dropped this far means a whole category of class stopped resolving, and the finding count below would be measuring its silence
+--- FAIL: TestCanonicalClassesPlacementIsAccountedFor (0.22s)
+    live_placement_test.go:277: enforce-canonical-classes: asked about 0 classes, placed 0, reported 0 findings
+    live_placement_test.go:279:   declined: 0 that read as static or arbitrary, 0 other
+    live_placement_test.go:287: the rule placed 0 classes and the corpus places 7,287; a population that dropped this far means a whole category of class stopped resolving to a root, and the finding count would be measuring that silence
+--- FAIL: TestClassOrderFixturesActuallyRan (0.00s)
+    enforce_consistent_class_order_test.go:736: no installed tailwindcss found from /Users/kirkouimet/Projects/ahra/app/_theme/styles, so every fixture in this file skipped and the package still reported ok. Either the search root is wrong or this machine has no Tailwind to test against; both need a human, and neither should read as a pass
+--- FAIL: TestCanonicalFixturesActuallyRan (0.00s)
+    enforce_canonical_classes_test.go:495: no installed tailwindcss found from /Users/kirkouimet/Projects/ahra/app/_theme/styles, so every fixture in this file skipped and the package still reported ok. Either the search root is wrong or this machine has no Tailwind to test against; both need a human, and neither should read as a pass
+--- FAIL: TestUnknownClassesPlacesEveryCorpusClass (0.32s)
+    live_placement_test.go:154: no-unknown-classes: asked about 0 classes, reported 0 as unknown
+    live_placement_test.go:162: the rule was asked about 0 classes and the corpus holds 11,314; a population that dropped this far means the corpus stopped loading, and the finding count below would be measuring an empty run
+--- FAIL: TestClassOrderLiveMatchesTheEngineOverTheCorpus (0.16s)
+    class_order_live_test.go:289: live rule vs the engine: 0 disagreeing pairs of 0 compared pairs across 0 lists (0 classes placed, 0 lists declined)
+    class_order_live_test.go:320: no pairs were compared, so this measured nothing
+FAIL
+FAIL	github.com/system-inc/cohere/internal/lint/rules/tailwind	10.223s
+FAIL
