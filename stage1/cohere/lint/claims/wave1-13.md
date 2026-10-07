@@ -32,3 +32,17 @@ The remaining selections are the first unclaimed entries in inventory.json's
 
 None is ported on fetched main or named by an existing origin claim.
 This claim update is committed and pushed before implementation.
+
+## Second continuation claim
+
+Fetched all origin heads on 2026-10-07, main ef3d907e. All 46 helper-ready
+names are already covered. Checked 39 distinct claims Markdown blobs on
+all origin branches. The first remaining syntax-ready inventory entries,
+absent from main selection sites and all branch claims, are:
+
+- @typescript-eslint/no-unnecessary-type-constraint: claimed here.
+- @typescript-eslint/prefer-as-const: claimed here.
+- @typescript-eslint/prefer-enum-initializers: claimed here.
+
+This claim is pushed before implementation. Full repair records will remain
+rule-owned; the shared single-edit/single-suggestion record is insufficient.
