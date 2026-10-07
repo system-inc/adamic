@@ -1,6 +1,0 @@
-{
-  "name": "structure-tailwind-no-physical-direction semantic comparison mutant",
-  "file": "rule.a",
-  "from": "parts.includes('rtl') || parts.includes('ltr')",
-  "to": "false"
-}

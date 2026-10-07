@@ -1,3 +1,0 @@
-// Pinned parser SyntaxKind values. The shared numeric driver consumes this declaration.
-// StringLiteral, NoSubstitutionTemplateLiteral, TemplateExpression
-export const syntaxKinds: readonly number[] = [10, 14, 229];

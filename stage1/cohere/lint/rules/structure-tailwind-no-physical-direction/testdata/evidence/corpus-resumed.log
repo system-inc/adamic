@@ -1,9 +1,0 @@
-=== RUN   TestSourceCorpora
-    port_test.go:300: corpus projected rule @eslint-community/eslint-comments/require-description: 214 files all three sides identical 12328594 bytes
-    port_test.go:300: corpus projected rule @next/next/google-font-display: 214 files all three sides identical 12277467 bytes
-    port_test.go:322: independent source probe side 0 passed; full independent corpus not certified
-    port_test.go:322: independent source probe side 1 passed; full independent corpus not certified
-    port_test.go:322: independent source probe side 2 passed; full independent corpus not certified
---- PASS: TestSourceCorpora (344.23s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction	344.247s

@@ -1,3 +1,39 @@
+Built: rebased onto area 7481e0324; dropped two losing rule copies and corrected the Google Font JSX witness suffix.
+Commits: tested rule tip ec857be9c; helper branch pushed at 2782874b4; final rule evidence commit follows.
+Checks: owned assertion PASS 28.663s, Tailwind/core/subscription/refusal PASS 40.745s; shared oracle FAIL 62.916s and corrected witness gate FAIL 2.929s.
+Mutants: four retained rule/core mutants and five numeric-sidecar mutants compile/run and are caught by comparison on all three backends.
+Not covered: complete landing readiness, full Google Font semantic rerun, full source corpus, live Tailwind resolver, multiple edits, arbitrary variable regex and complete repository gate.
+
+## Landed harness and deduplication, October 7
+
+Read the complete DEDUP_LEDGER.md before rebasing. Area 7481e0324 contains main 39638d9e2. Kept the winning wave1-01 Google Font copy and unique assertion/Tailwind candidates. Removed our require-description and physical-direction directories because wave1-05 wins both. Kept area's baseline rule and shared harness snapshots exactly: zero diff in context.ts, finding.ts, main.ts, registry, lint_test.go or testdata/oracle.go. No batch-only row explicitly assigns a rule to slot 01; no new batch rule or helper was claimed. Both branches are pushed only to their own names.
+
+Commands, output redirected to the retained logs:
+
+    bash cloud/setup.sh
+    source /workspace/adamic-tools/env.sh
+    go test ./stage1/cohere/lint/rules/typescript-consistent-type-assertions ./stage1/cohere/lint/rules/better-tailwindcss-no-deprecated-classes -run '^TestAssertions$|^TestNumericListeners$|^TestDecisionCores$|^TestListeners$|^TestRefusals$' -count=1 -timeout 15m -v
+    go test ./stage1/cohere/lint -run '^TestRulesAgree$|^TestOwnedWitnesses$' -count=1 -timeout 15m -v
+    go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1 -timeout 15m -v
+
+The shared TestRulesAgree still passes unrelated no-labels allowLoop options to our strict consistent-type-assertions Go decoder and fails with json: unknown field "allowLoop". Stack: shared collect in cohere/adamic_lint_oracle.go calls oracleConsistentTypeAssertionsOptions. Do not weaken the strict decoder. The first witness gate correctly exposed our .ts-suffixed JSX witness; renamed it to witness.tsx.txt. The retry passes the Google Font Go nonzero witness check, then fails because the no-unknown-classes witness produces no Go findings without its live design system. The retry never reaches the full three-backend witness comparison. Neither shared failure is green or a full rule certificate. No shared harness edits made; landing is still blocked, and no new helper is taken.
+
+Scoped parity: assertion 196 projected fixtures, 193 independent non-JSX sources, 44,254 identical bytes/backend; Tailwind 1,001 core observations/184,433 bytes, 51 supported listener fixtures/17,695 bytes and five independent sources. Three multiple-edit cases excluded. Old owned assertion driver still deliberately refuses its three JSX fixtures; this does not imply the landed production JSX parser is missing. Unknown-class core certifies the missing-system/exemption decision only. Regex provider and multiple-edit refusals remain explicit, so the Tailwind rules are partial and are not certified under the latest regex requirement.
+
+Nine mutants: assertion equal precedence > becomes >=; deprecation major-version boundary < becomes <=; duplicate first-occurrence guard inverted; unknown nil-system guard inverted; one extra-zero sidecar kind inserted for each of the five retained rules. All compile and execute before only byte comparison catches the change on source Node, emitted JavaScript and ASan/UBSan native. The numeric sidecars are historical Go enum contracts, not actual stage1 registry dispatch or a claimed numeric parser API. Actual rule.json subscriptions use named ast kinds. Full Google Font semantic mutant was not rerun in this refresh; old evidence was in the dropped losing directory and is preserved in landing-backup-wave1-01-before-area and its pushed parent.
+
+Fixture timings include process startup, Go parses sources while Node/native consume projected AST; these are not full lint speed comparisons:
+
+| Rule | Native findings/s | Node findings/s | Go findings/s |
+| --- | ---: | ---: | ---: |
+| consistent-type-assertions | 207.76 | 539.83 | 8414.19 |
+| no-deprecated-classes | 325.83 | 146.77 | 3077.92 |
+| no-duplicate-classes | 259.64 | 117.04 | 2497.92 |
+
+No fresh Google Font or unknown-class finding rate is reported. Setup initially failed on our ignored old capture-log directories, preserved narrowly in /tmp after inspection. Retry: Go/clang/Node/submodule ready 0s, cache warm and total 17s; nproc 5. Automatic review rejected a broad untracked-directory sweep; no such sweep ran. Current helper branch passes all eight contracts and seventeen compiling mutants, but zero complete rules are claimed unblocked.
+
+## Historical evidence before the landed harness
+
 Built: rebased the existing lint unit onto origin/main e011f8f6; no new helper reserved.
 Commits: d6b4f388 is the tested code tip; this report and logs follow it.
 Checks: owned fixture/core/refusal oracles pass, uncached input oracle passes, registry passes; shared TestRulesAgree fails.

@@ -15,7 +15,7 @@ import (
 
 // Not parallel: sequential sanitizer builds bound memory across declaration mutants.
 func TestNumericListeners(t *testing.T) {
-	slugs := []string{"typescript-consistent-type-assertions", "structure-tailwind-no-physical-direction", "eslint-comments-require-description", "next-google-font-display", "better-tailwindcss-no-deprecated-classes", "better-tailwindcss-no-duplicate-classes", "better-tailwindcss-no-unknown-classes"}
+	slugs := []string{"typescript-consistent-type-assertions", "next-google-font-display", "better-tailwindcss-no-deprecated-classes", "better-tailwindcss-no-duplicate-classes", "better-tailwindcss-no-unknown-classes"}
 	kinds := map[string]int{}
 	for kind := syntax.Kind(0); kind < syntax.KindCount; kind++ {
 		kinds[strings.TrimPrefix(kind.String(), "Kind")] = int(kind)
