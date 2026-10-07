@@ -847,11 +847,44 @@ Cast counts use the assertions ledger at
 This unit does not repeat that classification. The ledger partitions 4,101 sites:
 208 upcasts, 16 as const, 136 tagged union downcasts, 1,178 structural interface
 downcasts without a tag, 10 as unknown as nodes, and 2,553 other sites. Of other,
-1,842 are tagged narrowings outside a partitioned union. That is a candidate
-bucket, not an exact base-interface count; the ledger does not separately count
-class downcasts. Its locations and field names supply the census, without claiming
+1,842 are tagged narrowings outside a partitioned union. The original ledger
+alone does not give an exact base-interface count or separately count classes. Its locations and field names supply the census, without claiming
 that a TypeScript assignability result proves an Adamic construction invariant.
 The old counts in this document describe their own historical corpus only.
+
+The follow-up requested by the lead refines only the 2,553 other sites using the
+same pinned stock compiler, source hashes, source offsets and checked types.
+`stage3/interface-downcasts/refine-other.cjs`, `other-summary.json` and
+`other-locations.tsv` retain the procedure, cross-tab and every location. Declared
+ancestry means explicit extends chains, not merely structural assignability.
+
+| Refinement of other | Sites |
+| --- | ---: |
+| Tagged declared base-interface downcast | 1,758 |
+| Tagged interface-union narrowing without a valid partition | 57 |
+| Tagged composite, generic or mapped narrowing | 25 |
+| Tagged tuple narrowing | 2 |
+| Other structural or union narrowing | 255 |
+| Type-parameter narrowing | 3 |
+| Nullish removal to interface | 6 |
+| Non-assignable assertion | 343 |
+| Any involved | 104 |
+| Declared class downcast | 0 |
+
+The 1,758 include 1,497 single-interface targets and 261 unions of declared
+subinterfaces; 1,757 narrow kind and one narrows operator. Node-to-Identifier
+alone occurs 27 times here. The 57 union cases still need a construction invariant
+for open members: a tag cannot partition payload refinements the source does not
+promise. Of the 25 tagged composite/generic/mapped cases, 24 narrow kind and one
+isTypeOnly; they include staged Node-to-Mutable<Identifier> construction,
+BindableObjectDefinePropertyCall intersections, and Node-to-T generic assertions.
+The two tuple cases narrow length to zero. These require their own payload,
+mutability or generic proof and are not additional directly declared subtype
+pairs. The 255 remaining narrowings have source/target forms recorded individually;
+interface targets there can arise from mixed unions or mapped/intersection views,
+not a single declared base-interface pair. The 104 any cases erase information
+needed to certify a subtype relationship. Zero class downcasts applies to this
+other-bucket refinement, not a new classification of the entire census.
 
 Observation from that branch's `logs/kind-soundness.json`: a genuine factory
 PlusToken held as Node has its kind changed through Mutable<Node> to Identifier.
