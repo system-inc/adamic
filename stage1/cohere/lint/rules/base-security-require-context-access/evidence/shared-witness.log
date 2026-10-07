@@ -1,0 +1,15 @@
+=== RUN   TestOwnedWitnesses
+    registration_test.go:37: /tmp/adamic-gate/TestOwnedWitnesses1705605433/001/oracle [--manifest /tmp/adamic-gate/TestOwnedWitnesses1705605433/022/manifest.txt --count]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/TestOwnedWitnesses1705605433/021/next-google-font-display-0.ts: ['>' expected. ',' expected. Variable declaration expected. Expression expected. Expression expected.]
+        
+        goroutine 1 [running]:
+        main.collect({0x22a7b0012770, 0x4f}, {0x22a7b0059d60?, 0x1?}, {0x22a7b0330280, 0x5, 0x8})
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:91 +0x6c5
+        main.run({0x22a7b0012770?, 0x6f?}, 0x1, 0x22a7b030e280)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:143 +0x2f7
+--- FAIL: TestOwnedWitnesses (5.85s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	5.856s
+FAIL

@@ -1,0 +1,3 @@
+mutant context_access_alias_lost caught by all three comparisons
+benchmark {'rule': 'base/security-require-context-access', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.008239032999881601, 0.008579725999879884, 0.009775100000297243], 'findingsPerSecond': 23310.767733468412}, {'backend': 'Node', 'findings': 200, 'seconds': [0.18882636099988304, 0.1947507199993197, 0.18370648099971731], 'findingsPerSecond': 1059.1741478305769}, {'backend': 'native', 'findings': 200, 'seconds': [0.674101827999948, 0.6650908950005032, 0.6804575239993937], 'findingsPerSecond': 296.6910809208122}]}
+post validation complete

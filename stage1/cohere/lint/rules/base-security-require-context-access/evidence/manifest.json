@@ -1,0 +1,15 @@
+{
+  "cohereCommit": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "fixtureCases": 54,
+  "canonicalBytes": 15596,
+  "canonicalSha256": "15dee83aa8a5c634699663667864d31fc79899ec4d7c715cd6f054255a41bb2f",
+  "sources": {
+    "validation.ts": "1af773dcfc002fdced80775e6f856b38420ce913b93152a6c7d855e4be46171a",
+    "rule.ts": "e313bf687d4e1d53cf3a1f23bb2bf981efcc84ad072083ff65b17cd8fdad79a2",
+    "options_validation.ts": "5d0628699fde2fe0336bf07a62e98eeceb2e922fd429082b560624d3f3d5f787",
+    "options.ts": "70864352a0c3b09382fae6f379a66f5a4da37857c8d11fec60d82ab51acc9e9a",
+    "messages.ts": "9f88d19871f52dbd92c376f5728105390530198bd069d6901cd53addf90ccf2a"
+  },
+  "optionsCases": 26,
+  "independentPositiveScope": "shared parser refuses decorated parameters; no positive raw-source findings comparison credited"
+}

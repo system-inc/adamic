@@ -1,0 +1,12 @@
+{
+  "name": "base/security-require-context-access",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleContextAccess",
+  "upstreamPackage": "base",
+  "upstreamTest": "TestContextRequiresAccess"
+}

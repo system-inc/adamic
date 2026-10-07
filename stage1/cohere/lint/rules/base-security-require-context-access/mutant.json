@@ -1,0 +1,6 @@
+{
+  "name": "context_access_alias_lost",
+  "file": "rule.ts",
+  "from": "aliases.get(surface) ?? surface",
+  "to": "surface"
+}

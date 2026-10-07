@@ -1,0 +1,49 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	core "github.com/system-inc/cohere/internal/lint/rules/base"
+	"os"
+ "sort"
+	"strings"
+	"unicode/utf16"
+)
+
+func written(s string) string {
+	var b strings.Builder
+	for _, r := range s {
+		if r >= 32 && r <= 126 && r != '\\' {
+			b.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&b, `\u%04x`, r)
+		} else {
+			h, l := utf16.EncodeRune(r)
+			fmt.Fprintf(&b, `\u%04x\u%04x`, h, l)
+		}
+	}
+	return b.String()
+}
+func main() {
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var cases []string
+	if err = json.Unmarshal(data, &cases); err != nil {
+		panic(err)
+	}
+	for _, raw := range cases {
+		value, err := core.DecodeContextRequiresAccessOptions([]byte(raw))
+		if err != nil {
+			fmt.Println("invalid")
+			continue
+		}
+		fmt.Println("valid")
+        options := value.(core.SecurityRequireContextAccessOptions)
+        requirements := map[string][]string{}
+        for _, row := range options.Requirements { requirements[row.ContextKey] = row.RequiresAny }
+        keys := []string{}; for key := range requirements { keys = append(keys, key) }; sort.Strings(keys)
+        for _, key := range keys { fmt.Println("key\t"+written(key)); for _, value := range requirements[key] { fmt.Println("requires\t"+written(value)) } }
+    }
+}

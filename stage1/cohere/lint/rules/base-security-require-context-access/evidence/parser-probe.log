@@ -1,0 +1,27 @@
+{
+  "cases": 54,
+  "rules": {
+    "base/security-require-context-access": 54
+  },
+  "JSXExcluded": 0,
+  "backends": [
+    {
+      "exit": 70,
+      "stderrBytes": 116,
+      "name": "Node",
+      "equal": false
+    },
+    {
+      "exit": 70,
+      "stderrBytes": 116,
+      "name": "emitted",
+      "equal": false
+    },
+    {
+      "exit": 70,
+      "stderrBytes": 116,
+      "name": "native",
+      "equal": false
+    }
+  ]
+}

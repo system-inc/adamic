@@ -1,0 +1,2 @@
+import { AccountRequestContextKey as AK } from 'x';
+class A { m(@InjectRequestContext(AK) a: string) {} }
