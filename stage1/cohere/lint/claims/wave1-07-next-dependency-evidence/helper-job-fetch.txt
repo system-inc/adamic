@@ -1,0 +1,93 @@
+From https://github.com/system-inc/adamic
+   55f3eac6..689f30bc  apple/bridge            -> origin/apple/bridge
+ * [new branch]        cloud/integrate-fixes-3 -> origin/cloud/integrate-fixes-3
+ * [new branch]        cloud/integrate-s2-2    -> origin/cloud/integrate-s2-2
+   af9d76ed..dc1cd6b0  cloud/integrate-s3-1    -> origin/cloud/integrate-s3-1
+ * [new branch]        cloud/integrate-s3-2    -> origin/cloud/integrate-s3-2
+   21385619..0ca1fbda  cloud/json-decode       -> origin/cloud/json-decode
+ * [new branch]        codex/async-ordinary    -> origin/codex/async-ordinary
+ * [new branch]        codex/fallthrough-and-implicit-returns -> origin/codex/fallthrough-and-implicit-returns
+   f7d62772..40973847  codex/flag-enums        -> origin/codex/flag-enums
+   ae90a539..7545a010  codex/host-buffer-crypto -> origin/codex/host-buffer-crypto
+   f5702191..aa987b30  codex/host-fs-directory -> origin/codex/host-fs-directory
+ * [new branch]        codex/host-node-types   -> origin/codex/host-node-types
+ * [new branch]        codex/host-promises     -> origin/codex/host-promises
+ * [new branch]        codex/import-cycles     -> origin/codex/import-cycles
+ * [new branch]        codex/interface-downcasts -> origin/codex/interface-downcasts
+   8280e521..380fd46f  codex/library-map-set-2 -> origin/codex/library-map-set-2
+   6769b88e..95100eb4  codex/lint-helpers      -> origin/codex/lint-helpers
+   c0932914..c42bf9f5  codex/lint-helpers-01   -> origin/codex/lint-helpers-01
+   c332c147..9aff573c  codex/lint-helpers-02   -> origin/codex/lint-helpers-02
+   e3c2fbe4..c06493f0  codex/lint-helpers-03   -> origin/codex/lint-helpers-03
+   5344a94f..8890cfce  codex/lint-helpers-04   -> origin/codex/lint-helpers-04
+   37d5108b..2a267300  codex/lint-helpers-05   -> origin/codex/lint-helpers-05
+   7dedddb3..f7b92cb3  codex/lint-wave1-01     -> origin/codex/lint-wave1-01
+   1a6167f9..aba098eb  codex/lint-wave1-02     -> origin/codex/lint-wave1-02
+   b293c569..8815a3f9  codex/lint-wave1-05     -> origin/codex/lint-wave1-05
+   88417969..b6bd1641  codex/lint-wave1-07     -> origin/codex/lint-wave1-07
+   52acfe02..a7ff8948  codex/lint-wave1-09     -> origin/codex/lint-wave1-09
+   9b082b6d..e9066bff  codex/lint-wave1-10     -> origin/codex/lint-wave1-10
+   605581bc..0fe63020  codex/lint-wave1-11     -> origin/codex/lint-wave1-11
+   4fb908d9..3451deb2  codex/lint-wave1-12     -> origin/codex/lint-wave1-12
+   ed7fd892..fcce3b2d  codex/lint-wave1-15     -> origin/codex/lint-wave1-15
+   ce8a2acf..ebc4704f  codex/namespaces-tsc    -> origin/codex/namespaces-tsc
+   289d6870..e05e5415  codex/non-null-check    -> origin/codex/non-null-check
+   11a7fb9f..7e2bc734  codex/records-lowering  -> origin/codex/records-lowering
+ * [new branch]        codex/require-builtins  -> origin/codex/require-builtins
+   2573b3bb..2693ac10  codex/stage1-command    -> origin/codex/stage1-command
+   cc1ba3bc..4973271a  codex/stage1-estree     -> origin/codex/stage1-estree
+   595caf11..7edaad5e  codex/stage1-lint-batch6-perf -> origin/codex/stage1-lint-batch6-perf
+ * [new branch]        codex/stage3-contracts  -> origin/codex/stage3-contracts
+ * [new branch]        codex/stage3-contracts-ledger -> origin/codex/stage3-contracts-ledger
+ * [new branch]        codex/stage3-diagnostics-oracle -> origin/codex/stage3-diagnostics-oracle
+ * [new branch]        codex/stage3-explicit-any -> origin/codex/stage3-explicit-any
+ * [new branch]        codex/stage3-fixtures-assertions -> origin/codex/stage3-fixtures-assertions
+ * [new branch]        codex/stage3-fixtures-cycles -> origin/codex/stage3-fixtures-cycles
+ * [new branch]        codex/stage3-fixtures-enums -> origin/codex/stage3-fixtures-enums
+ * [new branch]        codex/stage3-fixtures-host -> origin/codex/stage3-fixtures-host
+ * [new branch]        codex/stage3-fixtures-namespaces -> origin/codex/stage3-fixtures-namespaces
+ * [new branch]        codex/stage3-fixtures-nested-functions -> origin/codex/stage3-fixtures-nested-functions
+ * [new branch]        codex/stage3-fixtures-objects -> origin/codex/stage3-fixtures-objects
+ * [new branch]        codex/stage3-fixtures-predicates -> origin/codex/stage3-fixtures-predicates
+ * [new branch]        codex/stage3-fixtures-records -> origin/codex/stage3-fixtures-records
+ * [new branch]        codex/stage3-fixtures-runner -> origin/codex/stage3-fixtures-runner
+ * [new branch]        codex/stage3-fixtures-taste -> origin/codex/stage3-fixtures-taste
+ * [new branch]        codex/stage3-indexed-reads -> origin/codex/stage3-indexed-reads
+ * [new branch]        codex/stage3-latent-census -> origin/codex/stage3-latent-census
+ * [new branch]        codex/stage3-parser-proof -> origin/codex/stage3-parser-proof
+ * [new branch]        codex/stage3-regex-captures -> origin/codex/stage3-regex-captures
+ * [new branch]        codex/stage3-scanner-proof -> origin/codex/stage3-scanner-proof
+ * [new branch]        codex/tsc-cycle-census  -> origin/codex/tsc-cycle-census
+   98f1cd32..6252e44c  codex/typeaware-wave-01 -> origin/codex/typeaware-wave-01
+   0a3a176e..ff7f6c9e  codex/typeaware-wave-02 -> origin/codex/typeaware-wave-02
+   eb012d3e..c2758b18  codex/typeaware-wave-03 -> origin/codex/typeaware-wave-03
+   21e9e37c..cd471e5f  codex/typeaware-wave-04 -> origin/codex/typeaware-wave-04
+   948dd987..e6553fc8  codex/typeaware-wave-05 -> origin/codex/typeaware-wave-05
+   df75b525..d0dc8c2c  codex/typeaware-wave-06 -> origin/codex/typeaware-wave-06
+   158557b6..87ebb321  codex/typeaware-wave-07 -> origin/codex/typeaware-wave-07
+   7330620a..f1488562  codex/typeaware-wave-08 -> origin/codex/typeaware-wave-08
+   c5647eb1..aa8aca95  codex/typeaware-wave-09 -> origin/codex/typeaware-wave-09
+   72718a9d..93916207  codex/typeaware-wave-10 -> origin/codex/typeaware-wave-10
+   5598cab4..5e14644c  codex/typeaware-wave-11 -> origin/codex/typeaware-wave-11
+   5da49595..acb1ff7c  codex/typeaware-wave-12 -> origin/codex/typeaware-wave-12
+   a215986d..756d7ea9  codex/typeaware-wave-13 -> origin/codex/typeaware-wave-13
+   350d4776..6f236b82  codex/typeaware-wave-14 -> origin/codex/typeaware-wave-14
+   90d8706a..5ebe19e4  codex/typeaware-wave-15 -> origin/codex/typeaware-wave-15
+   72eff2c5..58d204d3  codex/typeaware-wave-16 -> origin/codex/typeaware-wave-16
+   dd9c6958..ca3ed859  codex/typeaware-wave-17 -> origin/codex/typeaware-wave-17
+   c6d9d07f..eb1251ab  codex/typeaware-wave-18 -> origin/codex/typeaware-wave-18
+   f4e4aa3b..8845163b  codex/typeaware-wave-19 -> origin/codex/typeaware-wave-19
+   deb33e49..1ef7ed97  codex/typeaware-wave-20 -> origin/codex/typeaware-wave-20
+   84c0240f..6af00212  codex/typeaware-wave-21 -> origin/codex/typeaware-wave-21
+   712cddd7..7f3b9262  codex/typeaware-wave-22 -> origin/codex/typeaware-wave-22
+   ac619f54..c47e2d1e  codex/typeaware-wave-23 -> origin/codex/typeaware-wave-23
+   cce6c361..09bf947b  codex/typeaware-wave-24 -> origin/codex/typeaware-wave-24
+   abdad124..056799e9  codex/typeaware-wave-25 -> origin/codex/typeaware-wave-25
+   135bbbc7..8180b758  codex/typeaware-wave-26 -> origin/codex/typeaware-wave-26
+   c0cd6875..24d4f417  codex/typeaware-wave-27 -> origin/codex/typeaware-wave-27
+   612007a4..431ab666  codex/typeaware-wave-28 -> origin/codex/typeaware-wave-28
+   c5c8437d..7f4eabb8  codex/typeaware-wave-29 -> origin/codex/typeaware-wave-29
+   e08f357f..a6c2a932  codex/typeaware-wave-30 -> origin/codex/typeaware-wave-30
+ * [new branch]        compiler/private-generic-2 -> origin/compiler/private-generic-2
+ * [new branch]        coverage/proven-guards-relations -> origin/coverage/proven-guards-relations
+   ef3d907e..e011f8f6  main                    -> origin/main
