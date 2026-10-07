@@ -49,6 +49,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
@@ -171,7 +172,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	}
 	emitter.statements(program.Main)
 	builder.WriteString(emitter.out.String())
-	return builder.String()
+	code := builder.String()
+	if strings.Contains(code, "adamicNodeFSFile.") {
+		code = "import * as adamicNodeFSFile from 'node:fs';\n" + code
+	}
+	return code
 }
 
 type emitter struct {
@@ -558,6 +563,8 @@ var operators = map[ir.Operator]string{
 // as the IR means, so nesting expressions keeps every order the native backend makes explicit.
 func (e *emitter) value(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.NodeFSFile:
+		return e.nodeFSFile(expression)
 	case ir.RegExpNew:
 		if expression.Arguments != nil {
 			return "new RegExp(" + e.values(expression.Arguments) + ")"
@@ -580,6 +587,10 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Array) + "?.[" + quote(expression.Name) + "]"
 		}
 		return e.value(expression.Array) + "[" + quote(expression.Name) + "]"
+	case ir.HasProperty:
+		return "(" + quote(expression.Name) + " in " + e.value(expression.Object) + ")"
+	case ir.DynamicProperty:
+		return "(" + e.value(expression.Object) + ")[" + quote(expression.Name) + "]"
 	case ir.Null:
 		return "null"
 	case ir.IsNull:
@@ -731,6 +742,8 @@ func (e *emitter) value(expression ir.Expression) string {
 			return "String.fromCodePoint(" + codes + ")"
 		}
 		return "String.fromCharCode(" + codes + ")"
+	case ir.NodeBufferCall:
+		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:

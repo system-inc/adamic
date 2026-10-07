@@ -57,9 +57,6 @@ func TestArrayPredicateDoesNotMisclassifyNativeTuples(t *testing.T) {
 func TestUnknownArrayPredicateRefusesUnrepresentedObservations(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`function test(value: unknown): string { return typeof value; }`,
-		`function test(value: unknown): boolean { return value === null; }`,
-		`function test(value: unknown): unknown { return value; }`,
 		`function test(value: unknown): unknown { if (Array.isArray(value)) return value[0]; return undefined; }`,
 		`function test(value: unknown): boolean { return Array.isArray(value); } const pair: [number, string] = [1, 'x']; console.log(String(test(pair)));`,
 	} {
@@ -67,6 +64,21 @@ func TestUnknownArrayPredicateRefusesUnrepresentedObservations(t *testing.T) {
 		var notYet *NotYet
 		if !errors.As(err, &notYet) {
 			t.Fatalf("%s: want named representation refusal, got %v", source, err)
+		}
+	}
+}
+
+func TestArrayPredicateCoexistsWithUnknownReflection(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		`function test(value: unknown): string { return typeof value; }`,
+		`function test(value: unknown): boolean { return value === null; }`,
+		`function test(value: unknown): unknown { return value; }`,
+		`function errorCode(error: unknown): string | undefined { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined; }`,
+		`function isArray(value: unknown): value is readonly unknown[] { return Array.isArray(value); } function length(value: unknown): number { if (isArray(value)) return value.length; return -1; }`,
+	} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Fatalf("%s: %v", source, err)
 		}
 	}
 }

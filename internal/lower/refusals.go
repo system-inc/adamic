@@ -35,7 +35,6 @@ var refusals = map[ast.Kind]refusal{
 var refusedOperators = map[ast.Kind]refusal{
 	ast.KindEqualsEqualsToken:      {"==", "use ===, which doesn't coerce"},
 	ast.KindExclamationEqualsToken: {"!=", "use !==, which doesn't coerce"},
-	ast.KindInKeyword:              {"in", "an object's shape is known; use a discriminant, or a Map"},
 }
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
@@ -63,6 +62,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if found != nil {
+			return true
+		}
+		if err := l.nodeLibraryRefusal(node); err != nil {
+			found = err
 			return true
 		}
 		if refused, isRefused := refusals[node.Kind]; isRefused {
@@ -119,6 +122,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			// JavaScript's arguments object, not a variable the program named arguments.
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
 				found = &Refused{Where: l.program.Where(node), What: "arguments", Fix: "name the parameters, or take a rest parameter"}
+				return true
+			}
+		}
+		if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !called(node) {
+			if err := l.nodeBufferUnsupportedUse(node); err != nil {
+				found = err
 				return true
 			}
 		}
