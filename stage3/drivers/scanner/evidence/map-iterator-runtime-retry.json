@@ -1,0 +1,63 @@
+{
+  "result": "red: non-null typed-array assignment target",
+  "scratch_commit": "662f876ce01e1ca9a4753d763020b36b0fad32bd",
+  "compiler_pins": {
+    "host-blockers": "cd220dd5",
+    "runtime": "1836fc27ef547a42c9c4d43c498e69cc1eea0990",
+    "imported-const-case": "c9d885d79e10c6e0b404a9b6e9f3529f9e9b3412",
+    "library-array-holes": "f05aec3cee91d2ce3bfced6d341865933ec28da1"
+  },
+  "runtime_integration": "Isolated first-parent typed-array feature patch, as disclosed in uint16-runtime-retry.json; all preceding features preserved.",
+  "latest_merge_conflict": "Only generated internal/oracle/counts.md, retained scratch table; no lowering conflict.",
+  "compiler_build_exit": 0,
+  "commands": [
+    "go build -o /workspace/scratch/scanner-case-fix-adamic ./cmd/adamic",
+    "ADAMIC_NATIVE_SPLIT=0 /workspace/scratch/scanner-case-fix-adamic build /workspace/scratch/scanner-latest-preflight-run/main.a -o /workspace/scratch/scanner-map-iterator-scanner-0",
+    "ADAMIC_NATIVE_SPLIT=1 /workspace/scratch/scanner-case-fix-adamic build /workspace/scratch/scanner-latest-preflight-run/main.a -o /workspace/scratch/scanner-map-iterator-scanner-1"
+  ],
+  "builds": {
+    "0": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/scanner-latest-preflight-run/adapted/src/compiler/utilities.ts:76:9: stage 0 can't lower assigning to a NonNullExpression yet\n"
+    },
+    "1": {
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/scanner-latest-preflight-run/adapted/src/compiler/utilities.ts:76:9: stage 0 can't lower assigning to a NonNullExpression yet\n"
+    }
+  },
+  "probes": {
+    "map-union-iterator-binding": {
+      "Node": {
+        "exit": 0,
+        "stdout": "one:1\ntext:x\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "diagnostic": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "one:1\ntext:x\n",
+        "stderr": ""
+      },
+      "one_byte_mutant_diff_exit": 1
+    },
+    "typed-array-nonnull-write": {
+      "Node": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "diagnostic": "adamic: /workspace/adamic/stage3/drivers/scanner/probes/typed-array-nonnull-write.a:4:1: stage 0 can't lower assigning to a NonNullExpression yet\n"
+      }
+    }
+  },
+  "slice_audit": "PASS: 168 byte-identical source spans; 79 ordered module import lists\n",
+  "discovery_order": "Does not fully hold: after Map iterators and Uint16 construction, a typed-array NonNullExpression assignment target stops first, ahead of the nested-overload panic. Earlier discovery stubbed all of parsePseudoBigInt and therefore hid this assignment. No validated source modified.",
+  "previous_Node_reference": "Unchanged 1,369,432 tokens, 466 errors; reused, no new full Node run.",
+  "scanner_native_comparison": "Unavailable: no scanner C or binary.",
+  "metrics": "Unavailable before C emission; nproc 5."
+}

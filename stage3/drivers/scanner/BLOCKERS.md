@@ -1,5 +1,39 @@
 # Scanner blockers
 
+## October 7: Map iteration and Uint16 constructor fixed; non-null write stops first
+
+Merged host-blockers cd220dd5 into the scratch with runtime 1836fc27's
+Uint16Array feature. Scratch SHA: 662f876c. Only generated counts conflicted;
+no lowering conflict in this latest merge. Runtime integration's isolated patch
+resolution remains explicitly disclosed in `evidence/uint16-runtime-retry.json`.
+
+Both ADAMIC_NATIVE_SPLIT=0 and =1 builds of the untouched validated slice stop
+at utilities.ts:76:9 (upstream utilities.ts:10502, with slice checked-index
+adaptation on the target):
+
+```text
+stage 0 can't lower assigning to a NonNullExpression yet
+```
+
+Minimal probe: `probes/typed-array-nonnull-write.a`, `segments[0]! = 1`.
+Source Node prints `1`; native refuses at 4:1 with the same diagnostic.
+Required feature: lower assignment through the checked non-null element target
+without losing its typed-array store or bounds check. This representation-specific
+NotYet is not separately named in REPORT.md.
+
+The unchanged map-union-iterator-binding probe now builds and prints `one:1`
+and `text:x`, matching source Node stdout, stderr and exit. Its one-byte native
+stdout mutant is caught. The unchanged Uint16 constructor probe was already green
+in the preceding evidence. Slice audit passes; no stubs in these real builds.
+
+The discovery order does not fully hold: this write stops before the nested
+overload panic. Earlier discovery stubbed the entire parsePseudoBigInt body to
+bypass Uint16Array, so it hid these adapted assignment targets. The ten later
+stops remain discovery observations, not a claim that this new stop is absent.
+No scanner C/binary, token diff or metrics are available. Expanded Node reference
+is unchanged and reused, with no fresh full scanner Node run claimed.
+Exact commands/results: `evidence/map-iterator-runtime-retry.json`.
+
 ## October 7: Uint16Array probe fixed; bigint writes stay in range
 
 Runtime 1836fc27 is integrated in unpushed scratch 0c328304, using an isolated
