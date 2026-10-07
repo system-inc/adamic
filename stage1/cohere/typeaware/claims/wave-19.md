@@ -106,3 +106,7 @@ Integration remains pending: four dispatch lines in wave_19_third/registration.p
 ## Current landing checkpoint
 
 All nine algorithms are rebased onto area/stage1-lint b84a9d931, containing main c7991b900, and pass fresh Go parity normally and sanitized. The latest three rule.json kinds use ast.Kind names, superseding the historical numeric-descriptor notes above. Shared checker context/linking and the seven dispatch lines remain pending. No new claim is added: the refreshed 197-rule ranking has no available rule. See wave_19_third/CURRENT_LANDING_REPORT.md for commands, mutation receipts and fresh timing.
+
+## Typeof compiler landing checkpoint
+
+All nine algorithms are rebased onto lint integration d3a37422c, containing main b6b1538b0, rebuilt with the new typeof classifier and green against Go normally and sanitized. Six latest native mutants, released-handle mutations and the integration typeof Node mutations were checked again. No new claims: all 197 ranked rules are excluded by ports or reservations. Shared checker context/linking remains pending. See wave_19_third/TYPEOF_LANDING_REPORT.md for evidence and native versus Go timing.
