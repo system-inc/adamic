@@ -1010,3 +1010,42 @@ refuses Named & Counted at value, so zero pairs/reads are complete. Native and
 JavaScript package tests pass; lower retains the documented mixed-array adapter
 failure. The lane-owned component work, six executable mutants and exact blocker
 handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.
+
+### Dictionary boxed-record helper checkpoint after ba59427c
+
+The dictionary lane supplies `runtime/view_dictionaries.c/.h` and
+`javascript.DictionaryRuntime()`. Native `adamic_view_dictionary_read` consumes
+only source-certified existing records whose table values use existing union
+boxes (`reference_values=true`). It classifies each selected box at the read,
+checks a logical-kind mask and returns a borrowed normalized value with the
+nonzero child contract on reference results. JavaScript's corresponding helper
+checks an own data property without invoking getters. Neither scans unread keys.
+Native null has no distinct boxed encoding yet and stays unsupported.
+
+Shared wiring remains required: a source-certified record producer, descriptor
+registration ahead of unsupportedViewFamily's dictionary fallback, record IR and
+indexed-read dispatch, and propagation of the result's child contract. Existing
+raw scalar records must keep their current representation; they cannot be passed
+as boxed_storage=true on the word of a target cast. Shared source dispatch must
+retain deferred refusals until the complete producer/read path exists.
+
+The lazy census reports 18 dictionary-contract pairs / 174 candidate reads and
+14 dictionary-read pairs / 66 candidate reads; their deduplicated union is 29
+pairs / 228 reads. This is a candidate table, not exact runtime reachability.
+ADAPTED-CENSUS.md explicitly says runtime reachability is unmeasured while
+checker diagnostics prevent production IR. Do not replace that Unknown with zero
+or claim exact pair completion from component evidence.
+
+`internal/lower/view_dictionaries.go` now declares viewDictionaryContractHook and
+prepares recursive index/named-field descriptors, rolling back new ids on failure.
+The root remains Unsupported dictionary source dispatch until shared source
+wiring is complete. New records are not created by this helper. It does not change
+refusals.go's unconditional index-signature rule or install a read dispatcher.
+The native helper currently supports broad kind membership on source-certified
+boxed tables; finite literals and full array/callable/union/null contracts require
+their complete owning adapters, never a kind-mask shortcut.
+
+Revised whole-family working date: October 19, 2026 at 23:00 UTC, conditional
+on source producer and shared dispatch handoffs by October 9. Group1.md records
+the proven helper paths and all unimplemented source obligations. Candidate
+progress remains 29 / 228, with exact production reachability unmeasured.
