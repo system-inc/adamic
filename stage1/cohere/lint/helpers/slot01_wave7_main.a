@@ -4,8 +4,7 @@ import { collapseNewTable } from './collapse_new_table.a';
 import type { CollapseTableReading } from './collapse_new_table.a';
 import { collapseIngestThemeBlock } from './collapse_ingest_theme_block.a';
 import type { CollapseThemeNode } from './collapse_ingest_theme_block.a';
-import type { CollapseUtilitySlice } from './collapse_ingest_utility_block.a';
-import { collapseIngestUtilityBlock } from './collapse_ingest_utility_block.a';
+import { tailwindDissectClass } from './tailwind_dissect_class.a';
 const args = programArguments();
 const file = readTextFile(args[0] ?? panic('fixture path'));
 if (file.kind === 'Error') { panic(file.message); }
@@ -42,6 +41,13 @@ for (const line of file.text.split('\n')) {
     const root = json.parse();
     if (root < 0) { panic(json.error); }
     const fields = json.node(root).children;
+    if (args[1] === 'dissect') {
+        const result = tailwindDissectClass(json.node(fields[0] ?? panic('class')).text);
+        console.log(units(result.variants));
+        console.log(units(result.base));
+        console.log(`${result.important}`);
+        continue;
+    }
     if (args[1] === 'table') {
         if (json.node(fields[0] ?? panic('tag')).text === 'metadata') {
             for (const index of json.node(fields[1] ?? panic('base names')).children) {
@@ -174,35 +180,5 @@ for (const line of file.text.split('\n')) {
         for (const call of calls) { console.log(call); }
         continue;
     }
-    const state = { roots: new Map<string, number>(), definitions: [] as { readonly name: string; readonly nodes: CollapseUtilitySlice }[], statics: new Map<string, CollapseUtilitySlice>() };
-    const bodies: { values: number[]; length: number; capacity: number }[] = [];
-    const queries: string[] = [];
-    for (const child of json.node(fields[1] ?? panic('queries')).children) { queries.push(json.node(child).text); }
-    const observe = (error: string) => {
-        console.log(units(error));
-        console.log(`${state.roots.size} ${state.definitions.length}`);
-        for (const query of queries) {
-            const body = state.statics.get(query) ?? { values: [] as readonly number[], length: 0, capacity: 0 };
-            let output = `${state.roots.get(query) ?? 0} ${body.length} ${body.capacity}`;
-            for (let index = 0; index < body.length; index++) { output += ` ${body.values[index] ?? panic('body value')}`; }
-            console.log(output);
-        }
-        for (const definition of state.definitions) {
-            let output = `${units(definition.name)} ${definition.nodes.length} ${definition.nodes.capacity}`;
-            for (let index = 0; index < definition.nodes.length; index++) { output += ` ${definition.nodes.values[index] ?? panic('definition value')}`; }
-            console.log(output);
-        }
-    };
-    for (const child of json.node(fields[0] ?? panic('rows')).children) {
-        const row = json.node(child).children;
-        const raw = json.node(row[0] ?? panic('raw')).text;
-        const trimmed = json.node(row[1] ?? panic('trimmed')).text;
-        const body: number[] = [];
-        for (const value of json.node(row[2] ?? panic('body')).children) { body.push(Number(json.node(value).text)); }
-        const header = { values: body, length: body.length, capacity: body.length };
-        bodies.push(header);
-        observe(collapseIngestUtilityBlock(state, raw, header, 'fixture.css', value => { if (value !== raw) { panic('trim argument'); } return trimmed; }));
-    }
-    for (const body of bodies) { body.values[0] = 99; body.length = 0; body.capacity = 0; }
-    observe('');
+    panic('unknown mode');
 }

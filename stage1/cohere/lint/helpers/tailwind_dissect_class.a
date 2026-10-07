@@ -1,0 +1,10 @@
+// This is Go's last-colon split, including colons inside brackets and escaped text.
+export function tailwindDissectClass(className: string): { readonly variants: string; readonly base: string; readonly important: boolean } {
+    let variants = '';
+    let base = className;
+    const colon = base.lastIndexOf(':');
+    if (colon >= 0) { variants = base.slice(0, colon + 1); base = base.slice(colon + 1); }
+    let important = false;
+    if (base.endsWith('!')) { important = true; base = base.slice(0, -1); }
+    return { variants, base, important };
+}

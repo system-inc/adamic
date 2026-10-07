@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	tailwind "github.com/system-inc/cohere/internal/lint/rules/tailwind"
 	collapse "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse"
 	goast "go/ast"
 	goparser "go/parser"
@@ -94,7 +95,7 @@ func main() {
 		fixtureCount += found
 	}
 
-	sources = append(sources, "", "foo", "foo-*", "-*", "*", "foo-*-*", "\u00a0foo\u3000", "foo bar", "é𝒜", "foo\u200b", "initial", "not-custom")
+	sources = append(sources, "", "foo", "foo-*", "-*", "*", "foo-*-*", "\u00a0foo\u3000", "foo bar", "é𝒜", "foo\u200b", "initial", "not-custom", "sm:hover:flex-grow-2!", "hover:!flex", "!flex!", "x:y:!!", ":", "!", "[color:red]!", "[&:hover]:flex", "é𝒜:值!!", "a\\:b:c!")
 	if os.Args[4] == "table" {
 		metadata := collapse.AdamicWave7TableMetadata()
 		must(encode.Encode(metadata))
@@ -112,7 +113,7 @@ func main() {
 		return
 	}
 	for _, source := range sources {
-		input, actual := collapse.AdamicWave7Utility(source)
+		input, actual := tailwind.AdamicWave7Dissect(source)
 		if os.Args[4] == "theme" {
 			input, actual = collapse.AdamicWave7Theme(source)
 		}
@@ -121,5 +122,5 @@ func main() {
 			fmt.Fprintln(expected, line)
 		}
 	}
-	fmt.Fprintf(os.Stderr, "%d fixture strings; %d utility collector batches\n", fixtureCount, len(sources))
+	fmt.Fprintf(os.Stderr, "%d fixture strings; %d helper batches\n", fixtureCount, len(sources))
 }

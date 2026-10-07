@@ -59,6 +59,14 @@ func slot01Wave7Fixture(t *testing.T, dependency string, consumers int, mode str
 	if len(paths) != consumers {
 		t.Fatalf("consumer ledger drift: %d", len(paths))
 	}
+	if mode == "dissect" {
+		// Its defining rule is outside the frozen blocked cohort; exercise its direct fixture too.
+		extra := filepath.Join(root, "internal/lint/rules/tailwind/no_deprecated_classes_test.go")
+		if _, err := os.Stat(extra); err != nil {
+			t.Fatal(err)
+		}
+		paths = append(paths, extra)
+	}
 	directory := t.TempDir()
 	manifest, _ := json.Marshal(paths)
 	manifestPath := filepath.Join(directory, "manifest.json")
@@ -122,6 +130,13 @@ func slot01Wave7Fixture(t *testing.T, dependency string, consumers int, mode str
 		}
 		overlay, _ = json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_slot01_wave7.go"): bridge, livePath: traced}})
 	}
+	var configuration struct{ Replace map[string]string }
+	if err := json.Unmarshal(overlay, &configuration); err != nil {
+		t.Fatal(err)
+	}
+	bridgeTailwind, _ := filepath.Abs("testdata/slot01_wave7_tailwind.go")
+	configuration.Replace[filepath.Join(root, "internal/lint/rules/tailwind/adamic_slot01_wave7.go")] = bridgeTailwind
+	overlay, _ = json.Marshal(configuration)
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
@@ -155,7 +170,11 @@ func slot01Wave7Fixture(t *testing.T, dependency string, consumers int, mode str
 }
 func slot01Wave7Check(t *testing.T, dependency, mode, file, old, replacement string) {
 	t.Helper()
-	cases, want := slot01Wave7Fixture(t, dependency, 6, mode)
+	count := 6
+	if mode == "dissect" {
+		count = 5
+	}
+	cases, want := slot01Wave7Fixture(t, dependency, count, mode)
 	entry, _ := filepath.Abs("slot01_wave7_main.a")
 	runner, _ := filepath.Abs("../../../../oracle/node.mjs")
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, cases, mode), want)
@@ -163,7 +182,7 @@ func slot01Wave7Check(t *testing.T, dependency, mode, file, old, replacement str
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, mode), want)
 	t.Logf("%d Go output lines matched source Node, sanitized native and emitted JavaScript", bytes.Count(want, []byte("\n")))
 	dir := t.TempDir()
-	for _, name := range []string{"slot01_wave7_main.a", "collapse_ingest_utility_block.a", "collapse_ingest_theme_block.a", "collapse_new_table.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave7_main.a", "tailwind_dissect_class.a", "collapse_ingest_theme_block.a", "collapse_new_table.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -192,15 +211,6 @@ func slot01Wave7Check(t *testing.T, dependency, mode, file, old, replacement str
 }
 
 // Not parallel: bounded consumer capture and sanitizer builds.
-func TestSlot01Wave7UtilityMatchesCohere(t *testing.T) {
-	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "(collector.roots.get(root) ?? 0) | kind", "kind")
-}
-func TestSlot01Wave7UtilityBodyMutant(t *testing.T) {
-	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "collector.statics.set(root, { values: nodes.values, length: nodes.length, capacity: nodes.capacity });", "collector.statics.set(root, { values: nodes.values.slice(), length: nodes.length, capacity: nodes.capacity });")
-}
-func TestSlot01Wave7UtilityNameMutant(t *testing.T) {
-	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "root.includes('*')", "false")
-}
 
 // Not parallel: actual Go visitor observations and sanitized compiler builds.
 func TestSlot01Wave7ThemeMatchesCohere(t *testing.T) {
@@ -251,9 +261,13 @@ func TestSlot01Wave7TableBackingShareMutant(t *testing.T) {
 	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable", "table", "collapse_new_table.a", "values: reading.order.values", "values: reading.order.values.slice()")
 }
 
-func TestSlot01Wave7UtilityHeaderMutant(t *testing.T) {
-	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "collector.statics.set(root, { values: nodes.values, length: nodes.length, capacity: nodes.capacity });", "collector.statics.set(root, nodes);")
+// Not parallel: bounded consumer captures and sanitizer builds.
+func TestSlot01Wave7DissectMatchesCohere(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind.dissectClass", "dissect", "tailwind_dissect_class.a", "base.lastIndexOf(':')", "base.indexOf(':')")
 }
-func TestSlot01Wave7UtilityFunctionalHeaderMutant(t *testing.T) {
-	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*stylesheetCollector.ingestUtilityBlock", "utility", "collapse_ingest_utility_block.a", "nodes: { values: nodes.values, length: nodes.length, capacity: nodes.capacity }", "nodes")
+func TestSlot01Wave7DissectSuffixMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind.dissectClass", "dissect", "tailwind_dissect_class.a", "base.endsWith('!')", "base.startsWith('!')")
+}
+func TestSlot01Wave7DissectColonMutant(t *testing.T) {
+	slot01Wave7Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind.dissectClass", "dissect", "tailwind_dissect_class.a", "variants = base.slice(0, colon + 1)", "variants = base.slice(0, colon)")
 }
