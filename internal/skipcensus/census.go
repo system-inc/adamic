@@ -29,6 +29,8 @@ type Row struct {
 	Message   string   `json:"message"`
 	Class     string   `json:"class"`
 	Provides  string   `json:"provides"`
+	OptInOn   []string `json:"opt_in_on,omitempty"`
+	OptInOff  []string `json:"opt_in_off,omitempty"`
 }
 
 type function struct {
@@ -244,6 +246,9 @@ func Scan(root string) ([]Row, error) {
 			row.ID = fmt.Sprintf("%s:%x", strings.Join(row.Callers, ","), sum[:])
 		}
 	}
+	if err := optInAnnotations(root, rows); err != nil {
+		return nil, err
+	}
 	sort.Slice(rows, func(i, j int) bool {
 		if rows[i].File != rows[j].File {
 			return rows[i].File < rows[j].File
@@ -283,6 +288,9 @@ func Validate(actual, declared []Row) error {
 		case "required-input", "measurement", "not-applicable", "opt-in-lane":
 		default:
 			return fmt.Errorf("invalid class for %s", k)
+		}
+		if len(r.OptInOn) > 0 && r.Class != "required-input" {
+			return fmt.Errorf("skip after opt-in %s (%s) must be required-input", k, strings.Join(r.OptInOn, ", "))
 		}
 		if r.Provides == "" {
 			return fmt.Errorf("missing provision or rationale for %s", k)

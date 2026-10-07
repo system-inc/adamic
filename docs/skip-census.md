@@ -42,10 +42,20 @@ read expressions retain symbolic paths rather than inventing concrete filenames.
 inputs. `measurement` covers opt-in throughput and profile comparisons, never a
 replacement for correctness. `not-applicable` states a platform or CPU witness
 that cannot run on this host. `opt-in-lane` declares a verification lane selected
-on its own shard, or its explicit fixture scope; it is not a benchmark. GCC uses
+on its own shard while its opt-in is off; it is not a benchmark. GCC uses
 ADAMIC_GCC_LANE=1 and the shipping-build lane uses ADAMIC_RELEASE_LANE=1.
-Their missing tools are failures after opt-in. Release runs restrict their scope
-to fixtures that finish on Node; ordinary oracle verification covers the others.
+After opt-in, missing prerequisites and fixture-scope exclusions fail the test,
+preserving the original diagnostic. A lane that cannot verify a selected fixture
+must report failure rather than a green result with a skip.
+
+The AST scanner records `opt_in_off` for environment guards that disable a lane
+and `opt_in_on` for skips reached after such a guard, including nested callbacks
+and direct helpers. It resolves constant keys and local Getenv aliases, and
+recognizes `Getenv(key) != "1"` and `Getenv(key) == ""`. TestCensus requires every
+row reached after opt-in to be `required-input`, regardless of the variable name
+or whether the caller is a benchmark. Source-derived annotations are compared
+with the table, so removing an annotation cannot bypass this rule. Platform
+skips before opt-in remain classified by their actual applicability.
 Provisioning details are in [gate-inputs.md](gate-inputs.md).
 No result cache is added: ADAMIC_GATE_UNCACHED=1 and ordinary mode compute the
 same answers directly from source and log.
