@@ -305,6 +305,11 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
 		return 0, l.notYet(node, "an array of unknown with erased element storage (retain its declared element type before reading elements)")
 	}
+	if literal := ast.SkipParentheses(node); element.Flags()&checker.TypeFlagsNever != 0 && literal.Kind == ast.KindArrayLiteralExpression && len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 {
+		// A never[] literal has no slots. Its array identity is real, but no
+		// element representation is read or written until a concrete view uses it.
+		return ir.Number, nil
+	}
 	valueType, isKnown := l.kept(element)
 	if !isKnown || (slotless(valueType) && valueType != ir.Union) {
 		// An element is one adamic_value, and number | undefined needs two words.

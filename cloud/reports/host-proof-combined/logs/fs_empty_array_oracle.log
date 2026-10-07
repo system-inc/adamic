@@ -1,0 +1,73 @@
+=== RUN   TestEmptyArrayRuntimeMutants
+=== PAUSE TestEmptyArrayRuntimeMutants
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestEmptyArrayRuntimeMutants
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestEmptyArrayRuntimeMutants/empty_array_is_falsy
+=== PAUSE TestEmptyArrayRuntimeMutants/empty_array_is_falsy
+=== RUN   TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared
+=== PAUSE TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared
+=== CONT  TestEmptyArrayRuntimeMutants/empty_array_is_falsy
+=== CONT  TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared
+    empty_arrays_test.go:86: gate cache node hit
+    empty_arrays_test.go:89: Node caught fresh number array is shared: "0 0 true true\ntrue true\ntrue false\n9 freshfresh\n1 0 true\ntrue true\ntrue 0 2 1\n1\n"
+=== NAME  TestEmptyArrayRuntimeMutants/empty_array_is_falsy
+    empty_arrays_test.go:86: gate cache node hit
+    empty_arrays_test.go:89: Node caught empty array is falsy: "0 0 true true\ntrue true\nfalse true\n9 freshfresh\n0 0 false\ntrue true\ntrue 0 2 1\n0\n"
+--- PASS: TestEmptyArrayRuntimeMutants (0.01s)
+    --- PASS: TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared (0.59s)
+    --- PASS: TestEmptyArrayRuntimeMutants/empty_array_is_falsy (0.64s)
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+    oracle_test.go:610: gate cache native miss
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a
+    oracle_test.go:636: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+    oracle_test.go:636: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+    oracle_test.go:622: gate cache native miss
+    oracle_test.go:636: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/native-generic-empty-array.a (0.95s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a (1.34s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a (2.10s)
+PASS
+gate cache: native hits=3 misses=9
+gate cache: node hits=2 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.177s

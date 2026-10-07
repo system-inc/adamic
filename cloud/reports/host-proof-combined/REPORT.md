@@ -30,7 +30,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 22_createHash_fallback.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 23_newLine.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 24_useCaseSensitiveFileNames.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 25_readDirectory.a | Checker | Checker | Refused | Refused | never viewed as generic U at 579:22 | Compiler |
+| 25_readDirectory.a | Checker | Checker | Refused | Refused | overload type predicate without proving body at 628:59 | Compiler |
 
 Fixture 25 passes checking on both backends. Exact next diagnostic:
 ```
@@ -210,3 +210,19 @@ Command: `go test ./internal/flow -run '^(TestEveryFunctionIsInSingleAssignment|
 Distinct failing fixtures: non_null_write_array.a, non_null_write_field.a, non_null_write_local.a, non_null_write_logical.a, non_null_write_typed_array.a, non_null_write_union_logical.a. Owner: compiler. Verified one-line reproduction on both backends (1:71): `function update(value: number | string | boolean | undefined): void { value! ||= 7; console.log(`${value}`); } update(0);`.
 
 Targeted lower tests PASS 1.428s; incoming deinitialization readiness and impossible-assertion oracle tests PASS 2.013s. Executed mutant dropping the standalone exemption: TestStandaloneDeinitializationUsesReadiness fails with the exact-nullish refusal; restored the source. All 25 adapted host fixtures rerun on both backends: 22/25 agree with Node; 05/13 remain green, 14 still capture-cycle Refused, 08 and 25 unchanged. Pristine count 16/25 is the immediately preceding recount, not rerun in this step. No full gate, WASI rerun, macOS run or full Linux counts regeneration. No runtime implementation changes.
+
+## Generic empty-array recount
+
+Merged compiler 4e022aae with a merge commit; conflicts preserve erased-unknown element refusal alongside the incoming empty-never-literal proof, and both fixture count families. Source tree remains exactly audited 0d11046e. All 25 original and adapted fixtures rerun on both backends: 22/25 adapted, 16/25 pristine agree byte-for-byte with fresh Node. 05/13/11/24 remain green; 08 and 14 unchanged.
+
+25 advances past never-as-U but remains Refused on both backends at 628:59:
+
+```
+adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:628:59: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+```
+
+Verified one-line probe in probes/25_overload_predicate.a on both backends, same diagnostic at 1:59. Owner: compiler.
+
+Targeted lower empty-array and unknown-array tests PASS 0.234s. Incoming focused Node oracle and both semantic runtime mutants PASS 2.177s: empty-array-falsy and shared-fresh-number-array mutants finish with exit 0 and no sanitizer errors, caught solely by Node stdout. The incoming scalar fallback test assumed scalar OR was unsupported; this combined proof already supports it via taste-not-soundness. Reconciled its assertion to require accepted scalar truthiness and forbid the array-specific Coalesce representation. Both backends agree with Node (`7 missing 2 present`) on the scalar probe. Widening the array-only condition to all scalar OR fails that assertion; source restored. Initial direct JS probe failed to resolve the runtime module, then passed with oracle/node.mjs; the tool failure is retained in the logs. No production semantic workaround added.
+
+No full repository gate, full counts regeneration, flow rerun or WASI rerun in this compiler-only step; no runtime calls added. Previous four flow failures remain the recorded logical-assignment blockers. Only proof branch pushed; no main/area push, force or rebase.

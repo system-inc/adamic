@@ -336,11 +336,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:579:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:628:59: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
     },
     "javascript": {
       "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:579:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:628:59: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
     }
   }
 ]

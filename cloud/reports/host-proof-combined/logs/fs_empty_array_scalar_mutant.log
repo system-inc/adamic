@@ -1,0 +1,5 @@
+--- FAIL: TestEmptyArrayScalarFallbacksUseTruthiness (0.03s)
+    empty_arrays_test.go:68: scalar || used the array-only coalescing proof
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.041s
+FAIL

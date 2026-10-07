@@ -642,6 +642,11 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			return l.coalesce(node)
 		}
+		if binary.OperatorToken.Kind == ast.KindBarBarToken && l.arrayOrUndefined(l.checker.GetTypeAtLocation(binary.Left)) {
+			// Every array, including [], is truthy. Only undefined takes the
+			// fallback, so the existing lazy coalescing operation is exact here.
+			return l.coalesce(node)
+		}
 		if binary.OperatorToken.Kind == ast.KindInstanceOfKeyword {
 			if lowered, isCaught := l.caughtInstanceOfError(node); isCaught {
 				return lowered, nil
