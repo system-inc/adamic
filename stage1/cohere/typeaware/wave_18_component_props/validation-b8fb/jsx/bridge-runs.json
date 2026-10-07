@@ -1,0 +1,104 @@
+[
+  {
+    "name": "released-build",
+    "command": [
+      "/workspace/wave18-jsx-reproduce/adamic",
+      "build",
+      "/workspace/wave18-jsx-reproduce/released.a",
+      "-o",
+      "/workspace/wave18-jsx-reproduce/released",
+      "--tsgo",
+      "/workspace/wave18-jsx-reproduce/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 3.4953423379993183
+  },
+  {
+    "name": "released-run",
+    "command": [
+      "/workspace/wave18-jsx-reproduce/released",
+      "/workspace/wave18-jsx-reproduce/tsconfig.json",
+      "/workspace/wave18-jsx-reproduce/control-000.tsx"
+    ],
+    "exit": 70,
+    "seconds": 0.05834780899749603
+  },
+  {
+    "name": "numeric-question-archive",
+    "command": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-overlay",
+      "/workspace/wave18-jsx-reproduce/numeric-question.json",
+      "-o",
+      "/workspace/wave18-jsx-reproduce/numeric-question.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "seconds": 10.352394079000078
+  },
+  {
+    "name": "numeric-question-build",
+    "command": [
+      "/workspace/wave18-jsx-reproduce/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_18_jsx/main.a",
+      "-o",
+      "/workspace/wave18-jsx-reproduce/numeric-question-mutant",
+      "--tsgo",
+      "/workspace/wave18-jsx-reproduce/numeric-question.a"
+    ],
+    "exit": 0,
+    "seconds": 3.6692608339981234
+  },
+  {
+    "name": "numeric-question-run",
+    "command": [
+      "/workspace/wave18-jsx-reproduce/numeric-question-mutant",
+      "/workspace/wave18-jsx-reproduce/tsconfig.json",
+      "/workspace/wave18-jsx-reproduce/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.07388552500196965
+  },
+  {
+    "name": "stale-registry-archive",
+    "command": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-overlay",
+      "/workspace/wave18-jsx-reproduce/stale-registry.json",
+      "-o",
+      "/workspace/wave18-jsx-reproduce/stale-registry.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "seconds": 5.866137050001271
+  },
+  {
+    "name": "stale-registry-build",
+    "command": [
+      "/workspace/wave18-jsx-reproduce/adamic",
+      "build",
+      "/workspace/wave18-jsx-reproduce/released.a",
+      "-o",
+      "/workspace/wave18-jsx-reproduce/stale-registry-mutant",
+      "--tsgo",
+      "/workspace/wave18-jsx-reproduce/stale-registry.a"
+    ],
+    "exit": 0,
+    "seconds": 3.553915936998237
+  },
+  {
+    "name": "stale-registry-run",
+    "command": [
+      "/workspace/wave18-jsx-reproduce/stale-registry-mutant",
+      "/workspace/wave18-jsx-reproduce/tsconfig.json",
+      "/workspace/wave18-jsx-reproduce/control-000.tsx"
+    ],
+    "exit": 0,
+    "seconds": 0.057508325000526384
+  }
+]

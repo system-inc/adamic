@@ -198,3 +198,12 @@ Final pair complete at 5e8c9523e4969be8796e645523a63cf98d4aa546. Both rules matc
 sanitizers. Per-rule byte-only mutants and new-question released-handle checks
 pass. See wave_18_component_props/REPORT.md. No unclaimed ranked rule remains;
 the four previously parked analysis claims retain their named blockers.
+
+## Landing on main b8fb957aa
+
+All wave-18 work rebased onto fetched main b8fb957aa and re-green at
+ae1ceca5abf421d09d59f05656424707a9b9500b. Six suites, both rebuilt standalone groups, sanitizers,
+mutants, bridge, parked reporters, production Go, vet and filtered uncached Node
+pass. Refreshed 587-ref audit finds no unclaimed ranked rule. Four analysis
+claims remain parked with their prior blockers. See
+wave_18_component_props/LANDING_B8FB_REPORT.md and validation-b8fb.

@@ -1,0 +1,97 @@
+{
+  "tested_commit": "ae1ceca5abf421d09d59f05656424707a9b9500b",
+  "base": "b8fb957aa839a9e8cb0b54279dd9864fa317bd30",
+  "suites": [
+    [
+      "TestWave18ConstructorAgreementAndMutants",
+      "79.76"
+    ],
+    [
+      "TestWave18CoreAgreementAndMutants",
+      "84.58"
+    ],
+    [
+      "TestWave18PreferenceAgreementAndMutants",
+      "101.29"
+    ],
+    [
+      "TestWave18ReactCores",
+      "457.19"
+    ],
+    [
+      "TestWave18AgreementAndMutants",
+      "98.92"
+    ],
+    [
+      "TestWave18TitleWithJsxSlice",
+      "51.39"
+    ]
+  ],
+  "mutants": [
+    "wave_18_constructor_test.go:126: new-func mutant: exit 0, empty stderr, Go byte oracle caught byte 1100",
+    "wave_18_constructor_test.go:126: native-nonconstructor mutant: exit 0, empty stderr, Go byte oracle caught byte 11255",
+    "wave_18_constructor_test.go:126: new-wrappers mutant: exit 0, empty stderr, Go byte oracle caught byte 13042",
+    "wave_18_constructor_test.go:169: released registry mutant caught: expected stale handle panic, got <nil>",
+    "wave_18_core_test.go:120: class-assign mutant: exit 0, empty stderr, Go byte oracle caught byte 47",
+    "wave_18_core_test.go:120: const-assign mutant: exit 0, empty stderr, Go byte oracle caught byte 560",
+    "wave_18_core_test.go:120: constant-binary mutant: exit 0, empty stderr, Go byte oracle caught byte 41361",
+    "wave_18_core_test.go:163: released registry mutant caught: expected stale handle panic, got <nil>",
+    "wave_18_preference_test.go:144: promise mutant: exit 0, empty stderr, Go byte oracle caught byte 1593",
+    "wave_18_preference_test.go:144: regex mutant: exit 0, empty stderr, Go byte oracle caught byte 32342",
+    "wave_18_preference_test.go:144: rest mutant: exit 0, empty stderr, Go byte oracle caught byte 21969",
+    "wave_18_preference_test.go:154: regex grammar mutant: exit 0, empty stderr, byte oracle caught byte 32254",
+    "wave_18_preference_test.go:197: released registry mutant caught: expected stale handle panic, got <nil>",
+    "wave_18_react_cores_test.go:176: render-unconditional: exit 0, empty stderr; independent complete-byte comparison catches byte 400",
+    "wave_18_react_cores_test.go:176: effect-setter: exit 0, empty stderr; independent complete-byte comparison catches byte 1507",
+    "wave_18_react_cores_test.go:176: static-creator: exit 0, empty stderr; independent complete-byte comparison catches byte 50",
+    "wave_18_react_cores_test.go:218: adjacency-row alias mutant: exit 0, empty stderr; byte comparison catches byte 3067",
+    "wave_18_test.go:123: await mutant: exit 0, empty stderr, Go byte oracle caught byte 47",
+    "wave_18_test.go:123: class mutant: exit 0, empty stderr, Go byte oracle caught byte 4344",
+    "wave_18_test.go:139: iteration-facts mutant: exit 0, empty stderr, Go byte oracle caught byte 1662",
+    "wave_18_test.go:139: base-facts mutant: exit 0, empty stderr, Go byte oracle caught byte 7707",
+    "wave_18_test.go:195: released registry mutant caught: expected stale handle panic, got <nil>",
+    "wave_18_title_test.go:105: title mutant exit 0 empty stderr: byte oracle caught byte 50",
+    "fragments: compiled, exit 0, empty stderr; Go byte comparison catches byte 446",
+    "undef: compiled, exit 0, empty stderr; Go byte comparison catches byte 8288",
+    "adjacent: compiled, exit 0, empty stderr; Go byte comparison catches byte 27811",
+    "PASS: complete records, options, byte-only rule mutants, corpora and sanitizers",
+    "numeric question: compiled, exit 0, empty stderr; Go byte comparison catches byte 53",
+    "stale registry: compiled, exit 0, empty stderr; required exit-70 contract catches mutant",
+    "placement: compiled, exit 0, empty stderr; Go byte comparison catches byte 5981",
+    "style: compiled, exit 0, empty stderr; Go byte comparison catches byte 321",
+    "PASS: complete records, options, byte-only rule mutants, corpora and sanitizers",
+    "numeric question: compiled, exit 0, empty stderr; Go byte comparison catches byte 49",
+    "stale registry: compiled, exit 0, empty stderr; required exit-70 contract catches mutant",
+    "set_state_in_effect: rendering mutant caught by Go bytes; removed refusal caught by required exit 70",
+    "set_state_in_render: rendering mutant caught by Go bytes; removed refusal caught by required exit 70",
+    "static_components: rendering mutant caught by Go bytes; removed refusal caught by required exit 70"
+  ],
+  "median_seconds": {
+    "wave_18_constructor_test.go/repository/native": 0.261209,
+    "wave_18_constructor_test.go/repository/go": 0.155295,
+    "wave_18_constructor_test.go/compiler/native": 1.654201,
+    "wave_18_constructor_test.go/compiler/go": 0.322869,
+    "wave_18_core_test.go/repository/native": 0.368041,
+    "wave_18_core_test.go/repository/go": 0.165141,
+    "wave_18_core_test.go/compiler/native": 2.141404,
+    "wave_18_core_test.go/compiler/go": 0.373993,
+    "wave_18_preference_test.go/repository/native": 0.238964,
+    "wave_18_preference_test.go/repository/go": 0.129202,
+    "wave_18_preference_test.go/compiler/native": 2.020467,
+    "wave_18_preference_test.go/compiler/go": 0.37905,
+    "wave_18_test.go/repository/native": 0.252405,
+    "wave_18_test.go/repository/go": 0.151037,
+    "wave_18_test.go/compiler/native": 1.496911,
+    "wave_18_test.go/compiler/go": 0.310981,
+    "wave_18_title_test.go/repository/native": 0.226033,
+    "wave_18_title_test.go/repository/go": 0.135088,
+    "wave_18_title_test.go/compiler/native": 1.502792,
+    "wave_18_title_test.go/compiler/go": 0.305998
+  },
+  "selection": {
+    "refs": 587,
+    "claim_blobs": 33,
+    "remaining": [],
+    "base": "b8fb957aa839a9e8cb0b54279dd9864fa317bd30"
+  }
+}

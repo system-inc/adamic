@@ -1,0 +1,534 @@
+[
+  {
+    "name": "stage0-build",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/wave18-component/adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 2.0810128470002383
+  },
+  {
+    "name": "oracle-build",
+    "command": [
+      "go",
+      "-C",
+      "/workspace/adamic/cohere",
+      "build",
+      "-overlay",
+      "/workspace/wave18-component/overlay.json",
+      "-o",
+      "/workspace/wave18-component/oracle",
+      "/workspace/adamic/cohere/adamic_wave18component_oracle.go"
+    ],
+    "exit": 0,
+    "seconds": 0.1176085070001136
+  },
+  {
+    "name": "filter",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/all-controls.manifest",
+      "--valid-sources"
+    ],
+    "exit": 0,
+    "seconds": 0.08335089600223
+  },
+  {
+    "name": "checker-build",
+    "command": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave18-component/checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "seconds": 2.1570929730005446
+  },
+  {
+    "name": "native-build",
+    "command": [
+      "/workspace/wave18-component/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_18_component_props/main.a",
+      "-o",
+      "/workspace/wave18-component/native",
+      "--tsgo",
+      "/workspace/wave18-component/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 3.5357180120008707
+  },
+  {
+    "name": "checker-asan-build",
+    "command": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave18-component/checker-asan.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "seconds": 2.163805593998404
+  },
+  {
+    "name": "native-asan-build",
+    "command": [
+      "/workspace/wave18-component/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_18_component_props/main.a",
+      "-o",
+      "/workspace/wave18-component/native-asan",
+      "--tsgo",
+      "/workspace/wave18-component/checker-asan.a",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 6.264208840999345
+  },
+  {
+    "name": "controls-go",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.06944012100211694
+  },
+  {
+    "name": "controls-native",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.06285346299773664
+  },
+  {
+    "name": "controls-asan",
+    "command": [
+      "/workspace/wave18-component/native-asan",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.08357908600009978
+  },
+  {
+    "name": "getter-go",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--getter"
+    ],
+    "exit": 0,
+    "seconds": 0.07403299200086622
+  },
+  {
+    "name": "getter-native",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--getter"
+    ],
+    "exit": 0,
+    "seconds": 0.07670431000224198
+  },
+  {
+    "name": "getter-asan",
+    "command": [
+      "/workspace/wave18-component/native-asan",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--getter"
+    ],
+    "exit": 0,
+    "seconds": 0.09981206799784559
+  },
+  {
+    "name": "assignment-go",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--assignment"
+    ],
+    "exit": 0,
+    "seconds": 0.0808440069995413
+  },
+  {
+    "name": "assignment-native",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--assignment"
+    ],
+    "exit": 0,
+    "seconds": 0.06180286599919782
+  },
+  {
+    "name": "assignment-asan",
+    "command": [
+      "/workspace/wave18-component/native-asan",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--assignment"
+    ],
+    "exit": 0,
+    "seconds": 0.08953655499863089
+  },
+  {
+    "name": "allow-go",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--allow"
+    ],
+    "exit": 0,
+    "seconds": 0.07149639199997182
+  },
+  {
+    "name": "allow-native",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--allow"
+    ],
+    "exit": 0,
+    "seconds": 0.06397360700066201
+  },
+  {
+    "name": "allow-asan",
+    "command": [
+      "/workspace/wave18-component/native-asan",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--allow"
+    ],
+    "exit": 0,
+    "seconds": 0.09766838200084749
+  },
+  {
+    "name": "combined-go",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--getter",
+      "--allow"
+    ],
+    "exit": 0,
+    "seconds": 0.11148358900027233
+  },
+  {
+    "name": "combined-native",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--getter",
+      "--allow"
+    ],
+    "exit": 0,
+    "seconds": 0.07275370799834491
+  },
+  {
+    "name": "combined-asan",
+    "command": [
+      "/workspace/wave18-component/native-asan",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--getter",
+      "--allow"
+    ],
+    "exit": 0,
+    "seconds": 0.10668846199769177
+  },
+  {
+    "name": "override-go",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--override"
+    ],
+    "exit": 0,
+    "seconds": 0.10422036100135301
+  },
+  {
+    "name": "override-native",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--override"
+    ],
+    "exit": 0,
+    "seconds": 0.1310046849976061
+  },
+  {
+    "name": "override-asan",
+    "command": [
+      "/workspace/wave18-component/native-asan",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest",
+      "--override"
+    ],
+    "exit": 0,
+    "seconds": 0.11636809199990239
+  },
+  {
+    "name": "placement-mutant-build",
+    "command": [
+      "/workspace/wave18-component/adamic",
+      "build",
+      "/workspace/wave18-component/placement-source/main.a",
+      "-o",
+      "/workspace/wave18-component/placement-mutant",
+      "--tsgo",
+      "/workspace/wave18-component/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 4.036167681999359
+  },
+  {
+    "name": "placement-mutant-run",
+    "command": [
+      "/workspace/wave18-component/placement-mutant",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.06380977400112897
+  },
+  {
+    "name": "style-mutant-build",
+    "command": [
+      "/workspace/wave18-component/adamic",
+      "build",
+      "/workspace/wave18-component/style-source/main.a",
+      "-o",
+      "/workspace/wave18-component/style-mutant",
+      "--tsgo",
+      "/workspace/wave18-component/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 3.6900635870006226
+  },
+  {
+    "name": "style-mutant-run",
+    "command": [
+      "/workspace/wave18-component/style-mutant",
+      "/workspace/wave18-component/tsconfig.json",
+      "/workspace/wave18-component/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.07544299300207058
+  },
+  {
+    "name": "compiler-go",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/wave-18-typescript/src/compiler/tsconfig.json",
+      "/tmp/wave-18-compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.3657120850002684
+  },
+  {
+    "name": "compiler-native",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/wave-18-typescript/src/compiler/tsconfig.json",
+      "/tmp/wave-18-compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 4.52124681100031
+  },
+  {
+    "name": "compiler-asan",
+    "command": [
+      "/workspace/wave18-component/native-asan",
+      "/workspace/wave-18-typescript/src/compiler/tsconfig.json",
+      "/tmp/wave-18-compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 10.8952615470007
+  },
+  {
+    "name": "compiler-0-native-time",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/wave-18-typescript/src/compiler/tsconfig.json",
+      "/tmp/wave-18-compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 4.049207726999157
+  },
+  {
+    "name": "compiler-0-go-time",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/wave-18-typescript/src/compiler/tsconfig.json",
+      "/tmp/wave-18-compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 0.30993533399669104
+  },
+  {
+    "name": "compiler-1-go-time",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/wave-18-typescript/src/compiler/tsconfig.json",
+      "/tmp/wave-18-compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 0.3069682440000179
+  },
+  {
+    "name": "compiler-1-native-time",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/wave-18-typescript/src/compiler/tsconfig.json",
+      "/tmp/wave-18-compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 4.008935994002968
+  },
+  {
+    "name": "compiler-2-native-time",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/wave-18-typescript/src/compiler/tsconfig.json",
+      "/tmp/wave-18-compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 4.086417932998302
+  },
+  {
+    "name": "compiler-2-go-time",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/wave-18-typescript/src/compiler/tsconfig.json",
+      "/tmp/wave-18-compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 0.33459308999954374
+  },
+  {
+    "name": "repository-go",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/tmp/wave-18-repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.15475627400155645
+  },
+  {
+    "name": "repository-native",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/adamic/tsconfig.json",
+      "/tmp/wave-18-repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.6239969650014245
+  },
+  {
+    "name": "repository-asan",
+    "command": [
+      "/workspace/wave18-component/native-asan",
+      "/workspace/adamic/tsconfig.json",
+      "/tmp/wave-18-repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 1.6745239069969102
+  },
+  {
+    "name": "repository-0-native-time",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/adamic/tsconfig.json",
+      "/tmp/wave-18-repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 0.747422642998572
+  },
+  {
+    "name": "repository-0-go-time",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/tmp/wave-18-repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 0.14604751099977875
+  },
+  {
+    "name": "repository-1-go-time",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/tmp/wave-18-repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 0.15859916400222573
+  },
+  {
+    "name": "repository-1-native-time",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/adamic/tsconfig.json",
+      "/tmp/wave-18-repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 0.6358332549971237
+  },
+  {
+    "name": "repository-2-native-time",
+    "command": [
+      "/workspace/wave18-component/native",
+      "/workspace/adamic/tsconfig.json",
+      "/tmp/wave-18-repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 0.6587449170001491
+  },
+  {
+    "name": "repository-2-go-time",
+    "command": [
+      "/workspace/wave18-component/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/tmp/wave-18-repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "seconds": 0.15297818800172536
+  }
+]
