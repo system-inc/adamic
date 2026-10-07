@@ -16,6 +16,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 )
 
@@ -38,18 +39,19 @@ func run() error {
 		return err
 	}
 	start := time.Now()
-	host := compiler.NewCachedFSCompilerHost(filepath.ToSlash(filepath.Dir(configPath)), bundled.WrapFS(osvfs.FS()), bundled.LibPath(), nil, nil, nil)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(filepath.ToSlash(configPath), nil, nil, host, nil)
+	fs := bundled.WrapFS(osvfs.FS())
+	host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(configPath)), nil, nil, fs, nil)
 	if config == nil || len(diagnostics) > 0 || len(config.Errors) > 0 {
 		return fmt.Errorf("cannot parse config %s", configPath)
 	}
 	if len(os.Args) > 3 {
-		roots := []string{}
+		roots := []tspath.RootedFilePath{}
 		for _, root := range os.Args[3:] {
 			if !filepath.IsAbs(root) {
 				root = filepath.Join(filepath.Dir(configPath), root)
 			}
-			roots = append(roots, filepath.ToSlash(root))
+			roots = append(roots, tspath.RootedFilePathFromAbsolute(filepath.ToSlash(root)))
 		}
 		config = config.WithFileNames(roots)
 	}
@@ -74,7 +76,7 @@ func run() error {
 		if err != nil {
 			return err
 		}
-		file := program.GetSourceFile(filepath.ToSlash(path))
+		file := program.GetSourceFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(path)))
 		if file == nil || position < 0 || position >= len(file.Text()) {
 			return fmt.Errorf("invalid query %s", line)
 		}

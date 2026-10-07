@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 )
 
 func TestExactIndexMatchesCompilerNodes(t *testing.T) {
@@ -29,7 +30,7 @@ func TestExactIndexMatchesCompilerNodes(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, path := range paths {
-		source := program.Compiler.GetSourceFile(path)
+		source := program.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(path))
 		var nodes []*ast.Node
 		var walk func(*ast.Node)
 		walk = func(node *ast.Node) {

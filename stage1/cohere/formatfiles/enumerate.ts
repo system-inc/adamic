@@ -46,7 +46,7 @@ export const IgnorePatternsLayer = 'ignorePatterns';
 
 // enumerate.go: Enumeration, what a walk found, and why each file did not survive it. Every number is a
 // subtraction someone can check: walked minus the ignore counts minus unhandled minus symbolicLinks is
-// the number of files.
+// the number of files plus Adamic files held back.
 export class Enumeration {
 	readonly root: string;
 	walked = 0;
@@ -58,6 +58,7 @@ export class Enumeration {
 	readonly directories: string[] = [];
 	readonly ignoreFiles: string[] = [];
 	readonly files: string[] = [];
+	readonly adamic: string[] = [];
 
 	constructor(root: string) {
 		this.root = root;
@@ -377,6 +378,12 @@ export function enumerate(root: string, resolution: Resolution, handles: (fileNa
 
 		if (status.symbolicLink) {
 			enumeration.symbolicLinks++;
+			return proceed;
+		}
+
+		// cohere 483acc0e: .a files wait until a TypeScript program claims them.
+		if (path.endsWith('.a') && base(path) !== '.a') {
+			enumeration.adamic.push(path);
 			return proceed;
 		}
 
