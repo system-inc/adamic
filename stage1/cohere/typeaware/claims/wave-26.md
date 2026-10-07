@@ -89,3 +89,27 @@ Excluding base/main ports and 142 ranked names mentioned in origin claims leaves
 
 Each has zero combined corpus findings. Reserved on codex/typeaware-wave-26
 before implementation.
+
+### Sixth batch prerequisite
+
+These three remain claimed and are not implemented or validated. The current
+bridge has AST and checker-fact questions but no HIR/SSA graph question. All three
+production rules consume Cohere's HIR, not merely source syntax:
+
+- set-state-in-effect needs capture translation, ref-derived data/control flow
+  and the manual-memoization-erased graph.
+- set-state-in-render needs unconditional blocks and nested setter-call tracking.
+- static-components needs SSA phis and instruction-order dynamic-value tracking.
+
+Cohere's implementation is an internal Go package under
+`cohere/internal/lint/ecmascript/high_level_intermediate_representation`. The
+Adamic module cannot directly import it under Go's internal-package restriction.
+An isolated raw-graph implementation and serializer, or a native equivalent,
+are still required; returning Go lint verdicts would not establish an Adamic port.
+This is not the shared .a-loading or suggestion-serialization gap. No shared
+registration, generator, harness or compiler files were changed for this batch.
+No new rule comparison, mutant, sanitizer or timing result is claimed.
+
+The previous fifteen completed ports and their evidence remain at 8180b758.
+Selection evidence for this batch is in wave-26-sixth-selection.json alongside
+this claim. Work stopped here under Ahra's instruction to report other blockers.
