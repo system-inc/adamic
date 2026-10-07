@@ -1,0 +1,62 @@
+[
+  {
+    "name": "first",
+    "args": [
+      "python3",
+      "stage1/cohere/typeaware/testdata/benchmark_wave_12.py",
+      "/workspace/wave-12/c019/first/wave12",
+      "/workspace/wave-12/c019/first/wave12-oracle",
+      "/workspace/wave-12/c019/bench/first",
+      "/workspace/wave-12/corpus/src/compiler/tsconfig.json",
+      "/workspace/wave-12/compiler.manifest",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-12/repository.manifest"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "next",
+    "args": [
+      "python3",
+      "stage1/cohere/typeaware/testdata/benchmark_wave_12.py",
+      "/workspace/wave-12/c019/next/native",
+      "/workspace/wave-12/c019/next/oracle",
+      "/workspace/wave-12/c019/bench/next",
+      "/workspace/wave-12/corpus/src/compiler/tsconfig.json",
+      "/workspace/wave-12/compiler.manifest",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-12/repository.manifest"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "third",
+    "args": [
+      "python3",
+      "stage1/cohere/typeaware/testdata/benchmark_wave_12.py",
+      "/workspace/wave-12/c019/third/native",
+      "/workspace/wave-12/c019/third/oracle",
+      "/workspace/wave-12/c019/bench/third",
+      "/workspace/wave-12/corpus/src/compiler/tsconfig.json",
+      "/workspace/wave-12/compiler.manifest",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-12/repository.manifest"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "fourth",
+    "args": [
+      "python3",
+      "stage1/cohere/typeaware/testdata/benchmark_wave_12.py",
+      "/workspace/wave-12/c019/fourth/native",
+      "/workspace/wave-12/c019/fourth/oracle",
+      "/workspace/wave-12/c019/bench/fourth",
+      "/workspace/wave-12/corpus/src/compiler/tsconfig.json",
+      "/workspace/wave-12/compiler.manifest",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-12/repository.manifest"
+    ],
+    "exit": 0
+  }
+]

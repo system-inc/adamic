@@ -1,0 +1,50 @@
+[
+  {
+    "name": "first",
+    "args": [
+      "go",
+      "test",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave12AgreementAndMutants$"
+    ],
+    "exit": 0,
+    "log": "/tmp/wave-12-c019-first.log"
+  },
+  {
+    "name": "next",
+    "args": [
+      "go",
+      "test",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "./stage1/cohere/typeaware/wave12_next",
+      "-run",
+      "^TestAgreement$"
+    ],
+    "exit": 0,
+    "log": "/tmp/wave-12-c019-next.log"
+  },
+  {
+    "name": "third",
+    "args": [
+      "go",
+      "test",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "./stage1/cohere/typeaware/wave12_third",
+      "-run",
+      "^TestAgreement$"
+    ],
+    "exit": 0,
+    "log": "/tmp/wave-12-c019-third.log"
+  }
+]

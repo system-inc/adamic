@@ -1,0 +1,81 @@
+{
+  "cases": 20,
+  "bytes": 40,
+  "commands": [
+    {
+      "name": "go",
+      "args": [
+        "go",
+        "run",
+        "/workspace/wave-12/c019/regex/oracle.go"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "native-build",
+      "args": [
+        "/workspace/wave-12/c019/fourth/adamic",
+        "build",
+        "/workspace/wave-12/c019/regex/main.a",
+        "-o",
+        "/workspace/wave-12/c019/regex/native"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "native",
+      "args": [
+        "/workspace/wave-12/c019/regex/native"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "sanitized-build",
+      "args": [
+        "/workspace/wave-12/c019/fourth/adamic",
+        "build",
+        "/workspace/wave-12/c019/regex/main.a",
+        "-o",
+        "/workspace/wave-12/c019/regex/sanitized",
+        "--sanitize"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "sanitized",
+      "args": [
+        "/workspace/wave-12/c019/regex/sanitized"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "source-node",
+      "args": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/wave-12/c019/regex/main.a"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "javascript-build",
+      "args": [
+        "/workspace/wave-12/c019/fourth/adamic",
+        "js",
+        "/workspace/wave-12/c019/regex/main.a"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "emitted-node",
+      "args": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/wave-12/c019/regex/emitted.mjs"
+      ],
+      "exit": 0
+    }
+  ]
+}
