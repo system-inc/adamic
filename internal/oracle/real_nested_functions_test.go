@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"02_scanner_digits", "03_scanner_hoisting", "04_scanner_escaped_text", "05_scanner_reassigned_text", "06_parser_token_state", "07_binder_symbol_count", "10_checker_arrow_cleanup", "11_scanner_method_wrapper"} {
+	for _, name := range []string{"02_scanner_digits", "03_scanner_hoisting", "04_scanner_escaped_text", "05_scanner_reassigned_text", "06_parser_token_state", "07_binder_symbol_count", "08_checker_symbol_recursion", "10_checker_arrow_cleanup", "11_scanner_method_wrapper"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -25,7 +25,6 @@ func TestRealNestedBlockers(t *testing.T) {
 		refused    bool
 	}{
 		{"01_scanner_frame", "non-null assertion", true},
-		{"08_checker_symbol_recursion", "as a condition", true},
 		{"09_checker_constituent_recursion", "non-null assertion", true},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
