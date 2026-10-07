@@ -1,0 +1,50 @@
+debugger-setup.log
+v24.19.0
+setup: node ready (0.023s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.026s)
+setup: submodules ready (0.074s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.010s
+setup: markdown dependencies ready (0.079s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.180s)
+setup: go build ready (29.843s)
+setup: test binaries deferred (use --warm-tests) (29.967s)
+setup: build cache warm (29.969s)
+setup: build-flags commit=ce0750f28ef3943057f1f852b3ae5d93e6c5d644 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.00 0.11 0.57 1/167 59647 load-after=0.91 0.35 0.63 1/169 60389
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (29.995s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.PONErW
+
+debugger-node.log
+Debug Failure. Invalid version
+
+debugger-focus.log
+ok  	github.com/system-inc/adamic/internal/flow	0.010s
+ok  	github.com/system-inc/adamic/internal/oracle	0.442s
+
+debugger-mutants.log
+trap-artifact: caught by debugger emitted a trap or breakpoint call, exit 1
+trap-oracle: caught by exit codes differ, exit 1
+javascript-dropped: caught by JavaScript kept 0 debugger statements, exit 1
+lowering-dropped: caught by JavaScript kept 0 debugger statements, exit 1
+debugger-refused: caught by refuses debugger, exit 1
+flow-instruction: caught by debugger changed the flow: 2 instructions, exit 1
+
+debugger-counts.log
+ok  	github.com/system-inc/adamic/internal/oracle	21.727s
+
+debugger-packages.log
+ok  	github.com/system-inc/adamic/internal/lower	44.094s
+ok  	github.com/system-inc/adamic/internal/ir	13.079s
+ok  	github.com/system-inc/adamic/internal/native	288.807s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/flow	168.835s
+ok  	github.com/system-inc/adamic/internal/oracle	279.462s
+
+debugger-vet.log
+
+debugger-fmt.log
+
+debugger-diff-check.log
+
