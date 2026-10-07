@@ -99,8 +99,9 @@ def audit(binary, directory):
                 if any(fnmatch.fnmatchcase(original, pattern) for pattern in patterns):
                     ignored += 1
                     continue
-                # The programs the type and lint phases check, nothing else: lockfiles, timings and
-                # reports are written by the tools that measure, and every area adds them unformatted.
+                # For now, the programs the type and lint phases check. Temporary: the JSON, Markdown and
+                # scripts the areas add unformatted get one reformat on fresh main, and this filter goes
+                # in the same push (#dvxrzsv). Until then they'd block every merge.
                 if not name.endswith(('.ts', '.tsx')):
                     continue
                 paths.append(name)
