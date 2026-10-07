@@ -58,6 +58,16 @@ void adamic_share(void *value) {
 	append(&pending, value);
 	while (pending.count != 0) {
 		adamic_heap *heap = pending.values[--pending.count];
+		// An environment's interior cell is counted by its environment, so the environment is what
+		// becomes shared, and its cells' values with it.
+		if (heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+			heap = &((adamic_cell *)heap)->owner->heap;
+		}
+		// A graph region's counts are plain and single-threaded (graph_regions.c); the compiler
+		// refuses a graph value reaching a task, and this is the backstop.
+		if ((heap->slab & ADAMIC_GRAPH_FLAG) != 0) {
+			adamic_panic("a graph region can't cross into parallel work yet", sizeof "a graph region can't cross into parallel work yet" - 1);
+		}
 		bool shared = adamic_is_shared(heap);
 		// Immutable shared leaves cannot gain children. Containers can have gained fresh descendants
 		// through unique reuse before the caller retained them again, so always revisit containers.
@@ -106,6 +116,13 @@ void adamic_share(void *value) {
 		case adamic_kind_closure: {
 			adamic_closure *closure = (adamic_closure *)heap;
 			for (size_t i = 0; i < closure->count; i++) { append(&pending, closure->cells[i]); }
+			break;
+		}
+		case adamic_kind_environment: {
+			adamic_environment *environment = (adamic_environment *)heap;
+			for (size_t i = 0; i < environment->count; i++) {
+				if (environment->cells[i].references) { append(&pending, environment->cells[i].value.reference); }
+			}
 			break;
 		}
 		case adamic_kind_number: case adamic_kind_boolean: break;
