@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rerun wave-07's existing isolated gates after a main rebase."""
+"""Rerun owned gates on the requested integration base."""
 import json
 import os
 import pathlib
@@ -36,6 +36,24 @@ def run(name, command, extra=None):
     (OUT / 'commands.json').write_text(json.dumps(records, indent=2)+'\n')
     if process.returncode:
         raise RuntimeError(name+' failed; see '+str(log))
+    # Reclaim only completed, owned binaries; preserve downstream checker inputs.
+    scratch = {'original-trio': OUT/'original-trio', 'timer': pathlib.Path('/workspace/wave-07-timer'),
+        'process': pathlib.Path('/workspace/wave-07-process'), 'streams': pathlib.Path('/workspace/wave-07-streams-final'),
+        'rest': pathlib.Path('/workspace/wave-07-next-rest'), 'promise': pathlib.Path('/workspace/wave-07-next-promise'),
+        'regex': pathlib.Path('/workspace/wave-07-next-regex')}.get(name)
+    preserve = {'timer': {'adamic'}, 'streams': {'checker.a'},
+        'rest': {'adamic', 'checker.a', 'checker-asan.a'}, 'regex': {'adamic', 'checker.a'}}.get(name, set())
+    removed = []
+    if scratch is not None:
+        for path in scratch.iterdir():
+            if not path.is_file() or path.name in preserve:
+                continue
+            with path.open('rb') as binary:
+                magic = binary.read(8)
+            if magic.startswith(b'\x7fELF') or magic == b'!<arch>\n':
+                removed.append(dict(path=str(path), bytes=path.stat().st_size))
+                path.unlink()
+        (OUT/(name+'-scratch-recovery.json')).write_text(json.dumps(removed, indent=2)+'\n')
     print(name+': PASS', flush=True)
 
 run('original-trio', ['go','test','./stage1/cohere/typeaware','-run',
@@ -66,10 +84,13 @@ run('fact-guards',['go','test','./stage1/cohere/typeaware','-run',
 run('node-oracle',['go','test','./internal/oracle','-run',
     '^TestTheOracleCatchesOneByte$|^TestLibraryMapSetIteratorCopiesRefused$|^TestNativeAgreesWithNode$/internal/oracle/testdata/(maps_and_text|sorting|string_index|lone_surrogates|functions|closures|devirtualize|call_targets_.*|047cb0d_n_.*|library_map_set_iterator_(number_hash|exhausted)|override_same_representation|inherited_static_field_read)[.]a$',
     '-count=1','-v','-timeout','30m'])
+run('shared-finding-model',['go','test','./stage1/cohere/lint','./stage1/cohere/lint/registry','-run',
+    '^(TestEmittedJavaScriptMismatch|TestCompleteSuggestionSerialization|TestSuggestionAlongsideAutomaticFix|TestAdamicRuleModule|TestDescriptorRejections|TestDeterministicRegeneration)$',
+    '-count=1','-v','-timeout','30m'])
 run('vet',['go','vet','./...'])
 run('gofmt',['gofmt','-l','cmd','internal','bridge/tsgo','stage1/cohere/typeaware'])
 assert not (OUT/'gofmt.log').read_text().strip(), 'Go formatting differs'
-run('react-branch-blocker',['python3',UNIT/'probe.py'])
+run('react-integrated-parser',['python3',UNIT/'probe.py'])
 run('jsx-dependency',['python3',UNIT/'dependency_probe.py'])
 assert not resume_pending, 'Unknown resume step: '+RESUME
 print('PASS wave-07 landing gates; React ports and shared dispatch integration remain incomplete.',flush=True)

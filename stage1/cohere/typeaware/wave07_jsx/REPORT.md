@@ -4,6 +4,9 @@ Checks: 131 controls, four option combinations and both frozen corpora match Go;
 Mutants: three message IDs, three named dispatch listeners and one library-data mutation compile, exit 0 and fail only byte comparison.
 Not covered: positive JSX on the shared main parser, shared registration/profile integration, emitted-JavaScript comparison and the full repository gate.
 
+Current status is recorded in [AREA_LANDING_REPORT.md](AREA_LANDING_REPORT.md).
+The parser and harness blockers below are historical.
+
 ## Selection and scope
 
 The original nine ports were landing-ready before this claim. The three earlier

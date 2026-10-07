@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Measure the native parser blocker against positive production Go controls."""
+"""Check the integrated JSX parser against positive production Go controls."""
 import pathlib,subprocess,json
 root=pathlib.Path(__file__).resolve().parents[4];unit=pathlib.Path(__file__).resolve().parent
 out=pathlib.Path('/workspace/wave-07-react-probe');out.mkdir(exist_ok=True);records=[]
@@ -23,7 +23,7 @@ manifest=out/'controls.manifest';manifest.write_text(''.join(str(path)+'\n' for 
 if run('oracle',[out/'oracle',config,manifest]):raise RuntimeError('production oracle failed')
 for index,path in enumerate(paths):
  code=run('parser-'+str(index),[out/'parser',path])
- if code!=70 or b'expected GreaterThanToken, got SlashToken' not in (out/('parser-'+str(index)+'.stderr')).read_bytes():raise RuntimeError('recorded JSX blocker changed')
+ if code!=0 or (out/('parser-'+str(index)+'.stdout')).read_bytes()!=b'jsx 1\n' or (out/('parser-'+str(index)+'.stderr')).read_bytes():raise RuntimeError('integrated JSX parser failed positive control')
  print(f'parser control {index}: exit {code}',flush=True)
 truth=(out/'oracle.stdout').read_text()
 for name in ['react-hooks/set-state-in-effect','react-hooks/set-state-in-render','react-hooks/static-components']:

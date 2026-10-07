@@ -19,8 +19,8 @@ OUT = args.artifacts.resolve()
 OUT.mkdir(exist_ok=True)
 PRIVATE = OUT/'native'
 PRIVATE.mkdir(exist_ok=True)
-DEPENDENCY = pathlib.Path('/workspace/wave-07-jsx-dependency')
-PARSER_REVISION = 'a8a62d62ca49db7415e14c3887dd305022b17309'
+DEPENDENCY = ROOT
+PARSER_REVISION = subprocess.check_output(['git','rev-parse','origin/area/stage1-lint'],cwd=ROOT,text=True).strip()
 STAGE0 = pathlib.Path('/workspace/wave-07-next-rest/adamic')
 ARCHIVE = pathlib.Path('/workspace/wave-07-next-rest/checker.a')
 SAN_ARCHIVE = pathlib.Path('/workspace/wave-07-next-rest/checker-asan.a')
@@ -35,13 +35,13 @@ def run(name, command, cwd=ROOT, expected=0):
     assert result.returncode == expected, (name,result.returncode,expected)
     return (OUT/(name+'.stdout')).read_bytes(), (OUT/(name+'.stderr')).read_bytes()
 
-# Reproduce the exact published dependency, never modifying shared branch files.
+# Pin and use the integrated parser directly, without changing shared files.
 files=subprocess.check_output(['git','ls-tree','-r','--name-only',PARSER_REVISION,'stage1/typescript'],cwd=ROOT,text=True).splitlines()
 pins={}
 for name in files:
     if not name.endswith(('.ts','.a')): continue
-    content=subprocess.check_output(['git','show',PARSER_REVISION+':'+name],cwd=ROOT)
-    target=DEPENDENCY/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(content)
+    content=(ROOT/name).read_bytes()
+    assert content==subprocess.check_output(['git','show',PARSER_REVISION+':'+name],cwd=ROOT), name+' differs from integration base'
     pins[name]=hashlib.sha256(content).hexdigest()
 (OUT/'parser-pins.json').write_text(json.dumps(dict(revision=PARSER_REVISION,sha256=pins),indent=2)+'\n')
 
@@ -224,4 +224,4 @@ for name in ['jsx-fragments','jsx-no-undef','no-adjacent-inline-elements']:
     assert not error and changed!=truth, name+' listener mutant survived'
     path.write_text(original)
     print(name+': named listener mutant exits 0; Go bytes catch missed dispatch',flush=True)
-print('PASS isolated JSX rule gate; published parser integration remains pending.',flush=True)
+print('PASS JSX rule gate using the integrated area/stage1-lint parser.',flush=True)

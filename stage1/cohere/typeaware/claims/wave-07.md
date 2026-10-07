@@ -203,3 +203,14 @@ The previously two available names were claimed by wave 18 during validation.
 No new wave-07 claim was made. Main advanced to b8fb957a; the branch is rebased
 and its owned oracle includes the inherited-static-field-read fixture. See the
 named landing report and fresh evidence for actual green checks and source SHA.
+
+## Integrated parser landing refresh
+
+Rebased all wave commits onto area/stage1-lint 7481e032, containing main
+39638d9e. All twelve implemented rules, 17 landing steps, named JSX listener
+checks, legacy listener checks, sanitizers, valid mutants and released handles
+pass again. Actual integrated parser sources now pass 131 positive JSX controls;
+no private parser copy is needed. Three hook claims remain parked solely on
+native IR/SSA/capture analysis. Four private bridge routes and shared checker
+context access remain pending. See ../wave07_jsx/AREA_LANDING_REPORT.md.
+No new rules are claimed by this update.

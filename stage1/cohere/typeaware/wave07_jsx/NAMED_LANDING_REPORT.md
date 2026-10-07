@@ -4,6 +4,9 @@ Checks: all 16 landing steps pass; 31 Node fixtures, 131 JSX controls, both corp
 Mutants: three JSX message IDs, three named listeners, one library data mutation and all prior rule/raw-fact/ownership guards are caught.
 Not covered: positive JSX on the shared main parser, shared type-aware context integration, emitted-JavaScript rule comparison and the full repository gate.
 
+Current status is recorded in [AREA_LANDING_REPORT.md](AREA_LANDING_REPORT.md).
+The parser and harness blockers below are historical.
+
 ## Exhausted selection
 
 The final all-origin audit inspects 579 refs and 33 distinct claim blobs. It
