@@ -35,6 +35,8 @@ class RootResult {
     readonly exits: number[] = [];
     readonly started: number[] = [];
 }
+// Pinned typescript-go SyntaxKind values for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [307];
 export class RequireBlockingStandardStreams {
     readonly rules: Rules;
     readonly bindings: Bindings;

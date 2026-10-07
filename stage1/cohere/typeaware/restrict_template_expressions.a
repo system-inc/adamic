@@ -18,6 +18,8 @@ class TemplateSymbol {
         this.library = library;
     }
 }
+// Pinned typescript-go SyntaxKind values for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [229];
 export class RestrictTemplateExpressions {
     readonly rules: Rules;
     constructor(rules: Rules) {

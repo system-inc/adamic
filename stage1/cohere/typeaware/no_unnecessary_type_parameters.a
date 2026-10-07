@@ -18,6 +18,8 @@ const owners = [
     'ClassExpression',
 ];
 
+// Pinned typescript-go SyntaxKind values for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [220, 263, 219, 180, 181, 186, 185, 174, 175, 264, 232];
 export class NoUnnecessaryTypeParameters {
     readonly rules: Rules;
     readonly bindings: Bindings;

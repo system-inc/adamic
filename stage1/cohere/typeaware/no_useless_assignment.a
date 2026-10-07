@@ -73,6 +73,8 @@ class StoreTry {
         this.finallyEntry = finallyEntry;
     }
 }
+// Pinned typescript-go SyntaxKind values for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [307];
 export class NoUselessAssignment {
     readonly rules: Rules;
     readonly bindings: Bindings;

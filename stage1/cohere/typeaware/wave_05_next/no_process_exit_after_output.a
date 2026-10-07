@@ -50,6 +50,8 @@ class Position {
         this.state = state;
     }
 }
+// Pinned typescript-go SyntaxKind values for the shared kind-indexed driver.
+export const listenerKinds: readonly number[] = [307];
 export class NoProcessExitAfterOutput {
     readonly rules: Rules;
     readonly bindings: Bindings;
