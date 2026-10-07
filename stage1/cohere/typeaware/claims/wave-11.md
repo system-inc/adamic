@@ -67,3 +67,20 @@ and sanitized agreement, positive controls, comparison-only rule and judgment
 mutants, and released-handle checks. Evidence, timings and coverage limits are
 in ../WAVE_11_THIRD_REPORT.md. All nine wave-11 reservations are implemented;
 no additional rules are reserved by this completion update.
+
+## Fourth batch claim
+
+All nine previous reservations are implemented, tested and pushed through
+`2d9d4ad9`. Fetched origin: 341 refs, 336 distinct trees, 33 distinct Markdown
+claim documents. Descending combined volume with lexical ties, excluding base
+ports and every named origin reservation, selects these next three:
+
+1. `no-new-func`
+2. `no-new-native-nonconstructor`
+3. `no-new-wrappers`
+
+Each has zero recorded compiler and repository findings. References on main and
+the bridge branch are inventories and skipped-type catalogs, not ports. None is
+named in an origin claim document. This reservation is pushed before writing
+code. New Adamic files are .a; existing declaration-provenance questions suffice.
+Shared generator and harness remain untouched.
