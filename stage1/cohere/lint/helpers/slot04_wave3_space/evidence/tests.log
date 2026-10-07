@@ -1,0 +1,70 @@
+=== RUN   TestWave2GoNodeNative
+=== RUN   TestWave2GoNodeNative/witnesses.json
+    wave2_test.go:105: Go, Node source and sanitized native match 1386 output lines
+=== RUN   TestWave2GoNodeNative/consumers.json
+    wave2_test.go:105: Go, Node source and sanitized native match 22374 output lines
+--- PASS: TestWave2GoNodeNative (8.64s)
+    --- PASS: TestWave2GoNodeNative/witnesses.json (0.40s)
+    --- PASS: TestWave2GoNodeNative/consumers.json (2.81s)
+=== RUN   TestWave2CompilingMutants
+=== RUN   TestWave2CompilingMutants/class_values_under.aleading:_false,_trailing:_false
+    wave2_test.go:158: sanitized native compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+    wave2_test.go:158: Node source compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+=== RUN   TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.whenFalse,_origin,_edges,_values,_dependencies);
+    wave2_test.go:158: sanitized native compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+    wave2_test.go:158: Node source compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+=== RUN   TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.right,_origin,_edges,_values,_dependencies);
+    wave2_test.go:158: sanitized native compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+    wave2_test.go:158: Node source compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+--- PASS: TestWave2CompilingMutants (7.79s)
+    --- PASS: TestWave2CompilingMutants/class_values_under.aleading:_false,_trailing:_false (1.92s)
+    --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.whenFalse,_origin,_edges,_values,_dependencies); (1.78s)
+    --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.right,_origin,_edges,_values,_dependencies); (1.77s)
+=== RUN   TestWave2ConsumerCoverage
+    wave2_test.go:225: all 11 consumers covered; canonical-class consumer omission caught
+--- PASS: TestWave2ConsumerCoverage (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave2	16.483s
+=== RUN   TestSpaceGoNodeNativeJavaScript
+=== RUN   TestSpaceGoNodeNativeJavaScript/witnesses.json
+    space_test.go:135: Go, source Node, sanitized native and emitted JavaScript match 22597 output lines
+=== RUN   TestSpaceGoNodeNativeJavaScript/consumers.json
+    space_test.go:135: Go, source Node, sanitized native and emitted JavaScript match 21863 output lines
+=== RUN   TestSpaceGoNodeNativeJavaScript/--full
+    space_test.go:135: Go, source Node, sanitized native and emitted JavaScript match 1114372 output lines
+--- PASS: TestSpaceGoNodeNativeJavaScript (14.39s)
+    --- PASS: TestSpaceGoNodeNativeJavaScript/witnesses.json (0.43s)
+    --- PASS: TestSpaceGoNodeNativeJavaScript/consumers.json (0.33s)
+    --- PASS: TestSpaceGoNodeNativeJavaScript/--full (6.33s)
+=== RUN   TestSpaceCompilingMutants
+=== RUN   TestSpaceCompilingMutants/javascript_space.acase_0xfeff:
+    space_test.go:184: Node source compiling mutant caught at line 109: got "blank false", Go "blank true"
+    space_test.go:184: sanitized native compiling mutant caught at line 109: got "blank false", Go "blank true"
+    space_test.go:184: emitted JavaScript compiling mutant caught at line 109: got "blank false", Go "blank true"
+=== RUN   TestSpaceCompilingMutants/blank.areturn_true;
+    space_test.go:184: Node source compiling mutant caught at line 1: got "blank false", Go "blank true"
+    space_test.go:184: sanitized native compiling mutant caught at line 1: got "blank false", Go "blank true"
+    space_test.go:184: emitted JavaScript compiling mutant caught at line 1: got "blank false", Go "blank true"
+=== RUN   TestSpaceCompilingMutants/blank.aindex++
+    space_test.go:184: Node source compiling mutant caught at line 268: got "blank true", Go "blank false"
+    space_test.go:184: sanitized native compiling mutant caught at line 268: got "blank true", Go "blank false"
+    space_test.go:184: emitted JavaScript compiling mutant caught at line 268: got "blank true", Go "blank false"
+=== RUN   TestSpaceCompilingMutants/value_separator.acase_58:_
+    space_test.go:184: Node source compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+    space_test.go:184: sanitized native compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+    space_test.go:184: emitted JavaScript compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+=== RUN   TestSpaceCompilingMutants/value_separator.acase_60:_case_10:
+    space_test.go:184: Node source compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+    space_test.go:184: sanitized native compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+    space_test.go:184: emitted JavaScript compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+--- PASS: TestSpaceCompilingMutants (7.69s)
+    --- PASS: TestSpaceCompilingMutants/javascript_space.acase_0xfeff: (1.29s)
+    --- PASS: TestSpaceCompilingMutants/blank.areturn_true; (1.27s)
+    --- PASS: TestSpaceCompilingMutants/blank.aindex++ (1.45s)
+    --- PASS: TestSpaceCompilingMutants/value_separator.acase_58:_ (1.27s)
+    --- PASS: TestSpaceCompilingMutants/value_separator.acase_60:_case_10: (1.57s)
+=== RUN   TestSpaceConsumerCoverage
+    space_test.go:252: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestSpaceConsumerCoverage (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave3_space	22.095s

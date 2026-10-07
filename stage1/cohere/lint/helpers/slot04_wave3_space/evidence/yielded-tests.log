@@ -1,0 +1,74 @@
+=== RUN   TestWave2GoNodeNative
+=== RUN   TestWave2GoNodeNative/witnesses.json
+    wave2_test.go:105: Go, Node source and sanitized native match 1386 output lines
+=== RUN   TestWave2GoNodeNative/consumers.json
+    wave2_test.go:105: Go, Node source and sanitized native match 22374 output lines
+--- PASS: TestWave2GoNodeNative (8.33s)
+    --- PASS: TestWave2GoNodeNative/witnesses.json (0.29s)
+    --- PASS: TestWave2GoNodeNative/consumers.json (3.23s)
+=== RUN   TestWave2CompilingMutants
+=== RUN   TestWave2CompilingMutants/class_values_under.aleading:_false,_trailing:_false
+    wave2_test.go:158: sanitized native compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+    wave2_test.go:158: Node source compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+=== RUN   TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.whenFalse,_origin,_edges,_values,_dependencies);
+    wave2_test.go:158: sanitized native compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+    wave2_test.go:158: Node source compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+=== RUN   TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.right,_origin,_edges,_values,_dependencies);
+    wave2_test.go:158: sanitized native compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+    wave2_test.go:158: Node source compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+--- PASS: TestWave2CompilingMutants (6.99s)
+    --- PASS: TestWave2CompilingMutants/class_values_under.aleading:_false,_trailing:_false (1.74s)
+    --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.whenFalse,_origin,_edges,_values,_dependencies); (1.56s)
+    --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.right,_origin,_edges,_values,_dependencies); (1.68s)
+=== RUN   TestWave2ConsumerCoverage
+    wave2_test.go:225: all 11 consumers covered; canonical-class consumer omission caught
+--- PASS: TestWave2ConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave2	15.338s
+=== RUN   TestWave3GoNodeNativeJavaScript
+=== RUN   TestWave3GoNodeNativeJavaScript/witnesses.json
+    wave3_test.go:128: Go, source Node, sanitized native and emitted JavaScript match 7674 output lines
+=== RUN   TestWave3GoNodeNativeJavaScript/consumers.json
+    wave3_test.go:128: Go, source Node, sanitized native and emitted JavaScript match 386404 output lines
+--- PASS: TestWave3GoNodeNativeJavaScript (19.08s)
+    --- PASS: TestWave3GoNodeNativeJavaScript/witnesses.json (0.46s)
+    --- PASS: TestWave3GoNodeNativeJavaScript/consumers.json (8.93s)
+=== RUN   TestWave3CompilingMutants
+=== RUN   TestWave3CompilingMutants/create_class_name.aname_===_'createReactClass'_||_
+    wave3_test.go:178: Node source compiling mutant caught at line 14: got "es5 false", Go "es5 true"
+    wave3_test.go:178: sanitized native compiling mutant caught at line 14: got "es5 false", Go "es5 true"
+    wave3_test.go:178: emitted JavaScript compiling mutant caught at line 14: got "es5 false", Go "es5 true"
+=== RUN   TestWave3CompilingMutants/es5_component_call.aif(!isIdentifierNamed(item.expression,_'React'))
+    wave3_test.go:178: Node source compiling mutant caught at line 1370: got "es5 true", Go "es5 false"
+    wave3_test.go:178: sanitized native compiling mutant caught at line 1370: got "es5 true", Go "es5 false"
+    wave3_test.go:178: emitted JavaScript compiling mutant caught at line 1370: got "es5 true", Go "es5 false"
+=== RUN   TestWave3CompilingMutants/es5_component_call.awhile(callee_>=_0_&&_arena.node(callee).kind_===_'ParenthesizedExpression')
+    wave3_test.go:178: Node source compiling mutant caught at line 660: got "es5 false", Go "es5 true"
+    wave3_test.go:178: sanitized native compiling mutant caught at line 660: got "es5 false", Go "es5 true"
+    wave3_test.go:178: emitted JavaScript compiling mutant caught at line 660: got "es5 false", Go "es5 true"
+=== RUN   TestWave3CompilingMutants/string_attribute_value.areturn_{text:_'',_found:_false};_________}
+    wave3_test.go:178: Node source compiling mutant caught at line 3571: got "attribute true 108,97,116,101,114,", Go "attribute false "
+    wave3_test.go:178: sanitized native compiling mutant caught at line 3571: got "attribute true 108,97,116,101,114,", Go "attribute false "
+    wave3_test.go:178: emitted JavaScript compiling mutant caught at line 3571: got "attribute true 108,97,116,101,114,", Go "attribute false "
+=== RUN   TestWave3CompilingMutants/string_attribute_value.aunescape(arena.node(initializer).text)
+    wave3_test.go:178: Node source compiling mutant caught at line 2991: got "attribute true 38,35,52,55,59,97,98,111,117,116,", Go "attribute true 47,97,98,111,117,116,"
+    wave3_test.go:178: sanitized native compiling mutant caught at line 2991: got "attribute true 38,35,52,55,59,97,98,111,117,116,", Go "attribute true 47,97,98,111,117,116,"
+    wave3_test.go:178: emitted JavaScript compiling mutant caught at line 2991: got "attribute true 38,35,52,55,59,97,98,111,117,116,", Go "attribute true 47,97,98,111,117,116,"
+=== RUN   TestWave3CompilingMutants/string_attribute_value.afound:_true
+    wave3_test.go:178: Node source compiling mutant caught at line 2915: got "attribute false ", Go "attribute true "
+    wave3_test.go:178: sanitized native compiling mutant caught at line 2915: got "attribute false ", Go "attribute true "
+    wave3_test.go:178: emitted JavaScript compiling mutant caught at line 2915: got "attribute false ", Go "attribute true "
+--- PASS: TestWave3CompilingMutants (11.98s)
+    --- PASS: TestWave3CompilingMutants/create_class_name.aname_===_'createReactClass'_||_ (1.80s)
+    --- PASS: TestWave3CompilingMutants/es5_component_call.aif(!isIdentifierNamed(item.expression,_'React')) (1.87s)
+    --- PASS: TestWave3CompilingMutants/es5_component_call.awhile(callee_>=_0_&&_arena.node(callee).kind_===_'ParenthesizedExpression') (2.07s)
+    --- PASS: TestWave3CompilingMutants/string_attribute_value.areturn_{text:_'',_found:_false};_________} (1.91s)
+    --- PASS: TestWave3CompilingMutants/string_attribute_value.aunescape(arena.node(initializer).text) (1.75s)
+    --- PASS: TestWave3CompilingMutants/string_attribute_value.afound:_true (1.84s)
+=== RUN   TestWave3ConsumerCoverage
+    wave3_test.go:246: consumer omission caught: @next/next/google-font-display
+    wave3_test.go:246: consumer omission caught: react/no-did-mount-set-state
+    wave3_test.go:248: all twelve distinct consumers covered
+--- PASS: TestWave3ConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave3	31.080s
