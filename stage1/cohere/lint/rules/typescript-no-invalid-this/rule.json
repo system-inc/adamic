@@ -1,0 +1,12 @@
+{
+  "name": "@typescript-eslint/no-invalid-this",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleThis",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoInvalidThis"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "this_capital_constructor_disabled",
+  "file": "rule.a",
+  "from": "cap && this.capital(name)",
+  "to": "false && this.capital(name)"
+}

@@ -1,0 +1,172 @@
+import { utf8Length } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { all } from '../../helpers/comments/all.ts';
+import type { Comment } from '../../helpers/comments/comment.ts';
+import { goTrim } from '../typescript-ban-tslint-comment/rule.a';
+
+const functions = ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor', 'ClassStaticBlockDeclaration'];
+const message = 'This function is called rather than constructed and nothing binds `this` to it, so `this` is `undefined` here and every property read off it throws at runtime. The usual cause is a method that was moved out of a class or an object literal and left its `this.` prefixes behind. Take what it needs as a parameter, give the function a `this` parameter so TypeScript can check the call sites, or make it a method again.';
+
+export class Rule {
+    readonly context: RuleContext;
+    comments: Comment[] = [];
+    starts: number[] = [];
+    ends: number[] = [];
+    endUnits = new Map<number, number>();
+    byteCursor = 0;
+    unitCursor = 0;
+    advance(target: number): number {
+        const source = this.context.source;
+        while(this.byteCursor < target && this.unitCursor < source.length) {
+            const width = (source.codePointAt(this.unitCursor) ?? 0) > 65535 ? 2 : 1;
+            this.byteCursor += utf8Length(source.slice(this.unitCursor, this.unitCursor + width));
+            this.unitCursor += width;
+        }
+        return this.unitCursor;
+    }
+    constructor(context: RuleContext) { this.context = context; }
+    parent(index: number): number { return this.context.parents[index] ?? -1; }
+    kind(index: number): string { return index < 0 ? '' : this.context.node(index).kind; }
+    child(index: number, at: number): number { return index < 0 ? -1 : this.context.node(index).children[at] ?? -1; }
+    last(index: number): number { return this.child(index, this.context.node(index).children.length - 1); }
+    ownName(index: number): string {
+        for(const child of this.context.node(index).children) {
+            if(this.kind(child) === 'Identifier') { return this.context.node(child).text; }
+            if(!this.kind(child).endsWith('Keyword') && this.kind(child) !== 'AsteriskToken') { break; }
+        }
+        return '';
+    }
+    capital(name: string): boolean {
+        const first = [...name][0] ?? '';
+        return first !== '' && first.toLowerCase() !== first;
+    }
+    preceding(index: number): Comment[] {
+        let cursor = this.context.start(index);
+        const found: Comment[] = [];
+        for(let at = this.comments.length - 1; at >= 0; at--) {
+            const comment = this.comments[at];
+            if(comment === undefined) { continue; }
+            const end = this.ends[at] ?? 0;
+            if(end > cursor) { continue; }
+            if(goTrim(this.context.source.slice(end, cursor)) !== '') { break; }
+            found.push(comment); cursor = this.starts[at] ?? 0;
+        }
+        return found.reverse();
+    }
+    doc(index: number): string {
+        const comment = this.preceding(index).pop();
+        if(comment === undefined || !comment.isBlock || !comment.text.startsWith('/**')) { return ''; }
+        const end = this.endUnits.get(comment.end) ?? 0;
+        const gap = this.context.source.slice(end, this.context.start(index));
+        return gap.split(/\r\n|[\r\n\u2028\u2029]/).length > 2 ? '' : comment.text;
+    }
+    tag(text: string): boolean {
+        let value = text;
+        if(value.startsWith('/*') || value.startsWith('//')) { value = value.slice(2); }
+        if(value.endsWith('*/')) { value = value.slice(0, -2); }
+        return value.split('\n').some(line => line.replace(/^[ \t\r*]*/, '').startsWith('@this'));
+    }
+    hasTag(index: number): boolean {
+        let target = index;
+        if(this.kind(index) !== 'FunctionDeclaration') {
+            let parent = this.parent(index);
+            if(parent >= 0 && !['CallExpression', 'NewExpression'].includes(this.kind(parent))) {
+                while(parent >= 0) {
+                    if(this.preceding(parent).length > 0 || functions.includes(this.kind(parent)) || ['MethodDeclaration', 'PropertyAssignment'].includes(this.kind(parent))) { break; }
+                    parent = this.parent(parent);
+                }
+                if(parent >= 0 && !['FunctionDeclaration', 'SourceFile'].includes(this.kind(parent))) { target = parent; }
+            }
+        }
+        return this.tag(this.doc(target)) || this.preceding(index).some(comment => this.tag(comment.text));
+    }
+    call(index: number): number {
+        let cursor = index;
+        while(this.kind(this.parent(cursor)) === 'ParenthesizedExpression') { cursor = this.parent(cursor); }
+        const parent = this.parent(cursor);
+        return this.kind(parent) === 'CallExpression' && this.child(parent, 0) === cursor ? parent : -1;
+    }
+    arguments(index: number): number[] {
+        if(this.kind(index) !== 'CallExpression') { return []; }
+        return this.context.node(index).children.filter(child => child !== this.child(index, 0) && this.kind(child) !== 'TypeReference');
+    }
+    nullish(index: number): boolean {
+        return this.kind(index) === 'NullKeyword' || this.kind(index) === 'VoidExpression' || (this.kind(index) === 'Identifier' && this.context.node(index).text === 'undefined');
+    }
+    argument(index: number, at: number): boolean {
+        const child = this.arguments(index)[at];
+        return child !== undefined && !this.nullish(child);
+    }
+    member(index: number, object: string, property: string): boolean {
+        return this.kind(index) === 'PropertyAccessExpression' && this.kind(this.child(index, 0)) === 'Identifier' && this.context.node(this.child(index, 0)).text === object && this.context.node(this.last(index)).text === property;
+    }
+    callBinds(index: number, current: number): boolean {
+        const args = this.arguments(index);
+        const callee = this.child(index, 0);
+        if(this.member(callee, 'Reflect', 'apply')) { return args.length === 3 && args[0] === current && this.argument(index, 1); }
+        if(this.member(callee, 'Array', 'from') || this.member(callee, 'Array', 'fromAsync')) { return args.length === 3 && args[1] === current && this.argument(index, 2); }
+        if(this.kind(callee) === 'PropertyAccessExpression' && ['every', 'filter', 'find', 'findIndex', 'findLast', 'findLastIndex', 'flatMap', 'forEach', 'map', 'some'].includes(this.context.node(this.last(callee)).text)) { return args.length === 2 && args[0] === current && this.argument(index, 1); }
+        return false;
+    }
+    binds(index: number): boolean {
+        const cap = this.context.settings.read('capisconstructor', 'true') !== 'false';
+        const name = this.ownName(index);
+        if((cap && this.capital(name)) || this.hasTag(index)) { return true; }
+        const anonymous = name === '';
+        let current = index;
+        while(current >= 0) {
+            const parent = this.parent(current);
+            const kind = this.kind(parent);
+            if(parent < 0) { return false; }
+            switch(kind) {
+                case 'ParenthesizedExpression': case 'ConditionalExpression':
+                    current = parent; break;
+                case 'BinaryExpression':
+                    if(['BarBarToken', 'AmpersandAmpersandToken', 'QuestionQuestionToken'].includes(this.kind(this.child(parent, 1)))) { current = parent; break; }
+                    if(this.kind(this.child(parent, 1)) !== 'EqualsToken' || this.last(parent) !== current) { return false; }
+                    return ['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.kind(this.child(parent, 0))) || (cap && anonymous && this.kind(this.child(parent, 0)) === 'Identifier' && this.capital(this.context.node(this.child(parent, 0)).text));
+                case 'VariableDeclaration': case 'Parameter':
+                    return this.last(parent) === current && cap && anonymous && this.capital(this.ownName(parent));
+                case 'PropertyAssignment': case 'PropertyDeclaration':
+                    return this.last(parent) === current;
+                case 'MethodDeclaration': case 'GetAccessor': case 'SetAccessor':
+                    return true;
+                case 'ReturnStatement': {
+                    let enclosing = this.parent(parent);
+                    while(enclosing >= 0 && !functions.includes(this.kind(enclosing))) { enclosing = this.parent(enclosing); }
+                    current = enclosing < 0 ? -1 : this.call(enclosing); break;
+                }
+                case 'ArrowFunction':
+                    current = this.last(parent) === current ? this.call(parent) : -1; break;
+                case 'PropertyAccessExpression':
+                    return this.child(parent, 0) === current && ['bind', 'call', 'apply'].includes(this.context.node(this.last(parent)).text) && this.argument(this.call(parent), 0);
+                case 'CallExpression': return this.callBinds(parent, current);
+                default: return false;
+            }
+        }
+        return false;
+    }
+    walk(index: number, valid: boolean): void {
+        const kind = this.kind(index);
+        let bound = valid;
+        if(kind === 'ThisKeyword' && !valid) { this.context.report(index, '@typescript-eslint/no-invalid-this', 'unexpectedThis', message, '', '', ''); }
+        if(kind === 'FunctionDeclaration' || kind === 'FunctionExpression') {
+            const parameter = this.context.node(index).children.some(child => this.kind(child) === 'Parameter' && ['Identifier', 'ThisKeyword'].includes(this.kind(this.child(child, 0))) && this.context.source.slice(this.context.start(this.child(child, 0)), this.context.node(this.child(child, 0)).end) === 'this');
+            bound = parameter || this.binds(index);
+        }
+        if(['MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor', 'ClassStaticBlockDeclaration', 'PropertyDeclaration'].includes(kind)) { bound = true; }
+        for(const child of this.context.node(index).children) { this.walk(child, bound); }
+    }
+    visit(index: number): void {
+        this.comments = all(this.context.parser, index);
+        this.starts = []; this.ends = []; this.endUnits.clear();
+        this.byteCursor = 0; this.unitCursor = 0;
+        for(const comment of this.comments) {
+            this.starts.push(this.advance(comment.start));
+            const end = this.advance(comment.end);
+            this.ends.push(end); this.endUnits.set(comment.end, end);
+        }
+        this.walk(index, false);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
