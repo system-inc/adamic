@@ -2,7 +2,8 @@
 # Merges main into every area branch after main moves, so each area keeps building on what landed.
 # It works with git merge-tree and commit-tree, so no worktree or checkout is touched and it can run
 # from any clone. A conflict is reported, never resolved here: the area's owner merges main by hand,
-# keeping both sides' intent.
+# keeping both sides' intent. An area whose area-merge.sh lock is held on this machine is skipped
+# and caught up on the next landing, so merge-back never takes a running merge's push from it.
 #
 # usage: cloud/integration/merge-back.sh
 set -euo pipefail
@@ -13,6 +14,13 @@ main=$(git rev-parse origin/main)
 
 grep -v '^#' "$directory/areas.tsv" | while IFS=$'\t' read -r area owner oracle; do
 	[ -n "$area" ] || continue
+	lock="${ADAMIC_AREA_WORKTREES:-$HOME/.adamic-areas}/$area.lock"
+	if [ -d "$lock" ]; then
+		# An area-merge.sh run holds the area; pushing over it would cost that run its push.
+		# The next landing's merge-back catches the area up.
+		echo "area/$area skipped: a merge into it is running ($lock, since $(date -r "$lock" '+%H:%M'))"
+		continue
+	fi
 	if ! tip=$(git rev-parse -q --verify "refs/remotes/origin/area/$area"); then
 		echo "area/$area missing"
 		continue
