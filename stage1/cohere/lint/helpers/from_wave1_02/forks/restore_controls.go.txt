@@ -1,0 +1,37 @@
+package control_flow_graph
+
+import "testing"
+
+func TestWave02RestoreControls(t *testing.T) {
+	for frameLength := 0; frameLength <= 4; frameLength++ {
+		for frameMask := 0; frameMask < 1<<frameLength; frameMask++ {
+			for snapshotLength := 0; snapshotLength <= 6; snapshotLength++ {
+				for snapshotMask := 0; snapshotMask < 1<<snapshotLength; snapshotMask++ {
+					builder := &Builder[int]{}
+					for i := 0; i < frameLength; i++ {
+						builder.tryStack = append(builder.tryStack, &tryFrame[int]{thrownForked: frameMask&(1<<i) != 0})
+					}
+					snapshot := make([]bool, snapshotLength)
+					for i := range snapshot {
+						snapshot[i] = snapshotMask&(1<<i) != 0
+					}
+					builder.restoreForks(snapshot)
+				}
+			}
+		}
+	}
+	for frameMask := 0; frameMask < 4; frameMask++ {
+		for snapshotLength := 0; snapshotLength <= 5; snapshotLength++ {
+			for snapshotMask := 0; snapshotMask < 1<<snapshotLength; snapshotMask++ {
+				first := &tryFrame[int]{thrownForked: frameMask&1 != 0}
+				second := &tryFrame[int]{thrownForked: frameMask&2 != 0}
+				builder := &Builder[int]{tryStack: []*tryFrame[int]{first, second, first}}
+				snapshot := make([]bool, snapshotLength)
+				for i := range snapshot {
+					snapshot[i] = snapshotMask&(1<<i) != 0
+				}
+				builder.restoreForks(snapshot)
+			}
+		}
+	}
+}

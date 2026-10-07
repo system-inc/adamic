@@ -1,0 +1,13 @@
+import { panic } from 'adamic';
+import { ForkFrame } from './snapshot_forks.a';
+
+// Excess snapshot entries are ignored; a short snapshot leaves later frames alone.
+export function restoreForks(frames: readonly ForkFrame[], snapshot: readonly boolean[]): void {
+    for (let index = 0; index < snapshot.length; index++) {
+        if (index < frames.length) {
+            const frame = frames[index] ?? panic('missing restore frame');
+            const forked = snapshot[index] ?? panic('missing snapshot bit');
+            frame.thrownForked = forked;
+        }
+    }
+}

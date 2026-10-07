@@ -1,0 +1,38 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { ForkFrame } from './snapshot_forks.a';
+import { restoreForks } from './restore_forks.a';
+function bits(values: readonly boolean[]): string {
+    let result = '';
+    for (const value of values) result += value ? '1' : '0';
+    return result;
+}
+function frameBits(frames: readonly ForkFrame[]): string {
+    let result = '';
+    for (const frame of frames) result += frame.thrownForked ? '1' : '0';
+    return result;
+}
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('missing restore trace'));
+if (file.kind === 'Error') panic(file.message);
+for (const row of file.text.split('\n')) {
+    if (row.length === 0) continue;
+    const parts = row.split('|');
+    if (parts.length !== 5) panic('invalid restore row');
+    const seed = parts[0] ?? panic('missing frames');
+    const snapshotBits = parts[1] ?? panic('missing snapshot');
+    const identity = parts[3] ?? panic('missing frame identities');
+    const ids: string[] = [];
+    if (identity.length > 0) for (const id of identity.split(':')) ids.push(id);
+    if (ids.length !== seed.length) panic('identity length mismatch');
+    const frames: ForkFrame[] = [];
+    for (let index = 0; index < seed.length; index++) {
+        const handle = Number(ids[index] ?? panic('missing identity'));
+        if (handle < index) frames.push(frames[handle] ?? panic('invalid prior identity'));
+        else if (handle === index) frames.push(new ForkFrame(seed.charAt(index) === '1'));
+        else panic('invalid new identity');
+    }
+    const snapshot: boolean[] = [];
+    for (let index = 0; index < snapshotBits.length; index++) snapshot.push(snapshotBits.charAt(index) === '1');
+    restoreForks(frames, snapshot);
+    console.log(seed + '|' + snapshotBits + '|' + frameBits(frames) + '|' + identity + '|' + bits(snapshot));
+}
