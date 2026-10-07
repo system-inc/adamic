@@ -1,0 +1,9 @@
+import { Frames, header } from './frames.ts';
+import type { NodeStructure } from './node_structure.a';
+export class LiteralString {
+    readonly held: boolean; readonly value: string;
+    constructor(tree: NodeStructure, id: number, type: number) {
+        const frames = new Frames(tree.ask(id, `literal-string\n${type}`));
+        header(frames, 'literal-string'); this.held = frames.yes(); this.value = frames.field(); frames.end();
+    }
+}

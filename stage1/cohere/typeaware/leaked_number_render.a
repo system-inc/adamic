@@ -1,0 +1,65 @@
+import type { NodeStructure } from './node_structure.a';
+import type { Types } from './types.ts';
+import type { TypeFact } from './type_fact.ts';
+import { LiteralString } from './literal_string.a';
+import { transformedShape } from './transformed_shape.a';
+
+export class LeakedNumberRender {
+    readonly tree: NodeStructure;
+    constructor(tree: NodeStructure) { this.tree = tree; }
+    run(): void {
+        for(let id = 1; id <= this.tree.nodes.length; id++) {
+            const node = this.tree.node(id);
+            if(node.kind === 'JsxExpression' && node.role(0) !== 0 && !node.spread && node.parent !== 0 && ['JsxElement', 'JsxFragment'].includes(this.tree.node(node.parent).kind)) {
+                this.rendered(node.role(0));
+            }
+        }
+    }
+    rendered(index: number): void {
+        const id = this.tree.skip(index); const node = this.tree.node(id);
+        if(node.kind === 'ConditionalExpression') { this.rendered(node.role(6)); this.rendered(node.role(7)); }
+        if(node.kind === 'BinaryExpression') {
+            if(node.operator === 'AmpersandAmpersandToken') { this.falsy(node.role(4)); this.rendered(node.role(5)); }
+            if(node.operator === 'BarBarToken') { this.rendered(node.role(5)); }
+            if(node.operator === 'QuestionQuestionToken') { this.rendered(node.role(4)); this.rendered(node.role(5)); }
+        }
+    }
+    falsy(index: number): void {
+        const id = this.tree.skip(index); const node = this.tree.node(id);
+        if(node.kind === 'ConditionalExpression') { this.falsy(node.role(6)); this.falsy(node.role(7)); return; }
+        if(node.kind === 'BinaryExpression') {
+            if(['AmpersandAmpersandToken', 'QuestionQuestionToken'].includes(node.operator)) { this.falsy(node.role(4)); this.falsy(node.role(5)); return; }
+            if(node.operator === 'BarBarToken') { this.falsy(node.role(5)); return; }
+        }
+        const graph = this.tree.shape(id);
+        let leaks = false;
+        for(const part of graph.parts(graph.root())) {
+            const verdict = this.classify(id, graph, graph.type(part), 0);
+            if(verdict === 0) { return; }
+            if(verdict === 2) { leaks = true; }
+        }
+        if(leaks) { this.tree.add(id, 'correctness-no-leaked-number-render', 'leakedNumberRender', "This operand is a number, and `&&` hands back its own value when it is falsy, so when it is `0` (or `NaN`) React renders that number as text where nothing was meant to appear. Test the condition you mean instead, such as `count > 0 &&` or `count !== undefined &&`, so the operand is a boolean."); }
+    }
+    classify(id: number, graph: Types, type: TypeFact, depth: number): number {
+        if((type.flags & (4 | 8 | 16 | 8192 | 262144)) !== 0) { return 1; }
+        if((type.flags & (64 | 128)) !== 0) { return 2; }
+        if((type.flags & (2048 | 4096)) !== 0) {
+            const value = new LiteralString(this.tree, id, type.id);
+            return value.held && ['0', '-0', 'NaN'].includes(value.value) ? 2 : 1;
+        }
+        if((type.flags & 268435456) !== 0) { return type.parts.some((p) => (graph.type(p).flags & (64 | 128)) !== 0) ? 2 : 0; }
+        if((type.flags & 132644864) !== 0) {
+            if(depth > 4) { return 0; }
+            const constraint = transformedShape(this.tree, id, type.id, true);
+            if(!constraint.present || constraint.root().id === type.id) { return 0; }
+            let verdict = 1;
+            for(const part of constraint.parts(constraint.root())) {
+                const result = this.classify(id, constraint, constraint.type(part), depth + 1);
+                if(result === 0) { return 0; }
+                if(result === 2) { verdict = 2; }
+            }
+            return verdict;
+        }
+        return 0;
+    }
+}

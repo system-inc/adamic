@@ -1,0 +1,106 @@
+import type { NodeStructure } from './node_structure.a';
+import { DeclarationLineage } from './declaration_lineage.a';
+import { transformedShape } from './transformed_shape.a';
+
+export class GlobalListenerTargetAssertion {
+    readonly tree: NodeStructure;
+    constructor(tree: NodeStructure) { this.tree = tree; }
+    handler(id: number): number {
+        const tree = this.tree; const call = tree.node(id);
+        if(call.arguments.length < 2) { return 0; }
+        const access = tree.node(tree.skip(call.role(0)));
+        if(access.kind !== 'PropertyAccessExpression' || tree.node(access.role(1)).kind !== 'Identifier' || tree.node(access.role(1)).text !== 'addEventListener') { return 0; }
+        const receiver = tree.skip(access.role(0)); const object = tree.node(receiver);
+        if(object.kind !== 'Identifier' || !['document', 'window'].includes(object.text)) { return 0; }
+        const global = new DeclarationLineage(tree, receiver);
+        const method = new DeclarationLineage(tree, access.role(1));
+        if(!global.library() || !global.declarations.every((d) => d.first().kind === 'VariableDeclaration') || !method.library()) { return 0; }
+        const handler = tree.skip(call.arguments[1] ?? 0); const node = tree.node(handler);
+        if(['ArrowFunction', 'FunctionExpression'].includes(node.kind)) { return handler; }
+        if(node.kind !== 'Identifier') { return 0; }
+        const binding = new DeclarationLineage(tree, handler);
+        if(binding.identity === 0 || (binding.flags & 2097152) !== 0 || binding.declarations.length !== 1) { return 0; }
+        const declaration = binding.declarations[0];
+        if(declaration === undefined || declaration.file !== tree.path) { return 0; }
+        const original = declaration.first();
+        let found = 0;
+        for(let at = 1; at <= tree.nodes.length; at++) {
+            const candidate = tree.node(at);
+            if(candidate.kind === original.kind && candidate.start === original.start && candidate.end === original.end) { found = at; break; }
+        }
+        if(found === 0) { return 0; }
+        if(original.kind === 'FunctionDeclaration') { return found; }
+        if(original.kind !== 'VariableDeclaration') { return 0; }
+        const list = declaration.chain[1];
+        if(list === undefined || list.kind !== 'VariableDeclarationList' || (list.flags & 2) === 0 || tree.node(found).role(0) === 0) { return 0; }
+        const initializer = tree.skip(tree.node(found).role(0));
+        return ['ArrowFunction', 'FunctionExpression'].includes(tree.node(initializer).kind) ? initializer : 0;
+    }
+    run(): void {
+        const tree = this.tree;
+        for(let id = 1; id <= tree.nodes.length; id++) {
+            if(tree.node(id).kind !== 'CallExpression') { continue; }
+            const handler = this.handler(id);
+            if(handler === 0) { continue; }
+            const functionNode = tree.node(handler); const parameter = functionNode.parameters[0];
+            if(parameter === undefined || functionNode.role(3) === 0) { continue; }
+            const name = tree.node(parameter).role(1);
+            if(name === 0 || tree.node(name).kind !== 'Identifier' || tree.node(name).text === 'this') { continue; }
+            const event = new DeclarationLineage(tree, name);
+            if(event.identity === 0) { continue; }
+            for(let at = 1; at <= tree.nodes.length; at++) {
+                if(tree.node(at).kind !== 'PropertyAccessExpression') { continue; }
+                let current = at;
+                while(current !== 0 && current !== functionNode.role(3)) { current = tree.node(current).parent; }
+                if(current === 0) { continue; }
+                this.check(at, event.identity, event.name);
+            }
+        }
+    }
+    specific(id: number, type: number): boolean {
+        const tree = this.tree; const symbol = new DeclarationLineage(tree, id, `type\n${type}`);
+        if(symbol.identity === 0 || (symbol.flags & 64) === 0 || ['Element', 'HTMLElement', 'SVGElement', 'MathMLElement'].includes(symbol.name) || !symbol.library()) { return false; }
+        const queue = [type]; const seen: number[] = [symbol.identity];
+        for(let head = 0; head < queue.length; head++) {
+            const current = queue[head] ?? type;
+            const bases = tree.shape(id, `base-shapes\n${current}`);
+            for(const base of bases.roots) {
+                const binding = new DeclarationLineage(tree, id, `type\n${base}`);
+                if(binding.identity === 0 || seen.includes(binding.identity)) { continue; }
+                if(binding.name === 'Element' && binding.library()) { return true; }
+                seen.push(binding.identity); queue.push(base);
+            }
+        }
+        return false;
+    }
+    check(id: number, identity: number, eventName: string): void {
+        const tree = this.tree; const access = tree.node(id); const name = access.role(1);
+        if(tree.node(name).kind !== 'Identifier' || tree.node(name).text !== 'target') { return; }
+        const object = tree.skip(access.role(0));
+        if(tree.node(object).kind !== 'Identifier' || tree.node(object).text !== eventName) { return; }
+        const binding = new DeclarationLineage(tree, object);
+        const property = new DeclarationLineage(tree, name);
+        if(binding.identity !== identity || !property.library()) { return; }
+        const known = tree.shape(id);
+        let outer = access.parent;
+        while(outer !== 0) {
+            const node = tree.node(outer);
+            if(['ParenthesizedExpression', 'NonNullExpression'].includes(node.kind)) { outer = node.parent; continue; }
+            if(!['AsExpression', 'TypeAssertionExpression'].includes(node.kind)) { return; }
+            if(node.role(2) === 0) { return; }
+            const asserted = tree.shape(node.role(2), 'annotation-shape');
+            let specific = false; let accepted = true;
+            for(const part of asserted.parts(asserted.root())) {
+                const type = asserted.type(part);
+                if((type.flags & (4 | 8)) !== 0) { continue; }
+                if(!this.specific(id, type.id)) { accepted = false; break; }
+                specific = true;
+            }
+            if(!accepted || !specific) { outer = node.parent; continue; }
+            const source = transformedShape(tree, id, known.root().id);
+            const target = transformedShape(tree, id, asserted.root().id);
+            if(tree.compare(id, source.root().id, target.root().id)) { return; }
+            tree.add(outer, 'correctness-no-global-listener-target-assertion', 'globalListenerTargetAssertion', "This asserts `event.target` to a specific element type inside a listener on `document` or `window`. A listener that high up hears the event from every element on the page, so the target is whatever was clicked or focused, and a member read through the assertion (`selectionStart`, `value`, `checked`) is `undefined` on any other element. Check it with `instanceof` first, which narrows the type and makes the assertion unnecessary, or listen on the element itself and read `event.currentTarget`."); return;
+        }
+    }
+}

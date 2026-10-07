@@ -1,0 +1,32 @@
+import { panic } from 'adamic';
+import { Frames, header } from './frames.ts';
+import type { NodeStructure } from './node_structure.a';
+
+export class Ancestor {
+    readonly kind: string; readonly name: string; readonly nameKind: string; readonly start: number; readonly end: number; readonly flags: number;
+    constructor(frames: Frames) {
+        this.kind = frames.field(); this.name = frames.field(); this.nameKind = frames.field(); this.start = frames.natural(); this.end = frames.natural(); this.flags = frames.natural();
+    }
+}
+export class Declaration {
+    readonly file: string; readonly library: boolean; readonly typeOnly: boolean; readonly chain: readonly Ancestor[];
+    constructor(frames: Frames) {
+        this.file = frames.field(); this.library = frames.yes(); this.typeOnly = frames.yes();
+        const count = frames.natural(); const chain: Ancestor[] = [];
+        for(let i = 0; i < count; i++) { chain.push(new Ancestor(frames)); }
+        if(chain.length === 0) { panic('empty declaration ancestry'); }
+        this.chain = chain;
+    }
+    first(): Ancestor { return this.chain[0] ?? panic('missing declaration'); }
+}
+export class DeclarationLineage {
+    readonly identity: number; readonly flags: number; readonly name: string; readonly declarations: readonly Declaration[];
+    constructor(tree: NodeStructure, id: number, selector = 'node') {
+        const frames = new Frames(tree.ask(id, `declaration-lineage\n${selector}`));
+        header(frames, 'declaration-lineage'); this.identity = frames.natural(); this.flags = frames.natural(); this.name = frames.field();
+        const count = frames.natural(); const declarations: Declaration[] = [];
+        for(let i = 0; i < count; i++) { declarations.push(new Declaration(frames)); }
+        this.declarations = declarations; frames.end();
+    }
+    library(): boolean { return this.declarations.length > 0 && this.declarations.every((d) => d.library); }
+}

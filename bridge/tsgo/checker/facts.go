@@ -203,6 +203,10 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "literal-string": return p.literalString(out, question)
+	case "transformed-shape": return p.transformedShape(out, c, question)
+	case "node-structure": return p.nodeStructure(out, source, node, question)
+	case "declaration-lineage": return p.declarationLineage(out, c, node, question)
 	case "type-arguments": return p.typeArguments(out, c, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
 		if err := p.declarationFacts(out, c, node, mode, question); err != nil {

@@ -1,0 +1,5 @@
+import type { NodeStructure } from './node_structure.a';
+import type { Types } from './types.ts';
+export function transformedShape(tree: NodeStructure, id: number, type: number, constraint = false): Types {
+    return tree.shape(id, `transformed-shape\n${type}\n${constraint ? 'constraint' : 'non-nullable'}`);
+}

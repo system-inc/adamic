@@ -1,0 +1,40 @@
+import type { NodeStructure } from './node_structure.a';
+import { DeclarationLineage } from './declaration_lineage.a';
+
+export class MockOnModuleNamespace {
+    readonly tree: NodeStructure;
+    constructor(tree: NodeStructure) { this.tree = tree; }
+    run(): void {
+        const tree = this.tree;
+        if(tree.path.endsWith('.cts') || tree.path.endsWith('.cjs')) { return; }
+        if(!tree.path.endsWith('.mts') && !tree.path.endsWith('.mjs') && !(tree.module >= 5 && tree.module <= 99) && tree.module !== 200) { return; }
+        for(let id = 1; id <= tree.nodes.length; id++) {
+            const call = tree.node(id);
+            if(call.kind !== 'CallExpression' || call.arguments.length === 0) { continue; }
+            const access = tree.node(tree.skip(call.role(0)));
+            if(access.kind !== 'PropertyAccessExpression') { continue; }
+            const name = tree.node(access.role(1));
+            if(name.kind !== 'Identifier' || !['method', 'getter', 'setter', 'property'].includes(name.text)) { continue; }
+            const target = tree.skip(call.arguments[0] ?? 0, true);
+            if(tree.node(target).kind !== 'Identifier') { continue; }
+            const binding = new DeclarationLineage(tree, target);
+            const local = binding.declarations.filter((d) => d.file === tree.path);
+            if((binding.flags & 2097152) === 0 || local.length !== 1) { continue; }
+            const declaration = local[0];
+            if(declaration === undefined || declaration.first().kind !== 'NamespaceImport' || declaration.typeOnly) { continue; }
+            const signature = new DeclarationLineage(tree, id, 'signature');
+            const resolved = signature.declarations[0];
+            if(resolved === undefined || !['MethodSignature', 'MethodDeclaration'].includes(resolved.first().kind)) { continue; }
+            const owner = resolved.chain[1];
+            if(owner === undefined || !['InterfaceDeclaration', 'ClassDeclaration'].includes(owner.kind) || owner.name !== 'MockTracker') { continue; }
+            let nodeTest = false;
+            for(let i = 2; i < resolved.chain.length; i++) {
+                const ancestor = resolved.chain[i];
+                if(ancestor !== undefined && ancestor.kind === 'ModuleDeclaration' && ancestor.nameKind === 'StringLiteral') {
+                    nodeTest = ancestor.name === 'node:test' || ancestor.name === 'test'; break;
+                }
+            }
+            if(nodeTest) { tree.add(id, 'correctness-no-mock-on-module-namespace', 'mockOnModuleNamespace', "This mocks a member of an `import * as` namespace with node:test. An ES module namespace is sealed: its properties cannot be redefined, so the mock throws `Cannot redefine property` every time and the test never runs its body. Mock the object the module really exports instead: for a node builtin, the CommonJS exports reached through `createRequire(import.meta.url)`, followed by `syncBuiltinESMExports()` so the namespace's live binding sees the mock."); }
+        }
+    }
+}
