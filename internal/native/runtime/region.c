@@ -30,11 +30,7 @@ static size_t object_size(size_t count) {
 	return (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
 }
 
-adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape) {
-	if (region == NULL) {
-		return adamic_object_new(shape);
-	}
-	size_t size = object_size(shape->count);
+static void *allocate_in(adamic_region *region, size_t size) {
 	adamic_region_block *block = region->blocks;
 	if (block == NULL || block->size - block->used < size) {
 		// Each block twice the last, from 4 KB up to 1 MB, and at least as big as the object.
@@ -56,16 +52,30 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
 		region->blocks = fresh;
 		block = fresh;
 	}
-	adamic_object *object = (adamic_object *)(void *)(block->bytes + block->used);
+	void *value = block->bytes + block->used;
 	block->used += size;
+	region->count++;
+	ADAMIC_COUNT_ALLOCATION();
+	return value;
+}
+
+adamic_environment *adamic_environment_new_in(adamic_region *region, size_t count) {
+	size_t size = sizeof(adamic_environment) + count * sizeof(adamic_cell);
+	size = (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
+	adamic_environment *environment = allocate_in(region, size);
+	adamic_environment_init(environment, (adamic_cell *)(void *)(environment + 1), count);
+	return environment;
+}
+
+adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape) {
+	if (region == NULL) { return adamic_object_new(shape); }
+	adamic_object *object = allocate_in(region, object_size(shape->count));
 	object->heap.references = 0;
 	object->heap.kind = adamic_kind_object;
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
-	region->count++;
-	ADAMIC_COUNT_ALLOCATION();
 	return object;
 }
 
@@ -74,10 +84,18 @@ void adamic_region_end(adamic_region *region) {
 	// in another block of the same region (and immortal, so passed over).
 	for (adamic_region_block *block = region->blocks; block != NULL; block = block->next) {
 		for (size_t offset = 0; offset < block->used;) {
-			adamic_object *object = (adamic_object *)(void *)(block->bytes + offset);
-			adamic_object_free_children(object, adamic_release);
-			adamic_weak_forget(object);
-			offset += object_size(object->shape->count);
+			adamic_heap *value = (adamic_heap *)(void *)(block->bytes + offset);
+			if (value->kind == adamic_kind_environment) {
+				adamic_environment *environment = (adamic_environment *)value;
+				adamic_environment_end(environment);
+				size_t size = sizeof *environment + environment->count * sizeof(adamic_cell);
+				offset += (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
+			} else {
+				adamic_object *object = (adamic_object *)value;
+				adamic_object_free_children(object, adamic_release);
+				adamic_weak_forget(object);
+				offset += object_size(object->shape->count);
+			}
 		}
 	}
 	for (adamic_region_block *block = region->blocks; block != NULL;) {

@@ -1,0 +1,9 @@
+function fail(start: number): string { throw new Error('initializer' + String(start)); }
+function check(start: number): string {
+ const text = 'text' + String(start);
+ const values = [text];
+ const item = { label: fail(start) };
+ function read(): string { return text + values.join(',') + item.label; }
+ return read();
+}
+try { console.log(check(3)); } catch (error) { if (error instanceof Error) { console.log(error.message); } }

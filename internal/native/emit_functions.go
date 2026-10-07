@@ -58,6 +58,11 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
+	for index := range function.Body {
+		if _, ok := function.Body[index].(ir.AllocateEnvironment); ok {
+			e.allocateEnvironment(&function.Body[index])
+		}
+	}
 	for _, parameter := range function.Parameters {
 		switch {
 		case e.reuse.consumed[parameter]:
@@ -231,6 +236,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
 	}
 	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+	if expression.Direct > 0 {
+		call = fmt.Sprintf("%s(%s, %s)", e.functionName(expression.Direct-1), closure, packed)
+	}
 	if receiver != "" {
 		if closure == "" {
 			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)

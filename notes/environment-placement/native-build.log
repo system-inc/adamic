@@ -1,0 +1,18 @@
+panic: native: a store into the borrowed parameter text
+
+goroutine 1 [running]:
+github.com/system-inc/adamic/internal/native.(*emitter).store(0x5974a4956e0?, 0x4846cb?, {0x5974a2b24e0?, 0x493d4a?}, 0x80?)
+	/workspace/adamic/internal/native/emit_locals.go:32 +0x985
+github.com/system-inc/adamic/internal/native.(*emitter).makeCell(0x5974ab47180, 0x1, {0x5974a2b24e0?, 0x0?}, 0x0?)
+	/workspace/adamic/internal/native/emit_locals.go:156 +0x436
+github.com/system-inc/adamic/internal/native.(*emitter).functionBody(0x5974ab47180, {{0x5974a422009, 0x5}, {0x5974a2ae1c0, 0x4, 0x4}, 0x3, {0x5974ae495e0, 0xa, 0xa}, ...})
+	/workspace/adamic/internal/native/emit_functions.go:78 +0xbd4
+github.com/system-inc/adamic/internal/native.C(0x5974aac8f20)
+	/workspace/adamic/internal/native/emit.go:65 +0xd25
+main.build({0x7ffc54442314?, 0x4042000000000000?}, {0x7ffc54442353, 0x3e}, {0x5974a3cc010?, 0x5974a4b4300?, 0x5974a4b41e0?})
+	/workspace/adamic/cmd/adamic/tsgo.go:48 +0x29a
+main.run({0x5974a3cc010?, 0x19145c8?, 0x5974a28a1e0?})
+	/workspace/adamic/cmd/adamic/main.go:72 +0x308
+main.main()
+	/workspace/adamic/cmd/adamic/main.go:33 +0x45
+exit status 2

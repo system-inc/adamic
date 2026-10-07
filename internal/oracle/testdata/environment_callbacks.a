@@ -1,0 +1,16 @@
+function check(start: number): string {
+ let total = start;
+ const scratch = 'scratch' + String(start);
+ function visit(value: number): void { total += value + scratch.length; }
+ function transform(value: number): number { return value + total; }
+ function accept(value: number): boolean { return value >= start; }
+ function compare(left: number, right: number): number { return left - right + total - total; }
+ const values = [3, 1, 2];
+ values.forEach(visit);
+ const mapped = values.map(transform);
+ const filtered = mapped.filter(accept);
+ filtered.sort(compare);
+ const found = filtered.find(accept);
+ return `${total} ${filtered.join(',')} ${found ?? -1}`;
+}
+console.log(check(2));

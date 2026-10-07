@@ -35,13 +35,16 @@ type regionPlan struct {
 	escapes map[int]map[int]bool
 
 	// statements are the statements that get a region.
-	statements   map[*ir.Statement]bool
-	program      *ir.Program
-	classObjects map[int]int
+	statements           map[*ir.Statement]bool
+	program              *ir.Program
+	classObjects         map[int]int
+	environments         map[*ir.Statement]environmentPlacement
+	environmentArguments map[int]map[int]bool
+	cleanups             map[string]string
 }
 
 func planRegions(program *ir.Program) *regionPlan {
-	plan := &regionPlan{fresh: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}}
+	plan := &regionPlan{fresh: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}, environments: map[*ir.Statement]environmentPlacement{}, environmentArguments: map[int]map[int]bool{}, cleanups: map[string]string{}}
 	// Escape: start from every object parameter of a named function flowing nowhere, and mark any
 	// that escapes, until none changes.
 	for index, function := range program.Functions {
@@ -62,6 +65,7 @@ func planRegions(program *ir.Program) *regionPlan {
 			}
 		}
 	}
+	plan.planEnvironments()
 	// Fresh: start from every named function returning an object, and take away any that returns
 	// something else, until none changes.
 	for index, function := range program.Functions {
@@ -157,7 +161,8 @@ func (plan *regionPlan) freshValue(value ir.Expression) bool {
 	case ir.Undefined:
 		return true
 	case ir.Call:
-		return plan.regionTarget(value) >= 0
+		_, fresh := plan.regionTarget(value)
+		return fresh
 	}
 	return false
 }
@@ -252,8 +257,10 @@ func (plan *regionPlan) feedsRegion(statement ir.Statement) bool {
 	walk(statement, func(expression ir.Expression) {
 		if call, ok := expression.(ir.Call); ok {
 			for position, argument := range call.Arguments {
-				if inner, isCall := argument.(ir.Call); isCall && plan.regionTarget(inner) >= 0 && !plan.callEscapes(call, position) {
-					feeds = true
+				if inner, isCall := argument.(ir.Call); isCall {
+					if _, fresh := plan.regionTarget(inner); fresh && !plan.callEscapes(call, position) {
+						feeds = true
+					}
 				}
 			}
 		}
@@ -311,7 +318,7 @@ func (e *emitter) regionFunctionName(function int) string {
 // regionFor is the region a call to a function that takes one is handed: the one its parent said
 // (a statement's region, or the function's own), or none, and then it's the heap version's call.
 func (e *emitter) regionFor(call ir.Call) string {
-	if e.regions.regionTarget(call) < 0 || e.depth != e.regionCallDepth {
+	if _, fresh := e.regions.regionTarget(call); !fresh || e.depth != e.regionCallDepth {
 		return ""
 	}
 	return e.regionCallArgument
@@ -333,7 +340,10 @@ func (e *emitter) regionValue(value string) string {
 // takes one; anything else is evaluated as it would be.
 func (e *emitter) handRegion(expression ir.Expression, region string) string {
 	call, isCall := expression.(ir.Call)
-	if region == "" || !isCall || e.regions.regionTarget(call) < 0 {
+	if region == "" || !isCall {
+		return e.value(expression)
+	}
+	if _, fresh := e.regions.regionTarget(call); !fresh {
 		return e.value(expression)
 	}
 	outerDepth, outerArgument := e.regionCallDepth, e.regionCallArgument
@@ -373,13 +383,246 @@ func (plan *regionPlan) callEscapes(call ir.Call, position int) bool {
 	return false
 }
 
-// regionTarget selects a variant only when there is one proven target and the
-// call uses the direct ABI. Virtual tables contain heap variants, even when all
-// targets return fresh, so virtual calls stay on the counted heap.
-func (plan *regionPlan) regionTarget(call ir.Call) int {
-	targets := plan.program.CallTargets(call)
-	if call.Virtual != 0 || len(targets) != 1 || !plan.fresh[targets[0]] {
-		return -1
+// Environment placement is one decision for the explicit entry allocation, never
+// a decision for an individual slot. Unknown operations keep the counted heap.
+type environmentPlacement uint8
+
+const (
+	environmentHeap environmentPlacement = iota
+	environmentStack
+	environmentRegion
+)
+
+// Keep at most 64 slots on the stack (about 2.6 KB on amd64). Larger fixed
+// layouts use a region owned by this call. The IR has no variable layouts yet.
+const stackEnvironmentSlots = 64
+
+func (plan *regionPlan) planEnvironments() {
+	for index, function := range plan.program.Functions {
+		plan.environmentArguments[index] = map[int]bool{}
+		for position, parameter := range function.Parameters {
+			// Captured parameters can be forwarded through a closure not visible at
+			// this call site. They remain conservative even if the closure is local.
+			plan.environmentArguments[index][position] = plan.program.Locals[parameter].Captured
+		}
 	}
-	return targets[0]
+	for changed := true; changed; {
+		changed = false
+		for index, function := range plan.program.Functions {
+			for position, parameter := range function.Parameters {
+				if !plan.environmentArguments[index][position] && plan.environmentEscapes(nil, map[int]bool{parameter: true}, [][]ir.Statement{function.Body}) {
+					plan.environmentArguments[index][position] = true
+					changed = true
+				}
+			}
+		}
+	}
+	bodies := [][]ir.Statement{plan.program.Main}
+	for _, function := range plan.program.Functions {
+		bodies = append(bodies, function.Body)
+	}
+	for _, function := range plan.program.Functions {
+		for index := range function.Body {
+			site := &function.Body[index]
+			allocation, ok := (*site).(ir.AllocateEnvironment)
+			if !ok {
+				continue
+			}
+			cells := map[int]bool{}
+			for _, local := range allocation.Cells {
+				cells[local] = true
+			}
+			if plan.environmentEscapes(cells, map[int]bool{}, bodies) {
+				continue
+			}
+			placement := environmentStack
+			if len(allocation.Cells) > stackEnvironmentSlots {
+				placement = environmentRegion
+			}
+			plan.environments[site] = placement
+		}
+	}
+}
+
+func (plan *regionPlan) environmentCallEscapes(targets ir.FunctionTargets, position int) bool {
+	if targets.Unknown || len(targets.Functions) == 0 {
+		return true
+	}
+	for _, target := range targets.Functions {
+		escapes, known := plan.environmentArguments[target][position]
+		if !known || escapes {
+			return true
+		}
+	}
+	return false
+}
+
+// This monotone taint proof follows closure values through aliases and captures.
+// Cells identify the storage being proved; reading a slot's value does not itself
+// expose that storage. Making a closure retaining the slot does. We scan all
+// bodies because a forwarded ancestor slot can escape from a nested helper.
+// Stores into containers are deliberately escapes even for local containers.
+func (plan *regionPlan) environmentEscapes(cells, aliases map[int]bool, bodies [][]ir.Statement) bool {
+	escaped, changed := false, true
+	var derived func(ir.Expression) bool
+	derived = func(value ir.Expression) bool {
+		switch value := value.(type) {
+		case nil:
+			return false
+		case ir.Read:
+			return aliases[value.Local]
+		case ir.ClosureSelf:
+			// A named function expression can return or store its current carrier.
+			// No caller-specific self identity is represented in this proof.
+			return len(cells) != 0
+		case ir.MakeClosure:
+			for _, local := range plan.program.Functions[value.Function].Environment {
+				if cells[local] || aliases[local] {
+					return true
+				}
+			}
+			return false
+		case ir.Call:
+			for position, argument := range value.Arguments {
+				if derived(argument) && plan.environmentCallEscapes(ir.FunctionTargets{Functions: plan.program.CallTargets(value)}, position) {
+					escaped = true
+				}
+			}
+			return false
+		case ir.CallClosure:
+			// Visit the callee for evaluation effects without inspecting its target
+			// field. Calling a carrier synchronously does not retain the carrier.
+			eachOperand(value, func(operand ir.Expression) { derived(operand) })
+			targets := plan.program.ClosureTargets(value)
+			for position, argument := range value.Arguments {
+				if derived(argument) && plan.environmentCallEscapes(targets, position) {
+					escaped = true
+				}
+			}
+			return false
+		case ir.ArrayMap, ir.ArrayVisit, ir.ArraySort, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
+			targets := plan.program.ClosureTargets(value)
+			// These runtime loops borrow the callback for the duration of the
+			// operation. Their implementation never keeps it. Other operands may
+			// be handed to user code or retained by the result, so keep them out.
+			var callback ir.Expression
+			operands := []ir.Expression{}
+			switch call := value.(type) {
+			case ir.ArrayMap:
+				callback = call.Callback
+				operands = append(operands, call.Array)
+			case ir.ArrayVisit:
+				callback = call.Callback
+				operands = append(operands, call.Array)
+			case ir.ArraySort:
+				callback = call.Callback
+				operands = append(operands, call.Array)
+			case ir.ArrayReduce:
+				callback = call.Callback
+				operands = append(operands, call.Array, call.Initial)
+			case ir.ArrayFrom:
+				callback = call.Callback
+				operands = append(operands, call.Length)
+			case ir.MapForEach:
+				callback = call.Callback
+				operands = append(operands, call.Map)
+			}
+			if derived(callback) && targets.Unknown {
+				escaped = true
+			}
+			for _, operand := range operands {
+				if derived(operand) {
+					escaped = true
+				}
+			}
+			return false
+		case ir.Defined:
+			return derived(value.Value)
+		case ir.Narrow:
+			return derived(value.Value)
+		case ir.Unwrap:
+			return derived(value.Value)
+		case ir.Box:
+			return derived(value.Value)
+		case ir.MaybeOf:
+			return derived(value.Value)
+		case ir.Conditional:
+			derived(value.Condition)
+			left, right := derived(value.WhenTrue), derived(value.WhenNot)
+			return left || right
+		case ir.Coalesce:
+			derived(value.Panic)
+			left, right := derived(value.Value), derived(value.Fallback)
+			return left || right
+		}
+		operands := false
+		eachOperand(value, func(operand ir.Expression) {
+			if derived(operand) {
+				operands = true
+			}
+		})
+		if operands && !consumes(value) {
+			escaped = true
+		}
+		// A consumer returns a primitive independent of its operands. Other
+		// reference results may still carry the taint (property/element reads).
+		return operands && value.Type().IsReference()
+	}
+	var statements func([]ir.Statement)
+	statements = func(body []ir.Statement) {
+		for _, statement := range body {
+			switch statement := statement.(type) {
+			case ir.Declare:
+				if derived(statement.Value) {
+					if plan.program.Locals[statement.Local].Global || plan.program.Locals[statement.Local].Captured {
+						escaped = true
+					}
+					if !aliases[statement.Local] {
+						aliases[statement.Local] = true
+						changed = true
+					}
+				}
+			case ir.Assign:
+				if derived(statement.Value) {
+					if plan.program.Locals[statement.Local].Global || plan.program.Locals[statement.Local].Captured {
+						escaped = true
+					}
+					if !aliases[statement.Local] {
+						aliases[statement.Local] = true
+						changed = true
+					}
+				}
+			case ir.Evaluate:
+				derived(statement.Value)
+			case ir.AllocateEnvironment:
+			default:
+				eachOperandOfStatement(statement, func(value ir.Expression) {
+					if derived(value) {
+						escaped = true
+					}
+				})
+			}
+			walkStatement(statement, func(ir.Expression) {}, statements)
+		}
+	}
+	for changed && !escaped {
+		changed = false
+		for _, body := range bodies {
+			statements(body)
+		}
+	}
+	return escaped
+}
+
+// Only direct calls have an emitted region variant. Target identity still goes
+// through the program's authoritative query, including for emission decisions.
+func (plan *regionPlan) regionTarget(call ir.Call) (int, bool) {
+	if call.Virtual != 0 {
+		return 0, false
+	}
+	targets := plan.program.CallTargets(call)
+	if len(targets) != 1 {
+		return 0, false
+	}
+	return targets[0], plan.fresh[targets[0]]
 }
