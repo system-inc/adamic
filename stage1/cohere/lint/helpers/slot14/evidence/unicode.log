@@ -1,0 +1,17 @@
+scratch=/tmp/adamic-gate/slot14-unicode-escape-0pn10_b_
+@next/next/no-html-link-for-pages: original Go assertions PASS; actual private calls=0
+@typescript-eslint/no-empty-object-type: original Go assertions PASS; actual private calls=1
+no-restricted-exports: original Go assertions PASS; actual private calls=0
+no-restricted-imports: original Go assertions PASS; actual private calls=0
+@next/next/no-html-link-for-pages: targeted real-rule assertions PASS; actual private calls=2
+no-restricted-exports: targeted real-rule assertions PASS; actual private calls=2
+no-restricted-imports: targeted real-rule assertions PASS; actual private calls=2
+@typescript-eslint/no-empty-object-type: targeted real-rule assertions PASS; actual private calls=1
+unique controls and consumer inputs=12935
+Node: 12935 inputs / 834966 bytes identical to Go
+native: 12935 inputs / 834966 bytes identical to Go
+emitted JavaScript: 12935 inputs / 834966 bytes identical to Go
+Node: compiling exit-zero clean-stderr closing-brace width mutant caught only by Go byte comparison
+native: compiling exit-zero clean-stderr closing-brace width mutant caught only by Go byte comparison
+emitted JavaScript: compiling exit-zero clean-stderr closing-brace width mutant caught only by Go byte comparison
+PASS actual private Go unicode-escape behavior, all four original consumer suites, byte controls and semantic mutant

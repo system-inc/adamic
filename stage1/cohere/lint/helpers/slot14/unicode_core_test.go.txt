@@ -1,0 +1,21 @@
+package core
+
+import (
+	rule_testing "github.com/system-inc/cohere/internal/lint/testing"
+	"testing"
+)
+
+func TestSlot14UnicodeExports(t *testing.T) {
+	result := runNoRestrictedExports(t, noRestrictedExportsCase{
+		sourceText: "export const foo = 1;",
+		options:    NoRestrictedExportsOptions{RestrictedNamedExportsPattern: `^\u0066oo$`},
+	})
+	rule_testing.ExpectFindings(t, result, "restrictedNamed")
+}
+func TestSlot14UnicodeImports(t *testing.T) {
+	result := runNoRestrictedImports(t, noRestrictedImportsCase{
+		sourceText: "import value from 'foo';",
+		options:    NoRestrictedImportsOptions{Patterns: []NoRestrictedImportsPattern{{Regex: `^\u0066oo$`}}},
+	})
+	rule_testing.ExpectFindings(t, result, "patterns")
+}

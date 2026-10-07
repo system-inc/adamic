@@ -1,0 +1,16 @@
+package next
+
+import "testing"
+
+func TestSlot14UnicodeRoutes(t *testing.T) {
+	routes := compileRouteSources([]string{`^/\u0066oo/$`, `^/\u0062ar/$`})
+	if len(routes) != 2 {
+		t.Fatalf("routes: %d", len(routes))
+	}
+	if !routes[0].Test("/foo/") || routes[0].Test("/bar/") {
+		t.Fatal("hex route match")
+	}
+	if !routes[1].Test("/bar/") || routes[1].Test("/foo/") {
+		t.Fatal("unicode route match")
+	}
+}

@@ -1,0 +1,40 @@
+import { FixedHexEscape, decodeFixedHex } from './regexp_decode_fixed_hex.a';
+
+function unicodeFailure(closed: boolean): FixedHexEscape {
+    const bytes: number[] = [];
+    const beginning = 'unsupported regexp syntax: \\u{';
+    for(let at = 0; at < beginning.length; at++) { bytes.push(beginning.charCodeAt(at)); }
+    if(closed) {
+        // Go spells U+2026 in this error; retain its three UTF-8 bytes.
+        bytes.push(226); bytes.push(128); bytes.push(166);
+    }
+    const ending = closed ? '} naming no character' : ' that no } closes';
+    for(let at = 0; at < ending.length; at++) { bytes.push(ending.charCodeAt(at)); }
+    return new FixedHexEscape(0, 0, true, bytes);
+}
+
+// Byte source and integer indexes follow the same domain as decodeFixedHex,
+// additionally index + size <= source.length. Scanner callers use size 1.
+export function decodeUnicodeEscape(source: readonly number[], index: number, size: number, unicode: boolean): FixedHexEscape {
+    const start = index + size;
+    if(unicode && source[start] === 123) {
+        let end = start;
+        while(end < source.length && source[end] !== 125) { end++; }
+        if(end === source.length) { return unicodeFailure(false); }
+        let value = 0;
+        let valid = end > start + 1;
+        for(let at = start + 1; at < end; at++) {
+            const byte = source[at] ?? -1;
+            let digit = -1;
+            if(byte >= 48 && byte <= 57) { digit = byte - 48; }
+            else if(byte >= 65 && byte <= 70) { digit = byte - 65 + 10; }
+            else if(byte >= 97 && byte <= 102) { digit = byte - 97 + 10; }
+            if(digit < 0) { valid = false; break; }
+            value = value * 16 + digit;
+            if(value > 4294967295) { valid = false; break; }
+        }
+        if(!valid || value > 1114111) { return unicodeFailure(true); }
+        return new FixedHexEscape(value, size + end - start + 1, false, []);
+    }
+    return decodeFixedHex(source, index, size, 4, unicode);
+}

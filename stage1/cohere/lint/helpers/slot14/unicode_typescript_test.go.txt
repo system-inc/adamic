@@ -1,0 +1,14 @@
+package typescript
+
+import (
+	rule_testing "github.com/system-inc/cohere/internal/lint/testing"
+	"testing"
+)
+
+func TestSlot14UnicodeEmptyObject(t *testing.T) {
+	options, err := DecodeNoEmptyObjectTypeOptions([]byte(`{"allowWithName":"^\\u{49}tem$"}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	rule_testing.ExpectClean(t, rule_testing.RunWithOptions(t, NoEmptyObjectType, emptyObjectFile, "interface Item {}", options))
+}

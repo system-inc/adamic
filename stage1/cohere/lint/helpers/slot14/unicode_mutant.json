@@ -1,0 +1,6 @@
+{
+  "name": "brace escape omits its closing brace from width",
+  "file": "regexp_decode_unicode_escape.a",
+  "from": "size + end - start + 1",
+  "to": "size + end - start"
+}

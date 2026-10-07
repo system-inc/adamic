@@ -1,0 +1,330 @@
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus
+=== RUN   TestNoEmptyObjectTypeFiresOnInterfaces
+=== PAUSE TestNoEmptyObjectTypeFiresOnInterfaces
+=== RUN   TestNoEmptyObjectTypeFiresOnObjectTypes
+=== PAUSE TestNoEmptyObjectTypeFiresOnObjectTypes
+=== RUN   TestNoEmptyObjectTypeOffersTwoSuggestions
+=== PAUSE TestNoEmptyObjectTypeOffersTwoSuggestions
+=== RUN   TestNoEmptyObjectTypeStaysSilent
+=== PAUSE TestNoEmptyObjectTypeStaysSilent
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-0
+=== CONT  TestNoEmptyObjectTypeOffersTwoSuggestions
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-0
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-1
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-1
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-2
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-2
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-3
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-3
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-4
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-4
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-5
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-5
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-6
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-6
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-7
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-7
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-8
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-8
+=== CONT  TestNoEmptyObjectTypeStaysSilent
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-9
+=== CONT  TestNoEmptyObjectTypeFiresOnObjectTypes
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-9
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-10
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-10
+=== RUN   TestNoEmptyObjectTypeFiresOnObjectTypes/a_type_alias
+--- PASS: TestNoEmptyObjectTypeOffersTwoSuggestions (0.00s)
+=== PAUSE TestNoEmptyObjectTypeFiresOnObjectTypes/a_type_alias
+=== RUN   TestNoEmptyObjectTypeFiresOnObjectTypes/an_annotation
+=== PAUSE TestNoEmptyObjectTypeFiresOnObjectTypes/an_annotation
+=== RUN   TestNoEmptyObjectTypeFiresOnObjectTypes/inside_a_union
+=== PAUSE TestNoEmptyObjectTypeFiresOnObjectTypes/inside_a_union
+=== CONT  TestNoEmptyObjectTypeFiresOnInterfaces
+=== RUN   TestNoEmptyObjectTypeFiresOnInterfaces/an_empty_interface
+=== RUN   TestNoEmptyObjectTypeFiresOnObjectTypes/unioned_with_null
+=== PAUSE TestNoEmptyObjectTypeFiresOnObjectTypes/unioned_with_null
+=== CONT  TestNoEmptyObjectTypeFiresOnObjectTypes/a_type_alias
+=== PAUSE TestNoEmptyObjectTypeFiresOnInterfaces/an_empty_interface
+=== RUN   TestNoEmptyObjectTypeStaysSilent/an_interface_with_members
+=== PAUSE TestNoEmptyObjectTypeStaysSilent/an_interface_with_members
+=== RUN   TestNoEmptyObjectTypeStaysSilent/extending_two_names
+=== PAUSE TestNoEmptyObjectTypeStaysSilent/extending_two_names
+=== RUN   TestNoEmptyObjectTypeStaysSilent/extending_three_names
+=== PAUSE TestNoEmptyObjectTypeStaysSilent/extending_three_names
+=== RUN   TestNoEmptyObjectTypeStaysSilent/inside_an_intersection
+=== PAUSE TestNoEmptyObjectTypeStaysSilent/inside_an_intersection
+=== RUN   TestNoEmptyObjectTypeFiresOnInterfaces/extending_a_single_name
+=== RUN   TestNoEmptyObjectTypeStaysSilent/a_populated_type_literal
+=== PAUSE TestNoEmptyObjectTypeStaysSilent/a_populated_type_literal
+=== RUN   TestNoEmptyObjectTypeStaysSilent/a_populated_annotation
+=== PAUSE TestNoEmptyObjectTypeStaysSilent/a_populated_annotation
+=== RUN   TestNoEmptyObjectTypeStaysSilent/an_empty_object_value
+=== PAUSE TestNoEmptyObjectTypeStaysSilent/an_empty_object_value
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-11
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-11
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-12
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-12
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-13
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-13
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-14
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-14
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-15
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-15
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-16
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-16
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-17
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-17
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-18
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-18
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-19
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-19
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-20
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-20
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-21
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-21
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-22
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-22
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-23
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-23
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-24
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-24
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-25
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-25
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-26
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-26
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-27
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-27
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-28
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-28
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-29
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-29
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-30
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-30
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-31
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-31
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-32
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-32
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-33
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-33
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-34
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-34
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-35
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-35
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-36
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-36
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-37
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-37
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-38
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-38
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-39
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-39
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-40
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-40
+=== CONT  TestNoEmptyObjectTypeFiresOnObjectTypes/an_annotation
+=== PAUSE TestNoEmptyObjectTypeFiresOnInterfaces/extending_a_single_name
+=== RUN   TestNoEmptyObjectTypeFiresOnInterfaces/extending_a_generic
+=== CONT  TestNoEmptyObjectTypeFiresOnObjectTypes/inside_a_union
+=== PAUSE TestNoEmptyObjectTypeFiresOnInterfaces/extending_a_generic
+=== RUN   TestNoEmptyObjectTypeFiresOnInterfaces/a_generic_extending_a_generic
+=== PAUSE TestNoEmptyObjectTypeFiresOnInterfaces/a_generic_extending_a_generic
+=== CONT  TestNoEmptyObjectTypeFiresOnInterfaces/an_empty_interface
+=== CONT  TestNoEmptyObjectTypeFiresOnObjectTypes/unioned_with_null
+=== CONT  TestNoEmptyObjectTypeFiresOnInterfaces/extending_a_generic
+=== CONT  TestNoEmptyObjectTypeFiresOnInterfaces/extending_a_single_name
+=== RUN   TestNoEmptyObjectTypeStaysSilent/an_empty_object_argument
+=== PAUSE TestNoEmptyObjectTypeStaysSilent/an_empty_object_argument
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/upstream-41
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/upstream-41
+=== RUN   TestNoEmptyObjectTypeStaysSilent/an_empty_destructuring_default
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/a_parenthesized_empty_literal_in_an_intersection
+=== PAUSE TestNoEmptyObjectTypeStaysSilent/an_empty_destructuring_default
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/a_parenthesized_empty_literal_in_an_intersection
+=== CONT  TestNoEmptyObjectTypeFiresOnInterfaces/a_generic_extending_a_generic
+=== CONT  TestNoEmptyObjectTypeStaysSilent/an_empty_destructuring_default
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/a_parenthesized_empty_literal_named_by_allowWithName
+=== CONT  TestNoEmptyObjectTypeStaysSilent/a_populated_type_literal
+=== CONT  TestNoEmptyObjectTypeStaysSilent/an_empty_object_value
+=== CONT  TestNoEmptyObjectTypeStaysSilent/an_empty_object_argument
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/a_parenthesized_empty_literal_named_by_allowWithName
+=== CONT  TestNoEmptyObjectTypeStaysSilent/an_interface_with_members
+--- PASS: TestNoEmptyObjectTypeFiresOnObjectTypes (0.00s)
+    --- PASS: TestNoEmptyObjectTypeFiresOnObjectTypes/a_type_alias (0.00s)
+    --- PASS: TestNoEmptyObjectTypeFiresOnObjectTypes/an_annotation (0.00s)
+    --- PASS: TestNoEmptyObjectTypeFiresOnObjectTypes/inside_a_union (0.00s)
+    --- PASS: TestNoEmptyObjectTypeFiresOnObjectTypes/unioned_with_null (0.00s)
+--- PASS: TestNoEmptyObjectTypeFiresOnInterfaces (0.00s)
+    --- PASS: TestNoEmptyObjectTypeFiresOnInterfaces/an_empty_interface (0.00s)
+    --- PASS: TestNoEmptyObjectTypeFiresOnInterfaces/extending_a_generic (0.00s)
+    --- PASS: TestNoEmptyObjectTypeFiresOnInterfaces/extending_a_single_name (0.00s)
+    --- PASS: TestNoEmptyObjectTypeFiresOnInterfaces/a_generic_extending_a_generic (0.00s)
+=== CONT  TestNoEmptyObjectTypeStaysSilent/a_populated_annotation
+=== CONT  TestNoEmptyObjectTypeStaysSilent/extending_three_names
+=== CONT  TestNoEmptyObjectTypeStaysSilent/inside_an_intersection
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/declare_interface
+=== CONT  TestNoEmptyObjectTypeStaysSilent/extending_two_names
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/declare_interface
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/export_declare_interface
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/export_declare_interface
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_with_type_parameters_merged_with_a_class
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_with_type_parameters_merged_with_a_class
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_merged_with_a_namespace
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_merged_with_a_namespace
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_merged_across_blocks
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_merged_across_blocks
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_in_a_namespace_merged_in_the_same_namespace
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_in_a_namespace_merged_in_the_same_namespace
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_augmenting_the_lib_in_a_script
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_augmenting_the_lib_in_a_script
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_extending_two,_with-single-extends
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_extending_two,_with-single-extends
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/allowWithName_is_a_regular_expression,_not_a_name
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/allowWithName_is_a_regular_expression,_not_a_name
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/allowWithName_with_a_unicode_escape
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/allowWithName_with_a_unicode_escape
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_with_a_type_parameter_and_a_comment
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_with_a_type_parameter_and_a_comment
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/an_empty_literal_as_a_type_argument
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/an_empty_literal_as_a_type_argument
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/an_empty_literal_in_a_mapped_type's_value
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/an_empty_literal_in_a_mapped_type's_value
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/declare_interface_extending_one
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/declare_interface_extending_one
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/export_declare_interface_with_type_parameters_extending_one
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/export_declare_interface_with_type_parameters_extending_one
+=== RUN   TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_in_a_switch_case_merged_in_another_case
+=== PAUSE TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_in_a_switch_case_merged_in_another_case
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-0
+--- PASS: TestNoEmptyObjectTypeStaysSilent (0.00s)
+    --- PASS: TestNoEmptyObjectTypeStaysSilent/an_empty_object_value (0.00s)
+    --- PASS: TestNoEmptyObjectTypeStaysSilent/an_empty_destructuring_default (0.00s)
+    --- PASS: TestNoEmptyObjectTypeStaysSilent/an_empty_object_argument (0.00s)
+    --- PASS: TestNoEmptyObjectTypeStaysSilent/a_populated_annotation (0.00s)
+    --- PASS: TestNoEmptyObjectTypeStaysSilent/a_populated_type_literal (0.00s)
+    --- PASS: TestNoEmptyObjectTypeStaysSilent/inside_an_intersection (0.00s)
+    --- PASS: TestNoEmptyObjectTypeStaysSilent/extending_three_names (0.00s)
+    --- PASS: TestNoEmptyObjectTypeStaysSilent/an_interface_with_members (0.00s)
+    --- PASS: TestNoEmptyObjectTypeStaysSilent/extending_two_names (0.00s)
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-30
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-29
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-15
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_in_a_switch_case_merged_in_another_case
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/export_declare_interface_with_type_parameters_extending_one
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/an_empty_literal_in_a_mapped_type's_value
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/an_empty_literal_as_a_type_argument
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/declare_interface_extending_one
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_with_a_type_parameter_and_a_comment
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/allowWithName_with_a_unicode_escape
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/allowWithName_is_a_regular_expression,_not_a_name
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_extending_two,_with-single-extends
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_augmenting_the_lib_in_a_script
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_in_a_namespace_merged_in_the_same_namespace
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_merged_across_blocks
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_with_type_parameters_merged_with_a_class
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_merged_with_a_namespace
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/export_declare_interface
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/declare_interface
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/a_parenthesized_empty_literal_named_by_allowWithName
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/a_parenthesized_empty_literal_in_an_intersection
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-40
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-41
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-39
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-38
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-37
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-36
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-35
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-34
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-32
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-31
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-22
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-33
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-28
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-27
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-26
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-25
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-24
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-23
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-8
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-14
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-13
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-12
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-11
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-19
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-21
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-20
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-4
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-7
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-6
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-10
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-5
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-9
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-2
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-17
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-3
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-18
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-1
+=== CONT  TestNoEmptyObjectTypeUpstreamCorpus/upstream-16
+--- PASS: TestNoEmptyObjectTypeUpstreamCorpus (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-30 (0.01s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_in_a_switch_case_merged_in_another_case (0.01s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-15 (0.01s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-29 (0.01s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-0 (0.02s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/an_empty_literal_in_a_mapped_type's_value (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/an_empty_literal_as_a_type_argument (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_with_a_type_parameter_and_a_comment (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/allowWithName_with_a_unicode_escape (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/export_declare_interface_with_type_parameters_extending_one (0.01s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/allowWithName_is_a_regular_expression,_not_a_name (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/declare_interface_extending_one (0.01s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_extending_two,_with-single-extends (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_in_a_namespace_merged_in_the_same_namespace (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_with_type_parameters_merged_with_a_class (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/export_declare_interface (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_merged_across_blocks (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_augmenting_the_lib_in_a_script (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/an_empty_interface_merged_with_a_namespace (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/a_parenthesized_empty_literal_named_by_allowWithName (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/declare_interface (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-41 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-39 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-40 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/a_parenthesized_empty_literal_in_an_intersection (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-38 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-37 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-35 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-36 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-31 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-32 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-34 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-22 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-27 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-28 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-25 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-26 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-33 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-23 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-13 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-12 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-8 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-14 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-24 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-20 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-21 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-19 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-11 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-4 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-7 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-10 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-5 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-2 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-6 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-9 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-18 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-3 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-17 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-1 (0.00s)
+    --- PASS: TestNoEmptyObjectTypeUpstreamCorpus/upstream-16 (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.047s

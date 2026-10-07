@@ -1,0 +1,20 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { decodeUnicodeEscape } from './regexp_decode_unicode_escape.a';
+
+const file = readTextFile(programArguments()[0] ?? panic('missing Unicode inputs'));
+if(file.kind === 'Error') { panic(file.message); }
+const input = new OptionsJson(file.text);
+const root = input.parse();
+if(root < 0 || input.error !== '') { panic(input.error); }
+for(const item of input.node(root).children) {
+    const bytes: number[] = [];
+    for(const child of input.node(input.field(item, 'Source')).children) { bytes.push(input.node(child).number); }
+    const index = input.node(input.field(item, 'Index')).number;
+    const size = input.node(input.field(item, 'Size')).number;
+    const unicode = input.node(input.field(item, 'Unicode')).text === 'true';
+    const result = decodeUnicodeEscape(bytes, index, size, unicode);
+    let error = '';
+    for(const byte of result.errorBytes) { error += byte.toString(16).padStart(2, '0'); }
+    console.log(`${result.kind}\t${result.set}\t${result.rune}\t${result.width}\t${result.negated}\t${result.failed}\t${result.unsupported}\t${error}`);
+}
