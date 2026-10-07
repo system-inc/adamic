@@ -4,6 +4,8 @@ Commands: affected package tests, filtered uncached oracle, vet and formatting p
 Mutants: class merge, Function annotation, lowering first, Record, any, eval, expando and new Function each failed TestRefusalPassRulings.
 Not covered: full repository gate, optional widening, exhaustive module augmentation cases, or implementing the records design.
 
+Follow-up: [developer tools runtime effects and record operation diagnostics](FOLLOWUP.md).
+
 ## Scope and source
 
 Branch `codex/refusal-pass-rulings`, from current origin/main. The final fetch and

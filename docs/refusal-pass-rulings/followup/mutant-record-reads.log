@@ -1,0 +1,8 @@
+--- FAIL: TestRefusalPassRulings (0.00s)
+    --- FAIL: TestRefusalPassRulings/record-dynamic-read.a (0.06s)
+        refusal_pass_test.go:35: got /tmp/adamic-gate/TestRefusalPassRulingsrecord-dynamic-read.a2680437574/001/main.a:1:13: Adamic 0.1 refuses Record<string, T> (an index signature without own-key record lowering); use Map<string, T> until records have own keys, T | undefined dynamic reads, and loud prototype-name checks (#p9v82wa), want NotYet
+    --- FAIL: TestRefusalPassRulings/record-element-read.a (0.08s)
+        refusal_pass_test.go:35: got /tmp/adamic-gate/TestRefusalPassRulingsrecord-element-read.a3557967868/001/main.a:1:13: Adamic 0.1 refuses Record<string, T> (an index signature without own-key record lowering); use Map<string, T> until records have own keys, T | undefined dynamic reads, and loud prototype-name checks (#p9v82wa), want NotYet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.455s
+FAIL

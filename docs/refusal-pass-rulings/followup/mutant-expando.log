@@ -1,0 +1,10 @@
+--- FAIL: TestRefusalPassRulings (0.00s)
+    --- FAIL: TestRefusalPassRulings/expando.a (0.08s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsexpando.a942473061/001/main.a:1:21: stage 0 can't lower assigning a field of a value yet, want Refused
+    --- FAIL: TestRefusalPassRulings/expando-order.a (0.04s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsexpando-order.a905166165/001/main.a:1:26: stage 0 can't lower a function inside a function (a closure) yet, want Refused
+    --- FAIL: TestRefusalPassRulings/expando-index.a (0.06s)
+        refusal_pass_test.go:40: got /tmp/adamic-gate/TestRefusalPassRulingsexpando-index.a627241840/001/main.a:1:21: stage 0 can't lower assigning an element of a value yet, want Refused
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.530s
+FAIL
