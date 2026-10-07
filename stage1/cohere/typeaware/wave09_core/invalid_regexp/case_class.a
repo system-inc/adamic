@@ -1,0 +1,34 @@
+// Literal widening and spelling helpers for the native regexp rewrite.
+import {CaseEquivalence} from './case_equivalence.a';
+
+export function escapeClassRune(value:number):string {
+    // Go's conversion from an invalid rune to string produces RuneError.
+    if(value<0||value>1114111||value>=55296&&value<=57343){value=65533;}
+    const character=String.fromCodePoint(value);
+    return '\\]^-['.includes(character)?'\\'+character:character;
+}
+
+export class CaseClassResult {
+    readonly pattern:string;readonly changed:boolean;
+    constructor(pattern:string,changed:boolean){this.pattern=pattern;this.changed=changed;}
+}
+
+export class CaseClasses {
+    readonly table:CaseEquivalence;
+    constructor(unicodeMode:boolean){this.table=new CaseEquivalence(unicodeMode);}
+    widen(value:number):CaseClassResult {
+        const members=this.table.equivalents(value);
+        if(members.length===0){return new CaseClassResult('',false);}
+        let pattern='[';
+        for(const member of members){pattern+=escapeClassRune(member);}
+        return new CaseClassResult(pattern+']',true);
+    }
+}
+
+export function escapeTrailingDash(body:string):string {
+    if(!body.endsWith('-')){return body;}
+    let backslashes=0;
+    for(let at=body.length-2;at>=0&&body.slice(at,at+1)==='\\';at--){backslashes++;}
+    if(backslashes%2===1){return body;}
+    return body.slice(0,-1)+'\\-';
+}
