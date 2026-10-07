@@ -72,6 +72,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if err := l.nodeLibraryRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if refused, isRefused := refusals[node.Kind]; isRefused {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
@@ -116,6 +120,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			// JavaScript's arguments object, not a variable the program named arguments.
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
 				found = &Refused{Where: l.program.Where(node), What: "arguments", Fix: "name the parameters, or take a rest parameter"}
+				return true
+			}
+		}
+		if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !called(node) {
+			if err := l.nodeBufferUnsupportedUse(node); err != nil {
+				found = err
 				return true
 			}
 		}

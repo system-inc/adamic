@@ -40,10 +40,12 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		"names": 1, "type": 1, "size": 2, "symbolicLink": 3,
 	}
 	for _, names := range [][]string{
+		{"name", "message", "code"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
 		{"next"}, {"iterator", "part", "key", "value", "set"}, {"done", "value"},
 		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},
+		{"bytes", "finalized"},
 	} {
 		for index, name := range names {
 			if before, found := offsets[name]; found && before != index {
