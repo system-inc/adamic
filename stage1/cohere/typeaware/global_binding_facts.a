@@ -1,0 +1,60 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class GlobalSymbol {
+    readonly globalSymbolTag = true;
+    readonly present: boolean;
+    readonly declarationFiles: readonly boolean[];
+    constructor(present: boolean, declarations: readonly boolean[]) {
+        this.present = present;
+        this.declarationFiles = declarations;
+    }
+}
+function symbol(f: Frames): GlobalSymbol {
+    const present = f.yes();
+    const result: boolean[] = [];
+    if(present) {
+        f.natural();
+        f.natural();
+        f.field();
+        const count = f.natural();
+        for(let i = 0; i < count; i++) {
+            f.field();
+            f.field();
+            f.natural();
+            f.natural();
+            result.push(f.yes());
+            f.yes();
+            f.field();
+            f.field();
+            f.natural();
+            f.natural();
+            const tags = f.natural();
+            for(let t = 0; t < tags; t++) {
+                f.field();
+                f.field();
+                f.natural();
+                f.natural();
+                f.field();
+            }
+            const parameters = f.natural();
+            for(let p = 0; p < parameters; p++) {
+                f.field();
+            }
+        }
+    }
+    return new GlobalSymbol(present, result);
+}
+export class GlobalBindingFacts {
+    readonly globalBindingTag = true;
+    readonly ordinary: GlobalSymbol;
+    readonly local: GlobalSymbol;
+    readonly shorthand: GlobalSymbol;
+    constructor(rules: Rules, index: number) {
+        const f = new Frames(rules.ask(index, 'global-binding-facts'));
+        header(f, 'global-binding-facts');
+        this.ordinary = symbol(f);
+        this.local = symbol(f);
+        this.shorthand = symbol(f);
+        f.end();
+    }
+}

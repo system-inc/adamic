@@ -1,0 +1,21 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class GlobalSourceFacts {
+    readonly globalSourceTag = true;
+    readonly module: boolean;
+    readonly javascript: boolean;
+    readonly strict: number;
+    readonly alwaysStrict: number;
+    constructor(rules: Rules, root: number) {
+        const f = new Frames(rules.ask(root, 'global-source-facts'));
+        header(f, 'global-source-facts');
+        this.module = f.yes();
+        this.javascript = f.yes();
+        this.strict = f.natural();
+        this.alwaysStrict = f.natural();
+        f.end();
+    }
+    impliedStrict(): boolean {
+        return !this.javascript && (this.alwaysStrict === 2 || (this.alwaysStrict === 0 && this.strict !== 1));
+    }
+}

@@ -1,0 +1,127 @@
+import type { Rules } from './rules.ts';
+import { NexusFacts } from './nexus_facts.a';
+import { GlobalBindingFacts } from './global_binding_facts.a';
+export class NoImpliedEval {
+    readonly rules: Rules;
+    readonly reports: NexusFacts;
+    constructor(rules: Rules, reports: NexusFacts) {
+        this.rules = rules;
+        this.reports = reports;
+    }
+    unwrap(index: number): number {
+        while(index >= 0 && this.rules.parser.node(index).kind === 'ParenthesizedExpression') {
+            index = this.rules.parser.node(index).children[0] ?? -1;
+        }
+        return index;
+    }
+    global(index: number): boolean {
+        const facts = new GlobalBindingFacts(this.rules, index);
+        if(!facts.ordinary.present) {
+            return false;
+        }
+        const declarations =
+            facts.local.declarationFiles.length > facts.ordinary.declarationFiles.length
+                ? facts.local.declarationFiles
+                : facts.ordinary.declarationFiles;
+        return declarations.every((d) => d);
+    }
+    accessed(index: number): string {
+        const node = this.rules.parser.node(index);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) {
+            return '';
+        }
+        const key = this.unwrap(node.children[node.children.length - 1] ?? -1);
+        if(key < 0) {
+            return '';
+        }
+        const property = this.rules.parser.node(key);
+        if(node.kind === 'ElementAccessExpression' && ['Identifier', 'PrivateIdentifier'].includes(property.kind)) {
+            return '';
+        }
+        return ['Identifier', 'StringLiteral', 'NoSubstitutionTemplateLiteral', 'NumericLiteral'].includes(
+            property.kind,
+        )
+            ? property.text
+            : '';
+    }
+    callee(index: number): string {
+        index = this.unwrap(index);
+        if(index < 0) {
+            return '';
+        }
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            return ['setTimeout', 'setInterval', 'execScript'].includes(node.text) && this.global(index)
+                ? node.text
+                : '';
+        }
+        const name = this.accessed(index);
+        if(!['setTimeout', 'setInterval', 'execScript'].includes(name)) {
+            return '';
+        }
+        let receiver = node.children[0] ?? -1;
+        while(receiver >= 0) {
+            receiver = this.unwrap(receiver);
+            if(receiver < 0) {
+                return '';
+            }
+            const n = this.rules.parser.node(receiver);
+            if(n.kind === 'Identifier') {
+                return ['global', 'window', 'globalThis', 'self'].includes(n.text) && this.global(receiver) ? name : '';
+            }
+            if(!['global', 'window', 'globalThis', 'self'].includes(this.accessed(receiver))) {
+                return '';
+            }
+            receiver = n.children[0] ?? -1;
+        }
+        return '';
+    }
+    string(index: number): boolean {
+        index = this.unwrap(index);
+        if(index < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(index);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateExpression'].includes(node.kind)) {
+            return true;
+        }
+        return (
+            node.kind === 'BinaryExpression' &&
+            this.rules.parser.node(node.children[1] ?? -1).kind === 'PlusToken' &&
+            (this.string(node.children[0] ?? -1) || this.string(node.children[2] ?? -1))
+        );
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'CallExpression') {
+                continue;
+            }
+            const name = this.callee(node.children[0] ?? -1);
+            if(!['setTimeout', 'setInterval', 'execScript'].includes(name)) {
+                continue;
+            }
+            // Parser stores type arguments before the counted value arguments.
+            const args = node.children.slice(node.children.length - node.list);
+            if(!this.string(args[0] ?? -1)) {
+                continue;
+            }
+            if(name === 'execScript') {
+                this.reports.report(
+                    'no-implied-eval',
+                    'execScript',
+                    'This calls `execScript` with a string, which compiles and runs that text as code. It is `eval` under another name, and it is not standard. Call a function instead.',
+                    index,
+                );
+            }
+            else {
+                this.reports.report(
+                    'no-implied-eval',
+                    'impliedEval',
+                    'This passes a string where a function belongs, so the string is compiled and run when the timer fires. That is `eval` with a delay: the code loses the surrounding scope and anything interpolated into it becomes executable. Pass a function instead.',
+                    index,
+                );
+            }
+        }
+    }
+}

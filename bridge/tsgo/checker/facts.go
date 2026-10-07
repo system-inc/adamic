@@ -695,7 +695,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 		}
 		g.write(out)
 	default:
-		return p.inspectTypeDeclarationAncestry(c, node, question)
+		return p.inspectGlobalSourceFacts(c, node, question)
 	}
 	return out.String(), nil
 }
