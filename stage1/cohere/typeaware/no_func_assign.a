@@ -1,0 +1,24 @@
+import type { BindingStructure } from './binding_structure.a';
+import { BindingOrigin } from './binding_origin.a';
+import { CoreAccess } from './core_access.a';
+export class NoFuncAssign {
+    readonly tree: BindingStructure; readonly access: CoreAccess;
+    constructor(access: CoreAccess) { this.tree = access.tree; this.access = access; }
+    run(): void {
+        const anchors: string[] = []; const names: string[] = [];
+        for(let id = 1; id <= this.tree.nodes.length; id++) {
+            const node = this.tree.node(id);
+            if(!['FunctionDeclaration', 'FunctionExpression'].includes(node.kind) || node.role(1) === 0 || this.tree.node(node.role(1)).kind !== 'Identifier') { continue; }
+            const origin = new BindingOrigin(this.tree, node.role(1)); const key = origin.local(this.tree.path);
+            if(key !== '') { anchors.push(key); names.push(this.tree.node(node.role(1)).text); }
+        }
+        if(anchors.length === 0) { return; }
+        for(let id = 1; id <= this.tree.nodes.length; id++) {
+            const node = this.tree.node(id);
+            if(node.kind !== 'Identifier' || !names.includes(node.text) || !this.access.writes(id)) { continue; }
+            const origin = new BindingOrigin(this.tree, id);
+            const shorthand = node.parent !== 0 && this.tree.node(node.parent).kind === 'ShorthandPropertyAssignment';
+            if(anchors.includes(origin.local(this.tree.path, shorthand))) { this.tree.add(id, 'no-func-assign', 'noFuncAssign', "This assigns to the name a function declares. The declaration is hoisted, so the assignment usually parses and runs without complaint, and what it costs shows up somewhere else: every later call of the name invokes whatever was assigned instead of the function. Inside the function's own body the mistake is quieter still, because the write happens on the first call and the second call reaches a different value. A named function expression is stricter, where the binding is immutable and the write throws in strict mode. Assign to a separate variable, or declare the function as a variable if it is meant to be replaced."); }
+        }
+    }
+}

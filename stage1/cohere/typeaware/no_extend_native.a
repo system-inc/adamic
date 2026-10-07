@@ -1,0 +1,39 @@
+import type { BindingStructure } from './binding_structure.a';
+import { BindingOrigin } from './binding_origin.a';
+import { CoreAccess } from './core_access.a';
+export class NoExtendNative {
+    readonly tree: BindingStructure; readonly access: CoreAccess; readonly exceptions: readonly string[];
+    constructor(access: CoreAccess, exceptions: readonly string[] = []) { this.tree = access.tree; this.access = access; this.exceptions = exceptions; }
+    builtin(id: number): string {
+        if(id === 0) { return ''; }
+        const node = this.tree.skip(id);
+        if(this.access.name(node) !== 'prototype') { return ''; }
+        const receiver = this.access.object(node);
+        if(receiver === 0) { return ''; }
+        const object = this.tree.skip(receiver); const identifier = this.tree.node(object);
+        if(identifier.kind !== 'Identifier' || !["AggregateError", "Array", "ArrayBuffer", "Atomics", "BigInt", "BigInt64Array", "BigUint64Array", "Boolean", "DataView", "Date", "Error", "EvalError", "FinalizationRegistry", "Float16Array", "Float32Array", "Float64Array", "Function", "Infinity", "Int16Array", "Int32Array", "Int8Array", "Intl", "Iterator", "JSON", "Map", "Math", "NaN", "Number", "Object", "Promise", "Proxy", "RangeError", "ReferenceError", "Reflect", "RegExp", "Set", "SharedArrayBuffer", "String", "Symbol", "SyntaxError", "TypeError", "URIError", "Uint16Array", "Uint32Array", "Uint8Array", "Uint8ClampedArray", "WeakMap", "WeakRef", "WeakSet"].includes(identifier.text) || this.exceptions.includes(identifier.text)) { return ''; }
+        const origin = new BindingOrigin(this.tree, object);
+        return origin.global() ? identifier.text : '';
+    }
+    define(id: number): boolean {
+        const callee = this.tree.skip(id);
+        if(!['defineProperty', 'defineProperties'].includes(this.access.name(callee))) { return false; }
+        const receiver = this.access.object(callee);
+        if(receiver === 0) { return false; }
+        const object = this.tree.skip(receiver); const identifier = this.tree.node(object);
+        if(identifier.kind !== 'Identifier' || identifier.text !== 'Object') { return false; }
+        const origin = new BindingOrigin(this.tree, object);
+        return origin.global();
+    }
+    report(id: number, builtin: string): void {
+        this.tree.add(id, 'no-extend-native', 'unexpected', `This adds a property to \`${builtin}.prototype\`, which every object of that type in the program shares, including ones created by code that has never heard of this file. The property shows up in every \`for...in\` over such an object, it silently loses to a future standard method of the same name, and nothing at the call site says where it came from. Put the function somewhere it can be imported instead.`);
+    }
+    run(): void {
+        for(let id = 1; id <= this.tree.nodes.length; id++) {
+            const node = this.tree.node(id); let builtin = '';
+            if(node.kind === 'BinaryExpression' && this.access.assignment(node.operator)) { builtin = this.builtin(this.access.object(this.tree.skip(node.role(4)))); }
+            if(node.kind === 'CallExpression' && node.arguments.length > 0 && this.define(node.role(0))) { builtin = this.builtin(node.arguments[0] ?? 0); }
+            if(builtin !== '') { this.report(id, builtin); }
+        }
+    }
+}

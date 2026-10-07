@@ -1,0 +1,27 @@
+import { Frames, header } from './frames.ts';
+import type { BindingStructure } from './binding_structure.a';
+export class OriginDeclaration {
+    readonly file: string; readonly ambient: boolean; readonly kind: string; readonly start: number; readonly end: number; readonly key: string;
+    constructor(frames: Frames) {
+        this.file = frames.field(); this.ambient = frames.yes(); this.kind = frames.field(); this.start = frames.natural(); this.end = frames.natural();
+        this.key = `${this.file}\n${this.kind}\n${this.start}\n${this.end}`;
+    }
+}
+export class BindingOrigin {
+    readonly plain: readonly OriginDeclaration[]; readonly shorthand: readonly OriginDeclaration[];
+    constructor(tree: BindingStructure, id: number) {
+        const frames = new Frames(tree.ask(id, 'binding-origin')); header(frames, 'binding-origin');
+        const groups: OriginDeclaration[][] = [];
+        for(let i = 0; i < 2; i++) {
+            frames.yes(); const count = frames.natural(); const declarations: OriginDeclaration[] = [];
+            for(let at = 0; at < count; at++) { declarations.push(new OriginDeclaration(frames)); }
+            groups.push(declarations);
+        }
+        this.plain = groups[0] ?? []; this.shorthand = groups[1] ?? []; frames.end();
+    }
+    global(): boolean { return this.plain[0]?.ambient ?? false; }
+    local(file: string, shorthand = false): string {
+        for(const declaration of shorthand ? this.shorthand : this.plain) { if(declaration.file === file) { return declaration.key; } }
+        return '';
+    }
+}

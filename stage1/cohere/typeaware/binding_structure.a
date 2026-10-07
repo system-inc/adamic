@@ -1,0 +1,75 @@
+import { panic, tsgoInspect } from 'adamic';
+import { Frames, header } from './frames.ts';
+import { types } from './facts.ts';
+import type { Types } from './types.ts';
+import { Diagnostic } from './diagnostic.ts';
+
+export class BindingNode {
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly token: number;
+    readonly parent: number;
+    readonly flags: number;
+    readonly text: string;
+    readonly children: readonly number[];
+    readonly roles: readonly number[];
+    readonly arguments: readonly number[];
+    readonly parameters: readonly number[];
+    readonly operator: string;
+    readonly spread: boolean;
+    constructor(frames: Frames) {
+        this.kind = frames.field(); this.start = frames.natural(); this.end = frames.natural();
+        this.token = frames.natural(); this.parent = frames.natural(); this.flags = frames.natural();
+        this.text = frames.field(); this.children = frames.ids();
+        const roles: number[] = [];
+        for(let i = 0; i < 8; i++) { roles.push(frames.natural()); }
+        this.roles = roles; this.arguments = frames.ids(); this.parameters = frames.ids();
+        this.operator = frames.field(); this.spread = frames.yes();
+    }
+    role(index: number): number { return this.roles[index] ?? panic('missing syntax role'); }
+}
+export class BindingStructure {
+    readonly program: number;
+    readonly path: string;
+    readonly module: number;
+    readonly nodes: readonly BindingNode[];
+    readonly findings: Diagnostic[] = [];
+    constructor(program: number, path: string, length: number) {
+        this.program = program; this.path = path;
+        const frames = new Frames(tsgoInspect(program, path, 0, length, 'SourceFile', 'binding-structure'));
+        header(frames, 'binding-structure'); this.module = frames.natural();
+        const count = frames.natural(); const nodes: BindingNode[] = [];
+        for(let i = 0; i < count; i++) { nodes.push(new BindingNode(frames)); }
+        this.nodes = nodes; frames.end();
+        for(const node of nodes) {
+            if(node.start > node.end || node.token > node.end || node.parent > count) { panic('invalid syntax range'); }
+            for(const id of [...node.children, ...node.roles, ...node.arguments, ...node.parameters]) {
+                if(id > count) { panic('invalid syntax identity'); }
+            }
+        }
+    }
+    node(id: number): BindingNode { return this.nodes[id - 1] ?? panic('missing syntax identity'); }
+    ask(id: number, question: string): string {
+        const node = this.node(id);
+        return tsgoInspect(this.program, this.path, node.start, node.end, node.kind, question);
+    }
+    shape(id: number, question = 'raw-shape'): Types { return types(this.ask(id, question), question.split('\n')[0] ?? ''); }
+    skip(id: number, all = false): number {
+        let current = id;
+        while(current !== 0) {
+            const node = this.node(current);
+            if(node.kind !== 'ParenthesizedExpression' && (!all || !['NonNullExpression', 'AsExpression', 'TypeAssertionExpression', 'SatisfiesExpression', 'ExpressionWithTypeArguments'].includes(node.kind))) { break; }
+            current = node.role(0);
+        }
+        return current;
+    }
+    compare(id: number, source: number, target: number): boolean {
+        const frames = new Frames(this.ask(id, `assignable-types\n${source}\n${target}`));
+        header(frames, 'assignable-types'); const yes = frames.yes(); frames.end(); return yes;
+    }
+    add(id: number, rule: string, messageId: string, message: string): void {
+        const node = this.node(id);
+        this.findings.push(new Diagnostic(rule, messageId, message, node.token, node.end, ''));
+    }
+}

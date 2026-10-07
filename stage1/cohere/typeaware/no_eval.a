@@ -1,0 +1,53 @@
+import type { BindingStructure } from './binding_structure.a';
+import { BindingOrigin } from './binding_origin.a';
+import { CoreAccess } from './core_access.a';
+export class NoEval {
+    readonly tree: BindingStructure; readonly access: CoreAccess; readonly allowIndirect: boolean;
+    constructor(access: CoreAccess, allowIndirect = false) { this.tree = access.tree; this.access = access; this.allowIndirect = allowIndirect; }
+    direct(id: number): boolean {
+        let current = id;
+        while(this.tree.node(current).parent !== 0) {
+            const parentId = this.tree.node(current).parent; const parent = this.tree.node(parentId);
+            if(['ParenthesizedExpression', 'NonNullExpression', 'AsExpression', 'SatisfiesExpression', 'TypeAssertionExpression', 'ExpressionWithTypeArguments'].includes(parent.kind)) { current = parentId; continue; }
+            return parent.kind === 'CallExpression' && parent.role(0) === current;
+        }
+        return false;
+    }
+    reference(id: number): boolean {
+        const parentId = this.tree.node(id).parent;
+        if(parentId === 0) { return false; }
+        const parent = this.tree.node(parentId);
+        if(parent.kind === 'PropertyAccessExpression') { return parent.role(1) !== id; }
+        if(['VariableDeclaration', 'Parameter', 'PropertyDeclaration', 'PropertyAssignment', 'BindingElement', 'EnumMember'].includes(parent.kind)) { return parent.role(0) === id; }
+        return !['QualifiedName', 'PropertySignature', 'MethodDeclaration', 'MethodSignature', 'FunctionDeclaration', 'FunctionExpression', 'ClassDeclaration', 'ClassExpression', 'ImportSpecifier', 'ExportSpecifier', 'ImportClause', 'NamespaceImport', 'ShorthandPropertyAssignment', 'TypeReference'].includes(parent.kind);
+    }
+    globalObject(id: number): boolean {
+        if(id === 0) { return false; }
+        const current = this.tree.skip(id, true); const node = this.tree.node(current);
+        const globals = ['global', 'window', 'globalThis'];
+        if(node.kind === 'Identifier') { return globals.includes(node.text); }
+        const name = this.access.name(current);
+        if(!globals.includes(name)) { return false; }
+        const objectId = this.access.object(current);
+        if(objectId === 0) { return false; }
+        const object = this.tree.skip(objectId, true);
+        if(this.tree.node(object).kind === 'Identifier') { return this.tree.node(object).text === name; }
+        return this.access.name(object) === name && this.globalObject(object);
+    }
+    report(id: number): void { this.tree.add(id, 'no-eval', 'noEval', "This reaches the `eval` function, which compiles a string as code at runtime. A direct call also runs that code with full access to the surrounding scope, so any part of the string an attacker controls becomes an injection into this function's locals. It defeats every static tool that would otherwise see what the program does, and it is slow because the engine cannot optimize a scope it may rewrite. For JSON use JSON.parse; for dynamic property access use bracket notation; otherwise restructure so nothing is evaluated from a string."); }
+    run(): void {
+        for(let id = 1; id <= this.tree.nodes.length; id++) {
+            const node = this.tree.node(id);
+            if(node.kind === 'CallExpression') {
+                const callee = node.role(0); const inner = this.tree.skip(callee, true);
+                if(this.tree.node(inner).kind === 'Identifier' && this.tree.node(inner).text === 'eval' && (!this.allowIndirect || !node.children.some((c) => this.tree.node(c).kind === 'QuestionDotToken'))) { this.report(callee); }
+            }
+            if(this.allowIndirect) { continue; }
+            if(node.kind === 'Identifier' && node.text === 'eval' && !this.direct(id) && this.reference(id)) {
+                const origin = new BindingOrigin(this.tree, id);
+                if(origin.global()) { this.report(id); }
+            }
+            if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind) && this.access.name(id) === 'eval' && this.globalObject(this.access.object(id))) { this.report(node.role(1)); }
+        }
+    }
+}
