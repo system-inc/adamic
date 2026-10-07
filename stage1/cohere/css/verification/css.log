@@ -1,0 +1,77 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+    css_test.go:121: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]
+            adamic_port_side_test.go:216: 24076 cases, 5021 parsed
+            adamic_port_side_test.go:234: Go: 240760 stylesheets in 2.250643681s, 106974 stylesheets/s; 50210 parsed, 95850 children
+        --- PASS: TestAdamicPortCases (3.14s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	3.147s
+=== RUN   TestThePortParsesAsGoCohereDoes/Go_agreement
+    css_test.go:141: 24076 cases agree with Go, leak clean
+=== RUN   TestThePortParsesAsGoCohereDoes/PostCSS
+    css_test.go:183: PostCSS: 24074 exact agreements, 2 occurrences of the proved surrogate gap
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_custom_properties_lose_their_block_values
+    css_test.go:201: native caught: line 162, byte 396: ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":{\"raw\":\" \",\"value\":\"\"}},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offse", Go cohere ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offset\":14}},\"type\":\"decl\",\"value\":\""
+    css_test.go:201: Node caught: line 162, byte 396: ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":{\"raw\":\" \",\"value\":\"\"}},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offse", Go cohere ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offset\":14}},\"type\":\"decl\",\"value\":\""
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values
+    css_test.go:201: native caught: line 3126, byte 302: ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"cd\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* y */ g\"", Go cohere ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"c/* x */d\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* "
+    css_test.go:201: Node caught: line 3126, byte 302: ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"cd\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* y */ g\"", Go cohere ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"c/* x */d\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* "
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_closing_braces_no_longer_include_the_closing_byte
+    css_test.go:201: native caught: line 6, byte 659: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw"
+    css_test.go:201: Node caught: line 6, byte 659: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw"
+--- PASS: TestThePortParsesAsGoCohereDoes (74.11s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/Go_agreement (23.13s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/PostCSS (1.04s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_custom_properties_lose_their_block_values (16.14s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values (15.35s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_closing_braces_no_longer_include_the_closing_byte (14.54s)
+=== RUN   TestCompositionOnNodeMatchesGo
+    css_test.go:354: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:158 .less:43 .scss:90]
+            adamic_port_side_test.go:216: 24076 cases, 5021 parsed
+            adamic_port_side_test.go:234: Go: 240760 stylesheets in 2.322034568s, 103685 stylesheets/s; 50210 parsed, 95850 children
+        --- PASS: TestAdamicPortCases (3.07s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	3.073s
+    css_test.go:376: === RUN   TestAdamicCompositionCases
+            adamic_compose_side_test.go:79: composed trees: 24076 inputs, 5006 parsed
+        --- PASS: TestAdamicCompositionCases (1.63s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	1.641s
+=== RUN   TestCompositionOnNodeMatchesGo/catches_custom_properties_lose_their_block_values
+    css_test.go:402: Node composition caught: line 162, byte 1001: "tOffset\":14},\"type\":\"css-decl\",\"value\":\"\"},{\"nodes\":[{\"prop\":\"a\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":\"b\"},\"source\":{\"end\":{\"column\":28,\"line\":1,\"offset\":2", Go cohere "tOffset\":14},\"type\":\"css-decl\",\"value\":\" \"},{\"prop\":\"--c\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":30,\"line\":1,\"offset\":30},\"endOffset\":30,\""
+=== RUN   TestCompositionOnNodeMatchesGo/catches_comments_always_disappear_from_values
+    css_test.go:402: Node composition caught: line 3126, byte 77: "s\":{\"before\":\"\",\"between\":\":\",\"value\":\"cd\"},\"source\":{\"end\":{\"column\":14,\"line\":1,\"offset\":14},\"endOffset\":14,\"start\":{\"column\":3,\"line\":1,\"offset\":2},\"startOff", Go cohere "s\":{\"before\":\"\",\"between\":\":\",\"value\":\"c/* x */d\"},\"source\":{\"end\":{\"column\":14,\"line\":1,\"offset\":14},\"endOffset\":14,\"start\":{\"column\":3,\"line\":1,\"offset\":2},\"s"
+=== RUN   TestCompositionOnNodeMatchesGo/catches_closing_braces_no_longer_include_the_closing_byte
+    css_test.go:402: Node composition caught: line 6, byte 2264: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"endOffset\":27,\"start\":{\"column\":1,\"line\":1,\"offset\":0},\"startOffset\":0},\"type\":\"css-rule\"},{\"nodes\":[],\"raws\":{\"afte", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"endOffset\":28,\"start\":{\"column\":1,\"line\":1,\"offset\":0},\"startOffset\":0},\"type\":\"css-rule\"},{\"nodes\":[],\"raws\":{\"afte"
+=== NAME  TestCompositionOnNodeMatchesGo
+    css_test.go:408: 24076 composed trees/error positions agree with Go
+--- PASS: TestCompositionOnNodeMatchesGo (17.85s)
+    --- PASS: TestCompositionOnNodeMatchesGo/catches_custom_properties_lose_their_block_values (2.74s)
+    --- PASS: TestCompositionOnNodeMatchesGo/catches_comments_always_disappear_from_values (2.78s)
+    --- PASS: TestCompositionOnNodeMatchesGo/catches_closing_braces_no_longer_include_the_closing_byte (3.20s)
+=== RUN   TestCSSThroughput
+    css_test.go:415: set ADAMIC_CSS_BENCH=1 for throughput
+--- SKIP: TestCSSThroughput (0.00s)
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_regex_and_value_tree.ts
+    gaps_test.go:41: Node prints "Parsed\nOk\n"; Adamic refuses: /workspace/adamic/stage1/cohere/values/nodes.ts:92:2: Adamic 0.1 refuses ValueTree.nodes, a readonly field, which its constructor writes, of type readonly ValueTree[], which can reach back to the ValueTree holding it: a cycle reference counting can't free, and a write in Parser_attribute may close one (ir.RegExpCall is a node the cycle finder doesn't know); declare it nodes: Weak<readonly ValueTree[]> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts
+    gaps_test.go:41: Node prints "a\n1\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/2_array_shift.ts:2:16: stage 0 can't lower .shift on a value yet
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean_condition.ts
+    gaps_test.go:41: Node prints "important\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/3_optional_boolean_condition.ts:3:13: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts
+    gaps_test.go:41: Node prints "0\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/4_empty_array_union.ts:2:9: stage 0 can't lower an array of never yet
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts
+    gaps_test.go:41: Node prints "a\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/5_repeat_in_try.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.87s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_regex_and_value_tree.ts (0.37s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts (0.12s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean_condition.ts (0.15s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts (0.12s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts (0.11s)
+=== RUN   TestNativeCompositionIsBlockedByTheRecordedGap
+    gaps_test.go:61: /workspace/adamic/stage1/cohere/mediaquery/nodes.ts:24:2: Adamic 0.1 refuses MediaNode.nodes, a readonly field, which its constructor writes, of type readonly MediaNode[] | undefined, which can reach back to the MediaNode holding it: a cycle reference counting can't free, and a write in Parser_raw may close one (ir.RegExpCall is a node the cycle finder doesn't know); declare it nodes: Weak<readonly MediaNode[]> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+--- PASS: TestNativeCompositionIsBlockedByTheRecordedGap (3.34s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	96.189s
