@@ -1,0 +1,14 @@
+{
+  "name": "no-sequences",
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoSequences",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoSequences",
+  "factory": "create",
+  "class": "Rule",
+  "parent": true
+}

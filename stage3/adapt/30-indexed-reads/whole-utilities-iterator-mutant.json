@@ -1,0 +1,10 @@
+{
+  "file": "utilities.ts",
+  "roots": 78,
+  "code_filter": null,
+  "total": 2,
+  "diagnostics": [
+    "src/compiler/utilities.ts:1223:22: error TS2488: Type '[string, CommentDirective] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+    "src/compiler/utilities.ts:1224:19: error TS2488: Type '[string, CommentDirective] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+  ]
+}

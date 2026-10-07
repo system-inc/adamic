@@ -1,0 +1,233 @@
+// A class seen through an interface it implements: its methods aren't fields, so a call through the
+// interface finds the object's own function value if it has one and its class's method otherwise
+// (ir.Property's Method). Every way a class meets an interface is here: a variable, a parameter, an
+// array element beside object literals of the same interface, a field, and a return. The strings are
+// built at runtime, since literals are immortal, so a receiver let go too early is a use after free.
+interface Animal {
+	name: string;
+}
+
+interface Handler {
+	handle(animal: Animal): string;
+	count(): number;
+	busy(): boolean;
+	reset(): void;
+}
+
+class Kennel implements Handler {
+	private seen: string[] = [];
+	private readonly label: string;
+
+	constructor(label: string) {
+		this.label = label;
+	}
+
+	handle(animal: Animal): string {
+		this.seen.push(animal.name);
+		return `${this.label} took ${animal.name}`;
+	}
+
+	count(): number {
+		return this.seen.length;
+	}
+
+	busy(): boolean {
+		return this.seen.length > 1;
+	}
+
+	reset(): void {
+		this.seen = [];
+	}
+}
+
+// A second class with the same field names, so the shapes differ only by their methods.
+class Echo implements Handler {
+	private seen: string[] = [];
+	private readonly label: string;
+
+	constructor(label: string) {
+		this.label = label;
+	}
+
+	handle(animal: Animal): string {
+		this.seen.push(animal.name);
+		return `${this.label} echoed ${animal.name.toUpperCase()}`;
+	}
+
+	count(): number {
+		return this.seen.length * 10;
+	}
+
+	busy(): boolean {
+		return false;
+	}
+
+	reset(): void {
+		this.seen.pop();
+	}
+}
+
+function built(text: string, index: number): string {
+	return [text, `${index}`].join('-');
+}
+
+function literalHandler(prefix: string): Handler {
+	let calls = 0;
+	return {
+		handle: (animal: Animal): string => {
+			calls += 1;
+			return `${prefix} literal ${animal.name}`;
+		},
+		count: (): number => calls,
+		busy: (): boolean => calls > 0,
+		reset: (): void => {
+			calls = 0;
+		},
+	};
+}
+
+// A variable.
+const variable: Handler = new Kennel(built('variable', 1));
+console.log(variable.handle({ name: built('dog', 1) }));
+console.log(`${variable.count()} ${variable.busy()}`);
+variable.reset();
+console.log(`${variable.count()}`);
+
+// A parameter.
+function visit(handler: Handler, index: number): string {
+	const first = handler.handle({ name: built('cat', index) });
+	const second = handler.handle({ name: built('owl', index) });
+	return `${first} | ${second} | ${handler.count()} ${handler.busy()}`;
+}
+console.log(visit(new Kennel(built('parameter', 2)), 2));
+console.log(visit(new Echo(built('echo', 3)), 3));
+console.log(visit(literalHandler(built('plain', 4)), 4));
+
+// Array elements: classes and literals at one call site, each shape in turn.
+const handlers: Handler[] = [new Kennel(built('first', 5)), literalHandler(built('second', 6)), new Echo(built('third', 7)), new Kennel(built('fourth', 8))];
+for (let round = 0; round < 2; round++) {
+	for (const handler of handlers) {
+		console.log(`${handler.handle({ name: built('fox', round) })} ${handler.count()}`);
+	}
+}
+for (let index = 0; index < handlers.length; index++) {
+	const handler = handlers[index];
+	if (handler !== undefined) {
+		handler.reset();
+	}
+	console.log(`${handlers[index]?.count() ?? -1}`);
+}
+
+// A field, and a receiver whose only holder lets it go while the call's arguments are evaluated:
+// JavaScript reads the method before the arguments, from the object it had then.
+interface Holder {
+	handler: Handler;
+}
+const holder: Holder = { handler: new Kennel(built('held', 9)) };
+function replace(where: Holder): Animal {
+	where.handler = new Echo(built('replacement', 10));
+	return { name: built('hen', 10) };
+}
+console.log(holder.handler.handle(replace(holder)));
+console.log(holder.handler.handle({ name: built('emu', 11) }));
+
+// A global receiver the arguments replace: the global held the only count, and the call still has
+// the object JavaScript read before the arguments.
+let current: Handler = new Kennel(built('global', 13));
+function swap(): Animal {
+	current = new Echo(built('swapped', 14));
+	return { name: built('ram', 14) };
+}
+console.log(current.handle(swap()));
+console.log(current.handle({ name: built('ewe', 15) }));
+
+// An object's own function value the arguments replace, through a view of it whose handle is a
+// field: JavaScript calls the one it read first, which only the call still holds.
+interface Rewirable {
+	handle: (animal: Animal) => string;
+}
+const plain: Handler = literalHandler(built('own', 16));
+const wired: Rewirable = plain;
+function rewire(target: Rewirable): Animal {
+	const suffix = built('rewired', 16);
+	target.handle = (animal: Animal): string => `${suffix} ${animal.name}`;
+	return { name: built('cow', 16) };
+}
+console.log(plain.handle(rewire(wired)));
+console.log(plain.handle({ name: built('pig', 17) }));
+
+// A return.
+function choose(index: number): Handler {
+	if (index % 2 === 0) {
+		return new Kennel(built('even', index));
+	}
+	return new Echo(built('odd', index));
+}
+for (let index = 0; index < 3; index++) {
+	console.log(choose(index).handle({ name: built('yak', index) }));
+}
+
+// A throw through the interface.
+interface Checker {
+	check(value: number): number;
+}
+class Strict implements Checker {
+	check(value: number): number {
+		if (value < 0) {
+			throw new Error(built('negative', value));
+		}
+		return value * 2;
+	}
+}
+const checker: Checker = new Strict();
+for (const value of [3, -1]) {
+	try {
+		console.log(`${checker.check(value)}`);
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : 'unknown');
+	}
+}
+
+// A generic class through its interface, and an optional call.
+interface Source<T> {
+	next(): T;
+}
+class Counter<T> implements Source<T> {
+	private index = 0;
+	private readonly values: T[];
+
+	constructor(values: T[]) {
+		this.values = values;
+	}
+
+	next(): T {
+		const value = this.values[this.index % this.values.length];
+		this.index += 1;
+		if (value === undefined) {
+			throw new Error('empty');
+		}
+		return value;
+	}
+}
+const words: Source<string> = new Counter<string>([built('a', 0), built('b', 1)]);
+const others: Source<string> = new Counter<string>([built('c', 2)]);
+console.log(`${words.next()} ${words.next()} ${words.next()} ${others.next()}`);
+const maybe: Handler | undefined = handlers.length > 2 ? new Kennel(built('maybe', 12)) : undefined;
+console.log(maybe?.handle({ name: built('elk', 12) }) ?? 'none');
+
+// An optional call on undefined is undefined, its method not looked up and its arguments not
+// evaluated; on an object, it's the call.
+let evaluated = 0;
+function counted(index: number): Animal {
+	evaluated += 1;
+	return { name: built('gnu', index) };
+}
+const missingClass: Handler | undefined = handlers.length > 9 ? new Kennel(built('never', 18)) : undefined;
+const missingLiteral: Handler | undefined = handlers.length > 9 ? literalHandler(built('never', 19)) : undefined;
+console.log(`${missingClass?.handle(counted(18)) ?? 'no class'} ${missingLiteral?.handle(counted(19)) ?? 'no literal'} ${evaluated}`);
+console.log(`${missingClass?.count() ?? -1} ${maybe?.count() ?? -1} ${evaluated}`);
+function displace(): Animal {
+	handlers[0] = new Echo(built('displaced', 20));
+	return counted(20);
+}
+console.log(`${handlers[0]?.handle(displace()) ?? 'gone'} ${handlers[0]?.handle(counted(21)) ?? 'gone'} ${evaluated}`);

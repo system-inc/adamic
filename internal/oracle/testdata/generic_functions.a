@@ -1,0 +1,52 @@
+// Generic functions, lowered once for each set of what their type arguments are held as: by inference
+// from arguments and from the result, by explicit type arguments, through arrays, tuples and a
+// callback, a generic calling another with its own type parameter, and recursion, polymorphic
+// included, which reaches a fixed point because an array of anything is held as one array.
+function identity<Item>(item: Item): Item {
+	return item;
+}
+
+function first<Item>(items: readonly Item[], fallback: Item): Item {
+	return items[0] ?? fallback;
+}
+
+function last<Item>(items: readonly Item[], fallback: Item): Item {
+	return first(items.slice(-1), fallback);
+}
+
+function mapAll<From, To>(items: readonly From[], change: (item: From) => To): To[] {
+	const changed: To[] = [];
+	for (const item of items) {
+		changed.push(change(item));
+	}
+	return changed;
+}
+
+function repeatUntil<Item>(item: Item, count: number, into: Item[]): Item[] {
+	if (count === 0) {
+		return into;
+	}
+	into.push(identity(item));
+	return repeatUntil(item, count - 1, into);
+}
+
+function pair<Left, Right>(left: Left, right: Right): readonly [Left, Right] {
+	return [left, right];
+}
+
+interface Point {
+	readonly x: number;
+}
+
+console.log(`${identity(3)} ${identity('three')} ${identity(true)} ${identity<number>(4) + 1}`);
+console.log(`${first([1, 2], 0)} ${first([], 'none')} ${last(['a', 'b'], '?')} ${first<Point>([], { x: 9 }).x}`);
+console.log(mapAll([1, 2, 3], (value) => `#${value}`).join(' '));
+console.log(mapAll(['a', 'bb'], (word) => word.length).join(' '));
+console.log(repeatUntil('ab', 3, []).join('-'));
+const [name, age] = pair('Kirk', 42);
+console.log(`${name} ${age} ${pair(1, 'x')[1]}`);
+
+function nest<Item>(item: Item, depth: number): number {
+	return depth === 0 ? 0 : 1 + nest([item], depth - 1);
+}
+console.log(`${nest(1, 3)} ${nest('a', 0)}`);

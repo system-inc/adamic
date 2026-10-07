@@ -1,0 +1,9 @@
+=== RUN   TestFutureRegexMethodRemainsUnknown
+=== PAUSE TestFutureRegexMethodRemainsUnknown
+=== CONT  TestFutureRegexMethodRemainsUnknown
+    regexp_test.go:81: a regex method without a proved effect became silently safe
+--- FAIL: TestFutureRegexMethodRemainsUnknown (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	0.011s
+FAIL
+mutant exit=1

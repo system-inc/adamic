@@ -1,0 +1,33 @@
+// string[index]: one UTF-16 code unit as a string, or undefined where the string has no such index.
+const word = 'abc';
+const globe = 'a🌍b';
+for (const index of [0, 1, 2, 3, 4, -1, 1.5, 0 / 0, -0, 2 ** 53, 1 / 0]) {
+	const unit = globe[index];
+	const code = unit === undefined ? -1 : unit.charCodeAt(0);
+	console.log(`${index}: ${word[index] ?? 'none'} ${code} ${unit === undefined}`);
+}
+console.log(`${''[0] === undefined} ${(globe[1] ?? '') + (globe[2] ?? '') === '🌍'}`);
+console.log(globe[3] ?? 'none');
+
+// A tokenizer's inner loop: words split on spaces, by hand.
+const text = '  the quick  brown fox ';
+const words: string[] = [];
+let current = '';
+for (let index = 0; index < text.length; index++) {
+	const character = text[index];
+	if (character === undefined) {
+		break;
+	}
+	if (character === ' ') {
+		if (current.length > 0) {
+			words.push(current);
+			current = '';
+		}
+		continue;
+	}
+	current += character;
+}
+if (current.length > 0) {
+	words.push(current);
+}
+console.log(words.join('|'));
