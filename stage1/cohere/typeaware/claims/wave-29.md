@@ -48,3 +48,34 @@ This claim update is committed and pushed before implementation. No other rules 
 Third-batch status: blocked, not ported. [wave-29-third/REPORT.md](../wave-29-third/REPORT.md) records positive Go findings, native JSX misclassification/failure and the separate missing native React SSA pipeline. No additional claims were taken.
 
 Follow-up: static-components has a tested supplied-SSA native kernel (34 controls, two compiling mutants, sanitizer agreement), but no source-to-SSA entry. Published JSX parsing works in scratch. All three full ports remain blocked; no additional claim is taken. See the follow-up section of wave-29-third/REPORT.md.
+
+## React analysis claims parked
+
+As instructed by Ahra, the third-batch claims are parked and count as finished
+for the landing-first cap. Their existing native kernels and blocker evidence
+are pushed through 18ff19c8, rebased onto current main f8013f0b and re-green.
+
+| Parked rule | Blocker |
+| --- | --- |
+| react-hooks/set-state-in-effect | Native source-to-high-level IR, SSA, hook/setter and capture analysis integration |
+| react-hooks/set-state-in-render | Native source-to-high-level IR, SSA and render control/capture analysis integration |
+| react-hooks/static-components | Native source-to-high-level IR, SSA, creation/capture analysis integration |
+
+Cohere analysis modules are being ported to Adamic on #dnv6f2c. JSX support
+is landing on area/stage1-lint. Parking does not claim full source-rule parity.
+
+## Fourth batch
+
+Fetched 529 origin refs and checked 33 unique typeaware claim blobs against the
+197-rule combined-volume ranking. Excluding the 26 baseline ports and every
+claimed name leaves 18 candidates. The first three are:
+
+1. `react/jsx-fragments`.
+2. `react/jsx-no-constructed-context-values`.
+3. `react/jsx-no-undef`.
+
+All have combined default volume zero. They do not use the parked native React
+HIR/SSA/capture pipeline. Main and the bridge branch mention these names only
+in inventories/counts, not native rule implementations. This claim is pushed
+before new code. Shared JSX/numeric-node dependencies, if encountered, will be
+reported explicitly without editing the shared parser or driver.
