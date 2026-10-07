@@ -1,0 +1,14 @@
+=== RUN   TestSharedParserBlocker
+    blocker_test.go:115: react/jsx-fragments: Go 1 finding, native parser rejects JSX: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 63 in /workspace/wave28-fifth-probe/fragments.tsx
+    blocker_test.go:120: react/jsx-fragments: parser bypass mutant exits 0 and is rejected by expected-rejection comparison
+    blocker_test.go:115: react/jsx-no-constructed-context-values: Go 1 finding, native parser rejects JSX: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 68 in /workspace/wave28-fifth-probe/context.tsx
+    blocker_test.go:120: react/jsx-no-constructed-context-values: parser bypass mutant exits 0 and is rejected by expected-rejection comparison
+    blocker_test.go:115: react/jsx-no-undef: Go 1 finding, native parser rejects JSX: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 34 in /workspace/wave28-fifth-probe/undef.tsx
+    blocker_test.go:120: react/jsx-no-undef: parser bypass mutant exits 0 and is rejected by expected-rejection comparison
+    blocker_test.go:151: react/jsx-fragments listener kinds [285 286 289] agree with production Go; wrong-kind mutant caught
+    blocker_test.go:151: react/jsx-no-constructed-context-values listener kinds [286 287] agree with production Go; wrong-kind mutant caught
+    blocker_test.go:151: react/jsx-no-undef listener kinds [286 287] agree with production Go; wrong-kind mutant caught
+    blocker_test.go:158: ordinary non-JSX parser control passes
+--- PASS: TestSharedParserBlocker (16.15s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fifth	16.156s

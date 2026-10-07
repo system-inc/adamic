@@ -65,3 +65,5 @@ The React high-level-analysis claims are parked and their status is pushed at f7
 3. `react/jsx-no-undef` (0 compiler, 0 repository).
 
 No implementation match was found for these three across the inspected origin typeaware trees. Their production Go sources use JSX node listeners and AST/checker walks rather than HIR/SSA/capture lowering. This claim is pushed before implementation or owned blocker checks. JSX parsing remains an integration dependency to inspect.
+
+Fifth-batch status: claimed, blocked and unported. Numeric rule.json kinds agree with the actual production Go listeners; three Go-positive JSX controls are rejected by current main's native parser before listener execution. JSX integration through area/stage1-lint is the named blocker. See ../wave28_fifth/REPORT.md. These are not parked HIR/SSA claims; no sixth batch is claimed.

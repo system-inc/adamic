@@ -1,0 +1,1 @@
+declare const Ctx: any; function Component() { return <Ctx.Provider value={{a: 1}} />; }

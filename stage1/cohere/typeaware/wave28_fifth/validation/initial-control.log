@@ -1,0 +1,10 @@
+=== RUN   TestSharedParserBlocker
+    blocker_test.go:105: Go positive react/jsx-fragments: <nil> file	/workspace/wave28-fifth-probe/fragments.tsx
+        16	56	react/jsx-fragments	preferFragment	Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.	0	0
+        17	22	react/jsx-no-undef	jsxIdentifierNotDefined	This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.	0	0
+        findings 2
+         cohere: load_ns=54074918 rule_ns=26461 run_ns=306120
+--- FAIL: TestSharedParserBlocker (14.86s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fifth	14.860s
+FAIL

@@ -1,0 +1,3 @@
+file	/workspace/wave28-fifth-probe/undef.tsx
+17	33	react/jsx-no-undef	jsxIdentifierNotDefined	This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.	0	0
+findings 1
