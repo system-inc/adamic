@@ -1,3 +1,26 @@
+Ported dot-notation findings and exact automatic fixes as .a, except runtime regex options.
+Claim be10d93b was pushed before implementation; the final sibling report records the implementation commit.
+Go, Node, emitted JavaScript and sanitized native match on 56 accepted upstream cases and owned witnesses.
+An extra numeric-receiver separator mutant runs cleanly and is caught only by byte comparison on all three runtimes.
+Runtime regex configuration, two shared-parser refusals and five Go-invalid legacy-octal inputs remain excluded explicitly.
+
+The rule implements the exact ES3 keyword list, keyword defaults, boolean/null/
+string/static-template keys, nested parentheses, comment-preserving refusal,
+optional accesses, numeric receiver spacing and next-token spacing. It reports
+on the unwrapped literal or dot-name span, and preserves each original Go fix
+range and replacement independently. The let receiver fix refusal is ported,
+although the shared parser currently refuses the two upstream let-access forms.
+
+A nonempty allowPattern refuses explicitly with exit 70 on Node, emitted
+JavaScript and sanitized native. Four original upstream regex cases are logged
+as exclusions, not as clean findings. The existing minimal compiler probe below
+still explains the missing dynamic RegExp feature. No shared compiler or helper
+file was changed. This is a bounded candidate, not a complete certified port of
+the regex option surface. See sibling id-length/REPORT.md for current commands,
+evidence, corpus parity, every mutant and throughput.
+
+## Initial blocker observation at 1a6167f9
+
 Built and pushed an owned .a compiler-gap probe; earlier rule work remains pushed.
 Claim commit be10d93b reserves dot-notation, grouped-accessor-pairs and id-length.
 Node prints true then false; native build and emitted-JavaScript lowering both refuse the runtime regex pattern.
