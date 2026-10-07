@@ -1,0 +1,56 @@
+import type { Rules } from '../rules.ts';
+import type { ReactSyntax } from './react_syntax.a';
+export class CheckedRequires {
+    readonly rules: Rules;
+    readonly syntax: ReactSyntax;
+    constructor(rules: Rules, syntax: ReactSyntax) {
+        this.rules = rules;
+        this.syntax = syntax;
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'CallExpression' || !this.syntax.createElement(index)) {
+                continue;
+            }
+            const args = this.syntax.args(index);
+            const first = args[0] ?? -1;
+            const properties = args[1] ?? -1;
+            if(
+                first < 0 ||
+                this.rules.parser.node(first).kind !== 'StringLiteral' ||
+                this.rules.parser.node(first).text !== 'input' ||
+                properties < 0 ||
+                this.rules.parser.node(properties).kind !== 'ObjectLiteralExpression'
+            ) {
+                continue;
+            }
+            const present: string[] = [];
+            for(const property of this.rules.parser.node(properties).children) {
+                const name = this.syntax.name(property);
+                if(name >= 0 && this.rules.parser.node(name).kind === 'Identifier') {
+                    present.push(this.rules.parser.node(name).text);
+                }
+            }
+            if(!present.includes('checked')) {
+                continue;
+            }
+            if(present.includes('defaultChecked')) {
+                this.syntax.report(
+                    'react/checked-requires-onchange-or-readonly',
+                    'exclusiveCheckedAttribute',
+                    'This `input` writes both `checked` and `defaultChecked`. The first makes React own the value and the second hands the initial value to the browser, so writing both asks for a controlled and an uncontrolled input at once. React keeps `checked` and ignores `defaultChecked`, which makes the discarded one read as live configuration.',
+                    index,
+                );
+            }
+            if(!present.includes('onChange') && !present.includes('readOnly')) {
+                this.syntax.report(
+                    'react/checked-requires-onchange-or-readonly',
+                    'missingProperty',
+                    'This `input` is `checked` with no `onChange` and no `readOnly`. React treats `checked` as the single source of truth for the control, so without a handler to move that value the box refuses every click and looks broken rather than disabled. Add `onChange` to make it interactive, or `readOnly` to say the frozen state is deliberate.',
+                    index,
+                );
+            }
+        }
+    }
+}

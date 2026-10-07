@@ -1,0 +1,163 @@
+import { goPrintable } from './go_printable.a';
+import type { Rules } from '../rules.ts';
+import type { ReactSyntax } from './react_syntax.a';
+import { types } from '../facts.ts';
+export class ButtonHasType {
+    readonly rules: Rules;
+    readonly syntax: ReactSyntax;
+    constructor(rules: Rules, syntax: ReactSyntax) {
+        this.rules = rules;
+        this.syntax = syntax;
+    }
+    valid(value: string): boolean {
+        return value === 'button' || value === 'reset' || value === 'submit';
+    }
+    quoted(value: string): string {
+        let result = '"';
+        for(let index = 0; index < value.length; index++) {
+            const code = value.codePointAt(index) ?? 0;
+            if(code === 34 || code === 92) {
+                result += `\\${value.slice(index, index + 1)}`;
+            }
+            else if(code === 7) {
+                result += '\\a';
+            }
+            else if(code === 8) {
+                result += '\\b';
+            }
+            else if(code === 9) {
+                result += '\\t';
+            }
+            else if(code === 10) {
+                result += '\\n';
+            }
+            else if(code === 11) {
+                result += '\\v';
+            }
+            else if(code === 12) {
+                result += '\\f';
+            }
+            else if(code === 13) {
+                result += '\\r';
+            }
+            else if(goPrintable(code)) {
+                result += value.slice(index, index + (code > 65535 ? 2 : 1));
+            }
+            else {
+                result +=
+                    code < 128
+                        ? `\\x${code.toString(16).padStart(2, '0')}`
+                        : code < 65536
+                          ? `\\u${code.toString(16).padStart(4, '0')}`
+                          : `\\U${code.toString(16).padStart(8, '0')}`;
+            }
+            if(code > 65535) {
+                index++;
+            }
+        }
+        return `${result}"`;
+    }
+    value(index: number, value: string): void {
+        if(!this.valid(value)) {
+            this.syntax.report(
+                'react/button-has-type',
+                'invalidValue',
+                `${this.quoted(value)} is an invalid value for button type attribute. A button type has to be one of \`submit\`, \`reset\` or \`button\`, and a browser silently treats anything else as \`submit\`.`,
+                index,
+            );
+        }
+    }
+    proven(index: number): boolean {
+        const facts = types(this.rules.ask(index, 'raw-shape'), 'raw-shape');
+        if(!facts.present || facts.roots.length === 0) {
+            return false;
+        }
+        const root = facts.type(facts.roots[0] ?? 0);
+        const parts = (root.flags & 134217728) !== 0 ? root.parts : [root.id];
+        return parts.every((id) => {
+            const type = facts.type(id);
+            if((type.flags & 1024) === 0) {
+                return false;
+            }
+            const name = this.rules.name(type, index);
+            return name === '"button"' || name === '"reset"' || name === '"submit"';
+        });
+    }
+    expression(anchor: number, expression: number): void {
+        if(expression < 0) {
+            return;
+        }
+        const index = this.syntax.skip(expression);
+        const node = this.rules.parser.node(index);
+        if(
+            node.kind === 'StringLiteral' ||
+            node.kind === 'NumericLiteral' ||
+            node.kind === 'RegularExpressionLiteral' ||
+            node.kind === 'NoSubstitutionTemplateLiteral'
+        ) {
+            this.value(anchor, node.text);
+            return;
+        }
+        if(node.kind === 'BigIntLiteral') {
+            this.value(anchor, node.text.endsWith('n') ? node.text.slice(0, -1) : node.text);
+            return;
+        }
+        if(node.kind === 'TrueKeyword' || node.kind === 'FalseKeyword' || node.kind === 'NullKeyword') {
+            this.value(anchor, node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : 'null');
+            return;
+        }
+        if(node.kind === 'ConditionalExpression') {
+            this.expression(anchor, this.syntax.child(index, 2));
+            this.expression(anchor, this.syntax.child(index, 4));
+            return;
+        }
+        if(!this.proven(index)) {
+            this.syntax.report(
+                'react/button-has-type',
+                'complexType',
+                'This `button` computes its `type`, so no reader and no tool can tell whether it submits. The rule reads a static string or a ternary between static strings, and anything else could evaluate to a value that silently submits a form. Write the type out, or branch between written-out types.',
+                index,
+            );
+        }
+    }
+    missing(index: number): void {
+        this.syntax.report(
+            'react/button-has-type',
+            'missingType',
+            'This `button` has no `type`. HTML defaults a button inside a form to `type="submit"`, so a button written for anything else submits the form and reloads the page the first time somebody clicks it. Write the type you meant, which is usually `type="button"`.',
+            index,
+        );
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.rules.parser.node(index).kind !== 'CallExpression' || !this.syntax.createElement(index)) {
+                continue;
+            }
+            const args = this.syntax.args(index);
+            const first = args[0] ?? -1;
+            if(
+                first < 0 ||
+                this.rules.parser.node(first).kind !== 'StringLiteral' ||
+                this.rules.parser.node(first).text !== 'button'
+            ) {
+                continue;
+            }
+            const properties = args[1] ?? -1;
+            let property = -1;
+            if(properties >= 0 && this.rules.parser.node(properties).kind === 'ObjectLiteralExpression') {
+                for(const member of this.rules.parser.node(properties).children) {
+                    if(this.syntax.identifier(this.syntax.name(member), 'type')) {
+                        property = member;
+                        break;
+                    }
+                }
+            }
+            if(property < 0) {
+                this.missing(index);
+                continue;
+            }
+            const member = this.rules.parser.node(property);
+            this.expression(index, member.kind === 'PropertyAssignment' ? this.syntax.last(property) : property);
+        }
+    }
+}

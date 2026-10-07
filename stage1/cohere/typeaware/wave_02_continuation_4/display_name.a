@@ -1,0 +1,517 @@
+import { goUpperInvariant } from './go_upper_invariant.a';
+import type { Rules } from '../rules.ts';
+import type { ReactSyntax } from './react_syntax.a';
+export class DisplayName {
+    readonly rules: Rules;
+    readonly syntax: ReactSyntax;
+    readonly components: number[] = [];
+    constructor(rules: Rules, syntax: ReactSyntax) {
+        this.rules = rules;
+        this.syntax = syntax;
+    }
+    capital(text: string): boolean {
+        let position = 0;
+        while(text.slice(position, position + 1) === '_') {
+            position++;
+        }
+        return position < text.length && goUpperInvariant(text.codePointAt(position) ?? 0);
+    }
+    functionName(index: number): number {
+        for(const child of this.rules.parser.node(index).children) {
+            const kind = this.rules.parser.node(child).kind;
+            if(kind === 'Identifier' || kind === 'StringLiteral' || kind === 'ComputedPropertyName') {
+                return child;
+            }
+            if(kind === 'Parameter' || kind === 'TypeParameter' || kind === 'Block') {
+                return -1;
+            }
+        }
+        return -1;
+    }
+    reactValue(index: number): boolean {
+        const value = this.syntax.skip(index);
+        return (
+            value >= 0 &&
+            (this.syntax.identifier(value, 'React') ||
+                (this.syntax.requireReact(value) && this.syntax.args(value).length === 1))
+        );
+    }
+    wrapper(index: number): boolean {
+        if(
+            index < 0 ||
+            this.rules.parser.node(index).kind !== 'CallExpression' ||
+            this.syntax.args(index).length === 0
+        ) {
+            return false;
+        }
+        const callee = this.syntax.child(index, 0);
+        const node = this.rules.parser.node(callee);
+        if(node.kind === 'PropertyAccessExpression') {
+            const name = this.rules.parser.node(this.syntax.child(callee, 1)).text;
+            return (
+                this.syntax.identifier(this.syntax.child(callee, 0), 'React') &&
+                (name === 'memo' || name === 'forwardRef')
+            );
+        }
+        if(node.kind !== 'Identifier' || (node.text !== 'memo' && node.text !== 'forwardRef')) {
+            return false;
+        }
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const item = this.rules.parser.node(at);
+            if(item.kind === 'ImportSpecifier') {
+                const local = this.syntax.last(at);
+                if(this.syntax.identifier(local, node.text) && this.syntax.fromPragma(at)) {
+                    return true;
+                }
+            }
+            if(item.kind === 'VariableDeclaration' && item.children.length > 1) {
+                const target = this.syntax.child(at, 0);
+                const initializer = this.syntax.last(at);
+                if(
+                    this.syntax.identifier(target, node.text) &&
+                    this.rules.parser.node(initializer).kind === 'PropertyAccessExpression' &&
+                    this.syntax.identifier(this.syntax.child(initializer, 1), node.text) &&
+                    this.reactValue(this.syntax.child(initializer, 0))
+                ) {
+                    return true;
+                }
+                if(this.rules.parser.node(target).kind === 'ObjectBindingPattern' && this.reactValue(initializer)) {
+                    for(const element of this.rules.parser.node(target).children) {
+                        if(this.syntax.identifier(this.syntax.bindingName(element), node.text)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    enclosingWrapper(index: number): number {
+        let current = this.rules.parents[index] ?? -1;
+        let wrapper = -1;
+        while(this.wrapper(current)) {
+            wrapper = current;
+            current = this.rules.parents[current] ?? -1;
+        }
+        return wrapper;
+    }
+    value(index: number, acceptNull: boolean): boolean {
+        const at = this.syntax.skip(index);
+        if(at < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(at);
+        if(node.kind === 'NullKeyword') {
+            return acceptNull;
+        }
+        if(node.kind === 'CallExpression') {
+            return this.syntax.createElement(at);
+        }
+        if(node.kind === 'ConditionalExpression') {
+            return this.value(this.syntax.child(at, 2), acceptNull) || this.value(this.syntax.child(at, 4), acceptNull);
+        }
+        if(node.kind === 'BinaryExpression') {
+            if(this.syntax.operator(at) === 'CommaToken') {
+                return this.value(this.syntax.last(at), acceptNull);
+            }
+            if(
+                this.syntax.operator(at) === 'AmpersandAmpersandToken' ||
+                this.syntax.operator(at) === 'BarBarToken' ||
+                this.syntax.operator(at) === 'QuestionQuestionToken'
+            ) {
+                return this.value(this.syntax.child(at, 0), acceptNull) || this.value(this.syntax.last(at), acceptNull);
+            }
+        }
+        return false;
+    }
+    statements(index: number, acceptNull: boolean): boolean {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'ReturnStatement') {
+            return this.value(this.syntax.child(index, 0), acceptNull);
+        }
+        if(
+            ![
+                'Block',
+                'IfStatement',
+                'ForStatement',
+                'WhileStatement',
+                'SwitchStatement',
+                'CaseBlock',
+                'CaseClause',
+                'DefaultClause',
+            ].includes(node.kind)
+        ) {
+            return false;
+        }
+        return node.children.some((child) => this.statements(child, acceptNull));
+    }
+    returns(index: number, acceptNull: boolean): boolean {
+        const body = this.syntax.last(index);
+        if(body < 0) {
+            return false;
+        }
+        if(this.rules.parser.node(index).kind === 'ArrowFunction' && this.rules.parser.node(body).kind !== 'Block') {
+            return this.value(body, acceptNull);
+        }
+        return this.rules.parser.node(body).kind === 'Block' && this.statements(body, acceptNull);
+    }
+    allowed(index: number): boolean {
+        const parent = this.syntax.parent(index);
+        if(parent < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(parent);
+        if(node.kind === 'BinaryExpression') {
+            return (
+                this.syntax.operator(parent) === 'EqualsToken' ||
+                (this.syntax.operator(parent) === 'CommaToken' &&
+                    this.syntax.skip(this.syntax.last(parent)) === index &&
+                    this.allowed(parent))
+            );
+        }
+        return [
+            'VariableDeclaration',
+            'PropertyAssignment',
+            'ReturnStatement',
+            'ExportAssignment',
+            'ArrowFunction',
+        ].includes(node.kind);
+    }
+    stateless(index: number): number {
+        const node = this.rules.parser.node(index);
+        const name = this.functionName(index);
+        if(
+            node.kind !== 'ArrowFunction' &&
+            node.children.some((child) => this.rules.parser.node(child).kind === 'AsyncKeyword') &&
+            node.children.some((child) => this.rules.parser.node(child).kind === 'AsteriskToken')
+        ) {
+            return -1;
+        }
+        if(node.kind === 'FunctionDeclaration') {
+            return (name < 0 || this.capital(this.rules.parser.node(name).text)) && this.returns(index, true)
+                ? index
+                : -1;
+        }
+        const parent = this.syntax.parent(index);
+        if(parent < 0) {
+            return -1;
+        }
+        const owner = this.rules.parser.node(parent);
+        if(
+            (owner.kind === 'ReturnStatement' ||
+                (owner.kind === 'ArrowFunction' && this.syntax.last(parent) === index)) &&
+            !this.returns(index, false)
+        ) {
+            return -1;
+        }
+        if(owner.kind === 'ExportAssignment') {
+            return this.returns(index, false) ? index : -1;
+        }
+        if(owner.kind === 'VariableDeclaration' && this.returns(index, true)) {
+            const target = this.syntax.child(parent, 0);
+            return target >= 0 &&
+                this.rules.parser.node(target).kind === 'Identifier' &&
+                this.capital(this.rules.parser.node(target).text)
+                ? index
+                : -1;
+        }
+        if(owner.kind === 'PropertyAssignment' && !(node.kind === 'FunctionExpression' && name >= 0)) {
+            const key = this.syntax.name(parent);
+            return key >= 0 &&
+                this.rules.parser.node(key).kind === 'Identifier' &&
+                this.capital(this.rules.parser.node(key).text) &&
+                this.returns(index, false)
+                ? index
+                : -1;
+        }
+        const wrapper = this.enclosingWrapper(index);
+        if(wrapper >= 0 && this.returns(index, true)) {
+            return wrapper;
+        }
+        if(owner.kind === 'MethodDeclaration') {
+            const key = this.functionName(parent);
+            return key >= 0 && this.capital(this.rules.parser.node(key).text) && this.returns(index, false)
+                ? index
+                : -1;
+        }
+        if(!this.allowed(index) || !this.returns(index, true)) {
+            return -1;
+        }
+        if(node.kind === 'FunctionExpression' && name >= 0) {
+            return this.capital(this.rules.parser.node(name).text) ? index : -1;
+        }
+        if(owner.kind === 'BinaryExpression' && this.syntax.operator(parent) === 'EqualsToken') {
+            const target = this.syntax.skip(this.syntax.child(parent, 0));
+            const kind = this.rules.parser.node(target).kind;
+            if(kind === 'Identifier') {
+                return this.capital(this.rules.parser.node(target).text) ? index : -1;
+            }
+            if(kind === 'PropertyAccessExpression') {
+                const key = this.syntax.child(target, 1);
+                return this.moduleExports(target) || this.capital(this.rules.parser.node(key).text) ? index : -1;
+            }
+        }
+        return index;
+    }
+    moduleExports(index: number): boolean {
+        return (
+            index >= 0 &&
+            this.rules.parser.node(index).kind === 'PropertyAccessExpression' &&
+            this.syntax.identifier(this.syntax.skip(this.syntax.child(index, 0)), 'module') &&
+            this.syntax.identifier(this.syntax.child(index, 1), 'exports')
+        );
+    }
+    componentClass(index: number): boolean {
+        for(const child of this.rules.parser.node(index).children) {
+            const node = this.rules.parser.node(child);
+            if(node.kind !== 'HeritageClause' || node.operator !== 'ExtendsKeyword') {
+                continue;
+            }
+            for(const type of node.children) {
+                const base = this.syntax.skip(this.syntax.child(type, 0));
+                if(base < 0) {
+                    continue;
+                }
+                const item = this.rules.parser.node(base);
+                if(item.kind === 'Identifier' && (item.text === 'Component' || item.text === 'PureComponent')) {
+                    return true;
+                }
+                if(
+                    item.kind === 'PropertyAccessExpression' &&
+                    this.syntax.identifier(this.syntax.skip(this.syntax.child(base, 0)), 'React')
+                ) {
+                    const name = this.rules.parser.node(this.syntax.child(base, 1)).text;
+                    if(name === 'Component' || name === 'PureComponent') {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    add(index: number): void {
+        if(index >= 0 && !this.components.includes(index)) {
+            this.components.push(index);
+        }
+    }
+    detect(index: number): void {
+        const node = this.rules.parser.node(index);
+        if((node.kind === 'ClassDeclaration' || node.kind === 'ClassExpression') && this.componentClass(index)) {
+            this.add(index);
+        }
+        if(node.kind === 'CallExpression') {
+            const argument = this.syntax.args(index)[0] ?? -1;
+            const first = this.syntax.skip(argument);
+            if(this.wrapper(index) && this.syntax.functionLike(first)) {
+                this.add(index);
+            }
+            if(
+                this.syntax.factory(index) &&
+                argument >= 0 &&
+                this.rules.parser.node(argument).kind === 'ObjectLiteralExpression'
+            ) {
+                this.add(argument);
+            }
+        }
+        if(node.kind === 'MethodDeclaration') {
+            const parent = this.syntax.parent(index);
+            const name = this.functionName(index);
+            if(
+                parent >= 0 &&
+                this.rules.parser.node(parent).kind === 'ObjectLiteralExpression' &&
+                name >= 0 &&
+                this.rules.parser.node(name).kind === 'Identifier' &&
+                this.capital(this.rules.parser.node(name).text) &&
+                this.returns(index, false)
+            ) {
+                this.add(index);
+            }
+        }
+        if(node.kind === 'FunctionDeclaration' || this.syntax.functionLike(index)) {
+            this.add(this.stateless(index));
+        }
+        for(const child of node.children) {
+            this.detect(child);
+        }
+    }
+    es5Argument(index: number): boolean {
+        return (
+            index >= 0 &&
+            this.rules.parser.node(index).kind === 'ObjectLiteralExpression' &&
+            this.syntax.factory(this.syntax.parent(index))
+        );
+    }
+    transpiler(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        const parent = this.syntax.parent(index);
+        if(node.kind === 'CallExpression' && this.wrapper(index)) {
+            if(this.enclosingWrapper(index) >= 0) {
+                return true;
+            }
+            const first = this.syntax.skip(this.syntax.args(index)[0] ?? -1);
+            return first >= 0 && this.transpiler(first);
+        }
+        if(
+            ['ClassDeclaration', 'ClassExpression', 'FunctionDeclaration', 'FunctionExpression'].includes(node.kind) &&
+            this.functionName(index) >= 0
+        ) {
+            return true;
+        }
+        if(node.kind === 'ObjectLiteralExpression') {
+            const grandparent = parent < 0 ? -1 : this.syntax.parent(parent);
+            if(grandparent < 0) {
+                return false;
+            }
+            const owner = this.rules.parser.node(grandparent);
+            return (
+                owner.kind === 'VariableDeclaration' ||
+                (owner.kind === 'BinaryExpression' &&
+                    this.syntax.operator(grandparent) === 'EqualsToken' &&
+                    !this.moduleExports(this.syntax.child(grandparent, 0)))
+            );
+        }
+        if(node.kind === 'MethodDeclaration') {
+            return (
+                this.functionName(index) >= 0 &&
+                !(
+                    parent >= 0 &&
+                    this.rules.parser.node(parent).kind === 'ObjectLiteralExpression' &&
+                    this.syntax.factory(this.syntax.parent(parent))
+                )
+            );
+        }
+        return (
+            this.syntax.functionLike(index) &&
+            parent >= 0 &&
+            ['VariableDeclaration', 'PropertyAssignment', 'MethodDeclaration'].includes(
+                this.rules.parser.node(parent).kind,
+            ) &&
+            !this.es5Argument(this.syntax.parent(parent))
+        );
+    }
+    displayKey(index: number): boolean {
+        if(index < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'ComputedPropertyName') {
+            const child = this.syntax.skip(this.syntax.child(index, 0));
+            return (
+                child >= 0 &&
+                this.rules.parser.node(child).kind === 'StringLiteral' &&
+                this.rules.parser.node(child).text === 'displayName'
+            );
+        }
+        return (node.kind === 'Identifier' || node.kind === 'StringLiteral') && node.text === 'displayName';
+    }
+    declarationComponent(index: number): number {
+        if(this.components.includes(index)) {
+            return index;
+        }
+        const kind = this.rules.parser.node(index).kind;
+        if(kind === 'PropertyAssignment' || kind === 'VariableDeclaration') {
+            const value = this.syntax.skip(this.syntax.last(index));
+            if(this.components.includes(value)) {
+                return value;
+            }
+            if(
+                kind === 'VariableDeclaration' &&
+                value >= 0 &&
+                this.rules.parser.node(value).kind === 'CallExpression'
+            ) {
+                const first = this.syntax.skip(this.syntax.args(value)[0] ?? -1);
+                if(this.components.includes(first)) {
+                    return first;
+                }
+            }
+        }
+        return -1;
+    }
+    run(): void {
+        const root = this.rules.parser.nodes.findIndex((node) => node.kind === 'SourceFile');
+        if(root < 0) {
+            return;
+        }
+        this.detect(root);
+        const named: number[] = this.components.filter((component) => this.transpiler(component));
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(
+                ['PropertyDeclaration', 'MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(node.kind) &&
+                this.displayKey(this.functionName(index))
+            ) {
+                let owner = this.syntax.parent(index);
+                while(
+                    owner >= 0 &&
+                    !['ClassDeclaration', 'ClassExpression'].includes(this.rules.parser.node(owner).kind)
+                ) {
+                    owner = this.syntax.parent(owner);
+                }
+                if(owner >= 0) {
+                    named.push(owner);
+                }
+            }
+            if(node.kind === 'PropertyAssignment' && this.displayKey(this.syntax.name(index))) {
+                named.push(this.syntax.parent(index));
+            }
+            if(node.kind === 'PropertyAccessExpression' && this.displayKey(this.syntax.child(index, 1))) {
+                for(const declaration of this.syntax.declarationIndexes(this.syntax.child(index, 0))) {
+                    const target = this.declarationComponent(declaration);
+                    if(target >= 0) {
+                        named.push(target);
+                    }
+                }
+            }
+        }
+        for(const component of this.components) {
+            if(named.includes(component)) {
+                continue;
+            }
+            const parent = this.syntax.parent(component);
+            if(
+                this.rules.parser.node(component).kind === 'CallExpression' &&
+                this.wrapper(parent) &&
+                this.syntax.skip(this.syntax.args(parent)[0] ?? -1) === component
+            ) {
+                continue;
+            }
+            if(this.rules.parser.node(component).kind === 'CallExpression') {
+                const callee = this.syntax.skip(this.syntax.child(component, 0));
+                if(this.rules.parser.node(callee).kind === 'Identifier') {
+                    const declarations = this.syntax.declarationIndexes(callee);
+                    if(
+                        declarations.length > 0 &&
+                        !declarations.some((declaration) =>
+                            ['ImportSpecifier', 'ImportClause', 'NamespaceImport'].includes(
+                                this.rules.parser.node(declaration).kind,
+                            ),
+                        )
+                    ) {
+                        continue;
+                    }
+                }
+            }
+            let start = -1;
+            const modifiers = this.rules.parser
+                .node(component)
+                .children.filter((child) =>
+                    ['ExportKeyword', 'DefaultKeyword', 'DeclareKeyword', 'AbstractKeyword', 'AsyncKeyword'].includes(
+                        this.rules.parser.node(child).kind,
+                    ),
+                );
+            if(modifiers.length > 0) {
+                const last = modifiers[modifiers.length - 1] ?? -1;
+                this.rules.scanner.pos = this.rules.parser.node(last).end;
+                this.rules.scanner.scan();
+                start = this.rules.scanner.start;
+            }
+            this.syntax.report(
+                'react/display-name',
+                'noDisplayName',
+                'Component definition is missing display name',
+                component,
+                start,
+            );
+        }
+    }
+}

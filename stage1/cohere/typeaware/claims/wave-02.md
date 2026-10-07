@@ -127,3 +127,12 @@ skip-types records, not native implementations. They are reserved before code.
 The snapshot and document matches are in wave_02_continuation_4/selection-audit.json.
 Known shared JSX parsing gaps will be disclosed; other behavior will be ported
 inside this rule directory without shared harness or generator changes.
+
+Continuation 4 status: default non-JSX behavior is implemented in separate .a
+modules and tested against unmodified Go cohere. The final 272 supported controls
+produce 2,747 byte-identical findings; all 77 compiler and 287 repository roots,
+positive relative manifests, sanitizers, three rule mutants and released handles
+pass. Full ports remain reserved and blocked on the shared parser's JSX support:
+99 additional Go-parse-valid controls fail explicitly in native. An owned refusal
+mutant proves a JSX type-assertion misread would otherwise silently lose a button
+finding. No shared file was edited and no further rule was claimed.
