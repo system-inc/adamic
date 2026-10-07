@@ -22,3 +22,7 @@ No rule is declared fully helper-ready by this one helper. Second claim follows 
 2. `github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ValueToCss`
    File: from_wave1_11/tailwind_value_to_css.a.
    Six consumers listed above. Preserve word/separator text, recursive function emission and ignoring unknown kinds. Compare actual value trees captured independently from each consumer fixture suite against Go on source Node, emitted JavaScript and sanitized native; run a compiling semantic mutant. This claim is pushed before implementation.
+
+3. `github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.IsRoot`
+   File: from_wave1_11/cfg_is_root.a. Ties the highest unclaimed count (four), audited across all 547 origin refs and 19 distinct claim contents. Compare numeric SyntaxKind and initializer metadata from all four consumer fixture suites with unchanged Go, source Node, emitted JavaScript and sanitized native; a compiling semantic mutant. No shared harness files are changed. Rule branch is independently green, rebased and parked at 1d09e38cc under #zmh9v36. This claim is pushed before code.
+   Consumers: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks.
