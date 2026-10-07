@@ -1,0 +1,10 @@
+{
+  "isolated-2.a": "var isolated = 1;function topLevel(){}let skipped=2;leaky=1;function f(){'use strict';declined=1;}class C{f(){declinedClass=1;}}\n",
+  "isolated-1.js": "setTimeout('x'+value);execScript('x');window.window['execScript']('x');self.self.setInterval(`x${value}`);function f(setTimeout){setTimeout('x');}export {};\n",
+  "isolated-3.a": "using resource = null;var plain=1;let lexical=2;\n",
+  "isolated-3.js": "using resource = null;var plain=1;let lexical=2;\n",
+  "isolated-2.js": "var isolated = 1;function topLevel(){}let skipped=2;leaky=1;function f(){'use strict';declined=1;}class C{f(){declinedClass=1;}}\n",
+  "isolated-0.js": "Object=1;({Object,String=0}= {});[...Array]=[];async function f(){for await(Math of []){}};export {};\n",
+  "isolated-1.a": "setTimeout('x'+value);execScript('x');window.window['execScript']('x');self.self.setInterval(`x${value}`);function f(setTimeout){setTimeout('x');}export {};\n",
+  "isolated-0.a": "Object=1;({Object,String=0}= {});[...Array]=[];async function f(){for await(Math of []){}};export {};\n"
+}

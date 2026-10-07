@@ -1,0 +1,4 @@
+{
+  "filename": "ambient-globals.d.ts",
+  "source": "declare function setTimeout(handler: unknown, timeout?: number, ...rest: unknown[]): number;\ndeclare function setInterval(handler: unknown, timeout?: number, ...rest: unknown[]): number;\ndeclare function execScript(source: unknown, ...rest: unknown[]): void;\ninterface ImpliedEvalGlobalObject {\n\tsetTimeout(handler: unknown, timeout?: number, ...rest: unknown[]): number;\n\tsetInterval(handler: unknown, timeout?: number, ...rest: unknown[]): number;\n\texecScript(source: unknown, ...rest: unknown[]): void;\n\twindow: ImpliedEvalGlobalObject;\n\tself: ImpliedEvalGlobalObject;\n\tglobal: ImpliedEvalGlobalObject;\n\tglobalThis: ImpliedEvalGlobalObject;\n}\ndeclare var window: ImpliedEvalGlobalObject;\ndeclare var self: ImpliedEvalGlobalObject;\ndeclare var global: ImpliedEvalGlobalObject;\n"
+}
