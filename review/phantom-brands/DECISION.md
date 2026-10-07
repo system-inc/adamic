@@ -1,6 +1,6 @@
 # Phantom brands: language decision
 
-Implementation stopped on this family under the unit's instruction to stop when a language decision is needed. No compiler change is proposed yet.
+Historical review, superseded by the approved refinement below. Implementation originally stopped pending this language decision.
 
 Observed with Node 24.19.0, running the exact source using `node --input-type=module-typescript`:
 
@@ -17,3 +17,7 @@ These probes are original minimal counterexamples to the ruling, not fixtures cu
 Located representation refusal: `internal/lower/expression.go`, `representation`, routes intersections through `objectIntersection` after handling WeakBrand. Named values then produce NotYet diagnostics in `typeOf`, function signatures and locals when no representation is known. Cast refusal is in `internal/lower/cast.go`.
 
 The census README and scope/method section were read. Its findings are measurements on a checker-rejected program, deduplicated by kind, location, reason and exact text; lowering reports only the first failure per attempted unit. The supplied 222 is not independently verified here. No before/after census, compiler gate, sanitizer oracle or mutants were run because implementation stopped at the language decision. There is no family movement to report.
+
+## Approved refinement and implementation
+
+On October 7, @system_adamic approved preserving the catchable TypeError through the undefined arm and refusing member names present on the actual primitive or its prototype chain. The implementation now follows that ruling. Optional reads still yield undefined, ordinary reads through undefined throw, and casts are erased. See [REPORT.md](REPORT.md) for fixtures, the original-source review oracle, mutants, counts and validation.

@@ -636,6 +636,12 @@ func (e *emitter) value(expression ir.Expression) string {
 			return fmt.Sprintf("adamicClass(%s, %d)", object, expression.Class)
 		}
 		return object
+	case ir.PhantomMember:
+		operator := "["
+		if expression.Optional {
+			operator = "?.["
+		}
+		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
 		if expression.Optional {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
