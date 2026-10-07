@@ -1,0 +1,5 @@
+export type VariantOrderState = {groupPresent: boolean; groupOrder: number; lastOrder: number};
+export function variantNextOrder(state: VariantOrderState): number {
+ if(state.groupPresent) { return state.groupOrder; }
+ return state.lastOrder + 1;
+}

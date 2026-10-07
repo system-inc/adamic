@@ -1,0 +1,55 @@
+import {programArguments, readTextFile, panic} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {type CssNode, type ChildList} from './css_node.a';
+import {atRule} from './at_rule.a';
+import {styleRule} from './style_rule.a';
+import {variantNextOrder, type VariantOrderState} from './variant_next_order.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+function render(text: string): string {
+ let result = '';
+ for(let index = 0; index < text.length; index++) { result += `${text.charCodeAt(index)},`; }
+ return result;
+}
+function snapshot(node: CssNode): string {
+ return [node.kind, render(node.selector), render(node.name), render(node.params), render(node.property), render(node.value), `${node.valuePresent}`, `${node.important}`, `${node.contextPresent}`, `${node.nodes.present}`, `${node.nodes.length}`, `${node.nodes.capacity}`, node.nodes.values.slice(0, node.nodes.length).join(',')].join('|');
+}
+function construct(kind: number, text: string, nodes: ChildList): CssNode {
+ if(kind === 0) { return atRule(text, 'params:' + text, nodes); }
+ return styleRule(text, nodes);
+}
+for(const row of json.node(json.field(root, 'texts')).children) {
+ const text = json.node(row).text;
+ for(const childRow of json.node(json.field(root, 'children')).children) {
+  const present = json.node(json.field(childRow, 'present')).text === 'true';
+  for(let kind = 0; kind < 2; kind++) {
+   const values: number[] = [];
+   for(const child of json.node(json.field(childRow, 'nodes')).children) { values.push(json.node(child).number); }
+   const length = values.length;
+   const capacity = json.node(json.field(childRow, 'capacity')).number;
+   while(values.length < capacity) { values.push(-1); }
+   const nodes: ChildList = {values, length, capacity, present};
+   const first = construct(kind, text, nodes);
+   console.log(snapshot(first));
+   first.name = 'changed'; first.selector = 'changed';
+   if(first.nodes.length > 0) { first.nodes.values[0] = -1; }
+   first.nodes.length = 0; first.nodes.capacity = 0;
+   console.log(`${nodes.length}:${nodes.capacity}:${nodes.present}:` + nodes.values.slice(0, nodes.length).join(','));
+   const second = construct(kind, text, nodes);
+   console.log(snapshot(second));
+  }
+ }
+}
+for(const row of json.node(json.field(root, 'orders')).children) {
+ const state: VariantOrderState = {
+  groupPresent: json.node(json.field(row, 'groupPresent')).text === 'true',
+  groupOrder: json.node(json.field(row, 'groupOrder')).number,
+  lastOrder: json.node(json.field(row, 'lastOrder')).number,
+ };
+ console.log(`${variantNextOrder(state)}`);
+ console.log(`${state.groupPresent}:${state.groupOrder}:${state.lastOrder}`);
+ console.log(`${variantNextOrder(state)}`);
+}

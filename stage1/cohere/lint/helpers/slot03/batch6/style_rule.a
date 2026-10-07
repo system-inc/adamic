@@ -1,0 +1,4 @@
+import {type CssNode, type ChildList} from './css_node.a';
+export function styleRule(selector: string, nodes: ChildList): CssNode {
+ return {kind: 'rule', selector, name: '', params: '', property: '', value: '', valuePresent: false, important: false, contextPresent: false, nodes: {values: nodes.values, length: nodes.length, capacity: nodes.capacity, present: nodes.present}};
+}

@@ -1,0 +1,8 @@
+// Node indices preserve child identity; -1 denotes a nil child.
+// Presence flags preserve nil slices/maps independently of empty values.
+export type ChildList = {values: number[]; length: number; capacity: number; present: boolean};
+export type CssNode = {
+ kind: string; selector: string; name: string; params: string;
+ property: string; value: string; valuePresent: boolean; important: boolean;
+ contextPresent: boolean; nodes: ChildList;
+};

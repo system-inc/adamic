@@ -1,0 +1,40 @@
+=== RUN   TestBatch6Helpers
+    batch6_test.go:49: 34566 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch6Helpers (3.12s)
+=== RUN   TestBatch6Mutants
+=== RUN   TestBatch6Mutants/at_rule.a
+    batch6_test.go:85: compiled semantic mutant caught at line 1: got "rule|||112,97,114,97,109,115,58,|||false|false|false|false|0|0|" Go "at-rule|||112,97,114,97,109,115,58,|||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/at_rule.a#01
+    batch6_test.go:85: compiled semantic mutant caught at line 14: got "1:1:true:0" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/at_rule.a#02
+    batch6_test.go:85: compiled semantic mutant caught at line 14: got "0:0:true:" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/at_rule.a#03
+    batch6_test.go:85: compiled semantic mutant caught at line 3: got "at-rule|99,104,97,110,103,101,100,|99,104,97,110,103,101,100,|112,97,114,97,109,115,58,|||false|false|false|false|0|0|" Go "at-rule|||112,97,114,97,109,115,58,|||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/style_rule.a
+    batch6_test.go:85: compiled semantic mutant caught at line 4: got "at-rule||||||false|false|false|false|0|0|" Go "rule||||||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/style_rule.a#01
+    batch6_test.go:85: compiled semantic mutant caught at line 17: got "1:1:true:0" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/style_rule.a#02
+    batch6_test.go:85: compiled semantic mutant caught at line 17: got "0:0:true:" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/style_rule.a#03
+    batch6_test.go:85: compiled semantic mutant caught at line 6: got "rule|99,104,97,110,103,101,100,|99,104,97,110,103,101,100,||||false|false|false|false|0|0|" Go "rule||||||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/variant_next_order.a
+    batch6_test.go:85: compiled semantic mutant caught at line 29488: got "-9007199254740989" Go "-9007199254740991"
+=== RUN   TestBatch6Mutants/variant_next_order.a#01
+    batch6_test.go:85: compiled semantic mutant caught at line 29485: got "-9007199254740988" Go "-9007199254740989"
+=== RUN   TestBatch6Mutants/variant_next_order.a#02
+    batch6_test.go:85: compiled semantic mutant caught at line 29486: got "false:0:-9007199254740989" Go "false:0:-9007199254740990"
+--- PASS: TestBatch6Mutants (25.53s)
+    --- PASS: TestBatch6Mutants/at_rule.a (2.38s)
+    --- PASS: TestBatch6Mutants/at_rule.a#01 (2.48s)
+    --- PASS: TestBatch6Mutants/at_rule.a#02 (2.51s)
+    --- PASS: TestBatch6Mutants/at_rule.a#03 (1.96s)
+    --- PASS: TestBatch6Mutants/style_rule.a (1.82s)
+    --- PASS: TestBatch6Mutants/style_rule.a#01 (2.14s)
+    --- PASS: TestBatch6Mutants/style_rule.a#02 (2.52s)
+    --- PASS: TestBatch6Mutants/style_rule.a#03 (2.43s)
+    --- PASS: TestBatch6Mutants/variant_next_order.a (2.28s)
+    --- PASS: TestBatch6Mutants/variant_next_order.a#01 (2.19s)
+    --- PASS: TestBatch6Mutants/variant_next_order.a#02 (2.42s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	28.658s
