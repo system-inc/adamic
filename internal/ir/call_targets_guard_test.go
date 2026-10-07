@@ -49,6 +49,7 @@ var targetReaders = map[string]targetReader{
 }
 
 func TestCallTargetReaders(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)
@@ -63,8 +64,8 @@ func TestCallTargetReaders(t *testing.T) {
 		t.Fatal(err)
 	}
 	type listedPackage struct {
-		ImportPath, Dir, Export string
-		GoFiles, TestGoFiles    []string
+		ImportPath, Dir, Export, ForTest   string
+		GoFiles, TestGoFiles, XTestGoFiles []string
 	}
 	packages := []listedPackage{}
 	exports := map[string]string{}
@@ -80,6 +81,11 @@ func TestCallTargetReaders(t *testing.T) {
 		}
 		packages = append(packages, pkg)
 		exports[pkg.ImportPath] = pkg.Export
+		// External tests may use declarations from export_test.go. Import their
+		// package's test variant rather than the production-only export file.
+		if path, _, variant := strings.Cut(pkg.ImportPath, " ["); variant && path == pkg.ForTest {
+			exports[path] = pkg.Export
+		}
 	}
 	fset := token.NewFileSet()
 	imports := importer.ForCompiler(fset, "gc", func(path string) (io.ReadCloser, error) { return os.Open(exports[path]) })
@@ -106,66 +112,75 @@ func TestCallTargetReaders(t *testing.T) {
 		if pkg.ImportPath != "github.com/system-inc/adamic/internal/"+base || (base != "native" && base != "lower" && base != "fresh" && base != "flow") {
 			continue
 		}
-		files := []*ast.File{}
-		for _, name := range append(pkg.GoFiles, pkg.TestGoFiles...) {
-			file, err := parser.ParseFile(fset, filepath.Join(pkg.Dir, name), nil, 0)
-			if err != nil {
+		for group, names := range [][]string{append(pkg.GoFiles, pkg.TestGoFiles...), pkg.XTestGoFiles} {
+			if len(names) == 0 {
+				continue
+			}
+			packagePath := pkg.ImportPath
+			if group == 1 {
+				packagePath += "_test"
+			}
+			files := []*ast.File{}
+			for _, name := range names {
+				file, err := parser.ParseFile(fset, filepath.Join(pkg.Dir, name), nil, 0)
+				if err != nil {
+					t.Fatal(err)
+				}
+				files = append(files, file)
+			}
+			info := &types.Info{Selections: map[*ast.SelectorExpr]*types.Selection{}}
+			config := types.Config{Importer: imports}
+			if _, err := config.Check(packagePath, fset, files, info); err != nil {
 				t.Fatal(err)
 			}
-			files = append(files, file)
-		}
-		info := &types.Info{Selections: map[*ast.SelectorExpr]*types.Selection{}}
-		config := types.Config{Importer: imports}
-		if _, err := config.Check(pkg.ImportPath, fset, files, info); err != nil {
-			t.Fatal(err)
-		}
-		for _, file := range files {
-			for _, declaration := range file.Decls {
-				functionName := "<package>"
-				if function, ok := declaration.(*ast.FuncDecl); ok {
-					functionName = function.Name.Name
-				}
-				ast.Inspect(declaration, func(node ast.Node) bool {
-					selector, ok := node.(*ast.SelectorExpr)
-					if !ok {
-						return true
+			for _, file := range files {
+				for _, declaration := range file.Decls {
+					functionName := "<package>"
+					if function, ok := declaration.(*ast.FuncDecl); ok {
+						functionName = function.Name.Name
 					}
-					selection := info.Selections[selector]
-					if selection == nil || selection.Kind() != types.FieldVal {
-						return true
-					}
-					field, guarded := protected[selection.Obj()]
-					if !guarded {
-						return true
-					}
-					// A bare assignment's left side writes the field; compound assignments and
-					// address-taking can read it and intentionally remain guarded.
-					writes := false
 					ast.Inspect(declaration, func(node ast.Node) bool {
-						assignment, ok := node.(*ast.AssignStmt)
-						if ok && assignment.Tok == token.ASSIGN {
-							for _, left := range assignment.Lhs {
-								if left == selector {
-									writes = true
+						selector, ok := node.(*ast.SelectorExpr)
+						if !ok {
+							return true
+						}
+						selection := info.Selections[selector]
+						if selection == nil || selection.Kind() != types.FieldVal {
+							return true
+						}
+						field, guarded := protected[selection.Obj()]
+						if !guarded {
+							return true
+						}
+						// A bare assignment's left side writes the field; compound assignments and
+						// address-taking can read it and intentionally remain guarded.
+						writes := false
+						ast.Inspect(declaration, func(node ast.Node) bool {
+							assignment, ok := node.(*ast.AssignStmt)
+							if ok && assignment.Tok == token.ASSIGN {
+								for _, left := range assignment.Lhs {
+									if left == selector {
+										writes = true
+									}
 								}
 							}
+							return true
+						})
+						if writes {
+							return true
+						}
+						path, err := filepath.Rel(root, fset.Position(selector.Pos()).Filename)
+						if err != nil {
+							t.Fatal(err)
+						}
+						key := filepath.ToSlash(path) + ":" + functionName + ":" + field
+						seen[key] = true
+						if _, allowed := targetReaders[key]; !allowed {
+							t.Errorf("unapproved call-target read %s at %s; use CallTargets or ClosureTargets", key, fset.Position(selector.Pos()))
 						}
 						return true
 					})
-					if writes {
-						return true
-					}
-					path, err := filepath.Rel(root, fset.Position(selector.Pos()).Filename)
-					if err != nil {
-						t.Fatal(err)
-					}
-					key := filepath.ToSlash(path) + ":" + functionName + ":" + field
-					seen[key] = true
-					if _, allowed := targetReaders[key]; !allowed {
-						t.Errorf("unapproved call-target read %s at %s; use CallTargets or ClosureTargets", key, fset.Position(selector.Pos()))
-					}
-					return true
-				})
+				}
 			}
 		}
 	}
