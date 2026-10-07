@@ -164,6 +164,10 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	assertion := ast.SkipParentheses(node)
+	if assertion.Kind == ast.KindAsExpression && l.genericSignature(l.checker.GetTypeAtLocation(assertion.AsAsExpression().Expression)) != nil && l.genericSignature(l.checker.GetTypeAtLocation(assertion)) == nil {
+		return nil, l.notYet(node, "a cast erasing a generic function value's representation")
+	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
 	}

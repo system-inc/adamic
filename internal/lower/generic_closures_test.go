@@ -34,6 +34,7 @@ func TestGenericPropertyUnsupportedUsesStayDiagnostic(t *testing.T) {
 		`const value = <T>(x:T):T => x; value(1); Object.keys(value);`,
 		`const value = <T>(x:T):T => x; value(1); function forward<U>(x:U):void { value(x); } forward('x');`,
 		`const value = <T>(x:T):T => x;`,
+		`const call = <T>(x:T):T => x; call(1); console.log(typeof (call as unknown));`,
 		`const call = <T>(x:T):T => x; call(1); call.hasOwnProperty('length');`,
 		`const call = <T>(x:T):T => x; call(1); const object = call as {}; console.log(typeof object);`,
 		`const call = <T>(x:T):T => x; call(1); const spread = {...call}; Object.keys(spread);`,
