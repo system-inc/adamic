@@ -1,0 +1,72 @@
+Built general primitive array-store and optional boolean-literal equality fast paths; million-element Ir fell 27.53% with clang release -O2 (flags.txt).
+Commits: 89f9c44 scalar stores; ec5f84a literal equality; both pushed on codex/emitter-speed, with origin/main f8013f0 already merged.
+Commands/output: uncached native 120.984s and oracle 119.058s PASS; vet PASS; batch8 release cmp against Go exit 0; timing commands and results below.
+Mutants: scalar fast path widened to references leaked 73 bytes (LeakSanitizer); missing presence guard changed undefined === false (Node comparison).
+Not covered: full repository gate, Wasm timings, quiet-worker reproduction, compact array representation, additional bounds elision, new parse/W6 measurements.
+
+All instruction counts and native timings below use clang 20.1.8 release -O2, no sanitizers, no counting, no LTO, no -g; flags.txt gives the complete flags. Node uses 24.19.0 with --disable-warning=ExperimentalWarning. Instructions are Valgrind 3.24.0 Callgrind Ir, including startup and the checksum driver for one request. Timing and profile builds use adamic build with the same flags.
+
+Witness and source
+Read origin/codex/workers-bench-handler at 3306f3a, whose parent is requested 0a3e651. Its sieve.a has not changed. The final commit only keeps evidence outside that worker's delivery branch. Read the whole handler README, harness and generated C. The checked-in corpus is 1000, 10000, 100000, not 1000000. Both the supplied corpus and a separate one-line 1000000 corpus were measured. No worker's timing numbers were treated as this run's baseline.
+Before compiler is the already measured field-store compiler at 137c46b, based on main f8013f0. After compiler contains exactly ec5f84a's code. Runtime source is unchanged throughout. No cohere code was copied. codex/non-null-check a02613e was inspected; this patch does not change ArrayIndex or Unwrap emission. Naming and counter allocation mechanisms are unchanged.
+
+Measured costs, one request at 1000000, clang release -O2
+Function                                 self Ir      calls
+adamic_array_set                       91,248,064   2,122,048
+adamic_array_push                      16,000,340   1,000,001 sieve calls, plus 4 driver calls
+adamic_maybe_boolean_equal              9,008,982   1,000,998
+Generated main                         80,587,027   includes inlined countPrimes
+Whole before                          197,181,939
+Whole scalar-store only               165,231,841
+Whole both fixes                      142,895,223
+
+The first fix removes the array_set calls on valid scalar stores. Its net saving is 31,950,098 Ir (16.20%), not the full function self cost: validation and stores move into generated C. The second removes all optional-boolean equality calls in this sieve and saves another 22,336,618 Ir, including caller setup and code that clang can now simplify. Combined saving: 54,286,716 Ir (27.53%). These are measured totals, not estimates from summing eliminated function bodies. instructions.json reconciles the collapsed function counts with the whole profile.
+
+Observations
+Boolean array elements are untagged 8-byte adamic_value slots, with a bool member. They are not individually heap boxed. Reads produce a two-field adamic_maybe_boolean struct (present, boolean), not a heap union. There is no retain/release per boolean element read. The release of the array is outside the sieve loops. Array reads already inline adamic_array_at; they retain negative/NaN, upper-bound and fractional-index validation. Source-line costs for these individual predicates were not isolated by the non-debug profile, so no instruction number is assigned to a predicate or to the 8-byte representation itself.
+
+Changes and correctness
+primitiveArrayStore handles only Boolean, Number and MaybeNumber. It performs the existing adamic_array_at validation after operand evaluation; a valid slot gets the same adamic_value assignment, with no runtime reference branch because the element type proves it holds no reference. An invalid slot calls the existing array_set path for its exact message and exit code. Reference arrays retain the existing ownership path unchanged.
+booleanLiteralEquality specializes MaybeBoolean ===/!== a right-hand boolean literal wrapped by MaybeOf. The literal is proven present. The other operand is evaluated once, its presence test remains, and equality is present && boolean == literal. Arbitrary optional operands keep the general equality path. No array access is assumed in bounds or defined, and no ! assertion behavior is changed.
+The pinned test compares valid boolean, number, optional-number and heap-string stores with Node in release and ASan/UBSan builds. It covers true, false, missing, fractional and negative reads. A C ABI pin compares emitted invalid boolean stores with the existing runtime operation for -1, length, 0.5, NaN and infinity, including stdout/stderr/exit 70. Dropping the operand's presence test is caught by missing elements incorrectly comparing equal to false. Widening the scalar path to reference elements is caught by LeakSanitizer on an overwritten heap string made with repeat, not an immortal literal. Neither mutant is killed by a compiler warning.
+
+Validation commands (all output redirected to logs)
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -count=1 -timeout 30m
+  final-gate.log: both PASS, 120.984s and 119.058s.
+go test ./internal/native -run TestPrimitiveArrayStoresMatchNode -count=1
+  literal-control.log: PASS 2.823s.
+go test -overlay scratch/emitter-speed/sieve/mutant-overlay.json ./internal/native -run TestPrimitiveArrayStoresMatchNode -count=1
+  type-mutant.log: executable exit 1, LeakSanitizer 73-byte leak.
+go test -overlay scratch/emitter-speed/sieve/tag-mutant-overlay.json ./internal/native -run TestPrimitiveArrayStoresMatchNode -count=1
+  tag-mutant.log: executable stdout differs from Node for missing === false.
+go vet ./...
+  vet.log: PASS, empty output.
+adamic-final build scratch/emitter-speed/batch8/main.a -o scratch/emitter-speed/sieve/batch8-final
+batch8-final --manifest scratch/emitter-speed/compiler.txt
+cmp batch8-final.stdout scratch/emitter-speed/batch8-go.stdout
+  cmp exit 0, stderr empty. This uses the original parse-speed corpus and independent Go output from the field-store report, not a new Go implementation.
+
+Timing method, clang release -O2 and Node flags above
+Uses the handler bench's unchanged wait4.c and statistics.mjs, and the same driver algorithm/checksum.a. Three rounds, K=1000, fresh process for every measured and K=0 startup sample; no warmup. Each result is (wall(K)-wall(0))/(K*corpusLines). Processes never overlap. Variant order rotates per round; startup precedes measured on even rounds, follows it on odd rounds. Checksum comparison with independent Node source happens for every child. Every child must exit 0 with empty stderr. The subset rotates native-before, native-final, Adamic-JS, Node-source rather than building a Wasm variant. This preserves the timing instruments and flags, but is not a full four-backend harness invocation. No builds or tests overlapped these final measurement runs. CPU quota is 400000/100000 (4 CPUs), nproc 5.
+node scratch/emitter-speed/sieve/final-measure.mjs final-bench scratch/emitter-speed/sieve/bench-corpus.txt
+node scratch/emitter-speed/sieve/final-measure.mjs final-million
+
+Startup-subtracted wall ms/request, clang release -O2 and Node flags above
+Corpus                    statistic   before     final      Adamic-JS   Node
+1000/10000/100000          best        0.704480   0.456225    0.483118   0.443175
+1000/10000/100000          median      0.721340   0.464653    0.496409   0.449208
+1000000                   best       20.472952  13.255558   19.027770  17.018062
+1000000                   median     20.482650  13.327267   19.295539  17.074003
+
+The million-element case is at or under Node in this measured run as of October 7, 2026, 05:12 UTC: 22.11% faster on best time, 21.94% on median. The supplied mixed corpus improves 35.24% on best but remains 2.94% slower than Node. This does not establish parity for the quiet worker's supplied-corpus result or across machines. The remaining mixed-corpus parity target is October 8, 18:00 UTC; it is a target, not a verified result or a guarantee. This run is on a shared machine with higher load than the witness. Raw timing reports retain load, CPU, RSS and all samples.
+
+Runtime boundary: proposal only, stop here
+A one-byte boolean[] representation needs an explicit runtime array storage kind. Proposed API: a Boolean storage kind and constructor, with a typed bool buffer and byte-sized capacity/growth/copy operations; keep the existing adamic_value storage kind for numbers/references. Boolean reads must return value plus presence (or a bool-address helper), because the existing adamic_array_at pointer-to-adamic_value contract cannot safely point at a one-byte buffer. Boolean writes retain the current invalid-index diagnostic. Generic push/pop, slice/splice, fill, sort/reverse, join, search, visits, spread and destruction must dispatch by storage kind; array->references remains false for boolean storage. Emit direct bool-buffer reads/writes only when that kind is proven; update every emitter's generic element access to use the new runtime contract. noUncheckedIndexedAccess still distinguishes undefined from false. No per-element allocation is introduced. Representation width savings cannot be quantified by the current profile alone; measure a runtime-owned implementation before claiming its effect. No runtime storage or character/string code was edited.
+Bounds elision also stops here: index <= limit by itself proves neither index < array.length nor integrality. A further emitter proof needs the fresh array's fill relation, no intervening length mutation or escaping alias, and the counter's integral range, including overflow/non-finite cases. Current bounds checks remain. The non-null assertion worker can preserve its own undefined check while a later range proof is developed independently.
+
+W6 remains queued after these emitter items. Parse numbers in the parent field-store report refer to that fix; they have not been remeasured for this additional patch. No third-of-emitter-share claim is made.
+
+Supplied-corpus load before/after: 5.75 3.53 2.39 2/211 62507 / 4.40 3.36 2.36 1/211 62659
+Million-case load before/after: 4.40 3.36 2.36 2/211 62666 / 1.07 2.09 2.05 2/206 62934
+
+Mutant replacement sources are archived as type-mutant.go.txt and tag-mutant.go.txt. To repeat, create a Go overlay mapping the absolute internal/native/emit_speed.go path to the absolute replacement source path, then run the focused command above. The type mutant was re-run against the final compiler/test (FAIL 0.410s, same 73-byte LeakSanitizer failure). gofmt -l cmd internal produced no output.

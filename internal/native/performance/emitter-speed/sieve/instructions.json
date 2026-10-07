@@ -1,0 +1,347 @@
+{
+  "before": {
+    "total": 197181939,
+    "self": [
+      {
+        "function": "adamic_array_set",
+        "instructions": 91248064,
+        "percent": 46.27607602540109,
+        "self": 91248064,
+        "inclusive": 91248064
+      },
+      {
+        "function": "main",
+        "instructions": 80587027,
+        "percent": 40.86937546546796,
+        "self": 80587027,
+        "inclusive": 197010375
+      },
+      {
+        "function": "adamic_array_push",
+        "instructions": 16000340,
+        "percent": 8.114505862527297,
+        "self": 16000340,
+        "inclusive": 16134692
+      },
+      {
+        "function": "adamic_maybe_boolean_equal",
+        "instructions": 9008982,
+        "percent": 4.568867739960707,
+        "self": 9008982,
+        "inclusive": 9008982
+      },
+      {
+        "function": "adamic_release",
+        "instructions": 1718,
+        "percent": 0.0008712765523621309,
+        "self": 1718,
+        "inclusive": 2406
+      },
+      {
+        "function": "realloc",
+        "instructions": 1681,
+        "percent": 0.0008525121562984528,
+        "self": 1681,
+        "inclusive": 136351
+      },
+      {
+        "function": "decode",
+        "instructions": 1230,
+        "percent": 0.0006237893826574045,
+        "self": 1230,
+        "inclusive": 1904
+      },
+      {
+        "function": "adamic_number_format",
+        "instructions": 876,
+        "percent": 0.00044425975545356615,
+        "self": 876,
+        "inclusive": 876
+      },
+      {
+        "function": "__tunable_get_val",
+        "instructions": 815,
+        "percent": 0.0004133238592404754,
+        "self": 815,
+        "inclusive": 815
+      },
+      {
+        "function": "adamic_allocate",
+        "instructions": 770,
+        "percent": 0.00039050229646032643,
+        "self": 770,
+        "inclusive": 4807
+      },
+      {
+        "function": "adamic_bitwise_xor",
+        "instructions": 710,
+        "percent": 0.00036007354608679447,
+        "self": 710,
+        "inclusive": 2415
+      },
+      {
+        "function": "adamic_shift_right_unsigned",
+        "instructions": 708,
+        "percent": 0.00035905925440767673,
+        "self": 708,
+        "inclusive": 1044
+      }
+    ],
+    "edges": [
+      {
+        "caller": "main",
+        "callee": "adamic_array_set",
+        "instructions": 91248064,
+        "calls": 2122048
+      },
+      {
+        "caller": "main",
+        "callee": "adamic_array_push",
+        "instructions": 16134550,
+        "calls": 1000001
+      },
+      {
+        "caller": "main",
+        "callee": "adamic_maybe_boolean_equal",
+        "instructions": 9008982,
+        "calls": 1000998
+      },
+      {
+        "caller": "adamic_string_split",
+        "callee": "adamic_array_push",
+        "instructions": 110,
+        "calls": 2
+      },
+      {
+        "caller": "adamic_program_arguments",
+        "callee": "adamic_array_push",
+        "instructions": 32,
+        "calls": 2
+      }
+    ]
+  },
+  "after": {
+    "total": 165231841,
+    "self": [
+      {
+        "function": "main",
+        "instructions": 139884983,
+        "percent": 84.65982231596632,
+        "self": 139884983,
+        "inclusive": 165060267
+      },
+      {
+        "function": "adamic_array_push",
+        "instructions": 16000340,
+        "percent": 9.683569403550978,
+        "self": 16000340,
+        "inclusive": 16134692
+      },
+      {
+        "function": "adamic_maybe_boolean_equal",
+        "instructions": 9008982,
+        "percent": 5.452328041300466,
+        "self": 9008982,
+        "inclusive": 9008982
+      },
+      {
+        "function": "adamic_release",
+        "instructions": 1718,
+        "percent": 0.0010397511699939239,
+        "self": 1718,
+        "inclusive": 2406
+      },
+      {
+        "function": "realloc",
+        "instructions": 1681,
+        "percent": 0.0010173583915947533,
+        "self": 1681,
+        "inclusive": 136351
+      },
+      {
+        "function": "decode",
+        "instructions": 1230,
+        "percent": 0.000744408579215673,
+        "self": 1230,
+        "inclusive": 1904
+      },
+      {
+        "function": "adamic_number_format",
+        "instructions": 876,
+        "percent": 0.0005301641588560404,
+        "self": 876,
+        "inclusive": 876
+      },
+      {
+        "function": "__tunable_get_val",
+        "instructions": 815,
+        "percent": 0.000493246335008759,
+        "self": 815,
+        "inclusive": 815
+      },
+      {
+        "function": "adamic_allocate",
+        "instructions": 770,
+        "percent": 0.00046601187479355146,
+        "self": 770,
+        "inclusive": 4807
+      },
+      {
+        "function": "adamic_bitwise_xor",
+        "instructions": 710,
+        "percent": 0.0004296992611732747,
+        "self": 710,
+        "inclusive": 2415
+      },
+      {
+        "function": "adamic_shift_right_unsigned",
+        "instructions": 708,
+        "percent": 0.0004284888407192655,
+        "self": 708,
+        "inclusive": 1044
+      },
+      {
+        "function": "adamic_math_imul",
+        "instructions": 701,
+        "percent": 0.0004242523691302332,
+        "self": 701,
+        "inclusive": 701
+      }
+    ],
+    "edges": [
+      {
+        "caller": "main",
+        "callee": "adamic_array_push",
+        "instructions": 16134550,
+        "calls": 1000001
+      },
+      {
+        "caller": "main",
+        "callee": "adamic_maybe_boolean_equal",
+        "instructions": 9008982,
+        "calls": 1000998
+      },
+      {
+        "caller": "adamic_string_split",
+        "callee": "adamic_array_push",
+        "instructions": 110,
+        "calls": 2
+      },
+      {
+        "caller": "adamic_program_arguments",
+        "callee": "adamic_array_push",
+        "instructions": 32,
+        "calls": 2
+      }
+    ]
+  },
+  "final": {
+    "total": 142895223,
+    "self": [
+      {
+        "function": "main",
+        "instructions": 126557347,
+        "percent": 88.56653451599288,
+        "self": 126557347,
+        "inclusive": 142723649
+      },
+      {
+        "function": "adamic_array_push",
+        "instructions": 16000340,
+        "percent": 11.197253248976699,
+        "self": 16000340,
+        "inclusive": 16134692
+      },
+      {
+        "function": "adamic_release",
+        "instructions": 1718,
+        "percent": 0.0012022795191690909,
+        "self": 1718,
+        "inclusive": 2406
+      },
+      {
+        "function": "realloc",
+        "instructions": 1681,
+        "percent": 0.0011763864212591627,
+        "self": 1681,
+        "inclusive": 136351
+      },
+      {
+        "function": "decode",
+        "instructions": 1230,
+        "percent": 0.0008607705521408508,
+        "self": 1230,
+        "inclusive": 1904
+      },
+      {
+        "function": "adamic_number_format",
+        "instructions": 876,
+        "percent": 0.0006130365883539717,
+        "self": 876,
+        "inclusive": 876
+      },
+      {
+        "function": "__tunable_get_val",
+        "instructions": 815,
+        "percent": 0.0005703479674754418,
+        "self": 815,
+        "inclusive": 815
+      },
+      {
+        "function": "adamic_allocate",
+        "instructions": 770,
+        "percent": 0.0005388563619093131,
+        "self": 770,
+        "inclusive": 4807
+      },
+      {
+        "function": "adamic_bitwise_xor",
+        "instructions": 710,
+        "percent": 0.0004968675544878082,
+        "self": 710,
+        "inclusive": 2415
+      },
+      {
+        "function": "adamic_shift_right_unsigned",
+        "instructions": 708,
+        "percent": 0.000495467927573758,
+        "self": 708,
+        "inclusive": 1044
+      },
+      {
+        "function": "adamic_math_imul",
+        "instructions": 701,
+        "percent": 0.0004905692333745824,
+        "self": 701,
+        "inclusive": 701
+      },
+      {
+        "function": "fmod",
+        "instructions": 576,
+        "percent": 0.0004030925512464472,
+        "self": 576,
+        "inclusive": 576
+      }
+    ],
+    "edges": [
+      {
+        "caller": "main",
+        "callee": "adamic_array_push",
+        "instructions": 16134550,
+        "calls": 1000001
+      },
+      {
+        "caller": "adamic_string_split",
+        "callee": "adamic_array_push",
+        "instructions": 110,
+        "calls": 2
+      },
+      {
+        "caller": "adamic_program_arguments",
+        "callee": "adamic_array_push",
+        "instructions": 32,
+        "calls": 2
+      }
+    ]
+  }
+}

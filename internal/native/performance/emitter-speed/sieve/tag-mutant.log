@@ -1,0 +1,5 @@
+--- FAIL: TestPrimitiveArrayStoresMatchNode (0.16s)
+    emit_speed_test.go:153: native "true,false\ntrue:false:false:true\nfalse:true:true:false\nfalse:true:true:false\nfalse:true:true:false\nfalse:true:true:false\n1,3.5\n,NaN\nnewnewnew\n", Node "true,false\ntrue:false:false:true\nfalse:true:true:false\nfalse:true:false:true\nfalse:true:false:true\nfalse:true:false:true\n1,3.5\n,NaN\nnewnewnew\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.167s
+FAIL

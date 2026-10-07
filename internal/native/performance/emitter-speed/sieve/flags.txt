@@ -1,0 +1,7 @@
+Native timing and Callgrind use clang 20.1.8, without sanitizers or counting:
+-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2
+Build: adamic build driver.a -o BINARY; runtime archive uses the same release flags, link -lm. No -g or LTO.
+Node 24.19.0: --disable-warning=ExperimentalWarning oracle/node.mjs driver.a CORPUS K
+wait4: clang -O2 -std=c11 -Wall -Wextra -Werror -pedantic wait4.c -o wait4
+Callgrind: Valgrind 3.24.0 --tool=callgrind --callgrind-out-file=PATH BINARY corpus.txt 1
+Correctness: release above and native.Options{Sanitize:true}: -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all instead of -O2.

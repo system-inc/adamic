@@ -1,0 +1,9 @@
+import {handleRequest} from "./sieve.a";
+import {ResponseChecksum,readCorpus} from "./checksum.a";
+import {programArguments} from "adamic";
+const args=programArguments();
+const requests=readCorpus(args[0] ?? "");
+const iterations=Number(args[1] ?? "0");
+const checksum=new ResponseChecksum();
+for(let round=0;round<iterations;round++){for(const request of requests){checksum.add(handleRequest(request));}}
+console.log(checksum.text());

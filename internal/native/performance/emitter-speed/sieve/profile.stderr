@@ -1,0 +1,11 @@
+==36097== Callgrind, a call-graph generating cache profiler
+==36097== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==36097== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==36097== Command: scratch/emitter-speed/sieve/native scratch/emitter-speed/sieve/corpus.txt 1
+==36097== 
+==36097== For interactive control, run 'callgrind_control -h'.
+==36097== 
+==36097== Events    : Ir
+==36097== Collected : 197181939
+==36097== 
+==36097== I   refs:      197,181,939

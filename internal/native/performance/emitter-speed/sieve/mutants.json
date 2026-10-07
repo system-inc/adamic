@@ -1,0 +1,8 @@
+{
+  "Replace": {
+    "internal/native/emit_speed.go": {
+      "type-mutant": "type-mutant.go.txt",
+      "tag-mutant": "tag-mutant.go.txt"
+    }
+  }
+}

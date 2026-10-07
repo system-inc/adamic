@@ -1,0 +1,601 @@
+{
+  "K": 1000,
+  "rounds": 3,
+  "corpus": "/workspace/adamic/scratch/emitter-speed/sieve/corpus.txt",
+  "lines": 1,
+  "loadBefore": "4.40 3.36 2.36 2/211 62666",
+  "quota": "400000 100000",
+  "commands": {
+    "before": [
+      "/workspace/adamic/scratch/emitter-speed/sieve/native"
+    ],
+    "final": [
+      "/workspace/adamic/scratch/emitter-speed/sieve/native-final"
+    ],
+    "js": [
+      "/workspace/adamic-tools/bin/node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/adamic/scratch/emitter-speed/sieve/driver.mjs"
+    ],
+    "node": [
+      "/workspace/adamic-tools/bin/node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/adamic/scratch/emitter-speed/sieve/driver.a"
+    ]
+  },
+  "samples": [
+    {
+      "round": 0,
+      "name": "before",
+      "startup": {
+        "pid": 62685,
+        "wallMs": 0.901673,
+        "userMs": 0,
+        "systemMs": 0.769,
+        "cpuMs": 0.769,
+        "maxRssBytes": 1048576,
+        "minorFaults": 270,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 0,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "measured": {
+        "pid": 62687,
+        "wallMs": 20473.853418,
+        "userMs": 20445.963,
+        "systemMs": 8.066,
+        "cpuMs": 20454.029,
+        "maxRssBytes": 9183232,
+        "minorFaults": 4183,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 51,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 20.472951745,
+        "cpuMsPerRequest": 20.453259999999997,
+        "rawWallMsPerRequest": 20.473853417999997,
+        "rawCpuMsPerRequest": 20.454029,
+        "startupWallMs": 0.901673,
+        "startupCpuMs": 0.769,
+        "maxRssBytes": 9183232,
+        "startupMaxRssBytes": 1048576
+      }
+    },
+    {
+      "round": 0,
+      "name": "final",
+      "startup": {
+        "pid": 62733,
+        "wallMs": 1.006241,
+        "userMs": 0.928,
+        "systemMs": 0,
+        "cpuMs": 0.928,
+        "maxRssBytes": 1048576,
+        "minorFaults": 271,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 0,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "measured": {
+        "pid": 62735,
+        "wallMs": 13256.564614,
+        "userMs": 13253.525,
+        "systemMs": 0,
+        "cpuMs": 13253.525,
+        "maxRssBytes": 9175040,
+        "minorFaults": 4184,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 132,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 13.255558373000001,
+        "cpuMsPerRequest": 13.252597,
+        "rawWallMsPerRequest": 13.256564614,
+        "rawCpuMsPerRequest": 13.253525,
+        "startupWallMs": 1.006241,
+        "startupCpuMs": 0.928,
+        "maxRssBytes": 9175040,
+        "startupMaxRssBytes": 1048576
+      }
+    },
+    {
+      "round": 0,
+      "name": "js",
+      "startup": {
+        "pid": 62737,
+        "wallMs": 38.326117,
+        "userMs": 23.477,
+        "systemMs": 14.632,
+        "cpuMs": 38.109,
+        "maxRssBytes": 30146560,
+        "minorFaults": 7686,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 38,
+        "involuntaryContextSwitches": 2,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "measured": {
+        "pid": 62745,
+        "wallMs": 19333.864627,
+        "userMs": 9947.462,
+        "systemMs": 9592.063,
+        "cpuMs": 19539.525,
+        "maxRssBytes": 252104704,
+        "minorFaults": 7572033,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1028,
+        "involuntaryContextSwitches": 81,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 19.29553851,
+        "cpuMsPerRequest": 19.501416000000003,
+        "rawWallMsPerRequest": 19.333864627,
+        "rawCpuMsPerRequest": 19.539525,
+        "startupWallMs": 38.326117,
+        "startupCpuMs": 38.109,
+        "maxRssBytes": 252104704,
+        "startupMaxRssBytes": 30146560
+      }
+    },
+    {
+      "round": 0,
+      "name": "node",
+      "startup": {
+        "pid": 62761,
+        "wallMs": 60.128701,
+        "userMs": 52.531,
+        "systemMs": 17.561,
+        "cpuMs": 70.092,
+        "maxRssBytes": 47460352,
+        "minorFaults": 15331,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 48,
+        "involuntaryContextSwitches": 3,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "measured": {
+        "pid": 62769,
+        "wallMs": 17134.131214,
+        "userMs": 7424.287,
+        "systemMs": 9948.029,
+        "cpuMs": 17372.316,
+        "maxRssBytes": 279601152,
+        "minorFaults": 7579161,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1115,
+        "involuntaryContextSwitches": 175,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 17.074002513,
+        "cpuMsPerRequest": 17.302224,
+        "rawWallMsPerRequest": 17.134131214,
+        "rawCpuMsPerRequest": 17.372315999999998,
+        "startupWallMs": 60.128701,
+        "startupCpuMs": 70.092,
+        "maxRssBytes": 279601152,
+        "startupMaxRssBytes": 47460352
+      }
+    },
+    {
+      "round": 1,
+      "name": "final",
+      "measured": {
+        "pid": 62821,
+        "wallMs": 13328.086229,
+        "userMs": 13317.26,
+        "systemMs": 3.862,
+        "cpuMs": 13321.122,
+        "maxRssBytes": 9183232,
+        "minorFaults": 4184,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 113,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "startup": {
+        "pid": 62830,
+        "wallMs": 0.818917,
+        "userMs": 0.759,
+        "systemMs": 0,
+        "cpuMs": 0.759,
+        "maxRssBytes": 1048576,
+        "minorFaults": 270,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 0,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 13.327267312,
+        "cpuMsPerRequest": 13.320362999999999,
+        "rawWallMsPerRequest": 13.328086229,
+        "rawCpuMsPerRequest": 13.321121999999999,
+        "startupWallMs": 0.818917,
+        "startupCpuMs": 0.759,
+        "maxRssBytes": 9183232,
+        "startupMaxRssBytes": 1048576
+      }
+    },
+    {
+      "round": 1,
+      "name": "js",
+      "measured": {
+        "pid": 62832,
+        "wallMs": 20698.041973,
+        "userMs": 9701.679,
+        "systemMs": 11225.254,
+        "cpuMs": 20926.933,
+        "maxRssBytes": 251805696,
+        "minorFaults": 7571926,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1040,
+        "involuntaryContextSwitches": 190,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "startup": {
+        "pid": 62840,
+        "wallMs": 52.6033,
+        "userMs": 36.144,
+        "systemMs": 20.05,
+        "cpuMs": 56.194,
+        "maxRssBytes": 30146560,
+        "minorFaults": 7680,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 35,
+        "involuntaryContextSwitches": 1,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 20.645438673,
+        "cpuMsPerRequest": 20.870739,
+        "rawWallMsPerRequest": 20.698041973,
+        "rawCpuMsPerRequest": 20.926933000000002,
+        "startupWallMs": 52.6033,
+        "startupCpuMs": 56.194,
+        "maxRssBytes": 251805696,
+        "startupMaxRssBytes": 30146560
+      }
+    },
+    {
+      "round": 1,
+      "name": "node",
+      "measured": {
+        "pid": 62848,
+        "wallMs": 17275.287446,
+        "userMs": 7308.829,
+        "systemMs": 10231.556,
+        "cpuMs": 17540.385,
+        "maxRssBytes": 280076288,
+        "minorFaults": 7579177,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1097,
+        "involuntaryContextSwitches": 53,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "startup": {
+        "pid": 62863,
+        "wallMs": 58.998345,
+        "userMs": 50.197,
+        "systemMs": 20.104,
+        "cpuMs": 70.301,
+        "maxRssBytes": 47460352,
+        "minorFaults": 15337,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 44,
+        "involuntaryContextSwitches": 3,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 17.216289100999997,
+        "cpuMsPerRequest": 17.470084,
+        "rawWallMsPerRequest": 17.275287446,
+        "rawCpuMsPerRequest": 17.540384999999997,
+        "startupWallMs": 58.998345,
+        "startupCpuMs": 70.301,
+        "maxRssBytes": 280076288,
+        "startupMaxRssBytes": 47460352
+      }
+    },
+    {
+      "round": 1,
+      "name": "before",
+      "measured": {
+        "pid": 62871,
+        "wallMs": 20483.819348,
+        "userMs": 20471.318,
+        "systemMs": 4.148,
+        "cpuMs": 20475.466,
+        "maxRssBytes": 9175040,
+        "minorFaults": 4183,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 59,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "startup": {
+        "pid": 62873,
+        "wallMs": 1.169678,
+        "userMs": 1.07,
+        "systemMs": 0,
+        "cpuMs": 1.07,
+        "maxRssBytes": 1056768,
+        "minorFaults": 271,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 0,
+        "involuntaryContextSwitches": 0,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 20.482649670000004,
+        "cpuMsPerRequest": 20.474396000000002,
+        "rawWallMsPerRequest": 20.483819348,
+        "rawCpuMsPerRequest": 20.475466,
+        "startupWallMs": 1.169678,
+        "startupCpuMs": 1.07,
+        "maxRssBytes": 9175040,
+        "startupMaxRssBytes": 1056768
+      }
+    },
+    {
+      "round": 2,
+      "name": "js",
+      "startup": {
+        "pid": 62875,
+        "wallMs": 30.683525,
+        "userMs": 16.121,
+        "systemMs": 16.103,
+        "cpuMs": 32.224,
+        "maxRssBytes": 29884416,
+        "minorFaults": 7676,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 40,
+        "involuntaryContextSwitches": 2,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "measured": {
+        "pid": 62883,
+        "wallMs": 19058.453784,
+        "userMs": 9580.027,
+        "systemMs": 9693.82,
+        "cpuMs": 19273.847,
+        "maxRssBytes": 251748352,
+        "minorFaults": 7571995,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1078,
+        "involuntaryContextSwitches": 114,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 19.027770259,
+        "cpuMsPerRequest": 19.241623000000004,
+        "rawWallMsPerRequest": 19.058453784,
+        "rawCpuMsPerRequest": 19.273847,
+        "startupWallMs": 30.683525,
+        "startupCpuMs": 32.224,
+        "maxRssBytes": 251748352,
+        "startupMaxRssBytes": 29884416
+      }
+    },
+    {
+      "round": 2,
+      "name": "node",
+      "startup": {
+        "pid": 62899,
+        "wallMs": 65.397414,
+        "userMs": 66.306,
+        "systemMs": 12.574,
+        "cpuMs": 78.88,
+        "maxRssBytes": 47460352,
+        "minorFaults": 15331,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 57,
+        "involuntaryContextSwitches": 2,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "measured": {
+        "pid": 62907,
+        "wallMs": 17083.459241,
+        "userMs": 7298.561,
+        "systemMs": 10025.1,
+        "cpuMs": 17323.661,
+        "maxRssBytes": 279646208,
+        "minorFaults": 7579097,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1194,
+        "involuntaryContextSwitches": 37,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 17.018061827,
+        "cpuMsPerRequest": 17.244781,
+        "rawWallMsPerRequest": 17.083459241,
+        "rawCpuMsPerRequest": 17.323661,
+        "startupWallMs": 65.397414,
+        "startupCpuMs": 78.88,
+        "maxRssBytes": 279646208,
+        "startupMaxRssBytes": 47460352
+      }
+    },
+    {
+      "round": 2,
+      "name": "before",
+      "startup": {
+        "pid": 62919,
+        "wallMs": 0.88668,
+        "userMs": 0.778,
+        "systemMs": 0,
+        "cpuMs": 0.778,
+        "maxRssBytes": 1060864,
+        "minorFaults": 272,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 0,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "measured": {
+        "pid": 62921,
+        "wallMs": 21438.139217,
+        "userMs": 21432.298,
+        "systemMs": 4.154,
+        "cpuMs": 21436.452,
+        "maxRssBytes": 9183232,
+        "minorFaults": 4184,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 51,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 21.437252537,
+        "cpuMsPerRequest": 21.435674000000002,
+        "rawWallMsPerRequest": 21.438139217,
+        "rawCpuMsPerRequest": 21.436452000000003,
+        "startupWallMs": 0.88668,
+        "startupCpuMs": 0.778,
+        "maxRssBytes": 9183232,
+        "startupMaxRssBytes": 1060864
+      }
+    },
+    {
+      "round": 2,
+      "name": "final",
+      "startup": {
+        "pid": 62932,
+        "wallMs": 1.034434,
+        "userMs": 0,
+        "systemMs": 0.781,
+        "cpuMs": 0.781,
+        "maxRssBytes": 1044480,
+        "minorFaults": 271,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 1,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "0:0:2166136261:333555777\n",
+        "stderr": ""
+      },
+      "measured": {
+        "pid": 62934,
+        "wallMs": 13584.423537,
+        "userMs": 13578.374,
+        "systemMs": 3.973,
+        "cpuMs": 13582.347,
+        "maxRssBytes": 9146368,
+        "minorFaults": 4183,
+        "majorFaults": 0,
+        "voluntaryContextSwitches": 1,
+        "involuntaryContextSwitches": 35,
+        "exitCode": 0,
+        "timedOut": false,
+        "stdout": "1000:5000:2228604261:2774015457\n",
+        "stderr": ""
+      },
+      "metrics": {
+        "wallMsPerRequest": 13.583389103000002,
+        "cpuMsPerRequest": 13.581565999999999,
+        "rawWallMsPerRequest": 13.584423537000001,
+        "rawCpuMsPerRequest": 13.582347,
+        "startupWallMs": 1.034434,
+        "startupCpuMs": 0.781,
+        "maxRssBytes": 9146368,
+        "startupMaxRssBytes": 1044480
+      }
+    }
+  ],
+  "loadAfter": "1.07 2.09 2.05 2/206 62934",
+  "summary": {
+    "before": {
+      "best": 20.472951745,
+      "median": 20.482649670000004
+    },
+    "final": {
+      "best": 13.255558373000001,
+      "median": 13.327267312
+    },
+    "js": {
+      "best": 19.027770259,
+      "median": 19.29553851
+    },
+    "node": {
+      "best": 17.018061827,
+      "median": 17.074002513
+    }
+  }
+}
