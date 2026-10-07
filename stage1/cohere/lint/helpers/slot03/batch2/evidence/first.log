@@ -1,0 +1,10 @@
+=== RUN   TestBatch2Helpers
+    batch2_test.go:43: 125188 lines match real Go, Node source and sanitized native
+--- PASS: TestBatch2Helpers (17.38s)
+=== RUN   TestBatch2Mutants
+=== RUN   TestBatch2Mutants/intrinsic_element_named.a
+    batch2_test.go:79: compiled semantic mutant caught at line 24: got "true" Go "false"
+--- PASS: TestBatch2Mutants (12.45s)
+    --- PASS: TestBatch2Mutants/intrinsic_element_named.a (11.45s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	29.837s

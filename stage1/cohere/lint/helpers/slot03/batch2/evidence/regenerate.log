@@ -1,0 +1,25 @@
+{
+  "symbols": [
+    "jsx.IsIntrinsicElementNamed"
+  ],
+  "rules": [
+    "@next/next/google-font-display",
+    "@next/next/google-font-preconnect",
+    "@next/next/next-script-for-ga",
+    "@next/next/no-css-tags",
+    "@next/next/no-head-element",
+    "@next/next/no-html-link-for-pages",
+    "@next/next/no-page-custom-font",
+    "@next/next/no-styled-jsx-in-document",
+    "@next/next/no-sync-scripts",
+    "@next/next/no-unwanted-polyfillio",
+    "react/jsx-no-target-blank"
+  ],
+  "sources": 419,
+  "packages": [
+    "./internal/lint/rules/next",
+    "./internal/lint/rules/react"
+  ],
+  "capture_gate_exit": 0,
+  "cohere_commit": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+}

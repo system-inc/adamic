@@ -1,0 +1,15 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { isIntrinsicElementNamed } from './intrinsic_element_named.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const item of json.node(json.field(root, 'intrinsic')).children) {
+    const node = json.node(json.field(item, 'node')).number;
+    const kind = json.node(json.field(item, 'kind')).text;
+    const text = json.node(json.field(item, 'text')).text;
+    const name = json.node(json.field(item, 'name')).text;
+    console.log(`${isIntrinsicElementNamed(node, kind, text, name)}`);
+}
