@@ -50,17 +50,58 @@ Verification commands:
 
     source /workspace/adamic-tools/env.sh
     go test -count=1 -v ./internal/ir ./internal/lower ./internal/split ./cmd/adamic-split > /tmp/workers-boundary-packages.log 2>&1
-    go test -count=1 -v ./internal/oracle -run 'TestJSONDecode' > /tmp/workers-boundary-json-oracle.log 2>&1
+    ADAMIC_GATE_UNCACHED=1 go test -count=1 -v ./internal/oracle -run 'TestJSONDecode' > /tmp/workers-boundary-json-oracle.log 2>&1
     go vet ./... > /tmp/workers-boundary-vet.log 2>&1
     ADAMIC_SPLIT_SWEEP=1 go test -count=1 -run TestAnalyzeOracleFixtures -v ./internal/split > /tmp/workers-boundary-sweep.log 2>&1
 
 The opt-in TestCodegenSnapshot records every oracle source's C, JavaScript,
 diagnostic status and decodeJson source-oracle descriptors. Run the same harness
 against the base and hook, setting ADAMIC_SPLIT_SNAPSHOT to separate directories,
-then compare the directories with diff -qr. The base is 7ad3826. Its 353 sources
-include 311 that lower successfully; refused sources have matching diagnostic
-artifacts rather than invented codegen.
+then compare the directories with diff -qr. The final base is origin/area/platforms
+at be2e9c1 (including f573c146 and decoder coverage 01af78b8). All 399 sources
+match byte for byte: 344 lower successfully and have identical C and JavaScript;
+refused sources have matching diagnostic artifacts rather than invented codegen.
+All decoder source-oracle descriptors match as well.
 
 No Wasm emission, bridge generation, deployment or changes to native or
 JavaScript codegen are part of this unit. The lowering hook requires compiler
 owner review before merge.
+
+
+The only schema-builder factor is lowering.jsonDecodeSchema(node, rootType,
+boundary) in internal/lower/library_json_decode.go. decodeJson calls it with
+false; function metadata calls it with true using a private string table. The
+encoder worker should reuse this visitor, rather than introduce another builder.
+
+## Mutation evidence
+
+Every mutation below was applied alone and restored. The twelve analysis/hook
+mutants exited 1 because assertions failed, with no build failures. Logs are
+/tmp/workers-boundary-platform-mutant-NAME.log; the summary is
+/tmp/workers-boundary-platform-mutants.log.
+
+| Mutant | Check that caught it |
+| --- | --- |
+| transitive-purity: ignore impure callees | TestFixtures: callsLogger and mutual recursion tables |
+| mutable-global: ignore closed-program writes on reads | TestFixtures: readsMutable and globalRead |
+| map-signature: accept nil parameter schemas | TestFixtures: takesMap and takesSet |
+| internal-entry: count eligible callers as crossing callers | TestFixtures: helper sum; command golden test |
+| wrong-parameter: reuse first parameter checker type | TestBoundaryParameterOrderAndPositions: second schema must be string |
+| parameter-write: omit write exclusion | TestFixtures: parameter aliases and nested writes |
+| recursion: omit recursive work | TestFixtures: factorial becomes too small |
+| small-leaf: omit crossing cost rule | TestFixtures: tiny becomes eligible |
+| unknown-callee: omit unknown-call impurity | TestFixtures: takesClosure reason |
+| object-depth: accept depth 200 | TestFixtures: tooDeep becomes eligible |
+| contained-reference: omit stored reference propagation | TestFixtures: containedWrite loses parameter origin |
+| future-operation: accept unknown IR expressions | TestUnknownOperationIsImpure |
+| string-table: share emission table with metadata builder | Base/hook snapshot diff detects changed C and JavaScript |
+
+The string-table mutation passed the ordinary execution tests but failed the
+byte-identity comparison. Its separate logs are
+/tmp/workers-boundary-platform-mutant-string-table-{tests,snapshot,diff}.log.
+
+Toolchain setup reported go/clang/node/submodules ready in 0s, build cache warm
+in 98s, total 98s; nproc was 5. The final platform validation logs use the prefix
+/tmp/workers-boundary-platform-. Package tests, the uncached TestJSONDecode
+oracle, go vet ./..., the 344-program analysis sweep, and the complete byte
+comparison passed. The complete repository test gate was not run.
