@@ -1,0 +1,6 @@
+=== RUN   TestSymbolDeclarationSyntax
+    symbol_declaration_syntax_test.go:87: lost raw syntax identity: 0 0 36
+--- FAIL: TestSymbolDeclarationSyntax (0.27s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.334s
+FAIL
