@@ -1,0 +1,27 @@
+=== RUN   TestSlot05Canonicalize
+    helper_test.go:85: 4 consumers, 904 captured strings, 112 signed-rune controls, 2228448 Go queries
+    helper_test.go:95: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:153: canonicalize.a mutant "if(unicodeMode)" -> "if(!unicodeMode)" caught at output line 1 byte 12: mutant "-2147483648:fold:-2147483648;", Go "-2147483648:expand:-2147483648;upper:-2147483648;"
+    helper_test.go:153: canonicalize.a mutant "rune > 0xffff || " -> "" caught at output line 107 byte 6: mutant "66560:expand:66560;upper:66560;", Go "66560:"
+    helper_test.go:153: canonicalize.a mutant " || expandsOnUppercase(rune)" -> "" caught at output line 1 byte 12: mutant "-2147483648:upper:-2147483648;", Go "-2147483648:expand:-2147483648;upper:-2147483648;"
+    helper_test.go:153: canonicalize.a mutant "upper < 0x80" -> "upper < 0" caught at output line 96 byte 0: mutant "83:expand:383;upper:383;", Go "383:expand:383;upper:383;"
+--- PASS: TestSlot05Canonicalize (26.21s)
+=== RUN   TestSlot05CaseClass
+    helper_test.go:85: 4 consumers, 904 captured strings, 112 signed-rune controls, 2228448 Go queries
+    helper_test.go:95: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:153: case_class.a mutant "widened: false" -> "widened: true" caught at output line 1 byte 0: mutant "true::equivalents:-2147483648:false;", Go "false::equivalents:-2147483648:false;"
+    helper_test.go:153: case_class.a mutant "let text = '['" -> "let text = ''" caught at output line 38 byte 5: mutant "true:Aa]:equivalents:65:false;escape:65;escape:97;", Go "true:[Aa]:equivalents:65:false;escape:65;escape:97;"
+    helper_test.go:153: case_class.a mutant "for(const member of members)" -> "for(const member of members.slice(1))" caught at output line 38 byte 6: mutant "true:[a]:equivalents:65:false;escape:97;", Go "true:[Aa]:equivalents:65:false;escape:65;escape:97;"
+--- PASS: TestSlot05CaseClass (26.91s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch13	53.149s

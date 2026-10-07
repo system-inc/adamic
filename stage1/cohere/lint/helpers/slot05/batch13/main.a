@@ -1,0 +1,35 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { canonicalize } from './canonicalize.a';
+import { caseClass } from './case_class.a';
+interface Tables {readonly byMember: ReadonlyMap<number,readonly number[]>;readonly groups:readonly(readonly number[])[];}
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json=new OptionsJson(input.text);const root=json.parse();if(root < 0) {panic(json.error);}
+function field(index: number,name: string): number {return json.field(index,name);}
+function number(index: number): number {return Number(json.node(index).text);}
+function table(index: number): Tables {
+ const groups: number[][]=[];
+ for(const g of json.node(field(index,'groups')).children) {const group: number[]=[];for(const r of json.node(g).children){group.push(number(r));}groups.push(group);}
+ const byMember=new Map<number,readonly number[]>();
+ for(const m of json.node(field(index,'members')).children) {const values=json.node(m).children;const rune=number(values[0] ?? panic('missing rune'));const group=number(values[1] ?? panic('missing group'));byMember.set(rune,groups[group] ?? panic('missing group'));}
+ return {byMember,groups};
+}
+
+const upper=table(field(root,'upper'));const fold=table(field(root,'fold'));let trace='';
+function mapping(index: number): Map<number,number>{const result=new Map<number,number>();for(const pair of json.node(index).children){const values=json.node(pair).children;result.set(number(values[0] ?? panic('missing key')),number(values[1] ?? panic('missing value')));}return result;}
+const dependencies=field(root,'dependencies');const uppercase=mapping(field(dependencies,'upper'));const folded=mapping(field(dependencies,'fold'));const expanded=new Map<number,boolean>();
+for(const r of json.node(field(dependencies,'expanded')).children){expanded.set(number(r),true);}
+const escapes=new Map<number,string>();for(const e of json.node(field(dependencies,'escapes')).children){escapes.set(number(field(e,'rune')),json.node(field(e,'text')).text);}
+function simple(rune: number): number{trace+=`fold:${rune};`;return folded.get(rune) ?? rune;}
+function expansion(rune: number): boolean{trace+=`expand:${rune};`;return expanded.get(rune) ?? false;}
+function toUpper(rune: number): number{trace+=`upper:${rune};`;return uppercase.get(rune) ?? rune;}
+function equivalents(rune: number,u: boolean): readonly number[] | undefined{trace+=`equivalents:${rune}:${u};`;return (u ? fold : upper).byMember.get(rune);}
+function escape(rune: number): string{trace+=`escape:${rune};`;return escapes.get(rune) ?? panic('missing escape');}
+const mode=json.node(field(root,'mode')).text;
+function observe(rune: number,u: boolean): void{
+ trace='';
+ if(mode === 'canonical'){const value=canonicalize(rune,u,simple,expansion,toUpper);console.log(`${value}:${trace}`);return;}
+ const value=caseClass(rune,u,equivalents,escape);console.log(`${value.widened}:${value.text}:${trace}`);
+}
+for(const u of [false,true]){for(const r of json.node(field(root,'runes')).children){observe(number(r),u);}for(let r=0;r<=0x10ffff;r++){observe(r,u);}}

@@ -1,0 +1,8 @@
+export interface CaseClass { readonly text: string; readonly widened: boolean; }
+export function caseClass(rune: number, unicodeMode: boolean, equivalents: (rune: number, unicodeMode: boolean) => readonly number[] | undefined, escapeClassRune: (rune: number) => string): CaseClass {
+    const members = equivalents(rune, unicodeMode);
+    if(members === undefined || members.length === 0) { return {text: '', widened: false}; }
+    let text = '[';
+    for(const member of members) { text += escapeClassRune(member); }
+    return {text: text + ']', widened: true};
+}

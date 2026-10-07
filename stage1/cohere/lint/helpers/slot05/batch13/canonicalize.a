@@ -1,0 +1,7 @@
+export function canonicalize(rune: number, unicodeMode: boolean, simpleFold: (rune: number) => number, expandsOnUppercase: (rune: number) => boolean, toUpper: (rune: number) => number): number {
+    if(unicodeMode) { return simpleFold(rune); }
+    if(rune > 0xffff || expandsOnUppercase(rune)) { return rune; }
+    const upper = toUpper(rune);
+    if(rune >= 0x80 && upper < 0x80) { return rune; }
+    return upper;
+}
