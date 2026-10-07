@@ -3,6 +3,7 @@ package oracle
 import (
 	"fmt"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -113,6 +114,10 @@ func TestEnumSemanticMutants(t *testing.T) {
 
 func TestEnumCleanupMutant(t *testing.T) {
 	t.Parallel()
+	// The oracle uses LeakSanitizer on Linux and the leaks tool on macOS.
+	if runtime.GOOS != "linux" {
+		t.Skip("LeakSanitizer detect_leaks is not supported on this platform")
+	}
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums.a"))
 	if err != nil {
 		t.Fatal(err)
