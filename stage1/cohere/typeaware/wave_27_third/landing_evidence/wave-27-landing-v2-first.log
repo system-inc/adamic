@@ -1,0 +1,19 @@
+=== RUN   TestWave27AgreementAndMutants
+    wave_27_test.go:84: controls: 17807 identical finding bytes; findings 39
+    wave_27_test.go:92: controls-asan: 17807 identical finding bytes; findings 39
+    wave_27_test.go:134: orm mutant: exit 0, empty stderr, Go byte oracle catches byte 63
+    wave_27_test.go:134: serializable mutant: exit 0, empty stderr, Go byte oracle catches byte 5730
+    wave_27_test.go:134: array mutant: exit 0, empty stderr, Go byte oracle catches byte 8708
+    wave_27_test.go:144: repository: 18485 identical finding bytes; findings 0
+    wave_27_test.go:145: repository-asan: 18485 identical finding bytes; findings 0
+    wave_27_test.go:153: repository process native=273.235566ms Go=213.633971ms; native tsgo: load_ns=95843822 query_ns=0 queries=0 first_query_ns=0 run_ns=168598139
+         Go cohere: load_ns=122024668 rule_ns=170929 run_ns=59277667
+    wave_27_test.go:144: compiler: 5934 identical finding bytes; findings 0
+    wave_27_test.go:145: compiler-asan: 5934 identical finding bytes; findings 0
+    wave_27_test.go:153: compiler process native=2.103740959s Go=458.858412ms; native tsgo: load_ns=317767814 query_ns=0 queries=0 first_query_ns=0 run_ns=1753777610
+         Go cohere: load_ns=357749703 rule_ns=921551 run_ns=76184749
+    wave_27_test.go:165: released handle: panic 70, invalid or released checker handle
+    wave_27_test.go:170: released-registry mutant exits 0, caught by required panic 70
+--- PASS: TestWave27AgreementAndMutants (126.99s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	126.995s

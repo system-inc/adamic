@@ -1,0 +1,70 @@
+From https://github.com/system-inc/adamic
+   689f30bc..34308def  apple/bridge            -> origin/apple/bridge
+ * [new branch]        cloud/apple-generator   -> origin/cloud/apple-generator
+   167cd089..d9c13221  cloud/integrate-16      -> origin/cloud/integrate-16
+   ce46f8c8..31616820  cloud/integrate-l-1     -> origin/cloud/integrate-l-1
+   35ed8a55..0886fd9f  cloud/integrate-s2-2    -> origin/cloud/integrate-s2-2
+ * [new branch]        cloud/json-decode-landing -> origin/cloud/json-decode-landing
+ * [new branch]        cloud/merge-tree        -> origin/cloud/merge-tree
+   0fc1f05a..64a3eed1  codex/async-ordinary    -> origin/codex/async-ordinary
+ * [new branch]        codex/borrow-conventions -> origin/codex/borrow-conventions
+   e816797f..982e2118  codex/checked-downcasts -> origin/codex/checked-downcasts
+   8f6a0b23..3a090c7e  codex/host-fs-directory -> origin/codex/host-fs-directory
+ * [new branch]        codex/host-fs-fresh     -> origin/codex/host-fs-fresh
+   9efe6d1f..89f59518  codex/host-node-types   -> origin/codex/host-node-types
+   bcaf9aa4..5992275e  codex/lint-helpers-01   -> origin/codex/lint-helpers-01
+   cb39cbd9..039220d5  codex/lint-helpers-02   -> origin/codex/lint-helpers-02
+   b2ba51f4..6877b840  codex/lint-helpers-04   -> origin/codex/lint-helpers-04
+   cac1ca98..b2ed8252  codex/lint-helpers-05   -> origin/codex/lint-helpers-05
+   c408e07a..a8b5872d  codex/lint-helpers-from-codex-lint-wave1-03 -> origin/codex/lint-helpers-from-codex-lint-wave1-03
+   22598af8..79715f08  codex/lint-helpers-from-codex-lint-wave1-14 -> origin/codex/lint-helpers-from-codex-lint-wave1-14
+   398cedef..4e028e6f  codex/lint-helpers-from-codex/lint-wave1-04 -> origin/codex/lint-helpers-from-codex/lint-wave1-04
+   b07ef13e..2001f9b4  codex/lint-helpers-from-codex/lint-wave1-06 -> origin/codex/lint-helpers-from-codex/lint-wave1-06
+   87bcfd7e..2365c934  codex/lint-helpers-from-codex/lint-wave1-09 -> origin/codex/lint-helpers-from-codex/lint-wave1-09
+   2bf8e499..24719267  codex/lint-helpers-from-codex/lint-wave1-11 -> origin/codex/lint-helpers-from-codex/lint-wave1-11
+   c461d147..32587c34  codex/lint-helpers-from-codex/lint-wave1-15 -> origin/codex/lint-helpers-from-codex/lint-wave1-15
+   9d12e729..f0da58a8  codex/lint-helpers-from-lint-wave1-05 -> origin/codex/lint-helpers-from-lint-wave1-05
+   d49526e3..7de34d52  codex/lint-helpers-from-lint-wave1-08 -> origin/codex/lint-helpers-from-lint-wave1-08
+   8aeb70fd..599028b3  codex/lint-helpers-from-lint-wave1-12 -> origin/codex/lint-helpers-from-lint-wave1-12
+   e0b8c98c..5ee3b523  codex/lint-helpers-from-lint-wave1-13 -> origin/codex/lint-helpers-from-lint-wave1-13
+ * [new branch]        codex/lint-runtime-fixes -> origin/codex/lint-runtime-fixes
+   b21364cf..5f070b55  codex/lint-runtime-profile -> origin/codex/lint-runtime-profile
+   7ec95220..94af70f0  codex/lint-wave1-07     -> origin/codex/lint-wave1-07
+   4bbc8781..d6a9b070  codex/multi-root        -> origin/codex/multi-root
+   ebc4704f..37efb4bc  codex/namespaces-tsc    -> origin/codex/namespaces-tsc
+ * [new branch]        codex/phantom-brands    -> origin/codex/phantom-brands
+   dd4b67e7..4dc5419a  codex/process-exit-and-tty -> origin/codex/process-exit-and-tty
+ * [new branch]        codex/progress          -> origin/codex/progress
+   955cfcdc..dff2e8f1  codex/refuse-ts-nocheck -> origin/codex/refuse-ts-nocheck
+   e88d7a22..11436c1a  codex/stage1-lint-output -> origin/codex/stage1-lint-output
+   6a6e1453..02dc785c  codex/stage3-explicit-any -> origin/codex/stage3-explicit-any
+   7e65e723..7e400a0e  codex/stage3-fixtures-records -> origin/codex/stage3-fixtures-records
+   ebae9b2f..4fd00b8d  codex/stage3-indexed-reads -> origin/codex/stage3-indexed-reads
+ * [new branch]        codex/stage3-indexed-reads-checker -> origin/codex/stage3-indexed-reads-checker
+   4e61d4ca..dcdd5c8a  codex/stage3-indexed-reads-emit -> origin/codex/stage3-indexed-reads-emit
+ * [new branch]        codex/stage3-indexed-reads-program -> origin/codex/stage3-indexed-reads-program
+ * [new branch]        codex/stage3-readonly-views -> origin/codex/stage3-readonly-views
+   28afa305..138022f6  codex/stage3-scanner-proof -> origin/codex/stage3-scanner-proof
+   5ffb2f99..cabb7f1d  codex/taste-not-soundness -> origin/codex/taste-not-soundness
+   0ea841d4..3bffa89e  codex/typeaware-wave-02 -> origin/codex/typeaware-wave-02
+   40c55da4..2f79da56  codex/typeaware-wave-04 -> origin/codex/typeaware-wave-04
+   99d90694..b9e43baf  codex/typeaware-wave-07 -> origin/codex/typeaware-wave-07
+   aa8aca95..aa38a538  codex/typeaware-wave-09 -> origin/codex/typeaware-wave-09
+   b69b2849..569ca634  codex/typeaware-wave-11 -> origin/codex/typeaware-wave-11
+   88871caf..dc360b91  codex/typeaware-wave-12 -> origin/codex/typeaware-wave-12
+   fddf944a..e0e1727f  codex/typeaware-wave-15 -> origin/codex/typeaware-wave-15
+   c65417c6..b03c2289  codex/typeaware-wave-16 -> origin/codex/typeaware-wave-16
+   1de5a384..f28732f8  codex/typeaware-wave-17 -> origin/codex/typeaware-wave-17
+   7e877108..72f84449  codex/typeaware-wave-18 -> origin/codex/typeaware-wave-18
+   ac89cb14..165964a0  codex/typeaware-wave-19 -> origin/codex/typeaware-wave-19
+   d650a0f9..cb87c3c4  codex/typeaware-wave-20 -> origin/codex/typeaware-wave-20
+   5cc0f504..5b86729d  codex/typeaware-wave-22 -> origin/codex/typeaware-wave-22
+   e3ad77a8..ca76e25f  codex/typeaware-wave-23 -> origin/codex/typeaware-wave-23
+   860bf7d2..0bc69d87  codex/typeaware-wave-24 -> origin/codex/typeaware-wave-24
+   b0ad78cd..16a717e8  codex/typeaware-wave-25 -> origin/codex/typeaware-wave-25
+   65157586..2b64539b  codex/typeaware-wave-26 -> origin/codex/typeaware-wave-26
+   b4d273b0..46018855  codex/typeaware-wave-27 -> origin/codex/typeaware-wave-27
+   a5bfa52c..1e3a68ef  codex/typeaware-wave-28 -> origin/codex/typeaware-wave-28
+ * [new branch]        codex/wasi-agreement    -> origin/codex/wasi-agreement
+ * [new branch]        coverage/json-decode    -> origin/coverage/json-decode
+ * [new branch]        devtools/generators-i16 -> origin/devtools/generators-i16

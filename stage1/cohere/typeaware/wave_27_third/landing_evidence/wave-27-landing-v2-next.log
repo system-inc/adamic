@@ -1,0 +1,67 @@
+controls 62759 identical bytes findings 101
+controls-asan 62759 identical bytes findings 101
+repository 18485 identical bytes findings 0
+repository-asan 18485 identical bytes findings 0
+compiler 5934 identical bytes findings 0
+compiler-asan 5934 identical bytes findings 0
+process mutant: exit 0, empty stderr; Go byte oracle catches byte 86
+race mutant: exit 0, empty stderr; Go byte oracle catches byte 52612
+blocking mutant: exit 0, empty stderr; Go byte oracle catches byte 587
+wave-27-declaration-ancestry fact mutant: exit 0, empty stderr; Go bytes catch byte 62
+wave-27-syntax-flow fact mutant: exit 0, empty stderr; Go bytes catch byte 1336
+wave-27-call-declaration fact mutant: exit 0, empty stderr; Go bytes catch byte 12554
+wave-27-module-sources fact mutant: exit 0, empty stderr; Go bytes catch byte 42369
+ancestry-name-kind fact mutant: exit 0, empty stderr; Go bytes catch byte 62136
+wave-27-declaration-ancestry released handle: required panic 70
+wave-27-syntax-flow released handle: required panic 70
+wave-27-call-declaration released handle: required panic 70
+wave-27-module-sources released handle: required panic 70
+wave-27-declaration-ancestry retained-registry mutant: exit 0; required-panic check catches it
+wave-27-syntax-flow retained-registry mutant: exit 0; required-panic check catches it
+wave-27-call-declaration retained-registry mutant: exit 0; required-panic check catches it
+wave-27-module-sources retained-registry mutant: exit 0; required-panic check catches it
+{
+  "repository": {
+    "process_ns": {
+      "native": [
+        711378745,
+        428100654,
+        443970955
+      ],
+      "go": [
+        155123794,
+        156934890,
+        154026755
+      ]
+    },
+    "median_ns": {
+      "native": 443970955,
+      "go": 155123794
+    },
+    "native_over_go": 2.862042911353754,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "compiler": {
+    "process_ns": {
+      "native": [
+        3801125937,
+        3287628351,
+        2720446837
+      ],
+      "go": [
+        412683929,
+        364301514,
+        410473594
+      ]
+    },
+    "median_ns": {
+      "native": 3287628351,
+      "go": 410473594
+    },
+    "native_over_go": 8.009354070654298,
+    "bytes": 5934,
+    "sha256": "b1b13510c70ad0e39c27357d0ac18c275e6495a6644d6d814fb29be0e10fd970"
+  }
+}
+PASS

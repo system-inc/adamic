@@ -1,0 +1,59 @@
+639 control candidates; 605 parseable; 34 excluded by independent Go parser
+controls 229337 identical bytes findings 437
+controls-asan 229337 identical bytes findings 437
+repository 18485 identical bytes findings 0
+repository-asan 18485 identical bytes findings 0
+compiler 5934 identical bytes findings 0
+compiler-asan 5934 identical bytes findings 0
+rest mutant: exit 0, empty stderr; Go byte oracle catches byte 60
+hooks mutant: exit 0, empty stderr; Go byte oracle catches byte 5106
+regex mutant: exit 0, empty stderr; Go byte oracle catches byte 114242
+wave-27-declaration-ancestry released handle: required panic 70
+binding-declarations released handle: required panic 70
+wave-27-declaration-ancestry retained-registry mutant: exit 0; required-panic check catches it
+binding-declarations retained-registry mutant: exit 0; required-panic check catches it
+{
+  "repository": {
+    "process_ns": {
+      "native": [
+        378073399,
+        608656279,
+        414270050
+      ],
+      "go": [
+        153769493,
+        147899758,
+        148641898
+      ]
+    },
+    "median_ns": {
+      "native": 414270050,
+      "go": 148641898
+    },
+    "native_over_go": 2.787034177940866,
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "compiler": {
+    "process_ns": {
+      "native": [
+        3380977119,
+        2835108761,
+        3241533752
+      ],
+      "go": [
+        417548760,
+        424009612,
+        448928022
+      ]
+    },
+    "median_ns": {
+      "native": 3241533752,
+      "go": 424009612
+    },
+    "native_over_go": 7.644953463932322,
+    "bytes": 5934,
+    "sha256": "b1b13510c70ad0e39c27357d0ac18c275e6495a6644d6d814fb29be0e10fd970"
+  }
+}
+PASS

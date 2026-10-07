@@ -1,0 +1,21 @@
+{
+  "native": {
+    "command": [
+      "/workspace/wave-27-scratch/fourth-blocker/landing-parser-probe",
+      "/workspace/wave-27-scratch/fourth-blocker/control.tsx"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 84 in /workspace/wave-27-scratch/fourth-blocker/control.tsx\n"
+  },
+  "go": {
+    "command": [
+      "/workspace/wave-27-scratch/fourth-blocker/oracle",
+      "/workspace/wave-27-scratch/fourth-blocker/tsconfig.json",
+      "/workspace/wave-27-scratch/fourth-blocker/controls.manifest"
+    ],
+    "exit": 0,
+    "stdout": "file\t/workspace/wave-27-scratch/fourth-blocker/control.tsx\n74\t83\treact-hooks/static-components\tstaticComponents\tThis component is created during render, at `createComponent`, so it gets a new identity every time this function runs. React compares components by identity, so it unmounts the previous one and mounts this as a fresh component rather than updating it, discarding all of its state and re-rendering its whole subtree on every render. The usual symptom is an input that loses what was typed into it. Move the component to module scope, or pass the value that varies as a prop.\t0\t0\nfindings 1\n",
+    "stderr": "cohere: load_ns=70859459 rule_ns=1467442 run_ns=1641063\n"
+  }
+}

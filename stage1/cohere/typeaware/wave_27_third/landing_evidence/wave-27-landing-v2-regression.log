@@ -1,0 +1,89 @@
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.03s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestShapeAndNameFacts
+--- PASS: TestShapeAndNameFacts (0.03s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.11s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.13s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.217s
+=== RUN   TestCoverageAgreementAndMutants
+    coverage_test.go:121: controls: 24994 identical finding bytes; findings 53
+    coverage_test.go:129: controls-asan: 24994 identical finding bytes; findings 53
+=== RUN   TestCoverageAgreementAndMutants/before
+    coverage_test.go:153: before: exit 0, Go byte oracle catches byte 83; findings 52
+=== RUN   TestCoverageAgreementAndMutants/cast
+    coverage_test.go:153: cast: exit 0, Go byte oracle catches byte 1664; findings 53
+=== RUN   TestCoverageAgreementAndMutants/methods
+    coverage_test.go:153: methods: exit 0, Go byte oracle catches byte 2392; findings 46
+=== RUN   TestCoverageAgreementAndMutants/coercion
+    coverage_test.go:153: coercion: exit 0, Go byte oracle catches byte 1243; findings 53
+=== RUN   TestCoverageAgreementAndMutants/caller
+    coverage_test.go:153: caller: exit 0, Go byte oracle catches byte 10626; findings 54
+=== RUN   TestCoverageAgreementAndMutants/parameter
+    coverage_test.go:153: parameter: exit 0, Go byte oracle catches byte 395; findings 50
+=== RUN   TestCoverageAgreementAndMutants/invariant
+    coverage_test.go:153: invariant: exit 0, Go byte oracle catches byte 13272; findings 48
+=== RUN   TestCoverageAgreementAndMutants/optional
+    coverage_test.go:153: optional: exit 0, Go byte oracle catches byte 16143; findings 53
+=== RUN   TestCoverageAgreementAndMutants/alias
+    coverage_test.go:153: alias: exit 0, Go byte oracle catches byte 16673; findings 53
+=== RUN   TestCoverageAgreementAndMutants/unused
+    coverage_test.go:153: unused: exit 0, Go byte oracle catches byte 17571; findings 56
+=== NAME  TestCoverageAgreementAndMutants
+    coverage_test.go:182: released program queried using a new question: panic 70, invalid or released checker handle
+    coverage_test.go:187: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestCoverageAgreementAndMutants (206.86s)
+    --- PASS: TestCoverageAgreementAndMutants/before (12.53s)
+    --- PASS: TestCoverageAgreementAndMutants/cast (12.41s)
+    --- PASS: TestCoverageAgreementAndMutants/methods (14.30s)
+    --- PASS: TestCoverageAgreementAndMutants/coercion (11.86s)
+    --- PASS: TestCoverageAgreementAndMutants/caller (12.54s)
+    --- PASS: TestCoverageAgreementAndMutants/parameter (13.17s)
+    --- PASS: TestCoverageAgreementAndMutants/invariant (11.37s)
+    --- PASS: TestCoverageAgreementAndMutants/optional (12.75s)
+    --- PASS: TestCoverageAgreementAndMutants/alias (12.69s)
+    --- PASS: TestCoverageAgreementAndMutants/unused (11.57s)
+=== RUN   TestFactsDecoderGuards
+    suite_test.go:486: wire mutant empty: panic 70, invalid checker facts frame
+    suite_test.go:486: wire mutant length-negative: panic 70, invalid checker facts length
+    suite_test.go:486: wire mutant length-short: panic 70, invalid checker facts length
+    suite_test.go:486: wire mutant trailing: panic 70, trailing checker facts
+    suite_test.go:486: wire mutant version: panic 70, unsupported checker facts schema
+    suite_test.go:486: wire mutant question: panic 70, unsupported checker facts schema
+    suite_test.go:486: wire mutant not-integer: panic 70, invalid checker facts integer
+    suite_test.go:486: wire mutant rounded-integer: panic 70, invalid checker facts integer
+    suite_test.go:486: wire mutant noncanonical-integer: panic 70, invalid checker facts integer
+    suite_test.go:486: wire mutant negative-natural: panic 70, negative checker fact
+    suite_test.go:486: wire mutant bad-boolean: panic 70, invalid checker facts boolean
+    suite_test.go:486: wire mutant zero-id: panic 70, invalid checker type record
+    suite_test.go:486: wire mutant negative-tuple: panic 70, invalid checker type record
+    suite_test.go:486: wire mutant missing-root: panic 70, missing checker type identity
+    suite_test.go:486: wire mutant missing-constraint: panic 70, missing checker type identity
+    suite_test.go:486: wire mutant missing-element: panic 70, missing checker type identity
+    suite_test.go:486: wire mutant duplicate-id: panic 70, invalid checker type record
+    suite_test.go:486: wire mutant missing-link-17: panic 70, missing checker type identity
+    suite_test.go:486: wire mutant missing-link-18: panic 70, missing checker type identity
+--- PASS: TestFactsDecoderGuards (3.93s)
+=== RUN   TestInspectRequestRefusals
+    suite_test.go:521: released type-name query: panic 70, invalid or released checker handle
+    suite_test.go:535: wrong-kind: panic 70; guard mutant exits 0 and fails the refusal expectation
+    suite_test.go:535: unknown-question: panic 70; guard mutant exits 0 and fails the refusal expectation
+--- PASS: TestInspectRequestRefusals (37.94s)
+=== RUN   TestPinnedTypeFlags
+=== PAUSE TestPinnedTypeFlags
+=== CONT  TestPinnedTypeFlags
+--- PASS: TestPinnedTypeFlags (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	248.749s
