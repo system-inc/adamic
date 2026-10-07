@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -299,4 +300,219 @@ func TestO0HashCatchesMutants(t *testing.T) {
 			t.Fatalf("mutant %d escaped", index)
 		}
 	}
+}
+
+// TestO0MeasureWall replays the complete fixture population with four workers.
+// It measures a correctness lane with sanitized builds at O1 and release/count
+// builds at O0. The separate O2 lane is additional work and is not timed here.
+// Not parallel: each lane must finish before the next paired lane starts.
+func TestO0MeasureWall(t *testing.T) {
+	if os.Getenv("ADAMIC_O0_WALL_OUTPUT") == "" {
+		t.Skip("set ADAMIC_O0_WALL_OUTPUT for the full fixture wall experiment")
+	}
+	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
+	output, err := os.Create(os.Getenv("ADAMIC_O0_WALL_OUTPUT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	var outputLock sync.Mutex
+	encoder := json.NewEncoder(output)
+	write := func(value any) {
+		outputLock.Lock()
+		defer outputLock.Unlock()
+		if err := encoder.Encode(value); err != nil {
+			t.Fatal(err)
+		}
+	}
+	metadata := map[string]string{"mode": "uncached observations; warm runtime artifacts; sanitized O1 in both lanes"}
+	for name, command := range map[string][]string{"commit": {"git", "rev-parse", "HEAD"}, "nproc": {"nproc"}, "cpu.max": {"cat", "/sys/fs/cgroup/cpu.max"}, "go": {"go", "version"}, "clang": {"clang", "--version"}, "node": {"node", "--version"}, "load_before": {"cat", "/proc/loadavg"}} {
+		bytes, err := exec.Command(command[0], command[1:]...).CombinedOutput()
+		if err != nil {
+			t.Fatal(err)
+		}
+		metadata[name] = strings.TrimSpace(string(bytes))
+	}
+	write(metadata)
+	type variant struct {
+		name    string
+		options native.Options
+	}
+	variants := []variant{{"sanitized", native.Options{Sanitize: true}}, {"release", native.Options{}}, {"counted", native.Options{Count: true}}}
+	libraries := map[string]string{}
+	for _, variant := range variants {
+		library, err := native.RuntimeLibrary("", variant.options)
+		if err != nil {
+			t.Fatal(err)
+		}
+		libraries[variant.name+"/current"] = library
+		if variant.options.Sanitize {
+			libraries[variant.name+"/o0"] = library
+			continue
+		}
+		// A fresh private artifact, never a result cache. The fixed flag set, source
+		// snapshot and compiler are held unchanged for the lifetime of this test.
+		libraries[variant.name+"/o0"] = o0WallRuntime(t, o0Flags(variant.options, "o0"))
+	}
+	var observationsLock sync.Mutex
+	observations := map[string]run{}
+	for loop := 0; loop < 3; loop++ {
+		modes := []string{"current", "o0"}
+		if loop%2 == 1 {
+			modes = []string{"o0", "current"}
+		}
+		for _, mode := range modes {
+			start := time.Now()
+			t.Run(fmt.Sprintf("%d/%s", loop, mode), func(t *testing.T) {
+				for _, fixture := range fixtures {
+					if !fixture.lowers {
+						continue
+					}
+					t.Run(fixture.path, func(t *testing.T) {
+						t.Parallel()
+						path, err := filepath.Abs(filepath.Join(repository, fixture.path))
+						if err != nil {
+							t.Fatal(err)
+						}
+						lowerStart := time.Now()
+						program, err := lowered(t, path)
+						if err != nil {
+							t.Fatal(err)
+						}
+						write(map[string]any{"stage": "lower", "fixture": fixture.path, "loop": loop, "mode": mode, "seconds": time.Since(lowerStart).Seconds()})
+						observe := func(variant string, result run, seconds float64) {
+							key := fmt.Sprintf("%d/%s/%s", loop, fixture.path, variant)
+							observationsLock.Lock()
+							defer observationsLock.Unlock()
+							observations[key+"/"+mode] = result
+							before, beforePresent := observations[key+"/current"]
+							after, afterPresent := observations[key+"/o0"]
+							write(map[string]any{"fixture": fixture.path, "loop": loop, "mode": mode, "variant": variant, "stage": "execution", "seconds": seconds, "hash": o0Hash(result), "stdout_hash": fmt.Sprintf("%x", sha256.Sum256(result.stdout)), "stderr_hash": fmt.Sprintf("%x", sha256.Sum256(result.stderr)), "exit": result.exitCode})
+							if beforePresent && afterPresent && o0Hash(before) != o0Hash(after) {
+								write(map[string]any{"stage": "difference", "fixture": fixture.path, "loop": loop, "variant": variant, "before": o0Diff(before), "after": o0Diff(after)})
+							}
+						}
+						nodeStart := time.Now()
+						oracle := onNode(t, path)
+						observe("node", oracle, time.Since(nodeStart).Seconds())
+						nodeStart = time.Now()
+						backend := onJavaScriptBackend(t, program)
+						observe("backend_node", backend, time.Since(nodeStart).Seconds())
+						var sanitized run
+						var sanitizedBinary string
+						for _, variant := range variants {
+							if variant.options.Count && uncounted[fixture.path] {
+								continue
+							}
+							flagsMode := mode
+							if variant.options.Sanitize {
+								flagsMode = "current"
+							}
+							flags := o0Flags(variant.options, flagsMode)
+							library := libraries[variant.name+"/"+mode]
+							directory := t.TempDir()
+							main := filepath.Join(directory, "main.c")
+							binary := filepath.Join(directory, "program")
+							emissionStart := time.Now()
+							c := native.C(program)
+							emission := time.Since(emissionStart).Seconds()
+							if err := os.WriteFile(main, []byte(c), 0644); err != nil {
+								t.Fatal(err)
+							}
+							object := filepath.Join(directory, "main.o")
+							compileStart := time.Now()
+							o0Compile(t, append(append([]string{}, flags...), "-I", filepath.Dir(library), "-c", main, "-o", object))
+							compile := time.Since(compileStart).Seconds()
+							linkStart := time.Now()
+							args := append(append([]string{}, flags...), object, "-o", binary)
+							args = append(args, native.RuntimeLinkFlags(library)...)
+							args = append(args, "-lm")
+							o0Compile(t, args)
+							write(map[string]any{"stage": "build", "fixture": fixture.path, "variant": variant.name, "loop": loop, "mode": mode, "flags": flags, "emit": emission, "clang": compile, "link": time.Since(linkStart).Seconds()})
+							name, runArgs := binary, []string{}
+							environment := []string{}
+							if variant.options.Sanitize {
+								environment = append(environment, "ASAN_OPTIONS=detect_leaks=0")
+							}
+							if variant.options.Count {
+								name, runArgs = pinnedStack(binary)
+							}
+							runStart := time.Now()
+							result := executeWith(t, environment, name, runArgs...)
+							observe(variant.name, result, time.Since(runStart).Seconds())
+							if variant.options.Sanitize {
+								sanitized, sanitizedBinary = result, binary
+							}
+							if variant.name == "release" && disagreement(sanitized, result) != "" {
+								t.Errorf("release differs from sanitized: %s", disagreement(sanitized, result))
+							}
+						}
+						expected := oracle
+						if fixture.checked {
+							expected = backend
+							if sanitized.exitCode != 70 || oracle.exitCode == 70 {
+								t.Error("inserted check did not fire as expected")
+							}
+						}
+						if difference := disagreement(expected, sanitized); difference != "" {
+							t.Errorf("sanitized differs from Node: %s", difference)
+						}
+						if !fixture.checked && disagreement(oracle, backend) != "" {
+							t.Error("backend differs from source Node")
+						}
+						if !fixture.checked && oracle.exitCode == 0 {
+							leakStart := time.Now()
+							leak := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitizedBinary)
+							observe("leak", leak, time.Since(leakStart).Seconds())
+							if leak.exitCode != 0 {
+								t.Errorf("leak check: exit %d, %s", leak.exitCode, leak.stderr)
+							}
+						}
+					})
+				}
+			})
+			write(map[string]any{"stage": "wall", "loop": loop, "mode": mode, "seconds": time.Since(start).Seconds()})
+		}
+	}
+	bytes, err := os.ReadFile("/proc/loadavg")
+	if err != nil {
+		t.Fatal(err)
+	}
+	write(map[string]string{"load_after": strings.TrimSpace(string(bytes))})
+}
+
+func o0WallRuntime(t *testing.T, flags []string) string {
+	t.Helper()
+	directory := t.TempDir()
+	source := filepath.Join(repository, "internal/native/runtime")
+	entries, err := os.ReadDir(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, entry := range entries {
+		if !strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h") {
+			continue
+		}
+		bytes, err := os.ReadFile(filepath.Join(source, entry.Name()))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(directory, entry.Name()), bytes, 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	var objects []string
+	for _, entry := range entries {
+		if !strings.HasSuffix(entry.Name(), ".c") {
+			continue
+		}
+		object := filepath.Join(directory, entry.Name()+".o")
+		o0Compile(t, append(append([]string{}, flags...), "-c", filepath.Join(directory, entry.Name()), "-o", object))
+		objects = append(objects, object)
+	}
+	library := filepath.Join(directory, "runtime.a")
+	if bytes, err := exec.Command("ar", append([]string{"rcs", library}, objects...)...).CombinedOutput(); err != nil {
+		t.Fatalf("ar: %v: %s", err, bytes)
+	}
+	return library
 }
