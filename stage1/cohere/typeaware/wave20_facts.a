@@ -1,0 +1,108 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import type { Types } from './types.ts';
+import type { TypeFact } from './type_fact.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+import { callbackParameters } from './callback_parameters.a';
+
+export class WaveFacts {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    callable(index: number, id: number): boolean {
+        const frames = new Frames(this.rules.ask(index, `call-count\n${id}`));
+        header(frames, 'call-count');
+        const count = frames.natural();
+        frames.end();
+        return count > 0;
+    }
+    builtin(index: number, facts: Types, subject: TypeFact, name: string, seen: readonly number[] = []): boolean {
+        if(seen.includes(subject.id)) {
+            return false;
+        }
+        const visited = seen.slice();
+        visited.push(subject.id);
+        if((subject.flags & 134217728) !== 0) {
+            return subject.parts.every((id) => this.builtin(index, facts, facts.type(id), name, visited));
+        }
+        if((subject.flags & 268435456) !== 0) {
+            return subject.parts.some((id) => this.builtin(index, facts, facts.type(id), name, visited));
+        }
+        if((subject.flags & 524288) !== 0) {
+            return (
+                subject.constraint !== 0 && this.builtin(index, facts, facts.type(subject.constraint), name, visited)
+            );
+        }
+        const frames = new Frames(this.rules.ask(index, `type-origin\n${subject.id}`));
+        header(frames, 'type-origin');
+        if(!frames.yes()) {
+            frames.end();
+            return false;
+        }
+        const symbolName = frames.field();
+        const count = frames.natural();
+        let library = false;
+        for(let at = 0; at < count; at++) {
+            frames.field();
+            const declaration = frames.yes();
+            const defaultLib = frames.yes();
+            if(declaration && defaultLib) {
+                library = true;
+            }
+        }
+        frames.end();
+        if(symbolName === name && library) {
+            return true;
+        }
+        const bases = types(this.rules.ask(index, `base-shapes\n${subject.id}`), 'base-shapes');
+        return bases.roots.some((id) => this.builtin(index, bases, bases.type(id), name, visited));
+    }
+    promise(index: number, facts: Types, subject: TypeFact): boolean {
+        const apparent = types(this.rules.ask(index, `apparent-shape\n${subject.id}`), 'apparent-shape');
+        return apparent
+            .parts(apparent.root())
+            .some((id) => this.builtin(index, apparent, apparent.type(id), 'Promise'));
+    }
+    thenable(index: number, facts: Types): boolean {
+        const apparent = types(this.rules.ask(index, `apparent-shape\n${facts.root().id}`), 'apparent-shape');
+        for(const id of apparent.parts(apparent.root())) {
+            const property = types(this.rules.ask(index, `property-shape\n${id}\nthen`), 'property-shape');
+            if(!property.present) {
+                continue;
+            }
+            for(const part of property.parts(property.root())) {
+                const parameters = callbackParameters(this.rules, index, part);
+                for(const parameter of parameters.roots) {
+                    if(
+                        parameters
+                            .parts(parameters.type(parameter))
+                            .some((callbackPart) => this.callable(index, callbackPart))
+                    ) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    assignment(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(node.kind !== 'BinaryExpression') {
+            return false;
+        }
+        const operator = this.rules.parser.node(node.children[1] ?? panic('missing operator')).kind;
+        return (
+            operator.endsWith('EqualsToken') &&
+            ![
+                'EqualsEqualsToken',
+                'EqualsEqualsEqualsToken',
+                'ExclamationEqualsToken',
+                'ExclamationEqualsEqualsToken',
+                'LessThanEqualsToken',
+                'GreaterThanEqualsToken',
+            ].includes(operator)
+        );
+    }
+}

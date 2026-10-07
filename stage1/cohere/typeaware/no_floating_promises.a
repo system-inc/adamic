@@ -1,0 +1,166 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import type { WaveFacts } from './wave20_facts.a';
+import { accessedProperty } from './accessed_property.a';
+import { Repair } from './repair.ts';
+import { Suggestion } from './suggestion.ts';
+import { FloatingState } from './floating_state.a';
+export class NoFloatingPromises {
+    readonly rules: Rules;
+    readonly facts: WaveFacts;
+    constructor(rules: Rules, facts: WaveFacts) {
+        this.rules = rules;
+        this.facts = facts;
+    }
+    promiseArray(index: number): boolean {
+        const own = types(this.rules.ask(index, 'raw-shape'), 'raw-shape');
+        for(const part of own.parts(own.root())) {
+            const apparent = types(this.rules.ask(index, `apparent-shape\n${part}`), 'apparent-shape');
+            const shape = types(this.rules.ask(index, `reference-shape\n${apparent.root().id}`), 'reference-shape');
+            const subject = shape.root();
+            if(subject.array || subject.tuple >= 0) {
+                for(const argument of subject.arguments) {
+                    if(this.facts.promise(index, shape, shape.type(argument))) {
+                        return true;
+                    }
+                    if(subject.array) {
+                        break;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    unhandled(index: number): FloatingState {
+        const node = this.rules.parser.node(index);
+        if(this.facts.assignment(index)) {
+            return new FloatingState(false);
+        }
+        if(node.kind === 'BinaryExpression' && this.rules.parser.node(node.children[1] ?? -1).kind === 'CommaToken') {
+            const left = this.unhandled(node.children[0] ?? -1);
+            return left.unhandled ? left : this.unhandled(node.children[2] ?? -1);
+        }
+        if(this.promiseArray(index)) {
+            return new FloatingState(true, false, true);
+        }
+        if(node.kind === 'AwaitExpression') {
+            return new FloatingState(false);
+        }
+        const own = types(this.rules.ask(index, 'raw-shape'), 'raw-shape');
+        if(!this.facts.promise(index, own, own.root())) {
+            return new FloatingState(false);
+        }
+        if(node.kind === 'CallExpression') {
+            const calleeIndex = node.children[0] ?? -1;
+            const callee = this.rules.parser.node(calleeIndex);
+            if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) {
+                const name = accessedProperty(this.rules, calleeIndex);
+                let handler = -1;
+                if(name === 'catch' && node.list >= 1) {
+                    handler = node.children[node.children.length - node.list] ?? -1;
+                }
+                if(name === 'then' && node.list >= 2) {
+                    handler = node.children[node.children.length - node.list + 1] ?? -1;
+                }
+                if(handler >= 0) {
+                    const handlerType = types(this.rules.ask(handler, 'raw-shape'), 'raw-shape');
+                    return new FloatingState(
+                        !this.facts.callable(handler, handlerType.root().id),
+                        !this.facts.callable(handler, handlerType.root().id),
+                    );
+                }
+                if(name === 'finally') {
+                    return this.unhandled(callee.children[0] ?? -1);
+                }
+            }
+            return new FloatingState(true);
+        }
+        if(node.kind === 'ConditionalExpression') {
+            const last = this.unhandled(node.children[4] ?? -1);
+            return last.unhandled ? last : this.unhandled(node.children[2] ?? -1);
+        }
+        if(
+            node.kind === 'BinaryExpression' &&
+            ['BarBarToken', 'AmpersandAmpersandToken', 'QuestionQuestionToken'].includes(
+                this.rules.parser.node(node.children[1] ?? -1).kind,
+            )
+        ) {
+            const left = this.unhandled(node.children[0] ?? -1);
+            return left.unhandled ? left : this.unhandled(node.children[2] ?? -1);
+        }
+        return new FloatingState(true);
+    }
+    higher(index: number): boolean {
+        const kind = this.rules.parser.node(index).kind;
+        return ![
+            'BinaryExpression',
+            'ConditionalExpression',
+            'ArrowFunction',
+            'YieldExpression',
+            'AwaitExpression',
+            'PrefixUnaryExpression',
+            'VoidExpression',
+            'TypeOfExpression',
+            'DeleteExpression',
+            'AsExpression',
+            'SatisfiesExpression',
+            'NonNullExpression',
+            'TypeAssertionExpression',
+            'SpreadElement',
+        ].includes(kind);
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        const original = node.children[0] ?? -1;
+        const expression = this.rules.skip(original);
+        const state = this.unhandled(expression);
+        if(!state.unhandled) {
+            return;
+        }
+        if(state.array) {
+            this.rules.add(
+                'no-floating-promises',
+                'floatingPromiseArrayVoid',
+                "An array of Promises may be unintentional. Consider handling the promises' fulfillment or rejection with Promise.all or similar, or explicitly marking the expression as ignored with the `void` operator.",
+                index,
+            );
+            return;
+        }
+        const base =
+            'Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.';
+        const finding = this.rules.add(
+            'no-floating-promises',
+            state.handler ? 'floatingUselessRejectionHandlerVoid' : 'floatingVoid',
+            base + (state.handler ? ' A rejection handler that is not a function will be ignored.' : ''),
+            index,
+        );
+        const start = this.rules.byte(this.rules.start(node));
+        const end = this.rules.byte(this.rules.parser.node(expression).end);
+        const higher = this.higher(original);
+        finding.suggestions.push(
+            new Suggestion(
+                'floatingFixVoid',
+                'Add void operator to ignore.',
+                higher
+                    ? [new Repair(start, start, 'void ')]
+                    : [new Repair(start, start, 'void ('), new Repair(end, end, ')')],
+            ),
+        );
+        finding.suggestions.push(
+            new Suggestion(
+                'floatingFixAwait',
+                'Add await operator.',
+                higher
+                    ? [new Repair(start, start, 'await ')]
+                    : [new Repair(start, start, 'await ('), new Repair(end, end, ')')],
+            ),
+        );
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.rules.parser.node(index).kind === 'ExpressionStatement') {
+                this.visit(index);
+            }
+        }
+    }
+}

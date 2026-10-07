@@ -1,0 +1,174 @@
+{
+  "repository": {
+    "runs": {
+      "native": [
+        {
+          "process_ns": 424953676,
+          "phases": {
+            "load_ns": 80678474,
+            "query_ns": 111890427,
+            "queries": 17518,
+            "first_query_ns": 180676,
+            "run_ns": 337072298
+          },
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+          "bytes": 18485
+        },
+        {
+          "process_ns": 449262880,
+          "phases": {
+            "load_ns": 84328824,
+            "query_ns": 110769227,
+            "queries": 17518,
+            "first_query_ns": 268950,
+            "run_ns": 357482911
+          },
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+          "bytes": 18485
+        },
+        {
+          "process_ns": 457168722,
+          "phases": {
+            "load_ns": 82009405,
+            "query_ns": 121017244,
+            "queries": 17518,
+            "first_query_ns": 277136,
+            "run_ns": 367171204
+          },
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+          "bytes": 18485
+        }
+      ],
+      "go": [
+        {
+          "process_ns": 177114915,
+          "phases": {
+            "load_ns": 81019988,
+            "rule_ns": 25862551,
+            "run_ns": 80151603
+          },
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+          "bytes": 18485
+        },
+        {
+          "process_ns": 189719195,
+          "phases": {
+            "load_ns": 80289192,
+            "rule_ns": 32155007,
+            "run_ns": 92007958
+          },
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+          "bytes": 18485
+        },
+        {
+          "process_ns": 185040873,
+          "phases": {
+            "load_ns": 76127905,
+            "rule_ns": 27491529,
+            "run_ns": 89476860
+          },
+          "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+          "bytes": 18485
+        }
+      ]
+    },
+    "medians": {
+      "native": {
+        "process_seconds": 0.44926288,
+        "load_seconds": 0.082009405,
+        "run_seconds": 0.357482911
+      },
+      "go": {
+        "process_seconds": 0.185040873,
+        "load_seconds": 0.080289192,
+        "run_seconds": 0.08947686
+      }
+    }
+  },
+  "compiler": {
+    "runs": {
+      "native": [
+        {
+          "process_ns": 4547673305,
+          "phases": {
+            "load_ns": 346581519,
+            "query_ns": 1583031852,
+            "queries": 271021,
+            "first_query_ns": 7148166,
+            "run_ns": 4138846323
+          },
+          "sha256": "8643def10b63879ab30020f9a7127cf21108de05d6fc34b85aec3e9266d6741f",
+          "bytes": 5241
+        },
+        {
+          "process_ns": 4703423794,
+          "phases": {
+            "load_ns": 361142813,
+            "query_ns": 1694471633,
+            "queries": 271021,
+            "first_query_ns": 38332218,
+            "run_ns": 4307302909
+          },
+          "sha256": "8643def10b63879ab30020f9a7127cf21108de05d6fc34b85aec3e9266d6741f",
+          "bytes": 5241
+        },
+        {
+          "process_ns": 4208532856,
+          "phases": {
+            "load_ns": 324517533,
+            "query_ns": 1455118682,
+            "queries": 271021,
+            "first_query_ns": 9027809,
+            "run_ns": 3853214354
+          },
+          "sha256": "8643def10b63879ab30020f9a7127cf21108de05d6fc34b85aec3e9266d6741f",
+          "bytes": 5241
+        }
+      ],
+      "go": [
+        {
+          "process_ns": 856808833,
+          "phases": {
+            "load_ns": 405016437,
+            "rule_ns": 365019023,
+            "run_ns": 425993990
+          },
+          "sha256": "8643def10b63879ab30020f9a7127cf21108de05d6fc34b85aec3e9266d6741f",
+          "bytes": 5241
+        },
+        {
+          "process_ns": 858944119,
+          "phases": {
+            "load_ns": 418005289,
+            "rule_ns": 336318035,
+            "run_ns": 390565587
+          },
+          "sha256": "8643def10b63879ab30020f9a7127cf21108de05d6fc34b85aec3e9266d6741f",
+          "bytes": 5241
+        },
+        {
+          "process_ns": 764679886,
+          "phases": {
+            "load_ns": 308361375,
+            "rule_ns": 373295177,
+            "run_ns": 428203638
+          },
+          "sha256": "8643def10b63879ab30020f9a7127cf21108de05d6fc34b85aec3e9266d6741f",
+          "bytes": 5241
+        }
+      ]
+    },
+    "medians": {
+      "native": {
+        "process_seconds": 4.547673305,
+        "load_seconds": 0.346581519,
+        "run_seconds": 4.138846323
+      },
+      "go": {
+        "process_seconds": 0.856808833,
+        "load_seconds": 0.405016437,
+        "run_seconds": 0.42599399
+      }
+    }
+  }
+}

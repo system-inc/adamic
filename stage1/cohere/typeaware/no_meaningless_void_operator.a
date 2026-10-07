@@ -1,0 +1,94 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+import type { WaveFacts } from './wave20_facts.a';
+export class NoMeaninglessVoidOperator {
+    readonly rules: Rules;
+    readonly facts: WaveFacts;
+    constructor(rules: Rules, facts: WaveFacts) {
+        this.rules = rules;
+        this.facts = facts;
+    }
+    unwrap(index: number): number {
+        let current = index;
+        while(true) {
+            const node = this.rules.parser.node(current);
+            if(
+                ['ParenthesizedExpression', 'AsExpression', 'NonNullExpression', 'SatisfiesExpression'].includes(
+                    node.kind,
+                )
+            ) {
+                current = node.children[0] ?? -1;
+            }
+            else if(node.kind === 'TypeAssertionExpression') {
+                current = node.children[1] ?? -1;
+            }
+            else if(
+                node.kind === 'BinaryExpression' &&
+                this.rules.parser.node(node.children[1] ?? -1).kind === 'CommaToken'
+            ) {
+                current = node.children[2] ?? -1;
+            }
+            else {
+                return current;
+            }
+        }
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        const argument = node.children[0] ?? -1;
+        const facts = types(this.rules.ask(argument, 'raw-shape'), 'raw-shape');
+        const innerIndex = this.unwrap(argument);
+        const inner = this.rules.parser.node(innerIndex);
+        let message: string;
+        let id: string;
+        let fix: boolean;
+        if(
+            inner.kind !== 'CallExpression' ||
+            this.rules.parser.node(inner.children[0] ?? -1).kind === 'ImportKeyword'
+        ) {
+            if(inner.kind === 'NumericLiteral') {
+                const literal = types(this.rules.ask(innerIndex, 'raw-shape'), 'raw-shape');
+                const frames = new Frames(this.rules.ask(innerIndex, `literal-value\n${literal.root().id}`));
+                header(frames, 'literal-value');
+                frames.field();
+                const value = frames.field();
+                frames.end();
+                if(value === '0') {
+                    return;
+                }
+            }
+            if(this.facts.assignment(innerIndex) || this.facts.thenable(argument, facts)) {
+                return;
+            }
+            id = 'meaninglessVoidOnNonCall';
+            message = "void operator is useless here; it should only discard a call's return value";
+            let parent = this.rules.parents[index] ?? -1;
+            while(parent >= 0 && this.rules.parser.node(parent).kind === 'ParenthesizedExpression') {
+                parent = this.rules.parents[parent] ?? -1;
+            }
+            fix = parent >= 0 && this.rules.parser.node(parent).kind === 'ExpressionStatement';
+        }
+        else {
+            if(!facts.parts(facts.root()).every((part) => (facts.type(part).flags & (16 | 4)) !== 0)) {
+                return;
+            }
+            id = 'meaninglessVoidOperator';
+            message = `void operator shouldn't be used on ${this.rules.name(facts.root(), argument)}; it should convey that a return value is being ignored`;
+            fix = true;
+        }
+        const finding = this.rules.add('no-meaningless-void-operator', id, message, index);
+        if(fix) {
+            finding.fixStart = this.rules.byte(this.rules.start(node));
+            finding.fixEnd = this.rules.byte(this.rules.start(this.rules.parser.node(argument)));
+            finding.replacement = '';
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(this.rules.parser.node(index).kind === 'VoidExpression') {
+                this.visit(index);
+            }
+        }
+    }
+}

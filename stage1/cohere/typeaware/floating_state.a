@@ -1,0 +1,10 @@
+export class FloatingState {
+    readonly unhandled: boolean;
+    readonly handler: boolean;
+    readonly array: boolean;
+    constructor(unhandled: boolean, handler = false, array = false) {
+        this.unhandled = unhandled;
+        this.handler = handler;
+        this.array = array;
+    }
+}

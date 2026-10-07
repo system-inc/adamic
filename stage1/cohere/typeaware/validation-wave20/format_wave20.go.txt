@@ -1,0 +1,21 @@
+package main
+import (
+ "fmt"
+ "os"
+ "strings"
+ "github.com/system-inc/cohere/internal/format/native"
+)
+func main(){
+ engine,err:=native.NewResolving("/workspace/adamic");if err!=nil{panic(err)}
+ count:=0
+ for _,file:=range os.Args[1:] {
+  source,err:=os.ReadFile(file);if err!=nil{panic(err)}
+  virtual:=strings.TrimSuffix(file,".a")+".ts"
+  if !engine.Handles(virtual){panic("no TypeScript formatter")}
+  text:=string(source)
+  for pass:=0;pass<3;pass++ {formatted,err:=engine.Format(virtual,text);if err!=nil{panic(err)};if formatted==text{break};text=formatted;if pass==2{panic("nonidempotent formatter")}}
+  if err:=os.WriteFile(file,[]byte(text),0644);err!=nil{panic(err)}
+  count++
+ }
+ if count!=8 {panic("incomplete source coverage")};fmt.Printf("formatted and checked idempotence: %d Adamic files, virtual TypeScript printer names only\n",count)
+}

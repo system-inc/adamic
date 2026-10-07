@@ -1,0 +1,168 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import type { WaveFacts } from './wave20_facts.a';
+import { Frames, header } from './frames.ts';
+export class NoImpliedEval {
+    readonly rules: Rules;
+    readonly facts: WaveFacts;
+    constructor(rules: Rules, facts: WaveFacts) {
+        this.rules = rules;
+        this.facts = facts;
+    }
+    calleeName(index: number): string {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            return node.text;
+        }
+        if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) {
+            const receiver = this.rules.parser.node(node.children[0] ?? -1);
+            const key = this.rules.parser.node(node.children[node.children.length - 1] ?? -1);
+            if(receiver.kind === 'Identifier' && ['global', 'globalThis', 'window'].includes(receiver.text)) {
+                if(
+                    (node.kind === 'PropertyAccessExpression' && key.kind === 'Identifier') ||
+                    (node.kind === 'ElementAccessExpression' && key.kind === 'StringLiteral')
+                ) {
+                    return key.text;
+                }
+            }
+        }
+        return '';
+    }
+    functionType(index: number): boolean {
+        const facts = types(this.rules.ask(index, 'raw-shape'), 'raw-shape');
+        return (
+            this.facts.builtin(index, facts, facts.root(), 'Function') || this.facts.callable(index, facts.root().id)
+        );
+    }
+    isFunction(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(
+            [
+                'ArrowFunction',
+                'FunctionExpression',
+                'FunctionDeclaration',
+                'MethodDeclaration',
+                'GetAccessor',
+                'SetAccessor',
+                'Constructor',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(
+            [
+                'StringLiteral',
+                'NumericLiteral',
+                'BigIntLiteral',
+                'NoSubstitutionTemplateLiteral',
+                'RegularExpressionLiteral',
+            ].includes(node.kind)
+        ) {
+            return false;
+        }
+        if(node.kind === 'CallExpression') {
+            let callee = this.rules.parser.node(node.children[0] ?? -1);
+            if(callee.kind === 'PropertyAccessExpression') {
+                callee = this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+            }
+            if(callee.kind === 'Identifier' && callee.text === 'bind') {
+                return true;
+            }
+        }
+        return this.functionType(index);
+    }
+    declaredHere(index: number): boolean {
+        const frames = new Frames(this.rules.ask(index, 'node-symbol-details'));
+        header(frames, 'node-symbol-details');
+        let local = false;
+        if(frames.yes()) {
+            frames.natural();
+            frames.natural();
+            frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const file = frames.field();
+                if(file === this.rules.path) {
+                    local = true;
+                }
+                frames.field();
+                frames.natural();
+                frames.natural();
+                frames.yes();
+                frames.yes();
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                const tags = frames.natural();
+                for(let tag = 0; tag < tags; tag++) {
+                    frames.field();
+                    frames.field();
+                    frames.natural();
+                    frames.natural();
+                    frames.field();
+                }
+                const parameters = frames.natural();
+                for(let parameter = 0; parameter < parameters; parameter++) {
+                    frames.field();
+                }
+            }
+        }
+        frames.end();
+        return local;
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        const callee = node.children[0] ?? -1;
+        const name = this.calleeName(callee);
+        if(name === '') {
+            return;
+        }
+        if(name === 'Function') {
+            const facts = types(this.rules.ask(callee, 'raw-shape'), 'raw-shape');
+            const frames = new Frames(this.rules.ask(callee, `type-origin\n${facts.root().id}`));
+            header(frames, 'type-origin');
+            const present = frames.yes();
+            if(present) {
+                frames.field();
+                const count = frames.natural();
+                for(let at = 0; at < count; at++) {
+                    frames.field();
+                    frames.yes();
+                    frames.yes();
+                }
+            }
+            frames.end();
+            if(!present || this.facts.builtin(callee, facts, facts.root(), 'FunctionConstructor')) {
+                this.rules.add(
+                    'no-implied-eval',
+                    'noFunctionConstructor',
+                    'Implied eval. Do not use the Function constructor to create functions.',
+                    index,
+                );
+                return;
+            }
+        }
+        if(node.list === 0 || !['execScript', 'setImmediate', 'setInterval', 'setTimeout'].includes(name)) {
+            return;
+        }
+        const handler = node.children[node.children.length - node.list] ?? -1;
+        if(!this.isFunction(handler)) {
+            if(!this.declaredHere(callee)) {
+                this.rules.add(
+                    'no-implied-eval',
+                    'noImpliedEvalError',
+                    'Implied eval. Consider passing a function.',
+                    handler,
+                );
+            }
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(['CallExpression', 'NewExpression'].includes(this.rules.parser.node(index).kind)) {
+                this.visit(index);
+            }
+        }
+    }
+}
