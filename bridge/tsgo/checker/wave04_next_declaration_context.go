@@ -47,7 +47,7 @@ func (p *Program) wave04NextWriteContext(out *fields, node *ast.Node) {
 		out.number(uint64(ancestor.End()))
 		out.number(uint64(ancestor.Flags))
 		name := ""
-		if declared := ancestor.Name(); declared != nil {
+		if declared := ancestor.Name(); declared != nil && (ast.IsIdentifier(declared) || ast.IsStringLiteralLike(declared) || declared.Kind == ast.KindNumericLiteral) {
 			name = declared.Text()
 		}
 		out.text(name)

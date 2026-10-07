@@ -1,0 +1,127 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../diagnostic.ts';
+import type { ProcessFacts } from './process_facts.a';
+import type { DeclarationContext } from './declaration_context.a';
+import { CodeGraph } from './code_graph.a';
+import { ProgramModules } from './program_modules.a';
+
+class StreamPosition { readonly block: number; readonly state: readonly string[]; constructor(block:number,state:readonly string[]){this.block=block;this.state=state;} }
+class StartedFunctions { readonly runs: number[]=[]; readonly handsOn: number[]=[]; }
+class StreamAnalysis { readonly exits: number[]=[]; readonly started: number[]=[]; }
+export class RequireBlockingStandardStreams {
+    readonly facts: ProcessFacts; readonly modules: ProgramModules; readonly ordered: boolean;
+    readonly mayBlock=new Map<string,number>();
+    constructor(facts: ProcessFacts, modules: ProgramModules){this.facts=facts;this.modules=modules;this.ordered=modules.canBlock.has(facts.rules.path);}
+    reversed(parts: readonly number[]): number[] {const result:number[]=[];for(let at=parts.length-1;at>=0;at--){result.push(parts[at]??-1);}return result;}
+    callLike(f: ProcessFacts,index:number):boolean{return ['CallExpression','NewExpression','TaggedTemplateExpression'].includes(f.kind(index));}
+    body(f: ProcessFacts,index:number):number {const node=f.rules.parser.node(index);if(!f.bindings.functionKind(node.kind)){return -1;}const last=node.children[node.children.length-1]??-1;return f.kind(last)==='Block'||node.kind==='ArrowFunction'?last:-1;}
+    arguments(f: ProcessFacts,index:number):number[]{const node=f.rules.parser.node(index);return ['CallExpression','NewExpression'].includes(node.kind)&&node.list>0?node.children.slice(node.children.length-node.list):[];}
+    declarationIndex(f: ProcessFacts,declaration:DeclarationContext):number{const node=declaration.ancestors[0];return node===undefined?-1:f.bindings.spans.get(`${node.kind}:${node.start}:${node.end}`)??-1;}
+    // Facts stay raw at the bridge. Declaration reachability and call verdicts live here.
+    symbolMayBlock(f: ProcessFacts,index:number):boolean{
+        const symbol=f.context.context(index);if(!symbol.present||symbol.declarations.length===0){return true;}
+        for(const declaration of symbol.declarations){
+            if(!this.modules.canBlock.has(declaration.file)){if(declaration.declarationFile&&f.rules.parser.node(index).text==='require'){return true;}continue;}
+            if(declaration.declarationFile){return true;}
+            const foreign=f.foreign(declaration.file);const at=this.declarationIndex(foreign,declaration);if(at<0){panic('blocking declaration absent from Adamic parser');}
+            const node=foreign.rules.parser.node(at);
+            if(node.kind==='FunctionDeclaration'&&foreign.rules.parser.node(foreign.bindings.shape.name(at)).text==='blockStandardStreams'&&this.modules.nexus(declaration.file)){return true;}
+            if(['FunctionDeclaration','MethodDeclaration','Constructor','GetAccessor','SetAccessor'].includes(node.kind)){
+                if(this.body(foreign,at)<0){if(node.kind!=='FunctionDeclaration'||((declaration.ancestors[0]?.flags??0)&8388608)!==0){return true;}continue;}
+                if(this.whenRun(foreign,at)){return true;}continue;
+            }
+            if(node.kind==='VariableDeclaration'){
+                const initial=foreign.bindings.shape.initializer(at);const init=initial<0?-1:foreign.rules.skip(initial);
+                if(['ArrowFunction','FunctionExpression'].includes(foreign.kind(init))){if(this.whenRun(foreign,init)){return true;}continue;}
+            }
+            if(['ClassDeclaration','ClassExpression'].includes(node.kind)){if(this.whenRun(foreign,at)){return true;}continue;}
+            return true;
+        }
+        return false;
+    }
+    handsMayBlock(f:ProcessFacts,index:number):boolean{
+        const at=f.rules.skip(index);if(['ArrowFunction','FunctionExpression'].includes(f.kind(at))){return this.whenRun(f,at);}
+        return f.kind(at)==='Identifier'&&(f.context.context(at).flags&16)!==0&&this.symbolMayBlock(f,at);
+    }
+    callMayBlock(f:ProcessFacts,index:number):boolean{
+        const node=f.rules.parser.node(index);if(!this.callLike(f,index)){return false;}
+        const callee=f.rules.skip(node.children[0]??-1);if(node.kind==='CallExpression'&&f.kind(callee)==='ImportKeyword'){return true;}
+        if(this.arguments(f,index).some((arg)=>this.handsMayBlock(f,arg))){return true;}
+        if(['ArrowFunction','FunctionExpression'].includes(f.kind(callee))){return this.whenRun(f,callee);}
+        const name=f.member(callee);return name<0||this.symbolMayBlock(f,name);
+    }
+    whenRun(f:ProcessFacts,index:number):boolean{
+        const node=f.rules.parser.node(index);const key=`${f.rules.path}:${node.pos}:${node.end}`;const state=this.mayBlock.get(key)??0;
+        if(state>0){return state===1;}this.mayBlock.set(key,3);const pending=this.reversed(node.children);let blocks=false;
+        while(pending.length>0&&!blocks){const at=pending.pop()??-1;if(at<0){continue;}if(this.callLike(f,at)&&this.callMayBlock(f,at)){blocks=true;break;}for(const child of this.reversed(f.rules.parser.node(at).children)){pending.push(child);}}
+        this.mayBlock.set(key,blocks?1:2);return blocks;
+    }
+    topLevelMayBlock(f:ProcessFacts):boolean{
+        const pending=this.reversed(f.rules.parser.node(f.roots.root).children);
+        while(pending.length>0){const at=pending.pop()??-1;if(at<0||this.body(f,at)>=0){continue;}if(this.callLike(f,at)&&this.callMayBlock(f,at)){return true;}for(const child of this.reversed(f.rules.parser.node(at).children)){pending.push(child);}}return false;
+    }
+    importsBlock():boolean{
+        const queue=[this.facts.rules.path];const seen=new Set<string>(queue);
+        for(let at=0;at<queue.length;at++){const empty:string[]=[];for(const next of this.modules.edges.get(queue[at]??'')??empty){if(seen.has(next)){continue;}seen.add(next);queue.push(next);
+            if(!this.modules.canBlock.has(next)){continue;}const file=this.modules.files.get(next);if(file===undefined||file.declaration||this.topLevelMayBlock(this.facts.foreign(next))){return true;}}}return false;
+    }
+    local(index:number):number{
+        const f=this.facts;const at=f.rules.skip(index);if(['ArrowFunction','FunctionExpression'].includes(f.kind(at))){return at;}if(f.kind(at)!=='Identifier'){return -1;}
+        for(const declaration of f.context.context(at).declarations){if(declaration.file!==f.rules.path){continue;}const node=this.declarationIndex(f,declaration);if(node<0){continue;}
+            if(f.kind(node)==='FunctionDeclaration'&&this.body(f,node)>=0){return node;}
+            if(f.kind(node)==='VariableDeclaration'&&f.rules.parser.node(f.bindings.parent(node)).semantic==='2'){const initial=f.bindings.shape.initializer(node);const init=initial<0?-1:f.rules.skip(initial);if(['ArrowFunction','FunctionExpression'].includes(f.kind(init))){return init;}}}return -1;
+    }
+    started(index:number):StartedFunctions{
+        const f=this.facts;const node=f.rules.parser.node(index);const result=new StartedFunctions();
+        if(['CallExpression','TaggedTemplateExpression'].includes(node.kind)){const fn=this.local(node.children[0]??-1);if(fn>=0){const parts=f.rules.parser.node(fn).children;if(parts.some((part)=>f.kind(part)==='AsteriskToken')){result.handsOn.push(fn);}else{result.runs.push(fn);}}}
+        for(const arg of this.arguments(f,index)){const fn=this.local(arg);if(fn>=0){result.handsOn.push(fn);}}return result;
+    }
+    argumentsBlock(index:number):boolean{
+        const f=this.facts;const pending=this.reversed(this.arguments(f,index));
+        while(pending.length>0){const at=pending.pop()??-1;if(at<0||this.body(f,at)>=0){continue;}if(f.kind(at)==='AwaitExpression'||this.callLike(f,at)&&this.callMayBlock(f,at)){return true;}for(const child of this.reversed(f.rules.parser.node(at).children)){pending.push(child);}}return false;
+    }
+    inRun(index:number,root:number):boolean{const f=this.facts;for(let at=f.bindings.parent(index);at>=0&&at!==root;at=f.bindings.parent(at)){if(this.body(f,at)>=0){return false;}}return true;}
+    analyze(root:number):StreamAnalysis{
+        const f=this.facts;const graph=new CodeGraph(f.rules,f.bindings,f.syntax,root);graph.build();const recorded=new Set<number>();
+        for(const event of graph.events){if(event.kind!==0||f.catchBinding(event.node,root)){continue;}if(f.exit(event.node)||this.ordered&&(f.kind(event.node)==='AwaitExpression'||this.callLike(f,event.node)&&this.callMayBlock(f,event.node))){recorded.add(event.node);}}
+        const result=new StreamAnalysis();const check=f.rules.parser.node(root).children.slice();
+        while(check.length>0){const at=check.pop()??-1;if(at<0){continue;}
+            if(!recorded.has(at)&&(f.exit(at)&&f.roots.rootOf(at)===root||this.ordered&&this.inRun(at,root)&&(f.kind(at)==='AwaitExpression'||this.callLike(f,at)&&this.callMayBlock(f,at)))){return result;}
+            for(const child of f.rules.parser.node(at).children){check.push(child);}}
+        const initial:string[]=[];const queue=[new StreamPosition(0,initial)];const seen=new Set<string>(['0:']);const reported=new Set<number>();const started=new Set<number>();
+        for(let at=0;at<queue.length;at++){const position=queue[at];if(position===undefined){continue;}let state=position.state.slice();let ended=false;
+            for(const event of graph.block(position.block).events){const index=event.node;const node=f.rules.parser.node(index);
+                if(event.kind===1){
+                    if(node.kind==='Block'&&f.kind(f.bindings.parent(index))==='CatchClause'){const statement=f.bindings.parent(f.bindings.parent(index));state=state.filter((chain)=>!chain.includes(`,${statement},`));}
+                    if(this.ordered&&(node.kind==='ForOfStatement'&&node.children.some((child)=>f.kind(child)==='AwaitKeyword')||node.kind==='VariableStatement'&&node.children.some((child)=>f.kind(child)==='VariableDeclarationList'&&f.rules.parser.node(child).semantic==='6'))){ended=true;break;}continue;
+                }
+                if(f.catchBinding(index,root)){continue;}
+                if(node.kind==='AwaitExpression'){if(this.ordered){ended=true;break;}continue;}
+                if(!this.callLike(f,index)){continue;}
+                if(f.exit(index)){if(state.length>0){reported.add(index);}ended=true;break;}
+                if(f.write(index)&&!f.holdsExit(index)){state=f.withWrite(state,f.chain(index,root));}
+                const functions=this.started(index);
+                const emptyRuns:number[]=[];
+                const runs=this.ordered&&functions.runs.length>0&&this.argumentsBlock(index)?emptyRuns:functions.runs;
+                const add=this.ordered?runs:runs.concat(functions.handsOn);
+                for(const fn of add){if(!started.has(fn)){started.add(fn);result.started.push(fn);}}
+                if(this.ordered&&this.callMayBlock(f,index)){ended=true;break;}
+            }
+            if(ended){continue;}for(const next of graph.block(position.block).successors){const key=`${next}:${state.join(';')}`;if(!graph.block(next).reachable||seen.has(key)){continue;}seen.add(key);queue.push(new StreamPosition(next,state));}
+        }
+        for(const exit of reported){result.exits.push(exit);}return result;
+    }
+    run():void{
+        const f=this.facts;if(!f.rules.scanner.text.includes('exit')){return;}
+        if(!f.rules.scanner.text.startsWith('#!')&&this.modules.imported.has(f.rules.path)){return;}
+        const exits=new Set<number>();const writes=new Set<number>();
+        for(let at=0;at<f.rules.parser.nodes.length;at++){if(f.exit(at)){exits.add(f.roots.rootOf(at));}else if(f.write(at)){writes.add(f.roots.rootOf(at));}}
+        let candidate=false;for(const root of exits){if(writes.has(root)){candidate=true;}}if(!candidate||this.ordered&&this.importsBlock()){return;}
+        const queue=[f.roots.root];const queued=new Set<number>(queue);const found=new Set<number>();
+        for(let at=0;at<queue.length;at++){const result=this.analyze(queue[at]??-1);for(const exit of result.exits){found.add(exit);}for(const fn of result.started){if(!queued.has(fn)){queued.add(fn);queue.push(fn);}}}
+        const sorted:number[]=[];for(const exit of found){sorted.push(exit);}sorted.sort((a,b)=>f.rules.parser.node(a).pos-f.rules.parser.node(b).pos);const first=sorted[0]??-1;if(first<0){return;}
+        const reason=f.rules.scanner.text.startsWith('#!')?'it starts with `#!`':'nothing in the program imports it';const count=sorted.length>1?`, the first of ${sorted.length} such exits in this file`:'';
+        const message=`This file runs as a process (${reason}), and this \`process.exit()\` runs after a write to stdout or stderr before the process has called \`blockStandardStreams()\`${count}. Node writes to a pipe asynchronously, and \`process.exit()\` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's \`blockStandardStreams()\` (\`source/system/StandardStreams\`) before anything that can exit: first in the module, or first in the main it runs.`;
+        const node=f.rules.parser.node(first);f.rules.findings.push(new Diagnostic('nexus/correctness-require-blocking-standard-streams','exitBeforeBlockingStandardStreams',message,f.rules.byte(f.rules.start(node)),f.rules.byte(node.end),''));
+    }
+}

@@ -1,0 +1,42 @@
+import { Diagnostic } from '../diagnostic.ts';
+import type { ProcessFacts } from './process_facts.a';
+import { CodeGraph } from './code_graph.a';
+
+const message = 'This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.';
+class Position { readonly block: number; readonly state: readonly string[]; constructor(block: number, state: readonly string[]) { this.block = block; this.state = state; } }
+export class NoProcessExitAfterOutput {
+    readonly facts: ProcessFacts;
+    constructor(facts: ProcessFacts) { this.facts = facts; }
+    analyze(root: number, exits: readonly number[]): void {
+        const f = this.facts; const graph = new CodeGraph(f.rules, f.bindings, f.syntax, root); graph.build();
+        const recorded: number[] = []; const kinds = new Map<number, number>();
+        for(const block of graph.blocks) { for(const event of block.events) {
+            if(event.kind !== 0 || f.kind(event.node) !== 'CallExpression' || f.catchBinding(event.node, root)) { continue; }
+            if(f.exit(event.node)) { kinds.set(event.node, 2); recorded.push(event.node); }
+            else if(f.writer(event.node) && !f.holdsExit(event.node)) { kinds.set(event.node, 1); }
+        } }
+        if(exits.some((exit) => !recorded.includes(exit))) { return; }
+        const seen = new Set<string>(['0:']); const initialState: string[] = []; const pending = [new Position(0, initialState)]; const reported = new Set<number>();
+        for(let at = 0; at < pending.length; at++) {
+            const current = pending[at]; if(current === undefined) { continue; } let state = current.state.slice(); let ended = false;
+            for(const event of graph.block(current.block).events) {
+                const kind = event.kind === 0 ? kinds.get(event.node) ?? 0 : 0;
+                if(kind === 1) { state = f.withWrite(state, f.chain(event.node, root)); }
+                else if(kind === 2) { if(state.length > 0) { reported.add(event.node); } ended = true; break; }
+                if(event.kind === 1 && f.kind(event.node) === 'Block' && f.kind(f.bindings.parent(event.node)) === 'CatchClause') { const statement = f.bindings.parent(f.bindings.parent(event.node)); state = state.filter((chain) => !chain.includes(`,${statement},`)); }
+            }
+            if(ended) { continue; }
+            for(const next of graph.block(current.block).successors) { const key = `${next}:${state.join(';')}`; if(!graph.block(next).reachable || seen.has(key)) { continue; } seen.add(key); pending.push(new Position(next, state)); }
+        }
+        for(const exit of exits) { if(!reported.has(exit)) { continue; } const node = f.rules.parser.node(exit); f.rules.findings.push(new Diagnostic('nexus/correctness-no-process-exit-after-output', 'exitAfterOutput', message, f.rules.byte(f.rules.start(node)), f.rules.byte(node.end), '')); }
+    }
+    run(): void {
+        const f = this.facts; const roots = new Map<number, number[]>();
+        for(let index = 0; index < f.rules.parser.nodes.length; index++) { if(!f.exit(index)) { continue; } const root = f.roots.rootOf(index); if(root < 0) { continue; } const empty: number[] = []; const exits = roots.get(root) ?? empty; exits.push(index); roots.set(root, exits); }
+        for(const [root, exits] of roots) {
+            let wrote = false;
+            for(let index = 0; index < f.rules.parser.nodes.length && !wrote; index++) { if(f.kind(index) === 'CallExpression' && f.roots.rootOf(index) === root && f.writer(index)) { wrote = true; } }
+            if(wrote) { this.analyze(root, exits); }
+        }
+    }
+}

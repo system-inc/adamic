@@ -1,0 +1,13 @@
+// Apply the compiler's raw top-level context flags to the existing native parser.
+// This supplies its public awaitContext switch without changing shared parser code.
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export function parseSource(rules: Rules): number {
+    const parser=rules.parser;const stub=parser.make('SourceFile',0);parser.node(stub).end=parser.scanner.text.length;
+    const frames=new Frames(rules.ask(stub,'wave04-next-source-context'));header(frames,'wave04-next-source-context');const count=frames.natural();const flags=new Map<number,number>();
+    for(let at=0;at<count;at++){const start=frames.natural();frames.natural();const raw=frames.natural();const awaits=frames.yes();flags.set(start,awaits?raw|8192:raw);}frames.end();parser.nodes.pop();
+    const statements=parser.statements();const children:number[]=[];
+    while(parser.kind()!=='EndOfFile'){parser.awaitContext=((flags.get(rules.byte(parser.scanner.fullStart))??0)&8192)!==0;children.push(statements.statement());}
+    const eof=parser.make('EndOfFile',parser.scanner.fullStart);children.push(eof);parser.node(eof).end=parser.scanner.text.length;
+    const root=parser.make('SourceFile',0,children);parser.node(root).end=parser.scanner.text.length;return root;
+}

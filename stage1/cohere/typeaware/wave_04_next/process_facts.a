@@ -1,0 +1,129 @@
+import { parseSource } from './source_context.a';
+import {panic, readTextFile} from 'adamic';
+import type { Rules } from '../rules.ts';
+import { Rules as RuleSet } from '../rules.ts';
+import { Bindings } from '../bindings.ts';
+import { Unused } from '../unused.ts';
+import { Returns } from '../returns.ts';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+import { NoUnclearedRaceTimeout } from './no_uncleared_race_timeout.a';
+import { ResolvedSignatureDeclaration } from './resolved_signature_declaration.a';
+import { CodeGraph } from './code_graph.a';
+
+const consoleMethods = ['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'];
+export class ProcessFacts {
+    readonly rules: Rules; readonly bindings: Bindings; readonly context: NoUnclearedRaceTimeout;
+    readonly syntax: Returns; readonly roots: CodeGraph;
+    readonly writers = new Map<number, boolean>();
+    constructor(rules: Rules, bindings: Bindings, context: NoUnclearedRaceTimeout, syntax: Returns, roots: CodeGraph) {
+        this.rules = rules; this.bindings = bindings; this.context = context; this.syntax = syntax; this.roots = roots;
+    }
+    kind(index: number): string { return index < 0 ? '' : this.rules.parser.node(index).kind; }
+    member(index: number): number {
+        const node = this.rules.parser.node(this.rules.skip(index));
+        if(node.kind === 'Identifier') { return this.rules.skip(index); }
+        if(node.kind !== 'PropertyAccessExpression') { return -1; }
+        const name = node.children[node.children.length - 1] ?? -1; return this.kind(name) === 'Identifier' ? name : -1;
+    }
+    process(index: number): boolean {
+        const declarations = this.context.context(index).declarations;
+        return declarations.length > 0 && declarations.every((declaration) => declaration.declarationFile &&
+            ['MethodSignature', 'PropertySignature'].includes(declaration.ancestors[0]?.kind ?? '') &&
+            declaration.ancestors[1]?.kind === 'InterfaceDeclaration' && declaration.ancestors[1]?.name === 'Process' &&
+            declaration.ancestors[2]?.kind === 'ModuleBlock' && declaration.ancestors[3]?.kind === 'ModuleDeclaration' && declaration.ancestors[3]?.name === 'NodeJS');
+    }
+    exit(index: number): boolean {
+        const node = this.rules.parser.node(index); if(node.kind !== 'CallExpression') { return false; }
+        const name = this.member(node.children[0] ?? -1);
+        return name >= 0 && this.rules.parser.node(name).text === 'exit' && this.process(name);
+    }
+    global(index: number): boolean {
+        const declarations = this.context.context(index).declarations;
+        return declarations.length > 0 && declarations.every((declaration) => declaration.declarationFile &&
+            declaration.ancestors[0]?.kind === 'VariableDeclaration' && declaration.ancestors[1]?.kind === 'VariableDeclarationList' && declaration.ancestors[2]?.kind === 'VariableStatement' &&
+            ((declaration.ancestors[3]?.kind === 'SourceFile' && !declaration.externalModule) ||
+            (declaration.ancestors[3]?.kind === 'ModuleBlock' && declaration.ancestors[4]?.globalAugmentation === true)));
+    }
+    write(index: number): boolean {
+        const call = this.rules.parser.node(index); if(call.kind !== 'CallExpression') { return false; }
+        const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) { return false; }
+        const member = this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+        if(callee.kind === 'ElementAccessExpression' && !['StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(member.kind)) { return false; }
+        const receiverIndex = this.rules.skip(callee.children[0] ?? -1); const receiver = this.rules.parser.node(receiverIndex);
+        if(consoleMethods.includes(member.text) && receiver.kind === 'Identifier' && receiver.text === 'console') { return this.global(receiverIndex); }
+        if(member.text !== 'write') { return false; } const stream = this.member(receiverIndex);
+        return stream >= 0 && ['stdout', 'stderr'].includes(this.rules.parser.node(stream).text) && this.process(stream);
+    }
+    foreign(path: string): ProcessFacts {
+        if(path === this.rules.path) { return this; }
+        {
+            const source = readTextFile(path); if(source.kind === 'Error') { panic(source.message); }
+            const parser = new Parser(source.text, path); const scanner = new Scanner(source.text); const offsets = byteOffsets(source.text);
+            const unary = new UnaryMinus(this.rules.program, path, parser, scanner, offsets);
+            const rules = new RuleSet(this.rules.program, path, parser, scanner, offsets, unary); const root = parseSource(rules);
+            for(let at = 0; at < parser.nodes.length; at++) { rules.parents.push(-1); } rules.links(root, -1);
+            const bindings = new Bindings(rules); const symbols = new Unused(bindings); const contexts = new NoUnclearedRaceTimeout(rules, bindings, symbols);
+            const syntax = new Returns(rules, bindings.shape); const roots = new CodeGraph(rules, bindings, syntax, root);
+            return new ProcessFacts(rules, bindings, contexts, syntax, roots);
+        }
+    }
+    bodyWrites(index: number): boolean {
+        let wrote = false; let exits = false;
+        const pending = [index];
+        while(pending.length > 0) {
+            const nodeIndex = pending.pop() ?? -1; if(nodeIndex < 0 || this.roots.rootKind(nodeIndex)) { continue; }
+            const node = this.rules.parser.node(nodeIndex);
+            if(node.kind === 'CallExpression') { if(this.exit(nodeIndex)) { exits = true; break; } if(this.write(nodeIndex)) { wrote = true; } }
+            for(const child of node.children) { pending.push(child); }
+        }
+        return wrote && !exits;
+    }
+    writer(index: number): boolean {
+        if(this.write(index)) { return true; }
+        if(!this.writers.has(index)) {
+            const signature = new ResolvedSignatureDeclaration(this.rules, index); const declaration = signature.declaration;
+            let writes = false;
+            if(declaration !== undefined && signature.hasBody &&
+                ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(declaration.ancestors[0]?.kind ?? '') &&
+                (declaration.file === this.rules.path || declaration.externalModule) && (signature.functionFlags & 1) === 0 && (signature.returnFlags & 262144) === 0) {
+                const parent = this.rules.parser.node(this.bindings.parent(this.outer(index)));
+                if((signature.functionFlags & 2) === 0 || parent.kind === 'AwaitExpression') {
+                    const facts = this.foreign(declaration.file);
+                    const body = facts.rules.parser.nodes.findIndex((node) => facts.rules.byte(node.pos) === signature.bodyStart && facts.rules.byte(node.end) === signature.bodyEnd);
+                    if(body < 0) { panic('resolved callee body absent from Adamic parser'); } writes = facts.bodyWrites(body);
+                }
+            }
+            this.writers.set(index, writes);
+        }
+        return this.writers.get(index) ?? false;
+    }
+    outer(index: number): number { let at = index; while(this.kind(this.bindings.parent(at)) === 'ParenthesizedExpression') { at = this.bindings.parent(at); } return at; }
+    holdsExit(index: number): boolean {
+        const pending = this.rules.parser.node(index).children.slice();
+        while(pending.length > 0) { const child = pending.pop() ?? -1; if(child < 0 || this.roots.rootKind(child)) { continue; } if(this.exit(child)) { return true; } for(const part of this.rules.parser.node(child).children) { pending.push(part); } }
+        return false;
+    }
+    catchBinding(index: number, root: number): boolean {
+        let previous = index;
+        for(let current = this.bindings.parent(index); current >= 0 && current !== root; current = this.bindings.parent(current)) {
+            const node = this.rules.parser.node(current); if(node.kind === 'CatchClause' && node.children[0] === previous && this.kind(previous) === 'VariableDeclaration') { return true; } previous = current;
+        }
+        return false;
+    }
+    chain(index: number, root: number): string {
+        const ids: number[] = []; let previous = index;
+        for(let current = this.bindings.parent(index); current >= 0 && current !== root; current = this.bindings.parent(current)) {
+            const node = this.rules.parser.node(current); if(node.kind === 'TryStatement' && node.children[0] === previous && node.children.some((child) => this.kind(child) === 'CatchClause')) { ids.push(current); } previous = current;
+        }
+        ids.sort((a,b) => a-b); return `,${ids.map((id) => `${id},`).join('')}`;
+    }
+    withWrite(state: readonly string[], chain: string): string[] {
+        const holds = (outer: string, inner: string): boolean => inner.split(',').every((id) => id === '' || outer.includes(`,${id},`));
+        const next: string[] = [];
+        for(const held of state) { if(holds(chain, held)) { return state.slice(); } if(!holds(held, chain)) { next.push(held); } }
+        next.push(chain); next.sort((a,b) => a < b ? -1 : a > b ? 1 : 0); return next;
+    }
+}

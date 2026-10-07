@@ -1,0 +1,35 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+export class ModuleEntry {
+    readonly kind: string; readonly typeOnly: boolean; readonly calleeKind: string; readonly calleeName: string;
+    readonly argumentCount: number; readonly argumentKind: string; readonly argumentText: string; readonly target: string;
+    constructor(frames: Frames) { this.kind=frames.field(); this.typeOnly=frames.yes(); this.calleeKind=frames.field(); this.calleeName=frames.field(); this.argumentCount=frames.natural(); this.argumentKind=frames.field(); this.argumentText=frames.field(); this.target=frames.field(); }
+}
+export class ModuleFile {
+    readonly path: string; readonly declaration: boolean; readonly text: string; readonly entries: readonly ModuleEntry[];
+    constructor(frames: Frames) { this.path=frames.field(); this.declaration=frames.yes(); this.text=frames.field(); const entries: ModuleEntry[]=[]; const count=frames.natural(); for(let at=0;at<count;at++){entries.push(new ModuleEntry(frames));} this.entries=entries; }
+}
+export class ProgramModules {
+    readonly files=new Map<string,ModuleFile>(); readonly imported=new Set<string>(); readonly canBlock=new Set<string>(); readonly edges=new Map<string,string[]>();
+    constructor(rules: Rules, root: number) {
+        const frames=new Frames(rules.ask(root,'wave04-next-program-modules'));header(frames,'wave04-next-program-modules');const count=frames.natural();
+        for(let at=0;at<count;at++){const file=new ModuleFile(frames);this.files.set(file.path,file);if(this.nexus(file.path)){this.canBlock.add(file.path);}}
+        frames.end();
+        for(const [path,file] of this.files){
+            if(file.declaration){continue;} const targets: string[]=[];
+            for(const entry of file.entries){
+                if(entry.typeOnly){continue;}
+                if(entry.kind==='CallExpression'){
+                    if(!file.text.includes('import(')&&!file.text.includes('require(')){continue;}
+                    if(entry.calleeKind!=='ImportKeyword' && !(entry.calleeName==='require'&&entry.argumentCount===1)){continue;}
+                    if(!['StringLiteral','NoSubstitutionTemplateLiteral'].includes(entry.argumentKind)){this.canBlock.add(path);continue;}
+                }
+                if(entry.target!==''&&entry.target!==path&&this.files.has(entry.target)){targets.push(entry.target);this.imported.add(entry.target);}
+            }
+            this.edges.set(path,targets);
+        }
+        let changed=true;
+        while(changed){changed=false;for(const [path,targets] of this.edges){if(!this.canBlock.has(path)&&targets.some((target)=>this.canBlock.has(target))){this.canBlock.add(path);changed=true;}}}
+    }
+    nexus(path: string): boolean {return path.endsWith('/source/system/StandardStreams.ts')||path.endsWith('/source/system/StandardStreams.d.ts');}
+}

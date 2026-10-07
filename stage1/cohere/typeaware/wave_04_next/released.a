@@ -1,0 +1,3 @@
+import {programArguments, tsgoProgram, tsgoInspect, tsgoRelease} from 'adamic';
+const args=programArguments();const file=args[1]??'';const program=tsgoProgram(args[0]??'',[file]);tsgoRelease(program);
+console.log(tsgoInspect(program,file,0,2,'SourceFile','wave04-next-declaration-context'));
