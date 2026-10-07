@@ -25,3 +25,7 @@ Set `ADAMIC_SLOT05_EVIDENCE` to an existing directory to save per-consumer liter
 ## Continuation
 
 [batch2/REPORT.md](batch2/REPORT.md) records two retained Tailwind readers, their oracle checks and consumer dependencies. Factory and dispatcher claim collisions were yielded to earlier reservations. Ahra instructed workers to finish existing claims and stop claiming; no replacement for the third continuation slot was reserved. All continuation code and its independent oracle runner stay inside batch2/.
+
+## Third batch
+
+[batch3/REPORT.md](batch3/REPORT.md) records the next three completed helpers: exact JSX matching, filename normalization and Unicode hook-name recognition. They add 21 dependency removals; conservative accounting across all eight retained slot 05 helpers covers 64 rules and removes four final helper blockers in total.
