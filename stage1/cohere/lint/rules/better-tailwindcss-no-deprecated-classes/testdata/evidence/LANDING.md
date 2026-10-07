@@ -52,3 +52,7 @@ Setup: Go/clang/Node/submodules ready 0s; cache warm and total 121s; nproc=5. Fu
 ## Parked under Ahra instruction
 
 The explicit parking exception authorizes this unit to move to helpers. Own branch is pushed and based on current origin/main f8013f0ba; owned rule/core/numeric oracles and all fourteen mutants are green (refresh logs). Shared allowLoop option routing, multiple automatic edits, live-program/regex adapters and handed-node/numeric runtime API gaps are named above. This is scoped green plus a named shared blocker, not a full rule certification. No batch 8 Diagnostic SHA has been supplied. Rebase and revalidate this parked branch when the named harness SHA lands, before taking further work.
+
+## Parked refresh onto c01907a70
+
+Rebased cleanly onto current origin/main c01907a70. Main changes, including developer-tool leak-check changes where present, are retained; no shared files reverted. Owned assertion contracts PASS 48.334s, original three-rule contracts PASS 71.036s, numeric/Tailwind contracts/refusals PASS 60.575s. All fourteen semantic/subscription mutants remain comparison-only catches on all three backends. Setup ready timings 0s, cache warm and total 55s, nproc 5. Shared harness blockers remain named above; no supplied batch 8 Diagnostic SHA. Parked under the explicit exception, full shared/corpus gate not repeated. New CFG helpers contain no regex; future regex ports follow the new shared RegExp translation rule.
