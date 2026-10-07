@@ -1003,7 +1003,7 @@ type (
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
-	// Read: a write to a global from inside a function.
+	// Read: a write to an unready switch binding or a global from inside a function.
 	Assign struct {
 		Local   int
 		Value   Expression

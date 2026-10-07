@@ -59,7 +59,7 @@ func (e *emitter) store(local int, value string, owned bool) {
 	e.line("adamic_release(%s);", old)
 }
 
-// checkReady panics as JavaScript throws when a global is touched before its declaration has run.
+// checkReady guards globals and switch lexical bindings before their declarations have run.
 func (e *emitter) checkReady(local int) {
 	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
 	ready := readyName(local)

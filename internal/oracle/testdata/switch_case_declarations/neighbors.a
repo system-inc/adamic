@@ -19,3 +19,12 @@ function describe(input: number): string {
 	}
 }
 for (const input of [1, 2, 3, 1]) console.log(describe(input));
+function choose<T>(value: T, input: number): T {
+	switch (input) {
+		case 1:
+			const chosen = value;
+			return chosen;
+		default: return value;
+	}
+}
+console.log(`${choose(`generic${1}`, 1)} ${choose(3, 1)} ${choose(false, 0)}`);

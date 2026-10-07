@@ -5,9 +5,13 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// functionExpression uses the same calling convention and counted captures as arrows. Ordinary
+// functionExpression lowers ordinary function expressions and switch declarations with the same
+// calling convention and counted captures as arrows. Ordinary
 // functions have their own dynamic this; until that convention exists, every use of it is refused.
 func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
+	if node.Body() == nil {
+		return nil, l.notYet(node, "a function without a body")
+	}
 	if node.Kind == ast.KindFunctionExpression && node.AsFunctionExpression().AsteriskToken != nil || node.Kind == ast.KindFunctionDeclaration && node.AsFunctionDeclaration().AsteriskToken != nil {
 		return nil, l.notYet(node, "a generator function expression")
 	}
@@ -41,6 +45,9 @@ func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 	}
 	index := len(l.result.Functions)
 	function := ir.Function{Name: "function_expression", Closure: true}
+	if node.Name() != nil {
+		function.Name = node.Name().Text()
+	}
 	if name := node.Name(); node.Kind == ast.KindFunctionExpression && name != nil {
 		function.Name = name.Text()
 		if l.locals == nil {
