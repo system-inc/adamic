@@ -1,0 +1,14 @@
+import {panic} from 'adamic';
+export type ExitFrame = {index: number; finallyEntry: number; target: number; returnedAny: boolean; thrownAny: boolean};
+export type ExitState = {cur: {index: number; reachable: boolean}; tryStack: ExitFrame[]};
+export type ReturnDependencies = {returnFrame: () => number; link: (from: number, to: number) => void; markFinal: (block: number) => void; makeUnreachable: () => void};
+export function makeReturn(state: ExitState, dependencies: ReturnDependencies): void {
+  if (!state.cur.reachable) { return; }
+  const i = dependencies.returnFrame();
+  if (i >= 0) {
+    const frame = state.tryStack[i] ?? panic('invalid return frame');
+    frame.returnedAny = true;
+    dependencies.link(state.cur.index, frame.finallyEntry);
+  } else { dependencies.markFinal(state.cur.index); }
+  dependencies.makeUnreachable();
+}

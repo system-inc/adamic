@@ -1,0 +1,21 @@
+import {panic} from 'adamic';
+import type {ExitFrame, ExitState} from './make_return.a';
+export type YieldDependencies = {returnFrame: () => number; throwFrame: () => number; throwTarget: (frame: ExitFrame) => number; link: (from: number, to: number) => void; markFinal: (block: number) => void; markThrown: (block: number) => void; newBlock: () => number; enter: (block: number) => void};
+export function makeYield(state: ExitState, dependencies: YieldDependencies): void {
+  if (!state.cur.reachable) { return; }
+  const returning = dependencies.returnFrame();
+  if (returning >= 0) {
+    const frame = state.tryStack[returning] ?? panic('invalid return frame');
+    frame.returnedAny = true;
+    dependencies.link(state.cur.index, frame.finallyEntry);
+  } else { dependencies.markFinal(state.cur.index); }
+  const throwing = dependencies.throwFrame();
+  if (throwing >= 0) {
+    const frame = state.tryStack[throwing] ?? panic('invalid throw frame');
+    frame.thrownAny = true;
+    dependencies.link(state.cur.index, dependencies.throwTarget(frame));
+  } else { dependencies.markThrown(state.cur.index); }
+  const next = dependencies.newBlock();
+  dependencies.link(state.cur.index, next);
+  dependencies.enter(next);
+}

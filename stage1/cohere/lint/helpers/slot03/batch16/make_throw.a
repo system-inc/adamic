@@ -1,0 +1,13 @@
+import {panic} from 'adamic';
+import type {ExitFrame, ExitState} from './make_return.a';
+export type ThrowDependencies = {throwFrame: () => number; throwTarget: (frame: ExitFrame) => number; link: (from: number, to: number) => void; markThrown: (block: number) => void; makeUnreachable: () => void};
+export function makeThrow(state: ExitState, dependencies: ThrowDependencies): void {
+  if (!state.cur.reachable) { return; }
+  const i = dependencies.throwFrame();
+  if (i >= 0) {
+    const frame = state.tryStack[i] ?? panic('invalid throw frame');
+    frame.thrownAny = true;
+    dependencies.link(state.cur.index, dependencies.throwTarget(frame));
+  } else { dependencies.markThrown(state.cur.index); }
+  dependencies.makeUnreachable();
+}

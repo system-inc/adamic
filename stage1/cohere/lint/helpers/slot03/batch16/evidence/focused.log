@@ -1,0 +1,67 @@
+=== RUN   TestBatch16Helpers
+    batch16_test.go:76: 2466 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch16Helpers (12.62s)
+=== RUN   TestBatch16Mutants
+=== RUN   TestBatch16Mutants/make_return.a
+    batch16_test.go:133: compiled semantic mutant caught at line 931: got "0:false//return:-1/;final:0/;unreachable:0/;" Go "0:false//"
+=== RUN   TestBatch16Mutants/make_return.a#01
+    batch16_test.go:133: compiled semantic mutant caught at line 1: got "2:true//return:-1/;final:2/;" Go "3:false//return:-1/;final:2/;unreachable:2/;"
+=== RUN   TestBatch16Mutants/make_return.a#02
+    batch16_test.go:133: compiled semantic mutant caught at line 2: got "4:false/false:true,/return:0/false:true,;link:3:2/false:true,;unreachable:3/false:true,;" Go "4:false/true:true,/return:0/false:true,;link:3:2/true:true,;unreachable:3/true:true,;"
+=== RUN   TestBatch16Mutants/make_return.a#03
+    batch16_test.go:133: compiled semantic mutant caught at line 2: got "4:false/true:true,/return:0/false:true,;link:3:3/true:true,;unreachable:3/true:true,;" Go "4:false/true:true,/return:0/false:true,;link:3:2/true:true,;unreachable:3/true:true,;"
+=== RUN   TestBatch16Mutants/make_return.a#04
+    batch16_test.go:133: compiled semantic mutant caught at line 1: got "3:false//return:-1/;final:3/;unreachable:2/;" Go "3:false//return:-1/;final:2/;unreachable:2/;"
+=== RUN   TestBatch16Mutants/make_throw.a
+    batch16_test.go:133: compiled semantic mutant caught at line 7: got "1:false/true:true,/throw:0/true:false,;target:0/true:true,;link:1:2/true:true,;unreachable:1/true:true,;" Go "1:false/true:false,/"
+=== RUN   TestBatch16Mutants/make_throw.a#01
+    batch16_test.go:133: compiled semantic mutant caught at line 3: got "5:true/true:true,/throw:0/true:true,;target:0/true:true,;link:5:2/true:true,;" Go "6:false/true:true,/throw:0/true:true,;target:0/true:true,;link:5:2/true:true,;unreachable:5/true:true,;"
+=== RUN   TestBatch16Mutants/make_throw.a#02
+    batch16_test.go:133: compiled semantic mutant caught at line 3: got "6:false/true:false,/throw:0/true:true,;target:0/true:false,;link:5:2/true:false,;unreachable:5/true:false,;" Go "6:false/true:true,/throw:0/true:true,;target:0/true:true,;link:5:2/true:true,;unreachable:5/true:true,;"
+=== RUN   TestBatch16Mutants/make_throw.a#03
+    batch16_test.go:133: compiled semantic mutant caught at line 3: got "6:false/true:true,/throw:0/true:true,;link:5:2/true:true,;unreachable:5/true:true,;" Go "6:false/true:true,/throw:0/true:true,;target:0/true:true,;link:5:2/true:true,;unreachable:5/true:true,;"
+=== RUN   TestBatch16Mutants/make_throw.a#04
+    batch16_test.go:133: compiled semantic mutant caught at line 5: got "4:false/false:true,/throw:-1/false:true,;thrown:2/false:true,;unreachable:1/false:true,;" Go "4:false/false:true,/throw:-1/false:true,;thrown:1/false:true,;unreachable:1/false:true,;"
+=== RUN   TestBatch16Mutants/make_yield.a
+    batch16_test.go:133: compiled semantic mutant caught at line 935: got "1:false//return:-1/;final:0/;throw:-1/;thrown:0/;new/;link:0:1/;enter:1/;" Go "0:false//"
+=== RUN   TestBatch16Mutants/make_yield.a#01
+    batch16_test.go:133: compiled semantic mutant caught at line 1368: got "1:true/false:true,/return:0/false:false,;link:0:-1/false:false,;throw:0/false:false,;target:0/false:true,;link:0:-1/false:true,;new/false:true,;link:0:1/false:true,;enter:1/false:true,;" Go "1:true/true:true,/return:0/false:false,;link:0:-1/true:false,;throw:0/true:false,;target:0/true:true,;link:0:-1/true:true,;new/true:true,;link:0:1/true:true,;enter:1/true:true,;"
+=== RUN   TestBatch16Mutants/make_yield.a#02
+    batch16_test.go:133: compiled semantic mutant caught at line 1368: got "1:true/true:true,/return:0/false:false,;link:0:0/true:false,;throw:0/true:false,;target:0/true:true,;link:0:-1/true:true,;new/true:true,;link:0:1/true:true,;enter:1/true:true,;" Go "1:true/true:true,/return:0/false:false,;link:0:-1/true:false,;throw:0/true:false,;target:0/true:true,;link:0:-1/true:true,;new/true:true,;link:0:1/true:true,;enter:1/true:true,;"
+=== RUN   TestBatch16Mutants/make_yield.a#03
+    batch16_test.go:133: compiled semantic mutant caught at line 928: got "1:true//return:-1/;final:1/;throw:-1/;thrown:0/;new/;link:0:1/;enter:1/;" Go "1:true//return:-1/;final:0/;throw:-1/;thrown:0/;new/;link:0:1/;enter:1/;"
+=== RUN   TestBatch16Mutants/make_yield.a#04
+    batch16_test.go:133: compiled semantic mutant caught at line 1320: got "1:true/false:false,/return:-1/false:false,;final:0/false:false,;throw:0/false:false,;target:0/false:false,;link:0:-1/false:false,;new/false:false,;link:0:1/false:false,;enter:1/false:false,;" Go "1:true/false:true,/return:-1/false:false,;final:0/false:false,;throw:0/false:false,;target:0/false:true,;link:0:-1/false:true,;new/false:true,;link:0:1/false:true,;enter:1/false:true,;"
+=== RUN   TestBatch16Mutants/make_yield.a#05
+    batch16_test.go:133: compiled semantic mutant caught at line 1320: got "1:true/false:true,/return:-1/false:false,;final:0/false:false,;throw:0/false:false,;link:0:-1/false:true,;new/false:true,;link:0:1/false:true,;enter:1/false:true,;" Go "1:true/false:true,/return:-1/false:false,;final:0/false:false,;throw:0/false:false,;target:0/false:true,;link:0:-1/false:true,;new/false:true,;link:0:1/false:true,;enter:1/false:true,;"
+=== RUN   TestBatch16Mutants/make_yield.a#06
+    batch16_test.go:133: compiled semantic mutant caught at line 928: got "1:true//return:-1/;final:0/;throw:-1/;thrown:1/;new/;link:0:1/;enter:1/;" Go "1:true//return:-1/;final:0/;throw:-1/;thrown:0/;new/;link:0:1/;enter:1/;"
+=== RUN   TestBatch16Mutants/make_yield.a#07
+    batch16_test.go:133: compiled semantic mutant caught at line 928: got "1:true//return:-1/;final:0/;throw:-1/;thrown:0/;new/;enter:1/;" Go "1:true//return:-1/;final:0/;throw:-1/;thrown:0/;new/;link:0:1/;enter:1/;"
+=== RUN   TestBatch16Mutants/make_yield.a#08
+    batch16_test.go:133: compiled semantic mutant caught at line 928: got "0:true//return:-1/;final:0/;throw:-1/;thrown:0/;new/;link:0:1/;" Go "1:true//return:-1/;final:0/;throw:-1/;thrown:0/;new/;link:0:1/;enter:1/;"
+=== RUN   TestBatch16Mutants/make_yield.a#09
+    batch16_test.go:133: compiled semantic mutant caught at line 928: got "0:true//return:-1/;final:0/;throw:-1/;thrown:0/;new/;link:0:1/;enter:0/;" Go "1:true//return:-1/;final:0/;throw:-1/;thrown:0/;new/;link:0:1/;enter:1/;"
+--- PASS: TestBatch16Mutants (51.75s)
+    --- PASS: TestBatch16Mutants/make_return.a (2.90s)
+    --- PASS: TestBatch16Mutants/make_return.a#01 (2.75s)
+    --- PASS: TestBatch16Mutants/make_return.a#02 (2.77s)
+    --- PASS: TestBatch16Mutants/make_return.a#03 (2.03s)
+    --- PASS: TestBatch16Mutants/make_return.a#04 (2.52s)
+    --- PASS: TestBatch16Mutants/make_throw.a (2.29s)
+    --- PASS: TestBatch16Mutants/make_throw.a#01 (2.77s)
+    --- PASS: TestBatch16Mutants/make_throw.a#02 (2.21s)
+    --- PASS: TestBatch16Mutants/make_throw.a#03 (2.45s)
+    --- PASS: TestBatch16Mutants/make_throw.a#04 (2.34s)
+    --- PASS: TestBatch16Mutants/make_yield.a (2.37s)
+    --- PASS: TestBatch16Mutants/make_yield.a#01 (2.36s)
+    --- PASS: TestBatch16Mutants/make_yield.a#02 (2.90s)
+    --- PASS: TestBatch16Mutants/make_yield.a#03 (2.45s)
+    --- PASS: TestBatch16Mutants/make_yield.a#04 (2.24s)
+    --- PASS: TestBatch16Mutants/make_yield.a#05 (2.61s)
+    --- PASS: TestBatch16Mutants/make_yield.a#06 (2.30s)
+    --- PASS: TestBatch16Mutants/make_yield.a#07 (2.52s)
+    --- PASS: TestBatch16Mutants/make_yield.a#08 (3.11s)
+    --- PASS: TestBatch16Mutants/make_yield.a#09 (2.86s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	64.378s
