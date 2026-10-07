@@ -13,7 +13,7 @@ def run(name,args):
 def imports(text):
  return text.replace("from '../../../../typescript/","from '"+str(repo/'stage1/typescript')+'/').replace("from '../../","from '"+str(repo/'stage1/cohere/typeaware')+'/')
 main=imports((root/'main.a').read_text())
-for filename in ['no_invalid_regexp.a','rune_quote.a']:main=main.replace("from './"+filename+"'","from '"+str(root/filename)+"'")
+for filename in ['no_invalid_regexp.a','rune_quote.a','flag_options.a']:main=main.replace("from './"+filename+"'","from '"+str(root/filename)+"'")
 assert main.count('rule.visit(node, index)')==1
 main=main.replace('rule.visit(node, index)','rule.visit(node, 0)')
 source=work/'main.a';source.write_text(main)

@@ -5,6 +5,7 @@ import { Scanner } from '../../../../typescript/scanner/scanner.ts';
 import { UnaryMinus, byteOffsets } from '../../unary_minus.ts';
 import { Rules } from '../../rules.ts';
 import {quoteFlag} from './rune_quote.a';
+import {constructorFlags} from './flag_options.a';
 import { NoInvalidRegExp, PatternCompileResult } from './no_invalid_regexp.a';
 
 function unavailablePatternCompiler(_pattern:string,_flags:string):PatternCompileResult {
@@ -13,6 +14,7 @@ function unavailablePatternCompiler(_pattern:string,_flags:string):PatternCompil
 }
 
 const args = programArguments();
+const allowed = constructorFlags(args);
 const config = args[0] ?? panic('usage: wave_09_suite.a tsconfig manifest [--count]');
 const manifest = readTextFile(args[1] ?? panic('missing manifest'));
 if(manifest.kind === 'Error') {
@@ -37,7 +39,7 @@ for(const path of paths) {
     }
     linter.links(root, -1);
     // Relevance selection belongs to the driver; the rule receives its node.
-    const rule = new NoInvalidRegExp(linter, unavailablePatternCompiler, (flag) => quoteFlag(flag), []);
+    const rule = new NoInvalidRegExp(linter, unavailablePatternCompiler, (flag) => quoteFlag(flag), allowed);
     for(let index = 0; index < parser.nodes.length; index++) {
         const node = parser.node(index);
         switch(node.kind) {

@@ -1,0 +1,14 @@
+// Isolated driver transport for allowConstructorFlags. Shared JSON adapter
+// installation remains integration work; each argument is one array item.
+import { panic } from 'adamic';
+export function constructorFlags(args: readonly string[]): string[] {
+    const flags: string[] = [];
+    const seen = new Set<string>();
+    for(const argument of args) {
+        if(!argument.startsWith('--allow-flag=')) { continue; }
+        const flag = argument.slice('--allow-flag='.length);
+        if(seen.has(flag)) { panic('allowConstructorFlags items must be unique'); }
+        seen.add(flag); flags.push(flag);
+    }
+    return flags;
+}

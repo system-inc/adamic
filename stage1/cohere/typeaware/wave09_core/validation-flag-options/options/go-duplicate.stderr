@@ -1,0 +1,5 @@
+panic: allowConstructorFlags lists "a" more than once, and its items must be unique
+
+goroutine 1 [running]:
+main.main()
+	/workspace/adamic/cohere/wave09_flag_frontend.go:63 +0x1985

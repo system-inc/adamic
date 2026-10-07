@@ -1,0 +1,24 @@
+{
+  "default": {
+    "bytes": 2216,
+    "findings": "findings 13",
+    "go": 0.11571975499828113,
+    "normal": 0.06436171799941803,
+    "sanitized": 0.11421531199812307
+  },
+  "joined": {
+    "bytes": 1998,
+    "findings": "findings 11",
+    "go": 0.11436453699934646,
+    "normal": 0.11461263799719745,
+    "sanitized": 0.11443481999958749
+  },
+  "case": {
+    "bytes": 2218,
+    "findings": "findings 13",
+    "go": 0.06408032499894034,
+    "normal": 0.06675744000312989,
+    "sanitized": 0.11471215100027621
+  },
+  "mutant_difference": 49
+}

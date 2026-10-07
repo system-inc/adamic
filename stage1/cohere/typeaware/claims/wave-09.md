@@ -208,3 +208,12 @@ pass again, including mutants and sanitizers. Unchanged required parser,
 bridge and pure-helper evidence remains in the preceding landing report.
 Dynamic RegExp still blocks completion; no new claims. See
 ../wave09_core/LANDING_LEGACY_REPORT.md.
+
+## Constructor flag options
+
+The owned invalid-regexp frontend now passes allowConstructorFlags, and its
+independent Go oracle invokes the upstream option decoder instead of always
+passing nil. Three option profiles match full findings/fixes/suggestions in
+normal and sanitized native runs; a clean ignored-options mutant differs at
+byte 49. Shared JSON/registry installation and complete regex validation
+remain unfinished. No new claims. See ../wave09_core/FLAG_OPTIONS_REPORT.md.

@@ -1,0 +1,30 @@
+file	/workspace/wave-09-flag-options/control-0.a
+45	69	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: az. Unknown flag 'z'	0	0
+file	/workspace/wave-09-flag-options/control-1.a
+45	69	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: aa. Duplicate flag 'a'	0	0
+file	/workspace/wave-09-flag-options/control-2.a
+45	69	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: zz. Unknown flag 'z'	0	0
+file	/workspace/wave-09-flag-options/control-3.a
+45	68	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: A. Unknown flag 'A'	0	0
+file	/workspace/wave-09-flag-options/control-4.a
+file	/workspace/wave-09-flag-options/control-5.a
+45	69	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: uu. Duplicate flag 'u'	0	0
+file	/workspace/wave-09-flag-options/control-6.a
+45	69	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: uv. The u and v flags cannot both be set	0	0
+file	/workspace/wave-09-flag-options/control-7.a
+45	69	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: vu. The u and v flags cannot both be set	0	0
+file	/workspace/wave-09-flag-options/control-8.a
+45	70	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: zgg. Duplicate flag 'g'	0	0
+file	/workspace/wave-09-flag-options/control-9.a
+45	79	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: \ud83c\udf0d. Unknown flag '\ud83c\udf0d'	0	0
+file	/workspace/wave-09-flag-options/control-10.a
+45	91	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: \ud83c\udf0d\ud83c\udf0d. Unknown flag '\ud83c\udf0d'	0	0
+file	/workspace/wave-09-flag-options/control-11.a
+45	80	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: \ud83c\udf0dA. Unknown flag '\ud83c\udf0d'	0	0
+file	/workspace/wave-09-flag-options/control-12.a
+45	69	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: aZ. Unknown flag 'Z'	0	0
+file	/workspace/wave-09-flag-options/control-13.a
+file	/workspace/wave-09-flag-options/control-14.a
+file	/workspace/wave-09-flag-options/control-15.a
+45	91	no-invalid-regexp	invalidRegexp	Invalid regular expression flags: \ud834\udd1e\ud834\udd1e. Unknown flag '\ud834\udd1e'	0	0
+findings 13
