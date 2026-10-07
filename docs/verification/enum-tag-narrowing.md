@@ -1,5 +1,8 @@
 # Numeric enum literal tags, October 7, 2026
 
+Historical initial implementation report. The authorized follow-up and final
+limits are recorded in [enum-tag-final.md](enum-tag-final.md).
+
 Built member-tag narrowing with unrelated open enum metadata, and reachable explicit numeric defaults; the full ruling remains incomplete.
 Implementation commits: `039e5f741ebfcea8b7fc85bb0f9229da159438e9` and `c9cd9d6216b120c5cb7f70f912b8a2f2187f0d28`, based on `48c05d091f0a43c31cbe051b1d6578d99eeedf19`.
 Validation: full lowering and uncached enum oracle pass; final commands and meter observations follow below.
@@ -55,8 +58,9 @@ fixture. All experiment code was removed before the implementation commit.
 This ASan failure is a rejected implementation, not a killed semantic mutant.
 
 A complete implementation needs checked object-view/storage support beyond
-`enums.go`. The unit asked to extend territory to the existing never/object
-lowering files; no answer was received during work. No file outside the named
+`enums.go`. At this initial checkpoint the unit had asked to extend territory to the
+existing never/object lowering files. The subsequent user authorization and
+implementation are recorded in the final report. No file outside the named
 implementation territory, tests, fixture counts and documentation was changed.
 The four explicitly prohibited files were untouched. No cohere code was copied.
 
