@@ -4,6 +4,21 @@ Renderer comparisons use unmodified pinned Go cohere, Node source, and sanitized
 Live rules and fixes are compared on generated fixtures and the pinned compiler/repository corpus.
 The complete live CLI contract remains open: clocks, automatic character-device color, and verbose accounting.
 
+## Library integration observation
+
+Merging library integration `8b2f78bdea92053f925cc3fbfdcbc47d9cfd4c4c`
+expands the repository/compiler output corpus to 1,369 source files. The optional
+`TestOutputWholeCorpus` currently fails in Go reference capture, before either
+Adamic backend runs: pinned cohere reports four `Type expected.` parse errors for
+`stage3/drivers/tsc/corpus/239_expressionWithJSDocTypeArguments/input.a`.
+The proving input includes `const WhatFoo = foo<?>;`. The stage-three corpus is
+selected for TypeScript 6.0.3; the output oracle uses cohere's pinned parser.
+No file was excluded and no parser diagnostic was converted into lint success.
+Output parity over the newly imported stage-three corpus is unverified.
+Generated live-rule cases, synthetic summaries, auxiliary renderers, renderer
+mutants, and the other complete lint-package checks passed in the integration
+run. Its failed corpus capture is recorded in `/tmp/library-lint-tests.log`.
+
 Compiler work: branch `codex/process-exit-and-tty`, from origin/main
 `5d4c8012a0877094134e6c6bac367ff68f9313e8`; commits `fd2ef77` and `3a9d1fc`, pushed.
 See [the compiler report](../../../docs/process-report.md) for commands, outputs, five

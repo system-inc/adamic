@@ -1,0 +1,7 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:1810
+// Census reason: non-boolean control condition
+export function returnTrue(): true {
+    return true;
+}
+
+console.log(`${returnTrue()}`);
