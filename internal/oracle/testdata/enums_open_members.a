@@ -1,0 +1,14 @@
+enum SyntaxKind { First, Last }
+function describe(value: SyntaxKind): string {
+    switch (value) {
+        case SyntaxKind.First: return 'first';
+        case SyntaxKind.Last: return 'last';
+        default: { const unreachable: never = value; return unreachable; }
+    }
+}
+console.log(`${describe(SyntaxKind.First)} ${describe(SyntaxKind.Last)}`);
+const member: SyntaxKind = SyntaxKind.First;
+switch (member) {
+    case SyntaxKind.First: console.log('member'); break;
+    default: { const unreachable: never = member; console.log(`${unreachable}`); }
+}
