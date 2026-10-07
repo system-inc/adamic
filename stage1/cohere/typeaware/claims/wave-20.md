@@ -170,3 +170,12 @@ blocked; older HIR claims remain parked. The full gate and its seventeen mandato
 external-input checks were not run or claimed green. Fresh 637-ref audit finds
 no unclaimed rule; no new claims. See the owned constructed-context
 LANDING_C7991B900_REPORT.md and validation/landing-c7991b900 evidence.
+
+Legacy-registry integration landing: clean rebase onto area b46914832,
+including main c7991b900. Validated source 0a8eed884329ef0965de8f52699df17f2c140a86.
+All twelve private analyses green again: 1,132 controls/870 findings, both
+corpora, sanitizers, every mutant and released handle. Shared typed registration
+remains blocked; older HIR claims remain parked. No new claims: the fresh
+650-ref audit finds no unclaimed rule. Full gate and its seventeen mandatory
+input checks were not run or claimed green. See the owned constructed-context
+LANDING_B46914832_REPORT.md and validation/landing-b46914832 evidence.
