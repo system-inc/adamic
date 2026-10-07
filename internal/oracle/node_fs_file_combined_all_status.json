@@ -1,7 +1,7 @@
 [
   {
     "file": "01_readFile_utf8.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Checker",
@@ -14,18 +14,20 @@
     },
     "adapted": {
       "native": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/01_readFile_utf8.a:44:20: stage 0 can't lower an array of never yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       },
       "javascript": {
-        "stage": "NotYet",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/01_readFile_utf8.a:44:20: stage 0 can't lower an array of never yet\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     }
   },
   {
     "file": "02_readFile_utf16le.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Checker",
@@ -51,7 +53,7 @@
   },
   {
     "file": "03_readFile_utf16be.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Checker",
@@ -77,7 +79,7 @@
   },
   {
     "file": "04_readFile_missing.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Checker",
@@ -103,7 +105,7 @@
   },
   {
     "file": "05_writeFile.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Refused",
@@ -129,7 +131,7 @@
   },
   {
     "file": "06_fileExists.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -157,7 +159,7 @@
   },
   {
     "file": "07_directoryExists.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -185,7 +187,7 @@
   },
   {
     "file": "08_getDirectories.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "NotYet",
@@ -209,7 +211,7 @@
   },
   {
     "file": "09_realpath.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -237,7 +239,7 @@
   },
   {
     "file": "10_getModifiedTime.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -265,7 +267,7 @@
   },
   {
     "file": "11_setModifiedTime.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -293,7 +295,7 @@
   },
   {
     "file": "12_deleteFile.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -321,7 +323,7 @@
   },
   {
     "file": "13_createDirectory.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Checker",
@@ -347,7 +349,7 @@
   },
   {
     "file": "14_getCurrentDirectory.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Refused",
@@ -371,7 +373,7 @@
   },
   {
     "file": "15_getExecutingFilePath.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -399,7 +401,7 @@
   },
   {
     "file": "16_getEnvironmentVariable.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -427,7 +429,7 @@
   },
   {
     "file": "17_write.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -455,7 +457,7 @@
   },
   {
     "file": "18_exit_0.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -483,7 +485,7 @@
   },
   {
     "file": "19_exit_1.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -511,7 +513,7 @@
   },
   {
     "file": "20_exit_2.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -539,7 +541,7 @@
   },
   {
     "file": "21_createHash.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -567,7 +569,7 @@
   },
   {
     "file": "22_createHash_fallback.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -595,7 +597,7 @@
   },
   {
     "file": "23_newLine.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -623,7 +625,7 @@
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "NotYet",
@@ -647,7 +649,7 @@
   },
   {
     "file": "25_readDirectory.a",
-    "source": "audited adapted fixtures 21ef072e",
+    "source": "audited adapted fixtures 17c5385a",
     "original": {
       "native": {
         "stage": "Checker",
