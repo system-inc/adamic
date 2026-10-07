@@ -8,6 +8,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	bridge "github.com/system-inc/adamic/bridge/tsgo/checker"
 	"os"
 	"path/filepath"
@@ -46,7 +47,7 @@ func main() {
 	var rows []map[string]any
 	for _, r := range sites {
 		filename := filepath.Join(filepath.Dir(os.Args[1]), "src/compiler", r.File)
-		f := p.Compiler.GetSourceFile(filename)
+		f := p.Compiler.GetSourceFile(tspath.RootedFilePath(filename))
 		if f == nil {
 			panic(filename)
 		}
