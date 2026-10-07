@@ -1,0 +1,297 @@
+[
+  {
+    "path": "streams/components/001-stage0.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/001-stage0.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/002-jsx-go.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/002-jsx-go.stdout.gz",
+    "bytes": 158,
+    "sha256": "29e7eaac8ab527ce503940cc4e4568f854b2ebe16305699a586d6643860e475d"
+  },
+  {
+    "path": "streams/components/003-jsx-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/003-jsx-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/004-jsx-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/004-jsx-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/005-jsx-js-emit.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/005-jsx-js-emit.stdout.gz",
+    "bytes": 21006,
+    "sha256": "9b1190b5a7c815e6b491e7dc5369443b7726515e61eac6d32012994415c3ccc8"
+  },
+  {
+    "path": "streams/components/006-fragments-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/006-fragments-native.stdout.gz",
+    "bytes": 1215,
+    "sha256": "304c591e6012f11495bdb151c4a2657b35243f58a927eb3e593eee030705d086"
+  },
+  {
+    "path": "streams/components/007-fragments-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/007-fragments-asan.stdout.gz",
+    "bytes": 1215,
+    "sha256": "304c591e6012f11495bdb151c4a2657b35243f58a927eb3e593eee030705d086"
+  },
+  {
+    "path": "streams/components/008-fragments-javascript.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/008-fragments-javascript.stdout.gz",
+    "bytes": 1215,
+    "sha256": "304c591e6012f11495bdb151c4a2657b35243f58a927eb3e593eee030705d086"
+  },
+  {
+    "path": "streams/components/009-fragments-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/009-fragments-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/010-fragments-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/010-fragments-mutant-run.stdout.gz",
+    "bytes": 1216,
+    "sha256": "3c57faf99f92341ce40e792508c8c3708bef2676cbb82a517e961652969be720"
+  },
+  {
+    "path": "streams/components/011-undef-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/011-undef-native.stdout.gz",
+    "bytes": 12037,
+    "sha256": "d82f4b3517078071a044676f107de64e243c148ce12f4af4de63a74665c3cdd1"
+  },
+  {
+    "path": "streams/components/012-undef-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/012-undef-asan.stdout.gz",
+    "bytes": 12037,
+    "sha256": "d82f4b3517078071a044676f107de64e243c148ce12f4af4de63a74665c3cdd1"
+  },
+  {
+    "path": "streams/components/013-undef-javascript.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/013-undef-javascript.stdout.gz",
+    "bytes": 12037,
+    "sha256": "d82f4b3517078071a044676f107de64e243c148ce12f4af4de63a74665c3cdd1"
+  },
+  {
+    "path": "streams/components/014-undef-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/014-undef-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/015-undef-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/015-undef-mutant-run.stdout.gz",
+    "bytes": 11579,
+    "sha256": "d2a9b9114de0daa5c3e428a71a8ac6d0a47a5e10d4bb1fd6e7f323a970dd654d"
+  },
+  {
+    "path": "streams/components/016-context-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/016-context-native.stdout.gz",
+    "bytes": 46522,
+    "sha256": "b6d83d6d894ef6e32d264843f86e085b2ceeecd7f9fd52566413892bdc97d5d9"
+  },
+  {
+    "path": "streams/components/017-context-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/017-context-asan.stdout.gz",
+    "bytes": 46522,
+    "sha256": "b6d83d6d894ef6e32d264843f86e085b2ceeecd7f9fd52566413892bdc97d5d9"
+  },
+  {
+    "path": "streams/components/018-context-javascript.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/018-context-javascript.stdout.gz",
+    "bytes": 46522,
+    "sha256": "b6d83d6d894ef6e32d264843f86e085b2ceeecd7f9fd52566413892bdc97d5d9"
+  },
+  {
+    "path": "streams/components/019-context-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/019-context-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/020-context-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/020-context-mutant-run.stdout.gz",
+    "bytes": 46522,
+    "sha256": "9a074c8009bf1c79b00ab5610fa8e03d6394c0746318b20ed59c2137dc67e640"
+  },
+  {
+    "path": "streams/components/021-unsupported-name.stderr.gz",
+    "bytes": 60,
+    "sha256": "d04efe1d1128e9288880839c60a80b001b11baecf785c3ca6bd0a80f01464afe"
+  },
+  {
+    "path": "streams/components/021-unsupported-name.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/components/context-go.stdout.gz",
+    "bytes": 46522,
+    "sha256": "b6d83d6d894ef6e32d264843f86e085b2ceeecd7f9fd52566413892bdc97d5d9"
+  },
+  {
+    "path": "streams/components/fragments-go.stdout.gz",
+    "bytes": 1215,
+    "sha256": "304c591e6012f11495bdb151c4a2657b35243f58a927eb3e593eee030705d086"
+  },
+  {
+    "path": "streams/components/undef-go.stdout.gz",
+    "bytes": 12037,
+    "sha256": "d82f4b3517078071a044676f107de64e243c148ce12f4af4de63a74665c3cdd1"
+  },
+  {
+    "path": "streams/prerequisites/001-stage0.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/prerequisites/001-stage0.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/prerequisites/002-parser-probe-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/prerequisites/002-parser-probe-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/prerequisites/003-react-oracle-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/prerequisites/003-react-oracle-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/prerequisites/004-react-controls-go.stderr.gz",
+    "bytes": 53,
+    "sha256": "bb8f9a37b37cd5b169bedd82dd4d81477f4b929cd2d1c36eaf08c3f6c31d50d0"
+  },
+  {
+    "path": "streams/prerequisites/004-react-controls-go.stdout.gz",
+    "bytes": 1774,
+    "sha256": "7bfa2d52aa33be6a6eeabdacedec567cf62ea67edcf1945234b3f383414b4385"
+  },
+  {
+    "path": "streams/prerequisites/005-fragments-native-parser.stderr.gz",
+    "bytes": 132,
+    "sha256": "6adcd5bc1ec26da796b4136271e5ee416aa9f1f34a8797391b75e0bb2967cbcc"
+  },
+  {
+    "path": "streams/prerequisites/005-fragments-native-parser.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/prerequisites/006-context-native-parser.stderr.gz",
+    "bytes": 130,
+    "sha256": "8eac1c9c6946efa0503bf82045e09e9950b31c453f5d2ed75fff2b8572f75c19"
+  },
+  {
+    "path": "streams/prerequisites/006-context-native-parser.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "streams/prerequisites/007-undef-native-parser.stderr.gz",
+    "bytes": 128,
+    "sha256": "921c12d1f1bfa0122a65d5bfcf3f89c7c94de18261f954356992d813c54fd00f"
+  },
+  {
+    "path": "streams/prerequisites/007-undef-native-parser.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

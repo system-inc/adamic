@@ -141,3 +141,11 @@ analysis dependency, are:
 
 These three are claimed before implementation. Snapshot evidence is
 ../validation-wave-30-fifth/selection.json. No new code precedes this claim push.
+
+Fifth batch progress in 1d023cc6c: three native components, partial rule.json kind
+declarations and independent production-Go component tests are implemented. Each
+component has a caught comparison mutant and sanitized/JavaScript agreement.
+All three full Go TSX controls report while the native parser refuses them. Full
+source-rule findings, fixes/suggestions, corpora and timings remain blocked by
+shared native JSX AST and numeric handed-node/registration interfaces. These are
+partial components, not completed rule ports. See ../WAVE_30_FIFTH_REPORT.md.

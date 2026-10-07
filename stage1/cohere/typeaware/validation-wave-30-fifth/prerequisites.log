@@ -1,0 +1,7 @@
+=== RUN   TestWave30JsxPrerequisites
+    wave_30_jsx_prerequisites_test.go:58: react/jsx-fragments: Go reports; native parser refuses JSX, exit 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 30 in /workspace/wave-30-fifth-prerequisites/fragments.tsx
+    wave_30_jsx_prerequisites_test.go:58: react/jsx-no-constructed-context-values: Go reports; native parser refuses JSX, exit 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 42 in /workspace/wave-30-fifth-prerequisites/context.tsx
+    wave_30_jsx_prerequisites_test.go:58: react/jsx-no-undef: Go reports; native parser refuses JSX, exit 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 23 in /workspace/wave-30-fifth-prerequisites/undef.tsx
+--- PASS: TestWave30JsxPrerequisites (9.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	9.001s
