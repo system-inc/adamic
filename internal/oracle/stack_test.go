@@ -72,7 +72,9 @@ func TestLongArgumentsLeaveTheStackItsLimit(t *testing.T) {
 						return executeWith(t, environment, name, append(arguments, setting.arguments...)...)
 					}
 					command := bounded(t, name, append(arguments, setting.arguments...)...)
-					command.Env = []string{}
+					// No environment but one short option: with no PATH, macOS's AddressSanitizer
+					// can't find its symbolizer and says so on stderr, which isn't the program's.
+					command.Env = []string{"ASAN_OPTIONS=symbolize=0"}
 					var stdout, stderr bytes.Buffer
 					command.Stdout, command.Stderr = &stdout, &stderr
 					if err := command.Run(); err != nil && command.ProcessState == nil {

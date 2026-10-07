@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	goruntime "runtime"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
@@ -64,7 +65,7 @@ int main(void) {
 		t.Fatal(err)
 	}
 	command := exec.Command(binary)
-	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:malloc_fill_byte=239")
+	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks="+detectLeaks()+":malloc_fill_byte=239")
 	output, err := command.CombinedOutput()
 	if err != nil || len(output) != 0 {
 		t.Fatalf("regional Weak targets: %v\n%s", err, output)
@@ -97,9 +98,18 @@ func TestRegionEndThrowInitialization(t *testing.T) {
 		t.Fatalf("Node: %v\n%s", err, truth)
 	}
 	command := exec.Command(binary)
-	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:malloc_fill_byte=240")
+	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks="+detectLeaks()+":malloc_fill_byte=240")
 	output, err := command.CombinedOutput()
 	if err != nil || string(output) != string(truth) {
 		t.Fatalf("throw initialization: %v\n%s\nNode: %s", err, output, truth)
 	}
+}
+
+// detectLeaks is 1 where AddressSanitizer has a leak detector. macOS's has none and aborts when
+// asked for one; the leak check there is internal/leakcheck's counted build.
+func detectLeaks() string {
+	if goruntime.GOOS == "darwin" {
+		return "0"
+	}
+	return "1"
 }
