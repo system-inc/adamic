@@ -25,40 +25,50 @@ func Generate(seed uint64) *Program {
 // Features are the parts of the language the generator can leave out by name, so it can stay inside
 // what an older stage 0 lowered: fuzzing an old commit, a program that's all not-yets tests nothing.
 var Features = []string{
-	"field-updates",    // +=, ++ and the rest on a field (holder.value += 1), not plain =
-	"number-tostring",  // (1.5).toString()
-	"number-functions", // Number.parseInt, parseFloat, isInteger, isNaN, isFinite
-	"string-index",     // text[index] and text.at(index)
-	"string-search",    // lastIndexOf, replaceAll, trimStart, trimEnd
-	"array-index",      // list[index] and list.at(index), read
-	"array-write",      // list[index] = value
-	"array-spread",     // [...list, value]
-	"array-search",     // indexOf and includes on an array
-	"array-methods",    // reverse, concat, reduce, filter, find, findIndex, some, every
-	"sort-callback",    // sort with an arrow function as the comparator
-	"map-iteration",    // for...of over a Map
-	"closures-deep",    // closures pushed to a global array from anywhere, capturing cells, and called later
-	"map-mutation",     // for...of over a Map, its keys or its values, while the body sets and deletes
-	"splice",           // list.splice(start, count, ...items)
-	"sort-mutating",    // sort with a comparator that writes, to the array it's sorting too
-	"surrogates",       // strings with a surrogate pair's halves, apart and rejoined
-	"case-mapping",     // toUpperCase and toLowerCase
-	"defaults",         // default parameters, which may call functions, left out by some calls
-	"optional-chains",  // ?. and ?? through a linked list that may end anywhere
-	"number-formats",   // toExponential and toPrecision
-	"array-from",       // Array.from({ length }, callback)
-	"inheritance",      // a subclass, an override, a super call, and a base-typed virtual call
-	"map-keys",         // a number Map and a number Set, including NaN and -0
-	"regex",            // regular expression literals: exec, replace, replaceAll and split
-	"bitwise",          // &, |, ^, ~, <<, >> and >>>
+	"field-updates",     // +=, ++ and the rest on a field (holder.value += 1), not plain =
+	"number-tostring",   // (1.5).toString()
+	"number-functions",  // Number.parseInt, parseFloat, isInteger, isNaN, isFinite
+	"string-index",      // text[index] and text.at(index)
+	"string-search",     // lastIndexOf, replaceAll, trimStart, trimEnd
+	"array-index",       // list[index] and list.at(index), read
+	"array-write",       // list[index] = value
+	"array-spread",      // [...list, value]
+	"array-search",      // indexOf and includes on an array
+	"array-methods",     // reverse, concat, reduce, filter, find, findIndex, some, every
+	"sort-callback",     // sort with an arrow function as the comparator
+	"map-iteration",     // for...of over a Map
+	"closures-deep",     // closures pushed to a global array from anywhere, capturing cells, and called later
+	"map-mutation",      // for...of over a Map, its keys or its values, while the body sets and deletes
+	"splice",            // list.splice(start, count, ...items)
+	"sort-mutating",     // sort with a comparator that writes, to the array it's sorting too
+	"surrogates",        // strings with a surrogate pair's halves, apart and rejoined
+	"case-mapping",      // toUpperCase and toLowerCase
+	"defaults",          // default parameters, which may call functions, left out by some calls
+	"optional-chains",   // ?. and ?? through a linked list that may end anywhere
+	"number-formats",    // toExponential and toPrecision
+	"array-from",        // Array.from({ length }, callback)
+	"inheritance",       // a subclass, an override, a super call, and a base-typed virtual call
+	"map-keys",          // a number Map and a number Set, including NaN and -0
+	"regex",             // regular expression literals: exec, replace, replaceAll and split
+	"bitwise",           // &, |, ^, ~, <<, >> and >>>
+	"undefined-numbers", // number | undefined and optional numbers across every kind of call (undefined_numbers.go)
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
 // same features always make the same program.
 func GenerateWithout(seed uint64, without []string) *Program {
-	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}}
+	return GenerateFeatures(seed, without, nil)
+}
+
+// GenerateFeatures makes the program a seed names with some features left out and some of OptIn
+// put in. The same seed and the same features always make the same program.
+func GenerateFeatures(seed uint64, without []string, with []string) *Program {
+	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}, with: map[string]bool{}}
 	for _, feature := range without {
 		generator.without[feature] = true
+	}
+	for _, feature := range with {
+		generator.with[feature] = true
 	}
 	return generator.program()
 }
@@ -71,7 +81,9 @@ func (g *generator) allowed(feature string) bool {
 type generator struct {
 	random  *rand.Rand
 	without map[string]bool
-	scope   *scope
+	// with is the OptIn features asked for.
+	with  map[string]bool
+	scope *scope
 	// names counts every name made, so each is unique in the program and a shrunk expression that
 	// escapes its scope fails the checker instead of meaning something else.
 	names int
@@ -88,6 +100,10 @@ type generator struct {
 	// inClosure counts the closures being generated around this point: one pushed to pending must
 	// never run pending, or it would call itself.
 	inClosure int
+	// silent is set while the counter's methods are generated. Every function, closure and comparator
+	// can call them, so a print there runs once per call, and the calls multiply: seed 90's bump printed
+	// 17315 lines, 2.5 megabytes, which made the program unfit.
+	silent bool
 }
 
 // function is a callable the generator made: a name, its parameter types, and what it returns.
@@ -220,6 +236,11 @@ func (g *generator) program() *Program {
 
 	for range 2 + g.random.IntN(4) {
 		add(g.function())
+	}
+	if g.allowed("undefined-numbers") {
+		for _, part := range g.undefinedNumbersProgram() {
+			add(part)
+		}
 	}
 
 	for range 6 + g.random.IntN(14) {
@@ -545,7 +566,9 @@ func (g *generator) mutation() *Statement {
 			}
 			return statement("table.set(@e, @e);", g.key(), g.expression(Number, 2))
 		case 8:
-			return statement("console.log(@e);", g.expression(String, 2))
+			if !g.silent {
+				return statement("console.log(@e);", g.expression(String, 2))
+			}
 		}
 	}
 	return statement("holder.value += @e;", g.expression(Number, 2))
@@ -737,15 +760,17 @@ func (g *generator) number(depth int) *Expression {
 		if !g.allowed("array-methods") {
 			return g.leaf(Number)
 		}
+		// The test says it returns boolean: inside if (flag), a flag the checker knows is false is never,
+		// and an arrow returning it would return never, which stage 0 doesn't lower.
 		item := g.name("item")
 		g.push()
 		g.declare(item, Number, false)
 		test := g.expression(Boolean, next)
 		g.pop()
 		if g.chance(1, 2) {
-			return compose(Number, "@e.findIndex(("+item+") => @e)", g.expression(NumberArray, next), test)
+			return compose(Number, "@e.findIndex(("+item+"): boolean => @e)", g.expression(NumberArray, next), test)
 		}
-		return compose(Number, "(@e.find(("+item+") => @e) ?? @e)", g.expression(NumberArray, next), test, g.literal(Number))
+		return compose(Number, "(@e.find(("+item+"): boolean => @e) ?? @e)", g.expression(NumberArray, next), test, g.literal(Number))
 	case 19:
 		if !g.allowed("array-index") {
 			return g.leaf(Number)
@@ -870,14 +895,14 @@ func (g *generator) boolean(depth int) *Expression {
 		return compose(Boolean, "(@e "+g.pick("<", "<=", ">", ">=", "===", "!==")+" @e)", left, right)
 	case 3, 4:
 		left, right := g.expression(String, next), g.expression(String, next)
-		if isLiteral(left) && isLiteral(right) {
+		if constantString(left) && constantString(right) {
 			left = g.leafVariable(String, left)
 		}
 		return compose(Boolean, "(@e "+g.pick("<", ">=", "===", "!==")+" @e)", left, right)
 	case 5:
-		return compose(Boolean, "(@e "+g.pick("&&", "||")+" @e)", g.expression(Boolean, next), g.expression(Boolean, next))
+		return compose(Boolean, "(@e "+g.pick("&&", "||")+" @e)", g.operand(next), g.operand(next))
 	case 6:
-		return compose(Boolean, "!@e", g.expression(Boolean, next))
+		return compose(Boolean, "!@e", g.operand(next))
 	case 7:
 		if !g.allowed("array-search") {
 			return g.leaf(Boolean)
@@ -916,6 +941,36 @@ func (g *generator) boolean(depth int) *Expression {
 	return g.leaf(Boolean)
 }
 
+// operand is a side of && or ||, or what ! negates, never true or false written out. The checker
+// reads those through the operators when the expression is a condition, so (false || true) as an
+// if's condition makes its else unreachable, and the statement after if (!true && flag) return too.
+// In unreachable code a narrowing does nothing: chain !== undefined leaves chain possibly undefined.
+func (g *generator) operand(depth int) *Expression {
+	operand := g.expression(Boolean, depth)
+	if isLiteral(operand) {
+		return compose(Boolean, "(holder.value "+g.pick("<", ">=")+" @e)", g.literal(Number))
+	}
+	return operand
+}
+
+// constantString says whether the checker sees a string expression's one value: a literal, or a
+// template whose every part is constant, which TypeScript types as a literal too (`${1e21}>` is
+// "1e+21>"). Two of them compared with === is an error ("no overlap").
+func constantString(e *Expression) bool {
+	if isLiteral(e) {
+		return true
+	}
+	if len(e.Parts) == 0 || e.Parts[0].Expression != nil || !strings.HasPrefix(e.Parts[0].Text, "`") {
+		return false
+	}
+	for _, part := range e.Parts {
+		if part.Expression != nil && !isLiteral(part.Expression) && !constantString(part.Expression) {
+			return false
+		}
+	}
+	return true
+}
+
 // leafVariable is a variable of a type in place of a literal, or the literal parenthesized into an
 // expression the checker can't see through when there's no variable.
 func (g *generator) leafVariable(t Type, fallback *Expression) *Expression {
@@ -946,12 +1001,13 @@ func (g *generator) numberArray(depth int) *Expression {
 		if !g.allowed("array-methods") {
 			return g.leaf(NumberArray)
 		}
+		// Annotated for the reason find's test is.
 		item := g.name("item")
 		g.push()
 		g.declare(item, Number, false)
 		test := g.expression(Boolean, next)
 		g.pop()
-		return compose(NumberArray, "@e.filter(("+item+") => @e)", g.expression(NumberArray, next), test)
+		return compose(NumberArray, "@e.filter(("+item+"): boolean => @e)", g.expression(NumberArray, next), test)
 	case 4:
 		if !g.allowed("array-spread") {
 			return g.leaf(NumberArray)
@@ -1023,6 +1079,7 @@ func (g *generator) counterMethod(child bool) *Block {
 		g.declare("this.extra", Number, true)
 		g.declare("carried", Number, false)
 	}
+	g.silent = true
 	method := &Block{}
 	if child {
 		method.Statements = append(method.Statements, statement("const carried = super.bump(amount);"))
@@ -1035,6 +1092,7 @@ func (g *generator) counterMethod(child bool) *Block {
 	} else {
 		method.Statements = append(method.Statements, statement("return this.count + amount;"))
 	}
+	g.silent = false
 	g.returns = ""
 	g.pop()
 	return method
