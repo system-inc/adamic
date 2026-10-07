@@ -1,0 +1,62 @@
+{
+  "controls": {
+    "bytes": 45419,
+    "summary": "findings 126",
+    "sha256": "7a786567d1300026be038f9335b667976db7c66021b49a4b00954a3434f73fc6",
+    "same_stdout": [
+      "Go",
+      "native",
+      "ASan"
+    ],
+    "native_stderr_bytes": {
+      "native": 0,
+      "ASan": 0
+    }
+  },
+  "repository": {
+    "bytes": 18485,
+    "summary": "findings 0",
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "same_stdout": [
+      "Go",
+      "native",
+      "ASan"
+    ],
+    "native_stderr_bytes": {
+      "native": 0,
+      "ASan": 0
+    }
+  },
+  "compiler": {
+    "bytes": 5010,
+    "summary": "findings 0",
+    "sha256": "2928c31ae29c499319d6ad569c94021821553b6ae7ba20001051540f938fcab5",
+    "same_stdout": [
+      "Go",
+      "native",
+      "ASan"
+    ],
+    "native_stderr_bytes": {
+      "native": 0,
+      "ASan": 0
+    }
+  },
+  "parity-mutant": {
+    "sha256": "66c9b2bf4cd4ae0fc246f60da34d68216fd55a7cb2ef0bf667cd725889d4ca0a",
+    "first_difference": 36675,
+    "stderr_bytes": 0,
+    "exit_code": 0
+  },
+  "scope-mutant": {
+    "sha256": "0c54455613071e1dcacfcbd025a71f5510beb00044e37a4d4644772401956e9d",
+    "first_difference": 49,
+    "stderr_bytes": 0,
+    "exit_code": 0
+  },
+  "getter-mutant": {
+    "sha256": "7b0dd42969ed720dfab07868f895bb56fd406b844147242ee696c3ffd0b2dd88",
+    "first_difference": 21640,
+    "stderr_bytes": 0,
+    "exit_code": 0
+  }
+}

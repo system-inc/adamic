@@ -1,0 +1,382 @@
+file	/workspace/wave-28-validation/control-000.a
+14	15	block-scoped-var	outOfScope	`x` is declared with `var` inside a block on line 1 column 24, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-001.a
+25	26	block-scoped-var	outOfScope	`x` is declared with `var` inside a block on line 1 column 21, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-002.a
+41	42	block-scoped-var	outOfScope	`b` is declared with `var` inside a block on line 1 column 29, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-003.a
+54	55	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 26, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-004.a
+47	48	block-scoped-var	outOfScope	`c` is declared with `var` inside a block on line 1 column 39, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-005.a
+47	48	block-scoped-var	outOfScope	`c` is declared with `var` inside a block on line 1 column 39, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-006.a
+75	76	block-scoped-var	outOfScope	`b` is declared with `var` inside a block on line 1 column 39, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-007.a
+21	22	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 10, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-008.a
+21	22	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 10, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-009.a
+21	22	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 10, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-010.a
+15	16	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 7, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-011.a
+21	22	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 17, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-012.a
+16	17	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 37, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+36	37	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 17, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-013.a
+29	30	block-scoped-var	outOfScope	`i` is declared with `var` inside a block on line 1 column 10, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+9	10	block-scoped-var	outOfScope	`i` is declared with `var` inside a block on line 1 column 30, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-014.a
+41	44	block-scoped-var	outOfScope	`foo` is declared with `var` inside a block on line 1 column 35, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-015.a
+20	23	block-scoped-var	outOfScope	`bar` is declared with `var` inside a block on line 2 column 3, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-016.a
+30	33	block-scoped-var	outOfScope	`bar` is declared with `var` inside a block on line 2 column 3, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-017.a
+15	16	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 45, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+15	16	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 65, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+44	45	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 16, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+44	45	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 65, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+64	65	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 16, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+64	65	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 45, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-018.a
+file	/workspace/wave-28-validation/control-019.a
+file	/workspace/wave-28-validation/control-020.a
+file	/workspace/wave-28-validation/control-021.a
+file	/workspace/wave-28-validation/control-022.a
+file	/workspace/wave-28-validation/control-023.a
+file	/workspace/wave-28-validation/control-024.a
+file	/workspace/wave-28-validation/control-025.a
+file	/workspace/wave-28-validation/control-026.a
+file	/workspace/wave-28-validation/control-027.a
+file	/workspace/wave-28-validation/control-028.a
+file	/workspace/wave-28-validation/control-029.a
+file	/workspace/wave-28-validation/control-030.a
+file	/workspace/wave-28-validation/control-031.a
+file	/workspace/wave-28-validation/control-032.a
+file	/workspace/wave-28-validation/control-033.a
+file	/workspace/wave-28-validation/control-034.a
+file	/workspace/wave-28-validation/control-035.a
+file	/workspace/wave-28-validation/control-036.a
+file	/workspace/wave-28-validation/control-037.a
+file	/workspace/wave-28-validation/control-038.a
+file	/workspace/wave-28-validation/control-039.a
+file	/workspace/wave-28-validation/control-040.a
+file	/workspace/wave-28-validation/control-041.a
+file	/workspace/wave-28-validation/control-042.a
+file	/workspace/wave-28-validation/control-043.a
+file	/workspace/wave-28-validation/control-044.a
+file	/workspace/wave-28-validation/control-045.a
+file	/workspace/wave-28-validation/control-046.a
+file	/workspace/wave-28-validation/control-047.a
+file	/workspace/wave-28-validation/control-048.a
+file	/workspace/wave-28-validation/control-049.a
+24	31	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-050.a
+file	/workspace/wave-28-validation/control-051.a
+file	/workspace/wave-28-validation/control-052.a
+file	/workspace/wave-28-validation/control-053.a
+file	/workspace/wave-28-validation/control-054.a
+file	/workspace/wave-28-validation/control-055.a
+file	/workspace/wave-28-validation/control-056.a
+file	/workspace/wave-28-validation/control-057.a
+file	/workspace/wave-28-validation/control-058.a
+file	/workspace/wave-28-validation/control-059.a
+file	/workspace/wave-28-validation/control-060.a
+file	/workspace/wave-28-validation/control-061.a
+file	/workspace/wave-28-validation/control-062.a
+file	/workspace/wave-28-validation/control-063.a
+file	/workspace/wave-28-validation/control-064.a
+file	/workspace/wave-28-validation/control-065.a
+file	/workspace/wave-28-validation/control-066.a
+file	/workspace/wave-28-validation/control-067.a
+file	/workspace/wave-28-validation/control-068.a
+file	/workspace/wave-28-validation/control-069.a
+file	/workspace/wave-28-validation/control-070.a
+file	/workspace/wave-28-validation/control-071.a
+file	/workspace/wave-28-validation/control-072.a
+file	/workspace/wave-28-validation/control-073.a
+file	/workspace/wave-28-validation/control-074.a
+file	/workspace/wave-28-validation/control-075.a
+file	/workspace/wave-28-validation/control-076.a
+file	/workspace/wave-28-validation/control-077.a
+file	/workspace/wave-28-validation/control-078.a
+file	/workspace/wave-28-validation/control-079.a
+file	/workspace/wave-28-validation/control-080.a
+file	/workspace/wave-28-validation/control-081.a
+file	/workspace/wave-28-validation/control-082.a
+file	/workspace/wave-28-validation/control-083.a
+file	/workspace/wave-28-validation/control-084.a
+file	/workspace/wave-28-validation/control-085.a
+file	/workspace/wave-28-validation/control-086.a
+file	/workspace/wave-28-validation/control-087.a
+file	/workspace/wave-28-validation/control-088.a
+file	/workspace/wave-28-validation/control-089.a
+file	/workspace/wave-28-validation/control-090.a
+file	/workspace/wave-28-validation/control-091.a
+file	/workspace/wave-28-validation/control-092.a
+file	/workspace/wave-28-validation/control-093.a
+file	/workspace/wave-28-validation/control-094.a
+file	/workspace/wave-28-validation/control-095.a
+file	/workspace/wave-28-validation/control-096.a
+file	/workspace/wave-28-validation/control-097.a
+file	/workspace/wave-28-validation/control-098.a
+file	/workspace/wave-28-validation/control-099.a
+file	/workspace/wave-28-validation/control-100.a
+file	/workspace/wave-28-validation/control-101.a
+15	16	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 7, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-102.a
+14	15	block-scoped-var	outOfScope	`x` is declared with `var` inside a block on line 1 column 24, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-103.a
+41	42	block-scoped-var	outOfScope	`b` is declared with `var` inside a block on line 1 column 29, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-104.a
+29	30	block-scoped-var	outOfScope	`i` is declared with `var` inside a block on line 1 column 10, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+9	10	block-scoped-var	outOfScope	`i` is declared with `var` inside a block on line 1 column 30, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-105.a
+30	33	block-scoped-var	outOfScope	`bar` is declared with `var` inside a block on line 2 column 3, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-106.a
+15	16	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 45, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+15	16	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 65, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+44	45	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 16, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+44	45	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 65, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+64	65	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 16, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+64	65	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 45, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-107.a
+file	/workspace/wave-28-validation/control-108.a
+29	30	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 21, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-109.a
+file	/workspace/wave-28-validation/control-110.a
+file	/workspace/wave-28-validation/control-111.a
+21	22	block-scoped-var	outOfScope	`i` is declared with `var` inside a block on line 1 column 10, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-112.a
+file	/workspace/wave-28-validation/control-113.a
+21	22	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 17, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-114.a
+12	19	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-115.a
+12	21	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-116.a
+12	19	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-117.a
+12	19	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-118.a
+24	31	getter-return	expected	This bare return leaves the getter with undefined, so reading the property yields nothing. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-119.a
+12	19	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-120.a
+20	34	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-121.a
+12	19	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-122.a
+12	19	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-123.a
+36	50	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-124.a
+36	57	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-125.a
+36	39	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-126.a
+36	41	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-127.a
+36	50	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-128.a
+36	50	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-129.a
+37	51	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-130.a
+28	41	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-131.a
+28	31	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-132.a
+28	33	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-133.a
+37	51	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-134.a
+39	53	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-135.a
+36	52	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-136.a
+37	51	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-137.a
+29	43	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-138.a
+12	19	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-139.a
+12	19	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-140.a
+12	19	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-141.a
+12	19	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-142.a
+12	19	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-143.a
+12	19	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-144.a
+33	40	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-145.a
+12	19	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-146.a
+12	19	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-147.a
+33	40	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-148.a
+12	19	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-149.a
+12	19	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+33	40	getter-return	expected	This bare return leaves the getter with undefined, so reading the property yields nothing. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-150.a
+12	19	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-151.a
+12	19	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-152.a
+38	52	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-153.a
+38	52	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-154.a
+38	52	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-155.a
+36	50	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-156.a
+28	42	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-157.a
+37	51	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-158.a
+37	51	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-159.a
+39	53	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-160.a
+31	45	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-161.a
+file	/workspace/wave-28-validation/control-162.a
+file	/workspace/wave-28-validation/control-163.a
+file	/workspace/wave-28-validation/control-164.a
+file	/workspace/wave-28-validation/control-165.a
+file	/workspace/wave-28-validation/control-166.a
+file	/workspace/wave-28-validation/control-167.a
+file	/workspace/wave-28-validation/control-168.a
+file	/workspace/wave-28-validation/control-169.a
+file	/workspace/wave-28-validation/control-170.a
+file	/workspace/wave-28-validation/control-171.a
+file	/workspace/wave-28-validation/control-172.a
+file	/workspace/wave-28-validation/control-173.a
+file	/workspace/wave-28-validation/control-174.a
+file	/workspace/wave-28-validation/control-175.a
+file	/workspace/wave-28-validation/control-176.a
+file	/workspace/wave-28-validation/control-177.a
+file	/workspace/wave-28-validation/control-178.a
+file	/workspace/wave-28-validation/control-179.a
+file	/workspace/wave-28-validation/control-180.a
+file	/workspace/wave-28-validation/control-181.a
+file	/workspace/wave-28-validation/control-182.a
+file	/workspace/wave-28-validation/control-183.a
+file	/workspace/wave-28-validation/control-184.a
+file	/workspace/wave-28-validation/control-185.a
+file	/workspace/wave-28-validation/control-186.a
+file	/workspace/wave-28-validation/control-187.a
+file	/workspace/wave-28-validation/control-188.a
+file	/workspace/wave-28-validation/control-189.a
+file	/workspace/wave-28-validation/control-190.a
+file	/workspace/wave-28-validation/control-191.a
+file	/workspace/wave-28-validation/control-192.a
+file	/workspace/wave-28-validation/control-193.a
+file	/workspace/wave-28-validation/control-194.a
+file	/workspace/wave-28-validation/control-195.a
+file	/workspace/wave-28-validation/control-196.a
+file	/workspace/wave-28-validation/control-197.a
+file	/workspace/wave-28-validation/control-198.a
+file	/workspace/wave-28-validation/control-199.a
+file	/workspace/wave-28-validation/control-200.a
+file	/workspace/wave-28-validation/control-201.a
+file	/workspace/wave-28-validation/control-202.a
+file	/workspace/wave-28-validation/control-203.a
+file	/workspace/wave-28-validation/control-204.a
+file	/workspace/wave-28-validation/control-205.a
+file	/workspace/wave-28-validation/control-206.a
+file	/workspace/wave-28-validation/control-207.a
+23	30	getter-return	expected	This bare return leaves the getter with undefined, so reading the property yields nothing. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-208.a
+file	/workspace/wave-28-validation/control-209.a
+31	38	getter-return	expected	This bare return leaves the getter with undefined, so reading the property yields nothing. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-210.a
+file	/workspace/wave-28-validation/control-211.a
+22	29	getter-return	expected	This bare return leaves the getter with undefined, so reading the property yields nothing. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-212.a
+file	/workspace/wave-28-validation/control-213.a
+53	60	getter-return	expected	This bare return leaves the getter with undefined, so reading the property yields nothing. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-214.a
+file	/workspace/wave-28-validation/control-215.a
+56	63	getter-return	expected	This bare return leaves the getter with undefined, so reading the property yields nothing. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-216.a
+file	/workspace/wave-28-validation/control-217.a
+12	19	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-218.a
+36	50	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-219.a
+36	39	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-220.a
+36	41	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-221.a
+12	21	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-222.a
+20	34	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-223.a
+388	392	base/correctness-require-verify-optional-parity	optionalButTypeNot	@VerifyIsOptional() is present but type 'string' does not include null/undefined. The validator is configured to tolerate a missing value here and the type is not, so TypeScript forbids the very values the validation would have let through. One of the two is wrong and a reader cannot tell which.	0	0
+file	/workspace/wave-28-validation/control-224.a
+406	410	base/correctness-require-verify-optional-parity	optionalButTypeNot	@VerifyIsOptional() is present but type 'string' does not include null/undefined. The validator is configured to tolerate a missing value here and the type is not, so TypeScript forbids the very values the validation would have let through. One of the two is wrong and a reader cannot tell which.	0	0
+file	/workspace/wave-28-validation/control-225.a
+386	390	base/correctness-require-verify-optional-parity	typeOptionalButNoVerify	Type 'string | undefined' is nullable but @VerifyIsOptional() is missing. The type says this value may be missing and the validator does not, so passing undefined fails validation at runtime while the compiler was happy with it. That gap only shows up in production data.	0	0
+file	/workspace/wave-28-validation/control-226.a
+386	390	base/correctness-require-verify-optional-parity	typeOptionalButNoVerify	Type 'string | null' is nullable but @VerifyIsOptional() is missing. The type says this value may be missing and the validator does not, so passing undefined fails validation at runtime while the compiler was happy with it. That gap only shows up in production data.	0	0
+file	/workspace/wave-28-validation/control-227.a
+386	390	base/correctness-require-verify-optional-parity	typeOptionalButNoVerify	Type 'string | undefined' is nullable but @VerifyIsOptional() is missing. The type says this value may be missing and the validator does not, so passing undefined fails validation at runtime while the compiler was happy with it. That gap only shows up in production data.	0	0
+file	/workspace/wave-28-validation/control-228.a
+386	390	base/correctness-require-verify-optional-parity	typeOptionalButNoVerify	Type 'any' is nullable but @VerifyIsOptional() is missing. The type says this value may be missing and the validator does not, so passing undefined fails validation at runtime while the compiler was happy with it. That gap only shows up in production data.	0	0
+file	/workspace/wave-28-validation/control-229.a
+386	390	base/correctness-require-verify-optional-parity	typeOptionalButNoVerify	Type 'unknown' is nullable but @VerifyIsOptional() is missing. The type says this value may be missing and the validator does not, so passing undefined fails validation at runtime while the compiler was happy with it. That gap only shows up in production data.	0	0
+file	/workspace/wave-28-validation/control-230.a
+407	411	base/correctness-require-verify-optional-parity	optionalButTypeNot	@VerifyIsOptional() is present but type 'string' does not include null/undefined. The validator is configured to tolerate a missing value here and the type is not, so TypeScript forbids the very values the validation would have let through. One of the two is wrong and a reader cannot tell which.	0	0
+file	/workspace/wave-28-validation/control-231.a
+407	411	base/correctness-require-verify-optional-parity	typeOptionalButNoVerify	Type 'string | undefined' is nullable but @VerifyIsOptional() is missing. The type says this value may be missing and the validator does not, so passing undefined fails validation at runtime while the compiler was happy with it. That gap only shows up in production data.	0	0
+file	/workspace/wave-28-validation/control-232.a
+390	394	base/correctness-require-verify-optional-parity	typeOptionalButNoVerify	Type 'string | undefined' is nullable but @VerifyIsOptional() is missing. The type says this value may be missing and the validator does not, so passing undefined fails validation at runtime while the compiler was happy with it. That gap only shows up in production data.	0	0
+file	/workspace/wave-28-validation/control-233.a
+file	/workspace/wave-28-validation/control-234.a
+file	/workspace/wave-28-validation/control-235.a
+file	/workspace/wave-28-validation/control-236.a
+file	/workspace/wave-28-validation/control-237.a
+file	/workspace/wave-28-validation/control-238.a
+file	/workspace/wave-28-validation/control-239.a
+file	/workspace/wave-28-validation/control-240.a
+file	/workspace/wave-28-validation/control-241.a
+file	/workspace/wave-28-validation/control-242.a
+file	/workspace/wave-28-validation/control-243.a
+file	/workspace/wave-28-validation/control-244.a
+file	/workspace/wave-28-validation/control-245.a
+47	49	block-scoped-var	outOfScope	`\u00e9` is declared with `var` inside a block on line 3 column 6, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-246.a
+40	41	block-scoped-var	outOfScope	`y` is declared with `var` inside a block on line 1 column 23, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+42	43	block-scoped-var	outOfScope	`w` is declared with `var` inside a block on line 1 column 31, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+82	83	block-scoped-var	outOfScope	`a` is declared with `var` inside a block on line 1 column 67, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+84	85	block-scoped-var	outOfScope	`b` is declared with `var` inside a block on line 1 column 73, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-247.a
+51	52	block-scoped-var	outOfScope	`x` is declared with `var` inside a block on line 1 column 6, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-248.a
+60	64	block-scoped-var	outOfScope	`type` is declared with `var` inside a block on line 1 column 52, and used here, outside it. That works because `var` is function-scoped rather than block-scoped, so the braces around the declaration say one thing and the binding does another. Declare it with `let` in the scope that actually needs it, or move the declaration out to where it is used.	0	0
+file	/workspace/wave-28-validation/control-249.a
+49	54	getter-return	expectedAlways	This getter returns a value on some paths and falls off the end on another, where reading the property yields undefined. Return a value from every path.	0	0
+file	/workspace/wave-28-validation/control-250.a
+30	35	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+76	105	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-251.a
+30	37	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+77	93	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-252.a
+33	36	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+83	86	getter-return	expected	This getter never returns a value, so reading the property yields undefined. Return the value it stands for.	0	0
+file	/workspace/wave-28-validation/control-253.a
+file	/workspace/wave-28-validation/control-254.a
+194	200	base/correctness-require-verify-optional-parity	optionalButTypeNot	@VerifyIsOptional() is present but type 'T' does not include null/undefined. The validator is configured to tolerate a missing value here and the type is not, so TypeScript forbids the very values the validation would have let through. One of the two is wrong and a reader cannot tell which.	0	0
+222	229	base/correctness-require-verify-optional-parity	typeOptionalButNoVerify	Type 'void' is nullable but @VerifyIsOptional() is missing. The type says this value may be missing and the validator does not, so passing undefined fails validation at runtime while the compiler was happy with it. That gap only shows up in production data.	0	0
+findings 126
