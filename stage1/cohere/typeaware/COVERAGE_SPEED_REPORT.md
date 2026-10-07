@@ -1,5 +1,13 @@
 # Flow lookup speed report
 
+Build clarification: every uninstrumented native throughput number below uses
+clang `-O2`, without `-g`, sanitizers or `-DADAMIC_COUNT`. Diagnostic phase
+builds use `-O2 -g` and scratch timers; correctness builds use
+`-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`. Go uses its
+default optimized build. The historical literal clang commands were not
+captured. [The explicit build rerun](BUILD_FLAGS_REPORT.md) records actual
+clang argv and a release/sanitized comparison on the identical compiler input.
+
 The hot compiler runner falls from **65.449756 s to 61.539752 s**, a **6.0%**
 reduction in three isolated, alternating trials. Production Go takes 7.443676 s.
 The earlier unit measured 68.427 s / 7.768 s process times; the fresh matched

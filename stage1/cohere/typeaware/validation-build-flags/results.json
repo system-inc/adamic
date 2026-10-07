@@ -1,0 +1,188 @@
+[
+  {
+    "suite": "coverage",
+    "mode": "go",
+    "command": [
+      "/workspace/tsgo-speed/validation-pass/coverage-oracle",
+      "/tmp/tsgo-typescript/src/compiler/tsconfig.json",
+      "/tmp/tsgo-profile/final/compiler.manifest"
+    ],
+    "process_ns": 7578700164,
+    "bytes": 7120228,
+    "sha256": "cb4d875ac853b1e27561cbcce3b68eccc4d0818e701c9ab2a4e3d8494c614ab3",
+    "stderr": "cohere: load_ns=287364896 rule_ns=6840820832 run_ns=7256743341\n",
+    "build_flags": "Go default optimized; no race, ASan or gcflags",
+    "metrics": {
+      "load_ns": 287364896,
+      "rule_ns": 6840820832,
+      "run_ns": 7256743341
+    }
+  },
+  {
+    "suite": "coverage",
+    "mode": "release",
+    "command": [
+      "/workspace/tsgo-build-flags/coverage-release",
+      "/tmp/tsgo-typescript/src/compiler/tsconfig.json",
+      "/tmp/tsgo-profile/final/compiler.manifest"
+    ],
+    "process_ns": 60764310061,
+    "bytes": 7120228,
+    "sha256": "cb4d875ac853b1e27561cbcce3b68eccc4d0818e701c9ab2a4e3d8494c614ab3",
+    "stderr": "tsgo: load_ns=297768923 query_ns=13438385562 queries=2222043 first_query_ns=86481 run_ns=60403148308\n",
+    "build_flags": "-O2; no sanitizers; no -DADAMIC_COUNT",
+    "metrics": {
+      "load_ns": 297768923,
+      "query_ns": 13438385562,
+      "queries": 2222043,
+      "first_query_ns": 86481,
+      "run_ns": 60403148308
+    },
+    "query_mean_us": 6.047761254845203
+  },
+  {
+    "suite": "coverage",
+    "mode": "sanitized",
+    "command": [
+      "/workspace/tsgo-build-flags/coverage-sanitized",
+      "/tmp/tsgo-typescript/src/compiler/tsconfig.json",
+      "/tmp/tsgo-profile/final/compiler.manifest"
+    ],
+    "process_ns": 237290098514,
+    "bytes": 7120228,
+    "sha256": "cb4d875ac853b1e27561cbcce3b68eccc4d0818e701c9ab2a4e3d8494c614ab3",
+    "stderr": "tsgo: load_ns=309559807 query_ns=27846502132 queries=2222043 first_query_ns=100938 run_ns=236155350760\n",
+    "build_flags": "-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all; no -DADAMIC_COUNT",
+    "metrics": {
+      "load_ns": 309559807,
+      "query_ns": 27846502132,
+      "queries": 2222043,
+      "first_query_ns": 100938,
+      "run_ns": 236155350760
+    },
+    "query_mean_us": 12.531936660091636
+  },
+  {
+    "suite": "volume",
+    "mode": "go",
+    "command": [
+      "/workspace/tsgo-speed/validation-pass/volume-oracle",
+      "/tmp/tsgo-typescript/src/compiler/tsconfig.json",
+      "/tmp/tsgo-profile/final/compiler.manifest"
+    ],
+    "process_ns": 4449355824,
+    "bytes": 6717107,
+    "sha256": "6c1cafe2c044717bdb8fc427d4d5585b4d5cf357373fc759916638440ec60e59",
+    "stderr": "cohere: load_ns=343800447 rule_ns=3569694478 run_ns=4066493899\n",
+    "build_flags": "Go default optimized; no race, ASan or gcflags",
+    "metrics": {
+      "load_ns": 343800447,
+      "rule_ns": 3569694478,
+      "run_ns": 4066493899
+    }
+  },
+  {
+    "suite": "volume",
+    "mode": "release",
+    "command": [
+      "/workspace/tsgo-build-flags/volume-release",
+      "/tmp/tsgo-typescript/src/compiler/tsconfig.json",
+      "/tmp/tsgo-profile/final/compiler.manifest"
+    ],
+    "process_ns": 17803282987,
+    "bytes": 6717107,
+    "sha256": "6c1cafe2c044717bdb8fc427d4d5585b4d5cf357373fc759916638440ec60e59",
+    "stderr": "tsgo: load_ns=302001212 query_ns=7847600487 queries=854525 first_query_ns=17102 run_ns=17454293971\n",
+    "build_flags": "-O2; no sanitizers; no -DADAMIC_COUNT",
+    "metrics": {
+      "load_ns": 302001212,
+      "query_ns": 7847600487,
+      "queries": 854525,
+      "first_query_ns": 17102,
+      "run_ns": 17454293971
+    },
+    "query_mean_us": 9.18358209180539
+  },
+  {
+    "suite": "volume",
+    "mode": "sanitized",
+    "command": [
+      "/workspace/tsgo-build-flags/volume-sanitized",
+      "/tmp/tsgo-typescript/src/compiler/tsconfig.json",
+      "/tmp/tsgo-profile/final/compiler.manifest"
+    ],
+    "process_ns": 51869769218,
+    "bytes": 6717107,
+    "sha256": "6c1cafe2c044717bdb8fc427d4d5585b4d5cf357373fc759916638440ec60e59",
+    "stderr": "tsgo: load_ns=312474711 query_ns=13320123160 queries=854525 first_query_ns=53059 run_ns=50873218911\n",
+    "build_flags": "-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all; no -DADAMIC_COUNT",
+    "metrics": {
+      "load_ns": 312474711,
+      "query_ns": 13320123160,
+      "queries": 854525,
+      "first_query_ns": 53059,
+      "run_ns": 50873218911
+    },
+    "query_mean_us": 15.587751277025248
+  },
+  {
+    "suite": "headline-count-only",
+    "mode": "go",
+    "command": [
+      "/workspace/tsgo-speed/validation-pass/coverage-oracle",
+      "/tmp/tsgo-typescript/src/compiler/tsconfig.json",
+      "/tmp/tsgo-profile/final/compiler.manifest",
+      "--count"
+    ],
+    "process_ns": 7456766997,
+    "stderr": "cohere: load_ns=281531752 rule_ns=6755381299 run_ns=7139781510\n",
+    "build_flags": "Go default optimized; no race, ASan or gcflags",
+    "metrics": {
+      "load_ns": 281531752,
+      "rule_ns": 6755381299,
+      "run_ns": 7139781510
+    }
+  },
+  {
+    "suite": "headline-count-only",
+    "mode": "release",
+    "command": [
+      "/workspace/tsgo-build-flags/coverage-release",
+      "/tmp/tsgo-typescript/src/compiler/tsconfig.json",
+      "/tmp/tsgo-profile/final/compiler.manifest",
+      "--count"
+    ],
+    "process_ns": 62209701378,
+    "stderr": "tsgo: load_ns=311908580 query_ns=14321896720 queries=2222043 first_query_ns=67907 run_ns=61832225578\n",
+    "build_flags": "-O2; no sanitizers; no -DADAMIC_COUNT",
+    "metrics": {
+      "load_ns": 311908580,
+      "query_ns": 14321896720,
+      "queries": 2222043,
+      "first_query_ns": 67907,
+      "run_ns": 61832225578
+    },
+    "query_mean_us": 6.445373343360142
+  },
+  {
+    "suite": "headline-count-only",
+    "mode": "sanitized",
+    "command": [
+      "/workspace/tsgo-build-flags/coverage-sanitized",
+      "/tmp/tsgo-typescript/src/compiler/tsconfig.json",
+      "/tmp/tsgo-profile/final/compiler.manifest",
+      "--count"
+    ],
+    "process_ns": 234834516793,
+    "stderr": "tsgo: load_ns=277418002 query_ns=27829365662 queries=2222043 first_query_ns=103924 run_ns=233721575444\n",
+    "build_flags": "-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all; no -DADAMIC_COUNT",
+    "metrics": {
+      "load_ns": 277418002,
+      "query_ns": 27829365662,
+      "queries": 2222043,
+      "first_query_ns": 103924,
+      "run_ns": 233721575444
+    },
+    "query_mean_us": 12.524224626616137
+  }
+]
