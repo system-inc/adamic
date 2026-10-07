@@ -112,3 +112,32 @@ advanced. All ten wave-30 gates, bridge checks and fifteen filtered Node oracle
 fixtures pass again, including twenty-one comparison mutants. No new claims or
 implementation edits were made; shared numeric-dispatch and full React analysis
 prerequisites remain blocked. See ../WAVE_30_RELAND_REPORT.md and its rebase map.
+
+## Parked React analysis claims
+
+As directed by Ahra, these three claims are now PARKED and count as finished
+for the landing-first cap. Their native components and oracle evidence are pushed.
+
+- react-hooks/preserve-manual-memoization: native React high-level IR, single-assignment, reactive scopes and memoization/capture analysis are missing.
+- react-hooks/purity: native React high-level IR, single-assignment and render/capture analysis are missing.
+- react-hooks/refs: native React high-level IR, single-assignment and capture analysis are missing.
+
+Analysis modules are being ported on #dnv6f2c; JSX support is landing on
+area/stage1-lint. No integration branch is pushed by this unit. The partial
+components remain available for integration; this status supersedes the earlier
+requirement to block subsequent claims on complete React analyses.
+
+## Fifth batch claim
+
+On current main f8013f0b, wave-30's pushed branch is rebased and its ten gates
+are green. Refreshed all 529 origin refs and distinguished actual claim documents
+from inventory JSON stored under claims/. The first three ranked rules unported
+on main/c-library and unclaimed on any origin branch, without a React HIR/SSA
+analysis dependency, are:
+
+- react/jsx-fragments
+- react/jsx-no-constructed-context-values
+- react/jsx-no-undef
+
+These three are claimed before implementation. Snapshot evidence is
+../validation-wave-30-fifth/selection.json. No new code precedes this claim push.
