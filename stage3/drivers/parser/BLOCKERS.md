@@ -1,4 +1,220 @@
-# Parser proof: stopped before the closure experiment
+# Parser proof: slice blockers pending
+
+The proof now targets the declaration slice of createSourceFile, using the
+scanner worker's stage3/slice tool. As of fetched scanner commit 46041de, that
+tool has not been pushed. No second slice tool is being built here. Once it
+lands, the required order is: slice createSourceFile, compare its Node dump
+byte for byte with the full-tree dump, then measure checker and lowering
+blockers on that slice. Temporary 60-69 adaptations are limited to slice files
+outside the scanner slice, and the slice blocker list must be pushed first.
+
+The measurements below are historical whole-file evidence, not the requested
+slice blocker list. Neither closure.cjs nor value-closure.cjs emits a slice.
+
+# Historical whole-file checker measurements
+
+The Node driver is complete and its node-end mutant is caught. The native
+parser is still blocked at the checker. The entries below are observations
+from real parser.ts/scanner.ts loads; no checker-rejected program was lowered.
+The earlier stopped integration report is retained below as historical evidence.
+
+## Inputs and reproduction
+
+Base main remains ef3d907ecdc4c771b016f7d9c52372def057a340 (confirmed against
+origin on this continuation). Feature SHAs are in each integration JSON and
+in the historical input table below. Adaptation source is exactly
+ a3ef0dc93d5b2a6cf58f74669c763dc83a1aad0e, adaptation 10 only, followed by normal
+upstream diagnostic regeneration. Upstream source pin remains
+050880ce59e30b356b686bd3144efe24f875ebc8. The Node dump includes 81 files.
+
+The measurement overlay only replaces the Adamic prelude with pinned upstream
+Node declarations (@types/node 25.3.3, @types/source-map-support 0.5.10).
+All compiler options remain those of each merged feature compiler, including
+noUncheckedIndexedAccess, exactOptionalPropertyTypes, noImplicitReturns and
+noFallthroughCasesInSwitch. No upstream-tsconfig relaxation is used. The sound
+regex library adapter remains in force. Each overlay source is saved in
+ evidence/*-load.go.txt. Go VCS stamping is disabled because the scratch
+worktrees reuse the pinned cohere checkout through a symlink. Absolute module
+replacement paths reference the same pinned source; they change no semantics.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage3/drivers/parser/measure.py /tmp/new-parser-profiles /tmp/parser-adapted10 > /tmp/measure.log 2>&1
+python3 stage3/drivers/parser/summarize.py /tmp/new-parser-profiles > /tmp/summary.log 2>&1
+```
+
+Scratch branches are scratch/parser-main, scratch/parser-taste,
+scratch/parser-flags, scratch/parser-namespaces, scratch/parser-nested and
+scratch/parser-combined. None was pushed. Initial incoming-whole-file conflict
+resolutions dropped main fields and failed Go compilation. Those failures stay
+in the logs. Final flag/namespace/combined compilers rebuild successfully after
+three-way hunk reconstruction; merge.py records how both sides are retained.
+The final scratch resolution diffs are committed as evidence/*-scratch-resolution.patch.
+No production compiler file on codex/stage3-parser-proof was edited.
+
+## Closure and ownership boundary
+
+Following resolved imports and re-exports, including type-only edges, parser.ts
+and scanner.ts each reach the same 78 TypeScript source files. Both enter the
+large SCC through _namespaces/ts.ts. Therefore the literal file-closure
+subtraction contains zero files and zero exclusive diagnostics. closure.json
+saves every edge and both ordered member lists. This is the graph the current
+loader checks, not a claim that scanner executes every compiler function.
+
+A supplementary value-reference walk from createSourceFile/createScanner
+reaches 25/12 files and 13 parser-only files. It groups declarations by top-level
+statement and retains namespaces whole, so it is a conservative inventory,
+not a proven source-slicing transformation or a replacement loader graph.
+The definition and declaration spans are in value-closure.json. The 13 files are:
+
+- src/compiler/checker.ts
+- src/compiler/factory/baseNodeFactory.ts
+- src/compiler/factory/emitNode.ts
+- src/compiler/factory/nodeChildren.ts
+- src/compiler/factory/nodeConverters.ts
+- src/compiler/factory/nodeFactory.ts
+- src/compiler/factory/parenthesizerRules.ts
+- src/compiler/parser.ts
+- src/compiler/path.ts
+- src/compiler/performance.ts
+- src/compiler/performanceCore.ts
+- src/compiler/tracing.ts
+- src/compiler/visitorPublic.ts
+
+No temporary adaptation was made while this distinction is unresolved.
+These historical inventories do not authorize 60-69 edits. The slice blocker
+list will be pushed before any such adaptation.
+
+## What each feature alone moves
+
+Each entry is an actual load and a successful probe executable. All six final
+compilers build. Each stops at Checker, so no corpus entry reaches Lower.
+
+| Profile | Closure diagnostics | Removed from main | Added | parser.ts diagnostics |
+| --- | ---: | ---: | ---: | ---: |
+| main | 2673 | 0 | 0 | 68 |
+| taste | 2673 | 0 | 0 | 68 |
+| flags | 2493 | 180 | 0 | 58 |
+| namespaces | 2493 | 180 | 0 | 58 |
+| nested | 2673 | 0 | 0 | 68 |
+| combined | 2493 | 180 | 0 | 58 |
+
+Flags and namespaces each remove the same 180 TS1294 diagnostics by enabling
+non-erasable syntax in their loader options. This gate movement covers enums,
+namespaces and parameter properties; it does not prove flag-enums alone lowers
+namespaces. Taste and nested functions move no checker diagnostics. Their
+lowering effects are unobserved behind the remaining checker failures.
+
+The combined scratch merge order was taste, flags, namespaces, nested.
+Its final result is exactly the same ordered parser-entry diagnostic list as
+flags alone: 2,493 diagnostics, no added diagnostics. Intermediate combined
+source loads were not run; feature-alone loads and the final combined load are
+the measured comparisons. The first reported blocker is shared:
+
+```
+src/compiler/binder.ts:1109:17: error TS2412: Type 'undefined' is not assignable to type 'FlowNode' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+```
+
+Parser/scanner entry loads have identical site/code populations and counts,
+with one exact-text difference at program.ts:3541:13 TS2375: checker type
+printing changes object-field order and abbreviates a function signature.
+The complete strings are in feature-summary.json; they were not normalized
+away or credited as byte agreement.
+
+## Exact current ordered gate list
+
+The complete diagnostic chains, in the loader's returned order, are in
+ evidence/<profile>-ordered-diagnostics.json.gz. Their uncompressed SHA-256s
+are in feature-summary.json. This order is the actual checker report order,
+including its textual-location sorting; it is not an inferred order of future
+lowering refusals. The combined inventory has 58 diagnostics in parser.ts itself.
+The full parser.ts lists are also uncompressed in evidence/*-parser-file.json.
+
+The supplementary 13-file value inventory has 1,528 remaining diagnostics
+(1,562 on main); all exact strings and their order are in
+ evidence/*-value-exclusive-diagnostics.json.gz. Unreachable declarations in
+those files are still checked by today's loader; the count is not restricted
+to only reachable statement spans.
+
+Combined checker-code counts, in first-reported occurrence order:
+
+| Code | Diagnostics |
+| --- | ---: |
+| TS2412 | 617 |
+| TS7029 | 83 |
+| TS2322 | 105 |
+| TS2532 | 225 |
+| TS18048 | 359 |
+| TS7030 | 252 |
+| TS2345 | 688 |
+| TS2375 | 77 |
+| TS2379 | 31 |
+| TS2769 | 6 |
+| TS2722 | 2 |
+| TS2556 | 2 |
+| TS2488 | 1 |
+| TS2339 | 28 |
+| TS2420 | 1 |
+| TS18046 | 6 |
+| TS2538 | 7 |
+| TS2366 | 1 |
+| TS2684 | 2 |
+
+## TS7030 and TS7029 remain blockers
+
+noImplicitReturns and noFallthroughCasesInSwitch remain on in every profile.
+The combined closure retains 252 TS7030 and 83 TS7029 diagnostics.
+parser.ts itself retains the following 16 return and 9 fallthrough diagnostics
+(in the loader's actual order). These are candidates for temporary 60-69
+adaptations if parser ownership is defined by value dependencies; none was
+silently suppressed pending codex/fallthrough-and-implicit-returns.
+
+| Location in parser.ts | Code | Exact message |
+| --- | --- | --- |
+| 10367:18 | TS7030 | Not all code paths return a value. |
+| 1272:199 | TS7030 | Not all code paths return a value. |
+| 1682:21 | TS7029 | Fallthrough case in switch. |
+| 2904:13 | TS7029 | Fallthrough case in switch. |
+| 3791:14 | TS7030 | Not all code paths return a value. |
+| 3987:37 | TS7030 | Not all code paths return a value. |
+| 4095:14 | TS7030 | Not all code paths return a value. |
+| 447:153 | TS7030 | Not all code paths return a value. |
+| 4603:13 | TS7029 | Fallthrough case in switch. |
+| 4609:13 | TS7029 | Fallthrough case in switch. |
+| 4758:14 | TS7030 | Not all code paths return a value. |
+| 4924:14 | TS7030 | Not all code paths return a value. |
+| 5819:13 | TS7029 | Fallthrough case in switch. |
+| 5852:13 | TS7029 | Fallthrough case in switch. |
+| 6610:13 | TS7029 | Fallthrough case in switch. |
+| 7492:53 | TS7030 | Not all code paths return a value. |
+| 7753:14 | TS7030 | Not all code paths return a value. |
+| 7766:25 | TS7030 | Not all code paths return a value. |
+| 8441:14 | TS7030 | Not all code paths return a value. |
+| 8984:25 | TS7029 | Fallthrough case in switch. |
+| 9195:80 | TS7030 | Not all code paths return a value. |
+| 9272:25 | TS7029 | Fallthrough case in switch. |
+| 9346:22 | TS7030 | Not all code paths return a value. |
+| 9446:22 | TS7030 | Not all code paths return a value. |
+| 9707:44 | TS7030 | Not all code paths return a value. |
+
+## Limit of the measured order
+
+The current gate list is complete, but the exact latent lowering blocker order
+is not measured: all actual source entries fail checking. I did not remove
+2,493 checker diagnostics in a scratch source copy to reach lowering, did not
+make temporary adaptations, and did not run the stage-3 suite or a native
+parser dump. Moving enum/namespace syntax through the checker does not show
+that their runtime or ownership cases compile. There is no native agreement
+claim. The dump's successful mutant proves only that its byte comparison can
+catch an actual one-node end change on Node.
+
+The driver command, dump hash and mutant lines are in README.md and
+ evidence/node-report.json. Setup from the first pass remains valid: 98 seconds,
+nproc 5. Additional checks: bash -n run.sh, probe go vet, Python AST parsing,
+and git diff --check. Test output stayed in logs. No complete repository gate
+was run for these driver/probe/report changes.
+
+## Historical preflight, superseded by the measurements above
 
 This is an incomplete integration report, not the requested exact, ordered
 parser lowering blocker list. No parser-specific lowering blocker was measured.

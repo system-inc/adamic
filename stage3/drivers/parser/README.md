@@ -41,7 +41,11 @@ support is measured separately in BLOCKERS.md; a Node-only run does not prove
 native agreement.
 
 The full dump is retained outside Git at
-/tmp/parser-node10-regenerated/node.dump (the initial run) and in the final
-run directory reported in evidence/node-report.json's companion report.
+/tmp/parser-node10-final/node.dump, with the earlier equal run at
+/tmp/parser-node10-regenerated/node.dump.
 Only its byte size, SHA-256, corpus manifest and mutant evidence are committed.
 All tests and runs write output to logs. No repository-wide gate is claimed.
+
+The declaration-slice proof is pending the shared scanner tool. See
+BLOCKERS.md for its required sequence and WITNESS.md for the completed
+stage1 projection comparison.
