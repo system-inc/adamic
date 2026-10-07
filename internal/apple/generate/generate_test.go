@@ -65,7 +65,7 @@ func TestClangGolden(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	files := append(append([]File{}, output.Files...), File{Path: "bindings-check.m", Content: output.Check}, File{Path: LeavesFile, Content: output.Leaves})
+	files := append(append([]File{}, output.Files...), File{Path: "bindings-check.m", Content: output.Check}, File{Path: LeavesFile, Content: output.Leaves}, File{Path: HoldsFile, Content: output.Holds})
 	if len(files) != len(golden) {
 		t.Fatalf("generated %d files, golden has %d", len(files), len(golden))
 	}
@@ -360,6 +360,12 @@ func TestDelegateRefusals(t *testing.T) {
 		"holds a leaf": {
 			header + "import type { FixtureText } from 'apple/foundation/fixture-text';\nclass Owner implements FixtureTableSource {\n\treadonly note: FixtureText;\n\tconstructor(note: FixtureText) {\n\t\tthis.note = note;\n\t}\n\tnumberOfRows(table: FixtureRecord): number {\n\t\treturn this.note.text.length + table.text.length;\n\t}\n}\nexport function attach(record: FixtureRecord, note: FixtureText): void {\n\trecord.source = new Owner(note);\n}\n",
 			"",
+		},
+		// What a class's methods keep counts like its properties: a note's subclass keeps a record
+		// (stickTo:), so a note held by the record's delegate may reach back.
+		"holds what a subclass keeps a record in": {
+			header + "import type { FixtureNote } from 'apple/foundation/fixture-note';\nclass Owner implements FixtureTableSource {\n\treadonly note: FixtureNote;\n\tconstructor(note: FixtureNote) {\n\t\tthis.note = note;\n\t}\n\tnumberOfRows(table: FixtureRecord): number {\n\t\treturn this.note.body.length + table.text.length;\n\t}\n}\nexport function attach(record: FixtureRecord, note: FixtureNote): void {\n\trecord.source = new Owner(note);\n}\n",
+			"refuses Owner, handed to Apple as a delegate the FixtureRecord holds",
 		},
 		"extends a leaf": {
 			header + "import { FixtureText } from 'apple/foundation/fixture-text';\nclass Pinned extends FixtureText {\n\trecord: FixtureRecord | undefined = undefined;\n}\nexport function pin(pinned: Pinned): void {\n\tconsole.log(pinned.text);\n}\n",

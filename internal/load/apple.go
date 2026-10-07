@@ -91,6 +91,43 @@ func AppleLeaves() (map[string]bool, error) {
 	return appleLeaves.classes, appleLeaves.err
 }
 
+var appleHolds struct {
+	once    sync.Once
+	classes map[string][]string
+	err     error
+}
+
+// AppleHolds is what each Apple class that isn't a leaf may hold, by the derivation the leaf table
+// comes from, read from beside the bindings: each entry "class NSRecord", "protocol NSWindowDelegate",
+// "object" or "block" (internal/apple/generate, leaves.go).
+func AppleHolds() (map[string][]string, error) {
+	appleHolds.once.Do(func() {
+		directory, err := appleBindingsDirectory()
+		if err != nil {
+			appleHolds.err = err
+			return
+		}
+		text, err := os.ReadFile(filepath.Join(directory, generate.HoldsFile))
+		if err != nil {
+			appleHolds.err = fmt.Errorf("what Apple's classes hold, beside the bindings: %w", err)
+			return
+		}
+		appleHolds.classes = map[string][]string{}
+		class := ""
+		for _, line := range strings.Split(string(text), "\n") {
+			switch {
+			case line == "" || strings.HasPrefix(line, "#"):
+			case strings.HasPrefix(line, "\t"):
+				appleHolds.classes[class] = append(appleHolds.classes[class], strings.TrimSpace(line))
+			default:
+				class = strings.TrimSpace(line)
+				appleHolds.classes[class] = []string{}
+			}
+		}
+	})
+	return appleHolds.classes, appleHolds.err
+}
+
 // cachedAppleBindings generates the SDK's bindings once per SDK build and generator version.
 // A directory is complete only once renamed into place, so a run cut short leaves nothing a later
 // run would trust.

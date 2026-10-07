@@ -556,6 +556,10 @@ func (l *lowering) foreignSend(node *ast.Node, tag foreignTag, receiver *ast.Nod
 						return nil, err
 					}
 				}
+				if (source.native.Kind == ir.NativeBlock || source.native.Kind == ir.NativeAction) && written[key] != nil {
+					// What an Apple object holds of the program's: the cycle finder follows into it.
+					l.appleHanded = append(l.appleHanded, l.checker.GetTypeAtLocation(written[key]))
+				}
 				if source.native.Kind == ir.NativeObject {
 					delegate, isDelegate, err := l.foreignDelegate(written[key])
 					if err != nil {

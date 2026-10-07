@@ -206,26 +206,64 @@ func (l *lowering) delegateMethod(argument *ast.Node, delegate *ir.Delegate, sel
 	return nil
 }
 
+// foreignClassName is the Objective-C class a type is declared as in a binding file, or "".
+func (l *lowering) foreignClassName(proven *checker.Type) string {
+	symbol := proven.Symbol()
+	if symbol == nil || !isForeign(symbol) || len(symbol.Declarations) == 0 || symbol.Declarations[0].Kind != ast.KindClassDeclaration {
+		return ""
+	}
+	tags, err := l.foreignTags(symbol.Declarations[0])
+	if err != nil {
+		return ""
+	}
+	for _, tag := range tags {
+		if tag.kind == "class" {
+			return tag.selector
+		}
+	}
+	return ""
+}
+
 // foreignLeaf reports whether a type is an Apple class the leaf table names (load.AppleLeaves): one
 // whose instances hold strong references only to other leaves, which the cycle finder doesn't walk
 // through.
 func (l *lowering) foreignLeaf(proven *checker.Type) bool {
-	symbol := proven.Symbol()
-	if symbol == nil || !isForeign(symbol) || len(symbol.Declarations) == 0 || symbol.Declarations[0].Kind != ast.KindClassDeclaration {
+	return l.appleLeaf(l.foreignClassName(proven))
+}
+
+// appleLeaf reports whether the leaf table names an Objective-C class.
+func (l *lowering) appleLeaf(class string) bool {
+	if class == "" {
 		return false
 	}
-	tags, err := l.foreignTags(symbol.Declarations[0])
-	if err != nil {
-		return false
-	}
-	for _, tag := range tags {
-		if tag.kind != "class" {
-			continue
+	leaves, err := load.AppleLeaves()
+	return err == nil && leaves[class]
+}
+
+// appleType is the type of the class or protocol a binding file the program loaded declares, by its
+// Objective-C name ("class NSURL", "protocol NSWindowDelegate"), or nil when no loaded file declares
+// it: then nothing of the program's is one, though Apple's objects may be.
+func (l *lowering) appleType(name string) *checker.Type {
+	if l.appleTypes == nil {
+		l.appleTypes = map[string]*checker.Type{}
+		for _, sourceFile := range l.program.AppleFiles() {
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				if (node.Kind == ast.KindClassDeclaration || node.Kind == ast.KindInterfaceDeclaration) && node.Name() != nil {
+					if tags, err := l.foreignTags(node); err == nil {
+						for _, tag := range tags {
+							if tag.kind == "class" || tag.kind == "protocol" {
+								l.appleTypes[tag.kind+" "+tag.selector] = l.checker.GetTypeAtLocation(node.Name())
+							}
+						}
+					}
+				}
+				return node.ForEachChild(visit)
+			}
+			sourceFile.AsNode().ForEachChild(visit)
 		}
-		leaves, err := load.AppleLeaves()
-		return err == nil && leaves[tag.selector]
 	}
-	return false
+	return l.appleTypes[name]
 }
 
 // extendsApple refuses a class whose base is one of Apple's: Apple's classes are declared, not
