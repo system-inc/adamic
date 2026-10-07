@@ -34,13 +34,8 @@ for name in ['set_state_in_effect','set_state_in_render','static_components']:
  kinds=run(name+'-parser',[artifacts/name],expected=None)
  error=(artifacts/(name+'-parser.stderr')).read_text()
  status=records[-1]['exit']
- assert status in [0,70],(name,status)
- if status==70:
-  assert 'parser slice expected' in error,error
-  print(name,'probe compiled; native parser exited 70:',error.strip(),flush=True)
- else:
-  assert 'Jsx' not in kinds and 'TypeAssertionExpression' in kinds,kinds
-  print(name,'probe compiled and exited 0, but produced TypeAssertionExpression and no JSX nodes',flush=True)
+ assert status==0 and 'Jsx' in kinds and 'TypeAssertionExpression' not in kinds and not error,(name,status,kinds,error)
+ print(name,'probe compiled, exit 0, real JSX nodes; native source-to-SSA integration remains parked',flush=True)
 # Hook-only positive controls prove that adding JSX alone is insufficient.
 for name,text in [
  ('effect-hook','import {useState,useEffect} from "react"; export function useThing(){const [s,setS]=useState(0);useEffect(()=>setS(1));return s;}'),

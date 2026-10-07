@@ -1,0 +1,132 @@
+[
+  {
+    "name": "oracle-build",
+    "args": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave29-harness-third-source/overlay.json",
+      "-o",
+      "/workspace/wave29-harness-third-source/oracle",
+      "/workspace/adamic/cohere/adamic_wave29_third_oracle.go"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "go-positive",
+    "args": [
+      "/workspace/wave29-harness-third-source/oracle",
+      "/workspace/wave29-harness-third-source/config.json",
+      "/workspace/wave29-harness-third-source/manifest"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "set_state_in_effect-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/gaps/set_state_in_effect.a",
+      "-o",
+      "/workspace/wave29-harness-third-source/set_state_in_effect"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "set_state_in_effect-parser",
+    "args": [
+      "/workspace/wave29-harness-third-source/set_state_in_effect"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "set_state_in_render-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/gaps/set_state_in_render.a",
+      "-o",
+      "/workspace/wave29-harness-third-source/set_state_in_render"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "set_state_in_render-parser",
+    "args": [
+      "/workspace/wave29-harness-third-source/set_state_in_render"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "static_components-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/gaps/static_components.a",
+      "-o",
+      "/workspace/wave29-harness-third-source/static_components"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "static_components-parser",
+    "args": [
+      "/workspace/wave29-harness-third-source/static_components"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "effect-hook-go",
+    "args": [
+      "/workspace/wave29-harness-third-source/oracle",
+      "/workspace/wave29-harness-third-source/hook-config.json",
+      "/workspace/wave29-harness-third-source/hook-manifest"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "effect-hook-parse-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/wave29-harness-third-source/effect-hook-parse.a",
+      "-o",
+      "/workspace/wave29-harness-third-source/effect-hook-parse"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "effect-hook-parse",
+    "args": [
+      "/workspace/wave29-harness-third-source/effect-hook-parse"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "render-hook-go",
+    "args": [
+      "/workspace/wave29-harness-third-source/oracle",
+      "/workspace/wave29-harness-third-source/hook-config.json",
+      "/workspace/wave29-harness-third-source/hook-manifest"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "render-hook-parse-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/wave29-harness-third-source/render-hook-parse.a",
+      "-o",
+      "/workspace/wave29-harness-third-source/render-hook-parse"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "render-hook-parse",
+    "args": [
+      "/workspace/wave29-harness-third-source/render-hook-parse"
+    ],
+    "exit": 0
+  }
+]

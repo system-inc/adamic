@@ -1,0 +1,24 @@
+package main
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "path/filepath"
+ "strings"
+ "github.com/system-inc/adamic/stage1/cohere/lint/registry"
+)
+func main(){
+ root:="/workspace/wave29-harness-proof/numeric";dir:=filepath.Join(root,"rules","react-jsx-fragments")
+ if err:=os.MkdirAll(dir,0755);err!=nil{panic(err)}
+ descriptor:=map[string]any{"name":"react/jsx-fragments","kinds":[]int{285,286,289},"node":true,"factory":"create","class":"Rule","visit":"visit","oracle":"oracleJsxFragments","upstreamPackage":"react","upstreamTest":"TestJsxFragments"}
+ encoded,err:=json.Marshal(descriptor);if err!=nil{panic(err)}
+ if err=os.WriteFile(filepath.Join(dir,"rule.json"),encoded,0644);err!=nil{panic(err)}
+ _,err=registry.Discover(root)
+ if err==nil||!strings.Contains(err.Error(),"cannot unmarshal number"){panic(fmt.Sprintf("unexpected numeric descriptor result: %v",err))}
+ fmt.Println(err)
+ // Replacing kinds with strings bypasses this numeric decoding refusal.
+ descriptor["kinds"]=[]string{"JsxElement","JsxSelfClosingElement","JsxFragment"};encoded,_=json.Marshal(descriptor);os.WriteFile(filepath.Join(dir,"rule.json"),encoded,0644)
+ _,err=registry.Discover(root)
+ if err==nil||strings.Contains(err.Error(),"cannot unmarshal number"){panic("numeric refusal did not distinguish its descriptor mutant")}
+ fmt.Println("string-kind descriptor mutant passes numeric decoding; supplied numeric descriptor requires shared registry support")
+}

@@ -1,0 +1,103 @@
+[
+  {
+    "name": "go",
+    "args": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/wave29-harness-static/overlay.json",
+      "./internal/lint/rules/react",
+      "-run",
+      "^TestWave29StaticCore$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "elapsed_ns": 2363901728
+  },
+  {
+    "name": "native-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/static_core.a",
+      "-o",
+      "/workspace/wave29-harness-static/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 1281733075
+  },
+  {
+    "name": "native",
+    "args": [
+      "/workspace/wave29-harness-static/native",
+      "/workspace/wave29-harness-static/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 6285252
+  },
+  {
+    "name": "asan-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/static_core.a",
+      "-o",
+      "/workspace/wave29-harness-static/asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "elapsed_ns": 2422135417
+  },
+  {
+    "name": "asan",
+    "args": [
+      "/workspace/wave29-harness-static/asan",
+      "/workspace/wave29-harness-static/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 17501372
+  },
+  {
+    "name": "store-binding-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/wave29-harness-static/mutant-store-binding/static_core.a",
+      "-o",
+      "/workspace/wave29-harness-static/mutant-store-binding/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 1093056028
+  },
+  {
+    "name": "store-binding",
+    "args": [
+      "/workspace/wave29-harness-static/mutant-store-binding/native",
+      "/workspace/wave29-harness-static/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 2803644
+  },
+  {
+    "name": "phi-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/wave29-harness-static/mutant-phi/static_core.a",
+      "-o",
+      "/workspace/wave29-harness-static/mutant-phi/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 1109429914
+  },
+  {
+    "name": "phi",
+    "args": [
+      "/workspace/wave29-harness-static/mutant-phi/native",
+      "/workspace/wave29-harness-static/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 2717545
+  }
+]

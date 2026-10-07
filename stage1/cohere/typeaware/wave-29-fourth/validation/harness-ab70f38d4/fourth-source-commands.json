@@ -1,0 +1,79 @@
+[
+  {
+    "name": "go-build",
+    "args": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave29-harness-fourth-source/overlay.json",
+      "-o",
+      "/workspace/wave29-harness-fourth-source/oracle",
+      "/workspace/adamic/cohere/adamic_wave29_fourth_source_oracle.go"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "go",
+    "args": [
+      "/workspace/wave29-harness-fourth-source/oracle",
+      "/workspace/wave29-harness-fourth-source/config.json",
+      "/workspace/wave29-harness-fourth-source/manifest",
+      "/workspace/wave29-harness-fourth-source/profile.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "react-jsx-fragments-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-fourth/rules/react-jsx-fragments/gaps/source.a",
+      "-o",
+      "/workspace/wave29-harness-fourth-source/react-jsx-fragments"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "react-jsx-fragments",
+    "args": [
+      "/workspace/wave29-harness-fourth-source/react-jsx-fragments"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "react-jsx-no-constructed-context-values-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-fourth/rules/react-jsx-no-constructed-context-values/gaps/source.a",
+      "-o",
+      "/workspace/wave29-harness-fourth-source/react-jsx-no-constructed-context-values"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "react-jsx-no-constructed-context-values",
+    "args": [
+      "/workspace/wave29-harness-fourth-source/react-jsx-no-constructed-context-values"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "react-jsx-no-undef-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-fourth/rules/react-jsx-no-undef/gaps/source.a",
+      "-o",
+      "/workspace/wave29-harness-fourth-source/react-jsx-no-undef"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "react-jsx-no-undef",
+    "args": [
+      "/workspace/wave29-harness-fourth-source/react-jsx-no-undef"
+    ],
+    "exit": 0
+  }
+]

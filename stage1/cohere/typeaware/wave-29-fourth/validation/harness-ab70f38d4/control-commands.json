@@ -1,0 +1,145 @@
+[
+  {
+    "name": "go-build",
+    "args": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave29-harness-control/overlay.json",
+      "-o",
+      "/workspace/wave29-harness-control/oracle",
+      "/workspace/adamic/cohere/adamic_wave29_control_oracle.go"
+    ],
+    "exit": 0,
+    "elapsed_ns": 2145636149
+  },
+  {
+    "name": "go",
+    "args": [
+      "/workspace/wave29-harness-control/oracle",
+      "/workspace/wave29-harness-control",
+      "/workspace/adamic/cohere/internal/lint/ecmascript/high_level_intermediate_representation/postdominator_test.go"
+    ],
+    "exit": 0,
+    "elapsed_ns": 198497090
+  },
+  {
+    "name": "native-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/control_core.a",
+      "-o",
+      "/workspace/wave29-harness-control/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 227530871
+  },
+  {
+    "name": "native",
+    "args": [
+      "/workspace/wave29-harness-control/native",
+      "/workspace/wave29-harness-control/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 108578464
+  },
+  {
+    "name": "node",
+    "args": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/control_core.a",
+      "/workspace/wave29-harness-control/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 224864629
+  },
+  {
+    "name": "javascript",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "js",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/control_core.a"
+    ],
+    "exit": 0,
+    "elapsed_ns": 58171047
+  },
+  {
+    "name": "javascript-node",
+    "args": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave29-harness-control/control_core.mjs",
+      "/workspace/wave29-harness-control/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 197832944
+  },
+  {
+    "name": "asan-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/control_core.a",
+      "-o",
+      "/workspace/wave29-harness-control/asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "elapsed_ns": 557583036
+  },
+  {
+    "name": "asan",
+    "args": [
+      "/workspace/wave29-harness-control/asan",
+      "/workspace/wave29-harness-control/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 832601373
+  },
+  {
+    "name": "throw-exit-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/wave29-harness-control/mutant-throw-exit/control_core.a",
+      "-o",
+      "/workspace/wave29-harness-control/mutant-throw-exit/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 223491155
+  },
+  {
+    "name": "throw-exit",
+    "args": [
+      "/workspace/wave29-harness-control/mutant-throw-exit/native",
+      "/workspace/wave29-harness-control/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 110357351
+  },
+  {
+    "name": "switch-case-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/wave29-harness-control/mutant-switch-case/control_core.a",
+      "-o",
+      "/workspace/wave29-harness-control/mutant-switch-case/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 230085471
+  },
+  {
+    "name": "switch-case",
+    "args": [
+      "/workspace/wave29-harness-control/mutant-switch-case/native",
+      "/workspace/wave29-harness-control/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 110116089
+  }
+]

@@ -1,0 +1,479 @@
+[
+  {
+    "name": "extract",
+    "args": [
+      "go",
+      "run",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-next/testdata/extract.go",
+      "/workspace/adamic"
+    ],
+    "exit": 0,
+    "ns": 222056312
+  },
+  {
+    "name": "oracle-build",
+    "args": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave29-harness-next/overlay.json",
+      "-o",
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/adamic/cohere/adamic_wave29_next_oracle.go"
+    ],
+    "exit": 0,
+    "ns": 7474633665
+  },
+  {
+    "name": "native-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-next/runner.a",
+      "-o",
+      "/workspace/wave29-harness-next/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 15037674751
+  },
+  {
+    "name": "group-00-go",
+    "args": [
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/wave29-harness-next/group-00/config.json",
+      "/workspace/wave29-harness-next/group-00/manifest",
+      "/workspace/wave29-harness-next/group-00/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 230915107
+  },
+  {
+    "name": "group-00-native",
+    "args": [
+      "/workspace/wave29-harness-next/native",
+      "/workspace/wave29-harness-next/group-00/config.json",
+      "/workspace/wave29-harness-next/group-00/manifest",
+      "/workspace/wave29-harness-next/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 116690973
+  },
+  {
+    "name": "group-01-go",
+    "args": [
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/wave29-harness-next/group-01/config.json",
+      "/workspace/wave29-harness-next/group-01/manifest",
+      "/workspace/wave29-harness-next/group-01/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 67371287
+  },
+  {
+    "name": "group-01-native",
+    "args": [
+      "/workspace/wave29-harness-next/native",
+      "/workspace/wave29-harness-next/group-01/config.json",
+      "/workspace/wave29-harness-next/group-01/manifest",
+      "/workspace/wave29-harness-next/group-01/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 58522352
+  },
+  {
+    "name": "group-02-go",
+    "args": [
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/wave29-harness-next/group-02/config.json",
+      "/workspace/wave29-harness-next/group-02/manifest",
+      "/workspace/wave29-harness-next/group-02/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 60185985
+  },
+  {
+    "name": "group-02-native",
+    "args": [
+      "/workspace/wave29-harness-next/native",
+      "/workspace/wave29-harness-next/group-02/config.json",
+      "/workspace/wave29-harness-next/group-02/manifest",
+      "/workspace/wave29-harness-next/group-02/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 62444987
+  },
+  {
+    "name": "group-03-go",
+    "args": [
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/wave29-harness-next/group-03/config.json",
+      "/workspace/wave29-harness-next/group-03/manifest",
+      "/workspace/wave29-harness-next/group-03/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 94297672
+  },
+  {
+    "name": "group-03-native",
+    "args": [
+      "/workspace/wave29-harness-next/native",
+      "/workspace/wave29-harness-next/group-03/config.json",
+      "/workspace/wave29-harness-next/group-03/manifest",
+      "/workspace/wave29-harness-next/group-03/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 42794912
+  },
+  {
+    "name": "group-04-go",
+    "args": [
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/wave29-harness-next/group-04/config.json",
+      "/workspace/wave29-harness-next/group-04/manifest",
+      "/workspace/wave29-harness-next/group-04/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 88390507
+  },
+  {
+    "name": "group-04-native",
+    "args": [
+      "/workspace/wave29-harness-next/native",
+      "/workspace/wave29-harness-next/group-04/config.json",
+      "/workspace/wave29-harness-next/group-04/manifest",
+      "/workspace/wave29-harness-next/group-04/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 53990465
+  },
+  {
+    "name": "group-05-go",
+    "args": [
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/wave29-harness-next/group-05/config.json",
+      "/workspace/wave29-harness-next/group-05/manifest",
+      "/workspace/wave29-harness-next/group-05/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 140558455
+  },
+  {
+    "name": "group-05-native",
+    "args": [
+      "/workspace/wave29-harness-next/native",
+      "/workspace/wave29-harness-next/group-05/config.json",
+      "/workspace/wave29-harness-next/group-05/manifest",
+      "/workspace/wave29-harness-next/group-05/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 77964032
+  },
+  {
+    "name": "group-06-go",
+    "args": [
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/wave29-harness-next/group-06/config.json",
+      "/workspace/wave29-harness-next/group-06/manifest",
+      "/workspace/wave29-harness-next/group-06/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 73593590
+  },
+  {
+    "name": "group-06-native",
+    "args": [
+      "/workspace/wave29-harness-next/native",
+      "/workspace/wave29-harness-next/group-06/config.json",
+      "/workspace/wave29-harness-next/group-06/manifest",
+      "/workspace/wave29-harness-next/group-06/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 20404748
+  },
+  {
+    "name": "compiler-go",
+    "args": [
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-harness-next/compiler.manifest"
+    ],
+    "exit": 0,
+    "ns": 1019468804
+  },
+  {
+    "name": "compiler-native",
+    "args": [
+      "/workspace/wave29-harness-next/native",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-harness-next/compiler.manifest"
+    ],
+    "exit": 0,
+    "ns": 2973191555
+  },
+  {
+    "name": "repository-go",
+    "args": [
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-harness-next/repository.manifest"
+    ],
+    "exit": 0,
+    "ns": 476192274
+  },
+  {
+    "name": "repository-native",
+    "args": [
+      "/workspace/wave29-harness-next/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-harness-next/repository.manifest"
+    ],
+    "exit": 0,
+    "ns": 655799459
+  },
+  {
+    "name": "globals-mutant-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/wave29-harness-next/globals-source/runner.a",
+      "-o",
+      "/workspace/wave29-harness-next/globals-mutant",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 16600270023
+  },
+  {
+    "name": "globals-group-00",
+    "args": [
+      "/workspace/wave29-harness-next/globals-mutant",
+      "/workspace/wave29-harness-next/group-00/config.json",
+      "/workspace/wave29-harness-next/group-00/manifest",
+      "/workspace/wave29-harness-next/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 194013389
+  },
+  {
+    "name": "setter-mutant-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/wave29-harness-next/setter-source/runner.a",
+      "-o",
+      "/workspace/wave29-harness-next/setter-mutant",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 15484280930
+  },
+  {
+    "name": "setter-group-00",
+    "args": [
+      "/workspace/wave29-harness-next/setter-mutant",
+      "/workspace/wave29-harness-next/group-00/config.json",
+      "/workspace/wave29-harness-next/group-00/manifest",
+      "/workspace/wave29-harness-next/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 177078214
+  },
+  {
+    "name": "shadow-mutant-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/wave29-harness-next/shadow-source/runner.a",
+      "-o",
+      "/workspace/wave29-harness-next/shadow-mutant",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 10760294969
+  },
+  {
+    "name": "shadow-group-00",
+    "args": [
+      "/workspace/wave29-harness-next/shadow-mutant",
+      "/workspace/wave29-harness-next/group-00/config.json",
+      "/workspace/wave29-harness-next/group-00/manifest",
+      "/workspace/wave29-harness-next/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 92593832
+  },
+  {
+    "name": "asan-archive",
+    "args": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave29-harness-next/asan-checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "ns": 4003674621
+  },
+  {
+    "name": "asan-build",
+    "args": [
+      "/workspace/wave29-harness-adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-next/runner.a",
+      "-o",
+      "/workspace/wave29-harness-next/asan-native",
+      "--tsgo",
+      "/workspace/wave29-harness-next/asan-checker.a",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "ns": 18969740747
+  },
+  {
+    "name": "group-00-asan",
+    "args": [
+      "/workspace/wave29-harness-next/asan-native",
+      "/workspace/wave29-harness-next/group-00/config.json",
+      "/workspace/wave29-harness-next/group-00/manifest",
+      "/workspace/wave29-harness-next/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 164765781
+  },
+  {
+    "name": "group-01-asan",
+    "args": [
+      "/workspace/wave29-harness-next/asan-native",
+      "/workspace/wave29-harness-next/group-01/config.json",
+      "/workspace/wave29-harness-next/group-01/manifest",
+      "/workspace/wave29-harness-next/group-01/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 53320778
+  },
+  {
+    "name": "group-02-asan",
+    "args": [
+      "/workspace/wave29-harness-next/asan-native",
+      "/workspace/wave29-harness-next/group-02/config.json",
+      "/workspace/wave29-harness-next/group-02/manifest",
+      "/workspace/wave29-harness-next/group-02/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 43171062
+  },
+  {
+    "name": "group-03-asan",
+    "args": [
+      "/workspace/wave29-harness-next/asan-native",
+      "/workspace/wave29-harness-next/group-03/config.json",
+      "/workspace/wave29-harness-next/group-03/manifest",
+      "/workspace/wave29-harness-next/group-03/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 30045294
+  },
+  {
+    "name": "group-04-asan",
+    "args": [
+      "/workspace/wave29-harness-next/asan-native",
+      "/workspace/wave29-harness-next/group-04/config.json",
+      "/workspace/wave29-harness-next/group-04/manifest",
+      "/workspace/wave29-harness-next/group-04/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 35953442
+  },
+  {
+    "name": "group-05-asan",
+    "args": [
+      "/workspace/wave29-harness-next/asan-native",
+      "/workspace/wave29-harness-next/group-05/config.json",
+      "/workspace/wave29-harness-next/group-05/manifest",
+      "/workspace/wave29-harness-next/group-05/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 34910107
+  },
+  {
+    "name": "group-06-asan",
+    "args": [
+      "/workspace/wave29-harness-next/asan-native",
+      "/workspace/wave29-harness-next/group-06/config.json",
+      "/workspace/wave29-harness-next/group-06/manifest",
+      "/workspace/wave29-harness-next/group-06/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 42778486
+  },
+  {
+    "name": "compiler-asan",
+    "args": [
+      "/workspace/wave29-harness-next/asan-native",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-harness-next/compiler.manifest"
+    ],
+    "exit": 0,
+    "ns": 7283368856
+  },
+  {
+    "name": "repository-asan",
+    "args": [
+      "/workspace/wave29-harness-next/asan-native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-harness-next/repository.manifest"
+    ],
+    "exit": 0,
+    "ns": 1508735767
+  },
+  {
+    "name": "compiler-timed-go",
+    "args": [
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-harness-next/compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 377354832
+  },
+  {
+    "name": "compiler-timed-native",
+    "args": [
+      "/workspace/wave29-harness-next/native",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-harness-next/compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 2085306748
+  },
+  {
+    "name": "repository-timed-go",
+    "args": [
+      "/workspace/wave29-harness-next/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-harness-next/repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 164955136
+  },
+  {
+    "name": "repository-timed-native",
+    "args": [
+      "/workspace/wave29-harness-next/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-harness-next/repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 396379575
+  }
+]

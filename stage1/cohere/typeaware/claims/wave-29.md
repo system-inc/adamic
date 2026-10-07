@@ -96,3 +96,17 @@ incompatibility. No fallback or full configured parity is claimed. See
 [REGEX_CONTRACT.md](../wave-29-configured/REGEX_CONTRACT.md).
 All other pushed full/partial profiles re-green on current main. The fourth JSX
 batch remains partial with source/binding/memo blockers; no new claims are taken.
+
+## Rebase onto the named shared harness ab70f38d4
+
+Both current main c01907a7 and the exact named harness are ancestors of this
+continuation. All owned supported profiles re-green, including mutations,
+sanitizers and released handles. The six source witnesses now parse real JSX;
+the old JSX parser blocker is closed. Numeric rule registration still rejects
+integer kinds, and the shared syntax context does not supply checker access.
+Fragments and undef remain partial source ports for those concrete gaps.
+Constructed-context-values is parked for native memo/escape/capture analysis
+integration; its supplied-node kernel is green. The third batch remains parked
+for source-to-HIR/SSA/capture integration. Dynamic configured id-match remains
+blocked by nonconstant RegExp lowering and dialect differences. No new claims
+are taken. See [HARNESS_REPORT.md](../wave-29-fourth/HARNESS_REPORT.md).

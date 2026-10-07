@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Positive production Go findings and the missing shared native JSX pipeline."""
+"""Positive production Go findings, working JSX parsing and missing checker integration."""
 import json,os,subprocess,sys
 from pathlib import Path
 s=Path(__file__).resolve().parent;r=s.parents[3];d=Path(sys.argv[1]).resolve();d.mkdir(parents=True,exist_ok=True)
@@ -22,5 +22,5 @@ print('Go production callbacks: three real JSX sources, three findings, zero fix
 for row in profile:
  name=row['rule'].replace('/','-');probe=s/'rules'/name/'gaps/source.a'
  run(name+'-build',[c,'build',probe,'-o',d/name]);got=run(name,[d/name],expected=None);status=commands[-1]['exit'];err=(d/(name+'.stderr')).read_text()
- if status==70:assert 'parser slice expected' in err;print(name+': compiled, native parser exit 70: '+err.strip(),flush=True)
- else:assert status==0 and b'Jsx' not in got and b'TypeAssertionExpression' in got;print(name+': compiled, exits 0, misparsed as TypeAssertionExpression with no JSX nodes',flush=True)
+ assert status==0 and not err and b'Jsx' in got and b'TypeAssertionExpression' not in got
+ print(name+': compiled, exit 0, empty stderr, real JSX nodes; parser blocker closed, numeric/checker adapter still required',flush=True)
