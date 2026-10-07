@@ -181,9 +181,8 @@ type emitter struct {
 	// anything jumps to that label.
 	loops []*loop
 
-	// breakables holds, innermost last, the scope depth of each open loop or switch: what a break
-	// leaves.
-	breakables []int
+	// breakables holds, innermost last, each open loop or switch and its cleanup depth.
+	breakables []*breakable
 
 	// declarations are file-scope lines the bodies need: object shapes and field caches.
 	declarations []string

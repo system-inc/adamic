@@ -18,7 +18,7 @@
 // The output, for each tree, is `tree <name>`; then Enumerate's answer, `enumerate error <message>`, or
 // its counts and lists: `walked`, each `layer <name> <count>` and `declined <extension> <count>` in
 // Go's order (by code point), `unhandled`, `symbolic-links`, and each `nested`, `directory`,
-// `ignore-file` and `file` in the order the walk found them; then NestedRepositoriesBelow's, each
+// `ignore-file`, `file` and `adamic` in the order the walk found them; then NestedRepositoriesBelow's, each
 // `nested-below <path>` or `nested-below error <message>`; and an answer for each question, in order.
 // Names and paths are quoted with \\, \", \n, \r, \t, and \u00XX for any other control character.
 //
@@ -186,6 +186,9 @@ for (const line of read.text.split('\n')) {
 				}
 				for (const file of enumeration.files) {
 					console.log(`file ${quote(file)}`);
+				}
+				for (const file of enumeration.adamic) {
+					console.log(`adamic ${quote(file)}`);
 				}
 			}
 			const below = nestedRepositoriesBelow(root);
