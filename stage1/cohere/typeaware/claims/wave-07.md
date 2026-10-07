@@ -120,3 +120,12 @@ sanitizers, per-rule mutants, bridge-fact mutants and released-handle checks.
 See ../wave07_react/LANDING_REPORT.md for fresh timings and exact gate evidence.
 The three React claims remain unported pending shared JSX parser integration;
 the four private-overlay bridge routes also remain pending. No new claims.
+
+## Numeric listener declarations
+
+All nine completed ports now declare numeric listener kinds, verified against
+the pinned production Go registration maps (358 identical bytes, sanitizer
+checks and nine numeric-key mutants). See ../wave07_react/SPEED_REPORT.md.
+The shared parser still exposes string kinds and the shared numeric driver is
+pending, so rule-body migration remains blocked. React claims and four bridge
+registration routes remain pending. No new rules are claimed.

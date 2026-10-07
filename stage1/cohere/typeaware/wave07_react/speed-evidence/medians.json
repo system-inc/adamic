@@ -1,0 +1,86 @@
+[
+  {
+    "unit": "original-trio",
+    "corpus": "repository",
+    "native": 0.336406186,
+    "go": 0.143250581
+  },
+  {
+    "unit": "original-trio",
+    "corpus": "compiler",
+    "native": 2.131369348,
+    "go": 0.387616171
+  },
+  {
+    "unit": "timer",
+    "corpus": "repository",
+    "native": 0.29294201,
+    "go": 0.139727835
+  },
+  {
+    "unit": "timer",
+    "corpus": "compiler",
+    "native": 1.793275669,
+    "go": 0.317810136
+  },
+  {
+    "unit": "process",
+    "corpus": "repository",
+    "native": 0.283372685,
+    "go": 0.147280032
+  },
+  {
+    "unit": "process",
+    "corpus": "compiler",
+    "native": 1.780065926,
+    "go": 0.304467077
+  },
+  {
+    "unit": "streams",
+    "corpus": "repository",
+    "native": 0.359948634,
+    "go": 0.143629301
+  },
+  {
+    "unit": "streams",
+    "corpus": "compiler",
+    "native": 1.759294863,
+    "go": 0.317812865
+  },
+  {
+    "unit": "rest",
+    "corpus": "repository",
+    "native": 0.285570715,
+    "go": 0.136537212
+  },
+  {
+    "unit": "rest",
+    "corpus": "compiler",
+    "native": 1.865882857,
+    "go": 0.332406918
+  },
+  {
+    "unit": "promise",
+    "corpus": "repository",
+    "native": 0.257720239,
+    "go": 0.12650368
+  },
+  {
+    "unit": "promise",
+    "corpus": "compiler",
+    "native": 1.732648967,
+    "go": 0.28895692
+  },
+  {
+    "unit": "regex",
+    "corpus": "repository",
+    "native": 0.270590198,
+    "go": 0.138750745
+  },
+  {
+    "unit": "regex",
+    "corpus": "compiler",
+    "native": 2.017758358,
+    "go": 0.312456028
+  }
+]
