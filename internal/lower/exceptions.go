@@ -100,6 +100,10 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 	binary := node.AsBinaryExpression()
 	left := ast.SkipParentheses(binary.Left)
+	if binary.OperatorToken.Kind == ast.KindInstanceOfKeyword && ast.IsIdentifier(left) && l.caught[l.symbol(left)] && l.isLibraryGlobal(binary.Right, "RangeError") {
+		local, _ := l.local(left)
+		return ir.ArrayRangeErrorIs{Value: ir.Read{Local: local, Of: ir.Object}}, true
+	}
 	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.caught[l.symbol(left)] || !l.isLibraryGlobal(binary.Right, "Error") {
 		return nil, false
 	}
@@ -141,7 +145,7 @@ func (l *lowering) exceptions() error {
 			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
 		}
 	}
-	return nil
+	return l.checkArrayHoles()
 }
 
 // throwsOut reports whether a throw can leave statements: a throw, or a call to a function that can
@@ -159,7 +163,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			}
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
-		case ir.Throw:
+		case ir.Throw, ir.ArrayHoles:
 			found = true
 		case ir.NodeHostCall:
 			found = node.Throws

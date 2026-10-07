@@ -314,6 +314,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.arrayReduce(expression)
 	case ir.ArraySearch:
 		return e.libraryArraySearch(expression)
+	case ir.ArrayRangeErrorIs:
+		return fmt.Sprintf("adamic_array_is_range_error(%s)", e.value(expression.Value))
+	case ir.ArrayHoles:
+		return e.arrayHoles(expression)
 	case ir.ArrayFill:
 		if expression.Array == nil {
 			length := e.value(expression.Length)

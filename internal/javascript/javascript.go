@@ -829,6 +829,10 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "adamicFrom(" + e.value(expression.Length) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayReverse:
 		return e.value(expression.Array) + ".reverse()"
+	case ir.ArrayRangeErrorIs:
+		return "(" + e.value(expression.Value) + " instanceof RangeError)"
+	case ir.ArrayHoles:
+		return "new Array(" + e.value(expression.Length) + ")"
 	case ir.ArrayFill:
 		if expression.Array == nil {
 			return "new Array(" + e.value(expression.Length) + ").fill(" + e.value(expression.Value) + ")"

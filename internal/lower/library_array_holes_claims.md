@@ -58,3 +58,21 @@ The first acceptance source is the unchanged scanner probe from
 
 No new runtime representation, performance result, mutant kill, or test262
 agreement is claimed by this inventory commit.
+
+## Constructor milestone
+
+Implemented: numeric `new Array(n)`, `Array(n)`, and numeric-element generic
+length constructors; length reads and indexed numeric reads and writes;
+catchable invalid-length RangeError with separate nominal constructor identity.
+The unchanged scanner probe is copied into the oracle fixtures. A numeric map
+holds present slots, including explicitly present undefined in optional-number
+arrays. No per-hole allocation is required at the maximum length.
+
+This milestone is deliberately limited: other generic element representations
+remain named NotYet. Whenever the lowered program contains ArrayHoles,
+`checkArrayHoles` treats all arrays as potentially holey, including parameters,
+fields and returns. It refuses all unported array methods, array for-of and
+spreads, Array.from, collection constructors, object reflection, JSON,
+Buffer/host calls, and spread-sensitive Math/String consumers. Dense-only
+programs keep the old access and store functions. No performance measurement
+or complete operation support is claimed yet.
