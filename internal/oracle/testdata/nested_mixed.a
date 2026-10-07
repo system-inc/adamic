@@ -1,0 +1,8 @@
+function make(start: number): (() => number)[] {
+ let count = start;
+ function named(): number { count += 1; return count; }
+ const anonymous = (): number => { count += 2; return count; };
+ return [named, anonymous, named];
+}
+const values = make(3);
+for (const value of values) { console.log(String(value())); }

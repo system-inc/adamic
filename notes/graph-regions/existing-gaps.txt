@@ -1,0 +1,42 @@
+=== RUN   TestStrongAstParentGap
+    gaps_test.go:34: GAPS.md says strong parent/child cycle is refused, got <nil>
+--- FAIL: TestStrongAstParentGap (0.55s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	0.602s
+=== RUN   TestParserRepresentationProbes
+=== PAUSE TestParserRepresentationProbes
+=== CONT  TestParserRepresentationProbes
+=== RUN   TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== PAUSE TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== RUN   TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== PAUSE TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== RUN   TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== PAUSE TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== RUN   TestParserRepresentationProbes/gaps/4_structural_ranges.ts
+=== PAUSE TestParserRepresentationProbes/gaps/4_structural_ranges.ts
+=== RUN   TestParserRepresentationProbes/gaps/5_conditional_panic.ts
+=== PAUSE TestParserRepresentationProbes/gaps/5_conditional_panic.ts
+=== RUN   TestParserRepresentationProbes/gaps/7_postfix_property.ts
+=== PAUSE TestParserRepresentationProbes/gaps/7_postfix_property.ts
+=== CONT  TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== CONT  TestParserRepresentationProbes/gaps/7_postfix_property.ts
+=== CONT  TestParserRepresentationProbes/gaps/4_structural_ranges.ts
+=== CONT  TestParserRepresentationProbes/gaps/5_conditional_panic.ts
+=== CONT  TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== NAME  TestParserRepresentationProbes/gaps/1_recursive_state.ts
+    gaps_test.go:41: NotYet gap changed: /workspace/adamic/stage1/cohere/markdownblocks/gaps/1_recursive_state.ts:8:32: stage 0 can't lower a first-class nested function reference from another nested function yet; update GAPS.md
+=== CONT  TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== NAME  TestParserRepresentationProbes/gaps/4_structural_ranges.ts
+    gaps_test.go:48: Refused shape changed: <nil>; update GAPS.md
+=== NAME  TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+    gaps_test.go:48: Refused shape changed: <nil>; update GAPS.md
+--- FAIL: TestParserRepresentationProbes (0.00s)
+    --- FAIL: TestParserRepresentationProbes/gaps/1_recursive_state.ts (0.60s)
+    --- PASS: TestParserRepresentationProbes/gaps/5_conditional_panic.ts (0.65s)
+    --- FAIL: TestParserRepresentationProbes/gaps/4_structural_ranges.ts (0.67s)
+    --- PASS: TestParserRepresentationProbes/gaps/7_postfix_property.ts (0.72s)
+    --- FAIL: TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts (0.43s)
+    --- PASS: TestParserRepresentationProbes/gaps/3_recursive_callable.ts (1.50s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	1.546s
+FAIL

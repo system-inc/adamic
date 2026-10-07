@@ -1,0 +1,11 @@
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/notes/graph-regions/weak_expiry.a (0.40s)
+        oracle_test.go:659: stdout differs
+            node:   exit 0, stdout "child2\nchild2\n", stderr ""
+            native: exit 0, stdout "child2\nexpired\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.409s
+FAIL
