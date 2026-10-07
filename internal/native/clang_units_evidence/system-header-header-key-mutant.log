@@ -1,0 +1,5 @@
+--- FAIL: TestUnitSystemHeaderProvenance (0.41s)
+    units_test.go:146: header observation: exit=<nil> output="1\n" want="2\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.443s
+FAIL

@@ -1,0 +1,5 @@
+--- FAIL: TestUnitCacheFlagsHoldSanitizer (0.62s)
+    units_test.go:81: sanitized rebuild reused uninstrumented object: exit=<nil> output=
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.629s
+FAIL

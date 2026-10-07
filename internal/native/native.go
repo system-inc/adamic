@@ -44,6 +44,12 @@ func cString(value string) string {
 
 // Options says how to compile.
 type Options struct {
+	// Split compiles generated functions in separate translation units. Off by default.
+	Split bool
+
+	// Jobs bounds parallel clang processes in a split build; zero means one.
+	Jobs int
+
 	// Sanitize compiles with the address and undefined-behavior sanitizers, as the tests do.
 	Sanitize bool
 
@@ -92,6 +98,10 @@ func Flags(options Options) []string {
 
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
+	if options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1" {
+		return buildUnits(source, output, options)
+	}
+
 	directory, err := os.MkdirTemp("", "adamic-build-")
 	if err != nil {
 		return fmt.Errorf("native: %w", err)

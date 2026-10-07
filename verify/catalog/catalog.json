@@ -1,0 +1,1842 @@
+[
+  {
+    "number": 1,
+    "name": "shared-slice-append",
+    "area": "ownership",
+    "fix_commit": "7b6f9864cd22db4c9629b2d62aa4c08c2f2637b7",
+    "fixture": "internal/oracle/testdata/shared_slice_append.a",
+    "fixtures": [
+      "internal/oracle/testdata/shared_slice_append.a"
+    ],
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$"
+    ],
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "patch": "01-shared-slice-append.patch",
+    "status": "verified",
+    "adaptation": "Restore the original unsigned capacity subtraction. Leave explanatory comments and unrelated code alone.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 6.8,
+          "load_before": "9.11 8.00 4.19 9/194 11946",
+          "load_after": "9.18 8.03 4.22 9/187 12475",
+          "log": "logs/01-control-1.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 52.823,
+          "load_before": "9.18 8.03 4.22 7/187 12476",
+          "load_after": "6.96 7.63 4.31 7/188 15501",
+          "log": "logs/01-mutant-1.log"
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.519,
+          "load_before": "6.96 7.63 4.31 5/188 15502",
+          "load_after": "6.72 7.57 4.31 2/161 15587",
+          "log": "logs/01-control-2.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.779,
+          "load_before": "6.72 7.57 4.31 2/161 15588",
+          "load_after": "6.72 7.57 4.31 2/163 15670",
+          "log": "logs/01-mutant-2.log"
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.395,
+          "load_before": "6.72 7.57 4.31 2/163 15671",
+          "load_after": "6.34 7.48 4.29 2/163 15753",
+          "log": "logs/01-control-3.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.572,
+          "load_before": "6.34 7.48 4.29 2/163 15754",
+          "load_after": "6.34 7.48 4.29 2/165 15844",
+          "log": "logs/01-mutant-3.log"
+        }
+      }
+    ],
+    "expected_failure_line": "oracle_test.go:613: exit codes differ",
+    "whole_oracle": {
+      "completed": true,
+      "status": "fail",
+      "failed_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/shared_slice_append.a",
+        "TestNativeAgreesWithNode",
+        "TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slice_append.a",
+        "TestCountsAreRecorded/fixtures",
+        "TestCountsAreRecorded"
+      ],
+      "failed_fixture_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/shared_slice_append.a",
+        "TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slice_append.a"
+      ],
+      "failed_fixtures": [
+        "internal/oracle/testdata/shared_slice_append.a"
+      ],
+      "failed_fixture_count": 1,
+      "native_failed_fixtures": [
+        "internal/oracle/testdata/shared_slice_append.a"
+      ],
+      "native_failed_fixture_count": 1,
+      "counts_changed_fixtures": [],
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle",
+      "exit_code": 1,
+      "elapsed_seconds": 157.258,
+      "load_before": "7.36 6.91 4.71 2/204 21281",
+      "load_after": "6.64 7.11 5.16 1/196 32275",
+      "log": "logs/01-whole-mutant.jsonl",
+      "new_native_failed_fixtures": [
+        "internal/oracle/testdata/shared_slice_append.a"
+      ],
+      "only_own_native_fixture_detects": true,
+      "only_own_fixture_detects": true,
+      "all_failed_fixture_paths": [
+        "internal/oracle/testdata/shared_slice_append.a"
+      ],
+      "all_failed_fixture_count": 1,
+      "detecting_fixture_paths": [
+        "internal/oracle/testdata/shared_slice_append.a"
+      ],
+      "detecting_fixture_count": 1,
+      "only_fix_fixture_family_detects": true
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/shared_slice_append.a"
+    ],
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  },
+  {
+    "number": 2,
+    "name": "liveness-throw",
+    "area": "liveness",
+    "fix_commit": "2dbee114877dc0ab4cac2e96adfbb9791f966f47",
+    "fixture": "internal/oracle/testdata/throw_keeps_old_value.a",
+    "fixtures": [
+      "internal/oracle/testdata/throw_keeps_old_value.a",
+      "internal/oracle/testdata/throw_keeps_old_value_variants.a",
+      "internal/oracle/testdata/throw_in_writes.a",
+      "internal/oracle/testdata/throw_global_move.a"
+    ],
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$"
+    ],
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "patch": "02-liveness-throw.patch",
+    "status": "verified",
+    "adaptation": "Reverse the handler live-in block; retain the updated trace tests.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.705,
+          "load_before": "6.34 7.48 4.29 2/165 15845",
+          "load_after": "6.00 7.39 4.28 2/165 15926",
+          "log": "logs/02-control-1.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 14.674,
+          "load_before": "6.00 7.39 4.28 2/165 15927",
+          "load_after": "5.68 7.25 4.29 2/164 16071",
+          "log": "logs/02-mutant-1.log"
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.384,
+          "load_before": "5.68 7.25 4.29 2/164 16072",
+          "load_after": "5.68 7.25 4.29 3/164 16154",
+          "log": "logs/02-control-2.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.322,
+          "load_before": "5.68 7.25 4.29 2/164 16155",
+          "load_after": "5.68 7.25 4.29 2/164 16240",
+          "log": "logs/02-mutant-2.log"
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.415,
+          "load_before": "5.68 7.25 4.29 2/164 16241",
+          "load_after": "5.38 7.17 4.27 2/164 16324",
+          "log": "logs/02-control-3.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.272,
+          "load_before": "5.38 7.17 4.27 2/164 16325",
+          "load_after": "5.38 7.17 4.27 2/164 16406",
+          "log": "logs/02-mutant-3.log"
+        }
+      }
+    ],
+    "expected_failure_line": "oracle_test.go:613: exit codes differ",
+    "whole_oracle": {
+      "completed": true,
+      "status": "fail",
+      "failed_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/throw_keeps_old_value.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/throw_keeps_old_value_variants.a",
+        "TestNativeAgreesWithNode",
+        "TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value.a",
+        "TestCountsAreRecorded/fixtures",
+        "TestCountsAreRecorded"
+      ],
+      "failed_fixture_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/throw_keeps_old_value.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/throw_keeps_old_value_variants.a",
+        "TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value.a"
+      ],
+      "failed_fixtures": [
+        "internal/oracle/testdata/throw_keeps_old_value.a",
+        "internal/oracle/testdata/throw_keeps_old_value_variants.a"
+      ],
+      "failed_fixture_count": 2,
+      "native_failed_fixtures": [
+        "internal/oracle/testdata/throw_keeps_old_value.a",
+        "internal/oracle/testdata/throw_keeps_old_value_variants.a"
+      ],
+      "native_failed_fixture_count": 2,
+      "counts_changed_fixtures": [],
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle",
+      "exit_code": 1,
+      "elapsed_seconds": 121.699,
+      "load_before": "6.64 7.11 5.16 1/196 32276",
+      "load_after": "5.37 6.45 5.16 1/198 42963",
+      "log": "logs/02-whole-mutant.jsonl",
+      "new_native_failed_fixtures": [
+        "internal/oracle/testdata/throw_keeps_old_value.a",
+        "internal/oracle/testdata/throw_keeps_old_value_variants.a"
+      ],
+      "only_own_native_fixture_detects": false,
+      "only_own_fixture_detects": false,
+      "all_failed_fixture_paths": [
+        "internal/oracle/testdata/throw_keeps_old_value.a",
+        "internal/oracle/testdata/throw_keeps_old_value_variants.a"
+      ],
+      "all_failed_fixture_count": 2,
+      "detecting_fixture_paths": [
+        "internal/oracle/testdata/throw_keeps_old_value.a",
+        "internal/oracle/testdata/throw_keeps_old_value_variants.a"
+      ],
+      "detecting_fixture_count": 2,
+      "only_fix_fixture_family_detects": true
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/throw_keeps_old_value.a"
+    ],
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  },
+  {
+    "number": 3,
+    "name": "defined-lent",
+    "area": "ownership",
+    "fix_commit": "fe62d30ab994d6bfcc92cae575d3b31537bac97d",
+    "fixture": "internal/oracle/testdata/borrow_defined_lent.a",
+    "fixtures": [
+      "internal/oracle/testdata/borrow_defined_lent.a",
+      "internal/oracle/testdata/borrow_defined_lent_field.a"
+    ],
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$"
+    ],
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "patch": "03-defined-lent.patch",
+    "status": "verified",
+    "adaptation": "Remove Defined only from consumes exclusions, retaining its purity and all tests.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.219,
+          "load_before": "5.38 7.17 4.27 2/164 16407",
+          "load_after": "5.11 7.08 4.26 2/163 16488",
+          "log": "logs/03-control-1.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 8.187,
+          "load_before": "5.11 7.08 4.26 2/163 16489",
+          "load_after": "4.93 6.98 4.26 2/165 16599",
+          "log": "logs/03-mutant-1.log"
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.805,
+          "load_before": "4.93 6.98 4.26 2/165 16600",
+          "load_after": "4.93 6.98 4.26 2/167 16689",
+          "log": "logs/03-control-2.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.28,
+          "load_before": "4.93 6.98 4.26 2/167 16690",
+          "load_after": "4.69 6.89 4.25 2/170 16785",
+          "log": "logs/03-mutant-2.log"
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.486,
+          "load_before": "4.69 6.89 4.25 2/170 16786",
+          "load_after": "4.69 6.89 4.25 2/170 16870",
+          "log": "logs/03-control-3.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.973,
+          "load_before": "4.69 6.89 4.25 2/170 16871",
+          "load_after": "4.64 6.85 4.25 2/172 16958",
+          "log": "logs/03-mutant-3.log"
+        }
+      }
+    ],
+    "expected_failure_line": "oracle_test.go:613: exit codes differ",
+    "whole_oracle": {
+      "completed": true,
+      "status": "fail",
+      "failed_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent_field.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent.a",
+        "TestNativeAgreesWithNode",
+        "TestCountsAreRecorded"
+      ],
+      "failed_fixture_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent_field.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent.a"
+      ],
+      "failed_fixtures": [
+        "internal/oracle/testdata/borrow_defined_lent.a",
+        "internal/oracle/testdata/borrow_defined_lent_field.a"
+      ],
+      "failed_fixture_count": 2,
+      "native_failed_fixtures": [
+        "internal/oracle/testdata/borrow_defined_lent.a",
+        "internal/oracle/testdata/borrow_defined_lent_field.a"
+      ],
+      "native_failed_fixture_count": 2,
+      "counts_changed_fixtures": [
+        "internal/fresh/testdata/regexp_tree.ts",
+        "internal/load/testdata/0.1/compile/09_tree.ts",
+        "internal/oracle/testdata/borrow_defined_lent.a",
+        "internal/oracle/testdata/borrow_defined_lent_field.a",
+        "internal/oracle/testdata/casts.a",
+        "internal/oracle/testdata/class_oct6_subclass_holder.a",
+        "internal/oracle/testdata/fills.a",
+        "internal/oracle/testdata/fresh_calls.a",
+        "internal/oracle/testdata/fresh_writes.a",
+        "internal/oracle/testdata/narrowed_fields.a",
+        "internal/oracle/testdata/narrowed_methods.a",
+        "internal/oracle/testdata/narrowed_reads.a",
+        "internal/oracle/testdata/regexp.a",
+        "internal/oracle/testdata/regexp_cycle_collections.a",
+        "internal/oracle/testdata/regexp_cycle_fields.a",
+        "internal/oracle/testdata/regexp_cycle_weak.a",
+        "internal/oracle/testdata/regexp_exec.a",
+        "internal/oracle/testdata/regexp_null_narrowed.a",
+        "internal/oracle/testdata/regexp_split_pair_pattern.a",
+        "internal/oracle/testdata/regexp_unicode.a",
+        "internal/oracle/testdata/reuse_lent_global.a",
+        "internal/oracle/testdata/reuse_narrowed.a",
+        "internal/oracle/testdata/undefined_keys.a",
+        "internal/oracle/testdata/undefined_references.a",
+        "internal/oracle/testdata/undefined_strings.a",
+        "internal/oracle/testdata/visits.a",
+        "internal/oracle/testdata/weak_narrowed.a"
+      ],
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle",
+      "exit_code": 1,
+      "elapsed_seconds": 117.995,
+      "load_before": "5.37 6.45 5.16 1/198 42964",
+      "load_after": "5.52 6.15 5.21 1/200 53603",
+      "log": "logs/03-whole-mutant.jsonl",
+      "new_native_failed_fixtures": [
+        "internal/oracle/testdata/borrow_defined_lent.a",
+        "internal/oracle/testdata/borrow_defined_lent_field.a"
+      ],
+      "only_own_native_fixture_detects": false,
+      "only_own_fixture_detects": false,
+      "all_failed_fixture_paths": [
+        "internal/oracle/testdata/borrow_defined_lent.a",
+        "internal/oracle/testdata/borrow_defined_lent_field.a"
+      ],
+      "all_failed_fixture_count": 2,
+      "detecting_fixture_paths": [
+        "internal/fresh/testdata/regexp_tree.ts",
+        "internal/load/testdata/0.1/compile/09_tree.ts",
+        "internal/oracle/testdata/borrow_defined_lent.a",
+        "internal/oracle/testdata/borrow_defined_lent_field.a",
+        "internal/oracle/testdata/casts.a",
+        "internal/oracle/testdata/class_oct6_subclass_holder.a",
+        "internal/oracle/testdata/fills.a",
+        "internal/oracle/testdata/fresh_calls.a",
+        "internal/oracle/testdata/fresh_writes.a",
+        "internal/oracle/testdata/narrowed_fields.a",
+        "internal/oracle/testdata/narrowed_methods.a",
+        "internal/oracle/testdata/narrowed_reads.a",
+        "internal/oracle/testdata/regexp.a",
+        "internal/oracle/testdata/regexp_cycle_collections.a",
+        "internal/oracle/testdata/regexp_cycle_fields.a",
+        "internal/oracle/testdata/regexp_cycle_weak.a",
+        "internal/oracle/testdata/regexp_exec.a",
+        "internal/oracle/testdata/regexp_null_narrowed.a",
+        "internal/oracle/testdata/regexp_split_pair_pattern.a",
+        "internal/oracle/testdata/regexp_unicode.a",
+        "internal/oracle/testdata/reuse_lent_global.a",
+        "internal/oracle/testdata/reuse_narrowed.a",
+        "internal/oracle/testdata/undefined_keys.a",
+        "internal/oracle/testdata/undefined_references.a",
+        "internal/oracle/testdata/undefined_strings.a",
+        "internal/oracle/testdata/visits.a",
+        "internal/oracle/testdata/weak_narrowed.a"
+      ],
+      "detecting_fixture_count": 27,
+      "only_fix_fixture_family_detects": false
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_defined_lent.a"
+    ],
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  },
+  {
+    "number": 4,
+    "name": "borrowed-array-move",
+    "area": "ownership",
+    "fix_commit": "9579408671f8481e2a196822c21caab6f94c5366",
+    "fixture": "internal/oracle/testdata/borrow_element_super_move.a",
+    "fixtures": [
+      "internal/oracle/testdata/borrow_element_super_move.a",
+      "internal/oracle/testdata/borrow_element_virtual_move.a"
+    ],
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$"
+    ],
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "patch": "04-borrowed-array-move.patch",
+    "status": "verified",
+    "adaptation": "Remove only the movable lending guard. Keep plumbing and APIs so current callers build. The later virtual-call fix masks the virtual-move fixture; use the original direct super fixture.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.547,
+          "load_before": "4.64 6.85 4.25 3/172 16959",
+          "load_after": "4.64 6.85 4.25 2/172 17042",
+          "log": "logs/04-control-1.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 8.909,
+          "load_before": "4.64 6.85 4.25 2/172 17043",
+          "load_after": "4.23 6.69 4.22 2/174 17158",
+          "log": "logs/04-mutant-1.log"
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.762,
+          "load_before": "4.23 6.69 4.22 2/174 17159",
+          "load_after": "4.23 6.69 4.22 2/174 17244",
+          "log": "logs/04-control-2.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.739,
+          "load_before": "4.23 6.69 4.22 2/174 17245",
+          "load_after": "4.37 6.67 4.23 2/176 17331",
+          "log": "logs/04-mutant-2.log"
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.457,
+          "load_before": "4.37 6.67 4.23 2/176 17332",
+          "load_after": "4.26 6.61 4.22 2/176 17418",
+          "log": "logs/04-control-3.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.275,
+          "load_before": "4.26 6.61 4.22 2/176 17419",
+          "load_after": "4.26 6.61 4.22 1/176 17509",
+          "log": "logs/04-mutant-3.log"
+        }
+      }
+    ],
+    "expected_failure_line": "oracle_test.go:613: exit codes differ",
+    "whole_oracle": {
+      "completed": true,
+      "status": "fail",
+      "failed_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a",
+        "TestCountsAreRecorded",
+        "TestNativeAgreesWithNode"
+      ],
+      "failed_fixture_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a"
+      ],
+      "failed_fixtures": [
+        "internal/oracle/testdata/borrow_element_super_move.a"
+      ],
+      "failed_fixture_count": 1,
+      "native_failed_fixtures": [
+        "internal/oracle/testdata/borrow_element_super_move.a"
+      ],
+      "native_failed_fixture_count": 1,
+      "counts_changed_fixtures": [
+        "internal/oracle/testdata/borrow_element_super_move.a"
+      ],
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle",
+      "exit_code": 1,
+      "elapsed_seconds": 124.267,
+      "load_before": "5.52 6.15 5.21 1/200 53604",
+      "load_after": "4.73 5.73 5.18 1/202 64223",
+      "log": "logs/04-whole-mutant.jsonl",
+      "new_native_failed_fixtures": [
+        "internal/oracle/testdata/borrow_element_super_move.a"
+      ],
+      "only_own_native_fixture_detects": true,
+      "only_own_fixture_detects": true,
+      "all_failed_fixture_paths": [
+        "internal/oracle/testdata/borrow_element_super_move.a"
+      ],
+      "all_failed_fixture_count": 1,
+      "detecting_fixture_paths": [
+        "internal/oracle/testdata/borrow_element_super_move.a"
+      ],
+      "detecting_fixture_count": 1,
+      "only_fix_fixture_family_detects": true
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_super_move.a"
+    ],
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  },
+  {
+    "number": 5,
+    "name": "spread-method-reuse",
+    "area": "ownership",
+    "fix_commit": "9dd2e9ab99fff391ac55712aeb170de600ef214d",
+    "fixture": "internal/oracle/testdata/reuse_spread_method_alias.a",
+    "fixtures": [
+      "internal/oracle/testdata/reuse_spread_method_alias.a",
+      "internal/oracle/testdata/reuse_spread_method.a"
+    ],
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$"
+    ],
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "patch": "05-spread-method-reuse.patch",
+    "status": "verified",
+    "adaptation": "Restore method receiver reads in readOnlyInside. Use the alias fixture for a clean stdout disagreement.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.371,
+          "load_before": "4.26 6.61 4.22 1/176 17510",
+          "load_after": "4.26 6.61 4.22 1/176 17597",
+          "log": "logs/05-control-1.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 7.595,
+          "load_before": "4.26 6.61 4.22 1/176 17598",
+          "load_after": "3.76 6.43 4.19 1/172 17716",
+          "log": "logs/05-mutant-1.log"
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.388,
+          "load_before": "3.76 6.43 4.19 1/172 17717",
+          "load_after": "3.76 6.43 4.19 1/172 17811",
+          "log": "logs/05-control-2.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.249,
+          "load_before": "3.76 6.43 4.19 1/172 17812",
+          "load_after": "3.54 6.34 4.17 1/171 17897",
+          "log": "logs/05-mutant-2.log"
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.254,
+          "load_before": "3.54 6.34 4.17 2/171 17898",
+          "load_after": "3.54 6.34 4.17 1/171 17984",
+          "log": "logs/05-control-3.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.212,
+          "load_before": "3.54 6.34 4.17 1/171 17985",
+          "load_after": "3.34 6.25 4.15 1/171 18068",
+          "log": "logs/05-mutant-3.log"
+        }
+      }
+    ],
+    "expected_failure_line": "oracle_test.go:613: stdout differs",
+    "whole_oracle": {
+      "completed": true,
+      "status": "fail",
+      "failed_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a",
+        "TestNativeAgreesWithNode",
+        "TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method.a",
+        "TestCountsAreRecorded/fixtures",
+        "TestCountsAreRecorded"
+      ],
+      "failed_fixture_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method.a",
+        "TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method.a"
+      ],
+      "failed_fixtures": [
+        "internal/oracle/testdata/reuse_spread_method.a",
+        "internal/oracle/testdata/reuse_spread_method_alias.a"
+      ],
+      "failed_fixture_count": 2,
+      "native_failed_fixtures": [
+        "internal/oracle/testdata/reuse_spread_method.a",
+        "internal/oracle/testdata/reuse_spread_method_alias.a"
+      ],
+      "native_failed_fixture_count": 2,
+      "counts_changed_fixtures": [],
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle",
+      "exit_code": 1,
+      "elapsed_seconds": 128.844,
+      "load_before": "4.73 5.73 5.18 1/202 64224",
+      "load_after": "4.74 5.49 5.17 1/203 74797",
+      "log": "logs/05-whole-mutant.jsonl",
+      "new_native_failed_fixtures": [
+        "internal/oracle/testdata/reuse_spread_method.a",
+        "internal/oracle/testdata/reuse_spread_method_alias.a"
+      ],
+      "only_own_native_fixture_detects": false,
+      "only_own_fixture_detects": false,
+      "all_failed_fixture_paths": [
+        "internal/oracle/testdata/reuse_spread_method.a",
+        "internal/oracle/testdata/reuse_spread_method_alias.a"
+      ],
+      "all_failed_fixture_count": 2,
+      "detecting_fixture_paths": [
+        "internal/oracle/testdata/reuse_spread_method.a",
+        "internal/oracle/testdata/reuse_spread_method_alias.a"
+      ],
+      "detecting_fixture_count": 2,
+      "only_fix_fixture_family_detects": true
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/reuse_spread_method_alias.a"
+    ],
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  },
+  {
+    "number": 6,
+    "name": "constructor-capture-region",
+    "area": "ownership",
+    "fix_commit": "d84813c594c17931991dd36a3f2486bbfdfd2316",
+    "fixture": "internal/oracle/testdata/regions_constructor_capture.a",
+    "fixtures": [
+      "internal/oracle/testdata/regions_constructor_capture.a"
+    ],
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$"
+    ],
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "patch": "06-constructor-capture-region.patch",
+    "status": "verified",
+    "adaptation": "Remove only the captured-object guard in returnsFresh.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.182,
+          "load_before": "3.34 6.25 4.15 1/171 18069",
+          "load_after": "3.34 6.25 4.15 1/170 18154",
+          "log": "logs/06-control-1.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 7.232,
+          "load_before": "3.34 6.25 4.15 1/170 18155",
+          "load_after": "2.98 6.08 4.12 1/170 18271",
+          "log": "logs/06-mutant-1.log"
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.09,
+          "load_before": "2.98 6.08 4.12 1/170 18272",
+          "load_after": "2.98 6.08 4.12 1/170 18356",
+          "log": "logs/06-control-2.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.208,
+          "load_before": "2.98 6.08 4.12 1/170 18357",
+          "load_after": "2.98 6.02 4.11 1/173 18442",
+          "log": "logs/06-mutant-2.log"
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.367,
+          "load_before": "2.98 6.02 4.11 1/173 18443",
+          "load_after": "2.98 6.02 4.11 2/173 18524",
+          "log": "logs/06-control-3.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.179,
+          "load_before": "2.98 6.02 4.11 1/173 18525",
+          "load_after": "2.98 6.02 4.11 1/175 18610",
+          "log": "logs/06-mutant-3.log"
+        }
+      }
+    ],
+    "expected_failure_line": "oracle_test.go:613: exit codes differ",
+    "whole_oracle": {
+      "completed": true,
+      "status": "fail",
+      "failed_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/regions_constructor_capture.a",
+        "TestNativeAgreesWithNode",
+        "TestCountsAreRecorded"
+      ],
+      "failed_fixture_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/regions_constructor_capture.a"
+      ],
+      "failed_fixtures": [
+        "internal/oracle/testdata/regions_constructor_capture.a"
+      ],
+      "failed_fixture_count": 1,
+      "native_failed_fixtures": [
+        "internal/oracle/testdata/regions_constructor_capture.a"
+      ],
+      "native_failed_fixture_count": 1,
+      "counts_changed_fixtures": [
+        "internal/oracle/testdata/regions_constructor_capture.a"
+      ],
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle",
+      "exit_code": 1,
+      "elapsed_seconds": 137.248,
+      "load_before": "4.74 5.49 5.17 1/203 74798",
+      "load_after": "4.76 5.09 5.05 1/203 85353",
+      "log": "logs/06-whole-mutant.jsonl",
+      "new_native_failed_fixtures": [
+        "internal/oracle/testdata/regions_constructor_capture.a"
+      ],
+      "only_own_native_fixture_detects": true,
+      "only_own_fixture_detects": true,
+      "all_failed_fixture_paths": [
+        "internal/oracle/testdata/regions_constructor_capture.a"
+      ],
+      "all_failed_fixture_count": 1,
+      "detecting_fixture_paths": [
+        "internal/oracle/testdata/regions_constructor_capture.a"
+      ],
+      "detecting_fixture_count": 1,
+      "only_fix_fixture_family_detects": true
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/regions_constructor_capture.a"
+    ],
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  },
+  {
+    "number": 7,
+    "name": "borrowed-element-reads",
+    "area": "ownership",
+    "fix_commit": "658dbc4f32ad85388a8adcc18bd56317965bd695",
+    "fixture": "internal/oracle/testdata/borrow_element_virtual_store.a",
+    "fixtures": [
+      "internal/oracle/testdata/borrow_element_virtual_store.a",
+      "internal/oracle/testdata/borrow_element_throw.a"
+    ],
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$"
+    ],
+    "main_sha": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+    "patch": "07-borrowed-element-reads.patch",
+    "status": "verified",
+    "adaptation": "Restore the pre-fix trust in only expression.Function instead of checking all CallTargets. Keep closure-target safety and MakeError borrowing unchanged.",
+    "expected_failure_line": "oracle_test.go:618: exit codes differ",
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_virtual_store.a"
+    ],
+    "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+    "history": [
+      {
+        "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "patch": "history/07-borrowed-element-reads-e011f8f.patch",
+        "targeted_runs": [
+          {
+            "round": 1,
+            "before": {
+              "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+              "exit_code": 0,
+              "elapsed_seconds": 2.583,
+              "load_before": "2.98 6.02 4.11 1/175 18611",
+              "load_after": "2.98 5.97 4.11 1/186 18737",
+              "log": "logs/07-control-1.log"
+            },
+            "after": {
+              "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+              "exit_code": 1,
+              "elapsed_seconds": 9.017,
+              "load_before": "2.98 5.97 4.11 1/186 18738",
+              "load_after": "2.76 5.83 4.08 2/192 18894",
+              "log": "logs/07-mutant-1.log"
+            }
+          },
+          {
+            "round": 2,
+            "before": {
+              "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+              "exit_code": 0,
+              "elapsed_seconds": 2.467,
+              "load_before": "2.76 5.83 4.08 2/192 18895",
+              "load_after": "2.76 5.83 4.08 1/190 18998",
+              "log": "logs/07-control-2.log"
+            },
+            "after": {
+              "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+              "exit_code": 1,
+              "elapsed_seconds": 2.261,
+              "load_before": "2.76 5.83 4.08 1/190 18999",
+              "load_after": "2.78 5.78 4.07 2/191 19089",
+              "log": "logs/07-mutant-2.log"
+            }
+          },
+          {
+            "round": 3,
+            "before": {
+              "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+              "exit_code": 0,
+              "elapsed_seconds": 4.892,
+              "load_before": "2.78 5.78 4.07 2/191 19090",
+              "load_after": "3.51 5.88 4.12 2/204 19677",
+              "log": "logs/07-control-3.log"
+            },
+            "after": {
+              "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+              "exit_code": 1,
+              "elapsed_seconds": 2.489,
+              "load_before": "3.51 5.88 4.12 2/204 19678",
+              "load_after": "3.51 5.88 4.12 2/206 19764",
+              "log": "logs/07-mutant-3.log"
+            }
+          }
+        ],
+        "whole_oracle": {
+          "completed": true,
+          "status": "fail",
+          "failed_tests": [
+            "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_virtual_store.a",
+            "TestCountsAreRecorded",
+            "TestNativeAgreesWithNode"
+          ],
+          "failed_fixture_tests": [
+            "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_virtual_store.a"
+          ],
+          "failed_fixtures": [
+            "internal/oracle/testdata/borrow_element_virtual_store.a"
+          ],
+          "failed_fixture_count": 1,
+          "native_failed_fixtures": [
+            "internal/oracle/testdata/borrow_element_virtual_store.a"
+          ],
+          "native_failed_fixture_count": 1,
+          "counts_changed_fixtures": [
+            "internal/oracle/testdata/borrow_element_virtual_move.a",
+            "internal/oracle/testdata/borrow_element_virtual_store.a"
+          ],
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle",
+          "exit_code": 1,
+          "elapsed_seconds": 121.559,
+          "load_before": "4.76 5.09 5.05 1/203 85354",
+          "load_after": "5.93 5.36 5.16 1/209 96026",
+          "log": "logs/07-whole-mutant.jsonl",
+          "new_native_failed_fixtures": [
+            "internal/oracle/testdata/borrow_element_virtual_store.a"
+          ],
+          "only_own_native_fixture_detects": true,
+          "only_own_fixture_detects": false,
+          "all_failed_fixture_paths": [
+            "internal/oracle/testdata/borrow_element_virtual_store.a"
+          ],
+          "all_failed_fixture_count": 1,
+          "detecting_fixture_paths": [
+            "internal/oracle/testdata/borrow_element_virtual_move.a",
+            "internal/oracle/testdata/borrow_element_virtual_store.a"
+          ],
+          "detecting_fixture_count": 2,
+          "only_fix_fixture_family_detects": false
+        },
+        "expected_failure_line": "oracle_test.go:613: exit codes differ"
+      }
+    ],
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -trimpath -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 238.993,
+          "load_before": "0.48 1.67 2.66 1/242 128644",
+          "load_after": "5.18 4.62 3.73 2/243 131816",
+          "log": "logs/refresh-07-control-1.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -trimpath -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 10.129,
+          "load_before": "5.18 4.62 3.73 1/243 131817",
+          "load_after": "4.91 4.59 3.72 1/245 131926",
+          "log": "logs/refresh-07-mutant-1.log"
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -trimpath -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.227,
+          "load_before": "4.91 4.59 3.72 1/245 131927",
+          "load_after": "4.91 4.59 3.72 1/245 132010",
+          "log": "logs/refresh-07-control-2.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -trimpath -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.538,
+          "load_before": "4.91 4.59 3.72 1/245 132011",
+          "load_after": "4.60 4.53 3.71 1/247 132094",
+          "log": "logs/refresh-07-mutant-2.log"
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -trimpath -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.225,
+          "load_before": "4.60 4.53 3.71 1/247 132095",
+          "load_after": "4.60 4.53 3.71 1/247 132178",
+          "log": "logs/refresh-07-control-3.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -trimpath -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.33,
+          "load_before": "4.60 4.53 3.71 1/247 132179",
+          "load_after": "4.31 4.47 3.69 1/249 132261",
+          "log": "logs/refresh-07-mutant-3.log"
+        }
+      }
+    ],
+    "whole_oracle": {
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -trimpath -json -count=1 -timeout 30m ./internal/oracle",
+      "exit_code": 1,
+      "elapsed_seconds": 132.745,
+      "load_before": "4.31 4.47 3.69 1/249 132263",
+      "load_after": "5.80 4.92 3.96 1/264 142996",
+      "log": "logs/refresh-07-whole-mutant.jsonl",
+      "completed": true,
+      "failed_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_element.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element_virtual_store.a",
+        "TestNativeAgreesWithNode",
+        "TestCountsAreRecorded"
+      ],
+      "native_failed_fixtures": [
+        "internal/oracle/testdata/borrow_element_virtual_store.a",
+        "internal/oracle/testdata/call_targets_element.a"
+      ],
+      "native_failed_fixture_count": 2,
+      "counts_changed_fixtures": [
+        "internal/oracle/testdata/borrow_element_virtual_move.a",
+        "internal/oracle/testdata/borrow_element_virtual_store.a",
+        "internal/oracle/testdata/call_targets_element.a"
+      ],
+      "failed_fixtures": [
+        "internal/oracle/testdata/borrow_element_virtual_store.a",
+        "internal/oracle/testdata/call_targets_element.a"
+      ],
+      "failed_fixture_count": 2,
+      "detecting_fixture_paths": [
+        "internal/oracle/testdata/borrow_element_virtual_move.a",
+        "internal/oracle/testdata/borrow_element_virtual_store.a",
+        "internal/oracle/testdata/call_targets_element.a"
+      ],
+      "detecting_fixture_count": 3,
+      "only_own_native_fixture_detects": false,
+      "only_own_fixture_detects": false,
+      "only_fix_fixture_family_detects": false,
+      "counts_changed_fixture_count": 3
+    }
+  },
+  {
+    "number": 8,
+    "name": "narrowed-number-field",
+    "area": "representation",
+    "fix_commit": "675770b782b3512f423b4b9e271e377588a2eef9",
+    "fixture": "internal/oracle/testdata/e4eec87_f1_field_narrowed.a",
+    "fixtures": [
+      "internal/oracle/testdata/e4eec87_f1_field_narrowed.a",
+      "internal/oracle/testdata/e4eec87_f1_class_narrowed.a",
+      "internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
+      "internal/oracle/testdata/e4eec87_f1_field_present.a"
+    ],
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$"
+    ],
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "patch": "08-narrowed-number-field.patch",
+    "status": "verified",
+    "adaptation": "Reverse the declared maybe-field read and unwrap hunk, adapted to main's readObjectField wrapper.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.557,
+          "load_before": "3.51 5.88 4.12 2/206 19765",
+          "load_after": "3.39 5.82 4.10 2/206 19845",
+          "log": "logs/08-control-1.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 21.719,
+          "load_before": "3.39 5.82 4.10 3/206 19846",
+          "load_after": "4.75 5.97 4.19 2/207 19982",
+          "log": "logs/08-mutant-1.log"
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 5.891,
+          "load_before": "4.75 5.97 4.19 2/207 19983",
+          "load_after": "5.57 6.12 4.25 28/231 20097",
+          "log": "logs/08-control-2.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 11.175,
+          "load_before": "5.57 6.12 4.25 25/231 20098",
+          "load_after": "7.75 6.58 4.42 16/230 20234",
+          "log": "logs/08-mutant-2.log"
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 11.168,
+          "load_before": "7.75 6.58 4.42 23/230 20235",
+          "load_after": "10.23 7.19 4.65 11/230 20353",
+          "log": "logs/08-control-3.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 8.344,
+          "load_before": "10.23 7.19 4.65 8/230 20354",
+          "load_after": "10.70 7.34 4.72 2/205 20545",
+          "log": "logs/08-mutant-3.log"
+        }
+      }
+    ],
+    "expected_failure_line": "oracle_test.go:604: stdout differs",
+    "whole_oracle": {
+      "completed": true,
+      "status": "fail",
+      "failed_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_present.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a",
+        "TestCountsAreRecorded",
+        "TestNativeAgreesWithNode"
+      ],
+      "failed_fixture_tests": [
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_present.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_class_narrowed.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a"
+      ],
+      "failed_fixtures": [
+        "internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_class_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_field_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_field_present.a"
+      ],
+      "failed_fixture_count": 4,
+      "native_failed_fixtures": [
+        "internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_class_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_field_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_field_present.a"
+      ],
+      "native_failed_fixture_count": 4,
+      "counts_changed_fixtures": [
+        "internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_class_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_field_narrowed.a"
+      ],
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle",
+      "exit_code": 1,
+      "elapsed_seconds": 120.223,
+      "load_before": "5.93 5.36 5.16 1/209 96027",
+      "load_after": "5.32 5.36 5.19 1/212 106592",
+      "log": "logs/08-whole-mutant.jsonl",
+      "new_native_failed_fixtures": [
+        "internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_class_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_field_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_field_present.a"
+      ],
+      "only_own_native_fixture_detects": false,
+      "only_own_fixture_detects": false,
+      "all_failed_fixture_paths": [
+        "internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_class_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_field_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_field_present.a"
+      ],
+      "all_failed_fixture_count": 4,
+      "detecting_fixture_paths": [
+        "internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_class_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_field_narrowed.a",
+        "internal/oracle/testdata/e4eec87_f1_field_present.a"
+      ],
+      "detecting_fixture_count": 4,
+      "only_fix_fixture_family_detects": true
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a"
+    ],
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  },
+  {
+    "number": 9,
+    "name": "literal-undefined-field",
+    "area": "representation",
+    "fix_commit": "962f412b6f6d397ff801414cce014a3daf8bde61",
+    "fixture": "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+    "fixtures": [
+      "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+      "internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a"
+    ],
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$"
+    ],
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "patch": "09-literal-undefined-field.patch",
+    "status": "verified",
+    "adaptation": "Reverse literal fitting, union contextual member lookup and required numeric field reads. Adapt name.Text() to fieldName. Keep the helper and later optional-field machinery, which current main still uses.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 3.922,
+          "load_before": "10.70 7.34 4.72 2/205 20546",
+          "load_after": "10.00 7.25 4.70 4/199 20633",
+          "log": "logs/09-control-1.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 24.348,
+          "load_before": "10.00 7.25 4.70 2/199 20634",
+          "load_after": "7.77 6.96 4.68 7/212 20859",
+          "log": "logs/09-mutant-1.log"
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 11.455,
+          "load_before": "7.77 6.96 4.68 8/212 20860",
+          "load_after": "6.57 6.73 4.63 16/232 20976",
+          "log": "logs/09-control-2.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 5.779,
+          "load_before": "6.57 6.73 4.63 15/232 20977",
+          "load_after": "7.57 6.94 4.70 8/212 21102",
+          "log": "logs/09-mutant-2.log"
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.335,
+          "load_before": "7.57 6.94 4.70 7/212 21103",
+          "load_after": "7.36 6.91 4.71 2/206 21194",
+          "log": "logs/09-control-3.log"
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.323,
+          "load_before": "7.36 6.91 4.71 2/206 21195",
+          "load_after": "7.36 6.91 4.71 2/206 21278",
+          "log": "logs/09-mutant-3.log"
+        }
+      }
+    ],
+    "expected_failure_line": "oracle_test.go:613: stdout differs",
+    "whole_oracle": {
+      "completed": true,
+      "status": "fail",
+      "failed_tests": [
+        "TestLiteralUndefinedOracleCatchesMutant/e4eec87_u03_discriminated_undefined.a",
+        "TestLiteralUndefinedOracleCatchesMutant/e4eec87_u01_undefined_field_widened.a",
+        "TestLiteralUndefinedOracleCatchesMutant",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a",
+        "TestCountsAreRecorded",
+        "TestNativeAgreesWithNode"
+      ],
+      "failed_fixture_tests": [
+        "TestLiteralUndefinedOracleCatchesMutant/e4eec87_u03_discriminated_undefined.a",
+        "TestLiteralUndefinedOracleCatchesMutant/e4eec87_u01_undefined_field_widened.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a"
+      ],
+      "failed_fixtures": [
+        "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+        "internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a"
+      ],
+      "failed_fixture_count": 2,
+      "native_failed_fixtures": [
+        "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+        "internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a"
+      ],
+      "native_failed_fixture_count": 2,
+      "counts_changed_fixtures": [
+        "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+        "internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a"
+      ],
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -json -count=1 -timeout 30m ./internal/oracle",
+      "exit_code": 1,
+      "elapsed_seconds": 118.951,
+      "load_before": "5.32 5.36 5.19 1/212 106593",
+      "load_after": "5.70 5.50 5.26 1/215 117111",
+      "log": "logs/09-whole-mutant.jsonl",
+      "new_native_failed_fixtures": [
+        "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+        "internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a"
+      ],
+      "only_own_native_fixture_detects": false,
+      "only_own_fixture_detects": false,
+      "all_failed_fixture_paths": [
+        "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+        "internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a"
+      ],
+      "all_failed_fixture_count": 2,
+      "detecting_fixture_paths": [
+        "internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+        "internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a"
+      ],
+      "detecting_fixture_count": 2,
+      "only_fix_fixture_family_detects": true
+    },
+    "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'",
+    "expected_tests": [
+      "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a"
+    ],
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  },
+  {
+    "number": 10,
+    "name": "override-representation",
+    "area": "representation",
+    "fix_commit": "1f964412352567fca5ee39482205217706a078b2",
+    "fixture": "internal/oracle/testdata/override_same_representation.a",
+    "main_sha": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+    "status": "skipped",
+    "reason": "Fix 1f96441 is still not an ancestor of origin/main (e8ba3d5d81de4d3773c723914fccd4c76248b965); leave skipped pending integration.",
+    "patch": null,
+    "test_command": null,
+    "expected_failure_line": null,
+    "command": null,
+    "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965"
+  },
+  {
+    "number": 11,
+    "name": "refuse-definite-assignment",
+    "area": "refusal",
+    "fix_commit": "84e6752a9e0c9c4d5a7c33dff3e915408ec2bf0f",
+    "fixture": "internal/lower/definite_assignment_test.go",
+    "main_sha": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+    "status": "verified",
+    "patch": "11-refuse-definite-assignment.patch",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+    "expected_failure_line": "definite_assignment_test.go:22: got <nil>, want definite assignment refusal",
+    "command": "go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/lower",
+      "-run",
+      "^TestDefiniteAssignmentIsRefused$"
+    ],
+    "expected_tests": [
+      "TestDefiniteAssignmentIsRefused/definite-field-assigned.a",
+      "TestDefiniteAssignmentIsRefused/definite-field.a",
+      "TestDefiniteAssignmentIsRefused/definite-local-assigned.a",
+      "TestDefiniteAssignmentIsRefused/definite-local.a"
+    ],
+    "adaptation": "Reverse only the production refusal check.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 154.969,
+          "load_before": "0.63 1.58 3.34 1/218 121604",
+          "load_after": "6.16 4.09 4.05 1/219 122536",
+          "log": "logs/named-11-control-1.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 9.149,
+          "load_before": "6.16 4.09 4.05 2/219 122537",
+          "load_after": "5.84 4.08 4.05 1/219 122609",
+          "log": "logs/named-11-mutant-1.log",
+          "failed_tests": [
+            "TestDefiniteAssignmentIsRefused",
+            "TestDefiniteAssignmentIsRefused/definite-local-assigned.a",
+            "TestDefiniteAssignmentIsRefused/definite-field.a",
+            "TestDefiniteAssignmentIsRefused/definite-field-assigned.a",
+            "TestDefiniteAssignmentIsRefused/definite-local.a"
+          ]
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 1.766,
+          "load_before": "5.84 4.08 4.05 1/219 122610",
+          "load_after": "5.45 4.03 4.03 1/219 122662",
+          "log": "logs/named-11-control-2.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 1.793,
+          "load_before": "5.45 4.03 4.03 1/219 122663",
+          "load_after": "5.45 4.03 4.03 1/219 122713",
+          "log": "logs/named-11-mutant-2.log",
+          "failed_tests": [
+            "TestDefiniteAssignmentIsRefused",
+            "TestDefiniteAssignmentIsRefused/definite-local.a",
+            "TestDefiniteAssignmentIsRefused/definite-field.a",
+            "TestDefiniteAssignmentIsRefused/definite-local-assigned.a",
+            "TestDefiniteAssignmentIsRefused/definite-field-assigned.a"
+          ]
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.038,
+          "load_before": "5.45 4.03 4.03 1/219 122714",
+          "load_after": "5.45 4.03 4.03 1/219 122765",
+          "log": "logs/named-11-control-3.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 1.817,
+          "load_before": "5.45 4.03 4.03 1/219 122766",
+          "load_after": "5.09 3.98 4.01 1/219 122818",
+          "log": "logs/named-11-mutant-3.log",
+          "failed_tests": [
+            "TestDefiniteAssignmentIsRefused",
+            "TestDefiniteAssignmentIsRefused/definite-local-assigned.a",
+            "TestDefiniteAssignmentIsRefused/definite-field-assigned.a",
+            "TestDefiniteAssignmentIsRefused/definite-local.a",
+            "TestDefiniteAssignmentIsRefused/definite-field.a"
+          ]
+        }
+      }
+    ],
+    "whole_lowerer": {
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/lower",
+      "exit_code": 1,
+      "elapsed_seconds": 15.24,
+      "load_before": "4.60 3.96 4.00 1/219 123244",
+      "load_after": "4.69 4.01 4.02 1/220 123332",
+      "log": "logs/named-11-whole-lower-mutant.log",
+      "failed_tests": [
+        "TestDefiniteAssignmentIsRefused",
+        "TestDefiniteAssignmentIsRefused/definite-field.a",
+        "TestDefiniteAssignmentIsRefused/definite-field-assigned.a",
+        "TestDefiniteAssignmentIsRefused/definite-local-assigned.a",
+        "TestDefiniteAssignmentIsRefused/definite-local.a"
+      ]
+    },
+    "timing_environment": "environment-named-tests.json",
+    "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965"
+  },
+  {
+    "number": 12,
+    "name": "refuse-suppression-directives",
+    "area": "refusal",
+    "fix_commit": "921afc46fd7872cc0d0953147c3021bbec66c679",
+    "fixture": "internal/lower/suppression_directives_test.go",
+    "main_sha": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+    "status": "verified",
+    "patch": "12-refuse-suppression-directives.patch",
+    "test_command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+    "expected_failure_line": "suppression_directives_test.go:23: got <nil>, want directive refusal",
+    "command": "go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+    "test_args": [
+      "go",
+      "test",
+      "-count=1",
+      "./internal/lower",
+      "-run",
+      "^TestSuppressionDirectivesAreRefused$"
+    ],
+    "expected_tests": [
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_",
+      "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_"
+    ],
+    "adaptation": "Reverse only the production refusal check and its now-unused imports.",
+    "targeted_runs": [
+      {
+        "round": 1,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.46,
+          "load_before": "5.09 3.98 4.01 1/219 122819",
+          "load_after": "5.09 3.98 4.01 1/219 122871",
+          "log": "logs/named-12-control-1.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 9.125,
+          "load_before": "5.09 3.98 4.01 1/219 122872",
+          "load_after": "4.46 3.88 3.98 1/219 122944",
+          "log": "logs/named-12-mutant-1.log",
+          "failed_tests": [
+            "TestSuppressionDirectivesAreRefused",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_"
+          ]
+        }
+      },
+      {
+        "round": 2,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.329,
+          "load_before": "4.46 3.88 3.98 1/219 122945",
+          "load_after": "4.51 3.90 3.99 1/219 122998",
+          "log": "logs/named-12-control-2.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.369,
+          "load_before": "4.51 3.90 3.99 2/219 122999",
+          "load_after": "4.51 3.90 3.99 1/219 123056",
+          "log": "logs/named-12-mutant-2.log",
+          "failed_tests": [
+            "TestSuppressionDirectivesAreRefused",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_"
+          ]
+        }
+      },
+      {
+        "round": 3,
+        "before": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 0,
+          "elapsed_seconds": 2.339,
+          "load_before": "4.51 3.90 3.99 1/219 123057",
+          "load_after": "4.55 3.92 3.99 1/219 123108",
+          "log": "logs/named-12-control-3.log",
+          "failed_tests": []
+        },
+        "after": {
+          "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'",
+          "exit_code": 1,
+          "elapsed_seconds": 2.35,
+          "load_before": "4.55 3.92 3.99 1/219 123109",
+          "load_after": "4.55 3.92 3.99 1/219 123160",
+          "log": "logs/named-12-mutant-3.log",
+          "failed_tests": [
+            "TestSuppressionDirectivesAreRefused",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_",
+            "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_"
+          ]
+        }
+      }
+    ],
+    "whole_lowerer": {
+      "command": "ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/lower",
+      "exit_code": 1,
+      "elapsed_seconds": 15.218,
+      "load_before": "4.69 4.01 4.02 1/220 123334",
+      "load_after": "4.08 3.91 3.99 1/221 123414",
+      "log": "logs/named-12-whole-lower-mutant.log",
+      "failed_tests": [
+        "TestSuppressionDirectivesAreRefused",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_",
+        "TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_"
+      ]
+    },
+    "timing_environment": "environment-named-tests.json",
+    "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965"
+  },
+  {
+    "number": 13,
+    "name": "typeof-null",
+    "area": "typing",
+    "fix_commit": "8aa2f91c1d199a95fd64d92733bf093b8df2dd65",
+    "fixture": "internal/oracle/testdata/e4eec87_v02_typeof_null_literal.a",
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "status": "skipped",
+    "reason": "Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target.",
+    "patch": null,
+    "test_command": null,
+    "expected_failure_line": null,
+    "command": null,
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  },
+  {
+    "number": 14,
+    "name": "constructor-arrow-this",
+    "area": "refusal",
+    "fix_commit": "0cf467cdef1fba747a5b0019bf6f2f1b7651d30c",
+    "fixture": "internal/lower/class_early_this_test.go",
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "status": "skipped",
+    "reason": "Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal.",
+    "patch": null,
+    "test_command": null,
+    "expected_failure_line": null,
+    "command": null,
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  },
+  {
+    "number": 15,
+    "name": "class-instance-key",
+    "area": "typing",
+    "fix_commit": "f914cea29787df2a506d36d2f80bd0f5ff77d78a",
+    "fixture": "internal/oracle/testdata/class_instance_key_region.a",
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "status": "skipped",
+    "reason": "Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix.",
+    "patch": null,
+    "test_command": null,
+    "expected_failure_line": null,
+    "command": null,
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  },
+  {
+    "number": 16,
+    "name": "proven-guards-relations",
+    "area": "typing",
+    "fix_commit": "da1201283cce13e4910e706ff1ff44f1a425c381",
+    "fixture": "notes/proven-guards-relations/mutable_kind_guard.a",
+    "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "status": "skipped",
+    "reason": "Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures.",
+    "patch": null,
+    "test_command": null,
+    "expected_failure_line": null,
+    "command": null,
+    "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c"
+  }
+]
