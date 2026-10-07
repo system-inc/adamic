@@ -46,3 +46,17 @@ absent from main selection sites and all branch claims, are:
 
 This claim is pushed before implementation. Full repair records will remain
 rule-owned; the shared single-edit/single-suggestion record is insufficient.
+
+## Third continuation claim
+
+Prior candidates and complete repair evidence are pushed through df9f0451.
+Fetched all origin heads on 2026-10-07; main remains ef3d907e. Checked 52
+unique claims Markdown blobs across 330 origin refs, including reserved names.
+All 46 helper-ready rules are covered. The first three remaining syntax-ready
+inventory entries, absent from main and from all origin claims, are:
+
+- default-case-last: claimed here.
+- for-direction: claimed here.
+- guard-for-in: claimed here.
+
+This update is committed and pushed before any rule code is written.
