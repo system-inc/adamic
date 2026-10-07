@@ -524,3 +524,15 @@ integration; a standalone helper must not be counted as completed pairs.
 Working estimate for the whole nonprimitive family: October 16, 2026, 23:00 UTC,
 conditional on shared hooks and lazy admission by October 9. This is a planning
 estimate, not an observed delivery. No runtime completion is claimed yet.
+
+Lane 7 component API checkpoint: `(*lowering).viewIntersectionContracts(node,
+target,build)` returns all nonphantom constituent ids, propagating unsupported
+member errors. It does not reserve an aggregate descriptor. The shared owner
+should call it from the intersection dispatch hook after defining the all-members
+IR discriminator. Runtime entry points are `adamic_view_intersection_matches`
+and `adamic_view_intersection_require`; JavaScript helper text is exported by
+`javascript.IntersectionRuntime()`. They reuse lane 4's normalized snapshot type
+and accept a pure member matcher from shared dispatch. Production source admission
+is not enabled. Four source Node controls and six C/JS adapter mutations pass;
+these do not prove frontend transitive propagation or optional/readiness behavior.
+The ranked frozen ledger still has zero completed pairs and zero completed reads.
