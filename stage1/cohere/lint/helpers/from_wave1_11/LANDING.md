@@ -1,6 +1,6 @@
 Built: no new helper claim; existing helper branch rebased onto current main, rules branch blocked by shared foundation conflicts.
-Commits: main e011f8f60899586d6373a5ccb07335ad82cfbf3c; helper rebase head 2d7f31736d446fbc54237b590703cafeaf7fdc2b before this report; rule head restored to 0fe63020356226225fa251a50879ed529601aa8c.
-Commands and outputs: helper package Go test PASS 16.366s; 1,155 cases match Go on source Node, emitted JavaScript and sanitized native; owned vet PASS; uncached TestTheOracleCatchesOneByte PASS 17.174s.
+Commits: main e8ba3d5d81de4d3773c723914fccd4c76248b965; helper rebase head 7d2de193223fef30cfd135b5d5dc653cc8846c7f before this report; rule head restored to 0fe63020356226225fa251a50879ed529601aa8c.
+Commands and outputs: helper package Go test PASS 17.116s; 1,155 cases match Go on source Node, emitted JavaScript and sanitized native; owned vet PASS; uncached TestTheOracleCatchesOneByte PASS 0.359s.
 Mutants: entry_point_priority_reversed and function_closing_parenthesis_omitted compile and exit cleanly, then only byte comparisons catch each on all three runtimes; external one-byte oracle control passes too.
 Not covered: rule branch rebase/oracle on current main is blocked; full gate and fresh live consumer fixture capture were not run; no new work claimed while the landing cap is unmet.
 
@@ -13,3 +13,7 @@ Rule branch codex/lint-wave1-11 stopped at the first of 37 replayed commits: sha
 The user explicitly authorized rebasing existing owned pushed branches, superseding CLAUDE.md's general history-rewrite prohibition for this landing operation. Publishing the rebased helper branch uses an explicit expected-head force-with-lease against 24719267d5f2efd547ffff21810064bf574a6a96, protecting any concurrent update. No pull request is opened.
 
 Setup printed Go ready 0s, clang ready 1s, Node ready 1s, submodules ready 1s, build cache warm 21s and done 21s on 5 processors; nproc=5, cpu.max=400000 100000. Initial default shell access failed with exec-server transport disconnected; the cloud runtime reported a running environment and the authorized elevated shell path then worked.
+
+## Main advanced during publication
+
+The first rebased and validated helper report was pushed at 1d7d8add. Remote verification then observed main moving from e011f8f6 to e8ba3d5d (Merge branch codex/devirtualize). No stage1/cohere/lint file changed in that main update. The helper branch was rebased again, all 14 commits without conflicts, and all helper comparisons, semantic mutants, vet and the uncached one-byte oracle were run again. The current-prefixed evidence logs contain this latest run. Remote main was rechecked at e8ba3d5d before publication. A fresh isolated-worktree attempt of the rule rebase against e8ba3d5d reproduced the same four shared conflicts at 29175443; it was aborted, and that temporary worktree was removed. Rule head remains 0fe63020. The second helper publication uses an exact lease against 1d7d8add9b7e7bb0f7d9c6aaf880e4239e8ec535. No new helper claim was made.
