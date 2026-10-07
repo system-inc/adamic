@@ -1130,11 +1130,26 @@ untagged locations, clearly distinguishing static counts from measured hot paths
 
 ### Implementation progress, October 7
 
+Both backend view-read helpers now call the worker's readiness helper instead of
+repeating its presence/readiness predicate. A diagnostic mode selects the decided
+field-read message; ordinary readiness reads retain their existing diagnostic.
+Native reads also return the actual slot owner so inherited static fields use that
+owner's readiness and representation bytes. Object-literal `undefined!` and `null!`
+initializers with supported contextual field types now use the worker's existing
+`ir.Field.Uninitialized` flag and initializer recognizer. Later stores use the same
+write helper and mark the field ready. This extension does not implement lazy computed
+assertion initializers in object literals or admit missing native layout fields.
+Supplemental staged-factory fixtures hold completed objects as `Node`; their visitor
+reads are changed to checked-view reads in test IR. They validate helper integration,
+not default admission of `node as Identifier`.
+
+
 The ruling above is decided; default checked-view cast lowering is still unfinished.
 The previous `ADAMIC_INTERFACE_DOWNCASTS` implementation remains an archived, opt-in
 construction-gated prototype until the replacement is complete. It does not implement
 this ruling. Required-field backend primitives now use the non-null worker's shared
-initialization state from `6ae58a0`; there is no second initialization representation.
+initialization state from `6ae58a0`, updated by merging the requested non-null tip
+`e2ea9ab2` (including `c680ecf4`); there is no second initialization representation.
 They independently check presence, initialization, and physical field representation,
 with the prescribed field-read diagnostic and exit 70. Primitive fixtures cover
 numbers, booleans, strings and operand evaluation. This is groundwork, not admission
@@ -1188,3 +1203,19 @@ nullable storage after a capture write fails the oracle under UBSan.
 Each native object carries one initialized byte per field after its `adamic_value` slots, indexed by its actual shape. `adamic_object_initialized(const adamic_object *object)` exposes those bytes; `adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized)` updates a named slot. Fresh ordinary fields are initialized; an `ir.Field.Uninitialized` starts clear. Writes set the bit. The bytes share the object's allocation, including region allocations.
 
 Checked reads use `adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression)` in native code and `adamicReadField(object, name, expression, optional = false)` in JavaScript. `ir.Property.Readiness` supplies the source expression. Missing or uninitialized fields panic with `read before assignment: field '<name>' in <expression>`. The state is independent of the value, so zero, false, empty strings, and assigned undefined do not mean uninitialized. JavaScript keeps state in a WeakMap, preserving own keys.
+
+### Uninitialized assertions and definite assignment
+
+`undefined!` and `null!` in a let, const, class field or parameter-default initializer now reserve an uninitialized slot. `let x!: T` and `field!: T` use the same state. An assignment marks the slot ready independently of its value. Reads before assignment use the existing temporal-dead-zone readiness path and panic with exit 70, naming the variable or field and the source expression. Panic runs no catch or finally. Outside initializer positions, literal assertions still perform the loud nullish check. A shadowed `undefined` is an ordinary operand.
+
+Captured locals keep readiness in their existing cell; iteration clones copy that state. The existing control-flow graph proves dominating assignments across joins, loops and exception edges, including reads in closures after their own writes. An assignment that throws does not initialize its destination. Field facts are per binding and invalidated by calls and binding writes. Cross-function assignment proofs remain conservative. Field reads and spreads share `adamic_object_read` and `adamicReadField`; the JavaScript helper also accepts `allowAbsent = false` after `optional`. Optional absence retains its ordinary undefined behavior. Static inherited reads check their actual owning slot.
+
+Weak assertions use the same expression-bearing diagnostic, including after explicit clear or native lifetime release. Source Node agrees byte for byte on the successful fixtures. Inserted read checks and explicit Weak clearing use the oracle's checked JavaScript reference; native lifetime release has a separate pinned runtime assertion because Node retains the target.
+
+Readiness mutants dropping a check, erasing across a zero-iteration loop, initializing to zero, missing captured and exceptional reads, and treating marker initializers as ordinary nullish checks are caught by runtime output assertions. Weak generic-message and native lifetime-message mutants are caught by exact stderr assertions. The latent rerun in `non-null-readiness-census.json` verifies all 78 recorded source hashes: the original 180 non-null Refused and 25 NonNullExpression NotYet findings are now zero for both reasons. Twelve original locations still encounter other recorded refusals or NotYet reasons. This checker-rejected, per-unit measurement does not establish that tsc compiles.
+
+### Lazy computed assertion initializers
+
+The later scanner ruling extends the initializer rule to `let x = e!`, `const x = e!`, `var x = e!`, fields and defaults. The operand is evaluated once in its stored representation. A present value initializes the slot; a nullish value leaves the shared readiness state clear. The eventual read diagnostic names the slot and the original initializer expression. Assignment still makes it ready, and the same dominance proof erases subsequent reads' checks. Arguments, returns, member receivers and other operands keep eager assertions.
+
+The scanner fixture uses `var text = textInitial!` and a captured `setText`, with both missing and provided initial text. Local, instance-field, static-field and default fixtures cover assignment before reading and checked failure before assignment. Zero, false and empty strings remain present. The eager-initializer mutant exits 70 before the scanner can assign, while source Node prints its result. Other var forms remain refused; repeated var assertion declarations are refused explicitly. Function-local var reads before their declaration remain outside supported hoisting, rather than being guessed.

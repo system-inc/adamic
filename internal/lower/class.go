@@ -534,7 +534,7 @@ func nodesOf(list *ast.NodeList) []*ast.Node {
 func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
 	unset := map[string]bool{}
 	for _, member := range declaration.Members() {
-		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer == nil && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+		if member.Kind == ast.KindPropertyDeclaration && member.AsPropertyDeclaration().Initializer == nil && !(member.PostfixToken() != nil && member.PostfixToken().Kind == ast.KindExclamationToken) && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
 			unset[member.Name().Text()] = true
 		}
 	}

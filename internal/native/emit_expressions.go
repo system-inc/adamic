@@ -131,7 +131,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", slot, member(expression.Of)))
 		if expression.Of == ir.MaybeNumber {
-			if expression.Readiness != "" {
+			if expression.Readiness != "" && !expression.Absent {
 				e.line("(void)%s;", slot)
 			}
 			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())
@@ -143,6 +143,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				lookup = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, lookup)
 			}
 			e.line("adamic_value *%s = %s;", slot, lookup)
+			if expression.Readiness != "" {
+				e.line("if (%s != NULL) {", slot)
+				e.line("\t(void)adamic_object_read(%s, %s, &%s, %s);", object, cString(expression.Name), e.cache(), cString(expression.Readiness))
+				e.line("}")
+			}
 			undefined := "NULL"
 			if expression.Of.IsMaybe() {
 				undefined = zero(expression.Of)

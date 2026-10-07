@@ -70,6 +70,7 @@ typedef struct adamic_maybe_boolean {
 typedef struct adamic_cell {
 	adamic_heap heap;
 	bool references;
+	bool ready;
 	adamic_value value;
 } adamic_cell;
 
@@ -223,6 +224,7 @@ void adamic_region_end(adamic_region *region);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);
+adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression);
 
 // adamic_object_has is object.hasOwnProperty(name).
 bool adamic_object_has(const adamic_object *object, const adamic_string *name);

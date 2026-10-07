@@ -1,8 +1,8 @@
-Built so far: decided (c) documentation, shared initialization integration, and checked required-field backend primitives; cast lowering remains unfinished.
-Commits so far: c6def18 ruling, 888e394 shared-state merge, 58e0607 merge of origin/main e8ba3d5; the primitives and inventories follow separately.
-Commands and outputs: setup 95s, nproc 5; touched package suites passed, merged Node oracle passed, primitive oracle 2.879s, restored affected oracle/counts 27.914s; logs below.
-Mutants: dropping the field check, initialization tracking, runtime type check, and evaluating the operand twice each failed an independent semantic assertion with valid C.
-Not covered: default tagged checked-view lowering, construction/flow erasure, staged missing-field stores, transitive untagged views, post-erasure read share, release overhead, or the post-(c) latent refusal rerun.
+Built so far: decided (c) documentation and checked required-field primitives; merged the requested non-null tip and reused its readiness helper on both backends.
+Commits: prior feature tip 38bda39d; merged non-null e2ea9ab2c247f43e17a7c5703818518fce0cd2e6, including c680ecf4; origin/main e8ba3d5 is already an ancestor.
+Commands and outputs: touched packages PASS; filtered Node oracle PASS 12.220s; field-read integration PASS 4.421s; source mutants and vet PASS; counts regenerated with 33 new rows and no changed existing rows.
+Mutants: drop field check, shared initialization check, type check, or single evaluation all caught by independent semantic assertions; staged number readiness-state removal also caught with valid release C.
+Not covered: default cast admission, proof erasure, transitive checked views, staged missing-field stores, tsc checked-read share/timing, or post-(c) latent refusal rerun.
 
 No main or area branch was pushed or merged into. Both dependency merges were into
 `codex/interface-downcasts`; only that feature branch was pushed. The unit is still
@@ -169,3 +169,59 @@ oracle: PASS, 2.879s. Package suites: IR 26.434s, native 87.094s, lower 24.318s;
 JavaScript has no package-local tests and is exercised by the independent oracle.
 Vet: exit 0. Source mutants: all four caught by the named semantic assertions.
 The full repository gate was not rerun for this progress commit.
+
+## Requested non-null tip integration
+
+Merged `origin/codex/non-null-check` at exactly
+`e2ea9ab2c247f43e17a7c5703818518fce0cd2e6`, not just the earlier representation
+commit. This incorporates `c680ecf4` and the tip's lazy initializer and readiness
+analysis. No worker source was copied from cohere and no main/area branch was written.
+
+The helper fits interface-field reads. Its original diagnostic is different from
+the required checked-view diagnostic, so the same helper now accepts a diagnostic
+mode. Native `adamic_object_read_mode` performs the single presence/readiness test
+for both public read paths; JavaScript `adamicViewField` calls `adamicReadField`.
+The initialization byte/WeakMap representation is unchanged. Native inherited static
+reads return the actual slot owner before checking its representation tag.
+
+The worker did not mark object-literal assertion fields uninitialized: it lowered
+`undefined!` or `null!` eagerly. The object-literal lowerer now uses the worker's
+existing initializer recognizer and `ir.Field.Uninitialized` flag for supported
+contextual field types. These fields may be assigned later; both existing write
+helpers update the same readiness state. This extension does not implement lazy
+computed assertion initializers in object literals, and a field without a supported
+contextual slot type remains NotYet.
+
+Four new source fixtures cover staged identifier strings and numbers, including
+missing initialization. The objects are held as Node, but no new base-interface cast
+is admitted. Tests replace the visitor's field read with the checked-view IR primitive:
+passing outputs match independent Node output byte for byte, while negative fixtures
+pin exit 70 and the exact expression/field diagnostic. An inherited static-read probe
+also matches Node. Dropping the number field's readiness state makes a valid release
+binary print zero; the independent expected failure catches it. The four production
+source mutants were rerun after the merge and restore their source files afterward.
+The inherited worker's erase-without-proof mutant passed too, but that tests local
+readiness, not the still-unimplemented checked-view eraser. The skipped-transitive-view
+mutant remains pending with its compiler pass.
+
+Commands (all test output redirected to the corresponding committed logs):
+
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run 'TestRequiredViewField|TestFieldReadinessRepresentation|TestReadiness|TestNonNull|TestLazyInitializer|TestUninitialized' -count=1 -v -timeout 30m`: PASS, oracle 13.000s (`shared-tip-focused.log`).
+- `go test ./internal/lower ./internal/ir ./internal/javascript ./internal/native -count=1 -timeout 30m`: PASS, lower 19.182s, IR 20.898s, native 77.700s (`shared-tip-packages.log`).
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/non_null' -count=1 -v -timeout 30m`: PASS 12.220s, 81 native and 76 Node misses (`shared-tip-node.log`).
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestViewFieldInheritedStaticReadiness|TestNarrowedFieldUsesSharedReadiness|TestRequiredViewField' -count=1 -v -timeout 30m`: PASS 4.421s (`shared-field-reads.log`).
+- `python3 stage3/interface-downcasts/primitive-mutants.py`: all four semantic mutant catches, valid C (`shared-tip-mutants.log` and individual logs).
+- `go vet ./internal/lower ./internal/ir ./internal/javascript ./internal/native ./internal/oracle`: PASS (`shared-tip-vet.log`).
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts`: PASS (`shared-tip-counts.log`).
+
+Count changes relative to the prior feature tip are 29 inherited non-null fixture
+rows and four staged-readiness source rows. Existing rows did not move. The four
+supplemental rows count ordinary source lowering/shared readiness, separately from
+the view-read IR substitution. Panicking fixtures stop before freeing their live
+object, as other failure rows do; completed fixtures balance allocations and frees.
+
+The full repository gate was not rerun: these are the touched package suites and
+filtered oracle checks. Setup from this unit remains: go ready 0s, clang ready 1s,
+Node ready 1s, submodules ready 1s, cache warm 95s, done 95s; nproc 5, quota 4 CPUs.
+No second initialization representation was built. Default checked-view lowering
+and the outstanding measurements remain work, not a claimed completed ruling (c).

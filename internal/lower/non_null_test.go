@@ -8,14 +8,22 @@ import (
 
 func TestNonNullAssertionLowersToNullishPanic(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, "const map = new Map<string, number>();\nconst value = map.get('a')!;\n")
+	program, err := lowerSource(t, "const map = new Map<string, number>();\nconsole.log(`${map.get('a')!}`);\n")
 	if err != nil {
 		t.Fatal(err)
 	}
-	declaration := program.Main[1].(ir.Declare)
-	check, ok := declaration.Value.(ir.Coalesce)
+	var check ir.Coalesce
+	found := false
+	walk(program.Main, func(node any) bool {
+		if value, ok := node.(ir.Coalesce); ok && value.Panic != nil {
+			check = value
+			found = true
+		}
+		return true
+	})
+	ok := found
 	if !ok || check.Type() != ir.Number || check.Value.Type() != ir.MaybeNumber {
-		t.Fatalf("want checked maybe-number unwrap, got %#v", declaration.Value)
+		t.Fatalf("want checked maybe-number unwrap, got %#v", program.Main)
 	}
 	message := check.Panic.(ir.StringConstant)
 	if got := program.Strings[message.Index]; got != "non-null assertion failed: map.get('a')! is null or undefined" {
