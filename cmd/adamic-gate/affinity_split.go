@@ -44,8 +44,34 @@ func validateDeclaredSplits(p plan) error {
 		halves = append(halves, group)
 	}
 	if len(halves) == 0 {
-		return nil
-	} // Historical unsplit plans remain readable.
+		// Historical plans may carry one whole fixture, but must not hide a split
+		// by dropping the declaration from two partial affinity records.
+		layouts := []affinity{}
+		for _, group := range p.Affinity {
+			if group.Fixture == "layoutOnce" {
+				layouts = append(layouts, group)
+			}
+		}
+		if len(layouts) > 1 {
+			return fmt.Errorf("layout affinity split lacks declaration")
+		}
+		if len(layouts) == 1 {
+			expected := knownAffinities()[1]
+			if len(layouts[0].Tests) != len(expected.Tests) {
+				return fmt.Errorf("undeclared partial layout affinity")
+			}
+			members := map[string]bool{}
+			for _, name := range layouts[0].Tests {
+				members[name] = true
+			}
+			for _, name := range expected.Tests {
+				if !members[name] {
+					return fmt.Errorf("undeclared layout affinity missing %s", name)
+				}
+			}
+		}
+		return nil // Historical unsplit plans remain readable.
+	}
 	if len(halves) != 2 {
 		return fmt.Errorf("layout affinity requires exactly two declared halves")
 	}

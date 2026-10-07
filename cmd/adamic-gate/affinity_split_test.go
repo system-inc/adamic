@@ -80,7 +80,7 @@ func TestDeclaredLayoutSplitCoverageAndIsolation(t *testing.T) {
 }
 
 func TestDeclaredLayoutSplitRefusesCorruption(t *testing.T) {
-	for _, mutation := range []string{"shared-shard", "missing-half", "lost-test", "extra-test", "unrelated-work", "wrong-count", "invalid-shard"} {
+	for _, mutation := range []string{"shared-shard", "missing-half", "lost-test", "extra-test", "unrelated-work", "wrong-count", "invalid-shard", "undeclared-split"} {
 		t.Run(mutation, func(t *testing.T) {
 			p, _ := splitFixturePlan(t)
 			a, b := 1, 2
@@ -95,6 +95,9 @@ func TestDeclaredLayoutSplitRefusesCorruption(t *testing.T) {
 				p.Affinity[a].Tests = append(p.Affinity[a].Tests, p.Affinity[b].Tests[0])
 			case "unrelated-work":
 				p.Units = append(p.Units, unit{Package: "unrelated", Test: "TestOther", Shard: p.Affinity[a].Shard})
+			case "undeclared-split":
+				p.Affinity[a].Split, p.Affinity[b].Split = "", ""
+				p.Affinity[a].SplitCount, p.Affinity[b].SplitCount = 0, 0
 			case "invalid-shard":
 				p.Affinity[a].Shard = p.Count
 			case "wrong-count":

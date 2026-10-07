@@ -1394,3 +1394,9 @@ commit and complete build-flags line when no runner `summary.json` is present.
 `TestTimingsCarryWorkerMetadata` verifies that provenance survives calibration;
 an overlay discarding it is caught by that test. This seventh split mutant and
 the final timing race suite pass their expected outcomes; vet passes.
+
+The split declaration itself is required: two partial layout affinity records
+cannot masquerade as legacy unsplit groups by dropping `Split`/`SplitCount`.
+The corresponding corruption test and an eighth overlay mutant verify this;
+the fixed focused race suite and vet pass. One historical whole layout group
+remains readable.
