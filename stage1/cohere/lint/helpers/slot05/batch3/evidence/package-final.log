@@ -1,0 +1,41 @@
+=== RUN   TestSlot05MatchExactly
+    helper_test.go:61: 7 consumers, 1188 distinct test-file literals, 2085 source/parsed/control texts, 12510 Go verdicts
+    helper_test.go:71: consumer coverage: {
+          "@next/next/no-css-tags": 37,
+          "@next/next/no-html-link-for-pages": 383,
+          "@next/next/no-page-custom-font": 135,
+          "@next/next/no-styled-jsx-in-document": 67,
+          "@next/next/no-sync-scripts": 26,
+          "react/jsx-key": 487,
+          "react/no-unknown-property": 491
+        }
+    helper_test.go:120: jsx_match_exactly.a mutant caught at verdict 15: mutant true, Go false
+--- PASS: TestSlot05MatchExactly (6.36s)
+=== RUN   TestSlot05NormalizedFileName
+    helper_test.go:61: 7 consumers, 527 distinct test-file literals, 545 actual Go filenames/nil, 545 Go verdicts
+    helper_test.go:71: consumer coverage: {
+          "base/consistency-no-bare-throw": 207,
+          "nexus/boundary-no-internal-import": 48,
+          "nexus/boundary-no-nexus-outside-import": 53,
+          "nexus/boundary-no-project-import": 33,
+          "nexus/import-require-path-alias": 165,
+          "nexus/localization-no-untranslated-value": 112,
+          "structure/next-no-near-miss-route-export": 133
+        }
+    helper_test.go:120: imports_normalized_file_name.a mutant caught at verdict 125: mutant C:/src\pages\index.tsx, Go C:/src/pages/index.tsx
+--- PASS: TestSlot05NormalizedFileName (4.82s)
+=== RUN   TestSlot05IsHookName
+    helper_test.go:61: 7 consumers, 498 distinct test-file literals, 910 source/parsed/control names, 1112064 Unicode scalars, 1112974 Go verdicts
+    helper_test.go:71: consumer coverage: {
+          "structure/consistency-require-matching-file-name": 221,
+          "structure/import-require-react-namespace": 90,
+          "structure/react-component-no-destructuring": 93,
+          "structure/react-component-no-separate-named-export": 105,
+          "structure/react-component-require-properties-parameter": 73,
+          "structure/react-hook-no-destructuring": 76,
+          "structure/react-hook-no-properties-in-dependencies": 59
+        }
+    helper_test.go:120: react_is_hook_name.a mutant caught at verdict 887: mutant false, Go true
+--- PASS: TestSlot05IsHookName (8.25s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch3	19.437s

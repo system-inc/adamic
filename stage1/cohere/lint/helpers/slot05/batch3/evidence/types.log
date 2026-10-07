@@ -1,0 +1,11 @@
+stage1/cohere/lint/helpers/slot05/batch3/main.a:7:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/batch3/main.a:9:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/batch3/main.a:10:7: variable root: number
+stage1/cohere/lint/helpers/slot05/batch3/main.a:12:11: variable row: number
+stage1/cohere/lint/helpers/slot05/batch3/main.a:13:11: variable candidate: string
+stage1/cohere/lint/helpers/slot05/batch3/main.a:14:11: variable right: number
+stage1/cohere/lint/helpers/slot05/batch3/main.a:15:11: variable wanted: string
+stage1/cohere/lint/helpers/slot05/batch3/main.a:16:11: variable modeIndex: number
+stage1/cohere/lint/helpers/slot05/batch3/main.a:17:11: variable mode: string
+stage1/cohere/lint/helpers/slot05/batch3/main.a:19:17: variable scalar: number
+stage1/cohere/lint/helpers/slot05/batch3/main.a:26:15: variable files: SourceFileName[]

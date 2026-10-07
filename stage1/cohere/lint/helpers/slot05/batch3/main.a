@@ -1,0 +1,32 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { isHookName } from './react_is_hook_name.a';
+import type { SourceFileName } from './imports_normalized_file_name.a';
+import { normalizedFileName } from './imports_normalized_file_name.a';
+import { matchExactly } from './jsx_match_exactly.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const row of json.node(root).children) {
+    const candidate = json.node(json.field(row, 'left')).text;
+    const right = json.field(row, 'right');
+    const wanted = right < 0 ? '' : json.node(right).text;
+    const modeIndex = json.field(row, 'mode');
+    const mode = modeIndex < 0 ? 'match' : json.node(modeIndex).text;
+    if(mode === 'hookSweep') {
+        for(let scalar = 0; scalar <= 0x10ffff; scalar++) {
+            if(scalar >= 0xd800 && scalar <= 0xdfff) { continue; }
+            console.log(`${isHookName('use' + String.fromCodePoint(scalar))}`);
+        }
+    } else if(mode === 'hook') {
+        console.log(`${isHookName(candidate)}`);
+    } else if(mode === 'filename') {
+        const files: SourceFileName[] = [];
+        if(json.node(json.field(row, 'missing')).text !== 'true') { files.push({fileName: candidate}); }
+        console.log(normalizedFileName(files, 0));
+    } else {
+        console.log(`${matchExactly(candidate, wanted)}`);
+    }
+}
