@@ -677,3 +677,33 @@ and source facts but no checker program handle; shared changes remain outside
 this unit. No new claims were made. The full gate and 17 required external
 correctness checks were not run or represented as green. No new speed claim
 is inferred from this rebase.
+
+## Heritage contract selection
+
+Main c7991b900 and area b46914832 remained unchanged ancestors after fetch.
+Added require_await/heritage.a: guard method/static/name/class shape, then
+select the first nonzero inherited member type in heritage clause order.
+Facts describe the supplied method and preserve checker type identities.
+No string-kind relevance test, per-rule node refetch, regex or shared edit
+was introduced.
+
+After sourcing /workspace/adamic-tools/env.sh, ran python3
+stage1/cohere/typeaware/wave_01_fourth/testdata/verify_await_heritage.py
+/workspace/wave01-await-heritage /workspace/wave-01-fourth-adamic, logging
+to /tmp/wave01-await-heritage.log. Result: PASS 12 real-checker heritage cases;
+sanitizer-clean static-member mutant caught by bytes. Raw evidence is in
+validation/await-heritage. The test-only Go overlay captures actual member
+types and compares unchanged requireAwaitHeritageMemberType. Controls cover
+direct implementation, static method, quoted and computed names, missing
+member, ordered and reversed multiple clauses, extends, absent heritage,
+object method, function declaration and arrow. Removing the static guard
+changes the result; both executables exit zero with empty sanitizer stderr,
+so byte comparison alone rejects the mutant.
+
+This is a helper proof with independently captured Go checker facts, not
+native fact-delivery proof or full-rule parity. Generic ancestor collection,
+stand-in discovery, atomic CFG/event collection and native integration are
+still unfinished; three claims remain partial and no new claims were made.
+No bridge handle or question was added. Full gate, the 17 required external
+comparisons and new native/Go timings were not run for this helper, and no
+skipped check is claimed green.

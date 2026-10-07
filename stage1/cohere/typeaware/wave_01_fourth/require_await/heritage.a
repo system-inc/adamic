@@ -1,0 +1,20 @@
+export interface AwaitHeritageFacts {
+    method: boolean;
+    staticMember: boolean;
+    identifierName: boolean;
+    classParent: boolean;
+    members: readonly number[];
+}
+
+// Members preserve heritage clause and type order; zero means absent.
+export function awaitHeritageMember(facts: AwaitHeritageFacts): number {
+    if(!facts.method || facts.staticMember || !facts.identifierName || !facts.classParent) {
+        return 0;
+    }
+    for(const member of facts.members) {
+        if(member !== 0) {
+            return member;
+        }
+    }
+    return 0;
+}
