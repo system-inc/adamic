@@ -80,3 +80,20 @@ with full byte comparisons on both frozen corpora. Backreference independent
 scanner/judgments are implemented and tested; full corpus integration remains
 blocked by shared RegexSyntax and reference/constant helpers. See
 WAVE_15_FOURTH_REPORT.md for exact refusals and evidence. No further claims.
+
+## Fifth reservation
+
+Fetched 389 origin refs on 2026-10-07 after confirming prior work pushed at
+5ebe19e4. Thirty-three claim documents mention 142 of the 197 ranked checker
+rules. The first three remaining names, all combined volume zero, are:
+
+- react-hooks/set-state-in-effect
+- react-hooks/set-state-in-render
+- react-hooks/static-components
+
+Main and bridge matches are count/inventory records only. Reserved before code.
+These three are blocked before implementation by missing native shared HIR
+lowering, SSA/control-flow analysis, memoization preparation and compilation-unit
+gates. No native implementations were found on the fetched helper branches.
+Ahra's instruction to stop at a non-harness shared gap applies; no shared files
+will be edited. Detailed evidence will be recorded outside the claims directory.
