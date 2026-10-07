@@ -103,8 +103,8 @@ are validation costs, not rule-performance benchmarks.
 
 Commands, each writing exclusively to its named log:
 
-- ADAMIC_TOOLS=/workspace/adamic-tools bash cloud/setup.sh. Timing lines Go 0s,
-  clang 0s, Node 0s, submodules 1s, cache warm 25s, total 25s; nproc 5, quota 4 cores.
+- ADAMIC_TOOLS=/workspace/adamic-tools bash cloud/setup.sh. Timing lines Go 1s,
+  clang 1s, Node 1s, submodules 1s, cache warm 25s, total 25s; nproc 5, quota 4 cores.
 - After source /workspace/adamic-tools/env.sh, ADAMIC_WAVE30_JSX_COMPONENTS=/workspace/wave-30-fifth-components
   go test ./stage1/cohere/typeaware -run '^TestWave30JsxComponents$' -count=1 -timeout 15m -v.
 - ADAMIC_WAVE30_JSX_PREREQUISITES=/workspace/wave-30-fifth-prerequisites
