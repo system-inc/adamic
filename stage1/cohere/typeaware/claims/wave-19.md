@@ -102,3 +102,7 @@ These rules are reserved for codex/typeaware-wave-19. New modules will be .a, de
 Require-await, symbol-description and valid-typeof algorithms are implemented in owned .a directories with numeric rule.json kinds and handed-node listeners. All nine wave-19 algorithms were rebased onto origin/main b8fb957aa and rebuilt against Go again normally and under sanitizers. Each new rule has a compiled byte-only mutant. Contract, strict-option, ASI, raw-fact and released-handle checks have additional mutation proofs. No additional rules are claimed.
 
 Integration remains pending: four dispatch lines in wave_19_third/registration.patch, three earlier lines in wave_19_next_registration.patch, and shared rule/harness registration. The unmodified production archive explicitly refuses those questions. See wave_19_third/REPORT.md for evidence and native versus Go timing.
+
+## Current landing checkpoint
+
+All nine algorithms are rebased onto area/stage1-lint b84a9d931, containing main c7991b900, and pass fresh Go parity normally and sanitized. The latest three rule.json kinds use ast.Kind names, superseding the historical numeric-descriptor notes above. Shared checker context/linking and the seven dispatch lines remain pending. No new claim is added: the refreshed 197-rule ranking has no available rule. See wave_19_third/CURRENT_LANDING_REPORT.md for commands, mutation receipts and fresh timing.
