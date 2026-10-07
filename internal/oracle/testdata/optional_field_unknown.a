@@ -27,3 +27,12 @@ pending.pending = 0;
 inspect(pending);
 const ready: { pending: number; slot?: number } = { ...pending };
 inspect(ready);
+
+function emptyCopy(value: { slot?: number; marker?: number } | undefined): { slot?: number; marker?: number } {
+	const copy: { slot?: number; marker?: number } = { ...value, marker: 1 };
+	inspect(copy);
+	copy.slot = 0;
+	inspect(copy);
+	return copy;
+}
+emptyCopy(undefined);

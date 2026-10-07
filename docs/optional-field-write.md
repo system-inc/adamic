@@ -75,3 +75,27 @@ unknown reads; dropping readiness changes the copied bit and unknown reads;
 overlapping the tails triggers a read-before-assignment stop on the ready field.
 The full touched-package and stage 3 gate is running at this checkpoint.
 No changes were needed in internal/native/emit.go or internal/lower/lower.go.
+
+Second checkpoint: reserved writes through function parameters now use Node parity
+in the former missing-slot safety fixture. Unknown absent-spread presence is a
+positive lowering test. Empty undefined-spread shapes register their scalar type
+metadata; the additional unknown-view probe uses a distinct shape to exercise
+that registration. Removing it is caught by source Node versus native (exit 70,
+`dynamic read of a host scalar without type metadata`). Fresh Object.assign's
+optional surface exemption is conservative: direct literal arguments without
+spreads. Hidden-source tests keep their optional-widening refusal. Removing that
+restriction changes the refusal path to the existing Object.assign shape guard;
+this is diagnostic-path evidence, not an additional runtime soundness claim.
+
+Linux counts regenerated again in 31.968s. No existing batch 3 counts row changed;
+five new fixture rows were added. The final optional mutant suite passed in
+3.832s. Stage 3 regeneration passed in 35.777s: objects/08_loop_state.a and
+objects/12_decorator_descriptor.a changed NotYet to Compiles. There are no
+Compiles-to-Refused/NotYet regressions. A byte audit verifies that everything
+outside each stage0 value, including Node observations, remains unchanged.
+The diagnostic updater was a scratch Go overlay; the harness is unchanged.
+
+The first broad gate is discarded: its compiler binaries preceded the last
+metadata change while fixture sources changed, and it also found two obsolete
+unsupported-behavior assertions. The corrected focused regressions pass (native
+0.556s, lower 0.411s). The final broad gate is running with sources held fixed.

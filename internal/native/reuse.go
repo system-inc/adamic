@@ -557,7 +557,12 @@ func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
 	if !literal.SpreadMaybeUndefined {
 		return copy
 	}
-	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, e.shape(emptyFields(literal)))
+	empty := emptyFields(literal)
+	shape := e.shape(empty)
+	if len(empty) > 0 && e.dynamicProperties() {
+		e.line("adamic_register_shape_types(&%s_metadata);", shape)
+	}
+	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, shape)
 }
 
 // emptySpread gives the fields of the object spreadCopy made for an undefined source the value

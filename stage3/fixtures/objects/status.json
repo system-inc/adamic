@@ -111,7 +111,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/08_loop_state.a:16:17: stage 0 can't lower writing a possibly absent optional own field yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "10_build_options.a",
@@ -141,7 +141,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/12_decorator_descriptor.a:13:21: stage 0 can't lower writing a possibly absent optional own field yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "14_comment_pending.a",

@@ -318,7 +318,18 @@ func (l *lowering) exactObjectAlias(node *ast.Node) bool {
 		arguments := node.AsCallExpression().Arguments.Nodes
 		// Object.assign returns this new target. Only its surface keys are exact;
 		// nested field views still undergo optional and mutable relation checks.
-		return len(arguments) > 0 && ast.SkipParentheses(arguments[0]).Kind == ast.KindObjectLiteralExpression
+		for _, argument := range arguments {
+			literal := ast.SkipParentheses(argument)
+			if literal.Kind != ast.KindObjectLiteralExpression {
+				return false
+			}
+			for _, property := range literal.AsObjectLiteralExpression().Properties.Nodes {
+				if property.Kind == ast.KindSpreadAssignment {
+					return false
+				}
+			}
+		}
+		return len(arguments) > 0
 	}
 	if node.Kind != ast.KindIdentifier {
 		return false
