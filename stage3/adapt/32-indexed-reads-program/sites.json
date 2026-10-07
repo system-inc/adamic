@@ -3275,7 +3275,7 @@
     "function": "",
     "action": "decline",
     "class": "U-position",
-    "invariant": "Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument."
+    "invariant": "Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison."
   },
   {
     "file": "watchUtilities.ts",
@@ -3287,7 +3287,7 @@
     "function": "",
     "action": "decline",
     "class": "U-position",
-    "invariant": "Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument."
+    "invariant": "Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison."
   },
   {
     "file": "watchUtilities.ts",
@@ -3299,7 +3299,7 @@
     "function": "",
     "action": "decline",
     "class": "U-position",
-    "invariant": "Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument."
+    "invariant": "Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison."
   },
   {
     "file": "resolutionCache.ts",

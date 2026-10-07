@@ -743,9 +743,9 @@ are not run for this source-adaptation-only wave.
 | watch.ts:544:151 | `options.lib[reason.index]` | U-position | assert | A LibFile include reason with an index records the populated compilerOptions.lib entry that introduced this library. |
 | watchUtilities.ts:736:13 | `factory[key]` | U-table | decline | The key is keyof WatchFactory and addresses a required declared watcher method, already typed without indexed absence. |
 | watchUtilities.ts:811:14 | `plainInvokeFactory[key]` | U-table | decline | The key is keyof WatchFactory and addresses a required declared watcher method, already typed without indexed absence. |
-| watchUtilities.ts:815:120 | `args[0]` | U-position | decline | Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument. |
-| watchUtilities.ts:815:131 | `args[1]` | U-position | decline | Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument. |
-| watchUtilities.ts:815:155 | `args[1]` | U-position | decline | Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument. |
+| watchUtilities.ts:815:120 | `args[0]` | U-position | decline | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
+| watchUtilities.ts:815:131 | `args[1]` | U-position | decline | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
+| watchUtilities.ts:815:155 | `args[1]` | U-position | decline | Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison. |
 | resolutionCache.ts:273:22 | `pathComponents[0]` | U-endpoint | assert | The preceding length-at-most-one return guarantees a populated root component at position zero. |
 | resolutionCache.ts:275:9 | `pathComponents[0]` | U-endpoint | decline | The root-character equality comparison accepts absence without dereferencing the indexed result. |
 | resolutionCache.ts:277:9 | `pathComponents[1]` | U-position | assert | The earlier length-at-most-one return guarantees a populated second path component. |
@@ -777,3 +777,13 @@ are not run for this source-adaptation-only wave.
 | executeCommandLine.ts:746:39 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
 | executeCommandLine.ts:747:29 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
 | executeCommandLine.ts:747:54 | `commandLineArgs[0]` | U-endpoint | assert | The nonempty command-line length guard guarantees the first argument for all three reads in the build-command test. |
+
+## Whole-file closure: watchUtilities.ts
+
+Four findings become zero; the fair census is 374 to 370 with no shifted errors.
+The same 78-root census now counts 40 whole files at zero. See
+[the watcher proof](closure-watchUtilities/README.md) and its ledger entries in
+closure-sites.json. Default oracle: 106,367 passing, zero failing, empty baseline
+diff; all 26 emitted outputs and CRLF counts unchanged, second run zero edits.
+All eight type contract removal guards, the key-flow mutant and the ! to ?? 0
+emission/occurrence mutant fail as required.

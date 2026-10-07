@@ -125,5 +125,74 @@
     "expression": "preferences.getAllowedEndingsInPreferredOrder()",
     "after": "[ModuleSpecifierEnding, ...ModuleSpecifierEnding[]]",
     "proof": "This private consumer receives a fresh preference-factory result. All private callers create preferences locally; no external override reaches this instance. Every normal factory result has one to four elements, with no mutation before forwarding."
+  },
+  {
+    "kind": "internal-method",
+    "file": "watchUtilities.ts",
+    "interface": "DirectoryStructureHost",
+    "name": "directoryExists",
+    "before": "directoryExists?(path: string): boolean;",
+    "after": "directoryExists?: { directoryExists(path: string): boolean; }[\"directoryExists\"] | undefined;",
+    "proof": "The caching factory explicitly writes host.directoryExists && wrapper; absence is legitimate. This owning interface is @internal. The function signature is retained verbatim and only explicit undefined is admitted. Indexed method extraction preserves the original method parameter variance (required boolean WriteFileCallback hosts remain assignable); no function-property contravariance is introduced."
+  },
+  {
+    "kind": "internal-method",
+    "file": "watchUtilities.ts",
+    "interface": "DirectoryStructureHost",
+    "name": "realpath",
+    "before": "realpath?(path: string): string;",
+    "after": "realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;",
+    "proof": "The caching factory explicitly writes host.realpath && wrapper; absence is legitimate. This owning interface is @internal. The function signature is retained verbatim and only explicit undefined is admitted. Indexed method extraction preserves the original method parameter variance (required boolean WriteFileCallback hosts remain assignable); no function-property contravariance is introduced."
+  },
+  {
+    "kind": "internal-method",
+    "file": "watchUtilities.ts",
+    "interface": "DirectoryStructureHost",
+    "name": "createDirectory",
+    "before": "createDirectory?(path: string): void;",
+    "after": "createDirectory?: { createDirectory(path: string): void; }[\"createDirectory\"] | undefined;",
+    "proof": "The caching factory explicitly writes host.createDirectory && wrapper; absence is legitimate. This owning interface is @internal. The function signature is retained verbatim and only explicit undefined is admitted. Indexed method extraction preserves the original method parameter variance (required boolean WriteFileCallback hosts remain assignable); no function-property contravariance is introduced."
+  },
+  {
+    "kind": "internal-method",
+    "file": "watchUtilities.ts",
+    "interface": "DirectoryStructureHost",
+    "name": "writeFile",
+    "before": "writeFile?(path: string, data: string, writeByteOrderMark?: boolean): void;",
+    "after": "writeFile?: { writeFile(path: string, data: string, writeByteOrderMark?: boolean): void; }[\"writeFile\"] | undefined;",
+    "proof": "The caching factory explicitly writes host.writeFile && wrapper; absence is legitimate. This owning interface is @internal. The function signature is retained verbatim and only explicit undefined is admitted. Indexed method extraction preserves the original method parameter variance (required boolean WriteFileCallback hosts remain assignable); no function-property contravariance is introduced."
+  },
+  {
+    "kind": "call-receiver",
+    "file": "watchUtilities.ts",
+    "function": "createExcludeHandlingAddWatch",
+    "expression": "factory[key]",
+    "type": "(file: string, cb: FileWatcherCallback | DirectoryWatcherCallback, flags: PollingInterval | WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y) => FileWatcher",
+    "proof": "The immutable key selects the corresponding WatchFactory field. Only matching literal keys construct each private wrapper; the exposed keyed return type preserves callback and flag correlation. The host invokes the wrapped callback with that same key-specific argument tuple. No values or reads are changed; reviewed whole getWatchFactory runtime hash guards the protocol."
+  },
+  {
+    "kind": "call-receiver",
+    "file": "watchUtilities.ts",
+    "function": "createTriggerLoggingAddWatch",
+    "expression": "plainInvokeFactory[key]",
+    "type": "(file: string, cb: FileWatcherCallback | DirectoryWatcherCallback, flags: PollingInterval | WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y) => FileWatcher",
+    "proof": "The immutable key selects the corresponding WatchFactory field. Only matching literal keys construct each private wrapper; the exposed keyed return type preserves callback and flag correlation. The host invokes the wrapped callback with that same key-specific argument tuple. No values or reads are changed; reviewed whole getWatchFactory runtime hash guards the protocol."
+  },
+  {
+    "kind": "call-receiver",
+    "file": "watchUtilities.ts",
+    "function": "createTriggerLoggingAddWatch",
+    "expression": "cb",
+    "type": "(...eventArgs: typeof args) => void",
+    "proof": "The immutable key selects the corresponding WatchFactory field. Only matching literal keys construct each private wrapper; the exposed keyed return type preserves callback and flag correlation. The host invokes the wrapped callback with that same key-specific argument tuple. No values or reads are changed; reviewed whole getWatchFactory runtime hash guards the protocol."
+  },
+  {
+    "kind": "rest-type",
+    "file": "watchUtilities.ts",
+    "function": "createTriggerLoggingAddWatch",
+    "name": "args",
+    "before": "any[]",
+    "after": "Parameters<FileWatcherCallback> | Parameters<DirectoryWatcherCallback>",
+    "proof": "Only the selected host watcher invokes this callback: file events use the FileWatcherCallback tuple, directory events use its one-string tuple. Forwarding retains the exact argument list, including optional modifiedTime."
   }
 ]

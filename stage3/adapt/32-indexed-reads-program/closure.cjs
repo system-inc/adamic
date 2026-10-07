@@ -5,6 +5,36 @@ function plan(ts, file, text, check) {
     if (sf.parseDiagnostics.length) throw new Error(`closure parse failure: ${file}`);
     const edits = [];
     for (const site of sites.filter(s => s.file === file)) {
+        if (["internal-method", "call-receiver", "rest-type"].includes(site.kind)) {
+            const found = [];
+            function visit(n) {
+                if (site.kind === "internal-method" && (ts.isMethodSignature(n) || ts.isPropertySignature(n)) && n.name.getText(sf) === site.name && ts.isInterfaceDeclaration(n.parent) && n.parent.name.text === site.interface) found.push(n);
+                if (site.kind === "call-receiver" && ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression) && n.expression.name.text === "call") {
+                    let owner = n.parent;
+                    while (owner && !(ts.isFunctionDeclaration(owner) && owner.name)) owner = owner.parent;
+                    let receiver = n.expression.expression;
+                    const base = ts.isParenthesizedExpression(receiver) && ts.isAsExpression(receiver.expression) ? receiver.expression.expression : receiver;
+                    if (owner?.name.text === site.function && base.getText(sf) === site.expression) found.push(receiver);
+                }
+                if (site.kind === "rest-type" && ts.isParameter(n) && ts.isArrowFunction(n.parent) && n.dotDotDotToken && n.name.getText(sf) === site.name) {
+                    let owner = n.parent;
+                    while (owner && !(ts.isFunctionDeclaration(owner) && owner.name)) owner = owner.parent;
+                    if (owner?.name.text === site.function) found.push(n.type);
+                }
+                ts.forEachChild(n, visit);
+            }
+            visit(sf);
+            if (found.length !== 1 || !found[0]) throw new Error("watch contract occurrence drift: " + site.kind);
+            const n = found[0], actual = n.getText(sf);
+            const before = site.kind === "call-receiver" ? site.expression : site.before;
+            const after = site.kind === "call-receiver" ? "(" + site.expression + " as " + site.type + ")" : site.after;
+            if (actual === before) {
+                if (check) throw new Error("watch contract missing: " + site.kind);
+                edits.push({at:n.getStart(sf), end:n.end, text:after});
+            }
+            else if (actual !== after) throw new Error("watch contract shape drift: " + site.kind);
+            continue;
+        }
         if (site.kind === "nonempty-initializer") {
             const found = [];
             function visit(n) {
