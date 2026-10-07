@@ -86,3 +86,13 @@ accepts two extends clauses with lengths `[1, 0]` and crashes on the second.
 JavaScript equality and idempotence pass; the required-read mutant is caught
 twice. Default oracle: **106367 passing**, empty baseline diff,
 213.824s. See [proof and counterexample](proof/whole-files/declarations/README.md).
+
+### emitter.ts at zero
+
+All-code census **3 -> 0**; clean files **37 -> 38 of 78**. The two printer hook
+reads are present in transformNodes' own result literal, and build-info JSON
+serialization has a required string result for the compiler's plain-record
+producers. All three assertions retain their original evaluation points. Stock
+JavaScript and idempotence pass; both property and JSON-result mutants are caught
+twice. Default oracle **106367 passing**, empty baseline diff,
+229.955s. [Complete proof](proof/whole-files/emitter/README.md).
