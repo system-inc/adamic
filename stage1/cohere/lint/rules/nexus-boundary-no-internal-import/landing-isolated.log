@@ -1,0 +1,322 @@
+=== RUN   TestAliasUpstream
+    wave12_alias_test.go:93: cohere cases: 40 unique source/rule/options combinations
+    wave12_alias_test.go:100: Go, Node, emitted JavaScript, native identical: 15823 bytes
+--- PASS: TestAliasUpstream (144.60s)
+=== RUN   TestAliasOptions
+    wave12_alias_test.go:111: Go, Node, emitted JavaScript, native identical: 96262 bytes
+--- PASS: TestAliasOptions (39.52s)
+=== RUN   TestCompletedUpstream
+    wave12_completed_test.go:97: cohere cases: 67 unique source/rule/options combinations
+    wave12_completed_test.go:104: Go, Node, emitted JavaScript, native identical: 27985 bytes
+--- PASS: TestCompletedUpstream (79.22s)
+=== RUN   TestCompletedMutants
+    wave12_completed_test.go:97: cohere cases: 67 unique source/rule/options combinations
+=== RUN   TestCompletedMutants/typescript-no-non-null-asserted-optional-chain
+    wave12_completed_test.go:204: optional_assertion_removes_operand_byte compiling, successful-exit mutant caught only by output on source Node: case 2 line 9: port "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t49:51:\tRemove the non-null assertion.\t42 51", Go "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t50:51:\tRemove the non-null assertion.\t42 51"
+        Go context:
+        fixed	declare const foo: any;\u000adeclare const x: any;\u000aexport const r = foo?.bar(x!);\u000a
+        case 2
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-002/repository/source/Thing.ts:2:19
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	50:51:	Remove the non-null assertion.	42 51
+        fixed	declare const foo: any;\u000aexport const r = (foo?.bar!);\u000a
+        case 3
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-003/repository/source/Thing.ts:2:18
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+    wave12_completed_test.go:204: optional_assertion_removes_operand_byte compiling, successful-exit mutant caught only by output on emitted JavaScript: case 2 line 9: port "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t49:51:\tRemove the non-null assertion.\t42 51", Go "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t50:51:\tRemove the non-null assertion.\t42 51"
+        Go context:
+        fixed	declare const foo: any;\u000adeclare const x: any;\u000aexport const r = foo?.bar(x!);\u000a
+        case 2
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-002/repository/source/Thing.ts:2:19
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	50:51:	Remove the non-null assertion.	42 51
+        fixed	declare const foo: any;\u000aexport const r = (foo?.bar!);\u000a
+        case 3
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-003/repository/source/Thing.ts:2:18
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+    wave12_completed_test.go:204: optional_assertion_removes_operand_byte compiling, successful-exit mutant caught only by output on sanitized native: case 2 line 9: port "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t49:51:\tRemove the non-null assertion.\t42 51", Go "range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull\t50:51:\tRemove the non-null assertion.\t42 51"
+        Go context:
+        fixed	declare const foo: any;\u000adeclare const x: any;\u000aexport const r = foo?.bar(x!);\u000a
+        case 2
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-002/repository/source/Thing.ts:2:19
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 42 51 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	50:51:	Remove the non-null assertion.	42 51
+        fixed	declare const foo: any;\u000aexport const r = (foo?.bar!);\u000a
+        case 3
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-003/repository/source/Thing.ts:2:18
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+=== RUN   TestCompletedMutants/typescript-no-unnecessary-type-constraint
+    wave12_completed_test.go:204: constraint_suggestion_deletes_name compiling, successful-exit mutant caught only by output on source Node: case 24 line 97: port "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t14:27:,\tRemove the constraint that does nothing.\t14 15", Go "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t15:27:,\tRemove the constraint that does nothing.\t14 15"
+        Go context:
+        fixed	export let value!: number;\u000a
+        case 24
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-024/repository/source/no_unnecessary_type_constraint.cts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	15:27:,	Remove the constraint that does nothing.	14 15
+        fixed	const data = <T extends any>() => {};
+        case 25
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-025/repository/source/no_unnecessary_type_constraint.mts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+    wave12_completed_test.go:204: constraint_suggestion_deletes_name compiling, successful-exit mutant caught only by output on emitted JavaScript: case 24 line 97: port "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t14:27:,\tRemove the constraint that does nothing.\t14 15", Go "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t15:27:,\tRemove the constraint that does nothing.\t14 15"
+        Go context:
+        fixed	export let value!: number;\u000a
+        case 24
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-024/repository/source/no_unnecessary_type_constraint.cts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	15:27:,	Remove the constraint that does nothing.	14 15
+        fixed	const data = <T extends any>() => {};
+        case 25
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-025/repository/source/no_unnecessary_type_constraint.mts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+    wave12_completed_test.go:204: constraint_suggestion_deletes_name compiling, successful-exit mutant caught only by output on sanitized native: case 24 line 97: port "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t14:27:,\tRemove the constraint that does nothing.\t14 15", Go "range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint\t15:27:,\tRemove the constraint that does nothing.\t14 15"
+        Go context:
+        fixed	export let value!: number;\u000a
+        case 24
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-024/repository/source/no_unnecessary_type_constraint.cts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 14 15 noUnnecessaryTypeConstraint suggestion-edits:removeTheConstraint	15:27:,	Remove the constraint that does nothing.	14 15
+        fixed	const data = <T extends any>() => {};
+        case 25
+        /tmp/adamic-gate/TestCompletedMutants3595196892/001/case-025/repository/source/no_unnecessary_type_constraint.mts:1:15
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+--- PASS: TestCompletedMutants (60.80s)
+    --- PASS: TestCompletedMutants/typescript-no-non-null-asserted-optional-chain (24.71s)
+    --- PASS: TestCompletedMutants/typescript-no-unnecessary-type-constraint (24.45s)
+=== RUN   TestCompletedCorners
+    wave12_completed_test.go:226: Go, Node, emitted JavaScript, native identical: 31361 bytes
+--- PASS: TestCompletedCorners (32.89s)
+=== RUN   TestDocumentPaths
+    wave12_document_test.go:24: Go, Node, emitted JavaScript, native identical: 15200 bytes
+--- PASS: TestDocumentPaths (29.30s)
+=== RUN   TestWave12OptionsAndShapes
+    wave12_initial_test.go:29: Go, Node, emitted JavaScript, native identical: 33889 bytes
+--- PASS: TestWave12OptionsAndShapes (31.68s)
+=== RUN   TestNexusUpstream
+    wave12_nexus_test.go:85: captured case-000 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { Detail } from '@structure/source/widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-001 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { format } from '@structure/source/internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-002 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/source/other/Thing.ts source="// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:85: captured case-003 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-004 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import(somePath);\n"
+    wave12_nexus_test.go:85: captured case-005 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = require('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-006 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Detail } from '../widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-007 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Thing } from '../widget/Thing';\n"
+    wave12_nexus_test.go:85: captured case-008 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { format } from '../internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-009 nexus/boundary-no-internal-import /repo/source/widget/Thing.ts "import { Detail } from './internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-010 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './Detail';\n"
+    wave12_nexus_test.go:85: captured case-011 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './deep/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-012 nexus/boundary-no-internal-import /repo/source/widget/nested/Thing.ts "import { Detail } from '../internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-013 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus-template/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-014 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repository/libraries/nexus/code-quality/Thing.ts source="const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-015 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = require('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-016 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const thing = require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-017 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "declare const loader: { require(name: string): unknown };\nconst thing = loader.require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-018 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-019 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load(name: string) {\n    return await import(name);\n}\n"
+    wave12_nexus_test.go:85: captured case-020 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import '@base';\n"
+    wave12_nexus_test.go:85: captured case-021 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import * as NodePath from 'node:path';\n"
+    wave12_nexus_test.go:85: captured case-022 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import Thing from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-023 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import {\n  Thing,\n  Other,\n} from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-024 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '../Thing';\n"
+    wave12_nexus_test.go:85: captured case-025 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-026 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@basement/Thing';\n"
+    wave12_nexus_test.go:85: captured case-027 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@nexus/code-quality/Thing';\n"
+    wave12_nexus_test.go:85: captured case-028 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@projections/Thing';\n"
+    wave12_nexus_test.go:85: captured case-029 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-030 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-031 nexus/boundary-no-nexus-outside-import /repository/libraries/structure/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-032 nexus/boundary-no-nexus-outside-import /repository/source/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-033 nexus/boundary-no-project-import /repo/application/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-034 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-035 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-036 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/libraries/base/source/Thing.ts source="// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:85: captured case-037 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = import('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-038 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = require('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-039 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-040 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@projector/Thing';\n"
+    wave12_nexus_test.go:85: captured case-041 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-042 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-043 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { secret } from '@project/ProjectSettingsSecret';\n"
+    wave12_nexus_test.go:85: captured case-044 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { settings } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:106: cohere cases: 42 unique source/rule/options combinations
+    wave12_nexus_test.go:117: Go, Node, emitted JavaScript, native identical: 10480 bytes
+--- PASS: TestNexusUpstream (35.16s)
+=== RUN   TestNexusMutants
+    wave12_nexus_test.go:85: captured case-000 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { Detail } from '@structure/source/widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-001 nexus/boundary-no-internal-import /repo/libraries/structure/source/Thing.ts "import { format } from '@structure/source/internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-002 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/source/other/Thing.ts source="// Dependencies\n// a second comment\nimport { Detail } from '../widget/internal/Detail';\\n"
+    wave12_nexus_test.go:85: captured case-003 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-004 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = import(somePath);\n"
+    wave12_nexus_test.go:85: captured case-005 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "const detail = require('../widget/internal/Detail');\n"
+    wave12_nexus_test.go:85: captured case-006 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Detail } from '../widget/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-007 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { Thing } from '../widget/Thing';\n"
+    wave12_nexus_test.go:85: captured case-008 nexus/boundary-no-internal-import /repo/source/other/Thing.ts "import { format } from '../internationalization/Format';\n"
+    wave12_nexus_test.go:85: captured case-009 nexus/boundary-no-internal-import /repo/source/widget/Thing.ts "import { Detail } from './internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-010 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './Detail';\n"
+    wave12_nexus_test.go:85: captured case-011 nexus/boundary-no-internal-import /repo/source/widget/internal/Thing.ts "import { Detail } from './deep/internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-012 nexus/boundary-no-internal-import /repo/source/widget/nested/Thing.ts "import { Detail } from '../internal/Detail';\n"
+    wave12_nexus_test.go:85: captured case-013 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus-template/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-014 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repository/libraries/nexus/code-quality/Thing.ts source="const loaded = await import('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-015 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const loaded = require('@structure/source/Thing');"
+    wave12_nexus_test.go:85: captured case-016 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "const thing = require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-017 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "declare const loader: { require(name: string): unknown };\nconst thing = loader.require('@base/source/Thing');\n"
+    wave12_nexus_test.go:85: captured case-018 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-019 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "export async function load(name: string) {\n    return await import(name);\n}\n"
+    wave12_nexus_test.go:85: captured case-020 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import '@base';\n"
+    wave12_nexus_test.go:85: captured case-021 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import * as NodePath from 'node:path';\n"
+    wave12_nexus_test.go:85: captured case-022 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import Thing from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-023 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import {\n  Thing,\n  Other,\n} from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-024 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '../Thing';\n"
+    wave12_nexus_test.go:85: captured case-025 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-026 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@basement/Thing';\n"
+    wave12_nexus_test.go:85: captured case-027 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@nexus/code-quality/Thing';\n"
+    wave12_nexus_test.go:85: captured case-028 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@projections/Thing';\n"
+    wave12_nexus_test.go:85: captured case-029 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';"
+    wave12_nexus_test.go:85: captured case-030 nexus/boundary-no-nexus-outside-import /repository/libraries/nexus/code-quality/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-031 nexus/boundary-no-nexus-outside-import /repository/libraries/structure/source/Thing.ts "import { Thing } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:85: captured case-032 nexus/boundary-no-nexus-outside-import /repository/source/Thing.ts "export async function load() {\n    return await import('@structure/source/Thing');\n}\n"
+    wave12_nexus_test.go:85: captured case-033 nexus/boundary-no-project-import /repo/application/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-034 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-035 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-036 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:87: shared parser recovery gap, original filename=/repo/libraries/base/source/Thing.ts source="// Dependencies\n// a second comment\nimport { helper } from '@project/source/Helper';\\n"
+    wave12_nexus_test.go:85: captured case-037 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = import('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-038 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "const helper = require('@project/source/Helper');\n"
+    wave12_nexus_test.go:85: captured case-039 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from './Thing';\n"
+    wave12_nexus_test.go:85: captured case-040 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@projector/Thing';\n"
+    wave12_nexus_test.go:85: captured case-041 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { Thing } from '@structure/source/Thing';\n"
+    wave12_nexus_test.go:85: captured case-042 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { helper } from '@project/source/Helper';\n"
+    wave12_nexus_test.go:85: captured case-043 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { secret } from '@project/ProjectSettingsSecret';\n"
+    wave12_nexus_test.go:85: captured case-044 nexus/boundary-no-project-import /repo/libraries/base/source/Thing.ts "import { settings } from '@project/ProjectSettings';\n"
+    wave12_nexus_test.go:106: cohere cases: 42 unique source/rule/options combinations
+=== RUN   TestNexusMutants/nexus-boundary-no-internal-import
+    wave12_nexus_test.go:186: last_internal_owner compiling, successful-exit mutant caught only by output on source Node: case 10 line 38: port "fixed\timport { Detail } from './deep/internal/Detail';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants698295680/001/case-011/repo/source/widget/internal/Thing.ts:1:24"
+        Go context:
+        case 8
+        fixed	import { Detail } from './internal/Detail';\u000a
+        case 9
+        fixed	import { Detail } from './Detail';\u000a
+        case 10
+        /tmp/adamic-gate/TestNexusMutants698295680/001/case-011/repo/source/widget/internal/Thing.ts:1:24
+          nexus/boundary-no-internal-import  Only files inside the folder that owns this 'internal' directory may import from it. An internal folder is the one place a module may keep something it is free to change without warning, and that freedom lasts exactly as long as nobody outside reaches in.
+        
+        range 23 47 outsideInternal 			23 47
+        fixed	import { Detail } from './deep/internal/Detail';\u000a
+    wave12_nexus_test.go:186: last_internal_owner compiling, successful-exit mutant caught only by output on emitted JavaScript: case 10 line 38: port "fixed\timport { Detail } from './deep/internal/Detail';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants698295680/001/case-011/repo/source/widget/internal/Thing.ts:1:24"
+        Go context:
+        case 8
+        fixed	import { Detail } from './internal/Detail';\u000a
+        case 9
+        fixed	import { Detail } from './Detail';\u000a
+        case 10
+        /tmp/adamic-gate/TestNexusMutants698295680/001/case-011/repo/source/widget/internal/Thing.ts:1:24
+          nexus/boundary-no-internal-import  Only files inside the folder that owns this 'internal' directory may import from it. An internal folder is the one place a module may keep something it is free to change without warning, and that freedom lasts exactly as long as nobody outside reaches in.
+        
+        range 23 47 outsideInternal 			23 47
+        fixed	import { Detail } from './deep/internal/Detail';\u000a
+    wave12_nexus_test.go:186: last_internal_owner compiling, successful-exit mutant caught only by output on sanitized native: case 10 line 38: port "fixed\timport { Detail } from './deep/internal/Detail';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants698295680/001/case-011/repo/source/widget/internal/Thing.ts:1:24"
+        Go context:
+        case 8
+        fixed	import { Detail } from './internal/Detail';\u000a
+        case 9
+        fixed	import { Detail } from './Detail';\u000a
+        case 10
+        /tmp/adamic-gate/TestNexusMutants698295680/001/case-011/repo/source/widget/internal/Thing.ts:1:24
+          nexus/boundary-no-internal-import  Only files inside the folder that owns this 'internal' directory may import from it. An internal folder is the one place a module may keep something it is free to change without warning, and that freedom lasts exactly as long as nobody outside reaches in.
+        
+        range 23 47 outsideInternal 			23 47
+        fixed	import { Detail } from './deep/internal/Detail';\u000a
+=== RUN   TestNexusMutants/nexus-boundary-no-nexus-outside-import
+    wave12_nexus_test.go:186: alias_prefix_boundary compiling, successful-exit mutant caught only by output on source Node: case 24 line 94: port "/tmp/adamic-gate/TestNexusMutants698295680/001/case-026/repository/libraries/nexus/code-quality/Thing.ts:1:23", Go "fixed\timport { Thing } from '@basement/Thing';\\u000a"
+        Go context:
+        case 22
+        fixed	import { Thing } from '../Thing';\u000a
+        case 23
+        fixed	import { Thing } from './Thing';\u000a
+        case 24
+        fixed	import { Thing } from '@basement/Thing';\u000a
+        case 25
+        fixed	import { Thing } from '@nexus/code-quality/Thing';\u000a
+        case 26
+        fixed	import { Thing } from '@projections/Thing';\u000a
+    wave12_nexus_test.go:186: alias_prefix_boundary compiling, successful-exit mutant caught only by output on emitted JavaScript: case 24 line 94: port "/tmp/adamic-gate/TestNexusMutants698295680/001/case-026/repository/libraries/nexus/code-quality/Thing.ts:1:23", Go "fixed\timport { Thing } from '@basement/Thing';\\u000a"
+        Go context:
+        case 22
+        fixed	import { Thing } from '../Thing';\u000a
+        case 23
+        fixed	import { Thing } from './Thing';\u000a
+        case 24
+        fixed	import { Thing } from '@basement/Thing';\u000a
+        case 25
+        fixed	import { Thing } from '@nexus/code-quality/Thing';\u000a
+        case 26
+        fixed	import { Thing } from '@projections/Thing';\u000a
+    wave12_nexus_test.go:186: alias_prefix_boundary compiling, successful-exit mutant caught only by output on sanitized native: case 24 line 94: port "/tmp/adamic-gate/TestNexusMutants698295680/001/case-026/repository/libraries/nexus/code-quality/Thing.ts:1:23", Go "fixed\timport { Thing } from '@basement/Thing';\\u000a"
+        Go context:
+        case 22
+        fixed	import { Thing } from '../Thing';\u000a
+        case 23
+        fixed	import { Thing } from './Thing';\u000a
+        case 24
+        fixed	import { Thing } from '@basement/Thing';\u000a
+        case 25
+        fixed	import { Thing } from '@nexus/code-quality/Thing';\u000a
+        case 26
+        fixed	import { Thing } from '@projections/Thing';\u000a
+=== RUN   TestNexusMutants/nexus-boundary-no-project-import
+    wave12_nexus_test.go:186: whitelist_widened compiling, successful-exit mutant caught only by output on source Node: case 40 line 146: port "fixed\timport { secret } from '@project/ProjectSettingsSecret';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants698295680/001/case-043/repo/libraries/base/source/Thing.ts:1:24"
+        Go context:
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 47 forbiddenProjectImport 			23 47
+        fixed	import { helper } from '@project/source/Helper';\u000a
+        case 40
+        /tmp/adamic-gate/TestNexusMutants698295680/001/case-043/repo/libraries/base/source/Thing.ts:1:24
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 55 forbiddenProjectImport 			23 55
+        fixed	import { secret } from '@project/ProjectSettingsSecret';\u000a
+    wave12_nexus_test.go:186: whitelist_widened compiling, successful-exit mutant caught only by output on emitted JavaScript: case 40 line 146: port "fixed\timport { secret } from '@project/ProjectSettingsSecret';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants698295680/001/case-043/repo/libraries/base/source/Thing.ts:1:24"
+        Go context:
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 47 forbiddenProjectImport 			23 47
+        fixed	import { helper } from '@project/source/Helper';\u000a
+        case 40
+        /tmp/adamic-gate/TestNexusMutants698295680/001/case-043/repo/libraries/base/source/Thing.ts:1:24
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 55 forbiddenProjectImport 			23 55
+        fixed	import { secret } from '@project/ProjectSettingsSecret';\u000a
+    wave12_nexus_test.go:186: whitelist_widened compiling, successful-exit mutant caught only by output on sanitized native: case 40 line 146: port "fixed\timport { secret } from '@project/ProjectSettingsSecret';\\u000a", Go "/tmp/adamic-gate/TestNexusMutants698295680/001/case-043/repo/libraries/base/source/Thing.ts:1:24"
+        Go context:
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 47 forbiddenProjectImport 			23 47
+        fixed	import { helper } from '@project/source/Helper';\u000a
+        case 40
+        /tmp/adamic-gate/TestNexusMutants698295680/001/case-043/repo/libraries/base/source/Thing.ts:1:24
+          nexus/boundary-no-project-import  A framework library must not import from '@project', except the specifiers named in this rule's allowed option. A library reaching into arbitrary project code inverts the dependency: the framework starts depending on the thing that depends on it.
+        
+        range 23 55 forbiddenProjectImport 			23 55
+        fixed	import { secret } from '@project/ProjectSettingsSecret';\u000a
+--- PASS: TestNexusMutants (75.69s)
+    --- PASS: TestNexusMutants/nexus-boundary-no-internal-import (21.93s)
+    --- PASS: TestNexusMutants/nexus-boundary-no-nexus-outside-import (23.49s)
+    --- PASS: TestNexusMutants/nexus-boundary-no-project-import (25.97s)
+=== RUN   TestNexusCorners
+    wave12_nexus_test.go:234: corner cases: 81
+    wave12_nexus_test.go:235: Go, Node, emitted JavaScript, native identical: 80142 bytes
+--- PASS: TestNexusCorners (30.06s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	558.966s
