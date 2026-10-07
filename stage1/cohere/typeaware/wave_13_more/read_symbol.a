@@ -1,0 +1,7 @@
+import { Frames, header } from '../frames.ts';
+import { PlatformSymbol } from '../wave_13_next/platform_symbol.a';
+import type { Rules } from '../rules.ts';
+export function readSymbol(rules: Rules, index: number): PlatformSymbol {
+ const frames = new Frames(rules.ask(index, 'read-symbol')); header(frames, 'read-symbol');
+ const result = new PlatformSymbol(frames); frames.end(); return result;
+}

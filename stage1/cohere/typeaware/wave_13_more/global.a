@@ -1,0 +1,5 @@
+import type { OutputContext } from '../wave_13_next/output_context.a';
+export function resolvesGlobal(c: OutputContext, index: number): boolean {
+ const declaration = c.symbol(index).direct.declarations[0];
+ return declaration !== undefined && declaration.declarationFile;
+}

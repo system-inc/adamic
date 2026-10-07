@@ -1,0 +1,54 @@
+import { Diagnostic } from '../diagnostic.ts';
+import { Suggestion } from '../suggestion.ts';
+import { Repair } from '../repair.ts';
+import type { OutputContext } from '../wave_13_next/output_context.a';
+import { resolvesGlobal } from './global.a';
+const message = 'This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.';
+const prepend = 'Prepend `void` to the expression, saying the value is deliberately discarded.';
+const wrap = 'Wrap the expression in `{}`, making the arrow body a statement rather than a return.';
+export class NoPromiseExecutorReturn {
+ readonly c: OutputContext; readonly allowVoid: boolean;
+ constructor(c: OutputContext, allowVoid: boolean) { this.c = c; this.allowVoid = allowVoid; }
+ executor(index: number): boolean {
+  const c=this.c; const parent=c.parent(index);
+  if(parent < 0 || c.node(parent) !== 'NewExpression') { return false; }
+  const call=c.rules().parser.node(parent);
+  if(call.list===0 || call.children[call.children.length-call.list]!==index) { return false; }
+  const callee=c.child(parent, 0);
+  return c.node(callee) === 'Identifier' && c.rules().parser.node(callee).text === 'Promise' && resolvesGlobal(c, callee);
+ }
+ voidSuggestion(index: number): Suggestion {
+  const c=this.c; const r=c.rules(); const node=r.parser.node(index); const start=r.start(node); const end=node.end;
+  const adjacent=c.parent(index) >= 0 && c.node(c.parent(index)) === 'ReturnStatement' && r.scanner.text.slice(start-6,start) === 'return';
+  const prefix=adjacent ? ' void ' : 'void ';
+  const parens=['BinaryExpression','ConditionalExpression','YieldExpression','ArrowFunction'].includes(node.kind);
+  const repairs: Repair[]=[new Repair(r.byte(start),r.byte(start),prefix+(parens ? '(' : ''))];
+  if(parens) { repairs.push(new Repair(r.byte(end),r.byte(end),')')); }
+  return new Suggestion('prependVoid',prepend,repairs);
+ }
+ report(index: number, expression: number, arrow: boolean): void {
+  const c=this.c; const r=c.rules();
+  const finding=new Diagnostic('no-promise-executor-return','returnsValue',message,r.byte(r.start(r.parser.node(index))),r.byte(r.parser.node(index).end),'');
+  if(this.allowVoid) { finding.suggestions.push(this.voidSuggestion(expression)); }
+  const kind=c.node(expression);
+  if(arrow && (!['FunctionExpression','ClassExpression'].includes(kind) || c.bindings.shape.name(expression)>=0)) {
+   const node=r.parser.node(expression); const start=r.byte(r.start(node)); const end=r.byte(node.end);
+   finding.suggestions.push(new Suggestion('wrapBraces',wrap,[new Repair(start,start,'{'),new Repair(end,end,'}')]));
+  }
+  r.findings.push(finding);
+ }
+ run(): void {
+  const c=this.c;
+  for(let at=0;at<c.rules().parser.nodes.length;at++) {
+   const kind=c.node(at);
+   if(kind==='ArrowFunction') {
+    const body=c.last(at);
+    if(c.node(body)!=='Block' && this.executor(at) && !(this.allowVoid && c.node(c.skip(body))==='VoidExpression')) { this.report(c.skip(body),body,true); }
+   } else if(kind==='ReturnStatement' && c.child(at,0)>=0) {
+    let enclosing=c.parent(at); while(enclosing>=0 && !c.bindings.functionKind(c.node(enclosing)) && c.node(enclosing)!=='SourceFile') { enclosing=c.parent(enclosing); }
+    const expression=c.child(at,0);
+    if(enclosing>=0 && this.executor(enclosing) && !(this.allowVoid && c.node(c.skip(expression))==='VoidExpression')) { this.report(at,expression,false); }
+   }
+  }
+ }
+}

@@ -1,0 +1,127 @@
+import { panic } from 'adamic';
+import { Diagnostic } from '../diagnostic.ts';
+import { Reassign } from '../reassign.ts';
+import type { OutputContext } from '../wave_13_next/output_context.a';
+import { PlatformSymbol } from '../wave_13_next/platform_symbol.a';
+import { readSymbol } from './read_symbol.a';
+class Constant {
+ readonly text: string; readonly string: boolean; readonly known: boolean;
+ constructor(text: string, string: boolean, known: boolean) { this.text=text; this.string=string; this.known=known; }
+}
+export class NoObjCalls {
+ readonly c: OutputContext; readonly writes: Reassign;
+ readonly references=new Map<string, number[]>(); readonly symbols=new Map<number, PlatformSymbol>();
+ readonly following: string[]=[]; readonly empty: number[]=[];
+ readonly globals=['Atomics','Intl','JSON','Math','Reflect','Temporal'];
+ readonly objects=['global','globalThis','self','window'];
+ constructor(c: OutputContext) { this.c=c; this.writes=new Reassign(c.rules()); }
+ symbol(index: number): PlatformSymbol {
+  if(!this.symbols.has(index)) { this.symbols.set(index,readSymbol(this.c.rules(),index)); }
+  return this.symbols.get(index) ?? panic('missing read symbol');
+ }
+ reference(index: number): boolean {
+  const c=this.c; const parent=c.parent(index); if(parent<0) { return false; }
+  if(c.node(parent)==='ExportSpecifier') { return !c.bindings.declaring(index); }
+  if(c.node(parent)==='ShorthandPropertyAssignment') { return true; }
+  if(c.bindings.declaring(index)) { return false; }
+  if(['TypeReference','TypeQuery','QualifiedName','LabeledStatement','BreakStatement','ContinueStatement','JsxAttribute'].includes(c.node(parent))) { return false; }
+  if(['JsxOpeningElement','JsxSelfClosingElement','JsxClosingElement'].includes(c.node(parent))) {
+   const text=c.rules().parser.node(index).text; const first=text.slice(0,1); return !(first>='a' && first<='z') && !text.includes('-');
+  }
+  return true;
+ }
+ operator(index: number): string { return this.c.node(this.c.child(index,1)); }
+ constant(index: number): Constant {
+  const c=this.c; if(index<0) { return new Constant('',false,false); } const at=c.skip(index); const node=c.rules().parser.node(at);
+  if(['StringLiteral','NoSubstitutionTemplateLiteral'].includes(node.kind)) { return new Constant(node.text,true,true); }
+  if(node.kind==='NumericLiteral') { return new Constant(node.text,false,true); }
+  if(['TrueKeyword','FalseKeyword','NullKeyword'].includes(node.kind)) { return new Constant(node.kind==='TrueKeyword'?'true':node.kind==='FalseKeyword'?'false':'null',false,true); }
+  if(node.kind==='BinaryExpression' && this.operator(at)==='PlusToken') {
+   const left=this.constant(c.child(at,0)); const right=this.constant(c.child(at,2));
+   return left.known && right.known && (left.string || right.string) ? new Constant(left.text+right.text,true,true) : new Constant('',false,false);
+  }
+  if(node.kind==='TemplateExpression') {
+   let text=c.rules().parser.node(c.child(at,0)).text;
+   for(let part=1;part<node.children.length;part++) { const span=c.child(at,part); const value=this.constant(c.child(span,0)); if(!value.known) { return new Constant('',false,false); } text+=value.text+c.rules().parser.node(c.child(span,1)).text; }
+   return new Constant(text,true,true);
+  }
+  return new Constant('',false,false);
+ }
+ key(index: number, fold: boolean): string {
+  const c=this.c; if(index<0) { return ''; }
+  const kind=c.node(index);
+  if(kind==='ComputedPropertyName') { return this.constant(c.child(index,0)).text; }
+  if(['Identifier','PrivateIdentifier','StringLiteral','NumericLiteral'].includes(kind) || (!fold && kind==='NoSubstitutionTemplateLiteral')) { return c.rules().parser.node(index).text; }
+  return fold ? this.constant(index).text : '';
+ }
+ pass(index: number): boolean {
+  const c=this.c; const parent=c.parent(index); if(parent<0) { return false; } const kind=c.node(parent);
+  if(['ParenthesizedExpression','AsExpression','SatisfiesExpression','TypeAssertionExpression','NonNullExpression','ExpressionWithTypeArguments'].includes(kind)) { return true; }
+  if(kind==='ConditionalExpression') { return c.child(parent,2)===index || c.child(parent,4)===index; }
+  if(kind==='BinaryExpression') { const op=this.operator(parent); return ['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(op) || (op==='CommaToken' && c.child(parent,2)===index); }
+  return false;
+ }
+ reads(key: string, references: readonly number[], global: string): void {
+  if(this.following.includes(key)) { return; }
+  this.following.push(key);
+  for(const index of references) { this.value(index,global); }
+  this.following.pop();
+ }
+ target(index: number, global: string): void {
+  const c=this.c; if(index<0) { return; } const at=c.skip(index); const kind=c.node(at);
+  if(kind==='Identifier') {
+   const symbol=this.symbol(at); if(symbol.id===0) { return; }
+   const refs=(this.references.get(c.rules().parser.node(at).text) ?? this.empty).filter((ref)=>this.symbol(ref).id===symbol.id);
+   this.reads(`symbol:${symbol.id}`,refs,global); return;
+  }
+  if(kind==='BinaryExpression' && this.operator(at)==='EqualsToken') { this.target(c.child(at,0),global); return; }
+  if(global!=='' || !['ObjectBindingPattern','ObjectLiteralExpression'].includes(kind)) { return; }
+  for(const property of c.rules().parser.node(at).children) {
+   let name=-1; let value=-1;
+   if(c.node(property)==='BindingElement') {
+    if(c.rules().parser.node(property).children.some((child)=>c.node(child)==='DotDotDotToken')) { continue; }
+    value=c.bindings.shape.name(property);
+    const initializer=c.bindings.shape.initializer(property);
+    const names=c.rules().parser.node(property).children.filter((child)=>child!==initializer && c.node(child)!=='DotDotDotToken'); name=names[0] ?? -1;
+   } else if(c.node(property)==='PropertyAssignment') { name=c.child(property,0); value=c.last(property); }
+   else if(c.node(property)==='ShorthandPropertyAssignment') { name=c.child(property,0); value=name; }
+   const key=this.key(name,true); if(this.globals.includes(key)) { this.target(value,key); }
+  }
+ }
+ report(index: number, global: string): void {
+  const c=this.c; const r=c.rules(); const callee=c.skip(c.child(index,0)); let name='';
+  if(c.node(callee)==='Identifier') { name=r.parser.node(callee).text; }
+  else if(c.node(callee)==='PropertyAccessExpression') { name=this.key(c.last(callee),false); }
+  else if(c.node(callee)==='ElementAccessExpression') {
+   const key=c.last(callee); if(['StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral'].includes(c.node(key))) { name=this.key(key,false); }
+  }
+  const direct=name===global; const named=name==='' ? 'a value' : '`'+name+'`';
+  const message=direct ? `This calls \`${global}\`, which is an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached. Call a method on it instead.` : `This calls ${named}, which holds \`${global}\`, an object holding members rather than a function. Calling or constructing it throws a TypeError at runtime every time this line is reached, and the other name hides that from a reader. Call a method on \`${global}\` instead.`;
+  const n=r.parser.node(index); r.findings.push(new Diagnostic('no-obj-calls',direct?'unexpectedCall':'unexpectedRefCall',message,r.byte(r.start(n)),r.byte(n.end),''));
+ }
+ value(index: number, global: string): void {
+  const c=this.c; let at=index; while(this.pass(at)) { at=c.parent(at); } const parent=c.parent(at); if(parent<0) { return; } const kind=c.node(parent);
+  if(['PropertyAccessExpression','ElementAccessExpression'].includes(kind)) {
+   if(c.child(parent,0)!==at || global!=='') { return; }
+   const key=kind==='PropertyAccessExpression'?this.key(c.last(parent),false):this.constant(c.last(parent)).text;
+   if(this.globals.includes(key)) { this.value(parent,key); } return;
+  }
+  if(['CallExpression','NewExpression'].includes(kind)) { if(c.child(parent,0)===at && global!=='') { this.report(parent,global); } return; }
+  if(kind==='BinaryExpression' && c.child(parent,2)===at && ['EqualsToken','BarBarEqualsToken','AmpersandAmpersandEqualsToken','QuestionQuestionEqualsToken'].includes(this.operator(parent))) { this.target(c.child(parent,0),global); this.value(parent,global); return; }
+  if(['VariableDeclaration','Parameter','BindingElement'].includes(kind) && c.bindings.shape.initializer(parent)===at) { this.target(c.bindings.shape.name(parent),global); }
+  if(kind==='ShorthandPropertyAssignment' && c.child(parent,0)!==at) { this.target(c.child(parent,0),global); }
+ }
+ run(): void {
+  const c=this.c;
+  if(!this.globals.concat(this.objects).some((name)=>c.rules().scanner.text.includes(name))) { return; }
+  for(let at=0;at<c.rules().parser.nodes.length;at++) {
+   const node=c.rules().parser.node(at); if(node.kind!=='Identifier' || !this.reference(at)) { continue; }
+   const fresh: number[]=[]; const refs=this.references.get(node.text) ?? fresh; refs.push(at); this.references.set(node.text,refs);
+  }
+  for(const name of this.globals.concat(this.objects)) {
+   const refs=(this.references.get(name) ?? this.empty).filter((index)=>!this.symbol(index).declarations.some((d)=>!d.declarationFile));
+   if(refs.length===0 || refs.some((index)=>this.writes.writes(index))) { continue; }
+   this.reads(`global:${name}`,refs,this.globals.includes(name)?name:'');
+  }
+ }
+}
