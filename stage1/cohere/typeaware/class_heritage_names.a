@@ -1,0 +1,8 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export function classHeritageNames(rules: Rules, index: number): readonly string[] {
+    const frames = new Frames(rules.ask(index, 'class-heritage-names')); header(frames, 'class-heritage-names');
+    const count = frames.natural(); const names: string[] = [];
+    for(let at = 0; at < count; at++) { names.push(frames.field()); }
+    frames.end(); return names;
+}

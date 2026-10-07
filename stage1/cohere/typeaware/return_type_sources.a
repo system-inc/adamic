@@ -1,0 +1,36 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class ReturnTypeSource {
+    readonly present: boolean;
+    readonly written: string;
+    readonly flags: number;
+    readonly parts: readonly number[];
+    constructor(present: boolean, written: string, flags: number, parts: readonly number[]) {
+        this.present = present; this.written = written; this.flags = flags; this.parts = parts;
+    }
+}
+export class ReturnTypeSources {
+    readonly async: boolean;
+    readonly generator: boolean;
+    readonly groups: readonly (readonly ReturnTypeSource[])[];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'return-type-sources'));
+        header(frames, 'return-type-sources');
+        this.async = frames.yes(); this.generator = frames.yes();
+        const groups: (readonly ReturnTypeSource[])[] = [];
+        for(let group = 0; group < 3; group++) {
+            const count = frames.natural(); const values: ReturnTypeSource[] = [];
+            for(let at = 0; at < count; at++) {
+                const present = frames.yes(); let written = ''; let flags = 0; const parts: number[] = [];
+                if(present) {
+                    written = frames.field(); flags = frames.natural(); const length = frames.natural();
+                    for(let part = 0; part < length; part++) { parts.push(frames.natural()); }
+                }
+                values.push(new ReturnTypeSource(present, written, flags, parts));
+            }
+            groups.push(values);
+        }
+        frames.end(); this.groups = groups;
+    }
+}

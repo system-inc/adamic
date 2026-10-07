@@ -203,6 +203,13 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "class-heritage-names": return p.classHeritageNames(out, c, node, question)
+	case "character-properties": return p.characterProperties(out, question)
+	case "callable-type-facts": return p.callableTypeFacts(out, c, node, question)
+	case "program-imports": return p.programImports(out, node, question)
+	case "void-position-types": return p.voidPositionTypes(out, c, node, question)
+	case "call-parameter-returns": return p.callParameterReturns(out, c, node, question)
+	case "return-type-sources": return p.returnTypeSources(out, c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
 		if err := p.declarationFacts(out, c, node, mode, question); err != nil {
 			return "", err

@@ -1,0 +1,109 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { ReturnTypeSources } from './return_type_sources.a';
+import type { ReturnTypeSource } from './return_type_sources.a';
+import { Frames, header } from './frames.ts';
+
+export class ReturnVerdict {
+    readonly kind: number;
+    readonly written: string;
+    readonly origin: number;
+    readonly admitsUndefined: boolean;
+    readonly noun: string;
+    constructor(kind: number, written: string, origin: number, admits: boolean, noun: string) {
+        this.kind = kind; this.written = written; this.origin = origin; this.admitsUndefined = admits; this.noun = noun;
+    }
+}
+export class MatchingReturnType {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly verdicts = new Map<number, ReturnVerdict>();
+    constructor(rules: Rules) { this.rules = rules; this.bindings = new Bindings(rules); }
+    classify(type: ReturnTypeSource, origin: number, noun: string): ReturnVerdict {
+        let flags = 0;
+        for(const part of type.parts) { flags |= part; }
+        let kind = 0;
+        if(type.present && (type.flags & 262147) === 0) {
+            if((flags & 16) !== 0) { kind = 1; }
+            else if(!(origin !== 0 && type.flags === 4) && (type.flags & 132644864) === 0) { kind = 2; }
+        }
+        return new ReturnVerdict(kind, type.written, origin, (flags & 4) !== 0, noun);
+    }
+    judge(index: number): ReturnVerdict {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Constructor' || node.kind === 'SetAccessor') {
+            return new ReturnVerdict(1, '', 3, false, node.kind === 'Constructor' ? 'constructor' : 'setter');
+        }
+        const sources = new ReturnTypeSources(this.rules, index);
+        let noun = node.kind === 'GetAccessor' ? 'getter' : node.kind === 'MethodDeclaration' ? 'method' :
+            ['FunctionExpression', 'ArrowFunction'].includes(node.kind) ? 'function expression' : 'function';
+        const parent = this.bindings.parent(index);
+        if(noun === 'function expression' && parent >= 0 &&
+            ['CallExpression', 'NewExpression'].includes(this.rules.parser.node(parent).kind)) { noun = 'callback'; }
+        if(sources.generator) { noun = `generator ${noun}`; }
+        if(sources.async) { noun = `async ${noun}`; }
+        for(let origin = 0; origin < 3; origin++) {
+            const group: readonly ReturnTypeSource[] = sources.groups[origin] ?? [];
+            if(group.length === 0) { continue; }
+            let agreed = new ReturnVerdict(0, '', origin, false, noun);
+            for(let at = 0; at < group.length; at++) {
+                const type = group[at]; if(type === undefined) { continue; }
+                const verdict = this.classify(type, origin, noun);
+                if(at === 0) { agreed = verdict; }
+                else if(verdict.kind !== agreed.kind) { return new ReturnVerdict(0, '', origin, false, noun); }
+                else { agreed = new ReturnVerdict(agreed.kind, agreed.written, origin,
+                    agreed.admitsUndefined && verdict.admitsUndefined, noun); }
+            }
+            if(origin === 0 || origin === 2 || agreed.kind !== 0) { return agreed; }
+        }
+        return new ReturnVerdict(0, '', 2, false, noun);
+    }
+    globalUndefined(index: number): boolean {
+        const expression = this.rules.skip(index); const node = this.rules.parser.node(expression);
+        if(node.kind !== 'Identifier' || node.text !== 'undefined') { return false; }
+        const frames = new Frames(this.rules.ask(expression, 'binding-declarations'));
+        header(frames, 'binding-declarations');
+        let count = 0;
+        if(frames.yes()) {
+            frames.natural(); count = frames.natural();
+            for(let at = 0; at < count; at++) { frames.field(); frames.field(); frames.natural(); frames.natural(); }
+        }
+        frames.end(); return count === 0;
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index); if(node.kind !== 'ReturnStatement') { continue; }
+            let owner = this.bindings.parent(index);
+            while(owner >= 0 && !this.bindings.functionKind(this.rules.parser.node(owner).kind)) {
+                if(['ClassStaticBlockDeclaration', 'SourceFile'].includes(this.rules.parser.node(owner).kind)) { owner = -1; break; }
+                owner = this.bindings.parent(owner);
+            }
+            if(owner < 0) { continue; }
+            if(!this.verdicts.has(owner)) { this.verdicts.set(owner, this.judge(owner)); }
+            const verdict = this.verdicts.get(owner); if(verdict === undefined || verdict.kind === 0) { continue; }
+            const expression = node.children[0] ?? -1;
+            if(verdict.kind === 2 && expression >= 0) { continue; }
+            if(verdict.kind === 1 && (expression < 0 || !this.globalUndefined(expression))) { continue; }
+            const source = ['from its annotation', 'from the signature it is passed to', 'inferred from its returns'][verdict.origin] ?? '';
+            const reason = verdict.origin === 3 ? verdict.noun === 'constructor' ?
+                "a constructor's result is the instance, and `return` in it is only an early exit" :
+                "a setter's result is discarded, and `return` in it is only an early exit" :
+                `its return type is \`${verdict.written}\` (${source}), which says \`void\``;
+            const message = verdict.kind === 2 ?
+                `This ${verdict.noun} returns a value: its return type is \`${verdict.written}\` (${source}), so a bare \`return;\` hides that this path hands back \`undefined\`. Write \`return undefined;\`. A bare return is reserved for functions whose type says \`void\`, so a reader can tell at the return which kind of function this is.` :
+                `This ${verdict.noun} returns nothing: ${reason}, so \`return undefined;\` dresses an early exit up as a value. Write \`return;\`. \`return undefined;\` is reserved for functions whose type includes \`undefined\` as a value, so a reader can tell at the return which kind of function this is.`;
+            const finding = new Diagnostic('nexus/consistency-require-matching-return-type',
+                verdict.kind === 2 ? 'bareReturnInValueFunction' : 'undefinedReturnInVoidFunction', message,
+                this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), '');
+            const text = this.rules.text(node);
+            const canonical = text.startsWith('return') && text.endsWith('undefined;') &&
+                [...text.slice(6, text.length - 10)].every((character) => [' ', '\t', '\r', '\n', '\f'].includes(character)) && text.length > 16;
+            if((verdict.kind === 2 && verdict.admitsUndefined && text === 'return;') || (verdict.kind === 1 && canonical)) {
+                finding.fixStart = finding.start; finding.fixEnd = finding.end;
+                finding.replacement = verdict.kind === 2 ? 'return undefined;' : 'return;';
+            }
+            this.rules.findings.push(finding);
+        }
+    }
+}

@@ -1,0 +1,13 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { VoidReturns } from './void_position_types.a';
+export class CallParameterReturns {
+    readonly count: number;
+    readonly arguments: readonly VoidReturns[];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'call-parameter-returns')); header(frames, 'call-parameter-returns');
+        this.count = frames.natural(); const length = frames.natural(); const arguments_: VoidReturns[] = [];
+        for(let at = 0; at < length; at++) { arguments_.push(new VoidReturns(frames)); }
+        frames.end(); this.arguments = arguments_;
+    }
+}

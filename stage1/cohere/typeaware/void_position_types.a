@@ -1,0 +1,29 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class VoidReturns {
+    readonly flags: readonly number[];
+    readonly parts: readonly (readonly number[])[];
+    constructor(frames: Frames) {
+        const count = frames.natural(); const flags: number[] = []; const parts: (readonly number[])[] = [];
+        for(let at = 0; at < count; at++) {
+            flags.push(frames.natural()); const length = frames.natural(); const values: number[] = [];
+            for(let part = 0; part < length; part++) { values.push(frames.natural()); }
+            parts.push(values);
+        }
+        this.flags = flags; this.parts = parts;
+    }
+    voidOnly(): boolean { return this.parts.length > 0 && this.parts.every((parts) => parts.every((flags) => (flags & 16) !== 0)); }
+    nonVoid(): boolean { return this.parts.some((parts) => parts.some((flags) => (flags & 262164) === 0)); }
+}
+export class VoidPositionTypes {
+    readonly actual: VoidReturns;
+    readonly expected: VoidReturns;
+    readonly inherited: readonly VoidReturns[];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'void-position-types')); header(frames, 'void-position-types');
+        this.actual = new VoidReturns(frames); this.expected = new VoidReturns(frames);
+        const count = frames.natural(); const inherited: VoidReturns[] = [];
+        for(let at = 0; at < count; at++) { inherited.push(new VoidReturns(frames)); }
+        frames.end(); this.inherited = inherited;
+    }
+}

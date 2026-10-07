@@ -1,0 +1,43 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class CharacterProperties {
+    readonly characters: readonly string[];
+    readonly letters: readonly boolean[];
+    readonly digits: readonly boolean[];
+    readonly upper: readonly boolean[];
+    readonly lower: readonly boolean[];
+    readonly raised: readonly string[];
+    readonly lowered: readonly string[];
+    constructor(rules: Rules, index: number, text: string) {
+        const frames = new Frames(rules.ask(index, `character-properties\n${text}`)); header(frames, 'character-properties');
+        const count = frames.natural(); const chars: string[] = []; const letters: boolean[] = []; const digits: boolean[] = [];
+        const upper: boolean[] = []; const lower: boolean[] = []; const raised: string[] = []; const lowered: string[] = [];
+        for(let at = 0; at < count; at++) {
+            chars.push(frames.field()); letters.push(frames.yes()); digits.push(frames.yes()); upper.push(frames.yes()); lower.push(frames.yes());
+            raised.push(frames.field()); lowered.push(frames.field());
+        }
+        frames.end(); this.characters = chars; this.letters = letters; this.digits = digits; this.upper = upper; this.lower = lower; this.raised = raised; this.lowered = lowered;
+    }
+    casing(upper: boolean): boolean {
+        let first = 0; while(this.characters[first] === '_') { first++; }
+        if(first >= this.characters.length || this.letters[first] !== true || (upper ? this.upper[first] : this.lower[first]) !== true) { return false; }
+        for(let at = first + 1; at < this.characters.length; at++) { if(this.letters[at] !== true && this.digits[at] !== true) { return false; } }
+        return true;
+    }
+    recase(upper: boolean): string {
+        let at = 0; let result = ''; while(this.characters[at] === '_') { result += '_'; at++; }
+        let firstWord = true;
+        while(at < this.characters.length) {
+            while(this.characters[at] === '_') { at++; }
+            if(at >= this.characters.length) { break; }
+            let end = at; let allUpper = true;
+            while(end < this.characters.length && this.characters[end] !== '_') { if(this.lower[end] === true) { allUpper = false; } end++; }
+            for(let cursor = at; cursor < end; cursor++) {
+                result += cursor === at ? (upper || !firstWord ? this.raised[cursor] ?? '' : this.lowered[cursor] ?? '') :
+                    allUpper ? this.lowered[cursor] ?? '' : this.characters[cursor] ?? '';
+            }
+            firstWord = false; at = end;
+        }
+        return result === '' ? this.characters.join('') : result;
+    }
+}

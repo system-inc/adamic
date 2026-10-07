@@ -1,0 +1,230 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Flow } from './flow.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { CharacterProperties } from './character_properties.a';
+import { CallableTypeFacts } from './callable_type_facts.a';
+import { classHeritageNames } from './class_heritage_names.a';
+import type { ProgramImports } from './program_imports.a';
+import { Frames, header } from './frames.ts';
+
+const containers = ['Map', 'Set', 'WeakMap', 'WeakSet', 'Date', 'RegExp', 'Array', 'Int8Array', 'Uint8Array', 'Uint8ClampedArray',
+    'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float32Array', 'Float64Array', 'BigInt64Array', 'BigUint64Array',
+    'ArrayBuffer', 'SharedArrayBuffer', 'DataView', 'URL', 'URLSearchParams', 'Headers', 'TextEncoder', 'TextDecoder', 'String'];
+const reserved = ['arguments', 'await', 'break', 'case', 'catch', 'class', 'const', 'continue', 'debugger', 'default', 'delete', 'do',
+    'else', 'enum', 'eval', 'export', 'extends', 'false', 'finally', 'for', 'function', 'if', 'implements', 'import', 'in',
+    'instanceof', 'interface', 'let', 'new', 'null', 'package', 'private', 'protected', 'public', 'return', 'static', 'super',
+    'switch', 'this', 'throw', 'true', 'try', 'typeof', 'var', 'void', 'while', 'with', 'yield'];
+export class CasingSymbols {
+    readonly symbol: number; readonly local: number; readonly shorthand: number;
+    constructor(symbol: number, local: number, shorthand: number) { this.symbol = symbol; this.local = local; this.shorthand = shorthand; }
+}
+export class ConstantCasing {
+    readonly rules: Rules; readonly bindings: Bindings; readonly flow: Flow; readonly imports: ProgramImports;
+    readonly functions: string[] = []; readonly imported: string[] = []; readonly called: string[] = []; readonly jsx: string[] = [];
+    readonly returningFunction: string[] = []; readonly returningClass: string[] = []; readonly symbols = new Map<number, CasingSymbols>();
+    constructor(rules: Rules, bindings: Bindings, flow: Flow, imports: ProgramImports) { this.rules = rules; this.imports = imports; this.bindings = bindings; this.flow = flow; }
+    unwrap(index: number): number {
+        let at = index;
+        while(at >= 0) {
+            const node = this.rules.parser.node(at);
+            if(!['AsExpression', 'SatisfiesExpression', 'NonNullExpression', 'ParenthesizedExpression'].includes(node.kind)) { break; }
+            at = node.children[0] ?? -1;
+        }
+        return at;
+    }
+    name(index: number): string {
+        if(index < 0) { return ''; } const node = this.rules.parser.node(this.unwrap(index));
+        if(node.kind === 'Identifier') { return node.text; }
+        if(node.kind === 'PropertyAccessExpression' || node.kind === 'QualifiedName') { return this.rules.parser.node(node.children[node.children.length - 1] ?? -1).text; }
+        return '';
+    }
+    upper(name: string): boolean { let at = 0; while(name[at] === '_') { at++; } const first = name.charCodeAt(at); return first >= 65 && first <= 90; }
+    functionNode(index: number): boolean { return index >= 0 && ['ArrowFunction', 'FunctionExpression'].includes(this.rules.parser.node(this.unwrap(index)).kind); }
+    body(index: number): number { if(index < 0) { return -1; } const children = this.rules.parser.node(index).children; return children[children.length - 1] ?? -1; }
+    returnsFunction(index: number): boolean {
+        const body = this.body(this.unwrap(index)); if(body < 0) { return false; }
+        if(this.rules.parser.node(body).kind !== 'Block') { return this.functionNode(body); }
+        return this.rules.parser.node(body).children.some((child) => this.rules.parser.node(child).kind === 'ReturnStatement' && this.functionNode(this.rules.parser.node(child).children[0] ?? -1));
+    }
+    callName(index: number, identifierOnly = false): string {
+        if(index < 0) { return ''; } const node = this.rules.parser.node(this.unwrap(index)); if(node.kind !== 'CallExpression') { return ''; }
+        const callee = this.unwrap(node.children[0] ?? -1);
+        return identifierOnly && this.rules.parser.node(callee).kind !== 'Identifier' ? '' : this.name(callee);
+    }
+    collect(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index); const named = this.bindings.shape.name(index); const name = named >= 0 ? this.rules.parser.node(named).text : '';
+            if(node.kind === 'CallExpression') { const callee = this.unwrap(node.children[0] ?? -1); if(this.rules.parser.node(callee).kind === 'Identifier') { this.called.push(this.name(callee)); } }
+            if(node.kind === 'FunctionDeclaration' && name !== '') {
+                this.functions.push(name); const body = this.body(index); const annotation = node.children[node.children.length - 2] ?? -1;
+                const kind = annotation >= 0 ? this.rules.parser.node(annotation).kind : '';
+                if(kind === 'FunctionType') { this.returningFunction.push(name); }
+                else if(kind === 'TypeReference') { const type = this.rules.parser.node(annotation); const typeName = type.children[0] ?? -1;
+                    if(this.rules.parser.node(typeName).kind === 'Identifier' && this.upper(this.name(typeName)) && !containers.includes(this.name(typeName))) { this.returningClass.push(name); } }
+                else if(['Identifier', 'Parameter', 'TypeParameter'].includes(kind) && body >= 0 && this.returnsFunction(index)) { this.returningFunction.push(name); }
+            }
+            if(node.kind === 'VariableDeclaration' && this.functionNode(this.bindings.shape.initializer(index))) { this.functions.push(name); }
+            if(['ImportSpecifier', 'ImportClause', 'NamespaceImport'].includes(node.kind) && name !== '') { this.imported.push(name); }
+            if(['JsxOpeningElement', 'JsxSelfClosingElement', 'JsxClosingElement'].includes(node.kind)) {
+                let tag = node.children[0] ?? -1;
+                while(tag >= 0 && this.rules.parser.node(tag).kind === 'PropertyAccessExpression') { tag = this.rules.parser.node(tag).children[0] ?? -1; }
+                if(tag >= 0 && this.rules.parser.node(tag).kind === 'Identifier') { this.jsx.push(this.name(tag)); }
+            }
+            if(node.kind === 'JsxAttribute') { const expression = node.children.find((child) => this.rules.parser.node(child).kind === 'JsxExpression') ?? -1;
+                const inner = expression >= 0 ? this.unwrap(this.rules.parser.node(expression).children[0] ?? -1) : -1;
+                if(inner >= 0 && this.rules.parser.node(inner).kind === 'Identifier') { this.jsx.push(this.name(inner)); } }
+        }
+    }
+    identity(index: number): CasingSymbols {
+        const cached = this.symbols.get(index); if(cached !== undefined) { return cached; }
+        const frames = new Frames(this.rules.ask(index, 'symbol-identities')); header(frames, 'symbol-identities');
+        const symbol = frames.natural(); frames.natural(); frames.yes(); const local = frames.natural(); const shorthand = frames.natural(); frames.end();
+        const result = new CasingSymbols(symbol, local, shorthand); this.symbols.set(index, result); return result;
+    }
+    exported(statement: number, name: number): string[] {
+        if(statement >= 0 && this.rules.parser.node(statement).children.some((child) => this.rules.parser.node(child).kind === 'ExportKeyword')) { return [this.name(name)]; }
+        const symbol = this.identity(name).symbol; const result: string[] = []; if(symbol === 0) { return result; }
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at); if(node.kind !== 'ExportSpecifier') { continue; }
+            let declaration = this.bindings.parent(at);
+            while(declaration >= 0 && this.rules.parser.node(declaration).kind !== 'ExportDeclaration') { declaration = this.bindings.parent(declaration); }
+            if(declaration < 0 || this.rules.parser.node(declaration).children.some((child) => this.rules.parser.node(child).kind === 'StringLiteral')) { continue; }
+            const identifiers = node.children.filter((child) => this.rules.parser.node(child).kind === 'Identifier'); const local = identifiers[0] ?? -1; const exported = identifiers[identifiers.length - 1] ?? -1;
+            if(local >= 0 && this.name(exported) !== 'default' && this.identity(local).local === symbol) { result.push(this.name(exported)); }
+        }
+        return result;
+    }
+    rebinding(index: number): boolean {
+        const at = this.unwrap(index); if(at < 0) { return false; } const node = this.rules.parser.node(at);
+        if(node.kind === 'PropertyAccessExpression') { return this.upper(this.name(at)); }
+        if(node.kind === 'BinaryExpression' && ['QuestionQuestionToken', 'BarBarToken'].includes(this.rules.parser.node(node.children[1] ?? -1).kind)) { return this.rebinding(node.children[0] ?? -1) || this.rebinding(node.children[2] ?? -1); }
+        if(node.kind === 'ConditionalExpression') { return this.rebinding(node.children[2] ?? -1) || this.rebinding(node.children[4] ?? -1); }
+        return false;
+    }
+    dynamic(index: number): boolean {
+        let at = index;
+        while(at >= 0) { const node = this.rules.parser.node(at);
+            if(['PropertyAccessExpression', 'ElementAccessExpression', 'AwaitExpression', 'NonNullExpression', 'ParenthesizedExpression'].includes(node.kind)) { at = node.children[0] ?? -1; }
+            else { return node.kind === 'CallExpression' && this.rules.parser.node(node.children[0] ?? -1).kind === 'ImportKeyword'; }
+        }
+        return false;
+    }
+    classInstance(index: number): boolean {
+        if(index < 0) { return false; } const node = this.rules.parser.node(index);
+        if(node.kind === 'BinaryExpression' && ['QuestionQuestionToken', 'BarBarToken'].includes(this.rules.parser.node(node.children[1] ?? -1).kind)) { return this.classInstance(node.children[0] ?? -1) || this.classInstance(node.children[2] ?? -1); }
+        if(node.kind === 'NewExpression') {
+            const callee = this.unwrap(node.children[0] ?? -1); if(callee < 0 || this.rules.parser.node(callee).kind !== 'Identifier' || containers.includes(this.name(callee))) { return false; }
+            return !classHeritageNames(this.rules, callee).some((name) => containers.includes(name));
+        }
+        return this.returningClass.includes(this.callName(index, true));
+    }
+    annotationName(index: number): string { const annotation = this.flow.annotation(index); if(annotation < 0 || this.rules.parser.node(annotation).kind !== 'TypeReference') { return ''; } return this.name(this.rules.parser.node(annotation).children[0] ?? -1); }
+    classAnnotation(index: number): boolean {
+        const annotation = this.flow.annotation(index); if(annotation < 0) { return false; } const type = this.rules.parser.node(annotation); if(type.kind !== 'TypeReference' || type.children.length !== 1 || this.rules.parser.node(type.children[0] ?? -1).kind !== 'Identifier') { return false; }
+        const initializer = this.unwrap(this.bindings.shape.initializer(index)); if(initializer >= 0 && ['ObjectLiteralExpression', 'ArrayLiteralExpression'].includes(this.rules.parser.node(initializer).kind)) { return false; }
+        const name = this.annotationName(index); return this.upper(name) && !containers.includes(name) && !['Type', 'Interface', 'Properties', 'Options', 'Kind', 'Record'].some((suffix) => name.endsWith(suffix));
+    }
+    constEnum(index: number): boolean {
+        if(index < 0) { return false; } const node = this.rules.parser.node(index); if(node.kind !== 'AsExpression') { return false; }
+        const type = this.rules.parser.node(node.children[1] ?? -1); if(type.kind !== 'TypeReference' || this.name(type.children[0] ?? -1) !== 'const') { return false; }
+        const object = this.rules.parser.node(node.children[0] ?? -1); if(object.kind !== 'ObjectLiteralExpression' || object.children.length === 0) { return false; }
+        return object.children.every((child) => { const property = this.rules.parser.node(child); if(property.kind !== 'PropertyAssignment') { return false; }
+            const key = property.children[0] ?? -1; const value = this.rules.parser.node(property.children[property.children.length - 1] ?? -1);
+            if(this.rules.parser.node(key).kind !== 'Identifier' || !this.upper(this.name(key))) { return false; }
+            return value.kind === 'NumericLiteral' || (value.kind === 'StringLiteral' && value.text === this.name(key)) ||
+                (value.kind === 'PrefixUnaryExpression' && value.operator === 'MinusToken' && this.rules.parser.node(value.children[0] ?? -1).kind === 'NumericLiteral'); });
+    }
+    componentFactory(index: number): boolean {
+        const at = this.unwrap(index); if(at < 0) { return false; } const node = this.rules.parser.node(at); const name = this.callName(at);
+        if(!['memo', 'forwardRef', 'useMemo'].includes(name) || node.list <= 0) { return false; }
+        const first = node.children[node.children.length - node.list] ?? -1; const fn = this.rules.parser.node(first);
+        const named = this.bindings.shape.name(first); if(fn.kind === 'FunctionExpression' && named >= 0 && this.upper(this.name(named))) { return true; }
+        if(name === 'useMemo' && fn.kind === 'FunctionExpression') { const body = this.rules.parser.node(this.body(first)); return body.kind === 'Block' && body.children.some((child) => {
+            const statement = this.rules.parser.node(child); const expression = statement.children[0] ?? -1; if(statement.kind !== 'ReturnStatement' || expression < 0) { return false; }
+            const returned = this.rules.parser.node(expression); const named = this.bindings.shape.name(expression); return returned.kind === 'FunctionExpression' && named >= 0 && this.upper(this.name(named)); }); }
+        return false;
+    }
+    functionValue(index: number): boolean {
+        const at = this.unwrap(index); if(at < 0) { return false; } const node = this.rules.parser.node(at);
+        if(this.functionNode(at)) { return true; }
+        if(node.kind === 'Identifier') { return this.functions.includes(node.text) || (this.imported.includes(node.text) && !this.upper(node.text)); }
+        const called = this.callName(at); if(this.returningFunction.includes(this.callName(at, true)) || called.endsWith('Creator') || called.endsWith('Factory')) { return true; }
+        if(['useMemo', 'useCallback', 'memo'].includes(called) && node.list > 0) { const first = node.children[node.children.length - node.list] ?? -1; return called === 'useMemo' ? this.returnsFunction(first) : this.functionNode(first); }
+        return false;
+    }
+    shadows(index: number, name: string): boolean {
+        if(index < 0) { return false; } const node = this.rules.parser.node(index); if(node.kind === 'Identifier' && node.text === name) { return true; }
+        return node.children.some((child) => this.shadows(child, name));
+    }
+    routeContract(name: string): boolean {
+        const segments = this.rules.path.split('/'); if(!segments.slice(0, -1).includes('app')) { return false; }
+        const base = segments[segments.length - 1] ?? ''; if(!['.tsx', '.ts', '.jsx', '.js'].some((extension) => base.endsWith(extension))) { return false; }
+        let stem = base.slice(0, base.lastIndexOf('.')); const image = ['icon', 'apple-icon', 'opengraph-image', 'twitter-image'];
+        if(!['page', 'layout', 'route', 'sitemap', 'robots', 'manifest', ...image].includes(stem)) { while(stem.length > 0 && '0123456789'.includes(stem[stem.length - 1] ?? '!')) { stem = stem.slice(0, -1); } if(!image.includes(stem)) { return false; } }
+        if(['config', 'generateStaticParams', 'unstable_instant', 'unstable_dynamicStaleTime', 'revalidate', 'dynamic', 'dynamicParams', 'fetchCache', 'preferredRegion', 'runtime', 'maxDuration'].includes(name)) { return true; }
+        return (['page', 'layout'].includes(stem) && ['metadata', 'generateMetadata', 'viewport', 'generateViewport'].includes(name)) ||
+            (stem === 'route' && ['GET', 'HEAD', 'OPTIONS', 'POST', 'PUT', 'DELETE', 'PATCH'].includes(name)) ||
+            (image.includes(stem) && ['alt', 'size', 'contentType', 'generateImageMetadata'].includes(name)) || (stem === 'sitemap' && name === 'generateSitemaps');
+    }
+    rename(finding: Diagnostic, nameIndex: number, newName: string): void {
+        if(newName === '' || reserved.includes(newName) || ['undefined', 'NaN', 'Infinity'].includes(newName)) { return; }
+        const oldName = this.name(nameIndex); const declared = this.identity(nameIndex).symbol;
+        if(declared === 0 || this.bindings.list(nameIndex, 'binding-declarations', false).length !== 1) { return; }
+        const sites: number[] = []; const replacements: string[] = [];
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at); if(node.kind !== 'Identifier') { continue; }
+            if(node.text === newName) { return; } if(node.text !== oldName) { continue; }
+            const parent = this.bindings.parent(at); const kind = parent >= 0 ? this.rules.parser.node(parent).kind : '';
+            const symbols = this.identity(at);
+            if(kind === 'ExportSpecifier') { if(symbols.local === declared) { return; } continue; }
+            if(kind === 'ShorthandPropertyAssignment') { if(symbols.shorthand === declared) { sites.push(at); replacements.push(`${oldName}: ${newName}`); } }
+            else if(at === nameIndex || symbols.symbol === declared) { sites.push(at); replacements.push(newName); }
+        }
+        if(sites.length === 0) { return; }
+        // Parser storage is postorder, so sort references by source position before constructing one edit.
+        for(let at = 1; at < sites.length; at++) { let cursor = at; while(cursor > 0 && this.rules.parser.node(sites[cursor - 1] ?? -1).pos > this.rules.parser.node(sites[cursor] ?? -1).pos) {
+            const site = sites[cursor] ?? -1; sites[cursor] = sites[cursor - 1] ?? -1; sites[cursor - 1] = site;
+            const replacement = replacements[cursor] ?? ''; replacements[cursor] = replacements[cursor - 1] ?? ''; replacements[cursor - 1] = replacement; cursor--; } }
+        const start = this.rules.start(this.rules.parser.node(sites[0] ?? -1)); const end = this.rules.parser.node(sites[sites.length - 1] ?? -1).end;
+        let cursor = start; let text = '';
+        for(let at = 0; at < sites.length; at++) { const node = this.rules.parser.node(sites[at] ?? -1); const first = this.rules.start(node); text += this.rules.scanner.text.slice(cursor, first) + (replacements[at] ?? ''); cursor = node.end; }
+        text += this.rules.scanner.text.slice(cursor, end); finding.fixStart = this.rules.byte(start); finding.fixEnd = this.rules.byte(end); finding.replacement = text;
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index); if(node.kind !== 'VariableDeclaration') { return; }
+        const nameIndex = this.bindings.shape.name(index); if(nameIndex < 0 || this.rules.parser.node(nameIndex).kind !== 'Identifier') { return; }
+        const list = this.bindings.parent(index); if(list < 0 || this.rules.parser.node(list).semantic !== '2') { return; } const statement = this.bindings.parent(list);
+        if(statement >= 0 && this.rules.parser.node(statement).children.some((child) => this.rules.parser.node(child).kind === 'DeclareKeyword')) { return; }
+        const name = this.name(nameIndex); const screaming = name.includes('_') && !name.endsWith('_') && name.charCodeAt(0) >= 65 && name.charCodeAt(0) <= 90 &&
+            [...name].every((character) => character === '_' || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9'));
+        let reservedName = name; while(reservedName.endsWith('_')) { reservedName = reservedName.slice(0, -1); }
+        if(screaming || reserved.includes(reservedName.toLowerCase())) { return; }
+        const initializer = this.bindings.shape.initializer(index);
+        if(this.callName(initializer) === 'createContext' || this.componentFactory(initializer) || ['FC', 'FunctionComponent', 'ComponentType', 'VoidFunctionComponent'].includes(this.annotationName(index)) || this.rebinding(initializer) || this.constEnum(initializer)) { return; }
+        const names = this.exported(statement, nameIndex); const exported = names.length > 0; if(exported && this.routeContract(name)) { return; }
+        const characters = new CharacterProperties(this.rules, nameIndex, name); const camel = characters.casing(false); const pascal = characters.casing(true);
+        let id = '';
+        if(this.functionValue(initializer) || this.called.includes(name)) { if(camel || this.jsx.includes(name)) { return; } id = 'requireCamelCaseFunction'; }
+        else {
+            if(camel && new CallableTypeFacts(this.rules, nameIndex).holdsFunction()) { return; }
+            if(this.dynamic(initializer)) { return; }
+            if(this.classInstance(initializer) || this.classAnnotation(index)) { if(camel) { return; } id = 'requireCamelCaseInstance'; }
+            else if(exported) { if(pascal) { return; } id = camel && this.imports.unimported(this.rules.path, names) ? 'dropUnimportedExport' : 'requirePascalCaseExported'; }
+            else { if(camel || this.jsx.includes(name)) { return; } id = 'requireCamelCaseLocal'; }
+        }
+        const suggestion = characters.recase(id === 'requirePascalCaseExported' || id === 'dropUnimportedExport');
+        if((id === 'requireCamelCaseFunction' || id === 'requireCamelCaseLocal') && (characters.lowered[0] ?? '') !== (characters.characters[0] ?? '') && this.shadows(initializer, (characters.lowered[0] ?? '') + name.slice((characters.characters[0] ?? '').length))) { return; }
+        const reasoning = 'const already signals immutability, so casing signals scope instead: PascalCase means the value crosses files, camelCase means this file made it.';
+        let message = '';
+        if(id === 'requirePascalCaseExported') { message = `Constant "${name}" is exported and should be PascalCase ("${suggestion}"). ${reasoning} A camelCase export reads local at every call site while being importable from anywhere.`; }
+        else if(id === 'dropUnimportedExport') { message = `Constant "${name}" is exported, and nothing in this program imports it. Drop the \`export\`: its camelCase is already right for a file-local constant. ${reasoning} If something outside this program does import it, make it PascalCase ("${suggestion}") instead.`; }
+        else if(id === 'requireCamelCaseLocal') { message = `Constant "${name}" is file-local and should be camelCase ("${suggestion}"). ${reasoning} A PascalCase local sends the reader looking for an import that is not there.`; }
+        else if(id === 'requireCamelCaseFunction') { message = `Constant "${name}" holds a function and should be camelCase ("${suggestion}"), even though it is exported. A function is named for what it does and it is called, so "${suggestion}(...)" reads as an action while "${name}(...)" reads as a constructor. PascalCase is reserved for exported data and for components, which JSX needs capitalized.`; }
+        else { message = `Constant "${name}" holds an instance and should be camelCase ("${suggestion}"), even though it is exported. Casing carries two signals and they collide here: PascalCase is the older, louder claim that a name is a type, so a PascalCase instance reads as its own class. An instance is a thing that acts, and "${suggestion}.method()" says so at the call site. Exported data structures like Map and Set keep PascalCase, because they hold rather than act.`; }
+        const named = this.rules.parser.node(nameIndex); const finding = new Diagnostic('nexus/consistency-require-constant-casing', id, message, this.rules.byte(this.rules.start(named)), this.rules.byte(named.end), '');
+        if(!exported) { this.rename(finding, nameIndex, suggestion); }
+        this.rules.findings.push(finding);
+    }
+    run(): void { this.collect(); for(let at = 0; at < this.rules.parser.nodes.length; at++) { this.visit(at); } }
+}

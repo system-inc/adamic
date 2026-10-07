@@ -1,0 +1,112 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Flow } from './flow.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { types } from './facts.ts';
+import { VoidPositionTypes } from './void_position_types.a';
+import { CallParameterReturns } from './call_parameter_returns.a';
+
+export class StrictVoidReturn {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly flow: Flow;
+    constructor(rules: Rules) { this.rules = rules; this.bindings = new Bindings(rules); this.flow = new Flow(this.bindings); }
+    body(index: number): number { const children = this.rules.parser.node(index).children; return children[children.length - 1] ?? -1; }
+    report(index: number, id: string, head = false, keyword = false): void {
+        const node = this.rules.parser.node(index); const start = this.rules.start(node); let end = node.end;
+        if(keyword) { end = start + 6; }
+        if(head) {
+            const body = this.body(index);
+            if(body >= 0) {
+                end = this.rules.start(this.rules.parser.node(body)); const source = this.rules.scanner.text;
+                while(end > start && [' ', '\t', '\r', '\n', '>', '='].includes(source[end - 1] ?? '')) { end--; }
+                if(end <= start) { end = node.end; }
+            }
+        }
+        const message = id === 'asyncFunc' ? 'Async function used in a context where a void function is expected.' :
+            id === 'nonVoidReturn' ? 'Value returned in a context where a void return is expected.' :
+            'Value-returning function used in a context where a void function is expected.';
+        this.rules.findings.push(new Diagnostic('strict-void-return', id, message, this.rules.byte(start), this.rules.byte(end)));
+    }
+    returns(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'ClassDeclaration', 'ClassExpression'].includes(node.kind)) { return; }
+        if(node.kind === 'ReturnStatement') {
+            const expression = node.children[0] ?? -1;
+            if(expression >= 0) {
+                const actual = types(this.rules.ask(expression, 'raw-shape'), 'raw-shape');
+                if((actual.root().flags & 262164) === 0) { this.report(index, 'nonVoidReturn', false, true); }
+            }
+            return;
+        }
+        for(const child of node.children) { this.returns(child); }
+    }
+    nonVoid(index: number): void {
+        const facts = new VoidPositionTypes(this.rules, index);
+        if(!facts.actual.nonVoid()) { return; }
+        const node = this.rules.parser.node(index);
+        if(!['ArrowFunction', 'FunctionExpression', 'MethodDeclaration', 'GetAccessor'].includes(node.kind)) { this.report(index, 'nonVoidFunc'); return; }
+        if(node.children.some((child) => this.rules.parser.node(child).kind === 'AsteriskToken')) { this.report(index, 'nonVoidFunc', true); return; }
+        if(node.children.some((child) => this.rules.parser.node(child).kind === 'AsyncKeyword')) { this.report(index, 'asyncFunc', true); return; }
+        const body = this.body(index); if(body < 0) { return; }
+        if(this.rules.parser.node(body).kind !== 'Block') { this.report(this.rules.skip(body), 'nonVoidReturn'); return; }
+        const children = node.children; let annotation = children[children.length - (node.kind === 'ArrowFunction' ? 3 : 2)] ?? -1;
+        if(annotation >= 0 && ['Identifier', 'Parameter', 'TypeParameter', 'EqualsGreaterThanToken', 'AsteriskToken', 'AsyncKeyword'].includes(this.rules.parser.node(annotation).kind)) { annotation = -1; }
+        if(annotation >= 0 && this.rules.parser.node(annotation).kind !== 'VoidKeyword') { this.report(annotation, 'nonVoidFunc'); return; }
+        this.returns(body);
+    }
+    expression(index: number): boolean {
+        if(index < 0 || this.rules.parser.node(index).kind === 'OmittedExpression') { return false; }
+        const facts = new VoidPositionTypes(this.rules, index);
+        if(!facts.expected.voidOnly()) { return false; }
+        this.nonVoid(index); return true;
+    }
+    base(index: number): boolean {
+        const facts = new VoidPositionTypes(this.rules, index);
+        if(!facts.inherited.some((returns) => returns.voidOnly())) { return false; }
+        const node = this.rules.parser.node(index);
+        const subject = node.kind === 'PropertyDeclaration' ? this.bindings.shape.initializer(index) : index;
+        if(subject >= 0) { this.nonVoid(subject); }
+        return true;
+    }
+    call(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(node.list <= 0) { return; }
+        const args = node.children.slice(node.children.length - node.list);
+        const expected = new CallParameterReturns(this.rules, index);
+        for(let at = 0; at < args.length; at++) {
+            const argument = args[at] ?? -1;
+            if(argument < 0 || this.rules.parser.node(argument).kind === 'SpreadElement') { continue; }
+            const returns = expected.arguments[at]; if(returns === undefined) { continue; }
+            const allVoid = returns.flags.every((flags) => (flags & 786461) !== 0);
+            if((expected.count === 1 || allVoid) && this.expression(argument)) { continue; }
+            if(returns.flags.some((flags) => (flags & 16) !== 0) && returns.flags.every((flags) => (flags & 262173) !== 0)) { this.nonVoid(argument); }
+        }
+    }
+    visit(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(['CallExpression', 'NewExpression'].includes(node.kind)) { this.call(index); }
+        else if(node.kind === 'ArrayLiteralExpression') { for(const child of node.children) { if(this.rules.parser.node(child).kind !== 'SpreadElement') { this.expression(child); } } }
+        else if(node.kind === 'ArrowFunction') { const body = this.body(index); if(body >= 0 && this.rules.parser.node(body).kind !== 'Block') { this.expression(body); } }
+        else if(node.kind === 'BinaryExpression') {
+            if(['EqualsToken', 'QuestionQuestionEqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken'].includes(this.rules.parser.node(node.children[1] ?? -1).kind)) { this.expression(node.children[2] ?? -1); }
+        }
+        else if(node.kind === 'ObjectLiteralExpression') {
+            for(const child of node.children) {
+                const property = this.rules.parser.node(child);
+                if(property.kind === 'PropertyAssignment') { this.expression(property.children[property.children.length - 1] ?? -1); }
+                else if(property.kind === 'MethodDeclaration') { this.expression(child); }
+            }
+        }
+        else if(node.kind === 'ReturnStatement') { this.expression(node.children[0] ?? -1); }
+        else if(node.kind === 'VariableDeclaration') { this.expression(this.bindings.shape.initializer(index)); }
+        else if(node.kind === 'PropertyDeclaration') { if(!this.base(index)) { this.expression(this.bindings.shape.initializer(index)); } }
+        else if(['MethodDeclaration', 'GetAccessor'].includes(node.kind)) { if(this.rules.parser.node(this.body(index)).kind === 'Block') { this.base(index); } }
+        else if(node.kind === 'JsxAttribute') {
+            const expression = node.children.find((child) => this.rules.parser.node(child).kind === 'JsxExpression') ?? -1;
+            if(expression >= 0) { this.expression(this.rules.parser.node(expression).children[0] ?? -1); }
+        }
+        for(const child of node.children) { this.visit(child); }
+    }
+    run(): void { const root = this.rules.parser.nodes.findIndex((node) => node.kind === 'SourceFile'); if(root >= 0) { this.visit(root); } }
+}

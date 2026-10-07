@@ -1,0 +1,52 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ImportRecord {
+    readonly source: string; readonly target: string; readonly kind: string;
+    readonly default: boolean; readonly namespace: boolean; readonly names: readonly string[];
+    constructor(source: string, target: string, kind: string, default_: boolean, namespace: boolean, names: readonly string[]) {
+        this.source = source; this.target = target; this.kind = kind; this.default = default_; this.namespace = namespace; this.names = names;
+    }
+}
+export class ProgramImports {
+    readonly records: readonly ImportRecord[];
+    readonly dynamic: readonly string[];
+    constructor(rules: Rules, root: number) {
+        const frames = new Frames(rules.ask(root, 'program-imports')); header(frames, 'program-imports');
+        const count = frames.natural(); const records: ImportRecord[] = []; const dynamic: string[] = [];
+        for(let file = 0; file < count; file++) {
+            const path = frames.field(); const declaration = frames.yes(); const length = frames.natural();
+            for(let at = 0; at < length; at++) {
+                let prefix = frames.field(); if(declaration || path.includes('/node_modules/')) { continue; }
+                if(prefix.endsWith('/')) { prefix = prefix.slice(0, -1); }
+                const slash = prefix.lastIndexOf('/'); const segment = prefix.slice(slash + 1);
+                if(slash >= 0 && segment !== '' && !segment.includes('$')) { dynamic.push(`/${segment}/`); }
+            }
+            const imports = frames.natural();
+            for(let at = 0; at < imports; at++) {
+                const target = frames.field(); const kind = frames.field(); const default_ = frames.yes(); const namespace = frames.yes(); const n = frames.natural(); const names: string[] = [];
+                for(let name = 0; name < n; name++) { names.push(frames.field()); }
+                records.push(new ImportRecord(path, target, kind, default_, namespace, names));
+            }
+        }
+        frames.end(); this.records = records; this.dynamic = dynamic;
+    }
+    root(path: string): boolean {
+        const segments = path.split('/'); const base = segments[segments.length - 1] ?? ''; const dot = base.lastIndexOf('.'); const stem = dot > 0 ? base.slice(0, dot) : base;
+        if(base.endsWith('.d.ts') || stem.endsWith('.test') || stem.endsWith('.spec') || stem.includes('.test.') || stem.includes('.spec.')) { return true; }
+        if(['next.config', 'open-next.config', 'middleware', 'instrumentation', 'instrumentation-client', 'ProjectSettings', 'ProjectRoot',
+            'TailwindConfiguration', 'LintConfiguration', 'EsLintConfiguration', 'TypeScriptConfiguration', 'CohereSettings', 'next-env'].includes(stem)) { return true; }
+        if((segments.includes('app') || segments.includes('src')) && ['page', 'layout', 'route', 'template', 'loading', 'error', 'global-error', 'not-found', 'default', 'forbidden', 'unauthorized', 'sitemap', 'robots', 'manifest', 'opengraph-image', 'twitter-image', 'icon', 'apple-icon'].includes(stem)) { return true; }
+        if(segments.includes('pages') && !segments.some((segment) => segment.startsWith('_'))) { return true; }
+        return this.dynamic.some((directory) => path.includes(directory));
+    }
+    unimported(path: string, names: readonly string[]): boolean {
+        if(names.length === 0 || this.root(path)) { return false; }
+        for(const record of this.records) {
+            if(record.source === path || record.target !== path) { continue; }
+            if(record.namespace || !['ImportDeclaration', 'ExportDeclaration'].includes(record.kind)) { return false; }
+            if(record.default && names.includes('default')) { return false; }
+            if(record.names.some((name) => names.includes(name))) { return false; }
+        }
+        return true;
+    }
+}
