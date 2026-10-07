@@ -6,9 +6,9 @@ import { Scanner } from '../../../../typescript/scanner/scanner.ts';
 import { OptionsJson } from '../../helpers/options_json.ts';
 import { Settings } from '../../settings.ts';
 import { RuleContext } from '../../context.ts';
-import { Rule as Tailwind } from './rule.ts';
-import { Rule as Description } from '../eslint-comments-require-description/rule.ts';
-import { Rule as Font } from '../next-google-font-display/rule.ts';
+import { Rule as Tailwind } from './rule.a';
+import { Rule as Description } from '../eslint-comments-require-description/rule.a';
+import { Rule as Font } from '../next-google-font-display/rule.a';
 function written(text: string): string {
     const pieces: string[] = [];
     for(let index = 0; index < text.length; index++) {

@@ -141,7 +141,7 @@ func TestRuleContracts(t *testing.T) {
 	}
 	want := command(t, "", goOracle, cases)
 	adapted := file(t, "adapted.json", command(t, "", goOracle, "--ast", cases))
-	entry, err := filepath.Abs("main.ts")
+	entry, err := filepath.Abs("main.a")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -190,7 +190,7 @@ func TestRuleContracts(t *testing.T) {
 			if err = json.Unmarshal(changeData, &mutation); err != nil {
 				t.Fatal(err)
 			}
-			module := filepath.Join(directory, "rule.ts")
+			module := filepath.Join(directory, "rule.a")
 			source, err := os.ReadFile(module)
 			if err != nil {
 				t.Fatal(err)
@@ -198,14 +198,14 @@ func TestRuleContracts(t *testing.T) {
 			if strings.Count(string(source), mutation.From) != 1 {
 				t.Fatal("mutant anchor count")
 			}
-			mutated := file(t, "rule.ts", absoluteImports(t, module, []byte(strings.Replace(string(source), mutation.From, mutation.To, 1))))
+			mutated := file(t, "rule.a", absoluteImports(t, module, []byte(strings.Replace(string(source), mutation.From, mutation.To, 1))))
 			mainData, err := os.ReadFile(entry)
 			if err != nil {
 				t.Fatal(err)
 			}
 			mainData = absoluteImports(t, entry, mainData)
 			mainData = []byte(strings.Replace(string(mainData), filepath.ToSlash(module), filepath.ToSlash(mutated), 1))
-			mutantEntry := file(t, "main.ts", mainData)
+			mutantEntry := file(t, "main.a", mainData)
 			mutantBinary, mutantJS := compile(t, mutantEntry)
 			for i, got := range runSides(t, mutantEntry, mutantBinary, mutantJS, adapted) {
 				if bytes.Equal(got, want) {
@@ -277,7 +277,7 @@ func TestSourceCorpora(t *testing.T) {
 		}
 	}
 	goOracle := oracle(t)
-	entry, _ := filepath.Abs("main.ts")
+	entry, _ := filepath.Abs("main.a")
 	binary, emitted := compile(t, entry)
 	runner := filepath.Join(root(t), "oracle/node.mjs")
 	for _, rule := range rules {
@@ -335,7 +335,7 @@ func TestSourceCorpora(t *testing.T) {
 // Not parallel: sanitized native builds share the worker CPU and memory budget.
 func TestFixtureRates(t *testing.T) {
 	goOracle := oracle(t)
-	entry, _ := filepath.Abs("main.ts")
+	entry, _ := filepath.Abs("main.a")
 	binary, _ := compile(t, entry)
 	runner := filepath.Join(root(t), "oracle/node.mjs")
 	data, err := os.ReadFile("testdata/cases.json")
