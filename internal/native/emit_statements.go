@@ -390,8 +390,8 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.line("}")
 }
 
-// switchStatement emits a switch as do { if / else } while (0), so a break inside a case leaves the
-// switch exactly as JavaScript's does: the do is the innermost thing a C break leaves.
+// switchStatement uses integer dispatch for constant numeric cases and do { if / else }
+// while (0) otherwise. Either shape makes a case's break leave the switch.
 func (e *emitter) switchStatement(statement ir.Switch) {
 	e.line("{")
 	e.indent++
@@ -405,6 +405,13 @@ func (e *emitter) switchStatement(statement ir.Switch) {
 		e.line("%s %s = %s;", cType(statement.Value.Type()), held, value)
 	}
 	e.end()
+	if e.numericSwitch(statement, held) {
+		e.releaseScopes(len(e.scopes) - 1)
+		e.scopes = e.scopes[:len(e.scopes)-1]
+		e.indent--
+		e.line("}")
+		return
+	}
 	e.line("do {")
 	e.indent++
 	e.breakables = append(e.breakables, len(e.scopes))
