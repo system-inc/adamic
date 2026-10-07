@@ -33,6 +33,9 @@ var errReadOnly = errors.New("load: the source file system is read-only")
 
 // Program is a loaded Adamic program that the checker accepted.
 type Program struct {
+	// tsgo opts this compilation into the external native checker library.
+	tsgo bool
+
 	compiler *compiler.Program
 	fs       *sourceFS
 

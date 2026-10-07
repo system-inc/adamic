@@ -138,8 +138,6 @@ class Child extends Base { readonly label = 'child'; }`), 0644); err != nil {
 func TestInheritanceRejectsUnsupportedConstructorShapes(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
-		{"conditional super", `class A {} class B extends A { constructor(flag: boolean) { if (flag) { super(); } else { super(); } } } const value = new B(true);`, "unconditional super"},
-		{"repeated super", `class A {} class B extends A { constructor() { super(); if (true) { super(); } } } const value = new B();`, "unconditional super"},
 		{"replacement object", `class A {} class B extends A { constructor() { super(); return this; } } const value = new B();`, "replacement value"},
 		{"union dispatch", `class A { value(): number { return 1; } } class B { first(): number { return 0; } value(): number { return 2; } } function choose(flag: boolean): A | B { return flag ? new A() : new B(); } console.log('' + choose(true).value());`, "union of class types"},
 		{"computed base", `class A {} class B extends (() => A)() {} const value = new B();`, "computed class base"},
@@ -262,5 +260,70 @@ const child = new Child<Holder>(); const holder: Holder = { back: child }; child
 				t.Fatalf("want %s refusal, got %v", probe.rule, err)
 			}
 		})
+	}
+}
+
+func TestInheritanceConditionalThisRules(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		`class A {} class B extends A { readonly value = 'b'; constructor(flag: boolean) { if (flag) { super(); } const read = () => this.value; console.log(read()); } } const b = new B(false);`,
+		`class A { read(): string { return 'a'; } } class B extends A { constructor(flag: boolean) { const read = () => super.read(); console.log(read()); if (flag) { super(); } else { super(); } } } const b = new B(false);`,
+		`class A {} class B extends A { readonly value = 'b'; constructor(read: () => string = () => this.value) { super(); console.log(read()); } } const b = new B();`,
+	} {
+		_, err := lowerSource(t, source)
+		var refusal *Refused
+		if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "this before super returns") || !strings.Contains(err.Error(), "call super") {
+			t.Fatalf("want pre-super binding refusal with fix, got %v", err)
+		}
+	}
+}
+
+func TestInheritanceGenericViewsKeepNominalArguments(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `class Root { first(): string { return 'first'; } second(): string { return 'second'; } }
+class Other { second(): string { return 'other second'; } first(): string { return 'other first'; } }
+class Base {}
+class Box<T> extends Base { readonly value: T; constructor(value: T) { super(); this.value = value; } read(): T { return this.value; } }
+const actual = new Box<Other>(new Other()); const view: Box<Root> = actual; console.log(view.read().first());`)
+	var refusal *Refused
+	if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "nominal ancestry") {
+		t.Fatalf("want nominal generic argument refusal, got %v", err)
+	}
+}
+
+func TestInheritanceGenericNominalConstraints(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		`class Root { read(): string { return 'root'; } } class Other { read(): string { return 'other'; } } class Box<T extends Root> { readonly value: T; constructor(value: T) { this.value = value; } } const box = new Box<Other>(new Other());`,
+		`class Root { read(): string { return 'root'; } } class Other { read(): string { return 'other'; } } function read<T extends Root>(value: T): string { return value.read(); } console.log(read<Other>(new Other()));`,
+	} {
+		_, err := lowerSource(t, source)
+		var refusal *Refused
+		if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "nominal ancestry") || !strings.Contains(err.Error(), "interface") {
+			t.Fatalf("want nominal constraint refusal with structural repair, got %v", err)
+		}
+	}
+}
+
+func TestInheritanceGenericFactoryLayouts(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, `class Base {}
+class Box<T> extends Base { readonly value: T; constructor(value: T) { super(); this.value = value; } read(): T { return this.value; } }
+class Projected<T extends { readonly native: number | string }> extends Box<T['native']> {}
+function make<T extends { readonly native: number | string }>(value: T['native']): Projected<T> { return new Projected<T>(value); }
+const n = make<{ readonly native: number }>(1);
+const s = make<{ readonly native: string }>('s');
+console.log('done');`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	layouts := map[ir.Type]bool{}
+	for _, class := range program.Classes {
+		if strings.HasPrefix(class.Name, "Box_") {
+			layouts[class.Fields[0].Value.Type()] = true
+		}
+	}
+	if !layouts[ir.Number] || !layouts[ir.String] {
+		t.Fatalf("generic factories lost their concrete base layouts: %v", layouts)
 	}
 }

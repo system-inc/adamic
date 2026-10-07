@@ -1,0 +1,123 @@
+// text += more on a shared slice (string_share.c): its bytes are its owner's, or a constant's, so the
+// append must copy rather than write in place, though the slice is the only holder of itself. Its
+// capacity is 0 and its length isn't, and an append that read capacity minus length as room found
+// nearly all of memory: it wrote into the owner, changing a string the program never touched, and
+// past the owner's end when the slice ended where the owner did. Stage 1's YAML port found it.
+
+// A slice from the middle of its owner, appended: the owner keeps its bytes.
+function middle(): void {
+	const source = 'a'.repeat(128);
+	let prefix = source.slice(0, 80);
+	prefix += 'x';
+	console.log(`${source.slice(78, 83)} ${source.length} ${prefix.slice(78)} ${prefix.length}`);
+}
+middle();
+
+// A slice that ends where its owner ends: there's no byte after it to write.
+function atTheEnd(): void {
+	const source = 'b'.repeat(128);
+	let suffix = source.slice(48);
+	suffix += 'y';
+	suffix += 'z';
+	console.log(`${source.slice(-3)} ${source.length} ${suffix.slice(-4)} ${suffix.length}`);
+}
+atTheEnd();
+
+// A slice of a slice points at the first one's owner.
+function nested(): void {
+	const source = `${'c'.repeat(100)}${'d'.repeat(100)}`;
+	const outer = source.slice(20, 180);
+	let inner = outer.slice(10, 100);
+	inner += '!';
+	console.log(`${source.slice(118, 123)} ${outer.slice(98, 103)} ${inner.slice(-3)} ${inner.length}`);
+}
+nested();
+
+// A slice of a constant: the constant's bytes are the program's, never written.
+const constant = 'The quick brown fox jumps over the lazy dog, then naps in the sun for most of the day.';
+function ofConstant(): void {
+	let piece = constant.slice(4, 80);
+	piece += '?';
+	console.log(`${constant.slice(78, 84)} ${piece.slice(-4)} ${piece.length}`);
+}
+ofConstant();
+
+// Read before the append, so the slice's own caches are built: its length in units and, for a long
+// non-ASCII slice, its position index. After the append they describe the new bytes, and the owner's
+// are untouched.
+function cachesFollow(): void {
+	const source = 'é🌍'.repeat(40);
+	let piece = source.slice(6, 150);
+	console.log(`${piece.length} ${piece.charCodeAt(100)} ${piece.indexOf('é', 50)}`);
+	piece += 'ü';
+	console.log(`${piece.length} ${piece.charCodeAt(piece.length - 1)} ${piece.charCodeAt(100)} ${piece.indexOf('é', 50)}`);
+	console.log(`${source.length} ${source.charCodeAt(150)} ${source.indexOf('ü')}`);
+}
+cachesFollow();
+
+// Appended in a loop: the first append copies, and every one after can write in place in the copy.
+function loop(): void {
+	const source = 'e'.repeat(256);
+	let growing = source.slice(64, 192);
+	for (let round = 0; round < 50; round++) {
+		growing += `${round % 10}`;
+	}
+	console.log(`${source.slice(190, 194)} ${source.length} ${growing.slice(126, 134)} ${growing.length}`);
+}
+loop();
+
+// From integration's reading of 4023b5b (#fxspptb), the shapes real code takes to the same path.
+
+// A word split from a line, kept alone and extended: split's pieces share the line's bytes.
+function firstWord(line: string): string {
+	let word = line.split('|')[0] ?? '';
+	word += '>>';
+	return word;
+}
+function splitThenAppend(): void {
+	const line = `${'w'.repeat(70)}|${'v'.repeat(70)}|${'u'.repeat(70)}`;
+	console.log(`${firstWord(line).length} ${line.slice(68, 75)}`);
+}
+splitThenAppend();
+
+// trim of a literal is a slice of the literal's own bytes.
+function trimmedThenAppend(): void {
+	const padded = '  0123456789012345678901234567890123456789012345678901234567890123456789  ';
+	let piece = padded.trim();
+	piece += '!';
+	console.log(`${piece.slice(-4)} ${piece.length} ${padded.length} [${padded.slice(-6)}]`);
+}
+trimmedThenAppend();
+
+// piece = piece + more, the same append spelled out, on a slice of a parameter, from the middle and
+// from the end of a non-ASCII owner.
+function spelledOut(owner: string, fromEnd: boolean): string {
+	let piece = fromEnd ? owner.slice(100) : owner.slice(0, 100);
+	piece = piece + (fromEnd ? '!!!!' : 'XYZ');
+	return fromEnd ? piece.slice(-8) : piece.slice(95);
+}
+function appendSpelledOut(): void {
+	const owner = 'abcdefghij'.repeat(30);
+	console.log(`${spelledOut(owner, false)} ${owner.slice(95, 110)}`);
+	const tail = 'é0123456789'.repeat(20);
+	console.log(`${tail.length} ${tail.charCodeAt(150)} ${spelledOut(tail, true)} ${tail.charCodeAt(150)} ${tail.slice(-5)}`);
+}
+appendSpelledOut();
+
+// Every unit of an indexed non-ASCII owner, summed before and after a slice of it grows: the owner's
+// cached length and index must still describe its bytes.
+function checksum(text: string): number {
+	let sum = 0;
+	for (let index = 0; index < text.length; index += 1) {
+		sum = (sum * 31 + text.charCodeAt(index)) % 1000003;
+	}
+	return sum;
+}
+function ownerChecksum(): void {
+	const owner = 'é123456789'.repeat(20);
+	const before = checksum(owner);
+	let piece = owner.slice(0, 100);
+	piece += '🌍🌍🌍🌍';
+	console.log(`${owner.length} ${before} ${piece.length} ${checksum(owner)} ${owner.slice(98, 106)}`);
+}
+ownerChecksum();
