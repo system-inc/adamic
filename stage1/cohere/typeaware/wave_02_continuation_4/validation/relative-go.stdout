@@ -1,0 +1,5 @@
+file	control-052.tsx
+39	62	react/button-has-type	missingType	This `button` has no `type`. HTML defaults a button inside a form to `type="submit"`, so a button written for anything else submits the form and reloads the page the first time somebody clicks it. Write the type you meant, which is usually `type="button"`.	0	0
+file	control-053.tsx
+file	control-330.tsx
+findings 1

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "jsx-refusal",
+    "args": [
+      "/workspace/wave-02/continuation-4/final4/native",
+      "/workspace/wave-02/continuation-4/final4/tsconfig.json",
+      "/workspace/wave-02/continuation-4/final4/guard.manifest"
+    ],
+    "exit": 70
+  },
+  {
+    "name": "jsx-go",
+    "args": [
+      "/workspace/wave-02/continuation-4/final4/oracle",
+      "/workspace/wave-02/continuation-4/final4/tsconfig.json",
+      "/workspace/wave-02/continuation-4/final4/guard.manifest"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "jsx-mutant-build",
+    "args": [
+      "/workspace/wave-02/continuation-2/run/adamic",
+      "build",
+      "/workspace/wave-02/continuation-4/final4/jsx-source/suite.a",
+      "-o",
+      "/workspace/wave-02/continuation-4/final4/jsx-mutant",
+      "--tsgo",
+      "/workspace/wave-02/continuation-2/run/checker.a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "jsx-mutant-run",
+    "args": [
+      "/workspace/wave-02/continuation-4/final4/jsx-mutant",
+      "/workspace/wave-02/continuation-4/final4/tsconfig.json",
+      "/workspace/wave-02/continuation-4/final4/guard.manifest"
+    ],
+    "exit": 0
+  }
+]
