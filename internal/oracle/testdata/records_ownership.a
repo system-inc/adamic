@@ -1,0 +1,19 @@
+interface Item { name: string }
+const r: Record<string, Item> = {};
+r['first'] = {name: ['he', 'llo'].join('')};
+r['second'] = {name: ['wor', 'ld'].join('')};
+const old = r['first'];
+const values = Object.values(r);
+const entries = Object.entries(r);
+const copy: Record<string, Item> = {...r};
+r['first'] = {name: 'new'};
+delete r['second'];
+if(old !== undefined) console.log(old.name);
+console.log(values.map(v => v.name).join(','));
+console.log(entries.map(e => e[0] + ':' + e[1].name).join(','));
+const copied = copy['second'];
+if(copied !== undefined) console.log(copied.name);
+const optional: Record<string, string | undefined> = {empty: undefined, value: 'yes'};
+console.log(String('empty' in optional));
+console.log(Object.keys(optional).join(','));
+console.log(String(JSON.stringify(optional)));

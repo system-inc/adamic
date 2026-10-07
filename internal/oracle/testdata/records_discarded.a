@@ -1,0 +1,7 @@
+const record: Record<string, string> = { own: `value${1}` };
+function receiver(): Record<string, string> { console.log('receiver'); return record; }
+function key(): string { console.log('key'); return 'toString'; }
+receiver()[key()];
+const unused = record['constructor'];
+record['hasOwnProperty'];
+console.log('after discarded reads');

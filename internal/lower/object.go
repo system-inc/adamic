@@ -16,6 +16,9 @@ import (
 // objectLiteral preserves the legacy leading copy, and lowers closed late spreads through
 // snapshots and a fresh fixed-shape result.
 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+	if element := l.recordLiteralElement(node); element != nil {
+		return l.recordLiteral(node, element)
+	}
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
