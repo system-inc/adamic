@@ -1,0 +1,16 @@
+import { panic } from 'adamic';
+// Preserve Go byte slicing and every non-ASCII byte without decoding.
+export function breakpointBucket(value: readonly number[]): number[] {
+    const result: number[] = [];
+    for(let index = 0; index < value.length; index++) {
+        if(value[index] === 40) {
+            for(let before = 0; before < index; before++) { result.push(value[before] ?? panic('byte')); }
+            return result;
+        }
+    }
+    for(const byte of value) {
+        if((byte >= 48 && byte <= 57) || byte === 46) { continue; }
+        result.push(byte);
+    }
+    return result;
+}

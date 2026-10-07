@@ -1,0 +1,6 @@
+import type { CssLeaf } from './css_leaf.a';
+// Fresh Go KindComment leaf; its value-present flag remains false.
+export function Comment(value: readonly number[]): CssLeaf {
+    return {kind: 'comment', selector: [], name: [], params: [], property: [],
+        value, valuePresent: false, important: false, contextPresent: false, nodesPresent: false};
+}

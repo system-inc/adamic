@@ -1,0 +1,13 @@
+// Leaf view of Go Node. Raw immutable byte strings preserve all Go string data.
+export type CssLeaf = {
+    kind: string;
+    selector: readonly number[];
+    name: readonly number[];
+    params: readonly number[];
+    property: readonly number[];
+    value: readonly number[];
+    valuePresent: boolean;
+    important: boolean;
+    contextPresent: false;
+    nodesPresent: false;
+};

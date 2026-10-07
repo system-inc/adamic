@@ -1,0 +1,51 @@
+=== RUN   TestStringsGoNodeNativeJavaScript
+=== RUN   TestStringsGoNodeNativeJavaScript/witnesses.json
+    strings_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 3156 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/consumers.json
+    strings_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 1746 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/calls.json
+    strings_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 5610 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/--full
+    strings_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 394758 output lines
+--- PASS: TestStringsGoNodeNativeJavaScript (7.73s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (0.61s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (0.43s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.67s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/--full (4.38s)
+=== RUN   TestStringsCompilingMutants
+=== RUN   TestStringsCompilingMutants/comment.akind:_'comment'
+    strings_test.go:187: Node source compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+    strings_test.go:187: sanitized native compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+=== RUN   TestStringsCompilingMutants/comment.avaluePresent:_false
+    strings_test.go:187: Node source compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+    strings_test.go:187: sanitized native compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+=== RUN   TestStringsCompilingMutants/declaration.avaluePresent:_true
+    strings_test.go:187: Node source compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+    strings_test.go:187: sanitized native compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+=== RUN   TestStringsCompilingMutants/declaration.aparams:_[],_property,
+    strings_test.go:187: Node source compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+    strings_test.go:187: sanitized native compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+=== RUN   TestStringsCompilingMutants/breakpoint_bucket.abyte_===_46
+    strings_test.go:187: Node source compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+    strings_test.go:187: sanitized native compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+=== RUN   TestStringsCompilingMutants/breakpoint_bucket.abefore_<_index
+    strings_test.go:187: Node source compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+    strings_test.go:187: sanitized native compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+--- PASS: TestStringsCompilingMutants (11.35s)
+    --- PASS: TestStringsCompilingMutants/comment.akind:_'comment' (1.86s)
+    --- PASS: TestStringsCompilingMutants/comment.avaluePresent:_false (1.97s)
+    --- PASS: TestStringsCompilingMutants/declaration.avaluePresent:_true (1.91s)
+    --- PASS: TestStringsCompilingMutants/declaration.aparams:_[],_property, (1.76s)
+    --- PASS: TestStringsCompilingMutants/breakpoint_bucket.abyte_===_46 (1.49s)
+    --- PASS: TestStringsCompilingMutants/breakpoint_bucket.abefore_<_index (1.59s)
+=== RUN   TestStringsConsumerCoverage
+    strings_test.go:255: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestStringsConsumerCoverage (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave5	19.100s

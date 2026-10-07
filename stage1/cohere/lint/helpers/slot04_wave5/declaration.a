@@ -1,0 +1,6 @@
+import type { CssLeaf } from './css_leaf.a';
+// Empty string is a present value. Callers can explicitly clear valuePresent.
+export function Declaration(property: readonly number[], value: readonly number[]): CssLeaf {
+    return {kind: 'declaration', selector: [], name: [], params: [], property,
+        value, valuePresent: true, important: false, contextPresent: false, nodesPresent: false};
+}

@@ -1,0 +1,44 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { Comment } from './comment.a';
+import { Declaration } from './declaration.a';
+import type { CssLeaf } from './css_leaf.a';
+import { breakpointBucket } from './breakpoint_bucket.a';
+function leaf(n: CssLeaf): void {
+    console.log(`node ${n.kind}|${n.selector.join(',')}|${n.name.join(',')}|${n.params.join(',')}|${n.property.join(',')}|${n.value.join(',')}|${n.valuePresent}|${n.important}|${!n.contextPresent}|${!n.nodesPresent}`);
+}
+function observe(input: readonly number[]): void {
+    console.log(`bucket ${breakpointBucket(input).join(',')}`);
+    const comment = Comment(input);
+    const other = Comment(input);
+    leaf(comment);
+    comment.value = [];
+    comment.important = true;
+    leaf(other);
+    const declaration = Declaration(input,input);
+    const fresh = Declaration(input,input);
+    leaf(declaration);
+    declaration.valuePresent = false;
+    declaration.property = [];
+    leaf(fresh);
+    leaf(declaration);
+}
+const argument = programArguments()[0] ?? panic('path or --full');
+if(argument === '--full') {
+    observe([]);
+    for(let first = 0; first <= 255; first++) {
+        observe([first]);
+        for(let last = 0; last <= 255; last++) { observe([first,last]); }
+    }
+} else {
+    const input = readTextFile(argument);
+    if(input.kind === 'Error') { panic(input.message); }
+    const corpus = new OptionsJson(input.text);
+    const root = corpus.parse();
+    if(root < 0) { panic(corpus.error); }
+    for(const row of corpus.node(root).children) {
+        const bytes: number[] = [];
+        for(const value of corpus.node(row).children) { bytes.push(Number(corpus.node(value).text)); }
+        observe(bytes);
+    }
+}
