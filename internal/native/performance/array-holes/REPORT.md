@@ -1,6 +1,6 @@
 Built: numeric length constructors, own holes, indexed access, length writes, callback methods, searches and joins; unported consumers are explicitly refused.
-Commits: 1b86df6e (inventory), 41603d77 (probe), f7e1008a (operations), 91c5687b (proof integration), 85764567 (nullable boundary); all pushed on codex/library-array-holes.
-Commands and outputs: scanner prints 4 on both backends; ten accepted fixtures and 31 refusal fixtures pass; final lower/fresh/IR gates and vet pass; Array test262 has zero disagreements.
+Commits: 14b3d1bc (p2b merge), 8f724aa5 (wasmtime), e669f94d (operation/refusal checks), ceec0ca1 (test262), 87cc1212 (mutants and uncached gate); all pushed on codex/library-array-holes.
+Commands and outputs: ten accepted fixtures and 31 refusal fixtures pass uncached with native sanitizers/leaks and JavaScript; all ten agree on wasmtime; p2b Array test262 before/after has zero disagreements; vet passes.
 Mutants: forEach, map, join, length bound and hole count fail Node comparison; admission, exception edge, mutation effect, freshness and nullable-diagnostic mutants fail their respective checks.
 Uncovered: mixed-program dense-access performance guarantee, unported operations, arbitrary any[] element use, maximum-string/resource limits, actual macOS execution, and eight inherited test262 clang crashes.
 
@@ -316,3 +316,22 @@ stage1/typescript/parser/testdata/oracle.go. Integration's changes, including
 internal/native/native.go and its host runtime guards, are preserved by the
 merge; the Array worker made no hand edits to those guard files or native.go.
 The other three prohibited shared files remain untouched by this unit.
+
+## p2b dense hot loop and final scope
+
+Repeated measure.py with --before /tmp/array-holes-p2b-base
+--after /workspace/adamic while the other checks were idle. Both native artifacts
+and independent Node printed 680000000. Emitted C is identical, with the same
+SHA-256 listed above. Fifteen samples after two warmups gave:
+
+| Before p2b median seconds | Merged Array median seconds | After / before |
+| ---: | ---: | ---: |
+| 0.078746430 | 0.078603124 | 0.998180159 |
+
+This observation found no dense-only hot-loop slowdown. It does not establish
+zero overhead for dense accesses in a compilation that also contains holes;
+those accesses still use the representation branch explained above. Operations
+not implemented remain explicitly refused. The eight inherited test262 clang
+crashes, unannotated any[] element use in the complete tsc function, gigantic
+materializing operations, and actual macOS execution remain outside this unit's
+verified coverage. No full repository gate is claimed.
