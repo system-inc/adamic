@@ -1,0 +1,13 @@
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo
+    gitignore_test.go:100: seed 20261005, 40 generated trees
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+    gitignore_test.go:175: natively, caught: line 106: "error gitignore: /repository/.gitignore is larger than 100 MiB, which git skips with a warning, leaving its patterns unapplied; cohere refuses it rather than skip it", Go cohere "1 .gitignore:1:big\tbig"
+    gitignore_test.go:175: on Node, caught: line 106: "error gitignore: /repository/.gitignore is larger than 100 MiB, which git skips with a warning, leaving its patterns unapplied; cohere refuses it rather than skip it", Go cohere "1 .gitignore:1:big\tbig"
+--- PASS: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower (9.64s)
+--- PASS: TestThePortAnswersAsGoCohereAndGitDo (3.65s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	13.337s

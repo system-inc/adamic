@@ -1,0 +1,13 @@
+F...
+======================================================================
+FAIL: test_each_component_invalidates (__main__.InstallationKey.test_each_component_invalidates) (component='manifest')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_markdown_setup.py", line 31, in test_each_component_invalidates
+    self.assertNotEqual(original, helper.installation_key(**changed), component)
+AssertionError: 'e876d0fdc4bbda3059ad8138d39cb0b174bef1d9af462cac4ec15be4478f1aad' == 'e876d0fdc4bbda3059ad8138d39cb0b174bef1d9af462cac4ec15be4478f1aad' : manifest
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=1)

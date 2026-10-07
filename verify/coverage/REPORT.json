@@ -1,0 +1,7099 @@
+{
+ "sides": {
+  "generator": {
+   "meta": {
+    "seeds": "1 to 2000",
+    "parallel": 6,
+    "commit": "7863216ed4",
+    "verdicts": "agreed 1872, finding 0, checked 126, not yet 0, invalid 0, unfit 2",
+    "C profiles": 2000,
+    "exit": 0,
+    "seconds": 743
+   },
+   "goShares": {
+    "internal/native/emit*.go": {
+     "blocks": 980,
+     "blocksReached": 762,
+     "blockShare": 0.7776,
+     "statements": 1674,
+     "statementsReached": 1348,
+     "statementShare": 0.8053
+    },
+    "internal/lower": {
+     "blocks": 6340,
+     "blocksReached": 2313,
+     "blockShare": 0.3648,
+     "statements": 8847,
+     "statementsReached": 3215,
+     "statementShare": 0.3634
+    },
+    "internal/native (all Go)": {
+     "blocks": 2168,
+     "blocksReached": 1356,
+     "blockShare": 0.6255,
+     "statements": 3527,
+     "statementsReached": 2308,
+     "statementShare": 0.6544
+    },
+    "internal/native (Go, besides units*.go, tsgo.go, library.go)": {
+     "blocks": 1857,
+     "blocksReached": 1353,
+     "blockShare": 0.7286,
+     "statements": 3049,
+     "statementsReached": 2305,
+     "statementShare": 0.756
+    },
+    "internal/ir": {
+     "blocks": 195,
+     "blocksReached": 110,
+     "blockShare": 0.5641,
+     "statements": 181,
+     "statementsReached": 112,
+     "statementShare": 0.6188
+    },
+    "internal/flow": {
+     "blocks": 888,
+     "blocksReached": 208,
+     "blockShare": 0.2342,
+     "statements": 1343,
+     "statementsReached": 369,
+     "statementShare": 0.2748
+    }
+   },
+   "cShares": {
+    "internal/native/runtime": {
+     "branchOutcomes": 4560,
+     "branchOutcomesReached": 1755,
+     "branchShare": 0.3849,
+     "lines": 8510,
+     "linesReached": 3454,
+     "lineShare": 0.4059,
+     "regions": 6617,
+     "regionsReached": 2851,
+     "regionShare": 0.4309,
+     "functions": 468,
+     "functionsReached": 255,
+     "functionShare": 0.5449,
+     "llvmCovTotals": {
+      "lines": {
+       "count": 8399,
+       "covered": 3410,
+       "percent": 40.60007143707584
+      },
+      "regions": {
+       "count": 7405,
+       "covered": 3120,
+       "notcovered": 4285,
+       "percent": 42.133693450371375
+      },
+      "functions": {
+       "count": 468,
+       "covered": 255,
+       "percent": 54.48717948717948
+      },
+      "branches": {
+       "count": 4733,
+       "covered": 1837,
+       "notcovered": 2896,
+       "percent": 38.81259243608705
+      }
+     }
+    }
+   }
+  },
+  "fixtures": {
+   "meta": {
+    "test": "go test ./internal/oracle -run TestNativeAgreesWithNode",
+    "subtests passed": 327,
+    "subtests failed": "1 (internal/oracle/testdata/navigation.a)",
+    "C profiles": 1112,
+    "exit": 1,
+    "seconds": 230
+   },
+   "goShares": {
+    "internal/native/emit*.go": {
+     "blocks": 980,
+     "blocksReached": 958,
+     "blockShare": 0.9776,
+     "statements": 1674,
+     "statementsReached": 1652,
+     "statementShare": 0.9869
+    },
+    "internal/lower": {
+     "blocks": 6340,
+     "blocksReached": 4669,
+     "blockShare": 0.7364,
+     "statements": 8847,
+     "statementsReached": 7012,
+     "statementShare": 0.7926
+    },
+    "internal/native (all Go)": {
+     "blocks": 2168,
+     "blocksReached": 1797,
+     "blockShare": 0.8289,
+     "statements": 3527,
+     "statementsReached": 3009,
+     "statementShare": 0.8531
+    },
+    "internal/native (Go, besides units*.go, tsgo.go, library.go)": {
+     "blocks": 1857,
+     "blocksReached": 1773,
+     "blockShare": 0.9548,
+     "statements": 3049,
+     "statementsReached": 2958,
+     "statementShare": 0.9702
+    },
+    "internal/ir": {
+     "blocks": 195,
+     "blocksReached": 147,
+     "blockShare": 0.7538,
+     "statements": 181,
+     "statementsReached": 150,
+     "statementShare": 0.8287
+    },
+    "internal/flow": {
+     "blocks": 888,
+     "blocksReached": 219,
+     "blockShare": 0.2466,
+     "statements": 1343,
+     "statementsReached": 396,
+     "statementShare": 0.2949
+    }
+   },
+   "cShares": {
+    "internal/native/runtime": {
+     "branchOutcomes": 4560,
+     "branchOutcomesReached": 3626,
+     "branchShare": 0.7952,
+     "lines": 8486,
+     "linesReached": 7092,
+     "lineShare": 0.8357,
+     "regions": 6616,
+     "regionsReached": 5635,
+     "regionShare": 0.8517,
+     "functions": 467,
+     "functionsReached": 423,
+     "functionShare": 0.9058,
+     "llvmCovTotals": {
+      "lines": {
+       "count": 8375,
+       "covered": 6995,
+       "percent": 83.52238805970148
+      },
+      "regions": {
+       "count": 7404,
+       "covered": 6198,
+       "notcovered": 1206,
+       "percent": 83.71150729335494
+      },
+      "functions": {
+       "count": 467,
+       "covered": 423,
+       "percent": 90.5781584582441
+      },
+      "branches": {
+       "count": 4733,
+       "covered": 3774,
+       "notcovered": 959,
+       "percent": 79.73800971899429
+      }
+     }
+    }
+   }
+  }
+ },
+ "notes": [],
+ "comparison": {
+  "go": {
+   "internal/native/emit*.go": {
+    "blocksBoth": 762,
+    "blocksGeneratorOnly": 0,
+    "statementsGeneratorOnly": 0,
+    "blocksFixturesOnly": 196,
+    "statementsFixturesOnly": 304
+   },
+   "internal/lower": {
+    "blocksBoth": 2305,
+    "blocksGeneratorOnly": 8,
+    "statementsGeneratorOnly": 10,
+    "blocksFixturesOnly": 2364,
+    "statementsFixturesOnly": 3807
+   },
+   "internal/native (all Go)": {
+    "blocksBoth": 1350,
+    "blocksGeneratorOnly": 6,
+    "statementsGeneratorOnly": 6,
+    "blocksFixturesOnly": 447,
+    "statementsFixturesOnly": 707
+   },
+   "internal/native (Go, besides units*.go, tsgo.go, library.go)": {
+    "blocksBoth": 1350,
+    "blocksGeneratorOnly": 3,
+    "statementsGeneratorOnly": 3,
+    "blocksFixturesOnly": 423,
+    "statementsFixturesOnly": 656
+   },
+   "internal/ir": {
+    "blocksBoth": 109,
+    "blocksGeneratorOnly": 1,
+    "statementsGeneratorOnly": 1,
+    "blocksFixturesOnly": 38,
+    "statementsFixturesOnly": 39
+   },
+   "internal/flow": {
+    "blocksBoth": 208,
+    "blocksGeneratorOnly": 0,
+    "statementsGeneratorOnly": 0,
+    "blocksFixturesOnly": 11,
+    "statementsFixturesOnly": 27
+   }
+  },
+  "goGeneratorOnlyByFunction": [
+   {
+    "file": "internal/lower/class_inheritance.go",
+    "start": 767,
+    "end": 795,
+    "function": "lowering.cycleFieldMatches",
+    "statements": 6
+   },
+   {
+    "file": "internal/lower/exceptions.go",
+    "start": 184,
+    "end": 259,
+    "function": "lowering.libraryFailure",
+    "statements": 3
+   },
+   {
+    "file": "internal/native/tsgo.go",
+    "start": 15,
+    "end": 22,
+    "function": "UsesTSGo",
+    "statements": 3
+   },
+   {
+    "file": "internal/lower/counters.go",
+    "start": 76,
+    "end": 157,
+    "function": "markCounter",
+    "statements": 1
+   },
+   {
+    "file": "internal/native/region.go",
+    "start": 167,
+    "end": 246,
+    "function": "regionPlan.escaping",
+    "statements": 1
+   },
+   {
+    "file": "internal/native/reuse.go",
+    "start": 718,
+    "end": 745,
+    "function": "emitter.spreadArray",
+    "statements": 1
+   },
+   {
+    "file": "internal/native/union.go",
+    "start": 12,
+    "end": 32,
+    "function": "converted",
+    "statements": 1
+   }
+  ],
+  "goFixturesOnlyByFunction": [
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 13,
+    "end": 642,
+    "function": "emitter.evaluate",
+    "statements": 125
+   },
+   {
+    "file": "internal/lower/class_static.go",
+    "start": 48,
+    "end": 212,
+    "function": "lowering.staticInstance",
+    "statements": 103
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 302,
+    "end": 437,
+    "function": "lowering.libraryMapGroupBy",
+    "statements": 89
+   },
+   {
+    "file": "internal/lower/class_accessors.go",
+    "start": 207,
+    "end": 347,
+    "function": "lowering.finishAccessors",
+    "statements": 86
+   },
+   {
+    "file": "internal/lower/generic.go",
+    "start": 24,
+    "end": 136,
+    "function": "lowering.instantiateFunction",
+    "statements": 74
+   },
+   {
+    "file": "internal/lower/iteration_consume.go",
+    "start": 110,
+    "end": 203,
+    "function": "lowering.destructureIterator",
+    "statements": 68
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 13,
+    "end": 107,
+    "function": "lowering.librarySetMethod",
+    "statements": 66
+   },
+   {
+    "file": "internal/lower/library_object.go",
+    "start": 11,
+    "end": 147,
+    "function": "lowering.objectCall",
+    "statements": 65
+   },
+   {
+    "file": "internal/lower/class_static.go",
+    "start": 309,
+    "end": 436,
+    "function": "lowering.staticInitializationReads",
+    "statements": 61
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 162,
+    "end": 298,
+    "function": "lowering.planIteration",
+    "statements": 60
+   },
+   {
+    "file": "internal/lower/iteration_consume.go",
+    "start": 11,
+    "end": 96,
+    "function": "lowering.collectIteration",
+    "statements": 58
+   },
+   {
+    "file": "internal/lower/proven_relations.go",
+    "start": 33,
+    "end": 163,
+    "function": "lowering.optionalRelationFailure",
+    "statements": 56
+   },
+   {
+    "file": "internal/lower/library_math_number.go",
+    "start": 67,
+    "end": 181,
+    "function": "lowering.libraryMathNumberCall",
+    "statements": 54
+   },
+   {
+    "file": "internal/lower/class_static.go",
+    "start": 215,
+    "end": 297,
+    "function": "lowering.staticDeclaration",
+    "statements": 53
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 481,
+    "end": 580,
+    "function": "lowering.libraryArrayForOf",
+    "statements": 50
+   },
+   {
+    "file": "internal/lower/prototype_own.go",
+    "start": 11,
+    "end": 87,
+    "function": "lowering.nonObjectOwnProperty",
+    "statements": 46
+   },
+   {
+    "file": "internal/lower/library_json_stringify.go",
+    "start": 72,
+    "end": 154,
+    "function": "lowering.jsonInput",
+    "statements": 44
+   },
+   {
+    "file": "internal/lower/library_string.go",
+    "start": 151,
+    "end": 230,
+    "function": "lowering.libraryStringMethod",
+    "statements": 44
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 262,
+    "end": 311,
+    "function": "lowering.libraryArrayCopyWithin",
+    "statements": 42
+   },
+   {
+    "file": "internal/native/class_accessors.go",
+    "start": 10,
+    "end": 77,
+    "function": "emitter.accessorDeclarations",
+    "statements": 41
+   },
+   {
+    "file": "internal/lower/collections.go",
+    "start": 281,
+    "end": 355,
+    "function": "lowering.destructureFrom",
+    "statements": 39
+   },
+   {
+    "file": "internal/lower/library_for_in.go",
+    "start": 68,
+    "end": 153,
+    "function": "lowering.plainEnumerableObject",
+    "statements": 38
+   },
+   {
+    "file": "internal/native/emit_maps.go",
+    "start": 27,
+    "end": 74,
+    "function": "emitter.mapForEach",
+    "statements": 38
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 348,
+    "end": 408,
+    "function": "lowering.libraryArrayFlatMap",
+    "statements": 37
+   },
+   {
+    "file": "internal/lower/class_accessors.go",
+    "start": 132,
+    "end": 203,
+    "function": "lowering.accessorLiteral",
+    "statements": 36
+   },
+   {
+    "file": "internal/lower/library_function_expressions.go",
+    "start": 10,
+    "end": 70,
+    "function": "lowering.functionExpression",
+    "statements": 36
+   },
+   {
+    "file": "internal/lower/class_generic_calls.go",
+    "start": 14,
+    "end": 71,
+    "function": "lowering.classGenericCall",
+    "statements": 35
+   },
+   {
+    "file": "internal/lower/expression.go",
+    "start": 947,
+    "end": 992,
+    "function": "lowering.functionValue",
+    "statements": 35
+   },
+   {
+    "file": "internal/lower/predicates.go",
+    "start": 38,
+    "end": 103,
+    "function": "lowering.provePredicate",
+    "statements": 35
+   },
+   {
+    "file": "internal/lower/prototype.go",
+    "start": 77,
+    "end": 171,
+    "function": "lowering.objectPrototypeCall",
+    "statements": 35
+   },
+   {
+    "file": "internal/lower/cast.go",
+    "start": 15,
+    "end": 75,
+    "function": "lowering.cast",
+    "statements": 34
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 205,
+    "end": 260,
+    "function": "lowering.libraryArrayFlat",
+    "statements": 34
+   },
+   {
+    "file": "internal/lower/prototype.go",
+    "start": 176,
+    "end": 256,
+    "function": "lowering.prototypeHazard",
+    "statements": 34
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 395,
+    "end": 435,
+    "function": "emitter.switchStatement",
+    "statements": 34
+   },
+   {
+    "file": "internal/lower/class_super.go",
+    "start": 218,
+    "end": 282,
+    "function": "constructorSuperFlow.loop",
+    "statements": 32
+   },
+   {
+    "file": "internal/lower/library_string.go",
+    "start": 280,
+    "end": 329,
+    "function": "lowering.stringRaw",
+    "statements": 31
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 288,
+    "end": 497,
+    "function": "lowering.property",
+    "statements": 31
+   },
+   {
+    "file": "internal/native/fields.go",
+    "start": 28,
+    "end": 90,
+    "function": "uniformFieldOffsets",
+    "statements": 31
+   },
+   {
+    "file": "internal/lower/class_accessors.go",
+    "start": 53,
+    "end": 104,
+    "function": "lowering.superAccessor",
+    "statements": 29
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 109,
+    "end": 171,
+    "function": "lowering.iterationOrigin",
+    "statements": 29
+   },
+   {
+    "file": "internal/lower/library_for_in.go",
+    "start": 13,
+    "end": 66,
+    "function": "lowering.forIn",
+    "statements": 28
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 162,
+    "end": 211,
+    "function": "lowering.libraryForEachThisArg",
+    "statements": 28
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 364,
+    "end": 408,
+    "function": "lowering.forOfUser",
+    "statements": 27
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 18,
+    "end": 108,
+    "function": "lowering.libraryArrayMethod",
+    "statements": 27
+   },
+   {
+    "file": "internal/lower/class_super.go",
+    "start": 86,
+    "end": 149,
+    "function": "constructorSuperFlow.statement",
+    "statements": 26
+   },
+   {
+    "file": "internal/lower/collections.go",
+    "start": 187,
+    "end": 235,
+    "function": "lowering.clearOrVisit",
+    "statements": 26
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 344,
+    "end": 362,
+    "function": "lowering.closeIteration",
+    "statements": 25
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 799,
+    "end": 919,
+    "function": "lowering.forOf",
+    "statements": 25
+   },
+   {
+    "file": "internal/lower/class_inheritance.go",
+    "start": 48,
+    "end": 159,
+    "function": "lowering.checkMemberOverrides",
+    "statements": 24
+   },
+   {
+    "file": "internal/lower/generic.go",
+    "start": 170,
+    "end": 208,
+    "function": "lowering.refuseInstantiatedMutation",
+    "statements": 24
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 410,
+    "end": 467,
+    "function": "lowering.userMethodCall",
+    "statements": 24
+   },
+   {
+    "file": "internal/lower/library_json_stringify.go",
+    "start": 12,
+    "end": 65,
+    "function": "lowering.jsonCall",
+    "statements": 24
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 970,
+    "end": 1019,
+    "function": "lowering.switchStatement",
+    "statements": 24
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1889,
+    "end": 1936,
+    "function": "lowering.updateIndex",
+    "statements": 24
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 591,
+    "end": 630,
+    "function": "lowering.libraryArrayJoin",
+    "statements": 23
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1770,
+    "end": 1811,
+    "function": "lowering.spreadNumbers",
+    "statements": 23
+   },
+   {
+    "file": "internal/lower/predicates.go",
+    "start": 125,
+    "end": 170,
+    "function": "predicateProof.returned",
+    "statements": 23
+   },
+   {
+    "file": "internal/native/library_json_stringify.go",
+    "start": 39,
+    "end": 59,
+    "function": "emitter.jsonStringify",
+    "statements": 23
+   },
+   {
+    "file": "internal/lower/input.go",
+    "start": 13,
+    "end": 94,
+    "function": "lowering.input",
+    "statements": 22
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 441,
+    "end": 457,
+    "function": "lowering.libraryOptionalNumbers",
+    "statements": 22
+   }
+  ],
+  "c": {
+   "summary": {
+    "linesBoth": 3438,
+    "linesGeneratorOnly": 16,
+    "linesFixturesOnly": 3654,
+    "functionsBoth": 255,
+    "functionsGeneratorOnly": 0,
+    "functionsFixturesOnly": 168,
+    "branchOutcomesBoth": 1729,
+    "branchOutcomesGeneratorOnly": 26,
+    "branchOutcomesFixturesOnly": 1897
+   },
+   "generatorOnlyByFunction": [
+    {
+     "file": "internal/native/runtime/math.c",
+     "start": 7,
+     "end": 21,
+     "function": "adamic_math_round",
+     "lines": 4
+    },
+    {
+     "file": "internal/native/runtime/string_slice_impl.h",
+     "start": 59,
+     "end": 85,
+     "function": "adamic_string_code_point_at",
+     "lines": 3
+    },
+    {
+     "file": "internal/native/runtime/string_builder_impl.h",
+     "start": 32,
+     "end": 47,
+     "function": "builder_unit",
+     "lines": 3
+    },
+    {
+     "file": "internal/native/runtime/math.c",
+     "start": 23,
+     "end": 28,
+     "function": "adamic_math_sign",
+     "lines": 2
+    },
+    {
+     "file": "internal/native/runtime/parse.c",
+     "start": 155,
+     "end": 221,
+     "function": "adamic_number_parse_int",
+     "lines": 2
+    },
+    {
+     "file": "internal/native/runtime/math.c",
+     "start": 40,
+     "end": 48,
+     "function": "adamic_math_min",
+     "lines": 2
+    }
+   ],
+   "fixturesOnlyByFunction": [
+    {
+     "file": "internal/native/runtime/regexp.c",
+     "start": 172,
+     "end": 401,
+     "function": "regex_run",
+     "lines": 149
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 459,
+     "end": 659,
+     "function": "kernel_rem_pio2",
+     "lines": 121
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 133,
+     "end": 285,
+     "function": "ieee754_rem_pio2",
+     "lines": 113
+    },
+    {
+     "file": "internal/native/runtime/sort.c",
+     "start": 314,
+     "end": 408,
+     "function": "merge_high",
+     "lines": 91
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 748,
+     "end": 850,
+     "function": "kernel_tan",
+     "lines": 88
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 2237,
+     "end": 2355,
+     "function": "adamic_math_expm1",
+     "lines": 84
+    },
+    {
+     "file": "internal/native/runtime/sort.c",
+     "start": 221,
+     "end": 311,
+     "function": "merge_low",
+     "lines": 83
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 1465,
+     "end": 1556,
+     "function": "adamic_math_exp",
+     "lines": 66
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 1135,
+     "end": 1219,
+     "function": "adamic_math_atan",
+     "lines": 63
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 1804,
+     "end": 1901,
+     "function": "adamic_math_log1p",
+     "lines": 62
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 1658,
+     "end": 1737,
+     "function": "adamic_math_log",
+     "lines": 57
+    },
+    {
+     "file": "internal/native/runtime/radix.c",
+     "start": 53,
+     "end": 131,
+     "function": "double_to_radix",
+     "lines": 54
+    },
+    {
+     "file": "internal/native/runtime/json_stringify.c",
+     "start": 147,
+     "end": 203,
+     "function": "write_value",
+     "lines": 53
+    },
+    {
+     "file": "internal/native/runtime/parse.c",
+     "start": 69,
+     "end": 123,
+     "function": "power_of_two",
+     "lines": 47
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 1008,
+     "end": 1073,
+     "function": "adamic_math_asin",
+     "lines": 46
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 1248,
+     "end": 1339,
+     "function": "adamic_math_atan2",
+     "lines": 46
+    },
+    {
+     "file": "internal/native/runtime/sort.c",
+     "start": 119,
+     "end": 167,
+     "function": "gallop_left",
+     "lines": 45
+    },
+    {
+     "file": "internal/native/runtime/sort.c",
+     "start": 170,
+     "end": 218,
+     "function": "gallop_right",
+     "lines": 45
+    },
+    {
+     "file": "internal/native/runtime/library_math_number.c",
+     "start": 57,
+     "end": 99,
+     "function": "adamic_number_from_string",
+     "lines": 42
+    },
+    {
+     "file": "internal/native/runtime/normalize.c",
+     "start": 242,
+     "end": 290,
+     "function": "adamic_string_normalize",
+     "lines": 42
+    },
+    {
+     "file": "internal/native/runtime/regexp.c",
+     "start": 829,
+     "end": 917,
+     "function": "regex_substitution",
+     "lines": 40
+    },
+    {
+     "file": "internal/native/runtime/map_set.c",
+     "start": 66,
+     "end": 105,
+     "function": "collection_next",
+     "lines": 39
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 877,
+     "end": 936,
+     "function": "adamic_math_acos",
+     "lines": 38
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 2358,
+     "end": 2440,
+     "function": "adamic_math_cbrt",
+     "lines": 33
+    },
+    {
+     "file": "internal/native/runtime/string_replace_impl.h",
+     "start": 48,
+     "end": 83,
+     "function": "substitution",
+     "lines": 32
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 1995,
+     "end": 2073,
+     "function": "adamic_math_log2",
+     "lines": 32
+    },
+    {
+     "file": "internal/native/runtime/regexp.c",
+     "start": 118,
+     "end": 155,
+     "function": "regex_clone",
+     "lines": 31
+    },
+    {
+     "file": "internal/native/runtime/json_stringify.c",
+     "start": 70,
+     "end": 100,
+     "function": "quote",
+     "lines": 31
+    },
+    {
+     "file": "internal/native/runtime/hypot.c",
+     "start": 21,
+     "end": 53,
+     "function": "adamic_math_hypot",
+     "lines": 30
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 320,
+     "end": 351,
+     "function": "kernel_cos",
+     "lines": 30
+    },
+    {
+     "file": "internal/native/runtime/weak.c",
+     "start": 67,
+     "end": 101,
+     "function": "insert",
+     "lines": 29
+    },
+    {
+     "file": "internal/native/runtime/json_stringify.c",
+     "start": 229,
+     "end": 260,
+     "function": "adamic_json_stringify",
+     "lines": 29
+    },
+    {
+     "file": "internal/native/runtime/regexp.c",
+     "start": 673,
+     "end": 700,
+     "function": "adamic_regex_match",
+     "lines": 28
+    },
+    {
+     "file": "internal/native/runtime/class_features.c",
+     "start": 42,
+     "end": 74,
+     "function": "adamic_class_object_keys",
+     "lines": 27
+    },
+    {
+     "file": "internal/native/runtime/normalize.c",
+     "start": 168,
+     "end": 194,
+     "function": "compose",
+     "lines": 27
+    },
+    {
+     "file": "internal/native/runtime/case.c",
+     "start": 134,
+     "end": 160,
+     "function": "cased_beyond",
+     "lines": 26
+    },
+    {
+     "file": "internal/native/runtime/library_object.c",
+     "start": 110,
+     "end": 134,
+     "function": "adamic_object_values",
+     "lines": 25
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 688,
+     "end": 713,
+     "function": "kernel_sin",
+     "lines": 25
+    },
+    {
+     "file": "internal/native/runtime/parse.c",
+     "start": 127,
+     "end": 153,
+     "function": "generic",
+     "lines": 24
+    },
+    {
+     "file": "internal/native/runtime/json_stringify.c",
+     "start": 204,
+     "end": 226,
+     "function": "keys",
+     "lines": 23
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 1085,
+     "end": 1113,
+     "function": "adamic_math_asinh",
+     "lines": 23
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 2102,
+     "end": 2140,
+     "function": "adamic_math_log10",
+     "lines": 23
+    },
+    {
+     "file": "internal/native/runtime/input.c",
+     "start": 262,
+     "end": 297,
+     "function": "adamic_read_text_file",
+     "lines": 23
+    },
+    {
+     "file": "internal/native/runtime/normalize.c",
+     "start": 214,
+     "end": 235,
+     "function": "encode",
+     "lines": 22
+    },
+    {
+     "file": "internal/native/runtime/normalize.c",
+     "start": 79,
+     "end": 100,
+     "function": "composite",
+     "lines": 22
+    },
+    {
+     "file": "internal/native/runtime/map.c",
+     "start": 293,
+     "end": 315,
+     "function": "adamic_map_clear",
+     "lines": 22
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 2473,
+     "end": 2501,
+     "function": "adamic_math_sin",
+     "lines": 22
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 2699,
+     "end": 2733,
+     "function": "adamic_math_tanh",
+     "lines": 22
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 1372,
+     "end": 1400,
+     "function": "adamic_math_cos",
+     "lines": 22
+    },
+    {
+     "file": "internal/native/runtime/from_codes.c",
+     "start": 39,
+     "end": 60,
+     "function": "codes_point",
+     "lines": 22
+    },
+    {
+     "file": "internal/native/runtime/sort.c",
+     "start": 412,
+     "end": 436,
+     "function": "merge_at",
+     "lines": 22
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 1576,
+     "end": 1605,
+     "function": "adamic_math_atanh",
+     "lines": 21
+    },
+    {
+     "file": "internal/native/runtime/regexp.c",
+     "start": 719,
+     "end": 739,
+     "function": "adamic_regex_iterator_step",
+     "lines": 21
+    },
+    {
+     "file": "internal/native/runtime/json_stringify.c",
+     "start": 103,
+     "end": 128,
+     "function": "scalar",
+     "lines": 20
+    },
+    {
+     "file": "internal/native/runtime/map.c",
+     "start": 271,
+     "end": 291,
+     "function": "adamic_map_entries",
+     "lines": 20
+    },
+    {
+     "file": "internal/native/runtime/radix.c",
+     "start": 140,
+     "end": 163,
+     "function": "adamic_number_to_radix",
+     "lines": 20
+    },
+    {
+     "file": "internal/native/runtime/input.c",
+     "start": 322,
+     "end": 349,
+     "function": "adamic_write_text_file",
+     "lines": 19
+    },
+    {
+     "file": "internal/native/runtime/normalize.c",
+     "start": 145,
+     "end": 163,
+     "function": "reorder",
+     "lines": 19
+    },
+    {
+     "file": "internal/native/runtime/ieee754.c",
+     "start": 952,
+     "end": 977,
+     "function": "adamic_math_acosh",
+     "lines": 19
+    },
+    {
+     "file": "internal/native/runtime/normalize.c",
+     "start": 124,
+     "end": 142,
+     "function": "decompose",
+     "lines": 19
+    }
+   ]
+  }
+ },
+ "blindMap": {
+  "go": [
+   {
+    "file": "internal/lower/class_static.go",
+    "start": 48,
+    "end": 212,
+    "function": "lowering.staticInstance",
+    "kind": "function never entered",
+    "statements": 120,
+    "blocks": 77,
+    "label": null,
+    "fixturesReachStatements": 103,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 302,
+    "end": 437,
+    "function": "lowering.libraryMapGroupBy",
+    "kind": "function never entered",
+    "statements": 112,
+    "blocks": 54,
+    "label": null,
+    "fixturesReachStatements": 89,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_accessors.go",
+    "start": 217,
+    "end": 346,
+    "function": "lowering.finishAccessors",
+    "kind": "blocks never run",
+    "statements": 94,
+    "blocks": 55,
+    "label": null,
+    "fixturesReachStatements": 85,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 168,
+    "end": 297,
+    "function": "lowering.planIteration",
+    "kind": "blocks never run",
+    "statements": 90,
+    "blocks": 63,
+    "label": null,
+    "fixturesReachStatements": 60,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_object.go",
+    "start": 11,
+    "end": 147,
+    "function": "lowering.objectCall",
+    "kind": "function never entered",
+    "statements": 90,
+    "blocks": 67,
+    "label": null,
+    "fixturesReachStatements": 65,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_static.go",
+    "start": 309,
+    "end": 436,
+    "function": "lowering.staticInitializationReads",
+    "kind": "function never entered",
+    "statements": 89,
+    "blocks": 61,
+    "label": null,
+    "fixturesReachStatements": 61,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/generic.go",
+    "start": 24,
+    "end": 136,
+    "function": "lowering.instantiateFunction",
+    "kind": "function never entered",
+    "statements": 85,
+    "blocks": 46,
+    "label": null,
+    "fixturesReachStatements": 74,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/proven_relations.go",
+    "start": 33,
+    "end": 163,
+    "function": "lowering.optionalRelationFailure",
+    "kind": "function never entered",
+    "statements": 84,
+    "blocks": 73,
+    "label": null,
+    "fixturesReachStatements": 56,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_consume.go",
+    "start": 110,
+    "end": 203,
+    "function": "lowering.destructureIterator",
+    "kind": "function never entered",
+    "statements": 79,
+    "blocks": 37,
+    "label": null,
+    "fixturesReachStatements": 68,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 19,
+    "end": 106,
+    "function": "lowering.librarySetMethod",
+    "kind": "blocks never run",
+    "statements": 72,
+    "blocks": 45,
+    "label": null,
+    "fixturesReachStatements": 66,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_consume.go",
+    "start": 11,
+    "end": 96,
+    "function": "lowering.collectIteration",
+    "kind": "function never entered",
+    "statements": 68,
+    "blocks": 35,
+    "label": null,
+    "fixturesReachStatements": 58,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 499,
+    "end": 579,
+    "function": "lowering.libraryArrayForOf",
+    "kind": "blocks never run",
+    "statements": 62,
+    "blocks": 43,
+    "label": null,
+    "fixturesReachStatements": 49,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_static.go",
+    "start": 222,
+    "end": 296,
+    "function": "lowering.staticDeclaration",
+    "kind": "blocks never run",
+    "statements": 58,
+    "blocks": 33,
+    "label": null,
+    "fixturesReachStatements": 53,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_json_stringify.go",
+    "start": 72,
+    "end": 154,
+    "function": "lowering.jsonInput",
+    "kind": "function never entered",
+    "statements": 56,
+    "blocks": 42,
+    "label": null,
+    "fixturesReachStatements": 44,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_for_in.go",
+    "start": 68,
+    "end": 153,
+    "function": "lowering.plainEnumerableObject",
+    "kind": "function never entered",
+    "statements": 55,
+    "blocks": 42,
+    "label": null,
+    "fixturesReachStatements": 38,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/prototype.go",
+    "start": 176,
+    "end": 256,
+    "function": "lowering.prototypeHazard",
+    "kind": "function never entered",
+    "statements": 54,
+    "blocks": 37,
+    "label": null,
+    "fixturesReachStatements": 34,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_string.go",
+    "start": 151,
+    "end": 230,
+    "function": "lowering.libraryStringMethod",
+    "kind": "function never entered",
+    "statements": 53,
+    "blocks": 41,
+    "label": null,
+    "fixturesReachStatements": 44,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/prototype_own.go",
+    "start": 11,
+    "end": 87,
+    "function": "lowering.nonObjectOwnProperty",
+    "kind": "function never entered",
+    "statements": 52,
+    "blocks": 26,
+    "label": null,
+    "fixturesReachStatements": 46,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/collections.go",
+    "start": 281,
+    "end": 355,
+    "function": "lowering.destructureFrom",
+    "kind": "function never entered",
+    "statements": 51,
+    "blocks": 38,
+    "label": null,
+    "fixturesReachStatements": 39,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/input.go",
+    "start": 21,
+    "end": 91,
+    "function": "lowering.input",
+    "kind": "blocks never run",
+    "statements": 48,
+    "blocks": 41,
+    "label": "in case l.isPreludeFunction(callee, \"readTextFile\"):",
+    "fixturesReachStatements": 22,
+    "structural": false
+   },
+   {
+    "file": "internal/native/class_accessors.go",
+    "start": 14,
+    "end": 76,
+    "function": "emitter.accessorDeclarations",
+    "kind": "blocks never run",
+    "statements": 48,
+    "blocks": 27,
+    "label": null,
+    "fixturesReachStatements": 41,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_accessors.go",
+    "start": 141,
+    "end": 202,
+    "function": "lowering.accessorLiteral",
+    "kind": "blocks never run",
+    "statements": 46,
+    "blocks": 28,
+    "label": null,
+    "fixturesReachStatements": 36,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 262,
+    "end": 311,
+    "function": "lowering.libraryArrayCopyWithin",
+    "kind": "function never entered",
+    "statements": 45,
+    "blocks": 20,
+    "label": null,
+    "fixturesReachStatements": 42,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 348,
+    "end": 408,
+    "function": "lowering.libraryArrayFlatMap",
+    "kind": "function never entered",
+    "statements": 45,
+    "blocks": 25,
+    "label": null,
+    "fixturesReachStatements": 37,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_function_expressions.go",
+    "start": 10,
+    "end": 70,
+    "function": "lowering.functionExpression",
+    "kind": "function never entered",
+    "statements": 45,
+    "blocks": 26,
+    "label": null,
+    "fixturesReachStatements": 36,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_super.go",
+    "start": 218,
+    "end": 282,
+    "function": "constructorSuperFlow.loop",
+    "kind": "function never entered",
+    "statements": 44,
+    "blocks": 27,
+    "label": null,
+    "fixturesReachStatements": 32,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/predicates.go",
+    "start": 38,
+    "end": 103,
+    "function": "lowering.provePredicate",
+    "kind": "function never entered",
+    "statements": 44,
+    "blocks": 31,
+    "label": null,
+    "fixturesReachStatements": 35,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/prototype.go",
+    "start": 102,
+    "end": 170,
+    "function": "lowering.objectPrototypeCall",
+    "kind": "blocks never run",
+    "statements": 44,
+    "blocks": 37,
+    "label": null,
+    "fixturesReachStatements": 34,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/cast.go",
+    "start": 15,
+    "end": 75,
+    "function": "lowering.cast",
+    "kind": "function never entered",
+    "statements": 43,
+    "blocks": 28,
+    "label": null,
+    "fixturesReachStatements": 34,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 109,
+    "end": 171,
+    "function": "lowering.iterationOrigin",
+    "kind": "function never entered",
+    "statements": 41,
+    "blocks": 31,
+    "label": null,
+    "fixturesReachStatements": 29,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 205,
+    "end": 260,
+    "function": "lowering.libraryArrayFlat",
+    "kind": "function never entered",
+    "statements": 41,
+    "blocks": 25,
+    "label": null,
+    "fixturesReachStatements": 34,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_generic_calls.go",
+    "start": 23,
+    "end": 70,
+    "function": "lowering.classGenericCall",
+    "kind": "blocks never run",
+    "statements": 38,
+    "blocks": 21,
+    "label": null,
+    "fixturesReachStatements": 34,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_super.go",
+    "start": 86,
+    "end": 149,
+    "function": "constructorSuperFlow.statement",
+    "kind": "function never entered",
+    "statements": 38,
+    "blocks": 32,
+    "label": null,
+    "fixturesReachStatements": 26,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/expression.go",
+    "start": 947,
+    "end": 992,
+    "function": "lowering.functionValue",
+    "kind": "function never entered",
+    "statements": 38,
+    "blocks": 18,
+    "label": null,
+    "fixturesReachStatements": 35,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_maps.go",
+    "start": 27,
+    "end": 74,
+    "function": "emitter.mapForEach",
+    "kind": "function never entered",
+    "statements": 38,
+    "blocks": 17,
+    "label": null,
+    "fixturesReachStatements": 38,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_for_in.go",
+    "start": 13,
+    "end": 66,
+    "function": "lowering.forIn",
+    "kind": "function never entered",
+    "statements": 37,
+    "blocks": 24,
+    "label": null,
+    "fixturesReachStatements": 28,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_string.go",
+    "start": 280,
+    "end": 329,
+    "function": "lowering.stringRaw",
+    "kind": "function never entered",
+    "statements": 37,
+    "blocks": 20,
+    "label": null,
+    "fixturesReachStatements": 31,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/predicates.go",
+    "start": 172,
+    "end": 231,
+    "function": "predicateProof.statement",
+    "kind": "function never entered",
+    "statements": 36,
+    "blocks": 29,
+    "label": null,
+    "fixturesReachStatements": 20,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_accessors.go",
+    "start": 58,
+    "end": 103,
+    "function": "lowering.superAccessor",
+    "kind": "blocks never run",
+    "statements": 35,
+    "blocks": 22,
+    "label": null,
+    "fixturesReachStatements": 29,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_json_stringify.go",
+    "start": 12,
+    "end": 65,
+    "function": "lowering.jsonCall",
+    "kind": "function never entered",
+    "statements": 35,
+    "blocks": 28,
+    "label": null,
+    "fixturesReachStatements": 24,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 162,
+    "end": 211,
+    "function": "lowering.libraryForEachThisArg",
+    "kind": "function never entered",
+    "statements": 35,
+    "blocks": 20,
+    "label": null,
+    "fixturesReachStatements": 28,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/collections.go",
+    "start": 187,
+    "end": 235,
+    "function": "lowering.clearOrVisit",
+    "kind": "function never entered",
+    "statements": 34,
+    "blocks": 25,
+    "label": null,
+    "fixturesReachStatements": 26,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 364,
+    "end": 408,
+    "function": "lowering.forOfUser",
+    "kind": "function never entered",
+    "statements": 34,
+    "blocks": 18,
+    "label": null,
+    "fixturesReachStatements": 27,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 395,
+    "end": 435,
+    "function": "emitter.switchStatement",
+    "kind": "function never entered",
+    "statements": 34,
+    "blocks": 10,
+    "label": null,
+    "fixturesReachStatements": 34,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1889,
+    "end": 1936,
+    "function": "lowering.updateIndex",
+    "kind": "function never entered",
+    "statements": 32,
+    "blocks": 17,
+    "label": null,
+    "fixturesReachStatements": 24,
+    "structural": false
+   },
+   {
+    "file": "internal/native/fields.go",
+    "start": 38,
+    "end": 89,
+    "function": "uniformFieldOffsets",
+    "kind": "blocks never run",
+    "statements": 31,
+    "blocks": 27,
+    "label": null,
+    "fixturesReachStatements": 31,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 970,
+    "end": 1019,
+    "function": "lowering.switchStatement",
+    "kind": "function never entered",
+    "statements": 30,
+    "blocks": 24,
+    "label": null,
+    "fixturesReachStatements": 24,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/collections.go",
+    "start": 145,
+    "end": 184,
+    "function": "lowering.pairTypes",
+    "kind": "function never entered",
+    "statements": 29,
+    "blocks": 19,
+    "label": null,
+    "fixturesReachStatements": 19,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 591,
+    "end": 630,
+    "function": "lowering.libraryArrayJoin",
+    "kind": "function never entered",
+    "statements": 29,
+    "blocks": 18,
+    "label": null,
+    "fixturesReachStatements": 23,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_json_stringify.go",
+    "start": 159,
+    "end": 201,
+    "function": "lowering.jsonType",
+    "kind": "function never entered",
+    "statements": 29,
+    "blocks": 23,
+    "label": null,
+    "fixturesReachStatements": 21,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1719,
+    "end": 1756,
+    "function": "lowering.tupleLiteral",
+    "kind": "function never entered",
+    "statements": 29,
+    "blocks": 19,
+    "label": null,
+    "fixturesReachStatements": 22,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1770,
+    "end": 1811,
+    "function": "lowering.spreadNumbers",
+    "kind": "function never entered",
+    "statements": 29,
+    "blocks": 22,
+    "label": null,
+    "fixturesReachStatements": 23,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/predicates.go",
+    "start": 125,
+    "end": 170,
+    "function": "predicateProof.returned",
+    "kind": "function never entered",
+    "statements": 29,
+    "blocks": 24,
+    "label": null,
+    "fixturesReachStatements": 23,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 33,
+    "end": 79,
+    "function": "lowering.libraryArrayMethod",
+    "kind": "blocks never run",
+    "statements": 28,
+    "blocks": 25,
+    "label": "in case \"join\":",
+    "fixturesReachStatements": 21,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/generic.go",
+    "start": 170,
+    "end": 208,
+    "function": "lowering.refuseInstantiatedMutation",
+    "kind": "function never entered",
+    "statements": 27,
+    "blocks": 15,
+    "label": null,
+    "fixturesReachStatements": 24,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/counters.go",
+    "start": 174,
+    "end": 218,
+    "function": "boundRange",
+    "kind": "blocks never run",
+    "statements": 26,
+    "blocks": 19,
+    "label": "in case ir.Read:",
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 344,
+    "end": 362,
+    "function": "lowering.closeIteration",
+    "kind": "function never entered",
+    "statements": 26,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 25,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 434,
+    "end": 466,
+    "function": "lowering.userMethodCall",
+    "kind": "blocks never run",
+    "statements": 26,
+    "blocks": 15,
+    "label": null,
+    "fixturesReachStatements": 18,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 261,
+    "end": 298,
+    "function": "lowering.libraryForOfIterator",
+    "kind": "function never entered",
+    "statements": 26,
+    "blocks": 19,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_inheritance.go",
+    "start": 71,
+    "end": 105,
+    "function": "lowering.checkMemberOverrides",
+    "kind": "blocks never run",
+    "statements": 25,
+    "blocks": 17,
+    "label": null,
+    "fixturesReachStatements": 22,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 168,
+    "end": 203,
+    "function": "lowering.libraryArraySpliced",
+    "kind": "function never entered",
+    "statements": 24,
+    "blocks": 17,
+    "label": null,
+    "fixturesReachStatements": 20,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 313,
+    "end": 346,
+    "function": "lowering.libraryArrayWith",
+    "kind": "function never entered",
+    "statements": 24,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 20,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_object.go",
+    "start": 151,
+    "end": 186,
+    "function": "lowering.exactObject",
+    "kind": "function never entered",
+    "statements": 24,
+    "blocks": 20,
+    "label": null,
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1315,
+    "end": 1348,
+    "function": "lowering.newExpression",
+    "kind": "blocks never run",
+    "statements": 24,
+    "blocks": 17,
+    "label": null,
+    "fixturesReachStatements": 19,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_super.go",
+    "start": 184,
+    "end": 213,
+    "function": "lowering.conditionalSuper",
+    "kind": "blocks never run",
+    "statements": 23,
+    "blocks": 15,
+    "label": null,
+    "fixturesReachStatements": 18,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_super.go",
+    "start": 284,
+    "end": 314,
+    "function": "constructorSuperFlow.switchCases",
+    "kind": "function never entered",
+    "statements": 23,
+    "blocks": 13,
+    "label": null,
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/collections.go",
+    "start": 86,
+    "end": 120,
+    "function": "lowering.collectionPart",
+    "kind": "function never entered",
+    "statements": 23,
+    "blocks": 18,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/library_json_stringify.go",
+    "start": 39,
+    "end": 59,
+    "function": "emitter.jsonStringify",
+    "kind": "function never entered",
+    "statements": 23,
+    "blocks": 6,
+    "label": null,
+    "fixturesReachStatements": 23,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/assignments.go",
+    "start": 84,
+    "end": 115,
+    "function": "lowering.destructuringAssignment",
+    "kind": "function never entered",
+    "statements": 22,
+    "blocks": 15,
+    "label": null,
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 441,
+    "end": 457,
+    "function": "lowering.libraryOptionalNumbers",
+    "kind": "function never entered",
+    "statements": 22,
+    "blocks": 2,
+    "label": null,
+    "fixturesReachStatements": 22,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/regexp.go",
+    "start": 24,
+    "end": 54,
+    "function": "lowering.regexConstant",
+    "kind": "blocks never run",
+    "statements": 22,
+    "blocks": 16,
+    "label": null,
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_super.go",
+    "start": 53,
+    "end": 84,
+    "function": "constructorSuperFlow.expression",
+    "kind": "function never entered",
+    "statements": 21,
+    "blocks": 16,
+    "label": null,
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 100,
+    "end": 132,
+    "function": "lowering.memberFunction",
+    "kind": "function never entered",
+    "statements": 21,
+    "blocks": 17,
+    "label": null,
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_math_number.go",
+    "start": 152,
+    "end": 180,
+    "function": "lowering.libraryMathNumberCall",
+    "kind": "blocks never run",
+    "statements": 21,
+    "blocks": 18,
+    "label": null,
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/prototype_own.go",
+    "start": 91,
+    "end": 121,
+    "function": "lowering.functionPrototype",
+    "kind": "function never entered",
+    "statements": 21,
+    "blocks": 17,
+    "label": null,
+    "fixturesReachStatements": 15,
+    "structural": false
+   },
+   {
+    "file": "internal/native/reuse.go",
+    "start": 304,
+    "end": 339,
+    "function": "touches",
+    "kind": "function never entered",
+    "statements": 21,
+    "blocks": 17,
+    "label": null,
+    "fixturesReachStatements": 19,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 339,
+    "end": 367,
+    "function": "lowering.iterationReturnsClass",
+    "kind": "function never entered",
+    "statements": 20,
+    "blocks": 15,
+    "label": null,
+    "fixturesReachStatements": 15,
+    "structural": false
+   },
+   {
+    "file": "internal/native/class_accessors.go",
+    "start": 81,
+    "end": 110,
+    "function": "emitter.accessorCall",
+    "kind": "function never entered",
+    "statements": 20,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_generic_calls.go",
+    "start": 73,
+    "end": 99,
+    "function": "lowering.genericUsesClasses",
+    "kind": "function never entered",
+    "statements": 19,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/generic.go",
+    "start": 214,
+    "end": 244,
+    "function": "lowering.inferTypes",
+    "kind": "function never entered",
+    "statements": 19,
+    "blocks": 16,
+    "label": null,
+    "fixturesReachStatements": 18,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/invariance.go",
+    "start": 246,
+    "end": 275,
+    "function": "lowering.canWrite",
+    "kind": "function never entered",
+    "statements": 19,
+    "blocks": 16,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 308,
+    "end": 337,
+    "function": "lowering.knownIterationClass",
+    "kind": "function never entered",
+    "statements": 19,
+    "blocks": 14,
+    "label": null,
+    "fixturesReachStatements": 4,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_string.go",
+    "start": 360,
+    "end": 385,
+    "function": "lowering.stringRawTemplate",
+    "kind": "function never entered",
+    "statements": 19,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/set.go",
+    "start": 130,
+    "end": 156,
+    "function": "lowering.forOfSet",
+    "kind": "blocks never run",
+    "statements": 19,
+    "blocks": 14,
+    "label": "in case part == \"entries\" && name.Kind == ast.KindArrayBindingPattern:",
+    "fixturesReachStatements": 15,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_features.go",
+    "start": 35,
+    "end": 62,
+    "function": "lowering.objectKeys",
+    "kind": "blocks never run",
+    "statements": 18,
+    "blocks": 15,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_inheritance.go",
+    "start": 414,
+    "end": 435,
+    "function": "lowering.superStatement",
+    "kind": "function never entered",
+    "statements": 18,
+    "blocks": 8,
+    "label": null,
+    "fixturesReachStatements": 16,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_static.go",
+    "start": 503,
+    "end": 522,
+    "function": "lowering.staticConstruct",
+    "kind": "blocks never run",
+    "statements": 18,
+    "blocks": 5,
+    "label": null,
+    "fixturesReachStatements": 17,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/invariance.go",
+    "start": 383,
+    "end": 408,
+    "function": "lowering.refuseWidening",
+    "kind": "blocks never run",
+    "statements": 18,
+    "blocks": 11,
+    "label": "in case node.Kind == ast.KindAsExpression:",
+    "fixturesReachStatements": 18,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_string.go",
+    "start": 252,
+    "end": 276,
+    "function": "lowering.stringIndexMethod",
+    "kind": "function never entered",
+    "statements": 18,
+    "blocks": 10,
+    "label": null,
+    "fixturesReachStatements": 18,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/predicates.go",
+    "start": 235,
+    "end": 263,
+    "function": "predicateProof.check",
+    "kind": "function never entered",
+    "statements": 18,
+    "blocks": 15,
+    "label": null,
+    "fixturesReachStatements": 13,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/prototype.go",
+    "start": 260,
+    "end": 286,
+    "function": "lowering.exactPlainObject",
+    "kind": "function never entered",
+    "statements": 18,
+    "blocks": 14,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/regexp.go",
+    "start": 76,
+    "end": 104,
+    "function": "lowering.constantPattern",
+    "kind": "function never entered",
+    "statements": 18,
+    "blocks": 12,
+    "label": null,
+    "fixturesReachStatements": 16,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/set.go",
+    "start": 43,
+    "end": 69,
+    "function": "lowering.newSet",
+    "kind": "blocks never run",
+    "statements": 18,
+    "blocks": 14,
+    "label": null,
+    "fixturesReachStatements": 15,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 70,
+    "end": 98,
+    "function": "lowering.memberReceiver",
+    "kind": "function never entered",
+    "statements": 17,
+    "blocks": 15,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1673,
+    "end": 1697,
+    "function": "lowering.stringFromCodes",
+    "kind": "function never entered",
+    "statements": 17,
+    "blocks": 13,
+    "label": null,
+    "fixturesReachStatements": 13,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/collections.go",
+    "start": 255,
+    "end": 277,
+    "function": "lowering.destructure",
+    "kind": "function never entered",
+    "statements": 16,
+    "blocks": 12,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/invariance.go",
+    "start": 607,
+    "end": 630,
+    "function": "lowering.refuseElementWidening",
+    "kind": "function never entered",
+    "statements": 16,
+    "blocks": 12,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 192,
+    "end": 214,
+    "function": "lowering.iterationReturns",
+    "kind": "function never entered",
+    "statements": 16,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 14,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 260,
+    "end": 283,
+    "function": "lowering.iterationCallableBody",
+    "kind": "function never entered",
+    "statements": 16,
+    "blocks": 13,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 519,
+    "end": 542,
+    "function": "lowering.hasOwnProperty",
+    "kind": "function never entered",
+    "statements": 16,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 11,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1179,
+    "end": 1201,
+    "function": "lowering.newArrayFilled",
+    "kind": "function never entered",
+    "statements": 16,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 11,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_accessors.go",
+    "start": 108,
+    "end": 125,
+    "function": "lowering.literalAccessor",
+    "kind": "function never entered",
+    "statements": 15,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 14,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_accessors.go",
+    "start": 385,
+    "end": 405,
+    "function": "lowering.checkAccessorSpreads",
+    "kind": "blocks never run",
+    "statements": 15,
+    "blocks": 13,
+    "label": null,
+    "fixturesReachStatements": 11,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/collections.go",
+    "start": 60,
+    "end": 81,
+    "function": "lowering.iterated",
+    "kind": "blocks never run",
+    "statements": 15,
+    "blocks": 12,
+    "label": null,
+    "fixturesReachStatements": 11,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/counters.go",
+    "start": 243,
+    "end": 267,
+    "function": "neverNegativeZero",
+    "kind": "blocks never run",
+    "statements": 15,
+    "blocks": 12,
+    "label": "in case ir.Read:",
+    "fixturesReachStatements": 7,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 309,
+    "end": 328,
+    "function": "lowering.startIteration",
+    "kind": "function never entered",
+    "statements": 15,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 13,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 216,
+    "end": 238,
+    "function": "lowering.iterationFactoryKnown",
+    "kind": "function never entered",
+    "statements": 15,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 14,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 109,
+    "end": 130,
+    "function": "lowering.libraryCollectionIterator",
+    "kind": "function never entered",
+    "statements": 15,
+    "blocks": 10,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_math_number.go",
+    "start": 128,
+    "end": 148,
+    "function": "lowering.libraryMathNumberCall",
+    "kind": "blocks never run",
+    "statements": 15,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_string.go",
+    "start": 66,
+    "end": 92,
+    "function": "lowering.stringConversion",
+    "kind": "function never entered",
+    "statements": 15,
+    "blocks": 14,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 98,
+    "end": 121,
+    "function": "lowering.emptySpread",
+    "kind": "function never entered",
+    "statements": 15,
+    "blocks": 10,
+    "label": null,
+    "fixturesReachStatements": 14,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 890,
+    "end": 912,
+    "function": "lowering.forOf",
+    "kind": "blocks never run",
+    "statements": 15,
+    "blocks": 13,
+    "label": "in default:",
+    "fixturesReachStatements": 11,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_inheritance.go",
+    "start": 743,
+    "end": 763,
+    "function": "lowering.classDestructuredView",
+    "kind": "function never entered",
+    "statements": 14,
+    "blocks": 10,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_super.go",
+    "start": 151,
+    "end": 169,
+    "function": "lowering.prepareSuper",
+    "kind": "function never entered",
+    "statements": 14,
+    "blocks": 6,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/counters.go",
+    "start": 278,
+    "end": 302,
+    "function": "constantOf",
+    "kind": "blocks never run",
+    "statements": 14,
+    "blocks": 11,
+    "label": "in case ir.Unary:",
+    "fixturesReachStatements": 3,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/generic.go",
+    "start": 142,
+    "end": 164,
+    "function": "lowering.genericTypeKey",
+    "kind": "function never entered",
+    "statements": 14,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 112,
+    "end": 130,
+    "function": "lowering.libraryArrayComparator",
+    "kind": "function never entered",
+    "statements": 14,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 14,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_math_number.go",
+    "start": 85,
+    "end": 103,
+    "function": "lowering.libraryMathNumberCall",
+    "kind": "blocks never run",
+    "statements": 14,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 11,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1619,
+    "end": 1640,
+    "function": "lowering.elementAccess",
+    "kind": "blocks never run",
+    "statements": 14,
+    "blocks": 13,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/native/library_json_stringify.go",
+    "start": 9,
+    "end": 27,
+    "function": "emitter.jsonSchema",
+    "kind": "function never entered",
+    "statements": 14,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 14,
+    "structural": false
+   },
+   {
+    "file": "internal/native/library_object.go",
+    "start": 9,
+    "end": 34,
+    "function": "emitter.objectCall",
+    "kind": "function never entered",
+    "statements": 14,
+    "blocks": 13,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_inheritance.go",
+    "start": 594,
+    "end": 612,
+    "function": "lowering.fieldName",
+    "kind": "blocks never run",
+    "statements": 13,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_super.go",
+    "start": 22,
+    "end": 40,
+    "function": "constructorSuperFlow.reads",
+    "kind": "function never entered",
+    "statements": 13,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 240,
+    "end": 258,
+    "function": "hasConstructorReturn",
+    "kind": "function never entered",
+    "statements": 13,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 287,
+    "end": 306,
+    "function": "lowering.sameIterationClass",
+    "kind": "function never entered",
+    "statements": 13,
+    "blocks": 10,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 245,
+    "end": 259,
+    "function": "lowering.libraryIteratorArray",
+    "kind": "function never entered",
+    "statements": 13,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 13,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_math_number.go",
+    "start": 42,
+    "end": 65,
+    "function": "lowering.libraryNumber",
+    "kind": "function never entered",
+    "statements": 13,
+    "blocks": 13,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_string.go",
+    "start": 116,
+    "end": 133,
+    "function": "lowering.libraryString",
+    "kind": "blocks never run",
+    "statements": 13,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1443,
+    "end": 1461,
+    "function": "lowering.shorthand",
+    "kind": "function never entered",
+    "statements": 13,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 257,
+    "end": 271,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 13,
+    "blocks": 7,
+    "label": "in case ir.CallClosure:",
+    "fixturesReachStatements": 13,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 320,
+    "end": 335,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 13,
+    "blocks": 7,
+    "label": "in case ir.ArrayFill:",
+    "fixturesReachStatements": 13,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 351,
+    "end": 365,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 13,
+    "blocks": 5,
+    "label": "in case ir.CheckedCast:",
+    "fixturesReachStatements": 13,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_accessors.go",
+    "start": 33,
+    "end": 51,
+    "function": "lowering.registerAccessor",
+    "kind": "function never entered",
+    "statements": 12,
+    "blocks": 8,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_static_private.go",
+    "start": 26,
+    "end": 42,
+    "function": "lowering.privateStaticReceiver",
+    "kind": "blocks never run",
+    "statements": 12,
+    "blocks": 4,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/collections.go",
+    "start": 360,
+    "end": 376,
+    "function": "lowering.optionalTupleElement",
+    "kind": "function never entered",
+    "statements": 12,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/expression.go",
+    "start": 180,
+    "end": 197,
+    "function": "lowering.expression",
+    "kind": "blocks never run",
+    "statements": 12,
+    "blocks": 10,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/invariance.go",
+    "start": 462,
+    "end": 478,
+    "function": "lowering.wideningRefusal",
+    "kind": "function never entered",
+    "statements": 12,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 132,
+    "end": 149,
+    "function": "lowering.librarySetLiteral",
+    "kind": "function never entered",
+    "statements": 12,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_string.go",
+    "start": 36,
+    "end": 52,
+    "function": "lowering.stringMethodObservation",
+    "kind": "blocks never run",
+    "statements": 12,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1108,
+    "end": 1125,
+    "function": "lowering.arrayMethod",
+    "kind": "blocks never run",
+    "statements": 12,
+    "blocks": 11,
+    "label": "in case \"fill\":",
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/proven_relations.go",
+    "start": 11,
+    "end": 29,
+    "function": "lowering.provenRelation",
+    "kind": "function never entered",
+    "statements": 12,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 7,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 591,
+    "end": 607,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 12,
+    "blocks": 10,
+    "label": "in case ir.StringFromCodes:",
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/native/library_math_number.go",
+    "start": 34,
+    "end": 51,
+    "function": "emitter.libraryNumberCall",
+    "kind": "blocks never run",
+    "statements": 12,
+    "blocks": 8,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class.go",
+    "start": 275,
+    "end": 290,
+    "function": "containsThis",
+    "kind": "function never entered",
+    "statements": 11,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_inheritance.go",
+    "start": 779,
+    "end": 794,
+    "function": "lowering.cycleFieldMatches",
+    "kind": "blocks never run",
+    "statements": 11,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_inheritance.go",
+    "start": 818,
+    "end": 833,
+    "function": "lowering.classIdentity",
+    "kind": "function never entered",
+    "statements": 11,
+    "blocks": 6,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/collections.go",
+    "start": 125,
+    "end": 141,
+    "function": "lowering.newMapFrom",
+    "kind": "function never entered",
+    "statements": 11,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 7,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/expression.go",
+    "start": 350,
+    "end": 364,
+    "function": "lowering.weakTarget",
+    "kind": "blocks never run",
+    "statements": 11,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 47,
+    "end": 60,
+    "function": "lowering.objectMethod",
+    "kind": "function never entered",
+    "statements": 11,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 173,
+    "end": 190,
+    "function": "lowering.sameMemberOrigin",
+    "kind": "function never entered",
+    "statements": 11,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_math_number.go",
+    "start": 106,
+    "end": 120,
+    "function": "lowering.libraryMathNumberCall",
+    "kind": "blocks never run",
+    "statements": 11,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 8,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/modules.go",
+    "start": 29,
+    "end": 44,
+    "function": "lowering.moduleOrder",
+    "kind": "blocks never run",
+    "statements": 11,
+    "blocks": 8,
+    "label": "in case 2:",
+    "fixturesReachStatements": 8,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/refusals.go",
+    "start": 137,
+    "end": 150,
+    "function": "lowering.refuse",
+    "kind": "blocks never run",
+    "statements": 11,
+    "blocks": 7,
+    "label": "in case ast.KindMethodDeclaration:",
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 509,
+    "end": 526,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 11,
+    "blocks": 8,
+    "label": "in case ir.HasOwn:",
+    "fixturesReachStatements": 8,
+    "structural": false
+   },
+   {
+    "file": "internal/native/regexp.go",
+    "start": 11,
+    "end": 22,
+    "function": "emitter.regexCall",
+    "kind": "blocks never run",
+    "statements": 11,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 4,
+    "structural": false
+   },
+   {
+    "file": "internal/native/reuse.go",
+    "start": 280,
+    "end": 299,
+    "function": "reusePlan.movable",
+    "kind": "blocks never run",
+    "statements": 11,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/native/reuse.go",
+    "start": 603,
+    "end": 614,
+    "function": "emitter.take",
+    "kind": "blocks never run",
+    "statements": 11,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/cast.go",
+    "start": 93,
+    "end": 109,
+    "function": "lowering.literalConstant",
+    "kind": "function never entered",
+    "statements": 10,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 4,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_inheritance.go",
+    "start": 108,
+    "end": 121,
+    "function": "lowering.checkMemberOverrides",
+    "kind": "blocks never run",
+    "statements": 10,
+    "blocks": 8,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/expression.go",
+    "start": 828,
+    "end": 843,
+    "function": "lowering.writable",
+    "kind": "function never entered",
+    "statements": 10,
+    "blocks": 8,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/from.go",
+    "start": 21,
+    "end": 33,
+    "function": "lowering.arrayFrom",
+    "kind": "blocks never run",
+    "statements": 10,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 8,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 330,
+    "end": 340,
+    "function": "lowering.iterationStep",
+    "kind": "function never entered",
+    "statements": 10,
+    "blocks": 2,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_globals.go",
+    "start": 16,
+    "end": 29,
+    "function": "lowering.libraryGlobalValue",
+    "kind": "blocks never run",
+    "statements": 10,
+    "blocks": 8,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_map_set.go",
+    "start": 233,
+    "end": 243,
+    "function": "lowering.libraryIteratorLoop",
+    "kind": "function never entered",
+    "statements": 10,
+    "blocks": 2,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_string.go",
+    "start": 234,
+    "end": 246,
+    "function": "lowering.stringHelper",
+    "kind": "function never entered",
+    "statements": 10,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 376,
+    "end": 388,
+    "function": "lowering.property",
+    "kind": "blocks never run",
+    "statements": 10,
+    "blocks": 6,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1353,
+    "end": 1369,
+    "function": "writtenOut",
+    "kind": "function never entered",
+    "statements": 10,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 8,
+    "structural": false
+   },
+   {
+    "file": "internal/native/reuse.go",
+    "start": 575,
+    "end": 588,
+    "function": "emitter.emptySpread",
+    "kind": "blocks never run",
+    "statements": 10,
+    "blocks": 8,
+    "label": null,
+    "fixturesReachStatements": 10,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/assignments.go",
+    "start": 66,
+    "end": 79,
+    "function": "lowering.tupleField",
+    "kind": "function never entered",
+    "statements": 9,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_inheritance.go",
+    "start": 399,
+    "end": 412,
+    "function": "lowering.superCall",
+    "kind": "function never entered",
+    "statements": 9,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 7,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 860,
+    "end": 871,
+    "function": "lowering.forOf",
+    "kind": "blocks never run",
+    "statements": 9,
+    "blocks": 6,
+    "label": "in case ir.Map:",
+    "fixturesReachStatements": 8,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/predicates.go",
+    "start": 291,
+    "end": 309,
+    "function": "predicateEffects",
+    "kind": "function never entered",
+    "statements": 9,
+    "blocks": 8,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/regexp.go",
+    "start": 108,
+    "end": 121,
+    "function": "joinPatternStrings",
+    "kind": "function never entered",
+    "statements": 9,
+    "blocks": 5,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/regexp.go",
+    "start": 230,
+    "end": 242,
+    "function": "escapeRegexSource",
+    "kind": "blocks never run",
+    "statements": 9,
+    "blocks": 7,
+    "label": "in case '\\n':",
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 272,
+    "end": 286,
+    "function": "emitter.evaluate",
+    "kind": "case never taken",
+    "statements": 9,
+    "blocks": 8,
+    "label": "case expression.Returns == 0:",
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_generic_calls.go",
+    "start": 105,
+    "end": 115,
+    "function": "lowering.nominalTypeArguments",
+    "kind": "blocks never run",
+    "statements": 8,
+    "blocks": 6,
+    "label": null,
+    "fixturesReachStatements": 7,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/cycles.go",
+    "start": 330,
+    "end": 343,
+    "function": "cycleFinder.slotsOf",
+    "kind": "blocks never run",
+    "statements": 8,
+    "blocks": 5,
+    "label": "in default:",
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/expression.go",
+    "start": 794,
+    "end": 803,
+    "function": "lowering.conditional",
+    "kind": "blocks never run",
+    "statements": 8,
+    "blocks": 5,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/expression.go",
+    "start": 808,
+    "end": 824,
+    "function": "typeName",
+    "kind": "function never entered",
+    "statements": 8,
+    "blocks": 8,
+    "label": null,
+    "fixturesReachStatements": 5,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/invariance.go",
+    "start": 575,
+    "end": 585,
+    "function": "lowering.impliedTarget",
+    "kind": "blocks never run",
+    "statements": 8,
+    "blocks": 7,
+    "label": "in case ast.KindReturnStatement, ast.KindArrowFunction:",
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 11,
+    "end": 23,
+    "function": "memberConvention",
+    "kind": "function never entered",
+    "statements": 8,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 5,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration_origin.go",
+    "start": 369,
+    "end": 380,
+    "function": "lowering.genericIteratorFactoryKnown",
+    "kind": "function never entered",
+    "statements": 8,
+    "blocks": 5,
+    "label": null,
+    "fixturesReachStatements": 7,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 94,
+    "end": 105,
+    "function": "lowering.libraryArrayMethod",
+    "kind": "blocks never run",
+    "statements": 8,
+    "blocks": 7,
+    "label": "in case \"toSorted\":",
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_array.go",
+    "start": 466,
+    "end": 476,
+    "function": "lowering.libraryArrayObservedMethod",
+    "kind": "blocks never run",
+    "statements": 8,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/library_object.go",
+    "start": 211,
+    "end": 224,
+    "function": "lowering.objectIntersection",
+    "kind": "function never entered",
+    "statements": 8,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/modules.go",
+    "start": 74,
+    "end": 84,
+    "function": "lowering.declareModule",
+    "kind": "blocks never run",
+    "statements": 8,
+    "blocks": 7,
+    "label": "in case ast.KindVariableStatement:",
+    "fixturesReachStatements": 7,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/object.go",
+    "start": 1578,
+    "end": 1588,
+    "function": "lowering.elementAccess",
+    "kind": "blocks never run",
+    "statements": 8,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 5,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit.go",
+    "start": 108,
+    "end": 120,
+    "function": "cBytes",
+    "kind": "function never entered",
+    "statements": 8,
+    "blocks": 6,
+    "label": null,
+    "fixturesReachStatements": 8,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_branches.go",
+    "start": 130,
+    "end": 138,
+    "function": "emitter.coalesce",
+    "kind": "blocks never run",
+    "statements": 8,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 7,
+    "structural": false
+   },
+   {
+    "file": "internal/native/library_json_stringify.go",
+    "start": 28,
+    "end": 38,
+    "function": "emitter.jsonSlot",
+    "kind": "function never entered",
+    "statements": 8,
+    "blocks": 4,
+    "label": null,
+    "fixturesReachStatements": 8,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/cast.go",
+    "start": 79,
+    "end": 90,
+    "function": "lowering.fieldLiteral",
+    "kind": "function never entered",
+    "statements": 7,
+    "blocks": 6,
+    "label": null,
+    "fixturesReachStatements": 5,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_inheritance.go",
+    "start": 663,
+    "end": 671,
+    "function": "lowering.nominalMismatch",
+    "kind": "blocks never run",
+    "statements": 7,
+    "blocks": 5,
+    "label": null,
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_static.go",
+    "start": 467,
+    "end": 476,
+    "function": "lowering.staticStorage",
+    "kind": "function never entered",
+    "statements": 7,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/class_static_private.go",
+    "start": 50,
+    "end": 56,
+    "function": "lowering.privateStaticStore",
+    "kind": "blocks never run",
+    "statements": 7,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 7,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/collections.go",
+    "start": 240,
+    "end": 250,
+    "function": "lowering.tupleLength",
+    "kind": "function never entered",
+    "statements": 7,
+    "blocks": 5,
+    "label": null,
+    "fixturesReachStatements": 5,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/counters.go",
+    "start": 135,
+    "end": 147,
+    "function": "markCounter",
+    "kind": "blocks never run",
+    "statements": 7,
+    "blocks": 4,
+    "label": "in case step > 0 && condition.Operator == ir.LessOrEqual:",
+    "fixturesReachStatements": 4,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/cycles.go",
+    "start": 448,
+    "end": 459,
+    "function": "cycleFinder.present",
+    "kind": "function never entered",
+    "statements": 7,
+    "blocks": 6,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/functions.go",
+    "start": 172,
+    "end": 179,
+    "function": "lowering.lowerBody",
+    "kind": "blocks never run",
+    "statements": 7,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/invariance.go",
+    "start": 279,
+    "end": 291,
+    "function": "lowering.narrowedFrom",
+    "kind": "function never entered",
+    "statements": 7,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/lower/iteration.go",
+    "start": 144,
+    "end": 154,
+    "function": "lowering.memberResult",
+    "kind": "function never entered",
+    "statements": 7,
+    "blocks": 5,
+    "label": null,
+    "fixturesReachStatements": 5,
+    "structural": false
+   }
+  ],
+  "goEmit": [
+   {
+    "file": "internal/native/emit_maps.go",
+    "start": 27,
+    "end": 74,
+    "function": "emitter.mapForEach",
+    "kind": "function never entered",
+    "statements": 38,
+    "blocks": 17,
+    "label": null,
+    "fixturesReachStatements": 38,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 395,
+    "end": 435,
+    "function": "emitter.switchStatement",
+    "kind": "function never entered",
+    "statements": 34,
+    "blocks": 10,
+    "label": null,
+    "fixturesReachStatements": 34,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 257,
+    "end": 271,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 13,
+    "blocks": 7,
+    "label": "in case ir.CallClosure:",
+    "fixturesReachStatements": 13,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 320,
+    "end": 335,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 13,
+    "blocks": 7,
+    "label": "in case ir.ArrayFill:",
+    "fixturesReachStatements": 13,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 351,
+    "end": 365,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 13,
+    "blocks": 5,
+    "label": "in case ir.CheckedCast:",
+    "fixturesReachStatements": 13,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 591,
+    "end": 607,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 12,
+    "blocks": 10,
+    "label": "in case ir.StringFromCodes:",
+    "fixturesReachStatements": 12,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 509,
+    "end": 526,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 11,
+    "blocks": 8,
+    "label": "in case ir.HasOwn:",
+    "fixturesReachStatements": 8,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 272,
+    "end": 286,
+    "function": "emitter.evaluate",
+    "kind": "case never taken",
+    "statements": 9,
+    "blocks": 8,
+    "label": "case expression.Returns == 0:",
+    "fixturesReachStatements": 9,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit.go",
+    "start": 108,
+    "end": 120,
+    "function": "cBytes",
+    "kind": "function never entered",
+    "statements": 8,
+    "blocks": 6,
+    "label": null,
+    "fixturesReachStatements": 8,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_branches.go",
+    "start": 130,
+    "end": 138,
+    "function": "emitter.coalesce",
+    "kind": "blocks never run",
+    "statements": 8,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 7,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_functions.go",
+    "start": 95,
+    "end": 103,
+    "function": "emitter.returnStatement",
+    "kind": "blocks never run",
+    "statements": 7,
+    "blocks": 4,
+    "label": null,
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 196,
+    "end": 206,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 6,
+    "blocks": 5,
+    "label": "in case ir.WeakOf:",
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 352,
+    "end": 358,
+    "function": "emitter.forOf",
+    "kind": "blocks never run",
+    "statements": 6,
+    "blocks": 4,
+    "label": null,
+    "fixturesReachStatements": 6,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 202,
+    "end": 210,
+    "function": "emitter.comparator",
+    "kind": "function never entered",
+    "statements": 5,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 5,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 420,
+    "end": 426,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 5,
+    "blocks": 4,
+    "label": "in case ir.ArraySort:",
+    "fixturesReachStatements": 5,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 455,
+    "end": 462,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 5,
+    "blocks": 4,
+    "label": "in case ir.MapKeys:",
+    "fixturesReachStatements": 3,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_functions.go",
+    "start": 187,
+    "end": 192,
+    "function": "emitter.arguments",
+    "kind": "blocks never run",
+    "statements": 5,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 5,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 178,
+    "end": 184,
+    "function": "equality",
+    "kind": "blocks never run",
+    "statements": 4,
+    "blocks": 4,
+    "label": "in case ir.Boolean:",
+    "fixturesReachStatements": 4,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 63,
+    "end": 67,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 4,
+    "blocks": 3,
+    "label": "in case ir.Call:",
+    "fixturesReachStatements": 4,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_numbers.go",
+    "start": 69,
+    "end": 74,
+    "function": "emitter.mathCall",
+    "kind": "blocks never run",
+    "statements": 4,
+    "blocks": 4,
+    "label": "in case 0:",
+    "fixturesReachStatements": 3,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 23,
+    "end": 25,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 3,
+    "blocks": 1,
+    "label": "in case ir.RegExpGroup:",
+    "fixturesReachStatements": 3,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_numbers.go",
+    "start": 20,
+    "end": 23,
+    "function": "emitter.numberFormat",
+    "kind": "blocks never run",
+    "statements": 3,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 3,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_numbers.go",
+    "start": 60,
+    "end": 63,
+    "function": "emitter.mathCall",
+    "kind": "blocks never run",
+    "statements": 3,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 3,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_objects.go",
+    "start": 26,
+    "end": 29,
+    "function": "emitter.fieldSlot",
+    "kind": "blocks never run",
+    "statements": 3,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 3,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 168,
+    "end": 170,
+    "function": "emitter.statement",
+    "kind": "blocks never run",
+    "statements": 3,
+    "blocks": 1,
+    "label": "in case ir.Panic:",
+    "fixturesReachStatements": 3,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit.go",
+    "start": 34,
+    "end": 35,
+    "function": "C",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 86,
+    "end": 88,
+    "function": "emitter.arrayVisit",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": "in case \"filter\":",
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 162,
+    "end": 164,
+    "function": "emitter.arrayReduce",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 193,
+    "end": 195,
+    "function": "joinKind",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 2,
+    "label": "in case ir.Boolean:",
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 32,
+    "end": 34,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": "in case ir.IsNull:",
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 93,
+    "end": 95,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": "in case ir.InstanceOf:",
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 225,
+    "end": 227,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": "in case ir.StringLength:",
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 398,
+    "end": 399,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": "in case ir.MapEntries:",
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 580,
+    "end": 582,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": "in case ir.Length:",
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 585,
+    "end": 587,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 2,
+    "label": "in case ir.JSONStringify:",
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 674,
+    "end": 676,
+    "function": "emitter.binary",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 2,
+    "label": "in case operandType == ir.Union && operator == ir.Equal:",
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_objects.go",
+    "start": 123,
+    "end": 124,
+    "function": "emitter.objectLiteral",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 307,
+    "end": 309,
+    "function": "emitter.forOf",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 311,
+    "end": 313,
+    "function": "emitter.forOf",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_values.go",
+    "start": 28,
+    "end": 30,
+    "function": "cType",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 2,
+    "label": "in case ir.Union:",
+    "fixturesReachStatements": 2,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 32,
+    "end": 33,
+    "function": "emitter.arrayVisit",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case \"find\", \"findLast\":",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 38,
+    "end": 39,
+    "function": "emitter.arrayVisit",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case \"find\", \"findLast\":",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 56,
+    "end": 57,
+    "function": "emitter.arrayVisit",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case \"find\", \"findLast\":",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 66,
+    "end": 67,
+    "function": "emitter.arrayVisit",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case \"find\", \"findLast\":",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 72,
+    "end": 73,
+    "function": "emitter.arrayVisit",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case \"find\", \"findLast\":",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 79,
+    "end": 80,
+    "function": "emitter.arrayVisit",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case \"forEach\":",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 101,
+    "end": 102,
+    "function": "emitter.arrayVisit",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case \"find\", \"findLast\":",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_arrays.go",
+    "start": 135,
+    "end": 136,
+    "function": "emitter.arrayReduce",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_branches.go",
+    "start": 112,
+    "end": 113,
+    "function": "unwrap",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ')':",
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 17,
+    "end": 18,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.RegExpNew:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 29,
+    "end": 29,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.Null:",
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 50,
+    "end": 50,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.Plus:",
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 89,
+    "end": 89,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.HasAccessor:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 97,
+    "end": 98,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.InstanceOf:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 116,
+    "end": 117,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.Property:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 128,
+    "end": 129,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.Property:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 142,
+    "end": 143,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.Property:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 192,
+    "end": 192,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.Box:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 210,
+    "end": 211,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.TypeOf:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 213,
+    "end": 214,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.TypeOf:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 216,
+    "end": 217,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.TypeOf:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 220,
+    "end": 220,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.UnionToString:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 234,
+    "end": 234,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 389,
+    "end": 390,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.ArrayPop:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 436,
+    "end": 436,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.CollectionIterator:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 440,
+    "end": 441,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.MapNew:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 444,
+    "end": 445,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.MapNew:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 448,
+    "end": 449,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.MapNew:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 451,
+    "end": 452,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.MapNew:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 466,
+    "end": 467,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.SetNew:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 470,
+    "end": 471,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.SetNew:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 479,
+    "end": 479,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.SetValues:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 489,
+    "end": 489,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.MapGet:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 540,
+    "end": 541,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.ArrayJoin:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 559,
+    "end": 559,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case expression.Element.IsReference():",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 610,
+    "end": 611,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.NumberCall:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 633,
+    "end": 633,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.NumberCall:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_expressions.go",
+    "start": 641,
+    "end": 641,
+    "function": "emitter.evaluate",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_functions.go",
+    "start": 127,
+    "end": 128,
+    "function": "emitter.returnStatement",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_locals.go",
+    "start": 32,
+    "end": 32,
+    "function": "emitter.store",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_locals.go",
+    "start": 41,
+    "end": 42,
+    "function": "emitter.store",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_maps.go",
+    "start": 13,
+    "end": 14,
+    "function": "newMap",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_maps.go",
+    "start": 16,
+    "end": 17,
+    "function": "newMap",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_maps.go",
+    "start": 19,
+    "end": 20,
+    "function": "newMap",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_numbers.go",
+    "start": 43,
+    "end": 44,
+    "function": "emitter.mathCall",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_numbers.go",
+    "start": 46,
+    "end": 47,
+    "function": "emitter.mathCall",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_numbers.go",
+    "start": 56,
+    "end": 57,
+    "function": "emitter.mathCall",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_objects.go",
+    "start": 33,
+    "end": 34,
+    "function": "emitter.fieldSlot",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_objects.go",
+    "start": 41,
+    "end": 42,
+    "function": "emitter.fieldSlot",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_objects.go",
+    "start": 45,
+    "end": 46,
+    "function": "emitter.fieldSlot",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_objects.go",
+    "start": 49,
+    "end": 50,
+    "function": "emitter.fieldSlot",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_objects.go",
+    "start": 56,
+    "end": 56,
+    "function": "emitter.fieldSlot",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_objects.go",
+    "start": 75,
+    "end": 76,
+    "function": "emitter.objectLiteral",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_objects.go",
+    "start": 188,
+    "end": 188,
+    "function": "emitter.shapeWith",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_objects.go",
+    "start": 220,
+    "end": 221,
+    "function": "emitter.dispatchable",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 23,
+    "end": 24,
+    "function": "emitter.block",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 57,
+    "end": 58,
+    "function": "emitter.statement",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.WriteLine:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 89,
+    "end": 89,
+    "function": "emitter.statement",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.Assign:",
+    "fixturesReachStatements": 0,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 93,
+    "end": 94,
+    "function": "emitter.statement",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.Assign:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   },
+   {
+    "file": "internal/native/emit_statements.go",
+    "start": 121,
+    "end": 122,
+    "function": "emitter.statement",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": "in case ir.Evaluate:",
+    "fixturesReachStatements": 1,
+    "structural": false
+   }
+  ],
+  "goStructural": [
+   {
+    "file": "internal/native/units.go",
+    "start": 178,
+    "end": 274,
+    "function": "splitC",
+    "kind": "function never entered",
+    "statements": 74,
+    "blocks": 44,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/units.go",
+    "start": 370,
+    "end": 461,
+    "function": "buildUnitsWithLibrary",
+    "kind": "function never entered",
+    "statements": 67,
+    "blocks": 40,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/units.go",
+    "start": 86,
+    "end": 173,
+    "function": "splitDeclarations",
+    "kind": "function never entered",
+    "statements": 59,
+    "blocks": 43,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/units.go",
+    "start": 284,
+    "end": 364,
+    "function": "compileUnit",
+    "kind": "function never entered",
+    "statements": 53,
+    "blocks": 31,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/lower/tsgo.go",
+    "start": 27,
+    "end": 95,
+    "function": "lowering.tsgo",
+    "kind": "blocks never run",
+    "statements": 45,
+    "blocks": 28,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/library.go",
+    "start": 94,
+    "end": 148,
+    "function": "cachedRuntime",
+    "kind": "function never entered",
+    "statements": 39,
+    "blocks": 26,
+    "label": null,
+    "fixturesReachStatements": 8,
+    "structural": true
+   },
+   {
+    "file": "internal/native/units.go",
+    "start": 22,
+    "end": 74,
+    "function": "cTokens",
+    "kind": "function never entered",
+    "statements": 37,
+    "blocks": 29,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/tsgo.go",
+    "start": 29,
+    "end": 74,
+    "function": "TSGoC",
+    "kind": "function never entered",
+    "statements": 33,
+    "blocks": 22,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/tsgo.go",
+    "start": 79,
+    "end": 124,
+    "function": "BuildTSGo",
+    "kind": "function never entered",
+    "statements": 33,
+    "blocks": 22,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/native.go",
+    "start": 118,
+    "end": 146,
+    "function": "Build",
+    "kind": "function never entered",
+    "statements": 26,
+    "blocks": 13,
+    "label": null,
+    "fixturesReachStatements": 21,
+    "structural": true
+   },
+   {
+    "file": "internal/native/native.go",
+    "start": 80,
+    "end": 109,
+    "function": "Flags",
+    "kind": "function never entered",
+    "statements": 22,
+    "blocks": 13,
+    "label": null,
+    "fixturesReachStatements": 20,
+    "structural": true
+   },
+   {
+    "file": "internal/native/library.go",
+    "start": 72,
+    "end": 92,
+    "function": "runtimeKey",
+    "kind": "function never entered",
+    "statements": 20,
+    "blocks": 8,
+    "label": null,
+    "fixturesReachStatements": 20,
+    "structural": true
+   },
+   {
+    "file": "internal/native/library.go",
+    "start": 28,
+    "end": 51,
+    "function": "RuntimeLibrary",
+    "kind": "function never entered",
+    "statements": 17,
+    "blocks": 11,
+    "label": null,
+    "fixturesReachStatements": 12,
+    "structural": true
+   },
+   {
+    "file": "internal/native/units_tsgo.go",
+    "start": 31,
+    "end": 51,
+    "function": "splitTSGoRuntime",
+    "kind": "function never entered",
+    "statements": 15,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/library.go",
+    "start": 53,
+    "end": 70,
+    "function": "readRuntime",
+    "kind": "function never entered",
+    "statements": 12,
+    "blocks": 9,
+    "label": null,
+    "fixturesReachStatements": 9,
+    "structural": true
+   },
+   {
+    "file": "internal/native/units_tsgo.go",
+    "start": 14,
+    "end": 27,
+    "function": "BuildSplitTSGo",
+    "kind": "function never entered",
+    "statements": 9,
+    "blocks": 7,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/library.go",
+    "start": 152,
+    "end": 157,
+    "function": "RuntimeLinkFlags",
+    "kind": "function never entered",
+    "statements": 3,
+    "blocks": 3,
+    "label": null,
+    "fixturesReachStatements": 2,
+    "structural": true
+   },
+   {
+    "file": "internal/lower/tsgo.go",
+    "start": 20,
+    "end": 21,
+    "function": "lowering.tsgo",
+    "kind": "blocks never run",
+    "statements": 2,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/native.go",
+    "start": 113,
+    "end": 115,
+    "function": "CoverageRequested",
+    "kind": "function never entered",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 1,
+    "structural": true
+   },
+   {
+    "file": "internal/native/tsgo.go",
+    "start": 18,
+    "end": 19,
+    "function": "UsesTSGo",
+    "kind": "blocks never run",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/units.go",
+    "start": 75,
+    "end": 77,
+    "function": "identifierByte",
+    "kind": "function never entered",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/units.go",
+    "start": 280,
+    "end": 282,
+    "function": "unitKey",
+    "kind": "function never entered",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   },
+   {
+    "file": "internal/native/units.go",
+    "start": 366,
+    "end": 368,
+    "function": "buildUnits",
+    "kind": "function never entered",
+    "statements": 1,
+    "blocks": 1,
+    "label": null,
+    "fixturesReachStatements": 0,
+    "structural": true
+   }
+  ],
+  "c": [
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 459,
+    "end": 659,
+    "function": "kernel_rem_pio2",
+    "kind": "function never called",
+    "lines": 167,
+    "label": null,
+    "fixturesReachLines": 121
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 133,
+    "end": 285,
+    "function": "ieee754_rem_pio2",
+    "kind": "function never called",
+    "lines": 132,
+    "label": null,
+    "fixturesReachLines": 113
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 2237,
+    "end": 2355,
+    "function": "adamic_math_expm1",
+    "kind": "function never called",
+    "lines": 105,
+    "label": null,
+    "fixturesReachLines": 84
+   },
+   {
+    "file": "internal/native/runtime/sort.c",
+    "start": 314,
+    "end": 408,
+    "function": "merge_high",
+    "kind": "function never called",
+    "lines": 93,
+    "label": null,
+    "fixturesReachLines": 91
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 748,
+    "end": 850,
+    "function": "kernel_tan",
+    "kind": "function never called",
+    "lines": 89,
+    "label": null,
+    "fixturesReachLines": 88
+   },
+   {
+    "file": "internal/native/runtime/sort.c",
+    "start": 221,
+    "end": 311,
+    "function": "merge_low",
+    "kind": "function never called",
+    "lines": 89,
+    "label": null,
+    "fixturesReachLines": 83
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 1804,
+    "end": 1901,
+    "function": "adamic_math_log1p",
+    "kind": "function never called",
+    "lines": 87,
+    "label": null,
+    "fixturesReachLines": 62
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 1248,
+    "end": 1339,
+    "function": "adamic_math_atan2",
+    "kind": "function never called",
+    "lines": 82,
+    "label": null,
+    "fixturesReachLines": 46
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 1465,
+    "end": 1556,
+    "function": "adamic_math_exp",
+    "kind": "function never called",
+    "lines": 79,
+    "label": null,
+    "fixturesReachLines": 66
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 1135,
+    "end": 1219,
+    "function": "adamic_math_atan",
+    "kind": "function never called",
+    "lines": 78,
+    "label": null,
+    "fixturesReachLines": 63
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 1658,
+    "end": 1737,
+    "function": "adamic_math_log",
+    "kind": "function never called",
+    "lines": 76,
+    "label": null,
+    "fixturesReachLines": 57
+   },
+   {
+    "file": "internal/native/runtime/directory.c",
+    "start": 67,
+    "end": 130,
+    "function": "adamic_read_directory",
+    "kind": "function never called",
+    "lines": 63,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 1008,
+    "end": 1073,
+    "function": "adamic_math_asin",
+    "kind": "function never called",
+    "lines": 62,
+    "label": null,
+    "fixturesReachLines": 46
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 877,
+    "end": 936,
+    "function": "adamic_math_acos",
+    "kind": "function never called",
+    "lines": 59,
+    "label": null,
+    "fixturesReachLines": 38
+   },
+   {
+    "file": "internal/native/runtime/json_stringify.c",
+    "start": 147,
+    "end": 203,
+    "function": "write_value",
+    "kind": "function never called",
+    "lines": 57,
+    "label": null,
+    "fixturesReachLines": 53
+   },
+   {
+    "file": "internal/native/runtime/radix.c",
+    "start": 53,
+    "end": 131,
+    "function": "double_to_radix",
+    "kind": "function never called",
+    "lines": 57,
+    "label": null,
+    "fixturesReachLines": 54
+   },
+   {
+    "file": "internal/native/runtime/parse.c",
+    "start": 69,
+    "end": 123,
+    "function": "power_of_two",
+    "kind": "function never called",
+    "lines": 54,
+    "label": null,
+    "fixturesReachLines": 47
+   },
+   {
+    "file": "internal/native/runtime/input.c",
+    "start": 35,
+    "end": 89,
+    "function": "decode_step",
+    "kind": "function never called",
+    "lines": 53,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 329,
+    "end": 377,
+    "function": "regex_run",
+    "kind": "region never run",
+    "lines": 49,
+    "label": "case 9: {",
+    "fixturesReachLines": 39
+   },
+   {
+    "file": "internal/native/runtime/sort.c",
+    "start": 119,
+    "end": 167,
+    "function": "gallop_left",
+    "kind": "function never called",
+    "lines": 49,
+    "label": null,
+    "fixturesReachLines": 45
+   },
+   {
+    "file": "internal/native/runtime/sort.c",
+    "start": 170,
+    "end": 218,
+    "function": "gallop_right",
+    "kind": "function never called",
+    "lines": 49,
+    "label": null,
+    "fixturesReachLines": 45
+   },
+   {
+    "file": "internal/native/runtime/normalize.c",
+    "start": 242,
+    "end": 290,
+    "function": "adamic_string_normalize",
+    "kind": "function never called",
+    "lines": 47,
+    "label": null,
+    "fixturesReachLines": 42
+   },
+   {
+    "file": "internal/native/runtime/record.c",
+    "start": 149,
+    "end": 192,
+    "function": "adamic_record_keys",
+    "kind": "function never called",
+    "lines": 44,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 1995,
+    "end": 2073,
+    "function": "adamic_math_log2",
+    "kind": "function never called",
+    "lines": 42,
+    "label": null,
+    "fixturesReachLines": 32
+   },
+   {
+    "file": "internal/native/runtime/library_math_number.c",
+    "start": 57,
+    "end": 99,
+    "function": "adamic_number_from_string",
+    "kind": "function never called",
+    "lines": 42,
+    "label": null,
+    "fixturesReachLines": 42
+   },
+   {
+    "file": "internal/native/runtime/library_language.c",
+    "start": 28,
+    "end": 70,
+    "function": "adamic_plain_object_keys",
+    "kind": "function never called",
+    "lines": 40,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/map_set.c",
+    "start": 66,
+    "end": 105,
+    "function": "collection_next",
+    "kind": "function never called",
+    "lines": 39,
+    "label": null,
+    "fixturesReachLines": 39
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 855,
+    "end": 906,
+    "function": "regex_substitution",
+    "kind": "region never run",
+    "lines": 39,
+    "label": "case '<': {",
+    "fixturesReachLines": 36
+   },
+   {
+    "file": "internal/native/runtime/utf8.c",
+    "start": 18,
+    "end": 60,
+    "function": "adamic_utf8_at",
+    "kind": "function never called",
+    "lines": 39,
+    "label": null,
+    "fixturesReachLines": 16
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 2358,
+    "end": 2440,
+    "function": "adamic_math_cbrt",
+    "kind": "function never called",
+    "lines": 38,
+    "label": null,
+    "fixturesReachLines": 33
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 118,
+    "end": 155,
+    "function": "regex_clone",
+    "kind": "function never called",
+    "lines": 37,
+    "label": null,
+    "fixturesReachLines": 31
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 2102,
+    "end": 2140,
+    "function": "adamic_math_log10",
+    "kind": "function never called",
+    "lines": 34,
+    "label": null,
+    "fixturesReachLines": 23
+   },
+   {
+    "file": "internal/native/runtime/input.c",
+    "start": 98,
+    "end": 131,
+    "function": "decode",
+    "kind": "function never called",
+    "lines": 34,
+    "label": null,
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/input.c",
+    "start": 227,
+    "end": 260,
+    "function": "read_all",
+    "kind": "function never called",
+    "lines": 34,
+    "label": null,
+    "fixturesReachLines": 14
+   },
+   {
+    "file": "internal/native/runtime/weak.c",
+    "start": 67,
+    "end": 101,
+    "function": "insert",
+    "kind": "function never called",
+    "lines": 34,
+    "label": null,
+    "fixturesReachLines": 29
+   },
+   {
+    "file": "internal/native/runtime/class_features.c",
+    "start": 42,
+    "end": 74,
+    "function": "adamic_class_object_keys",
+    "kind": "function never called",
+    "lines": 33,
+    "label": null,
+    "fixturesReachLines": 27
+   },
+   {
+    "file": "internal/native/runtime/input.c",
+    "start": 262,
+    "end": 297,
+    "function": "adamic_read_text_file",
+    "kind": "function never called",
+    "lines": 32,
+    "label": null,
+    "fixturesReachLines": 23
+   },
+   {
+    "file": "internal/native/runtime/string_replace_impl.h",
+    "start": 52,
+    "end": 83,
+    "function": "substitution",
+    "kind": "region never run",
+    "lines": 32,
+    "label": "pieces list = {NULL, 0, 0};",
+    "fixturesReachLines": 32
+   },
+   {
+    "file": "internal/native/runtime/heap.c",
+    "start": 107,
+    "end": 137,
+    "function": "new_chunk",
+    "kind": "function never called",
+    "lines": 31,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 320,
+    "end": 351,
+    "function": "kernel_cos",
+    "kind": "function never called",
+    "lines": 31,
+    "label": null,
+    "fixturesReachLines": 30
+   },
+   {
+    "file": "internal/native/runtime/json_stringify.c",
+    "start": 70,
+    "end": 100,
+    "function": "quote",
+    "kind": "function never called",
+    "lines": 31,
+    "label": null,
+    "fixturesReachLines": 31
+   },
+   {
+    "file": "internal/native/runtime/hypot.c",
+    "start": 21,
+    "end": 53,
+    "function": "adamic_math_hypot",
+    "kind": "function never called",
+    "lines": 30,
+    "label": null,
+    "fixturesReachLines": 30
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 2699,
+    "end": 2733,
+    "function": "adamic_math_tanh",
+    "kind": "function never called",
+    "lines": 29,
+    "label": null,
+    "fixturesReachLines": 22
+   },
+   {
+    "file": "internal/native/runtime/json_stringify.c",
+    "start": 229,
+    "end": 260,
+    "function": "adamic_json_stringify",
+    "kind": "function never called",
+    "lines": 29,
+    "label": null,
+    "fixturesReachLines": 29
+   },
+   {
+    "file": "internal/native/runtime/directory.c",
+    "start": 132,
+    "end": 161,
+    "function": "adamic_file_status",
+    "kind": "function never called",
+    "lines": 28,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 1085,
+    "end": 1113,
+    "function": "adamic_math_asinh",
+    "kind": "function never called",
+    "lines": 28,
+    "label": null,
+    "fixturesReachLines": 23
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 1576,
+    "end": 1605,
+    "function": "adamic_math_atanh",
+    "kind": "function never called",
+    "lines": 28,
+    "label": null,
+    "fixturesReachLines": 21
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 673,
+    "end": 700,
+    "function": "adamic_regex_match",
+    "kind": "function never called",
+    "lines": 28,
+    "label": null,
+    "fixturesReachLines": 28
+   },
+   {
+    "file": "internal/native/runtime/input.c",
+    "start": 168,
+    "end": 194,
+    "function": "failure",
+    "kind": "function never called",
+    "lines": 27,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/input.c",
+    "start": 322,
+    "end": 349,
+    "function": "adamic_write_text_file",
+    "kind": "function never called",
+    "lines": 27,
+    "label": null,
+    "fixturesReachLines": 19
+   },
+   {
+    "file": "internal/native/runtime/normalize.c",
+    "start": 168,
+    "end": 194,
+    "function": "compose",
+    "kind": "function never called",
+    "lines": 27,
+    "label": null,
+    "fixturesReachLines": 27
+   },
+   {
+    "file": "internal/native/runtime/parse.c",
+    "start": 127,
+    "end": 153,
+    "function": "generic",
+    "kind": "function never called",
+    "lines": 27,
+    "label": null,
+    "fixturesReachLines": 24
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 298,
+    "end": 324,
+    "function": "regex_run",
+    "kind": "region never run",
+    "lines": 27,
+    "label": "case 7: {",
+    "fixturesReachLines": 27
+   },
+   {
+    "file": "internal/native/runtime/case.c",
+    "start": 134,
+    "end": 160,
+    "function": "cased_beyond",
+    "kind": "function never called",
+    "lines": 26,
+    "label": null,
+    "fixturesReachLines": 26
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 952,
+    "end": 977,
+    "function": "adamic_math_acosh",
+    "kind": "function never called",
+    "lines": 26,
+    "label": null,
+    "fixturesReachLines": 19
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 2578,
+    "end": 2619,
+    "function": "adamic_math_cosh",
+    "kind": "function never called",
+    "lines": 26,
+    "label": null,
+    "fixturesReachLines": 12
+   },
+   {
+    "file": "internal/native/runtime/json_stringify.c",
+    "start": 103,
+    "end": 128,
+    "function": "scalar",
+    "kind": "function never called",
+    "lines": 26,
+    "label": null,
+    "fixturesReachLines": 20
+   },
+   {
+    "file": "internal/native/runtime/record.c",
+    "start": 43,
+    "end": 68,
+    "function": "prototype_member",
+    "kind": "function never called",
+    "lines": 26,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/directory.c",
+    "start": 37,
+    "end": 61,
+    "function": "failure",
+    "kind": "function never called",
+    "lines": 25,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 688,
+    "end": 713,
+    "function": "kernel_sin",
+    "kind": "function never called",
+    "lines": 25,
+    "label": null,
+    "fixturesReachLines": 25
+   },
+   {
+    "file": "internal/native/runtime/library_object.c",
+    "start": 110,
+    "end": 134,
+    "function": "adamic_object_values",
+    "kind": "function never called",
+    "lines": 25,
+    "label": null,
+    "fixturesReachLines": 25
+   },
+   {
+    "file": "internal/native/runtime/sort.c",
+    "start": 412,
+    "end": 436,
+    "function": "merge_at",
+    "kind": "function never called",
+    "lines": 25,
+    "label": null,
+    "fixturesReachLines": 22
+   },
+   {
+    "file": "internal/native/runtime/heap.c",
+    "start": 139,
+    "end": 162,
+    "function": "take",
+    "kind": "function never called",
+    "lines": 24,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 2642,
+    "end": 2673,
+    "function": "adamic_math_sinh",
+    "kind": "function never called",
+    "lines": 24,
+    "label": null,
+    "fixturesReachLines": 16
+   },
+   {
+    "file": "internal/native/runtime/json_stringify.c",
+    "start": 28,
+    "end": 51,
+    "function": "append",
+    "kind": "function never called",
+    "lines": 24,
+    "label": null,
+    "fixturesReachLines": 18
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 1372,
+    "end": 1400,
+    "function": "adamic_math_cos",
+    "kind": "function never called",
+    "lines": 23,
+    "label": null,
+    "fixturesReachLines": 22
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 2473,
+    "end": 2501,
+    "function": "adamic_math_sin",
+    "kind": "function never called",
+    "lines": 23,
+    "label": null,
+    "fixturesReachLines": 22
+   },
+   {
+    "file": "internal/native/runtime/json_stringify.c",
+    "start": 204,
+    "end": 226,
+    "function": "keys",
+    "kind": "function never called",
+    "lines": 23,
+    "label": null,
+    "fixturesReachLines": 23
+   },
+   {
+    "file": "internal/native/runtime/radix.c",
+    "start": 140,
+    "end": 163,
+    "function": "adamic_number_to_radix",
+    "kind": "function never called",
+    "lines": 23,
+    "label": null,
+    "fixturesReachLines": 20
+   },
+   {
+    "file": "internal/native/runtime/from_codes.c",
+    "start": 39,
+    "end": 60,
+    "function": "codes_point",
+    "kind": "function never called",
+    "lines": 22,
+    "label": null,
+    "fixturesReachLines": 22
+   },
+   {
+    "file": "internal/native/runtime/from_codes.c",
+    "start": 90,
+    "end": 113,
+    "function": "adamic_string_from_code_points",
+    "kind": "function never called",
+    "lines": 22,
+    "label": null,
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/map.c",
+    "start": 293,
+    "end": 315,
+    "function": "adamic_map_clear",
+    "kind": "function never called",
+    "lines": 22,
+    "label": null,
+    "fixturesReachLines": 22
+   },
+   {
+    "file": "internal/native/runtime/normalize.c",
+    "start": 79,
+    "end": 100,
+    "function": "composite",
+    "kind": "function never called",
+    "lines": 22,
+    "label": null,
+    "fixturesReachLines": 22
+   },
+   {
+    "file": "internal/native/runtime/normalize.c",
+    "start": 214,
+    "end": 235,
+    "function": "encode",
+    "kind": "function never called",
+    "lines": 22,
+    "label": null,
+    "fixturesReachLines": 22
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 719,
+    "end": 739,
+    "function": "adamic_regex_iterator_step",
+    "kind": "function never called",
+    "lines": 21,
+    "label": null,
+    "fixturesReachLines": 21
+   },
+   {
+    "file": "internal/native/runtime/map.c",
+    "start": 271,
+    "end": 291,
+    "function": "adamic_map_entries",
+    "kind": "function never called",
+    "lines": 20,
+    "label": null,
+    "fixturesReachLines": 20
+   },
+   {
+    "file": "internal/native/runtime/normalize.c",
+    "start": 124,
+    "end": 142,
+    "function": "decompose",
+    "kind": "function never called",
+    "lines": 19,
+    "label": null,
+    "fixturesReachLines": 19
+   },
+   {
+    "file": "internal/native/runtime/normalize.c",
+    "start": 145,
+    "end": 163,
+    "function": "reorder",
+    "kind": "function never called",
+    "lines": 19,
+    "label": null,
+    "fixturesReachLines": 19
+   },
+   {
+    "file": "internal/native/runtime/record.c",
+    "start": 119,
+    "end": 136,
+    "function": "array_index",
+    "kind": "function never called",
+    "lines": 18,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 266,
+    "end": 283,
+    "function": "regex_run",
+    "kind": "region never run",
+    "lines": 18,
+    "label": "case 5:",
+    "fixturesReachLines": 18
+   },
+   {
+    "file": "internal/native/runtime/exceptions.c",
+    "start": 24,
+    "end": 42,
+    "function": "adamic_uncaught",
+    "kind": "function never called",
+    "lines": 17,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/from_codes.c",
+    "start": 20,
+    "end": 36,
+    "function": "codes_add",
+    "kind": "function never called",
+    "lines": 17,
+    "label": null,
+    "fixturesReachLines": 14
+   },
+   {
+    "file": "internal/native/runtime/heap.c",
+    "start": 164,
+    "end": 186,
+    "function": "give",
+    "kind": "function never called",
+    "lines": 17,
+    "label": null,
+    "fixturesReachLines": 17
+   },
+   {
+    "file": "internal/native/runtime/library_language.c",
+    "start": 10,
+    "end": 26,
+    "function": "array_index",
+    "kind": "function never called",
+    "lines": 17,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/library_math_number.c",
+    "start": 12,
+    "end": 28,
+    "function": "library_uint32",
+    "kind": "function never called",
+    "lines": 17,
+    "label": null,
+    "fixturesReachLines": 17
+   },
+   {
+    "file": "internal/native/runtime/library_object.c",
+    "start": 136,
+    "end": 152,
+    "function": "adamic_object_assign",
+    "kind": "function never called",
+    "lines": 17,
+    "label": null,
+    "fixturesReachLines": 17
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 218,
+    "end": 235,
+    "function": "regex_run",
+    "kind": "region never run",
+    "lines": 17,
+    "label": "for (size_t k = 0; k < i->string_count; k++) {",
+    "fixturesReachLines": 17
+   },
+   {
+    "file": "internal/native/runtime/union.c",
+    "start": 42,
+    "end": 60,
+    "function": "adamic_union_to_string",
+    "kind": "function never called",
+    "lines": 17,
+    "label": null,
+    "fixturesReachLines": 13
+   },
+   {
+    "file": "internal/native/runtime/union.c",
+    "start": 62,
+    "end": 78,
+    "function": "adamic_union_typeof",
+    "kind": "function never called",
+    "lines": 17,
+    "label": null,
+    "fixturesReachLines": 17
+   },
+   {
+    "file": "internal/native/runtime/input.c",
+    "start": 199,
+    "end": 214,
+    "function": "utf8",
+    "kind": "function never called",
+    "lines": 16,
+    "label": null,
+    "fixturesReachLines": 10
+   },
+   {
+    "file": "internal/native/runtime/library_array.c",
+    "start": 34,
+    "end": 49,
+    "function": "adamic_array_join_nested",
+    "kind": "function never called",
+    "lines": 16,
+    "label": null,
+    "fixturesReachLines": 16
+   },
+   {
+    "file": "internal/native/runtime/map.c",
+    "start": 319,
+    "end": 334,
+    "function": "listed",
+    "kind": "function never called",
+    "lines": 16,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/record.c",
+    "start": 202,
+    "end": 217,
+    "function": "adamic_record_iterator_next",
+    "kind": "function never called",
+    "lines": 16,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/string_split_impl.h",
+    "start": 26,
+    "end": 43,
+    "function": "adamic_string_split",
+    "kind": "region never run",
+    "lines": 16,
+    "label": "if (halves_pairs(separator)) {",
+    "fixturesReachLines": 16
+   },
+   {
+    "file": "internal/native/runtime/union.c",
+    "start": 23,
+    "end": 40,
+    "function": "adamic_union_equal",
+    "kind": "function never called",
+    "lines": 16,
+    "label": null,
+    "fixturesReachLines": 14
+   },
+   {
+    "file": "internal/native/runtime/array.c",
+    "start": 273,
+    "end": 289,
+    "function": "adamic_array_fill",
+    "kind": "function never called",
+    "lines": 15,
+    "label": null,
+    "fixturesReachLines": 15
+   },
+   {
+    "file": "internal/native/runtime/map.c",
+    "start": 344,
+    "end": 358,
+    "function": "adamic_map_add_pairs",
+    "kind": "function never called",
+    "lines": 15,
+    "label": null,
+    "fixturesReachLines": 15
+   },
+   {
+    "file": "internal/native/runtime/array.c",
+    "start": 257,
+    "end": 271,
+    "function": "adamic_array_filled",
+    "kind": "function never called",
+    "lines": 14,
+    "label": null,
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 2533,
+    "end": 2553,
+    "function": "adamic_math_tan",
+    "kind": "function never called",
+    "lines": 14,
+    "label": null,
+    "fixturesReachLines": 13
+   },
+   {
+    "file": "internal/native/runtime/input.c",
+    "start": 305,
+    "end": 318,
+    "function": "write_all",
+    "kind": "function never called",
+    "lines": 14,
+    "label": null,
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/json_stringify.c",
+    "start": 56,
+    "end": 69,
+    "function": "code_point",
+    "kind": "function never called",
+    "lines": 14,
+    "label": null,
+    "fixturesReachLines": 14
+   },
+   {
+    "file": "internal/native/runtime/library_object.c",
+    "start": 73,
+    "end": 87,
+    "function": "ordered",
+    "kind": "function never called",
+    "lines": 14,
+    "label": null,
+    "fixturesReachLines": 14
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 558,
+    "end": 572,
+    "function": "regex_result",
+    "kind": "region never run",
+    "lines": 14,
+    "label": "if (p->flags & 32) {",
+    "fixturesReachLines": 14
+   },
+   {
+    "file": "internal/native/runtime/set.c",
+    "start": 16,
+    "end": 29,
+    "function": "adamic_set_values",
+    "kind": "function never called",
+    "lines": 14,
+    "label": null,
+    "fixturesReachLines": 14
+   },
+   {
+    "file": "internal/native/runtime/weak.c",
+    "start": 52,
+    "end": 65,
+    "function": "find",
+    "kind": "function never called",
+    "lines": 14,
+    "label": null,
+    "fixturesReachLines": 14
+   },
+   {
+    "file": "internal/native/runtime/normalize.c",
+    "start": 109,
+    "end": 121,
+    "function": "points_add",
+    "kind": "function never called",
+    "lines": 13,
+    "label": null,
+    "fixturesReachLines": 10
+   },
+   {
+    "file": "internal/native/runtime/parse.c",
+    "start": 176,
+    "end": 189,
+    "function": "adamic_number_parse_int",
+    "kind": "region never run",
+    "lines": 13,
+    "label": "if ((radix == 0 || radix == 16) && *current == '0') {",
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 284,
+    "end": 296,
+    "function": "regex_run",
+    "kind": "region never run",
+    "lines": 13,
+    "label": "case 6: {",
+    "fixturesReachLines": 12
+   },
+   {
+    "file": "internal/native/runtime/weak.c",
+    "start": 115,
+    "end": 127,
+    "function": "adamic_weak_of",
+    "kind": "function never called",
+    "lines": 13,
+    "label": null,
+    "fixturesReachLines": 13
+   },
+   {
+    "file": "internal/native/runtime/case.c",
+    "start": 73,
+    "end": 84,
+    "function": "within",
+    "kind": "function never called",
+    "lines": 12,
+    "label": null,
+    "fixturesReachLines": 12
+   },
+   {
+    "file": "internal/native/runtime/library_math_number.c",
+    "start": 101,
+    "end": 112,
+    "function": "adamic_number_from_union",
+    "kind": "function never called",
+    "lines": 12,
+    "label": null,
+    "fixturesReachLines": 8
+   },
+   {
+    "file": "internal/native/runtime/library_object.c",
+    "start": 96,
+    "end": 108,
+    "function": "adamic_object_keys",
+    "kind": "function never called",
+    "lines": 12,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/map_set.c",
+    "start": 107,
+    "end": 119,
+    "function": "adamic_collection_iterator",
+    "kind": "function never called",
+    "lines": 12,
+    "label": null,
+    "fixturesReachLines": 12
+   },
+   {
+    "file": "internal/native/runtime/normalize.c",
+    "start": 52,
+    "end": 63,
+    "function": "combining_class",
+    "kind": "function never called",
+    "lines": 12,
+    "label": null,
+    "fixturesReachLines": 12
+   },
+   {
+    "file": "internal/native/runtime/normalize.c",
+    "start": 65,
+    "end": 76,
+    "function": "mapping_of",
+    "kind": "function never called",
+    "lines": 12,
+    "label": null,
+    "fixturesReachLines": 12
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 585,
+    "end": 596,
+    "function": "adamic_regex_group_lookup",
+    "kind": "function never called",
+    "lines": 12,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/sort.c",
+    "start": 448,
+    "end": 460,
+    "function": "merge_collapse",
+    "kind": "region never run",
+    "lines": 12,
+    "label": "while (state->runs > 1) {",
+    "fixturesReachLines": 10
+   },
+   {
+    "file": "internal/native/runtime/class_static.c",
+    "start": 15,
+    "end": 25,
+    "function": "adamic_object_write_field",
+    "kind": "region never run",
+    "lines": 11,
+    "label": "adamic_value *slot = adamic_object_find(object, name, cache);",
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/heap.c",
+    "start": 94,
+    "end": 104,
+    "function": "unlist_chunk",
+    "kind": "function never called",
+    "lines": 11,
+    "label": null,
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 1972,
+    "end": 1983,
+    "function": "k_log1p",
+    "kind": "function never called",
+    "lines": 11,
+    "label": null,
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/library_math_number.c",
+    "start": 114,
+    "end": 124,
+    "function": "adamic_number_has_own_property",
+    "kind": "function never called",
+    "lines": 11,
+    "label": null,
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/library_object.c",
+    "start": 8,
+    "end": 18,
+    "function": "adamic_object_is",
+    "kind": "function never called",
+    "lines": 11,
+    "label": null,
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/library_object.c",
+    "start": 53,
+    "end": 63,
+    "function": "array_index",
+    "kind": "function never called",
+    "lines": 11,
+    "label": null,
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/normalize.c",
+    "start": 200,
+    "end": 210,
+    "function": "decode_at",
+    "kind": "function never called",
+    "lines": 11,
+    "label": null,
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/record.c",
+    "start": 70,
+    "end": 81,
+    "function": "check_missing_member",
+    "kind": "function never called",
+    "lines": 11,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 34,
+    "end": 44,
+    "function": "regex_read",
+    "kind": "region never run",
+    "lines": 11,
+    "label": "if (at <= 0)",
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 529,
+    "end": 539,
+    "function": "regex_groups",
+    "kind": "region never run",
+    "lines": 11,
+    "label": "adamic_object *groups = adamic_object_new(p->group_shape);",
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 708,
+    "end": 718,
+    "function": "adamic_regex_match_all",
+    "kind": "function never called",
+    "lines": 11,
+    "label": null,
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 801,
+    "end": 812,
+    "function": "adamic_regex_split",
+    "kind": "region never run",
+    "lines": 11,
+    "label": "for (size_t k = 1; k <= p->captures; k++) {",
+    "fixturesReachLines": 11
+   },
+   {
+    "file": "internal/native/runtime/spread.c",
+    "start": 27,
+    "end": 37,
+    "function": "numbers",
+    "kind": "function never called",
+    "lines": 11,
+    "label": null,
+    "fixturesReachLines": 8
+   },
+   {
+    "file": "internal/native/runtime/from_codes.c",
+    "start": 71,
+    "end": 80,
+    "function": "adamic_to_uint16",
+    "kind": "function never called",
+    "lines": 10,
+    "label": null,
+    "fixturesReachLines": 10
+   },
+   {
+    "file": "internal/native/runtime/input.c",
+    "start": 21,
+    "end": 30,
+    "function": "new_string",
+    "kind": "function never called",
+    "lines": 10,
+    "label": null,
+    "fixturesReachLines": 10
+   },
+   {
+    "file": "internal/native/runtime/object.c",
+    "start": 33,
+    "end": 42,
+    "function": "adamic_object_has",
+    "kind": "function never called",
+    "lines": 10,
+    "label": null,
+    "fixturesReachLines": 10
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 575,
+    "end": 584,
+    "function": "adamic_regex_done",
+    "kind": "function never called",
+    "lines": 10,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/weak.c",
+    "start": 103,
+    "end": 113,
+    "function": "remove_entry",
+    "kind": "function never called",
+    "lines": 10,
+    "label": null,
+    "fixturesReachLines": 10
+   },
+   {
+    "file": "internal/native/runtime/adamic.c",
+    "start": 185,
+    "end": 195,
+    "function": "adamic_panic",
+    "kind": "function never called",
+    "lines": 9,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/heap.c",
+    "start": 84,
+    "end": 92,
+    "function": "list_chunk",
+    "kind": "function never called",
+    "lines": 9,
+    "label": null,
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/input.c",
+    "start": 145,
+    "end": 153,
+    "function": "adamic_program_arguments",
+    "kind": "function never called",
+    "lines": 9,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/json_stringify.c",
+    "start": 137,
+    "end": 146,
+    "function": "write_field",
+    "kind": "function never called",
+    "lines": 9,
+    "label": null,
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/library_language.c",
+    "start": 75,
+    "end": 83,
+    "function": "adamic_library_identity",
+    "kind": "function never called",
+    "lines": 9,
+    "label": null,
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/map.c",
+    "start": 154,
+    "end": 164,
+    "function": "rebuild",
+    "kind": "region never run",
+    "lines": 9,
+    "label": "for (size_t index = 0; index < map->used; index++) {",
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/parse.c",
+    "start": 38,
+    "end": 46,
+    "function": "digit_value",
+    "kind": "function never called",
+    "lines": 9,
+    "label": null,
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 241,
+    "end": 250,
+    "function": "regex_run",
+    "kind": "region never run",
+    "lines": 9,
+    "label": "for (size_t k = 1; k < count; k++) {",
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/set.c",
+    "start": 6,
+    "end": 14,
+    "function": "adamic_set_add_all",
+    "kind": "function never called",
+    "lines": 9,
+    "label": null,
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/spread.c",
+    "start": 39,
+    "end": 47,
+    "function": "adamic_math_hypot_of",
+    "kind": "function never called",
+    "lines": 9,
+    "label": null,
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/string_split_impl.h",
+    "start": 3,
+    "end": 11,
+    "function": "adamic_string_code_points",
+    "kind": "function never called",
+    "lines": 9,
+    "label": null,
+    "fixturesReachLines": 9
+   },
+   {
+    "file": "internal/native/runtime/adamic.c",
+    "start": 109,
+    "end": 116,
+    "function": "stopped",
+    "kind": "function never called",
+    "lines": 8,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/class_features.c",
+    "start": 23,
+    "end": 30,
+    "function": "adamic_public_index",
+    "kind": "region never run",
+    "lines": 8,
+    "label": "numeric++;",
+    "fixturesReachLines": 8
+   },
+   {
+    "file": "internal/native/runtime/class_features.c",
+    "start": 85,
+    "end": 92,
+    "function": "adamic_accessor_get",
+    "kind": "function never called",
+    "lines": 8,
+    "label": null,
+    "fixturesReachLines": 5
+   },
+   {
+    "file": "internal/native/runtime/class_features.c",
+    "start": 94,
+    "end": 101,
+    "function": "adamic_accessor_set",
+    "kind": "function never called",
+    "lines": 8,
+    "label": null,
+    "fixturesReachLines": 5
+   },
+   {
+    "file": "internal/native/runtime/class_static.c",
+    "start": 4,
+    "end": 11,
+    "function": "adamic_static_field",
+    "kind": "function never called",
+    "lines": 8,
+    "label": null,
+    "fixturesReachLines": 8
+   },
+   {
+    "file": "internal/native/runtime/count.c",
+    "start": 18,
+    "end": 26,
+    "function": "adamic_count_report",
+    "kind": "function never called",
+    "lines": 8,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/json_stringify.c",
+    "start": 20,
+    "end": 27,
+    "function": "json_memory",
+    "kind": "function never called",
+    "lines": 8,
+    "label": null,
+    "fixturesReachLines": 5
+   },
+   {
+    "file": "internal/native/runtime/library_object.c",
+    "start": 34,
+    "end": 41,
+    "function": "adamic_object_check_write",
+    "kind": "region never run",
+    "lines": 8,
+    "label": "const char prefix[] = \"TypeError: Cannot assign to read only property '\";",
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/parse.c",
+    "start": 208,
+    "end": 216,
+    "function": "adamic_number_parse_int",
+    "kind": "region never run",
+    "lines": 8,
+    "label": "} else if ((radix & (radix - 1)) == 0) {",
+    "fixturesReachLines": 8
+   },
+   {
+    "file": "internal/native/runtime/weak.c",
+    "start": 133,
+    "end": 140,
+    "function": "adamic_weak_target_present",
+    "kind": "function never called",
+    "lines": 8,
+    "label": null,
+    "fixturesReachLines": 5
+   },
+   {
+    "file": "internal/native/runtime/array.c",
+    "start": 63,
+    "end": 70,
+    "function": "adamic_array_join",
+    "kind": "region never run",
+    "lines": 7,
+    "label": "case adamic_join_maybe_numbers: {",
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/count.c",
+    "start": 10,
+    "end": 16,
+    "function": "adamic_count_allocation",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/from_codes.c",
+    "start": 82,
+    "end": 88,
+    "function": "adamic_string_from_char_codes",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/heap.c",
+    "start": 298,
+    "end": 312,
+    "function": "free_one",
+    "kind": "region never run",
+    "lines": 7,
+    "label": "case adamic_kind_number:",
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/json_stringify.c",
+    "start": 129,
+    "end": 135,
+    "function": "indent",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/library_math_number.c",
+    "start": 30,
+    "end": 36,
+    "function": "adamic_math_clz32",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/library_object.c",
+    "start": 43,
+    "end": 49,
+    "function": "adamic_object_has_own",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/library_object.c",
+    "start": 65,
+    "end": 71,
+    "function": "compare_names",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/map_set.c",
+    "start": 11,
+    "end": 17,
+    "function": "adamic_map_maybe_key_hash",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/number.c",
+    "start": 167,
+    "end": 175,
+    "function": "adamic_number_to_fixed",
+    "kind": "region never run",
+    "lines": 7,
+    "label": "} else {",
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/radix.c",
+    "start": 43,
+    "end": 49,
+    "function": "radix_next_double",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/record.c",
+    "start": 83,
+    "end": 89,
+    "function": "adamic_record_get",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/record.c",
+    "start": 99,
+    "end": 105,
+    "function": "adamic_record_set",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/record.c",
+    "start": 194,
+    "end": 200,
+    "function": "adamic_record_iterate",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 743,
+    "end": 749,
+    "function": "adamic_regex_next",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/spread.c",
+    "start": 9,
+    "end": 16,
+    "function": "adamic_math_max_of",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/spread.c",
+    "start": 18,
+    "end": 24,
+    "function": "adamic_math_min_of",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/weak.c",
+    "start": 44,
+    "end": 50,
+    "function": "slot_of",
+    "kind": "function never called",
+    "lines": 7,
+    "label": null,
+    "fixturesReachLines": 7
+   },
+   {
+    "file": "internal/native/runtime/adamic.h",
+    "start": 397,
+    "end": 402,
+    "function": "adamic_array_at_integer",
+    "kind": "function never called",
+    "lines": 6,
+    "label": null,
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/adamic.h",
+    "start": 537,
+    "end": 542,
+    "function": "adamic_string_char_code_at",
+    "kind": "function never called",
+    "lines": 6,
+    "label": null,
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/array.c",
+    "start": 395,
+    "end": 401,
+    "function": "adamic_array_set",
+    "kind": "region never run",
+    "lines": 6,
+    "label": "if (slot == NULL) {",
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/from_codes.c",
+    "start": 62,
+    "end": 67,
+    "function": "codes_finish",
+    "kind": "function never called",
+    "lines": 6,
+    "label": null,
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/input.c",
+    "start": 218,
+    "end": 223,
+    "function": "file_name",
+    "kind": "function never called",
+    "lines": 6,
+    "label": null,
+    "fixturesReachLines": 4
+   },
+   {
+    "file": "internal/native/runtime/library_math_number.c",
+    "start": 50,
+    "end": 55,
+    "function": "library_digit",
+    "kind": "function never called",
+    "lines": 6,
+    "label": null,
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/library_object.c",
+    "start": 89,
+    "end": 94,
+    "function": "key_string",
+    "kind": "function never called",
+    "lines": 6,
+    "label": null,
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/radix.c",
+    "start": 35,
+    "end": 40,
+    "function": "radix_double_exponent",
+    "kind": "function never called",
+    "lines": 6,
+    "label": null,
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 164,
+    "end": 169,
+    "function": "regex_push",
+    "kind": "function never called",
+    "lines": 6,
+    "label": null,
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/regexp.c",
+    "start": 201,
+    "end": 206,
+    "function": "regex_run",
+    "kind": "region never run",
+    "lines": 6,
+    "label": "case 2: {",
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/sort.c",
+    "start": 439,
+    "end": 444,
+    "function": "balanced",
+    "kind": "function never called",
+    "lines": 6,
+    "label": null,
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/sort.c",
+    "start": 465,
+    "end": 471,
+    "function": "merge_force_collapse",
+    "kind": "region never run",
+    "lines": 6,
+    "label": "while (state->runs > 1) {",
+    "fixturesReachLines": 4
+   },
+   {
+    "file": "internal/native/runtime/spread.c",
+    "start": 49,
+    "end": 54,
+    "function": "adamic_string_from_char_codes_of",
+    "kind": "function never called",
+    "lines": 6,
+    "label": null,
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/spread.c",
+    "start": 56,
+    "end": 62,
+    "function": "adamic_string_from_code_points_of",
+    "kind": "function never called",
+    "lines": 6,
+    "label": null,
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/string_append.c",
+    "start": 43,
+    "end": 49,
+    "function": "adamic_string_append",
+    "kind": "region never run",
+    "lines": 6,
+    "label": "if (length + added > ADAMIC_STRING_MAX_UNITS) {",
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/string_build_impl.h",
+    "start": 46,
+    "end": 52,
+    "function": "adamic_string_concat",
+    "kind": "region never run",
+    "lines": 6,
+    "label": "if (length > ADAMIC_STRING_MAX_UNITS) {",
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/string_repeat_impl.h",
+    "start": 14,
+    "end": 20,
+    "function": "adamic_string_repeat",
+    "kind": "region never run",
+    "lines": 6,
+    "label": "if (count < 0 || isinf(count)) {",
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/weak.c",
+    "start": 146,
+    "end": 151,
+    "function": "adamic_weak_forget",
+    "kind": "region never run",
+    "lines": 6,
+    "label": "uintptr_t *entry = find(target);",
+    "fixturesReachLines": 6
+   },
+   {
+    "file": "internal/native/runtime/adamic.c",
+    "start": 21,
+    "end": 26,
+    "function": "write_all",
+    "kind": "region never run",
+    "lines": 5,
+    "label": "if (written < 0) {",
+    "fixturesReachLines": 0
+   },
+   {
+    "file": "internal/native/runtime/adamic.c",
+    "start": 90,
+    "end": 95,
+    "function": "buffer",
+    "kind": "region never run",
+    "lines": 5,
+    "label": "if (length > sizeof output) {",
+    "fixturesReachLines": 3
+   },
+   {
+    "file": "internal/native/runtime/array.c",
+    "start": 233,
+    "end": 238,
+    "function": "adamic_array_index_of",
+    "kind": "region never run",
+    "lines": 5,
+    "label": "case adamic_equal_maybe_numbers: {",
+    "fixturesReachLines": 5
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 42,
+    "end": 46,
+    "function": "adamic_ieee754_bits",
+    "kind": "function never called",
+    "lines": 5,
+    "label": null,
+    "fixturesReachLines": 5
+   },
+   {
+    "file": "internal/native/runtime/ieee754.c",
+    "start": 48,
+    "end": 52,
+    "function": "adamic_ieee754_double",
+    "kind": "function never called",
+    "lines": 5,
+    "label": null,
+    "fixturesReachLines": 5
+   },
+   {
+    "file": "internal/native/runtime/library_array.c",
+    "start": 17,
+    "end": 23,
+    "function": "adamic_array_search_from",
+    "kind": "region never run",
+    "lines": 5,
+    "label": "if (last) {",
+    "fixturesReachLines": 5
+   },
+   {
+    "file": "internal/native/runtime/library_math_number.c",
+    "start": 43,
+    "end": 48,
+    "function": "adamic_math_fround",
+    "kind": "function never called",
+    "lines": 5,
+    "label": null,
+    "fixturesReachLines": 5
+   },
+   {
+    "file": "internal/native/runtime/library_object.c",
+    "start": 20,
+    "end": 24,
+    "function": "adamic_object_is_frozen",
+    "kind": "function never called",
+    "lines": 5,
+    "label": null,
+    "fixturesReachLines": 5
+   }
+  ],
+  "goRegionCount": 1181,
+  "goEmitRegionCount": 111,
+  "cRegionCount": 461
+ },
+ "blindToBoth": {
+  "goRegions": 609,
+  "goStatements": 1249,
+  "cRegions": 201,
+  "cLines": 896
+ }
+}

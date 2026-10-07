@@ -4,7 +4,7 @@
 # Every cloud environment runs it (Codex's setup and maintenance scripts, Claude's, a plain VM), it's
 # safe to run again, and it prints how long each step took, so time-to-green is a number we watch.
 #
-#   bash cloud/setup.sh [--warm-tests]   then: source the env.sh path printed below
+#   bash cloud/setup.sh [--warm-tests] [--gate-inputs]   then: source the env.sh path printed below
 #
 # Go checks its own content-addressed action cache before a warming stamp can skip linking.
 # Test binaries are optional because most workers need one package.
@@ -15,8 +15,11 @@ set -euo pipefail
 scriptDirectory=${BASH_SOURCE[0]%/*}
 [ "$scriptDirectory" != "${BASH_SOURCE[0]}" ] || scriptDirectory=.
 repository=$(cd -- "$scriptDirectory/.." && pwd)
+cloudSource="$repository/cloud"
 # shellcheck source=../internal/boundedrun/shell.sh
 source "$repository/internal/boundedrun/shell.sh"
+# A clean main worktree can use this installer without copying source into it.
+repository=${ADAMIC_SETUP_REPOSITORY:-$repository}
 # Even local utility children get a bound; a network filesystem can stall them.
 for boundedTool in cat awk mkdir install mktemp realpath uname ls sort dirname ln mv grep nproc sha256sum cut head; do
  eval "$boundedTool() { bounded 30 $boundedTool \"\$@\"; }"
@@ -25,10 +28,12 @@ done
 started=$EPOCHREALTIME
 loadBefore=$(cat /proc/loadavg)
 warmTests=false
+gateInputs=false
 for argument in "$@"; do
 	case "$argument" in
 		--warm-tests) warmTests=true ;;
-		*) echo "usage: bash cloud/setup.sh [--warm-tests]" >&2; exit 2 ;;
+		--gate-inputs) gateInputs=true ;;
+		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--gate-inputs]" >&2; exit 2 ;;
 	esac
 done
 step() {
@@ -50,6 +55,10 @@ run=$(mktemp -d "$gate/setup.XXXXXX")
 markdownDependencies="$tools/markdown-width"
 case $(realpath -m "$markdownDependencies") in
 	/root | /root/*) markdownDependencies="$gate/markdown-width-$(printf '%s' "$tools" | sha256sum | cut -d' ' -f1)" ;;
+esac
+gateInputsRoot="$tools/gate-inputs"
+case $(realpath -m "$gateInputsRoot") in
+	/root | /root/*) gateInputsRoot="$gate/gate-inputs-$(printf '%s' "$tools" | sha256sum | cut -d' ' -f1)" ;;
 esac
 case $(uname -m) in
 	x86_64) goArchitecture=amd64 nodeArchitecture=x64 llvmArchitecture=X64 ;;
@@ -127,9 +136,21 @@ if ! bounded 30 "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; the
 fi
 bounded 30 "$tools/bin/node" --version
 step "node ready"
-bounded 1800 python3 "$repository/internal/boundedrun/python.py" "$repository/cloud/setup-markdown-width.py" "$repository/cloud/markdown-width" "$markdownDependencies" "$tools/bin/node" > "$run/markdown.log" 2>&1 || { cat "$run/markdown.log"; return 1; }
+bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-markdown-width.py" "$cloudSource/markdown-width" "$markdownDependencies" "$tools/bin/node" > "$run/markdown.log" 2>&1 || { cat "$run/markdown.log"; return 1; }
 cat "$run/markdown.log"
 step "markdown dependencies ready"
+if "$gateInputs"; then
+	bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-gate-inputs.py" npm "$repository" "$gateInputsRoot" "$tools/bin/node" > "$run/gate-npm.log" 2>&1 || { cat "$run/gate-npm.log"; return 1; }
+	cat "$run/gate-npm.log"
+	step "gate npm inputs ready"
+fi
+}
+
+prepareGoAndSignal() {
+	trap ': > "$run/go-failed"' EXIT
+	prepareGo
+	: > "$run/go-ready"
+	trap - EXIT
 }
 
 prepareSubmodules() {
@@ -138,24 +159,43 @@ cd "$repository"
 bounded 30 git config submodule.cohere.url https://github.com/system-inc/cohere.git
 bounded 600 git submodule update --init --recursive --depth 1 --filter=blob:none
 step "submodules ready"
+# Go and submodules must exist before warming the nested workspace graphs.
+# The ready file keeps this in parallel preparation without racing either installer.
+while [ ! -f "$run/go-ready" ]; do
+	[ ! -f "$run/go-failed" ] || return 1
+	sleep 0.05
+done
+[ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
+bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-modules.py" "$repository" "$tools" > "$run/modules.log" 2>&1 || { cat "$run/modules.log"; return 1; }
+cat "$run/modules.log"
+step "module dependencies ready"
+}
 
+prepareGateCorpora() {
+	bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-gate-inputs.py" corpora "$repository" "$gateInputsRoot" "$tools/bin/node" > "$run/gate-corpora.log" 2>&1 || { cat "$run/gate-corpora.log"; return 1; }
+	cat "$run/gate-corpora.log"
+	step "gate corpora ready"
 }
 
 # Downloads and the sanitizer check do not need each other's results. Build only after all
 # have succeeded; wait for every child even when one fails, so no installer outlives setup.
 # Bound the preparation shells as well as their individual children. Observed
 # complete setup was 32.8s; 30m also allows cold downloads and toolchain work.
-export started repository tools gate run markdownDependencies goArchitecture nodeArchitecture llvmArchitecture ADAMIC_BOUNDED_REPORT
-export -f bounded step prepareGo prepareClang prepareNode prepareSubmodules
+export started repository cloudSource tools gate run gateInputs gateInputsRoot markdownDependencies goArchitecture nodeArchitecture llvmArchitecture ADAMIC_BOUNDED_REPORT
+export -f bounded step prepareGo prepareGoAndSignal prepareClang prepareNode prepareSubmodules prepareGateCorpora
 for boundedTool in cat awk mkdir install mktemp realpath uname ls sort dirname ln mv grep nproc sha256sum cut head; do
  export -f "$boundedTool"
 done
-bounded 1800 bash -c "set -euo pipefail; prepareGo" & goProcess=$!
+bounded 1800 bash -c "set -euo pipefail; prepareGoAndSignal" & goProcess=$!
 bounded 1800 bash -c "set -euo pipefail; prepareClang" & clangProcess=$!
 bounded 1800 bash -c "set -euo pipefail; prepareNode" & nodeProcess=$!
 bounded 1800 bash -c "set -euo pipefail; prepareSubmodules" & submoduleProcess=$!
+prepareProcesses=("$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess")
+if "$gateInputs"; then
+	bounded 1800 bash -c "set -euo pipefail; prepareGateCorpora" & prepareProcesses+=("$!")
+fi
 failed=0
-for process in "$goProcess" "$clangProcess" "$nodeProcess" "$submoduleProcess"; do
+for process in "${prepareProcesses[@]}"; do
 	wait "$process" || failed=1
 done
 [ "$failed" = 0 ] || exit 1
@@ -168,6 +208,16 @@ export GOTOOLCHAIN=auto
 export TMPDIR=$gate
 export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
 ENV
+if "$gateInputs"; then
+	# Node, Go and submodules are now ready; build this seat's checker archive.
+	export PATH="$tools/bin:$PATH"
+	bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-gate-inputs.py" archive "$repository" "$gateInputsRoot" "$tools/bin/node" > "$run/gate-archive.log" 2>&1 || { cat "$run/gate-archive.log"; exit 1; }
+	cat "$run/gate-archive.log"
+	bounded 30 python3 "$cloudSource/setup-gate-inputs.py" env "$repository" "$gateInputsRoot" "$tools/bin/node" >> "$tools/env.sh"
+else
+	# A later ordinary setup must not inherit a previous opt-in gate seat.
+	echo "unset ADAMIC_TYPESCRIPT_SOURCE ADAMIC_CSS_LIBRARY ADAMIC_GRAPHQL_LIBRARY ADAMIC_MEDIA_QUERY_LIBRARY ADAMIC_SELECTOR_LIBRARY ADAMIC_VALUES_LIBRARY ADAMIC_JSON_PRETTIER ADAMIC_CSS_PRINTER_LIBRARY ADAMIC_GITIGNORE_LARGEST ADAMIC_CLANG_TSGO_ARCHIVE" >> "$tools/env.sh"
+fi
 grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
 # shellcheck disable=SC1091
 source "$tools/env.sh"
@@ -184,7 +234,7 @@ else
 	listArguments=()
 	"$warmTests" && listArguments=(-test)
 	bounded 600 go list -deps -export "${listArguments[@]}" -json ./... > "$run/packages.json" 2> "$run/list.log" || { cat "$run/list.log"; exit 1; }
-	key=$(bounded 30 python3 "$repository/cloud/setup-key.py" "$repository" "$run/packages.json" "$warmTests") || key=""
+	key=$(bounded 30 python3 "$cloudSource/setup-key.py" "$repository" "$run/packages.json" "$warmTests") || key=""
 fi
 if [ -n "$key" ] && [ "$(cat "$stamp" 2> /dev/null || true)" = "$key" ]; then
 	step "go build skipped (validated warming stamp)"
@@ -198,7 +248,7 @@ else
 	fi
 	if [ -n "$key" ]; then
 		# Build/link adds cache entries. Publish only the key of the completed cache, atomically.
-		if bounded 30 python3 "$repository/cloud/setup-key.py" "$repository" "$run/packages.json" "$warmTests" > "$run/stamp"; then
+		if bounded 30 python3 "$cloudSource/setup-key.py" "$repository" "$run/packages.json" "$warmTests" > "$run/stamp"; then
 			mv "$run/stamp" "$stamp"
 		fi
 	fi
@@ -208,7 +258,7 @@ step "build cache warm"
 
 cpuQuota=$(cat /sys/fs/cgroup/cpu.max 2> /dev/null || echo unknown)
 memory=$(awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo)
-echo "setup: build-flags commit=$(bounded 30 git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(bounded 30 go version) clang=$(bounded 30 clang --version | head -n 1) node=$(bounded 30 node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests load-before=$loadBefore load-after=$(cat /proc/loadavg)"
+echo "setup: build-flags commit=$(bounded 30 git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(bounded 30 go version) clang=$(bounded 30 clang --version | head -n 1) node=$(bounded 30 node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests gate-inputs=$gateInputs load-before=$loadBefore load-after=$(cat /proc/loadavg)"
 step "done on $(nproc) processors (cgroup cpu.max: $cpuQuota), $memory"
 echo "setup: source $tools/env.sh"
 echo "setup: logs $run"

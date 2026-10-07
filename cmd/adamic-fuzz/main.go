@@ -1,12 +1,23 @@
 // adamic-fuzz generates random valid Adamic programs and holds each one to the oracle: its source on
-// Node, native under ASan and UBSan, and the JavaScript backend on Node. Any disagreement or
-// sanitizer finding is shrunk to a minimal program.
+// Node, native under ASan and UBSan, and the JavaScript backend on Node. Every crash and every
+// finding is shrunk to a minimal program.
 //
 //	adamic-fuzz -seed 1 -count 1000             fuzz this checkout from seed 1
 //	adamic-fuzz -root ../old -seed 1 -count 100 fuzz another checkout, an old commit say
 //	adamic-fuzz -seed 42 -print                 print the program seed 42 makes
 //
 // Program n of a run is made from seed+n, so any finding reproduces with -seed alone and -count 1.
+//
+// A crash (fuzz.Crash: native died by a signal or a sanitizer reported, or the JavaScript backend
+// died by a signal) is the most severe verdict, and is reported first: the summary counts crashes
+// before findings, and lists them first. The exit status says the worst that happened:
+//
+//	0  every program agreed, stopped at an inserted check, or wasn't one to judge (not yet, invalid, unfit)
+//	1  at least one finding and no crash, or the checkout couldn't be prepared
+//	2  the command line was wrong
+//	3  at least one crash
+//
+// -try exits the same way for its one program.
 package main
 
 import (
@@ -99,16 +110,14 @@ func run() int {
 				fmt.Printf("--- %s stderr:\n%s", way.name, way.run.Stderr)
 			}
 		}
-		if outcome.Verdict == fuzz.Finding {
-			return 1
-		}
-		return 0
+		return exitStatus(map[fuzz.Verdict]int{outcome.Verdict: 1})
 	}
 
 	var mutex sync.Mutex
 	verdicts := map[fuzz.Verdict]int{}
 	reasons := map[string]int{}
-	var found []string
+	reasonVerdict := map[string]fuzz.Verdict{}
+	var found []foundProgram
 	var next atomic.Uint64
 	started := time.Now()
 	var group sync.WaitGroup
@@ -128,28 +137,31 @@ func run() int {
 				mutex.Lock()
 				verdicts[outcome.Verdict]++
 				if outcome.Verdict != fuzz.Agreed {
-					reasons[string(outcome.Verdict)+": "+outcome.Key]++
+					reason := string(outcome.Verdict) + ": " + outcome.Key
+					reasons[reason]++
+					reasonVerdict[reason] = outcome.Verdict
 				}
-				if *verbose || outcome.Verdict == fuzz.Finding {
+				failed := outcome.Verdict == fuzz.Crash || outcome.Verdict == fuzz.Finding
+				if *verbose || failed {
 					fmt.Printf("seed %d: %s %s\n", programSeed, outcome.Verdict, outcome.Key)
 				}
 				mutex.Unlock()
-				if outcome.Verdict != fuzz.Finding {
+				if !failed {
 					continue
 				}
 				fmt.Printf("seed %d:\n%s\n", programSeed, indent(outcome.Detail))
 				path := filepath.Join(*findings, fmt.Sprintf("seed%d.a", programSeed))
 				if *shrink {
-					shrunk := fuzz.Shrink(program, outcome.Key, func(candidate *fuzz.Program) fuzz.Outcome {
+					shrunk := fuzz.Shrink(program, outcome.Verdict, outcome.Key, func(candidate *fuzz.Program) fuzz.Outcome {
 						return checkout.Try(candidate.Source(), filepath.Join(*work, "programs", fmt.Sprintf("worker%d-shrink", worker)))
 					})
 					program = shrunk
 				}
-				if err := fuzz.WriteFinding(path, program, programSeed, leftOut, putIn, outcome.Key); err != nil {
+				if err := fuzz.WriteFinding(path, program, programSeed, leftOut, putIn, string(outcome.Verdict)+": "+outcome.Key); err != nil {
 					fmt.Fprintln(os.Stderr, err)
 				}
 				mutex.Lock()
-				found = append(found, fmt.Sprintf("seed %d: %s -> %s", programSeed, outcome.Key, path))
+				found = append(found, foundProgram{outcome.Verdict, fmt.Sprintf("seed %d: %s %s -> %s", programSeed, outcome.Verdict, outcome.Key, path)})
 				mutex.Unlock()
 			}
 		}()
@@ -157,21 +169,51 @@ func run() int {
 	group.Wait()
 
 	fmt.Printf("\n%d programs from seed %d in %s on %s\n", *count, *seed, time.Since(started).Round(time.Second), checkout.Root)
-	for _, verdict := range []fuzz.Verdict{fuzz.Agreed, fuzz.Finding, fuzz.Checked, fuzz.NotYet, fuzz.Invalid, fuzz.Unfit} {
+	for _, verdict := range fuzz.Verdicts {
 		fmt.Printf("  %-8s %d\n", verdict, verdicts[verdict])
 	}
+	// Reasons go most severe verdict first, then most often seen.
 	var keys []string
 	for key := range reasons {
 		keys = append(keys, key)
 	}
-	sort.Slice(keys, func(left, right int) bool { return reasons[keys[left]] > reasons[keys[right]] })
+	sort.Slice(keys, func(left, right int) bool {
+		if leftRank, rightRank := severity(reasonVerdict[keys[left]]), severity(reasonVerdict[keys[right]]); leftRank != rightRank {
+			return leftRank < rightRank
+		}
+		if reasons[keys[left]] != reasons[keys[right]] {
+			return reasons[keys[left]] > reasons[keys[right]]
+		}
+		return keys[left] < keys[right]
+	})
 	for _, key := range keys {
 		fmt.Printf("  %5d  %s\n", reasons[key], key)
 	}
-	for _, line := range found {
-		fmt.Println(line)
+	sort.SliceStable(found, func(left, right int) bool { return severity(found[left].verdict) < severity(found[right].verdict) })
+	for _, program := range found {
+		fmt.Println(program.line)
 	}
-	if len(found) > 0 {
+	return exitStatus(verdicts)
+}
+
+// foundProgram is a crash or a finding as the summary lists it.
+type foundProgram struct {
+	verdict fuzz.Verdict
+	line    string
+}
+
+// severity is a verdict's place in fuzz.Verdicts: 0 is a crash, the most severe.
+func severity(verdict fuzz.Verdict) int {
+	return slices.Index(fuzz.Verdicts, verdict)
+}
+
+// exitStatus is the worst of what a run came to, as the package comment's table says: 3 for a crash,
+// 1 for a finding, 0 otherwise.
+func exitStatus(verdicts map[fuzz.Verdict]int) int {
+	switch {
+	case verdicts[fuzz.Crash] > 0:
+		return 3
+	case verdicts[fuzz.Finding] > 0:
 		return 1
 	}
 	return 0

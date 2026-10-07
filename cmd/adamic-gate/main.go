@@ -18,14 +18,18 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 	"time"
 
 	"github.com/system-inc/adamic/internal/boundedrun"
 )
+
+var packageJobs = runtime.GOMAXPROCS(0)
 
 const timingPath = "cmd/adamic-gate/timings.json"
 
@@ -40,14 +44,15 @@ type unit struct {
 func (u unit) key() string { return u.Package + "::" + u.Test }
 
 type plan struct {
-	Version int
-	Commit  string
-	Source  string
-	Count   int
-	Units   []unit
-	Digest  string
-	Shards  []prediction
-	WASI    *wasiRequirement
+	Version     int
+	Commit      string
+	Source      string
+	Count       int
+	Units       []unit
+	Digest      string
+	Shards      []prediction
+	Complements []complement
+	WASI        *wasiRequirement
 }
 type event struct {
 	Action, Package, Test, Output string
@@ -93,6 +98,9 @@ type merged struct {
 	BuildFlags        []string
 	Errors            []string
 	Green             bool
+	Unplanned         []string
+	SplitChildren     map[string][]string
+	SkipCensus        skipCensusSummary
 }
 
 func main() {
@@ -122,6 +130,7 @@ func run(args []string) error {
 		count := flags.Int("count", 8, "number of shards")
 		index := flags.Int("index", -1, "zero-based shard")
 		out := flags.String("out", "", "evidence directory")
+		flags.IntVar(&packageJobs, "jobs", runtime.GOMAXPROCS(0), "concurrent package test processes")
 		resume := flags.Bool("resume", false, "reuse complete package evidence for identical execution inputs")
 		scratch := flags.String("scratch", "/workspace/adamic-gate-scratch", "disk-backed scratch root outside the repository")
 		if err := flags.Parse(args[1:]); err != nil {
@@ -166,11 +175,13 @@ func output(name string, args ...string) (string, error) {
 	if name == "go" && len(args) > 0 && (args[0] == "list" || args[0] == "test") {
 		limit = boundedrun.Build
 	}
-	command, release := boundedrun.Command(limit, name, args...)
+	cmd, release := boundedrun.Command(limit, name, args...)
 	defer release()
-	b, err := command.CombinedOutput()
+	var stderr commandBuffer
+	cmd.Stderr = &stderr
+	b, err := cmd.Output()
 	if err != nil {
-		return "", fmt.Errorf("%s %v: %w\n%s", name, args, err, b)
+		return "", fmt.Errorf("%s %v: %w\n%s", name, args, err, string(b)+stderr.String())
 	}
 	return strings.TrimSpace(string(b)), nil
 }
@@ -327,9 +338,9 @@ func children(pkg, parent string) ([]string, error) {
 	if strings.HasSuffix(pkg, "/internal/oracle") {
 		switch parent {
 		case "TestNativeAgreesWithNode", "TestWASIAgreesWithNode", "TestWASIEmission":
-			return fixtureRows("internal/oracle/oracle_test.go", "fixtures")
+			return registeredFixtures("internal/oracle/oracle_test.go", "fixtures")
 		case "TestInputAgreesWithNode":
-			return fixtureRows("internal/oracle/input_test.go", "inputFixtures")
+			return registeredFixtures("internal/oracle/input_test.go", "inputFixtures")
 		case "TestFreshWriteProbesStayRefused":
 			paths, err := filepath.Glob("internal/oracle/testdata/fresh_refused/*.a")
 			for i := range paths {
@@ -517,60 +528,34 @@ func makePlan(count int) (plan, error) {
 		loads[best] += p.Units[i].Seconds
 	}
 	sort.Slice(p.Units, func(i, j int) bool { return p.Units[i].key() < p.Units[j].key() })
+	p.Complements = complements(p)
 	p.Shards = predictions(p, weights)
 	p.Digest = planDigest(p)
 	return p, nil
 }
 
-// Group only siblings under an identical literal prefix. Alternating whole slash-containing
-// patterns would form a Cartesian product in Go's -run parser and execute unplanned tests.
+// Top-level alternation gives Go testing a union of complete slash-separated paths.
 func patterns(units []unit) []string {
-	// TestWASI needs SDK clang on PATH. Keep its invocation separate even with count=1.
-	for i, u := range units {
-		if strings.HasSuffix(u.Package, "/internal/native") && u.Test == "TestWASI" {
-			rest := append([]unit{}, units[:i]...)
-			rest = append(rest, units[i+1:]...)
-			return append(patterns(rest), "^TestWASI$")
-		}
-	}
-	groups := map[string][]string{}
+	var names []string
+	sdk := false
 	for _, u := range units {
-		if u.Test == "" {
-			groups[""] = nil
+		if strings.HasSuffix(u.Package, "/internal/native") && u.Test == "TestWASI" {
+			sdk = true
 			continue
 		}
-		parts := strings.Split(u.Test, "/")
-		prefix := strings.Join(parts[:len(parts)-1], "/")
-		groups[prefix] = append(groups[prefix], parts[len(parts)-1])
+		names = append(names, exactPath(u.Test))
 	}
-	keys := []string{}
-	for k := range groups {
-		keys = append(keys, k)
+	sort.Strings(names)
+	var out []string
+	if len(names) > 0 {
+		out = append(out, strings.Join(names, "|"))
 	}
-	sort.Strings(keys)
-	var result []string
-	for _, prefix := range keys {
-		names := groups[prefix]
-		if len(names) == 0 {
-			result = append(result, "^$")
-			continue
-		}
-		sort.Strings(names)
-		for i := range names {
-			names[i] = regexp.QuoteMeta(names[i])
-		}
-		last := "^(" + strings.Join(names, "|") + ")$"
-		if prefix != "" {
-			parts := strings.Split(prefix, "/")
-			for i := range parts {
-				parts[i] = "^" + regexp.QuoteMeta(parts[i]) + "$"
-			}
-			last = strings.Join(parts, "/") + "/" + last
-		}
-		result = append(result, last)
+	if sdk {
+		out = append(out, "^TestWASI$")
 	}
-	return result
+	return out
 }
+
 func skipReason(action, text string) string {
 	if action != "skip" {
 		return ""
@@ -593,10 +578,12 @@ func readRuns(path string) ([]result, error) {
 	scanner := bufio.NewScanner(f)
 	scanner.Buffer(make([]byte, 65536), 64*1024*1024)
 	var runs []result
+	line := 0
 	for scanner.Scan() {
+		line++
 		var e event
 		if err := json.Unmarshal(scanner.Bytes(), &e); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("%s:%d: malformed JSON: %w", path, line, err)
 		}
 		if e.Action == "run" && e.Test != "" {
 			runs = append(runs, result{Package: e.Package, Test: e.Test, Action: "run"})
@@ -616,10 +603,12 @@ func readLog(path string) ([]result, []string, int, error) {
 	var results []result
 	var cache []string
 	raw := 0
+	line := 0
 	for scanner.Scan() {
+		line++
 		var e event
 		if err := json.Unmarshal(scanner.Bytes(), &e); err != nil {
-			return nil, nil, 0, fmt.Errorf("%s: malformed JSON: %w", path, err)
+			return nil, nil, 0, fmt.Errorf("%s:%d: malformed JSON: %w", path, line, err)
 		}
 		key := e.Package + "::" + e.Test
 		outputs[key] += e.Output
@@ -659,13 +648,6 @@ func free(path string) uint64 {
 	}
 	return s.Bavail * uint64(s.Bsize)
 }
-func loadAverage() string {
-	b, err := os.ReadFile("/proc/loadavg")
-	if err != nil {
-		return "unknown"
-	}
-	return strings.TrimSpace(string(b))
-}
 func buildFlags(commit, before, after string) string {
 	get := func(n string, a ...string) string {
 		s, e := output(n, a...)
@@ -674,8 +656,8 @@ func buildFlags(commit, before, after string) string {
 		}
 		return strings.Split(s, "\n")[0]
 	}
-	quota, _ := os.ReadFile("/sys/fs/cgroup/cpu.max")
-	return fmt.Sprintf("commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q", commit, get("nproc"), strings.TrimSpace(string(quota)), get("go", "version"), get("clang", "--version"), get("node", "--version"), before, after, os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), os.Getenv("GOMAXPROCS"), os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"))
+	quota := cpuQuota()
+	return fmt.Sprintf("commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q", commit, processorCount(), quota, get("go", "version"), get("clang", "--version"), get("node", "--version"), before, after, os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), os.Getenv("GOMAXPROCS"), os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"))
 }
 func shard(index, count int, out, scratch string, resume bool) error {
 	started := time.Now()
@@ -728,6 +710,10 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if err != nil {
 		return err
 	}
+	if packageJobs < 1 {
+		return errors.New("jobs must be positive")
+	}
+	context = schedulingIdentity(context, packageJobs)
 	state := resumeState{PlanDigest: p.Digest, Context: context, Index: index}
 	if _, err := os.Stat(out); err == nil {
 		if !resume {
@@ -831,21 +817,16 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			s.Errors = append(s.Errors, err.Error())
 		}
 	}
-	byPackage := map[string][]unit{}
-	for _, u := range p.Units {
-		if u.Shard == index {
-			byPackage[u.Package] = append(byPackage[u.Package], u)
-		}
-	}
+	byPackage := assignedPackages(p, index)
 	pkgs := []string{}
 	for pkg := range byPackage {
 		pkgs = append(pkgs, pkg)
 	}
 	sort.Strings(pkgs)
 	fmt.Printf("shard %d disk before=%d bytes scratch=%s /tmp_free=%d bytes /tmp_tmpfs=%t\n", index, beforeDisk, root, free("/tmp"), tmpfs("/tmp"))
-	for _, pkg := range pkgs {
+	runPackage := func(pkg string) error {
 		packageDir := filepath.Join(out, "packages", shortHash(pkg))
-		key := checkpointKey(state, pkg, patterns(byPackage[pkg]))
+		key := checkpointKey(state, pkg, selectorKeys(p, index, pkg))
 		if err := cleanupPackageScratch(packageDir, key, root); err != nil {
 			return err
 		}
@@ -855,15 +836,9 @@ func shard(index, count int, out, scratch string, resume bool) error {
 				return err
 			}
 			if found {
-				if err := appendFile(raw, filepath.Join(packageDir, "test.jsonl")); err != nil {
-					return err
-				}
-				if err := appendFile(stderr, filepath.Join(packageDir, "test.stderr")); err != nil {
-					return err
-				}
-				s.Invocations = append(s.Invocations, saved.Invocations...)
+				_ = saved
 				fmt.Printf("resumed %s from complete log\n", pkg)
-				continue
+				return nil
 			}
 		}
 		if err := os.MkdirAll(packageDir, 0755); err != nil {
@@ -888,12 +863,29 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		if err := atomicJSON(filepath.Join(packageDir, "scratch.json"), scratchRecord{Key: key, Path: tmp}); err != nil {
 			return err
 		}
-		first := len(s.Invocations)
-		commandStderr = io.MultiWriter(stderr, packageStderr)
-		for _, pattern := range patterns(byPackage[pkg]) {
-			runCommand("go", testArgs(pkg, pattern), tmp, io.MultiWriter(raw, packageLog))
+		local := summary{}
+		var localErrors []string
+		for _, selection := range selections(p, index, pkg) {
+			args := selectionArgs(pkg, selection)
+			cmd, release := shardCommand("go", args...)
+			cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
+			if strings.HasSuffix(pkg, "/internal/native") && selection.Run == "^TestWASI$" {
+				cmd.Env = append(cmd.Env, "PATH="+filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin")+string(os.PathListSeparator)+os.Getenv("PATH"))
+			}
+			cmd.Stdout, cmd.Stderr = packageLog, packageStderr
+			began := time.Now()
+			code := 0
+			runErr := cmd.Run()
+			release()
+			if err := runErr; err != nil {
+				code = 1
+				if exit, ok := err.(*exec.ExitError); ok {
+					code = exit.ExitCode()
+				}
+				fmt.Fprintln(packageStderr, err)
+			}
+			local.Invocations = append(local.Invocations, invocation{pkg, args, true, code, time.Since(began).Seconds()})
 		}
-		commandStderr = stderr
 		err = errors.Join(packageLog.Sync(), packageStderr.Sync(), packageLog.Close(), packageStderr.Close())
 		if err != nil {
 			return err
@@ -904,9 +896,12 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		if err := os.Rename(filepath.Join(packageDir, "test.stderr.partial"), filepath.Join(packageDir, "test.stderr")); err != nil {
 			return err
 		}
-		checkpoint := packageEvidence{Key: key, Package: pkg, Invocations: s.Invocations[first:]}
+		checkpoint := packageEvidence{Key: key, Package: pkg, Invocations: local.Invocations}
+		if err := atomicJSON(filepath.Join(packageDir, "invocations.json"), checkpoint); err != nil {
+			return err
+		}
 		if err := completePackage(packageDir, checkpoint, p, index, pkg); err != nil {
-			s.Errors = append(s.Errors, err.Error())
+			localErrors = append(localErrors, err.Error())
 		} else {
 			checkpoint.LogDigest, err = fileDigest(filepath.Join(packageDir, "test.jsonl"))
 			if err != nil {
@@ -921,10 +916,55 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			}
 		}
 		if err := cleanupPackageScratch(packageDir, key, root); err != nil {
-			s.Errors = append(s.Errors, err.Error())
+			localErrors = append(localErrors, err.Error())
 		}
 		fmt.Printf("finished %s free=%d bytes\n", pkg, free(root))
+		if len(localErrors) > 0 {
+			return errors.New(strings.Join(localErrors, "; "))
+		}
+		return nil
 	}
+	jobs := make(chan string)
+	var workers sync.WaitGroup
+	var problemsMutex sync.Mutex
+	for worker := 0; worker < packageJobs; worker++ {
+		workers.Add(1)
+		go func() {
+			defer workers.Done()
+			for pkg := range jobs {
+				if err := runPackage(pkg); err != nil {
+					problemsMutex.Lock()
+					s.Errors = append(s.Errors, pkg+": "+err.Error())
+					problemsMutex.Unlock()
+				}
+			}
+		}()
+	}
+	for _, pkg := range pkgs {
+		jobs <- pkg
+	}
+	close(jobs)
+	workers.Wait()
+	// Aggregate only after workers finish, in stable package order. Checkpoints are durable earlier.
+	for _, pkg := range pkgs {
+		directory := filepath.Join(out, "packages", shortHash(pkg))
+		if err := appendFile(raw, filepath.Join(directory, "test.jsonl")); err != nil {
+			s.Errors = append(s.Errors, err.Error())
+		}
+		if err := appendFile(stderr, filepath.Join(directory, "test.stderr")); err != nil {
+			s.Errors = append(s.Errors, err.Error())
+		}
+		var checkpoint packageEvidence
+		if err := loadJSON(filepath.Join(directory, "complete.json"), &checkpoint); err == nil {
+			s.Invocations = append(s.Invocations, checkpoint.Invocations...)
+		} else {
+			// Preserve failed/incomplete invocation provenance independently of completion stamps.
+			if err := loadJSON(filepath.Join(directory, "invocations.json"), &checkpoint); err == nil {
+				s.Invocations = append(s.Invocations, checkpoint.Invocations...)
+			}
+		}
+	}
+
 	raw.Close()
 	stderr.Close()
 	afterSource, identityErr := sourceIdentity()
@@ -1038,6 +1078,11 @@ func validateResults(expected plan, index int, results []result, produced map[st
 		}
 		owner := -1
 		isAncestor := false
+		for _, c := range expected.Complements {
+			if c.Shard == index && c.Package == r.Package && c.Parent == r.Test {
+				isAncestor = true
+			}
+		}
 		for j, u := range expected.Units {
 			if owns(u, r) {
 				owner = j
@@ -1059,7 +1104,14 @@ func validateResults(expected plan, index int, results []result, produced map[st
 				produced[u.key()] = true
 			}
 		} else if !isAncestor {
-			problems = append(problems, "unplanned test: "+r.key())
+			if complementOwns(expected, index, r) {
+				if previous, ok := seenTest[r.key()]; ok {
+					problems = append(problems, fmt.Sprintf("test %s ran twice in shards %d and %d", r.key(), previous, index))
+				}
+				seenTest[r.key()] = index
+			} else {
+				problems = append(problems, "unplanned test: "+r.key())
+			}
 		}
 	}
 	return problems
@@ -1138,8 +1190,8 @@ func merge(dirs []string, out string) error {
 		for _, call := range s.Invocations {
 			declared[call.Package]++
 			assigned := false
-			for _, u := range expected.Units {
-				if u.Package == call.Package && u.Shard == s.Index {
+			for pkg := range assignedPackages(expected, s.Index) {
+				if pkg == call.Package {
 					assigned = true
 				}
 			}
@@ -1210,8 +1262,35 @@ func merge(dirs []string, out string) error {
 		}
 	}
 	m.Results = canonical(all)
+	m.SplitChildren = map[string][]string{}
+	for _, split := range expected.Complements {
+		parent := split.Package + "::" + split.Parent
+		for _, r := range m.Results {
+			if r.Package != split.Package || !strings.HasPrefix(r.Test, split.Parent+"/") {
+				continue
+			}
+			m.SplitChildren[parent] = append(m.SplitChildren[parent], r.Test)
+			known := false
+			for _, u := range expected.Units {
+				if owns(u, r) || ancestor(u, r) {
+					known = true
+					break
+				}
+			}
+			if !known {
+				notice := "unplanned, ran anyway: " + r.key()
+				m.Unplanned = append(m.Unplanned, notice)
+				fmt.Println(notice)
+			}
+		}
+	}
+
 	m.Pass, m.Fail, m.Skip = totals(m.Results)
 	m.TestEvents = m.Pass + m.Fail + m.Skip
+	m.SkipCensus, err = checkSkipCensus(".")
+	if err != nil {
+		m.Errors = append(m.Errors, err.Error())
+	}
 	m.Green = len(m.Errors) == 0 && m.Fail == 0
 	if _, err := os.Stat(out); err == nil {
 		return errors.New("merged output already exists")

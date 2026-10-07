@@ -12,7 +12,9 @@
   "targets": {
     "main": "f8013f0baac41ddc340d76f83bddde38536a8f07",
     "main_note": "origin/main moved from e8ba3d5d to f8013f0b (the fixes-3 landing) while the first runs were being set up; every run was restarted on f8013f0b. Entries 08 and 12 no longer apply there, so they are recorded as needing a refresh and were also run, as a supplement, on e8ba3d5d, where they apply, against that commit's own control.",
-    "later_main": "origin/main kept moving (b8fb957a, then 39638d9e) and this branch is based on origin/area/developer-tools 752f4531; applicability was not rechecked on those later commits"
+    "later_main": "origin/main kept moving (b8fb957a, then 39638d9e) and this branch is based on origin/area/developer-tools 752f4531; applicability was not rechecked on those later commits",
+    "scenes_main": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+    "scenes_note": "The scenes generator ran against origin/main 39638d9e. 02 and 09 apply there unchanged. 08 does not: inside the hunk the patch removes, main now calls l.acceptsUndefined(node) where the patch has comparedWithUndefined(node), so the patch's copy of that one removed line was changed to match (verify/catalog/08-narrowed-number-field-39638d9e.patch), same intent (remove the declared maybe-field read before trusting the narrowing)."
   },
   "generators": {
     "area": {
@@ -29,6 +31,11 @@
       "commit": "ac92bf0abf36b0fa442929b4e9a434445cb15a17",
       "branch": "origin/area/developer-tools",
       "note": "the area tip at the end: it merged the i16 families and a new undefined-numbers family; run only on the entries no earlier generator found"
+    },
+    "scenes": {
+      "commit": "6615e48d9d23160b43cfbbb9242c1b0b486a1a89",
+      "branch": "origin/devtools/generator-liveness-fields",
+      "note": "origin/area/developer-tools 3f904d53 plus the liveness and field-representation scenes (internal/fuzz/liveness.go, field_representation.go), each on a random stream of its own; run on the three entries no earlier generator found"
     }
   },
   "build_flags": {
@@ -197,6 +204,29 @@
         "latest generator, entry 11 on f8013f0b"
       ],
       "finding_kind": "all are #ht2nwj5: native and the JavaScript backend exit 70 with adamic: panic: TypeError: Cannot read properties of undefined (reading 'next') where Node exits 0. None reproduces on f8013f0b: seed 79 tried there agreed, and the area and i16 controls on f8013f0b are clean over the same seeds"
+    },
+    "scenes_on_39638d9e": {
+      "generator": "scenes",
+      "target": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+      "programs_judged": 1000,
+      "stopped_for": "range finished",
+      "wall_seconds": 536.0,
+      "load_before": "{ 177.08 132.29 113.29 }",
+      "load_after": "{ 120.73 120.88 116.36 }",
+      "command": "<scratch>/adamic-fuzz -root <scratch>/main -work <scratch>/work/main1000 -seed 1 -count 1000 -parallel 4 -shrink=false -v",
+      "finding_seeds": [],
+      "verdicts": {
+        "agreed": 935,
+        "finding": 0,
+        "checked": 64,
+        "not yet": 0,
+        "invalid": 0,
+        "unfit": 1
+      },
+      "note": "All 64 inserted checks and the one unfit program (seed 428, Node printed more than a megabyte) come to the same verdict with both scenes left out (-without liveness,field-representation), so none is the scenes' doing. Separately, adamic c from 39638d9e compiled the programs of seeds 1 to 1,000 with no checker refusal and no not yet.",
+      "overlapped_runs": [
+        "scenes generator, reduction of seed 3 on 02, 08 and 09"
+      ]
     }
   },
   "skipped_by_catalog": [
@@ -303,9 +333,39 @@
             "latest generator, control on f8013f0b",
             "latest generator, entry 09 on f8013f0b"
           ]
+        },
+        {
+          "generator": "scenes",
+          "target": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+          "patch_applied": "02-liveness-throw.patch",
+          "programs_judged": 8,
+          "stopped_for": "first finding",
+          "wall_seconds": 7.8,
+          "load_before": "{ 190.80 129.46 111.63 }",
+          "load_after": "{ 191.54 131.66 112.62 }",
+          "command": "<scratch>/adamic-fuzz -root <scratch>/p02 -work <scratch>/work/m02 -seed 1 -count 2000 -parallel 4 -shrink=false -v",
+          "first_finding": {
+            "reported_seed": 3,
+            "verdict_line": "seed 3: finding sanitizer: undefined behavior: member access within null pointer of type 'const adamic_object' (aka 'const struct adamic_object')",
+            "seconds_from_launch": 4.6,
+            "detail": "adamic.h:229:14: runtime error: member access within null pointer of type 'const adamic_object' (aka 'const struct adamic_object')",
+            "lowest_finding_seed": 1,
+            "findings_among_judged": 8,
+            "matched": "yes",
+            "match_note": "UBSan member access within null pointer of type 'const adamic_object', native killed where Node exits 0, as recorded. Seed 1, the lowest, is the other form of the same fault: native stdout differs, a reuse in place that wrote into the local the catch still reads"
+          },
+          "overlapped_runs": []
         }
       ],
-      "applies_on": "f8013f0baac41ddc340d76f83bddde38536a8f07"
+      "applies_on": "f8013f0baac41ddc340d76f83bddde38536a8f07",
+      "shrunk_program": {
+        "generator": "scenes",
+        "seed": 3,
+        "command": "go run ./cmd/adamic-reduce -root <scratch>/p02 -parallel 2 -o p02.a seed3.a (812 lines to 30 in 431 s). Native stdout is lost when UBSan kills it, so the derived signature is the first mismatching line, from the undefined-numbers scene, which the reduction keeps as an anchor. Without those five lines the remaining 25 still fail the same way on the patched tree and agree on main.",
+        "source": "function maybePair(first: number | undefined, second: number | undefined): (number | undefined)[] {\n\treturn [first];\n}\nconst maybeValue24: number | undefined = maybePair(0, 2).find((): boolean => true);\nconsole.log(`maybeValue24 number>find ${false} ${typeof maybeValue24} ${maybeValue24} ${false}`);\ninterface LiveTree {\n\tvalue: number;\n\tlabel: string;\n}\nfunction liveEach(input: number): LiveTree {\n\t[0].forEach((): void => {\n\t\t\tthrow new Error();\n\t});\n\treturn { value: 0, label: '' };\n}\nfunction liveConsume(tree: LiveTree): LiveTree {\n\treturn { ...tree };\n}\nfunction live6(input: number): string {\n\tlet local: LiveTree = { value: 0, label: '' };\n\tfor (let round = 0; round < 3; round++) {\n\t\ttry {\n\t\t\tconst other = liveConsume(local);\n\t\t\tlocal = liveEach(0);\n\t\t} catch (error) {\n\t\t}\n\t}\n\treturn '';\n}\n\tconsole.log(live6(0));\n",
+        "try_patched": "finding sanitizer: undefined behavior: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')",
+        "try_unpatched_main": "agreed"
+      }
     },
     {
       "number": "03",
@@ -691,11 +751,41 @@
             "latest generator, entry 11 on f8013f0b"
           ],
           "findings_beyond_control": []
+        },
+        {
+          "generator": "scenes",
+          "target": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+          "patch_applied": "08-narrowed-number-field.patch adapted (see targets.scenes_note)",
+          "programs_judged": 8,
+          "stopped_for": "first finding",
+          "wall_seconds": 7.4,
+          "load_before": "{ 191.54 131.66 112.62 }",
+          "load_after": "{ 188.61 132.04 112.87 }",
+          "command": "<scratch>/adamic-fuzz -root <scratch>/p08 -work <scratch>/work/m08 -seed 1 -count 2000 -parallel 4 -shrink=false -v",
+          "first_finding": {
+            "reported_seed": 3,
+            "verdict_line": "seed 3: finding javascript backend stdout differs, native stdout differs",
+            "seconds_from_launch": 4.2,
+            "detail": "native prints NaN false number NaN for a narrowed field a call or an alias set to undefined, where Node prints undefined true undefined -5",
+            "lowest_finding_seed": 1,
+            "findings_among_judged": 7,
+            "matched": "yes",
+            "match_note": "native prints NaN where Node prints undefined, as recorded. The scene reads only where undefined is taken, so main never stops at an inserted check there; the JavaScript backend differs too, at ?? -5, which the lowering drops for a field it trusts to be a number"
+          },
+          "overlapped_runs": []
         }
       ],
       "applies_on": null,
       "needs_refresh_on": "f8013f0baac41ddc340d76f83bddde38536a8f07",
-      "supplementary_target": "e8ba3d5d81de4d3773c723914fccd4c76248b965"
+      "supplementary_target": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+      "shrunk_program": {
+        "generator": "scenes",
+        "seed": 3,
+        "command": "go run ./cmd/adamic-reduce -root <scratch>/p08 -parallel 2 -o p08.a seed3.a (812 lines to 13 in 48.9 s)",
+        "source": "interface FieldBox {\n\tvalue: number | undefined;\n\tlabel: string;\n}\nfunction fieldShow(value: number | undefined): string {\n\treturn `${value === undefined}:${value}`;\n}\nconst field1: FieldBox = { value: 1.5, label: `field1` };\nconst field1Alias = field1;\nif (field1.value !== undefined) {\n\tfield1Alias.value = undefined;\n\tconsole.log(`field1 narrowedAlias ${field1.value} ${field1.value === undefined} ${typeof field1.value} ${field1.value ?? -5} ${fieldShow(field1.value)}`);\n}\n",
+        "try_patched": "finding javascript backend stdout differs, native stdout differs",
+        "try_unpatched_main": "agreed"
+      }
     },
     {
       "number": "09",
@@ -752,9 +842,39 @@
             "latest generator, control on f8013f0b",
             "latest generator, entry 02 on f8013f0b"
           ]
+        },
+        {
+          "generator": "scenes",
+          "target": "39638d9e278d38bb5aeae887f46d55a70e47aaad",
+          "patch_applied": "09-literal-undefined-field.patch",
+          "programs_judged": 7,
+          "stopped_for": "first finding",
+          "wall_seconds": 6.8,
+          "load_before": "{ 188.61 132.04 112.87 }",
+          "load_after": "{ 181.96 132.48 113.25 }",
+          "command": "<scratch>/adamic-fuzz -root <scratch>/p09 -work <scratch>/work/m09 -seed 1 -count 2000 -parallel 4 -shrink=false -v",
+          "first_finding": {
+            "reported_seed": 3,
+            "verdict_line": "seed 3: finding native stdout differs",
+            "seconds_from_launch": 3.8,
+            "detail": "native prints 0 false number 0 for a field made undefined, where Node prints undefined true undefined -5",
+            "lowest_finding_seed": 1,
+            "findings_among_judged": 7,
+            "matched": "yes",
+            "match_note": "stdout differs, both exit 0, native prints 0 false for undefined true, as recorded"
+          },
+          "overlapped_runs": []
         }
       ],
-      "applies_on": "f8013f0baac41ddc340d76f83bddde38536a8f07"
+      "applies_on": "f8013f0baac41ddc340d76f83bddde38536a8f07",
+      "shrunk_program": {
+        "generator": "scenes",
+        "seed": 3,
+        "command": "go run ./cmd/adamic-reduce -root <scratch>/p09 -parallel 2 -o p09.a seed3.a (812 lines to 9 in 41.6 s)",
+        "source": "interface FieldReading {\n\treadonly value: number | undefined;\n}\nfunction fieldShow(value: number | undefined): string {\n\treturn `${value === undefined}:${value}`;\n}\nconst field4 = { value: undefined };\nconst field4Reading: FieldReading = field4;\nconsole.log(`field4 widened ${field4Reading.value} ${field4Reading.value === undefined} ${typeof field4Reading.value} ${field4Reading.value ?? -5} ${fieldShow(field4Reading.value)}`);\n",
+        "try_patched": "finding native stdout differs",
+        "try_unpatched_main": "agreed"
+      }
     },
     {
       "number": "11",

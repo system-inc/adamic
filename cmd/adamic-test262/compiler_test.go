@@ -60,7 +60,7 @@ func TestCompilerWorkerTimeout(t *testing.T) {
 	}
 	worker := &compilerWorker{command: command.Cmd, input: input, output: output, encoder: json.NewEncoder(input), decoder: json.NewDecoder(output), timeout: 200 * time.Millisecond}
 	defer worker.close()
-	started := time.Now()
+	started := testfixture.WaitTree(t, heartbeat)
 	result := worker.compile("unused.a")
 	testfixture.AssertStopped(t, started, heartbeat, result.Stderr, child)
 	if !result.TimedOut || result.Exit != -1 || worker.command != nil || command.ProcessState == nil {

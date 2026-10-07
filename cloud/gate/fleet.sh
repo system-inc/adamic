@@ -86,14 +86,16 @@ await() {
 
 # One brief per shard. The last shard carries any required WASI units (Plan.WASI), so every box
 # provisions the WASI SDK when this tree's setup offers it; the runner refuses to start a shard whose
-# requirements are missing, and merge refuses any skipped required unit.
+# requirements are missing, and merge refuses any skipped required unit. Every box also provides the
+# gate's required inputs (--gate-inputs: the pinned TypeScript source, reference libraries and
+# oracles) whenever this tree's setup offers them.
 brief() {
 	local name=$1 command=$2
 	cat << BRIEF
 Unit: run one part of Adamic's test gate at a fixed commit and return the raw logs. Branch for the logs: $prefix/$name. This is a measured run; do not change any code.
 
 1. In the repository: \`git fetch origin && git checkout --detach $sha\` and confirm \`git rev-parse HEAD\` prints $sha.
-2. If \`grep -q -- --wasi-sdk cloud/setup.sh\`, run \`bash cloud/setup.sh --wasi-sdk\`, otherwise \`bash cloud/setup.sh\`. Source the env file it prints, then \`export ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1\`. Record setup's timing lines and \`nproc\`.
+2. Set up with every gate input this tree's setup offers: \`flags=""; grep -q -- --wasi-sdk cloud/setup.sh && flags="\$flags --wasi-sdk"; grep -q -- --gate-inputs cloud/setup.sh && flags="\$flags --gate-inputs"; bash cloud/setup.sh \$flags\`. Source the env file it prints, then \`export ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1\`. Record setup's timing lines, the flags it ran with, and \`nproc\`. A test that skips for a missing input is a gate failure, not a pass.
 3. \`go build -o /workspace/adamic-gate ./cmd/adamic-gate\`, read docs/gate-shards.md, then run, with output to a log file (never piped):
    \`date -u; $command > /workspace/gate-run.log 2>&1; echo exit=\$?; date -u\`
    If the box restarts or the command is interrupted, rerun the same command with \`-resume\` added (same output directory) until it completes. Record each start, end and interruption.
@@ -145,9 +147,21 @@ run)
 	done
 	echo "fleet: run $run, logs on $prefix/"
 
-	# A shard takes about 20 minutes; two hours covers setup, restarts and resumes.
+	# A shard takes about 20 minutes; two hours covers setup, restarts and resumes. A box can fail
+	# in ways its brief can't fix (no push credentials, a dead container), so each shard whose logs
+	# never arrive is started once more on a fresh box before the run gives up.
 	# shellcheck disable=SC2046
-	await "${ADAMIC_GATE_FLEET_SHARD_WAIT:-7200}" $(shards) || exit 1
+	if ! await "${ADAMIC_GATE_FLEET_SHARD_WAIT:-7200}" $(shards); then
+		present=$(arrived)
+		retried=()
+		for name in $(shards); do
+			grep -qx "$name" <<< "$present" && continue
+			launch "$fleet-$name-retry" "$work/$name.md"
+			retried+=("$name")
+		done
+		echo "fleet: started again on fresh boxes: ${retried[*]}"
+		await "${ADAMIC_GATE_FLEET_SHARD_WAIT:-7200}" "${retried[@]}" || exit 1
+	fi
 	echo "fleet: all $count shard logs arrived after $((($(date +%s) - started) / 60)) minutes"
 	runMerge
 	;;

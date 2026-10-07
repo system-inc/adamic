@@ -1,0 +1,23 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -458,20 +458,6 @@
+ 			return nil, err
+ 		}
+ 		optional := access.QuestionDotToken != nil
+-		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+-			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored.IsMaybe() && of == stored.Present() {
+-				// Read the declared representation before trusting the narrowing. A call or an
+-				// alias write may have restored undefined, just as for a narrowed variable.
+-				if slotless(stored) {
+-					return nil, l.notYet(node, "a narrowed boolean | undefined field; copy the field into a local and narrow that local instead")
+-				}
+-				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})
+-				if l.acceptsUndefined(node) {
+-					return read, nil
+-				}
+-				return ir.Unwrap{Value: read}, nil
+-			}
+-		}
+ 		if of.IsMaybe() && optional {
+ 			// box?.size is number | undefined because box may be; the field itself is what's stored.
+ 			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
