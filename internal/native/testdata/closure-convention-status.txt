@@ -1,0 +1,53 @@
+Closure convention checkpoint and runtime audit
+
+Status: incomplete. This report does not certify the requested reconciliation.
+Branch: codex/closure-convention, based on origin/main 48c05d09.
+Tested implementation: 9534e8ab2c2daa2c5e400f43a421004ed4ed0311.
+The branch contains the reader-only arguments.length implementation, not the completed optional/default reconciliation.
+
+Parser identity observed at this checkpoint:
+Both compiler binaries built with go build -buildvcs=false, canonical stage1/typescript/parser/main.ts entry, default release build flags, same toolchain and cohere pin as main 48c05d09.
+Emitted C: byte-identical; SHA256 1e6bfaa8b9e114078056060a632f9e8e3d782d511badeed1ab0030cba674a5d9.
+Release binary: byte-identical; SHA256 db7646892bd85541e3ac2663e80056435de6262908fb34a49ed3031b8037eb6e.
+Artifacts: /tmp/closure-convention-step1-parser.c and /tmp/closure-convention-step1-parser.
+Main artifacts: /tmp/arguments-length-current-main-parser-correct.c and /tmp/arguments-length-current-main-parser-correct.
+These observations establish identity only for the checkpoint, not for an unimplemented reconciliation.
+
+Runtime call-site audit:
+Searched the complete internal/native/runtime tree at 9534e8ab and library's codex/regex-replace-callback 132d9919, using git grep for (->|.)code followed by a call and for adamic_method. Additional searches examined code-field references and method-table access.
+At 9534e8ab the only runtime closure call is array.c:198. At 132d9919 there are six:
+1. array.c:198: compare->code(compare, (adamic_value[]){left, right}). Type: adamic_code, two arguments, no cast. Sort comparator receives two JavaScript arguments.
+2. node_process.c:436: closure->code(closure, padded). Type: adamic_code, two arguments, no cast. Built-in performance closures receive padded string slots. Logical count is available in the enclosing invoke function but padding length is not that count.
+3. node_process.c:441: closure->code(closure, args). Type: adamic_code, two arguments, no cast. User-closure fallback in performance invocation; enclosing count must remain the actual count if the candidate closure observes it.
+4. parallel.c:197: scope->work->code(scope->work, arguments). Type: adamic_code, two arguments, no cast. Worker callback receives element and index.
+5. parallel.c:300: work->code(work, arguments). Type: adamic_code, two arguments, no cast. Sequential worker callback receives element and index.
+6. regexp_replace.c:114: callback->code(callback, packed). Type: adamic_code, two arguments, no cast. The local argument_count is the JavaScript match callback count; packed_count is a parameter/rest layout size and must not replace it.
+The library header defines adamic_code once at adamic.h:126 as adamic_value (*)(adamic_closure *, adamic_value *).
+The checkpoint header defines the same shape once at adamic.h:81.
+
+Method audit:
+No runtime C site invokes an adamic_method pointer in either audited tree.
+At 9534e8ab, adamic.h:196 defines adamic_method once as adamic_value (*)(adamic_object *, adamic_value *); adamic_methods.code at :200 is a const adamic_method pointer; object.c:57 adamic_object_callee returns a method through its typed output parameter. Invocation is emitted by internal/native/emit_functions.go, callThrough.
+At 132d9919, corresponding locations are adamic.h:248 (typedef), :252 (table) and object.c:66 (lookup).
+class_inheritance.c:19 accesses a separate class-method function-index table, not an adamic_method invocation.
+The unfinished census merge changed adamic_code and adamic_method to universal three-argument pointers and array.c:198 to three arguments. Those changes were not validated and are not in this checkpoint.
+
+Validation:
+Setup succeeded, total 52.417s, nproc 5; cgroup cpu.max 400000 100000.
+Timing lines: node 0.062s; go 0.070s; submodules 0.152s; markdown dependencies 0.154s; clang 0.422s; go build 51.529s; tests deferred 52.357s; cache warm 52.358s; done 52.417s.
+Toolchain: Go 1.27.1, clang 20.1.8, Node 24.19.0.
+Checkpoint gate /tmp/closure-convention-step1-gate.log: native package passed in 0.160s; filtered Node oracle passed in 2.746s.
+Recheck commands, with all output written to logs:
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native -run '^TestNoReaderCallingConvention$' -count=1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length' -count=1
+Logs: /tmp/closure-convention-audit-native.log, /tmp/closure-convention-audit-oracle.log.
+
+Mutants:
+No new drop-count compiler mutant has been run for this unit. Historical arguments-length mutants are documented in arguments-length-revision-report.txt; those do not prove the new C-arity requirement.
+
+Unfinished scope:
+The merges of 24a2b287 and cd220dd5, the single typed selective-count convention, runtime/library integration, host fixture 24, and the compiler-rejected drop-count mutant remain unfinished.
+The attempted 24a2b287 merge had overlapping lowering/emission changes and universal ABI changes outside conflict blocks. Resolving textual conflicts alone did not yield a coherent implementation, so the unvalidated merge was saved and aborted.
+Full unfinished patch: /tmp/closure-convention-unfinished-census-merge.patch. Merge head: /tmp/closure-convention-unfinished-merge-head.txt. These are local recovery artifacts, not pushed commits.
+The supplied compiler branches do not contain parallel.c or regexp_replace.c; the fetched library branch does, with additional runtime dependencies. No claim is made that those dependencies are integrated.
+Scratch merge 87ba1951 was unavailable from the fetched refs; no claim is made that its host validation was reproduced here.
