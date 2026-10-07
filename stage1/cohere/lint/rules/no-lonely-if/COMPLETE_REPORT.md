@@ -1,5 +1,5 @@
 Built: completed six previous claims, then claimed and ported no-lone-blocks, no-lonely-if and no-loss-of-precision.
-Commits: six ports c0612bbb, ae160b6c, 0659fc7d, d60b3d7d, 0378e63b, 454e5303; evidence 110b24f6; next claim 38b0f50e.
+Commits: six ports c0612bbb, ae160b6c, 0659fc7d, d60b3d7d, 0378e63b, 454e5303; evidence 110b24f6; next claim 38b0f50e; next ports ff36611e, c2a97e5e, 9ed57333.
 Checks: all three new original Go suites, 263 fixture files and 236 compiler/stage1 sources match on Node, emitted JavaScript and sanitized native.
 Mutants: each new semantic mutant and the additional eleven-pass fix mutant compile, exit zero with clean stderr, and are caught only by Go byte comparison on all three runtimes.
 Limits: shared .a registration and independent repair integration remain pending; no shared files were edited, no full repository gate is claimed.

@@ -104,3 +104,15 @@ Owned directories will be rules/no-lone-blocks, rules/no-lonely-if and
 rules/no-loss-of-precision. This claim is committed and pushed before rule code.
 The fresh fetch also found origin/codex/lint-harness-dot-a at 2650ad59. Its new
 .a/suggestion support is recorded for integration; no shared files are edited here.
+
+### Fifth-batch outcome
+
+All three owned .a ports and evidence are complete: no-lone-blocks ff36611e,
+no-lonely-if c2a97e5e and no-loss-of-precision 9ed57333. Their upstream Go
+assertions, full fixture comparisons and compiler/stage1 comparisons pass on
+Node source, emitted JavaScript and sanitized native. Each semantic mutant and
+the additional convergence-budget mutant compiles and runs cleanly and is caught
+only by the external Go comparison. Independent repair integration remains
+explicitly refused where the shared contract cannot represent it. No shared
+files were modified. Complete reports, rates and exact limitations are in
+../rules/no-lonely-if/COMPLETE_REPORT.md. No additional rules are claimed.
