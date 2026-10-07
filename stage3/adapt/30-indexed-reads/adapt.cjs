@@ -8,7 +8,7 @@ const files = [
     "factory/baseNodeFactory.ts", "factory/emitHelpers.ts", "factory/emitNode.ts",
     "factory/nodeChildren.ts", "factory/nodeConverters.ts", "factory/nodeFactory.ts",
     "factory/nodeTests.ts", "factory/parenthesizerRules.ts", "factory/utilities.ts",
-    "factory/utilitiesPublic.ts",
+    "factory/utilitiesPublic.ts", "debug.ts", "path.ts",
 ];
 
 // Addresses are parsed expressions plus their occurrence in the pinned file.
