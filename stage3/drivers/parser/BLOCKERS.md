@@ -211,7 +211,9 @@ catch an actual one-node end change on Node.
 The driver command, dump hash and mutant lines are in README.md and
  evidence/node-report.json. Setup from the first pass remains valid: 98 seconds,
 nproc 5. Additional checks: bash -n run.sh, probe go vet, Python AST parsing,
-and git diff --check. Test output stayed in logs. No complete repository gate
+and git diff --check excluding saved patch artifacts. The unfiltered check
+reports whitespace in unified-diff context lines inside those artifacts;
+they preserve the scratch changes verbatim. Test output stayed in logs. No complete repository gate
 was run for these driver/probe/report changes.
 
 ## Historical preflight, superseded by the measurements above
