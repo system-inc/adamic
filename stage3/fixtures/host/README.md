@@ -117,8 +117,11 @@ The unused adaptation was removed; number 50 belongs to the scanner proof's
 temporary adaptations. Historical oracle evidence is retained in this bucket.
 The fixture Go test owned by another worker was not edited.
 
-Fixture 14's memoize follow-up is recorded in
-[ADAPTED.md](ADAPTED.md#fixture-14-memoize-follow-up). Adaptation 48 is
-declined, so its re-extracted source bodies and Node golden are unchanged.
-The provenance refresh and independent caching mutant are reproducible with
-reextract-14.cjs and verify-14.cjs; no native fix is claimed.
+Fixture 14 now applies adaptation 48 A, re-extracted from the actual composed
+adapted tree. Its memoize parameter is `callback: (() => T) | undefined` and
+its clearing assignment is `callback = undefined;`. Emitted JavaScript and
+Node stdout/stderr/exit are unchanged. See
+[ADAPTED.md](ADAPTED.md#fixture-14-applied-memoize-a) for current source pins,
+audit and mutant evidence. The earlier decline is historical; tsc adaptation
+acceptance and native compiler support are separate. The old status.json
+compiler observation for fixture 14 has not been remeasured on this source.
