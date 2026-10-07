@@ -1,0 +1,14 @@
+function tie(callback: (n: number) => string): (n: number) => string {
+    const label = ['cycle', 'ready'].join(':');
+    function ending(): string { return label; }
+    ending();
+    const result = (n: number): string => n === 0 ? label : callback(n - 1);
+    callback = result;
+    return result;
+}
+function run(): void {
+    const get = tie((n) => `${n}`);
+    console.log(get(3));
+}
+run();
+console.log('freed');

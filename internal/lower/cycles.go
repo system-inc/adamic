@@ -400,7 +400,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 				if owner.Async {
 					for _, held := range owner.FrameEnvironment {
 						if f.l.result.Locals[held].Captured {
-							queue = append(queue, cycleNode{cell: held + 1})
+							enqueue(cycleNode{cell: held + 1}, "async frame captured slot")
 						}
 					}
 				}

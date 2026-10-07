@@ -1,0 +1,11 @@
+--- a/internal/lower/graph_types.go
++++ b/internal/lower/graph_types.go
+@@ -89,7 +89,7 @@
+ 					Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
+ 				}
+ 			}
+-			seeds[cycleNode{cell: local + 1}] = true
++			return &Refused{Where: f.l.program.Where(f.l.localNodes[local]), What: "captured callback cycle seed refused again", Fix: "adamic/cycle-capable"}
+ 		}
+ 	}
+ 	if len(seeds) == 0 {

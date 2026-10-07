@@ -17,14 +17,30 @@ func TestMemoizeCaptureStopsAtAssertion(t *testing.T) {
 	}
 }
 
-// Assigning the returned closure into the cell it captures makes the finder's
-// same-signature closure edge an actual runtime cycle, without any assertion.
-func TestMemoizeSelfCaptureIsCycleCapable(t *testing.T) {
+// A store of the returned closure into its captured cell really closes a cycle.
+// The synchronous environment and closure must be graph members together.
+func TestMemoizeSelfCaptureUsesGraph(t *testing.T) {
 	t.Parallel()
 	const source = "function tie(callback: () => string): () => string {\n    const result = () => callback();\n    callback = result;\n    return result;\n}\nconst get = tie(() => 'cwd');\nconsole.log('made');\n"
-	_, err := lowerSource(t, source)
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.Error(), "'callback', a variable a function value captures") || !strings.Contains(refused.Error(), "adamic/cycle-capable") {
-		t.Fatalf("want the self-capturing callback cell refused, got %v", err)
+	program, err := lowerSource(t, source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := false
+	for _, local := range program.Locals {
+		if local.Name == "callback" && local.Captured {
+			found = true
+			if !local.GraphCell {
+				t.Fatal("cyclic callback is not a graph member")
+			}
+		}
+	}
+	if !found {
+		t.Fatal("no captured callback")
+	}
+	for _, function := range program.Functions {
+		if len(function.Environment) > 0 && !function.GraphClosure {
+			t.Fatalf("closure %s is not a graph member", function.Name)
+		}
 	}
 }
