@@ -1,0 +1,12 @@
+=== RUN   TestWave17FourthAgreementAndMutants
+    wave_17_fourth_test.go:98: controls: 71324 identical finding bytes; findings 195
+    wave_17_fourth_test.go:104: 333 upstream and edge control files
+    wave_17_fourth_test.go:107: controls-asan: 71324 identical finding bytes; findings 195
+    wave_17_fourth_test.go:147: throw mutant exits 0, empty stderr; Go byte oracle catches byte 16897
+    wave_17_fourth_test.go:147: regex mutant exits 0, empty stderr; Go byte oracle catches byte 1187
+    wave_17_fourth_test.go:147: arrow mutant exits 0, empty stderr; Go byte oracle catches byte 326
+    wave_17_fourth_test.go:145: mutant survived or sanitizer caught tracker
+--- FAIL: TestWave17FourthAgreementAndMutants (102.46s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	102.465s
+FAIL

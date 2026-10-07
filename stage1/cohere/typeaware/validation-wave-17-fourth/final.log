@@ -1,0 +1,21 @@
+=== RUN   TestWave17FourthAgreementAndMutants
+    wave_17_fourth_test.go:98: controls: 72000 identical finding bytes; findings 197
+    wave_17_fourth_test.go:104: 335 upstream and edge control files
+    wave_17_fourth_test.go:107: controls-asan: 72000 identical finding bytes; findings 197
+    wave_17_fourth_test.go:147: throw mutant exits 0, empty stderr; Go byte oracle catches byte 16897
+    wave_17_fourth_test.go:147: regex mutant exits 0, empty stderr; Go byte oracle catches byte 1187
+    wave_17_fourth_test.go:147: arrow mutant exits 0, empty stderr; Go byte oracle catches byte 326
+    wave_17_fourth_test.go:147: tracker mutant exits 0, empty stderr; Go byte oracle catches byte 14477
+    wave_17_fourth_test.go:156: options [--allow-named]: 69480 identical bytes
+    wave_17_fourth_test.go:156: options [--disallow-unbound]: 74369 identical bytes
+    wave_17_fourth_test.go:156: options [--allow-named --disallow-unbound]: 71586 identical bytes
+    wave_17_fourth_test.go:165: binding question rejects released program: panic 70
+    wave_17_fourth_test.go:173: released registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_fourth_test.go:186: symbol identity question rejects released handle; retained registry mutant finishes cleanly, required panic catches it
+    wave_17_fourth_test.go:212: repository: 18485 identical finding bytes; findings 0
+    wave_17_fourth_test.go:213: repository-asan: 18485 identical finding bytes; findings 0
+    wave_17_fourth_test.go:212: compiler: 5318 identical finding bytes; findings 0
+    wave_17_fourth_test.go:213: compiler-asan: 5318 identical finding bytes; findings 0
+--- PASS: TestWave17FourthAgreementAndMutants (126.84s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	126.843s
