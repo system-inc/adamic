@@ -1,0 +1,27 @@
+import { panic,readTextFile,programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import type { Escape,EscapeContext,NumberEscape } from './types.a';
+import { decodePropertyEscape } from './decode_property_escape.a';
+import { decodeNumericEscape } from './decode_numeric_escape.a';
+import { readClass } from './read_class.a';
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));if(input.kind === 'Error'){panic(input.message);}
+const json=new OptionsJson(input.text);const root=json.parse();if(root<0){panic(json.error);}
+function field(index: number,name: string): number {return json.field(index,name);}
+function vector(index: number): number[] {const values: number[]=[];for(const child of json.node(index).children){values.push(Number(json.node(child).text));}return values;}
+const sources: number[][]=[];const sizes: number[][]=[];for(const source of json.node(field(root,'sources')).children){sources.push(vector(field(source,'bytes')));sizes.push(vector(field(source,'sizes')));}
+let current: readonly number[]=[];let currentSizes: readonly number[]=[];let deps: readonly number[]=[];let identityError='';let trace='';
+function at(values: readonly number[],index: number): number {return values[index] ?? panic('missing value');}
+function decimalDigit(index: number): boolean {trace+=`digit:${index};`;return at(deps,4) === 1;}
+function decimal(index: number): NumberEscape {trace+=`decimal:${index};`;return {rune:at(deps,0),width:at(deps,1)};}
+function octal(index: number): NumberEscape {trace+=`octal:${index};`;return {rune:at(deps,2),width:at(deps,3)};}
+function identity(rune: number,size: number,context: EscapeContext): Escape {trace+=`identity:${rune}:${size}:${context.unicode}:${context.inClass}:${context.groups}:${context.named};`;return {kind:at(deps,6),set:at(deps,7),rune:at(deps,8),width:at(deps,9),negated:at(deps,10) === 1,error:identityError};}
+function brace(start: number): number {trace+=`brace:${current.length-start};`;return at(deps,5);}
+function decodeSize(index: number): number {trace+=`decode:${current.length-index};`;return at(currentSizes,index);}
+function slice(start: number,end: number): string {let text='';for(let i=start;i<end;i++){text+=at(current,i).toString(16).padStart(2,'0');}return text;}
+const mode=json.node(field(root,'mode')).text;
+for(const row of json.node(field(root,'rows')).children) {
+ const values=vector(field(row,'input'));current=sources[at(values,0)] ?? panic('missing source');currentSizes=sizes[at(values,0)] ?? panic('missing sizes');deps=vector(field(row,'deps'));identityError=json.node(field(row,'identityError')).text;
+ trace='';const context: EscapeContext={unicode:at(values,2) === 1,inClass:at(values,3) === 1,groups:at(values,4),named:at(values,5) === 1};
+ if(mode === 'class') {const value=readClass(current,decodeSize,slice);console.log(`${value.width}|${value.negated}|${value.body}|${value.error}|${trace}`);}
+ else {const index=at(values,1);const value=mode === 'numeric' ? decodeNumericEscape(current,index,context,decimalDigit,decimal,octal) : decodePropertyEscape(current,index,1,context,identity,brace);console.log(`${value.kind},${value.set},${value.rune},${value.width},${value.negated}|${value.error}|${trace}`);}
+}

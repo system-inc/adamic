@@ -1,0 +1,15 @@
+import { panic } from 'adamic';
+import type { Escape,EscapeContext,NumberEscape } from './types.a';
+import { emptyEscape } from './types.a';
+export function decodeNumericEscape(source: readonly number[],index: number,context: EscapeContext,isDecimalDigit: (index: number) => boolean,decimalEscape: (index: number) => NumberEscape,legacyOctal: (index: number) => NumberEscape): Escape {
+ const byte=source[index] ?? panic('missing numeric marker');
+ if(byte === 48 && !isDecimalDigit(index+1)) {return {kind:0,set:0,rune:0,width:1,negated:false,error:''};}
+ if(byte !== 48 && !context.inClass) {
+  const value=decimalEscape(index);
+  if(value.rune<=context.groups) {return {kind:3,set:0,rune:0,width:value.width,negated:false,error:''};}
+ }
+ if(context.unicode) {return emptyEscape('unsupported regexp syntax: \\' + String.fromCharCode(byte));}
+ const octal=legacyOctal(index);
+ if(octal.width>0) {return {kind:0,set:0,rune:octal.rune,width:octal.width,negated:false,error:''};}
+ return {kind:0,set:0,rune:byte,width:1,negated:false,error:''};
+}

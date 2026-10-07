@@ -1,0 +1,12 @@
+import { panic } from 'adamic';
+import type { Escape,EscapeContext } from './types.a';
+import { emptyEscape } from './types.a';
+export function decodePropertyEscape(source: readonly number[],index: number,size: number,context: EscapeContext,identityEscape: (rune: number,size: number,context: EscapeContext) => Escape,indexBrace: (start: number) => number): Escape {
+ const rune=source[index] ?? panic('missing property marker');
+ if(!context.unicode) {return identityEscape(rune,size,context);}
+ const marker=String.fromCharCode(rune);
+ if(source[index+size] !== 123) {return emptyEscape('unsupported regexp syntax: \\' + marker + ' naming no property');}
+ const end=indexBrace(index+size);
+ if(end<0) {return emptyEscape('unsupported regexp syntax: \\' + marker + '{ that no } closes');}
+ return {kind:1,set:3,rune:0,width:size+end+1,negated:false,error:''};
+}

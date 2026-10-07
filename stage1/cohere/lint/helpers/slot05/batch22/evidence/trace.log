@@ -1,0 +1,56 @@
+=== RUN   TestProperty
+    helper_test.go:84: {
+          "consumer_strings": 904,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "rows": 18600,
+          "source_projections": 604
+        }
+    helper_test.go:138: decode_property_escape.a mutant "if(!context.unicode)" -> "if(context.unicode)" caught at output line 1: mutant "0,0,0,0,false|unsupported regexp syntax: \\p naming no property|", Go "0,0,112,1,false||identity:112:1:false:false:0:false;"
+    helper_test.go:138: decode_property_escape.a mutant "source[index+size] !== 123" -> "source[index+size] === 123" caught at output line 11: mutant "1,3,0,57,false||brace:133;", Go "0,0,0,0,false|unsupported regexp syntax: \\p naming no property|"
+    helper_test.go:138: decode_property_escape.a mutant "if(end<0)" -> "if(false)" caught at output line 17291: mutant "1,3,0,1,false||brace:1;", Go "0,0,0,0,false|unsupported regexp syntax: \\p{ that no } closes|brace:1;"
+    helper_test.go:138: decode_property_escape.a mutant "size+end+1" -> "size+end" caught at output line 3131: mutant "1,3,0,14,false||brace:18;", Go "1,3,0,15,false||brace:18;"
+--- PASS: TestProperty (22.80s)
+=== RUN   TestNumeric
+    helper_test.go:84: {
+          "consumer_strings": 904,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "rows": 5440,
+          "source_projections": 88
+        }
+    helper_test.go:138: decode_numeric_escape.a mutant "!isDecimalDigit(index+1)" -> "isDecimalDigit(index+1)" caught at output line 261: mutant "0,0,0,1,false||digit:1;octal:0;", Go "0,0,0,1,false||digit:1;"
+    helper_test.go:138: decode_numeric_escape.a mutant "!context.inClass" -> "context.inClass" caught at output line 1: mutant "0,0,1,1,false||octal:35;", Go "0,0,1,1,false||decimal:35;octal:35;"
+    helper_test.go:138: decode_numeric_escape.a mutant "value.rune<=context.groups" -> "value.rune<context.groups" caught at output line 2: mutant "0,0,1,1,false||decimal:35;octal:35;", Go "3,0,0,1,false||decimal:35;"
+    helper_test.go:138: decode_numeric_escape.a mutant "if(context.unicode)" -> "if(false)" caught at output line 11: mutant "0,0,1,1,false||decimal:35;octal:35;", Go "0,0,0,0,false|unsupported regexp syntax: \\1|decimal:35;"
+    helper_test.go:138: decode_numeric_escape.a mutant "if(octal.width>0)" -> "if(false)" caught at output line 1: mutant "0,0,49,1,false||decimal:35;octal:35;", Go "0,0,1,1,false||decimal:35;octal:35;"
+    helper_test.go:138: decode_numeric_escape.a mutant "rune:byte,width:1" -> "rune:0,width:1" caught at output line 801: mutant "0,0,0,1,false||decimal:0;octal:0;", Go "0,0,56,1,false||decimal:0;octal:0;"
+--- PASS: TestNumeric (10.98s)
+=== RUN   TestReadClass
+    helper_test.go:84: {
+          "consumer_strings": 904,
+          "consumers": {
+            "@next/next/no-html-link-for-pages": 383,
+            "@typescript-eslint/no-empty-object-type": 65,
+            "no-restricted-exports": 480,
+            "no-restricted-imports": 1266
+          },
+          "rows": 81,
+          "source_projections": 81
+        }
+    helper_test.go:138: read_class.a mutant "source[index] === 94" -> "source[index] === 95" caught at output line 17: mutant "0|false||unsupported regexp syntax: [ that no ] closes|decode:1;", Go "0|false||unsupported regexp syntax: [ that no ] closes|"
+    helper_test.go:138: read_class.a mutant "index+=1+decodeSize(index+1)" -> "index+=1" caught at output line 12: mutant "0|false||unsupported regexp syntax: [ that no ] closes|", Go "0|false||unsupported regexp syntax: [ that no ] closes|decode:0;"
+    helper_test.go:138: read_class.a mutant "width:index+1" -> "width:index" caught at output line 2: mutant "16|false|2261222c20222e2e2f62222c202222||decode:16;decode:15;decode:14;decode:13;decode:12;decode:11;decode:10;decode:9;decode:8;decode:7;decode:6;decode:5;decode:4;decode:3;decode:2;", Go "17|false|2261222c20222e2e2f62222c202222||decode:16;decode:15;decode:14;decode:13;decode:12;decode:11;decode:10;decode:9;decode:8;decode:7;decode:6;decode:5;decode:4;decode:3;decode:2;"
+    helper_test.go:138: read_class.a mutant "body:slice(start,index)" -> "body:slice(1,index)" caught at output line 18: mutant "8|true|5e5cf09f9880||decode:9;", Go "8|true|5cf09f9880||decode:9;"
+    helper_test.go:138: read_class.a mutant "negated:false,width:0" -> "negated,width:0" caught at output line 17: mutant "0|true||unsupported regexp syntax: [ that no ] closes|", Go "0|false||unsupported regexp syntax: [ that no ] closes|"
+--- PASS: TestReadClass (4.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch22	38.569s

@@ -1,0 +1,4 @@
+export interface EscapeContext { readonly unicode: boolean; readonly inClass: boolean; readonly groups: number; readonly named: boolean; }
+export interface Escape { readonly kind: number; readonly set: number; readonly rune: number; readonly width: number; readonly negated: boolean; readonly error: string; }
+export interface NumberEscape { readonly rune: number; readonly width: number; }
+export function emptyEscape(error: string): Escape {return {kind:0,set:0,rune:0,width:0,negated:false,error};}
