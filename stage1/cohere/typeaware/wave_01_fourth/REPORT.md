@@ -119,3 +119,40 @@ This refresh does not complete the three latest claims: symbol native frontend
 integration and full atomic/await rules remain unfinished as described above.
 No additional rules were claimed. The production Go sources of these three
 rules contain no regex usage, so this batch requires no regex translation.
+
+## Atomic fixed-point solver continuation
+
+On unchanged origin/main c01907a7036a, added require_atomic_updates/solver.a.
+The driver supplies indexed successor edges and numeric event/symbol pairs.
+The solver discovers entry reachability, carries both sets across predecessor
+joins, iterates to a fixed point and refuses nonconvergence after 10000 rounds.
+It does not interpret syntax kinds or refetch parser nodes.
+
+The independent Go overlay constructs test graphs, then invokes the unchanged
+production control_flow_graph.Solve and outdatedReadLattice. Sixteen graphs
+exercise branch joins, suspension, refresh, loop back edges and an unreachable
+predecessor. All 96 block-boundary observations match byte for byte. Native
+and the one-sweep mutant both exit zero with empty sanitizer stderr; the mutant
+fails only the Go byte comparison. Exact streams are in validation/atomic-solver.
+
+Command after sourcing /workspace/adamic-tools/env.sh:
+
+```sh
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_atomic_solver.py /workspace/wave-01-solver-validation /workspace/wave-01-fourth-adamic > /tmp/wave-01-solver.log 2>&1
+```
+
+Output: PASS 16 graphs, 96 block boundaries; sanitizers clean; one-sweep mutant
+caught by Go bytes. gofmt and git diff --check pass. Initial builds exposed two
+stage-0 limitations: prefix increment in a condition and early constructor return.
+Both were avoided in the final source; no compiler files were edited.
+
+Setup succeeded: Go ready 0s, clang ready 1s, Node ready 1s, submodules ready 1s,
+build cache warm 127s, done 127s. nproc is 5; cgroup quota is 4 CPUs.
+
+This adds the solver only. Full atomic event collection, deferred positioning,
+escape filtering and rendering remain unfinished; full await implementation and
+symbol native integration remain unfinished too. The shared supplied numeric-node
+API is still absent from current main. No new claim was taken. The six completed
+ports were unchanged and their previously recorded oracle gates were not repeated.
+No full-rule timing, released-handle coverage or corpus agreement is claimed for
+this pure solver addition; it creates no checker handles.

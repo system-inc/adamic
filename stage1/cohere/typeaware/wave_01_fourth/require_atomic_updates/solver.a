@@ -1,0 +1,91 @@
+import { panic } from 'adamic';
+import { AtomicReadState } from './state.a';
+
+// Blocks and numeric events are supplied by the control-flow driver.
+export class AtomicBlock {
+    readonly successors: readonly number[];
+    readonly events: readonly number[];
+    constructor(successors: readonly number[], events: readonly number[]) {
+        this.successors = successors;
+        this.events = events;
+    }
+}
+function equal(left: AtomicReadState, right: AtomicReadState): boolean {
+    if(left.fresh.size !== right.fresh.size || left.outdated.size !== right.outdated.size) {
+        return false;
+    }
+    for(const symbol of left.fresh) {
+        if(!right.fresh.has(symbol)) {
+            return false;
+        }
+    }
+    for(const symbol of left.outdated) {
+        if(!right.outdated.has(symbol)) {
+            return false;
+        }
+    }
+    return true;
+}
+export class AtomicSolution {
+    readonly incoming: AtomicReadState[] = [];
+    readonly outgoing: AtomicReadState[] = [];
+    readonly reachable = new Set<number>();
+    constructor(blocks: readonly AtomicBlock[]) {
+        for(const block of blocks) {
+            if(block.events.length % 2 !== 0) {
+                panic('atomic event requires kind and symbol');
+            }
+            this.incoming.push(new AtomicReadState());
+            this.outgoing.push(new AtomicReadState());
+        }
+        const pending: number[] = [];
+        if(blocks.length !== 0) {
+            pending.push(0);
+        }
+        while(pending.length !== 0) {
+            const index = pending.pop() ?? panic('missing pending block');
+            if(this.reachable.has(index)) {
+                continue;
+            }
+            this.reachable.add(index);
+            const block = blocks[index] ?? panic('invalid atomic successor');
+            for(const successor of block.successors) {
+                pending.push(successor);
+            }
+        }
+        let changed = true;
+        let rounds = 0;
+        while(changed) {
+            rounds++;
+            if(rounds > 10000) {
+                panic('atomic dataflow did not converge');
+            }
+            changed = false;
+            for(let index = 0; index < blocks.length; index++) {
+                if(!this.reachable.has(index)) {
+                    continue;
+                }
+                let incoming = new AtomicReadState();
+                for(let predecessor = 0; predecessor < blocks.length; predecessor++) {
+                    const before = blocks[predecessor] ?? panic('missing atomic predecessor');
+                    if(this.reachable.has(predecessor) && before.successors.includes(index)) {
+                        incoming = incoming.meet(this.outgoing[predecessor] ?? panic('missing atomic output'));
+                    }
+                }
+                const outgoing = incoming.clone();
+                const block = blocks[index] ?? panic('missing atomic block');
+                for(let event = 0; event < block.events.length; event += 2) {
+                    outgoing.transfer(block.events[event] ?? panic('missing event kind'), block.events[event + 1] ?? panic('missing event symbol'));
+                }
+                if(!equal(incoming, this.incoming[index] ?? panic('missing atomic input'))) {
+                    this.incoming[index] = incoming;
+                    changed = true;
+                }
+                if(!equal(outgoing, this.outgoing[index] ?? panic('missing atomic output'))) {
+                    this.outgoing[index] = outgoing;
+                    changed = true;
+                }
+            }
+        }
+    }
+}
