@@ -1,0 +1,182 @@
+[
+  {
+    "name": "first",
+    "argv": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11AgreementAndMutants$",
+      "-count=1",
+      "-timeout",
+      "15m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 151.917,
+    "log": "b84-first.log"
+  },
+  {
+    "name": "next",
+    "argv": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11NextAgreementAndMutants$",
+      "-count=1",
+      "-timeout",
+      "15m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 347.266,
+    "log": "b84-next.log"
+  },
+  {
+    "name": "third",
+    "argv": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11ThirdAgreementAndMutants$",
+      "-count=1",
+      "-timeout",
+      "15m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 147.358,
+    "log": "b84-third.log"
+  },
+  {
+    "name": "fourth",
+    "argv": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11FourthAgreementAndMutants$",
+      "-count=1",
+      "-timeout",
+      "15m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 107.163,
+    "log": "b84-fourth.log"
+  },
+  {
+    "name": "fifth",
+    "argv": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11FifthAgreementAndMutants$",
+      "-count=1",
+      "-timeout",
+      "15m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 152.529,
+    "log": "b84-fifth.log"
+  },
+  {
+    "name": "listeners",
+    "argv": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11ListenerDeclarationsAndMutants$",
+      "-count=1",
+      "-timeout",
+      "15m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 33.4,
+    "log": "b84-listeners.log"
+  },
+  {
+    "name": "seventh",
+    "argv": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11SeventhAgreementAndMutants$",
+      "-count=1",
+      "-timeout",
+      "15m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 102.929,
+    "log": "b84-seventh.log"
+  },
+  {
+    "name": "eighth",
+    "argv": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave11EighthAgreementAndMutants$",
+      "-count=1",
+      "-timeout",
+      "15m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 132.379,
+    "log": "b84-eighth.log"
+  },
+  {
+    "name": "bridge",
+    "argv": [
+      "go",
+      "test",
+      "./bridge/tsgo/...",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 104.637,
+    "log": "b84-bridge.log"
+  },
+  {
+    "name": "compiler",
+    "argv": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestTheOracleCatchesOneByte$|^TestNativeAgreesWithNode$/internal/oracle/testdata/(sorting|string_index|functions|closures|devirtualize|call_targets_(closure|element|region|reuse|sort)|library_map_set_iterator_.*|047cb0d_n_.*|inherited_static_field_read)\\.a$",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 29.435,
+    "log": "b84-compiler.log"
+  },
+  {
+    "name": "vet",
+    "argv": [
+      "go",
+      "vet",
+      "./stage1/cohere/typeaware",
+      "./bridge/tsgo/..."
+    ],
+    "exit": 0,
+    "seconds": 1.135,
+    "log": "b84-vet.log"
+  }
+]
