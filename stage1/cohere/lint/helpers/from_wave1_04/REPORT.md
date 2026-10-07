@@ -72,3 +72,16 @@ helpers: ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers/from_wave1_
 Both baseline comparisons and all five semantic mutants pass. go vet over the
 same package exits zero with empty evidence/both-vet.log. These bounded checks
 and the filtered external input oracle are the gate run; no full gate is claimed.
+
+Landing refresh
+
+Rebased this branch onto current origin/main e8ba3d5d81de4d3773c723914fccd4c76248b965.
+The rebase applied cleanly without compiler or shared harness edits. Rebased source
+tip b861ff983358db00d6c1055342d95312f39abfe8. cloud/setup.sh passed: Go, clang
+and Node ready at 0s, submodules 1s, cache warm and done 17s; nproc 5.
+ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers/from_wave1_04
+-count=1 -v -timeout=10m: PASS 18.910s, both actual Go differential comparisons
+and all five compiling mutants on source Node, emitted JavaScript and ASan/UBSan
+native. The same filtered input oracle command above passed in 11.104s, six probe
+misses. go vet ./stage1/cohere/lint/helpers/from_wave1_04 exits zero. Logs are
+evidence/landing-*.log. Earlier integration limits remain as recorded above.
