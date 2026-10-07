@@ -1,0 +1,22 @@
+[
+  {
+    "test": "TestEveryFunctionIsInSingleAssignment",
+    "state": "FAIL",
+    "firstDiagnostic": "flow_test.go:95: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_alias.a:5:15: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined"
+  },
+  {
+    "test": "TestEveryPathNodeTakesIsInTheGraph",
+    "state": "FAIL",
+    "firstDiagnostic": "trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_literal_statement.a:2:1: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined"
+  },
+  {
+    "test": "TestEveryMutationIsInItsRange",
+    "state": "FAIL",
+    "firstDiagnostic": "ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet"
+  },
+  {
+    "test": "TestLivenessHoldsOnEveryPath",
+    "state": "FAIL",
+    "firstDiagnostic": "trace_test.go:390: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet"
+  }
+]

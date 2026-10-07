@@ -174,3 +174,12 @@ Took the exact stage3/fixtures/host tree at daa638ed, including status.json and 
 25 is Refused at 579:22 on both backends: `Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)`. Verified one-line source `export const emptyArray: never[] = [] as never[]; export function fallback<U extends {}>(result: U[] | undefined): readonly U[] { return result ?? emptyArray; }` produces the same refusal at 1:148 on both backends. Owner: compiler.
 
 14 remains Refused at 17:24 on both backends (exact undefined non-null assertion); awaiting the promised re-extraction. Targeted lower unknown/predicate/phantom/qualified-type tests PASS 5.366s. WASI host tests and imported unknown mutants PASS 37.984s. Mutants in_always_true and skip_inner_typeof are caught by Node stdout; the first checks native too. Test output in logs/fs_recount_daa_*.log. No new production implementation beyond merge reconciliation, no full repository gate, no macOS execution, no full counts regeneration.
+
+Four requested flow tests: all FAIL, package time 111.071s. The old unknown-array-only refusal is absent from all lowering diagnostics. First diagnostics:
+
+- TestEveryFunctionIsInSingleAssignment: `flow_test.go:95: Lower: /workspace/adamic/internal/oracle/testdata/non_null_deinitialize_alias.a:5:15: Adamic 0.1 refuses a non-null assertion whose operand is exactly null; declare the variable optional and assign undefined`
+- TestEveryPathNodeTakesIsInTheGraph: `trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/non_null_literal_statement.a:2:1: Adamic 0.1 refuses a non-null assertion whose operand is exactly undefined; declare the variable optional and assign undefined`
+- TestEveryMutationIsInItsRange: `ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet`
+- TestLivenessHoldsOnEveryPath: `trace_test.go:390: Lower: /workspace/adamic/internal/oracle/testdata/non_null_write_union_logical.a:2:2: stage 0 can't lower a logical assignment to this target yet`
+
+Focused Node unknown/errorCode oracle PASS 1.233s, including native sanitizer/release and JS for four fixtures. Full flow logs retained; no claim that flow is green.
