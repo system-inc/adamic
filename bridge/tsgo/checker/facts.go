@@ -203,6 +203,12 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "symbol-context":
+		return p.symbolContext(out, c, node, question)
+	case "interface-bases":
+		return p.interfaceBases(out, c, question)
+	case "signature-context":
+		return p.signatureContext(out, c, node, question)
 	case "stringification-type":
 		return p.stringificationType(out, c, question)
 	case "reference-context":

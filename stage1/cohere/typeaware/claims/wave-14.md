@@ -33,3 +33,13 @@ incomplete reservations. The earlier collection and discarded-result candidates
 are already claimed by other continuations. These three have no matching native
 port on either base branch and no matching claim. This update must be pushed
 before implementation. Positive controls and comparison-only mutants are required.
+
+Continuation status after Ahra's correction: the listener assertion and module
+namespace rules are implemented and validated. The leaked-number-render rule
+remains unimplemented because the native parser cannot parse JSX child nodes.
+A Go-positive .a witness, parsed as virtual TSX by the independent Go harness,
+reports bytes 49:54; the native parser refuses with panic 70 at byte 54.
+This is a partial continuation, not three completed ports. Implementation stops
+at this blocker, with no further rules claimed and no shared harness or generator
+edits. The six existing checker-dispatch lines were added before the correction.
+See ../WAVE_14_NEXT_REPORT.md for commands, artifacts and limits.

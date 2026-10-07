@@ -1,0 +1,19 @@
+=== RUN   TestWave14NextAgreementAndMutants
+    wave_14_next_test.go:99: controls: 9142 identical finding bytes; findings 15
+    wave_14_next_test.go:107: module-CommonJS: 4875 identical finding bytes; findings 7
+    wave_14_next_test.go:107: module-NodeNext: 4875 identical finding bytes; findings 7
+    wave_14_next_test.go:107: module-Preserve: 9142 identical finding bytes; findings 15
+    wave_14_next_test.go:107: module-ES2020: 9142 identical finding bytes; findings 15
+    wave_14_next_test.go:111: controls-asan: 9142 identical finding bytes; findings 15
+    wave_14_next_test.go:121: listener mutant: exit 0, empty stderr, byte oracle catches byte 91
+    wave_14_next_test.go:121: namespace mutant: exit 0, empty stderr, byte oracle catches byte 4619
+    wave_14_next_test.go:131: repository: 18485 identical finding bytes; findings 0
+    wave_14_next_test.go:132: repository-asan: 18485 identical finding bytes; findings 0
+    wave_14_next_test.go:131: compiler: 5318 identical finding bytes; findings 0
+    wave_14_next_test.go:132: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_14_next_test.go:151: leaked-number-render: Go reports the .a witness as virtual TSX; native refuses parsing with panic 70, so this rule remains unported
+    wave_14_next_test.go:162: released handle: panic 70, invalid or released checker handle
+    wave_14_next_test.go:167: released-registry mutant exits 0, required panic catches it
+--- PASS: TestWave14NextAgreementAndMutants (87.67s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	87.690s
