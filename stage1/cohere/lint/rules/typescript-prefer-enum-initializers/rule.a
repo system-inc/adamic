@@ -1,0 +1,30 @@
+import type { RuleContext } from '../../context.ts';
+import { saveRepairs } from '../typescript-no-unnecessary-type-constraint/repairs.a';
+import type { Suggestion } from '../typescript-no-unnecessary-type-constraint/repairs.a';
+import { description } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        let position = 0;
+        for(const member of this.context.node(index).children) {
+            if(this.context.node(member).kind !== 'EnumMember') { continue; }
+            if(this.context.node(member).children.length === 1) {
+                const start = this.context.start(member);
+                const end = this.context.node(member).end;
+                const name = this.context.source.slice(start, end);
+                const suggestions: Suggestion[] = [];
+                for(const value of [String(position), String(position + 1), "'" + name + "'"]) {
+                    const text = name + ' = ' + value;
+                    suggestions.push({ id: 'defineInitializerSuggestion', message: 'Can be fixed to ' + text,
+                        edits: [{ start: start, end: end, text: text }] });
+                }
+                const rule = '@typescript-eslint/prefer-enum-initializers';
+                this.context.report(member, rule, 'defineInitializer', description(name), '', '', '');
+                saveRepairs(rule, start, { fixes: [], suggestions: suggestions });
+            }
+            position++;
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
