@@ -12,6 +12,7 @@ import (
 )
 
 func TestCallTargetsIncludeEveryDescendant(t *testing.T) {
+	t.Parallel()
 	source, err := load.Load([]string{"testdata/call_targets.a"})
 	if err != nil {
 		t.Fatal(err)
@@ -45,13 +46,14 @@ func TestCallTargetsIncludeEveryDescendant(t *testing.T) {
 		if local.Name == "fixed" && local.ConstantClosure == 0 {
 			t.Error("const literal lost target proof")
 		}
-		if local.Name == "mutable" && local.ConstantClosure != 0 {
-			t.Error("let binding incorrectly bounded")
+		if (local.Name == "mutable" || local.Name == "namedBinding") && local.ConstantClosure != 0 {
+			t.Error("nonliteral or let binding incorrectly bounded")
 		}
 	}
 }
 
 func TestClosureTargetsBoundOnlyProvenValues(t *testing.T) {
+	t.Parallel()
 	program := &ir.Program{Locals: []ir.Local{{ConstantClosure: 2}, {}}, Functions: []ir.Function{{MayThrow: true}, {}}}
 	literal := ir.MakeClosure{Function: 1}
 	calls := []ir.Expression{
