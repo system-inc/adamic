@@ -1,0 +1,298 @@
+github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).char STEXT nosplit size=46 align=0x0 args=0x8 locals=0x8 funcid=0x0
+	0x0000 00000 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:434)	TEXT	github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).char(SB), NOSPLIT|ABIInternal, $8-8
+	0x0000 00000 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:434)	PUSHQ	BP
+	0x0001 00001 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:434)	MOVQ	SP, BP
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:434)	FUNCDATA	$0, gclocals·wvjpxkknJ4nY1JtrArJJaw==(SB)
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:434)	FUNCDATA	$1, gclocals·J26BEvPExEQhJvjp9E8Whg==(SB)
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:434)	FUNCDATA	$5, github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).char.arginfo1(SB)
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:434)	FUNCDATA	$6, github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).char.argliveinfo(SB)
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:434)	PCDATA	$3, $1
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:435)	MOVQ	48(AX), CX
+	0x0008 00008 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:435)	CMPQ	16(AX), CX
+	0x000c 00012 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:435)	JLE	33
+	0x000e 00014 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	MOVQ	8(AX), DX
+	0x0012 00018 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	CMPQ	DX, CX
+	0x0015 00021 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	JLS	40
+	0x0017 00023 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	MOVQ	(AX), DX
+	0x001a 00026 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	MOVBLZX	(DX)(CX*1), AX
+	0x001e 00030 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	POPQ	BP
+	0x001f 00031 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	NOP
+	0x0020 00032 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	RET
+	0x0021 00033 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:438)	MOVL	$-1, AX
+	0x0026 00038 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:438)	POPQ	BP
+	0x0027 00039 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:438)	RET
+	0x0028 00040 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	PCDATA	$1, $1
+	0x0028 00040 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	PCDATA	$4, $2439
+	0x0028 00040 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	CALL	runtime.panicBounds(SB)
+	0x002d 00045 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	XCHGL	AX, AX
+	0x0000 55 48 89 e5 48 8b 48 30 48 39 48 10 7e 13 48 8b  UH..H.H0H9H.~.H.
+	0x0010 50 08 48 39 ca 76 11 48 8b 10 0f b6 04 0a 5d 90  P.H9.v.H......].
+	0x0020 c3 b8 ff ff ff ff 5d c3 e8 00 00 00 00 90        ......].......
+	rel 41+4 t=R_CALL runtime.panicBounds+0
+
+github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).charAt STEXT nosplit size=46 align=0x0 args=0x10 locals=0x8 funcid=0x0
+	0x0000 00000 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:442)	TEXT	github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).charAt(SB), NOSPLIT|ABIInternal, $8-16
+	0x0000 00000 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:442)	PUSHQ	BP
+	0x0001 00001 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:442)	MOVQ	SP, BP
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:442)	FUNCDATA	$0, gclocals·wvjpxkknJ4nY1JtrArJJaw==(SB)
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:442)	FUNCDATA	$1, gclocals·J26BEvPExEQhJvjp9E8Whg==(SB)
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:442)	FUNCDATA	$5, github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).charAt.arginfo1(SB)
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:442)	FUNCDATA	$6, github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).charAt.argliveinfo(SB)
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:442)	PCDATA	$3, $1
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	ADDQ	48(AX), BX
+	0x0008 00008 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	CMPQ	16(AX), BX
+	0x000c 00012 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	JLE	33
+	0x000e 00014 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVQ	8(AX), CX
+	0x0012 00018 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	CMPQ	CX, BX
+	0x0015 00021 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	JLS	40
+	0x0017 00023 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVQ	(AX), CX
+	0x001a 00026 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVBLZX	(CX)(BX*1), AX
+	0x001e 00030 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	POPQ	BP
+	0x001f 00031 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	NOP
+	0x0020 00032 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	RET
+	0x0021 00033 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:446)	MOVL	$-1, AX
+	0x0026 00038 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:446)	POPQ	BP
+	0x0027 00039 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:446)	RET
+	0x0028 00040 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	PCDATA	$1, $1
+	0x0028 00040 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	PCDATA	$4, $1431
+	0x0028 00040 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	CALL	runtime.panicBounds(SB)
+	0x002d 00045 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	XCHGL	AX, AX
+	0x0000 55 48 89 e5 48 03 58 30 48 39 58 10 7e 13 48 8b  UH..H.X0H9X.~.H.
+	0x0010 48 08 48 39 d9 76 11 48 8b 08 0f b6 04 19 5d 90  H.H9.v.H......].
+	0x0020 c3 b8 ff ff ff ff 5d c3 e8 00 00 00 00 90        ......].......
+	rel 41+4 t=R_CALL runtime.panicBounds+0
+
+github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).charAndSize STEXT size=165 align=0x0 args=0x8 locals=0x18 funcid=0x0
+	0x0000 00000 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	TEXT	github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).charAndSize(SB), ABIInternal, $24-8
+	0x0000 00000 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	CMPQ	SP, 16(R14)
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	PCDATA	$0, $-2
+	0x0004 00004 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	JLS	141
+	0x000a 00010 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	PCDATA	$0, $-1
+	0x000a 00010 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	PUSHQ	BP
+	0x000b 00011 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	MOVQ	SP, BP
+	0x000e 00014 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	SUBQ	$16, SP
+	0x0012 00018 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	FUNCDATA	$0, gclocals·wvjpxkknJ4nY1JtrArJJaw==(SB)
+	0x0012 00018 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	FUNCDATA	$1, gclocals·J26BEvPExEQhJvjp9E8Whg==(SB)
+	0x0012 00018 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	FUNCDATA	$5, github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).charAndSize.arginfo1(SB)
+	0x0012 00018 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	FUNCDATA	$6, github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).charAndSize.argliveinfo(SB)
+	0x0012 00018 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	PCDATA	$3, $1
+	0x0012 00018 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:453)	MOVQ	48(AX), CX
+	0x0016 00022 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:453)	CMPQ	16(AX), CX
+	0x001a 00026 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:453)	JLE	62
+	0x001c 00028 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:454)	MOVQ	8(AX), DX
+	0x0020 00032 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:454)	CMPQ	DX, CX
+	0x0023 00035 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:454)	JLS	135
+	0x0025 00037 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:454)	MOVQ	(AX), DX
+	0x0028 00040 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:454)	MOVBLZX	(CX)(DX*1), DX
+	0x002c 00044 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:454)	CMPB	DL, $-128
+	0x002f 00047 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:454)	JCC	62
+	0x0031 00049 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:455)	MOVL	DX, AX
+	0x0033 00051 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:455)	MOVL	$1, BX
+	0x0038 00056 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:455)	ADDQ	$16, SP
+	0x003c 00060 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:455)	POPQ	BP
+	0x003d 00061 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:455)	RET
+	0x003e 00062 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	MOVQ	8(AX), BX
+	0x0042 00066 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	CMPQ	BX, CX
+	0x0045 00069 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	JCS	130
+	0x0047 00071 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	MOVQ	(AX), DX
+	0x004a 00074 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	SUBQ	CX, BX
+	0x004d 00077 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	MOVQ	BX, SI
+	0x0050 00080 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	NEGQ	SI
+	0x0053 00083 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	SARQ	$63, SI
+	0x0057 00087 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	ANDQ	SI, CX
+	0x005a 00090 (<unknown line number>)	NOP
+	0x005a 00090 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	LEAQ	(DX)(CX*1), AX
+	0x005e 00094 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	NOP
+	0x0060 00096 (/workspace/adamic-tools/go/src/unicode/utf8/utf8.go:223)	TESTQ	BX, BX
+	0x0063 00099 (/workspace/adamic-tools/go/src/unicode/utf8/utf8.go:223)	JEQ	119
+	0x0065 00101 (/workspace/adamic-tools/go/src/unicode/utf8/utf8.go:223)	MOVBLZX	(CX)(DX*1), CX
+	0x0069 00105 (/workspace/adamic-tools/go/src/unicode/utf8/utf8.go:223)	CMPB	CL, $-128
+	0x006c 00108 (/workspace/adamic-tools/go/src/unicode/utf8/utf8.go:223)	JCC	119
+	0x006e 00110 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	MOVL	CX, AX
+	0x0070 00112 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	MOVL	$1, BX
+	0x0075 00117 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	JMP	124
+	0x0077 00119 (/workspace/adamic-tools/go/src/unicode/utf8/utf8.go:226)	PCDATA	$1, $1
+	0x0077 00119 (/workspace/adamic-tools/go/src/unicode/utf8/utf8.go:226)	CALL	unicode/utf8.decodeRuneInStringSlow(SB)
+	0x007c 00124 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	ADDQ	$16, SP
+	0x0080 00128 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	POPQ	BP
+	0x0081 00129 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	RET
+	0x0082 00130 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	PCDATA	$4, $3594
+	0x0082 00130 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:458)	CALL	runtime.panicBounds(SB)
+	0x0087 00135 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:454)	PCDATA	$4, $2439
+	0x0087 00135 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:454)	CALL	runtime.panicBounds(SB)
+	0x008c 00140 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:454)	XCHGL	AX, AX
+	0x008d 00141 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:454)	NOP
+	0x008d 00141 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	PCDATA	$1, $-1
+	0x008d 00141 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	PCDATA	$0, $-2
+	0x008d 00141 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	MOVQ	AX, 8(SP)
+	0x0092 00146 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	CALL	runtime.morestack_noctxt(SB)
+	0x0097 00151 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	PCDATA	$0, $-1
+	0x0097 00151 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	MOVQ	8(SP), AX
+	0x009c 00156 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	NOP
+	0x00a0 00160 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:449)	JMP	0
+	0x0000 49 3b 66 10 0f 86 83 00 00 00 55 48 89 e5 48 83  I;f.......UH..H.
+	0x0010 ec 10 48 8b 48 30 48 39 48 10 7e 22 48 8b 50 08  ..H.H0H9H.~"H.P.
+	0x0020 48 39 ca 76 62 48 8b 10 0f b6 14 11 80 fa 80 73  H9.vbH.........s
+	0x0030 0d 89 d0 bb 01 00 00 00 48 83 c4 10 5d c3 48 8b  ........H...].H.
+	0x0040 58 08 48 39 cb 72 3b 48 8b 10 48 29 cb 48 89 de  X.H9.r;H..H).H..
+	0x0050 48 f7 de 48 c1 fe 3f 48 21 f1 48 8d 04 0a 66 90  H..H..?H!.H...f.
+	0x0060 48 85 db 74 12 0f b6 0c 11 80 f9 80 73 09 89 c8  H..t........s...
+	0x0070 bb 01 00 00 00 eb 05 e8 00 00 00 00 48 83 c4 10  ............H...
+	0x0080 5d c3 e8 00 00 00 00 e8 00 00 00 00 90 48 89 44  ]............H.D
+	0x0090 24 08 e8 00 00 00 00 48 8b 44 24 08 0f 1f 40 00  $......H.D$...@.
+	0x00a0 e9 5b ff ff ff                                   .[...
+	rel 120+4 t=R_CALL unicode/utf8.decodeRuneInStringSlow+0
+	rel 131+4 t=R_CALL runtime.panicBounds+0
+	rel 136+4 t=R_CALL runtime.panicBounds+0
+	rel 147+4 t=R_CALL runtime.morestack_noctxt+0
+
+github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan STEXT size=7551 align=0x0 args=0x8 locals=0x90 funcid=0x0
+	0x0000 00000 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	TEXT	github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan(SB), ABIInternal, $144-8
+	0x0000 00000 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	LEAQ	-16(SP), R12
+	0x0005 00005 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	CMPQ	R12, 16(R14)
+	0x0009 00009 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	PCDATA	$0, $-2
+	0x0009 00009 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	JLS	7531
+	0x000f 00015 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	PCDATA	$0, $-1
+	0x000f 00015 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	PUSHQ	BP
+	0x0010 00016 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	MOVQ	SP, BP
+	0x0013 00019 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	SUBQ	$136, SP
+	0x001a 00026 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	FUNCDATA	$0, gclocals·N+4Fxc1nG9JyHMKPO1y60g==(SB)
+	0x001a 00026 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	FUNCDATA	$1, gclocals·Mf6xSQD8VWm0WvrqpQLg3w==(SB)
+	0x001a 00026 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	FUNCDATA	$2, github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan.stkobj(SB)
+	0x001a 00026 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	FUNCDATA	$5, github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan.arginfo1(SB)
+	0x001a 00026 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	FUNCDATA	$6, github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan.argliveinfo(SB)
+	0x001a 00026 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:477)	PCDATA	$3, $1
+	0x001a 00026 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:480)	MOVQ	AX, github.com/microsoft/TypeScript/tsc/internal/scanner.s+152(SP)
+	0x0022 00034 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:480)	PCDATA	$3, $-1
+	0x0022 00034 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:478)	MOVQ	48(AX), R9
+	0x0026 00038 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:478)	MOVQ	R9, 56(AX)
+	0x002a 00042 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:479)	MOVL	$0, 96(AX)
+	0x0031 00049 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:435)	MOVQ	48(AX), CX
+	0x0035 00053 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:435)	MOVQ	16(AX), R9
+	0x0039 00057 (<unknown line number>)	NOP
+	0x0039 00057 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:435)	CMPQ	R9, CX
+	0x003c 00060 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:435)	JLE	85
+	0x003e 00062 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	MOVQ	8(AX), R10
+	0x0042 00066 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	CMPQ	R10, CX
+	0x0045 00069 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	JLS	7525
+	0x004b 00075 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	MOVQ	(AX), R10
+	0x004e 00078 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:436)	MOVBLZX	(R10)(CX*1), R10
+	0x0053 00083 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:481)	JMP	91
+	0x0055 00085 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:481)	MOVL	$-1, R10
+	0x005b 00091 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:482)	MOVQ	CX, 64(AX)
+	0x005f 00095 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:484)	MOVLQSX	R10, R11
+	0x0062 00098 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:484)	ADDQ	$-9, R11
+	0x0066 00102 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:484)	CMPQ	R11, $117
+	0x006a 00106 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:484)	JHI	1330
+	0x0070 00112 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:484)	LEAQ	github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan.jump12(SB), DX
+	0x0077 00119 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:484)	JMP	(DX)(R11*8)
+	0x007b 00123 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:499)	ORL	$1, 96(AX)
+	0x007f 00127 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:500)	CMPB	40(AX), $0
+	0x0083 00131 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:500)	JEQ	1600
+	0x0089 00137 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:501)	MOVQ	48(AX), R9
+	0x008d 00141 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:501)	LEAQ	1(R9), R10
+	0x0091 00145 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:501)	MOVQ	R10, 48(AX)
+	0x0095 00149 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	MOVQ	8(AX), R11
+	0x0099 00153 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	MOVQ	16(AX), R12
+	0x009d 00157 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:502)	XCHGL	AX, AX
+	0x009e 00158 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:502)	NOP
+	0x00a0 00160 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	CMPQ	R11, R12
+	0x00a3 00163 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	JCS	7518
+	0x00a9 00169 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	CMPQ	R12, R10
+	0x00ac 00172 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	JCS	7513
+	0x00b2 00178 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	MOVQ	(AX), R11
+	0x00b5 00181 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	SUBQ	R9, R12
+	0x00b8 00184 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	DECQ	R12
+	0x00bb 00187 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	MOVQ	R12, R13
+	0x00be 00190 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	NEGQ	R12
+	0x00c1 00193 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	SARQ	$63, R12
+	0x00c5 00197 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	ANDQ	R10, R12
+	0x00c8 00200 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:465)	LEAQ	(R11)(R12*1), R10
+	0x00cc 00204 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:467)	XORL	R11, R11
+	0x00cf 00207 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:467)	JMP	7464
+	0x00d4 00212 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:486)	LEAQ	1(CX), R9
+	0x00d8 00216 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:486)	MOVQ	R9, 48(AX)
+	0x00dc 00220 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:487)	CMPB	40(AX), $0
+	0x00e0 00224 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:487)	JNE	49
+	0x00e6 00230 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:487)	JMP	7313
+	0x00eb 00235 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	LEAQ	1(CX), R10
+	0x00ef 00239 (<unknown line number>)	NOP
+	0x00ef 00239 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	CMPQ	R9, R10
+	0x00f2 00242 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	JLE	276
+	0x00f4 00244 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVQ	8(AX), R9
+	0x00f8 00248 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	NOP
+	0x0100 00256 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	CMPQ	R9, R10
+	0x0103 00259 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	JLS	7283
+	0x0109 00265 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVQ	(AX), R9
+	0x010c 00268 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVBLZX	1(CX)(R9*1), R9
+	0x0112 00274 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:904)	JMP	288
+	0x0114 00276 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:904)	MOVL	$-1, R9
+	0x011a 00282 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:904)	NOP
+	0x0120 00288 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:904)	CMPL	R9, $33
+	0x0124 00292 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:904)	JNE	1893
+	0x012a 00298 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:905)	TESTQ	CX, CX
+	0x012d 00301 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:905)	JNE	1829
+	0x0133 00307 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:906)	MOVQ	$2, 48(AX)
+	0x013b 00315 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:907)	PCDATA	$1, $0
+	0x013b 00315 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:907)	NOP
+	0x0140 00320 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:907)	CALL	github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).charAndSize(SB)
+	0x0145 00325 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:907)	JMP	7237
+	0x014a 00330 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	LEAQ	1(CX), R10
+	0x014e 00334 (<unknown line number>)	NOP
+	0x014e 00334 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	CMPQ	R9, R10
+	0x0151 00337 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	JLE	372
+	0x0153 00339 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVQ	8(AX), R11
+	0x0157 00343 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	NOP
+	0x0160 00352 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	CMPQ	R11, R10
+	0x0163 00355 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	JLS	7198
+	0x0169 00361 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVQ	(AX), R11
+	0x016c 00364 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVBLZX	1(CX)(R11*1), R11
+	0x0172 00370 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:563)	JMP	384
+	0x0174 00372 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:563)	MOVL	$-1, R11
+	0x017a 00378 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:563)	NOP
+	0x0180 00384 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:564)	CMPL	R11, $61
+	0x0184 00388 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:564)	JEQ	2463
+	0x018a 00394 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:567)	CMPL	R11, $42
+	0x018e 00398 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:567)	JEQ	2384
+	0x0194 00404 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:576)	MOVQ	R10, 48(AX)
+	0x0198 00408 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:577)	CMPQ	128(AX), $0
+	0x01a0 00416 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:577)	JEQ	2373
+	0x01a6 00422 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:578)	MOVL	96(AX), R9
+	0x01aa 00426 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:578)	BTL	$15, R9
+	0x01af 00431 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:578)	JCS	2373
+	0x01b5 00437 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:579)	BTL	$0, R9
+	0x01ba 00442 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:579)	NOP
+	0x01c0 00448 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:579)	JCC	2373
+	0x01c6 00454 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:580)	ORL	$32768, R9
+	0x01cd 00461 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:580)	MOVL	R9, 96(AX)
+	0x01d1 00465 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:581)	JMP	49
+	0x01d6 00470 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	LEAQ	1(CX), DX
+	0x01da 00474 (<unknown line number>)	NOP
+	0x01da 00474 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	CMPQ	R9, DX
+	0x01dd 00477 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	JLE	502
+	0x01df 00479 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVQ	8(AX), BX
+	0x01e3 00483 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	CMPQ	BX, DX
+	0x01e6 00486 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	JLS	7163
+	0x01ec 00492 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVQ	(AX), BX
+	0x01ef 00495 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVBLZX	1(CX)(BX*1), BX
+	0x01f4 00500 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:625)	JMP	512
+	0x01f6 00502 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:625)	MOVL	$-1, BX
+	0x01fb 00507 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:625)	NOP
+	0x0200 00512 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:625)	CMPL	BX, $47
+	0x0203 00515 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:625)	JNE	530
+	0x0205 00517 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:626)	ADDQ	$2, CX
+	0x0209 00521 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:626)	MOVQ	CX, 48(AX)
+	0x020d 00525 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:628)	JMP	6949
+	0x0212 00530 (<unknown line number>)	NOP
+	0x0212 00530 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	CMPQ	R9, DX
+	0x0215 00533 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:443)	JLE	563
+	0x0217 00535 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVQ	8(AX), BX
+	0x021b 00539 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	NOP
+	0x0220 00544 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	CMPQ	BX, DX
+	0x0223 00547 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	JLS	6932
+	0x0229 00553 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVQ	(AX), BX
+	0x022c 00556 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:444)	MOVBLZX	1(CX)(BX*1), BX
+	0x0231 00561 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:648)	JMP	576
+	0x0233 00563 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:648)	MOVL	$-1, BX
+	0x0238 00568 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:648)	NOP
+	0x0240 00576 (/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:648)	CMPL	BX, $42

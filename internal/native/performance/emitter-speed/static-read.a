@@ -1,0 +1,4 @@
+class Base { static inherited = 1; }
+class Derived extends Base {}
+Base.inherited = 2;
+console.log(Derived.inherited.toString());

@@ -1,0 +1,6 @@
+Every native instruction count in this report uses clang 20.1.8, release, without sanitizers or ADAMIC_COUNT:
+-std=c11 -Wall -Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -g -I internal/native/runtime
+Runtime inputs: internal/native/runtime/*.c in lexical order; link -lm.
+Assembly: same flags, -S instead of runtime link.
+Go assembly: Go 1.27.1, optimized defaults, go build -gcflags=github.com/microsoft/TypeScript/tsc/internal/scanner=-S ./TypeScript/tsc/internal/scanner from cohere.
+Callgrind: Valgrind 3.24.0, --tool=callgrind --callgrind-out-file=PATH BINARY --manifest compiler.txt --count.
