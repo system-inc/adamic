@@ -1,4 +1,4 @@
-// core/no_fallthrough.go:169; "(?i)" + pattern
+// core/no_fallthrough.go:170; "(?i)" + pattern
 import { observe } from '../observe.a';
 const pattern = "falls? through";
 const flags = "gui";

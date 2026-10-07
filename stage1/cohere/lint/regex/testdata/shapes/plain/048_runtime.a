@@ -1,4 +1,4 @@
-// nexus/shouting.go:181; `^[ \t]*\*(?: |\t|$)`
+// nexus/shouting.go:180; `^\s*\*?\s?`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,7 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "*\t", 4);
-observe(regex, "x*\t", 5);
-observe(regex, "*\t\n", 6);
+observe(regex, "x", 4);
+observe(regex, "\n", 5);
+observe(regex, "PaginationInput", 6);
+observe(regex, "Pagination", 7);

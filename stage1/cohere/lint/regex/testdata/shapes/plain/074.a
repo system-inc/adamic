@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:66; `^inset-shadow$`
+// tailwind/no_deprecated_classes.go:65; `^inset-shadow$`
 import { observe } from '../observe.a';
 const pattern = "^inset-shadow(?![\\s\\S])";
 const flags = "gu";

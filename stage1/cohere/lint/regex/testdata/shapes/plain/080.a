@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:75; `^text-opacity-(.*)$`
+// tailwind/no_deprecated_classes.go:74; `^text-opacity-(.*)$`
 import { observe } from '../observe.a';
 const pattern = "^text-opacity-([^\\n]*)(?![\\s\\S])";
 const flags = "gu";

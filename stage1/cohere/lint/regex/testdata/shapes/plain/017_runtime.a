@@ -1,4 +1,4 @@
-// core/require_description.go:222; `^eslint-disable-(next-)?line$`
+// core/require_description.go:225; `^eslint-disable-(next-)?line$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();

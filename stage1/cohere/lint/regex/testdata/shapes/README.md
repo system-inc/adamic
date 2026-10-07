@@ -1,8 +1,8 @@
 # Per-site string-pattern fixtures
 
-Base: area/stage1-lint db2ecc00447f9ebe8adecb190f71ac222e5db860.
-Table: unchanged from codex/lint-regex 071fb012848ce0408428c61aba0857cca472236f.
-This unit changes testdata only after bringing that table and its existing gate forward.
+Base: area/stage1-lint d45a323be353add8ed1c593f51e781d3f67ade18.
+Table: regenerated at cohere 7945d102 with the reviewed delta from 071fb0128 in CENSUS.md.
+The owned shapes_test.go registers this testdata gate with ordinary go test.
 No runtime/compiler code, rule migration, submodule bump or shared harness edit.
 
 fixtures.json contains one fixture for every table row, in table order: rule and Go
@@ -13,10 +13,10 @@ Go's adjacent-empty enumeration rule, as in the existing table gate. Captured gr
 and replacement/split behavior are not covered. The `g` flag is an observation flag
 for enumerating matches, not a claim about a rule's upstream method or flags.
 
-Shapes: plain 76, (?i) 4, (?s) 1, (?m) 1, dynamic 25; total 107. Of the table's 88
-MustCompile sites, six are dynamic expressions; the other 19 dynamic sites use Compile.
+Shapes: plain 77, (?i) 4, (?s) 1, (?m) 1, dynamic 24; total 107. Of the table's 89
+MustCompile sites, six are dynamic expressions; the other 18 dynamic sites use Compile.
 Every selected instance has a positive input. Dynamic rows include a documented
-binding for their option or source expression. These 25 representatives do not
+binding for their option or source expression. These 24 representatives do not
 exhaust the infinite option-pattern language and do not change option semantics.
 They hold the selected Go-compatible table translations to the pinned Go oracle.
 
@@ -59,3 +59,9 @@ recorded corpus per row. generate.mjs independently observes Node and refuses a
 mismatch before emitting fixtures. gate.go rechecks every stored Go observation
 against Go regexp on every run. Patterns are strings throughout the fixture data;
 only the executing constructor makes a RegExp. See evidence for observed results.
+
+## Landing correction
+
+The reviewed census and package test registration are in [CENSUS.md](CENSUS.md):
+107 rows now comprise 83 fixed and 24 dynamic. `go test ./stage1/cohere/lint/regex`
+runs every fixture automatically; the CLI is also available for library checks.

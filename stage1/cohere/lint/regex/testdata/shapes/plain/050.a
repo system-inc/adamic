@@ -1,12 +1,12 @@
-// nexus/shouting.go:183; `^@\w+`
+// nexus/shouting.go:184; `^@example\b`
 import { observe } from '../observe.a';
-const pattern = "^@\\w+";
+const pattern = "^@example\\b";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "@A", 4);
-observe(regex, "x@A", 5);
-observe(regex, "@A\n", 6);
+observe(regex, "@example", 4);
+observe(regex, "x@example", 5);
+observe(regex, "@example\n", 6);

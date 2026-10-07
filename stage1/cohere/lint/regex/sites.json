@@ -20,7 +20,7 @@
   {
     "rule": "default-case",
     "file": "core/default_case.go",
-    "line": 29,
+    "line": 30,
     "call": "MustCompile",
     "expression": "`(?i)^no default$`",
     "go_pattern": "(?i)^no default$",
@@ -29,7 +29,7 @@
   {
     "rule": "default-case",
     "file": "core/default_case.go",
-    "line": 99,
+    "line": 100,
     "call": "Compile",
     "expression": "resolved.CommentPattern",
     "go_pattern": null,
@@ -56,7 +56,7 @@
   {
     "rule": "no-fallthrough",
     "file": "core/no_fallthrough.go",
-    "line": 169,
+    "line": 170,
     "call": "Compile",
     "expression": "\"(?i)\" + pattern",
     "go_pattern": null,
@@ -65,7 +65,7 @@
   {
     "rule": "no-inline-comments",
     "file": "core/no_inline_comments.go",
-    "line": 38,
+    "line": 39,
     "call": "MustCompile",
     "expression": "`^(?:eslint[- ]|(?:globals?|exported) )`",
     "go_pattern": "^(?:eslint[- ]|(?:globals?|exported) )",
@@ -74,7 +74,7 @@
   {
     "rule": "no-inline-comments",
     "file": "core/no_inline_comments.go",
-    "line": 102,
+    "line": 103,
     "call": "Compile",
     "expression": "resolved.IgnorePattern",
     "go_pattern": null,
@@ -110,7 +110,7 @@
   {
     "rule": "no-warning-comments",
     "file": "core/no_warning_comments.go",
-    "line": 280,
+    "line": 378,
     "call": "MustCompile",
     "expression": "`\\bno-warning-comments\\b`",
     "go_pattern": "\\bno-warning-comments\\b",
@@ -119,7 +119,7 @@
   {
     "rule": "no-warning-comments",
     "file": "core/no_warning_comments.go",
-    "line": 354,
+    "line": 452,
     "call": "Compile",
     "expression": "\"(?i)\" + prefix + escaped + suffix",
     "go_pattern": null,
@@ -128,7 +128,7 @@
   {
     "rule": "object-shorthand",
     "file": "core/object_shorthand.go",
-    "line": 140,
+    "line": 141,
     "call": "Compile",
     "expression": "*wire.MethodsIgnorePattern",
     "go_pattern": null,
@@ -137,7 +137,7 @@
   {
     "rule": "require-description",
     "file": "core/require_description.go",
-    "line": 214,
+    "line": 217,
     "call": "MustCompile",
     "expression": "jsWhitespace + `-{2,}` + jsWhitespace",
     "go_pattern": "[\\t\\n\\x0B\\f\\r \\x{00A0}\\x{1680}\\x{2000}-\\x{200A}\\x{2028}\\x{2029}\\x{202F}\\x{205F}\\x{3000}\\x{FEFF}]-{2,}[\\t\\n\\x0B\\f\\r \\x{00A0}\\x{1680}\\x{2000}-\\x{200A}\\x{2028}\\x{2029}\\x{202F}\\x{205F}\\x{3000}\\x{FEFF}]",
@@ -146,7 +146,7 @@
   {
     "rule": "require-description",
     "file": "core/require_description.go",
-    "line": 217,
+    "line": 220,
     "call": "MustCompile",
     "expression": "`^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:` + jsWhitespace + `|$)`",
     "go_pattern": "^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:[\\t\\n\\x0B\\f\\r \\x{00A0}\\x{1680}\\x{2000}-\\x{200A}\\x{2028}\\x{2029}\\x{202F}\\x{205F}\\x{3000}\\x{FEFF}]|$)",
@@ -155,7 +155,7 @@
   {
     "rule": "require-description",
     "file": "core/require_description.go",
-    "line": 222,
+    "line": 225,
     "call": "MustCompile",
     "expression": "`^eslint-disable-(next-)?line$`",
     "go_pattern": "^eslint-disable-(next-)?line$",
@@ -164,7 +164,7 @@
   {
     "rule": "require-description",
     "file": "core/require_description.go",
-    "line": 233,
+    "line": 236,
     "call": "MustCompile",
     "expression": "`^(` + strings.Join(quoted, \"|\") + `)(?:` + jsWhitespace + `|$)`",
     "go_pattern": null,
@@ -173,7 +173,7 @@
   {
     "rule": "no-html-link-for-pages-routes",
     "file": "next/no_html_link_for_pages_routes.go",
-    "line": 139,
+    "line": 169,
     "call": "MustCompile",
     "expression": "`\\.[jt]sx?$`",
     "go_pattern": "\\.[jt]sx?$",
@@ -182,7 +182,7 @@
   {
     "rule": "no-html-link-for-pages-routes",
     "file": "next/no_html_link_for_pages_routes.go",
-    "line": 140,
+    "line": 170,
     "call": "MustCompile",
     "expression": "`^index\\.[jt]sx?$`",
     "go_pattern": "^index\\.[jt]sx?$",
@@ -191,7 +191,7 @@
   {
     "rule": "no-html-link-for-pages-routes",
     "file": "next/no_html_link_for_pages_routes.go",
-    "line": 141,
+    "line": 171,
     "call": "MustCompile",
     "expression": "`^page\\.[jt]sx?$`",
     "go_pattern": "^page\\.[jt]sx?$",
@@ -200,7 +200,7 @@
   {
     "rule": "no-html-link-for-pages-routes",
     "file": "next/no_html_link_for_pages_routes.go",
-    "line": 142,
+    "line": 172,
     "call": "MustCompile",
     "expression": "`^layout\\.[jt]sx?$`",
     "go_pattern": "^layout\\.[jt]sx?$",
@@ -209,7 +209,7 @@
   {
     "rule": "no-html-link-for-pages-routes",
     "file": "next/no_html_link_for_pages_routes.go",
-    "line": 251,
+    "line": 281,
     "call": "MustCompile",
     "expression": "\"\\\\[[^\\n\\r\\u2028\\u2029]*\\\\]\"",
     "go_pattern": "\\[[^\n\r\u2028\u2029]*\\]",
@@ -326,7 +326,7 @@
   {
     "rule": "consistency-require-constant-casing",
     "file": "nexus/consistency_require_constant_casing.go",
-    "line": 350,
+    "line": 355,
     "call": "MustCompile",
     "expression": "`(Creator|Factory)$`",
     "go_pattern": "(Creator|Factory)$",
@@ -342,9 +342,18 @@
     "feature": "plain"
   },
   {
+    "rule": "localization-no-untranslated-value",
+    "file": "nexus/localization_no_untranslated_value.go",
+    "line": 408,
+    "call": "MustCompile",
+    "expression": "`^[a-z]{2,3}(?:[-_][A-Za-z0-9]+)*$`",
+    "go_pattern": "^[a-z]{2,3}(?:[-_][A-Za-z0-9]+)*$",
+    "feature": "plain"
+  },
+  {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 121,
+    "line": 123,
     "call": "MustCompile",
     "expression": "`[0-9_]`",
     "go_pattern": "[0-9_]",
@@ -353,7 +362,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 122,
+    "line": 124,
     "call": "MustCompile",
     "expression": "`[AEIOUY]`",
     "go_pattern": "[AEIOUY]",
@@ -362,7 +371,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 123,
+    "line": 125,
     "call": "MustCompile",
     "expression": "`\\b[A-Z][A-Z0-9_]*\\b`",
     "go_pattern": "\\b[A-Z][A-Z0-9_]*\\b",
@@ -371,7 +380,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 147,
+    "line": 149,
     "call": "MustCompile",
     "expression": "\"(?s)```.*?```\"",
     "go_pattern": "(?s)```.*?```",
@@ -380,7 +389,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 153,
+    "line": 155,
     "call": "MustCompile",
     "expression": "\"`[^`]*`\"",
     "go_pattern": "`[^`]*`",
@@ -389,7 +398,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 160,
+    "line": 162,
     "call": "MustCompile",
     "expression": "`\"[^\"\\n]*\"`",
     "go_pattern": "\"[^\"\\n]*\"",
@@ -398,7 +407,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 166,
+    "line": 168,
     "call": "MustCompile",
     "expression": "`'[A-Za-z0-9_.\\-/]+'`",
     "go_pattern": "'[A-Za-z0-9_.\\-/]+'",
@@ -407,7 +416,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 175,
+    "line": 177,
     "call": "MustCompile",
     "expression": "`'[A-Z0-9_][A-Z0-9_ .,:=\\-/]*[A-Z0-9_]'`",
     "go_pattern": "'[A-Z0-9_][A-Z0-9_ .,:=\\-/]*[A-Z0-9_]'",
@@ -416,7 +425,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 177,
+    "line": 179,
     "call": "MustCompile",
     "expression": "`[^\\n]`",
     "go_pattern": "[^\\n]",
@@ -425,7 +434,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 178,
+    "line": 180,
     "call": "MustCompile",
     "expression": "`^\\s*\\*?\\s?`",
     "go_pattern": "^\\s*\\*?\\s?",
@@ -434,7 +443,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 181,
+    "line": 183,
     "call": "MustCompile",
     "expression": "`^[ \\t]*\\*(?: |\\t|$)`",
     "go_pattern": "^[ \\t]*\\*(?: |\\t|$)",
@@ -443,7 +452,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 182,
+    "line": 184,
     "call": "MustCompile",
     "expression": "`^@example\\b`",
     "go_pattern": "^@example\\b",
@@ -452,7 +461,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 183,
+    "line": 185,
     "call": "MustCompile",
     "expression": "`^@\\w+`",
     "go_pattern": "^@\\w+",
@@ -461,7 +470,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 184,
+    "line": 186,
     "call": "MustCompile",
     "expression": "`^\\s*(\\$|ahra\\s|git\\s|pnpm\\s|npm\\s|sqlite3\\s|curl\\s|s\\s+c\\b)`",
     "go_pattern": "^\\s*(\\$|ahra\\s|git\\s|pnpm\\s|npm\\s|sqlite3\\s|curl\\s|s\\s+c\\b)",
@@ -470,7 +479,7 @@
   {
     "rule": "shouting",
     "file": "nexus/shouting.go",
-    "line": 464,
+    "line": 466,
     "call": "MustCompile",
     "expression": "`s\\s+c`",
     "go_pattern": "s\\s+c",
@@ -594,15 +603,6 @@
     "feature": "plain"
   },
   {
-    "rule": "class-literals",
-    "file": "tailwind/class_literals.go",
-    "line": 167,
-    "call": "Compile",
-    "expression": "pattern",
-    "go_pattern": null,
-    "feature": "dynamic"
-  },
-  {
     "rule": "class-order-strict",
     "file": "tailwind/class_order_strict.go",
     "line": 89,
@@ -650,7 +650,7 @@
   {
     "rule": "enforce-canonical-classes",
     "file": "tailwind/enforce_canonical_classes.go",
-    "line": 345,
+    "line": 334,
     "call": "Compile",
     "expression": "pattern",
     "go_pattern": null,
@@ -659,7 +659,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 65,
+    "line": 64,
     "call": "MustCompile",
     "expression": "`^shadow$`",
     "go_pattern": "^shadow$",
@@ -668,7 +668,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 66,
+    "line": 65,
     "call": "MustCompile",
     "expression": "`^inset-shadow$`",
     "go_pattern": "^inset-shadow$",
@@ -677,7 +677,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 67,
+    "line": 66,
     "call": "MustCompile",
     "expression": "`^drop-shadow$`",
     "go_pattern": "^drop-shadow$",
@@ -686,7 +686,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 68,
+    "line": 67,
     "call": "MustCompile",
     "expression": "`^blur$`",
     "go_pattern": "^blur$",
@@ -695,7 +695,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 69,
+    "line": 68,
     "call": "MustCompile",
     "expression": "`^backdrop-blur$`",
     "go_pattern": "^backdrop-blur$",
@@ -704,7 +704,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 70,
+    "line": 69,
     "call": "MustCompile",
     "expression": "`^rounded$`",
     "go_pattern": "^rounded$",
@@ -713,7 +713,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 74,
+    "line": 73,
     "call": "MustCompile",
     "expression": "`^bg-opacity-(.*)$`",
     "go_pattern": "^bg-opacity-(.*)$",
@@ -722,7 +722,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 75,
+    "line": 74,
     "call": "MustCompile",
     "expression": "`^text-opacity-(.*)$`",
     "go_pattern": "^text-opacity-(.*)$",
@@ -731,7 +731,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 76,
+    "line": 75,
     "call": "MustCompile",
     "expression": "`^border-opacity-(.*)$`",
     "go_pattern": "^border-opacity-(.*)$",
@@ -740,7 +740,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 77,
+    "line": 76,
     "call": "MustCompile",
     "expression": "`^divide-opacity-(.*)$`",
     "go_pattern": "^divide-opacity-(.*)$",
@@ -749,7 +749,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 78,
+    "line": 77,
     "call": "MustCompile",
     "expression": "`^ring-opacity-(.*)$`",
     "go_pattern": "^ring-opacity-(.*)$",
@@ -758,7 +758,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 79,
+    "line": 78,
     "call": "MustCompile",
     "expression": "`^placeholder-opacity-(.*)$`",
     "go_pattern": "^placeholder-opacity-(.*)$",
@@ -767,7 +767,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 83,
+    "line": 82,
     "call": "MustCompile",
     "expression": "`^flex-shrink$`",
     "go_pattern": "^flex-shrink$",
@@ -776,7 +776,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 84,
+    "line": 83,
     "call": "MustCompile",
     "expression": "`^flex-shrink-(.*)$`",
     "go_pattern": "^flex-shrink-(.*)$",
@@ -785,7 +785,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 85,
+    "line": 84,
     "call": "MustCompile",
     "expression": "`^flex-grow$`",
     "go_pattern": "^flex-grow$",
@@ -794,7 +794,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 86,
+    "line": 85,
     "call": "MustCompile",
     "expression": "`^flex-grow-(.*)$`",
     "go_pattern": "^flex-grow-(.*)$",
@@ -803,7 +803,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 88,
+    "line": 87,
     "call": "MustCompile",
     "expression": "`^overflow-ellipsis$`",
     "go_pattern": "^overflow-ellipsis$",
@@ -812,7 +812,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 89,
+    "line": 88,
     "call": "MustCompile",
     "expression": "`^decoration-slice$`",
     "go_pattern": "^decoration-slice$",
@@ -821,7 +821,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 90,
+    "line": 89,
     "call": "MustCompile",
     "expression": "`^decoration-clone$`",
     "go_pattern": "^decoration-clone$",
@@ -830,7 +830,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 93,
+    "line": 92,
     "call": "MustCompile",
     "expression": "`^bg-left-top$`",
     "go_pattern": "^bg-left-top$",
@@ -839,7 +839,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 94,
+    "line": 93,
     "call": "MustCompile",
     "expression": "`^bg-left-bottom$`",
     "go_pattern": "^bg-left-bottom$",
@@ -848,7 +848,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 95,
+    "line": 94,
     "call": "MustCompile",
     "expression": "`^bg-right-top$`",
     "go_pattern": "^bg-right-top$",
@@ -857,7 +857,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 96,
+    "line": 95,
     "call": "MustCompile",
     "expression": "`^bg-right-bottom$`",
     "go_pattern": "^bg-right-bottom$",
@@ -866,7 +866,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 97,
+    "line": 96,
     "call": "MustCompile",
     "expression": "`^object-left-top$`",
     "go_pattern": "^object-left-top$",
@@ -875,7 +875,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 98,
+    "line": 97,
     "call": "MustCompile",
     "expression": "`^object-left-bottom$`",
     "go_pattern": "^object-left-bottom$",
@@ -884,7 +884,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 99,
+    "line": 98,
     "call": "MustCompile",
     "expression": "`^object-right-top$`",
     "go_pattern": "^object-right-top$",
@@ -893,7 +893,7 @@
   {
     "rule": "no-deprecated-classes",
     "file": "tailwind/no_deprecated_classes.go",
-    "line": 100,
+    "line": 99,
     "call": "MustCompile",
     "expression": "`^object-right-bottom$`",
     "go_pattern": "^object-right-bottom$",
@@ -902,7 +902,7 @@
   {
     "rule": "no-physical-direction",
     "file": "tailwind/no_physical_direction.go",
-    "line": 284,
+    "line": 287,
     "call": "MustCompile",
     "expression": "`^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\\[\\]/]+)?$`",
     "go_pattern": "^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\\[\\]/]+)?$",
@@ -911,7 +911,7 @@
   {
     "rule": "main",
     "file": "tailwind/tools/generate_variant/main.go",
-    "line": 221,
+    "line": 232,
     "call": "MustCompile",
     "expression": "`(?:class|className)\\s*=\\s*\"([^\"\\n{}$]+)\"`",
     "go_pattern": "(?:class|className)\\s*=\\s*\"([^\"\\n{}$]+)\"",
@@ -938,7 +938,7 @@
   {
     "rule": "no-unnecessary-template-expression",
     "file": "typescript/no_unnecessary_template_expression.go",
-    "line": 574,
+    "line": 575,
     "call": "MustCompile",
     "expression": "`\\$$`",
     "go_pattern": "\\$$",
@@ -947,7 +947,7 @@
   {
     "rule": "switch-exhaustiveness-check",
     "file": "typescript/switch_exhaustiveness_check.go",
-    "line": 212,
+    "line": 213,
     "call": "Compile",
     "expression": "*opts.DefaultCaseCommentPattern",
     "go_pattern": null,
@@ -956,7 +956,7 @@
   {
     "rule": "switch-exhaustiveness-check",
     "file": "typescript/switch_exhaustiveness_check.go",
-    "line": 381,
+    "line": 382,
     "call": "MustCompile",
     "expression": "`(?i)^no default$`",
     "go_pattern": "(?i)^no default$",

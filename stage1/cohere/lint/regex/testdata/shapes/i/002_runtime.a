@@ -1,4 +1,4 @@
-// core/default_case.go:29; `(?i)^no default$`
+// core/default_case.go:30; `(?i)^no default$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();

@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:89; `^decoration-slice$`
+// tailwind/no_deprecated_classes.go:88; `^decoration-slice$`
 import { observe } from '../observe.a';
 const pattern = "^decoration-slice(?![\\s\\S])";
 const flags = "gu";

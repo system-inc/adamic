@@ -48,3 +48,15 @@ go test ./stage1/cohere/lint/regex -count=1 -v -timeout=20m > /tmp/regex-final.l
 go vet ./stage1/cohere/lint/regex > /tmp/regex-final-vet.log 2>&1
 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^regexp\.a$' -count=1 -v -timeout=10m > /tmp/regex-filtered-oracle.log 2>&1
 ```
+
+## Seat correction
+
+Merged area d45a323be and rebuilt at cohere 7945d102. Census remains 107:
+new locale-stem pattern in bb39e2dd, removed Tailwind Go regexp site in 0f2797dd
+(replaced by esregexp), zero pattern edits, 66 line-only moves. Complete provenance
+is in testdata/shapes/census-review.json and CENSUS.md.
+
+Normal go test now executes every fixture through shapes_test.go. Full regex package
+passed in 64.454s, logging 107 Node/JavaScript comparisons and 107 named native
+refusals. The separate mutant-enabled go test failed only at its fixture comparison.
+Vet is clean. No unexplained deletion and no runtime/compiler or migration edit.

@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:77; `^divide-opacity-(.*)$`
+// tailwind/no_deprecated_classes.go:76; `^divide-opacity-(.*)$`
 import { observe } from '../observe.a';
 const pattern = "^divide-opacity-([^\\n]*)(?![\\s\\S])";
 const flags = "gu";

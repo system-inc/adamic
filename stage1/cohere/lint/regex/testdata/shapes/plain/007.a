@@ -1,4 +1,4 @@
-// core/no_inline_comments.go:38; `^(?:eslint[- ]|(?:globals?|exported) )`
+// core/no_inline_comments.go:39; `^(?:eslint[- ]|(?:globals?|exported) )`
 import { observe } from '../observe.a';
 const pattern = "^(?:eslint[- ]|(?:globals?|exported) )";
 const flags = "gu";

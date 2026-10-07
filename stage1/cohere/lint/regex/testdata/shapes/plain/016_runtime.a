@@ -1,4 +1,4 @@
-// core/require_description.go:217; `^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:` + jsWhitespace + `|$)`
+// core/require_description.go:220; `^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:` + jsWhitespace + `|$)`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();

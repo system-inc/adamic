@@ -1,4 +1,4 @@
-// core/require_description.go:222; `^eslint-disable-(next-)?line$`
+// core/require_description.go:225; `^eslint-disable-(next-)?line$`
 import { observe } from '../observe.a';
 const pattern = "^eslint-disable-(next-)?line(?![\\s\\S])";
 const flags = "gu";

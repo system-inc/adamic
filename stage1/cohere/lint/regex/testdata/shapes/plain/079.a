@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:74; `^bg-opacity-(.*)$`
+// tailwind/no_deprecated_classes.go:73; `^bg-opacity-(.*)$`
 import { observe } from '../observe.a';
 const pattern = "^bg-opacity-([^\\n]*)(?![\\s\\S])";
 const flags = "gu";

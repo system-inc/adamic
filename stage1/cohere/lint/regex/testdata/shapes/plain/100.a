@@ -1,4 +1,4 @@
-// tailwind/no_physical_direction.go:284; `^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\[\]/]+)?$`
+// tailwind/no_physical_direction.go:287; `^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\[\]/]+)?$`
 import { observe } from '../observe.a';
 const pattern = "^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\\[\\]/]+)?(?![\\s\\S])";
 const flags = "gu";

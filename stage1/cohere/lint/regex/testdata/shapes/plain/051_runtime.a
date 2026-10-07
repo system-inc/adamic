@@ -1,4 +1,4 @@
-// nexus/shouting.go:184; `^\s*(\$|ahra\s|git\s|pnpm\s|npm\s|sqlite3\s|curl\s|s\s+c\b)`
+// nexus/shouting.go:185; `^@\w+`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "$", 4);
-observe(regex, "x$", 5);
-observe(regex, "$\n", 6);
+observe(regex, "@A", 4);
+observe(regex, "x@A", 5);
+observe(regex, "@A\n", 6);

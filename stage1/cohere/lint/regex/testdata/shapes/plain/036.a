@@ -1,4 +1,4 @@
-// nexus/consistency_require_constant_casing.go:350; `(Creator|Factory)$`
+// nexus/consistency_require_constant_casing.go:355; `(Creator|Factory)$`
 import { observe } from '../observe.a';
 const pattern = "(Creator|Factory)(?![\\s\\S])";
 const flags = "gu";

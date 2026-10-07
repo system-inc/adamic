@@ -1,4 +1,4 @@
-// next/no_html_link_for_pages_routes.go:142; `^layout\.[jt]sx?$`
+// next/no_html_link_for_pages_routes.go:172; `^layout\.[jt]sx?$`
 import { observe } from '../observe.a';
 const pattern = "^layout\\.[jt]sx?(?![\\s\\S])";
 const flags = "gu";

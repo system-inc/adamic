@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:68; `^blur$`
+// tailwind/no_deprecated_classes.go:67; `^blur$`
 import { observe } from '../observe.a';
 const pattern = "^blur(?![\\s\\S])";
 const flags = "gu";

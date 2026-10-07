@@ -1,4 +1,4 @@
-// tailwind/tools/generate_variant/main.go:221; `(?:class|className)\s*=\s*"([^"\n{}$]+)"`
+// tailwind/tools/generate_variant/main.go:232; `(?:class|className)\s*=\s*"([^"\n{}$]+)"`
 import { observe } from '../observe.a';
 const pattern = "(?:class|className)[ \\t\\n\\f\\r]*=[ \\t\\n\\f\\r]*\"([^\"\\n{}$]+)\"";
 const flags = "gu";

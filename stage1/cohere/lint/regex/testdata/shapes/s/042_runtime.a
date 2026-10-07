@@ -1,7 +1,9 @@
-// nexus/shouting.go:147; "(?s)```.*?```"
+// nexus/shouting.go:149; "(?s)```.*?```"
 import { observe } from '../observe.a';
-const pattern = "```[\\s\\S]*?```";
-const flags = "gu";
+import { programArguments } from 'adamic';
+const argumentsList = programArguments();
+const pattern = argumentsList[0] ?? '';
+const flags = argumentsList[1] ?? '';
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);

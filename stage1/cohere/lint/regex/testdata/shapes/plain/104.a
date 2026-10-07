@@ -1,4 +1,4 @@
-// typescript/no_unnecessary_template_expression.go:574; `\$$`
+// typescript/no_unnecessary_template_expression.go:575; `\$$`
 import { observe } from '../observe.a';
 const pattern = "\\$(?![\\s\\S])";
 const flags = "gu";

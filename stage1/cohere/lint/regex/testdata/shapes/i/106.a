@@ -1,4 +1,4 @@
-// typescript/switch_exhaustiveness_check.go:381; `(?i)^no default$`
+// typescript/switch_exhaustiveness_check.go:382; `(?i)^no default$`
 import { observe } from '../observe.a';
 const pattern = "^no default(?![\\s\\S])";
 const flags = "gui";

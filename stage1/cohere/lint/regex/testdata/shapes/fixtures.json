@@ -70,10 +70,10 @@
         "node_matches": []
       }
     ],
-    "file": "plain/000.a",
-    "runtime_file": "plain/000_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/000.a",
+    "runtime_file": "plain/000_runtime.a"
   },
   {
     "id": "base/consistency_require_pagination_argument_name.go:30",
@@ -146,13 +146,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/001.a",
-    "runtime_file": "plain/001_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/001.a",
+    "runtime_file": "plain/001_runtime.a"
   },
   {
-    "id": "core/default_case.go:29",
+    "id": "core/default_case.go:30",
     "rule": "default-case",
     "shape": "(?i)",
     "expression": "`(?i)^no default$`",
@@ -210,13 +210,13 @@
         "node_matches": []
       }
     ],
-    "file": "i/002.a",
-    "runtime_file": "i/002_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "i/002.a",
+    "runtime_file": "i/002_runtime.a"
   },
   {
-    "id": "core/default_case.go:99",
+    "id": "core/default_case.go:100",
     "rule": "default-case",
     "shape": "dynamic",
     "expression": "resolved.CommentPattern",
@@ -274,10 +274,10 @@
         "node_matches": []
       }
     ],
-    "file": "dynamic/003.a",
-    "runtime_file": "dynamic/003_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/003.a",
+    "runtime_file": "dynamic/003_runtime.a"
   },
   {
     "id": "core/id_length.go:93",
@@ -384,10 +384,10 @@
         ]
       }
     ],
-    "file": "dynamic/004.a",
-    "runtime_file": "dynamic/004_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/004.a",
+    "runtime_file": "dynamic/004_runtime.a"
   },
   {
     "id": "core/id_match.go:111",
@@ -511,13 +511,13 @@
         ]
       }
     ],
-    "file": "dynamic/005.a",
-    "runtime_file": "dynamic/005_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/005.a",
+    "runtime_file": "dynamic/005_runtime.a"
   },
   {
-    "id": "core/no_fallthrough.go:169",
+    "id": "core/no_fallthrough.go:170",
     "rule": "no-fallthrough",
     "shape": "dynamic",
     "expression": "\"(?i)\" + pattern",
@@ -599,13 +599,13 @@
         ]
       }
     ],
-    "file": "dynamic/006.a",
-    "runtime_file": "dynamic/006_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/006.a",
+    "runtime_file": "dynamic/006_runtime.a"
   },
   {
-    "id": "core/no_inline_comments.go:38",
+    "id": "core/no_inline_comments.go:39",
     "rule": "no-inline-comments",
     "shape": "plain",
     "expression": "`^(?:eslint[- ]|(?:globals?|exported) )`",
@@ -692,13 +692,13 @@
         ]
       }
     ],
-    "file": "plain/007.a",
-    "runtime_file": "plain/007_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/007.a",
+    "runtime_file": "plain/007_runtime.a"
   },
   {
-    "id": "core/no_inline_comments.go:102",
+    "id": "core/no_inline_comments.go:103",
     "rule": "no-inline-comments",
     "shape": "dynamic",
     "expression": "resolved.IgnorePattern",
@@ -821,10 +821,10 @@
         ]
       }
     ],
-    "file": "dynamic/008.a",
-    "runtime_file": "dynamic/008_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/008.a",
+    "runtime_file": "dynamic/008_runtime.a"
   },
   {
     "id": "core/no_param_reassign.go:553",
@@ -897,10 +897,10 @@
         ]
       }
     ],
-    "file": "dynamic/009.a",
-    "runtime_file": "dynamic/009_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/009.a",
+    "runtime_file": "dynamic/009_runtime.a"
   },
   {
     "id": "core/no_unused_vars.go:282",
@@ -1007,10 +1007,10 @@
         ]
       }
     ],
-    "file": "dynamic/010.a",
-    "runtime_file": "dynamic/010_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/010.a",
+    "runtime_file": "dynamic/010_runtime.a"
   },
   {
     "id": "core/no_unused_vars.go:2276",
@@ -1117,13 +1117,13 @@
         ]
       }
     ],
-    "file": "dynamic/011.a",
-    "runtime_file": "dynamic/011_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/011.a",
+    "runtime_file": "dynamic/011_runtime.a"
   },
   {
-    "id": "core/no_warning_comments.go:280",
+    "id": "core/no_warning_comments.go:378",
     "rule": "no-warning-comments",
     "shape": "plain",
     "expression": "`\\bno-warning-comments\\b`",
@@ -1210,13 +1210,13 @@
         ]
       }
     ],
-    "file": "plain/012.a",
-    "runtime_file": "plain/012_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/012.a",
+    "runtime_file": "plain/012_runtime.a"
   },
   {
-    "id": "core/no_warning_comments.go:354",
+    "id": "core/no_warning_comments.go:452",
     "rule": "no-warning-comments",
     "shape": "dynamic",
     "expression": "\"(?i)\" + prefix + escaped + suffix",
@@ -1315,13 +1315,13 @@
         ]
       }
     ],
-    "file": "dynamic/013.a",
-    "runtime_file": "dynamic/013_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/013.a",
+    "runtime_file": "dynamic/013_runtime.a"
   },
   {
-    "id": "core/object_shorthand.go:140",
+    "id": "core/object_shorthand.go:141",
     "rule": "object-shorthand",
     "shape": "dynamic",
     "expression": "*wire.MethodsIgnorePattern",
@@ -1391,13 +1391,13 @@
         ]
       }
     ],
-    "file": "dynamic/014.a",
-    "runtime_file": "dynamic/014_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/014.a",
+    "runtime_file": "dynamic/014_runtime.a"
   },
   {
-    "id": "core/require_description.go:214",
+    "id": "core/require_description.go:217",
     "rule": "require-description",
     "shape": "plain",
     "expression": "jsWhitespace + `-{2,}` + jsWhitespace",
@@ -1530,13 +1530,13 @@
         ]
       }
     ],
-    "file": "plain/015.a",
-    "runtime_file": "plain/015_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/015.a",
+    "runtime_file": "plain/015_runtime.a"
   },
   {
-    "id": "core/require_description.go:217",
+    "id": "core/require_description.go:220",
     "rule": "require-description",
     "shape": "plain",
     "expression": "`^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:` + jsWhitespace + `|$)`",
@@ -1657,13 +1657,13 @@
         ]
       }
     ],
-    "file": "plain/016.a",
-    "runtime_file": "plain/016_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/016.a",
+    "runtime_file": "plain/016_runtime.a"
   },
   {
-    "id": "core/require_description.go:222",
+    "id": "core/require_description.go:225",
     "rule": "require-description",
     "shape": "plain",
     "expression": "`^eslint-disable-(next-)?line$`",
@@ -1721,13 +1721,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/017.a",
-    "runtime_file": "plain/017_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/017.a",
+    "runtime_file": "plain/017_runtime.a"
   },
   {
-    "id": "core/require_description.go:233",
+    "id": "core/require_description.go:236",
     "rule": "require-description",
     "shape": "dynamic",
     "expression": "`^(` + strings.Join(quoted, \"|\") + `)(?:` + jsWhitespace + `|$)`",
@@ -1797,13 +1797,13 @@
         ]
       }
     ],
-    "file": "dynamic/018.a",
-    "runtime_file": "dynamic/018_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/018.a",
+    "runtime_file": "dynamic/018_runtime.a"
   },
   {
-    "id": "next/no_html_link_for_pages_routes.go:139",
+    "id": "next/no_html_link_for_pages_routes.go:169",
     "rule": "no-html-link-for-pages-routes",
     "shape": "plain",
     "expression": "`\\.[jt]sx?$`",
@@ -1890,13 +1890,13 @@
         ]
       }
     ],
-    "file": "plain/019.a",
-    "runtime_file": "plain/019_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/019.a",
+    "runtime_file": "plain/019_runtime.a"
   },
   {
-    "id": "next/no_html_link_for_pages_routes.go:140",
+    "id": "next/no_html_link_for_pages_routes.go:170",
     "rule": "no-html-link-for-pages-routes",
     "shape": "plain",
     "expression": "`^index\\.[jt]sx?$`",
@@ -1954,13 +1954,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/020.a",
-    "runtime_file": "plain/020_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/020.a",
+    "runtime_file": "plain/020_runtime.a"
   },
   {
-    "id": "next/no_html_link_for_pages_routes.go:141",
+    "id": "next/no_html_link_for_pages_routes.go:171",
     "rule": "no-html-link-for-pages-routes",
     "shape": "plain",
     "expression": "`^page\\.[jt]sx?$`",
@@ -2018,13 +2018,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/021.a",
-    "runtime_file": "plain/021_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/021.a",
+    "runtime_file": "plain/021_runtime.a"
   },
   {
-    "id": "next/no_html_link_for_pages_routes.go:142",
+    "id": "next/no_html_link_for_pages_routes.go:172",
     "rule": "no-html-link-for-pages-routes",
     "shape": "plain",
     "expression": "`^layout\\.[jt]sx?$`",
@@ -2082,13 +2082,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/022.a",
-    "runtime_file": "plain/022_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/022.a",
+    "runtime_file": "plain/022_runtime.a"
   },
   {
-    "id": "next/no_html_link_for_pages_routes.go:251",
+    "id": "next/no_html_link_for_pages_routes.go:281",
     "rule": "no-html-link-for-pages-routes",
     "shape": "plain",
     "expression": "\"\\\\[[^\\n\\r\\u2028\\u2029]*\\\\]\"",
@@ -2221,10 +2221,10 @@
         ]
       }
     ],
-    "file": "plain/023.a",
-    "runtime_file": "plain/023_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/023.a",
+    "runtime_file": "plain/023_runtime.a"
   },
   {
     "id": "next/no_location_assign_relative_destination.go:26",
@@ -2360,10 +2360,10 @@
         ]
       }
     ],
-    "file": "i/024.a",
-    "runtime_file": "i/024_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "i/024.a",
+    "runtime_file": "i/024_runtime.a"
   },
   {
     "id": "nexus/abbreviation_vocabulary.go:162",
@@ -2436,10 +2436,10 @@
         ]
       }
     ],
-    "file": "dynamic/025.a",
-    "runtime_file": "dynamic/025_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/025.a",
+    "runtime_file": "dynamic/025_runtime.a"
   },
   {
     "id": "nexus/abbreviation_vocabulary.go:176",
@@ -2500,10 +2500,10 @@
         "node_matches": []
       }
     ],
-    "file": "dynamic/026.a",
-    "runtime_file": "dynamic/026_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/026.a",
+    "runtime_file": "dynamic/026_runtime.a"
   },
   {
     "id": "nexus/abbreviation_vocabulary.go:177",
@@ -2576,10 +2576,10 @@
         "node_matches": []
       }
     ],
-    "file": "dynamic/027.a",
-    "runtime_file": "dynamic/027_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/027.a",
+    "runtime_file": "dynamic/027_runtime.a"
   },
   {
     "id": "nexus/abbreviation_vocabulary.go:178",
@@ -2652,10 +2652,10 @@
         "node_matches": []
       }
     ],
-    "file": "dynamic/028.a",
-    "runtime_file": "dynamic/028_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/028.a",
+    "runtime_file": "dynamic/028_runtime.a"
   },
   {
     "id": "nexus/consistency_no_abbreviated_identifier.go:50",
@@ -2728,10 +2728,10 @@
         "node_matches": []
       }
     ],
-    "file": "plain/029.a",
-    "runtime_file": "plain/029_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/029.a",
+    "runtime_file": "plain/029_runtime.a"
   },
   {
     "id": "nexus/consistency_no_ambiguous_identifier.go:17",
@@ -2877,10 +2877,10 @@
         ]
       }
     ],
-    "file": "i/030.a",
-    "runtime_file": "i/030_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "i/030.a",
+    "runtime_file": "i/030_runtime.a"
   },
   {
     "id": "nexus/consistency_no_ambiguous_identifier.go:18",
@@ -2970,10 +2970,10 @@
         ]
       }
     ],
-    "file": "plain/031.a",
-    "runtime_file": "plain/031_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/031.a",
+    "runtime_file": "plain/031_runtime.a"
   },
   {
     "id": "nexus/consistency_no_ambiguous_identifier.go:19",
@@ -3068,10 +3068,10 @@
         ]
       }
     ],
-    "file": "plain/032.a",
-    "runtime_file": "plain/032_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/032.a",
+    "runtime_file": "plain/032_runtime.a"
   },
   {
     "id": "nexus/consistency_no_boolean_outcome.go:48",
@@ -3195,10 +3195,10 @@
         ]
       }
     ],
-    "file": "plain/033.a",
-    "runtime_file": "plain/033_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/033.a",
+    "runtime_file": "plain/033_runtime.a"
   },
   {
     "id": "nexus/consistency_no_return_void.go:100",
@@ -3305,10 +3305,10 @@
         ]
       }
     ],
-    "file": "plain/034.a",
-    "runtime_file": "plain/034_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/034.a",
+    "runtime_file": "plain/034_runtime.a"
   },
   {
     "id": "nexus/consistency_no_return_void.go:116",
@@ -3369,13 +3369,13 @@
         "node_matches": []
       }
     ],
-    "file": "dynamic/035.a",
-    "runtime_file": "dynamic/035_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/035.a",
+    "runtime_file": "dynamic/035_runtime.a"
   },
   {
-    "id": "nexus/consistency_require_constant_casing.go:350",
+    "id": "nexus/consistency_require_constant_casing.go:355",
     "rule": "consistency-require-constant-casing",
     "shape": "plain",
     "expression": "`(Creator|Factory)$`",
@@ -3496,10 +3496,10 @@
         ]
       }
     ],
-    "file": "plain/036.a",
-    "runtime_file": "plain/036_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/036.a",
+    "runtime_file": "plain/036_runtime.a"
   },
   {
     "id": "nexus/consistency_require_matching_return_type.go:216",
@@ -3560,13 +3560,140 @@
         "node_matches": []
       }
     ],
-    "file": "plain/037.a",
-    "runtime_file": "plain/037_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/037.a",
+    "runtime_file": "plain/037_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:121",
+    "id": "nexus/localization_no_untranslated_value.go:408",
+    "rule": "localization-no-untranslated-value",
+    "shape": "plain",
+    "expression": "`^[a-z]{2,3}(?:[-_][A-Za-z0-9]+)*$`",
+    "go_pattern": "^[a-z]{2,3}(?:[-_][A-Za-z0-9]+)*$",
+    "pattern": "^[a-z]{2,3}(?:[-_][A-Za-z0-9]+)*(?![\\s\\S])",
+    "flags": "gu",
+    "binding": "",
+    "outside": "",
+    "samples": [
+      {
+        "input": "",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "🌍",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "TODO\n",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": " TODO",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "aa",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "aa"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "aa"
+          }
+        ]
+      },
+      {
+        "input": "xaa",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "xaa"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "xaa"
+          }
+        ]
+      },
+      {
+        "input": "aa\n",
+        "go_matches": [],
+        "node_matches": []
+      },
+      {
+        "input": "to",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "to"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "to"
+          }
+        ]
+      },
+      {
+        "input": "the",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "the"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "the"
+          }
+        ]
+      },
+      {
+        "input": "ts",
+        "go_matches": [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "ts"
+          }
+        ],
+        "node_matches": [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "ts"
+          }
+        ]
+      }
+    ],
+    "native_expectation": "awaits codex/regex-runtime-compiler",
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/038.a",
+    "runtime_file": "plain/038_runtime.a"
+  },
+  {
+    "id": "nexus/shouting.go:123",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`[0-9_]`",
@@ -3709,13 +3836,13 @@
         ]
       }
     ],
-    "file": "plain/038.a",
-    "runtime_file": "plain/038_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/039.a",
+    "runtime_file": "plain/039_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:122",
+    "id": "nexus/shouting.go:124",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`[AEIOUY]`",
@@ -3912,13 +4039,13 @@
         ]
       }
     ],
-    "file": "plain/039.a",
-    "runtime_file": "plain/039_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/040.a",
+    "runtime_file": "plain/040_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:123",
+    "id": "nexus/shouting.go:125",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`\\b[A-Z][A-Z0-9_]*\\b`",
@@ -4063,13 +4190,13 @@
         ]
       }
     ],
-    "file": "plain/040.a",
-    "runtime_file": "plain/040_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/041.a",
+    "runtime_file": "plain/041_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:147",
+    "id": "nexus/shouting.go:149",
     "rule": "shouting",
     "shape": "(?s)",
     "expression": "\"(?s)```.*?```\"",
@@ -4168,13 +4295,13 @@
         ]
       }
     ],
-    "file": "s/041.a",
-    "runtime_file": "s/041_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "s/042.a",
+    "runtime_file": "s/042_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:153",
+    "id": "nexus/shouting.go:155",
     "rule": "shouting",
     "shape": "plain",
     "expression": "\"`[^`]*`\"",
@@ -4307,13 +4434,13 @@
         ]
       }
     ],
-    "file": "plain/042.a",
-    "runtime_file": "plain/042_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/043.a",
+    "runtime_file": "plain/043_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:160",
+    "id": "nexus/shouting.go:162",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`\"[^\"\\n]*\"`",
@@ -4446,13 +4573,13 @@
         ]
       }
     ],
-    "file": "plain/043.a",
-    "runtime_file": "plain/043_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/044.a",
+    "runtime_file": "plain/044_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:166",
+    "id": "nexus/shouting.go:168",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`'[A-Za-z0-9_.\\-/]+'`",
@@ -4585,13 +4712,13 @@
         ]
       }
     ],
-    "file": "plain/044.a",
-    "runtime_file": "plain/044_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/045.a",
+    "runtime_file": "plain/045_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:175",
+    "id": "nexus/shouting.go:177",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`'[A-Z0-9_][A-Z0-9_ .,:=\\-/]*[A-Z0-9_]'`",
@@ -4673,13 +4800,13 @@
         ]
       }
     ],
-    "file": "plain/045.a",
-    "runtime_file": "plain/045_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/046.a",
+    "runtime_file": "plain/046_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:177",
+    "id": "nexus/shouting.go:179",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`[^\\n]`",
@@ -5188,13 +5315,13 @@
         ]
       }
     ],
-    "file": "plain/046.a",
-    "runtime_file": "plain/046_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/047.a",
+    "runtime_file": "plain/047_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:178",
+    "id": "nexus/shouting.go:180",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`^\\s*\\*?\\s?`",
@@ -5341,13 +5468,13 @@
         ]
       }
     ],
-    "file": "plain/047.a",
-    "runtime_file": "plain/047_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/048.a",
+    "runtime_file": "plain/048_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:181",
+    "id": "nexus/shouting.go:183",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`^[ \\t]*\\*(?: |\\t|$)`",
@@ -5417,13 +5544,13 @@
         ]
       }
     ],
-    "file": "plain/048.a",
-    "runtime_file": "plain/048_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/049.a",
+    "runtime_file": "plain/049_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:182",
+    "id": "nexus/shouting.go:184",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`^@example\\b`",
@@ -5493,13 +5620,13 @@
         ]
       }
     ],
-    "file": "plain/049.a",
-    "runtime_file": "plain/049_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/050.a",
+    "runtime_file": "plain/050_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:183",
+    "id": "nexus/shouting.go:185",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`^@\\w+`",
@@ -5569,13 +5696,13 @@
         ]
       }
     ],
-    "file": "plain/050.a",
-    "runtime_file": "plain/050_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/051.a",
+    "runtime_file": "plain/051_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:184",
+    "id": "nexus/shouting.go:186",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`^\\s*(\\$|ahra\\s|git\\s|pnpm\\s|npm\\s|sqlite3\\s|curl\\s|s\\s+c\\b)`",
@@ -5645,13 +5772,13 @@
         ]
       }
     ],
-    "file": "plain/051.a",
-    "runtime_file": "plain/051_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/052.a",
+    "runtime_file": "plain/052_runtime.a"
   },
   {
-    "id": "nexus/shouting.go:464",
+    "id": "nexus/shouting.go:466",
     "rule": "shouting",
     "shape": "plain",
     "expression": "`s\\s+c`",
@@ -5784,10 +5911,10 @@
         ]
       }
     ],
-    "file": "plain/052.a",
-    "runtime_file": "plain/052_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/053.a",
+    "runtime_file": "plain/053_runtime.a"
   },
   {
     "id": "react/boolean_prop_naming.go:93",
@@ -5911,10 +6038,10 @@
         ]
       }
     ],
-    "file": "dynamic/053.a",
-    "runtime_file": "dynamic/053_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/054.a",
+    "runtime_file": "dynamic/054_runtime.a"
   },
   {
     "id": "react/boolean_prop_naming.go:182",
@@ -6038,10 +6165,10 @@
         ]
       }
     ],
-    "file": "dynamic/054.a",
-    "runtime_file": "dynamic/054_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/055.a",
+    "runtime_file": "dynamic/055_runtime.a"
   },
   {
     "id": "react/boolean_prop_naming.go:621",
@@ -6126,10 +6253,10 @@
         ]
       }
     ],
-    "file": "plain/055.a",
-    "runtime_file": "plain/055_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/056.a",
+    "runtime_file": "plain/056_runtime.a"
   },
   {
     "id": "react/conformance/classify.go:95",
@@ -6202,10 +6329,10 @@
         ]
       }
     ],
-    "file": "m/056.a",
-    "runtime_file": "m/056_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "m/057.a",
+    "runtime_file": "m/057_runtime.a"
   },
   {
     "id": "react/conformance/classify.go:98",
@@ -6295,10 +6422,10 @@
         ]
       }
     ],
-    "file": "plain/057.a",
-    "runtime_file": "plain/057_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/058.a",
+    "runtime_file": "plain/058_runtime.a"
   },
   {
     "id": "react/exhaustive_deps.go:451",
@@ -6400,10 +6527,10 @@
         ]
       }
     ],
-    "file": "plain/058.a",
-    "runtime_file": "plain/058_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/059.a",
+    "runtime_file": "plain/059_runtime.a"
   },
   {
     "id": "react/exhaustive_deps.go:463",
@@ -6476,10 +6603,10 @@
         ]
       }
     ],
-    "file": "dynamic/059.a",
-    "runtime_file": "dynamic/059_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/060.a",
+    "runtime_file": "dynamic/060_runtime.a"
   },
   {
     "id": "react/no_unstable_nested_components.go:450",
@@ -6557,10 +6684,10 @@
         ]
       }
     ],
-    "file": "plain/060.a",
-    "runtime_file": "plain/060_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/061.a",
+    "runtime_file": "plain/061_runtime.a"
   },
   {
     "id": "react/no_unstable_nested_components.go:893",
@@ -6638,10 +6765,10 @@
         ]
       }
     ],
-    "file": "dynamic/061.a",
-    "runtime_file": "dynamic/061_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/062.a",
+    "runtime_file": "dynamic/062_runtime.a"
   },
   {
     "id": "react/sort_comp.go:119",
@@ -6777,10 +6904,10 @@
         ]
       }
     ],
-    "file": "plain/062.a",
-    "runtime_file": "plain/062_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/063.a",
+    "runtime_file": "plain/063_runtime.a"
   },
   {
     "id": "react/sort_comp.go:589",
@@ -6858,10 +6985,10 @@
         ]
       }
     ],
-    "file": "dynamic/063.a",
-    "runtime_file": "dynamic/063_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/064.a",
+    "runtime_file": "dynamic/064_runtime.a"
   },
   {
     "id": "tailwind/class_existence.go:63",
@@ -6922,10 +7049,10 @@
         "node_matches": []
       }
     ],
-    "file": "plain/064.a",
-    "runtime_file": "plain/064_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/065.a",
+    "runtime_file": "plain/065_runtime.a"
   },
   {
     "id": "tailwind/class_existence.go:70",
@@ -6986,74 +7113,10 @@
         "node_matches": []
       }
     ],
-    "file": "plain/065.a",
-    "runtime_file": "plain/065_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
-  },
-  {
-    "id": "tailwind/class_literals.go:167",
-    "rule": "class-literals",
-    "shape": "dynamic",
-    "expression": "pattern",
-    "go_pattern": "^classes$",
-    "pattern": "^classes(?![\\s\\S])",
-    "flags": "gu",
-    "binding": "variablePatterns=[^classes$]",
-    "outside": "",
-    "samples": [
-      {
-        "input": "",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "🌍",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "TODO\n",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": " TODO",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "classes",
-        "go_matches": [
-          {
-            "start": 0,
-            "end": 7,
-            "text": "classes"
-          }
-        ],
-        "node_matches": [
-          {
-            "start": 0,
-            "end": 7,
-            "text": "classes"
-          }
-        ]
-      },
-      {
-        "input": "xclasses",
-        "go_matches": [],
-        "node_matches": []
-      },
-      {
-        "input": "classes\n",
-        "go_matches": [],
-        "node_matches": []
-      }
-    ],
-    "file": "dynamic/066.a",
-    "runtime_file": "dynamic/066_runtime.a",
-    "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/066.a",
+    "runtime_file": "plain/066_runtime.a"
   },
   {
     "id": "tailwind/class_order_strict.go:89",
@@ -7189,10 +7252,10 @@
         ]
       }
     ],
-    "file": "plain/067.a",
-    "runtime_file": "plain/067_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/067.a",
+    "runtime_file": "plain/067_runtime.a"
   },
   {
     "id": "tailwind/collapse/utility_nodes.go:131",
@@ -7304,10 +7367,10 @@
         ]
       }
     ],
-    "file": "plain/068.a",
-    "runtime_file": "plain/068_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/068.a",
+    "runtime_file": "plain/068_runtime.a"
   },
   {
     "id": "tailwind/collapse/utility_nodes.go:138",
@@ -7409,10 +7472,10 @@
         ]
       }
     ],
-    "file": "plain/069.a",
-    "runtime_file": "plain/069_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/069.a",
+    "runtime_file": "plain/069_runtime.a"
   },
   {
     "id": "tailwind/collapse/utility_nodes.go:140",
@@ -7543,10 +7606,10 @@
         ]
       }
     ],
-    "file": "plain/070.a",
-    "runtime_file": "plain/070_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/070.a",
+    "runtime_file": "plain/070_runtime.a"
   },
   {
     "id": "tailwind/collapse/utility_nodes.go:142",
@@ -7631,13 +7694,13 @@
         ]
       }
     ],
-    "file": "plain/071.a",
-    "runtime_file": "plain/071_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/071.a",
+    "runtime_file": "plain/071_runtime.a"
   },
   {
-    "id": "tailwind/enforce_canonical_classes.go:345",
+    "id": "tailwind/enforce_canonical_classes.go:334",
     "rule": "enforce-canonical-classes",
     "shape": "dynamic",
     "expression": "pattern",
@@ -7707,13 +7770,13 @@
         ]
       }
     ],
-    "file": "dynamic/072.a",
-    "runtime_file": "dynamic/072_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/072.a",
+    "runtime_file": "dynamic/072_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:65",
+    "id": "tailwind/no_deprecated_classes.go:64",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^shadow$`",
@@ -7771,13 +7834,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/073.a",
-    "runtime_file": "plain/073_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/073.a",
+    "runtime_file": "plain/073_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:66",
+    "id": "tailwind/no_deprecated_classes.go:65",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^inset-shadow$`",
@@ -7835,13 +7898,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/074.a",
-    "runtime_file": "plain/074_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/074.a",
+    "runtime_file": "plain/074_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:67",
+    "id": "tailwind/no_deprecated_classes.go:66",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^drop-shadow$`",
@@ -7899,13 +7962,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/075.a",
-    "runtime_file": "plain/075_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/075.a",
+    "runtime_file": "plain/075_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:68",
+    "id": "tailwind/no_deprecated_classes.go:67",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^blur$`",
@@ -7963,13 +8026,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/076.a",
-    "runtime_file": "plain/076_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/076.a",
+    "runtime_file": "plain/076_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:69",
+    "id": "tailwind/no_deprecated_classes.go:68",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^backdrop-blur$`",
@@ -8027,13 +8090,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/077.a",
-    "runtime_file": "plain/077_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/077.a",
+    "runtime_file": "plain/077_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:70",
+    "id": "tailwind/no_deprecated_classes.go:69",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^rounded$`",
@@ -8091,13 +8154,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/078.a",
-    "runtime_file": "plain/078_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/078.a",
+    "runtime_file": "plain/078_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:74",
+    "id": "tailwind/no_deprecated_classes.go:73",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^bg-opacity-(.*)$`",
@@ -8155,13 +8218,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/079.a",
-    "runtime_file": "plain/079_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/079.a",
+    "runtime_file": "plain/079_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:75",
+    "id": "tailwind/no_deprecated_classes.go:74",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^text-opacity-(.*)$`",
@@ -8219,13 +8282,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/080.a",
-    "runtime_file": "plain/080_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/080.a",
+    "runtime_file": "plain/080_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:76",
+    "id": "tailwind/no_deprecated_classes.go:75",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^border-opacity-(.*)$`",
@@ -8283,13 +8346,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/081.a",
-    "runtime_file": "plain/081_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/081.a",
+    "runtime_file": "plain/081_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:77",
+    "id": "tailwind/no_deprecated_classes.go:76",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^divide-opacity-(.*)$`",
@@ -8347,13 +8410,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/082.a",
-    "runtime_file": "plain/082_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/082.a",
+    "runtime_file": "plain/082_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:78",
+    "id": "tailwind/no_deprecated_classes.go:77",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^ring-opacity-(.*)$`",
@@ -8411,13 +8474,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/083.a",
-    "runtime_file": "plain/083_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/083.a",
+    "runtime_file": "plain/083_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:79",
+    "id": "tailwind/no_deprecated_classes.go:78",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^placeholder-opacity-(.*)$`",
@@ -8475,13 +8538,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/084.a",
-    "runtime_file": "plain/084_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/084.a",
+    "runtime_file": "plain/084_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:83",
+    "id": "tailwind/no_deprecated_classes.go:82",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^flex-shrink$`",
@@ -8539,13 +8602,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/085.a",
-    "runtime_file": "plain/085_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/085.a",
+    "runtime_file": "plain/085_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:84",
+    "id": "tailwind/no_deprecated_classes.go:83",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^flex-shrink-(.*)$`",
@@ -8603,13 +8666,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/086.a",
-    "runtime_file": "plain/086_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/086.a",
+    "runtime_file": "plain/086_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:85",
+    "id": "tailwind/no_deprecated_classes.go:84",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^flex-grow$`",
@@ -8667,13 +8730,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/087.a",
-    "runtime_file": "plain/087_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/087.a",
+    "runtime_file": "plain/087_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:86",
+    "id": "tailwind/no_deprecated_classes.go:85",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^flex-grow-(.*)$`",
@@ -8731,13 +8794,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/088.a",
-    "runtime_file": "plain/088_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/088.a",
+    "runtime_file": "plain/088_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:88",
+    "id": "tailwind/no_deprecated_classes.go:87",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^overflow-ellipsis$`",
@@ -8795,13 +8858,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/089.a",
-    "runtime_file": "plain/089_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/089.a",
+    "runtime_file": "plain/089_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:89",
+    "id": "tailwind/no_deprecated_classes.go:88",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^decoration-slice$`",
@@ -8859,13 +8922,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/090.a",
-    "runtime_file": "plain/090_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/090.a",
+    "runtime_file": "plain/090_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:90",
+    "id": "tailwind/no_deprecated_classes.go:89",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^decoration-clone$`",
@@ -8923,13 +8986,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/091.a",
-    "runtime_file": "plain/091_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/091.a",
+    "runtime_file": "plain/091_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:93",
+    "id": "tailwind/no_deprecated_classes.go:92",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^bg-left-top$`",
@@ -8987,13 +9050,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/092.a",
-    "runtime_file": "plain/092_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/092.a",
+    "runtime_file": "plain/092_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:94",
+    "id": "tailwind/no_deprecated_classes.go:93",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^bg-left-bottom$`",
@@ -9051,13 +9114,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/093.a",
-    "runtime_file": "plain/093_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/093.a",
+    "runtime_file": "plain/093_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:95",
+    "id": "tailwind/no_deprecated_classes.go:94",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^bg-right-top$`",
@@ -9115,13 +9178,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/094.a",
-    "runtime_file": "plain/094_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/094.a",
+    "runtime_file": "plain/094_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:96",
+    "id": "tailwind/no_deprecated_classes.go:95",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^bg-right-bottom$`",
@@ -9179,13 +9242,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/095.a",
-    "runtime_file": "plain/095_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/095.a",
+    "runtime_file": "plain/095_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:97",
+    "id": "tailwind/no_deprecated_classes.go:96",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^object-left-top$`",
@@ -9243,13 +9306,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/096.a",
-    "runtime_file": "plain/096_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/096.a",
+    "runtime_file": "plain/096_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:98",
+    "id": "tailwind/no_deprecated_classes.go:97",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^object-left-bottom$`",
@@ -9307,13 +9370,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/097.a",
-    "runtime_file": "plain/097_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/097.a",
+    "runtime_file": "plain/097_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:99",
+    "id": "tailwind/no_deprecated_classes.go:98",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^object-right-top$`",
@@ -9371,13 +9434,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/098.a",
-    "runtime_file": "plain/098_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/098.a",
+    "runtime_file": "plain/098_runtime.a"
   },
   {
-    "id": "tailwind/no_deprecated_classes.go:100",
+    "id": "tailwind/no_deprecated_classes.go:99",
     "rule": "no-deprecated-classes",
     "shape": "plain",
     "expression": "`^object-right-bottom$`",
@@ -9435,13 +9498,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/099.a",
-    "runtime_file": "plain/099_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/099.a",
+    "runtime_file": "plain/099_runtime.a"
   },
   {
-    "id": "tailwind/no_physical_direction.go:284",
+    "id": "tailwind/no_physical_direction.go:287",
     "rule": "no-physical-direction",
     "shape": "plain",
     "expression": "`^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\\[\\]/]+)?$`",
@@ -9562,13 +9625,13 @@
         ]
       }
     ],
-    "file": "plain/100.a",
-    "runtime_file": "plain/100_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/100.a",
+    "runtime_file": "plain/100_runtime.a"
   },
   {
-    "id": "tailwind/tools/generate_variant/main.go:221",
+    "id": "tailwind/tools/generate_variant/main.go:232",
     "rule": "main",
     "shape": "plain",
     "expression": "`(?:class|className)\\s*=\\s*\"([^\"\\n{}$]+)\"`",
@@ -9667,10 +9730,10 @@
         ]
       }
     ],
-    "file": "plain/101.a",
-    "runtime_file": "plain/101_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/101.a",
+    "runtime_file": "plain/101_runtime.a"
   },
   {
     "id": "typescript/ban_tslint_comment.go:24",
@@ -9743,10 +9806,10 @@
         ]
       }
     ],
-    "file": "plain/102.a",
-    "runtime_file": "plain/102_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/102.a",
+    "runtime_file": "plain/102_runtime.a"
   },
   {
     "id": "typescript/no_require_imports.go:378",
@@ -9819,13 +9882,13 @@
         ]
       }
     ],
-    "file": "dynamic/103.a",
-    "runtime_file": "dynamic/103_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/103.a",
+    "runtime_file": "dynamic/103_runtime.a"
   },
   {
-    "id": "typescript/no_unnecessary_template_expression.go:574",
+    "id": "typescript/no_unnecessary_template_expression.go:575",
     "rule": "no-unnecessary-template-expression",
     "shape": "plain",
     "expression": "`\\$$`",
@@ -9895,13 +9958,13 @@
         "node_matches": []
       }
     ],
-    "file": "plain/104.a",
-    "runtime_file": "plain/104_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "plain/104.a",
+    "runtime_file": "plain/104_runtime.a"
   },
   {
-    "id": "typescript/switch_exhaustiveness_check.go:212",
+    "id": "typescript/switch_exhaustiveness_check.go:213",
     "rule": "switch-exhaustiveness-check",
     "shape": "dynamic",
     "expression": "*opts.DefaultCaseCommentPattern",
@@ -9959,13 +10022,13 @@
         "node_matches": []
       }
     ],
-    "file": "dynamic/105.a",
-    "runtime_file": "dynamic/105_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "dynamic/105.a",
+    "runtime_file": "dynamic/105_runtime.a"
   },
   {
-    "id": "typescript/switch_exhaustiveness_check.go:381",
+    "id": "typescript/switch_exhaustiveness_check.go:382",
     "rule": "switch-exhaustiveness-check",
     "shape": "(?i)",
     "expression": "`(?i)^no default$`",
@@ -10023,9 +10086,9 @@
         "node_matches": []
       }
     ],
-    "file": "i/106.a",
-    "runtime_file": "i/106_runtime.a",
     "native_expectation": "awaits codex/regex-runtime-compiler",
-    "native_when_accepted": "required identical matches and spans"
+    "native_when_accepted": "required identical matches and spans",
+    "file": "i/106.a",
+    "runtime_file": "i/106_runtime.a"
   }
 ]

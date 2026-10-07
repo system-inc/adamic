@@ -1,7 +1,9 @@
-// react/boolean_prop_naming.go:93; options.Rule
+// react/boolean_prop_naming.go:182; settings.Rule
 import { observe } from '../observe.a';
-const pattern = "^(is|has)[A-Z]";
-const flags = "gu";
+import { programArguments } from 'adamic';
+const argumentsList = programArguments();
+const pattern = argumentsList[0] ?? '';
+const flags = argumentsList[1] ?? '';
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);

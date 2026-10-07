@@ -1,5 +1,5 @@
 """Translate pinned fixed expressions once, retaining all dynamic sites as contracts."""
-import json,re,pathlib,collections,hashlib
+import json,re,pathlib,collections,hashlib,sys
 root=pathlib.Path(__file__).resolve().parents[1]
 rows=json.loads((root/'sites.json').read_text())
 def translate(p):
@@ -38,11 +38,15 @@ for r in fixed:
  p=r['js_pattern'].replace('/','\\/').replace('\n','\\n').replace('\r','\\r').replace('\u2028','\\u2028').replace('\u2029','\\u2029')
  lines.append(f"        /{p or '(?:)'}/{r['js_flags']}, // {r['id']}")
 lines+=['    ];','}']
-for export_name, source_file, source_line in [('inlineCommentDirective','core/no_inline_comments.go',38),('warningSelfDirective','core/no_warning_comments.go',280)]:
- r=next(r for r in fixed if r['file']==source_file and r['line']==source_line)
+for export_name, source_file, source_pattern in [('inlineCommentDirective','core/no_inline_comments.go',r'^(?:eslint[- ]|(?:globals?|exported) )'),('warningSelfDirective','core/no_warning_comments.go',r'\bno-warning-comments\b')]:
+ r=next(r for r in fixed if r['file']==source_file and r['go_pattern']==source_pattern)
  pattern=r['js_pattern'].replace('/','\\/')
  lines.append(f"export function {export_name}(): RegExp {{ return /{pattern}/{r['js_flags'].replace('g','')}; }}")
 (root/'patterns.a').write_text('\n'.join(lines)+'\n')
+if '--table-only' in sys.argv:
+ print('table sites',len(rows),'fixed',len(fixed),'dynamic',len(rows)-len(fixed))
+ raise SystemExit(0)
+
 # The fleet's named quiet-hundred manifest is not present on main. Keep an explicit,
 # reproducible alternate corpus rather than presenting it as that manifest.
 compiler=pathlib.Path('/workspace/scratch/wave1-06-typescript-6.0.3/src/compiler')

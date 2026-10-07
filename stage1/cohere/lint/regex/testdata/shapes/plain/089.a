@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:88; `^overflow-ellipsis$`
+// tailwind/no_deprecated_classes.go:87; `^overflow-ellipsis$`
 import { observe } from '../observe.a';
 const pattern = "^overflow-ellipsis(?![\\s\\S])";
 const flags = "gu";

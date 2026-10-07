@@ -1,4 +1,4 @@
-// next/no_html_link_for_pages_routes.go:141; `^page\.[jt]sx?$`
+// next/no_html_link_for_pages_routes.go:171; `^page\.[jt]sx?$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();

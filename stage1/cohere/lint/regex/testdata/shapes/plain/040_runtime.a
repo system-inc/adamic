@@ -1,4 +1,4 @@
-// nexus/shouting.go:123; `\b[A-Z][A-Z0-9_]*\b`
+// nexus/shouting.go:124; `[AEIOUY]`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -12,6 +12,6 @@ observe(regex, " TODO", 3);
 observe(regex, "A", 4);
 observe(regex, "xA", 5);
 observe(regex, "A\n", 6);
-observe(regex, "TODO", 7);
-observe(regex, "K", 8);
-observe(regex, "S", 9);
+observe(regex, "PaginationInput", 7);
+observe(regex, "TODO", 8);
+observe(regex, "🌍TODO", 9);

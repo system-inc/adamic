@@ -1,4 +1,4 @@
-// core/require_description.go:233; `^(` + strings.Join(quoted, "|") + `)(?:` + jsWhitespace + `|$)`
+// core/require_description.go:236; `^(` + strings.Join(quoted, "|") + `)(?:` + jsWhitespace + `|$)`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();

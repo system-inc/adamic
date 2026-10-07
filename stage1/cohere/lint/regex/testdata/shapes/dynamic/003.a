@@ -1,4 +1,4 @@
-// core/default_case.go:99; resolved.CommentPattern
+// core/default_case.go:100; resolved.CommentPattern
 import { observe } from '../observe.a';
 const pattern = "^no default(?![\\s\\S])";
 const flags = "gu";

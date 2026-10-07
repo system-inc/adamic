@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:83; `^flex-shrink$`
+// tailwind/no_deprecated_classes.go:82; `^flex-shrink$`
 import { observe } from '../observe.a';
 const pattern = "^flex-shrink(?![\\s\\S])";
 const flags = "gu";

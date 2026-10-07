@@ -1,4 +1,4 @@
-// tailwind/class_existence.go:70; `^\[[^\]]+:[^\]]*\]$`
+// tailwind/class_existence.go:63; `^(group|peer)(/\S*)?$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "[A:]", 4);
-observe(regex, "x[A:]", 5);
-observe(regex, "[A:]\n", 6);
+observe(regex, "group", 4);
+observe(regex, "xgroup", 5);
+observe(regex, "group\n", 6);

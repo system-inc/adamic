@@ -1,15 +1,15 @@
-// nexus/shouting.go:160; `"[^"\n]*"`
+// nexus/shouting.go:155; "`[^`]*`"
 import { observe } from '../observe.a';
-const pattern = "\"[^\"\\n]*\"";
+const pattern = "`[^`]*`";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "\"\"", 4);
-observe(regex, "x\"\"", 5);
-observe(regex, "\"\"\n", 6);
-observe(regex, "className=\"flex-grow-2\"", 7);
-observe(regex, "// Skip for invalid syntax like this: export { \"x\" }", 8);
-observe(regex, "// typeof x === \"string\"", 9);
+observe(regex, "``", 4);
+observe(regex, "x``", 5);
+observe(regex, "``\n", 6);
+observe(regex, "// `export import x = mod.x` being treated as instantiated:", 7);
+observe(regex, "/** May store more in future. For now, this will simply be `true` to indicate when a diagnostic is an unused-identifier diagnostic. */", 8);
+observe(regex, "//       order in the generated program (see `getDefaultLibFilePriority` in program.ts). This", 9);

@@ -1,4 +1,4 @@
-// typescript/switch_exhaustiveness_check.go:212; *opts.DefaultCaseCommentPattern
+// typescript/switch_exhaustiveness_check.go:213; *opts.DefaultCaseCommentPattern
 import { observe } from '../observe.a';
 const pattern = "^no default(?![\\s\\S])";
 const flags = "gu";

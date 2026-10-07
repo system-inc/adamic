@@ -54,4 +54,4 @@ for(let index=0;index<fixtures.length;index++) {
  fs.writeFileSync(path.join(root,f.runtime_file),prefix+`import { programArguments } from 'adamic';\nconst argumentsList = programArguments();\nconst pattern = argumentsList[0] ?? '';\nconst flags = argumentsList[1] ?? '';\nconst regex = new RegExp(pattern, flags);\n`+samples);
 }
 fs.writeFileSync(path.join(root,'fixtures.json'),JSON.stringify(fixtures,null,2)+'\n');
-console.log('107 fixtures agree on whole matches and UTF-16 spans; 107 runtime companions written');
+console.log(`${fixtures.length} fixtures agree on whole matches and UTF-16 spans; ${fixtures.length} runtime companions written`);

@@ -1,4 +1,4 @@
-// core/no_warning_comments.go:354; "(?i)" + prefix + escaped + suffix
+// core/no_warning_comments.go:452; "(?i)" + prefix + escaped + suffix
 import { observe } from '../observe.a';
 const pattern = "^[ \\t\\n\\f\\r*]*todo\\b";
 const flags = "gui";

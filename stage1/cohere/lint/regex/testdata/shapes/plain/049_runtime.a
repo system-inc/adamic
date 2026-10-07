@@ -1,4 +1,4 @@
-// nexus/shouting.go:182; `^@example\b`
+// nexus/shouting.go:183; `^[ \t]*\*(?: |\t|$)`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "@example", 4);
-observe(regex, "x@example", 5);
-observe(regex, "@example\n", 6);
+observe(regex, "*\t", 4);
+observe(regex, "x*\t", 5);
+observe(regex, "*\t\n", 6);
