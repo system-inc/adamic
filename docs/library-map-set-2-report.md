@@ -65,3 +65,28 @@ All eight mutations changed real generated code. Each passed compilation with We
 
 No runtime change was needed: existing live Map iteration and exception cleanup implement these operations. No new V8 algorithm was ported, so THIRD_PARTY_NOTICES.md did not change. Compiler-owned object.go, cycles.go, lower.go, native.go, emit.go and oracle_test.go were untouched.
 General set-like objects, array iterator protocols, dynamic receivers and builtin prototype identity remain refused rather than approximated. The claim records each language feature with a one-line reproducer, all 157 baseline paths, and the seven runner diagnostic-code mismatches.
+
+## Resumed after the small Map priority
+
+The library implementation was committed and pushed at 8280e52 before the priority change arrived. It was left separate while codex/map-small was built from e191149. Small storage is now integrated from 3b607c39ac08e974a5d8781a3b28406b95591eee in the merge commit containing this addition. No further library approximations or language features were added.
+
+Combined verification used a separate worktree at /tmp/map-small-resume, with the same pinned cohere and TypeScript submodules initialized from local clones. The runtime files are those already tested on codex/map-small. Setup in the new worktree initially failed because its submodules were not initialized; initialization resolved it.
+
+From that worktree, these final commands exited 0:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower -count=1 -timeout 10m > /tmp/map-small-resume-lower.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestMapSmallMutants|TestLibraryMapSet|TestNativeAgreesWithNode/internal/oracle/testdata/(library_map|map|set)' -count=1 -v -timeout 10m > /tmp/map-small-resume-oracle.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 10m > /tmp/map-small-resume-counts.log 2>&1
+go vet ./... > /tmp/map-small-resume-vet.log 2>&1
+/tmp/map-set-2-runner -adapt -json -test262 /tmp/map-set-test262 built-ins/Set built-ins/Map > /tmp/map-small-resume-test262.json 2> /tmp/map-small-resume-test262.log
+```
+
+Lowering passed in 11.642s, the combined library oracle in 12.297s, and the counts gate in 14.633s. All 21 library method mutants and four storage behavior mutants were caught only by source Node stdout; each compiled and ran cleanly. The runtime team's hash-probe files were not created or edited and the number hash did not change.
+
+| Combined branch | Pass | Disagreement | Refused | Not TypeScript | Crashed | Skipped |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Set | 23 | 0 | 121 | 80 | 0 | 159 |
+| Map | 7 | 0 | 31 | 45 | 0 | 121 |
+
+The full repository gate was not rerun. The native and flow storage gates and the synthetic before/after measurements are recorded in [map-small-report.md](map-small-report.md). The compiler handoff remains [library-map-set-2-claim.md](library-map-set-2-claim.md).
