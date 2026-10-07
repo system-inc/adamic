@@ -37,7 +37,7 @@ func member(valueType ir.Type) string {
 	switch valueType {
 	case ir.Number, ir.MaybeNumber:
 		return "number"
-	case ir.Boolean:
+	case ir.Boolean, ir.MaybeBoolean:
 		return "boolean"
 	}
 	return "reference"
@@ -73,4 +73,16 @@ func cNumber(value float64) string {
 		return "(-HUGE_VAL)"
 	}
 	return "(" + strconv.FormatFloat(value, 'x', -1, 64) + ")"
+}
+
+// absent is an omitted argument, distinct from an uninitialized local's placeholder.
+// References use NULL; scalar optionals carry their explicit absence bit.
+func absent(valueType ir.Type) string {
+	if valueType.IsMaybe() {
+		return zero(valueType)
+	}
+	if valueType.IsReference() {
+		return "NULL"
+	}
+	panic("native: omitted argument has no undefined representation")
 }

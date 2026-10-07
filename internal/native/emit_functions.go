@@ -16,7 +16,7 @@ func (e *emitter) signature(function int) string {
 	if declared.Closure {
 		// Every closure's code is called the same way (adamic_code): its arguments and result as
 		// adamic_value, whatever their types.
-		return fmt.Sprintf("adamic_value %s(adamic_closure *self, adamic_value *arguments)", e.functionName(function))
+		return fmt.Sprintf("adamic_value %s(adamic_closure *self, size_t argument_count, adamic_value *arguments)", e.functionName(function))
 	}
 	returns := "void"
 	if declared.Returns != 0 {
@@ -48,6 +48,7 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.line("ADAMIC_CHECK_STACK();")
 	if function.Closure {
 		e.line("(void)self;")
+		e.line("(void)argument_count;")
 		e.line("(void)arguments;")
 		for index, parameter := range function.Parameters {
 			local := e.program.Locals[parameter]
@@ -55,9 +56,13 @@ func (e *emitter) functionBody(function ir.Function) {
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
+			if local.Type.IsMaybe() || local.Type.IsReference() {
+				value = fmt.Sprintf("(argument_count > %d ? %s : %s)", index, value, absent(local.Type))
+			}
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
+	e.allocateEnvironment(function.FrameEnvironment)
 	for _, parameter := range function.Parameters {
 		switch {
 		case e.reuse.consumed[parameter]:
@@ -196,11 +201,7 @@ func (e *emitter) arguments(call ir.Call) []string {
 		arguments = append(arguments, value)
 	}
 	for _, parameter := range parameters[min(len(call.Arguments), len(parameters)):] {
-		if of := e.program.Locals[parameter].Type; of.IsMaybe() {
-			arguments = append(arguments, zero(of))
-		} else {
-			arguments = append(arguments, "NULL")
-		}
+		arguments = append(arguments, absent(e.program.Locals[parameter].Type))
 	}
 	return arguments
 }
@@ -230,12 +231,15 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	if len(arguments) > 0 {
 		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
 	}
-	call := fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+	call := fmt.Sprintf("%s->code(%s, %d, %s)", closure, closure, len(arguments), packed)
+	if expression.Direct > 0 {
+		call = fmt.Sprintf("%s(%s, %d, %s)", e.functionName(expression.Direct-1), closure, len(arguments), packed)
+	}
 	if receiver != "" {
 		if closure == "" {
-			call = fmt.Sprintf("%s(%s, %s)", method, receiver, packed)
+			call = fmt.Sprintf("%s(%s, %d, %s)", method, receiver, len(arguments), packed)
 		} else {
-			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %s))", closure, call, method, receiver, packed)
+			call = fmt.Sprintf("(%s != NULL ? %s : %s(%s, %d, %s))", closure, call, method, receiver, len(arguments), packed)
 		}
 	}
 	if expression.Returns == 0 {
