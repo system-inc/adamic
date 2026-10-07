@@ -1,0 +1,4 @@
+{"Time":"2026-10-07T22:01:43.526042898Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-07T22:01:43.549475805Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree"}
+{"Time":"2026-10-07T22:01:43.549610398Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"=== RUN   TestCompilerAndStage1Agree\n","OutputType":"frame"}
+{"Time":"2026-10-07T22:01:43.555930323Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCompilerAndStage1Agree","Output":"    lint_test.go:514: compiler and stage1: 397 files\n"}
