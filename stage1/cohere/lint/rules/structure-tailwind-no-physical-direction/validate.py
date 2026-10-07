@@ -42,6 +42,7 @@ environment = os.environ.copy()
 environment["ADAMIC_GATE_UNCACHED"] = "1"
 environment["ADAMIC_TYPESCRIPT_SOURCE"] = str(args.typescript.resolve())
 commands = [
+    ("dependencies.log", ["go", "-C", "cohere", "mod", "download", "github.com/dlclark/regexp2", "github.com/dlclark/regexp2/v2"]),
     ("parity.log", ["go", "test", "-overlay=" + str(overlay), "./stage1/cohere/lint", "-count=1", "-v", "-timeout=20m",
                     "-run", "^(TestOwnedWitnesses|TestRulesAgree|TestCompilerAndStage1Agree|TestWave15Shapes|TestWave15JsxGap|TestWave15MessageMutant)$"]),
     ("mutants.log", ["go", "test", "-overlay=" + str(overlay), "./stage1/cohere/lint", "-count=1", "-v", "-timeout=10m",

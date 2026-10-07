@@ -1,0 +1,61 @@
+=== RUN   TestWave15Throughput
+    wave15_overlay_test.go:59: @next/next/no-assign-module-variable: compiler alone 77 files findings=0
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 1 Go 0.179047s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 1 native 1.101918s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 1 Node 0.817961s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 2 Go 0.163837s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 2 native 1.134046s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 2 Node 0.840666s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 3 Go 0.186629s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 3 native 1.100494s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 3 Node 0.761751s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 4 Go 0.173768s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 4 native 1.087546s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 4 Node 0.706495s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 5 Go 0.166860s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 5 native 1.079099s findings=1000
+    wave15_overlay_test.go:91: @next/next/no-assign-module-variable round 5 Node 0.774450s findings=1000
+    wave15_overlay_test.go:99: @next/next/no-assign-module-variable best of 5 Go 0.163837s 6103.65 findings/s (78 files, 1000 findings)
+    wave15_overlay_test.go:99: @next/next/no-assign-module-variable best of 5 native 1.079099s 926.70 findings/s (78 files, 1000 findings)
+    wave15_overlay_test.go:99: @next/next/no-assign-module-variable best of 5 Node 0.706495s 1415.44 findings/s (78 files, 1000 findings)
+    wave15_overlay_test.go:59: @typescript-eslint/default-param-last: compiler alone 77 files findings=24
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 1 Go 0.168519s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 1 native 1.119652s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 1 Node 0.808935s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 2 Go 0.184163s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 2 native 1.202194s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 2 Node 0.793706s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 3 Go 0.175542s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 3 native 1.113217s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 3 Node 0.804851s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 4 Go 0.168172s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 4 native 1.148857s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 4 Node 0.797848s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 5 Go 0.186376s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 5 native 1.184483s findings=1024
+    wave15_overlay_test.go:91: @typescript-eslint/default-param-last round 5 Node 0.831706s findings=1024
+    wave15_overlay_test.go:99: @typescript-eslint/default-param-last best of 5 Go 0.168172s 6089.00 findings/s (78 files, 1024 findings)
+    wave15_overlay_test.go:99: @typescript-eslint/default-param-last best of 5 native 1.113217s 919.86 findings/s (78 files, 1024 findings)
+    wave15_overlay_test.go:99: @typescript-eslint/default-param-last best of 5 Node 0.793706s 1290.15 findings/s (78 files, 1024 findings)
+    wave15_overlay_test.go:59: structure/tailwind-no-physical-direction: compiler alone 77 files findings=0
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 1 Go 0.196739s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 1 native 1.155905s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 1 Node 0.831435s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 2 Go 0.199361s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 2 native 1.145627s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 2 Node 0.787082s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 3 Go 0.184559s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 3 native 1.141021s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 3 Node 0.825430s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 4 Go 0.210431s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 4 native 1.144543s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 4 Node 0.802750s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 5 Go 0.197110s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 5 native 1.172753s findings=2000
+    wave15_overlay_test.go:91: structure/tailwind-no-physical-direction round 5 Node 0.777241s findings=2000
+    wave15_overlay_test.go:99: structure/tailwind-no-physical-direction best of 5 Go 0.184559s 10836.62 findings/s (78 files, 2000 findings)
+    wave15_overlay_test.go:99: structure/tailwind-no-physical-direction best of 5 native 1.141021s 1752.82 findings/s (78 files, 2000 findings)
+    wave15_overlay_test.go:99: structure/tailwind-no-physical-direction best of 5 Node 0.777241s 2573.20 findings/s (78 files, 2000 findings)
+--- PASS: TestWave15Throughput (37.10s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	37.106s

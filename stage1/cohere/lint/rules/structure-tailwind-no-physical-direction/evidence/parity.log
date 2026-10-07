@@ -1,0 +1,56 @@
+=== RUN   TestRulesAgree
+    lint_test.go:315: explicit JSX parser gap, not compared: export const c = <div className="flex ml-4" />;
+    lint_test.go:332: captured structure/tailwind-no-physical-direction: 53 cases
+    lint_test.go:332: captured @next/next/no-assign-module-variable: 13 cases
+    lint_test.go:332: captured @typescript-eslint/default-param-last: 117 cases
+    lint_test.go:332: captured eqeqeq: 92 cases
+    lint_test.go:332: captured no-debugger: 11 cases
+    lint_test.go:332: captured no-duplicate-case: 38 cases
+    lint_test.go:332: captured no-empty: 57 cases
+    lint_test.go:332: captured no-var: 20 cases
+    lint_test.go:336: cohere cases: 401 unique source/rule/options combinations
+    lint_test.go:386: Go, Node, emitted JavaScript, native identical: 185532 bytes
+--- PASS: TestRulesAgree (20.37s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:420: compiler and stage1: 214 files
+    lint_test.go:421: Go, Node, emitted JavaScript, native identical: 12628931 bytes
+--- PASS: TestCompilerAndStage1Agree (29.30s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 8430 bytes
+--- PASS: TestOwnedWitnesses (13.96s)
+=== RUN   TestWave15Shapes
+    wave15_overlay_test.go:29: Go, Node, emitted JavaScript, native identical: 16341 bytes
+--- PASS: TestWave15Shapes (13.61s)
+=== RUN   TestWave15JsxGap
+    wave15_overlay_test.go:120: Go parses JSX and reports useLogicalClass
+    wave15_overlay_test.go:135: explicit JSX parser refusal on node: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 22 in /tmp/adamic-gate/TestWave15JsxGap952721358/001/gap.tsx
+    wave15_overlay_test.go:135: explicit JSX parser refusal on /tmp/adamic-gate/TestWave15JsxGap952721358/007/scanner: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 22 in /tmp/adamic-gate/TestWave15JsxGap952721358/001/gap.tsx
+--- PASS: TestWave15JsxGap (12.35s)
+=== RUN   TestWave15MessageMutant
+    wave15_overlay_test.go:156: literal interpolation mutant caught on Node: case 0 line 3: port "  structure/tailwind-no-physical-direction  The class \"ml-{{original}}\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"ms-{{replacement}}\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"ml-$&\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"ms-$&\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave15MessageMutant1646502586/001/message.ts:1:17
+          structure/tailwind-no-physical-direction  The class "ml-$&" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-$&", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 28 useLogicalClass 		
+        fixed	const classes = 'flex ml-$&';\u000a
+    wave15_overlay_test.go:156: literal interpolation mutant caught on emitted JavaScript: case 0 line 3: port "  structure/tailwind-no-physical-direction  The class \"ml-{{original}}\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"ms-{{replacement}}\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"ml-$&\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"ms-$&\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave15MessageMutant1646502586/001/message.ts:1:17
+          structure/tailwind-no-physical-direction  The class "ml-$&" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-$&", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 28 useLogicalClass 		
+        fixed	const classes = 'flex ml-$&';\u000a
+    wave15_overlay_test.go:156: literal interpolation mutant caught on native: case 0 line 3: port "  structure/tailwind-no-physical-direction  The class \"ml-{{original}}\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"ms-{{replacement}}\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"ml-$&\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"ms-$&\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave15MessageMutant1646502586/001/message.ts:1:17
+          structure/tailwind-no-physical-direction  The class "ml-$&" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-$&", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 28 useLogicalClass 		
+        fixed	const classes = 'flex ml-$&';\u000a
+--- PASS: TestWave15MessageMutant (13.83s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	103.434s

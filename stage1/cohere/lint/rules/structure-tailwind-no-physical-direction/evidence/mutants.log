@@ -1,0 +1,106 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/module_name_ignored
+    lint_test.go:503: module_name_ignored caught on Node: case 24 line 522: port "fixed\tlet a = 1, module = {};\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule_name_ignored133030558/007/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsmodule_name_ignored133030558/007/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 		
+        fixed	let a = 1, module = {};\u000a
+    lint_test.go:503: module_name_ignored caught on emitted JavaScript: case 24 line 522: port "fixed\tlet a = 1, module = {};\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule_name_ignored133030558/007/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsmodule_name_ignored133030558/007/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 		
+        fixed	let a = 1, module = {};\u000a
+    lint_test.go:503: module_name_ignored caught on native: case 24 line 522: port "fixed\tlet a = 1, module = {};\\u000a", Go "/tmp/adamic-gate/TestMutantsmodule_name_ignored133030558/007/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsmodule_name_ignored133030558/007/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 		
+        fixed	let a = 1, module = {};\u000a
+=== RUN   TestMutants/optional_parameter_ignored
+    lint_test.go:503: optional_parameter_ignored caught on Node: case 24 line 522: port "fixed\tfunction f(a?: number, b: number) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsoptional_parameter_ignored1528223960/007/typescript-default-param-last-0.ts:1:12"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsoptional_parameter_ignored1528223960/007/typescript-default-param-last-0.ts:1:12
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 21 shouldBeLast 		
+        fixed	function f(a?: number, b: number) {}\u000a
+    lint_test.go:503: optional_parameter_ignored caught on emitted JavaScript: case 24 line 522: port "fixed\tfunction f(a?: number, b: number) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsoptional_parameter_ignored1528223960/007/typescript-default-param-last-0.ts:1:12"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsoptional_parameter_ignored1528223960/007/typescript-default-param-last-0.ts:1:12
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 21 shouldBeLast 		
+        fixed	function f(a?: number, b: number) {}\u000a
+    lint_test.go:503: optional_parameter_ignored caught on native: case 24 line 522: port "fixed\tfunction f(a?: number, b: number) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsoptional_parameter_ignored1528223960/007/typescript-default-param-last-0.ts:1:12"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsoptional_parameter_ignored1528223960/007/typescript-default-param-last-0.ts:1:12
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 11 21 shouldBeLast 		
+        fixed	function f(a?: number, b: number) {}\u000a
+=== RUN   TestMutants/direction_exemption_removed
+    lint_test.go:503: direction_exemption_removed caught on Node: case 24 line 526: port "/tmp/adamic-gate/TestMutantsdirection_exemption_removed2099807678/007/structure-tailwind-no-physical-direction-0.ts:1:17", Go "fixed\tconst classes = 'ml-4 rtl:mr-4';\\u000a"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsdirection_exemption_removed2099807678/007/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 31 useLogicalClass 		
+        fixed	const classes = 'ml-4 rtl:mr-4';\u000a
+    lint_test.go:503: direction_exemption_removed caught on emitted JavaScript: case 24 line 526: port "/tmp/adamic-gate/TestMutantsdirection_exemption_removed2099807678/007/structure-tailwind-no-physical-direction-0.ts:1:17", Go "fixed\tconst classes = 'ml-4 rtl:mr-4';\\u000a"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsdirection_exemption_removed2099807678/007/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 31 useLogicalClass 		
+        fixed	const classes = 'ml-4 rtl:mr-4';\u000a
+    lint_test.go:503: direction_exemption_removed caught on native: case 24 line 526: port "/tmp/adamic-gate/TestMutantsdirection_exemption_removed2099807678/007/structure-tailwind-no-physical-direction-0.ts:1:17", Go "fixed\tconst classes = 'ml-4 rtl:mr-4';\\u000a"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantsdirection_exemption_removed2099807678/007/structure-tailwind-no-physical-direction-0.ts:1:17
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 16 31 useLogicalClass 		
+        fixed	const classes = 'ml-4 rtl:mr-4';\u000a
+--- PASS: TestMutants (36.20s)
+    --- PASS: TestMutants/module_name_ignored (11.09s)
+    --- PASS: TestMutants/optional_parameter_ignored (11.30s)
+    --- PASS: TestMutants/direction_exemption_removed (11.97s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	36.211s
