@@ -1,0 +1,182 @@
+import { panic } from 'adamic';
+import { types } from '../../facts.ts';
+import { stringLike,numberLike,bigintLike,booleanLike } from '../../flags.ts';
+import { Diagnostic } from '../../diagnostic.ts';
+import { ResolvedSignatureDeclaration } from '../../wave_04_next/resolved_signature_declaration.a';
+import { ContextSource, ContextNode } from './source.a';
+import { quote } from './quote.a';
+
+class Instability {
+    readonly origin: ContextNode; readonly reason: string; readonly dependency: ContextNode | undefined;
+    constructor(origin: ContextNode,reason: string,dependency?: ContextNode) { this.origin=origin;this.reason=reason;this.dependency=dependency; }
+}
+class Evaluation {
+    fresh: Instability | undefined; readonly other: boolean; holders: ContextNode[];
+    constructor(fresh?: Instability,other=false,holders: ContextNode[]=[]) { this.fresh=fresh;this.other=other;this.holders=holders; }
+    combine(other: Evaluation): Evaluation { return new Evaluation(this.fresh??other.fresh,this.other||other.other,this.holders.concat(other.holders)); }
+}
+class MemoResult {
+    readonly fresh: Instability | undefined; readonly other: boolean;
+    constructor(fresh?: Instability,other=true) { this.fresh=fresh;this.other=other; }
+}
+export class Stability {
+    readonly render: ContextNode; readonly active=new Set<string>();
+    constructor(render: ContextNode) { this.render=render; }
+    key(node: ContextNode): string { return `${node.source.rules.path}:${node.index}`; }
+    unknown(): Evaluation { return new Evaluation(undefined,true); }
+    nearest(node: ContextNode): ContextNode { return node.source.reference(node.source.nearest(node.index)); }
+    runsWith(owner: ContextNode,scope: ContextNode): boolean {
+        if(owner.index<0) { return false; }if(owner.same(scope)) { return true; }
+        const chain: ContextNode[]=[];
+        for(let at=scope;at.index>=0;at=this.nearest(at)) { chain.push(at);if(at.same(this.render)) { break; } }
+        const last=chain[chain.length-1];if(last===undefined||!last.same(this.render)) { return false; }return chain.some((node)=>node.same(owner));
+    }
+    renderConst(node: ContextNode,scope: ContextNode): ContextNode | undefined {
+        const declaration=node.source.declarations(node.index)[0];if(declaration===undefined||!this.runsWith(this.nearest(declaration),scope)) { return undefined; }
+        const s=declaration.source;const kind=s.kind(declaration.index);if(kind==='FunctionDeclaration') { return declaration; }
+        if(kind!=='VariableDeclaration') { return undefined; }
+        const parent=s.parent(declaration.index);return s.kind(parent)==='VariableDeclarationList' && s.node(parent).semantic==='2'?declaration:undefined;
+    }
+    primitive(node: ContextNode): boolean {
+        const facts=types(node.source.rules.ask(node.index,'raw-shape'),'raw-shape');if(facts.roots.length===0) { return false; }
+        const primitive=stringLike|numberLike|bigintLike|booleanLike|512|16384|32768|65536|4|8|16;
+        return facts.parts(facts.root()).every((id)=>(facts.type(id).flags&primitive)!==0);
+    }
+    memo(call: ContextNode,scope: ContextNode,depth: number): MemoResult {
+        const key=this.key(call);if(depth>8||this.active.has(key)) { return new MemoResult(); }
+        this.active.add(key);const result=this.memoBody(call,scope,depth);this.active.delete(key);return result;
+    }
+    memoBody(call: ContextNode,scope: ContextNode,depth: number): MemoResult {
+        const s=call.source;const args=s.arguments(call.index);if(args.length===0) { return new MemoResult(); }
+        let finding: Instability | undefined;
+        if(args.length===1) { finding=new Instability(call,''); }
+        else {
+            const list=s.unwrap(args[1]??-1,true);if(s.kind(list)!=='ArrayLiteralExpression') { return new MemoResult(); }
+            for(const element of s.node(list).children) { finding=this.dependency(s.reference(element),scope,depth+1);if(finding!==undefined) { break; } }
+            if(finding===undefined) { return new MemoResult(); }
+        }
+        if(s.hook(call.index)==='useCallback') { return new MemoResult(finding,false); }
+        const factory=s.unwrap(args[0]??-1,true);if(!['ArrowFunction','FunctionExpression'].includes(s.kind(factory))) { return new MemoResult(); }
+        const result=this.functionEvaluation(s.reference(factory),depth+1);return result.fresh===undefined?new MemoResult():new MemoResult(finding,result.other);
+    }
+    dependency(node: ContextNode,scope: ContextNode,depth: number): Instability | undefined {
+        const result=this.evaluate(node,scope,depth);if(result.fresh===undefined||result.other&&this.anyEscapes(result.holders,true)) { return undefined; }
+        return new Instability(result.fresh.origin,result.fresh.reason,node);
+    }
+    evaluate(input: ContextNode,scope: ContextNode,depth: number): Evaluation {
+        const s=input.source;const index=s.unwrap(input.index,true);if(index<0) { return new Evaluation(); }if(depth>8) { return this.unknown(); }
+        const node=s.reference(index);if(this.primitive(node)) { return new Evaluation(); }
+        const label=s.constructionKind(index);if(label!=='') { return new Evaluation(new Instability(node,`is a new ${label} built during render`)); }
+        switch(s.kind(index)) {
+            case 'ConditionalExpression': return this.evaluate(s.reference(s.child(index,2)),scope,depth+1).combine(this.evaluate(s.reference(s.child(index,4)),scope,depth+1));
+            case 'BinaryExpression': {
+                const op=s.kind(s.child(index,1));if(['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(op)) { return this.evaluate(s.reference(s.child(index,0)),scope,depth+1).combine(this.evaluate(s.reference(s.child(index,2)),scope,depth+1)); }
+                if(op==='CommaToken') { return this.evaluate(s.reference(s.child(index,2)),scope,depth+1); }
+                if(op==='EqualsToken') {
+                    const target=s.unwrap(s.child(index,0),true);if(s.kind(target)!=='Identifier') { return this.unknown(); }
+                    const local=s.declarations(target)[0];if(local===undefined||local.source.kind(local.index)!=='VariableDeclaration'||!this.nearest(local).same(scope)) { return this.unknown(); }
+                    const result=this.evaluate(s.reference(s.child(index,2)),scope,depth+1);if(result.fresh!==undefined) { result.holders.push(local); }return result;
+                }
+                return this.unknown();
+            }
+            case 'CallExpression': {
+                const hook=s.hook(index);if(hook==='') { return this.callEvaluation(node,depth+1); }
+                const result=this.memo(node,scope,depth+1);if(result.fresh===undefined) { return this.unknown(); }
+                const inner=result.fresh;let reason=`comes from a ${hook} with no dependency list`;
+                if(inner.dependency!==undefined) { reason=`comes from a ${hook} whose own dependency ${quote(this.text(inner.dependency))} ${inner.reason}`; }
+                return new Evaluation(new Instability(inner.origin,reason),result.other);
+            }
+            case 'Identifier': {
+                const declaration=this.renderConst(node,scope);if(declaration===undefined||this.active.has(this.key(declaration))) { return this.unknown(); }
+                if(declaration.source.kind(declaration.index)==='FunctionDeclaration') { return new Evaluation(new Instability(declaration,'is a function declared during render'),false,[declaration]); }
+                const key=this.key(declaration);this.active.add(key);const result=this.evaluate(declaration.source.reference(declaration.source.bindings.shape.initializer(declaration.index)),scope,depth+1);this.active.delete(key);if(result.fresh!==undefined) { result.holders.push(declaration); }return result;
+            }
+        }
+        return this.unknown();
+    }
+    callEvaluation(call: ContextNode,depth: number): Evaluation {
+        const s=call.source;const signature=new ResolvedSignatureDeclaration(s.rules,call.index);const declaration=signature.declaration;
+        if(declaration===undefined||!signature.hasBody) { return this.unknown(); }
+        const foreign=s.foreign(declaration.file);const head=declaration.ancestors[0]??panic('missing callee declaration');const index=foreign.bindings.spans.get(`${head.kind}:${head.start}:${head.end}`)??panic('callee absent from native tree');const function_=foreign.reference(index);
+        const callee=s.unwrap(s.child(call.index,0),true);let name='the call';if(s.kind(callee)==='Identifier') { name=s.node(callee).text; }else if(s.kind(callee)==='PropertyAccessExpression') { name=s.node(s.last(callee)).text; }
+        if((signature.functionFlags&2)!==0) { return new Evaluation(new Instability(function_,`is the result of \`${name}(...)\`, an async function, which returns a new promise on every call`)); }
+        if((signature.functionFlags&1)!==0) { return new Evaluation(new Instability(function_,`is the result of \`${name}(...)\`, a generator, which returns a new iterator on every call`)); }
+        const result=this.functionEvaluation(function_,depth+1);if(result.fresh!==undefined) { result.fresh=new Instability(result.fresh.origin,`is the result of \`${name}(...)\`, which can return a new value on every call`); }return result;
+    }
+    functionEvaluation(function_: ContextNode,depth: number): Evaluation {
+        const key=this.key(function_);if(depth>8||this.active.has(key)||function_.source.body(function_.index)<0) { return this.unknown(); }
+        this.active.add(key);const result=this.functionBody(function_,depth);this.active.delete(key);return result;
+    }
+    functionBody(function_: ContextNode,depth: number): Evaluation {
+        const s=function_.source;const body=s.body(function_.index);let result=new Evaluation();
+        if(s.kind(body)!=='Block') { result=this.evaluate(s.reference(body),function_,depth+1); }
+        else {
+            const pending=s.node(body).children.slice().reverse();
+            while(pending.length>0) {
+                const at=pending.pop()??-1;if(at<0) { continue; }
+                if(s.kind(at)==='ReturnStatement') { result=result.combine(this.evaluate(s.reference(s.child(at,0)),function_,depth+1));continue; }
+                if(s.functionKind(s.kind(at))||['ClassDeclaration','ClassExpression'].includes(s.kind(at))) { continue; }
+                for(const child of s.node(at).children.slice().reverse()) { pending.push(child); }
+            }
+        }
+        const own=result.holders.filter((holder)=>this.nearest(holder).same(function_));const outer=result.holders.filter((holder)=>!this.nearest(holder).same(function_));
+        if(result.fresh!==undefined&&result.other&&this.anyEscapes(own,false)) { result.fresh=undefined; }result.holders=outer;return result;
+    }
+    sameSymbol(a: ContextNode,b: ContextNode): boolean {
+        const first=a.source.declarations(a.index)[0];const second=b.source.declarations(b.index)[0];return first!==undefined&&second!==undefined&&first.same(second);
+    }
+    anyEscapes(holders: readonly ContextNode[],render: boolean): boolean {
+        for(const holder of holders) {
+            const scope=this.nearest(holder);const s=holder.source;if(scope.index<0||s.body(scope.index)<0) { return true; }
+            const name=s.bindings.shape.name(holder.index);if(name<0||s.declarations(name).length===0) { return true; }
+            const pending=s.node(s.body(scope.index)).children.slice();
+            while(pending.length>0) {
+                const at=pending.pop()??-1;if(at<0) { continue; }
+                if(at!==name&&s.kind(at)==='Identifier'&&s.node(at).text===s.node(name).text&&this.sameSymbol(s.reference(at),s.reference(name))&&!this.staysHome(s.reference(at),scope,render)) { return true; }
+                for(const child of s.node(at).children) { pending.push(child); }
+            }
+        }
+        return false;
+    }
+    memoFactory(node: ContextNode): boolean { const s=node.source;const parent=s.parent(node.index);return parent>=0&&s.hook(parent)!==''&&s.arguments(parent)[0]===node.index; }
+    dependencyList(node: ContextNode): boolean { const s=node.source;const parent=s.parent(node.index);return parent>=0&&s.hook(parent)!==''&&s.arguments(parent)[1]===node.index; }
+    memoResult(node: ContextNode): boolean {
+        const s=node.source;let index=node.index;while(s.kind(s.parent(index))==='ParenthesizedExpression') { index=s.parent(index); }const parent=s.parent(index);
+        if(s.kind(parent)==='ArrowFunction') { return s.body(parent)===index&&this.memoFactory(s.reference(parent)); }
+        return s.kind(parent)==='ReturnStatement'&&this.memoFactory(this.nearest(s.reference(parent)));
+    }
+    ownFunction(node: ContextNode,scope: ContextNode,render: boolean): boolean { return node.same(scope)||render&&this.memoFactory(node); }
+    isCallee(s: ContextSource,index: number): boolean { const parent=s.parent(index);return s.kind(parent)==='CallExpression'&&s.child(parent,0)===index; }
+    staysHome(node: ContextNode,scope: ContextNode,render: boolean): boolean {
+        const s=node.source;let expression=node.index;while(['ParenthesizedExpression','AsExpression','SatisfiesExpression','NonNullExpression'].includes(s.kind(s.parent(expression)))) { expression=s.parent(expression); }
+        const parent=s.parent(expression);switch(s.kind(parent)) {
+            case 'ReturnStatement': return this.ownFunction(this.nearest(s.reference(expression)),scope,render);
+            case 'ArrowFunction': return s.body(parent)===expression&&this.ownFunction(s.reference(parent),scope,render);
+            case 'PropertyAccessExpression': case 'ElementAccessExpression': return s.child(parent,0)===expression&&!this.isCallee(s,parent);
+            case 'BinaryExpression': { const op=s.kind(s.child(parent,1));return op==='EqualsToken'?s.child(parent,0)===expression:['EqualsEqualsEqualsToken','ExclamationEqualsEqualsToken','EqualsEqualsToken','ExclamationEqualsToken','InstanceOfKeyword'].includes(op); }
+            case 'PrefixUnaryExpression': return s.node(parent).operator==='ExclamationToken';
+            case 'TypeOfExpression': return true;
+            case 'IfStatement': return s.child(parent,0)===expression;
+            case 'ArrayLiteralExpression': return render&&this.dependencyList(s.reference(parent));
+            case 'ShorthandPropertyAssignment': return render&&this.memoResult(s.reference(s.parent(parent)));
+            case 'PropertyAssignment': return render&&s.bindings.shape.initializer(parent)===expression&&this.memoResult(s.reference(s.parent(parent)));
+        }
+        return false;
+    }
+    text(node: ContextNode): string { const s=node.source;return s.rules.scanner.text.slice(s.rules.start(s.node(node.index)),s.node(node.index).end); }
+    check(value: ContextNode): void {
+        const s=value.source;let memo=s.unwrap(value.index,true);
+        if(s.hook(memo)==='') {
+            if(s.kind(memo)!=='Identifier') { return; }const declaration=this.renderConst(s.reference(memo),this.render);
+            if(declaration===undefined||declaration.source.kind(declaration.index)!=='VariableDeclaration') { return; }
+            memo=declaration.source.unwrap(declaration.source.bindings.shape.initializer(declaration.index),true);if(declaration.source.rules.path!==s.rules.path) { panic('render-scoped memo changed source file'); }
+        }
+        const hook=s.hook(memo);if(hook==='') { return; }const found=this.memo(s.reference(memo),this.render,0).fresh;if(found===undefined) { return; }
+        let target=s.reference(s.child(memo,0));let id='memoWithoutDependenciesMsg';let message=`The ${hook} that builds the Context provider's value (at line ${s.line(memo)}) has no dependency list, so it recomputes on every render and every consumer of this context re-renders on every render of this component, exactly as if it were not memoized. Pass the dependency list.`;
+        if(found.dependency!==undefined) {
+            target=found.dependency;id='unstableDependencyMsg';const dependency=quote(this.text(target));const location=found.origin.source.rules.path===s.rules.path?` (at line ${found.origin.source.line(found.origin.index)})`:'';
+            message=`The ${dependency} dependency of the ${hook} that builds the Context provider's value (at line ${s.line(memo)}) ${found.reason}${location}, so the ${hook} recomputes on every render and every consumer of this context re-renders on every render of this component, exactly as if it were not memoized. A memoized value is only stable when every input is: make ${dependency} stable too, by memoizing it or by building it outside the component.`;
+        }
+        const range=target.source; s.rules.findings.push(new Diagnostic('react/jsx-no-constructed-context-values',id,message,range.rules.byte(range.rules.start(range.node(target.index))),range.rules.byte(range.node(target.index).end),''));
+    }
+}

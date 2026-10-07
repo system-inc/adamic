@@ -1,0 +1,2 @@
+declare const Ctx:any;
+function Component(){return <Ctx.Provider value={({} satisfies object)}/>;}

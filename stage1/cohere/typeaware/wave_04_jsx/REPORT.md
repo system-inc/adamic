@@ -182,3 +182,7 @@ See [SOURCE_RULES.md](SOURCE_RULES.md). Both reserved source visitors now match 
 ## Current main and lint-area landing
 
 [LANDING_C799.md](LANDING_C799.md) records the rebase onto main c7991b900 and area b84a9d931, eight source-rule oracles, all partial validators, adopted proof/record checks and mutants. The final area rebase preserves exactly the tested Git tree. Constructed-context source analysis and shared checker/factory integration remain unfinished. No new claims.
+
+## Constructed-context source candidate
+
+[CONSTRUCTED_CONTEXT.md](CONSTRUCTED_CONTEXT.md) records the native implementation and retained production-Go satisfies panic. 109/110 inputs match, every input ran under sanitizers, both corpora match, six mutants are caught. Complete parity remains blocked; no new claims.

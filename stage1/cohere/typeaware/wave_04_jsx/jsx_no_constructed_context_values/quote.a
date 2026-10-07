@@ -1,0 +1,30 @@
+import { printable } from './unicode_regex.a';
+// strconv.Quote's spelling, using the frozen Go IsPrint predicate.
+export function quote(text: string): string {
+    let result = '"';
+    for(let at = 0; at < text.length; at++) {
+        const first = text.charCodeAt(at);
+        let code = first;
+        let character = text.slice(at,at+1);
+        if(first >= 55296 && first <= 56319 && at+1 < text.length) {
+            const second = text.charCodeAt(at+1);
+            if(second >= 56320 && second <= 57343) { code = 65536+(first-55296)*1024+second-56320; character=text.slice(at,at+2); at++; }
+        }
+        switch(code) {
+            case 34: result += '\\"'; continue;
+            case 92: result += '\\\\'; continue;
+            case 7: result += '\\a'; continue;
+            case 8: result += '\\b'; continue;
+            case 12: result += '\\f'; continue;
+            case 10: result += '\\n'; continue;
+            case 13: result += '\\r'; continue;
+            case 9: result += '\\t'; continue;
+            case 11: result += '\\v'; continue;
+        }
+        if(printable(character)) { result += character; }
+        else if(code < 32 || code === 127) { result += `\\x${code.toString(16).padStart(2,'0')}`; }
+        else if(code < 65536) { result += `\\u${code.toString(16).padStart(4,'0')}`; }
+        else { result += `\\U${code.toString(16).padStart(8,'0')}`; }
+    }
+    return result+'"';
+}

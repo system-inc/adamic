@@ -1,3 +1,5 @@
+//go:build ignore
+
 // Built as an overlay inside cohere. Calls its unmodified production rule,
 // with an independent program loader and walk; imports no bridge code.
 package main

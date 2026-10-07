@@ -1,0 +1,163 @@
+import { panic, readTextFile } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { Rules } from '../../rules.ts';
+import { UnaryMinus, byteOffsets } from '../../unary_minus.ts';
+import { Bindings } from '../../bindings.ts';
+import { Diagnostic } from '../../diagnostic.ts';
+import { Frames, header } from '../../frames.ts';
+import { parseSource } from '../../wave_04_next/source_context.a';
+import { upper } from './unicode_regex.a';
+import { quote } from './quote.a';
+
+export class ContextNode {
+    readonly source: ContextSource; readonly index: number;
+    constructor(source: ContextSource,index: number) { this.source=source; this.index=index; }
+    same(other: ContextNode): boolean { return this.index===other.index && this.source.rules.path===other.source.rules.path; }
+}
+export class Construction {
+    readonly kind: string; readonly origin: ContextNode; readonly usage: ContextNode | undefined;
+    constructor(kind: string,origin: ContextNode,usage?: ContextNode) { this.kind=kind; this.origin=origin; this.usage=usage; }
+}
+export class ContextSource {
+    readonly rules: Rules; readonly bindings: Bindings; readonly graph: Map<string,Rules>;
+    constructor(rules: Rules,graph?: Map<string,Rules>) {
+        this.rules=rules; this.bindings=new Bindings(rules); this.graph=graph??new Map<string,Rules>(); this.graph.set(rules.path,rules);
+    }
+    kind(index: number): string { return index < 0 ? '' : this.rules.parser.node(index).kind; }
+    node(index: number): ParseNode { return this.rules.parser.node(index); }
+    parent(index: number): number { return this.bindings.parent(index); }
+    reference(index: number): ContextNode { return new ContextNode(this,index); }
+    child(index: number,offset: number): number { return this.node(index).children[offset]??-1; }
+    last(index: number): number { const children=this.node(index).children; return children[children.length-1]??-1; }
+    unwrap(index: number,identity=false): number {
+        while(index>=0 && (this.kind(index)==='ParenthesizedExpression' || identity && ['AsExpression','SatisfiesExpression','NonNullExpression'].includes(this.kind(index)))) { index=this.child(index,0); }
+        return index;
+    }
+    functionKind(kind: string): boolean {
+        return ['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration','GetAccessor','SetAccessor','Constructor','MethodSignature','CallSignature','ConstructSignature','FunctionType','ConstructorType','JSDocSignature','IndexSignature'].includes(kind);
+    }
+    nearest(index: number): number { for(let at=this.parent(index);at>=0;at=this.parent(at)) { if(this.functionKind(this.kind(at))) { return at; } } return -1; }
+    body(index: number): number { const last=this.last(index); return this.kind(last)==='Block'||this.kind(index)==='ArrowFunction'?last:-1; }
+    foreign(path: string): ContextSource {
+        const previous=this.graph.get(path); if(previous!==undefined) { return new ContextSource(previous,this.graph); }
+        const input=readTextFile(path); if(input.kind==='Error') { panic(input.message); }
+        const parser=new Parser(input.text,path); const scanner=new Scanner(input.text); const offsets=byteOffsets(input.text);
+        const unary=new UnaryMinus(this.rules.program,path,parser,scanner,offsets); const rules=new Rules(this.rules.program,path,parser,scanner,offsets,unary); const root=parseSource(rules);
+        for(let at=0;at<parser.nodes.length;at++) { rules.parents.push(-1); } rules.links(root,-1);
+        return new ContextSource(rules,this.graph);
+    }
+    declarations(index: number): ContextNode[] {
+        const frames=new Frames(this.rules.ask(index,'binding-declarations'));header(frames,'binding-declarations');const result: ContextNode[]=[];
+        if(frames.yes()) {
+            frames.natural();const count=frames.natural();
+            for(let at=0;at<count;at++) {
+                const file=frames.field();const kind=frames.field();const start=frames.natural();const end=frames.natural();
+                const source=this.foreign(file);const declared=source.bindings.spans.get(`${kind}:${start}:${end}`)??panic('context declaration absent from native tree');result.push(source.reference(declared));
+            }
+        }
+        frames.end();
+        return result;
+    }
+    callee(index: number,wanted: readonly string[]): string {
+        index=this.unwrap(index); if(index<0) { return ''; } const node=this.node(index);
+        if(node.kind==='Identifier') { return wanted.includes(node.text)?node.text:''; }
+        if(node.kind!=='PropertyAccessExpression') { return ''; }
+        const receiver=this.unwrap(this.child(index,0)); const name=this.last(index);
+        return this.kind(receiver)==='Identifier' && this.node(receiver).text==='React' && this.kind(name)==='Identifier' && wanted.includes(this.node(name).text)?this.node(name).text:'';
+    }
+    hook(index: number): string { return this.kind(index)==='CallExpression'?this.callee(this.child(index,0),['useMemo','useCallback']):''; }
+    arguments(index: number): number[] { const node=this.node(index); return node.list===0?[]:node.children.slice(node.children.length-node.list); }
+    provider(index: number): boolean {
+        if(this.kind(index)==='PropertyAccessExpression') { const name=this.last(index); return this.kind(name)==='Identifier' && this.node(name).text==='Provider'; }
+        if(this.kind(index)!=='Identifier') { return false; }
+        for(const declaration of this.declarations(index)) {
+            const source=declaration.source; if(source.kind(declaration.index)!=='VariableDeclaration') { continue; }
+            const initializer=source.unwrap(source.bindings.shape.initializer(declaration.index));
+            if(source.kind(initializer)==='CallExpression' && source.callee(source.child(initializer,0),['createContext'])!=='') { return true; }
+        }
+        return false;
+    }
+    value(attributes: number): number {
+        for(const property of this.node(attributes).children) {
+            if(this.kind(property)!=='JsxAttribute') { continue; } const name=this.child(property,0);
+            if(this.kind(name)!=='Identifier'||this.node(name).text!=='value') { continue; }
+            const initializer=this.last(property); return this.kind(initializer)==='JsxExpression'?this.child(initializer,0):-1;
+        }
+        return -1;
+    }
+    base(index: number): boolean {
+        if(this.kind(index)==='Identifier') { return ['Component','PureComponent'].includes(this.node(index).text); }
+        if(this.kind(index)!=='PropertyAccessExpression') { return false; }
+        const receiver=this.unwrap(this.child(index,0));const name=this.last(index);
+        return this.kind(receiver)==='Identifier' && this.node(receiver).text==='React' && this.kind(name)==='Identifier' && ['Component','PureComponent'].includes(this.node(name).text);
+    }
+    componentClass(index: number): boolean {
+        for(let at=this.parent(index);at>=0;at=this.parent(at)) {
+            if(!['ClassDeclaration','ClassExpression'].includes(this.kind(at))) { continue; }
+            for(const clause of this.node(at).children) {
+                if(this.kind(clause)!=='HeritageClause') { continue; }
+                for(const type of this.node(clause).children) { if(this.kind(type)==='ExpressionWithTypeArguments' && this.base(this.child(type,0))) { return true; } }
+            }
+            return false;
+        }
+        return false;
+    }
+    componentBinding(index: number): boolean {
+        const parent=this.parent(index); if(parent<0) { return false; }
+        if(this.kind(parent)==='CallExpression') { return this.componentBinding(parent); }
+        if(this.kind(parent)!=='VariableDeclaration') { return false; }
+        const name=this.bindings.shape.name(parent); return this.kind(name)==='Identifier' && upper(this.node(name).text);
+    }
+    component(index: number): boolean {
+        for(let at=this.parent(index);at>=0;at=this.parent(at)) {
+            switch(this.kind(at)) {
+                case 'FunctionDeclaration': { const name=this.bindings.shape.name(at); return name>=0 && upper(this.node(name).text); }
+                case 'ArrowFunction': case 'FunctionExpression': return this.kind(this.parent(at))==='PropertyDeclaration'?this.componentClass(this.parent(at)):this.componentBinding(at);
+                case 'MethodDeclaration': case 'GetAccessor': case 'SetAccessor': case 'Constructor': case 'PropertyDeclaration': return this.componentClass(at);
+            }
+        }
+        return false;
+    }
+    constructionKind(index: number): string {
+        switch(this.kind(index)) {
+            case 'ObjectLiteralExpression': return 'object'; case 'ArrayLiteralExpression': return 'array';
+            case 'ArrowFunction': case 'FunctionExpression': return 'function expression'; case 'ClassExpression': return 'class expression';
+            case 'NewExpression': return 'new expression'; case 'RegularExpressionLiteral': return 'regular expression';
+            case 'JsxElement': case 'JsxSelfClosingElement': return 'JSX element'; case 'JsxFragment': return 'JSX fragment';
+        }
+        return '';
+    }
+    assignment(operator: string): boolean { return ['EqualsToken','PlusEqualsToken','MinusEqualsToken','AsteriskEqualsToken','AsteriskAsteriskEqualsToken','SlashEqualsToken','PercentEqualsToken','LessThanLessThanEqualsToken','GreaterThanGreaterThanEqualsToken','GreaterThanGreaterThanGreaterThanEqualsToken','AmpersandEqualsToken','BarEqualsToken','CaretEqualsToken','BarBarEqualsToken','AmpersandAmpersandEqualsToken','QuestionQuestionEqualsToken'].includes(operator); }
+    construct(index: number,depth=0): Construction | undefined {
+        if(index<0||depth>16) { return undefined; } const label=this.constructionKind(index); if(label!=='') { return new Construction(label,this.reference(index)); }
+        switch(this.kind(index)) {
+            case 'ParenthesizedExpression': case 'AsExpression': case 'SatisfiesExpression': return this.construct(this.child(index,0),depth+1);
+            case 'ConditionalExpression': return this.construct(this.child(index,2),depth+1)??this.construct(this.child(index,4),depth+1);
+            case 'BinaryExpression': {
+                const operator=this.kind(this.child(index,1));
+                if(this.assignment(operator)) { const found=this.construct(this.child(index,2),depth+1); return found===undefined?undefined:new Construction('assignment expression',found.origin,this.reference(index)); }
+                return ['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(operator)?this.construct(this.child(index,0),depth+1)??this.construct(this.child(index,2),depth+1):undefined;
+            }
+            case 'PropertyAccessExpression': { const object=this.child(index,0);const found=this.construct(object,depth+1);return found===undefined?undefined:new Construction(found.kind,found.origin,this.reference(object)); }
+            case 'Identifier': {
+                const declarations=this.declarations(index);const declaration=declarations[declarations.length-1];if(declaration===undefined) { return undefined; }
+                const source=declaration.source;const owner=source.nearest(declaration.index);const scope=this.nearest(index);
+                if(owner!==scope || owner>=0 && source.rules.path!==this.rules.path) { return undefined; }
+                if(source.kind(declaration.index)==='FunctionDeclaration') { return new Construction('function declaration',declaration,this.reference(index)); }
+                if(source.kind(declaration.index)!=='VariableDeclaration') { return undefined; }
+                const found=source.construct(source.bindings.shape.initializer(declaration.index),depth+1);return found===undefined?undefined:new Construction(found.kind,found.origin,this.reference(index));
+            }
+        }
+        return undefined;
+    }
+    line(index: number): number { return this.rules.scanner.text.slice(0,this.rules.start(this.node(index))).split(/\r\n|[\r\n\u2028\u2029]/u).length; }
+    report(found: Construction): void {
+        const function_=found.kind==='function expression'||found.kind==='function declaration';const remedy=function_?'useCallback':'useMemo';let id=found.usage===undefined?'defaultMsg':'withIdentifierMsg';if(function_) { id+='Func'; }
+        const origin=found.origin;let message='';
+        if(found.usage===undefined) { message=`The ${found.kind} passed as the value prop to the Context provider (at line ${origin.source.line(origin.index)}) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`; }
+        else { const usage=found.usage;const name=usage.source.kind(usage.index)==='Identifier'?usage.source.node(usage.index).text:'';message=`The ${quote(name)} ${found.kind} (at line ${origin.source.line(origin.index)}) passed as the value prop to the Context provider (at line ${usage.source.line(usage.index)}) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`; }
+        this.rules.findings.push(new Diagnostic('react/jsx-no-constructed-context-values',id,message,origin.source.rules.byte(origin.source.rules.start(origin.source.node(origin.index))),origin.source.rules.byte(origin.source.node(origin.index).end),''));
+    }
+}

@@ -24,7 +24,6 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/cohere/internal/lint/registry"
 	"github.com/system-inc/cohere/internal/lint/rule"
-	"github.com/system-inc/cohere/internal/lint/rules/react"
 )
 
 func written(text string) string {
@@ -42,7 +41,7 @@ func written(text string) string {
 	return out.String()
 }
 
-var coverageNames = map[string]bool{"react/jsx-fragments": true}
+var coverageNames = map[string]bool{"react/jsx-no-constructed-context-values": true}
 
 func main() {
 	args := os.Args[1:]
@@ -100,12 +99,19 @@ func main() {
 		}
 		return
 	}
+	selectedPath := ""
+	if len(args) > 3 && args[2] == "--select" {
+		selectedPath = args[3]
+	}
 	countOnly := len(args) > 2 && args[2] == "--count"
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 	findings := 0
 	var ruleTime time.Duration
 	for i, path := range paths {
+		if selectedPath != "" && path != selectedPath {
+			continue
+		}
 		file := program.GetSourceFile(roots[i])
 		if file == nil {
 			panic("source not loaded")
@@ -125,8 +131,8 @@ func main() {
 		cache := rule.NewFileCache()
 		for _, subject := range subjects {
 			var configured any
-			if slices.Contains(args[2:], "element") {
-				configured = react.JsxFragmentsOptions{Mode: react.JsxFragmentsElement}
+			if slices.Contains(args[2:], "globals") {
+				configured = nil
 			}
 			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, configured)
 			for kind, callback := range listeners {

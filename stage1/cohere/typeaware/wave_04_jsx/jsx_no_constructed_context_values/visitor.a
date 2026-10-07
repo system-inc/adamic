@@ -1,0 +1,16 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { ContextSource } from './source.a';
+import { Stability } from './stability.a';
+export const listenerKinds: readonly string[] = ['JsxOpeningElement','JsxSelfClosingElement'];
+export class ContextVisitor {
+    readonly facts: ContextSource;
+    constructor(facts: ContextSource) { this.facts=facts; }
+    check(node: ParseNode,index: number): void {
+        const f=this.facts;
+        if(!f.provider(node.children[0]??-1)) { return; }
+        const value=f.value(node.children[node.children.length-1]??-1);if(value<0) { return; }
+        const found=f.construct(value);if(!f.component(index)) { return; }
+        if(found!==undefined) { f.report(found); return; }
+        new Stability(f.reference(f.nearest(index))).check(f.reference(value));
+    }
+}
