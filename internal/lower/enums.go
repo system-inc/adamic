@@ -355,7 +355,15 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		if symbol := l.flagValueSymbol(node); symbol != nil {
 			declared := l.checker.GetTypeOfSymbol(symbol)
 			observed := l.checker.GetTypeAtLocation(node)
-			if declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
+			objectMembers := 0
+			if declared.Flags()&checker.TypeFlagsUnion != 0 {
+				for _, member := range declared.Types() {
+					if member.Flags()&checker.TypeFlagsObject != 0 {
+						objectMembers++
+					}
+				}
+			}
+			if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
 				for _, field := range l.checker.GetPropertiesOfType(observed) {
 					tag := l.checker.GetTypeOfSymbol(field)
 					if tag.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.openNumericEnumType(tag) {
