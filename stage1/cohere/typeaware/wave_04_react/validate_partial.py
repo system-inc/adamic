@@ -32,7 +32,7 @@ if error or actual!=truth:raise RuntimeError('source Node reporting differs from
 js,_=run('emit-js',[a.adamic,'js',o/'reporting.a']);(o/'reporting.js').write_bytes(js);actual,error=run('run-js',['node','--disable-warning=ExperimentalWarning',r/'oracle/node.mjs',o/'reporting.js'])
 if error or actual!=truth:raise RuntimeError('reporting emitted JS differs from Go')
 run('parser-build',[a.adamic,'build',own/'parser_probe.a','-o',o/'parser-probe'])
-for rule,status in [('memo',0),('purity',70),('refs',0)]:run('parser-'+rule,[o/'parser-probe',o/(rule+'.tsx')],expected=status)
+for rule,status in [('memo',0),('purity',0),('refs',0)]:run('parser-'+rule,[o/'parser-probe',o/(rule+'.tsx')],expected=status)
 run('analysis-build',[a.adamic,'build',own/'analysis_probe.a','-o',o/'analysis-probe'])
 for rule in ['memo','purity','refs']:
  stdout,stderr=run('analysis-'+rule,[o/'analysis-probe',rule],expected=70)

@@ -1,0 +1,10 @@
+PASS nexus/consistency-require-constant-casing: Go/module/rule.json agree; numeric +1 mutant rejected
+PASS nexus/consistency-require-matching-return-type: Go/module/rule.json agree; numeric +1 mutant rejected
+PASS @typescript-eslint/strict-void-return: Go/module/rule.json agree; numeric +1 mutant rejected
+PASS nexus/correctness-no-process-exit-after-output: Go/module/rule.json agree; numeric +1 mutant rejected
+PASS nexus/correctness-no-uncleared-race-timeout: Go/module/rule.json agree; numeric +1 mutant rejected
+PASS nexus/correctness-require-blocking-standard-streams: Go/module/rule.json agree; numeric +1 mutant rejected
+PASS react-hooks/preserve-manual-memoization: Go/module/rule.json agree; numeric +1 mutant rejected
+PASS react-hooks/purity: Go/module/rule.json agree; numeric +1 mutant rejected
+PASS react-hooks/refs: Go/module/rule.json agree; numeric +1 mutant rejected
+PASS nine rule.json declarations and nine comparison-only metadata mutants

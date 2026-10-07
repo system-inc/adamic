@@ -116,3 +116,5 @@ shared numeric JSX node integration is unavailable, and rule-local binding,
 component and stability/escape decisions remain unfinished. These claims remain
 reserved here. See [the JSX report](../wave_04_jsx/REPORT.md). No additional rules
 are claimed.
+
+Named harness update: adopted ab70f38d4 atop current main c01907a7. JSX syntax parsing now succeeds. The three JSX claims remain partial and reserved: shared Descriptor.kinds rejects numeric kinds, and own binding/attribute/component/stability source judgments remain unfinished. HIR React claims remain parked for native HIR, single-assignment and capture analysis. All six completed-rule oracles and partial helper checks are green again; no new claims. See ../wave_04_jsx/HARNESS_AB70.md.

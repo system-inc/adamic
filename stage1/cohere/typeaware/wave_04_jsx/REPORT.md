@@ -146,3 +146,7 @@ those entries in the earlier unported list. Source `run(node)` still explicitly
 refuses execution. No full corpus parity, full-rule mutants, checker-handle
 integration, fresh throughput or full repository gate is claimed. No new claims.
 Main remains f8013f0b, with the earlier six completed-rule landing oracles green.
+
+## Named harness adoption
+
+Current evidence supersedes the earlier JSX parser failure and main revision: JSX parsing now succeeds after adopting ab70f38d4; current main is c01907a7. Numeric registry integration and the own source-analysis work remain incomplete. See [HARNESS_AB70.md](HARNESS_AB70.md) for green completed-rule oracles, partial-kernel mutants, measured timings and exact limits.

@@ -1,0 +1,15 @@
+=== RUN   TestBatch8PositionsAndRelease
+    batch8_positions_test.go:43: build load=75.493265ms lower=342.179659ms emit=79.752026ms clang=9.314545542s C_bytes=2317265
+    batch8_positions_test.go:44: Node execution 134.746503ms
+    batch8_positions_test.go:44: native execution 16.866613ms
+    batch8_positions_test.go:44: Go, Node, sanitized native identical: 12303 bytes, 14 cases; Go execution 4.827814ms
+    batch8_positions_test.go:45: build load=81.635099ms lower=387.125708ms emit=85.465891ms clang=2.94252438s C_bytes=2317265
+    batch8_positions_test.go:46: Node execution 124.770875ms
+    batch8_positions_test.go:46: native execution 2.941547ms
+    batch8_positions_test.go:46: Go, Node, sanitized native identical: 12303 bytes, 14 cases; Go execution 4.379236ms
+=== RUN   TestBatch8PositionsAndRelease/source_corpus
+    batch8_positions_test.go:47: set ADAMIC_TYPESCRIPT_SOURCE to the pinned TypeScript checkout for source-corpus parity
+--- PASS: TestBatch8PositionsAndRelease (21.97s)
+    --- SKIP: TestBatch8PositionsAndRelease/source_corpus (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	21.980s
