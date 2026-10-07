@@ -3,7 +3,6 @@ package main
 
 import (
 	"bufio"
-	"bytes"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/hex"
@@ -26,6 +25,8 @@ import (
 	"sync"
 	"syscall"
 	"time"
+
+	"github.com/system-inc/adamic/internal/boundedrun"
 )
 
 var packageJobs = runtime.GOMAXPROCS(0)
@@ -99,6 +100,7 @@ type merged struct {
 	Green             bool
 	Unplanned         []string
 	SplitChildren     map[string][]string
+	SkipCensus        skipCensusSummary
 }
 
 func main() {
@@ -169,8 +171,13 @@ func run(args []string) error {
 	return fmt.Errorf("unknown command %q", args[0])
 }
 func output(name string, args ...string) (string, error) {
-	cmd := exec.Command(name, args...)
-	var stderr bytes.Buffer
+	limit := boundedrun.Probe
+	if name == "go" && len(args) > 0 && (args[0] == "list" || args[0] == "test") {
+		limit = boundedrun.Build
+	}
+	cmd, release := boundedrun.Command(limit, name, args...)
+	defer release()
+	var stderr commandBuffer
 	cmd.Stderr = &stderr
 	b, err := cmd.Output()
 	if err != nil {
@@ -748,7 +755,8 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	}
 	var commandStderr io.Writer = stderr
 	runCommand := func(name string, args []string, tmp string, w io.Writer) int {
-		cmd := exec.Command(name, args...)
+		cmd, release := shardCommand(name, args...)
+		defer release()
 		cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
 		if name == "go" && len(args) > 0 && args[0] == "test" && p.WASI != nil && p.WASI.Shard == index && strings.HasSuffix(args[len(args)-1], "/internal/native") && args[len(args)-2] == "^TestWASI$" {
 			cmd.Env = append(cmd.Env, "PATH="+filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin")+string(os.PathListSeparator)+os.Getenv("PATH"))
@@ -859,7 +867,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		var localErrors []string
 		for _, selection := range selections(p, index, pkg) {
 			args := selectionArgs(pkg, selection)
-			cmd := exec.Command("go", args...)
+			cmd, release := shardCommand("go", args...)
 			cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
 			if strings.HasSuffix(pkg, "/internal/native") && selection.Run == "^TestWASI$" {
 				cmd.Env = append(cmd.Env, "PATH="+filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin")+string(os.PathListSeparator)+os.Getenv("PATH"))
@@ -867,7 +875,9 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			cmd.Stdout, cmd.Stderr = packageLog, packageStderr
 			began := time.Now()
 			code := 0
-			if err := cmd.Run(); err != nil {
+			runErr := cmd.Run()
+			release()
+			if err := runErr; err != nil {
 				code = 1
 				if exit, ok := err.(*exec.ExitError); ok {
 					code = exit.ExitCode()
@@ -1277,6 +1287,10 @@ func merge(dirs []string, out string) error {
 
 	m.Pass, m.Fail, m.Skip = totals(m.Results)
 	m.TestEvents = m.Pass + m.Fail + m.Skip
+	m.SkipCensus, err = checkSkipCensus(".")
+	if err != nil {
+		m.Errors = append(m.Errors, err.Error())
+	}
 	m.Green = len(m.Errors) == 0 && m.Fail == 0
 	if _, err := os.Stat(out); err == nil {
 		return errors.New("merged output already exists")
@@ -1371,4 +1385,14 @@ func compare(path, log string) error {
 	}
 	fmt.Println("diff: empty")
 	return nil
+}
+
+// Shard tests already request Go's 60m timer. The outer 70m deadline also
+// covers a stuck build or Go itself. Formatting/vet fit the measured 32.8s setup.
+func shardCommand(name string, args ...string) (*boundedrun.Cmd, func()) {
+	limit := boundedrun.Build
+	if name == "go" && len(args) > 0 && args[0] == "test" {
+		limit = boundedrun.Shard
+	}
+	return boundedrun.Command(limit, name, args...)
 }

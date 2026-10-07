@@ -1,0 +1,17 @@
+parser-expressions PASS 65.322s
+parser-whole PASS 23.534s
+postcss PASS 5.342s
+graphql PASS 2.984s
+media-query PASS 3.033s
+selector PASS 11.138s
+selector-nontermination PASS 2.651s
+values PASS 3.389s
+json-numeric PASS 4.921s
+lint PASS 133.753s
+json-mutants PASS 8.268s
+json-corpus PASS 56.464s
+css-printer-default PASS 120.912s
+css-printer-boundaries PASS 2.685s
+gitignore-100MiB PASS 14.980s
+checker-split ABSENT 1.518s
+css-printer-narrow PASS 122.561s

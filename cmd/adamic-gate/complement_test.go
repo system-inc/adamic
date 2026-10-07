@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/boundedrun"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -32,11 +32,13 @@ func init() {for _,name:=range []string{"left/b", "right/a", "new/fixture"} {fix
 			t.Fatal(selections)
 		}
 		args := selectionArgs(".", selections[0])
-		cmd := exec.Command("go", args...)
+		cmd, release := boundedrun.Command(boundedrun.Build, "go", args...)
 		cmd.Dir = root
 		log := filepath.Join(root, "shard-"+string(rune('0'+index))+".jsonl")
 		cmd.Env = append(os.Environ(), "GOWORK=off", "GO111MODULE=on", "GOPATH="+warningRoot)
-		if err := runJSONCommand(cmd, log); err != nil {
+		runErr := runJSONCommand(cmd, log)
+		release()
+		if err := runErr; err != nil {
 			t.Fatal(err)
 		}
 		stderr, err := os.ReadFile(stderrPath(log))

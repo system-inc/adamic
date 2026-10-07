@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/boundedrun"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 )
@@ -36,7 +36,8 @@ func registeredFixtures(file, variable string) ([]string, error) {
 		return nil, err
 	}
 	logPath := filepath.Join(root, "discovery.jsonl")
-	cmd := exec.Command("go", "test", "-overlay="+overlay, "-count=1", "-json", "-run", "^TestAdamicGateRegisteredFixtures$", "./"+filepath.ToSlash(filepath.Dir(file)))
+	cmd, release := boundedrun.Command(boundedrun.Build, "go", "test", "-overlay="+overlay, "-count=1", "-json", "-run", "^TestAdamicGateRegisteredFixtures$", "./"+filepath.ToSlash(filepath.Dir(file)))
+	defer release()
 	commandErr := runJSONCommand(cmd, logPath)
 	bytes, readErr := os.ReadFile(logPath)
 	if commandErr != nil || readErr != nil {

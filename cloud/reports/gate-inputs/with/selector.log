@@ -1,0 +1,28 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    selector_test.go:49: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:157: cohere PCG(2,3) corpus: 20330 unique inputs, 20000 terminating
+            adamic_port_side_test.go:197: 1940 CSS test constants plus fixtures and generated selectors; total 26773
+            adamic_port_side_test.go:214: Go: 267730 selectors in 2.732013859s, 97997 selectors/s; 95460 parsed, 101900 root children
+        --- PASS: TestAdamicPortCases (3.43s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/selector	3.435s
+    selector_test.go:49: 389 brace-containing CSS test constants, 129 not valid stylesheets, 387 extracted test selectors
+        1 CSS files, 387 selectors (including repeats)
+    selector_test.go:49: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:157: cohere PCG(2,3) corpus: 20330 unique inputs, 20000 terminating
+            adamic_port_side_test.go:197: 1940 CSS test constants plus fixtures and generated selectors; total 27160
+            adamic_port_side_test.go:214: Go: 271600 selectors in 3.385627922s, 80221 selectors/s; 99100 parsed, 105840 root children
+        --- PASS: TestAdamicPortCases (4.14s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/selector	4.151s
+    selector_test.go:49: seed 20261005, 4000 generated selectors
+=== RUN   TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser
+=== CONT  TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser
+    selector_test.go:99: 401 nonterminating inputs excluded from JS oracle
+--- PASS: TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser (0.68s)
+--- PASS: TestThePortParsesAsGoCohereDoes (9.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	9.696s

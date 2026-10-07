@@ -127,6 +127,10 @@ class SetupIntegration(unittest.TestCase):
             shutil.copyfile(KEY_MODULE if name == "setup-key.py" else SOURCE / name,
                             repository / "cloud" / name)
         shutil.copytree(SOURCE / "markdown-width", repository / "cloud/markdown-width")
+        (repository / "internal/boundedrun").mkdir(parents=True)
+        for name in ["shell.sh", "python.py"]:
+            shutil.copyfile(SOURCE.parent / "internal/boundedrun" / name,
+                            repository / "internal/boundedrun" / name)
         (repository / "go.mod").write_text("module setup-proof\n\ngo 1.27\n")
         (repository / "go.sum").write_text("")
         (repository / ".gitignore").write_text("setup-proof\n")

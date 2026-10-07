@@ -1,0 +1,12 @@
+function add(left: number, right: number): number {
+	return left + right;
+}
+const callable: Function = add;
+console.log(`${callable.length}`);
+const holder: { readonly callable: Function } = { callable: add };
+console.log(`${holder.callable.length}`);
+function arity(given: Function): number {
+	return given.length;
+}
+console.log(`${arity(add)}`);
+console.log(`${arity((value: string) => value)}`);

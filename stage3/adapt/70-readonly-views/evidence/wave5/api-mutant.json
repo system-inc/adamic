@@ -1,0 +1,5 @@
+{
+  "mutant": "unowned API version string changed to number",
+  "exit": 1,
+  "check": "exact owner-based API reconstruction"
+}

@@ -1,0 +1,35 @@
+// From TypeScript 6.0.3, src/compiler/utilitiesPublic.ts:2625
+// From TypeScript 6.0.3, src/compiler/factory/nodeTests.ts:235
+// From TypeScript 6.0.3, src/compiler/utilities.ts:5362
+// Census reason: a type predicate
+
+const SyntaxKind = { Identifier: 80, StringLiteral: 11, NumericLiteral: 9, ModuleDeclaration: 268, VoidExpression: 223, PrefixUnaryExpression: 225, NoSubstitutionTemplateLiteral: 15, PlusToken: 40, MinusToken: 41 } as const;
+type Identifier = { readonly kind: typeof SyntaxKind.Identifier; readonly escapedText: string };
+type StringLiteral = { readonly kind: typeof SyntaxKind.StringLiteral; readonly text: string };
+type NumericLiteral = { readonly kind: typeof SyntaxKind.NumericLiteral; readonly text: string };
+type NoSubstitutionTemplateLiteral = { readonly kind: typeof SyntaxKind.NoSubstitutionTemplateLiteral; readonly text: string };
+type StringLiteralLike = StringLiteral | NoSubstitutionTemplateLiteral;
+type ModuleDeclaration = { readonly kind: typeof SyntaxKind.ModuleDeclaration };
+type VoidExpression = { readonly kind: typeof SyntaxKind.VoidExpression; readonly expression: NumericLiteral | Identifier };
+type PrefixUnaryExpression = { readonly kind: typeof SyntaxKind.PrefixUnaryExpression; readonly operator: number; readonly operand: NumericLiteral | Identifier };
+interface Node { readonly kind: number; }
+type ModuleName = Identifier | StringLiteral;
+type PropertyNameLiteral = Identifier | StringLiteralLike | NumericLiteral;
+const identifier: Identifier = { kind: SyntaxKind.Identifier, escapedText: 'x' };
+const literal: StringLiteral = { kind: SyntaxKind.StringLiteral, text: 'm' };
+const numeric: NumericLiteral = { kind: SyntaxKind.NumericLiteral, text: '0' };
+type FileReference = { readonly fileName: string };
+
+export function isStringLiteralLike(node: Node | FileReference): node is StringLiteralLike {
+    return (node as Node).kind === SyntaxKind.StringLiteral || (node as Node).kind === SyntaxKind.NoSubstitutionTemplateLiteral;
+}
+
+export function isNumericLiteral(node: Node): node is NumericLiteral {
+    return node.kind === SyntaxKind.NumericLiteral;
+}
+
+export function isStringOrNumericLiteralLike(node: Node): node is StringLiteralLike | NumericLiteral {
+    return isStringLiteralLike(node) || isNumericLiteral(node);
+}
+
+for (const node of [literal, numeric, identifier, { kind: SyntaxKind.NoSubstitutionTemplateLiteral, text: 's' } as const]) console.log(String(isStringOrNumericLiteralLike(node)));

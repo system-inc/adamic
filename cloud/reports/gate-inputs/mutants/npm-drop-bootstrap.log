@@ -1,0 +1,13 @@
+F...
+======================================================================
+FAIL: test_each_component_invalidates (__main__.InstallationKey.test_each_component_invalidates) (component='bootstrap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_markdown_setup.py", line 31, in test_each_component_invalidates
+    self.assertNotEqual(original, helper.installation_key(**changed), component)
+AssertionError: '919dd69968658e92a3878d4cdf298315e162aaeb44ac67b5f10dbe16787f72f9' == '919dd69968658e92a3878d4cdf298315e162aaeb44ac67b5f10dbe16787f72f9' : bootstrap
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=1)

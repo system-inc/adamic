@@ -1,0 +1,5 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:328: set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3
+--- SKIP: TestCompilerAndStage1Agree (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.018s

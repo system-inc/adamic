@@ -553,3 +553,45 @@ go vet ./cmd/adamic-gate
 Four source-overlay mutants fail their intended tests: join stderr to JSON stdout, restore
 combined output for structured queries, remove file/line diagnostics, and use GNU `nproc` in
 Darwin metadata. No cache was added or changed.
+
+
+## Child-deadline integration and skip-census landing hook
+
+Merged `origin/area/developer-tools` at `7863216ed419151286c34df3896496dd15f4ec11`,
+which contains the `97ac3d6` child-deadline audit, using a merge rather than a rebase.
+Conflicts in the gate entry point and selector test retain stdout-only JSON logs while using
+`internal/boundedrun` commands. Every Go child launch in the gate package now uses the bounded
+constructor: metadata/listing probes, fixture overlays, formatting/vet, concurrent package
+workers and test probes. Probe queries use the audit's 30-second limit, cold Go listings and
+fixture discovery use 10 minutes, and real shard test invocations use 70 minutes around Go's
+existing 60-minute test timeout. Contexts are released after reaping; deadline expiration kills
+the process group. The helper only accepts a `*boundedrun.Cmd`, preventing a raw `exec.Cmd`
+from silently bypassing its contract. Buffered probe stderr uses a locked snapshot so bounded
+pipe draining cannot race the returned diagnostic.
+
+The structural complements, required WASI derivation/preflight/skip rejection, resume validation,
+and concurrent package scheduling remain in place. Twenty-four gate-tool tests and the three
+bounded-run tests pass with `-race`; focused vet and Darwin arm64 test cross-compilation pass.
+The two additional deadline proofs exercise the JSON-file helper and actual fixture discovery
+against a hung child with a grandchild heartbeat. Actual concurrent shard workers also execute
+under the race detector on the bounded scheduling corpus. Logs and the skip-hook mutant are
+preserved in `cmd/adamic-gate/evidence/deadline-merge.tar.gz`.
+
+Fetched and read `devtools/skip-census` at `a2bf5a93db623cdd45d4975efb77e48b1cac8231`.
+Its `internal/skipcensus` package is absent from both the integration area at `7863216` and
+main at `c7991b9`; it has not landed. No census classifications are invented or copied into
+this branch. `checkSkipCensus` in `skip_policy.go` is the explicit merge integration hook:
+
+- Before `Green` is computed, its result is recorded as `SkipCensus` in `merged.json`.
+- Until the package lands, `Status` is `not-landed`; classification arrays are empty.
+- If the census package's source appears before the hook is wired, merge fails with a
+  `not-wired` status, rather than silently bypassing the checker.
+- When it lands, replace the hook with source `Scan`, declaration `Load`/`Validate`, and
+  `CheckLog` over the shard streams. Feed required-input and unclassified errors into
+  `Errors`; populate the named `NotApplicable` and `Measurement` summary arrays from the
+  checker's report. Keep the census declaration file as the single classification authority.
+
+The hook test plants the package source in a temporary tree and proves the unwired refusal.
+A source-overlay mutant allowing that bypass fails the test. Existing required WASI skips
+remain red independently. General census-required-input enforcement and classified skip
+listing await the census landing; this branch does not claim those checks are active yet.
