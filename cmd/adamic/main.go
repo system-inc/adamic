@@ -3,6 +3,7 @@
 //	adamic types <file.a|file.ts>...        check, and print every declaration's proven type
 //	adamic c <file.a|file.ts>               print the program as C
 //	adamic js <file.a|file.ts>              print the program as JavaScript
+//	adamic worker <entry.a> --out <dir>    generate a Cloudflare Worker
 //	adamic build <file.a|file.ts> -o <out>  compile it to a native binary
 //
 // build --count makes a binary that counts its allocations, frees, retains and releases and writes
@@ -21,11 +22,13 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/worker"
 )
 
 const usage = `usage:
   adamic types <file.a|file.ts>...
   adamic c <file.a|file.ts>
+  adamic worker <entry.a> --out <directory>
   adamic js <file.a|file.ts>
   adamic build <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>]`
 
@@ -37,6 +40,12 @@ func main() {
 // be compiled, 2 for a usage error.
 func run(arguments []string) int {
 	switch {
+	case len(arguments) == 4 && arguments[0] == "worker" && arguments[2] == "--out":
+		if err := worker.Build(arguments[1], arguments[3]); err != nil {
+			fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
+			return 1
+		}
+		return 0
 	case len(arguments) >= 2 && arguments[0] == "types":
 		program, code := check(arguments[1:])
 		if program == nil {

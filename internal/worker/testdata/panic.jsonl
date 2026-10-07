@@ -1,0 +1,4 @@
+{"method":"GET","url":"https://worker.test/panic","headers":[]}
+{"method":"POST","url":"https://worker.test/ok","headers":[],"body":"世🌍"}
+{"method":"POST","url":"https://worker.test/utf8-panic","headers":[],"body":""}
+{"method":"GET","url":"https://worker.test/ok","headers":[]}

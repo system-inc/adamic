@@ -1,0 +1,28 @@
+import type { HttpRequest, HttpResponse, HttpField } from 'adamic/http';
+
+let starts = 0;
+starts += 1;
+
+function fields(values: readonly HttpField[]): string {
+    let text = '';
+    for(const field of values) {
+        text += `${field.name}=${field.value}\n`;
+    }
+    return text;
+}
+
+export function other(): HttpResponse {
+    return { status: 418, headers: [], body: 'wrong export' };
+}
+
+export function handle(request: HttpRequest): HttpResponse {
+    return {
+        status: 200,
+        headers: [
+            { name: 'x-order', value: 'first' },
+            { name: 'x-order', value: 'second' },
+            { name: 'x-last', value: 'last' },
+        ],
+        body: `${starts}\n${request.method}\n${request.url}\n${request.path}\nquery:\n${fields(request.query)}headers:\n${fields(request.headers)}body:\n${request.body}`,
+    };
+}
