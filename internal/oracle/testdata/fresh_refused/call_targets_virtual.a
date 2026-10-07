@@ -1,0 +1,23 @@
+interface Node {
+    readonly label: string;
+    readonly children: Node[];
+}
+let saved: Node = { label: `empty${0}`, children: [] };
+class Maker {
+    make(value: number): Node {
+        return { label: `fresh${value}`, children: [] };
+    }
+}
+class Alias extends Maker {
+    override make(value: number): Node {
+        return saved;
+    }
+}
+function run(maker: Maker): void {
+    const node: Node = { label: `node${1}`, children: [] };
+    saved = node;
+    node.children.push(maker.make(2)); // closes the cycle
+    console.log(`${node.children.length}`);
+}
+run(new Alias());
+saved = { label: `cleared${3}`, children: [] };
