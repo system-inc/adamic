@@ -1,0 +1,29 @@
+// Validation fixture decoder. Production parsing remains the shared parser.
+import { panic } from 'adamic';
+import type { Parser } from '../../typescript/parser/parser.ts';
+import { ParseNode } from '../../typescript/parser/nodes.ts';
+import { Frames, header } from './frames.ts';
+export function projectedReactTree(parser: Parser, text: string, offsets: readonly number[]): number {
+    const frames = new Frames(text);
+    header(frames, 'react-ast-fixture');
+    const count = frames.natural();
+    for(let at = 0; at < count; at++) {
+        const kind = frames.field();
+        const first = offsets.indexOf(frames.natural());
+        const last = offsets.indexOf(frames.natural());
+        if(first < 0 || last < first) {
+            panic('AST fixture boundary is not a character boundary');
+        }
+        const spelling = frames.field();
+        const semantic = frames.field();
+        const children = frames.ids();
+        const node = new ParseNode(kind, first, last, children);
+        node.text = spelling;
+        node.semantic = semantic;
+        const argumentIds = frames.ids();
+        if(kind === 'CallExpression') node.list = argumentIds.length;
+        parser.nodes.push(node);
+    }
+    frames.end();
+    return 0;
+}

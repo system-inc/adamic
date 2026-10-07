@@ -1,0 +1,41 @@
+import type { Rules } from './rules.ts';
+import { NexusFacts } from './nexus_facts.a';
+import { ReactCompilationGate } from './react_compilation_gate.a';
+const unsupportedEval =
+    'This component or hook calls `eval`, so React Compiler stops optimizing it. The compiler works by tracking where every value comes from and what touches it, and `eval` runs code that only exists as a string at runtime, so there is nothing to track through. The component still works, it just never gets memoized. Replace the eval with the operation it stands in for: `JSON.parse` for data, bracket access for a dynamic property, a lookup table for a dynamic function.';
+const unsupportedWith =
+    'This component or hook uses a `with` statement, so React Compiler stops optimizing it. Inside a `with` block, a bare name might be a property of the object or might be an outer variable, and which one it is cannot be known until the code runs, so the compiler cannot say where any value came from. The statement is also forbidden in strict mode and in modules. Destructure the object or read its properties explicitly.';
+const unsupportedInlineClass =
+    'This component or hook declares a `class` in its body, so React Compiler stops optimizing it. A class declared during render is a brand new class on every render, so every instance of it is a fresh identity that nothing downstream can memoize against, and the compiler declines to reason about it rather than guessing. Move the class to module scope, where it is declared once.';
+export class ReactUnsupportedSyntax {
+    readonly unsupportedSyntaxTag = true;
+    readonly rules: Rules;
+    readonly facts: NexusFacts;
+    readonly gate: ReactCompilationGate;
+    constructor(rules: Rules, facts: NexusFacts, gate: ReactCompilationGate) {
+        this.rules = rules;
+        this.facts = facts;
+        this.gate = gate;
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const n = this.rules.parser.node(i);
+            if(!['Identifier', 'WithStatement', 'ClassDeclaration'].includes(n.kind)) continue;
+            if(n.kind === 'Identifier' && n.text !== 'eval') continue;
+            if(!this.gate.inside(i)) continue;
+            if(n.kind === 'Identifier') {
+                if(!this.facts.declarations(i).some((d) => d.library)) continue;
+                this.facts.report('react-hooks/unsupported-syntax', 'unsupportedEval', unsupportedEval, i);
+            }
+            else if(n.kind === 'WithStatement')
+                this.facts.report('react-hooks/unsupported-syntax', 'unsupportedWith', unsupportedWith, i);
+            else
+                this.facts.report(
+                    'react-hooks/unsupported-syntax',
+                    'unsupportedInlineClass',
+                    unsupportedInlineClass,
+                    i,
+                );
+        }
+    }
+}

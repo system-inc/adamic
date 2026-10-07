@@ -1,0 +1,141 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+export class ReactCompilationGate {
+    readonly reactCompilationTag = true;
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    constructor(rules: Rules, bindings: Bindings) {
+        this.rules = rules;
+        this.bindings = bindings;
+    }
+    functionKind(k: string): boolean {
+        return ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(k);
+    }
+    component(name: string): boolean {
+        return name.length > 0 && name.charCodeAt(0) >= 65 && name.charCodeAt(0) <= 90;
+    }
+    hook(name: string): boolean {
+        const c = name.charCodeAt(3);
+        return name.startsWith('use') && name.length >= 4 && ((c >= 65 && c <= 90) || (c >= 48 && c <= 57));
+    }
+    name(index: number): string {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'FunctionDeclaration') {
+            const n = this.bindings.shape.name(index);
+            return n < 0 ? '' : this.rules.parser.node(n).text;
+        }
+        if(node.kind !== 'ArrowFunction' && node.kind !== 'FunctionExpression') return '';
+        let p = this.bindings.parent(index);
+        while(p >= 0 && this.rules.parser.node(p).kind === 'ParenthesizedExpression') p = this.bindings.parent(p);
+        if(p < 0 || this.rules.parser.node(p).kind !== 'VariableDeclaration') return '';
+        const init = this.bindings.shape.initializer(p);
+        if(init < 0 || this.rules.skip(init) !== index) return '';
+        const n = this.bindings.shape.name(p);
+        return n < 0 || this.rules.parser.node(n).kind !== 'Identifier' ? '' : this.rules.parser.node(n).text;
+    }
+    params(index: number): number[] {
+        return this.rules.parser.node(index).children.filter((i) => this.rules.parser.node(i).kind === 'Parameter');
+    }
+    body(index: number): number {
+        const n = this.rules.parser.node(index);
+        return n.children[n.children.length - 1] ?? -1;
+    }
+    callee(index: number): boolean {
+        const n = this.rules.parser.node(index);
+        if(n.kind === 'Identifier') return this.hook(n.text);
+        if(n.kind !== 'PropertyAccessExpression') return false;
+        const a = n.children[0] ?? -1;
+        const b = n.children[n.children.length - 1] ?? -1;
+        return (
+            a >= 0 &&
+            b >= 0 &&
+            this.rules.parser.node(a).kind === 'Identifier' &&
+            this.component(this.rules.parser.node(a).text) &&
+            this.hook(this.rules.parser.node(b).text)
+        );
+    }
+    evidence(index: number): boolean {
+        const n = this.rules.parser.node(index);
+        if(n.kind.startsWith('Jsx')) return true;
+        if(n.kind === 'CallExpression' && this.callee(n.children[0] ?? -1)) return true;
+        if(this.functionKind(n.kind)) return false;
+        return n.children.some((i) => this.evidence(i));
+    }
+    like(index: number): boolean {
+        const name = this.name(index);
+        if(!this.hook(name) && !this.component(name)) return false;
+        const body = this.body(index);
+        if(body < 0) return false;
+        const n = this.rules.parser.node(body);
+        const evidence = n.kind === 'Block' ? n.children.some((i) => this.evidence(i)) : this.evidence(body);
+        if(!evidence) return false;
+        if(this.hook(name)) return true;
+        const ps = this.params(index);
+        if(ps.length > 2) return false;
+        if(ps.length > 0) {
+            const p = this.rules.parser.node(ps[0] ?? -1);
+            if(p.children.some((i) => this.rules.parser.node(i).kind === 'DotDotDotToken')) return false;
+            const t = this.rules.annotation(ps[0] ?? -1);
+            if(
+                t >= 0 &&
+                [
+                    'ArrayType',
+                    'BigIntKeyword',
+                    'BooleanKeyword',
+                    'ConstructorType',
+                    'FunctionType',
+                    'LiteralType',
+                    'NeverKeyword',
+                    'NumberKeyword',
+                    'StringKeyword',
+                    'SymbolKeyword',
+                    'TupleType',
+                ].includes(this.rules.parser.node(t).kind)
+            )
+                return false;
+        }
+        if(ps.length === 2) {
+            const n = this.bindings.shape.name(ps[1] ?? -1);
+            if(n < 0 || this.rules.parser.node(n).kind !== 'Identifier') return false;
+            const name = this.rules.parser.node(n).text;
+            if(!name.includes('ref') && !name.includes('Ref')) return false;
+        }
+        return true;
+    }
+    reachable(index: number): boolean {
+        let p = this.bindings.parent(index);
+        while(p >= 0) {
+            const n = this.rules.parser.node(p);
+            if(n.kind === 'SourceFile') return true;
+            if(this.functionKind(n.kind)) {
+                const name = this.name(p);
+                if(!this.component(name) && !this.hook(name)) return false;
+            }
+            else if(n.kind === 'Block') {
+                const owner = this.bindings.parent(p);
+                if(owner < 0 || !this.functionKind(this.rules.parser.node(owner).kind)) return false;
+            }
+            else if(
+                ![
+                    'VariableDeclaration',
+                    'VariableDeclarationList',
+                    'VariableStatement',
+                    'ExportAssignment',
+                    'ExportDeclaration',
+                    'ParenthesizedExpression',
+                ].includes(n.kind)
+            )
+                return false;
+            p = this.bindings.parent(p);
+        }
+        return false;
+    }
+    inside(index: number): boolean {
+        let p = this.bindings.parent(index);
+        while(p >= 0) {
+            if(this.like(p) && this.reachable(p)) return true;
+            p = this.bindings.parent(p);
+        }
+        return false;
+    }
+}

@@ -1,0 +1,178 @@
+import type { Rules } from './rules.ts';
+import { NexusFacts } from './nexus_facts.a';
+import { Bindings } from './bindings.ts';
+import { GlobalBindingFacts } from './global_binding_facts.a';
+import { ReactCompilationGate } from './react_compilation_gate.a';
+import { FourthFacts } from './fourth_facts.a';
+const useMemoMissingCallback =
+    'This `useMemo` or `useCallback` call was given no arguments at all, so there is nothing to memoize. The first argument is the function whose result gets cached between renders, and without it the call computes nothing and returns undefined. Pass the calculation as an inline function.';
+const useMemoCallbackNotInline =
+    "The first argument here is not a function written in place. React Compiler caches this value by reading the callback's body to learn what it depends on, and a name pointing somewhere else gives it nothing to read, so the memoization silently stops working. Move the function into the call itself.";
+const useMemoDependencyListNotArrayLiteral =
+    'The dependency list is not an array literal written in place. The list tells React when the cached value is stale, and it is read at compile time rather than at runtime, so a variable, a conditional, or a spread leaves nothing to read and the memoization cannot be checked. Write the dependencies as a literal array of names.';
+const useMemoDependencyNotSimple =
+    'This dependency is not a plain value reference. Each entry has to be something React can compare across renders by reading it, which means a name or a chain of property accesses off one, such as `x`, `x.y.z`, or `x?.y?.z`. A call, an arithmetic expression, or a literal has no identity to track, so it cannot say whether the cached value went stale. Compute it into a variable first and depend on that.';
+const useMemoCallbackHasParameters =
+    'This memoization callback declares a parameter. React calls it with no arguments to compute the cached value, so every parameter is permanently undefined and the callback is almost certainly not doing what it reads as doing. Drop the parameters and reference the props, state, or local variables the calculation needs directly.';
+const useMemoCallbackAsyncOrGenerator =
+    'This memoization callback is an async function or a generator. React calls it once and stores whatever comes back, so an async callback caches a pending promise and a generator caches an iterator, never the value the code is reaching for. Compute the value synchronously here, and fetch asynchronous data in an effect instead.';
+const useMemoCallbackReassignsOuterVariable =
+    'This memoization callback assigns to a variable declared outside of it. The callback only runs when the cached value is recomputed, which is on some renders and not others, so a write from inside it lands unpredictably and the value it wrote is lost on every render that reuses the cache. Return the value instead of assigning it, and hold anything that must survive across renders in a ref.';
+export class ReactUseMemo {
+    readonly reactUseMemoTag = true;
+    readonly rules: Rules;
+    readonly facts: NexusFacts;
+    readonly bindings: Bindings;
+    readonly gate: ReactCompilationGate;
+    readonly fourth: FourthFacts;
+    constructor(rules: Rules, facts: NexusFacts, bindings: Bindings, gate: ReactCompilationGate, fourth: FourthFacts) {
+        this.rules = rules;
+        this.facts = facts;
+        this.bindings = bindings;
+        this.gate = gate;
+        this.fourth = fourth;
+    }
+    kind(index: number): string {
+        const n = this.rules.parser.node(index);
+        if(n.kind === 'Identifier') {
+            const raw = new GlobalBindingFacts(this.rules, index).ordinary;
+            if(!raw.present) return n.text;
+            for(const d of this.bindings.list(index, 'binding-declarations', false)) {
+                const node = this.rules.parser.node(d);
+                if(node.kind !== 'ImportSpecifier') continue;
+                let p = d;
+                let module = '';
+                for(let s = 0; p >= 0 && s < 5; s++) {
+                    const item = this.rules.parser.node(p);
+                    if(item.kind === 'ImportDeclaration') {
+                        const m = item.children.find((i) => this.rules.parser.node(i).kind === 'StringLiteral') ?? -1;
+                        module = m < 0 ? '' : this.rules.parser.node(m).text;
+                        break;
+                    }
+                    p = this.bindings.parent(p);
+                }
+                if(!['react', 'react-dom'].includes(module.toLowerCase())) return '';
+                const names = node.children.filter((i) => this.rules.parser.node(i).kind === 'Identifier');
+                return this.rules.parser.node(names[0] ?? -1).text;
+            }
+            return '';
+        }
+        if(n.kind !== 'PropertyAccessExpression') return '';
+        const object = n.children[0] ?? -1;
+        const prop = n.children[n.children.length - 1] ?? -1;
+        if(
+            object < 0 ||
+            prop < 0 ||
+            this.rules.parser.node(object).kind !== 'Identifier' ||
+            this.rules.parser.node(object).text !== 'React'
+        )
+            return '';
+        const raw = new GlobalBindingFacts(this.rules, object).ordinary;
+        if(
+            raw.present &&
+            !this.bindings
+                .list(object, 'binding-declarations', false)
+                .some((i) => ['ImportClause', 'NamespaceImport'].includes(this.rules.parser.node(i).kind))
+        )
+            return '';
+        return this.rules.parser.node(prop).kind === 'Identifier' ? this.rules.parser.node(prop).text : '';
+    }
+    simple(index: number): boolean {
+        const n = this.rules.parser.node(index);
+        if(n.kind === 'Identifier') return true;
+        if(n.kind === 'PropertyAccessExpression' || n.kind === 'NonNullExpression')
+            return this.simple(n.children[0] ?? -1);
+        if(n.kind === 'ElementAccessExpression') {
+            const arg = n.children[n.children.length - 1] ?? -1;
+            return (
+                arg >= 0 && this.rules.parser.node(arg).kind === 'NumericLiteral' && this.simple(n.children[0] ?? -1)
+            );
+        }
+        return false;
+    }
+    report(id: string, message: string, index: number): void {
+        this.facts.report('react-hooks/use-memo', id, message, index);
+    }
+    assignments(index: number, callback: number): void {
+        const n = this.rules.parser.node(index);
+        if(this.bindings.functionKind(n.kind)) return;
+        if(n.kind === 'BinaryExpression' && n.children.length >= 3) {
+            const op = this.rules.parser.node(n.children[1] ?? -1).kind;
+            const target = n.children[0] ?? -1;
+            if(
+                (op === 'EqualsToken' ||
+                    (op.endsWith('EqualsToken') &&
+                        ![
+                            'EqualsEqualsToken',
+                            'EqualsEqualsEqualsToken',
+                            'ExclamationEqualsToken',
+                            'ExclamationEqualsEqualsToken',
+                            'LessThanEqualsToken',
+                            'GreaterThanEqualsToken',
+                        ].includes(op))) &&
+                this.rules.parser.node(target).kind === 'Identifier'
+            ) {
+                const raw = new GlobalBindingFacts(this.rules, target).ordinary;
+                if(raw.present && raw.declarationFiles.length > 0) {
+                    const ds = this.bindings.list(target, 'binding-declarations', false);
+                    if(!ds.some((d) => this.within(d, callback)))
+                        this.report(
+                            'useMemoCallbackReassignsOuterVariable',
+                            useMemoCallbackReassignsOuterVariable,
+                            target,
+                        );
+                }
+            }
+        }
+        for(const c of n.children) this.assignments(c, callback);
+    }
+    within(index: number, outer: number): boolean {
+        let p = index;
+        while(p >= 0) {
+            if(p === outer) return true;
+            p = this.bindings.parent(p);
+        }
+        return false;
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const n = this.rules.parser.node(i);
+            if(n.kind !== 'CallExpression') continue;
+            const kind = this.kind(n.children[0] ?? -1);
+            if(!['useMemo', 'useCallback'].includes(kind) || !this.gate.inside(i)) continue;
+            const args = this.fourth.args(i);
+            if(args.length === 0) {
+                this.report('useMemoMissingCallback', useMemoMissingCallback, i);
+                continue;
+            }
+            const callback = args[0] ?? -1;
+            const cb = this.rules.parser.node(callback);
+            const inline = ['ArrowFunction', 'FunctionExpression'].includes(cb.kind);
+            if(!inline) {
+                if(cb.kind === 'SpreadElement') continue;
+                this.report('useMemoCallbackNotInline', useMemoCallbackNotInline, callback);
+            }
+            if(args.length >= 2) {
+                const dep = args[1] ?? -1;
+                const dn = this.rules.parser.node(dep);
+                if(
+                    dn.kind !== 'ArrayLiteralExpression' ||
+                    dn.children.some((c) =>
+                        ['SpreadElement', 'OmittedExpression'].includes(this.rules.parser.node(c).kind),
+                    )
+                )
+                    this.report('useMemoDependencyListNotArrayLiteral', useMemoDependencyListNotArrayLiteral, dep);
+                else
+                    for(const c of dn.children)
+                        if(!this.simple(c)) this.report('useMemoDependencyNotSimple', useMemoDependencyNotSimple, c);
+            }
+            if(!inline || kind !== 'useMemo') continue;
+            const ps = this.gate.params(callback);
+            if(ps.length > 0) this.report('useMemoCallbackHasParameters', useMemoCallbackHasParameters, ps[0] ?? -1);
+            if(cb.children.some((c) => ['AsyncKeyword', 'AsteriskToken'].includes(this.rules.parser.node(c).kind)))
+                this.report('useMemoCallbackAsyncOrGenerator', useMemoCallbackAsyncOrGenerator, callback);
+            const body = this.gate.body(callback);
+            if(body >= 0) for(const c of this.rules.parser.node(body).children) this.assignments(c, callback);
+        }
+    }
+}
