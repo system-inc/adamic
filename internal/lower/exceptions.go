@@ -171,6 +171,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = node.Throws
 		case ir.ProcessCall:
 			found = node.Operation == "exit" || node.Operation == "setExitCode" || node.Operation == "cwd" || node.Operation == "chdir" || node.Operation == "measure"
+		case ir.Defined:
+			found = node.Throws()
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
