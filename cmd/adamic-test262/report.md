@@ -141,3 +141,5 @@ Each mutation was independently applied, its test run to failure, then reverted.
 | Include unused scratch compiler path in worker key | TestCompilerCacheAcrossScratchDirectories | [failure log](evidence/test262-mutant-scratch-key.log) |
 
 Remaining limits: no full corpus or full repository gate; other platforms unmeasured; dependency programs execute uncached; crash classification fixture is synthetic. Arbitrary environmental changes during a run are outside the stable pinned-corpus comparison. No internal/native or internal/lower files were edited.
+
+Follow-up: [library edit loops, cold phases and go run reuse](report-edit-loop.md).
