@@ -52,3 +52,23 @@ The preliminary gate passed the three baselines, but one for-in/of mutant anchor
 Not covered: complete rule findings, positions, fixes, suggestions or options; shared registry integration; the external dependency implementations; arbitrary forged nodes or inconsistent adapters; arbitrary hooks changing graph state; exhaustive AST combinations or object-handle generic instantiations. The native driver instantiates the helpers with numeric arena handles. Defensive branches unreachable on this captured parser corpus are not claimed exhaustively held.
 
 The full repository gate, including the seventeen required stage1 external-input checks, was not run. This is the authorized bounded touched-package and filtered-oracle gate. No skip is counted as green and no check is relaxed or removed.
+
+## Landing rerun on October 7
+
+The landing-first cap makes this unit the rebase and verification of all 56 existing helpers. No additional helper was claimed or implemented. Previous publication 8f70f184b05de95a990e1c04b6458baa5d457a27 was rebased cleanly (85 commits) onto current origin/area/stage1-lint d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898, which contains current origin/main b6b1538b0cebc4ba6741ac34f1aedb60293c1d06. Rebased source HEAD is dbad16667fb7bc23340529572e1c1939d5848872. The retained helper subtree remains exactly 1ce3081481308ee62860a269887fe2abaeae1464. Compiler/runtime inputs changed upstream, so every retained helper oracle was rerun rather than carrying earlier witnesses forward. The final fetch confirmed both bases unchanged and ancestors. Only codex/lint-helpers-05 is published.
+
+Setup succeeded: Go, clang, Node and submodules each 0s; build cache 40s; total 40s; nproc 5, four-core quota, 17.6 GB. Sourced /workspace/adamic-tools/env.sh. Exact fresh commands, all output directly to logs:
+
+```sh
+bash cloud/setup.sh > /tmp/lint05-landing21-setup.log 2>&1
+git rebase origin/area/stage1-lint > /tmp/lint05-landing21-rebase.log 2>&1
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 go test -p 2 ./stage1/cohere/lint/helpers ./stage1/cohere/lint/helpers/slot05/... -count=1 -v -timeout=30m > /tmp/lint05-landing21-helpers.log 2>&1
+go vet ./... > /tmp/lint05-landing21-vet.log 2>&1
+gofmt -l cmd internal stage1/cohere/lint/helpers/slot05 > /tmp/lint05-landing21-format.log
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v > /tmp/lint05-landing21-oracle.log 2>&1
+```
+
+All twenty actual helper packages PASS, including batch20 at 388.832s. All 222 compiling semantic mutants were caught again by the real Go output comparators, including the four shared inherited variants and all 218 owned variants. Every exact first differing value is retained in evidence/landing-mutants.json; complete output and per-package timings are in evidence/landing-helpers.log and landing-package-results.json. Vet and formatting pass with empty logs. All six filtered Node input fixtures PASS 8.789s uncached, zero cache hits and six probe misses. No selected check skipped, was relaxed or removed.
+
+Coverage and dependency removals are unchanged: 56 helpers, 319 prerequisite occurrences across 70 consumers, with 50 helper-ready rules under the frozen assumptions. Complete rule diagnostics, positions, fixes, suggestions, options, shared registration integration, and the full repository gate including its seventeen required stage1 external-input checks were not run. No new helper claim is made in this landing unit. Existing helper coverage limits above and in earlier batch reports still apply.
