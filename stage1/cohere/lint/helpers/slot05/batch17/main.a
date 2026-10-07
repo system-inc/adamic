@@ -1,0 +1,37 @@
+import {panic,readTextFile,programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {visitUnknown} from './visit_unknown.a';
+import {forkOptionalChain} from './fork_optional_chain.a';
+import type {ChainState} from './fork_optional_chain.a';
+import {isHookCall} from './react_is_hook_call.a';
+import type {HookCall} from './react_is_hook_call.a';
+interface Node {readonly id:number;}
+interface Block {readonly id:number;reachable:boolean;incoming:boolean;}
+const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));if(input.kind === 'Error'){panic(input.message);}
+const json=new OptionsJson(input.text);const root=json.parse();if(root<0){panic(json.error);}
+function field(index:number,name:string):number{return json.field(index,name);}
+function number(index:number):number{return Number(json.node(index).text);}
+function bool(index:number):boolean{return json.node(index).text === 'true';}
+const mode=json.node(field(root,'mode')).text;
+for(const row of json.node(field(root,'rows')).children){
+ let trace='';
+ const original:Node={id:1};
+ if(mode === 'visit'){
+  const node:Node | undefined=number(field(row,'Node'))<0 ? undefined : original;
+  const id=(n:Node | undefined):number=>n === undefined ? -1 : n.id;
+  visitUnknown<Node | undefined>(node,(n:Node | undefined):boolean=>n === undefined,(n:Node | undefined):boolean=>{if(n !== node){panic('classification identity');}trace+=`classify:${id(n)};`;return bool(field(row,'Statement'));},(n:Node | undefined):void=>{if(n !== node){panic('statement identity');}trace+=`stmt:${id(n)};`;},(n:Node | undefined):void=>{if(n !== node){panic('expression identity');}trace+=`expr:${id(n)};`;});console.log(trace);continue;
+ }
+ if(mode === 'hook'){
+  const expression:Node | undefined=bool(field(row,'HasExpression')) ? original : undefined;
+  const call:HookCall<Node> | undefined=bool(field(row,'HasCall')) ? {expression} : undefined;
+  const hookName=(name:string):boolean=>{trace+=`hook:${name};`;return bool(field(row,'Hook'));};
+  const result=isHookCall<Node>(call,(n:Node):boolean=>{if(n !== expression){panic('callee identity');}return bool(field(row,'Identifier'));},(n:Node):boolean=>{if(n !== expression){panic('callee identity');}return bool(field(row,'Property'));},(n:Node):string=>{if(n !== expression){panic('callee identity');}trace+='text:1;';return json.node(field(row,'Text')).text;},hookName,(n:Node,p:(name:string)=>boolean):boolean=>{if(n !== expression){panic('callee identity');}if(p !== hookName){panic('predicate identity');}trace+='member:1;';return bool(field(row,'Namespaced'));});
+  console.log(`${result}|${trace}`);continue;
+ }
+ const blocks:Block[]=[];for(let i=0;i<4;i+=1){blocks.push({id:i,reachable:i === 0 && bool(field(row,'Reachable')),incoming:false});}
+ const joins:Block[]=[];for(let i=1;i<=number(field(row,'Depth'));i+=1){joins.push(blocks[i] ?? panic('missing join'));}
+ const state:ChainState<Block>={cur:blocks[0] ?? panic('missing current'),joins};
+ forkOptionalChain(state,original,(n:Node):boolean=>{if(n !== original){panic('root identity');}trace+='root:1;';return bool(field(row,'Root'));},(from:Block,to:Block):void=>{trace+=`link:${from.id}:${to.id};`;if(from.reachable){to.incoming=true;}},():Block=>{const b:Block={id:blocks.length,reachable:false,incoming:false};blocks.push(b);trace+=`new:${b.id};`;return b;},(b:Block):void=>{trace+=`enter:${b.id};`;b.reachable=b.incoming;state.cur=b;});
+ let targets='';for(const j of joins){targets+=`${j.id},`;}
+ console.log(`${state.cur.id}:${state.cur.reachable}|${targets}|${trace}`);
+}

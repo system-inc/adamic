@@ -1,0 +1,18 @@
+[
+  "helper_test.go:169: visit_unknown.a mutant \"if(isNil(node))\" -> \"if(false)\" caught at output line 1 byte 0: mutant \"classify:-1;expr:-1;\", Go \"\"",
+  "helper_test.go:169: visit_unknown.a mutant \"if(isStatement(node))\" -> \"if(false)\" caught at output line 2 byte 0: mutant \"expr:1;\", Go \"classify:1;expr:1;\"",
+  "helper_test.go:169: visit_unknown.a mutant \"expr(node);\" -> \"statement(node);\" caught at output line 2 byte 11: mutant \"classify:1;stmt:1;\", Go \"classify:1;expr:1;\"",
+  "helper_test.go:169: visit_unknown.a mutant \"statement(node);return;\" -> \"statement(node);expr(node);return;\" caught at output line 3 byte 18: mutant \"classify:1;stmt:1;expr:1;\", Go \"classify:1;stmt:1;\"",
+  "helper_test.go:169: fork_optional_chain.a mutant \"state.joins.length === 0 || !isOptionalChainRoot(node)\" -> \"!isOptionalChainRoot(node) || state.joins.length === 0\" caught at output line 1 byte 9: mutant \"0:false||root:1;\", Go \"0:false||\"",
+  "helper_test.go:169: fork_optional_chain.a mutant \"state.joins.length === 0\" -> \"state.joins.length <= 1\" caught at output line 3 byte 11: mutant \"0:false|1,|\", Go \"0:false|1,|root:1;\"",
+  "helper_test.go:169: fork_optional_chain.a mutant \"!isOptionalChainRoot(node)\" -> \"false\" caught at output line 3 byte 0: mutant \"4:false|1,|link:0:1;new:4;link:0:4;enter:4;\", Go \"0:false|1,|root:1;\"",
+  "helper_test.go:169: fork_optional_chain.a mutant \"state.joins.length - 1\" -> \"0\" caught at output line 1229 byte 27: mutant \"|1,2,|root:1;link:0:1;new:4;link:0:4;enter:4;\", Go \"|1,2,|root:1;link:0:2;new:4;link:0:4;enter:4;\"",
+  "helper_test.go:169: fork_optional_chain.a mutant \"link(state.cur,next);\" -> \"if(false) {link(state.cur,next);}\" caught at output line 1227 byte 33: mutant \"ot:1;link:0:1;new:4;enter:4;\", Go \"ot:1;link:0:1;new:4;link:0:4;enter:4;\"",
+  "helper_test.go:169: fork_optional_chain.a mutant \"enter(next);\" -> \"if(false) {enter(next);}\" caught at output line 1227 byte 0: mutant \"0:false|1,|root:1;link:0:1;new:4;link:0:4;\", Go \"4:false|1,|root:1;link:0:1;new:4;link:0:4;enter:4;\"",
+  "helper_test.go:169: react_is_hook_call.a mutant \"if(call === undefined || call.expression === undefined) {return false;}\" -> \"if(call === undefined || call.expression === undefined) {return true;}\" caught at output line 1 byte 0: mutant \"true|\", Go \"false|\"",
+  "helper_test.go:169: react_is_hook_call.a mutant \"\\n return false;\\n}\" -> \"\\n return true;\\n}\" caught at output line 33 byte 0: mutant \"true|\", Go \"false|\"",
+  "helper_test.go:169: react_is_hook_call.a mutant \"if(isIdentifier(expression))\" -> \"if(false)\" caught at output line 5 byte 0: mutant \"false|\", Go \"true|text:1;hook:useImperativeHandle;\"",
+  "helper_test.go:169: react_is_hook_call.a mutant \"if(isPropertyAccess(expression))\" -> \"if(false)\" caught at output line 3 byte 0: mutant \"false|\", Go \"true|member:1;\"",
+  "helper_test.go:169: react_is_hook_call.a mutant \"return isHookName(text(expression));\" -> \"return !isHookName(text(expression));\" caught at output line 5 byte 0: mutant \"false|text:1;hook:useImperativeHandle;\", Go \"true|text:1;hook:useImperativeHandle;\"",
+  "helper_test.go:169: react_is_hook_call.a mutant \"return isNamespacedMember(expression,isHookName);\" -> \"return !isNamespacedMember(expression,isHookName);\" caught at output line 3 byte 0: mutant \"false|member:1;\", Go \"true|member:1;\""
+]

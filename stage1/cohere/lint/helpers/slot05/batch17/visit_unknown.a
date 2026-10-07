@@ -1,0 +1,5 @@
+export function visitUnknown<N>(node: N,isNil: (node: N) => boolean,isStatement: (node: N) => boolean,statement: (node: N) => void,expr: (node: N) => void): void {
+ if(isNil(node)) {return;}
+ if(isStatement(node)) {statement(node);return;}
+ expr(node);
+}

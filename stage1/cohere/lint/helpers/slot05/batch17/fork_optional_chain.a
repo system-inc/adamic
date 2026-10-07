@@ -1,0 +1,9 @@
+import {panic} from 'adamic';
+export interface ChainState<B> {cur: B;readonly joins: readonly B[];}
+export function forkOptionalChain<N,B>(state: ChainState<B>,node: N,isOptionalChainRoot: (node: N) => boolean,link: (from: B,to: B) => void,newBlock: () => B,enter: (block: B) => void): void {
+ if(state.joins.length === 0 || !isOptionalChainRoot(node)) {return;}
+ link(state.cur,state.joins[state.joins.length - 1] ?? panic('missing chain join'));
+ const next=newBlock();
+ link(state.cur,next);
+ enter(next);
+}
