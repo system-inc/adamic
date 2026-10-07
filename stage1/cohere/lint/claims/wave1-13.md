@@ -74,3 +74,16 @@ entries are:
 - no-eq-null: claimed here.
 
 This claim update is pushed before rule implementation.
+
+## Fifth continuation claim
+
+Prior ports and final evidence are pushed through a3f826a4. Fetched 341 origin
+refs on 2026-10-07; main remains ef3d907e. All 52 distinct recursive claims
+Markdown blobs and main registrations were checked. The helper-ready list is
+exhausted. The first three unclaimed syntax-ready inventory entries are:
+
+- no-multi-str: claimed here.
+- no-nonoctal-decimal-escape: claimed here.
+- no-octal: claimed here.
+
+This update is committed and pushed before implementation.
