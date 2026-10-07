@@ -1,0 +1,23 @@
+=== RUN   TestWave26FifthAgreementAndMutants
+    wave_26_fifth_test.go:152: controls: 44486 identical finding bytes; findings 94
+    wave_26_fifth_test.go:160: controls-asan: 44486 identical finding bytes; findings 94
+    wave_26_fifth_test.go:171: promise mutant: exit 0, empty stderr, byte oracle catches byte 3151
+    wave_26_fifth_test.go:171: regex mutant: exit 0, empty stderr, byte oracle catches byte 12183
+    wave_26_fifth_test.go:171: rest mutant: exit 0, empty stderr, byte oracle catches byte 8356
+    wave_26_fifth_test.go:187: syntax question mutant: exit 0, empty stderr, byte oracle catches byte 1217
+    wave_26_fifth_test.go:187: binding question mutant: exit 0, empty stderr, byte oracle catches byte 55
+    wave_26_fifth_test.go:187: pattern question mutant: exit 0, empty stderr, byte oracle catches byte 10946
+    wave_26_fifth_test.go:187: comments question mutant: exit 0, empty stderr, byte oracle catches byte 25546
+    wave_26_fifth_test.go:198: repository: 18485 identical finding bytes; findings 0
+    wave_26_fifth_test.go:199: repository-asan: 18485 identical finding bytes; findings 0
+    wave_26_fifth_test.go:207: repository whole process native 667.342756ms Go 174.94372ms; native phases tsgo: load_ns=87876159 query_ns=182011196 queries=313 first_query_ns=1806295 run_ns=568019797
+        ; Go phases cohere: load_ns=86468644 rule_ns=3237181 run_ns=70359609
+    wave_26_fifth_test.go:198: compiler: 5318 identical finding bytes; findings 0
+    wave_26_fifth_test.go:199: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_26_fifth_test.go:207: compiler whole process native 8.829892356s Go 1.465977711s; native phases tsgo: load_ns=765081855 query_ns=3110741267 queries=255 first_query_ns=87235 run_ns=7990312602
+        ; Go phases cohere: load_ns=986819826 rule_ns=220303835 run_ns=406193088
+    wave_26_fifth_test.go:218: released handle: panic 70, invalid or released checker handle
+    wave_26_fifth_test.go:223: released-registry mutant: exit 0, required panic 70 catches it
+--- PASS: TestWave26FifthAgreementAndMutants (218.77s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	218.781s

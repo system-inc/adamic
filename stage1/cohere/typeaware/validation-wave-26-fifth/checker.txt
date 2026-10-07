@@ -1,0 +1,33 @@
+=== RUN   TestBindingOriginContracts
+--- PASS: TestBindingOriginContracts (0.31s)
+=== RUN   TestConstructorExpressionContract
+--- PASS: TestConstructorExpressionContract (0.20s)
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.02s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestPreferenceQuestionContracts
+--- PASS: TestPreferenceQuestionContracts (0.08s)
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestTypeArgumentsQuestion
+--- PASS: TestTypeArgumentsQuestion (0.03s)
+=== RUN   TestWave26NextRawQuestionContracts
+--- PASS: TestWave26NextRawQuestionContracts (0.12s)
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestShapeAndNameFacts
+--- PASS: TestShapeAndNameFacts (0.06s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.12s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.14s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.904s
+?   	github.com/system-inc/adamic/bridge/tsgo/checker/regex_pattern/comments	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/checker/regex_pattern/pattern	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/checker/regex_pattern/syntax	[no test files]
