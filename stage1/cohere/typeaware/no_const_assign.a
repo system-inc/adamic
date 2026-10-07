@@ -1,0 +1,59 @@
+import type { Rules } from './rules.ts';
+import { CoreBindingFacts } from './core_binding_facts.a';
+const message =
+    'This assigns to a binding declared `const`, `using`, or `await using`, which is immutable. The assignment throws a TypeError at runtime rather than storing anything, so the line does not do what it reads as doing and everything after it in that function is skipped. TypeScript reports this too, but only where the file is type checked, and the failure is a hard one at the moment it runs. Declare the binding `let` if it needs to change, or assign to a new binding.';
+export class NoConstAssign {
+    readonly rules: Rules;
+    readonly facts: CoreBindingFacts;
+    readonly anchors: string[] = [];
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.facts = new CoreBindingFacts(rules);
+    }
+    gather(index: number): void {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            const anchor = this.facts.anchor(index);
+            if(anchor !== '' && !this.anchors.includes(anchor)) {
+                this.anchors.push(anchor);
+            }
+        }
+        else if(['ObjectBindingPattern', 'ArrayBindingPattern'].includes(node.kind)) {
+            for(const element of node.children) {
+                const name = this.facts.names.name(element);
+                if(name >= 0) {
+                    this.gather(name);
+                }
+            }
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) < 0) {
+                continue;
+            }
+            const node = this.rules.parser.node(index);
+            if(node.kind === 'VariableDeclarationList' && (Number.parseInt(node.semantic, 10) & 6) !== 0) {
+                for(const declaration of node.children) {
+                    const name = this.facts.names.name(declaration);
+                    if(name >= 0) {
+                        this.gather(name);
+                    }
+                }
+            }
+        }
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) < 0) {
+                continue;
+            }
+            const node = this.rules.parser.node(index);
+            if(
+                node.kind === 'Identifier' &&
+                this.facts.writes.writes(index) &&
+                this.anchors.includes(this.facts.anchor(index))
+            ) {
+                this.facts.report(index, 'no-const-assign', 'noConstAssign', message);
+            }
+        }
+    }
+}

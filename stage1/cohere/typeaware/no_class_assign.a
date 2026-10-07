@@ -1,0 +1,45 @@
+import type { Rules } from './rules.ts';
+import { CoreBindingFacts } from './core_binding_facts.a';
+const message =
+    'This assigns to a class binding. The binding is const-like inside the class body and the assignment throws in strict mode, which every module and every class body already is, so the line fails at runtime rather than rebinding anything. Where it does not throw it is worse: every later use of the name gets the new value instead of the class, so `new A()` constructs something else and `instanceof A` answers about something else. Use a separate variable for the new value.';
+export class NoClassAssign {
+    readonly rules: Rules;
+    readonly facts: CoreBindingFacts;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.facts = new CoreBindingFacts(rules);
+    }
+    run(): void {
+        for(let declaration = 0; declaration < this.rules.parser.nodes.length; declaration++) {
+            if((this.rules.parents[declaration] ?? -1) < 0) {
+                continue;
+            }
+            const node = this.rules.parser.node(declaration);
+            if(!['ClassDeclaration', 'ClassExpression'].includes(node.kind)) {
+                continue;
+            }
+            const name = this.facts.names.name(declaration);
+            if(name < 0 || this.rules.parser.node(name).kind !== 'Identifier') {
+                continue;
+            }
+            const anchor = this.facts.anchor(name);
+            if(anchor === '') {
+                continue;
+            }
+            for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+                if((this.rules.parents[index] ?? -1) < 0) {
+                    continue;
+                }
+                const use = this.rules.parser.node(index);
+                if(
+                    use.kind === 'Identifier' &&
+                    use.text === this.rules.parser.node(name).text &&
+                    this.facts.writes.writes(index) &&
+                    this.facts.anchor(index) === anchor
+                ) {
+                    this.facts.report(index, 'no-class-assign', 'noClassAssign', message);
+                }
+            }
+        }
+    }
+}

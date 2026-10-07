@@ -1,0 +1,517 @@
+import type { Rules } from './rules.ts';
+import { CoreBindingFacts } from './core_binding_facts.a';
+const messages = new Map<string, string>([
+    [
+        'constantShortCircuit',
+        'The left side of this short-circuit always has the same truthiness or nullishness, so the operator never chooses: one side always wins and the other is dead. The usual cause is a guard written against the wrong thing, such as testing an object that is always present rather than the field inside it.',
+    ],
+    [
+        'constantBinaryOperand',
+        'This comparison always gives the same answer, because one side can never equal the other. Nothing reports it: the code compiles and the branch it guards simply never changes. It is usually a comparison against the wrong thing, such as testing an array or a function for null when neither can be.',
+    ],
+    [
+        'alwaysNew',
+        'This side of the comparison builds a fresh object every time it runs, and strict equality on objects compares identity rather than contents, so the comparison is always false. The intent is nearly always to compare contents, which needs an explicit check rather than an operator.',
+    ],
+    [
+        'bothAlwaysNew',
+        'Both sides build a fresh object, and two fresh objects are never the same object, so this comparison is always false even under loose equality: two objects are compared by identity whichever equality operator is used.',
+    ],
+    [
+        'constantRelationalComparison',
+        'Both sides of this comparison are literals, so the answer is fixed and could be written as true or false. A comparison that decides nothing is usually a leftover from code that used to compare something real.',
+    ],
+]);
+const literals = [
+    'StringLiteral',
+    'NumericLiteral',
+    'BigIntLiteral',
+    'TrueKeyword',
+    'FalseKeyword',
+    'NullKeyword',
+    'RegularExpressionLiteral',
+    'NoSubstitutionTemplateLiteral',
+];
+const objects = [
+    'ObjectLiteralExpression',
+    'ArrayLiteralExpression',
+    'ArrowFunction',
+    'FunctionExpression',
+    'ClassExpression',
+    'RegularExpressionLiteral',
+];
+const constructors = [
+    'Array',
+    'ArrayBuffer',
+    'BigInt64Array',
+    'BigUint64Array',
+    'Boolean',
+    'DataView',
+    'Date',
+    'Error',
+    'EvalError',
+    'Float32Array',
+    'Float64Array',
+    'Function',
+    'Int8Array',
+    'Int16Array',
+    'Int32Array',
+    'Map',
+    'Number',
+    'Object',
+    'Promise',
+    'Proxy',
+    'RangeError',
+    'ReferenceError',
+    'RegExp',
+    'Set',
+    'String',
+    'SyntaxError',
+    'TypeError',
+    'URIError',
+    'Uint8Array',
+    'Uint8ClampedArray',
+    'Uint16Array',
+    'Uint32Array',
+    'WeakMap',
+    'WeakRef',
+    'WeakSet',
+];
+const numeric = [
+    'MinusToken',
+    'PlusToken',
+    'SlashToken',
+    'AsteriskToken',
+    'PercentToken',
+    'BarToken',
+    'CaretToken',
+    'AmpersandToken',
+    'AsteriskAsteriskToken',
+    'LessThanLessThanToken',
+    'GreaterThanGreaterThanToken',
+    'GreaterThanGreaterThanGreaterThanToken',
+];
+export class NoConstantBinaryExpression {
+    readonly rules: Rules;
+    readonly facts: CoreBindingFacts;
+    readonly relational: boolean;
+    constructor(rules: Rules, relational = false) {
+        this.rules = rules;
+        this.facts = new CoreBindingFacts(rules);
+        this.relational = relational;
+    }
+    op(index: number): string {
+        return this.rules.parser.node(this.rules.parser.node(index).children[1] ?? -1).kind;
+    }
+    boolCall(index: number, global = false): boolean {
+        const node = this.rules.parser.node(index);
+        const callee = this.rules.skip(node.children[0] ?? -1);
+        const name = this.rules.parser.node(callee);
+        if(name.kind !== 'Identifier' || name.text !== 'Boolean' || (global && !this.facts.global(callee))) {
+            return false;
+        }
+        return node.list <= 0 || this.constant(node.children[node.children.length - node.list] ?? -1, true);
+    }
+    identity(index: number, operator: string): boolean {
+        if(index < 0) {
+            return false;
+        }
+        index = this.rules.skip(index);
+        const node = this.rules.parser.node(index);
+        let truth: boolean | undefined = undefined;
+        if(node.kind === 'TrueKeyword') {
+            truth = true;
+        }
+        else if(['FalseKeyword', 'NullKeyword', 'VoidExpression'].includes(node.kind)) {
+            truth = false;
+        }
+        else if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(node.kind)) {
+            truth = node.text.length > 0;
+        }
+        else if(node.kind === 'BigIntLiteral') {
+            // Go's numericLiteralSign examines the retained n suffix, so even 0n
+            // is an identity for ||. Preserve that production behavior exactly.
+            truth = true;
+        }
+        else if(node.kind === 'NumericLiteral') {
+            const text = node.text.replaceAll('_', '');
+            const prefix = text.slice(0, 2).toLowerCase();
+            truth =
+                (prefix === '0x' || prefix === '0b' || prefix === '0o'
+                    ? Number.parseInt(text.slice(2), prefix === '0x' ? 16 : prefix === '0b' ? 2 : 8)
+                    : Number.parseFloat(text)) !== 0;
+        }
+        else if(
+            [
+                'RegularExpressionLiteral',
+                'ObjectLiteralExpression',
+                'ArrayLiteralExpression',
+                'ArrowFunction',
+                'FunctionExpression',
+            ].includes(node.kind)
+        ) {
+            truth = true;
+        }
+        else if(node.kind === 'BinaryExpression') {
+            const op = this.op(index);
+            const right = node.children[2] ?? -1;
+            if(['AmpersandAmpersandToken', 'BarBarToken'].includes(op)) {
+                return (
+                    op === operator &&
+                    (this.identity(node.children[0] ?? -1, operator) || this.identity(right, operator))
+                );
+            }
+            if(op === 'BarBarEqualsToken') {
+                return operator === 'BarBarToken' && this.identity(right, operator);
+            }
+            if(op === 'AmpersandAmpersandEqualsToken') {
+                return operator === 'AmpersandAmpersandToken' && this.identity(right, operator);
+            }
+        }
+        return truth !== undefined && (truth ? operator === 'BarBarToken' : operator === 'AmpersandAmpersandToken');
+    }
+    constant(index: number, boolean: boolean): boolean {
+        if(index < 0) {
+            return true;
+        }
+        index = this.rules.skip(index);
+        const node = this.rules.parser.node(index);
+        if(
+            literals.includes(node.kind) ||
+            [
+                'ArrowFunction',
+                'FunctionExpression',
+                'ClassExpression',
+                'ObjectLiteralExpression',
+                'VoidExpression',
+                'OmittedExpression',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(node.kind === 'Identifier') {
+            return node.text === 'undefined';
+        }
+        if(node.kind === 'TemplateExpression') {
+            if(boolean) {
+                if(this.rules.parser.node(node.children[0] ?? -1).text.length > 0) {
+                    return true;
+                }
+                for(const span of node.children.slice(1)) {
+                    const children = this.rules.parser.node(span).children;
+                    if(this.rules.parser.node(children[1] ?? -1).text.length > 0) {
+                        return true;
+                    }
+                }
+            }
+            return node.children
+                .slice(1)
+                .every((span) => this.constant(this.rules.parser.node(span).children[0] ?? -1, false));
+        }
+        if(node.kind === 'ArrayLiteralExpression') {
+            return boolean || node.children.every((child) => this.constant(child, false));
+        }
+        if(node.kind === 'PrefixUnaryExpression') {
+            return this.constant(node.children[0] ?? -1, node.operator === 'ExclamationToken');
+        }
+        if(node.kind === 'TypeOfExpression') {
+            return boolean || this.constant(node.children[0] ?? -1, false);
+        }
+        if(node.kind === 'NewExpression') {
+            return boolean;
+        }
+        if(node.kind === 'CallExpression') {
+            return this.boolCall(index);
+        }
+        if(node.kind === 'SpreadElement') {
+            return this.constant(node.children[0] ?? -1, boolean);
+        }
+        if(node.kind === 'BinaryExpression') {
+            const op = this.op(index);
+            const left = node.children[0] ?? -1;
+            const right = node.children[2] ?? -1;
+            if(['AmpersandAmpersandToken', 'BarBarToken'].includes(op)) {
+                const l = this.constant(left, boolean);
+                const r = this.constant(right, boolean);
+                return (l && this.identity(left, op)) || (boolean && r && this.identity(right, op)) || (l && r);
+            }
+            if(['CommaToken', 'EqualsToken'].includes(op)) {
+                return this.constant(right, boolean);
+            }
+            if(op === 'BarBarEqualsToken') {
+                return boolean && this.identity(right, 'BarBarToken');
+            }
+            if(op === 'AmpersandAmpersandEqualsToken') {
+                return boolean && this.identity(right, 'AmpersandAmpersandToken');
+            }
+            if(['InKeyword', 'InstanceOfKeyword'].includes(op)) {
+                return false;
+            }
+            return this.constant(left, false) && this.constant(right, false);
+        }
+        return false;
+    }
+    nullish(index: number): boolean {
+        index = this.rules.skip(index);
+        const node = this.rules.parser.node(index);
+        return (
+            ['NullKeyword', 'VoidExpression'].includes(node.kind) ||
+            (node.kind === 'Identifier' && node.text === 'undefined' && this.facts.global(index))
+        );
+    }
+    staticBoolean(index: number): boolean {
+        index = this.rules.skip(index);
+        const node = this.rules.parser.node(index);
+        return (
+            ['TrueKeyword', 'FalseKeyword'].includes(node.kind) ||
+            (node.kind === 'CallExpression' && this.boolCall(index, true))
+        );
+    }
+    fixedNullish(index: number, nonNullish = false): boolean {
+        index = this.rules.skip(index);
+        const node = this.rules.parser.node(index);
+        if(nonNullish && this.nullish(index)) {
+            return false;
+        }
+        if(
+            literals.includes(node.kind) ||
+            objects.includes(node.kind) ||
+            [
+                'NewExpression',
+                'TemplateExpression',
+                'PostfixUnaryExpression',
+                'VoidExpression',
+                'TypeOfExpression',
+                'PrefixUnaryExpression',
+                'DeleteExpression',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(node.kind === 'Identifier') {
+            return node.text === 'undefined' && this.facts.global(index);
+        }
+        if(node.kind === 'CallExpression') {
+            const callee = this.rules.skip(node.children[0] ?? -1);
+            const name = this.rules.parser.node(callee);
+            return (
+                name.kind === 'Identifier' &&
+                ['Boolean', 'String', 'Number', 'Symbol', 'BigInt'].includes(name.text) &&
+                this.facts.global(callee)
+            );
+        }
+        if(node.kind === 'BinaryExpression') {
+            const op = this.op(index);
+            if(op === 'QuestionQuestionToken') {
+                return this.fixedNullish(node.children[2] ?? -1, true);
+            }
+            if(
+                [
+                    'AmpersandAmpersandToken',
+                    'BarBarToken',
+                    'BarBarEqualsToken',
+                    'AmpersandAmpersandEqualsToken',
+                    'QuestionQuestionEqualsToken',
+                ].includes(op)
+            ) {
+                return false;
+            }
+            if(op === 'EqualsToken') {
+                return this.fixedNullish(node.children[2] ?? -1, nonNullish);
+            }
+            return true;
+        }
+        return false;
+    }
+    loose(index: number): boolean {
+        index = this.rules.skip(index);
+        const node = this.rules.parser.node(index);
+        if(
+            literals.includes(node.kind) ||
+            [
+                'ObjectLiteralExpression',
+                'ClassExpression',
+                'ArrowFunction',
+                'FunctionExpression',
+                'VoidExpression',
+                'TypeOfExpression',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(node.kind === 'Identifier') {
+            return node.text === 'undefined' && this.facts.global(index);
+        }
+        if(node.kind === 'ArrayLiteralExpression') {
+            return (
+                node.children.length === 0 ||
+                node.children.filter((child) => this.rules.parser.node(child).kind !== 'SpreadElement').length > 1
+            );
+        }
+        if(node.kind === 'TemplateExpression') {
+            return node.children.length <= 1;
+        }
+        if(node.kind === 'PrefixUnaryExpression') {
+            return node.operator === 'ExclamationToken' && this.constant(node.children[0] ?? -1, true);
+        }
+        if(node.kind === 'CallExpression') {
+            return this.boolCall(index, true);
+        }
+        if(node.kind === 'BinaryExpression' && ['CommaToken', 'EqualsToken'].includes(this.op(index))) {
+            return this.loose(node.children[2] ?? -1);
+        }
+        return false;
+    }
+    strict(index: number): boolean {
+        index = this.rules.skip(index);
+        const node = this.rules.parser.node(index);
+        if(
+            literals.includes(node.kind) ||
+            objects.includes(node.kind) ||
+            [
+                'NewExpression',
+                'TemplateExpression',
+                'PostfixUnaryExpression',
+                'VoidExpression',
+                'TypeOfExpression',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(node.kind === 'Identifier') {
+            return node.text === 'undefined' && this.facts.global(index);
+        }
+        if(node.kind === 'PrefixUnaryExpression') {
+            return node.operator !== 'ExclamationToken' || this.constant(node.children[0] ?? -1, true);
+        }
+        if(node.kind === 'CallExpression') {
+            const callee = this.rules.skip(node.children[0] ?? -1);
+            const name = this.rules.parser.node(callee);
+            if(name.kind !== 'Identifier' || !this.facts.global(callee)) {
+                return false;
+            }
+            return (
+                ['String', 'Number', 'BigInt', 'Symbol'].includes(name.text) ||
+                (name.text === 'Boolean' && this.boolCall(index))
+            );
+        }
+        if(node.kind === 'BinaryExpression') {
+            const op = this.op(index);
+            if(['CommaToken', 'EqualsToken'].includes(op)) {
+                return this.strict(node.children[2] ?? -1);
+            }
+            return numeric.includes(op);
+        }
+        return false;
+    }
+    fresh(index: number): boolean {
+        index = this.rules.skip(index);
+        const node = this.rules.parser.node(index);
+        if(objects.includes(node.kind)) {
+            return true;
+        }
+        if(node.kind === 'NewExpression') {
+            const callee = this.rules.skip(node.children[0] ?? -1);
+            const name = this.rules.parser.node(callee);
+            return name.kind === 'Identifier' && constructors.includes(name.text) && this.facts.global(callee);
+        }
+        if(node.kind === 'BinaryExpression' && ['CommaToken', 'EqualsToken'].includes(this.op(index))) {
+            return this.fresh(node.children[2] ?? -1);
+        }
+        if(node.kind === 'ConditionalExpression') {
+            return this.fresh(node.children[2] ?? -1) && this.fresh(node.children[4] ?? -1);
+        }
+        return false;
+    }
+    literal(index: number): boolean {
+        index = this.rules.skip(index);
+        const node = this.rules.parser.node(index);
+        if(literals.includes(node.kind)) {
+            return true;
+        }
+        if(node.kind === 'Identifier') {
+            return node.text === 'undefined' && this.facts.global(index);
+        }
+        if(node.kind === 'TemplateExpression') {
+            return node.children.length <= 1;
+        }
+        if(node.kind === 'PrefixUnaryExpression' && ['MinusToken', 'PlusToken', 'TildeToken'].includes(node.operator)) {
+            return ['NumericLiteral', 'BigIntLiteral', 'StringLiteral'].includes(
+                this.rules.parser.node(this.rules.skip(node.children[0] ?? -1)).kind,
+            );
+        }
+        return false;
+    }
+    operand(known: number, other: number, strict: boolean): boolean {
+        return (
+            (this.nullish(known) && this.fixedNullish(other)) ||
+            (this.staticBoolean(known) && (strict ? this.strict(other) : this.loose(other)))
+        );
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) < 0) {
+                continue;
+            }
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'BinaryExpression') {
+                continue;
+            }
+            const op = this.op(index);
+            const left = this.rules.skip(node.children[0] ?? -1);
+            const right = this.rules.skip(node.children[2] ?? -1);
+            let target = -1;
+            let id = '';
+            if(['AmpersandAmpersandToken', 'BarBarToken'].includes(op) && this.constant(left, true)) {
+                target = left;
+                id = 'constantShortCircuit';
+            }
+            else if(op === 'QuestionQuestionToken' && this.fixedNullish(left)) {
+                target = left;
+                id = 'constantShortCircuit';
+            }
+            else if(
+                [
+                    'EqualsEqualsEqualsToken',
+                    'ExclamationEqualsEqualsToken',
+                    'EqualsEqualsToken',
+                    'ExclamationEqualsToken',
+                ].includes(op)
+            ) {
+                const strict = ['EqualsEqualsEqualsToken', 'ExclamationEqualsEqualsToken'].includes(op);
+                if(this.operand(left, right, strict)) {
+                    target = right;
+                    id = 'constantBinaryOperand';
+                }
+                else if(this.operand(right, left, strict)) {
+                    target = left;
+                    id = 'constantBinaryOperand';
+                }
+                else if(strict && this.fresh(left)) {
+                    target = left;
+                    id = 'alwaysNew';
+                }
+                else if(strict && this.fresh(right)) {
+                    target = right;
+                    id = 'alwaysNew';
+                }
+                else if(!strict && this.fresh(left) && this.fresh(right)) {
+                    target = left;
+                    id = 'bothAlwaysNew';
+                }
+            }
+            else if(
+                this.relational &&
+                ['LessThanToken', 'LessThanEqualsToken', 'GreaterThanToken', 'GreaterThanEqualsToken'].includes(op) &&
+                this.literal(left) &&
+                this.literal(right)
+            ) {
+                target = index;
+                id = 'constantRelationalComparison';
+            }
+            if(target >= 0) {
+                this.facts.report(target, 'no-constant-binary-expression', id, messages.get(id) ?? '');
+            }
+        }
+    }
+}

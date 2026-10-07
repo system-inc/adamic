@@ -1,0 +1,88 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { Reassign } from './reassign.ts';
+import { Shadow } from './shadow.ts';
+import { Diagnostic } from './diagnostic.ts';
+export class CoreBindingFacts {
+    readonly rules: Rules;
+    readonly writes: Reassign;
+    readonly names: Shadow;
+    readonly anchors = new Map<number, string>();
+    readonly globals = new Map<number, boolean>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.writes = new Reassign(rules);
+        this.names = new Shadow(rules);
+    }
+    anchor(index: number): string {
+        if(this.anchors.has(index)) {
+            return this.anchors.get(index) ?? '';
+        }
+        const frames = new Frames(this.rules.ask(index, 'binding-declarations'));
+        header(frames, 'binding-declarations');
+        let first = '';
+        if(frames.yes()) {
+            frames.natural();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const path = frames.field();
+                const kind = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                if(first === '' && path === this.rules.path) {
+                    first = `${kind}:${start}:${end}`;
+                }
+            }
+        }
+        frames.end();
+        this.anchors.set(index, first);
+        return first;
+    }
+    global(index: number): boolean {
+        if(this.globals.has(index)) {
+            return this.globals.get(index) ?? false;
+        }
+        const frames = new Frames(this.rules.ask(index, 'node-symbol-details'));
+        header(frames, 'node-symbol-details');
+        let source = false;
+        if(frames.yes()) {
+            frames.natural();
+            frames.natural();
+            frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                source = !frames.yes() || source;
+                frames.yes();
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                const tags = frames.natural();
+                for(let t = 0; t < tags; t++) {
+                    frames.field();
+                    frames.field();
+                    frames.natural();
+                    frames.natural();
+                    frames.field();
+                }
+                const parameters = frames.natural();
+                for(let t = 0; t < parameters; t++) {
+                    frames.field();
+                }
+            }
+        }
+        frames.end();
+        this.globals.set(index, !source);
+        return !source;
+    }
+    report(index: number, rule: string, id: string, message: string): void {
+        const node = this.rules.parser.node(index);
+        this.rules.findings.push(
+            new Diagnostic(rule, id, message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''),
+        );
+    }
+}
