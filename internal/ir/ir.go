@@ -87,6 +87,10 @@ type Function struct {
 	// FrameEnvironment is the layout of the single entry allocation for this frame.
 	FrameEnvironment []int
 	NestedFrame      bool
+	// FrameIdentity is a synthetic cell plus one, anchoring canonical nested values.
+	FrameIdentity int
+	// ReferenceParents are lexical groups whose completed layouts this closure needs.
+	ReferenceParents []int
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.

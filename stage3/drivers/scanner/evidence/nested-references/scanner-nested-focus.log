@@ -1,0 +1,45 @@
+=== RUN   TestScannerNestedReferenceMutants
+=== RUN   TestScannerNestedReferenceMutants/nested-sibling-callback
+    scanner_nested_references_test.go:70: native mutant caught: output "" next to Node "x\n"
+    scanner_nested_references_test.go:70: JavaScript mutant caught: output "" next to Node "x\n"
+=== RUN   TestScannerNestedReferenceMutants/nested-generic-sibling-call
+    scanner_nested_references_test.go:70: native mutant caught: output "" next to Node "x\n"
+    scanner_nested_references_test.go:70: JavaScript mutant caught: output "" next to Node "x\n"
+=== RUN   TestScannerNestedReferenceMutants/nested-ancestor-call
+    scanner_nested_references_test.go:70: JavaScript mutant caught: output "0\n" next to Node "1\n"
+    scanner_nested_references_test.go:70: native mutant caught: output "0\n" next to Node "1\n"
+--- PASS: TestScannerNestedReferenceMutants (1.57s)
+    --- PASS: TestScannerNestedReferenceMutants/nested-sibling-callback (0.54s)
+    --- PASS: TestScannerNestedReferenceMutants/nested-generic-sibling-call (0.49s)
+    --- PASS: TestScannerNestedReferenceMutants/nested-ancestor-call (0.54s)
+=== RUN   TestScannerNestedReferences
+=== RUN   TestScannerNestedReferences/nested_reference_identity.a
+    scanner_nested_references_test.go:100: release output "true true true false\n11 12 21\ntrue 7\n32 33\n" next to Node "true true true false\n11 12 21\ntrue 7\n32 33\n"; exits 0/0
+    scanner_nested_references_test.go:100: JavaScript output "true true true false\n11 12 21\ntrue 7\n32 33\n" next to Node "true true true false\n11 12 21\ntrue 7\n32 33\n"; exits 0/0
+    scanner_nested_references_test.go:100: native output "true true true false\n11 12 21\ntrue 7\n32 33\n" next to Node "true true true false\n11 12 21\ntrue 7\n32 33\n"; exits 0/0
+=== RUN   TestScannerNestedReferences/nested-sibling-callback.a
+    scanner_nested_references_test.go:100: native output "x\n" next to Node "x\n"; exits 0/0
+    scanner_nested_references_test.go:100: release output "x\n" next to Node "x\n"; exits 0/0
+    scanner_nested_references_test.go:100: JavaScript output "x\n" next to Node "x\n"; exits 0/0
+=== RUN   TestScannerNestedReferences/nested-generic-sibling-call.a
+    scanner_nested_references_test.go:100: native output "x\n" next to Node "x\n"; exits 0/0
+    scanner_nested_references_test.go:100: release output "x\n" next to Node "x\n"; exits 0/0
+    scanner_nested_references_test.go:100: JavaScript output "x\n" next to Node "x\n"; exits 0/0
+=== RUN   TestScannerNestedReferences/nested-ancestor-call.a
+    scanner_nested_references_test.go:100: native output "1\n" next to Node "1\n"; exits 0/0
+    scanner_nested_references_test.go:100: release output "1\n" next to Node "1\n"; exits 0/0
+    scanner_nested_references_test.go:100: JavaScript output "1\n" next to Node "1\n"; exits 0/0
+--- PASS: TestScannerNestedReferences (2.52s)
+    --- PASS: TestScannerNestedReferences/nested_reference_identity.a (0.87s)
+    --- PASS: TestScannerNestedReferences/nested-sibling-callback.a (0.59s)
+    --- PASS: TestScannerNestedReferences/nested-generic-sibling-call.a (0.55s)
+    --- PASS: TestScannerNestedReferences/nested-ancestor-call.a (0.50s)
+=== RUN   TestNestedReferenceIdentityMutant
+    scanner_nested_references_test.go:140: native identity mutant caught: output "false false false false\n11 12 21\nfalse 7\n32 33\n" next to Node "true true true false\n11 12 21\ntrue 7\n32 33\n"
+    scanner_nested_references_test.go:140: JavaScript identity mutant caught: output "false false false false\n11 12 21\nfalse 7\n32 33\n" next to Node "true true true false\n11 12 21\ntrue 7\n32 33\n"
+--- PASS: TestNestedReferenceIdentityMutant (0.58s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.692s

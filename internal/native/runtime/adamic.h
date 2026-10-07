@@ -80,6 +80,8 @@ typedef struct adamic_cell {
 typedef struct adamic_environment {
 	adamic_heap heap;
 	size_t count;
+	// Weak cache: closures unlink themselves before releasing this frame.
+	struct adamic_closure *functions;
 	adamic_cell cells[];
 } adamic_environment;
 adamic_environment *adamic_environment_new(size_t count);
@@ -94,11 +96,17 @@ struct adamic_closure {
 	adamic_heap heap;
 	adamic_code code;
 	size_t count;
+	adamic_environment *canonical_owner;
+	adamic_closure *canonical_previous;
+	adamic_closure *canonical_next;
 	adamic_cell *cells[];
 };
 
 // adamic_closure_new makes a closure of count cells, for the caller to fill with references it gives.
 adamic_closure *adamic_closure_new(adamic_code code, size_t count);
+// Returns an owned canonical value; the frame cache holds no count on it.
+adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]);
+void adamic_closure_uncache(adamic_closure *closure);
 
 // adamic_string is an immutable string: UTF-8 bytes (string.c).
 typedef struct adamic_string {

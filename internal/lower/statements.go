@@ -3,7 +3,9 @@ package lower
 
 import (
 	"errors"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -177,6 +179,14 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if l.isPanicCall(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
+	}
+	// A generic return specialized to void still evaluates the call before returning.
+	if l.function.Returns == 0 && expression.Kind == ast.KindCallExpression && l.concrete(l.checker.GetTypeAtLocation(expression)).Flags()&checker.TypeFlagsVoid != 0 {
+		statements, err := l.expressionStatement(expression)
+		if err != nil {
+			return nil, err
+		}
+		return append(statements, ir.Return{}), nil
 	}
 	value, err := l.expression(expression)
 	if err != nil {
