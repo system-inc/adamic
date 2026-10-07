@@ -1,0 +1,213 @@
+Pushed implementation commits
+=============================
+V8 recheck: a8cc9037638ca1bfb0c074f310df9973aa6b875e on codex/regex-v8-divergences.
+Native base: origin/main 50045bd. Branch: codex/regex-native-fixes.
+1. 1c8cb692e4ead491983b3bf828dd466419a20f23: class octal and quantifier order.
+2. 5bce1185a0c1b794c2f40bc95d964898ad426035: duplicate class-string endpoints.
+3. c63a961be1f617f0ed9b3bffc0a0b2cfaa051821: cached UTF-16 input view.
+4. d4dfab69b7442c32bf58cfcfb116c276302ad9d7: compound-write refusal.
+5. e806c6672a829ec07a9e5bd46e2ce54f393dfab1: long backtracking leak oracle.
+Each implementation step was pushed separately. No PR was opened.
+
+Five-line summary
+=================
+Annex B class octal now matches Node; the cohere near-2^63 pattern is accepted.
+Duplicate class strings no longer create exponential duplicate choice points.
+The input string owns a reusable UTF-16 view, invalidated on append and freed with it.
+Compound group/property writes stop with NotYet before native field lookup.
+The exact long fixture agrees with Node; removing its heap-frame free leaks 82,773 allocations.
+
+Pinned Node/V8 recheck
+=====================
+node --version: v24.19.0. V8: 13.6.233.17-node.51. Linux x64.
+The exact integration program prints, one line each:
+2
+1
+false
+true
+false
+|
+Spec answers: 4 / 2 / true / false / true / a|.
+The Linux output is identical to integration's supplied official darwin-arm64
+24.19.0 output and its earlier macOS 24.14.1 output. Mac results were supplied,
+not locally measured. No observed platform/version difference in these lines.
+
+Draft                            Reproduces on 24.19.0       Decision
+1. Singleton class folding        Yes, integration line 3     Refusal kept
+2. Scoped modifiers               Yes, integration lines 4/5  Refusals kept; missing legacy shape added
+3. Mixed empty class strings      Yes, line 6 and replace hang Refusal kept
+4. Unicode non-word boundary      Yes, integration line 1     Node-compatible runtime kept; no refusal
+5. Negative word lookahead        Yes, integration line 2     Node-compatible runtime kept; no refusal
+
+No existing refusal was dropped. All five reproducing drafts remain for Kirk;
+nothing was filed. The uppercase mixed-empty exec witness does not independently
+prove empty-first ordering: the folding defect can fail the nonempty alternative.
+The direct lowercase non-i ordering control agrees with the spec. Draft 3 also
+pins a separate replacement slow-path hang. The recheck's docs state this distinction.
+See docs/regexp-v8-divergences.md at a8cc903, and that branch's node2419 reports.
+Recheck totals: 13 explicit spec/Node witnesses; 4,650 generated visible cases;
+3,660 accepted executions, zero disagreements. Refusals cost zero patterns in the
+5,746-pattern parser corpus, zero test262 files there, and zero of 127,369 exec calls.
+Both metered/unlimited C configurations retained 127,369 test262 and 9,911 random
+comparisons with zero disagreements; 89 random inputs were loudly refused on that
+policy branch (83 unique pattern/flag pairs). Native-fixes below uses the main base,
+not a merge of the separate V8 refusal-policy branch.
+
+Before and after
+================
+Probe / feature                    Before                     After
+class_octal                        Wrong stdout               Node-identical stdout
+class_escapes                      Wrong octal rows           Node-identical 17 rows
+quantifier_bounds                  Order refusal              Node-identical false witnesses
+class_string_duplicates            >3 s, bound killed it      0.001780 s, all three false
+quadratic_exec                     >3 s, bound killed it      0.704661 s, count 100000
+quadratic_matchall                 >3 s, bound killed it      0.707898 s, count 100000
+quadratic_test                     >3 s, bound killed it      0.682358 s, count 100000
+write_groups_compound_missing      Lowered unsafely            NotYet with source position
+long_backtrack                     No exact fixture guard     Node-identical; no leaks
+
+Final timing measurements are best of five release executions, compilation
+excluded, on this machine after other tests finished. Each run has a three-second
+deadline and must print exactly Node's output. Input construction is included;
+these are full-program times, not isolated VM throughput. Node measurements include
+process startup and the oracle loader. The old native runs were bounded at three
+seconds, so the local baseline is a lower bound, not a remeasurement of integration's
+reported 52.6 s or 10.5 s. Earlier loaded measurements are archived separately.
+
+Probe                         Native before   Native after   Node best of five
+class_string_duplicates       >3.000 s        0.001780 s     0.089860 s
+quadratic_exec                >3.000 s        0.704661 s     0.101480 s
+quadratic_matchall            >3.000 s        0.707898 s     0.145539 s
+quadratic_test                >3.000 s        0.682358 s     0.113074 s
+
+Implementation details and coverage
+===================================
+Class decimal escapes now enter Annex B legacy-octal decoding independently of
+capture count, with backreference handling still excluded inside classes. A Node
+sweep holds 1,536 octal cases plus the cohere pattern-620 witness: 1,537 comparisons.
+The order check follows observed V8 saturation at INT_MAX, not the cohere report's
+double-rounding inference. Exact arbitrary-width AST counters are retained. There
+are 432 syntax comparisons spanning INT_MAX, 2^53, 2^63 and 2^64, in legacy/u/v.
+The native fixtures hold the non-nullable large-bound match results. Huge nullable
+repetition performance was not optimized or exhaustively covered; bounds above
+uint64 retain the existing loud native refusal. This is not a claim of exhaustive
+large-bound execution coverage.
+
+One follow-up is blocked, not implemented: Node immediately prints true for
+new RegExp('(?:){9223372036854775808,9223372036854775807}').test('').
+The accepted AST retains its reversed exact counters. Code inspection of the C
+repeat instruction shows it cannot exit below minimum and cannot enter the body
+at maximum, so this nullable case risks an extremely long execution followed by
+a different eventual result. That eventual result was inferred from the bytecode
+conditions, not observed by running billions of iterations. A proposed narrow
+NotYet guard for reversed saturated ranges with possibly empty bodies was rejected
+by automatic approval review as a new behavior restriction beyond the specifically
+authorized parser/cohere fix. No refusal or test from that follow-up was applied.
+The consuming cohere witness remains held to Node; this nullable variant is not
+covered by the zero-disagreement totals and needs approval for the extra restriction.
+
+The C set operation sorts, then compacts equal endpoints. Equal endpoints have no
+capture side effects inside a class, so removing duplicate choices preserves order.
+This also covers duplicates introduced by Canonicalize and repeated string operands.
+
+The cache lives in adamic_string_index, not on a RegExp, so it does not retain input
+strings. The full view is separate from the BMP-only view (which direct code-point
+reads assume has no supplementary characters); it aliases that view for BMP input.
+Non-BMP decoding preserves both surrogate units and lone surrogates. Heap release
+frees the view, and existing in-place append invalidation discards it before writing.
+Ownerless stack pieces keep an explicitly freed temporary decode. The cache fixture
+holds mixed BMP/supplementary/lone-surrogate input, repeated reads, append, slices,
+replace, split, search and empty input to Node. Existing string-index/view tests pass.
+
+The assignment check recognizes every assignment token and both property/index
+targets. Twelve TypeScript-valid string dictionary assignments are tested: missing
+and existing names, +=, &&=, ||=, ??=. Adamic 0.1's earlier Refused for &&= and ||=
+is preserved; ??= already stops with generic NotYet before operands are lowered.
+Supported lastIndex += updates remain admitted. Numeric assignments to string-valued
+groups are tsc errors and were not built for this unit.
+
+Main 50045bd already contains the heap-frame free. Item 5 adds its missing guard,
+not another free. The exact supplied fixture is unchanged in behavior. Its failing
+unanchored search is intentionally expensive under sanitizers: the ordinary
+one-minute leak run timed out. It now has its own three-minute process bound,
+matching source Node, JavaScript backend, sanitized and release native executions,
+then Linux LeakSanitizer or macOS leaks. Its counts join the ordinary counts gate.
+No edit to internal/oracle/oracle_test.go was needed. Current Linux observations:
+sanitized comparison 110.611 s, release 26.986 s, leak check 92.737 s, all exit 0;
+test 236.651 s. The native release standalone control took 20.001 s on an earlier run.
+
+Mutants actually run
+===================
+All were isolated from the working branch. No compiler-warning failure is claimed.
+1a. Restore !inClass guard: 534 capture/index disagreements in the 1,537-case Node sweep.
+1b. Restore exact integer order comparison: 108 syntax disagreements in 432 cases.
+2. Leave count uncompacted: duplicate probe fails its three-second execution bound.
+3. Ignore the cached view: all three scan probes fail their three-second bounds.
+4. Restore equals-only guard: missing/existing += writes lose the required refusal,
+   including the exact g.y witness; three failing matrix controls.
+5. Replace only free(frame) with (void)frame: comparison builds finish exit 0 and
+   print Node's output; only leak detection fails. Linux reports 11,827,488 leaked
+   bytes in 82,773 allocations. Initial one-minute mutant attempts timed out and
+   are not counted as a leak proof; the three-minute rerun is the valid proof.
+Every disagreement is in the mutant logs. run-mutants.py recreates all six changes
+in a disposable checkout. Source the toolchain env first; it requires Linux for
+the final LeakSanitizer proof. It was assembled from the individual commands run,
+not rerun as a redundant second full mutation campaign.
+
+Integration's additional candidates
+===================================
+None agrees on this main base with the numbered fixes. All are archived under
+probes/ with the failed oracle log; none was registered as a passing fixture.
+null_undefined_inline: source Node distinguishes absent undefined from stored null;
+native reports null for both, while the JavaScript backend loses the undefined
+comparison on missing reads. Both backends disagree on those two missing-entry rows.
+structural_method: Node prints true; native exits 70, missing proven method.
+structural_optional: Node prints 'has test' / 'no test'; native exits 70, missing field.
+These existing representation/prototype gaps were reported, not fixed outside scope.
+
+Commands and outputs
+====================
+All test output went directly to files. No test run was piped. Logs live here.
+Toolchain: bash cloud/setup.sh; source /workspace/adamic-tools/env.sh. Go 1.27.1,
+clang 20.1.8, Node 24.19.0. nproc=5, CPU quota=4. Setup timing lines:
+setup: go ready (0s)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1s)
+setup: node ready (1s)
+setup: submodules ready (1s)
+setup: build cache warm (122s)
+setup: done in 122s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
+
+go test ./internal/regexp -count=1 -v -timeout=20m
+PASS, 3.314 s. Go: 127,369 test262 executions and 10,000 random cases, zero disagreements;
+also 1,537 octal executions, 432 large-bound syntax pairs, canonicalization and controls.
+go test ./internal/native -run '^TestRegExp' -count=1 -v -timeout=20m
+PASS, 59.097 s. Metered and unlimited C each compare 127,369 test262 plus 10,000
+random cases, zero disagreements, ASan/UBSan/LeakSanitizer enabled. No refusal-policy
+branch is merged here. Also 890 lint-pattern input cases and search/UTF-16 controls.
+go test ./internal/native -run '^Test(StringIndex|StringView|Strings)' -count=1 -v
+PASS, 8.563 s.
+go test ./internal/lower -run '^TestRegExp' -count=1 -v
+PASS, 1.682 s, compound-write controls and existing regexp refusals/source checks.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestRegExpLongBacktrackNode$' -count=1 -v -timeout=10m
+PASS, 236.651 s. Node/backend/sanitized/release/LSan all agree; no leaks.
+go test ./internal/regexp ./internal/lower ./internal/native -count=1 -timeout=20m
+PASS: regexp 15.916 s; lower 24.059 s; native 139.753 s.
+go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/regexp' -parallel=2 -count=1 -v -timeout=15m
+PASS, 40.985 s: 18 accepted fixtures agree across all comparisons, one exact NotYet.
+go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/sweeps/regexp_methods' -count=1 -v
+PASS, 3.462 s.
+go test ./internal/oracle -run '^TestRegExpNativeTiming$' -count=1 -v
+PASS, 14.827 s; all five trials of all four probes finish under 3 s and match Node.
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts
+PASS, 41.990 s, complete table regenerated; item 5 adds one row.
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1
+PASS, 32.254 s, recorded counts verified.
+go vet ./...: exit 0, no output. gofmt -l cmd internal: exit 0, no output.
+git diff --check: exit 0, no output.
+
+The full uncached ./... test gate was not run. Complete touched packages plus
+the explicit regex oracle filters above were run; the long oracle itself was
+uncached. No runner verdict/classification edits, cohere-corpus edits, protected
+compiler-file edits or constantPattern edits. No local macOS execution or benchmark
+callgrind campaign was part of this fix unit. The separate V8 policy commit remains
+on its own branch for integration.
