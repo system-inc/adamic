@@ -42,10 +42,13 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 	if len(bases) == 0 {
 		return nil
 	}
-	base := bases[0]
-	checkABI := len(declaration.TypeParameters()) == 0 || classType != l.checker.GetTypeAtLocation(declaration.Name())
+	return l.checkMemberOverrides(declaration, classType, bases[0], false)
+}
+
+func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *checker.Type, static bool) error {
+	checkABI := static || len(declaration.TypeParameters()) == 0 || classType != l.checker.GetTypeAtLocation(declaration.Name())
 	for _, member := range declaration.Members() {
-		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) != static {
 			continue
 		}
 		inherited := l.checker.GetPropertyOfType(base, member.Name().Text())
@@ -60,6 +63,46 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 		refuse := func(what, fix string) error { return &Refused{Where: l.program.Where(member), What: what, Fix: fix} }
 		if (member.Kind == ast.KindMethodDeclaration) != (inherited.Flags&ast.SymbolFlagsMethod != 0) {
 			return refuse("an inherited method replaced by a field, or a field replaced by a method", "keep the inherited member kind; use a different name for the new member")
+		}
+		if accessorMember(member) != accessorSymbol(inherited) {
+			return refuse("an inherited data property replaced by an accessor, or an accessor replaced by data", "keep the inherited member kind; use another name for the new property")
+		}
+		if accessorMember(member) {
+			ownGet, ownSet, baseGet, baseSet := false, false, false, false
+			for _, candidate := range declaration.Members() {
+				if candidate.Name() != nil && candidate.Name().Text() == member.Name().Text() && ast.HasSyntacticModifier(candidate, ast.ModifierFlagsStatic) == static {
+					ownGet = ownGet || candidate.Kind == ast.KindGetAccessor
+					ownSet = ownSet || candidate.Kind == ast.KindSetAccessor
+				}
+			}
+			for _, candidate := range inherited.Declarations {
+				baseGet = baseGet || candidate.Kind == ast.KindGetAccessor
+				baseSet = baseSet || candidate.Kind == ast.KindSetAccessor
+			}
+			if (baseGet && !ownGet) || (baseSet && !ownSet) {
+				return refuse("an accessor override that hides the inherited getter or setter", "override both halves of the inherited descriptor; delegate an unchanged half to super")
+			}
+			if member.Kind == ast.KindSetAccessor {
+				for _, candidate := range inherited.Declarations {
+					if candidate.Kind != ast.KindSetAccessor {
+						continue
+					}
+					old := l.checker.GetSignatureFromDeclaration(candidate)
+					next := l.checker.GetSignatureFromDeclaration(member)
+					accepts := l.checker.GetTypeOfSymbol(old.Parameters()[0])
+					override := l.checker.GetTypeOfSymbol(next.Parameters()[0])
+					if !static {
+						accepts = instantiateType(l.checker, accepts, l.typeMapperOf(candidate.Parent, base))
+						override = instantiateType(l.checker, override, l.typeMapperOf(declaration, classType))
+					}
+					if !l.classAssignable(accepts, override) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
+						return refuse("an accessor override that narrows a setter parameter (adamic/contravariant-override)", "accept the base setter's parameter type or a wider type; narrow it inside the setter")
+					}
+				}
+			}
+			if ownGet && (!l.classAssignable(own, previous) || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
+				return refuse("an accessor override with an unsafe read or write type (adamic/invariant-mutable)", "keep the inherited accessor type; narrow values inside the accessor")
+			}
 		}
 		if member.Kind == ast.KindPropertyDeclaration {
 			if !l.checker.IsReadonlySymbol(inherited) && (!l.classAssignable(previous, own) || !l.classAssignable(own, previous) || l.widened(previous, own, map[[2]*checker.Type]bool{}) != nil || l.widened(own, previous, map[[2]*checker.Type]bool{}) != nil) {
@@ -87,32 +130,62 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 		}
 		old, next := oldSignatures[0], newSignatures[0]
 		if len(old.Parameters()) != len(next.Parameters()) {
-			return l.notYet(member, "an override with a different parameter count")
+			return l.notYet(member, "an override with a different parameter count; keep the base method's parameter count")
 		}
 		for index, parameter := range old.Parameters() {
 			accepts := l.checker.GetTypeOfSymbol(parameter)
 			override := l.checker.GetTypeOfSymbol(next.Parameters()[index])
+			a, knownA := l.overrideParameterRepresentation(parameter)
+			b, knownB := l.overrideParameterRepresentation(next.Parameters()[index])
+			if checkABI && (!knownA || !knownB || a != b) {
+				return l.notYet(member, "an override with a different native representation for parameter "+strconv.Quote(next.Parameters()[index].Name)+"; keep the base method's parameter form")
+			}
 			if !l.classAssignable(accepts, override) || l.widened(accepts, override, map[[2]*checker.Type]bool{}) != nil {
 				return refuse("an override that narrows a method parameter (adamic/contravariant-override)", "accept the base method's parameter type or a wider type; narrow it inside the method")
-			}
-			a, knownA := l.representation(accepts)
-			b, knownB := l.representation(override)
-			if checkABI && (!knownA || !knownB || a != b) {
-				return l.notYet(member, "an override with a different native parameter representation")
 			}
 		}
 		oldResult := l.checker.GetReturnTypeOfSignature(old)
 		newResult := l.checker.GetReturnTypeOfSignature(next)
+		a, knownA := l.overrideResultRepresentation(oldResult)
+		b, knownB := l.overrideResultRepresentation(newResult)
+		if checkABI && (!knownA || !knownB || a != b) {
+			return l.notYet(member, "an override with a different native result representation; keep the base method's result form")
+		}
 		if !l.classAssignable(newResult, oldResult) || l.widened(newResult, oldResult, map[[2]*checker.Type]bool{}) != nil {
 			return refuse("an override that widens its return type", "return the base method's result type or a subtype")
 		}
-		a, knownA := l.representation(oldResult)
-		b, knownB := l.representation(newResult)
-		if checkABI && oldResult.Flags()&checker.TypeFlagsVoid == 0 && (!knownA || !knownB || a != b) {
-			return l.notYet(member, "an override with a different native result representation")
-		}
 	}
 	return nil
+}
+
+// Match signature lowering, including the incoming optional form of a defaulted parameter.
+// The signature's symbol carries the instantiated type; its declaration carries the default.
+func (l *lowering) overrideParameterRepresentation(parameter *ast.Symbol) (ir.Type, bool) {
+	if len(parameter.Declarations) != 1 || parameter.Declarations[0].Kind != ast.KindParameter {
+		return 0, false
+	}
+	declaration := parameter.Declarations[0]
+	declared := declaration.AsParameterDeclaration()
+	if declared.DotDotDotToken != nil {
+		return 0, false
+	}
+	name := declaration.Name()
+	if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
+		return ir.Object, declared.Initializer == nil && declared.QuestionToken == nil
+	}
+	representation, known := l.representation(l.checker.GetTypeOfSymbol(parameter))
+	if declared.Initializer != nil || declared.QuestionToken != nil {
+		representation = ir.Maybe(representation)
+	}
+	return representation, known
+}
+
+// Named methods returning void or never have no C result, as signature lowering does.
+func (l *lowering) overrideResultRepresentation(result *checker.Type) (ir.Type, bool) {
+	if result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0 {
+		return 0, true
+	}
+	return l.representation(result)
 }
 
 // Constructors initialize an already allocated object. A separate allocator fixes its dynamic
@@ -160,7 +233,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 			return l.notYet(member, "a declare or abstract class field")
 		}
 		if ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
-			return l.notYet(member, "a static field")
+			continue
 		}
 		if !ast.IsIdentifier(member.Name()) && member.Name().Kind != ast.KindPrivateIdentifier {
 			return l.notYet(member, "a field with a computed name")
@@ -172,7 +245,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if slotless(of) {
 			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
 		}
-		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of)}
+		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier}
 		// An uninitialized reference still has its declared representation for the shape bitmap.
 		if of.IsReference() {
 			field.Value = ir.Undefined{Of: of}
@@ -216,50 +289,24 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if returnValue != nil {
 			return l.notYet(returnValue, "a constructor returning a replacement value")
 		}
+		state := uint8(0)
 		if instance.base != nil {
-			// Conditional and repeated super need definite-initialization dataflow, not a guessed order.
-			var invalid *ast.Node
-			totalSuper := 0
-			var visit ast.Visitor
-			visit = func(node *ast.Node) bool {
-				if ast.IsFunctionLike(node) {
-					return false
-				}
-				if node.Kind == ast.KindCallExpression && ast.SkipParentheses(node.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
-					totalSuper++
-				}
-				if node.Kind == ast.KindReturnStatement {
-					invalid = node
-					return true
-				}
-				return node.ForEachChild(visit)
-			}
-			constructor.Body().ForEachChild(visit)
-			if invalid != nil {
-				return l.notYet(invalid, "an explicit return from a derived constructor")
-			}
-			count := 0
-			for _, statement := range constructor.Body().AsBlock().Statements.Nodes {
-				if statement.Kind != ast.KindExpressionStatement {
-					continue
-				}
-				call := ast.SkipParentheses(statement.AsExpressionStatement().Expression)
-				if call.Kind == ast.KindCallExpression && ast.SkipParentheses(call.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
-					count++
-					instance.beforeSuper = statement.End()
-				}
-			}
-			if count != 1 || totalSuper != 1 {
-				return l.notYet(constructor, "a derived constructor without exactly one unconditional super(...) statement")
+			var err error
+			state, err = l.prepareSuper(constructor, initializer)
+			if err != nil {
+				return err
 			}
 		}
+
 		outerUnset := l.unsetUntil
 		l.unsetUntil = lastFieldAssignment(declaration, constructor)
 		err := l.lowerFunction(initializer, constructor, this)
 		l.unsetUntil = outerUnset
-		instance.beforeSuper = 0
 		if err != nil {
 			return err
+		}
+		if state&superUninitialized != 0 {
+			l.result.Functions[initializer].Body = append(l.result.Functions[initializer].Body, l.superEnd())
 		}
 	} else if instance.base != nil {
 		arguments := []ir.Expression{}
@@ -369,13 +416,18 @@ func (l *lowering) superStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	statements := []ir.Statement{ir.Evaluate{Value: call}}
+	statements := []ir.Statement{}
+	if l.instance.superStates[node]&superInitialized != 0 {
+		// JavaScript constructs another base object before rejecting a second binding.
+		// Do not overwrite the already initialized object's fields on this path.
+		base := call.(ir.Call)
+		second := ir.Call{Function: l.instance.base.constructor, Arguments: base.Arguments[1:], Returns: ir.Object}
+		statements = append(statements, ir.If{Condition: ir.Read{Local: l.instance.superReady, Of: ir.Boolean}, Then: []ir.Statement{ir.Evaluate{Value: second}, l.superError("Super constructor may only be called once")}})
+	}
+	statements = append(statements, ir.Evaluate{Value: call}, ir.Assign{Local: l.instance.superReady, Value: ir.BooleanConstant{Value: true}})
 	// Fields run only once super has returned, and before the next derived-body statement.
-	before := l.instance.beforeSuper
-	l.instance.beforeSuper = 0
 	declaration := l.classNode.Parent
 	initialized, err := l.fieldInitializers(declaration, l.this)
-	l.instance.beforeSuper = before
 	if err != nil {
 		return nil, err
 	}
@@ -480,7 +532,7 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
 	return &Refused{Where: l.program.Where(node), What: "a value without nominal ancestry seen as " + l.checker.TypeToString(target), Fix: "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"}
 }
 
-func (l *lowering) nominalAncestor(source, target *checker.Type) bool {
+func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*checker.Type]bool) bool {
 	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		if constraint := l.checker.GetBaseConstraintOfType(source); constraint != nil {
 			source = constraint
@@ -498,14 +550,14 @@ func (l *lowering) nominalAncestor(source, target *checker.Type) bool {
 			return false
 		}
 		for index := range from {
-			if !l.checker.IsTypeAssignableTo(from[index], to[index]) || !l.checker.IsTypeAssignableTo(to[index], from[index]) {
+			if !l.checker.IsTypeAssignableTo(from[index], to[index]) || !l.checker.IsTypeAssignableTo(to[index], from[index]) || l.nominalMismatch(from[index], to[index], seen) != nil || l.nominalMismatch(to[index], from[index], seen) != nil {
 				return false
 			}
 		}
 		return true
 	}
 	for _, base := range l.classBases(source) {
-		if l.nominalAncestor(base, target) {
+		if l.nominalAncestor(base, target, seen) {
 			return true
 		}
 	}
@@ -542,6 +594,11 @@ func (l *lowering) fieldName(name *ast.Node) string {
 	symbol := l.checker.GetSymbolAtLocation(name)
 	if symbol != nil && len(symbol.Declarations) > 0 {
 		class := symbol.Declarations[0].Parent
+		if class != nil && ast.HasSyntacticModifier(symbol.Declarations[0], ast.ModifierFlagsStatic) {
+			if lowered := l.statics[l.symbol(class.Name())]; lowered != nil {
+				return memberKey(name, lowered.class)
+			}
+		}
 		if class != nil && class.Kind == ast.KindClassDeclaration {
 			if l.instance != nil && l.classNode != nil && l.classNode.Parent == class {
 				return name.Text() + "@" + strconv.Itoa(l.instance.class)
@@ -602,11 +659,22 @@ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.
 		}
 		return nil
 	}
+	if l.isStaticType(to) {
+		wanted := l.staticClass(to, nil)
+		actual := l.staticClass(from, nil)
+		for actual != nil {
+			if actual == wanted {
+				return nil
+			}
+			actual = l.staticBase(actual)
+		}
+		return to
+	}
 	if isClassInstance(to) {
 		if symbol := to.Symbol(); symbol != nil && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
 			return nil
 		}
-		if !l.nominalAncestor(from, to) {
+		if !l.nominalAncestor(from, to, seen) {
 			return to
 		}
 		return nil
@@ -709,6 +777,11 @@ func (l *lowering) cycleFieldMatches(holder *checker.Type, field, written string
 		return false
 	}
 	class := property.Declarations[0].Parent
+	if ast.HasSyntacticModifier(property.Declarations[0], ast.ModifierFlagsStatic) {
+		if lowered := l.statics[l.symbol(class.Name())]; lowered != nil {
+			return written == memberKey(name, lowered.class)
+		}
+	}
 	prefix := l.program.Where(class) + ":" + class.Name().Text()
 	for key, instance := range l.instances {
 		if key != prefix && !strings.HasPrefix(key, prefix+",") {
@@ -762,6 +835,14 @@ func (l *lowering) classIdentity(declaration *ast.Node) int {
 // An inherited method's receiver can be a descendant with different type arguments.
 // Find the declaration's actual instantiated view instead of substituting by position.
 func (l *lowering) classView(proven *checker.Type, declaration *ast.Node) *checker.Type {
+	if proven.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		if constraint := l.checker.GetBaseConstraintOfType(proven); constraint != nil {
+			proven = constraint
+		}
+	}
+	if weak := l.weakTarget(proven); weak != nil {
+		proven = weak
+	}
 	if proven.Symbol() == l.symbol(declaration.Name()) {
 		return proven
 	}

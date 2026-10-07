@@ -1,0 +1,14 @@
+==136493== Callgrind, a call-graph generating cache profiler
+==136493== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==136493== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==136493== Command: /tmp/adamic-field-perf/json-after --cases /tmp/adamic-json-perf/profile-cases.txt
+==136493==
+==136493== For interactive control, run 'callgrind_control -h'.
+==136493== brk segment overflow in thread #1: can't grow to 0x483c000
+==136493== (see section Limitations in user manual)
+==136493== NOTE: further instances of this message will not be shown
+==136493==
+==136493== Events    : Ir
+==136493== Collected : 883391243
+==136493==
+==136493== I   refs:      883,391,243

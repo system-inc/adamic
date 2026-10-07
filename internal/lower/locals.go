@@ -44,6 +44,13 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
+		} else if l.includesUndefined(l.checker.GetTypeAtLocation(name)) {
+			// An optional declaration can be read before assignment. Its first value
+			// is undefined, not the backend's unobservable storage placeholder.
+			value = ir.Undefined{Of: ir.Object}
+		}
+		if closure, literal := value.(ir.MakeClosure); literal && list.Flags&ast.NodeFlagsConst != 0 {
+			l.result.Locals[local].ConstantClosure = closure.Function + 1
 		}
 		statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
 	}

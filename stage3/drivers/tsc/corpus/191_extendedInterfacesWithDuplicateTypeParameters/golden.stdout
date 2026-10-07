@@ -1,0 +1,4 @@
+extendedInterfacesWithDuplicateTypeParameters.ts(1,42): error TS2300: Duplicate identifier 'A'.
+extendedInterfacesWithDuplicateTypeParameters.ts(5,11): error TS2428: All declarations of 'InterfaceWithSomeTypars' must have identical type parameters.
+extendedInterfacesWithDuplicateTypeParameters.ts(9,11): error TS2428: All declarations of 'InterfaceWithSomeTypars' must have identical type parameters.
+extendedInterfacesWithDuplicateTypeParameters.ts(9,38): error TS2300: Duplicate identifier 'C'.

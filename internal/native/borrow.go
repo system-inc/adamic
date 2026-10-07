@@ -58,9 +58,14 @@ func lendable(valueType ir.Type) bool {
 // consumes reports whether an expression is a consumer whose operands it can lend: pure, done with
 // its operands when it's evaluated (not handing one on as its own value, as a conditional or ??
 // does), and with every operand pure.
+//
+// Every pure operation whose value is one of its operands, as it is (a narrowing, a cast, a box),
+// must be on the list below: on pure's list without being here, it lends the read it hands on, and
+// its parent keeps that uncounted pointer while a later operand frees it (ir.Defined, once pure,
+// did: borrow_defined_lent.a). TestPassThroughsAreNotConsumers holds every pure kind to a decision.
 func consumes(expression ir.Expression) bool {
 	switch expression.(type) {
-	case ir.Read, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast, ir.MaybeOf, ir.Undefined,
+	case ir.Read, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast, ir.MaybeOf, ir.Defined, ir.Undefined,
 		ir.NumberConstant, ir.BooleanConstant, ir.StringConstant:
 		return false
 	}
