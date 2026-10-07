@@ -1,0 +1,133 @@
+// Built through an overlay inside cohere, using its unmodified syntax-only rules.
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/system-inc/cohere/internal/edit"
+	"github.com/system-inc/cohere/internal/lint/report"
+	"github.com/system-inc/cohere/internal/lint/rule"
+	"os"
+	"sort"
+	"strings"
+	"unicode/utf16"
+)
+
+func written(text string) string {
+	var result strings.Builder
+	for _, r := range text {
+		if r >= 32 && r <= 126 && r != '\\' {
+			result.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&result, `\u%04x`, r)
+		} else {
+			h, l := utf16.EncodeRune(r)
+			fmt.Fprintf(&result, `\u%04x\u%04x`, h, l)
+		}
+	}
+	return result.String()
+}
+func run(row string, countOnly bool, out *bufio.Writer) int {
+	fields := strings.Split(row, "\t")
+	for len(fields) < 5 {
+		fields = append(fields, "")
+	}
+	path := fields[0]
+	data, err := os.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+	source := string(data)
+	diagnostics := collect(path, source, fields)
+	if countOnly {
+		return len(diagnostics)
+	}
+    for _, d := range diagnostics {
+        var rendered strings.Builder
+        report.Write(&rendered, []rule.Diagnostic{d}, report.Coverage{})
+        display := rendered.String(); footer := strings.LastIndex(display, "✗ cohere (")
+        if footer < 0 { panic("cohere report shape changed") }
+        fmt.Fprint(out, display[:footer])
+        fmt.Fprintf(out, "range %d %d %s\n", d.Range.Pos(), d.Range.End(), d.Message.Id)
+        for _, f := range d.Fixes { fmt.Fprintf(out, "fix %d %d\t%s\n", f.Range.Pos(), f.Range.End(), written(f.Text)) }
+        for _, s := range d.Suggestions {
+            fmt.Fprintf(out, "suggestion %s\t%s\n", s.Message.Id, written(s.Message.Description))
+            for _, f := range s.Fixes { fmt.Fprintf(out, "edit %d %d\t%s\n", f.Range.Pos(), f.Range.End(), written(f.Text)) }
+        }
+    }
+	result, err := edit.FixText(path, source, func(fileName, text string) ([]edit.Proposal, error) {
+		return edit.ProposalsFrom(collect(fileName, text, fields)), nil
+	}, 10)
+	if err != nil || len(result.Rejected) != 0 || !result.Converged {
+		panic(fmt.Sprintf("fix failed: %v %+v", err, result))
+	}
+	fixed := result.Text
+	fmt.Fprintf(out, "fixed\t%s\n", written(fixed))
+	return len(diagnostics)
+}
+func collect(path, source string, fields []string) []rule.Diagnostic {
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, core.ScriptKindTS)
+	if len(file.Diagnostics()) != 0 {
+		panic(fmt.Sprintf("invalid corpus %s: %v", path, file.Diagnostics()))
+	}
+	selected := registeredRules()
+	var diagnostics []rule.Diagnostic
+	var listeners []rule.Listeners
+	for _, registered := range selected {
+		subject := registered.subject
+		if fields[1] != "" && fields[1] != "all" && fields[1] != subject.Name {
+			continue
+		}
+		ctx := rule.Context{SourceFile: file, FileCache: rule.NewFileCache(), Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; diagnostics = append(diagnostics, d) }}
+		options := registered.options(fields)
+		listeners = append(listeners, subject.Run(ctx, options))
+	}
+	var walk func(*ast.Node)
+	walk = func(n *ast.Node) {
+		for _, listener := range listeners {
+			if visit := listener[n.Kind]; visit != nil {
+				visit(n)
+			}
+		}
+		n.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
+	}
+	walk(file.AsNode())
+	sort.SliceStable(diagnostics, func(i, j int) bool { return diagnostics[i].Range.Pos() < diagnostics[j].Range.Pos() })
+	return diagnostics
+}
+
+func main() {
+	args := os.Args[1:]
+	if len(args) == 0 {
+		panic("missing file")
+	}
+	out := bufio.NewWriter(os.Stdout)
+	defer out.Flush()
+	if args[0] != "--manifest" {
+		run(args[0], false, out)
+		return
+	}
+	data, err := os.ReadFile(args[1])
+	if err != nil {
+		panic(err)
+	}
+	countOnly := len(args) > 2 && args[2] == "--count"
+	count, index := 0, 0
+	for _, row := range strings.Split(string(data), "\n") {
+		if row == "" {
+			continue
+		}
+		if !countOnly {
+			fmt.Fprintf(out, "case %d\n", index)
+		}
+		count += run(row, countOnly, out)
+		index++
+	}
+	if countOnly {
+		fmt.Fprintln(out, count)
+	}
+}
