@@ -1,6 +1,6 @@
 {
   "name": "optional suggestion edits omitted",
-  "file": "rule.a",
+  "file": "rule.ts",
   "from": "if(fixes.length > 0) suggestions.push",
   "to": "if(fixes.length > 99) suggestions.push"
 }

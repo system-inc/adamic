@@ -1,0 +1,993 @@
+diff --git a/cmd/lint-registry/main.go b/cmd/lint-registry/main.go
+new file mode 100644
+index 00000000..6c289b1b
+--- /dev/null
++++ b/cmd/lint-registry/main.go
+@@ -0,0 +1,22 @@
++// lint-registry prepares static imports before building the stage 1 lint driver.
++package main
++
++import (
++	"flag"
++	"fmt"
++	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
++	"os"
++)
++
++func main() {
++	root := flag.String("root", "stage1/cohere/lint", "lint source directory")
++	flag.Parse()
++	descriptors, err := registry.Generate(*root)
++	if err != nil {
++		fmt.Fprintln(os.Stderr, err)
++		os.Exit(1)
++	}
++	for _, d := range descriptors {
++		fmt.Println(d.Name)
++	}
++}
+diff --git a/docs/lint-registration.md b/docs/lint-registration.md
+new file mode 100644
+index 00000000..659e2024
+--- /dev/null
++++ b/docs/lint-registration.md
+@@ -0,0 +1,114 @@
++# Lint registration without shared lines
++
++Current main (`5d4c801`) has five syntax rules. This migration moves all five,
++including their messages, options adapters, witnesses and mutants, into
++`stage1/cohere/lint/rules/<slug>/`. The thirty-rule scanner branch described in
++the accepted proposal is another worker's branch; this unit changes main's five.
++
++Add only your own rule directory. Do not append imports, dispatch conditions,
++Go oracle selections, corpus filters, file-copy lists or mutant lists elsewhere.
++The rule directory contains:
++
++- `rule.ts`: an exported concrete listener class and named factory.
++- `messages.ts`: exact descriptions and any message builders.
++- `rule.json`: public name, interested node kinds, factory/class names and provenance.
++- `oracle.go`: the unmodified upstream cohere rule and its typed options adapter.
++- `testdata/*.ts.txt`: raw TypeScript witnesses, outside the module graph.
++- `mutant.json`: one source mutation that compiles, runs, and must disagree with Go.
++  Fields are `name`, `from`, `to`, and optional `file` (default `rule.ts`). The
++  file must stay inside this rule directory. Anchors are scoped to that file,
++  so another worker can use the same snippet without changing your test.
++
++For example, the debugger descriptor is:
++
++```json
++{
++  "name": "no-debugger",
++  "order": 1,
++  "kinds": ["DebuggerStatement"],
++  "visit": "visit",
++  "parent": true,
++  "factory": "create",
++  "class": "Rule",
++  "oracle": "oracleNoDebugger",
++  "upstreamPackage": "core",
++  "upstreamTest": "TestNoDebugger"
++}
++```
++
++`order` preserves the five migrated rules' prior dispatch and stable finding tie
++order. **New rules omit it** and sort lexically by public name after migrated
++rules. There is no shared ordinal allocator. Slugs contain lowercase letters,
++digits and hyphens; scoped public names such as `@typescript-eslint/example`
++stay in `name`. Upstream test names are prefixes because the tests have suffixes.
++Only captured cases with the descriptor's exact rule name enter its corpus.
++
++`create(context: RuleContext)` returns the exported concrete class. The class
++implements `visit(index: number, parent: number)` when `parent: true`, or
++`visit(index: number)` otherwise. Optional `prepare` and `finish` descriptor
++fields name methods taking the source root index. File listeners subscribe to
++`SourceFile`. Factories create one instance per source file; instances can own
++rule-local state. Each file's full numeric ancestry is ready before `prepare`.
++All prepare hooks run before preorder visitation; all finish hooks run afterward.
++Hooks and visits run only for `all` or the exact selected name.
++
++The shared context owns source, initialized parser/scanner, read-only parent
++indexes, the finding destination, decoded JSON settings and main's existing equality/catch options.
++It has no link back to Linter or RuleSet. Concrete named imports and typed fields
++avoid interface-method casts and reference cycles. Keep new options decoding
++inside the rule adapter. Manifest field 5 carries the complete captured options
++as JSON, without a fixed per-rule capture struct. `context.settings.read` and
++`list` expose scalar/string-array settings with lowercase keys. Empty/null input
++uses defaults. The settings parser reads flat scalar/array values; structured values remain
++JSON text for a rule's own decoder, and `settings.text` retains the complete raw
++options. Rules can decode new shapes entirely within their own directory.
++Option expressions are never executed. This is the
++scanner branch's existing restricted settings parser, reused on main. Legacy
++fields remain available, and JSON values override them when provided.
++
++The adapter is built through a Go overlay inside cohere, with the generated
++selection file and **all** discovered adapter files passed to `go build`. It
++returns the upstream `rule.Rule` from a uniquely named function and has a second
++function named `<oracle>Options(fields []string) any`. Preserve upstream defaults
++and legacy manifest fields: equality mode/null are fields 2/3, empty-catch is field
++4. JSON options are field 5; decode them to the rule's own upstream options
++type in its adapter. For an object, `json.Unmarshal` retains the upstream
++struct's decoded defaults; option validation remains the upstream rule's job.
++Mark the adapter `//go:build lintoracle`: ordinary Adamic package discovery
++must not build cohere's internal imports. The explicit-file overlay build includes
++it. Cohere's rule bodies, messages, formatter and converging fixer stay independent
++from the TS port and unchanged in the submodule.
++
++From the repository root, before every manual build or Node run:
++
++```sh
++go run ./cmd/lint-registry
++go run ./cmd/adamic build stage1/cohere/lint/main.ts
++```
++
++The generator validates the entire discovered set: strict JSON, unique public
++names and adapter functions, complete directories, named factories/classes/hooks,
++pinned AST kind names, required adapter exports, witnesses and mutant metadata.
++It writes bucketed TS dispatch and Go selection into ignored `.generated/` files.
++Generation uses sorted descriptors and node kinds, atomic replacement and unchanged
++byte checks. A removed descriptor cannot leave a stale registration behind.
++Do not commit these outputs. CI tests validate and regenerate before filtered tests
++as well as before each port build and Node run.
++
++Tests derive upstream package/test filters and copied module files by discovery.
++Every owned witness must cause an upstream finding, and Go/Node/sanitized-native
++outputs must match for selected and all-rule runs. Each discovered mutant is tested
++against its own witnesses plus the inherited corner-case corpus. The existing
++217 upstream cases, decoded defaults, exact descriptions, UTF-8 ranges, stable
++findings, safe fixes, suggestions, fixed-source reparsing and overlap refusal are
++preserved. This unit does not expand main's fix engine or parser recovery contract.
++
++For a new rule, run the generator and package tests, review the upstream comparison
++and mutant log, and commit only that directory. Two workers choosing distinct slugs
++share no changed lines. Trial commits, merge output and tests are recorded in
++[the evidence report](lint-registration-evidence/REPORT.md).
++
++Oracle fixtures have their own companion migration on `codex/no-shared-lists`,
++commit `7f958de`. Its source/options/counts sidecars and discovery command remove
++fixture registry and table appends. This lint branch starts from main and does not
++include that unit's changes; follow that unit's fixture instructions once merged.
+diff --git a/stage1/cohere/lint/context.ts b/stage1/cohere/lint/context.ts
+new file mode 100644
+index 00000000..ca552815
+--- /dev/null
++++ b/stage1/cohere/lint/context.ts
+@@ -0,0 +1,125 @@
++import { panic } from 'adamic';
++import type { Parser } from '../../typescript/parser/parser.ts';
++import type { ParseNode } from '../../typescript/parser/nodes.ts';
++import type { Scanner } from '../../typescript/scanner/scanner.ts';
++
++import { Finding } from './finding.ts';
++import type { Settings } from './settings.ts';
++
++export class RuleContext {
++    readonly source: string;
++    readonly settings: Settings;
++    readonly parser: Parser;
++    readonly scanner: Scanner;
++    readonly findings: Finding[] = [];
++    readonly parents: readonly number[];
++    readonly selected: string;
++    readonly mode: string;
++    readonly nullPolicy: string;
++    readonly allowCatch: boolean;
++    constructor(
++        source: string,
++        parser: Parser,
++        scanner: Scanner,
++        selected: string,
++        mode: string,
++        nullPolicy: string,
++        allowCatch: boolean,
++        parents: readonly number[],
++        settings: Settings,
++    ) {
++        this.source = source;
++        this.parser = parser;
++        this.scanner = scanner;
++        this.settings = settings;
++        this.selected = selected === '' ? 'all' : selected;
++        this.mode = mode === '' ? 'Always' : mode;
++        this.nullPolicy = this.mode === 'Always' ? (nullPolicy === '' ? 'Always' : nullPolicy) : 'Ignore';
++        this.allowCatch = allowCatch;
++        this.parents = parents;
++    }
++    node(index: number): ParseNode {
++        return this.parser.node(index);
++    }
++    enabled(name: string): boolean {
++        return this.selected === 'all' || this.selected === name;
++    }
++    start(index: number): number {
++        const node = this.node(index);
++        this.scanner.pos = node.pos;
++        this.scanner.scan();
++        return this.scanner.start;
++    }
++    report(
++        index: number,
++        rule: string,
++        id: string,
++        message: string,
++        repair: string,
++        replacement: string,
++        suggestion: string,
++    ): void {
++        this.findings.push(
++            new Finding(rule, id, message, this.start(index), this.node(index).end, repair, replacement, suggestion),
++        );
++    }
++    comment(index: number): boolean {
++        const end = this.node(index).end;
++        const opening = this.source.indexOf('{', this.start(index));
++        if(opening < 0 || opening >= end) {
++            return false;
++        }
++        // The next token's trivia is the interior of an empty braced node.
++        this.scanner.pos = opening + 1;
++        this.scanner.scan();
++        const trivia = this.source.slice(opening + 1, this.scanner.start);
++        return trivia.includes('//') || trivia.includes('/*');
++    }
++    unwrap(index: number): number {
++        let cursor = index;
++        while(this.node(cursor).kind === 'ParenthesizedExpression') {
++            cursor = this.node(cursor).children[0] ?? panic('parenthesis without operand');
++        }
++        return cursor;
++    }
++    literalType(index: number): string {
++        switch(this.node(this.unwrap(index)).kind) {
++            case 'StringLiteral':
++            case 'NoSubstitutionTemplateLiteral':
++                return 'string';
++            case 'NumericLiteral':
++                return 'number';
++            case 'BigIntLiteral':
++                return 'bigint';
++            case 'TrueKeyword':
++            case 'FalseKeyword':
++                return 'boolean';
++            case 'NullKeyword':
++            case 'RegularExpressionLiteral':
++                return 'object';
++            default:
++                return '';
++        }
++    }
++    tokens(start: number, end: number): string {
++        this.scanner.pos = start;
++        let result = '';
++        while(this.scanner.scan() !== 'EndOfFile' && this.scanner.start < end) {
++            result += `${this.source.slice(this.scanner.start, this.scanner.pos)} `;
++        }
++        return result;
++    }
++    signature(index: number): string {
++        const node = this.node(index);
++        const start = this.start(index);
++        let result = `${node.kind}(`;
++        let cursor = start;
++        for(const child of node.children) {
++            result += this.tokens(cursor, this.start(child));
++            result += `${this.signature(child)},`;
++            cursor = this.node(child).end;
++        }
++        result += node.children.length === 0 ? this.source.slice(start, node.end) : this.tokens(cursor, node.end);
++        return `${result})`;
++    }
++}
+diff --git a/stage1/cohere/lint/registration_test.go b/stage1/cohere/lint/registration_test.go
+new file mode 100644
+index 00000000..a83b0d9b
+--- /dev/null
++++ b/stage1/cohere/lint/registration_test.go
+@@ -0,0 +1,253 @@
++package lint
++
++import (
++	"bytes"
++	"encoding/json"
++	"fmt"
++	"os"
++	"os/exec"
++	"path/filepath"
++	"strings"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/load"
++	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
++)
++
++// Validate every descriptor before even a filtered test. No rule can hide behind a filter.
++func TestMain(m *testing.M) {
++	if _, err := registry.Generate("."); err != nil {
++		fmt.Fprintln(os.Stderr, err)
++		os.Exit(1)
++	}
++	os.Exit(m.Run())
++}
++
++func TestOwnedWitnesses(t *testing.T) {
++	directory, err := filepath.Abs(".")
++	if err != nil {
++		t.Fatal(err)
++	}
++	oracle := goOracle(t)
++	var rows []string
++	for _, d := range prepareRegistry(t, ".") {
++		paths := ownedWitnesses(t, directory, d.Slug)
++		for _, path := range paths {
++			selected := path + "\t" + d.Name
++			answer := execute(t, "", oracle, "--manifest", manifest(t, []string{selected}), "--count")
++			if string(answer.output) == "0\n" {
++				t.Fatalf("%s witness reports no findings", d.Name)
++			}
++			rows = append(rows, selected, path+"\tall")
++		}
++	}
++	path := manifest(t, rows)
++	compare(t, oracle, buildPort(t, directory, true), directory, path)
++}
++
++func TestRegistrationMutant(t *testing.T) {
++	// This remains a valid descriptor and compiled rule: only its subscription is wrong.
++	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
++	source := ownedWitnesses(t, ".", "no-debugger")[0]
++	path := manifest(t, []string{source + "\tno-debugger"})
++	want := execute(t, "", goOracle(t), "--manifest", path).output
++	for _, side := range []struct {
++		name string
++		run  execution
++	}{
++		{"Node", node(t, directory, path, false)},
++		{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
++	} {
++		if bytes.Equal(side.run.output, want) {
++			t.Fatalf("listener omission survived on %s", side.name)
++		}
++		t.Logf("wrong descriptor kind caught on %s: %s", side.name, difference(side.run.output, want))
++	}
++}
++
++func TestFactoryHooks(t *testing.T) {
++	directory := mutant(t, "", "")
++	module := filepath.Join(directory, "rules/no-debugger/rule.ts")
++	data, err := os.ReadFile(module)
++	if err != nil {
++		t.Fatal(err)
++	}
++	source := strings.Replace(string(data), "    visit(index: number, parent: number): void {", `    ready = false;
++    prepare(root: number): void { this.ready = true; console.log('prepare'); }
++    finish(root: number): void { console.log('finish'); }
++    visit(index: number, parent: number): void {
++        if(!this.ready) { panic('visit before prepare'); }
++        console.log('visit');`, 1)
++	source = strings.Replace(source, "return new Rule(context);", `if(context.node(context.parents.length - 1).kind !== 'SourceFile') { panic('factory before ancestry'); }
++    if(context.settings.read('number', '') !== '-2' || !context.settings.read('payload', '').includes('enabled')) { panic('structured option lost'); }
++    console.log('factory');
++    return new Rule(context);`, 1)
++	source = "import { panic } from 'adamic';\n" + source
++	if err := os.WriteFile(module, []byte(source), 0644); err != nil {
++		t.Fatal(err)
++	}
++	descriptor := filepath.Join(directory, "rules/no-debugger/rule.json")
++	data, err = os.ReadFile(descriptor)
++	if err != nil {
++		t.Fatal(err)
++	}
++	var options map[string]any
++	if err := json.Unmarshal(data, &options); err != nil {
++		t.Fatal(err)
++	}
++	options["prepare"] = "prepare"
++	options["finish"] = "finish"
++	write := func() {
++		data, err := json.Marshal(options)
++		if err != nil {
++			t.Fatal(err)
++		}
++		if err := os.WriteFile(descriptor, data, 0644); err != nil {
++			t.Fatal(err)
++		}
++	}
++	write()
++	fixture := filepath.Join(t.TempDir(), "hooks.ts")
++	if err := os.WriteFile(fixture, []byte("debugger;\n"), 0644); err != nil {
++		t.Fatal(err)
++	}
++	path := manifest(t, []string{fixture + "\tno-debugger\t\t\tfalse\t{\"Number\":-2,\"Payload\":{\"enabled\":true}}"})
++	expected := []byte("case 0\nfactory\nprepare\nvisit\nfinish\n")
++	run := func(mutated bool) {
++		for _, side := range []struct {
++			name string
++			run  execution
++		}{
++			{"Node", node(t, directory, path, false)},
++			{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
++		} {
++			matches := bytes.HasPrefix(side.run.output, expected)
++			if matches == mutated {
++				t.Fatalf("hook sequence on %s (mutant=%t): %s", side.name, mutated, side.run.output)
++			}
++			if mutated {
++				t.Logf("finish-hook omission caught on %s", side.name)
++			}
++		}
++	}
++	run(false)
++	delete(options, "finish")
++	write()
++	run(true)
++}
++
++// Raw corpus text stays outside the project's TypeScript module graph.
++func ownedWitnesses(t *testing.T, directory, slug string) []string {
++	t.Helper()
++	paths, err := filepath.Glob(filepath.Join(directory, "rules", slug, "testdata", "*.ts.txt"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	var sources []string
++	for index, path := range paths {
++		data, err := os.ReadFile(path)
++		if err != nil {
++			t.Fatal(err)
++		}
++		target := filepath.Join(t.TempDir(), fmt.Sprintf("%s-%d.ts", slug, index))
++		if err := os.WriteFile(target, data, 0644); err != nil {
++			t.Fatal(err)
++		}
++		sources = append(sources, target)
++	}
++	if len(sources) == 0 {
++		t.Fatalf("%s has no witnesses", slug)
++	}
++	return sources
++}
++
++func TestNestedOutsideModuleCopy(t *testing.T) {
++	directory := mutant(t, "", "")
++	original := `import { written } from '../../../../typescript/parser/nodes.ts';
++console.log(written('copied'));
++`
++	source := rewritePortImports(t, "rules/probe/rule.ts", original)
++	if err := os.WriteFile(filepath.Join(directory, "main.ts"), []byte(source), 0644); err != nil {
++		t.Fatal(err)
++	}
++	path := manifest(t, nil)
++	for _, side := range []struct {
++		name string
++		run  execution
++	}{
++		{"Node", node(t, directory, path, false)},
++		{"native", execute(t, "", buildPort(t, directory, true))},
++	} {
++		if string(side.run.output) != "copied\n" {
++			t.Fatalf("outside module copy on %s: %q", side.name, side.run.output)
++		}
++	}
++	// Put the old root-only rewrite back: a nested rule keeps two unwanted parents.
++	parserDirectory, err := filepath.Abs("../../typescript")
++	if err != nil {
++		t.Fatal(err)
++	}
++	bad := strings.ReplaceAll(original, "../../typescript", parserDirectory)
++	main := filepath.Join(directory, "main.ts")
++	if err := os.WriteFile(main, []byte(bad), 0644); err != nil {
++		t.Fatal(err)
++	}
++	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	output, err := os.CreateTemp(t.TempDir(), "bad-copy-")
++	if err != nil {
++		t.Fatal(err)
++	}
++	command := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, main)
++	command.Stdout = output
++	command.Stderr = output
++	runError := command.Run()
++	if err := output.Close(); err != nil {
++		t.Fatal(err)
++	}
++	data, err := os.ReadFile(output.Name())
++	if err != nil {
++		t.Fatal(err)
++	}
++	if runError == nil || !bytes.Contains(data, []byte("ERR_MODULE_NOT_FOUND")) {
++		t.Fatalf("root-only import mutant survived on Node: %v %s", runError, data)
++	}
++	if _, err := load.Load([]string{main}); err == nil {
++		t.Fatal("root-only import mutant survived native module loading")
++	}
++	t.Log("root-only import rewrite mutant caught by Node and native module loading")
++}
++
++func TestDecodedOptionsAndMutant(t *testing.T) {
++	directory, err := filepath.Abs(".")
++	if err != nil {
++		t.Fatal(err)
++	}
++	fixture := filepath.Join(t.TempDir(), "catch.ts")
++	if err := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0644); err != nil {
++		t.Fatal(err)
++	}
++	path := manifest(t, []string{fixture + "\tno-empty\t\t\tfalse\t{\"AllowEmptyCatch\":true}"})
++	oracle := goOracle(t)
++	compare(t, oracle, buildPort(t, directory, true), directory, path)
++	count := execute(t, "", oracle, "--manifest", path, "--count")
++	if string(count.output) != "0\n" {
++		t.Fatal("JSON catch option did not override the legacy default")
++	}
++	changed := mutant(t, "'allowemptycatch'", "'ignored-allowemptycatch'", "main.ts")
++	want := execute(t, "", oracle, "--manifest", path).output
++	for _, side := range []struct {
++		name string
++		run  execution
++	}{
++		{"Node", node(t, changed, path, false)},
++		{"native", execute(t, "", buildPort(t, changed, true), "--manifest", path)},
++	} {
++		if bytes.Equal(side.run.output, want) {
++			t.Fatalf("ignored decoded-option mutant survived on %s", side.name)
++		}
++		t.Logf("ignored decoded-option mutant caught on %s: %s", side.name, difference(side.run.output, want))
++	}
++}
+diff --git a/stage1/cohere/lint/registry/registry.go b/stage1/cohere/lint/registry/registry.go
+new file mode 100644
+index 00000000..44795783
+--- /dev/null
++++ b/stage1/cohere/lint/registry/registry.go
+@@ -0,0 +1,295 @@
++// Package registry discovers rule-owned descriptors and generates static dispatch.
++package registry
++
++import (
++	"bytes"
++	"encoding/json"
++	"fmt"
++	"go/ast"
++	"go/format"
++	"go/parser"
++	"go/token"
++	"io"
++	"os"
++	"path/filepath"
++	"regexp"
++	"sort"
++	"strings"
++
++	syntax "github.com/microsoft/TypeScript/tsc/shim/ast"
++)
++
++type Descriptor struct {
++	Parent          bool     `json:"parent,omitempty"`
++	Factory         string   `json:"factory"`
++	Class           string   `json:"class"`
++	Name            string   `json:"name"`
++	Order           int      `json:"order,omitempty"`
++	Kinds           []string `json:"kinds"`
++	Visit           string   `json:"visit"`
++	Prepare         string   `json:"prepare,omitempty"`
++	Finish          string   `json:"finish,omitempty"`
++	Oracle          string   `json:"oracle"`
++	UpstreamPackage string   `json:"upstreamPackage"`
++	UpstreamTest    string   `json:"upstreamTest"`
++	Slug            string   `json:"-"`
++}
++
++var identifier = regexp.MustCompile(`^[A-Za-z_][A-Za-z0-9_]*$`)
++var publicName = regexp.MustCompile(`^(?:@?[A-Za-z0-9_-]+/)*[A-Za-z0-9_-]+$`)
++var slugPattern = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
++
++func Discover(root string) ([]Descriptor, error) {
++	paths, err := filepath.Glob(filepath.Join(root, "rules", "*", "rule.json"))
++	if err != nil {
++		return nil, err
++	}
++	if len(paths) == 0 {
++		return nil, fmt.Errorf("no rule descriptors in %s", root)
++	}
++	names := map[string]bool{}
++	adapters := map[string]bool{}
++	entries, err := os.ReadDir(filepath.Join(root, "rules"))
++	if err != nil {
++		return nil, err
++	}
++	for _, entry := range entries {
++		if entry.IsDir() {
++			if _, err := os.Stat(filepath.Join(root, "rules", entry.Name(), "rule.json")); err != nil {
++				return nil, fmt.Errorf("%s: missing rule descriptor", entry.Name())
++			}
++		}
++	}
++	var result []Descriptor
++	for _, path := range paths {
++		data, err := os.ReadFile(path)
++		if err != nil {
++			return nil, err
++		}
++		var d Descriptor
++		decoder := json.NewDecoder(bytes.NewReader(data))
++		decoder.DisallowUnknownFields()
++		if err := decoder.Decode(&d); err != nil {
++			return nil, fmt.Errorf("%s: %w", path, err)
++		}
++		if err := decoder.Decode(new(any)); err != io.EOF {
++			return nil, fmt.Errorf("%s: trailing JSON", path)
++		}
++		d.Slug = filepath.Base(filepath.Dir(path))
++		if !slugPattern.MatchString(d.Slug) || !publicName.MatchString(d.Name) || d.Name == "all" || names[d.Name] {
++			return nil, fmt.Errorf("%s: invalid or duplicate rule name %q", path, d.Name)
++		}
++		names[d.Name] = true
++		if adapters[d.Oracle] {
++			return nil, fmt.Errorf("%s: duplicate oracle adapter %q", path, d.Oracle)
++		}
++		adapters[d.Oracle] = true
++		if d.Order < 0 || !identifier.MatchString(d.Oracle) || d.UpstreamPackage == "" || !identifier.MatchString(d.UpstreamTest) {
++			return nil, fmt.Errorf("%s: invalid oracle or provenance", path)
++		}
++		for _, part := range strings.Split(d.UpstreamPackage, "/") {
++			if !slugPattern.MatchString(part) {
++				return nil, fmt.Errorf("%s: invalid upstream package", path)
++			}
++		}
++		module, err := os.ReadFile(filepath.Join(filepath.Dir(path), "rule.ts"))
++		if err != nil {
++			return nil, err
++		}
++		if !identifier.MatchString(d.Factory) || !identifier.MatchString(d.Class) || !strings.Contains(string(module), "export function "+d.Factory+"(") || !strings.Contains(string(module), "export class "+d.Class+" {") {
++			return nil, fmt.Errorf("%s: missing named factory or class", path)
++		}
++		for _, hook := range []string{d.Visit, d.Prepare, d.Finish} {
++			if hook == "" {
++				continue
++			}
++			if !identifier.MatchString(hook) || !regexp.MustCompile(`(?m)^\s+`+regexp.QuoteMeta(hook)+`\(`).Match(module) {
++				return nil, fmt.Errorf("%s: missing named hook %q", path, hook)
++			}
++		}
++		if d.Visit == "" || len(d.Kinds) == 0 {
++			return nil, fmt.Errorf("%s: visit and kinds required", path)
++		}
++		seen := map[string]bool{}
++		// SyntaxKind names come from the pinned upstream AST, not a second maintained list.
++		kinds := map[string]bool{}
++		for kind := syntax.Kind(0); kind < syntax.KindCount; kind++ {
++			kinds[strings.TrimPrefix(kind.String(), "Kind")] = true
++		}
++		for _, kind := range d.Kinds {
++			if !identifier.MatchString(kind) || seen[kind] || !kinds[kind] {
++				return nil, fmt.Errorf("%s: invalid or duplicate kind %q", path, kind)
++			}
++			seen[kind] = true
++		}
++		adapter, err := parser.ParseFile(token.NewFileSet(), filepath.Join(filepath.Dir(path), "oracle.go"), nil, 0)
++		if err != nil {
++			return nil, err
++		}
++		functions := map[string]bool{}
++		for _, decl := range adapter.Decls {
++			if f, ok := decl.(*ast.FuncDecl); ok {
++				functions[f.Name.Name] = true
++			}
++		}
++		if adapter.Name.Name != "main" || !functions[d.Oracle] || !functions[d.Oracle+"Options"] {
++			return nil, fmt.Errorf("%s: missing oracle adapter exports", path)
++		}
++		var mutant struct{ Name, File, From, To string }
++		mutation, err := os.ReadFile(filepath.Join(filepath.Dir(path), "mutant.json"))
++		if err != nil {
++			return nil, err
++		}
++		mutationDecoder := json.NewDecoder(bytes.NewReader(mutation))
++		mutationDecoder.DisallowUnknownFields()
++		if err := mutationDecoder.Decode(&mutant); err != nil {
++			return nil, err
++		}
++		if mutant.File == "" {
++			mutant.File = "rule.ts"
++		}
++		if filepath.IsAbs(mutant.File) || filepath.Clean(mutant.File) == ".." || strings.HasPrefix(filepath.Clean(mutant.File), ".."+string(filepath.Separator)) || !strings.HasSuffix(mutant.File, ".ts") {
++			return nil, fmt.Errorf("%s: mutant file must be an owned TS module", path)
++		}
++		if _, err := os.Stat(filepath.Join(filepath.Dir(path), mutant.File)); err != nil {
++			return nil, err
++		}
++		if mutant.Name == "" || mutant.From == "" || mutant.To == mutant.From {
++			return nil, fmt.Errorf("%s: invalid owned mutant", path)
++		}
++		witnesses, err := filepath.Glob(filepath.Join(filepath.Dir(path), "testdata", "*.ts.txt"))
++		if err != nil || len(witnesses) == 0 {
++			return nil, fmt.Errorf("%s: missing witness", path)
++		}
++		result = append(result, d)
++	}
++	sort.Slice(result, func(i, j int) bool {
++		a, b := result[i], result[j]
++		if a.Order != b.Order {
++			if a.Order == 0 {
++				return false
++			}
++			if b.Order == 0 {
++				return true
++			}
++			return a.Order < b.Order
++		}
++		return a.Name < b.Name
++	})
++	return result, nil
++}
++
++func Render(descriptors []Descriptor) (typescript, golang []byte) {
++	var ts, goSource strings.Builder
++	ts.WriteString("// Generated by lint-registry. Do not commit or edit.\nimport type { RuleContext } from '../context.ts';\n")
++	goSource.WriteString("// Generated by lint-registry.\npackage main\nimport \"github.com/system-inc/cohere/internal/lint/rule\"\ntype registeredRule struct { subject rule.Rule; options func([]string) any }\nfunc registeredRules() []registeredRule { return []registeredRule{\n")
++	for i, d := range descriptors {
++		fmt.Fprintf(&ts, "import { %s as create%d, type %s as Rule%d } from '../rules/%s/rule.ts';\n", d.Factory, i, d.Class, i, d.Slug)
++		fmt.Fprintf(&goSource, "{%s(), %sOptions},\n", d.Oracle, d.Oracle)
++	}
++	ts.WriteString("export class RuleSet {\n    readonly context: RuleContext;\n")
++	for i := range descriptors {
++		fmt.Fprintf(&ts, "    readonly rule%d: Rule%d;\n", i, i)
++	}
++	ts.WriteString("    constructor(context: RuleContext")
++	for i := range descriptors {
++		fmt.Fprintf(&ts, ", rule%d: Rule%d", i, i)
++	}
++	ts.WriteString(") {\n        this.context = context;\n")
++	for i := range descriptors {
++		fmt.Fprintf(&ts, "        this.rule%d = rule%d;\n", i, i)
++	}
++	ts.WriteString("    }\n")
++	goSource.WriteString("} }\n")
++	for _, hook := range []string{"prepare", "finish"} {
++		fmt.Fprintf(&ts, "    %s(root: number): void {\n        const context = this.context;\n", hook)
++		for i, d := range descriptors {
++			name := d.Prepare
++			if hook == "finish" {
++				name = d.Finish
++			}
++			if name != "" {
++				fmt.Fprintf(&ts, "    if(context.enabled('%s')) { this.rule%d.%s(root); }\n", d.Name, i, name)
++			}
++		}
++		ts.WriteString("}\n")
++	}
++	ts.WriteString("    visit(index: number, parent: number): void {\n        const context = this.context;\n        switch(context.node(index).kind) {\n")
++	buckets := map[string][]int{}
++	for i, d := range descriptors {
++		for _, kind := range d.Kinds {
++			buckets[kind] = append(buckets[kind], i)
++		}
++	}
++	var kinds []string
++	for kind := range buckets {
++		kinds = append(kinds, kind)
++	}
++	sort.Strings(kinds)
++	for _, kind := range kinds {
++		fmt.Fprintf(&ts, "        case '%s':\n", kind)
++		for _, i := range buckets[kind] {
++			d := descriptors[i]
++			arguments := "index"
++			if d.Parent {
++				arguments += ", parent"
++			}
++			fmt.Fprintf(&ts, "            if(context.enabled('%s')) { this.rule%d.%s(%s); }\n", d.Name, i, d.Visit, arguments)
++		}
++		ts.WriteString("            break;\n")
++	}
++	ts.WriteString("        default:\n            break;\n    }\n    }\n}\n")
++	ts.WriteString("export function createRuleSet(context: RuleContext): RuleSet {\n")
++	for i := range descriptors {
++		fmt.Fprintf(&ts, "    const rule%d = create%d(context);\n", i, i)
++	}
++	ts.WriteString("    return new RuleSet(context")
++	for i := range descriptors {
++		fmt.Fprintf(&ts, ", rule%d", i)
++	}
++	ts.WriteString(");\n}\n")
++	formatted, err := format.Source([]byte(goSource.String()))
++	if err != nil {
++		panic(fmt.Sprintf("registry generator produced invalid Go: %v", err))
++	}
++	return []byte(ts.String()), formatted
++}
++
++// Generate validates the entire registry even when a test selects only one rule.
++// Atomic replacement and unchanged-byte checks make concurrent test generation safe.
++func Generate(root string) ([]Descriptor, error) {
++	descriptors, err := Discover(root)
++	if err != nil {
++		return nil, err
++	}
++	ts, goSource := Render(descriptors)
++	directory := filepath.Join(root, ".generated")
++	if err := os.MkdirAll(directory, 0755); err != nil {
++		return nil, err
++	}
++	for _, file := range []struct {
++		name string
++		data []byte
++	}{{"registry.ts", ts}, {"registry.go", goSource}} {
++		path := filepath.Join(directory, file.name)
++		if existing, err := os.ReadFile(path); err == nil && bytes.Equal(existing, file.data) {
++			continue
++		}
++		temporary, err := os.CreateTemp(directory, "registry-")
++		if err != nil {
++			return nil, err
++		}
++		if _, err = temporary.Write(file.data); err != nil {
++			temporary.Close()
++			os.Remove(temporary.Name())
++			return nil, err
++		}
++		if err = temporary.Close(); err != nil {
++			return nil, err
++		}
++		if err = os.Rename(temporary.Name(), path); err != nil {
++			return nil, err
++		}
++	}
++	return descriptors, nil
++}
+diff --git a/stage1/cohere/lint/registry/registry_test.go b/stage1/cohere/lint/registry/registry_test.go
+new file mode 100644
+index 00000000..c2aa56e3
+--- /dev/null
++++ b/stage1/cohere/lint/registry/registry_test.go
+@@ -0,0 +1,148 @@
++package registry
++
++import (
++	"bytes"
++	"encoding/json"
++	"os"
++	"path/filepath"
++	"strings"
++	"testing"
++)
++
++func copyRules(t *testing.T) string {
++	t.Helper()
++	root := t.TempDir()
++	err := filepath.WalkDir("../rules", func(path string, entry os.DirEntry, err error) error {
++		if err != nil {
++			return err
++		}
++		relative, err := filepath.Rel("..", path)
++		if err != nil {
++			return err
++		}
++		target := filepath.Join(root, relative)
++		if entry.IsDir() {
++			return os.MkdirAll(target, 0755)
++		}
++		data, err := os.ReadFile(path)
++		if err != nil {
++			return err
++		}
++		return os.WriteFile(target, data, 0644)
++	})
++	if err != nil {
++		t.Fatal(err)
++	}
++	return root
++}
++
++func TestDeterministicRegeneration(t *testing.T) {
++	t.Parallel()
++	root := copyRules(t)
++	descriptors, err := Generate(root)
++	if err != nil {
++		t.Fatal(err)
++	}
++	ts, goSource := Render(descriptors)
++	for _, name := range []string{"registry.ts", "registry.go"} {
++		path := filepath.Join(root, ".generated", name)
++		before, err := os.Stat(path)
++		if err != nil {
++			t.Fatal(err)
++		}
++		if _, err := Generate(root); err != nil {
++			t.Fatal(err)
++		}
++		after, err := os.Stat(path)
++		if err != nil {
++			t.Fatal(err)
++		}
++		if !before.ModTime().Equal(after.ModTime()) {
++			t.Fatalf("unchanged %s rewritten", name)
++		}
++		data, err := os.ReadFile(path)
++		if err != nil {
++			t.Fatal(err)
++		}
++		expected := ts
++		if name == "registry.go" {
++			expected = goSource
++		}
++		if !bytes.Equal(data, expected) {
++			t.Fatal("generation changed bytes")
++		}
++	}
++}
++
++func TestDescriptorRejections(t *testing.T) {
++	t.Parallel()
++	for _, change := range []struct {
++		name   string
++		mutate func(map[string]any)
++		want   string
++	}{
++		{"duplicate public name", func(d map[string]any) { d["name"] = "no-empty" }, "duplicate rule name"},
++		{"unknown field", func(d map[string]any) { d["vist"] = "visit" }, "unknown field"},
++		{"missing named export", func(d map[string]any) { d["visit"] = "missing" }, "missing named hook"},
++		{"bad kind", func(d map[string]any) { d["kinds"] = []string{"NotARealNode"} }, "invalid or duplicate kind"},
++		{"missing oracle export", func(d map[string]any) { d["oracle"] = "missing" }, "missing oracle adapter exports"},
++		{"no listener", func(d map[string]any) { d["kinds"] = []string{} }, "visit and kinds required"},
++		{"missing factory", func(d map[string]any) { d["factory"] = "missing" }, "missing named factory or class"},
++		{"missing class", func(d map[string]any) { d["class"] = "Missing" }, "missing named factory or class"},
++		{"missing finish hook", func(d map[string]any) { d["finish"] = "missing" }, "missing named hook"},
++		{"unsafe public name", func(d map[string]any) { d["name"] = "bad\\name" }, "invalid or duplicate rule name"},
++	} {
++		t.Run(change.name, func(t *testing.T) {
++			t.Parallel()
++			root := copyRules(t)
++			path := filepath.Join(root, "rules/no-debugger/rule.json")
++			data, err := os.ReadFile(path)
++			if err != nil {
++				t.Fatal(err)
++			}
++			var d map[string]any
++			if err := json.Unmarshal(data, &d); err != nil {
++				t.Fatal(err)
++			}
++			change.mutate(d)
++			data, err = json.Marshal(d)
++			if err != nil {
++				t.Fatal(err)
++			}
++			if err := os.WriteFile(path, data, 0644); err != nil {
++				t.Fatal(err)
++			}
++			_, err = Generate(root)
++			if err == nil || !strings.Contains(err.Error(), change.want) {
++				t.Fatalf("mutant survived or wrong failure: %v", err)
++			}
++			t.Logf("mutant rejected: %v", err)
++		})
++	}
++}
++
++func TestDuplicateOracleAdapter(t *testing.T) {
++	t.Parallel()
++	root := copyRules(t)
++	path := filepath.Join(root, "rules/no-empty/oracle.go")
++	data, err := os.ReadFile(path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	if err := os.WriteFile(path, bytes.ReplaceAll(data, []byte("oracleNoEmpty"), []byte("oracleNoDebugger")), 0644); err != nil {
++		t.Fatal(err)
++	}
++	path = filepath.Join(root, "rules/no-empty/rule.json")
++	data, err = os.ReadFile(path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	if err := os.WriteFile(path, bytes.ReplaceAll(data, []byte("oracleNoEmpty"), []byte("oracleNoDebugger")), 0644); err != nil {
++		t.Fatal(err)
++	}
++	_, err = Generate(root)
++	if err == nil || !strings.Contains(err.Error(), "duplicate oracle adapter") {
++		t.Fatalf("duplicate adapter mutant survived: %v", err)
++	}
++	t.Logf("mutant rejected: %v", err)
++}

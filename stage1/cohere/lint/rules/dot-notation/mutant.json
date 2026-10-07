@@ -1,1 +1,1 @@
-{"name": "insert an extra numeric receiver separator", "file": "rule.a", "from": "decimal ? ' .' : '.'", "to": "decimal ? '  .' : '.'"}
+{"name": "insert an extra numeric receiver separator", "file": "rule.ts", "from": "decimal ? ' .' : '.'", "to": "decimal ? '  .' : '.'"}

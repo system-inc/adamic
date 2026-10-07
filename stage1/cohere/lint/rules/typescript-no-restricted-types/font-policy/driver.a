@@ -1,5 +1,5 @@
 import { panic, programArguments, readTextFile } from 'adamic';
-import { Element, evaluate } from './rule.a';
+import { Element, evaluate } from './rule.ts';
 import { message } from './messages.a';
 const input = readTextFile(programArguments()[0] ?? panic('missing JSX adapter data'));
 if(input.kind === 'Error') panic(input.message);

@@ -1,0 +1,69 @@
+diff --git a/stage1/cohere/lint/lint_test.go b/stage1/cohere/lint/lint_test.go
+index 6f8848e9..96909fc8 100644
+--- a/stage1/cohere/lint/lint_test.go
++++ b/stage1/cohere/lint/lint_test.go
+@@ -9,6 +9,7 @@ import (
+ 	"os"
+ 	"os/exec"
+ 	"path/filepath"
++	"regexp"
+ 	"sort"
+ 	"strings"
+ 	"testing"
+@@ -17,6 +18,7 @@ import (
+ 	"github.com/system-inc/adamic/internal/load"
+ 	"github.com/system-inc/adamic/internal/lower"
+ 	"github.com/system-inc/adamic/internal/native"
++	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
+ )
+ 
+ const repository = "../../.."
+@@ -369,7 +371,7 @@ func mutant(t *testing.T, from, to string, targets ...string) string {
+ 			t.Fatal(err)
+ 		}
+ 		source := string(data)
+-		if file == target {
++		if from != "" && file == target {
+ 			if strings.Count(source, from) != 1 {
+ 				t.Fatalf("mutant anchor count for %q", from)
+ 			}
+@@ -553,3 +555,39 @@ func TestThroughput(t *testing.T) {
+ 	loadAfter, _ := os.ReadFile("/proc/loadavg")
+ 	t.Logf("load after %s", strings.TrimSpace(string(loadAfter)))
+ }
++
++func prepareRegistry(t *testing.T, directory string) []registry.Descriptor {
++	t.Helper()
++	descriptors, err := registry.Generate(directory)
++	if err != nil {
++		t.Fatal(err)
++	}
++	return descriptors
++}
++
++var portImport = regexp.MustCompile(`(?m)(^import\s+[^;]*?\s+from\s+)(['"])([^'"]+)(['"])`)
++
++// Preserve imports within the copied port, and resolve outside imports from their
++// original module directory. Rules may be arbitrarily deeper than context.ts.
++func rewritePortImports(t *testing.T, file, source string) string {
++	t.Helper()
++	root, err := filepath.Abs(".")
++	if err != nil {
++		t.Fatal(err)
++	}
++	return portImport.ReplaceAllStringFunc(source, func(declaration string) string {
++		parts := portImport.FindStringSubmatch(declaration)
++		if !strings.HasPrefix(parts[3], ".") {
++			return declaration
++		}
++		absolute := filepath.Clean(filepath.Join(root, filepath.Dir(file), parts[3]))
++		relative, err := filepath.Rel(root, absolute)
++		if err != nil {
++			t.Fatal(err)
++		}
++		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
++			return declaration
++		}
++		return parts[1] + parts[2] + filepath.ToSlash(absolute) + parts[4]
++	})
++}

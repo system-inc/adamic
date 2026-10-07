@@ -1,5 +1,5 @@
 {
- "name": "empty directive reason accepted", "file": "rule.a",
+ "name": "empty directive reason accepted", "file": "rule.ts",
  "from": "if((pieces[1] ?? '').trim() !== '') continue;",
  "to": "if(pieces.length > 1) continue;"
 }

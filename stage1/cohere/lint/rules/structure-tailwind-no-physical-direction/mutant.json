@@ -1,6 +1,6 @@
 {
   "name": "physical direction exemption omitted",
-  "file": "rule.a",
+  "file": "rule.ts",
   "from": "if(parts.includes('rtl') || parts.includes('ltr')) continue;",
   "to": "if(parts.includes('not-rtl') || parts.includes('not-ltr')) continue;"
 }
