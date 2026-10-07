@@ -68,8 +68,15 @@ if ! mkdir "$lock" 2>/dev/null; then
 fi
 # The same lock on origin, so merge-back run from any machine sees this merge and leaves the area alone.
 remoteLock="refs/heads/locks/area-$area"
-git push -q origin "${areaTip}:${remoteLock}"
-trap 'git push -q origin ":${remoteLock}" 2>/dev/null; rmdir "$lock"' EXIT
+# The lease with an empty expected value creates the ref only if no other machine holds it. The lock
+# is a commit of its own naming this run, because pushing a sha a ref already holds succeeds.
+lockCommit=$(git commit-tree "${areaTip}^{tree}" -p "$areaTip" -m "Lock area/$area for a merge: $(hostname) pid $$ at $(date -u +%Y-%m-%dT%H:%M:%SZ)")
+if ! git push -q --force-with-lease="${remoteLock}:" origin "${lockCommit}:${remoteLock}" 2>/dev/null; then
+	rmdir "$lock"
+	echo "refused: another machine is merging into area/$area (${remoteLock#refs/heads/} on origin); wait for it" >&2
+	exit 1
+fi
+trap 'git push -q --force-with-lease="${remoteLock}:${lockCommit}" origin ":${remoteLock}" 2>/dev/null; rmdir "$lock"' EXIT
 
 if [ -d "$worktree" ]; then
 	if [ -n "$(git -C "$worktree" status --porcelain --untracked-files=no)" ]; then
