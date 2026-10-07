@@ -60,6 +60,42 @@ def main():
         raise RuntimeError('exit 66 without a TSan race is not a proof')
     print('aliased-element mutant:', next(line for line in race.splitlines()
                                           if 'SUMMARY: ThreadSanitizer:' in line))
+    # Keep every source-use and callback check. Break only the field graph
+    # proof: distinct outer records are incorrectly considered disjoint even
+    # though each reaches the same mutable child.
+    seam = '\t\t\tif value.Kind != ast.KindNumericLiteral && value.Kind != ast.KindTrueKeyword && value.Kind != ast.KindFalseKeyword {\n'
+    assert original.count(seam) == 1
+    nested = directory/'nested.go'
+    nested.write_text(original.replace(seam, '\t\t\tif false { // mutant: treat nested graph as flat\n'))
+    overlay = directory/'nested.json'
+    overlay.write_text(json.dumps({'Replace': {str(SOURCE): str(nested)}}))
+    compiler = directory/'nested-compiler'
+    command(['go', 'build', '-overlay', str(overlay), '-o', str(compiler), './cmd/adamic'], directory/'nested-build.log')
+    cfile = directory/'nested.c'
+    with cfile.open('w') as output, (directory/'nested-lower.log').open('w') as error:
+        result = subprocess.run([str(compiler), 'c', 'internal/oracle/testdata/moves/refused/nested_race.a'],
+                                cwd=ROOT, stdout=output, stderr=error, timeout=60)
+    if result.returncode != 0:
+        raise RuntimeError(f'nested mutant did not lower: {directory}/nested-lower.log')
+    binary = directory/'nested'
+    command(['clang', *flags, '-I', str(runtime), str(cfile),
+             *map(str, sorted(runtime.glob('*.c'))), '-lm', '-o', str(binary)],
+            directory/'nested-clang.log')
+    # The same aliased graph is legal sequentially. Match its source on Node
+    # before attributing the concurrent failure to the broken graph guard.
+    command(['node', '--disable-warning=ExperimentalWarning', 'oracle/node.mjs',
+             'internal/oracle/testdata/moves/refused/nested_race.a'], directory/'nested-node.log')
+    sequential = environment.copy()
+    sequential['ADAMIC_THREADS'] = '1'
+    command([str(binary)], directory/'nested-one-thread.log', env=sequential)
+    if (directory/'nested-node.log').read_bytes() != (directory/'nested-one-thread.log').read_bytes():
+        raise RuntimeError('nested mutant sequential control disagrees with Node')
+    command([str(binary)], directory/'nested-race.log', env=environment, expected=66)
+    race = (directory/'nested-race.log').read_text()
+    if 'WARNING: ThreadSanitizer: data race' not in race:
+        raise RuntimeError('nested mutant exit 66 without a TSan race is not a proof')
+    print('nested-flat mutant:', next(line for line in race.splitlines()
+                                     if 'SUMMARY: ThreadSanitizer:' in line))
     # Only later source uses are allowed; the old binding is still consumed.
     seam = '\t\t\tif child.Pos() > node.End() {\n'
     assert original.count(seam) == 1
@@ -74,6 +110,27 @@ def main():
     if 'got <nil>' not in report:
         raise RuntimeError('use-after-move mutant failed for the wrong reason')
     print('use-after-move mutant: exact refusal expected; got <nil>, go test exit 1')
+    # The approved fix and nested proof path have independent exact witnesses.
+    diagnostics = [
+        ('fix', original.replace('fix := "return it through the results"',
+                                 'fix := "use the returned values"'), 'alias.a', 'unapproved move fix'),
+        ('path', original.replace('"cannot move "+fieldPath+": nested reachable ownership is not proven"',
+                                  '"cannot move "+path+": nested reachable ownership is not proven"'),
+         'nested.a', 'want "cannot move items[0].child:'),
+    ]
+    for name, changed, fixture, witness in diagnostics:
+        if changed == original:
+            raise RuntimeError(f'{name} diagnostic mutant did not change its seam')
+        replacement = directory/(name+'.go')
+        replacement.write_text(changed)
+        overlay = directory/(name+'.json')
+        overlay.write_text(json.dumps({'Replace': {str(SOURCE): str(replacement)}}))
+        log = directory/(name+'-test.log')
+        command(['go', 'test', '-overlay', str(overlay), './internal/oracle', '-run',
+                 '^TestMovesRefusals$/^'+fixture+'$', '-count=1', '-v'], log, expected=1)
+        if witness not in log.read_text():
+            raise RuntimeError(f'{name} diagnostic mutant failed for the wrong reason')
+        print(name+' diagnostic mutant: exact refusal assertion, go test exit 1')
     command(['go','test','./internal/oracle','-run','^TestMovesPlainCounts$',
              '-count=1','-v'],directory/'shared-count-test.log')
     report = (directory/'shared-count-test.log').read_text()

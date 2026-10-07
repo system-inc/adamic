@@ -2,6 +2,7 @@ package lower
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -29,7 +30,42 @@ func (l *lowering) parallelMoves(node *ast.Node) bool {
 }
 
 func (l *lowering) moveRefused(where *ast.Node, what string) error {
-	return &Refused{Where: l.program.Where(where), What: what, Fix: "give each task an independent fresh object graph and use only the returned results; the general ownership proof is not implemented"}
+	fix := "return it through the results"
+	if strings.HasPrefix(what, "use after move:") {
+		fix = "don't use it after the parallelMap"
+	}
+	// The diagnostic names the failing proof path at the task boundary. There
+	// are no ownership annotations or lifetime checks elsewhere in the language.
+	if strings.HasPrefix(what, "cannot move task result:") {
+		path := "work.result"
+		switch where.Kind {
+		case ast.KindIdentifier, ast.KindPropertyAccessExpression, ast.KindElementAccessExpression:
+			path = movePath(where)
+		case ast.KindVariableDeclaration:
+			path = movePath(where.Name())
+		case ast.KindParameter:
+			path = "work.parameters"
+			for index, parameter := range where.Parent.Parameters() {
+				if parameter == where {
+					path += fmt.Sprintf("[%d]", index)
+					break
+				}
+			}
+			if ast.IsIdentifier(where.Name()) {
+				path += "." + where.Name().Text()
+			}
+		case ast.KindCallExpression:
+			callee := ast.SkipParentheses(where.AsCallExpression().Expression)
+			path = "work.call"
+			if ast.IsIdentifier(callee) || callee.Kind == ast.KindPropertyAccessExpression {
+				path = movePath(callee)
+			}
+		case ast.KindArrowFunction:
+			path = "work"
+		}
+		what = strings.Replace(what, "task result", path, 1)
+	}
+	return &Refused{Where: l.program.Where(where), What: what, Fix: fix}
 }
 
 func moveBlock(node *ast.Node) *ast.Node {
@@ -47,12 +83,17 @@ func movePath(node *ast.Node) string {
 		return movePath(node.AsPropertyAccessExpression().Expression) + "." + node.Name().Text()
 	}
 	if node.Kind == ast.KindElementAccessExpression {
-		return movePath(node.AsElementAccessExpression().Expression) + "[]"
+		access := node.AsElementAccessExpression()
+		index := ast.SkipParentheses(access.ArgumentExpression)
+		if index.Kind == ast.KindNumericLiteral {
+			return movePath(access.Expression) + "[" + index.Text() + "]"
+		}
+		return movePath(access.Expression) + "[]"
 	}
 	if ast.IsIdentifier(node) {
 		return node.Text()
 	}
-	return "items"
+	return "parallelMap.items"
 }
 
 // Source references are deliberately counted across the whole function and its
@@ -64,7 +105,7 @@ func (l *lowering) checkMove(node *ast.Node) error {
 	proof := &parallelProof{l: l}
 	declaration := proof.declaration(items)
 	if !ast.IsIdentifier(items) || declaration == nil || declaration.Kind != ast.KindVariableDeclaration || !proof.immutable(declaration) {
-		return l.moveRefused(items, "cannot move items: whole reachable ownership is not proven")
+		return l.moveRefused(items, "cannot move "+movePath(items)+": whole reachable ownership is not proven")
 	}
 	insideFunction := false
 	for parent := declaration.Parent; parent != nil; parent = parent.Parent {
@@ -116,6 +157,12 @@ func (l *lowering) checkMove(node *ast.Node) error {
 		path := fmt.Sprintf("%s[%d]", items.Text(), index)
 		element = ast.SkipParentheses(element)
 		if element.Kind != ast.KindObjectLiteralExpression {
+			if element.Kind == ast.KindArrayLiteralExpression {
+				return l.moveRefused(element, "cannot move "+path+"[]: nested array ownership is not proven")
+			}
+			if l.isLibraryType(l.concrete(l.checker.GetTypeAtLocation(element)), "Map") {
+				return l.moveRefused(element, "cannot move "+path+".values[]: nested Map ownership is not proven")
+			}
 			return l.moveRefused(element, "cannot move "+path+": element is not a fresh object literal with only scalar literal fields")
 		}
 		for _, property := range element.AsObjectLiteralExpression().Properties.Nodes {
@@ -124,7 +171,11 @@ func (l *lowering) checkMove(node *ast.Node) error {
 			}
 			value := ast.SkipParentheses(property.AsPropertyAssignment().Initializer)
 			if value.Kind != ast.KindNumericLiteral && value.Kind != ast.KindTrueKeyword && value.Kind != ast.KindFalseKeyword {
-				return l.moveRefused(value, "cannot move "+path+"."+property.Name().Text()+": field is not a numeric or boolean literal")
+				fieldPath := path + "." + property.Name().Text()
+				if l.checker.GetTypeAtLocation(value).Flags()&checker.TypeFlagsObject != 0 {
+					return l.moveRefused(value, "cannot move "+fieldPath+": nested reachable ownership is not proven")
+				}
+				return l.moveRefused(value, "cannot move "+fieldPath+": field is not a numeric or boolean literal")
 			}
 		}
 	}
@@ -170,6 +221,9 @@ func (l *lowering) checkMoveWork(work *ast.Node) error {
 			allowed := ast.IsIdentifier(target) && local != nil && parallelInside(local, work) && proof.symbol(target) != item
 			if target.Kind == ast.KindPropertyAccessExpression {
 				receiver := ast.SkipParentheses(target.AsPropertyAccessExpression().Expression)
+				for receiver.Kind == ast.KindPropertyAccessExpression {
+					receiver = ast.SkipParentheses(receiver.AsPropertyAccessExpression().Expression)
+				}
 				allowed = ast.IsIdentifier(receiver) && proof.symbol(receiver) == item
 			}
 			if !allowed {
@@ -194,7 +248,10 @@ func (l *lowering) checkMoveWork(work *ast.Node) error {
 			if node.Kind == ast.KindVariableDeclaration {
 				scalar = l.checker.GetTypeAtLocation(node.Name())
 			}
-			if scalar.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) == 0 {
+			// A reference used only to traverse an owned path does not escape.
+			// Input construction must prove the entire path before this can run.
+			traversal := node.Kind == ast.KindPropertyAccessExpression && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.AsPropertyAccessExpression().Expression == node
+			if !traversal && scalar.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike) == 0 {
 				found = l.moveRefused(node, "cannot move task result: reference fields and locals are outside the move prototype")
 				return false
 			}

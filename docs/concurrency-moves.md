@@ -1,12 +1,12 @@
 # Concurrency, part 2: moves
 
-Status: **proposal and prototype, not approved** (#p286ycm). The design is Kirk and Ahra's to approve. Part 1's Shareable contract remains.
+Status: **inferred moves approved by @system_adamic, Kirk briefed** (#p286ycm). Moves have no source annotation. The gospel's no borrow checker rule holds: users write neither ownership nor lifetimes, and move proofs can refuse only at a task boundary. Part 1's Shareable contract remains.
 
 A task may take a mutable value when its variable uniquely owns the whole reachable graph. No other variable, field, closure, global or Weak may reach any mutable part of it. A count of one at the root is insufficient: a child can have another owner, and a Weak counts nothing. Each parallelMap item must also own a disjoint graph. `[value, value]` cannot give two tasks ownership of one object. Immortal scalar constants are harmless; other shared descendants need part 1's publication protocol.
 
 ## Source and proof
 
-Recommend inferring the move at the existing call, with no annotation:
+Infer the move at the existing call, with no annotation:
 
 ```a
 import { parallelMap } from 'adamic';
@@ -22,7 +22,7 @@ function run(): void {
 run();
 ```
 
-The call consumes `items`. Every later use through that binding is a compile error, including a read after the join. Results are the new owners. A closure may not retain an element merely because the parent never calls it again. Inferred last use is a necessary condition, not the ownership proof. A `move(items)` marker would express intent but could not replace that proof; do not add it for this prototype.
+The call consumes `items`. Every later use through that binding is a compile error, including a read after the join. Results are the new owners. A closure may not retain an element merely because the parent never calls it again. Inferred last use is a necessary condition, not the ownership proof. There is no `move(items)` marker or ownership annotation. Diagnostics at this boundary include the path of a later use.
 
 The general proof belongs on the existing IR graph. `internal/flow` provides reaching definitions, exception-aware liveness and Assign/CreateFrom/Capture/MaybeAlias edges. `internal/fresh` already interprets reachable abstract heaps for the cycle finder's relaxation: allocation recency, escaped objects, strong and weak reachability, joins and direct-call summaries. Extend that interpretation with a query at the transfer: every reachable object is confined, no other root whose ownership has not ended reaches it, no weak observer exists, and item graphs are disjoint. Unknown objects, summary fallback and merged allocation instances must refuse. Confinement alone is insufficient: two locals can hold a confined object. Mutable ranges alone do not prove uniqueness either.
 
@@ -36,18 +36,19 @@ The runtime borrows the private array shell through the join, assigns each disjo
 
 ## Refusals
 
-Diagnostics include source position, the reachable path and a fix. Proposed names and messages:
+Diagnostics include source position, the failing ownership or task-result proof path and exactly one of the two approved fixes. Unknown ownership names the path whose graph the prototype cannot prove, rather than inventing an alias. Current messages:
 
 | Rule | Message | Fix |
 | --- | --- | --- |
-| use-after-move | `use after move: items.length; items was moved into parallelMap` | use the returned results |
-| aliased graph | `cannot move items[0]: another variable or field may reach this element` | construct independent elements under the array's sole owner |
-| global reach | `cannot move items[0]: reachable from global saved` | remove the global owner before transfer |
-| closure reach | `cannot move items[0]: reachable from closure observer` | end the capture's ownership before transfer |
-| overlapping items | `cannot move items[1]: also reachable from items[0]` | give each task an independent graph |
-| unknown ownership | `cannot move items: whole reachable ownership is not proven` | use the supported fresh construction or make it Shareable |
-| borrowed owner | `cannot move items: the binding borrows its value` | transfer from its owning binding |
-| unproven work/result | `cannot move task result: ownership or effects are not proven` | return the owned item or a proven fresh result |
+| use-after-move | `use after move: items.length; items was moved into parallelMap` | `don't use it after the parallelMap` |
+| aliased array | `cannot move items[0]: another variable, field or closure may reach the graph` | `return it through the results` |
+| unknown element, including global/closure aliases | `cannot move items[0]: element is not a fresh object literal with only scalar literal fields` | `return it through the results` |
+| nested object | `cannot move items[0].child: nested reachable ownership is not proven` | `return it through the results` |
+| nested array | `cannot move items[0][]: nested array ownership is not proven` | `return it through the results` |
+| nested Map | `cannot move items[0].values[]: nested Map ownership is not proven` | `return it through the results` |
+| unknown owner | `cannot move items: whole reachable ownership is not proven` | `return it through the results` |
+| captured work value | `cannot move amount: captures are outside the move prototype` | `return it through the results` |
+| unproven result | `cannot move work.result: return the owned item` | `return it through the results` |
 
 The narrow slice may conservatively report unknown ownership for graphs requiring the general query; it must never claim a precise alias path it has not established. Every admitted shape and every refusal needs a fixture. Letting an alias through must fail Linux TSan or ASan; allowing a later source use must fail the exact refusal witness; gratuitous sharing must fail a measured shared-count assertion. A build failure or timeout proves none of these.
 
@@ -59,15 +60,17 @@ The narrow slice may conservatively report unknown ownership for graphs requirin
 - Verona's [region tracking](https://github.com/microsoft/verona/blob/old_version/docs/internal/region-tracking.md) associates mutable aliases with their owning region and distinguishes region entry points from internal aliases. Its [FAQ](https://github.com/microsoft/verona/blob/old_version/docs/faq.md) states the aim of linear regions without per-object linearity. Internal sharing need not imply external sharing; splitting one region between tasks still requires disjointness.
 - Lean's [reset/reuse pass](https://github.com/leanprover/lean4/blob/master/src/Lean/Compiler/LCNF/ResetReuse.lean) searches for dead owned values and separates borrowed from owned arguments. Koka's [reuse transformation](https://github.com/koka-lang/koka/blob/master/src/Backend/C/ParcReuse.hs) branches on `genIsUnique` before destructive reuse. These are memory reuse proofs, not permission to transfer an aliased descendant between threads.
 
-## Left for Kirk and Ahra
+## Remaining design
 
-Inferred moves, permanent invalidation after a structured join, whether dead aliases may be consumed as a group, splitting regions with internal aliases, mixing moved and Shareable descendants, general helper/result summaries and ownership diagnostics are recommendations here. No syntax or language decision is approved by this unit. Async and await remain part 3. The flat-literal experiment cannot establish how often real programs will satisfy the general proof.
+Inferred moves, the absence of annotations and lifetime syntax, task-boundary-only refusal and the two diagnostic fixes are approved. Whether dead aliases may be consumed as a group, splitting regions with internal aliases, mixing moved and Shareable descendants and general helper/result summaries remain for Kirk and Ahra to decide. Async and await remain part 3. The flat-literal experiment cannot establish how often real programs will satisfy the general proof.
+
+Nested object graphs, arrays of arrays and Maps of objects are all explicitly refused in this slice, even when a human can see they are unique. Their fixtures name the child, array-element or Map-value path. No nested acceptance is claimed. Callback property traversal itself does not create an alias; the input graph proof remains mandatory before any scalar leaf write. The nested-flat mutant breaks only that graph proof, keeping the callback and source-use checks intact.
 
 ## Prototype evidence, October 7
 
 Built in `internal/lower/moves.go`, with `ir.ParallelMap.Moved` set only by lowering and a small native/runtime ABI hook. The emitter clears the source binding after evaluating work, gives its count to a statement temporary and releases the private shell after join. The accepted `.a` fixture mutates and returns 2,048 independent objects; 27 exact refusal fixtures include later array reads, element aliases, globals, closures, repeated elements and unsupported proof shapes. This is construction-based exclusivity, not the general flow/fresh query above.
 
-Source Node, emitted JavaScript and native agree: `2048 moved objects, ordered digest 661084526`. One thread and the four-thread default passed ASan/UBSan with leaks, sanitized size classes, release and separate Linux TSan. All lower/native package tests passed (18.351s and 110.906s), including part 1's runtime mutants. Final lower, part 1 source fixtures, all 27 move refusals, counts and vet passed. A filtered uncached oracle run initially failed only because the new closure fixture's expected path omitted `.value`; the corrected refusal suite passed. No whole-repository test gate or Darwin run was made. Commands and actual outputs are in [evidence.json](../internal/oracle/testdata/moves/evidence.json).
+Source Node, emitted JavaScript and native agree: `2048 moved objects, ordered digest 661084526`. One thread and the four-thread default passed ASan/UBSan with leaks, sanitized size classes, release and separate Linux TSan. All lower/native package tests passed (18.351s and 110.906s), including part 1's runtime mutants. Final lower, part 1 source fixtures, all 27 move refusals, counts and vet passed. A filtered uncached oracle run initially failed only because the new closure fixture's expected path omitted `.value`; the corrected refusal suite passed. That initial prototype run did not include the whole-repository gate or Darwin. Commands and actual outputs are in [evidence.json](../internal/oracle/testdata/moves/evidence.json).
 
 All three requested mutants compile in isolation and are caught: accepting identifier elements gives aliased tasks a TSan race in `adamic_retain` (exit 66); allowing a later array read fails its exact refusal (`got <nil>`, test exit 1); using shared publication for moved values changes graph-header counts from **2,050 plain / 0 shared** to **1 plain / 2,049 shared**. Ordinary retain totals are identical, so they alone cannot catch the third mutant. Reproduce with `python3 internal/oracle/testdata/moves/prove.py`. Conservative syntax restrictions were not each given an independent mutant.
 
@@ -78,3 +81,13 @@ Best whole-process seconds, five interleaved rounds after tests finished, clang 
 | Seconds | 0.3293 | 0.1657 | 0.1148 | 0.0888 | 0.0801 | 0.1728 |
 
 `nproc` and affinity are 5, with a four-CPU quota (`400000 100000`). Load before/after was 1.06/2.13/1.73 and 1.05/2.11/1.72. Every timed and counted run matched Node. All thread settings counted allocations = frees = 2,056, retains 8,194, releases 6,153, peak 2,053 and regions 0. One native thread is 1.91x Node's time here; four threads take 0.51x Node's time. These are shared-machine observations of this fixture, not a general speed claim. Every sample is in [measurements.json](../internal/oracle/testdata/moves/measurements.json); reproduce with `python3 internal/oracle/testdata/moves/measure.py --threads 1,2,3,4,5 --rounds 5`.
+
+## Approval follow-up
+
+All 27 original refusals now check both their path-bearing message and their exact approved fix. With the nested-array, Map and shared-child witnesses there are 30 refusal fixtures. Nested objects, arrays of arrays and Maps of objects are explicitly unsupported; none is silently handled as a flat record.
+
+The nested-flat mutant bypasses only the field graph guard. Distinct outer objects then share one mutable child; Linux TSan reports a race in that child's plain count (`adamic_retain`, exit 66). The same binary at one thread agrees with source Node: `1024 37869`. The aliased-element, later-use and shared-marking mutants are caught again. Two diagnostic mutants, substituting an unapproved fix and dropping the nested child path, each fail an exact refusal assertion (test exit 1). Reproduce all six with `prove.py`.
+
+The accepted fixture's emitted C is byte-identical to the measured prototype (SHA-256 `44fc1105cec03d2b48be19349cf7e3bfcdf64edb927dd9daf04acdb484334c27`). The timings above remain the original observations; no new timing claim is made. Follow-up commands and outputs are in [approval-evidence.json](../internal/oracle/testdata/moves/approval-evidence.json).
+
+The full Linux gate passed uncached: `ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...`, exit 0. Lowering passed in 26.117s, native in 269.866s, the oracle in 765.961s, Unicode properties in 957.988s and every stage-1 package passed. Formatting and `go vet ./...` were clean. Full output is recorded in the follow-up evidence; the original log is `/tmp/concurrency-moves-full-gate.log`. Darwin is left to Kirk's run.

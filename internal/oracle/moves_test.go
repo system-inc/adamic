@@ -35,13 +35,17 @@ func TestMovesAgreesWithNode(t *testing.T) {
 func TestMovesRefusals(t *testing.T) {
 	t.Parallel()
 	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/moves/refused/*.a"))
-	if err != nil || len(paths) < 27 {
+	if err != nil || len(paths) < 30 {
 		t.Fatalf("fixtures: %d %v", len(paths), err)
 	}
 	for _, path := range paths {
 		t.Run(filepath.Base(path), func(t *testing.T) {
 			t.Parallel()
 			want, err := os.ReadFile(strings.TrimSuffix(path, ".a") + ".what")
+			if err != nil {
+				t.Fatal(err)
+			}
+			fix, err := os.ReadFile(strings.TrimSuffix(path, ".a") + ".fix")
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -54,7 +58,10 @@ func TestMovesRefusals(t *testing.T) {
 			if !errors.As(err, &refused) {
 				t.Fatalf("want Refused %q, got %v", strings.TrimSpace(string(want)), err)
 			}
-			if refused.What != strings.TrimSpace(string(want)) || refused.Where == "" || refused.Fix == "" {
+			if refused.Fix != "return it through the results" && refused.Fix != "don't use it after the parallelMap" {
+				t.Fatalf("unapproved move fix: %q", refused.Fix)
+			}
+			if refused.What != strings.TrimSpace(string(want)) || refused.Where == "" || refused.Fix != strings.TrimSpace(string(fix)) {
 				t.Fatalf("want %q; got %+v", strings.TrimSpace(string(want)), refused)
 			}
 		})
