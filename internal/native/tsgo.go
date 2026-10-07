@@ -113,7 +113,7 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "tsgo.h"), bridge.Header, 0o644); err != nil {
 		return err
 	}
-	arguments := append(Flags(options), "-DADAMIC_TSGO", "-o", output)
+	arguments := append(LinkFlags(options), "-DADAMIC_TSGO", "-o", output)
 	arguments = append(arguments, units...)
 	arguments = append(arguments, archive, "-lm", "-lpthread", "-ldl")
 	combined, err := exec.Command("clang", arguments...).CombinedOutput()

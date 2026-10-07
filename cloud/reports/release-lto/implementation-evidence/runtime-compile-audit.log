@@ -1,0 +1,23 @@
+=== RUN   TestNonShippingFlagsStayIdentical
+=== PAUSE TestNonShippingFlagsStayIdentical
+=== RUN   TestReleaseFlagsReachLink
+=== PAUSE TestReleaseFlagsReachLink
+=== RUN   TestRuntimeCompilesEveryUnitUnfused
+=== RUN   TestRuntimeCompilesEveryUnitUnfused/shipped_release
+    release_test.go:186: all 48 runtime compile commands include contraction protection, including dtoa.c and ieee754.c
+=== RUN   TestRuntimeCompilesEveryUnitUnfused/ordinary_oracle
+    release_test.go:186: all 48 runtime compile commands include contraction protection, including dtoa.c and ieee754.c
+=== RUN   TestRuntimeCompilesEveryUnitUnfused/oracle_counts
+    release_test.go:186: all 48 runtime compile commands include contraction protection, including dtoa.c and ieee754.c
+=== NAME  TestRuntimeCompilesEveryUnitUnfused
+    release_test.go:203: actual dtoa.c-only flag omission caught by runtime compile-command audit
+--- PASS: TestRuntimeCompilesEveryUnitUnfused (15.86s)
+    --- PASS: TestRuntimeCompilesEveryUnitUnfused/shipped_release (2.67s)
+    --- PASS: TestRuntimeCompilesEveryUnitUnfused/ordinary_oracle (5.39s)
+    --- PASS: TestRuntimeCompilesEveryUnitUnfused/oracle_counts (5.16s)
+=== CONT  TestNonShippingFlagsStayIdentical
+--- PASS: TestNonShippingFlagsStayIdentical (0.00s)
+=== CONT  TestReleaseFlagsReachLink
+--- PASS: TestReleaseFlagsReachLink (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	15.865s

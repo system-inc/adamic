@@ -1,0 +1,10 @@
+
+ Performance counter stats for 'taskset -c 3 /workspace/scratch/release-lto/go-parse --manifest /workspace/scratch/release-lto/compiler.txt --count' (10 runs):
+
+   <not supported>      cycles:u                                                              
+   <not supported>      instructions:u                                                        
+   <not supported>      cache-misses:u                                                        
+   <not supported>      branch-misses:u                                                       
+
+           0.19132 +- 0.00205 seconds time elapsed  ( +-  1.07% )
+

@@ -9,7 +9,7 @@ import (
 )
 
 func build(path, output string, arguments []string) int {
-	options := native.Options{}
+	options := native.Options{Release: true}
 	archive := ""
 	for index := 0; index < len(arguments); index++ {
 		switch arguments[index] {
