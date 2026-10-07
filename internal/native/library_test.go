@@ -17,7 +17,7 @@ func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	flags := Flags(Options{Sanitize: true, Count: true, slabs: true, cpu: "haswell"})
+	flags := Flags(Options{Sanitize: true, Count: true, Slabs: true, cpu: "haswell"})
 	key := runtimeKey(files, flags, "clang", "version 1")
 	for index, flag := range flags {
 		changed := append([]string{}, flags[:index]...)

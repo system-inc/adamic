@@ -1,0 +1,1213 @@
+{
+  "TimingSourceCommit": "2adf65c2514eefbbb073bfdab922d00a4e80a3d3",
+  "PlainLogSHA256": "326bf7aa3500e18d65ddb1ddb0b7e85a87976a688d3c4a6db7d58363d385ad28",
+  "Totals": {
+    "Pass": 4114,
+    "Fail": 0,
+    "Skip": 21
+  },
+  "Plans": {
+    "8": {
+      "Commit": "74cfd78e52549c71cc7422b198617a947c44fe09",
+      "Source": "e49b65d18d97e001be14b28b7980c88fbf4689eb010c0b9704421c360b00b0b4",
+      "Digest": "8aaa8d34dc0adaf578def8ce01b283e7821bedb6b7f1cb2828908d88af32580e",
+      "Units": 924,
+      "Shards": [
+        {
+          "Shard": 0,
+          "Seconds": 2018.79,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+            "Test": "TestCanonicalizeUnicodeNode",
+            "Shard": 0,
+            "Seconds": 822.51,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 1,
+          "Seconds": 2034.9400000000003,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+            "Test": "TestPortMatchesGoCohere",
+            "Shard": 1,
+            "Seconds": 762.2,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 2,
+          "Seconds": 2011.69,
+          "ParentSeconds": 121.65000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownWhitespaceLayout",
+            "Shard": 2,
+            "Seconds": 762.15,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 3,
+          "Seconds": 2018.76,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownASTPreprocessing",
+            "Shard": 3,
+            "Seconds": 729.8,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 4,
+          "Seconds": 2018.7600000000002,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownQuoteLayout",
+            "Shard": 4,
+            "Seconds": 626.8,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 5,
+          "Seconds": 2015.1,
+          "ParentSeconds": 125.04000000000002,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownCodeBlockLayout",
+            "Shard": 5,
+            "Seconds": 607.97,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 6,
+          "Seconds": 2034.9300000000003,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+            "Test": "TestMarkdownInline",
+            "Shard": 6,
+            "Seconds": 589.45,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 7,
+          "Seconds": 2034.97,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownLeafComposition",
+            "Shard": 7,
+            "Seconds": 541.42,
+            "WASI": false
+          },
+          "Unknown": 2
+        }
+      ]
+    },
+    "10": {
+      "Commit": "74cfd78e52549c71cc7422b198617a947c44fe09",
+      "Source": "e49b65d18d97e001be14b28b7980c88fbf4689eb010c0b9704421c360b00b0b4",
+      "Digest": "ba1b23ae39b64c2f102b3ffa637c972cc869718638f85f1096360f2462fbeef5",
+      "Units": 924,
+      "Shards": [
+        {
+          "Shard": 0,
+          "Seconds": 1637.3600000000001,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+            "Test": "TestCanonicalizeUnicodeNode",
+            "Shard": 0,
+            "Seconds": 822.51,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 1,
+          "Seconds": 1637.0600000000002,
+          "ParentSeconds": 125.04000000000002,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+            "Test": "TestPortMatchesGoCohere",
+            "Shard": 1,
+            "Seconds": 762.2,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 2,
+          "Seconds": 1640.7700000000002,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownWhitespaceLayout",
+            "Shard": 2,
+            "Seconds": 762.15,
+            "WASI": false
+          },
+          "Unknown": 3
+        },
+        {
+          "Shard": 3,
+          "Seconds": 1640.76,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownASTPreprocessing",
+            "Shard": 3,
+            "Seconds": 729.8,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 4,
+          "Seconds": 1640.7700000000002,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownQuoteLayout",
+            "Shard": 4,
+            "Seconds": 626.8,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 5,
+          "Seconds": 1515.7300000000005,
+          "ParentSeconds": 3.680000000000007,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownCodeBlockLayout",
+            "Shard": 5,
+            "Seconds": 607.97,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 6,
+          "Seconds": 1656.9499999999996,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+            "Test": "TestMarkdownInline",
+            "Shard": 6,
+            "Seconds": 589.45,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 7,
+          "Seconds": 1640.7699999999998,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownLeafComposition",
+            "Shard": 7,
+            "Seconds": 541.42,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 8,
+          "Seconds": 1633.6700000000003,
+          "ParentSeconds": 121.65000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownTableLayout",
+            "Shard": 8,
+            "Seconds": 513.37,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 9,
+          "Seconds": 1656.93,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/bridge/tsgo",
+            "Test": "TestBridge",
+            "Shard": 9,
+            "Seconds": 481.75,
+            "WASI": false
+          },
+          "Unknown": 1
+        }
+      ]
+    },
+    "12": {
+      "Commit": "74cfd78e52549c71cc7422b198617a947c44fe09",
+      "Source": "e49b65d18d97e001be14b28b7980c88fbf4689eb010c0b9704421c360b00b0b4",
+      "Digest": "f86a6f50673057967d6dcde9fd8548c16660f795b8037a87303fa7c13464e54f",
+      "Units": 924,
+      "Shards": [
+        {
+          "Shard": 0,
+          "Seconds": 1385.09,
+          "ParentSeconds": 125.04000000000002,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+            "Test": "TestCanonicalizeUnicodeNode",
+            "Shard": 0,
+            "Seconds": 822.51,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 1,
+          "Seconds": 1385.3800000000003,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+            "Test": "TestPortMatchesGoCohere",
+            "Shard": 1,
+            "Seconds": 762.2,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 2,
+          "Seconds": 1401.56,
+          "ParentSeconds": 141.51000000000005,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownWhitespaceLayout",
+            "Shard": 2,
+            "Seconds": 762.15,
+            "WASI": false
+          },
+          "Unknown": 3
+        },
+        {
+          "Shard": 3,
+          "Seconds": 1388.7400000000002,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownASTPreprocessing",
+            "Shard": 3,
+            "Seconds": 729.8,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 4,
+          "Seconds": 1388.74,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownQuoteLayout",
+            "Shard": 4,
+            "Seconds": 626.8,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 5,
+          "Seconds": 1385.0900000000001,
+          "ParentSeconds": 125.04000000000002,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownCodeBlockLayout",
+            "Shard": 5,
+            "Seconds": 607.97,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 6,
+          "Seconds": 1263.6900000000003,
+          "ParentSeconds": 3.680000000000007,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+            "Test": "TestMarkdownInline",
+            "Shard": 6,
+            "Seconds": 589.45,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 7,
+          "Seconds": 1385.08,
+          "ParentSeconds": 125.04000000000002,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownLeafComposition",
+            "Shard": 7,
+            "Seconds": 541.42,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 8,
+          "Seconds": 1385.3500000000001,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownTableLayout",
+            "Shard": 8,
+            "Seconds": 513.37,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 9,
+          "Seconds": 1388.7300000000005,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/bridge/tsgo",
+            "Test": "TestBridge",
+            "Shard": 9,
+            "Seconds": 481.75,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 10,
+          "Seconds": 1404.92,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownStructureLayout",
+            "Shard": 10,
+            "Seconds": 444.43,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 11,
+          "Seconds": 1404.95,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownHTMLBlockLayout",
+            "Shard": 11,
+            "Seconds": 443.54,
+            "WASI": false
+          },
+          "Unknown": 0
+        }
+      ]
+    },
+    "14": {
+      "Commit": "71e767cfb812c7a80d623516172336d105a953a3",
+      "Digest": "afa4e4c493e0381abe7ad17d064a36077515103903a239abeed7ff456b1153a7",
+      "Units": 922,
+      "Shards": [
+        {
+          "Shard": 0,
+          "Seconds": 1087.1100000000001,
+          "ParentSeconds": 7.069999999999993,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+            "Test": "TestCanonicalizeUnicodeNode",
+            "Shard": 0,
+            "Seconds": 822.51,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 1,
+          "Seconds": 1087.11,
+          "ParentSeconds": 7.069999999999993,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+            "Test": "TestPortMatchesGoCohere",
+            "Shard": 1,
+            "Seconds": 762.2,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 2,
+          "Seconds": 1205.3600000000001,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownWhitespaceLayout",
+            "Shard": 2,
+            "Seconds": 762.15,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 3,
+          "Seconds": 1205.35,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownASTPreprocessing",
+            "Shard": 3,
+            "Seconds": 729.8,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 4,
+          "Seconds": 1208.7600000000002,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownQuoteLayout",
+            "Shard": 4,
+            "Seconds": 626.8,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 5,
+          "Seconds": 1208.73,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownCodeBlockLayout",
+            "Shard": 5,
+            "Seconds": 607.97,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 6,
+          "Seconds": 1224.94,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+            "Test": "TestMarkdownInline",
+            "Shard": 6,
+            "Seconds": 589.45,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 7,
+          "Seconds": 1208.76,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownLeafComposition",
+            "Shard": 7,
+            "Seconds": 541.42,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 8,
+          "Seconds": 1201.69,
+          "ParentSeconds": 121.65000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownTableLayout",
+            "Shard": 8,
+            "Seconds": 513.37,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 9,
+          "Seconds": 1087.1000000000004,
+          "ParentSeconds": 7.069999999999993,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/bridge/tsgo",
+            "Test": "TestBridge",
+            "Shard": 9,
+            "Seconds": 481.75,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 10,
+          "Seconds": 1205.3600000000001,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownStructureLayout",
+            "Shard": 10,
+            "Seconds": 444.43,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 11,
+          "Seconds": 1083.69,
+          "ParentSeconds": 3.680000000000007,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownHTMLBlockLayout",
+            "Shard": 11,
+            "Seconds": 443.54,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 12,
+          "Seconds": 1221.52,
+          "ParentSeconds": 141.51000000000005,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownRootLayout",
+            "Shard": 12,
+            "Seconds": 374.71,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 13,
+          "Seconds": 1224.9100000000003,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownListLayout",
+            "Shard": 13,
+            "Seconds": 370.68,
+            "WASI": false
+          },
+          "Unknown": 0
+        }
+      ]
+    },
+    "15": {
+      "Commit": "74cfd78e52549c71cc7422b198617a947c44fe09",
+      "Source": "e49b65d18d97e001be14b28b7980c88fbf4689eb010c0b9704421c360b00b0b4",
+      "Digest": "6e86de9aaa8c3fb438a7dc7c1f6b95b7eaa985f005f4934c3de35cd2d17aae18",
+      "Units": 924,
+      "Shards": [
+        {
+          "Shard": 0,
+          "Seconds": 1136.7400000000002,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+            "Test": "TestCanonicalizeUnicodeNode",
+            "Shard": 0,
+            "Seconds": 822.51,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 1,
+          "Seconds": 1133.37,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+            "Test": "TestPortMatchesGoCohere",
+            "Shard": 1,
+            "Seconds": 762.2,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 2,
+          "Seconds": 1133.37,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownWhitespaceLayout",
+            "Shard": 2,
+            "Seconds": 762.15,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 3,
+          "Seconds": 1133.3700000000001,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownASTPreprocessing",
+            "Shard": 3,
+            "Seconds": 729.8,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 4,
+          "Seconds": 1136.76,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownQuoteLayout",
+            "Shard": 4,
+            "Seconds": 626.8,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 5,
+          "Seconds": 1145.84,
+          "ParentSeconds": 137.83000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownCodeBlockLayout",
+            "Shard": 5,
+            "Seconds": 607.97,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 6,
+          "Seconds": 1015.08,
+          "ParentSeconds": 7.069999999999993,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+            "Test": "TestMarkdownInline",
+            "Shard": 6,
+            "Seconds": 589.45,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 7,
+          "Seconds": 1015.0799999999998,
+          "ParentSeconds": 7.069999999999993,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownLeafComposition",
+            "Shard": 7,
+            "Seconds": 541.42,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 8,
+          "Seconds": 1152.94,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownTableLayout",
+            "Shard": 8,
+            "Seconds": 513.37,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 9,
+          "Seconds": 1015.1000000000003,
+          "ParentSeconds": 7.069999999999993,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/bridge/tsgo",
+            "Test": "TestBridge",
+            "Shard": 9,
+            "Seconds": 481.75,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 10,
+          "Seconds": 1136.7300000000002,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownStructureLayout",
+            "Shard": 10,
+            "Seconds": 444.43,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 11,
+          "Seconds": 1133.3500000000001,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownHTMLBlockLayout",
+            "Shard": 11,
+            "Seconds": 443.54,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 12,
+          "Seconds": 1133.37,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownRootLayout",
+            "Shard": 12,
+            "Seconds": 374.71,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 13,
+          "Seconds": 1133.0700000000002,
+          "ParentSeconds": 125.04000000000002,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownListLayout",
+            "Shard": 13,
+            "Seconds": 370.68,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 14,
+          "Seconds": 1152.9099999999999,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+            "Test": "TestSixRuleAgreementAndMutants",
+            "Shard": 14,
+            "Seconds": 361.77,
+            "WASI": false
+          },
+          "Unknown": 0
+        }
+      ]
+    },
+    "16": {
+      "Commit": "74cfd78e52549c71cc7422b198617a947c44fe09",
+      "Source": "e49b65d18d97e001be14b28b7980c88fbf4689eb010c0b9704421c360b00b0b4",
+      "Digest": "83935bf136d9684ea3ab471f2bb2e737196c126361ca3297d29efe8bfad4b74b",
+      "Units": 924,
+      "Shards": [
+        {
+          "Shard": 0,
+          "Seconds": 1070.34,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+            "Test": "TestCanonicalizeUnicodeNode",
+            "Shard": 0,
+            "Seconds": 822.51,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 1,
+          "Seconds": 1070.3400000000001,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+            "Test": "TestPortMatchesGoCohere",
+            "Shard": 1,
+            "Seconds": 762.2,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 2,
+          "Seconds": 948.7199999999999,
+          "ParentSeconds": 3.680000000000007,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownWhitespaceLayout",
+            "Shard": 2,
+            "Seconds": 762.15,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 3,
+          "Seconds": 1066.69,
+          "ParentSeconds": 121.65000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownASTPreprocessing",
+            "Shard": 3,
+            "Seconds": 729.8,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 4,
+          "Seconds": 952.08,
+          "ParentSeconds": 7.069999999999993,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownQuoteLayout",
+            "Shard": 4,
+            "Seconds": 626.8,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 5,
+          "Seconds": 948.72,
+          "ParentSeconds": 3.680000000000007,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownCodeBlockLayout",
+            "Shard": 5,
+            "Seconds": 607.97,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 6,
+          "Seconds": 1070.3600000000001,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+            "Test": "TestMarkdownInline",
+            "Shard": 6,
+            "Seconds": 589.45,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 7,
+          "Seconds": 1086.25,
+          "ParentSeconds": 141.22000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownLeafComposition",
+            "Shard": 7,
+            "Seconds": 541.42,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 8,
+          "Seconds": 1066.69,
+          "ParentSeconds": 121.65000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownTableLayout",
+            "Shard": 8,
+            "Seconds": 513.37,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 9,
+          "Seconds": 948.7100000000003,
+          "ParentSeconds": 3.680000000000007,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/bridge/tsgo",
+            "Test": "TestBridge",
+            "Shard": 9,
+            "Seconds": 481.75,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 10,
+          "Seconds": 1082.8600000000001,
+          "ParentSeconds": 137.83000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownStructureLayout",
+            "Shard": 10,
+            "Seconds": 444.43,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 11,
+          "Seconds": 1070.0700000000002,
+          "ParentSeconds": 125.04000000000002,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownHTMLBlockLayout",
+            "Shard": 11,
+            "Seconds": 443.54,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 12,
+          "Seconds": 952.1099999999999,
+          "ParentSeconds": 7.069999999999993,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownRootLayout",
+            "Shard": 12,
+            "Seconds": 374.71,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 13,
+          "Seconds": 1070.0400000000002,
+          "ParentSeconds": 125.04000000000002,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownListLayout",
+            "Shard": 13,
+            "Seconds": 370.68,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 14,
+          "Seconds": 1070.3300000000002,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+            "Test": "TestSixRuleAgreementAndMutants",
+            "Shard": 14,
+            "Seconds": 361.77,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 15,
+          "Seconds": 1089.91,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownTextSplitting",
+            "Shard": 15,
+            "Seconds": 311.55,
+            "WASI": false
+          },
+          "Unknown": 1
+        }
+      ]
+    },
+    "13": {
+      "Commit": "74cfd78e52549c71cc7422b198617a947c44fe09",
+      "Source": "e49b65d18d97e001be14b28b7980c88fbf4689eb010c0b9704421c360b00b0b4",
+      "Digest": "fdc90d2bd89869bfde03cd04e8b6a0d02b77301241ea92744be1d85b2d772813",
+      "Units": 924,
+      "Shards": [
+        {
+          "Shard": 0,
+          "Seconds": 1288.4400000000003,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+            "Test": "TestCanonicalizeUnicodeNode",
+            "Shard": 0,
+            "Seconds": 822.51,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 1,
+          "Seconds": 1288.4300000000003,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+            "Test": "TestPortMatchesGoCohere",
+            "Shard": 1,
+            "Seconds": 762.2,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 2,
+          "Seconds": 1170.18,
+          "ParentSeconds": 7.069999999999993,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownWhitespaceLayout",
+            "Shard": 2,
+            "Seconds": 762.15,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 3,
+          "Seconds": 1166.5000000000002,
+          "ParentSeconds": 3.3899999999999864,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownASTPreprocessing",
+            "Shard": 3,
+            "Seconds": 729.8,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 4,
+          "Seconds": 1304.6000000000001,
+          "ParentSeconds": 141.51000000000005,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownQuoteLayout",
+            "Shard": 4,
+            "Seconds": 626.8,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 5,
+          "Seconds": 1288.4399999999998,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownCodeBlockLayout",
+            "Shard": 5,
+            "Seconds": 607.97,
+            "WASI": false
+          },
+          "Unknown": 2
+        },
+        {
+          "Shard": 6,
+          "Seconds": 1291.83,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+            "Test": "TestMarkdownInline",
+            "Shard": 6,
+            "Seconds": 589.45,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 7,
+          "Seconds": 1308,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownLeafComposition",
+            "Shard": 7,
+            "Seconds": 541.42,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 8,
+          "Seconds": 1291.84,
+          "ParentSeconds": 128.72000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownTableLayout",
+            "Shard": 8,
+            "Seconds": 513.37,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 9,
+          "Seconds": 1288.44,
+          "ParentSeconds": 125.33000000000004,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/bridge/tsgo",
+            "Test": "TestBridge",
+            "Shard": 9,
+            "Seconds": 481.75,
+            "WASI": false
+          },
+          "Unknown": 1
+        },
+        {
+          "Shard": 10,
+          "Seconds": 1288.15,
+          "ParentSeconds": 125.04000000000002,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownStructureLayout",
+            "Shard": 10,
+            "Seconds": 444.43,
+            "WASI": false
+          },
+          "Unknown": 3
+        },
+        {
+          "Shard": 11,
+          "Seconds": 1166.78,
+          "ParentSeconds": 3.680000000000007,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownHTMLBlockLayout",
+            "Shard": 11,
+            "Seconds": 443.54,
+            "WASI": false
+          },
+          "Unknown": 0
+        },
+        {
+          "Shard": 12,
+          "Seconds": 1308.0100000000002,
+          "ParentSeconds": 144.90000000000003,
+          "Largest": {
+            "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+            "Test": "TestMarkdownRootLayout",
+            "Shard": 12,
+            "Seconds": 374.71,
+            "WASI": false
+          },
+          "Unknown": 0
+        }
+      ]
+    }
+  },
+  "KnownUnitSeconds": 15120.39,
+  "MinimumCountBelow1200Seconds": 15,
+  "TimingFileSHA256": "07901072164986db5f6e341145e9d7c8fb42fac18342cec424976f0007c57971"
+}

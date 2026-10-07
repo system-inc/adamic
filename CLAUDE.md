@@ -35,6 +35,11 @@ Whole functions are kept together; trace extracted files with `git log --follow 
 
 ## The gate
 
+The oracle pins Node v24.19.0 in `internal/nodepin`. `bash cloud/setup.sh` supplies it
+from nodejs.org on Linux and macOS, checking published SHA-256 sums against
+`cloud/node-pin.json`. Source the printed `env.sh` to put it first on PATH. A different
+version fails the oracle before comparisons; test262 and the fuzzer check it too.
+
 ```
 gofmt -l cmd internal
 go vet ./...
@@ -50,6 +55,14 @@ main moves.** Ordinary worker gates may use the cache. Keep `-timeout 30m` for t
 
 The input tests drop to uid 65534 when run as root, so TMPDIR must be world-traversable (for example /tmp/adamic-gate, mode 1777) and Node must not live under /root. A new fixture needs its row in internal/oracle/counts.md: `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`.
 
+Add a stage 1 lint rule only under `stage1/cohere/lint/rules/<slug>/`. Its directory
+owns `rule.json`, `rule.ts`, messages, its upstream Go `oracle.go` adapter,
+`mutant.json` and raw `testdata/*.ts.txt` witnesses. Omit `order` for new rules.
+Never edit a dispatch, oracle, corpus or copied-file list. Before building the lint
+driver, run `go run ./cmd/lint-registry`; tests regenerate and validate every
+descriptor automatically. Generated `.generated/` registries stay out of Git.
+See `docs/lint-registration.md` for the descriptor and adapter contracts.
+
 Send test output to a log and read the log. Never pipe a test run into `head` or `tail`: it kills the run mid-way and can orphan the fixtures' processes. Tests are parallel by default; a test that can't be says why in a "Not parallel:" comment.
 
 On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that job. On macOS the leak check is the counted build, whose allocations must be its frees and its values in regions, then `leaks --atExit` on the same binary for malloc memory outside the counts; `leaks` alone can't see a leaked value, since the size-class allocator's chunks stay reachable.
@@ -61,6 +74,9 @@ cohere checks and formats every Adamic program in this repository, `.ts` and `.a
 - `internal/load/testdata/0.1/refuse/**`: docs/0.1.md's five refused programs, whose job is to be refused.
 - `stage1/**/gaps/**`: each stage-1 slice's smallest programs for what stage 0 can't hold yet, kept exactly as written so their gaps tests notice when a gap closes.
 - `review/**`: reviewers' probes, written to break things.
+- `stage3/drivers/tsc/corpus/**`: 300 programs from TypeScript 6.0.3's own compiler tests, kept byte for byte as upstream wrote them, 240 of them with errors on purpose, for the tsc diagnostics oracle.
+
+The cohere baseline gate (`cloud/cohere_gate.py`, run by `TestRepositoryPassesCohereBaseline` when `ADAMIC_GATE_COHERE=1`, which every gate run sets) builds the pinned submodule binary and checks every repository-owned `.ts` and `.a` file, plus formatting and docs. The pinned cohere does not discover `.a` yet, so the gate checks disposable `.a.ts` copies with their import suffixes adjusted; it never edits cohere or source files. Type and lint phases run separately so intentional type-error fixtures do not hide lint findings, and the existing refusal, gap and review exclusions still apply. It prints what it covered before its verdict. Remaining findings are recorded in `cloud/cohere-baseline.json`, keyed by path, rule, messageId, severity and source line, never message text, so a cohere pin bump that rewords a message changes nothing. `--record` removes resolved entries and refuses additions, and the gate refuses baseline growth relative to `origin/main` and to HEAD.
 
 ## Working here
 

@@ -1,0 +1,13 @@
+v24.19.0
+oracle: node v24.19.0 at /tmp/adamic-gate/node-pin-tools/bin/node
+=== RUN   TestTheOracleCatchesOneByte
+=== PAUSE TestTheOracleCatchesOneByte
+=== CONT  TestTheOracleCatchesOneByte
+    oracle_test.go:489: gate cache native miss
+    oracle_test.go:697: gate cache node miss
+--- PASS: TestTheOracleCatchesOneByte (9.78s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.793s

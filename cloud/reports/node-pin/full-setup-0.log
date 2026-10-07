@@ -1,0 +1,27 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.090s)
+setup: submodules ready (0.113s)
+setup: downloading module dependencies in /tmp/adamic-gate/node-path-proof-yd71k3jf/repository
+go: no module dependencies to download
+all modules verified
+setup: module dependencies downloaded and verified (1 module directories); step-duration=0.020s
+setup: module dependencies ready (0.185s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/tmp/adamic-gate/node-pin-tools/llvm/bin/clang) (0.320s)
+setup: node v24.19.0 installed (published SHA-256 verified); step-duration=2.546s
+v24.19.0
+setup: node ready (2.680s)
+
+added 3 packages in 378ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=0.766s
+setup: markdown dependencies ready (3.499s)
+setup: stage3 API dependencies skipped (stage3/api/package-lock.json absent); step-duration=0.000s
+setup: stage3 API dependencies checked (3.553s)
+setup: go build ready (3.975s)
+setup: test binaries deferred (use --warm-tests) (4.214s)
+setup: build cache warm (4.219s)
+setup: build-flags commit=f3ae06a12af20999fa37e6bdddcbca188275ad52 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=false load-before=0.40 0.77 0.85 1/648 199729 load-after=0.52 0.79 0.86 1/649 200175
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (4.279s)
+setup: source /tmp/adamic-gate/node-pin-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.VUGCWo
+setup: node v24.19.0

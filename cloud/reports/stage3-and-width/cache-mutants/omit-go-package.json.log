@@ -1,0 +1,13 @@
+sF...
+======================================================================
+FAIL: test_collected_manifests_invalidate (__main__.WarmingKey.test_collected_manifests_invalidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup.py", line 112, in test_collected_manifests_invalidate
+    self.assertNotEqual(previous, current, str(file))
+AssertionError: '48c7bff3478ba960bfc477076090a2cb035977ca16cad7c070b26712d5cf7022\n' == '48c7bff3478ba960bfc477076090a2cb035977ca16cad7c070b26712d5cf7022\n' : /tmp/setup-collected-2jej54xg/stage3/api/package.json
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.007s
+
+FAILED (failures=1, skipped=1)

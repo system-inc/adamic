@@ -1,0 +1,16 @@
+
+added 20 packages in 903ms
+
+added 20 packages in 878ms
+
+added 20 packages in 975ms
+warm: skipped (validated lock and installed bytes)
+uncached: installed (npm ci, integrity verified)
+changed lock: installed (npm ci, integrity verified)
+restore: installed (npm ci, integrity verified)
+caught drop-lock mutant: key failed to invalidate
+caught drop-manifest mutant: key failed to invalidate
+caught drop-bootstrap mutant: key failed to invalidate
+caught drop-helper mutant: key failed to invalidate
+caught drop-node mutant: key failed to invalidate
+PASS: warm, uncached bytes, lock rerun, five key mutants

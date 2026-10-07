@@ -9,13 +9,17 @@
 # Go checks its own content-addressed action cache before a warming stamp can skip linking.
 # Test binaries are optional because most workers need one package.
 #
-# Nothing here is needed on a Mac: Xcode's clang and leaks already do this job there.
+# On macOS, use the portable preparation lane with Xcode clang and an installed Go.
 set -euo pipefail
 
 scriptDirectory=${BASH_SOURCE[0]%/*}
 [ "$scriptDirectory" != "${BASH_SOURCE[0]}" ] || scriptDirectory=.
 repository=$(cd -- "$scriptDirectory/.." && pwd)
 cloudSource="$repository/cloud"
+# macOS ships Bash 3.2 and no GNU timeout/flock; dispatch before using Linux shell tools.
+if [ "$(uname -s)" = Darwin ]; then
+	exec python3 "$repository/internal/boundedrun/python.py" "$cloudSource/setup-darwin.py" "$@"
+fi
 # shellcheck source=../internal/boundedrun/shell.sh
 source "$repository/internal/boundedrun/shell.sh"
 # A clean main worktree can use this installer without copying source into it.
@@ -29,11 +33,13 @@ started=$EPOCHREALTIME
 loadBefore=$(cat /proc/loadavg)
 warmTests=false
 gateInputs=false
+wasiSDK=false
 for argument in "$@"; do
 	case "$argument" in
 		--warm-tests) warmTests=true ;;
 		--gate-inputs) gateInputs=true ;;
-		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--gate-inputs]" >&2; exit 2 ;;
+		--wasi-sdk) wasiSDK=true ;;
+		*) echo "usage: bash cloud/setup.sh [--warm-tests] [--gate-inputs] [--wasi-sdk]" >&2; exit 2 ;;
 	esac
 done
 step() {
@@ -44,6 +50,11 @@ step() {
 
 tools=${ADAMIC_TOOLS:-/opt/adamic-tools}
 mkdir -p "$tools/bin" 2> /dev/null || { tools=$HOME/.adamic-tools && mkdir -p "$tools/bin"; }
+# Keep the pinned Node traversable even if a fallback tool directory was under /root.
+if python3 -c 'import pathlib,sys;sys.exit(not pathlib.Path(sys.argv[1]).resolve().is_relative_to("/root"))' "$tools"; then
+ tools="/tmp/adamic-gate/tools-$(printf '%s' "$tools" | sha256sum | cut -d' ' -f1)"
+ mkdir -p "$tools/bin"
+fi
 gate=/tmp/adamic-gate
 # The input tests drop to uid 65534 when run as root, so everything they touch must be traversable
 # by that user: the temporary directory, and the Node they run.
@@ -69,6 +80,11 @@ esac
 # Go. Any Go from 1.21 on fetches the version go.mod names by itself (GOTOOLCHAIN=auto), so an
 # installed one is enough; otherwise the newest stable release goes in $tools/go.
 export GOTOOLCHAIN=auto
+# Some cloud boxes reach proxy.golang.org but not storage.googleapis.com, where it redirects module
+# downloads, and answer 403. The default proxy list falls back to direct only on 404 and 410, so a
+# module the box hasn't cached fails setup. The pipe falls back on any error, fetching from the
+# module's own source instead; go.sum still checks every module's hash either way.
+export GOPROXY="https://proxy.golang.org|direct"
 prepareGo() {
 # Only a go that answers `go version` counts: some images ship an unrelated /usr/bin/go.
 realGo() { bounded 30 "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
@@ -116,29 +132,18 @@ bounded 30 "$clang" --version | head -n 1
 step "clang ready ($clang)"
 }
 
-# Node 24, outside /root.
+# Pinned Node, downloaded and checksum verified even when another version is on PATH.
 prepareNode() {
-if ! bounded 30 "$tools/bin/node" --version 2> /dev/null | grep -q '^v24\.'; then
-	existing=""
-	for candidate in $(command -v node || true) /root/.nvm/versions/node/v24*/bin/node; do
-		if [ -x "$candidate" ] && bounded 30 "$candidate" --version | grep -q '^v24\.'; then
-			existing=$candidate
-			break
-		fi
-	done
-	if [ -n "$existing" ]; then
-		install -m 755 "$existing" "$tools/bin/node"
-	else
-		nodeVersion=$(bounded 600 curl -fsSL https://nodejs.org/dist/index.json | bounded 30 python3 -c 'import json, sys; print(next(r["version"] for r in json.load(sys.stdin) if r["version"].startswith("v24.")))')
-		bounded 600 curl -fsSL "https://nodejs.org/dist/$nodeVersion/node-$nodeVersion-linux-$nodeArchitecture.tar.xz" | bounded 600 tar --no-same-owner -xJ -C "$tools" --strip-components 2 --wildcards '*/bin/node'
-		mv "$tools/node" "$tools/bin/node"
-	fi
-fi
+bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-node.py" "$tools" > "$run/node.log" 2>&1 || { cat "$run/node.log"; return 1; }
+cat "$run/node.log"
 bounded 30 "$tools/bin/node" --version
 step "node ready"
 bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-markdown-width.py" "$cloudSource/markdown-width" "$markdownDependencies" "$tools/bin/node" > "$run/markdown.log" 2>&1 || { cat "$run/markdown.log"; return 1; }
 cat "$run/markdown.log"
 step "markdown dependencies ready"
+bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-stage3-api.py" "$repository" "$tools" "$tools/bin/node" > "$run/stage3.log" 2>&1 || { cat "$run/stage3.log"; return 1; }
+cat "$run/stage3.log"
+step "stage3 API dependencies checked"
 if "$gateInputs"; then
 	bounded 1800 python3 "$cloudSource/../internal/boundedrun/python.py" "$cloudSource/setup-gate-inputs.py" npm "$repository" "$gateInputsRoot" "$tools/bin/node" > "$run/gate-npm.log" 2>&1 || { cat "$run/gate-npm.log"; return 1; }
 	cat "$run/gate-npm.log"
@@ -151,6 +156,7 @@ prepareGoAndSignal() {
 	prepareGo
 	: > "$run/go-ready"
 	trap - EXIT
+
 }
 
 prepareSubmodules() {
@@ -201,13 +207,33 @@ done
 [ "$failed" = 0 ] || exit 1
 [ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
 
+# Optional WASI SDK 27: native clang remains the default in PATH.
+if "$wasiSDK"; then
+ wasiVersion=27
+ wasiDirectory="$tools/wasi-sdk"
+ if [ ! -x "$wasiDirectory/bin/clang" ]; then
+  case $(uname -m) in
+   x86_64) wasiArchitecture=x86_64 ;;
+   *) wasiArchitecture=arm64 ;;
+  esac
+  mkdir -p "$wasiDirectory"
+  curl -fsSL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$wasiVersion/wasi-sdk-$wasiVersion.0-$wasiArchitecture-linux.tar.gz" | tar --no-same-owner -xz -C "$wasiDirectory" --strip-components 1
+ fi
+ "$wasiDirectory/bin/clang" --version | head -n 1
+ step "wasi sdk ready ($wasiDirectory)"
+fi
+
 # One file every shell sources: the agent's shell in Codex is a different session from this one.
 cat > "$tools/env.sh" << ENV
 export PATH="$tools/bin:$([ -x "$tools/go/bin/go" ] && echo "$tools/go/bin:")\$PATH"
 export GOTOOLCHAIN=auto
+export GOPROXY="https://proxy.golang.org|direct"
 export TMPDIR=$gate
 export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
 ENV
+if "$wasiSDK"; then
+ printf 'export WASI_SYSROOT=%q\n' "$wasiDirectory/share/wasi-sysroot" >> "$tools/env.sh"
+fi
 if "$gateInputs"; then
 	# Node, Go and submodules are now ready; build this seat's checker archive.
 	export PATH="$tools/bin:$PATH"
@@ -216,7 +242,7 @@ if "$gateInputs"; then
 	bounded 30 python3 "$cloudSource/setup-gate-inputs.py" env "$repository" "$gateInputsRoot" "$tools/bin/node" >> "$tools/env.sh"
 else
 	# A later ordinary setup must not inherit a previous opt-in gate seat.
-	echo "unset ADAMIC_TYPESCRIPT_SOURCE ADAMIC_CSS_LIBRARY ADAMIC_GRAPHQL_LIBRARY ADAMIC_MEDIA_QUERY_LIBRARY ADAMIC_SELECTOR_LIBRARY ADAMIC_VALUES_LIBRARY ADAMIC_JSON_PRETTIER ADAMIC_CSS_PRINTER_LIBRARY ADAMIC_GITIGNORE_LARGEST ADAMIC_CLANG_TSGO_ARCHIVE" >> "$tools/env.sh"
+	echo "unset ADAMIC_GRAPHQL_PRETTIER ADAMIC_ESTREE_LIBRARY ADAMIC_YAML_LIBRARY ADAMIC_TS_PRETTIER ADAMIC_TYPESCRIPT_SOURCE ADAMIC_CSS_LIBRARY ADAMIC_GRAPHQL_LIBRARY ADAMIC_MEDIA_QUERY_LIBRARY ADAMIC_SELECTOR_LIBRARY ADAMIC_VALUES_LIBRARY ADAMIC_JSON_PRETTIER ADAMIC_CSS_PRINTER_LIBRARY ADAMIC_GITIGNORE_LARGEST ADAMIC_CLANG_TSGO_ARCHIVE" >> "$tools/env.sh"
 fi
 grep -qs "$tools/env.sh" ~/.bashrc || echo "source $tools/env.sh" >> ~/.bashrc
 # shellcheck disable=SC1091
@@ -256,9 +282,32 @@ fi
 "$warmTests" || step "test binaries deferred (use --warm-tests)"
 step "build cache warm"
 
+# Go commands in workspace mode (downloads, builds, the archive step) add sums to go.work.sum. A gate
+# tests the commit exactly, and the shard runner refuses a dirty submodule, so setup leaves every
+# go.work.sum as the commit has it: a tracked one is written back from HEAD, an untracked one setup
+# created is removed. Go adds missing sums again as it needs them.
+restoreWorkSums() {
+	local directory=$1
+	if bounded 30 git -C "$directory" ls-files --error-unmatch go.work.sum > /dev/null 2>&1; then
+		bounded 30 git -C "$directory" diff --quiet -- go.work.sum || bounded 30 git -C "$directory" show HEAD:go.work.sum > "$directory/go.work.sum"
+	elif [ -f "$directory/go.work.sum" ] && ! bounded 30 git -C "$directory" check-ignore -q go.work.sum; then
+		rm -f "${directory:?}/go.work.sum"
+	fi
+}
+restoreWorkSums "$repository"
+while IFS= read -r submodule; do
+	restoreWorkSums "$repository/$submodule"
+done < <(bounded 60 git -C "$repository" submodule --quiet foreach --recursive 'echo "$displaypath"')
+step "workspace sums restored to the commit"
+
 cpuQuota=$(cat /sys/fs/cgroup/cpu.max 2> /dev/null || echo unknown)
 memory=$(awk '/MemTotal/ {printf "%.1f GB", $2 / 1048576}' /proc/meminfo)
 echo "setup: build-flags commit=$(bounded 30 git -C "$repository" rev-parse HEAD) nproc=$(nproc) cpu.max=$cpuQuota go=$(bounded 30 go version) clang=$(bounded 30 clang --version | head -n 1) node=$(bounded 30 node --version) cached=$([ "${ADAMIC_GATE_UNCACHED:-0}" = 1 ] && echo no || echo yes) warm-tests=$warmTests gate-inputs=$gateInputs load-before=$loadBefore load-after=$(cat /proc/loadavg)"
 step "done on $(nproc) processors (cgroup cpu.max: $cpuQuota), $memory"
 echo "setup: source $tools/env.sh"
 echo "setup: logs $run"
+# Refuse drift even if preparation succeeded earlier in this run.
+finalNodeVersion=$(bounded 30 node --version)
+expectedNodeVersion=$(bounded 30 python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["version"])' "$cloudSource/node-pin.json")
+[ "$finalNodeVersion" = "$expectedNodeVersion" ] || { echo "setup: node got $finalNodeVersion, want $expectedNodeVersion" >&2; exit 1; }
+echo "setup: node $finalNodeVersion"

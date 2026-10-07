@@ -4,8 +4,10 @@ import { panic } from 'adamic';
 import { Parser } from '../../typescript/parser/parser.ts';
 
 export class Settings {
+    text = '';
     readonly values = new Map<string, string[]>();
     load(text: string): void {
+        this.text = text;
         if(text === '' || text === 'null') {
             return;
         }
@@ -16,6 +18,10 @@ export class Settings {
         const object = parser.node(outer).children[0] ?? panic('missing option object');
         if(parser.node(object).kind === 'StringLiteral') {
             this.values.set('option', [parser.node(object).text]);
+            return;
+        }
+        if(parser.node(object).kind !== 'ObjectLiteralExpression') {
+            this.values.set('option', [text]);
             return;
         }
         for(const property of parser.node(object).children) {
@@ -30,7 +36,28 @@ export class Settings {
                 parser.node(value).kind === 'ArrayLiteralExpression' ? parser.node(value).children : [value];
             for(const element of elements) {
                 const node = parser.node(element);
-                values.push(node.kind === 'TrueKeyword' ? 'true' : node.kind === 'FalseKeyword' ? 'false' : node.text);
+                const scalar = ['TrueKeyword', 'FalseKeyword', 'StringLiteral', 'NumericLiteral'].includes(node.kind);
+                if(
+                    !scalar &&
+                    ![
+                        'ObjectLiteralExpression',
+                        'ArrayLiteralExpression',
+                        'PrefixUnaryExpression',
+                        'NullKeyword',
+                    ].includes(node.kind)
+                ) {
+                    panic('unsupported option expression');
+                }
+                // Structured values stay as data for a rule's own decoder.
+                values.push(
+                    scalar
+                        ? node.kind === 'TrueKeyword'
+                            ? 'true'
+                            : node.kind === 'FalseKeyword'
+                              ? 'false'
+                              : node.text
+                        : `(${text});`.slice(node.pos, node.end).trim(),
+                );
             }
             this.values.set(name, values);
         }

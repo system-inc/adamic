@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_published_checksum_must_match_pin (cloud.test_node_setup.NodeSetup.test_published_checksum_must_match_pin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_node_setup.py", line 105, in test_published_checksum_must_match_pin
+    with self.assertRaisesRegex(ValueError, 'published SHA-256 differs'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)

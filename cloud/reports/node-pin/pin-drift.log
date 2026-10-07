@@ -1,0 +1,8 @@
+=== RUN   TestSetupVersion
+=== PAUSE TestSetupVersion
+=== CONT  TestSetupVersion
+    nodepin_test.go:24: setup pins v24.19.0, nodepin.Version is v24.21.0
+--- FAIL: TestSetupVersion (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/nodepin	0.001s
+FAIL

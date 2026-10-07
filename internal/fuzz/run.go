@@ -17,6 +17,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/boundedrun"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/nodepin"
 )
 
 // Checkout is a compiler under test: a checkout of the repository, with its own adamic command built
@@ -37,6 +38,9 @@ var flags = native.Flags(native.Options{Sanitize: true})
 // Prepare builds a checkout's adamic command into directory and gets its cached runtime library.
 // The cache is shared with native.Build, while another checkout keeps its own runtime bytes.
 func Prepare(root string, directory string) (*Checkout, error) {
+	if _, err := nodepin.Check(); err != nil {
+		return nil, err
+	}
 	root, err := filepath.Abs(root)
 	if err != nil {
 		return nil, err
@@ -247,6 +251,30 @@ func crashed(outcome Outcome) (string, string) {
 }
 
 func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outcome {
+	outcome = Compare(outcome)
+	if outcome.Verdict != Agreed || outcome.Node.ExitCode != 0 {
+		return outcome
+	}
+	// Every program that finishes must let go of everything: the same binary again, leak detection on.
+	// LeakSanitizer's report here (on Linux), or any other failure (macOS's ASan aborting because it
+	// has no leak detection), is a leak, a finding. A report of a bad access is a Crash like any other.
+	leaked := execute(directory, []string{"ASAN_OPTIONS=detect_leaks=1"}, 20*time.Second, binary)
+	if report := sanitized(leaked, outcome.Node); report != "" {
+		outcome.Verdict, outcome.Key, outcome.Detail = Crash, "native "+report, firstLines(string(leaked.Stderr), 20)
+		return outcome
+	}
+	if leaked.ExitCode != 0 {
+		outcome.Verdict, outcome.Key, outcome.Detail = Finding, "leak", firstLines(string(leaked.Stderr), 20)
+		return outcome
+	}
+	return outcome
+}
+
+// Compare is the judge without its leak run: Node's run against native's (Native) and the JavaScript
+// backend's (Backend), read for a crash, an inserted check and a disagreement. It comes to Agreed when
+// the three agree; whether the program then let go of everything is the caller's to ask, the way its
+// platform asks it (internal/metamorphic runs the oracle's own leak checks).
+func Compare(outcome Outcome) Outcome {
 	switch {
 	case outcome.Node.TimedOut:
 		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node never finished", string(outcome.Node.Stderr)
@@ -295,22 +323,20 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 			outcome.Backend.ExitCode, tail(outcome.Backend.Stdout), outcome.Backend.Stderr)
 		return outcome
 	}
-	// Every program that finishes must let go of everything: the same binary again, leak detection on.
-	// LeakSanitizer's report here (on Linux), or any other failure (macOS's ASan aborting because it
-	// has no leak detection), is a leak, a finding. A report of a bad access is a Crash like any other.
-	if outcome.Node.ExitCode == 0 {
-		leaked := execute(directory, []string{"ASAN_OPTIONS=detect_leaks=1"}, 20*time.Second, binary)
-		if report := sanitized(leaked, outcome.Node); report != "" {
-			outcome.Verdict, outcome.Key, outcome.Detail = Crash, "native "+report, firstLines(string(leaked.Stderr), 20)
-			return outcome
-		}
-		if leaked.ExitCode != 0 {
-			outcome.Verdict, outcome.Key, outcome.Detail = Finding, "leak", firstLines(string(leaked.Stderr), 20)
-			return outcome
-		}
-	}
 	outcome.Verdict = Agreed
 	return outcome
+}
+
+// Refusal sorts a compiler run that failed, as Try does: the checker's refusal (Invalid), stage 0's
+// NotYet, or anything else, a crash of the compiler among them, a Finding.
+func Refusal(lowered Run) Outcome {
+	return compilerRefusal(lowered)
+}
+
+// Execute runs a command for another package the way the fuzzer runs its own: in its own process
+// group, killed whole at the deadline.
+func Execute(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
+	return execute(directory, environment, limit, name, arguments...)
 }
 
 // compilerRefusal sorts the compiler's refusal: the checker's (the generator's fault), stage 0's
