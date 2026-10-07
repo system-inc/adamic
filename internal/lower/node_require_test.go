@@ -123,7 +123,7 @@ func TestRequirePerformanceAndImportHaveTheSameIR(t *testing.T) {
 		if !reflect.DeepEqual(required, imported) {
 			t.Fatalf("require(%q) IR differs from import", specifier)
 		}
-		source := "function obtain(): number { if (true) { try { const { performance } = require('" + specifier + "') as Partial<typeof import('node:perf_hooks')>; if (performance !== undefined) return performance.now(); } catch {} } return -1; } console.log(obtain() >= 0 ? 'yes' : 'no');"
+		source := "function obtain(): number { if (true) { try { const { performance } = require('" + specifier + "') as Partial<typeof import('perf_hooks')>; if (performance !== undefined) return performance.now(); } catch {} } return -1; } console.log(obtain() >= 0 ? 'yes' : 'no');"
 		if _, err := lowerSource(t, source); err != nil {
 			t.Fatal(err)
 		}
@@ -133,7 +133,7 @@ func TestRequirePerformanceAndImportHaveTheSameIR(t *testing.T) {
 func TestRequirePerformanceViewCannotEscape(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`const hooks = require('perf_hooks') as Partial<typeof import('node:perf_hooks')>;`,
+		`const hooks = require('perf_hooks') as Partial<typeof import('perf_hooks')>;`,
 		`const { performance } = require('perf_hooks') as { performance: { now(): number } };`,
 		`const { Performance } = require('perf_hooks');`,
 	} {

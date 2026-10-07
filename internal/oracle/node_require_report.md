@@ -1,8 +1,8 @@
 Built both perf_hooks require spellings on library host 94df56b, including tsc's guarded Partial destructuring.
-Commit: this feature branch's performance host merge (see git log); no main or area branch was pushed.
-Checks: adapted performanceCore.ts has zero diagnostics; loader/lower, focused Node oracle, counts and vet results below.
+Commits: performance merge 037ad76b136e9b2de712ede58f37e86e8dd4f863; main merge 64e75b6206f7a8f26ce6c001c72db1b107f7d77b; final validation commit follows. No main or area branch was pushed.
+Checks: adapted performanceCore.ts has zero diagnostics; focused loader/lower and Node oracle pass; whole counts and broad checks are qualified below.
 Mutants: nonliteral require acceptance, omitted projection support, and absent runtime performance projection all failed their intended tests.
-Limits: incoming host fixtures block full flow/freshness; newer library tip remains pending.
+Limits: incoming host fixtures block lower/flow/freshness/counts after main merge; newer library tip remains pending.
 
 Both literal spellings reuse nodeProcessValue and its existing ProcessCall runtime. Plain const
 namespace bindings have the same IR as namespace imports. Immediate performance destructuring
@@ -64,6 +64,46 @@ Mutants were each applied to real lowering code and restored:
 
 The full gate was not rerun after its flow/freshness package blockers were established.
 The newer library tip will be merged when supplied, followed by renewed validation.
+
+After merging origin/main b6b1538 into the feature, two relation checks needed integration.
+The as const probe in refuseWidening now checks that its type name is an identifier before
+reading Text; otherwise NodeJS.ErrnoException caused a qualified-name AST panic. The existing
+TestNodeFSFileQualifiedErrorType catches this under a mutant that removes the guard
+(/tmp/require-perf-mutant-qualified.log, exit 1). Its final behavior is a truthful refusal,
+not a crash: main's new proven relation rejects Error to ErrnoException when optional errno
+presence/type has no proof. The immediate validated performance projection is preserved in
+both widening and cast checks, without allowing an escaping or changed-member view.
+
+A further mutant removes the projected member type equality. TestRequirePerformanceViewCannotEscape
+then accepts a changed { now(): number } performance view and fails its assertion, exit 1
+(/tmp/require-perf-mutant-member-type.log). This proves the exception is restricted to the
+module's actual declared performance type. All mutants were restored.
+
+Final checks on the combined main/host/unit tree:
+
+```sh
+go test -count=1 -timeout=30m ./internal/load ./internal/lower -run 'TestRequire|TestCommonJS|TestLocalRequire' > /tmp/require-perf-main-focused.log 2>&1
+go test -count=1 -timeout=30m ./internal/oracle -run 'TestRequire|TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance' > /tmp/require-perf-main-focused-oracle.log 2>&1
+go test -count=1 -timeout=30m ./internal/oracle -run 'TestRequire|TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance|TestCountsAreRecorded' -args -update-counts > /tmp/require-perf-main-oracle-fixed.log 2>&1
+go vet ./... > /tmp/require-perf-main-vet-fixed.log 2>&1
+```
+
+Focused loader/lower pass 1.119s/3.822s; the Node oracle passes 1.409s, including both require
+spellings and the library performance fixtures. Vet exits 0. Formatting and uncommitted
+diff checks print nothing. Full lower now fails only TestNodeFSFileQualifiedErrorType and
+TestNodeLibraryQualifiedTypeAssertion on main's unproven Error to ErrnoException relation
+(/tmp/require-perf-main-lower-fixed.log, loader passes 9.208s).
+The whole counts regeneration is blocked by the same relation in node_fs_file fixtures
+(/tmp/require-perf-main-oracle-fixed.log, exit 1 after 19.609s), so it does not replace the ledger.
+The ledger retains the successful pre-main measurements and main's merged rows, pending the
+library fix. The final flow/freshness rerun failed on the same incoming-host blockers after 72.319s/33.973s
+(/tmp/require-perf-final-flow-fresh.log), with no AST panic.
+
+The post-main performanceCore checker observation is still zero diagnostics in that file,
+with unchanged checker options (/tmp/require-perf-main-performanceCore.log).
+Its per-file evidence is recorded alongside this report in node_require_performanceCore.json.
+The command still exits 1 on transitive files, not performanceCore.ts. This is a per-file
+checker result, not a claim that the whole TypeScript compiler is accepted or lowered.
 
 Previous fs/path report follows for its historical evidence.
 

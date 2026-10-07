@@ -14,7 +14,7 @@ function isNodeLikeSystem(): boolean { return true; }
 function tryGetPerformance() {
     if (isNodeLikeSystem()) {
         try {
-            const { performance } = require('perf_hooks') as Partial<typeof import('node:perf_hooks')>;
+            const { performance } = require('perf_hooks') as Partial<typeof import('perf_hooks')>;
             if (performance !== undefined) {
                 return { shouldWriteNativeEvents: false, performance };
             }
