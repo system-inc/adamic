@@ -129,3 +129,12 @@ checks and nine numeric-key mutants). See ../wave07_react/SPEED_REPORT.md.
 The shared parser still exposes string kinds and the shared numeric driver is
 pending, so rule-body migration remains blocked. React claims and four bridge
 registration routes remain pending. No new rules are claimed.
+
+## Current-main landing refresh
+
+Rebased all owned wave commits onto origin/main f8013f0b. All nine completed
+rule gates, numeric listener-map checks, sanitizers, mutants, bridge/decoder
+guards, 30 Node fixtures and 12 iterator refusals pass. A disk-full failure
+was recovered using obsolete owned scratch binaries; its log and successful
+retry are preserved. See ../wave07_react/CURRENT_LANDING_REPORT.md. Three React
+claims and four bridge routes remain pending; no new rules are claimed.

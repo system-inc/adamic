@@ -44,7 +44,8 @@ for label,directory in sources:
         with gzip.open(target/(path.name+'.gz'),'wb') as output:
             output.write(content)
         index[label+'/'+path.name] = dict(sha256=hashlib.sha256(content).hexdigest(),bytes=len(content))
-for name in ['landing-fetch','landing-rebase','landing-rebase-current','landing-setup','landing-gates','landing-gates-current','speed-fetch','speed-setup','listener-gate','speed-landing-gates']:
+log_names = os.environ.get('ADAMIC_WAVE07_LOGS', 'landing-fetch,landing-rebase,landing-rebase-current,landing-setup,landing-gates,landing-gates-current,speed-fetch,speed-setup,listener-gate,speed-landing-gates').split(',')
+for name in log_names:
     path = pathlib.Path('/workspace/wave-07-artifacts')/(name+'.log')
     if not path.exists():
         continue
