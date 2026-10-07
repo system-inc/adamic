@@ -1,0 +1,78 @@
+case 0
+finding	24	27	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	!class A {\u000a  foo() {}\u000a  foo() {}\u000a};\u000a
+case 1
+fixed	abstract class A {\u000a  abstract foo(): void;\u000a  abstract foo(): void;\u000a}\u000a
+case 2
+finding	25	30	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A {\u000a  'foo'() {}\u000a  'foo'() {}\u000a}\u000a
+case 3
+fixed	class A {\u000a  *foo() {}\u000a  *bar() {}\u000a  *baz() {}\u000a}\u000a
+case 4
+fixed	class A {\u000a  1() {}\u000a  2() {}\u000a}\u000a
+case 5
+finding	22	25	noDupeClassMembers	This class already declares a member named number:10. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A {\u000a  10() {}\u000a  1e1() {}\u000a}\u000a
+case 6
+finding	53	56	noDupeClassMembers	This class already declares a member named string:bar. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A {\u000a  ['foo']() {}\u000a  ['foo']() {}\u000a  bar() {}\u000a  bar() {}\u000a}\u000a
+case 7
+fixed	class A {\u000a  ['foo']() {}\u000a  ['foo']() {}\u000a}\u000a
+case 8
+fixed	class A {\u000a  ['foo']() {}\u000a  foo() {}\u000a}\u000a
+case 9
+fixed	class A {\u000a  [1]() {}\u000a  [1]() {}\u000a}\u000a
+case 10
+fixed	class A {\u000a  [foo]() {}\u000a  foo() {}\u000a}\u000a
+case 11
+fixed	class A {\u000a  [x]() {}\u000a  [x]() {}\u000a}\u000a
+case 12
+fixed	class A {\u000a  foo() {}\u000a  bar() {}\u000a  baz() {}\u000a}\u000a
+case 13
+fixed	class A {\u000a  foo() {}\u000a  bar() {}\u000a}\u000a
+case 14
+finding	23	26	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+finding	34	37	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A {\u000a  foo() {}\u000a  foo() {}\u000a  foo() {}\u000a}\u000a
+case 15
+finding	23	26	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A {\u000a  foo() {}\u000a  foo() {}\u000a}\u000a
+case 16
+finding	27	30	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A {\u000a  foo() {}\u000a  get foo() {}\u000a}\u000a
+case 17
+fixed	class A {\u000a  foo() {}\u000a}\u000aclass B {\u000a  foo() {}\u000a}\u000a
+case 18
+fixed	class A {\u000a  foo(a: string): void;\u000a  foo(a: number): void;\u000a  foo(a: unknown): void {}\u000a}\u000a
+case 19
+finding	27	30	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A {\u000a  foo: string;\u000a  foo: string;\u000a}\u000a
+case 20
+finding	19	22	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A {\u000a  foo;\u000a  foo = 42;\u000a}\u000a
+case 21
+finding	19	22	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A {\u000a  foo;\u000a  foo() {}\u000a}\u000a
+case 22
+fixed	class A {\u000a  get foo() {}\u000a  get bar() {}\u000a  get baz() {}\u000a}\u000a
+case 23
+fixed	class A {\u000a  get foo() {}\u000a  set foo(value) {}\u000a}\u000a
+case 24
+finding	32	35	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A {\u000a  set foo(value) {}\u000a  foo() {}\u000a}\u000a
+case 25
+fixed	class A {\u000a  static foo() {}\u000a  foo() {}\u000a}\u000a
+case 26
+fixed	class A {\u000a  static foo() {}\u000a  get foo() {}\u000a  set foo(value) {}\u000a}\u000a
+case 27
+finding	37	40	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A {\u000a  static foo() {}\u000a  static foo() {}\u000a}\u000a
+case 28
+fixed	class Foo {\u000a  foo(a: string): string;\u000a  foo(a: number): number;\u000a  foo(a: any): any {}\u000a}\u000a
+case 29
+fixed	declare class A {\u000a  foo(): void;\u000a  foo(): void;\u000a}\u000a
+case 30
+finding	19	22	noDupeClassMembers	This class already declares a member named string:foo. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+finding	86	89	noDupeClassMembers	This class already declares a member named string:bar. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+finding	192	197	noDupeClassMembers	This class already declares a member named string:value. The later declaration wins silently, so the earlier one is dead code that reads as live, and nothing in the language or at runtime tells the two apart.
+fixed	class A { foo() {} foo() {} static foo() {} get bar() { return 1; } set bar(v) {} get bar() { return 2; } ['x']() {} x() {} m(a: string): void; m(a: any) {} }\u000aconst C = class { value: string; value: string; };\u000a
