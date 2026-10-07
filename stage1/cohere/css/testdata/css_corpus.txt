@@ -3,7 +3,10 @@
 # Sparse set: tests/format/css, tests/format/scss, tests/format/less,
 # tests/format/js/multiparser-css, tests/format/js/template-literals
 # Exact fork files: 157 CSS, 90 SCSS, 43 Less; 290 total.
-# Reports count one additional repository CSS file, which is not in this checkout.
+# The reports' 291 files included this repository's independent_theme.css:
+# cohere/internal/lint/rules/tailwind/tools/generate_descriptor_base/testdata/independent_theme.css
+# That file is outside the fork sparse set and ADAMIC_CSS_FIXTURES; this list pins
+# only the 290 fork files. Repository files can be read directly from the repository.
 16d2cb0c41f3a1536cbd5c80a2a943e5199436330bc88f31c67c1965c6f68859	tests/format/css/_errors_/less-syntax.css
 2f17788858e9be92037af1604aa3932b5cc0635b8d23359e7bc5d9298f8c33fa	tests/format/css/_errors_/scss-syntax.css
 866ae9648ecf3f20d2c3bbb97b41b7bfde88d42649453405fe99c1581efbbcf7	tests/format/css/atrule/at-root.css
