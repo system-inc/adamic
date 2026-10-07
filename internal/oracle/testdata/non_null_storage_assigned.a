@@ -1,0 +1,5 @@
+let value: number = undefined!; value = 0;
+class State { value: string = null!; static count: number = undefined!; }
+const state = new State(); state.value = "assigned"; State.count = 4;
+const raw: { value: string } = { value: undefined! }; raw.value = "ready";
+console.log(`${value} ${state.value} ${State.count} ${raw.value}`);

@@ -15,9 +15,6 @@ func TestExactlyNullishAssertionsAreRefused(t *testing.T) {
 	for _, extension := range []string{"a", "ts"} {
 		for _, operand := range []string{"undefined", "null"} {
 			for _, source := range []string{
-				"let value: number = " + operand + "!; value=1; console.log(`${value}`);",
-				"const value: number = " + operand + "!;",
-				"class Box { value: number = " + operand + "!; }",
 				"function f(value: number = " + operand + "!): number {return value;}",
 				"function f(): number { return " + operand + "!; }",
 				"console.log(`${" + operand + "! + 1}`);",
@@ -32,6 +29,11 @@ func TestExactlyNullishAssertionsAreRefused(t *testing.T) {
 				"let value=1; const clear=(): number => value=" + operand + "!;",
 				"const values=[1]; values[0]=" + operand + "!;",
 				"class Box { value=1; } const box=new Box(); console.log(`${box.value=" + operand + "!}`);",
+				"const value: number = true ? " + operand + "! : 1;",
+				"const value: number = 1 || " + operand + "!;",
+				"const values = [" + operand + "!];",
+				"const values = [..." + operand + "!];",
+				"const box: {value: number; other: number} = {value: " + operand + "!, get other(): number { return 1; }};",
 				"console.log(" + operand + "!);",
 				"const absent = " + operand + "; console.log(absent!);",
 				"function f(value: " + operand + "): void { console.log(value!); }",

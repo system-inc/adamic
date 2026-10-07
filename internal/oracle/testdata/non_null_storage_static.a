@@ -1,0 +1,3 @@
+class State { static value: number = undefined!; }
+console.log("before");
+console.log(`${State.value}`);

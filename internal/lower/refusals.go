@@ -108,7 +108,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
-		if node.Kind == ast.KindNonNullExpression && !l.deinitializingStatement(node) {
+		if node.Kind == ast.KindNonNullExpression && !l.uninitializedStorage(node) {
 			flags := l.checker.GetTypeAtLocation(node.AsNonNullExpression().Expression).Flags()
 			if flags == checker.TypeFlagsUndefined || flags == checker.TypeFlagsNull {
 				operand := "undefined"
@@ -249,6 +249,36 @@ func scannedText(node *ast.Node) string {
 		return "this"
 	}
 	return node.Text()
+}
+
+// Literal markers are exempt only when they are the entire stored value.
+// Parameters and aggregate elements do not use the slot readiness machinery.
+func (l *lowering) uninitializedStorage(node *ast.Node) bool {
+	if !l.uninitializedInitializer(node) {
+		return false
+	}
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	if parent := node.Parent; parent != nil {
+		switch parent.Kind {
+		case ast.KindVariableDeclaration:
+			return ast.IsIdentifier(parent.Name()) && parent.AsVariableDeclaration().Initializer == node
+		case ast.KindPropertyDeclaration:
+			return parent.AsPropertyDeclaration().Initializer == node
+		case ast.KindPropertyAssignment:
+			// Accessor literals have a separate initializer path without marker state.
+			if literal := parent.Parent; literal != nil && literal.Kind == ast.KindObjectLiteralExpression {
+				for _, property := range literal.AsObjectLiteralExpression().Properties.Nodes {
+					if accessorMember(property) {
+						return false
+					}
+				}
+			}
+			return parent.AsPropertyAssignment().Initializer == node
+		}
+	}
+	return l.deinitializingStatement(node)
 }
 
 // Only a literal marker occupying the whole RHS of a standalone store clears
