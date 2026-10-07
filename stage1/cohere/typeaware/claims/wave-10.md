@@ -138,3 +138,6 @@ Node/native/emitted-JavaScript oracle passes too. The two new live native rules
 have full corpus-byte validation; require-await remains IN PROGRESS for its
 unimplemented contextual/generic/heritage decision and bridge facts. No further
 claim is taken. See the current landing section in wave_10_leaf/README.md.
+
+
+Latest continuation status: all three non-analysis rules are fully ported and native-tested on origin/main 39638d9e2. require-await's contextual/generic/heritage decision and dedicated raw bridge question are implemented. All three match full Go findings, fixes and suggestions on positive controls and compiler77/repository287, normal and sanitized; require-await also matches 87 upstream source controls. Native mutants and released handles pass. All six earlier ports are re-green on this base; the three earlier React claims remain PARKED with their named blockers. Shared registry/context wiring remains with the harness worker. No additional reservation precedes the completion push. See ../wave_10_leaf/README.md latest completion section.

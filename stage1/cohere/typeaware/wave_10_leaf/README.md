@@ -1,8 +1,10 @@
-Added live handed-node native adapters for symbol-description and structure/react-hook-no-any-type, plus require-await reporting.
-The branch is rebased and oracle-green on origin/main b8fb957a; no new rules are claimed.
-The two live rules pass full Go-byte controls/corpora, sanitizers, released-handle checks and native mutants; source lint reports 0.
-Require-await body filters and 32 reporting controls pass their narrower Go authorities; the incomplete full listener still refuses candidates.
-Full require-await contextual/generic/heritage contract decisions and shared-registry integration remain unimplemented.
+Completed native require-await contract decisions beside symbol-description and structure/react-hook-no-any-type.
+Implementation 9ab85036b is rebased onto origin/main 39638d9e2; all nine completed ports are oracle-green.
+Three live rules match full Go finding/fix/suggestion bytes on controls and compiler77/repository287; require-await also matches 87 upstream sources.
+Native mutants, released-handle rejection, ASan/UBSan, raw-question tests, source lint and the focused uncached Node oracle pass.
+Shared registry/context integration and emitted-JavaScript comparison of the live lint runner remain outside this unit; the three React claims stay PARKED.
+
+Earlier observations below are historical; the latest completion section supersedes their require-await blockers.
 
 The three earlier React claims are PARKED under the user's explicit instruction.
 The first six rules remain completed; their full landing observations are in
@@ -324,3 +326,46 @@ claim. Raw logs, stdout/stderr and timing samples are in evidence/landing-b8.
 | hook-controls | 0.020389 | 0.034592 | 0.589x |
 | hook-compiler | 1.514863 | 0.355884 | 4.257x |
 | hook-repository | 0.250067 | 0.148570 | 1.683x |
+
+## Completed require-await and landing on 39638d9e2
+
+The rebase onto 39638d9e278d38bb5aeae887f46d55a70e47aaad is clean. Its advance from b8fb957a changes stage3 and landing documentation only; no compiler, bridge, stage1, toolchain or CLAUDE source changed. Stage 0 was nevertheless rebuilt as /workspace/wave-10-396-stage0. Setup reports go/clang/node/submodules ready in 0s each, build cache warm in 102s, total 102s; nproc=5 and cpu.max=400000 100000.
+
+require_await_facts.go supplies raw function syntax, declared/resolved signatures, type-parameter identities, heritage roots, call signatures, index types and symbol property types. It contains no lint predicate. Its only shared edit is the require-await switch registration in facts.go. require_await_facts.a decodes these observations; contracts.a performs contextual walking, generic replay, stand-ins, union expansion, thenable callback checks and heritage exemption natively. The full Rule.visit takes the driver's node and index. The older supplied-facts-only visit deliberately still refuses candidates: body facts alone cannot decide a contract; this refusal does not run in the full listener.
+
+All descriptors use canonical named kinds and node:true. No shared harness/generator or protected compiler file was edited. No new Adamic .ts file was added. No new regex matcher was needed; existing reporting and hook regexes remain JS RegExp literals. The pinned union constant is reused: TypeFlagsUnion=134217728, not standard TypeScript's 1048576. The independent Go comparison caught eight wrong findings from using the latter, and a retained native mutant proves this check.
+
+Commands, with every test output captured to a file:
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./bridge/tsgo/checker -count=1 > /tmp/wave10-396-bridge.log 2>&1
+go vet ./bridge/tsgo/checker > /tmp/wave10-396-vet.log 2>&1
+/workspace/wave-10-source-gate /workspace/adamic/tsconfig.json /tmp/wave10-owned-sources.manifest > /tmp/wave10-396-source-lint.log 2>&1
+python3 stage1/cohere/typeaware/wave_10_leaf/live_validate.py --stage0 /workspace/wave-10-396-stage0 --checker /workspace/wave-10-require-checker.a --checker-asan /workspace/wave-10-require-checker-asan.a --isolated /workspace/wave-10-require-isolated --artifacts /workspace/wave-10-require-396-live --compiler-config /workspace/wave-10-typescript/src/compiler/tsconfig.json --compiler-manifest /workspace/wave-10-compiler.manifest --repository-manifest /workspace/wave-10-repository.manifest > /tmp/wave10-require-396-live.log 2>&1
+```
+
+live_validate.py exits 0. Symbol controls: 13 sources, 4 findings, 2114 bytes; hook: 16 sources, 7 findings, 5902 bytes; require-await: 14 sources, 7 findings, 4866 bytes. Each rule matches compiler77 (5318 bytes) and repository287 (18485 bytes), with zero corpus findings, so the positive controls are essential. require-await also matches 87 mechanically extracted complete Go-test source programs, 59 findings and 40041 bytes. extract_upstream.go uses Go's AST and strconv.Unquote, including concatenated typed preludes. The retained JSON excludes three expected-head fragments and twelve Go-parse-invalid extracted literals. This is not every upstream test or option combination. All comparisons include full messages, ranges, fixes and suggestions, normal and ASan/UBSan. Released handles are rejected normally and sanitized, exit 70 and exact invalid-or-released panic text.
+
+Clean-exit native mutants, caught only by the independent Go byte comparison: symbol declaration origin byte 66; hook result-any byte 70; await-using flags byte 2266; pinned union flag byte 34397; bypassing declared generic demand/self-inference byte 35762. The 32-case reporting gate matches 20215 bytes, normal/sanitized; shifting a reported range is caught at byte 62. Isolated body controls match 882 bytes; their await-using mutant differs at byte 628. Isolated symbol/hook mutants differ at 66/70; removing digits from the hook-name RegExp differs at 819. A Go overlay drops the new function-question arity guard: TestRequireAwaitRawQuestions fails with accepted-invalid-question, exit 1.
+
+The earlier six ports are re-green on this base using the exact landing-b8 commands above with /tmp/wave10-396-* logs and fresh process archive/compiler: TestWave10AgreementAndMutants PASS 123.621s; TestTimeoutAgreementAndMutants PASS 60.369s; TestLandingNativeRulesAndMutants PASS 203.122s. Their native mutants are caught at bytes loop=548, redundant=4569, includes=8447, timeout=51, process=114, blocking=13904; both retaining-registry mutants exit 0 and are caught by requiring released-query panic 70. All normal/sanitized controls and both corpora pass.
+
+Bridge tests PASS 0.212s; vet output empty; owned source lint findings 0. The uncached filtered RegExp Node/native/emitted-JavaScript oracle passes in 1.851s: three fixtures and the one-byte oracle mutant, native misses=10, Node misses=7, zero hits. This compares the RegExp fixtures, not the live lint runner's emitted JavaScript.
+
+Three alternating whole-process timing samples give these medians under concurrent landing load; they are observations, not a speedup claim:
+
+| Rule / corpus | Native seconds | Go seconds | Native / Go |
+| --- | ---: | ---: | ---: |
+| symbol-controls | 0.046992 | 0.048466 | 0.970x |
+| symbol-compiler | 1.887221 | 0.478514 | 3.944x |
+| symbol-repository | 0.335965 | 0.217888 | 1.542x |
+| hook-controls | 0.023686 | 0.036080 | 0.656x |
+| hook-compiler | 1.728615 | 0.503694 | 3.432x |
+| hook-repository | 0.403118 | 0.295351 | 1.365x |
+| await-controls | 0.025282 | 0.031910 | 0.792x |
+| await-compiler | 2.590656 | 0.486722 | 5.323x |
+| await-repository | 0.356319 | 0.206339 | 1.727x |
+| await-upstream | 0.050000 | 0.067608 | 0.740x |
+
+Evidence is preserved in evidence/require-await-complete. Full repository go test ./... and the live runner's emitted-JavaScript oracle were not run. The shared harness at 41eb6eab2 still needs its checker attachment connected to this owned Context; shared wiring is reserved for its worker. Native high-level IR/SSA/capture/JSX analysis remains unavailable for the three PARKED React claims. The full require-await rule is now native-tested; no further rule was reserved before this completion was pushed.
