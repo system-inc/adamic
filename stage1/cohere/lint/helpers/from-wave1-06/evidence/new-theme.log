@@ -1,0 +1,26 @@
+=== RUN   TestNewTheme
+    helpers_test.go:146: 157 actual captured sources from all 6 consumers
+    helpers_test.go:153: 13272 identical bytes on Go, source Node, emitted JavaScript and sanitized native
+=== RUN   TestNewTheme/dirty-prefix
+    helpers_test.go:189: dirty-prefix caught only by Go byte comparison on backend 0; execution clean
+    helpers_test.go:189: dirty-prefix caught only by Go byte comparison on backend 1; execution clean
+    helpers_test.go:189: dirty-prefix caught only by Go byte comparison on backend 2; execution clean
+=== RUN   TestNewTheme/allocated-order
+    helpers_test.go:189: allocated-order caught only by Go byte comparison on backend 0; execution clean
+    helpers_test.go:189: allocated-order caught only by Go byte comparison on backend 1; execution clean
+    helpers_test.go:189: allocated-order caught only by Go byte comparison on backend 2; execution clean
+=== RUN   TestNewTheme/shared-map
+    helpers_test.go:189: shared-map caught only by Go byte comparison on backend 0; execution clean
+    helpers_test.go:189: shared-map caught only by Go byte comparison on backend 1; execution clean
+    helpers_test.go:189: shared-map caught only by Go byte comparison on backend 2; execution clean
+=== RUN   TestNewTheme/shared-record
+    helpers_test.go:189: shared-record caught only by Go byte comparison on backend 0; execution clean
+    helpers_test.go:189: shared-record caught only by Go byte comparison on backend 1; execution clean
+    helpers_test.go:189: shared-record caught only by Go byte comparison on backend 2; execution clean
+--- PASS: TestNewTheme (9.12s)
+    --- PASS: TestNewTheme/dirty-prefix (0.53s)
+    --- PASS: TestNewTheme/allocated-order (0.54s)
+    --- PASS: TestNewTheme/shared-map (0.53s)
+    --- PASS: TestNewTheme/shared-record (0.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-06	9.131s

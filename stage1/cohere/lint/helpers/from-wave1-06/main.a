@@ -1,0 +1,25 @@
+import { readTextFile, programArguments, panic } from 'adamic';
+import { newTheme, type Theme } from './new_theme.a';
+function snapshot(theme: Theme): string {
+  return `${theme.Prefix === ''} ${theme.values.size} ${theme.keyOrder.nil} ${theme.keyOrder.values.length} ${theme.deadKeys}`;
+}
+const args = programArguments();
+const input = readTextFile(args[0] ?? '');
+if (input.kind !== 'Ok') { panic(input.message); }
+const keys = input.text.split('\n');
+for (const key of keys) {
+  if (key === '') { continue; }
+  const first = newTheme();
+  const second = newTheme();
+  console.log(snapshot(first));
+  console.log(snapshot(second));
+  console.log(`${first === second}`);
+  first.Prefix = key;
+  first.values.set(key, { value: key, options: 31 });
+  first.keyOrder = { nil: false, values: [key] };
+  first.deadKeys = 7;
+  console.log(snapshot(second));
+  const third = newTheme();
+  console.log(snapshot(third));
+  console.log(`${first.values.size} ${second.values.has(key)} ${third.values.has(key)}`);
+}
