@@ -1,0 +1,62 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { callExpressionSource } from './call_expression_source.a';
+import type { SourceNode } from './call_expression_source.a';
+import { hasAttributeNamed } from './has_attribute_named.a';
+import { matchIgnoringCase } from './match_ignoring_case.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('corpus path'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if (root === -1) { panic(json.error); }
+function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
+function number(index: number, field: string): number { return json.node(json.field(index, field)).number; }
+function indices(index: number, field: string): number[] {
+    const values: number[] = [];
+    for (const value of json.node(json.field(index, field)).children) { values.push(json.node(value).number); }
+    return values;
+}
+const nodes: SourceNode[] = [];
+for (const index of json.node(json.field(root, 'Nodes')).children) {
+    nodes.push({kind: text(index, 'Kind'), text: text(index, 'Text'), expression: number(index, 'Expression'), name: number(index, 'Name'), keyword: text(index, 'Keyword'), argumentsPresent: text(index, 'ArgumentsPresent') === 'true', arguments: indices(index, 'Arguments'), propertiesPresent: text(index, 'PropertiesPresent') === 'true', properties: indices(index, 'Properties')});
+}
+for (const index of json.node(json.field(root, 'Pairs')).children) {
+    const pair = json.node(index).children;
+    const a = json.node(pair[0] ?? panic('pair left')).text;
+    const b = json.node(pair[1] ?? panic('pair right')).text;
+    console.log(`fold:${matchIgnoringCase(a,b)}`);
+}
+// Compare decoded source as decimal UTF-16 units, retaining NUL and newlines.
+function codeUnits(text: string): string {
+    let out = '';
+    for (let i = 0; i < text.length; i++) { out += `${text.charCodeAt(i)},`; }
+    return out;
+}
+for (let id = -1; id < nodes.length; id++) {
+    const result = callExpressionSource(nodes,id);
+    console.log(`call:${result.found}:${codeUnits(result.source)}`);
+}
+let matchCalls = 0;
+let matchTrace = '';
+let matchMode = 0;
+function matches(candidate: string, wanted: string): boolean {
+    matchCalls++;
+    matchTrace += candidate + ':' + wanted + '|';
+    if (matchMode === 0) { return candidate === wanted; }
+    if (matchMode === 1) { return matchIgnoringCase(candidate,wanted); }
+    if (matchMode === 2) { return false; }
+    return matchCalls === 2;
+}
+for (const id of indices(root, 'Attributes')) {
+    for (const index of json.node(json.field(root, 'Names')).children) {
+        const wanted = json.node(index).text;
+        for (let mode = 0; mode < 4; mode++) {
+            matchCalls = 0;
+            matchTrace = '';
+            matchMode = mode;
+            const answer = hasAttributeNamed(nodes,id,wanted,matches);
+            console.log(`attr:${answer}:${matchCalls}:${matchTrace}`);
+        }
+    }
+}
