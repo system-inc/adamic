@@ -86,3 +86,11 @@ It fails because no installed tailwindcss is found at the required search root. 
 # Limits
 
 This is helper composition evidence, not full rule findings/fixes/suggestions parity. Parsed input/callback adapters must obey the byte and non-null-description contracts in README.md. The full repository gate and its seventeen required external correctness checks were not run. The failed upstream Tailwind gate remains a reported blocker and is never presented as green. All implementation and compact evidence are published only to this worker's branch; no PR, main push or area push.
+
+# Landing input recheck
+
+On the next landing-first request, a fresh wildcard fetch leaves main b6b1538b and lint area d3a37422 unchanged. Both are ancestors of published implementation e218f040. `git rebase origin/area/stage1-lint` reports that codex/lint-helpers-03 is up to date. No source changed and no new helper was claimed.
+
+The required Tailwind search directory and theme.css are still absent. Running the same unmodified upstream TestUnknownClassFixturesActuallyRan reproducer again exits 1, with the package reporting FAIL in 0.016s; evidence/landing-input-recheck.log records its exact output. The existing helper proof remains 6,453 four-way comparisons and fourteen caught semantic variants on these unchanged bases. Neither that successful bounded proof nor a repeat fetch makes the consumer input gate green. The helper and mutant suites were not rerun in this read-only blocker check.
+
+This pass stops on the unresolved real-input blocker. It changes only this owned report and the fresh proof log, and publishes only to codex/lint-helpers-03. The full repository gate and seventeen required external comparisons remain unrun.
