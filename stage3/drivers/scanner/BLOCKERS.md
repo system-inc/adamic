@@ -1,5 +1,21 @@
 # Scanner blockers
 
+## October 7: full baseline rejects the first checker adaptations
+
+Full unfiltered baseline: 106,312 passing, 55 failing, zero pending, seven
+baseline differences. Install/build pass. Tests exit 1 in 232.685 seconds.
+Adaptation 52's guarded generic forEach rejects legitimate undefined entries
+in other compiler users. Adaptation 53's explicit undefined unions alter the
+public API declaration snapshot. These are adaptation regressions, not a
+native silent miscompile; no native executable was produced. The slice token
+oracle passed, demonstrating that it alone did not cover these cases.
+
+The revised README-only plans are pushed before corrective implementation:
+use entries iteration for forEach without rejecting undefined values; infer
+private diag's actual return type and keep the public interface unchanged.
+Neither first version is approved by the baseline. Full details are in
+[member-baseline-first-report.json](evidence/member-baseline-first-report.json).
+
 ## October 7: removing the assertion contract exposes non-null assertions
 
 In the same untracked diagnostic copy, changing only `asserts expression` to

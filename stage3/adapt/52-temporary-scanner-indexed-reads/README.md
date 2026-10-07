@@ -15,3 +15,13 @@ Validate idempotence, stock Node token bytes against all 509,014 baseline tokens
 and the stage 3 baseline oracle before calling the adaptation complete. A mutant
 must demonstrate that the checked-read path can reject a missing value. Any
 unvalidated adaptation remains a scratch probe and is reported as such.
+
+## Baseline rejection and revised plan
+
+The first full baseline rejected the guarded generic forEach read: other compiler
+callers legitimately pass undefined array entries. Keep their callbacks and
+indices exactly as before. Revise that one loop to array.entries() iteration,
+which visits undefined entries and holes rather than rejecting them, obtains
+the same increasing indices, and observes dynamic array length. The scanner
+arrays are append-built, while the full baseline covers undefined entries.
+The other bounded guards remain separate. Re-run the complete baseline.
