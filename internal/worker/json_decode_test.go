@@ -52,6 +52,7 @@ func TestWorkerDecodeJSON(t *testing.T) {
 	if len(fixtures) == 0 {
 		t.Fatal("no decodeJson fixtures selected")
 	}
+	fixtures = append(fixtures, filepath.Join(root, "internal/worker/testdata/json_decode/fast_risks.a"))
 	for _, fixture := range fixtures {
 		t.Run(filepath.Base(fixture), func(t *testing.T) {
 			directory := t.TempDir()
@@ -70,6 +71,24 @@ func TestWorkerDecodeJSON(t *testing.T) {
 			actual := run("node", "internal/worker/json_decode_run.mjs", filepath.Join(generated, "handler.mjs"))
 			if !bytes.Equal(expected, oracle) || !bytes.Equal(expected, actual) {
 				t.Fatalf("native:\n%s\nNode:\n%s\nWorker:\n%s", expected, oracle, actual)
+			}
+			if filepath.Base(fixture) == "fast_risks.a" {
+				// Exercise the same explicit risks through the original parser too.
+				runtimePath := filepath.Join(generated, "adamic.mjs")
+				runtime, err := os.ReadFile(runtimePath)
+				if err != nil {
+					t.Fatal(err)
+				}
+				before := "validate(descriptor.root, parseWorkerJsonFast(text), '$')"
+				if strings.Count(string(runtime), before) != 1 {
+					t.Fatal("fast parser call target changed")
+				}
+				write(t, runtimePath, strings.Replace(string(runtime), before, "validate(descriptor.root, parseWorkerJson(text), '$')", 1))
+				legacy := run("node", "internal/worker/json_decode_run.mjs", filepath.Join(generated, "handler.mjs"))
+				if !bytes.Equal(expected, legacy) {
+					t.Fatalf("legacy parser differs from native:\nnative: %s\nlegacy: %s", expected, legacy)
+				}
+				t.Log("explicit duplicates, depth and UTF-16 risks agree across legacy parser, fast path, native and Node source")
 			}
 			t.Log("native, Node source and generated Worker output identical")
 		})
@@ -98,6 +117,7 @@ func TestWorkerDecodeJSON(t *testing.T) {
 	}
 	mutants := []struct{ name, before, after string }{
 		{"duplicate-first", "object[key] = value(depth + 1);", "const parsed = value(depth + 1); if (!Object.hasOwn(object, key)) object[key] = parsed;"},
+		{"skip-depth-scan", "if (!withinWorkerJsonDepth(text)) return parseWorkerJson(text);", ""},
 		{"depth-128-accepted", "if (depth >= 128)", "if (depth >= 129)"},
 		{"missing-required", "if (field.optional) continue;", "if (field.optional || name === 'required') continue;"},
 		{"reject-extra", "const result = {};", "const result = {}; if (Object.keys(value).some(name => !node.fields.some(field => units(field.nameUnits, field.name) === name))) mismatch(node, path, value);"},
@@ -108,12 +128,25 @@ func TestWorkerDecodeJSON(t *testing.T) {
 			if !strings.Contains(string(original), mutant.before) {
 				t.Fatal("mutant target missing")
 			}
-			write(t, runtimePath, strings.ReplaceAll(string(original), mutant.before, mutant.after))
+			mutated := strings.ReplaceAll(string(original), mutant.before, mutant.after)
+			// V8 owns duplicate selection on success. Retain the old duplicate
+			// mutant as an explicit fallback-parser regression check.
+			if mutant.name == "duplicate-first" {
+				mutated = strings.Replace(mutated, "parsed = JSON.parse(text);", "parsed = parseWorkerJson(text);", 1)
+			}
+			write(t, runtimePath, mutated)
 			t.Cleanup(func() { write(t, runtimePath, string(original)) })
 			command := exec.Command("node", filepath.Join(root, "internal/worker/json_decode_run.mjs"), filepath.Join(generated, "handler.mjs"), corpus, observations)
 			output, err := command.CombinedOutput()
 			if err == nil || !bytes.Contains(output, []byte("native disagreement")) {
 				t.Fatalf("mutant escaped its native comparison: %v\n%s", err, output)
+			}
+			if mutant.name == "skip-depth-scan" {
+				depth129 := strings.Repeat("[", 129) + "0" + strings.Repeat("]", 129)
+				if !bytes.Contains(output, []byte(depth129)) {
+					t.Fatalf("depth scan mutant must fail on the depth-129 text: %s", output)
+				}
+				t.Log("fast depth scan omission caught on the 129-container text")
 			}
 			t.Logf("caught %s by native corpus comparison", mutant.name)
 		})

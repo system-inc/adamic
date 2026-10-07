@@ -116,6 +116,35 @@ function parseWorkerJson(text) {
 	return parsed;
 }
 
+// JSON.parse has already checked grammar. Count every raw container, including
+// overwritten duplicate values and fields that schema validation will drop.
+function withinWorkerJsonDepth(text) {
+	let depth = 0;
+	let quoted = false;
+	for (let index = 0; index < text.length; index++) {
+		const unit = text.charCodeAt(index);
+		if (quoted) {
+			if (unit === 92) index++;
+			else if (unit === 34) quoted = false;
+		} else if (unit === 34) quoted = true;
+		else if (unit === 123 || unit === 91) {
+			if (++depth > 128) return false;
+		} else if (unit === 125 || unit === 93) depth--;
+	}
+	return true;
+}
+
+function parseWorkerJsonFast(text) {
+	let parsed;
+	try {
+		parsed = JSON.parse(text);
+	} catch {
+		return parseWorkerJson(text);
+	}
+	if (!withinWorkerJsonDepth(text)) return parseWorkerJson(text);
+	return parsed;
+}
+
 export function decodeJson(text, descriptor) {
 	const units = (encoded, fallback = '') => encoded === undefined ? fallback : encoded.map(unit => String.fromCharCode(unit)).join('');
 	const jsonKind = value => value === null ? 'null' : Array.isArray(value) ? 'array' : typeof value;
@@ -176,7 +205,7 @@ export function decodeJson(text, descriptor) {
 		}
 	}
 	try {
-		return { kind: 'Ok', value: validate(descriptor.root, parseWorkerJson(text), '$') };
+		return { kind: 'Ok', value: validate(descriptor.root, parseWorkerJsonFast(text), '$') };
 	} catch (error) {
 		if (!(error instanceof WorkerJsonError)) throw error;
 		return { kind: 'Error', message: error.message };
