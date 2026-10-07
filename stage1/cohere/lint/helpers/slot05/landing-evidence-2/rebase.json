@@ -1,0 +1,26 @@
+{
+  "branch": "codex/lint-helpers-05",
+  "before": "76d8c61e33eeb5cbbd6afba78fb50d2b8b7951e2",
+  "previous_base": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "current_main": "f8013f0baac41ddc340d76f83bddde38536a8f07",
+  "rebased_head": "11a96b5792cd59ec564f192d0dacda8b5d2d235b",
+  "owned_helpers": 26,
+  "new_claims": 0,
+  "gate_packages": [
+    "ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers\t139.537s",
+    "ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch2\t107.270s",
+    "ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch3\t16.503s",
+    "ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch4\t45.399s",
+    "ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch5\t68.718s",
+    "ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch6\t152.559s",
+    "ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch7\t22.848s",
+    "ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch8\t207.473s",
+    "ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch9\t50.666s"
+  ],
+  "mutants_caught": 69,
+  "helper_gate_exit": 0,
+  "oracle_exit": 0,
+  "vet_exit": 0,
+  "format_empty": true,
+  "main_still_current": "f8013f0baac41ddc340d76f83bddde38536a8f07"
+}
