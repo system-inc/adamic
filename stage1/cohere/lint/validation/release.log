@@ -1,0 +1,32 @@
+=== RUN   TestRulesAgree
+    lint_test.go:276: cohere cases: 873 unique source/rule/options combinations
+    lint_test.go:303: Go, Node, native identical: 577682 bytes
+--- PASS: TestRulesAgree (21.72s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:339: compiler and stage1: 161 files
+    lint_test.go:340: Go, Node, native identical: 15548815 bytes
+--- PASS: TestCompilerAndStage1Agree (46.91s)
+=== RUN   TestThroughput
+    lint_test.go:502: machine Linux 6d3a2813751b 6.18.44 #1 SMP Sat Sep 26 20:02:31 UTC 2026 x86_64 GNU/Linux; model name	: AMD EPYC 9V74 80-Core Processor; load before 0.74 0.69 0.74 3/191 127180
+    lint_test.go:525: round 1 Go 519.389728ms findings=8215
+    lint_test.go:525: round 1 native 3.484289241s findings=8215
+    lint_test.go:525: round 1 Node 1.493458886s findings=8215
+    lint_test.go:525: round 2 Go 496.138851ms findings=8215
+    lint_test.go:525: round 2 native 3.255685217s findings=8215
+    lint_test.go:525: round 2 Node 1.446094751s findings=8215
+    lint_test.go:525: round 3 Go 532.855261ms findings=8215
+    lint_test.go:525: round 3 native 3.679254668s findings=8215
+    lint_test.go:525: round 3 Node 1.780835876s findings=8215
+    lint_test.go:525: round 4 Go 516.364631ms findings=8215
+    lint_test.go:525: round 4 native 3.70467843s findings=8215
+    lint_test.go:525: round 4 Node 1.775664723s findings=8215
+    lint_test.go:525: round 5 Go 640.138812ms findings=8215
+    lint_test.go:525: round 5 native 3.615527265s findings=8215
+    lint_test.go:525: round 5 Node 1.531979985s findings=8215
+    lint_test.go:533: best of 5 Go: 0.496139s, 16557.86 findings/s (77 files, 8215 findings)
+    lint_test.go:533: best of 5 native: 3.255685s, 2523.28 findings/s (77 files, 8215 findings)
+    lint_test.go:533: best of 5 Node: 1.446095s, 5680.82 findings/s (77 files, 8215 findings)
+    lint_test.go:536: load after 0.91 0.74 0.75 3/191 127263
+--- PASS: TestThroughput (35.81s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	104.448s

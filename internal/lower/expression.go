@@ -20,6 +20,7 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 }
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+	proven = l.concrete(proven)
 	flags := proven.Flags()
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
@@ -380,6 +381,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	case ast.KindIdentifier:
 		if value, known, err := l.libraryGlobalValue(node); known {
 			return value, err
+		}
+		if value, handled := l.staticClassRead(node); handled {
+			return value, nil
 		}
 		local, isLocal := l.local(node)
 		if !isLocal && node.Text() == "undefined" {
