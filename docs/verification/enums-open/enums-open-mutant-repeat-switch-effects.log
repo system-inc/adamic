@@ -1,0 +1,16 @@
+=== RUN   TestNumericEnumNeverPathsPinned
+=== RUN   TestNumericEnumNeverPathsPinned/implicit
+=== PAUSE TestNumericEnumNeverPathsPinned/implicit
+=== CONT  TestNumericEnumNeverPathsPinned/implicit
+    oracle_test.go:481: gate cache native miss
+    enums_open_test.go:37: gate cache node miss
+    enums_open_test.go:39: native: stdout differs; {stdout:[98 101 102 111 114 101 10 108 111 111 107 117 112 10 108 111 111 107 117 112 10 108 111 111 107 117 112 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}
+    enums_open_test.go:39: javascript: stdout differs; {stdout:[98 101 102 111 114 101 10 108 111 111 107 117 112 10 108 111 111 107 117 112 10 108 111 111 107 117 112 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 117 110 114 101 97 99 104 97 98 108 101 32 118 97 108 117 101 32 52 50 32 102 111 114 32 110 117 109 101 114 105 99 32 101 110 117 109 32 83 121 110 116 97 120 75 105 110 100 10] exitCode:70}
+--- FAIL: TestNumericEnumNeverPathsPinned (0.00s)
+    --- FAIL: TestNumericEnumNeverPathsPinned/implicit (0.36s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.374s
+FAIL

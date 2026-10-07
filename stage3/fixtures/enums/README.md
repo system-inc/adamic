@@ -80,3 +80,59 @@ All adapters to this engine in debug.ts are: formatSyntaxKind 444, formatSnippet
 ## Limits
 
 This does not cover all 164 enum declarations, every scalar enum call site, mutations of exported enum objects, or diagnostic host implementations. The complete reflection fixture cannot pass the current checker unchanged. Real flag and generic Map blockers are preserved for the implementation worker. Signed-mask behavior has a Node observation but no native run because the feature branch refuses that declaration. The numeric reverse-lookup inventory is a declared-name source scan with the Debug generic engine audited separately; dynamic aliases other than that engine were not exhaustively analyzed. No frequency claim beyond the declaration census is made. The full gate, stock-tsc emit inlining comparison and a main outcome flip remain unperformed for the reasons above.
+
+
+## Implementation follow-up
+
+On `codex/flag-enums`, after merging this branch at `671e1fd`, the original
+thirteen fixtures have the following observations. None of their source bodies,
+drivers or contracts were changed. Historical `status.json` and
+`flag-enums-results.json` remain intact; `implementation-results.json` records
+the new exact observations.
+
+| Outcome | Before | After |
+| --- | ---: | ---: |
+| Compiles and agrees byte for byte with Node | 6 | 7 |
+| Refused | 5 | 4 |
+| Checker | 2 | 2 |
+
+04 now compiles: direct same-enum aliases preserve the non-negative flag domain,
+and a const binding iterating a fresh inline array of proven flags keeps that
+proof through a shorthand field. Numeric shape alone still cannot opt in.
+The seven compiling fixtures also pass the source Node, JavaScript backend,
+native release, ASan/UBSan and leak oracle.
+
+| Remaining fixture | Why its original contract remains blocked |
+| --- | --- |
+| 05 local/export flags | SymbolFlags contains All = -1, complement initializers and member-derived masks. It is outside the approved non-negative flag domain. The OR return is an arbitrary number relative to its closed member union. A signed mask domain needs its own decision; alternatively use number for open masks and validate when returning a closed enum member. |
+| 06 setNodeFlags | Mutable<T> permits writing a full NodeFlags into a flags slot that a caller can constrain to one narrower member. Removing readonly also opens writes through a covariant view. For example, T can have flags: NodeFlags.Let, while newFlags is NodeFlags.Const. Keep an invariant NodeFlags field contract or copy into a new full-domain node rather than claiming the result remains T. |
+| 07 regex array/map | Map<CharacterCodes, RegularExpressionFlags> cannot become writable Map<CharacterCodes, number>; that view could store 99 into an enum slot. ReadonlyMap is a safe reading contract, but the original result[value] writes also create a sparse array, outside Adamic's dense-array contract. Use a readonly source view and a Map for the reverse table. |
+| 09 symbol exclusions | It has the same signed SymbolFlags declaration and open OR return as 05. Its negative complement outputs are correct numbers on Node, but do not establish a non-negative flag domain. Keep complements in number or design a distinct signed-mask domain. |
+| 08 Debug formatter | TS2532 rejects members[0] despite the length guard. Array length alone does not prove a present element in general JavaScript arrays. The body also uses any for reflection and cache keys. Narrow a checked first-element read and give reflection an explicit typed contract; disabling noUncheckedIndexedAccess or admitting any would remove soundness checks. |
+| 11 SyntaxKind formatter | The same unchecked reads and any reflection/cache contract as 08, plus (ts as any).SyntaxKind. Use a named typed enum import and checked element reads. It remains Checker, not an enum numeric-reverse-lookup limitation. |
+
+`TestStage3EnumBoundaries` asserts each diagnostic. `enums_names.a` separately
+proves typed enum-object name enumeration, including aliases, reverse-key order
+and string enums. The permanent ordering mutant compiles and finishes cleanly,
+then fails the independent Node stdout comparison.
+
+The merge retained enum and accessor initialization hooks, enum and nominal
+class invariance checks, enum and definite-assignment refusals, and both counts
+row sets. [docs/enums.md](../../../docs/enums.md#typescript-source-fixtures)
+records validation commands, timings and the six compiler mutants.
+
+## Numeric enum ruling follow-up
+
+Numeric enums are now open numbers, with checked unreachable branches when the
+checker narrows them to never. The unchanged fixture set advances from 7 Node
+matches, 4 Refused and 2 Checker to 9 Node matches, 1 checked stop, 1 Refused and
+2 Checker. Ten fixtures compile. `open-results.json` records fresh observations
+for source Node, generated JavaScript and sanitized native, plus successful-run
+leak checks. The full oracle also checks native release.
+
+05 and 09 now match Node, including signed masks. 07 passes numeric Map widening
+but reaches the existing sparse-array boundary: writing index 1 into an empty
+array stops at 70 in both backends. 06 still cannot prove the generic Mutable<T>
+write contract. 08 and 11 still fail TS2532 and retain unproven any/index contracts.
+Enum name enumeration is supported; it is separate from numeric reverse lookup,
+which remains string | undefined. See docs/enums.md for the ruling and mutants.

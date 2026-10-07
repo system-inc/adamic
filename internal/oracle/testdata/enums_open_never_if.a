@@ -1,0 +1,11 @@
+enum SyntaxKind { First, Last }
+function describe(value: SyntaxKind | undefined): string {
+    if (value === undefined) { return 'missing'; }
+    if (value === SyntaxKind.First) { return 'first'; }
+    if (value === SyntaxKind.Last) { return 'last'; }
+    const unreachable: never = value;
+    return unreachable;
+}
+function other(): number { return 42; }
+console.log('before');
+console.log(`${describe(other())}`);

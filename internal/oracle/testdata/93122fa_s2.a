@@ -1,0 +1,10 @@
+// Grouped tests compete before later duplicate tests.
+function kind(code: number): string {
+ switch (code) {
+  case 1:
+  default: return 'grouped';
+  case 2: return 'two';
+  case 1: return 'later one';
+ }
+}
+console.log(`${kind(1)} ${kind(2)} ${kind(3)}`);

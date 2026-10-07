@@ -1,0 +1,28 @@
+function label(n: number): string {
+ let out = '';
+ switch (n) {
+  case 1: out += 'one ';
+  case 2: out += 'two '; break;
+  case 3: out += 'three ';
+  default: out += 'default ';
+  case 4: out += 'four ';
+ }
+ return out;
+}
+for (const n of [1, 2, 3, 4, 5]) {
+ console.log(`${n}: ${label(n)}`);
+}
+function maybe(x: number) {
+ if (x > 0) { return x * 2; }
+}
+console.log(`${maybe(3)} ${maybe(-1)}`);
+let total = 0;
+for (let i = 0; i < 4; i++) {
+ switch (i % 3) {
+  case 0: total += 1;
+  case 1: total += 10; continue;
+  default: total += 100;
+ }
+ total += 1000;
+}
+console.log(`${total}`);

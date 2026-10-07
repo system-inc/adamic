@@ -1,0 +1,10 @@
+=== RUN   TestNumericEnumLiteralPromises
+=== PAUSE TestNumericEnumLiteralPromises
+=== CONT  TestNumericEnumLiteralPromises
+=== RUN   TestNumericEnumLiteralPromises/member_tag
+    enums_open_test.go:93: want literal-promise refusal, got <nil>
+--- FAIL: TestNumericEnumLiteralPromises (0.04s)
+    --- FAIL: TestNumericEnumLiteralPromises/member_tag (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.043s
+FAIL
