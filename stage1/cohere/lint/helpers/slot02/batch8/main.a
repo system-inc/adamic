@@ -1,0 +1,34 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { escapeClassRune } from './escape_class_rune.a';
+import { identityEscape } from './identity_escape.a';
+import type { EscapeContext, DecodedEscape } from './identity_escape.a';
+import { literalRune } from './literal_rune.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('corpus path'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if (root === -1) { panic(json.error); }
+function number(index: number, field: string): number { return json.node(json.field(index, field)).number; }
+function flag(index: number, field: string): boolean { return json.node(json.field(index, field)).text === 'true'; }
+function numbers(index: number, field: string): number[] {
+    const values: number[] = [];
+    for (const value of json.node(json.field(index, field)).children) { values.push(json.node(value).number); }
+    return values;
+}
+function units(text: string): string {
+    let value = '';
+    for (let i = 0; i < text.length; i++) { value += `${text.charCodeAt(i)},`; }
+    return value;
+}
+function printResult(r: DecodedEscape): void { console.log(`escape:${r.kind}:${r.set}:${r.rune}:${r.width}:${r.negated}:${units(r.error)}:${units(r.cause)}`); }
+const runes = numbers(root,'Runes');
+const sizes = numbers(root,'Sizes');
+const contexts: EscapeContext[] = [];
+for (const index of json.node(json.field(root,'Contexts')).children) {
+    contexts.push({unicode:flag(index,'Unicode'), inClass:flag(index,'InClass'), groups:number(index,'Groups'), named:flag(index,'Named')});
+}
+for (const rune of runes) { console.log(`class:${units(escapeClassRune(rune))}`); }
+for (const context of contexts) { for (const rune of runes) { for (const size of sizes) { printResult(identityEscape(rune,size,context)); } } }
+for (const rune of runes) { console.log(`literal:${units(literalRune(rune))}`); }

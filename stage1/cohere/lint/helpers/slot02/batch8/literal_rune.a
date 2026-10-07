@@ -1,0 +1,21 @@
+import { panic } from 'adamic';
+// Go literalRune uses signed minimum-width-four %04x for every nonalphanumeric
+// BMP rune. Surrogates are written numerically, without scalar replacement.
+export function literalRune(rune: number): string {
+    if (!Number.isInteger(rune) || rune < -2147483648 || rune > 2147483647) { panic('invalid Go rune adapter'); }
+    if ((rune >= 48 && rune <= 57) || (rune >= 97 && rune <= 122) || (rune >= 65 && rune <= 90) || rune > 65535) {
+        const valid = rune >= 0 && rune <= 1114111 && !(rune >= 55296 && rune <= 57343);
+        return String.fromCodePoint(valid ? rune : 65533);
+    }
+    const negative = rune < 0;
+    let value = negative ? -rune : rune;
+    let hex = '';
+    const digits = '0123456789abcdef';
+    do {
+        hex = (digits[value % 16] ?? panic('hex digit index')) + hex;
+        value = Math.floor(value / 16);
+    } while (value > 0);
+    const minimum = negative ? 3 : 4;
+    while (hex.length < minimum) { hex = '0' + hex; }
+    return '\\u' + (negative ? '-' : '') + hex;
+}

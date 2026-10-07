@@ -1,0 +1,16 @@
+import { panic } from 'adamic';
+export interface EscapeContext { readonly unicode: boolean; readonly inClass: boolean; readonly groups: number; readonly named: boolean; }
+export interface DecodedEscape {
+    readonly kind: number; readonly set: number; readonly rune: number; readonly width: number;
+    readonly negated: boolean; readonly error: string; readonly cause: string;
+}
+export function identityEscape(rune: number, size: number, context: EscapeContext): DecodedEscape {
+    if (!Number.isInteger(rune) || rune < -2147483648 || rune > 2147483647 || !Number.isInteger(size)) { panic('invalid Go escape adapter'); }
+    const valid = rune >= 0 && rune <= 1114111 && !(rune >= 55296 && rune <= 57343);
+    const text = String.fromCodePoint(valid ? rune : 65533);
+    const syntax = rune === 94 || rune === 36 || rune === 92 || rune === 46 || rune === 42 || rune === 43 || rune === 63 || rune === 40 || rune === 41 || rune === 91 || rune === 93 || rune === 123 || rune === 125 || rune === 124;
+    if (context.unicode && !syntax && rune !== 47 && (!context.inClass || rune !== 45)) {
+        return {kind: 0, set: 0, rune: 0, width: 0, negated: false, error: 'unsupported regexp syntax: \\' + text, cause: 'unsupported regexp syntax'};
+    }
+    return {kind: 0, set: 0, rune, width: size, negated: false, error: '', cause: ''};
+}
