@@ -20,7 +20,7 @@ import (
 func TestRegExpRuntimeParserAcceptance(t *testing.T) { runtimeParserAcceptance(t, false) }
 func TestRegExpRuntimeParserWASI(t *testing.T)       { runtimeParserAcceptance(t, true) }
 
-func runtimeParserAcceptance(t *testing.T, wasi bool) {
+func runtimeParserAcceptance(t *testing.T, wasi bool, mutateMessage ...bool) {
 	t.Helper()
 	cases, corpus := runtimeRegexCompilerCases(t)
 	cohereCount := 875
@@ -36,7 +36,7 @@ func runtimeParserAcceptance(t *testing.T, wasi bool) {
 		t.Fatal(err)
 	}
 	var source strings.Builder
-	source.WriteString("#include <stdio.h>\n#include <string.h>\n#include \"regexp_compile_parser.h\"\nstruct test { const unsigned char *pattern, *flags; size_t length, flag_length; int expected; const unsigned char *reason; };\nstatic const struct test cases[] = {\n")
+	source.WriteString("#include <stdio.h>\n#include <string.h>\n#include \"regexp_compile_parser.h\"\nstruct test { const unsigned char *pattern, *flags; size_t length, flag_length; int expected; const unsigned char *reason; size_t reason_length; };\nstatic const struct test cases[] = {\n")
 	emit := func(value string) string {
 		var a strings.Builder
 		a.WriteString("(const unsigned char[]){")
@@ -66,9 +66,9 @@ func runtimeParserAcceptance(t *testing.T, wasi bool) {
 			reason = err.Error()
 		}
 
-		fmt.Fprintf(&source, "{%s,%s,%d,%d,%d,%s},\n", emit(c[0]), emit(c[1]), len(c[0]), len(c[1]), expected, emit(reason))
+		fmt.Fprintf(&source, "{%s,%s,%d,%d,%d,%s,%d},\n", emit(c[0]), emit(c[1]), len(c[0]), len(c[1]), expected, emit(reason), len(reason))
 	}
-	source.WriteString("};\nint main(void) { int failures=0; for(size_t i=0;i<sizeof(cases)/sizeof(cases[0]);i++) { const struct test *c=&cases[i]; adamic_regex_parse_result r; adamic_regex_parse(c->pattern,c->length,c->flags,c->flag_length,&r); if(r.status!=c->expected || ((r.status==1 || r.status==3) && strcmp(r.message,(const char *)c->reason)!=0)) {fprintf(stderr,\"case %zu: status %d reason %s expected %s\\n\",i,r.status,r.message?r.message:\"none\",c->reason);failures++;} adamic_regex_parse_free(&r); } return failures!=0;}\n")
+	source.WriteString("};\nint main(void) { int failures=0; for(size_t i=0;i<sizeof(cases)/sizeof(cases[0]);i++) { const struct test *c=&cases[i]; adamic_regex_parse_result r; adamic_regex_parse(c->pattern,c->length,c->flags,c->flag_length,&r); if(r.status!=c->expected || ((r.status==1 || r.status==3) && (r.message_length!=c->reason_length || memcmp(r.message,c->reason,c->reason_length)!=0))) {fprintf(stderr,\"case %zu: status %d reason %s expected %s\\n\",i,r.status,r.message?r.message:\"none\",c->reason);failures++;} adamic_regex_parse_free(&r); } return failures!=0;}\n")
 	directory := t.TempDir()
 	main := filepath.Join(directory, "main.c")
 	if err := os.WriteFile(main, []byte(source.String()), 0600); err != nil {
@@ -86,6 +86,27 @@ func runtimeParserAcceptance(t *testing.T, wasi bool) {
 		compiler = filepath.Join(filepath.Dir(filepath.Dir(sysroot)), "bin", "clang")
 		args = []string{"--target=wasm32-wasi", "--sysroot=" + sysroot, "-DADAMIC_TARGET_WASI=1", "-mno-atomics", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", runtimeDirectory, main, filepath.Join(runtimeDirectory, "regexp_compile_parser.c"), filepath.Join(runtimeDirectory, "regexp_compile_properties.c"), "-Wl,-z,stack-size=1048576", "-o", binary}
 	}
+	if len(mutateMessage) > 0 && mutateMessage[0] {
+		parser := filepath.Join(runtimeDirectory, "regexp_compile_parser.c")
+		data, err := os.ReadFile(parser)
+		if err != nil {
+			t.Fatal(err)
+		}
+		old := "result->message = message; result->message_length = position;"
+		if bytes.Count(data, []byte(old)) != 1 {
+			t.Fatal("counted message mutation site moved")
+		}
+		data = bytes.Replace(data, []byte(old), []byte("if(memchr(pattern,0,length)!=NULL)message[position-1]='!';\n    "+old), 1)
+		replacement := filepath.Join(directory, "parser-mutant.c")
+		if err := os.WriteFile(replacement, data, 0600); err != nil {
+			t.Fatal(err)
+		}
+		for i, arg := range args {
+			if arg == parser {
+				args[i] = replacement
+			}
+		}
+	}
 	command := exec.Command(compiler, args...)
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("compile: %v\n%s", err, output)
@@ -95,13 +116,21 @@ func runtimeParserAcceptance(t *testing.T, wasi bool) {
 		command = exec.Command("node", "--no-warnings", "-e", `const fs=require('fs');const {WASI}=require('node:wasi');const wasi=new WASI({version:'preview1',args:[],env:{},returnOnExit:true});WebAssembly.instantiate(fs.readFileSync(process.argv[1]),{wasi_snapshot_preview1:wasi.wasiImport}).then(({instance})=>{process.exitCode=wasi.start(instance)});`, binary)
 	}
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
-	if output, err := command.CombinedOutput(); err != nil {
+	output, err = command.CombinedOutput()
+	if len(mutateMessage) > 0 && mutateMessage[0] {
+		if err == nil || !bytes.Contains(output, []byte("case ")) || bytes.Contains(output, []byte("ERROR: AddressSanitizer")) {
+			t.Fatalf("counted message mutant did not reach comparison: %v %s", err, output)
+		}
+		t.Log("caught error-message corruption after embedded NUL at counted-byte comparison")
+		return
+	}
+	if err != nil {
 		t.Fatalf("C versus Go: %v\n%s", err, output)
 	}
 	if disagreements != 0 {
 		t.Fatalf("%d reference versus Node disagreements", disagreements)
 	}
-	t.Logf("%d test262 + %d cohere + 4000 seeded + 8 ruling probes agree on acceptance, complete Node SyntaxError messages and Go divergence reasons (WASI=%v)", corpus-cohereCount, cohereCount, wasi)
+	t.Logf("%d test262 + %d cohere + 4000 seeded + 9 ruling probes agree on acceptance, complete Node SyntaxError messages and Go divergence reasons (WASI=%v)", corpus-cohereCount, cohereCount, wasi)
 }
 
 func runtimeRegexCompilerCases(t *testing.T) ([][]string, int) {
@@ -127,7 +156,7 @@ func runtimeRegexCompilerCases(t *testing.T) ([][]string, int) {
 		t.Fatalf("cohere count %d", len(cohere))
 	}
 	cases = append(cases, cohere...)
-	cases = append(cases, [][]string{{"(?<ⸯ>a)", "u", "Pattern_Syntax"}, {"(?<Ᲊ>a)", "u", "Unicode identifier"}, {"a\x00b", "u", "embedded NUL"}, {"\x00", "", "embedded NUL"}, {"(?<℘>a)", "u", "Other_ID_Start"}, {"(?<a·>a)", "u", "Other_ID_Continue"}, {`\u{10000000000000000000000}`, "u", "overflow"}, {"a{2147483648,2147483647}", "", "clamp"}}...)
+	cases = append(cases, [][]string{{"\x00[", "u", "counted SyntaxError"}, {"(?<ⸯ>a)", "u", "Pattern_Syntax"}, {"(?<Ᲊ>a)", "u", "Unicode identifier"}, {"a\x00b", "u", "embedded NUL"}, {"\x00", "", "embedded NUL"}, {"(?<℘>a)", "u", "Other_ID_Start"}, {"(?<a·>a)", "u", "Other_ID_Continue"}, {`\u{10000000000000000000000}`, "u", "overflow"}, {"a{2147483648,2147483647}", "", "clamp"}}...)
 	corpus += len(cohere)
 	rng := rand.New(rand.NewSource(0xEC2025))
 	atoms := []string{"a", ".", "[a-z]", "[^]", "(a)", "(?:a)", "(?=a)", "(?<=a)", `\d`, `\p{Letter}`, "[", "(", `\k<x>`, "(?<x>a)", "[a&&b]", `[\q{ab|}]`}
@@ -142,3 +171,5 @@ func runtimeRegexCompilerCases(t *testing.T) ([][]string, int) {
 	}
 	return cases, corpus
 }
+
+func TestRegExpRuntimeCountedErrorMutant(t *testing.T) { runtimeParserAcceptance(t, false, true) }
