@@ -6,7 +6,7 @@ defined no-op on both backends. Arguments are still evaluated in source order.
 The JavaScript backend emits Adamic's empty function and never calls V8's real
 `Error.captureStackTrace`. Native has no JavaScript frames to trim.
 
-Every `.stack` or literal `['stack']` read remains NotYet, including reads from a
+Every `.stack` or literal `['stack']` read remains NotYet, including destructuring and reads from a
 plain object passed to captureStackTrace. It is never silently undefined. If
 `.stack` is ever lowered, this slice is the place to define what it holds and
 ensure that both backends implement that definition.
@@ -104,10 +104,11 @@ The required mutants were run independently and restored:
 | Feature test uses IsUndefined without negation | Probe stdout differs on both backends: unavailable instead of available |
 | Capture closure throws Error("capture mutant") | Debug.fail fixture's caught messages and final exit differ on both backends |
 | Remove the stack-read refusal hook | Plain-object post-capture stack test unexpectedly lowers |
+| Remove the destructured stack refusal | Renamed stack binding unexpectedly lowers |
 | typeof Error yields object | typeof fixture stdout differs on both backends |
 | Allocate a new capture function on each read | Identity observation prints false on both backends |
 
-Each mutant test exited 1; neither depended on clang warnings or a refusal.
+All six mutant tests exited 1; neither depended on clang warnings or a refusal.
 Logs are `/tmp/library-error-mutant-falsy_feature.log` and
 `/tmp/library-error-mutant-capture_throws.log`.
 
@@ -130,5 +131,6 @@ unless explicitly authorized. No edit to lower.go was made.
 
 The slice's shared hooks are three lines each at expression.go:382-384,
 control.go:98-100 and object.go:598-600, plus the named capture-read exemption in
-refusals.go:135. The oracle registration lives in a new slice test file;
+refusals.go:139. A four-line binding refusal hook at refusals.go:79-82 also
+keeps destructured stack fields behind the same boundary. The oracle registration lives in a new slice test file;
 oracle_test.go is unchanged.

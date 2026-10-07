@@ -128,3 +128,19 @@ func (l *lowering) errorCaptureValue() ir.Expression {
 	l.forwarders[-1] = held
 	return ir.Read{Local: held, Of: ir.Closure}
 }
+
+// Destructuring reads an own field without a property-access AST node. Keep
+// that observation behind the same stack boundary, including renamed bindings.
+func (l *lowering) libraryErrorBindingRefusal(node *ast.Node) error {
+	if node.Kind != ast.KindBindingElement || node.Parent == nil || node.Parent.Kind != ast.KindObjectBindingPattern {
+		return nil
+	}
+	name := node.Name()
+	if declared := node.AsBindingElement(); declared.PropertyName != nil {
+		name = declared.PropertyName
+	}
+	if name != nil && (ast.IsIdentifier(name) || name.Kind == ast.KindStringLiteral) && name.Text() == "stack" {
+		return l.notYet(node, "Error.stack: native frames have no JavaScript source stack; stack reads need a shared definition before lowering")
+	}
+	return nil
+}

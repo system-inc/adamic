@@ -10,6 +10,7 @@ func TestLibraryErrorRefusals(t *testing.T) {
 		{"stack after capture", `import type { Stats } from 'node:fs'; const e = new Error('no stack'); Error.captureStackTrace(e); console.log(e.stack ?? 'absent');`, "Error.stack: native frames"},
 		{"plain target stack", `import type { Stats } from 'node:fs'; const target: { stack?: string } = {}; Error.captureStackTrace(target); console.log(target.stack ?? 'absent');`, "Error.stack: native frames"},
 		{"bracket stack", `import type { Stats } from 'node:fs'; const e = new Error('no stack'); Error.captureStackTrace(e); console.log(e['stack'] ?? 'absent');`, "Error.stack: native frames"},
+		{"destructured stack", `import type { Stats } from 'node:fs'; const target: { stack?: string } = {}; Error.captureStackTrace(target); const { stack: captured } = target; console.log(captured ?? 'absent');`, "Error.stack: native frames"},
 		{"constructor alias", `const constructor = Error;`, "constructor aliases and overloaded calls"},
 		{"constructor passed", `function use(constructor: ErrorConstructor): void {} use(Error);`, "constructor aliases and overloaded calls"},
 		{"stack limit", `import type { Stats } from 'node:fs'; console.log(String(Error.stackTraceLimit));`, "stackTraceLimit"},
