@@ -1,0 +1,44 @@
+=== RUN   TestStaticDeclarationNodesAgree
+    helper_test.go:47: 6 consumers, 639 distinct literals, 890 framework statics, 3461 cases
+    helper_test.go:51: coverage: {
+          "cases": 3461,
+          "consumers": {
+            "better-tailwindcss/enforce-canonical-classes": 259,
+            "better-tailwindcss/enforce-consistent-class-order": 370,
+            "better-tailwindcss/enforce-consistent-variant-order": 110,
+            "better-tailwindcss/enforce-shorthand-classes": 131,
+            "better-tailwindcss/no-conflicting-classes": 247,
+            "better-tailwindcss/no-unknown-classes": 239
+          },
+          "frameworkStatics": 890,
+          "uniqueStrings": 639
+        }
+    helper_test.go:63: baseline Go/source Node/emitted JavaScript/sanitized native agree: 2019129 output bytes
+=== RUN   TestStaticDeclarationNodesAgree/absent_versus_empty
+    helper_test.go:100: node compiled and exited 0; comparison caught line 29: mutant "false" Go "true"
+    helper_test.go:100: node compiled and exited 0; comparison caught line 29: mutant "false" Go "true"
+    helper_test.go:100: /tmp/adamic-gate/TestStaticDeclarationNodesAgreeabsent_versus_empty3684796584/002/native compiled and exited 0; comparison caught line 29: mutant "false" Go "true"
+=== RUN   TestStaticDeclarationNodesAgree/important_flag
+    helper_test.go:100: node compiled and exited 0; comparison caught line 30: mutant "false" Go "true"
+    helper_test.go:100: node compiled and exited 0; comparison caught line 30: mutant "false" Go "true"
+    helper_test.go:100: /tmp/adamic-gate/TestStaticDeclarationNodesAgreeimportant_flag2781099180/002/native compiled and exited 0; comparison caught line 30: mutant "false" Go "true"
+=== RUN   TestStaticDeclarationNodesAgree/declaration_kind
+    helper_test.go:100: node compiled and exited 0; comparison caught line 3: mutant "comment" Go "declaration"
+    helper_test.go:100: node compiled and exited 0; comparison caught line 3: mutant "comment" Go "declaration"
+    helper_test.go:100: /tmp/adamic-gate/TestStaticDeclarationNodesAgreedeclaration_kind3737872485/002/native compiled and exited 0; comparison caught line 3: mutant "comment" Go "declaration"
+=== RUN   TestStaticDeclarationNodesAgree/declaration_order
+    helper_test.go:100: node compiled and exited 0; comparison caught line 113736: mutant "margin-inline-end" Go "--tw-sort"
+    helper_test.go:100: node compiled and exited 0; comparison caught line 113736: mutant "margin-inline-end" Go "--tw-sort"
+    helper_test.go:100: /tmp/adamic-gate/TestStaticDeclarationNodesAgreedeclaration_order3226216225/002/native compiled and exited 0; comparison caught line 113736: mutant "margin-inline-end" Go "--tw-sort"
+=== RUN   TestStaticDeclarationNodesAgree/fresh_nodes
+    helper_test.go:100: node compiled and exited 0; comparison caught line 44: mutant "true" Go "false"
+    helper_test.go:100: node compiled and exited 0; comparison caught line 44: mutant "true" Go "false"
+    helper_test.go:100: /tmp/adamic-gate/TestStaticDeclarationNodesAgreefresh_nodes3592689974/002/native compiled and exited 0; comparison caught line 44: mutant "true" Go "false"
+--- PASS: TestStaticDeclarationNodesAgree (15.27s)
+    --- PASS: TestStaticDeclarationNodesAgree/absent_versus_empty (2.56s)
+    --- PASS: TestStaticDeclarationNodesAgree/important_flag (2.51s)
+    --- PASS: TestStaticDeclarationNodesAgree/declaration_kind (2.49s)
+    --- PASS: TestStaticDeclarationNodesAgree/declaration_order (2.52s)
+    --- PASS: TestStaticDeclarationNodesAgree/fresh_nodes (2.51s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_09	15.276s
