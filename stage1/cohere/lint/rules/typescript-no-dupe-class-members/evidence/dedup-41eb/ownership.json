@@ -1,0 +1,18 @@
+{
+  "ledger": "41eb6eab2b6de45ede0a40250765be295ee25fbd",
+  "removed": {
+    "@eslint-community/eslint-comments/require-description": "wave1-05",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "wave1-05",
+    "@typescript-eslint/no-non-null-assertion": "wave1-05",
+    "@typescript-eslint/no-this-alias": "wave1-07"
+  },
+  "retained": [
+    "@typescript-eslint/no-dupe-class-members",
+    "@typescript-eslint/no-empty-object-type",
+    "@typescript-eslint/no-import-type-side-effects",
+    "react/jsx-no-useless-fragment",
+    "react/no-invalid-html-attribute",
+    "react/no-unescaped-entities"
+  ],
+  "batch_only_assignment_to_wave109": []
+}
