@@ -69131,3 +69131,15 @@
 {"Time":"2026-10-07T23:50:21.981558306Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateLibraryGap","Elapsed":0.99}
 {"Time":"2026-10-07T23:50:21.981566969Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal"}
 {"Time":"2026-10-07T23:50:21.981569673Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Output":"=== RUN   TestLossyInputRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:51:01.002987829Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Output":"    utf8_test.go:65: equal-size malformed and valid replacement inputs both explicitly refuse; raw-byte API remains required\n"}
+{"Time":"2026-10-07T23:51:01.004259517Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Output":"--- PASS: TestLossyInputRefusal (39.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:51:01.004284605Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Elapsed":39.02}
+{"Time":"2026-10-07T23:51:01.004317665Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl"}
+{"Time":"2026-10-07T23:51:01.00432138Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl","Output":"=== RUN   TestLossyInputControl\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:51:41.049464368Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl","Output":"    utf8_test.go:78: Node: line 17: Go \"0 .value string \\\\ufffd\\\\ufffd\\\\ufffd\", port \"0 .value string \\\\ufffd\"\n"}
+{"Time":"2026-10-07T23:51:41.049905964Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl","Output":"    utf8_test.go:78: native: line 17: Go \"0 .value string \\\\ufffd\\\\ufffd\\\\ufffd\", port \"0 .value string \\\\ufffd\"\n"}
+{"Time":"2026-10-07T23:51:41.050462393Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl","Output":"--- PASS: TestLossyInputControl (40.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:51:41.050479829Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputControl","Elapsed":40.05}
+{"Time":"2026-10-07T23:51:41.05048699Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:51:41.054269143Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t2160.657s\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:51:41.054288943Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":2160.657}
