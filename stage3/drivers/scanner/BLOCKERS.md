@@ -1,5 +1,16 @@
 # Scanner blockers
 
+## October 7: adaptation 59 preserves legitimately missing regex operands
+
+`let operand!: string` becomes `let operand: string | undefined`. Malformed
+class-set inputs leave it absent; existing !operand tests handle that absence
+and narrow before length/code-point reads. Plain string was rejected by TS2454
+at both tests. Census reason: definite assignment assertions. Feature: lazy
+initializer/definite-assignment checks. Node 509,014 tokens match; combined
+59 and 80-83 baseline 106,367 pass, zero failures/pending/differences, 230.719s.
+Next at this snapshot remains scanner:528:33 flag-return inference; its earlier
+position in the refusal walk precedes operand. Evidence native59-83-*.
+
 ## October 7: adaptation 58 removes the initialization spelling blocker
 
 Per updated instruction, text is now `var text: string;`; its first setText

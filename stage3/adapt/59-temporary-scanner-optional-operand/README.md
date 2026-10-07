@@ -9,3 +9,9 @@ The existing guards narrow the value before codePointAt and length reads.
 
 Validate all Node tokens and the full upstream baseline, including regex error
 cases. Record the next actual refusal before any further source adaptation.
+
+Validated with 58 and 80-83: full upstream baseline 106,367 passing, zero
+failures/pending/differences (230.719 seconds). All Node tokens match.
+The failed plain-string probe is evidence that absence is legitimate; existing
+truthiness checks narrow both required uses. No eager string value was added.
+The next refusal at this snapshot is flag-return inference at scanner:528.
