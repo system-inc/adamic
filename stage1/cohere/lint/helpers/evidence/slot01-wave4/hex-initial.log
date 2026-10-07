@@ -1,0 +1,14 @@
+=== RUN   TestSlot01Wave4HexMatchesCohere
+    slot01_wave4_test.go:146: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        625 fixture strings; 27316 byte queries, all 256 byte values
+    slot01_wave4_test.go:146: 27316 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave4_test.go:146: compiled collapse_is_hex_digit.a mutant caught at output line 64: got "false", Go "true"
+--- PASS: TestSlot01Wave4HexMatchesCohere (6.89s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	6.898s

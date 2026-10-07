@@ -1,0 +1,14 @@
+=== RUN   TestSlot01Wave4StringValueMatchesCohere
+    slot01_wave4_test.go:15: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_display_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/google_font_preconnect_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/next_script_for_ga_test.go: 99 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_css_tags_test.go: 35 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_html_link_for_pages_test.go: 280 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/next/no_page_custom_font_test.go: 87 string inputs
+        571 fixture strings; 576 batches; 4690 string-value queries
+    slot01_wave4_test.go:15: 9382 Go output lines matched source Node, native and emitted JavaScript
+    slot01_wave4_test.go:15: compiled jsx_string_attribute_value.a mutant caught at output line 3: got "true", Go "false"
+--- PASS: TestSlot01Wave4StringValueMatchesCohere (6.53s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	6.539s
