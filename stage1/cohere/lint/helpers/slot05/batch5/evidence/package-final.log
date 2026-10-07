@@ -37,7 +37,7 @@
           "better-tailwindcss/no-conflicting-classes": 247,
           "better-tailwindcss/no-unknown-classes": 239
         }
-    helper_test.go:131: theme_delete.a mutant "theme.keyOrder[index] = ''" -> "theme.keyOrder[index] = key" caught at verdict 75: mutant --a, Go 
+    helper_test.go:131: theme_delete.a mutant "theme.keyOrder[index] = ''" -> "theme.keyOrder[index] = key" caught at verdict 75: mutant --a, Go
     helper_test.go:131: theme_delete.a mutant "if(!theme.values.has(key))" -> "if(false)" caught at verdict 2: mutant 0, Go -1
     helper_test.go:131: theme_delete.a mutant "theme.values.delete(key)" -> "theme.values.delete('--never-present')" caught at verdict 78: mutant 2, Go 1
     helper_test.go:131: theme_delete.a mutant "for(let index = theme.keyOrder.length - 1; index >= 0; index--)" -> "for(let index = 0; index < theme.keyOrder.length; index++)" caught at verdict 74: mutant , Go --a

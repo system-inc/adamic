@@ -32,7 +32,7 @@
           "better-tailwindcss/no-conflicting-classes": 247,
           "better-tailwindcss/no-unknown-classes": 239
         }
-    helper_test.go:114: theme_delete.a mutant caught at verdict 75: mutant --a, Go 
+    helper_test.go:114: theme_delete.a mutant caught at verdict 75: mutant --a, Go
 --- PASS: TestSlot05DeleteThemeKey (21.31s)
 PASS
 ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch5	32.805s
