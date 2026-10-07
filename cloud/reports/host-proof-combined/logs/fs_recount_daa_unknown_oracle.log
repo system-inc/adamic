@@ -1,0 +1,71 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/host_unknown_error_code.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/host_unknown_error_code.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/host_unknown_error_code.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_unknown_error_code.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_unknown_error_code.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+    oracle_test.go:795: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_unknown_error_code.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+    oracle_test.go:795: gate cache node miss
+    oracle_test.go:795: gate cache node miss
+    oracle_test.go:629: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_unknown_error_code.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+    oracle_test.go:610: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_unknown_error_code.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:622: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_unknown_error_code.a
+    oracle_test.go:636: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+    oracle_test.go:636: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+    oracle_test.go:636: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:636: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/host_unknown_error_code.a (0.98s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a (1.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a (1.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a (1.20s)
+PASS
+gate cache: native hits=4 misses=12
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.233s
