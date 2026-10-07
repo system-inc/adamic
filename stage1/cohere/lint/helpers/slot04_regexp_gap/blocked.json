@@ -1,0 +1,37 @@
+{
+  "symbols": [
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.*RegExp.Test",
+    "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.Compile"
+  ],
+  "rules": [
+    {
+      "rule": "@next/next/no-html-link-for-pages",
+      "helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.*RegExp.Test",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.Compile"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-empty-object-type",
+      "helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.*RegExp.Test",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.Compile"
+      ]
+    },
+    {
+      "rule": "no-restricted-exports",
+      "helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.*RegExp.Test",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.Compile"
+      ]
+    },
+    {
+      "rule": "no-restricted-imports",
+      "helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.*RegExp.Test",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.Compile"
+      ]
+    }
+  ],
+  "branches_checked": 20
+}

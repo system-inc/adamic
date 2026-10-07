@@ -1,0 +1,5 @@
+function matches(pattern: string, subject: string): boolean {
+  return new RegExp(pattern, 'u').test(subject);
+}
+console.log(matches('^a+$', 'aaa') ? 'true' : 'false');
+console.log(matches('^a+$', 'b') ? 'true' : 'false');
