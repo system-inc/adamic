@@ -1,0 +1,1 @@
+{"name": "count private identifier hash", "file": "rule.a", "from": "privateName ? node.text.slice(1) : node.text", "to": "privateName ? node.text : node.text"}
