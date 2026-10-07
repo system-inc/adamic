@@ -1,0 +1,31 @@
+import type { RuleContext } from '../../context.ts';
+import { Diagnostic, Edit, Suggestion, publish, requireRepairs } from '../typescript-no-unnecessary-type-constraint/records.a';
+import { message, suggestion } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly records: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        if(this.context.node(index).kind !== 'EnumDeclaration') { return; }
+        let position = 0;
+        for(const member of this.context.node(index).children) {
+            const node = this.context.node(member);
+            if(node.kind !== 'EnumMember') { continue; }
+            const offset = position;
+            position++;
+            if(node.children.length > 1) { continue; }
+            const name = this.context.source.slice(this.context.start(member), node.end);
+            const record = new Diagnostic(this.context, member, '@typescript-eslint/prefer-enum-initializers', 'defineInitializer', message(name));
+            for(const value of [`${offset}`, `${offset + 1}`, `'${name}'`]) {
+                const repair = new Suggestion('defineInitializerSuggestion', suggestion(name, value));
+                repair.edits.push(new Edit(record.start, record.end, `${name} = ${value}`));
+                record.suggestions.push(repair);
+            }
+            this.records.push(record);
+            publish(this.context, member, record);
+        }
+    }
+    finish(root: number): void { requireRepairs(this.records); }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

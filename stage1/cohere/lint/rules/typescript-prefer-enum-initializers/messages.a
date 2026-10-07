@@ -1,0 +1,2 @@
+export function message(name: string): string { return `The value of the member '${name}' should be explicitly defined.`; }
+export function suggestion(name: string, value: string): string { return `Can be fixed to ${name} = ${value}`; }
