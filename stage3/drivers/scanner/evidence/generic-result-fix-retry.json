@@ -1,0 +1,68 @@
+{
+  "result": "red at stop 2: union-valued Map",
+  "scratch_commit": "35ae70e9dce54cafca339d33bd5b43c9d34cabe6",
+  "compiler_pins": {
+    "origin/codex/scanner-generic-optional-result": "6ffb8bb89c020d81d800cb139b2c5768cc552ff6",
+    "origin/codex/host-blockers": "877ff0c021767217f539f107b04c6b07e8cbf072",
+    "origin/codex/proven-predicates": "6feee11b6e64c70838ab95cb2342c572daf13310",
+    "origin/codex/library-array-holes": "f05aec3cee91d2ce3bfced6d341865933ec28da1"
+  },
+  "merge": "Only generated internal/oracle/counts.md conflicted; retained existing scratch table. generic.go auto-merged. No authored compiler edits on proof branch.",
+  "fixed_generic_probe": {
+    "file": "probes/generic-optional-callback-result.a",
+    "build_exit": 0,
+    "native_exit": 0,
+    "stdout": "x\n",
+    "stderr": "",
+    "Node_stdout_stderr_exit_match": true,
+    "one_byte_output_mutant_diff_exit": 1
+  },
+  "builds": [
+    {
+      "split": false,
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/scanner-latest-preflight-run/adapted/src/compiler/utilities.ts:14:22: stage 0 can't lower a Map of V yet\n"
+    },
+    {
+      "split": true,
+      "exit": 1,
+      "diagnostic": "adamic: /workspace/scratch/scanner-latest-preflight-run/adapted/src/compiler/utilities.ts:14:22: stage 0 can't lower a Map of V yet\n"
+    }
+  ],
+  "map_probe": {
+    "file": "probes/map-union-values.a",
+    "C_exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/stage3/drivers/scanner/probes/map-union-values.a:2:16: stage 0 can't lower a Map of string | number yet\n",
+    "previous_Node_stdout": "1\n"
+  },
+  "focused_uncached_optional_result_oracle_and_undefined_to_zero_mutant": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.731s\n",
+  "validated_slice_audit": "PASS: 168 byte-identical source spans; 79 ordered module import lists\n",
+  "previous_verified_Node_reference": {
+    "tokens": 1369432,
+    "errors": 466,
+    "sha256": "41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc",
+    "bytes": 108019935,
+    "input_tree": "/workspace/scratch/scanner-fixed-inputs",
+    "files": 81,
+    "node_exit": 0,
+    "comparison_control_exit": 0,
+    "end_mutant_diff_exit": 1,
+    "native": "blocked at compilation",
+    "build_exit": 1
+  },
+  "Node_reference_note": "The proof slice and fixed input corpus were unchanged. This retry rebuilt native and reran focused Node differential tests; the full scanner Node dump was reused from the preceding verified run.",
+  "metrics": {
+    "nproc": 5,
+    "C_bytes": null,
+    "C_lines": null,
+    "clang_unsplit_wall": null,
+    "clang_split_cold_wall": null,
+    "clang_split_warm_wall": null,
+    "scanner_binary_bytes": null,
+    "native_user_time": null,
+    "reason": "Both modes stop in lowering before scanner C emission."
+  },
+  "scanner_native_token_diff": "not run: no scanner binary",
+  "scanner_native_byte_mutant": "not run: no scanner output",
+  "discovery": "No new discovery substitutions or stubs used. Previously recorded case-declaration and Uint16Array stops remain in flight."
+}

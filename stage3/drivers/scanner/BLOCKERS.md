@@ -1,5 +1,41 @@
 # Scanner blockers
 
+## October 7: generic optional result fixed; union-valued Map is first real stop
+
+Merged scanner-generic-optional-result 6ffb8bb8 into the existing unpushed
+scratch, keeping all prior features. Only the generated counts table conflicted;
+generic.go auto-merged. Exact scratch SHA and pins are recorded in
+`evidence/generic-result-fix-retry.json`.
+
+The unchanged `generic-optional-callback-result.a` probe builds natively and
+prints `x`, matching Node stdout, stderr and exit. Its one-byte output mutant is
+caught. Focused uncached source/native/JavaScript optional-result fixtures pass,
+as does the compiler worker's absent-number-to-zero mutant (valid binary,
+clean sanitizer execution, wrong stdout caught by Node).
+
+Both ADAMIC_NATIVE_SPLIT=0 and =1 now stop at utilities.ts:14:22:
+
+```text
+stage 0 can't lower a Map of V yet
+```
+
+The site is `const iterator = map.entries()` in forEachEntry, upstream
+utilities.ts:747. The scanner call passes targetOptionDeclaration.type, declared
+Map<string, string | number>. The independent `map-union-values.a` probe still
+refuses at 2:16 as `a Map of string | number`; source Node prints `1`. Required
+feature: union-valued Map storage and operations, preserving the value tag.
+This representation-specific NotYet is not separately named in REPORT.md.
+
+The validated slice audit passes; no source or discovery changes were made.
+Its established full-tree Node reference remains 1,369,432 tokens and 466 errors,
+SHA-256 `41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc`.
+This retry reused that unchanged full scanner Node dump and reran the focused
+Node differential fixtures. The previously discovered case declarations and
+Uint16Array stops remain recorded below; no stubs were used in these real builds.
+
+No scanner C/executable, native token diff, compile/runtime metrics or scanner
+native-byte mutant could run because lowering stops first. nproc is 5.
+
 ## October 7: never fallback fixed; generic result, Map union, case scope and Uint16 remain
 
 Fetched and merged host-blockers 877ff0c, proven-predicates 6feee11, and newest
