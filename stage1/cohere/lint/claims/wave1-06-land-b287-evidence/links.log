@@ -1,0 +1,6 @@
+=== RUN   TestNodeTableIsLinkOnly
+    lint_test.go:399: cohere cases: 2422 unique source/rule/options combinations
+    lint_test.go:751: 2559 rows: identical with and without unattached node rows, 13206430 bytes
+--- PASS: TestNodeTableIsLinkOnly (32.86s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	32.882s
