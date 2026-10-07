@@ -228,3 +228,7 @@ Merge attempted exactly at 75a30c4fb, then aborted. Explicit resolutions compile
 The stage3 update also exposed an auto-merge runner error: oracle/adamic.mjs references undefined AdamicPanic, changing import-cycle Node failures from exit 70 with their recorded ReferenceError text to exit 7. This runner repair is small, but cannot make the compiler admission failures green. All partial stage3 records and attempted resolutions were discarded; the existing Node observations remain unchanged. No wrong production output with exit 0 was observed. Logs: /tmp/landing-batch-3-13-{compile,counts,stage3-update}.log. Review patch: /tmp/landing-batch-3-13-unlanded.patch.
 
 Automatic approval review rejected the broad scripted exception/ownership/emitter/null resolution for miscompilation and runtime-corruption risk. Explicit additive patches were subsequently approved and compile-checked; the merge was dropped for the actual admission failures above.
+
+### Item 14: records-lowering
+
+Kept the existing recordStorageView check after cast proofs, avoiding the incoming duplicate while preserving every refusal. Added all three type-only Record composition/value/scanner oracle programs. Linux counts passed 29.660s; vet passed; whole uncached lower passed 49.954s and oracle passed 192.767s. No new failure or stage3 record change. No production check changed, so no new mutant was required. Logs: /tmp/landing-batch-3-14-*.log.
