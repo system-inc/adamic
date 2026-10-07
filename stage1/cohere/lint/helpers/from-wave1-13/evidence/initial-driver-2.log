@@ -1,0 +1,9 @@
+=== RUN   TestNewTheme
+    helper_test.go:37: captured 1131 Go source literals from all 6 consumer rule test families; map[enforce_canonical_classes:204 enforce_consistent_class_order:316 enforce_consistent_variant_order:52 enforce_shorthand_classes:178 no_conflicting_classes:195 no_unknown_classes:184]
+    helper_test.go:65: /workspace/adamic/stage1/cohere/lint/helpers/from-wave1-13/main.a:14:38: error TS2554: Expected 1 arguments, but got 4.
+        /workspace/adamic/stage1/cohere/lint/helpers/from-wave1-13/main.a:19:39: error TS2554: Expected 1 arguments, but got 4.
+        /workspace/adamic/stage1/cohere/lint/helpers/from-wave1-13/main.a:21:38: error TS2554: Expected 1 arguments, but got 4.
+--- FAIL: TestNewTheme (1.38s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-13	1.390s
+FAIL

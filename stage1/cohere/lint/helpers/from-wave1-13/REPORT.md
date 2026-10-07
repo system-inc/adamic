@@ -1,3 +1,5 @@
+Withdrawn: NewTheme is owned by slot 08 under e069e11a at 02:30:35 UTC, before our f0b136e5 at 02:32:43 UTC. No active duplicate helper or tests are delivered. Snapshots and logs below are retained as withdrawn evidence only; zero dependencies are counted from this work.
+
 Built: collapse.NewTheme, one .a helper, with independent fresh store state.
 Commits: claim f0b136e5 pushed before code; implementation commit is this report's commit.
 Commands: owned go test PASS 3.258s, 1,131 cases and 27,144 Go bytes; owned go vet PASS, empty output; setup 77s, nproc 5.

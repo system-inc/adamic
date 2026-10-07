@@ -1,0 +1,7 @@
+=== RUN   TestNewTheme
+    helper_test.go:37: captured 1131 Go source literals from all 6 consumer rule test families; map[enforce_canonical_classes:204 enforce_consistent_class_order:316 enforce_consistent_variant_order:52 enforce_shorthand_classes:178 no_conflicting_classes:195 no_unknown_classes:184]
+    helper_test.go:65: /workspace/adamic/stage1/cohere/lint/helpers/from-wave1-13/main.a:3:10: error TS2305: Module '"adamic"' has no exported member 'input'.
+--- FAIL: TestNewTheme (2.39s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-13	2.403s
+FAIL

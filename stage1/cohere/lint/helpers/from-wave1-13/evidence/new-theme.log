@@ -1,0 +1,8 @@
+=== RUN   TestNewTheme
+    helper_test.go:40: captured 1131 Go source literals from all 6 consumer rule test families; map[enforce_canonical_classes:204 enforce_consistent_class_order:316 enforce_consistent_variant_order:52 enforce_shorthand_classes:178 no_conflicting_classes:195 no_unknown_classes:184]
+    helper_test.go:82: baseline compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 27144 Go bytes
+    helper_test.go:82: dead-counter-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 27144 Go bytes
+    helper_test.go:82: shared-map-mutant compiled and finished cleanly on source Node, emitted JavaScript and sanitized native; compared 27144 Go bytes
+--- PASS: TestNewTheme (3.25s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-13	3.258s
