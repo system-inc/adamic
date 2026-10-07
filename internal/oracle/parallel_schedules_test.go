@@ -18,13 +18,18 @@ func TestParallelSchedules(t *testing.T) {
 	t.Parallel()
 	executions := 0
 	defer func() { t.Logf("schedule sweep: %d native executions", executions) }()
+	var paths []string
 	for _, fixture := range fixtures {
 		if !strings.HasPrefix(fixture.path, "internal/oracle/testdata/concurrency/accepted/") && fixture.path != "bench/parallel_files.a" {
 			continue
 		}
+		paths = append(paths, fixture.path)
+	}
+	paths = append(paths, "internal/oracle/testdata/moves/accepted/objects.a")
+	for _, relative := range paths {
 		// Not parallel: each process can start 64 threads; keep fixture pools from competing.
-		t.Run(fixture.path, func(t *testing.T) {
-			path := filepath.Join(repository, fixture.path)
+		t.Run(relative, func(t *testing.T) {
+			path := filepath.Join(repository, relative)
 			program, err := lowered(t, path)
 			if err != nil {
 				t.Fatal(err)
