@@ -1,0 +1,2 @@
+PASS state mutant compiled and exited 0, empty stderr; production Go state bytes caught byte 2
+This verifies state reduction only, not complete process-exit lint findings.

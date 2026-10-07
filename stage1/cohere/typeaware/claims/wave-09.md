@@ -46,7 +46,8 @@ three continuation reservations and takes no replacements. The original
 prefer-const, radix and non-nullable-type-assertion-style ports remain complete.
 
 Work performed before the collision was observed is saved as an explicitly
-withdrawn experiment in ../wave09_next, with no shared registration edits.
+withdrawn experiment in ../validation-wave-09-continuation/withdrawn-experiment.tar.gz, with no
+shared registration edits.
 The timeout port passed independent full-byte controls and both corpora using
 a temporary checker registration overlay. The other two rules are partial,
-not completed ports. See ../wave09_next/REPORT.md for gaps and evidence.
+not completed ports. See ../WAVE_09_CONTINUATION_REPORT.md for gaps and evidence.

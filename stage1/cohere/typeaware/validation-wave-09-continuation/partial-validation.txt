@@ -1,0 +1,19 @@
+state-oracle-build exit 0 seconds 0.184849
+state-go exit 0 seconds 0.009636
+state-build exit 0 seconds 2.606491
+state-native exit 0 seconds 0.004011
+state-asan-build exit 0 seconds 4.558825
+state-asan exit 0 seconds 0.046856
+state-js-build exit 0 seconds 0.059211
+state-node exit 1 seconds 0.036495
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/wave09_next/verify_parts.py", line 38, in <module>
+    want=compare('state',[work/'state-oracle'],base/'process_exit/state_probe.a')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/typeaware/wave09_next/verify_parts.py", line 29, in compare
+    assert run(name+'-node',["node",js,*args])==want
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/typeaware/wave09_next/verify_parts.py", line 12, in run
+    assert result.returncode==expected,name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: state-node
