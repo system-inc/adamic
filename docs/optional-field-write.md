@@ -99,3 +99,85 @@ The first broad gate is discarded: its compiler binaries preceded the last
 metadata change while fixture sources changed, and it also found two obsolete
 unsupported-behavior assertions. The corrected focused regressions pass (native
 0.556s, lower 0.411s). The final broad gate is running with sources held fixed.
+
+## Final batch 3 validation
+
+Based on a37ebdb0913eca9d3d6e8adbe8f01bb733da52eb, with implementation
+checkpoints 5bb775ca and 03980678 pushed to codex/optional-field-write-2.
+No current-main merge was substituted for the requested batch 3 base.
+
+After `export GOPROXY='https://proxy.golang.org|direct'`, cloud/setup.sh passed:
+Node ready 0.024s, Go ready 0.034s, submodules ready 0.051s, clang ready 0.229s,
+markdown dependencies installed step-duration 0.733s / ready 0.831s, go build
+ready 38.906s, test binaries deferred 38.993s, cache warm 38.994s, done 39.018s.
+`nproc` reports 5; cgroup cpu.max is 400000 100000. Node v24.19.0,
+Go 1.27.1 and clang 20.1.8; source /workspace/adamic-tools/env.sh before commands.
+Setup ran successfully while the initial recursive fetch was still on main
+71d7e491. The recursive fetch stalled on unrelated submodule history; explicit
+nonrecursive refs and shallow exact submodule commits supplied the batch 3 pins.
+The first test attempt exposed that pin mismatch, then missing @types/node in
+stage3/api. Exact pinned submodule updates and `npm ci --prefix stage3/api`
+resolved those environment failures. No cohere source was copied.
+
+The final source-stable gate wrote to /tmp/optional-field-packages-final.log:
+
+```text
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/lower ./internal/native ./internal/javascript ./internal/ir ./internal/oracle ./stage3/fixtures
+ok internal/lower 73.328s
+ok internal/native 238.801s
+internal/javascript: no package tests (backend checked by oracle)
+ok internal/ir 12.266s
+ok internal/oracle 299.166s
+ok stage3/fixtures 34.364s
+```
+
+This is the complete oracle, including every predecessor optional-field fixture,
+all batch 3 readiness/import-cycle fixtures, and their stored mutations. It uses
+source Node, backend Node and the oracle's usual native release, sanitizer and
+Linux leak builds. Existing inserted readiness checks are intentionally pinned
+checked stops, rather than raw source-Node equality. In particular,
+optional_field_checked_copy.a stops on its present unreadied field in both
+backends, while Node continues. Its earlier successful checked copy preserves
+absence. The independent C probe also checks fixed and dynamic copies with an
+absent unreadied slot, raw copies carrying unreadied present storage, unknown
+reads, and subsequent writes. The unknown-view .a fixture observes both optional
+presence and class field readiness, including the distinct empty-spread shape.
+
+Final Linux regeneration:
+`go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts`
+passed in 31.968s; /tmp/optional-field-counts4.log. The complete final gate also
+rechecked recorded counts. New A/F/R/L/P/G rows are 2/2/0/2/1/0 (write),
+45/45/40/59/11/0 (presence), 87/86/62/134/25/1 (construction),
+22/22/34/63/7/0 (unknown), and 5/2/6/8/4/0 (checked copy, intentional stop).
+Existing rows are unchanged from the requested base.
+
+`go test ./internal/oracle -run '^TestOptionalField' -v -count=1 -timeout 30m`
+passed in 3.832s; /tmp/optional-field-mutants-final.log. Every requested mutant
+was caught: dropped absent slot restores the missing-field compiler-bug stop
+(exit 70, source Node disagrees); dropped copy presence changes state/unknown
+assertions; dropped copy readiness changes state/unknown assertions; overlapping
+tails stops on the independently ready field. The three copy-layout mutations
+are run against both fixed and dynamic shapes, release and ASan/UBSan builds.
+Additional stored mutations caught initial presence, static layout insertion
+order, ineffective deletion (all wrong stdout with exit 0), and missing spread
+reservation (missing-field stop, exit 70). The empty-shape metadata overlay was
+caught by Node/native disagreement; /tmp/optional-field-empty-metadata-mutant.log.
+The conservative Object.assign overlay was caught by the diagnostic assertion,
+not a runtime miscompile; /tmp/optional-field-assign-proof-mutant.log.
+
+Stage 3 update and byte audit passed; /tmp/optional-field-stage3-update.log and
+/tmp/optional-field-stage3-byte-audit.log. Only two stage0 values changed,
+NotYet to Compiles. There are no Compiles regressions. All bytes outside stage0,
+including recorded Node observations, remain exact. The final gate validates
+those records without an updater overlay.
+
+Whole-repository `go vet ./...` exited 0; gofmt -l cmd internal and git diff
+--check printed nothing. Logs: /tmp/optional-field-vet-final.log,
+/tmp/optional-field-format-final.log, /tmp/optional-field-whitespace-final.log.
+No lines in internal/native/emit.go, internal/lower/lower.go,
+internal/native/native.go or internal/oracle/oracle_test.go changed.
+
+Not covered: the entire repository/stage-1 test gate, Darwin or WASI execution,
+performance measurements, optional boolean/mixed-union layout extensions,
+arbitrary dynamic keys, and retroactive reservation through widened aliases.
+Developer-tools generated-program reruns were not run, as requested.
