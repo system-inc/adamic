@@ -37,3 +37,15 @@ These names have no implementation on main or the bridge branch. Inventory,
 configuration and skip-types records are not ports. Positive controls are
 required because the recorded corpus counts are zero. Implementation stays in
 this wave's own directories, without editing the shared generator or harness.
+
+Continuation 1 status: the uncleared-race-timeout rule is implemented and
+validated normally and under sanitizers on both frozen corpora, with 22 DOM and
+Node controls, a comparison-only mutant, and released-handle checks.
+The process-exit and blocking-stream rules remain unported. The attempted
+reuse of the native CFG through a derived class is refused by stage 0 at
+shared `bindings.ts:49:33`, before native code is generated. The reproducer and
+exact refusal are retained in `../wave_05_next/gaps/cfg_probe.a` and its report.
+No shared bindings, compiler, registration generator or test harness were edited.
+Stopped this continuation on that blocker under Ahra's correction; no additional
+rules are claimed. The two incomplete reservations remain explicitly marked
+blocked rather than advertised as ports.

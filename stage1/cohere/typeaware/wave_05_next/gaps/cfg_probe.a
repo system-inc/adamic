@@ -1,0 +1,15 @@
+import { panic, readTextFile, programArguments, tsgoProgram, tsgoRelease } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from '../../unary_minus.ts';
+import { Rules } from '../../rules.ts';
+import { NoUselessAssignment } from '../../no_useless_assignment.a';
+class Probe extends NoUselessAssignment {
+    constructor(rules: Rules) { super(rules); }
+    expr(index: number): void {console.log('expression hook');super.expr(index);}
+}
+const args=programArguments();const file=args[1]??panic('file');const source=readTextFile(file);if(source.kind==='Error') {panic(source.message);}
+const program=tsgoProgram(args[0]??panic('config'),[file]);const parser=new Parser(source.text,file);const scanner=new Scanner(source.text);const offsets=byteOffsets(source.text);
+const unary=new UnaryMinus(program,file,parser,scanner,offsets);const rules=new Rules(program,file,parser,scanner,offsets,unary);
+const root=parser.file();for(let at=0;at<parser.nodes.length;at++) {rules.parents.push(-1);}rules.links(root,-1);
+new Probe(rules).analyze(root);tsgoRelease(program);
