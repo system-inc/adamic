@@ -1,0 +1,6 @@
+{
+  "name": "parenthesized chain missed",
+  "file": "rule.a",
+  "from": "this.optional(this.context.unwrap(operand))",
+  "to": "this.optional(operand)"
+}
