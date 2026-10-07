@@ -179,6 +179,8 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			}
 			switch member.Kind {
 			case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement, ast.KindModuleDeclaration, ast.KindClassDeclaration, ast.KindEnumDeclaration:
+			case ast.KindExpressionStatement, ast.KindBlock, ast.KindIfStatement, ast.KindForStatement, ast.KindWhileStatement, ast.KindDoStatement, ast.KindForOfStatement, ast.KindSwitchStatement:
+				// Statement lowering keeps module evaluation order. Calls still pass preflight.
 			case ast.KindFunctionDeclaration:
 				if namespaceOwnThis(member) {
 					return &Refused{Where: l.program.Where(member), What: "this in a namespace function; a qualified call and a detached call have different receivers", Fix: "pass the state as an explicit parameter instead of using this"}
@@ -202,7 +204,17 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 					}
 				}
 			default:
-				return l.notYet(member, "a namespace member other than a function, type, initialized binding or nested namespace")
+				return l.notYet(member, "an unsupported namespace statement or declaration")
+			}
+		}
+	}
+	if node.Kind == ast.KindVariableDeclarationList && node.Flags&ast.NodeFlagsBlockScoped == 0 && !namespaceVariable(node) {
+		for parent := node.Parent; parent != nil; parent = parent.Parent {
+			if ast.IsFunctionLike(parent) {
+				break
+			}
+			if parent.Kind == ast.KindModuleBlock {
+				return l.notYet(node, "var inside namespace control flow; direct singleton var is hoisted, block var is not yet modeled")
 			}
 		}
 	}
@@ -273,7 +285,7 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 				return l.notYet(node, "a namespace read before runtime initialization; put namespaces before executable module code")
 			}
 		}
-		if pending > 0 && (node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression) {
+		if pending > 0 && (node.Kind == ast.KindCallExpression && !l.isConsole(node.Expression()) || node.Kind == ast.KindNewExpression) {
 			return l.notYet(node, "a call before all runtime namespaces are initialized; put namespaces before executable module code")
 		}
 		var found error

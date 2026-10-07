@@ -182,3 +182,18 @@ The parser-enum fixture covers two parser enum scopes, a nested JSDoc parser,
 const member inlining, numeric aliases/reverse mapping, and IncrementalParser.
 A mutant replacing SourceElements with 99 must finish cleanly and disagree with
 independent Node stdout.
+
+## Stage 3: ordered nested bodies
+
+Namespace statements now run in source order at module evaluation, with nested
+bodies evaluated at their declaration. Console calls, local assignments and
+ordinary control flow are admitted. Arbitrary calls and construction while any
+runtime namespace is pending remain NotYet: they could see partially assigned
+exports through deferred code. Initializer calls have the same restriction.
+Direct singleton var is hoisted; var hidden inside namespace control flow remains
+NotYet until its block and function scope are modeled. Early qualified namespace
+reads remain NotYet, including reads before a nested namespace's body finishes.
+
+The ordered-body fixture prints before the module namespace, at Parser entry,
+inside JSDocParser, after the nested body, and after Parser completes. Reordering
+two output statements is caught by Node stdout comparison.

@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/namespaces_nested.a", "internal/oracle/testdata/namespaces_pair/main.a", "internal/oracle/testdata/namespaces_parser_enums.a", "internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a"} {
+	for _, path := range []string{"internal/oracle/testdata/namespaces_nested.a", "internal/oracle/testdata/namespaces_pair/main.a", "internal/oracle/testdata/namespaces_parser_enums.a", "internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a", "internal/oracle/testdata/namespaces_parser_body.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -25,10 +25,13 @@ func init() {
 }
 
 func TestNamespaceSemanticMutants(t *testing.T) {
-	for _, family := range []string{"wrong scoped function", "wrong scoped constant", "wrong namespace enum"} {
+	for _, family := range []string{"wrong scoped function", "wrong scoped constant", "wrong namespace enum", "wrong body order"} {
 		t.Run(family, func(t *testing.T) {
 			t.Parallel()
 			fixture := "namespaces.a"
+			if family == "wrong body order" {
+				fixture = "namespaces_parser_body.a"
+			}
 			if family == "wrong namespace enum" {
 				fixture = "namespaces_parser_enums.a"
 			}
@@ -41,7 +44,19 @@ func TestNamespaceSemanticMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			changed := false
-			if family == "wrong namespace enum" {
+			if family == "wrong body order" {
+				positions := []int{}
+				for index, statement := range program.Main {
+					if _, ok := statement.(ir.WriteLine); ok {
+						positions = append(positions, index)
+					}
+				}
+				if len(positions) >= 2 {
+					first, second := positions[len(positions)-2], positions[len(positions)-1]
+					program.Main[first], program.Main[second] = program.Main[second], program.Main[first]
+					changed = true
+				}
+			} else if family == "wrong namespace enum" {
 				for _, statement := range program.Main {
 					declaration, ok := statement.(ir.Declare)
 					if !ok {
