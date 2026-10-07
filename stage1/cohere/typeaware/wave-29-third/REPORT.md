@@ -176,3 +176,5 @@ validator here; their blocker controls remain the executable evidence.
 The branch was subsequently rebased onto current main and its available oracles rechecked. See [LANDING_REPORT.md](LANDING_REPORT.md) for current results and the remaining React dependency boundary.
 
 A further partial control-analysis port is tested in [CONTROL_REPORT.md](CONTROL_REPORT.md). It does not mark any full React rule complete.
+
+Numeric listener declarations and their pending driver boundary are documented in [LISTENER_REPORT.md](LISTENER_REPORT.md). Legacy execution is not yet migrated to the new speed contract.

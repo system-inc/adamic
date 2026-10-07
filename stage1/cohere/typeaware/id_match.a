@@ -4,6 +4,9 @@ import { panic } from 'adamic';
 import { IdDenylist } from './id_denylist.a';
 import { RegexpProgram } from './regexp_program.a';
 
+// Numeric SyntaxKind subscriptions, held to pinned Go production registrations.
+export const listenerKinds: readonly number[] = [79, 80];
+
 export interface IdMatchFlags {
     readonly properties: boolean;
     readonly classFields: boolean;

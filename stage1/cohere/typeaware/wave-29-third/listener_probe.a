@@ -1,0 +1,6 @@
+import { numericListeners } from './listener_declarations.a';
+for(const listener of numericListeners()) {
+    let ids = '';
+    for(const id of listener.kinds) { ids += `${id},`; }
+    console.log(`${listener.rule}\t${ids}`);
+}

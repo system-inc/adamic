@@ -1,0 +1,10 @@
+denylist: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+match: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+concurrency: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+globals: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+setter: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+shadow: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+effect: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+render: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+static: wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it
+PASS: 9 numeric listener declarations; 315 bytes agree across Go/native/Node/sanitized native

@@ -1,0 +1,479 @@
+[
+  {
+    "name": "extract",
+    "args": [
+      "go",
+      "run",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-next/testdata/extract.go",
+      "/workspace/adamic"
+    ],
+    "exit": 0,
+    "ns": 52491699
+  },
+  {
+    "name": "oracle-build",
+    "args": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave29-speed-next/overlay.json",
+      "-o",
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/adamic/cohere/adamic_wave29_next_oracle.go"
+    ],
+    "exit": 0,
+    "ns": 2602669021
+  },
+  {
+    "name": "native-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-next/runner.a",
+      "-o",
+      "/workspace/wave29-speed-next/native",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 7654243014
+  },
+  {
+    "name": "group-00-go",
+    "args": [
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/wave29-speed-next/group-00/config.json",
+      "/workspace/wave29-speed-next/group-00/manifest",
+      "/workspace/wave29-speed-next/group-00/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 93832643
+  },
+  {
+    "name": "group-00-native",
+    "args": [
+      "/workspace/wave29-speed-next/native",
+      "/workspace/wave29-speed-next/group-00/config.json",
+      "/workspace/wave29-speed-next/group-00/manifest",
+      "/workspace/wave29-speed-next/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 63175729
+  },
+  {
+    "name": "group-01-go",
+    "args": [
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/wave29-speed-next/group-01/config.json",
+      "/workspace/wave29-speed-next/group-01/manifest",
+      "/workspace/wave29-speed-next/group-01/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 30931282
+  },
+  {
+    "name": "group-01-native",
+    "args": [
+      "/workspace/wave29-speed-next/native",
+      "/workspace/wave29-speed-next/group-01/config.json",
+      "/workspace/wave29-speed-next/group-01/manifest",
+      "/workspace/wave29-speed-next/group-01/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 21653430
+  },
+  {
+    "name": "group-02-go",
+    "args": [
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/wave29-speed-next/group-02/config.json",
+      "/workspace/wave29-speed-next/group-02/manifest",
+      "/workspace/wave29-speed-next/group-02/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 23353609
+  },
+  {
+    "name": "group-02-native",
+    "args": [
+      "/workspace/wave29-speed-next/native",
+      "/workspace/wave29-speed-next/group-02/config.json",
+      "/workspace/wave29-speed-next/group-02/manifest",
+      "/workspace/wave29-speed-next/group-02/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 16831869
+  },
+  {
+    "name": "group-03-go",
+    "args": [
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/wave29-speed-next/group-03/config.json",
+      "/workspace/wave29-speed-next/group-03/manifest",
+      "/workspace/wave29-speed-next/group-03/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 20724247
+  },
+  {
+    "name": "group-03-native",
+    "args": [
+      "/workspace/wave29-speed-next/native",
+      "/workspace/wave29-speed-next/group-03/config.json",
+      "/workspace/wave29-speed-next/group-03/manifest",
+      "/workspace/wave29-speed-next/group-03/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 16217073
+  },
+  {
+    "name": "group-04-go",
+    "args": [
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/wave29-speed-next/group-04/config.json",
+      "/workspace/wave29-speed-next/group-04/manifest",
+      "/workspace/wave29-speed-next/group-04/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 24553459
+  },
+  {
+    "name": "group-04-native",
+    "args": [
+      "/workspace/wave29-speed-next/native",
+      "/workspace/wave29-speed-next/group-04/config.json",
+      "/workspace/wave29-speed-next/group-04/manifest",
+      "/workspace/wave29-speed-next/group-04/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 36225947
+  },
+  {
+    "name": "group-05-go",
+    "args": [
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/wave29-speed-next/group-05/config.json",
+      "/workspace/wave29-speed-next/group-05/manifest",
+      "/workspace/wave29-speed-next/group-05/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 59600152
+  },
+  {
+    "name": "group-05-native",
+    "args": [
+      "/workspace/wave29-speed-next/native",
+      "/workspace/wave29-speed-next/group-05/config.json",
+      "/workspace/wave29-speed-next/group-05/manifest",
+      "/workspace/wave29-speed-next/group-05/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 51398513
+  },
+  {
+    "name": "group-06-go",
+    "args": [
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/wave29-speed-next/group-06/config.json",
+      "/workspace/wave29-speed-next/group-06/manifest",
+      "/workspace/wave29-speed-next/group-06/profiles.json"
+    ],
+    "exit": 0,
+    "ns": 42713720
+  },
+  {
+    "name": "group-06-native",
+    "args": [
+      "/workspace/wave29-speed-next/native",
+      "/workspace/wave29-speed-next/group-06/config.json",
+      "/workspace/wave29-speed-next/group-06/manifest",
+      "/workspace/wave29-speed-next/group-06/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 55703739
+  },
+  {
+    "name": "compiler-go",
+    "args": [
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-speed-next/compiler.manifest"
+    ],
+    "exit": 0,
+    "ns": 947745026
+  },
+  {
+    "name": "compiler-native",
+    "args": [
+      "/workspace/wave29-speed-next/native",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-speed-next/compiler.manifest"
+    ],
+    "exit": 0,
+    "ns": 2251439683
+  },
+  {
+    "name": "repository-go",
+    "args": [
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-speed-next/repository.manifest"
+    ],
+    "exit": 0,
+    "ns": 143583243
+  },
+  {
+    "name": "repository-native",
+    "args": [
+      "/workspace/wave29-speed-next/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-speed-next/repository.manifest"
+    ],
+    "exit": 0,
+    "ns": 332307562
+  },
+  {
+    "name": "globals-mutant-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/wave29-speed-next/globals-source/runner.a",
+      "-o",
+      "/workspace/wave29-speed-next/globals-mutant",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 6796192523
+  },
+  {
+    "name": "globals-group-00",
+    "args": [
+      "/workspace/wave29-speed-next/globals-mutant",
+      "/workspace/wave29-speed-next/group-00/config.json",
+      "/workspace/wave29-speed-next/group-00/manifest",
+      "/workspace/wave29-speed-next/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 43594027
+  },
+  {
+    "name": "setter-mutant-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/wave29-speed-next/setter-source/runner.a",
+      "-o",
+      "/workspace/wave29-speed-next/setter-mutant",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 7026679799
+  },
+  {
+    "name": "setter-group-00",
+    "args": [
+      "/workspace/wave29-speed-next/setter-mutant",
+      "/workspace/wave29-speed-next/group-00/config.json",
+      "/workspace/wave29-speed-next/group-00/manifest",
+      "/workspace/wave29-speed-next/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 42965368
+  },
+  {
+    "name": "shadow-mutant-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/wave29-speed-next/shadow-source/runner.a",
+      "-o",
+      "/workspace/wave29-speed-next/shadow-mutant",
+      "--tsgo",
+      "/workspace/wave29-next-checker.a"
+    ],
+    "exit": 0,
+    "ns": 7515799073
+  },
+  {
+    "name": "shadow-group-00",
+    "args": [
+      "/workspace/wave29-speed-next/shadow-mutant",
+      "/workspace/wave29-speed-next/group-00/config.json",
+      "/workspace/wave29-speed-next/group-00/manifest",
+      "/workspace/wave29-speed-next/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 75406792
+  },
+  {
+    "name": "asan-archive",
+    "args": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave29-speed-next/asan-checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "ns": 18964300477
+  },
+  {
+    "name": "asan-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-next/runner.a",
+      "-o",
+      "/workspace/wave29-speed-next/asan-native",
+      "--tsgo",
+      "/workspace/wave29-speed-next/asan-checker.a",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "ns": 31366375728
+  },
+  {
+    "name": "group-00-asan",
+    "args": [
+      "/workspace/wave29-speed-next/asan-native",
+      "/workspace/wave29-speed-next/group-00/config.json",
+      "/workspace/wave29-speed-next/group-00/manifest",
+      "/workspace/wave29-speed-next/group-00/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 157572469
+  },
+  {
+    "name": "group-01-asan",
+    "args": [
+      "/workspace/wave29-speed-next/asan-native",
+      "/workspace/wave29-speed-next/group-01/config.json",
+      "/workspace/wave29-speed-next/group-01/manifest",
+      "/workspace/wave29-speed-next/group-01/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 43116914
+  },
+  {
+    "name": "group-02-asan",
+    "args": [
+      "/workspace/wave29-speed-next/asan-native",
+      "/workspace/wave29-speed-next/group-02/config.json",
+      "/workspace/wave29-speed-next/group-02/manifest",
+      "/workspace/wave29-speed-next/group-02/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 30164135
+  },
+  {
+    "name": "group-03-asan",
+    "args": [
+      "/workspace/wave29-speed-next/asan-native",
+      "/workspace/wave29-speed-next/group-03/config.json",
+      "/workspace/wave29-speed-next/group-03/manifest",
+      "/workspace/wave29-speed-next/group-03/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 30119424
+  },
+  {
+    "name": "group-04-asan",
+    "args": [
+      "/workspace/wave29-speed-next/asan-native",
+      "/workspace/wave29-speed-next/group-04/config.json",
+      "/workspace/wave29-speed-next/group-04/manifest",
+      "/workspace/wave29-speed-next/group-04/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 34453162
+  },
+  {
+    "name": "group-05-asan",
+    "args": [
+      "/workspace/wave29-speed-next/asan-native",
+      "/workspace/wave29-speed-next/group-05/config.json",
+      "/workspace/wave29-speed-next/group-05/manifest",
+      "/workspace/wave29-speed-next/group-05/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 31455678
+  },
+  {
+    "name": "group-06-asan",
+    "args": [
+      "/workspace/wave29-speed-next/asan-native",
+      "/workspace/wave29-speed-next/group-06/config.json",
+      "/workspace/wave29-speed-next/group-06/manifest",
+      "/workspace/wave29-speed-next/group-06/profiles.frames"
+    ],
+    "exit": 0,
+    "ns": 32127456
+  },
+  {
+    "name": "compiler-asan",
+    "args": [
+      "/workspace/wave29-speed-next/asan-native",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-speed-next/compiler.manifest"
+    ],
+    "exit": 0,
+    "ns": 7302116466
+  },
+  {
+    "name": "repository-asan",
+    "args": [
+      "/workspace/wave29-speed-next/asan-native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-speed-next/repository.manifest"
+    ],
+    "exit": 0,
+    "ns": 1129320871
+  },
+  {
+    "name": "compiler-timed-go",
+    "args": [
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-speed-next/compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 355743954
+  },
+  {
+    "name": "compiler-timed-native",
+    "args": [
+      "/workspace/wave29-speed-next/native",
+      "/workspace/wave29-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave29-speed-next/compiler.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 1943223230
+  },
+  {
+    "name": "repository-timed-go",
+    "args": [
+      "/workspace/wave29-speed-next/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-speed-next/repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 148666297
+  },
+  {
+    "name": "repository-timed-native",
+    "args": [
+      "/workspace/wave29-speed-next/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave29-speed-next/repository.manifest",
+      "--count"
+    ],
+    "exit": 0,
+    "ns": 305504644
+  }
+]

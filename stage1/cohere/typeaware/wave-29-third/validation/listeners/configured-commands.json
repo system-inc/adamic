@@ -1,0 +1,250 @@
+[
+  {
+    "name": "stage0",
+    "argv": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/wave29-regex-controls/adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "ns": 5504153172
+  },
+  {
+    "name": "archive",
+    "argv": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave29-regex-controls/checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "ns": 5802846641
+  },
+  {
+    "name": "extract",
+    "argv": [
+      "go",
+      "run",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/testdata/extract.go",
+      "/workspace/adamic"
+    ],
+    "exit": 0,
+    "ns": 66614599
+  },
+  {
+    "name": "oracle-build",
+    "argv": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave29-regex-controls/overlay.json",
+      "-o",
+      "/workspace/wave29-regex-controls/oracle",
+      "/workspace/adamic/cohere/adamic_wave29_configured_oracle.go"
+    ],
+    "exit": 0,
+    "ns": 126780965
+  },
+  {
+    "name": "native-build",
+    "argv": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/runner.a",
+      "-o",
+      "/workspace/wave29-regex-controls/native",
+      "--tsgo",
+      "/workspace/wave29-regex-controls/checker.a"
+    ],
+    "exit": 0,
+    "ns": 6327786744
+  },
+  {
+    "name": "go",
+    "argv": [
+      "/workspace/wave29-regex-controls/oracle",
+      "/workspace/wave29-regex-controls/tsconfig.json",
+      "/workspace/wave29-regex-controls/manifest",
+      "/workspace/wave29-regex-controls/fixtures.json"
+    ],
+    "exit": 0,
+    "ns": 134528208
+  },
+  {
+    "name": "native",
+    "argv": [
+      "/workspace/wave29-regex-controls/native",
+      "/workspace/wave29-regex-controls/tsconfig.json",
+      "/workspace/wave29-regex-controls/manifest",
+      "/workspace/wave29-regex-controls/profiles"
+    ],
+    "exit": 0,
+    "ns": 83260745
+  },
+  {
+    "name": "denylist-build",
+    "argv": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/wave29-regex-controls/denylist-mutant/runner.a",
+      "-o",
+      "/workspace/wave29-regex-controls/denylist",
+      "--tsgo",
+      "/workspace/wave29-regex-controls/checker.a"
+    ],
+    "exit": 0,
+    "ns": 6545920303
+  },
+  {
+    "name": "denylist",
+    "argv": [
+      "/workspace/wave29-regex-controls/denylist",
+      "/workspace/wave29-regex-controls/tsconfig.json",
+      "/workspace/wave29-regex-controls/manifest",
+      "/workspace/wave29-regex-controls/profiles"
+    ],
+    "exit": 0,
+    "ns": 100549186
+  },
+  {
+    "name": "match-build",
+    "argv": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/wave29-regex-controls/match-mutant/runner.a",
+      "-o",
+      "/workspace/wave29-regex-controls/match",
+      "--tsgo",
+      "/workspace/wave29-regex-controls/checker.a"
+    ],
+    "exit": 0,
+    "ns": 6631322775
+  },
+  {
+    "name": "match",
+    "argv": [
+      "/workspace/wave29-regex-controls/match",
+      "/workspace/wave29-regex-controls/tsconfig.json",
+      "/workspace/wave29-regex-controls/manifest",
+      "/workspace/wave29-regex-controls/profiles"
+    ],
+    "exit": 0,
+    "ns": 82758365
+  },
+  {
+    "name": "asan-archive",
+    "argv": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave29-regex-controls/asan-checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "ns": 12515605707
+  },
+  {
+    "name": "asan-build",
+    "argv": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/runner.a",
+      "-o",
+      "/workspace/wave29-regex-controls/asan-native",
+      "--tsgo",
+      "/workspace/wave29-regex-controls/asan-checker.a",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "ns": 36167436056
+  },
+  {
+    "name": "asan",
+    "argv": [
+      "/workspace/wave29-regex-controls/asan-native",
+      "/workspace/wave29-regex-controls/tsconfig.json",
+      "/workspace/wave29-regex-controls/manifest",
+      "/workspace/wave29-regex-controls/profiles"
+    ],
+    "exit": 0,
+    "ns": 331344479
+  },
+  {
+    "name": "regexp-probe-build",
+    "argv": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/gaps/regexp.a",
+      "-o",
+      "/workspace/wave29-regex-controls/regexp-probe"
+    ],
+    "exit": 0,
+    "ns": 147795278
+  },
+  {
+    "name": "regexp-probe-node",
+    "argv": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/gaps/regexp.a"
+    ],
+    "exit": 0,
+    "ns": 86607354
+  },
+  {
+    "name": "regexp-probe-native",
+    "argv": [
+      "/workspace/wave29-regex-controls/regexp-probe"
+    ],
+    "exit": 0,
+    "ns": 1157876
+  },
+  {
+    "name": "regexp-probe-javascript",
+    "argv": [
+      "/workspace/wave29-regex-controls/adamic",
+      "js",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/gaps/regexp.a"
+    ],
+    "exit": 0,
+    "ns": 43257087
+  },
+  {
+    "name": "regexp-probe-js-node",
+    "argv": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave29-regex-controls/regexp-probe.js"
+    ],
+    "exit": 0,
+    "ns": 32060522
+  },
+  {
+    "name": "regexp-probe-asan-build",
+    "argv": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/gaps/regexp.a",
+      "-o",
+      "/workspace/wave29-regex-controls/regexp-probe-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "ns": 272100113
+  },
+  {
+    "name": "regexp-probe-asan",
+    "argv": [
+      "/workspace/wave29-regex-controls/regexp-probe-asan"
+    ],
+    "exit": 0,
+    "ns": 6934339
+  }
+]

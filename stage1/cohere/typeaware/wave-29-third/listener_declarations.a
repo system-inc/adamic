@@ -1,0 +1,26 @@
+import { listenerKinds as denylist } from '../id_denylist.a';
+import { listenerKinds as match } from '../id_match.a';
+import { listenerKinds as concurrency } from '../concurrency_no_check_then_write.a';
+import { listenerKinds as globals } from '../wave-29-next/no_restricted_globals.a';
+import { listenerKinds as setter } from '../wave-29-next/no_setter_return.a';
+import { listenerKinds as shadow } from '../wave-29-next/no_shadow_restricted_names.a';
+import { setStateInEffectKinds, setStateInRenderKinds, staticComponentsKinds } from './react_listener_declarations.a';
+export class ListenerDeclaration {
+    readonly rule: string;
+    readonly kinds: readonly number[];
+    constructor(rule: string, kinds: readonly number[]) { this.rule = rule; this.kinds = kinds; }
+}
+// Metadata for the incoming kind-indexed driver. No AST node is fetched here.
+export function numericListeners(): ListenerDeclaration[] {
+    return [
+        new ListenerDeclaration('id-denylist', denylist),
+        new ListenerDeclaration('id-match', match),
+        new ListenerDeclaration('nexus/concurrency-no-check-then-write', concurrency),
+        new ListenerDeclaration('no-restricted-globals', globals),
+        new ListenerDeclaration('no-setter-return', setter),
+        new ListenerDeclaration('no-shadow-restricted-names', shadow),
+        new ListenerDeclaration('react-hooks/set-state-in-effect', setStateInEffectKinds),
+        new ListenerDeclaration('react-hooks/set-state-in-render', setStateInRenderKinds),
+        new ListenerDeclaration('react-hooks/static-components', staticComponentsKinds),
+    ];
+}

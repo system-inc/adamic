@@ -1,0 +1,5 @@
+// Proposed source listeners for the claimed React rules. No source validator
+// is implied: their native source-to-SSA entry is still unavailable.
+export const setStateInEffectKinds: readonly number[] = [307];
+export const setStateInRenderKinds: readonly number[] = [307];
+export const staticComponentsKinds: readonly number[] = [307];

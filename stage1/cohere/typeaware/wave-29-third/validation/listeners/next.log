@@ -1,0 +1,16 @@
+group 0: 341 cases, 103515 bytes, findings 201
+group 1: 30 cases, 6877 bytes, findings 23
+group 2: 8 cases, 1889 bytes, findings 6
+group 3: 1 cases, 66 bytes, findings 0
+group 4: 18 cases, 4650 bytes, findings 18
+group 5: 1 cases, 545 bytes, findings 2
+group 6: 1 cases, 545 bytes, findings 2
+compiler 77 5241 findings 0
+repository 287 18485 findings 0
+globals mutant: compiled, exit 0, empty stderr, byte comparison killed on group-00
+setter mutant: compiled, exit 0, empty stderr, byte comparison killed on group-00
+shadow mutant: compiled, exit 0, empty stderr, byte comparison killed on group-00
+all configured and corpus streams match under ASan/UBSan/LeakSanitizer
+compiler native ns 1943223230 Go ns 355743954 ratio 5.462420957967988
+repository native ns 305504644 Go ns 148666297 ratio 2.0549690828715534
+combined stream sha256 d6d7f2f904e5945847c92c05ce8081675afe962edeb5d1026779e3f33152a909
