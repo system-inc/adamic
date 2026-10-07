@@ -1,0 +1,4 @@
+foo.every(() => {});
+foo.forEach(x => x);
+foo.filter(function cb(){ if(x) return; });
+foo.forEach(x => void x);

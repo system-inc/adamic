@@ -1,0 +1,14 @@
+import { panic } from 'adamic';
+// Private comparison adapter only. A real shared CFG must replace this boundary.
+const ends = new Map<number, boolean>();
+export function provideGraphEnds(text: string): void {
+    ends.clear();
+    for(const row of text.split(';')) {
+        if(row === '') continue;
+        const pair = row.split(':');
+        ends.set(Number(pair[0]), pair[1] === 'true');
+    }
+}
+export function graphEnd(start: number): boolean {
+    return ends.get(start) ?? panic('array-callback-return: shared control-flow end reachability is not available');
+}

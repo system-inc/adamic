@@ -1,0 +1,9 @@
+export function message(id: string): string {
+    if(id === "expectedAtEnd") return "This callback returns a value on some paths and runs off the end on others, so the method receives undefined for the elements that take the other path. A filter reads that as false, a map stores it, and a sort treats it as zero, none of which is what a missing return usually means. Return a value on every path.";
+    if(id === "expectedInside") return "This callback never returns a value, and the array method it is passed to is built entirely around the value each call produces. Every element gets undefined, so a filter keeps nothing, a map fills with undefined, and a sort orders nothing. Either return the value the method needs, or use a method that does not want one.";
+    if(id === "expectedReturnValue") return "This `return` leaves the callback without a value, and the array method it is passed to needs one from every call. A bare return here reads as an early exit and behaves as returning undefined, which the method then treats as a real answer.";
+    if(id === "expectedNoReturnValue") return "This callback returns a value to a method that discards it, so the value is computed and thrown away. Returning something here usually means the wrong method was chosen, and the value was meant to be collected rather than dropped.";
+    if(id === "wrapBraces") return "Wrap the expression in braces so it is a statement rather than a returned value.";
+    if(id === "prependVoid") return "Prepend `void` to say the expression's value is deliberately discarded.";
+    return '';
+}
