@@ -5,6 +5,9 @@ import { readFileSync } from 'node:fs';
 import { registerHooks, stripTypeScriptTypes } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
+import { registerWasm } from './wasm-node.mjs';
+
+registerWasm();
 const [worker, requests, mode] = process.argv.slice(2);
 if (mode === '--oracle-runtime') {
 	const runtimeUrl = new URL('../../oracle/adamic.mjs', import.meta.url).href;
