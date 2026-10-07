@@ -205,6 +205,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	switch mode {
 	case "binding-structure": return p.bindingStructure(out, source, node, question)
 	case "binding-origin": return p.bindingOrigin(out, c, node, question)
+	case "constructor-expression": return p.constructorExpression(out, node, question)
 	case "literal-string": return p.literalString(out, question)
 	case "transformed-shape": return p.transformedShape(out, c, question)
 	case "node-structure": return p.nodeStructure(out, source, node, question)

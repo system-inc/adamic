@@ -1,0 +1,19 @@
+import type { BindingStructure } from './binding_structure.a';
+import { BindingOrigin } from './binding_origin.a';
+import { CoreAccess } from './core_access.a';
+import { ConstructorExpression } from './constructor_expression.a';
+export class NoNewWrappers {
+    readonly tree: BindingStructure; readonly constructors: ConstructorExpression;
+    constructor(access: CoreAccess, constructors: ConstructorExpression) { this.tree = access.tree; this.constructors = constructors; }
+    run(): void {
+        for(let id = 1; id <= this.tree.nodes.length; id++) {
+            if(this.tree.node(id).kind !== 'NewExpression') { continue; }
+            const callee = this.tree.skip(this.constructors.callee(id));
+            if(callee === 0) { continue; }
+            const node = this.tree.node(callee); const name = node.text;
+            if(node.kind !== 'Identifier' || !['String', 'Number', 'Boolean'].includes(name)) { continue; }
+            const origin = new BindingOrigin(this.tree, callee);
+            if(origin.global()) { this.tree.add(id, 'no-new-wrappers', 'noNewWrappers', `This calls \`new ${name}()\`. Constructed, ${name} returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by \`===\`, and reports its \`typeof\` as "object". Drop the \`new\` and call ${name} directly.`); }
+        }
+    }
+}

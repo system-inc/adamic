@@ -1,0 +1,24 @@
+import type { BindingStructure } from './binding_structure.a';
+import { BindingOrigin } from './binding_origin.a';
+import { CoreAccess } from './core_access.a';
+import { ConstructorExpression } from './constructor_expression.a';
+export class NoNewFunc {
+    readonly tree: BindingStructure; readonly access: CoreAccess; readonly constructors: ConstructorExpression;
+    constructor(access: CoreAccess, constructors: ConstructorExpression) { this.tree = access.tree; this.access = access; this.constructors = constructors; }
+    run(): void {
+        for(let id = 1; id <= this.tree.nodes.length; id++) {
+            const node = this.tree.node(id);
+            if(!['NewExpression', 'CallExpression'].includes(node.kind)) { continue; }
+            const callee = this.tree.skip(this.constructors.callee(id));
+            if(callee === 0) { continue; }
+            let target = callee;
+            if(this.tree.node(callee).kind !== 'Identifier') {
+                if(!['apply', 'bind', 'call'].includes(this.access.name(callee))) { continue; }
+                target = this.tree.skip(this.access.object(callee));
+            }
+            if(target === 0 || this.tree.node(target).kind !== 'Identifier' || this.tree.node(target).text !== 'Function') { continue; }
+            const origin = new BindingOrigin(this.tree, target);
+            if(origin.global()) { this.tree.add(id, 'no-new-func', 'noFunctionConstructor', "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."); }
+        }
+    }
+}

@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+import { Frames, header } from './frames.ts';
+import type { BindingStructure } from './binding_structure.a';
+export class ConstructorExpression {
+    readonly tree: BindingStructure;
+    constructor(tree: BindingStructure) { this.tree = tree; }
+    callee(id: number): number {
+        const node = this.tree.node(id);
+        if(node.kind === 'CallExpression') { return node.role(0); }
+        const frames = new Frames(this.tree.ask(id, 'constructor-expression'));
+        header(frames, 'constructor-expression');
+        if(!frames.yes()) { frames.end(); return 0; }
+        const kind = frames.field(); const start = frames.natural(); const end = frames.natural(); frames.end();
+        for(const child of node.children) {
+            const candidate = this.tree.node(child);
+            if(candidate.kind === kind && candidate.start === start && candidate.end === end) { return child; }
+        }
+        return panic('constructor expression is absent from syntax children');
+    }
+}

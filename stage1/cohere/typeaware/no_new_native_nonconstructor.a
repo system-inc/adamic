@@ -1,0 +1,19 @@
+import type { BindingStructure } from './binding_structure.a';
+import { BindingOrigin } from './binding_origin.a';
+import { CoreAccess } from './core_access.a';
+import { ConstructorExpression } from './constructor_expression.a';
+export class NoNewNativeNonconstructor {
+    readonly tree: BindingStructure; readonly constructors: ConstructorExpression;
+    constructor(access: CoreAccess, constructors: ConstructorExpression) { this.tree = access.tree; this.constructors = constructors; }
+    run(): void {
+        for(let id = 1; id <= this.tree.nodes.length; id++) {
+            if(this.tree.node(id).kind !== 'NewExpression') { continue; }
+            const callee = this.constructors.callee(id);
+            if(callee === 0) { continue; }
+            const node = this.tree.node(callee); const name = node.text;
+            if(node.kind !== 'Identifier' || !['Symbol', 'BigInt'].includes(name)) { continue; }
+            const origin = new BindingOrigin(this.tree, callee);
+            if(origin.global()) { this.tree.add(callee, 'no-new-native-nonconstructor', 'noNewNativeNonconstructor', `This calls \`new ${name}()\`. ${name} is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without \`new\`.`); }
+        }
+    }
+}
