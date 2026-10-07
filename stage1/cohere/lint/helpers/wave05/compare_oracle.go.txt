@@ -1,0 +1,4 @@
+package main
+import("encoding/json";"fmt";"os"; collapse "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse")
+type pair struct{Left string `json:"left"`;Right string `json:"right"`;Ascending bool `json:"ascending"`;LeftBucket string `json:"leftBucket"`;RightBucket string `json:"rightBucket"`}
+func main(){b,e:=os.ReadFile(os.Args[1]);if e!=nil{panic(e)};var inputs []pair;if e=json.Unmarshal(b,&inputs);e!=nil{panic(e)};if len(os.Args)>2 {for i:=range inputs{inputs[i].LeftBucket=collapse.AdamicBucket(inputs[i].Left);inputs[i].RightBucket=collapse.AdamicBucket(inputs[i].Right)};if e=json.NewEncoder(os.Stdout).Encode(inputs);e!=nil{panic(e)};return};for _,s:=range inputs{fmt.Println(collapse.CompareBreakpoints(s.Left,s.Right,s.Ascending))}}

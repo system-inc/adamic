@@ -50,3 +50,24 @@ func TestWave05PackageRoot(t *testing.T) {
 	data, _ := os.ReadFile(logPath)
 	t.Log(string(data))
 }
+
+// Not parallel: captures into this unit's named comparator scratch directory.
+func TestWave05CompareBreakpoints(t *testing.T) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+	defer cancel()
+	logPath := filepath.Join(t.TempDir(), "compare-breakpoints.log")
+	log, err := os.Create(logPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer log.Close()
+	cmd := exec.CommandContext(ctx, "python3", "wave05/compare_validate.py")
+	cmd.Stdout = log
+	cmd.Stderr = log
+	if err = cmd.Run(); err != nil {
+		data, _ := os.ReadFile(logPath)
+		t.Fatalf("breakpoint comparison: %v\n%s", err, data)
+	}
+	data, _ := os.ReadFile(logPath)
+	t.Log(string(data))
+}

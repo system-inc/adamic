@@ -1,0 +1,26 @@
+import { Integer, leadingInteger } from './collapse_leading_integer.a';
+
+// Unicode scalar ordering is UTF-8 byte ordering for valid Unicode strings.
+// Go strings with invalid UTF-8 have no representation in this interface.
+function before(left: string, right: string): boolean {
+    let a = 0; let b = 0;
+    while(a < left.length && b < right.length) {
+        const x = left.codePointAt(a) ?? 0; const y = right.codePointAt(b) ?? 0;
+        if(x !== y) { return x < y; }
+        a += x > 65535 ? 2 : 1; b += y > 65535 ? 2 : 1;
+    }
+    return a === left.length && b !== right.length;
+}
+function ordering(left: string, right: string): Integer {
+    return before(left, right) ? new Integer(4294967295, 4294967295, true) : new Integer(0, 1, true);
+}
+export function compareBreakpoints(left: string, right: string, ascending: boolean, bucket: (value: string) => string): Integer {
+    if(left === right) { return new Integer(0, 0, true); }
+    const leftBucket = bucket(left); const rightBucket = bucket(right);
+    if(leftBucket !== rightBucket) { return ordering(leftBucket, rightBucket); }
+    const a = leadingInteger(left); const b = leadingInteger(right);
+    if(!a.valid || !b.valid) { return ordering(left, right); }
+    const first = ascending ? a : b; const second = ascending ? b : a;
+    const borrow = first.low < second.low ? 1 : 0;
+    return new Integer((first.high - second.high - borrow + 4294967296) % 4294967296, (first.low - second.low + 4294967296) % 4294967296, true);
+}

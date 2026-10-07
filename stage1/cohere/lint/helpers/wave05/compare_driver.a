@@ -1,0 +1,15 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { compareBreakpoints } from '../collapse_compare_breakpoints.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const index of json.node(root).children) {
+    const left = json.node(json.field(index, 'left')).text;
+    const right = json.node(json.field(index, 'right')).text;
+    const leftBucket = json.node(json.field(index, 'leftBucket')).text;
+    const rightBucket = json.node(json.field(index, 'rightBucket')).text;
+    const ascending = json.node(json.field(index, 'ascending')).text === 'true';
+    console.log(compareBreakpoints(left, right, ascending, value => value === left ? leftBucket : rightBucket).decimal());
+}

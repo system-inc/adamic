@@ -1,0 +1,15 @@
+{
+  "consumers": [
+    "better-tailwindcss/enforce-canonical-classes",
+    "better-tailwindcss/enforce-consistent-class-order",
+    "better-tailwindcss/enforce-consistent-variant-order",
+    "better-tailwindcss/enforce-shorthand-classes",
+    "better-tailwindcss/no-conflicting-classes",
+    "better-tailwindcss/no-unknown-classes"
+  ],
+  "capturedFixtures": 145,
+  "actualCalls": 2,
+  "cases": 22342,
+  "inputSha256": "c7df9e15cb364fb2b1dd7d26d13fbcf9351263a004ece71e299fff1dc21c30cb",
+  "dependency": "breakpointBucket facts from actual Go; caller supplies callback"
+}

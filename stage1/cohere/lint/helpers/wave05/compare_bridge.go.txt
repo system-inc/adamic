@@ -1,0 +1,8 @@
+package tailwind
+import("encoding/json";"os";"sync")
+var ownedCompareLock sync.Mutex
+func CompareBreakpoints(left,right string,ascending bool)int{
+ if path:=os.Getenv("ADAMIC_COMPARE_CAPTURE");path!="" {ownedCompareLock.Lock();f,e:=os.OpenFile(path,os.O_CREATE|os.O_APPEND|os.O_WRONLY,0600);if e!=nil{panic(e)};if e=json.NewEncoder(f).Encode(map[string]any{"left":left,"right":right,"ascending":ascending});e!=nil{panic(e)};if e=f.Close();e!=nil{panic(e)};ownedCompareLock.Unlock()}
+ return ownedOriginalCompareBreakpoints(left,right,ascending)
+}
+func AdamicBucket(value string)string{return breakpointBucket(value)}
