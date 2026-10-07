@@ -13,7 +13,9 @@ func (e *emitter) nodeHostCall(call ir.NodeHostCall) string {
 	}
 	var code string
 	if call.Module == "node:path" {
-		if call.Member == "dirname" {
+		if call.Member == "relative" {
+			code = "adamic_node_path_relative(" + arguments[0] + ", " + arguments[1] + ")"
+		} else if call.Member == "dirname" {
 			code = "adamic_node_path_dirname(" + arguments[0] + ")"
 		} else {
 			array := "NULL"
