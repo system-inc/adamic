@@ -783,3 +783,9 @@ nested cleanup, with replacement by a cleanup return or throw. This requires a
 completion representation and its ownership proof. It remains explicit NotYet;
 await in catch or finally remains NotYet as well. Shared-SSA reconciliation is
 left pending the worker branch, as the compiler requested.
+
+The current-main reconciliation is e9bfaf4, incorporating f8013f0. The freshness
+implementation is 6d8afa4. Counts regeneration passes in 59.194s; the seventeenth
+async fixture adds this measured row (allocations, frees, retains, releases, peak,
+regions): async_fresh_holder.a = 12, 12, 23, 38, 11, 0. Existing async rows retain
+their numbers; main's other fixture changes are incorporated by regeneration.
