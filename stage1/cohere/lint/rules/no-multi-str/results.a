@@ -1,0 +1,54 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+
+export class Edit {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    constructor(start: number, end: number, text: string) {
+        this.start = start;
+        this.end = end;
+        this.text = text;
+    }
+}
+export class Suggestion {
+    readonly id: string;
+    readonly message: string;
+    readonly edits: readonly Edit[];
+    constructor(id: string, message: string, edits: readonly Edit[]) {
+        this.id = id;
+        this.message = message;
+        this.edits = edits;
+    }
+}
+export class Result {
+    readonly index: number;
+    readonly start: number;
+    readonly end: number;
+    readonly rule: string;
+    readonly id: string;
+    readonly message: string;
+    readonly edits: readonly Edit[];
+    readonly suggestions: readonly Suggestion[];
+    constructor(index: number, rule: string, id: string, message: string, start: number, end: number, suggestions: readonly Suggestion[] = emptySuggestions()) {
+        this.index = index; this.rule = rule; this.id = id; this.message = message;
+        this.start = start; this.end = end; this.edits = emptyEdits(); this.suggestions = suggestions;
+    }
+
+}
+// Keep complete proposals in owned data. Refuse instead of losing them at the
+// current shared bridge. Integration can consume Result when its model expands.
+export function publish(context: RuleContext, result: Result): void {
+    if(result.suggestions.length > 0 || result.start !== context.start(result.index) || result.end !== context.node(result.index).end) {
+        panic(`NotYet: shared lint repair serialization for ${result.rule}`);
+    }
+    const edit = result.edits[0];
+    if(edit !== undefined && (edit.start !== context.start(result.index) || edit.end !== context.node(result.index).end)) {
+        panic(`NotYet: shared lint independent repair range for ${result.rule}`);
+    }
+    context.report(result.index, result.rule, result.id, result.message, edit === undefined ? '' : 'fix', edit === undefined ? '' : edit.text, '');
+}
+
+export function emptyEdits(): Edit[] { const edits: Edit[] = []; return edits; }
+export function emptySuggestions(): readonly Suggestion[] { const suggestions: Suggestion[] = []; return suggestions; }
+export function emptyResults(): readonly Result[] { const results: Result[] = []; return results; }

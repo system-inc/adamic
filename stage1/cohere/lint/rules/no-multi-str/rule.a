@@ -1,0 +1,38 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Result, Suggestion, Edit, emptyResults, publish } from '../no-multi-str/results.a';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    results: readonly Result[] = emptyResults();
+    constructor(context: RuleContext) {
+        this.context = context;
+        // The current parser can recover JSX as ordinary type assertions/blocks.
+        // A parent-kind exemption then gives a false positive. Refuse that tree.
+        if(context.parser.path.endsWith('.tsx') && context.source.includes('<')) {
+            let jsx = false;
+            for(const node of context.parser.nodes) { if(node.kind.startsWith('Jsx')) { jsx = true; } }
+            if(!jsx) { panic('NotYet: no-multi-str requires JSX parent nodes'); }
+        }
+    }
+    evaluate(index: number): void {
+        if(this.context.node(index).kind !== 'StringLiteral') { return; }
+        const parent = this.context.parents[index] ?? -1;
+        if(parent >= 0 && this.context.node(parent).kind.startsWith('Jsx')) { return; }
+        const start = this.context.start(index);
+        const end = this.context.node(index).end;
+        const raw = this.context.source.slice(start, end);
+        if(raw.includes('\n') || raw.includes('\r') || raw.includes('\u2028') || raw.includes('\u2029')) {
+            this.results = [...this.results, new Result(index, 'no-multi-str', 'multilineString', message, start, end)];
+        }
+    }
+    visit(index: number): void {
+        const before = this.results.length;
+        this.evaluate(index);
+        for(let position = before; position < this.results.length; position++) {
+            const result = this.results[position];
+            if(result !== undefined) { publish(this.context, result); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
