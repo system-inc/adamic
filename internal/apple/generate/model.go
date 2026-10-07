@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/big"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -141,6 +142,27 @@ func (g *generator) text(l location) (string, error) {
 	}
 	return string(source[l.Offset:end]), nil
 }
+
+// regionMacro is an availability macro written without arguments, its platforms in its name.
+var regionMacro = regexp.MustCompile(`^[A-Z][A-Z0-9_]*(AVAILABLE|DEPRECATED)[A-Z0-9_]*`)
+
+// unavailableByName reports whether a macro like APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST makes its
+// declarations unavailable on the platform being generated: the words after UNAVAILABLE name the
+// platforms it removes. AVAILABLE and DEPRECATED regions keep them.
+func (g *generator) unavailableByName(macro string) bool {
+	at := strings.Index(macro, "UNAVAILABLE")
+	if at < 0 {
+		return false
+	}
+	platform := g.configuration.Platform
+	for _, word := range strings.Split(strings.ToLower(macro[at+len("UNAVAILABLE"):]), "_") {
+		if word == platform || platform == "macos" && word == "macosx" || platform == "visionos" && word == "xros" {
+			return true
+		}
+	}
+	return false
+}
+
 func (g *generator) attributes(n *node) (swift string, refined, unavailable bool, err error) {
 	for _, child := range n.Children {
 		switch child.Kind {
@@ -156,6 +178,14 @@ func (g *generator) attributes(n *node) (swift string, refined, unavailable bool
 			}
 			left := strings.IndexByte(text, '(')
 			right := strings.LastIndexByte(text, ')')
+			if (left < 0 || right <= left) && child.Kind == "AvailabilityAttr" && regionMacro.MatchString(text) {
+				// A region's macro names its platforms instead of taking them:
+				// APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST covers the declarations up to its END.
+				if g.unavailableByName(regionMacro.FindString(text)) {
+					unavailable = true
+				}
+				continue
+			}
 			if left < 0 || right <= left {
 				err = fmt.Errorf("cannot read attribute %q", text)
 				return
