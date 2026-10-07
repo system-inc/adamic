@@ -3,6 +3,8 @@ import { OptionsJson } from './options_json.ts';
 import { collapseNormalizeUtilityDefinition } from './collapse_normalize_utility_definition.a';
 import { collapseNormalizeValueFunctionArguments } from './collapse_normalize_value_function_arguments.a';
 import type { CollapseArgumentNode } from './collapse_normalize_value_function_arguments.a';
+import { collapseRegisterFrameworkVariants } from './collapse_register_framework_variants.a';
+import type { CollapseVariantRegistration } from './collapse_register_framework_variants.a';
 const args = programArguments();
 const file = readTextFile(args[0] ?? panic('fixture path'));
 if (file.kind === 'Error') { panic(file.message); }
@@ -12,6 +14,38 @@ for (const line of file.text.split('\n')) {
     const root = json.parse();
     if (root < 0) { panic(json.error); }
     const fields = json.node(root).children;
+    if (args[1] === 'framework') {
+        const state = { registrations: new Map<string, CollapseVariantRegistration>(), lastOrder: Number(json.node(fields[0] ?? panic('last order')).text) };
+        for (const child of json.node(fields[1] ?? panic('initial')).children) {
+            const row = json.node(child).children;
+            const name = json.node(row[0] ?? panic('name')).text;
+            state.registrations.set(name, { name, order: Number(json.node(row[1] ?? panic('order')).text), kind: json.node(row[2] ?? panic('kind')).text });
+        }
+        const incoming: { name: string; order: number; kind: string }[] = [];
+        for (const child of json.node(fields[2] ?? panic('incoming')).children) {
+            const row = json.node(child).children;
+            incoming.push({ name: json.node(row[0] ?? panic('name')).text, order: Number(json.node(row[1] ?? panic('order')).text), kind: json.node(row[2] ?? panic('kind')).text });
+        }
+        const observe = () => {
+            console.log(`${state.lastOrder} ${state.registrations.size}`);
+            for (const child of json.node(fields[3] ?? panic('queries')).children) {
+                const record = state.registrations.get(json.node(child).text) ?? panic('query missing');
+                console.log(`${record.order}`);
+                for (const value of [record.name, record.kind]) {
+                    let output = `${value.length}:`;
+                    for (let index = 0; index < value.length; index++) { output += `${value.charCodeAt(index)},`; }
+                    console.log(output);
+                }
+            }
+        };
+        collapseRegisterFrameworkVariants(state, incoming);
+        observe();
+        for (const record of incoming) { record.kind = 'tampered'; }
+        observe();
+        collapseRegisterFrameworkVariants(state, incoming);
+        observe();
+        continue;
+    }
     const bound = json.node(fields[0] ?? panic('bound')).text === 'true';
     const rows = json.node(fields[1] ?? panic('rows')).children;
     const values: string[] = [];

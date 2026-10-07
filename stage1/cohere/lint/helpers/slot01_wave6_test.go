@@ -123,7 +123,7 @@ func slot01Wave6Check(t *testing.T, dependency, mode, file, old, replacement str
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, mode), want)
 	t.Logf("%d Go output lines matched source Node, native and emitted JavaScript", bytes.Count(want, []byte("\n")))
 	dir := t.TempDir()
-	for _, name := range []string{"slot01_wave6_main.a", "collapse_normalize_utility_definition.a", "collapse_normalize_value_function_arguments.a", "options_json.ts"} {
+	for _, name := range []string{"slot01_wave6_main.a", "collapse_normalize_utility_definition.a", "collapse_normalize_value_function_arguments.a", "collapse_register_framework_variants.a", "options_json.ts"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
@@ -180,4 +180,74 @@ func TestSlot01Wave6WalkerOrderMutant(t *testing.T) {
         if (!node.value.includes('--value(') && !node.value.includes('--modifier(')) { continue; }
         node.value = rewrite(node.value);`, `if (node.kind === 'declaration' && node.valuePresent && node.value !== '' && (node.value.includes('--value(') || node.value.includes('--modifier('))) { node.value = rewrite(node.value); }
         collapseNormalizeValueFunctionArguments(nodes, node.children, rewrite);`)
+}
+
+// Not parallel: bounded external Go captures and sanitizer compilation.
+func TestSlot01Wave6FrameworkMatchesCohere(t *testing.T) {
+	slot01Wave6Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*VariantRegistry.RegisterFrameworkVariants", "framework", "collapse_register_framework_variants.a", "order: existing.order", "order: registration.order")
+}
+func TestSlot01Wave6FrameworkLastOrderMutant(t *testing.T) {
+	slot01Wave6Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*VariantRegistry.RegisterFrameworkVariants", "framework", "collapse_register_framework_variants.a", "if (registration.order > registry.lastOrder) { registry.lastOrder = registration.order; }", "")
+}
+func TestSlot01Wave6FrameworkCopyMutant(t *testing.T) {
+	slot01Wave6Check(t, "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*VariantRegistry.RegisterFrameworkVariants", "framework", "collapse_register_framework_variants.a", "{ name: registration.name, order: registration.order, kind: registration.kind }", "registration")
+}
+
+// Not parallel: bounded source/native/emitted-JavaScript refusal builds.
+func TestSlot01Wave6FrameworkDomainRefusal(t *testing.T) {
+	entry, _ := filepath.Abs("slot01_wave6_main.a")
+	runner, _ := filepath.Abs("../../../../oracle/node.mjs")
+	dir := t.TempDir()
+	cases := filepath.Join(dir, "unsafe.jsonl")
+	if err := os.WriteFile(cases, []byte(`[3,[],[["unsafe",9007199254740993,"static"]],["unsafe"]]`+"\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	observe := func(command string, args ...string) {
+		t.Helper()
+		cmd := exec.Command(command, args...)
+		log, err := os.CreateTemp(t.TempDir(), "refusal-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer log.Close()
+		cmd.Stdout = log
+		var stderr bytes.Buffer
+		cmd.Stderr = &stderr
+		if err := cmd.Run(); err == nil {
+			t.Fatal("unsafe order accepted")
+		}
+		if !strings.Contains(stderr.String(), "NotYet: framework variant order outside exact integer range") {
+			t.Fatalf("wrong refusal: %s", &stderr)
+		}
+	}
+	observe("node", "--disable-warning=ExperimentalWarning", runner, entry, cases, "framework")
+	observe(slot01Build(t, entry), cases, "framework")
+	observe("node", "--disable-warning=ExperimentalWarning", runner, slot01Wave3JavaScript(t, entry), cases, "framework")
+	for _, name := range []string{"slot01_wave6_main.a", "collapse_normalize_utility_definition.a", "collapse_normalize_value_function_arguments.a", "collapse_register_framework_variants.a", "options_json.ts"} {
+		data, err := os.ReadFile(name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if name == "collapse_register_framework_variants.a" {
+			old := "if (!valid) { panic('NotYet: framework variant order outside exact integer range'); }"
+			if strings.Count(string(data), old) != 1 {
+				t.Fatal("domain mutant anchor drift")
+			}
+			data = []byte(strings.Replace(string(data), old, "", 1))
+		}
+		if name == "slot01_wave6_main.a" {
+			data = []byte(strings.ReplaceAll(string(data), "./options_json.ts", "./options_json.a"))
+		}
+		if name == "options_json.ts" {
+			name = "options_json.a"
+		}
+		if err := os.WriteFile(filepath.Join(dir, name), data, 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	mutant := run(t, "", slot01Build(t, filepath.Join(dir, "slot01_wave6_main.a")), cases, "framework")
+	if !strings.HasPrefix(string(mutant), "9007199254740992 1\n") {
+		t.Fatalf("unexpected mutant output: %s", mutant)
+	}
+	t.Log("compiled exact-integer guard mutant accepted 9007199254740993 as rounded 9007199254740992; source/native/emitted-JS refusal checks catch it")
 }

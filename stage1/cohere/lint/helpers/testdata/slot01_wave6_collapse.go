@@ -1,5 +1,10 @@
 package tailwind
 
+import (
+	"fmt"
+	"unicode/utf16"
+)
+
 var wave6Trace []string
 
 func AdamicWave6Definition(source string, bound bool, mode string) ([][]any, []string, []string) {
@@ -38,4 +43,46 @@ func AdamicWave6Definition(source string, bound bool, mode string) ([][]any, []s
 		actual[index] = node.Value
 	}
 	return rows, actual, wave6Trace
+}
+
+func AdamicWave6Framework(source string, last int) ([]any, []string) {
+	initial := []FrameworkVariantRegistration{{Name: "existing", Order: 3, Kind: ParsedVariantKindStatic}}
+	incoming := []FrameworkVariantRegistration{{Name: source, Order: 2, Kind: ParsedVariantKindFunctional}, {Name: source, Order: 99, Kind: ParsedVariantKindCompound}, {Name: "shared-a", Order: 5, Kind: ParsedVariantKindStatic}, {Name: "shared-b", Order: 5, Kind: ParsedVariantKindArbitrary}, {Name: "negative", Order: -3, Kind: ParsedVariantKindFunctional}, {Name: "existing", Order: 1000, Kind: ParsedVariantKindFunctional}}
+	queries := []string{"existing", source, "shared-a", "shared-b", "negative"}
+	registry := NewVariantRegistry()
+	registry.lastOrder = last
+	first := [][]any{}
+	next := [][]any{}
+	for _, row := range initial {
+		registry.registrations[row.Name] = VariantRegistration{Name: row.Name, Order: row.Order, Kind: row.Kind}
+		first = append(first, []any{row.Name, row.Order, string(row.Kind)})
+	}
+	for _, row := range incoming {
+		next = append(next, []any{row.Name, row.Order, string(row.Kind)})
+	}
+	var observations []string
+	units := func(value string) string {
+		list := utf16.Encode([]rune(value))
+		output := fmt.Sprintf("%d:", len(list))
+		for _, unit := range list {
+			output += fmt.Sprintf("%d,", unit)
+		}
+		return output
+	}
+	observe := func() {
+		observations = append(observations, fmt.Sprintf("%d %d", registry.lastOrder, len(registry.registrations)))
+		for _, name := range queries {
+			row := registry.registrations[name]
+			observations = append(observations, fmt.Sprint(row.Order), units(row.Name), units(string(row.Kind)))
+		}
+	}
+	registry.RegisterFrameworkVariants(incoming)
+	observe()
+	for index := range incoming {
+		incoming[index].Kind = "tampered"
+	}
+	observe()
+	registry.RegisterFrameworkVariants(incoming)
+	observe()
+	return []any{last, first, next, queries}, observations
 }

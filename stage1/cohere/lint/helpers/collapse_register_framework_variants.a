@@ -1,0 +1,17 @@
+import { panic } from 'adamic';
+export interface CollapseVariantRegistration { readonly name: string; readonly order: number; readonly kind: string; }
+export interface CollapseFrameworkRegistry { readonly registrations: Map<string, CollapseVariantRegistration>; lastOrder: number; }
+export function collapseRegisterFrameworkVariants(registry: CollapseFrameworkRegistry, registrations: readonly CollapseVariantRegistration[]): void {
+    let valid = Number.isSafeInteger(registry.lastOrder);
+    for (const registration of registrations) { valid = valid && Number.isSafeInteger(registration.order); }
+    if (!valid) { panic('NotYet: framework variant order outside exact integer range'); }
+    for (const registration of registrations) {
+        if (registry.registrations.has(registration.name)) {
+            const existing = registry.registrations.get(registration.name) ?? panic('existing variant missing');
+            registry.registrations.set(registration.name, { name: existing.name, order: existing.order, kind: registration.kind });
+            continue;
+        }
+        registry.registrations.set(registration.name, { name: registration.name, order: registration.order, kind: registration.kind });
+        if (registration.order > registry.lastOrder) { registry.lastOrder = registration.order; }
+    }
+}

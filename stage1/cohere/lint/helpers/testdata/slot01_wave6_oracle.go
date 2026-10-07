@@ -96,6 +96,20 @@ func main() {
 	}
 
 	sources = append(sources, "", "--value(--spacing)", "calc(--value(--text --line-height) * 2)", "--modifier([ *])", "--value(--a, --b)", "--value(--a) --modifier(--b)", "--value (--spacing)", "--VALUE(--a)", "'--value(--a)'", "--value(--é --𝒜)", "--value(--a\\*)", "--value(--a\n--b)")
+	if os.Args[4] == "framework" {
+		sources = append(sources, "existing", "shared-a", "shared-b", "negative", "é𝒜")
+		for _, value := range sources {
+			for _, last := range []int{3, 9} {
+				input, actual := collapse.AdamicWave6Framework(value, last)
+				must(encode.Encode(input))
+				for _, line := range actual {
+					fmt.Fprintln(expected, line)
+				}
+			}
+		}
+		fmt.Fprintf(os.Stderr, "%d fixture strings; %d registry batches, three snapshots each\n", fixtureCount, len(sources)*2)
+		return
+	}
 	for _, value := range sources {
 		for _, bound := range []bool{false, true} {
 			rows, actual, trace := collapse.AdamicWave6Definition(value, bound, os.Args[4])
