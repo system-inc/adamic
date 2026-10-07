@@ -1,0 +1,5 @@
+{
+  "name": "duplicate reports suppressed",
+  "from": "if(previous !== undefined) {",
+  "to": "if(previous !== undefined && key.length === 0) {"
+}
