@@ -1,0 +1,7 @@
+# github.com/system-inc/adamic/stage1/cohere/lint [github.com/system-inc/adamic/stage1/cohere/lint.test]
+/tmp/lint-wave1-13-loops/profile_test.go:32:2: undefined: copyPort
+/tmp/lint-wave1-13-loops/profile_test.go:154:27: undefined: emittedNode
+/tmp/lint-wave1-13-loops/profile_test.go:174:26: undefined: emittedNode
+/tmp/lint-wave1-13-loops/profile_test.go:195:26: undefined: emittedNode
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL

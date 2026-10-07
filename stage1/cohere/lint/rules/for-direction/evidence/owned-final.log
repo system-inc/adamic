@@ -1,0 +1,6 @@
+=== RUN   TestWave13LoopsOwnedWitnesses
+    lint_test.go:915: Go, Node, native identical: 4069 bytes
+    lint_test.go:932: selected and all-rule owned witnesses match on all three backends: 6 rows
+--- PASS: TestWave13LoopsOwnedWitnesses (17.99s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	18.003s
