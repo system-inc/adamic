@@ -1,0 +1,6 @@
+{
+  "name": "fallback_display_ignored",
+  "file": "rule.a",
+  "from": "display === 'auto' || display === 'block' || display === 'fallback'",
+  "to": "display === 'auto' || display === 'block'"
+}
