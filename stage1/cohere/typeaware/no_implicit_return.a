@@ -1,0 +1,94 @@
+import type { Rules } from './rules.ts';
+import { FunctionReturnFlow } from './function_return_flow.a';
+import { Diagnostic } from './diagnostic.ts';
+
+const message =
+    "Not all code paths return a value: this function returns one on some paths and falls off the end on another, where it returns undefined without saying so. It is what TypeScript's noImplicitReturns reports (TS7030), for a project that has not turned the flag on. Return on every path, `return undefined` included where that is the answer, or make the path that ends unreachable.";
+
+export class NoImplicitReturn {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(
+                ![
+                    'FunctionDeclaration',
+                    'MethodDeclaration',
+                    'GetAccessor',
+                    'FunctionExpression',
+                    'ArrowFunction',
+                ].includes(node.kind)
+            ) {
+                continue;
+            }
+            const facts = new FunctionReturnFlow(this.rules, index);
+            if(facts.covered) {
+                continue;
+            }
+            if(
+                facts.block &&
+                !(facts.declared && (facts.voidType || (facts.flags & (1 | 4)) !== 0)) &&
+                facts.implicit
+            ) {
+                const report = facts.declared
+                    ? (facts.flags & 262144) === 0 && facts.explicit && (!facts.strict || facts.undefinedAssignable)
+                    : facts.explicit && !facts.inferredVoid && (facts.unwrappedFlags & (1 | 4)) === 0;
+                if(report) {
+                    this.rules.findings.push(
+                        new Diagnostic(
+                            'nexus/correctness-no-implicit-return',
+                            'implicitReturn',
+                            message,
+                            facts.start,
+                            facts.end,
+                            '',
+                        ),
+                    );
+                }
+            }
+            if(
+                !facts.strict &&
+                (facts.inferredFlags & 262144) === 0 &&
+                !facts.inferredVoid &&
+                (facts.unwrappedFlags & (1 | 4)) === 0
+            ) {
+                this.bareReturns(index);
+            }
+        }
+    }
+    bareReturns(index: number): void {
+        for(const child of this.rules.parser.node(index).children) {
+            const node = this.rules.parser.node(child);
+            if(
+                [
+                    'FunctionDeclaration',
+                    'MethodDeclaration',
+                    'GetAccessor',
+                    'SetAccessor',
+                    'Constructor',
+                    'FunctionExpression',
+                    'ArrowFunction',
+                    'ClassStaticBlockDeclaration',
+                ].includes(node.kind)
+            ) {
+                continue;
+            }
+            if(node.kind === 'ReturnStatement' && node.children.length === 0) {
+                this.rules.findings.push(
+                    new Diagnostic(
+                        'nexus/correctness-no-implicit-return',
+                        'implicitReturn',
+                        message,
+                        this.rules.byte(this.rules.start(node)),
+                        this.rules.byte(this.rules.start(node) + 6),
+                        '',
+                    ),
+                );
+            }
+            this.bareReturns(child);
+        }
+    }
+}

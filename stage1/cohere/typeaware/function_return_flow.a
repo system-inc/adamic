@@ -1,0 +1,38 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export class FunctionReturnFlow {
+    readonly covered: boolean;
+    readonly strict: boolean;
+    readonly block: boolean;
+    readonly declared: boolean;
+    readonly flags: number;
+    readonly voidType: boolean;
+    readonly undefinedAssignable: boolean;
+    readonly implicit: boolean;
+    readonly explicit: boolean;
+    readonly inferredFlags: number;
+    readonly unwrappedFlags: number;
+    readonly inferredVoid: boolean;
+    readonly start: number;
+    readonly end: number;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'function-return-flow'));
+        header(frames, 'function-return-flow');
+        this.covered = frames.yes();
+        this.strict = frames.yes();
+        this.block = frames.yes();
+        this.declared = frames.yes();
+        this.flags = frames.natural();
+        this.voidType = frames.yes();
+        this.undefinedAssignable = frames.yes();
+        this.implicit = frames.yes();
+        this.explicit = frames.yes();
+        this.inferredFlags = frames.natural();
+        this.unwrappedFlags = frames.natural();
+        this.inferredVoid = frames.yes();
+        this.start = frames.natural();
+        this.end = frames.natural();
+        frames.end();
+    }
+}

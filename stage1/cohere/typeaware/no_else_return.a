@@ -1,0 +1,241 @@
+import type { Rules } from './rules.ts';
+import type { Bindings } from './bindings.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { Repair } from './repair.ts';
+import { scopeNameCollision } from './scope_symbol_declarations.a';
+
+const message =
+    'This `else` follows a branch that always returns, so it is doing nothing. The code after it only runs when the `if` did not return, which is what an `else` says, and the extra nesting costs the reader a level of indentation to learn nothing.';
+export class NoElseReturn {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) {
+        this.bindings = bindings;
+        this.rules = bindings.rules;
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            const parent = this.bindings.parent(index);
+            if(
+                node.kind !== 'IfStatement' ||
+                parent < 0 ||
+                !['Block', 'SourceFile', 'ModuleBlock', 'CaseClause', 'DefaultClause'].includes(
+                    this.rules.parser.node(parent).kind,
+                )
+            ) {
+                continue;
+            }
+            let current = index;
+            let alternate = -1;
+            let valid = true;
+            while(this.rules.parser.node(current).kind === 'IfStatement') {
+                const branch = this.rules.parser.node(current);
+                const then = branch.children[1] ?? -1;
+                alternate = branch.children[2] ?? -1;
+                if(alternate < 0 || then < 0 || !this.always(then)) {
+                    valid = false;
+                    break;
+                }
+                current = alternate;
+            }
+            if(valid && alternate >= 0) {
+                const target = this.rules.parser.node(alternate);
+                const finding = new Diagnostic(
+                    'no-else-return',
+                    'unexpected',
+                    message,
+                    this.rules.byte(this.rules.start(target)),
+                    this.rules.byte(target.end),
+                    '',
+                );
+                this.rules.findings.push(finding);
+                for(const repair of this.fix(index, alternate)) {
+                    finding.repairs.push(repair);
+                }
+            }
+        }
+    }
+    always(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        return node.kind === 'Block' ? node.children.some((child) => this.returns(child)) : this.returns(index);
+    }
+    returns(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'ReturnStatement') {
+            return true;
+        }
+        if(node.kind !== 'IfStatement' || node.children.length < 3) {
+            return false;
+        }
+        return this.naive(node.children[1] ?? -1) && this.naive(node.children[2] ?? -1);
+    }
+    naive(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Block') {
+            const last = node.children[node.children.length - 1] ?? -1;
+            return last >= 0 && this.rules.parser.node(last).kind === 'ReturnStatement';
+        }
+        return node.kind === 'ReturnStatement';
+    }
+    bindNames(index: number): string[] {
+        let names: string[] = [];
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'Identifier') {
+            names.push(node.text);
+        }
+        if(['ObjectBindingPattern', 'ArrayBindingPattern'].includes(node.kind)) {
+            for(const child of node.children) {
+                if(this.rules.parser.node(child).kind === 'BindingElement') {
+                    names = names.concat(this.bindNames(this.bindings.shape.name(child)));
+                }
+            }
+        }
+        return names;
+    }
+    names(index: number): string[] {
+        let names: string[] = [];
+        for(const child of this.rules.parser.node(index).children) {
+            const node = this.rules.parser.node(child);
+            if(['ClassDeclaration', 'FunctionDeclaration'].includes(node.kind)) {
+                const name = this.bindings.shape.name(child);
+                if(name >= 0 && this.rules.parser.node(name).kind === 'Identifier') {
+                    names.push(this.rules.parser.node(name).text);
+                }
+            }
+            if(node.kind === 'VariableStatement') {
+                for(const list of node.children) {
+                    const declarations = this.rules.parser.node(list);
+                    if(declarations.kind !== 'VariableDeclarationList') {
+                        continue;
+                    }
+                    this.rules.scanner.pos = declarations.pos;
+                    const token = this.rules.scanner.scan();
+                    if(token !== 'LetKeyword' && token !== 'ConstKeyword') {
+                        continue;
+                    }
+                    for(const declaration of declarations.children) {
+                        names = names.concat(this.bindNames(this.bindings.shape.name(declaration)));
+                    }
+                }
+            }
+        }
+        return names;
+    }
+    mentioned(index: number, alternate: number, names: readonly string[]): boolean {
+        const node = this.rules.parser.node(index);
+        if(this.bindings.contains(alternate, index)) {
+            return false;
+        }
+        if(node.kind === 'Identifier' && names.includes(node.text)) {
+            const parentIndex = this.bindings.parent(index);
+            if(parentIndex >= 0) {
+                const parent = this.rules.parser.node(parentIndex);
+                const declared =
+                    [
+                        'FunctionDeclaration',
+                        'ClassDeclaration',
+                        'VariableDeclaration',
+                        'Parameter',
+                        'BindingElement',
+                        'MethodDeclaration',
+                        'PropertyDeclaration',
+                        'PropertyAssignment',
+                        'EnumDeclaration',
+                        'InterfaceDeclaration',
+                        'TypeAliasDeclaration',
+                        'ModuleDeclaration',
+                    ].includes(parent.kind) && this.bindings.shape.name(parentIndex) === index;
+                const property =
+                    parent.kind === 'PropertyAccessExpression' && parent.children[parent.children.length - 1] === index;
+                if(!declared && !property) {
+                    return true;
+                }
+            }
+            else {
+                return true;
+            }
+        }
+        return node.children.some((child) => this.mentioned(child, alternate, names));
+    }
+    space(character: string): boolean {
+        return character === ' ' || character === '\t' || character === '\n' || character === '\r';
+    }
+    continuation(character: string): boolean {
+        return ['(', '[', '/', '+', '`', '-'].includes(character);
+    }
+    fix(index: number, alternate: number): Repair[] {
+        const node = this.rules.parser.node(alternate);
+        if(node.kind === 'FunctionDeclaration') {
+            return [];
+        }
+        if(node.kind === 'Block') {
+            const names = this.names(alternate);
+            if(
+                names.length > 0 &&
+                (scopeNameCollision(this.rules, index, names, alternate) ||
+                    this.mentioned(this.bindings.parent(index), alternate, names))
+            ) {
+                return [];
+            }
+        }
+        const source = this.rules.scanner.text;
+        const branch = this.rules.parser.node(index);
+        let keyword = -1;
+        // Match Go's backward byte search, including its treatment of intervening comments.
+        for(let at = node.pos - 4; at >= branch.pos; at--) {
+            if(source.slice(at, at + 4) === 'else') {
+                keyword = at;
+                break;
+            }
+        }
+        if(keyword < 0) {
+            return [];
+        }
+        let start = this.rules.start(node);
+        let end = node.end;
+        if(node.kind === 'Block') {
+            start = source.indexOf('{', node.pos) + 1;
+            end = node.end - 1;
+            while(end >= start && source.slice(end, end + 1) !== '}') {
+                end--;
+            }
+        }
+        if(start < 0 || end < start || end > source.length) {
+            return [];
+        }
+        const then = this.rules.parser.node(branch.children[1] ?? -1);
+        let front = start;
+        while(front < end && this.space(source.slice(front, front + 1))) {
+            front++;
+        }
+        let previous = then.end - 1;
+        while(previous >= 0 && this.space(source.slice(previous, previous + 1))) {
+            previous--;
+        }
+        if(
+            then.kind !== 'Block' &&
+            source.slice(previous, previous + 1) !== ';' &&
+            this.continuation(source.slice(front, front + 1))
+        ) {
+            return [];
+        }
+        let last = end - 1;
+        while(last >= start && this.space(source.slice(last, last + 1))) {
+            last--;
+        }
+        if(source.slice(last, last + 1) !== ';') {
+            let next = node.end;
+            while(next < source.length && this.space(source.slice(next, next + 1))) {
+                next++;
+            }
+            if(next < source.length) {
+                const character = source.slice(next, next + 1);
+                if(this.continuation(character) || (character !== '}' && !source.slice(end, next).includes('\n'))) {
+                    return [];
+                }
+            }
+        }
+        return [new Repair(this.rules.byte(keyword), this.rules.byte(node.end), source.slice(start, end))];
+    }
+}

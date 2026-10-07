@@ -1,0 +1,278 @@
+import type { Rules } from './rules.ts';
+import type { Bindings } from './bindings.ts';
+import { types } from './facts.ts';
+import { Frames, header } from './frames.ts';
+import { Documentation } from './documentation.a';
+import { SymbolDocuments, signatureDocumentation } from './symbol_documentation.a';
+
+export class NoDeprecated {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) {
+        this.bindings = bindings;
+        this.rules = bindings.rules;
+    }
+    absent(): Documentation {
+        return new Documentation(false, '');
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind === 'ElementAccessExpression') {
+                this.element(index);
+                continue;
+            }
+            if(!['Identifier', 'PrivateIdentifier', 'SuperKeyword'].includes(node.kind)) {
+                continue;
+            }
+            const parentIndex = this.bindings.parent(index);
+            if(parentIndex < 0) {
+                continue;
+            }
+            const parent = this.rules.parser.node(parentIndex);
+            if(node.kind === 'Identifier') {
+                if(['ExportDeclaration', 'NamespaceExport', 'JsxClosingElement'].includes(parent.kind)) {
+                    continue;
+                }
+                if(parent.kind === 'ElementAccessExpression' && parent.children[parent.children.length - 1] === index) {
+                    continue;
+                }
+                if(parent.kind === 'ExportSpecifier') {
+                    const own = new SymbolDocuments(this.rules, index).chain[0];
+                    if(
+                        parent.children[parent.children.length - 1] !== index ||
+                        (own !== undefined && own.first().present)
+                    ) {
+                        continue;
+                    }
+                }
+            }
+            if(this.declaration(index) || this.importing(index)) {
+                continue;
+            }
+            const tag = this.reason(index);
+            const name =
+                node.kind === 'SuperKeyword'
+                    ? 'super'
+                    : node.kind === 'PrivateIdentifier'
+                      ? `#${node.text.startsWith('#') ? node.text.slice(1) : node.text}`
+                      : node.text;
+            if(tag.present) {
+                this.report(index, name, tag);
+            }
+        }
+    }
+    report(index: number, name: string, tag: Documentation): void {
+        this.rules.add(
+            'no-deprecated',
+            tag.reason === '' ? 'deprecated' : 'deprecatedWithReason',
+            `\`${name}\` is deprecated.${tag.reason === '' ? '' : ` ${tag.reason}`}`,
+            index,
+        );
+    }
+    name(index: number): number {
+        const node = this.rules.parser.node(index);
+        if(node.kind === 'BindingElement') {
+            return this.bindings.shape.name(index);
+        }
+        for(const child of node.children) {
+            if(
+                [
+                    'Identifier',
+                    'PrivateIdentifier',
+                    'StringLiteral',
+                    'NumericLiteral',
+                    'ComputedPropertyName',
+                    'ArrayBindingPattern',
+                    'ObjectBindingPattern',
+                ].includes(this.rules.parser.node(child).kind)
+            ) {
+                return child;
+            }
+        }
+        return -1;
+    }
+    declaration(index: number): boolean {
+        const parentIndex = this.bindings.parent(index);
+        const parent = this.rules.parser.node(parentIndex);
+        if(
+            [
+                'ClassDeclaration',
+                'ClassExpression',
+                'VariableDeclaration',
+                'EnumMember',
+                'MethodDeclaration',
+                'PropertyDeclaration',
+                'GetAccessor',
+                'SetAccessor',
+                'FunctionDeclaration',
+                'FunctionExpression',
+                'ArrowFunction',
+                'EnumDeclaration',
+                'InterfaceDeclaration',
+                'MethodSignature',
+                'PropertySignature',
+                'ModuleDeclaration',
+                'TypeAliasDeclaration',
+                'TypeParameter',
+                'ImportEqualsDeclaration',
+                'Parameter',
+            ].includes(parent.kind)
+        ) {
+            return this.name(parentIndex) === index;
+        }
+        if(parent.kind === 'BindingElement') {
+            if(this.bindings.shape.initializer(parentIndex) === index) {
+                return false;
+            }
+            const name = this.bindings.shape.name(parentIndex);
+            const first = parent.children[0] ?? -1;
+            const pattern = this.rules.parser.node(this.bindings.parent(parentIndex));
+            if(first !== name && this.rules.parser.node(first).kind !== 'DotDotDotToken') {
+                return name === index;
+            }
+            return pattern.kind === 'ArrayBindingPattern';
+        }
+        return parent.kind === 'PropertyAssignment' && parent.children[0] === index;
+    }
+    importing(index: number): boolean {
+        let current = index;
+        while(current >= 0) {
+            const kind = this.rules.parser.node(current).kind;
+            if(['ImportDeclaration', 'ImportEqualsDeclaration'].includes(kind)) {
+                return true;
+            }
+            if(
+                [
+                    'ArrowFunction',
+                    'ExportDeclaration',
+                    'ExportAssignment',
+                    'Block',
+                    'ClassDeclaration',
+                    'InterfaceDeclaration',
+                    'FunctionDeclaration',
+                    'FunctionExpression',
+                    'SourceFile',
+                    'UnionType',
+                    'VariableDeclaration',
+                ].includes(kind)
+            ) {
+                return false;
+            }
+            current = this.bindings.parent(current);
+        }
+        return false;
+    }
+    call(index: number): number {
+        let callee = index;
+        let parent = this.bindings.parent(callee);
+        while(
+            parent >= 0 &&
+            this.rules.parser.node(parent).kind === 'PropertyAccessExpression' &&
+            this.rules.parser.node(parent).children[this.rules.parser.node(parent).children.length - 1] === callee
+        ) {
+            callee = parent;
+            parent = this.bindings.parent(callee);
+        }
+        if(parent < 0) {
+            return -1;
+        }
+        const node = this.rules.parser.node(parent);
+        return [
+            'CallExpression',
+            'NewExpression',
+            'TaggedTemplateExpression',
+            'JsxOpeningElement',
+            'JsxSelfClosingElement',
+        ].includes(node.kind) && node.children[0] === callee
+            ? parent
+            : -1;
+    }
+    property(index: number, owner: number, name: string, contextual = false): Documentation {
+        const mode = contextual ? 'contextual-shape' : 'raw-shape';
+        const facts = types(this.rules.ask(owner, mode), mode);
+        if(!facts.present || facts.roots.length === 0 || facts.roots[0] === 0) {
+            return this.absent();
+        }
+        return new SymbolDocuments(this.rules, index, `property\n${facts.root().id}\n${name}`).target.first();
+    }
+    reason(index: number): Documentation {
+        const call = this.call(index);
+        if(call >= 0) {
+            const docs = new SymbolDocuments(this.rules, index);
+            const isFunction = ['MethodDeclaration', 'FunctionDeclaration', 'MethodSignature'].includes(
+                docs.target.kind,
+            );
+            const alias = docs.first(!isFunction);
+            if(alias.present) {
+                return alias;
+            }
+            const signature = signatureDocumentation(this.rules, call);
+            if(signature.present || isFunction) {
+                return signature;
+            }
+            return docs.target.first();
+        }
+        const parentIndex = this.bindings.parent(index);
+        const parent = this.rules.parser.node(parentIndex);
+        const node = this.rules.parser.node(index);
+        if(node.kind !== 'SuperKeyword') {
+            if(parent.kind === 'JsxAttribute' && parent.children[0] === index) {
+                const opening = this.bindings.parent(this.bindings.parent(parentIndex));
+                const tag = this.rules.parser.node(opening).children[0] ?? -1;
+                const contextual = this.property(index, tag, node.text, true);
+                if(contextual.present) {
+                    return contextual;
+                }
+                return this.property(index, this.bindings.parent(parentIndex), node.text, true);
+            }
+            if(parent.kind === 'BindingElement') {
+                const tag = this.property(index, this.bindings.parent(parentIndex), node.text);
+                if(tag.present) {
+                    return tag;
+                }
+            }
+            if(['PropertyAssignment', 'ShorthandPropertyAssignment'].includes(parent.kind)) {
+                const tag = this.property(index, this.bindings.parent(parentIndex), node.text);
+                if(tag.present) {
+                    return tag;
+                }
+                const docs = new SymbolDocuments(this.rules, index);
+                const alias = docs.first();
+                if(alias.present) {
+                    return alias;
+                }
+                const first = docs.chain[0];
+                const own = first === undefined ? this.absent() : first.first();
+                if(own.present) {
+                    return own;
+                }
+                if(parent.kind === 'ShorthandPropertyAssignment') {
+                    return new SymbolDocuments(this.rules, index, 'shorthand').target.first();
+                }
+                return this.absent();
+            }
+        }
+        return new SymbolDocuments(this.rules, index).first();
+    }
+    element(index: number): void {
+        const node = this.rules.parser.node(index);
+        const argument = node.children[node.children.length - 1] ?? -1;
+        const facts = types(this.rules.ask(argument, 'raw-shape'), 'raw-shape');
+        if((facts.root().flags & (1024 | 2048)) === 0) {
+            return;
+        }
+        const frames = new Frames(this.rules.ask(argument, `literal-value\n${facts.root().id}`));
+        header(frames, 'literal-value');
+        const kind = frames.field();
+        const name = frames.field();
+        frames.end();
+        if(kind !== 'string' && kind !== 'number') {
+            return;
+        }
+        const tag = this.property(index, node.children[0] ?? -1, name);
+        if(tag.present) {
+            this.report(argument, name, tag);
+        }
+    }
+}

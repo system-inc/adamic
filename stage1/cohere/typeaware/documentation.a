@@ -1,0 +1,8 @@
+export class Documentation {
+    readonly present: boolean;
+    readonly reason: string;
+    constructor(present: boolean, reason: string) {
+        this.present = present;
+        this.reason = reason;
+    }
+}

@@ -1,0 +1,29 @@
+import type { Frames } from './frames.ts';
+import { Documentation } from './documentation.a';
+
+export class SymbolDocumentation {
+    readonly present: boolean;
+    readonly flags: number;
+    readonly kind: string;
+    readonly tags: readonly Documentation[];
+    constructor(frames: Frames) {
+        this.present = frames.yes();
+        this.flags = this.present ? frames.natural() : 0;
+        this.kind = this.present ? frames.field() : '';
+        const count = this.present ? frames.natural() : 0;
+        const tags: Documentation[] = [];
+        for(let index = 0; index < count; index++) {
+            const present = frames.yes();
+            tags.push(new Documentation(present, frames.field().trim()));
+        }
+        this.tags = tags;
+    }
+    first(): Documentation {
+        for(const tag of this.tags) {
+            if(tag.present) {
+                return tag;
+            }
+        }
+        return new Documentation(false, '');
+    }
+}

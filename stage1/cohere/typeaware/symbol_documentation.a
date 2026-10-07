@@ -1,0 +1,53 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+import { Documentation } from './documentation.a';
+import { SymbolDocumentation } from './symbol_documentation_value.a';
+
+export class SymbolDocuments {
+    readonly target: SymbolDocumentation;
+    readonly chain: readonly SymbolDocumentation[];
+    readonly targets: readonly boolean[];
+    constructor(rules: Rules, index: number, operation = 'node') {
+        const frames = new Frames(rules.ask(index, `symbol-documentation\n${operation}`));
+        header(frames, 'symbol-documentation');
+        this.target = new SymbolDocumentation(frames);
+        const count = frames.natural();
+        const chain: SymbolDocumentation[] = [];
+        const targets: boolean[] = [];
+        for(let at = 0; at < count; at++) {
+            targets.push(frames.yes());
+            chain.push(new SymbolDocumentation(frames));
+        }
+        this.chain = chain;
+        this.targets = targets;
+        frames.end();
+    }
+    first(checkTarget = true): Documentation {
+        for(let at = 0; at < this.chain.length; at++) {
+            const symbol = this.chain[at];
+            if(symbol === undefined) {
+                continue;
+            }
+            if((symbol.flags & 2097152) === 0 && !(checkTarget && (at === 0 || this.targets[at] === true))) {
+                break;
+            }
+            const tag = symbol.first();
+            if(tag.present) {
+                return tag;
+            }
+            if((symbol.flags & 2097152) === 0) {
+                break;
+            }
+        }
+        return new Documentation(false, '');
+    }
+}
+export function signatureDocumentation(rules: Rules, index: number): Documentation {
+    const frames = new Frames(rules.ask(index, 'symbol-documentation\nsignature'));
+    header(frames, 'symbol-documentation');
+    const present = frames.yes();
+    const tag = new Documentation(present, frames.field().trim());
+    frames.end();
+    return tag;
+}

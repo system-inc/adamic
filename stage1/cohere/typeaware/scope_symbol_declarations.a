@@ -1,0 +1,31 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+
+export function scopeNameCollision(rules: Rules, index: number, names: readonly string[], alternate: number): boolean {
+    const frames = new Frames(rules.ask(index, 'scope-symbol-declarations'));
+    header(frames, 'scope-symbol-declarations');
+    const count = frames.natural();
+    const node = rules.parser.node(alternate);
+    let collision = false;
+    for(let at = 0; at < count; at++) {
+        const name = frames.field();
+        const declarations = frames.natural();
+        for(let declaration = 0; declaration < declarations; declaration++) {
+            if(frames.yes()) {
+                const path = frames.field();
+                const ambient = frames.yes();
+                const start = frames.natural();
+                const end = frames.natural();
+                if(
+                    names.includes(name) &&
+                    !ambient &&
+                    !(path === rules.path && start >= rules.byte(node.pos) && end <= rules.byte(node.end))
+                ) {
+                    collision = true;
+                }
+            }
+        }
+    }
+    frames.end();
+    return collision;
+}
