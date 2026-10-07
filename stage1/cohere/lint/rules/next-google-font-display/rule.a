@@ -1,0 +1,48 @@
+import { panic } from 'adamic';
+import { RuleContext } from '../../context.ts';
+import { unescape } from './entities.a';
+export function description(id: string): string {
+    if(id === 'googleFontDisplayMissing') { return 'This Google Fonts <link> has no `display` parameter, so the browser uses the default and hides the text while the font downloads. On a slow connection that is a blank block where the words should be. Add `&display=optional` or `&display=swap` to the href so the text is painted in a fallback face first.'; }
+    if(id === 'googleFontDisplayNotRecommended') { return 'This Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text while the font loads. Use `optional`, which paints a fallback immediately and only swaps if the font arrives in time, or `swap` if the exact face matters more than the reflow.'; }
+    return '';
+}
+export function evaluate(tag: string, attribute: string, literal: boolean, raw: string): string {
+    if(tag !== 'link' || attribute.toLowerCase() !== 'href' || !literal) { return ''; }
+    const reference = unescape(raw);
+    if(!reference.startsWith('https://fonts.googleapis.com/css')) { return ''; }
+    const question = reference.indexOf('?');
+    if(question >= 0) {
+        for(const pair of reference.slice(question + 1).split('&')) {
+            const equal = pair.indexOf('=');
+            if(equal < 0 || pair.slice(0,equal) !== 'display') { continue; }
+            const display = pair.slice(equal + 1);
+            return ['auto','block','fallback'].includes(display) ? 'googleFontDisplayNotRecommended' : '';
+        }
+    }
+    return 'googleFontDisplayMissing';
+}
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const node = this.context.node(index);
+        const tag = this.context.node(node.children[0] ?? panic('JSX tag'));
+        if(tag.kind !== 'Identifier' || tag.text !== 'link') { return; }
+        for(const child of node.children) {
+            const attributes = this.context.node(child);
+            if(attributes.kind !== 'JsxAttributes') { continue; }
+            for(const property of attributes.children) {
+                const attribute = this.context.node(property);
+                if(attribute.kind !== 'JsxAttribute') { continue; }
+                const name = this.context.node(attribute.children[0] ?? panic('attribute name'));
+                if(name.kind !== 'Identifier' || name.text.toLowerCase() !== 'href') { continue; }
+                const initializer = attribute.children[1] ?? -1;
+                if(initializer < 0 || this.context.node(initializer).kind !== 'StringLiteral') { return; }
+                const id = evaluate(tag.text,name.text,true,this.context.node(initializer).text);
+                if(id !== '') { this.context.report(index,'@next/next/google-font-display',id,description(id),'','',''); }
+                return;
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

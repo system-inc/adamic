@@ -1,0 +1,25 @@
+package main
+import (
+ "fmt"
+ "os"
+ "strings"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/microsoft/TypeScript/tsc/shim/parser"
+ "github.com/microsoft/TypeScript/tsc/shim/tspath"
+ "github.com/system-inc/cohere/internal/lint/rule"
+)
+func main() {
+ data,err:=os.ReadFile(os.Args[1]);if err!=nil {panic(err)}
+ count:=0
+ for _,row:=range strings.Split(string(data),"\n") {
+  if row=="" {continue};path:=strings.Split(row,"\t")[0]
+  source,err:=os.ReadFile(path);if err!=nil {panic(err)}
+  file:=parser.ParseSourceFile(ast.SourceFileParseOptions{FileName:path,Path:tspath.Path(path)},string(source),core.ScriptKindTSX)
+  id,message:="",""
+  listener:=oracleGoogleFontDisplay().Run(rule.Context{SourceFile:file,FileCache:rule.NewFileCache(),Report:func(d rule.Diagnostic){id=d.Message.Id;message=d.Message.Description;count++}},nil)
+  var walk func(*ast.Node);walk=func(n *ast.Node){if visit:=listener[n.Kind];visit!=nil{visit(n)};n.ForEachChild(func(child *ast.Node)bool{walk(child);return false})};walk(file.AsNode())
+  if len(os.Args)<3 {fmt.Printf("%s\t%s\n",id,message)}
+ }
+ if len(os.Args)>2 {fmt.Println(count)}
+}

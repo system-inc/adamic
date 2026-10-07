@@ -59,3 +59,12 @@ these names occur only in such selection ledgers, not reservations. Main remains
 
 Outcome: no-this-alias is a bounded .a candidate; both assertion rules need shared
 suggestion edit support. Reservations remain. See wave1-07-third-report.md.
+
+
+## Older reservation completion, October 7
+
+The original three reservations now have own-directory .a ports, complete independent Go/Node/emitted-JavaScript/sanitized-native comparisons, compiling semantic mutants caught only by comparison, and throughput measurements. Final corpus is 351 files including TypeScript src/compiler and current stage1 sources. Their owned README.md and evidence/ directories contain commands, outputs and limits.
+
+Google Font Display now has its own registered .a listener, diagnostic/query/entity implementation and a validated selector. All sixteen upstream cases plus eleven query/entity cases match the actual Go rule on the three Adamic runtimes; its block-display mutant is caught by comparison. Full independent parsing, finding ranges and corpus parity remain blocked: the current Parser treats JSX as a type assertion and exits 70 on a real link. No shared parser, harness or registry generator was edited. This remains a partial port, with the blocker demonstrated on all three runtimes in rules/next-google-font-display/evidence/full-parser-results.txt.
+
+No further rules were claimed before pushing this completion. Earlier blocker entries above are historical; the three TypeScript assertion/alias rules were completed and pushed at 76d6c805, 80485a80 and 4fc20717. The earlier Tailwind and directive-description candidates remain pushed with their original evidence and declared limits.

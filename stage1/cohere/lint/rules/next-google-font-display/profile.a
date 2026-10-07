@@ -1,0 +1,64 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { RuleContext } from '../../context.ts';
+import { Settings } from '../../settings.ts';
+import { create, type Rule } from './rule.a';
+function ancestry(context: RuleContext, parents: number[], index: number, parent: number): void {
+    parents[index] = parent;
+    for(const child of context.node(index).children) { ancestry(context, parents, child, index); }
+}
+function visit(context: RuleContext, rule: Rule, index: number): void {
+    if(['JsxOpeningElement','JsxSelfClosingElement'].includes(context.node(index).kind)) { rule.visit(index); }
+    for(const child of context.node(index).children) { visit(context, rule, child); }
+}
+function run(row: string, countOnly: boolean): number {
+    const columns = row.split('\t');
+    const path = columns[0] ?? panic('path');
+    const settings = new Settings();
+    settings.load(columns[1] ?? '');
+    const read = readTextFile(path);
+    if(read.kind === 'Error') { panic(read.message); }
+    const source = read.text;
+    const parser = new Parser(source, path);
+    const root = parser.file();
+    const parents: number[] = [];
+    for(const node of parser.nodes) { parents.push(-1); }
+    const context = new RuleContext(source, parser, new Scanner(source), '', '', '', false, parents, settings);
+    const rule = create(context);
+    ancestry(context, parents, root, -1);
+    visit(context, rule, root);
+    if(countOnly) { return context.findings.length; }
+    const offsets: number[] = [0];
+    let bytes = 0;
+    for(let index = 0; index < source.length; index++) {
+        const code = source.codePointAt(index) ?? 0;
+        if(code > 65535) { offsets.push(bytes); index++; }
+        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+        offsets.push(bytes);
+    }
+    context.findings.sort((left, right) => left.start - right.start);
+    for(const finding of context.findings) {
+        console.log(`finding ${offsets[finding.start] ?? panic('start')} ${offsets[finding.end] ?? panic('end')} ${finding.id}\t${written(finding.message)}`);
+        for(const suggestion of finding.suggestions) {
+            console.log(`suggestion ${suggestion.id}\t${written(suggestion.message)}`);
+            for(const edit of suggestion.edits) { console.log(`edit ${offsets[edit.start] ?? panic('edit start')} ${offsets[edit.end] ?? panic('edit end')}\t${written(edit.text)}`); }
+        }
+    }
+    console.log(`fixed\t${written(source)}`);
+    return context.findings.length;
+}
+const args = programArguments();
+const read = readTextFile(args[0] ?? panic('missing manifest'));
+if(read.kind === 'Error') { panic(read.message); }
+const countOnly = args.includes('--count');
+let total = 0;
+let index = 0;
+for(const path of read.text.split('\n')) {
+    if(path === '') { continue; }
+    if(!countOnly) { console.log(`case ${index}`); }
+    total += run(path, countOnly);
+    index++;
+}
+if(countOnly) { console.log(`${total}`); }

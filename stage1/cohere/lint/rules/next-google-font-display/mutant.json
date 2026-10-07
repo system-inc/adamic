@@ -1,0 +1,6 @@
+{
+  "name": "block-display-accepted",
+  "file": "rule.a",
+  "from": "['auto','block','fallback'].includes(display)",
+  "to": "['auto','fallback'].includes(display)"
+}
