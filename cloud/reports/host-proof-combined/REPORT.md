@@ -1,6 +1,6 @@
 # Combined host proof
 
-22/25 adapted fixtures agree on native, 23/25 on JavaScript, and 22/25 on both. The pristine controls remain 16/25 on both backends. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
+17/25 adapted fixtures agree on each backend and jointly. Pristine controls agree on 12/25 on each backend. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
 
 Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 9eba5d10. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
 
@@ -11,14 +11,14 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 03_readFile_utf16be.a | Checker | Checker | Agrees | Agrees | None | None |
 | 04_readFile_missing.a | Checker | Checker | Agrees | Agrees | None | None |
 | 05_writeFile.a | Refused | Refused | Agrees | Agrees | None | None |
-| 06_fileExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 07_directoryExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 08_getDirectories.a | NotYet | NotYet | Disagrees | Agrees | Stats/Dirent method dispatch reads missing type field | Library |
+| 06_fileExists.a | Refused | Refused | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
+| 07_directoryExists.a | Refused | Refused | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
+| 08_getDirectories.a | Refused | Refused | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
 | 09_realpath.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 10_getModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
+| 10_getModifiedTime.a | Refused | Refused | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
 | 11_setModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 12_deleteFile.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 13_createDirectory.a | Checker | Checker | Agrees | Agrees | None | None |
+| 13_createDirectory.a | Checker | Checker | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
 | 14_getCurrentDirectory.a | Refused | Refused | Refused | Refused | callback capture cycle at 12:28 | Compiler / runtime graph ownership |
 | 15_getExecutingFilePath.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 16_getEnvironmentVariable.a | Agrees | Agrees | Agrees | Agrees | None | None |
@@ -29,7 +29,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 21_createHash.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 22_createHash_fallback.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 23_newLine.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 24_useCaseSensitiveFileNames.a | Agrees | Agrees | Agrees | Agrees | None | None |
+| 24_useCaseSensitiveFileNames.a | Refused | Refused | Refused | Refused | const-asserted stat options: optional bigint missing | Compiler / library option exemption |
 | 25_readDirectory.a | Checker | Checker | Refused | Refused | generic identity callback at 1088:12 | Compiler |
 
 Fixture 25 passes checking on both backends. Exact next diagnostic:
@@ -319,3 +319,23 @@ Validation:
 - Selected oracle package command exits 1: TestNonNullStorageUnionRemainsRefused expected a refusal but lowering returns nil on this combined proof. Initial wider run also fails TestLibraryErrorCounts on the historical library_error_original_probe.a cast; exact diagnostics are in logs. These are reported failures, not green gates. The initial WASI invocation lacked WASI_SYSROOT; cloud/setup.sh --wasi-sdk supplied it and the WASI tests were rerun successfully.
 - Setup timing: node 0.021s, Go 0.022s, submodules 0.051s, markdown 0.066s, clang 0.159s, WASI SDK 0.176s; nproc 5. Initial setup overlapped conflict resolution and its warm build failed on unresolved markers; final SDK setup completed.
 - No full gate, four-full-flow rerun, counts regeneration or macOS execution. Proof branch only; no main/area or force push.
+
+## Stats/Dirent runtime dispatch merge and recount
+
+Merged 70a2a97 via f72489a6, preserving existing nominal error/null-sentinel behavior and both fixture families. All 25 adapted and pristine sources rerun on both backends. Final adapted joint count is 17/25 (native 17, JavaScript 17). The merge imports optional-widening checks and the Node option absence proof; the proof excludes const assertions. Consequently the existing shared `{ throwIfNoEntry: false } as const` options stop fixtures 06,07,08,10,13,24 before lowering, with the optional bigint refusal. The regression begins at this merge, not at the preceding Error/storage recount. Fixture 08 no longer reaches the old layout panic because it now stops earlier; the isolated union oracle proves the dispatch fix. No global optional-widening exemption was added to hide these refusals.
+
+Verified one-line regression reproducer (Node prints true, exit 0; Adamic refuses at 1:120):
+
+```typescript
+import * as fs from 'node:fs'; const options = { throwIfNoEntry: false } as const; console.log(String(fs.statSync('.', options)?.isDirectory()));
+```
+
+Exact diagnostic:
+
+```text
+adamic: /tmp/fs_union_options.a:1:120: Adamic 0.1 refuses optional property bigint in StatSyncOptions & { bigint?: false | undefined; throwIfNoEntry: false; } absent from structural source { readonly throwIfNoEntry: false; }, which can hide fields; declare bigint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+```
+
+Owner: compiler/library Node-options absence-proof boundary. The existing exemption intentionally rejects casts and thus misses the fixture's const assertion. Fixtures 14 and 25 retain their capture-cycle and generic identity callback refusals.
+
+Validation: ADAMIC_ORACLE_WASI=1 filtered union/host tests PASS, 29.728s. Native static first-member-dispatch mutant compiles and executes then panics on Stats; Node catches it. Special kinds match Node on native and JavaScript; WASI honestly refuses ambiguous FIFO/socket kinds, and removing that guard is caught only by Node stdout with exit 0. WASI host refusals and empty-symlink error oracle pass. No full gate or full flow rerun; counts retain unique rows without a regeneration claim. stage3 host fixtures remain exactly 9eba5d10. Proof branch only, merge commits without rebasing/force/main/area pushes.
