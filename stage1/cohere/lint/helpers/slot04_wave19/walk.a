@@ -1,0 +1,8 @@
+// CSS node identities are arena indices. These are CSS kinds, not lint listener kinds.
+export function walk(ids: readonly number[], kind: (id: number) => string, children: (id: number) => readonly number[], resolveDeclaration: (id: number) => void): void {
+ for(const id of ids) {
+  const tag=kind(id);
+  if(tag==='declaration') { resolveDeclaration(id); }
+  else if(tag==='rule' || tag==='at-rule' || tag==='context' || tag==='at-root') { walk(children(id),kind,children,resolveDeclaration); }
+ }
+}

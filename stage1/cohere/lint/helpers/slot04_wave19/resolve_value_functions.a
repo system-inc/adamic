@@ -1,0 +1,26 @@
+export type EvaluationState={usedValue: boolean; resolvedValue: boolean; usedModifier: boolean; resolvedModifier: boolean; resolvedRatio: boolean; nonRatioPresent: boolean; droppedPresent: boolean; nonRatio: Map<number,boolean>; dropped: Map<number,boolean>};
+export type Resolution={text: string; ratio: boolean; ok: boolean};
+export function resolveValueFunctions(ids: readonly number[], declaration: number, state: EvaluationState, kind: (id: number) => string, value: (id: number) => string, children: (id: number) => readonly number[], resolve: (modifier: boolean,id: number) => Resolution, replace: (id: number,text: string) => void): boolean {
+ for(const id of ids) {
+  if(kind(id)!=='function') { continue; }
+  const name=value(id);
+  if(name==='--value') {
+   state.usedValue=true;
+   const result=resolve(false,id);
+   if(!result.ok) { return true; }
+   state.resolvedValue=true;
+   if(result.ratio) { state.resolvedRatio=true; }
+   else { state.nonRatioPresent=true; state.nonRatio.set(declaration,true); }
+   replace(id,result.text);
+  } else if(name==='--modifier') {
+   state.usedModifier=true;
+   const result=resolve(true,id);
+   if(!result.ok) { return true; }
+   state.resolvedModifier=true;
+   replace(id,result.text);
+  } else {
+   if(resolveValueFunctions(children(id),declaration,state,kind,value,children,resolve,replace)) { return true; }
+  }
+ }
+ return false;
+}

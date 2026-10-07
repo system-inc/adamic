@@ -1,0 +1,29 @@
+import {panic,programArguments,readTextFile} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {walk} from './walk.a';
+import {resolveDeclaration} from './resolve_declaration.a';
+import {resolveValueFunctions} from './resolve_value_functions.a';
+import type {EvaluationState,Resolution} from './resolve_value_functions.a';
+type ValueView={kind:string;value:string;prefix:string;suffix:string;edges:number[];resolution:Resolution};
+type CssView={kind:string;value:string;present:boolean;edges:number[];values:ValueView[];roots:number[]};
+function field(c:OptionsJson,id:number,key:string):number {const n=c.node(id);const i=n.keys.indexOf(key);return n.children[i] ?? panic('field '+key);}
+function text(c:OptionsJson,id:number,key:string):string {return c.node(field(c,id,key)).text;}
+function ints(c:OptionsJson,id:number,key:string):number[]{const a:number[]=[];for(const n of c.node(field(c,id,key)).children){a.push(Number(c.node(n).text));}return a;}
+function printValue(arena:readonly ValueView[],ids:readonly number[]):string {let s='';for(const id of ids){const n=arena[id] ?? panic('value node');s+=n.prefix+printValue(arena,n.edges)+n.suffix;}return s;}
+const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+for(const row of c.node(root).children){
+ for(const mode of [0,1,2]){
+  const arena:CssView[]=[];
+  for(const id of c.node(field(c,row,'Nodes')).children){const values:ValueView[]=[];for(const v of c.node(field(c,id,'Values')).children){const r=field(c,v,'Resolution');values.push({kind:text(c,v,'Kind'),value:text(c,v,'Value'),prefix:text(c,v,'Prefix'),suffix:text(c,v,'Suffix'),edges:ints(c,v,'Edges'),resolution:{text:text(c,r,'Text'),ratio:text(c,r,'Ratio')==='true',ok:text(c,r,'OK')==='true'}});}arena.push({kind:text(c,id,'Kind'),value:text(c,id,'Value'),present:text(c,id,'Present')==='true',edges:ints(c,id,'Edges'),values:values,roots:ints(c,id,'Roots')});}
+  const flags=Number(text(c,row,'Flags'));const seed=text(c,row,'SeedSets')==='true';
+  const state:EvaluationState={usedValue:(flags&1)!==0,resolvedValue:(flags&2)!==0,usedModifier:(flags&4)!==0,resolvedModifier:(flags&8)!==0,resolvedRatio:(flags&16)!==0,nonRatioPresent:seed,droppedPresent:seed,nonRatio:new Map<number,boolean>(),dropped:new Map<number,boolean>()};
+  if(seed && arena.length>0){state.nonRatio.set(0,false);state.dropped.set(0,false);}
+  const direct:boolean[]=[];for(const n of arena){direct.push(false);}
+  const functions=(id:number):boolean=>{const n=arena[id] ?? panic('css');return resolveValueFunctions(n.roots,id,state,(v:number):string=>(n.values[v] ?? panic('kind')).kind,(v:number):string=>(n.values[v] ?? panic('name')).value,(v:number):readonly number[]=>(n.values[v] ?? panic('edges')).edges,(modifier:boolean,v:number):Resolution=>{const node=n.values[v] ?? panic('resolution');if(modifier!==(node.value==='--modifier')){panic('modifier routing');}return node.resolution;},(v:number,value:string):void=>{const node=n.values[v] ?? panic('replace');node.kind='word';node.value=value;node.prefix=value;node.suffix='';node.edges=[];});};
+  const declaration=(id:number):void=>{const n=arena[id] ?? panic('declaration');resolveDeclaration(id,n.present,n.value,(source:string):number=>{if(source!==n.value){panic('parse input');}return id;},(parsed:number,identity:number):boolean=>{if(parsed!==identity){panic('identity');}return functions(identity);},(parsed:number):string=>{const node=arena[parsed] ?? panic('print');return printValue(node.values,node.roots);},(identity:number,value:string):void=>{const node=arena[identity] ?? panic('write');node.value=value;},(identity:number):void=>{state.droppedPresent=true;state.dropped.set(identity,true);});};
+  if(mode===0){walk(ints(c,row,'Roots'),(id:number):string=>(arena[id] ?? panic('kind')).kind,(id:number):readonly number[]=>(arena[id] ?? panic('edges')).edges,declaration);}
+  else {for(let id=0;id<arena.length;id++){if(mode===1){declaration(id);}else {direct[id]=functions(id);const n=arena[id] ?? panic('direct');n.value=printValue(n.values,n.roots);}}}
+  console.log(`${state.usedValue}|${state.resolvedValue}|${state.usedModifier}|${state.resolvedModifier}|${state.resolvedRatio}|${state.nonRatioPresent}|${state.droppedPresent}`);
+  for(let id=0;id<arena.length;id++){const n=arena[id] ?? panic('output');console.log(`${n.present}|${state.nonRatio.has(id)}|${state.nonRatio.get(id) ?? false}|${state.dropped.has(id)}|${state.dropped.get(id) ?? false}|${direct[id] ?? false}|${n.value}`);}
+ }
+}

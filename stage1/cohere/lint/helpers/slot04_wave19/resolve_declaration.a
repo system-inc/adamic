@@ -1,0 +1,6 @@
+export function resolveDeclaration<T>(id: number, present: boolean, value: string, parse: (source: string) => T, resolveFunctions: (nodes: T,id: number) => boolean, print: (nodes: T) => string, replace: (id: number,value: string) => void, markDropped: (id: number) => void): void {
+ if(!present || value==='') { return; }
+ const nodes=parse(value);
+ if(resolveFunctions(nodes,id)) { markDropped(id); return; }
+ replace(id,print(nodes));
+}
