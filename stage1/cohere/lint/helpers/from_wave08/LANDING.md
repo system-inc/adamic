@@ -90,3 +90,13 @@ Fresh uncached owned helper command, unchanged from the earlier sections, PASS 5
 Setup timing: Go 0.068s, Node 0.118s, submodules 0.324s, clang 0.641s, markdown dependencies 1.665s, build cache warm 92.691s, total 92.831s; nproc 5 and quota four CPUs. Six Tailwind consumers remain those in REPORT.md and BREAKPOINTS_REPORT.md; no consuming rule is independently fully unblocked. No full repository gate, broader seventeen correctness checks or fresh throughput measurement.
 
 The owned rule branch rebased cleanly onto this main and cleanly merged origin/area/stage1-lint bb2ece564842c4b2f909b9f75c27e74c2efa4f29 without manual shared-file changes. Two minimal probes still exit 70: const x: 'x' = 'x'; exceeds the shared automatic-edit limit, and ({ ['x' }); lacks parser recovery. Therefore no new helper claim is made. This branch is pushed only to its own name with an exact prior-head lease.
+
+## Current main 71d7e491b
+
+Rebased cleanly from pushed 58ccae567fab9fefb17d24ba5a4ec9b47721eb70 onto origin/main 71d7e491b3c9724f7a0e2ee754592149e7f9790b. The main delta is confined to stage3; owned implementation, stage1, native runtime, internal compiler and tool setup sources are unchanged. No new claim or implementation change.
+
+Fresh uncached owned-package comparison PASS 23.184s, all four actual-Go baselines on source Node, emitted JavaScript and ASan/UBSan native, and four successfully executing semantic mutants caught only by differing Go bytes: nonzero NewTheme deadKeys, wrong ClearNamespace hyphen boundary, omitted var( refusal, reversed unresolved breakpoint ordering. Whole-repository vet exits zero with empty log; uncached external one-byte oracle PASS 0.564s with zero cache hits. Commands match earlier landing validation, substituting /tmp/wave08-71d-*.log destinations; raw logs are evidence/landing_71d_*.log.
+
+Setup PASS: Go 0.048s, Node 0.070s, markdown dependencies 0.177s, submodules 0.220s, clang 0.405s, build cache warm 59.434s, total 59.479s; nproc 5 and CPU quota four. Same six Tailwind consumers listed in the reports, none independently fully unblocked. No full repository gate, broader seventeen correctness checks or new throughput measurement.
+
+The rule branch also rebased cleanly, preserving its area bb2ece564 clean merge. Fresh minimal probes still exit 70 on const x: 'x' = 'x'; (one automatic edit guard) and ({ ['x' }); (missing CloseBracketToken recovery). No shared source is edited to bypass either refusal. The landing cap remains closed and no helper is claimed. Push only this owned branch under its exact prior-head lease.
