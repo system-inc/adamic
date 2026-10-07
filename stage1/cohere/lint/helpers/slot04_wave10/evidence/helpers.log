@@ -1,0 +1,54 @@
+=== RUN   TestExportsGoNodeNativeJavaScript
+=== RUN   TestExportsGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:129: Go, source Node, sanitized native, emitted JavaScript match 2319 AST/list observations
+=== RUN   TestExportsGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:129: Go, source Node, sanitized native, emitted JavaScript match 8827 AST/list observations
+--- PASS: TestExportsGoNodeNativeJavaScript (8.91s)
+    --- PASS: TestExportsGoNodeNativeJavaScript/witnesses.json (0.90s)
+    --- PASS: TestExportsGoNodeNativeJavaScript/consumers.json (2.39s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/is_exported_by_name.ahasExport_&&_!hasDefault
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/is_exported_by_name.ahasDefault_=_true;
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/has_export_modifier.aif(!modifiers.present)_{_return_false;_}
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/has_export_modifier.atag_===_'export-keyword'
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/is_exported.aif(!node.present)_{_return_false;_}
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/is_exported.areturn_HasExportModifier(node.modifiers);
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (11.15s)
+    --- PASS: TestCompilingMutants/is_exported_by_name.ahasExport_&&_!hasDefault (1.77s)
+    --- PASS: TestCompilingMutants/is_exported_by_name.ahasDefault_=_true; (1.71s)
+    --- PASS: TestCompilingMutants/has_export_modifier.aif(!modifiers.present)_{_return_false;_} (1.65s)
+    --- PASS: TestCompilingMutants/has_export_modifier.atag_===_'export-keyword' (1.63s)
+    --- PASS: TestCompilingMutants/is_exported.aif(!node.present)_{_return_false;_} (1.77s)
+    --- PASS: TestCompilingMutants/is_exported.areturn_HasExportModifier(node.modifiers); (1.77s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:247: consumer omission caught: structure/network-require-hook-options-parameter
+    helpers_test.go:247: consumer omission caught: structure/next-no-near-miss-route-export
+    helpers_test.go:247: consumer omission caught: structure/react-component-no-const-assignment
+    helpers_test.go:247: consumer omission caught: @typescript-eslint/no-useless-empty-export
+    helpers_test.go:247: consumer omission caught: structure/network-require-hook-request-suffix
+    helpers_test.go:247: consumer omission caught: structure/network-require-hook-variables-type
+    helpers_test.go:247: consumer omission caught: structure/react-component-require-named-export
+    helpers_test.go:247: consumer omission caught: @next/next/no-typos
+    helpers_test.go:247: consumer omission caught: nexus/consistency-no-screaming-snake-case
+    helpers_test.go:247: consumer omission caught: structure/boundary-no-project-theme-value
+--- PASS: TestConsumerCoverage (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave10	20.107s

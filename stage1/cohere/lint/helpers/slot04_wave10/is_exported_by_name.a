@@ -1,0 +1,11 @@
+import type { ModifierListView } from './modifier_view.a';
+export function IsExportedByName(modifiers: ModifierListView): boolean {
+    if(!modifiers.present) { return false; }
+    let hasExport = false;
+    let hasDefault = false;
+    for(const tag of modifiers.tags) {
+        if(tag === 'export-keyword') { hasExport = true; }
+        else if(tag === 'default-keyword') { hasDefault = true; }
+    }
+    return hasExport && !hasDefault;
+}

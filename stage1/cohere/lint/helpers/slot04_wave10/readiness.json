@@ -1,0 +1,146 @@
+{
+  "base_helper_ready": 46,
+  "removed_edges": 15,
+  "additional_helper_ready": 2,
+  "newly_helper_ready_rules": [
+    "@typescript-eslint/no-useless-empty-export",
+    "nexus/consistency-no-screaming-snake-case"
+  ],
+  "helpers": [
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/module.IsExportedByName",
+      "consumers": [
+        "@next/next/no-typos",
+        "structure/boundary-no-project-theme-value",
+        "structure/next-no-near-miss-route-export",
+        "structure/react-component-no-const-assignment",
+        "structure/react-component-require-named-export"
+      ]
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/module.HasExportModifier",
+      "consumers": [
+        "@typescript-eslint/no-useless-empty-export",
+        "nexus/consistency-no-screaming-snake-case",
+        "structure/network-require-hook-options-parameter",
+        "structure/network-require-hook-request-suffix",
+        "structure/network-require-hook-variables-type"
+      ]
+    },
+    {
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/module.IsExported",
+      "consumers": [
+        "@typescript-eslint/no-useless-empty-export",
+        "nexus/consistency-no-screaming-snake-case",
+        "structure/network-require-hook-options-parameter",
+        "structure/network-require-hook-request-suffix",
+        "structure/network-require-hook-variables-type"
+      ]
+    }
+  ],
+  "remaining": [
+    {
+      "rule": "@next/next/no-typos",
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsInPagesDirectory",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.splitSegments",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.BestMatch",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.MinimumEditDistance"
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-useless-empty-export",
+      "remaining_helpers": []
+    },
+    {
+      "rule": "nexus/consistency-no-screaming-snake-case",
+      "remaining_helpers": []
+    },
+    {
+      "rule": "structure/boundary-no-project-theme-value",
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.ElementParts",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.UnescapeStringLiteralText",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.decodeEntity",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.hexValue",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor"
+      ]
+    },
+    {
+      "rule": "structure/network-require-hook-options-parameter",
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collect",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collectFunctionDeclaration",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collectVariableStatement",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.NetworkFileAnalysisFor",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.bodyCallsNetworkService",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.findNetworkServiceCalls",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.isNetworkServiceHookCall",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.parameterName",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.parameterNodes",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.parameterTypeNode",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.typeReferenceName"
+      ]
+    },
+    {
+      "rule": "structure/network-require-hook-request-suffix",
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collect",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collectFunctionDeclaration",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collectVariableStatement",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.NetworkFileAnalysisFor",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.bodyCallsNetworkService",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.findNetworkServiceCalls",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.isNetworkServiceHookCall",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.parameterNodes"
+      ]
+    },
+    {
+      "rule": "structure/network-require-hook-variables-type",
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/property.Name",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collect",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collectFunctionDeclaration",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collectVariableStatement",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.NetworkFileAnalysisFor",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.bodyCallsNetworkService",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.findNetworkServiceCalls",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.isNetworkServiceHookCall",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.parameterName",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.parameterNodes",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.parameterTypeNode",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.typeReferenceName"
+      ]
+    },
+    {
+      "rule": "structure/next-no-near-miss-route-export",
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/imports.NormalizedFileName",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.RouteContractExports",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.buildRouteFileContracts",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.splitSegments",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.BestMatch",
+        "github.com/system-inc/cohere/internal/lint/ecmascript/text.MinimumEditDistance"
+      ]
+    },
+    {
+      "rule": "structure/react-component-no-const-assignment",
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsLikelyComponentName",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.isForwardRefCall"
+      ]
+    },
+    {
+      "rule": "structure/react-component-require-named-export",
+      "remaining_helpers": [
+        "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsLikelyComponentName",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.FileContextFor",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.IsLikelyReactComponent",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.isJsxValue",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.jsxAfterParentheses",
+        "github.com/system-inc/cohere/internal/lint/rules/structure.returnArgumentLooksLikeJsx"
+      ]
+    }
+  ]
+}
