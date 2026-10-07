@@ -1,0 +1,64 @@
+import { Diagnostic } from './diagnostic.ts';
+import { waveNode } from './wave_node.a';
+import type { Bindings } from './bindings.ts';
+import { WaveSymbol } from './wave_symbol.a';
+import { Repair } from './repair.ts';
+
+export class NoUndefInit {
+    readonly bindings: Bindings;
+    constructor(bindings: Bindings) {
+        this.bindings = bindings;
+    }
+    run(): void {
+        for(let index = 0; index < this.bindings.rules.parser.nodes.length; index++) {
+            const node = waveNode(this.bindings.rules.parser, index);
+            const list = waveNode(this.bindings.rules.parser, this.bindings.parent(index));
+            if(
+                node.kind !== 'VariableDeclaration' ||
+                list.kind !== 'VariableDeclarationList' ||
+                ['2', '4', '6'].includes(list.semantic)
+            ) {
+                continue;
+            }
+            const initializer = this.bindings.shape.initializer(index);
+            const value = waveNode(this.bindings.rules.parser, initializer);
+            if(value.kind !== 'Identifier' || value.text !== 'undefined') {
+                continue;
+            }
+            const symbol = new WaveSymbol(this.bindings.rules, initializer);
+            if(symbol.sourceDeclarations) {
+                continue;
+            }
+            const nameIndex = this.bindings.shape.name(index);
+            if(nameIndex < 0) {
+                continue;
+            }
+            const name = waveNode(this.bindings.rules.parser, nameIndex);
+            const finding = new Diagnostic(
+                'no-undef-init',
+                'unnecessaryUndefinedInit',
+                `\`${this.bindings.rules.text(name)}\` is initialized to \`undefined\`, which is the value it would already have. The initializer adds a token and no behaviour, and it costs the reader a moment deciding whether the author meant something by it. Drop it.`,
+                this.bindings.rules.byte(this.bindings.rules.start(node)),
+                this.bindings.rules.byte(node.end),
+                '',
+            );
+            this.bindings.rules.findings.push(finding);
+            if(list.semantic !== '1' || name.kind !== 'Identifier') {
+                continue;
+            }
+            let removal = name.end;
+            for(const child of node.children.slice(node.children.indexOf(nameIndex) + 1)) {
+                if(child === initializer) {
+                    break;
+                }
+                removal = waveNode(this.bindings.rules.parser, child).end;
+            }
+            const text = this.bindings.rules.scanner.text.slice(removal, node.end);
+            if(!text.includes('/*') && !text.includes('//')) {
+                finding.repairs.push(
+                    new Repair(this.bindings.rules.byte(removal), this.bindings.rules.byte(node.end), ''),
+                );
+            }
+        }
+    }
+}

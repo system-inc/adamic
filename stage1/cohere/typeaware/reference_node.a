@@ -1,0 +1,20 @@
+export class ReferenceNode {
+    readonly kind: string;
+    readonly symbol: number;
+    readonly body: number;
+    readonly children: readonly number[];
+    readonly declarations: readonly number[];
+    constructor(
+        kind: string,
+        symbol: number,
+        body: number,
+        children: readonly number[],
+        declarations: readonly number[],
+    ) {
+        this.kind = kind;
+        this.symbol = symbol;
+        this.body = body;
+        this.children = children;
+        this.declarations = declarations;
+    }
+}
