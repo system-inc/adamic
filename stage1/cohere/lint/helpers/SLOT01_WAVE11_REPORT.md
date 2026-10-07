@@ -161,3 +161,11 @@ The following actual current-main log witnesses retain their prior credit: 77 se
 - slot01_wave9_test.go:142: compiled regexp_bounded_quantifier_width.a mutant caught at output line 22: got "2", Go "0"
 - slot01_wave9_test.go:147: compiled regexp_quantifier_width.a mutant caught at output line 25795: got "1", Go "2"
 - slot01_wave9_test.go:152: compiled regexp_group_kind.a mutant caught at output line 25936: got "0", Go "2"
+
+## Landing refresh on b8fb957a
+
+Rebased the worker branch onto current main b8fb957aa839a9e8cb0b54279dd9864fa317bd30 without conflicts. The incoming inherited static-field read fix is retained. No shared files were edited. The pre-report rebased head was e2a4cef34e4c6ab90d9bbc001ee8675244b45f71.
+
+Ran `go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m`: PASS 590.238s, 76 top-level passes and eight explicit ownership-blocked skips. The log records all 77 compiled semantic mutant catches, the two expected refusal checks, and all eight source-only tree mutant catches. Native/emitted-JavaScript validation of the tree helpers is still blocked by the same CollapseCopyNode[] adamic/cycle-capable refusal; no readiness credit is added.
+
+`go vet ./stage1/cohere/lint/helpers` exited zero. `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=20m` passed in 1.052s. Logs are evidence/slot01-wave11/{landing,vet,input}-b8fb.log. No full repository gate was run. No new helper was claimed.
