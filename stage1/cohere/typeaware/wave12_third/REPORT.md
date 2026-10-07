@@ -22,7 +22,7 @@ Cohere remains pinned at `715ba94f3608a6500086b1076ce5cb7e51b836db`, typescript-
 
 ## Agreement and controls
 
-The unchanged coverage manifests retain 77 compiler roots and 287 repository roots (212 `.a`, 75 `.ts`). Configured declaration files are retained. Controls contain 11 targeted sources plus 83 literal source rows extracted from pinned Go reference tests: 44 Function, 14 nonconstructor, 25 wrapper rows. Each is reevaluated by production Go rather than copying expected diagnostics. Controls include direct/indirect invocations, optional access, template/string/dynamic subscripts, callee parentheses, nested shadows, named functions, parameters, hoisting, imported source/ambient shadows, multiple findings, Unicode and CRLF. Generated helper.ts is a TypeScript reference input, not an Adamic implementation module; its preserved bytes have a .reference.txt evidence filename.
+The unchanged coverage manifests retain 77 compiler roots and 287 repository roots (212 `.a`, 75 `.ts`). Configured declaration files are retained. Controls contain 11 targeted sources plus 83 literal source rows extracted from pinned Go reference tests: 44 Function, 14 nonconstructor, 25 wrapper rows. Each is reevaluated by production Go rather than copying expected diagnostics. Controls include direct/indirect invocations, optional access, template/string/dynamic subscripts, callee parentheses, nested shadows, named functions, parameters, hoisting, imported source/ambient shadows, multiple findings, Unicode and CRLF. Generated helper.ts is a TypeScript reference input, not an Adamic implementation module; its preserved bytes have a .reference.txt.gz evidence filename. All preserved source controls are compressed to keep them outside repository source discovery.
 
 | Population | Findings | Identical bytes | Normal and ASan/UBSan/LSan |
 | --- | ---: | ---: | --- |
@@ -56,7 +56,7 @@ go test -v -count=1 -timeout 30m ./internal/oracle \
 
 PASS **22.080s**, five native/Node/emitted-JavaScript fixtures with sanitizers and the one-byte mutant. This is the filtered compiler oracle, not emitted-JavaScript execution of the new lint suite.
 
-The first attempt failed building the isolated oracle because the two imported core packages collided. The second byte comparison caught the shared diagnostic helper's default TypeScript namespace on these core rules. Both were corrected inside this directory. Failed logs are preserved; build failures were not counted as killed mutants.
+The first attempt failed building the isolated oracle because the two imported core packages collided. The second byte comparison caught the shared diagnostic helper's default TypeScript namespace on these core rules. Both were corrected inside this directory. Failed logs are preserved, with the import-failure log compressed to retain its original whitespace; build failures were not counted as killed mutants.
 
 ## Mutants and released handles
 

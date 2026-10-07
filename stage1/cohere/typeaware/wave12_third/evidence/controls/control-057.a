@@ -1,2 +1,0 @@
-export {};
-function bar() { return function Symbol() {}; } var baz = new Symbol('baz');
