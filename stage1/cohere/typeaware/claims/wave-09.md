@@ -117,3 +117,15 @@ and absent numeric handed-node listener contract remain separate shared gaps.
 No React analysis exception applies; these claims are not counted as finished
 or parked under that exception. No new batch is claimed. See
 ../wave09_core/REGEX_POLICY_REPORT.md for current scope and retained evidence.
+
+## Landing refresh on c01907a7
+
+Rebased onto current main c01907a7 and reran all original rule, bridge, Node
+and seventeen owned component checks, including their mutants and sanitizers.
+The shared origin/codex/lint-regex branch now exists at 071fb012. Its 107-row
+table has no fixed-pattern compile site for these three claimed rules. Its
+own gaps report reproduces the same dynamic constructor refusal. This
+supersedes the earlier observation that the branch was absent; the dynamic
+RegExp and numeric handed-node blockers remain. No further matcher was added,
+no React parking exception was used and no new rules were claimed. See
+../wave09_core/LANDING_C019_REPORT.md for fresh verification evidence.

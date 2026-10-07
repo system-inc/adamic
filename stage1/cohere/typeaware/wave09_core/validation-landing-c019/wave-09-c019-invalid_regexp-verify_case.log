@@ -1,0 +1,19 @@
+go-build 0 0.06514
+tables 0 0.031963
+go 0 0.169005
+normal-build 0 2.025194
+normal 0 0.316823
+normal identical bytes 15603280
+sanitized-build 0 2.422953
+sanitized 0 1.778798
+sanitized identical bytes 15603280
+ascii-mutant-build 0 2.785524
+ascii-mutant 0 0.417162
+ascii-mutant caught at byte 2180
+fold-mutant-build 0 2.519841
+fold-mutant 0 0.316935
+fold-mutant caught at byte 379
+js-build 0 0.221991
+source 0 1.726584
+emitted 0 1.57224
+PASS exhaustive ECMAScript case canonicalization, production Go, native, sanitizers, both Node modes and two semantic mutants; no native regex compiler is exercised
