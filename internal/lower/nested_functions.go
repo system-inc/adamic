@@ -125,7 +125,7 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 }
 
 func (l *lowering) nestedSibling(node *ast.Node) int {
-	if !ast.IsIdentifier(node) || l.function == nil || l.function.NestedParent == 0 {
+	if !ast.IsIdentifier(node) || l.function == nil {
 		return -1
 	}
 	local, ok := l.locals[l.symbol(node)]
@@ -133,8 +133,48 @@ func (l *lowering) nestedSibling(node *ast.Node) int {
 		return -1
 	}
 	index := l.result.Locals[local].NestedFunction - 1
-	if index < 0 || l.result.Functions[index].NestedParent != l.function.NestedParent {
+	if index < 0 {
 		return -1
+	}
+	parent := l.result.Functions[index].NestedParent
+	if l.function.NestedParent != 0 {
+		if parent == l.function.NestedParent {
+			return index
+		}
+		return -1
+	}
+	if !l.function.Closure {
+		return -1
+	}
+	// Forward only through anonymous closures in the same lexical group.
+	// Crossing another named group still requires a separate binding strategy.
+	boundary := -1
+	for position := len(l.closures) - 1; position >= 0; position-- {
+		function := l.closures[position]
+		if function == parent-1 {
+			boundary = position
+			break
+		}
+		if group := l.result.Functions[function].NestedParent; group != 0 {
+			if group != parent {
+				return -1
+			}
+			boundary = position
+			break
+		}
+	}
+	for _, function := range l.closures[boundary+1:] {
+		if forwarded := l.result.Functions[function].ForwardedNestedParent; forwarded != 0 && forwarded != parent {
+			return -1
+		}
+	}
+	for _, function := range l.closures[boundary+1:] {
+		l.result.Functions[function].ForwardedNestedParent = parent
+	}
+	// Known slots propagate now; slots discovered by later sibling bodies are
+	// added to every forwarding closure when the enclosing frame is completed.
+	for _, captured := range l.result.Functions[index].Environment {
+		l.touch(captured)
 	}
 	return index
 }
@@ -206,13 +246,12 @@ func (l *lowering) finishNestedEnvironment(function *ir.Function, owner int) {
 		l.result.Locals[local].Preallocated = true
 		function.FrameEnvironment = append(function.FrameEnvironment, local)
 	}
-	if len(function.FrameEnvironment) == 0 {
-		return
+	if len(function.FrameEnvironment) > 0 {
+		function.Body = append([]ir.Statement{ir.AllocateEnvironment{Cells: slices.Clone(function.FrameEnvironment)}}, function.Body...)
 	}
-	function.Body = append([]ir.Statement{ir.AllocateEnvironment{Cells: slices.Clone(function.FrameEnvironment)}}, function.Body...)
 	for index := range l.result.Functions {
 		target := &l.result.Functions[index]
-		retains := target.NestedParent == owner+1
+		retains := target.NestedParent == owner+1 || target.ForwardedNestedParent == owner+1
 		for _, local := range target.Environment {
 			retains = retains || slices.Contains(function.FrameEnvironment, local)
 		}
@@ -238,8 +277,15 @@ func (l *lowering) finishNestedEnvironment(function *ir.Function, owner int) {
 		}
 	}
 	for index := range l.result.Functions {
-		if l.result.Functions[index].NestedParent == owner+1 {
-			l.result.Functions[index].Environment = slices.Clone(environment)
+		target := &l.result.Functions[index]
+		if target.NestedParent == owner+1 {
+			target.Environment = slices.Clone(environment)
+		} else if target.ForwardedNestedParent == owner+1 {
+			for _, local := range environment {
+				if !slices.Contains(target.Environment, local) {
+					target.Environment = append(target.Environment, local)
+				}
+			}
 		}
 	}
 }

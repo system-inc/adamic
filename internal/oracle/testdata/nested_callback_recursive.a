@@ -1,0 +1,12 @@
+function make(start: number): (values: number[]) => number {
+ let bias = start;
+ function count(n: number): number { return n <= 0 ? bias : countAll([n - 1]); }
+ function countAll(values: number[]): number {
+  const offset = 10;
+  return values.reduce((sum, n) => offset + sum + count(n), 0);
+ }
+ return countAll;
+}
+const count = make(2);
+console.log(String(count([1, 2])));
+console.log(String(make(3)([0])));

@@ -214,6 +214,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	// The environment may have grown while the body was lowered (captures are found as they're
 	// read), so it's taken from what's recorded, not from this copy.
 	function.Environment = l.result.Functions[index].Environment
+	function.ForwardedNestedParent = l.result.Functions[index].ForwardedNestedParent
 	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
 	l.finishNestedEnvironment(&function, index)

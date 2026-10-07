@@ -874,7 +874,13 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 			}
 			arguments = append(arguments, value)
 		}
-		return ir.CallClosure{Closure: ir.ClosureSelf{}, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
+		carrier := ir.Expression(ir.ClosureSelf{})
+		if l.function.NestedParent != l.result.Functions[direct].NestedParent {
+			// Anonymous captures have their own layout. Materialize a temporary carrier
+			// for the target layout; do not capture a sibling's canonical function value.
+			carrier = ir.MakeClosure{Function: direct}
+		}
+		return ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
 	}
 	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
 		instance, err := l.instantiateFunction(node, declaration)

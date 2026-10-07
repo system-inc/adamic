@@ -845,7 +845,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		return fmt.Sprintf("new AdamicClosure(%s, [%s])", functionName(e.program, expression.Function), strings.Join(cells, ", "))
 	case ir.CallClosure:
 		if expression.Direct > 0 {
-			return fmt.Sprintf("%s(self, [%s])", functionName(e.program, expression.Direct-1), e.values(expression.Arguments))
+			return fmt.Sprintf("%s(%s, [%s])", functionName(e.program, expression.Direct-1), e.value(expression.Closure), e.values(expression.Arguments))
 		}
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
 			if property.Optional {

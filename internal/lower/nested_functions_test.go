@@ -1,8 +1,12 @@
 package lower
 
 import (
+	"context"
 	"errors"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"path/filepath"
 	"slices"
 	"strings"
 	"testing"
@@ -139,5 +143,52 @@ func TestClosedFrameInputRejectsMutation(t *testing.T) {
 	program.Functions[owner].Body = append(program.Functions[owner].Body, ir.SetProperty{})
 	if l.closedFrameInput(input) {
 		t.Fatal("mutable graph accepted as closed")
+	}
+}
+
+// Bypass only the suppression-directive gate to exercise the lowering guard
+// behind TypeScript's earlier TS2630 diagnostic. The public fixture pins TS2630.
+func TestNestedRebindingNotYet(t *testing.T) {
+	path, err := filepath.Abs("../oracle/refusals/nested_rebinding.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	text := strings.Replace(string(source), "    inner =", "    // @ts-expect-error\n    inner =", 1)
+	program, err := load.LoadOverlay([]string{path}, map[string]string{path: text})
+	if err != nil {
+		t.Fatal(err)
+	}
+	file := program.Files()[0]
+	check, release := program.Checker(context.Background(), file)
+	defer release()
+	{
+		l := &lowering{program: program, checker: check, result: &ir.Program{}, this: -1, functionIndex: -1}
+		err := l.declareModule(file.Statements.Nodes)
+		// declareModule lowers the body, so the ordinary marker reaches the guard.
+		if err == nil {
+			_, err = l.statements(file.Statements.Nodes)
+		}
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "rebinding a nested function declaration") {
+			t.Fatalf("want canonical NotYet, got %v", err)
+		}
+	}
+}
+
+func TestNestedCallbackCycleIsRefused(t *testing.T) {
+	_, err := lowerSource(t, `function make(): () => number {
+ let saved: (() => number) | undefined = undefined;
+ function read(): number { return saved === undefined ? 1 : saved(); }
+ function factory(): () => number { return () => read(); }
+ saved = factory();
+ return saved;
+} console.log(String(make()()));`)
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
+		t.Fatalf("want callback environment cycle refusal, got %v", err)
 	}
 }

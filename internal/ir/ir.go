@@ -81,6 +81,9 @@ type Function struct {
 	Environment []int
 	// NestedParent is the enclosing function plus one for a named nested declaration.
 	NestedParent int
+	// ForwardedNestedParent identifies a named group called directly from this
+	// anonymous closure. Its complete shared layout is forwarded after lowering.
+	ForwardedNestedParent int
 	// FrameEnvironment is the layout of the single entry allocation for this frame.
 	FrameEnvironment []int
 	NestedFrame      bool

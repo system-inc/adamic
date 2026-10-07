@@ -689,3 +689,87 @@ optional/default signatures in 01 but does not change its earlier policy refusal
 01, 08 and 09 stay paused on the exact programs and choices already recorded.
 The shared AllocateEnvironment construct, cycle proof and heap placement are
 unchanged. Nothing was built against unmerged graph-regions.
+
+## Reader omission and callback forwarding follow-up
+
+The exact Reader interface witness, its direct class call, its subclass override
+through the base type, and its string variant all print `true undefined` in Node,
+the native release build, the sanitized native build, and the JavaScript backend.
+They pass the leak check. The existing omission fix covers all four; no new
+argument representation or padding path was introduced. Their fixtures are
+`omitted_reader{,_direct,_override,_string}.a`. A permanent IR mutant replaces
+the exact Reader call's absent number with present zero. It exits successfully
+and without a leak; Node comparison rejects `false 0` instead of `true undefined`.
+
+An anonymous callback can directly call a named helper in its enclosing named
+group. Its IR function records ForwardedNestedParent. Completing that group's
+frame appends the whole shared environment layout to each forwarding callback,
+including captures discovered in later sibling bodies. Intermediate anonymous
+closures carry the layout too. The original AllocateEnvironment remains the one
+allocation site for the enclosing frame's captured locals. No sibling function
+binding becomes a captured cell.
+
+A callback can also capture locals belonging to its immediate helper. Consequently
+its layout need not equal the target helper's layout. Its direct call constructs
+a temporary counted target-layout closure carrier, invokes the target code,
+and releases the carrier. Both emitters use the carrier expression in CallClosure,
+rather than assuming ClosureSelf has the target layout. This costs one closure
+allocation per such direct call. It does not allocate another environment record.
+Region analysis still sees the original AllocateEnvironment site and ordinary
+MakeClosure captures; no escape proof, region rule, borrow rule, or reuse rule is
+disabled. Calling across another named group and first-class sibling values remain
+refused. Only direct calls through anonymous closures in the same group are added.
+
+The cycle finder sees the full forwarded layout. A saved callback that calls a
+helper reading that same saved callback is still cycle-capable and refused. Four
+fixtures cover recursion with callback-local captures, a callback escaping both
+frames, two levels of anonymous callbacks, and a capture discovered in a later
+sibling body. All match Node in both backends with sanitizers and leak checks.
+A permanent wrong-carrier mutant replaces MakeClosure with ClosureSelf in the
+escaped fixture. It exits successfully without a leak; Node output alone catches
+it. The count table adds four callback rows (29, 16, 9, and 9 allocations) and
+four Reader rows. No pre-existing row changes.
+
+Nested declaration rebinding keeps the exact NotYet message
+`rebinding a nested function declaration`, including generic declarations and
+array destructuring targets. The public `refusals/nested_rebinding.a` witness
+stops earlier at TypeScript TS2630. A lower package test suppresses that diagnostic
+in a read-only overlay and bypasses only the suppression-directive gate to pin
+the lowering message. Removing the guard in a Go overlay makes that test fail
+because lowering succeeds. The public compiler still refuses suppression directives.
+
+An unpushed scratch merge used nested-functions 4d49d5b plus this follow-up,
+non-null-check a02613eff851e07f567ab9934adfc8a2dc98eeca,
+taste-not-soundness d2c05df34443d9c0ae4fe6639beef2c5aee8a4ad, and
+interface-downcasts 21558749e9b18ed0416e465ece1f164c00821259.
+Ten of eleven original real-source fixtures match Node in both backends, under
+sanitizers and leak checks. Fixture 08 clears with truthiness; fixture 09 clears
+with anonymous sibling-call forwarding. Fixture 01 stops at its exact line 72,
+`var pos: number;`, with `Adamic 0.1 refuses var; use const or let`. That remaining
+blocker belongs to non-null-check. Its asserted initializer `var text = textInitial!`
+is accepted, but an ordinary uninitialized var is still refused. The feature branch
+alone retains 8/11 because the three policy branches are not merged here.
+Scratch merge resolutions retained the omission fix's byte representation for
+optional boolean slots instead of mixing the two branches' encodings. Nothing
+from graph-regions was built or merged.
+
+The developer-tools generator was built from a detached read-only checkout of
+8a04d2a3be4d1644a13c73ee8964280e5e42847e, with GOFLAGS=-buildvcs=false to avoid
+unavailable VCS stamping. The command was `/tmp/adamic-reader-fuzz -root
+/workspace/adamic -with interface-omitted-optional -seed 1 -count 200 -parallel 4
+-work /tmp/adamic-reader-fuzz-run -v`. In 3m10s it reported 187 agreed, 13 checked,
+0 findings, 0 NotYet, 0 invalid, and 0 unfit. Checked programs stop at matching
+inserted checks in both compiled backends; they are not counted as agreeing with
+Node. Replaying seed 113 showed an array-bounds panic, `index 1 is outside an array
+of length 1`, in both backends. The scene is opt-in and does not force every seed
+to contain an interface omission. The full log is /tmp/adamic-reader-fuzz-200.log.
+
+This turn's setup log is /tmp/adamic-reader-setup.log: go 0s, clang 1s, node 1s,
+submodules 1s, warm 80s, total 80s; nproc 5, quota 4. Reader oracle and mutant
+proofs are in /tmp/adamic-reader-proof.log. Callback, rebinding, and combined
+measurement logs are /tmp/adamic-callback-rebinding.log,
+/tmp/adamic-callback-mutant.log, /tmp/adamic-callback-cycle.log,
+/tmp/adamic-rebinding-final.log, /tmp/adamic-rebinding-mutant.log, and
+/tmp/adamic-combined-after-callback-final.log. The first combined measurement was
+9/11; the callback fix gains fixture 09 and reaches 10/11. No main or area branch
+was pushed to or merged into.
