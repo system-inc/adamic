@@ -1,0 +1,35 @@
+TestSlot02Batch13/condition_negation_targets
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 559: got "hook:0:1856;hook:0:1857;expr:0:1858;link:0:0:2;link:0:0:3;|0:1"; Go "hook:0:1856;hook:0:1857;expr:0:1858;link:0:0:3;link:0:0:2;|0:1"
+
+TestSlot02Batch13/condition_and_continuation
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 853: got "hook:0:3341;new:0:4;expr:0:3342;link:0:0:2;link:0:0:3;enter:0:4;expr:0:3344;link:0:4:2;link:0:4:3;|4:1"; Go "hook:0:3341;new:0:4;expr:0:3342;link:0:0:4;link:0:0:3;enter:0:4;expr:0:3344;link:0:4:2;link:0:4:3;|4:1"
+
+TestSlot02Batch13/condition_nullish_false_continuation
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 1207: got "hook:0:25463;new:0:4;expr:0:25464;link:0:0:2;link:0:0:4;enter:0:4;expr:0:25466;link:0:4:2;link:0:4:3;|4:1"; Go "hook:0:25463;new:0:4;expr:0:25464;link:0:0:2;link:0:0:3;link:0:0:4;enter:0:4;expr:0:25466;link:0:4:2;link:0:4:3;|4:1"
+
+TestSlot02Batch13/condition_hook_presence
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 185: got "hook:0:271;new:0:4;new:0:5;expr:0:272;link:0:0:4;link:0:0:5;enter:0:4;expr:0:274;link:0:4:-1;link:0:4:2;enter:0:5;expr:0:280;link:0:5:-1;link:0:5:2;|5:1"; Go "new:0:4;new:0:5;expr:0:272;link:0:0:4;link:0:0:5;enter:0:4;expr:0:274;link:0:4:-1;link:0:4:2;enter:0:5;expr:0:280;link:0:5:-1;link:0:5:2;|5:1"
+
+TestSlot02Batch13/statement_notification
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 7: got "unknown:0:1;unknown:0:11;|0:1"; Go "reached:0:0;unknown:0:1;unknown:0:11;|0:1"
+
+TestSlot02Batch13/statement_return_order
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 289: got "reached:0:1445;return:0:-1;expr:0:1446;|0:1"; Go "reached:0:1445;expr:0:1446;return:0:-1;|0:1"
+
+TestSlot02Batch13/statement_default_traversal
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 7: got "reached:0:0;unknown:0:11;unknown:0:1;|0:1"; Go "reached:0:0;unknown:0:1;unknown:0:11;|0:1"
+
+TestSlot02Batch13/statement_with_body
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 2443: got "reached:0:30425;expr:0:30426;|0:1"; Go "reached:0:30425;expr:0:30426;reached:0:30427;statements:0:2610;|0:1"
+
+TestSlot02Batch13/value_default_name
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 145: got "value::-1:false:false"; Go "value::100:false:true"
+
+TestSlot02Batch13/value_matching_quotes
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 811: got "value:parse:red;:-1:false:true"; Go "value:bare:0:'redx:true;bare:0:integer:true;:-1:false:false"
+
+TestSlot02Batch13/value_bare_ratio
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 317: got "value:bare:0:'red':true;:200:false:true"; Go "value:bare:0:'red':true;:200:true:true"
+
+TestSlot02Batch13/value_theme_fallthrough
+slot02_batch13_test.go:271: compiled semantic mutant caught at line 19: got "value:theme:0:--percentage-*:red;bare:0:--percentage-*:true;bare:0:[*]:true;:-1:false:false"; Go "value:theme:0:--percentage-*:red;bare:0:[*]:true;:-1:false:false"
