@@ -1,0 +1,274 @@
+[
+  {
+    "order": 1,
+    "file": "src/compiler/core.ts",
+    "line": 127,
+    "column": 42,
+    "code": "TS2532",
+    "message": "Object is possibly 'undefined'."
+  },
+  {
+    "order": 2,
+    "file": "src/compiler/core.ts",
+    "line": 127,
+    "column": 70,
+    "code": "TS2532",
+    "message": "Object is possibly 'undefined'."
+  },
+  {
+    "order": 3,
+    "file": "src/compiler/core.ts",
+    "line": 14,
+    "column": 37,
+    "code": "TS2345",
+    "message": "Argument of type 'T | undefined' is not assignable to parameter of type 'T'."
+  },
+  {
+    "order": 4,
+    "file": "src/compiler/debug.ts",
+    "line": 5,
+    "column": 18,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 5,
+    "file": "src/compiler/diagnosticInformationMap.generated.ts",
+    "line": 6,
+    "column": 5,
+    "code": "TS2375",
+    "message": "Type '{ code: number; category: DiagnosticCategory; key: string; message: string; reportsUnnecessary: {} | undefined; elidedInCompatabilityPyramid: boolean | undefined; reportsDeprecated: ... | undefined; }' is not assignable to type 'DiagnosticMessage' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties."
+  },
+  {
+    "order": 6,
+    "file": "src/compiler/scanner.ts",
+    "line": 1002,
+    "column": 13,
+    "code": "TS7029",
+    "message": "Fallthrough case in switch."
+  },
+  {
+    "order": 7,
+    "file": "src/compiler/scanner.ts",
+    "line": 1012,
+    "column": 13,
+    "code": "TS7029",
+    "message": "Fallthrough case in switch."
+  },
+  {
+    "order": 8,
+    "file": "src/compiler/scanner.ts",
+    "line": 1135,
+    "column": 13,
+    "code": "TS7029",
+    "message": "Fallthrough case in switch."
+  },
+  {
+    "order": 9,
+    "file": "src/compiler/scanner.ts",
+    "line": 1582,
+    "column": 17,
+    "code": "TS7029",
+    "message": "Fallthrough case in switch."
+  },
+  {
+    "order": 10,
+    "file": "src/compiler/scanner.ts",
+    "line": 2215,
+    "column": 21,
+    "code": "TS7029",
+    "message": "Fallthrough case in switch."
+  },
+  {
+    "order": 11,
+    "file": "src/compiler/scanner.ts",
+    "line": 2288,
+    "column": 21,
+    "code": "TS7029",
+    "message": "Fallthrough case in switch."
+  },
+  {
+    "order": 12,
+    "file": "src/compiler/scanner.ts",
+    "line": 2357,
+    "column": 17,
+    "code": "TS7029",
+    "message": "Fallthrough case in switch."
+  },
+  {
+    "order": 13,
+    "file": "src/compiler/scanner.ts",
+    "line": 261,
+    "column": 16,
+    "code": "TS2532",
+    "message": "Object is possibly 'undefined'."
+  },
+  {
+    "order": 14,
+    "file": "src/compiler/scanner.ts",
+    "line": 274,
+    "column": 13,
+    "code": "TS2532",
+    "message": "Object is possibly 'undefined'."
+  },
+  {
+    "order": 15,
+    "file": "src/compiler/scanner.ts",
+    "line": 274,
+    "column": 41,
+    "code": "TS2532",
+    "message": "Object is possibly 'undefined'."
+  },
+  {
+    "order": 16,
+    "file": "src/compiler/scanner.ts",
+    "line": 2750,
+    "column": 17,
+    "code": "TS7029",
+    "message": "Fallthrough case in switch."
+  },
+  {
+    "order": 17,
+    "file": "src/compiler/scanner.ts",
+    "line": 278,
+    "column": 20,
+    "code": "TS2532",
+    "message": "Object is possibly 'undefined'."
+  },
+  {
+    "order": 18,
+    "file": "src/compiler/scanner.ts",
+    "line": 2930,
+    "column": 17,
+    "code": "TS7029",
+    "message": "Fallthrough case in switch."
+  },
+  {
+    "order": 19,
+    "file": "src/compiler/scanner.ts",
+    "line": 3311,
+    "column": 13,
+    "code": "TS7029",
+    "message": "Fallthrough case in switch."
+  },
+  {
+    "order": 20,
+    "file": "src/compiler/scanner.ts",
+    "line": 450,
+    "column": 12,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 21,
+    "file": "src/compiler/scanner.ts",
+    "line": 463,
+    "column": 12,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 22,
+    "file": "src/compiler/types.ts",
+    "line": 1011,
+    "column": 19,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 23,
+    "file": "src/compiler/types.ts",
+    "line": 11,
+    "column": 19,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 24,
+    "file": "src/compiler/types.ts",
+    "line": 585,
+    "column": 19,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 25,
+    "file": "src/compiler/types.ts",
+    "line": 600,
+    "column": 19,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 26,
+    "file": "src/compiler/types.ts",
+    "line": 650,
+    "column": 19,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 27,
+    "file": "src/compiler/types.ts",
+    "line": 666,
+    "column": 13,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 28,
+    "file": "src/compiler/types.ts",
+    "line": 690,
+    "column": 19,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 29,
+    "file": "src/compiler/types.ts",
+    "line": 709,
+    "column": 19,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 30,
+    "file": "src/compiler/types.ts",
+    "line": 731,
+    "column": 19,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 31,
+    "file": "src/compiler/types.ts",
+    "line": 776,
+    "column": 19,
+    "code": "TS1294",
+    "message": "This syntax is not allowed when 'erasableSyntaxOnly' is enabled."
+  },
+  {
+    "order": 32,
+    "file": "src/compiler/utilities.ts",
+    "line": 75,
+    "column": 9,
+    "code": "TS2532",
+    "message": "Object is possibly 'undefined'."
+  },
+  {
+    "order": 33,
+    "file": "src/compiler/utilities.ts",
+    "line": 77,
+    "column": 23,
+    "code": "TS2532",
+    "message": "Object is possibly 'undefined'."
+  },
+  {
+    "order": 34,
+    "file": "src/compiler/utilities.ts",
+    "line": 87,
+    "column": 46,
+    "code": "TS2532",
+    "message": "Object is possibly 'undefined'."
+  }
+]

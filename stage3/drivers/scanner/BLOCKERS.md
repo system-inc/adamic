@@ -1,5 +1,30 @@
 # Scanner blockers
 
+## October 7: namespace member slice is green on Node
+
+Commit `c4e011f` gathers namespace members independently. Eight source files,
+87 declarations and four original namespace-wrapper spans, 7,127 copied-span
+lines. All spans match source bytes. Node prints exactly 509,014 tokens, with
+empty diff against the full-tree oracle and SHA-256
+`c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f`.
+Debug initialization no longer fails. Debug reaches only isDebugging, fail,
+assert and assertEqual; no enum formatter or registration member is needed.
+
+Current-main checker and prior four-feature scratch checker stop before
+lowering. Ordered diagnostics are [member-main-checker.json](evidence/member-main-checker.json)
+and [member-features-checker.json](evidence/member-features-checker.json).
+The latter has 22 findings: bounded indexed reads / TS2532 and generic indexed
+reads / TS2345, exact optional declarations / TS2375, and intentional switch
+fallthrough / TS7029. Main additionally rejects enums and namespaces / TS1294.
+Closing branches: flag-enums and namespaces-tsc for TS1294;
+fallthrough-and-implicit-returns for TS7029. Indexed reads and exact optional
+properties have no demonstrated closing feature in this probe.
+
+The remote fallthrough feature now exists at `5f77d33`; current main is
+`e011f8f`. A main-plus-fallthrough-only scratch compiler is being built before
+any adaptation decision. Earlier whole-namespace failure reports below are
+superseded for the member slice, but remain historical evidence.
+
 ## October 7: declaration slice, latest observation
 
 The checker-driven tool is in `stage3/slice/` and was pushed independently at
