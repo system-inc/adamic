@@ -1,0 +1,12 @@
+import type { MutableThemeState } from './theme_clear_all.a';
+// Equal dead/live counts do not compact. A compaction owns a fresh order list.
+export function compactKeyOrder(theme: MutableThemeState): void {
+    if(theme.deadKeys <= theme.values.size) { return; }
+    const compacted: string[] = [];
+    for(const key of theme.keyOrder) {
+        if(key === '') { continue; }
+        if(theme.values.has(key)) { compacted.push(key); }
+    }
+    theme.keyOrder = compacted;
+    theme.deadKeys = 0;
+}

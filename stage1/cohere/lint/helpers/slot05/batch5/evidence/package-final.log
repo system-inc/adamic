@@ -1,0 +1,48 @@
+=== RUN   TestSlot05ClearAll
+    helper_test.go:64: 6 consumers, 639 distinct test-file literals, 1927 mutation cases, 7708 Go store/alias snapshots
+    helper_test.go:74: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:131: theme_clear_all.a mutant "theme.deadKeys = 0" -> "theme.deadKeys = theme.deadKeys" caught at verdict 2: mutant -1, Go 0
+    helper_test.go:131: theme_clear_all.a mutant "theme.values = new Map<string, ThemeValue>()" -> "theme.values = theme.values" caught at verdict 4: mutant 2, Go 0
+    helper_test.go:131: theme_clear_all.a mutant "theme.keyOrder = []" -> "theme.keyOrder = theme.keyOrder" caught at verdict 3: mutant 6, Go 0
+--- PASS: TestSlot05ClearAll (8.73s)
+=== RUN   TestSlot05CompactKeyOrder
+    helper_test.go:64: 6 consumers, 639 distinct test-file literals, 1927 mutation cases, 7708 Go store/alias snapshots
+    helper_test.go:74: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:131: theme_compact_key_order.a mutant "theme.deadKeys <= theme.values.size" -> "theme.deadKeys < theme.values.size" caught at verdict 206: mutant 0, Go 2
+    helper_test.go:131: theme_compact_key_order.a mutant "if(key === '')" -> "if(false)" caught at verdict 469: mutant 2, Go 0
+    helper_test.go:131: theme_compact_key_order.a mutant "if(theme.values.has(key))" -> "if(true)" caught at verdict 275: mutant 4, Go 3
+    helper_test.go:131: theme_compact_key_order.a mutant "theme.deadKeys = 0" -> "theme.deadKeys = theme.deadKeys" caught at verdict 274: mutant 3, Go 0
+--- PASS: TestSlot05CompactKeyOrder (10.73s)
+=== RUN   TestSlot05DeleteThemeKey
+    helper_test.go:64: 6 consumers, 639 distinct test-file literals, 11562 mutation cases, 46248 Go store/alias snapshots
+    helper_test.go:74: consumer coverage: {
+          "better-tailwindcss/enforce-canonical-classes": 259,
+          "better-tailwindcss/enforce-consistent-class-order": 370,
+          "better-tailwindcss/enforce-consistent-variant-order": 110,
+          "better-tailwindcss/enforce-shorthand-classes": 131,
+          "better-tailwindcss/no-conflicting-classes": 247,
+          "better-tailwindcss/no-unknown-classes": 239
+        }
+    helper_test.go:131: theme_delete.a mutant "theme.keyOrder[index] = ''" -> "theme.keyOrder[index] = key" caught at verdict 75: mutant --a, Go 
+    helper_test.go:131: theme_delete.a mutant "if(!theme.values.has(key))" -> "if(false)" caught at verdict 2: mutant 0, Go -1
+    helper_test.go:131: theme_delete.a mutant "theme.values.delete(key)" -> "theme.values.delete('--never-present')" caught at verdict 78: mutant 2, Go 1
+    helper_test.go:131: theme_delete.a mutant "for(let index = theme.keyOrder.length - 1; index >= 0; index--)" -> "for(let index = 0; index < theme.keyOrder.length; index++)" caught at verdict 74: mutant , Go --a
+    helper_test.go:131: theme_delete.a mutant "theme.deadKeys++" -> "theme.deadKeys = theme.deadKeys" caught at verdict 70: mutant -1, Go 0
+    helper_test.go:131: theme_delete.a mutant "break;" -> "continue;" caught at verdict 74: mutant , Go --a
+--- PASS: TestSlot05DeleteThemeKey (55.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch5	75.431s

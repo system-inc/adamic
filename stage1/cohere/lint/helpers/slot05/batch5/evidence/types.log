@@ -1,0 +1,39 @@
+stage1/cohere/lint/helpers/slot05/batch5/main.a:8:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/batch5/main.a:10:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/batch5/main.a:11:7: variable root: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:13:10: function text: (index: number, field: string) => string
+stage1/cohere/lint/helpers/slot05/batch5/main.a:13:15: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:13:30: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch5/main.a:14:10: function number: (index: number, field: string) => number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:14:17: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:14:32: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch5/main.a:15:10: function byteCompare: (a: string, b: string) => number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:15:22: parameter a: string
+stage1/cohere/lint/helpers/slot05/batch5/main.a:15:33: parameter b: string
+stage1/cohere/lint/helpers/slot05/batch5/main.a:16:11: variable left: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:16:39: variable right: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:17:11: variable length: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:18:13: variable index: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:19:15: variable difference: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:24:10: function printOrder: (order: readonly string[]) => void
+stage1/cohere/lint/helpers/slot05/batch5/main.a:24:21: parameter order: readonly string[]
+stage1/cohere/lint/helpers/slot05/batch5/main.a:26:15: variable key: string
+stage1/cohere/lint/helpers/slot05/batch5/main.a:28:10: function printValues: (values: ReadonlyMap<string, ThemeValue>) => void
+stage1/cohere/lint/helpers/slot05/batch5/main.a:28:22: parameter values: ReadonlyMap<string, ThemeValue>
+stage1/cohere/lint/helpers/slot05/batch5/main.a:29:11: variable keys: string[]
+stage1/cohere/lint/helpers/slot05/batch5/main.a:30:15: variable key: string
+stage1/cohere/lint/helpers/slot05/batch5/main.a:31:16: parameter a: string
+stage1/cohere/lint/helpers/slot05/batch5/main.a:31:19: parameter b: string
+stage1/cohere/lint/helpers/slot05/batch5/main.a:33:15: variable key: string
+stage1/cohere/lint/helpers/slot05/batch5/main.a:34:15: variable value: ThemeValue
+stage1/cohere/lint/helpers/slot05/batch5/main.a:38:10: function printTheme: (theme: MutableThemeState) => void
+stage1/cohere/lint/helpers/slot05/batch5/main.a:38:21: parameter theme: MutableThemeState
+stage1/cohere/lint/helpers/slot05/batch5/main.a:42:11: variable row: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:43:11: variable state: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:44:11: variable keyOrder: string[]
+stage1/cohere/lint/helpers/slot05/batch5/main.a:44:73: parameter c: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:45:11: variable values: Map<string, ThemeValue>
+stage1/cohere/lint/helpers/slot05/batch5/main.a:46:15: variable entry: number
+stage1/cohere/lint/helpers/slot05/batch5/main.a:49:11: variable theme: MutableThemeState
+stage1/cohere/lint/helpers/slot05/batch5/main.a:50:11: variable mode: string
+stage1/cohere/lint/helpers/slot05/batch5/main.a:50:43: variable key: string

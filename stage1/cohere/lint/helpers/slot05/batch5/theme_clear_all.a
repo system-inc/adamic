@@ -1,0 +1,13 @@
+import type { ThemeValue } from '../batch4/theme_live_keys.a';
+export interface MutableThemeState {
+    prefix: string;
+    values: Map<string, ThemeValue>;
+    keyOrder: string[];
+    deadKeys: number;
+}
+// Go replaces both containers. Clearing them in place would change retained aliases.
+export function clearAll(theme: MutableThemeState): void {
+    theme.values = new Map<string, ThemeValue>();
+    theme.keyOrder = [];
+    theme.deadKeys = 0;
+}

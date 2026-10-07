@@ -1,0 +1,32 @@
+{
+  "refs/remotes/origin/codex/lint-helpers": {
+    "sha": "6769b88e876e3797293b34a29dfd02cbd8507256",
+    "claims": {}
+  },
+  "refs/remotes/origin/codex/lint-helpers-01": {
+    "sha": "c42bf9f5d09fc017b2371aafc8c399fb4dabf90d",
+    "claims": {}
+  },
+  "refs/remotes/origin/codex/lint-helpers-02": {
+    "sha": "9aff573c0722897c7c75a6e160e63d3042956cbf",
+    "claims": {}
+  },
+  "refs/remotes/origin/codex/lint-helpers-03": {
+    "sha": "d8c56c50967dbea8b5dad2809f484978609a94ad",
+    "claims": {}
+  },
+  "refs/remotes/origin/codex/lint-helpers-04": {
+    "sha": "56b0cd3979a8a60374e5831b1dc7515eff9d54ec",
+    "claims": {}
+  },
+  "refs/remotes/origin/codex/lint-helpers-05": {
+    "sha": "a0e06da6c21abc93661d6030d529a019ededdfb0",
+    "claims": {
+      "stage1/cohere/lint/helpers/claims/05.md": [
+        "14. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.clearAll",
+        "15. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.compactKeyOrder",
+        "16. github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.delete"
+      ]
+    }
+  }
+}

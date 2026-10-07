@@ -1,0 +1,15 @@
+import type { MutableThemeState } from './theme_clear_all.a';
+import { compactKeyOrder } from './theme_compact_key_order.a';
+// Only the last matching order slot is blanked, before the owned compactor runs.
+export function deleteThemeKey(theme: MutableThemeState, key: string): void {
+    if(!theme.values.has(key)) { return; }
+    theme.values.delete(key);
+    for(let index = theme.keyOrder.length - 1; index >= 0; index--) {
+        if(theme.keyOrder[index] === key) {
+            theme.keyOrder[index] = '';
+            break;
+        }
+    }
+    theme.deadKeys++;
+    compactKeyOrder(theme);
+}
