@@ -1,0 +1,180 @@
+=== RUN   TestCoverageAgreementAndMutants
+    coverage_test.go:121: controls: 23950 identical finding bytes; findings 53
+    coverage_test.go:129: controls-asan: 23950 identical finding bytes; findings 53
+=== RUN   TestCoverageAgreementAndMutants/before
+    coverage_test.go:153: before: exit 0, Go byte oracle catches byte 54; findings 52
+=== RUN   TestCoverageAgreementAndMutants/cast
+    coverage_test.go:153: cast: exit 0, Go byte oracle catches byte 1548; findings 53
+=== RUN   TestCoverageAgreementAndMutants/methods
+    coverage_test.go:153: methods: exit 0, Go byte oracle catches byte 2189; findings 46
+=== RUN   TestCoverageAgreementAndMutants/coercion
+    coverage_test.go:153: coercion: exit 0, Go byte oracle catches byte 1156; findings 53
+=== RUN   TestCoverageAgreementAndMutants/caller
+    coverage_test.go:153: caller: exit 0, Go byte oracle catches byte 10220; findings 54
+=== RUN   TestCoverageAgreementAndMutants/parameter
+    coverage_test.go:153: parameter: exit 0, Go byte oracle catches byte 366; findings 50
+=== RUN   TestCoverageAgreementAndMutants/invariant
+    coverage_test.go:153: invariant: exit 0, Go byte oracle catches byte 12721; findings 48
+=== RUN   TestCoverageAgreementAndMutants/optional
+    coverage_test.go:153: optional: exit 0, Go byte oracle catches byte 15476; findings 53
+=== RUN   TestCoverageAgreementAndMutants/alias
+    coverage_test.go:153: alias: exit 0, Go byte oracle catches byte 15948; findings 53
+=== RUN   TestCoverageAgreementAndMutants/unused
+    coverage_test.go:153: unused: exit 0, Go byte oracle catches byte 16759; findings 56
+=== NAME  TestCoverageAgreementAndMutants
+    coverage_test.go:161: repository: 85151 identical finding bytes; findings 180
+    coverage_test.go:162: repository-asan: 85151 identical finding bytes; findings 180
+    coverage_test.go:169: compiler: 7120921 identical finding bytes; findings 16589
+    coverage_test.go:170: compiler-asan: 7120921 identical finding bytes; findings 16589
+    coverage_test.go:182: released program queried using a new question: panic 70, invalid or released checker handle
+    coverage_test.go:187: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestCoverageAgreementAndMutants (579.87s)
+    --- PASS: TestCoverageAgreementAndMutants/before (10.26s)
+    --- PASS: TestCoverageAgreementAndMutants/cast (12.87s)
+    --- PASS: TestCoverageAgreementAndMutants/methods (9.85s)
+    --- PASS: TestCoverageAgreementAndMutants/coercion (9.85s)
+    --- PASS: TestCoverageAgreementAndMutants/caller (10.32s)
+    --- PASS: TestCoverageAgreementAndMutants/parameter (8.82s)
+    --- PASS: TestCoverageAgreementAndMutants/invariant (8.65s)
+    --- PASS: TestCoverageAgreementAndMutants/optional (8.73s)
+    --- PASS: TestCoverageAgreementAndMutants/alias (8.80s)
+    --- PASS: TestCoverageAgreementAndMutants/unused (8.68s)
+=== RUN   TestWave15FourthArrowAgreementAndMutants
+    wave_15_arrow_test.go:63: controls: 4889 identical finding bytes; findings 14
+    wave_15_arrow_test.go:66: controls-asan: 4889 identical finding bytes; findings 14
+=== RUN   TestWave15FourthArrowAgreementAndMutants/arrow
+    wave_15_arrow_test.go:106: arrow: exit 0, independent Go bytes catch byte 329
+=== NAME  TestWave15FourthArrowAgreementAndMutants
+    wave_15_arrow_test.go:118: repository: 18485 identical finding bytes; findings 0
+    wave_15_arrow_test.go:119: repository-asan: 18485 identical finding bytes; findings 0
+    wave_15_arrow_test.go:127: repository native=274.083306ms Go=122.705217ms; tsgo: load_ns=69128874 query_ns=3970091 queries=25 first_query_ns=887839 run_ns=199542458
+         cohere: load_ns=63041810 rule_ns=5804702 run_ns=46663703
+    wave_15_arrow_test.go:118: compiler: 5318 identical finding bytes; findings 0
+    wave_15_arrow_test.go:119: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_15_arrow_test.go:127: compiler native=2.29899413s Go=333.150265ms; tsgo: load_ns=261088719 query_ns=178525844 queries=422 first_query_ns=6791521 run_ns=2017083533
+         cohere: load_ns=238622273 rule_ns=43211246 run_ns=76991998
+    wave_15_arrow_test.go:139: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15FourthArrowAgreementAndMutants (62.25s)
+    --- PASS: TestWave15FourthArrowAgreementAndMutants/arrow (6.45s)
+=== RUN   TestWave15FourthBackreferenceAgreementAndMutants
+    wave_15_backreference_test.go:56: controls: 3516 identical finding bytes; findings 9
+    wave_15_backreference_test.go:59: controls-asan: 3516 identical finding bytes; findings 9
+=== RUN   TestWave15FourthBackreferenceAgreementAndMutants/backreference
+    wave_15_backreference_test.go:99: backreference: exit 0, independent Go bytes catch byte 257
+=== NAME  TestWave15FourthBackreferenceAgreementAndMutants
+    wave_15_backreference_test.go:108: controls native=14.475541ms Go=19.910184ms
+    wave_15_backreference_test.go:119: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15FourthBackreferenceAgreementAndMutants (36.58s)
+    --- PASS: TestWave15FourthBackreferenceAgreementAndMutants/backreference (5.91s)
+=== RUN   TestWave15ContinuationAgreementAndMutants
+    wave_15_continuation_test.go:61: controls: 7131 identical finding bytes; findings 11
+    wave_15_continuation_test.go:64: controls-asan: 7131 identical finding bytes; findings 11
+    wave_15_continuation_test.go:67: controls-commonjs: 4464 identical finding bytes; findings 6
+    wave_15_continuation_test.go:67: controls-nodenext: 4464 identical finding bytes; findings 6
+    wave_15_continuation_test.go:67: controls-preserve: 7131 identical finding bytes; findings 11
+    wave_15_continuation_test.go:67: controls-es2020: 7131 identical finding bytes; findings 11
+=== RUN   TestWave15ContinuationAgreementAndMutants/listener
+    wave_15_continuation_test.go:110: listener: exit 0, independent Go bytes catch byte 3008
+=== RUN   TestWave15ContinuationAgreementAndMutants/mock
+    wave_15_continuation_test.go:110: mock: exit 0, independent Go bytes catch byte 57
+=== NAME  TestWave15ContinuationAgreementAndMutants
+    wave_15_continuation_test.go:122: repository: 18485 identical finding bytes; findings 0
+    wave_15_continuation_test.go:123: repository-asan: 18485 identical finding bytes; findings 0
+    wave_15_continuation_test.go:131: repository native=261.674795ms Go=122.952257ms; tsgo: load_ns=71101504 query_ns=0 queries=0 first_query_ns=0 run_ns=184960472
+         cohere: load_ns=65899529 rule_ns=1123050 run_ns=43953999
+    wave_15_continuation_test.go:122: compiler: 5318 identical finding bytes; findings 0
+    wave_15_continuation_test.go:123: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_15_continuation_test.go:131: compiler native=1.679663034s Go=284.035944ms; tsgo: load_ns=229814285 query_ns=0 queries=0 first_query_ns=0 run_ns=1435499034
+         cohere: load_ns=225639221 rule_ns=2064348 run_ns=41425362
+    wave_15_continuation_test.go:143: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15ContinuationAgreementAndMutants (58.94s)
+    --- PASS: TestWave15ContinuationAgreementAndMutants/listener (6.58s)
+    --- PASS: TestWave15ContinuationAgreementAndMutants/mock (6.53s)
+=== RUN   TestWave15CoreAgreementAndMutants
+    wave_15_core_test.go:56: controls: 4203 identical finding bytes; findings 10
+    wave_15_core_test.go:59: controls-asan: 4203 identical finding bytes; findings 10
+=== RUN   TestWave15CoreAgreementAndMutants/label
+    wave_15_core_test.go:99: label: exit 0, independent Go bytes catch byte 53
+=== NAME  TestWave15CoreAgreementAndMutants
+    wave_15_core_test.go:111: repository: 18485 identical finding bytes; findings 0
+    wave_15_core_test.go:112: repository-asan: 18485 identical finding bytes; findings 0
+    wave_15_core_test.go:120: repository native=220.072631ms Go=126.574173ms; tsgo: load_ns=65505792 query_ns=0 queries=0 first_query_ns=0 run_ns=149710125
+         cohere: load_ns=68018794 rule_ns=0 run_ns=47591026
+    wave_15_core_test.go:111: compiler: 5318 identical finding bytes; findings 0
+    wave_15_core_test.go:112: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_15_core_test.go:120: compiler native=1.441183271s Go=304.317378ms; tsgo: load_ns=233516389 query_ns=120249077 queries=10 first_query_ns=93348325 run_ns=1190997933
+         cohere: load_ns=239186231 rule_ns=4220804 run_ns=46005964
+    wave_15_core_test.go:132: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15CoreAgreementAndMutants (45.07s)
+    --- PASS: TestWave15CoreAgreementAndMutants/label (5.68s)
+=== RUN   TestWave15FourthThrowAgreementAndMutants
+    wave_15_fourth_test.go:55: controls: 3377 identical finding bytes; findings 8
+    wave_15_fourth_test.go:58: controls-asan: 3377 identical finding bytes; findings 8
+=== RUN   TestWave15FourthThrowAgreementAndMutants/throw
+    wave_15_fourth_test.go:98: throw: exit 0, independent Go bytes catch byte 53
+=== NAME  TestWave15FourthThrowAgreementAndMutants
+    wave_15_fourth_test.go:110: repository: 18485 identical finding bytes; findings 0
+    wave_15_fourth_test.go:111: repository-asan: 18485 identical finding bytes; findings 0
+    wave_15_fourth_test.go:119: repository native=233.812162ms Go=123.418723ms; tsgo: load_ns=69716428 query_ns=0 queries=0 first_query_ns=0 run_ns=159667813
+         cohere: load_ns=67416739 rule_ns=6837 run_ns=44804551
+    wave_15_fourth_test.go:110: compiler: 5318 identical finding bytes; findings 0
+    wave_15_fourth_test.go:111: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_15_fourth_test.go:119: compiler native=1.28487639s Go=316.433295ms; tsgo: load_ns=238582877 query_ns=0 queries=0 first_query_ns=0 run_ns=1031399438
+         cohere: load_ns=261966110 rule_ns=2896 run_ns=36925914
+    wave_15_fourth_test.go:131: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15FourthThrowAgreementAndMutants (44.72s)
+    --- PASS: TestWave15FourthThrowAgreementAndMutants/throw (6.02s)
+=== RUN   TestWave15LeakedAgreementAndMutants
+    wave_15_leaked_test.go:63: controls: 8851 identical bytes; native=18.051415ms Go=20.983261ms
+    wave_15_leaked_test.go:63: controls-asan: 8851 identical bytes; native=44.370562ms Go=28.859231ms
+=== RUN   TestWave15LeakedAgreementAndMutants/leaked
+    wave_15_leaked_test.go:109: leaked: exit 0, independent Go bytes catch byte 6229
+=== NAME  TestWave15LeakedAgreementAndMutants
+    wave_15_leaked_test.go:121: repository: 18485 identical finding bytes; findings 0
+    wave_15_leaked_test.go:122: repository-asan: 18485 identical finding bytes; findings 0
+    wave_15_leaked_test.go:130: repository native=225.76003ms Go=121.598313ms; tsgo: load_ns=71904432 query_ns=0 queries=0 first_query_ns=0 run_ns=149778039
+         cohere: load_ns=62067737 rule_ns=0 run_ns=47808362
+    wave_15_leaked_test.go:121: compiler: 5318 identical finding bytes; findings 0
+    wave_15_leaked_test.go:122: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_15_leaked_test.go:130: compiler native=1.339770658s Go=295.613027ms; tsgo: load_ns=242232635 query_ns=0 queries=0 first_query_ns=0 run_ns=1084539324
+         cohere: load_ns=239098610 rule_ns=0 run_ns=40065266
+    wave_15_leaked_test.go:142: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15LeakedAgreementAndMutants (44.97s)
+    --- PASS: TestWave15LeakedAgreementAndMutants/leaked (5.66s)
+=== RUN   TestWave15RegexPartialControlsAndMutants
+    wave_15_regex_test.go:51: controls: 3400 identical finding bytes; findings 10
+    wave_15_regex_test.go:54: controls-asan: 3400 identical finding bytes; findings 10
+=== RUN   TestWave15RegexPartialControlsAndMutants/flags
+    wave_15_regex_test.go:95: flags: exit 0, independent Go bytes catch byte 125
+=== RUN   TestWave15RegexPartialControlsAndMutants/suggestion
+    wave_15_regex_test.go:95: suggestion: exit 0, independent Go bytes catch byte 2633
+=== NAME  TestWave15RegexPartialControlsAndMutants
+    wave_15_regex_test.go:108: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15RegexPartialControlsAndMutants (43.19s)
+    --- PASS: TestWave15RegexPartialControlsAndMutants/flags (5.85s)
+    --- PASS: TestWave15RegexPartialControlsAndMutants/suggestion (6.12s)
+=== RUN   TestWave15AgreementAndMutants
+    wave_15_test.go:51: controls: 3609 identical finding bytes; findings 19
+    wave_15_test.go:54: controls-asan: 3609 identical finding bytes; findings 19
+=== RUN   TestWave15AgreementAndMutants/default
+    wave_15_test.go:96: default: exit 0, independent Go bytes catch byte 2077
+=== RUN   TestWave15AgreementAndMutants/find
+    wave_15_test.go:96: find: exit 0, independent Go bytes catch byte 632
+=== RUN   TestWave15AgreementAndMutants/sort
+    wave_15_test.go:96: sort: exit 0, independent Go bytes catch byte 53
+=== NAME  TestWave15AgreementAndMutants
+    wave_15_test.go:108: repository: 18704 identical finding bytes; findings 1
+    wave_15_test.go:109: repository-asan: 18704 identical finding bytes; findings 1
+    wave_15_test.go:117: repository native=317.828002ms Go=136.055756ms; tsgo: load_ns=72883592 query_ns=26363697 queries=556 first_query_ns=16505 run_ns=239600881
+         cohere: load_ns=65634380 rule_ns=5281867 run_ns=55993507
+    wave_15_test.go:108: compiler: 5629 identical finding bytes; findings 2
+    wave_15_test.go:109: compiler-asan: 5629 identical finding bytes; findings 2
+    wave_15_test.go:117: compiler native=2.036356695s Go=398.872135ms; tsgo: load_ns=235842478 query_ns=258140527 queries=1303 first_query_ns=15172 run_ns=1778153332
+         cohere: load_ns=272642020 rule_ns=56208328 run_ns=102498677
+    wave_15_test.go:129: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15AgreementAndMutants (71.24s)
+    --- PASS: TestWave15AgreementAndMutants/default (6.97s)
+    --- PASS: TestWave15AgreementAndMutants/find (7.08s)
+    --- PASS: TestWave15AgreementAndMutants/sort (6.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	986.836s
