@@ -1,0 +1,426 @@
+[
+  {
+    "id": "cycle-census-ruled",
+    "track": "Stage 3",
+    "claim": "The tsc cycle census ruled (runtime brings the count, Kirk rules).",
+    "deadline": "2026-10-07T02:00:00-06:00",
+    "measurement": "Main stage3/progress.json milestones.cycle_census_ruled records the ruling, with its evidence link.",
+    "conditions": [
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "milestones.cycle_census_ruled",
+        "operator": "equals",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "adaptation20-live",
+    "track": "Stage 3",
+    "claim": "Adaptation 20 on main; the merge tree live (integration).",
+    "deadline": "2026-10-07T06:00:00-06:00",
+    "measurement": "A main stage3/adapt/20*/adapt.cjs exists and stage3/progress.json records milestones.merge_tree_live.",
+    "conditions": [
+      {
+        "kind": "path_prefix",
+        "prefix": "stage3/adapt/20",
+        "suffix": "/adapt.cjs"
+      },
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "milestones.merge_tree_live",
+        "operator": "equals",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "nested-functions",
+    "track": "Stage 3",
+    "claim": "Nested functions green on all 11 of tsc's fixtures, the scanner frame included (compiler).",
+    "deadline": "2026-10-07T08:00:00-06:00",
+    "measurement": "Main stage3/progress.json nested_functions: passed=11, total=11, scanner_frame=true. These are recorded parity results, not source presence.",
+    "conditions": [
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "nested_functions.passed",
+        "operator": "at_least",
+        "value": 11
+      },
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "nested_functions.total",
+        "operator": "equals",
+        "value": 11
+      },
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "nested_functions.scanner_frame",
+        "operator": "equals",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "scanner-native",
+    "track": "Stage 3",
+    "claim": "The scanner slice runs natively, tokens identical to Node over all of src/compiler (typescript).",
+    "deadline": "2026-10-07T12:00:00-06:00",
+    "measurement": "Main stage3/progress.json milestones.scanner_native and scanner_tokens_all_compiler_match.",
+    "conditions": [
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "milestones.scanner_native",
+        "operator": "equals",
+        "value": true
+      },
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "milestones.scanner_tokens_all_compiler_match",
+        "operator": "equals",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "records-main",
+    "track": "Stage 3",
+    "claim": "Records, the dictionary table and its lowering, on main (runtime and compiler).",
+    "deadline": "2026-10-07T18:00:00-06:00",
+    "measurement": "Main stage3/progress.json milestones.records_table_main and records_lowering_main record landed implementation evidence.",
+    "conditions": [
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "milestones.records_table_main",
+        "operator": "equals",
+        "value": true
+      },
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "milestones.records_lowering_main",
+        "operator": "equals",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "parser-native",
+    "track": "Stage 3",
+    "claim": "The parser slice runs natively, trees identical (typescript).",
+    "deadline": "2026-10-07T20:00:00-06:00",
+    "measurement": "Main stage3/progress.json milestones.parser_native and parser_trees_match.",
+    "conditions": [
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "milestones.parser_native",
+        "operator": "equals",
+        "value": true
+      },
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "milestones.parser_trees_match",
+        "operator": "equals",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "checker40",
+    "track": "Stage 3",
+    "claim": "At least 40 of 78 files past the checker.",
+    "deadline": "2026-10-07T23:49:00-06:00",
+    "measurement": "Latest recorded main stage3/meter run: compiler checker >=40, denominator 78.",
+    "conditions": [
+      {
+        "kind": "metric",
+        "track": "Stage 3",
+        "name": "compiler checker",
+        "operator": "at_least",
+        "value": 40
+      }
+    ]
+  },
+  {
+    "id": "checker78-lower20-host25",
+    "track": "Stage 3",
+    "claim": "78 of 78 past the checker, at least 20 past lowering, the host surface done (library): all 25 stage3/fixtures/host fixtures compile and print exactly Node's recorded output on both backends, on main.",
+    "deadline": "2026-10-08T12:00:00-06:00",
+    "measurement": "Main meter checker >=78 and lowering >=20; all 25 pinned host fixtures (codex/stage3-fixtures-host, 1037217) have recorded native and JavaScript stdout/stderr/exit exactly equal to Node in stage3/fixtures/host/status.json. Missing results: not measurable yet. The command compares records; it never executes the fixture gate.",
+    "conditions": [
+      {
+        "kind": "metric",
+        "track": "Stage 3",
+        "name": "compiler checker",
+        "operator": "at_least",
+        "value": 78
+      },
+      {
+        "kind": "metric",
+        "track": "Stage 3",
+        "name": "compiler lowering",
+        "operator": "at_least",
+        "value": 20
+      },
+      {
+        "kind": "host",
+        "ref": "main",
+        "value": 25
+      }
+    ]
+  },
+  {
+    "id": "lower78-noemit",
+    "track": "Stage 3",
+    "claim": "78 of 78 past lowering; the first tsc --noEmit matches on a tiny project.",
+    "deadline": "2026-10-09T06:00:00-06:00",
+    "measurement": "Main meter lowering >=78 and stage3/progress.json milestones.no_emit_match.",
+    "conditions": [
+      {
+        "kind": "metric",
+        "track": "Stage 3",
+        "name": "compiler lowering",
+        "operator": "at_least",
+        "value": 78
+      },
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "milestones.no_emit_match",
+        "operator": "equals",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "native-tsc-real",
+    "track": "Stage 3",
+    "claim": "Native tsc type-checks real programs with identical diagnostics.",
+    "deadline": "2026-10-09T23:49:00-06:00",
+    "measurement": "Main stage3/progress.json milestones.real_programs_match records native exact-diagnostic parity.",
+    "conditions": [
+      {
+        "kind": "record",
+        "file": "stage3/progress.json",
+        "pointer": "milestones.real_programs_match",
+        "operator": "equals",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "host-loader-four",
+    "track": "Stage 3",
+    "claim": "The node:* loader hook merged by all four host branches.",
+    "deadline": "2026-10-07T06:00:00-06:00",
+    "measurement": "documentation/progress/host-loader.json names hook_commit and exactly four branches; git merge-base verifies the hook is an ancestor of each fetched branch. Missing record/ref: not measurable yet.",
+    "conditions": [
+      {
+        "kind": "host_loader"
+      }
+    ]
+  },
+  {
+    "id": "host12-library",
+    "track": "Stage 3",
+    "claim": "At least 12 of 25 host fixtures green on area/library.",
+    "deadline": "2026-10-07T18:00:00-06:00",
+    "measurement": "Compare Node/native/JavaScript recorded observations in origin/area/library:stage3/fixtures/host/status.json. Do not credit another branch; missing ref/results: not measurable yet.",
+    "conditions": [
+      {
+        "kind": "host",
+        "ref": "origin/area/library",
+        "value": 12
+      }
+    ]
+  },
+  {
+    "id": "host25-library",
+    "track": "Stage 3",
+    "claim": "25 of 25 host fixtures green on area/library.",
+    "deadline": "2026-10-08T02:00:00-06:00",
+    "measurement": "Compare the complete pinned host fixture set on origin/area/library, both backend observations against recorded Node. Missing ref/results: not measurable yet.",
+    "conditions": [
+      {
+        "kind": "host",
+        "ref": "origin/area/library",
+        "value": 25
+      }
+    ]
+  },
+  {
+    "id": "readonly-retains",
+    "track": "Stage 1",
+    "claim": "Read-only walks under 0.1 retains per node visited on batch 8's driver (runtime and compiler).",
+    "deadline": "2026-10-08T12:00:00-06:00",
+    "measurement": "Main stage1/progress.json readonly_walk.driver=\"batch8\" and readonly_walk.retains_per_node <0.1, recorded on that driver.",
+    "conditions": [
+      {
+        "kind": "record",
+        "file": "stage1/progress.json",
+        "pointer": "readonly_walk.driver",
+        "operator": "equals",
+        "value": "batch8"
+      },
+      {
+        "kind": "record",
+        "file": "stage1/progress.json",
+        "pointer": "readonly_walk.retains_per_node",
+        "operator": "less_than",
+        "value": 0.1
+      }
+    ]
+  },
+  {
+    "id": "lint-go-release",
+    "track": "Stage 1",
+    "claim": "Native lint at or faster than Go on release builds, flags named.",
+    "deadline": "2026-10-09T12:00:00-06:00",
+    "measurement": "Latest main syntax-lint timing Go/native >=1; stage1/progress.json lint_release.release=true and lint_release.flags is a nonempty array of named flags.",
+    "conditions": [
+      {
+        "kind": "metric",
+        "track": "Stage 1",
+        "name": "syntax-lint native/Go speed",
+        "operator": "at_least",
+        "value": 1
+      },
+      {
+        "kind": "record",
+        "file": "stage1/progress.json",
+        "pointer": "lint_release.release",
+        "operator": "equals",
+        "value": true
+      },
+      {
+        "kind": "record",
+        "file": "stage1/progress.json",
+        "pointer": "lint_release.flags",
+        "operator": "nonempty"
+      }
+    ]
+  },
+  {
+    "id": "all-rules-printer",
+    "track": "Stage 1",
+    "claim": "Every inventory rule ported or explicitly refused with a reason; the TypeScript printer done.",
+    "deadline": "2026-10-10T12:00:00-06:00",
+    "measurement": "Main port oracle registrations union stage1/progress.json refused_rules (inventory rule name -> nonempty reason), against the inventory total; formatters.typescript=true.",
+    "conditions": [
+      {
+        "kind": "inventory_accounted"
+      },
+      {
+        "kind": "record",
+        "file": "stage1/progress.json",
+        "pointer": "formatters.typescript",
+        "operator": "equals",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "apple-bindings",
+    "track": "Apple",
+    "claim": "Generated bindings for AppKit and Foundation with the rename table.",
+    "deadline": "2026-10-08T12:00:00-06:00",
+    "measurement": "Main examples/apple/bindings.a plus apple/progress.json generated_bindings.appkit, foundation, rename_table recorded true.",
+    "conditions": [
+      {
+        "kind": "path",
+        "file": "examples/apple/bindings.a"
+      },
+      {
+        "kind": "record",
+        "file": "apple/progress.json",
+        "pointer": "generated_bindings.appkit",
+        "operator": "equals",
+        "value": true
+      },
+      {
+        "kind": "record",
+        "file": "apple/progress.json",
+        "pointer": "generated_bindings.foundation",
+        "operator": "equals",
+        "value": true
+      },
+      {
+        "kind": "record",
+        "file": "apple/progress.json",
+        "pointer": "generated_bindings.rename_table",
+        "operator": "equals",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "apple-real-app",
+    "track": "Apple",
+    "claim": "A real app with a list, state, a typed fetch and async, with its crossing-cost table beside Swift's.",
+    "deadline": "2026-10-09T23:49:00-06:00",
+    "measurement": "Main examples/apple/app.a and apple/progress.json real_app.list, state, typed_fetch, async, crossing_cost_table_with_swift recorded true.",
+    "conditions": [
+      {
+        "kind": "path",
+        "file": "examples/apple/app.a"
+      },
+      {
+        "kind": "record",
+        "file": "apple/progress.json",
+        "pointer": "real_app.list",
+        "operator": "equals",
+        "value": true
+      },
+      {
+        "kind": "record",
+        "file": "apple/progress.json",
+        "pointer": "real_app.state",
+        "operator": "equals",
+        "value": true
+      },
+      {
+        "kind": "record",
+        "file": "apple/progress.json",
+        "pointer": "real_app.typed_fetch",
+        "operator": "equals",
+        "value": true
+      },
+      {
+        "kind": "record",
+        "file": "apple/progress.json",
+        "pointer": "real_app.async",
+        "operator": "equals",
+        "value": true
+      },
+      {
+        "kind": "record",
+        "file": "apple/progress.json",
+        "pointer": "real_app.crossing_cost_table_with_swift",
+        "operator": "equals",
+        "value": true
+      }
+    ]
+  },
+  {
+    "id": "backlog-falls",
+    "track": "Velocity",
+    "claim": "From Oct 7 06:00, the backlog falls every hour.",
+    "deadline": "2026-10-07T06:00:00-06:00",
+    "measurement": "Main documentation/velocity/backlog.csv timestamp/count records at every elapsed hour from this start; each successive backlog count must be strictly lower. Current remote refs cannot reconstruct past remote ref states. Missing hourly records: not measurable yet.",
+    "conditions": [
+      {
+        "kind": "backlog_hourly"
+      }
+    ]
+  }
+]

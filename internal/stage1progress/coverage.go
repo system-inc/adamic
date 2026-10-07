@@ -1,4 +1,4 @@
-package main
+package stage1progress
 
 // The names are reviewed source boundaries, not statuses inferred from directory
 // names. GAPS.md and the production/test files must exist in the measured tree.

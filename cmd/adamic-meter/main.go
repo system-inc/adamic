@@ -17,32 +17,12 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/meterdata"
 )
 
-type finding struct {
-	Kind     string   `json:"kind"`
-	Reason   string   `json:"reason"`
-	Count    int      `json:"count"`
-	Files    []string `json:"files"`
-	Example  string   `json:"example"`
-	fileSeen map[string]bool
-}
-
-type report struct {
-	Root                  string       `json:"root"`
-	FilesExamined         int          `json:"files_examined"`
-	JavaScriptSkipped     int          `json:"javascript_files_skipped"`
-	FilesReachingLowering int          `json:"files_reaching_lowering"`
-	Reasons               []*finding   `json:"reasons"`
-	Adaptations           []adaptation `json:"adaptations,omitempty"`
-}
-
-type adaptation struct {
-	Rewrite             string `json:"rewrite"`
-	Removed             int    `json:"diagnostics_removed"`
-	DeclarationsChanged int    `json:"declarations_changed,omitempty"`
-	FunctionsChanged    int    `json:"functions_changed,omitempty"`
-}
+type finding = meterdata.Finding
+type report = meterdata.Report
+type adaptation = meterdata.Adaptation
 
 func main() { os.Exit(run(os.Args[1:], os.Stdout, os.Stderr)) }
 
@@ -129,13 +109,13 @@ func measure(root string, adapt bool) (*report, error) {
 			key := observation.Kind + "\x00" + observation.Reason
 			existing := byReason[key]
 			if existing == nil {
-				existing = &finding{Kind: observation.Kind, Reason: observation.Reason, Example: relative(absolute, observation.Example), fileSeen: make(map[string]bool)}
+				existing = &finding{Kind: observation.Kind, Reason: observation.Reason, Example: relative(absolute, observation.Example), FileSeen: make(map[string]bool)}
 				byReason[key] = existing
 			}
 			existing.Count++
 			file := relative(absolute, path)
-			if !existing.fileSeen[file] {
-				existing.fileSeen[file] = true
+			if !existing.FileSeen[file] {
+				existing.FileSeen[file] = true
 				existing.Files = append(existing.Files, file)
 			}
 		}
@@ -200,7 +180,7 @@ func measure(root string, adapt bool) (*report, error) {
 	}
 	for _, item := range byReason {
 		sort.Strings(item.Files)
-		item.fileSeen = nil
+		item.FileSeen = nil
 		result.Reasons = append(result.Reasons, item)
 	}
 	sort.Slice(result.Reasons, func(i, j int) bool {

@@ -1,4 +1,4 @@
-package main
+package stage1progress
 
 import (
 	"os"
