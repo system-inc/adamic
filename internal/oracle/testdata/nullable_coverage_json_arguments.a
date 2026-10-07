@@ -1,0 +1,12 @@
+function show(n: string | null, u: string | undefined): void {
+ const nullKeys: (string | null)[] = ['keep', n];
+ const undefinedKeys: (string | undefined)[] = ['keep', u];
+ console.log(JSON.stringify({keep: n, drop: u, null: 'null-key', undefined: 'undefined-key'}, nullKeys, n));
+ console.log(JSON.stringify({keep: n, drop: u, null: 'null-key', undefined: 'undefined-key'}, undefinedKeys, u));
+ console.log(JSON.stringify([n, u], null, n));
+ console.log(JSON.stringify([n, u], undefined, u));
+}
+show(null, undefined);
+show('drop', 'drop');
+show('  ', '  ');
+show('', '');

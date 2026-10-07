@@ -10,6 +10,7 @@ func init() {
 		"nullable_coverage_map.a",
 		"nullable_coverage_class.a",
 		"nullable_coverage_nested_generics.a",
+		"nullable_coverage_json_arguments.a",
 
 		"nullable_references_generics.a",
 		"nullable_references_json.a",

@@ -1,6 +1,6 @@
 # Nullable reference coverage
 
-Base: origin/codex/nullable-references at 98ad7e1. Seven added programs agree on Node,
+Base: origin/codex/nullable-references at 98ad7e1. Eight added programs agree on Node,
 native (sanitized and release), and the JavaScript backend. No differing programs.
 
 ## Case inventory
@@ -22,6 +22,7 @@ value and its statically declared null or undefined empty case.
 | Nullable map values, direct iteration | nullable_references_slots.a strings; nullable_references_map_narrowed.a match arrays | All five kinds, insertion and replacement |
 | Missing Map.get and past-end array reads of reference-or-undefined elements | Existing general reference fixtures have partial coverage; map_narrowed covers match-array missing lookup | All five kinds; missing reads passed to functions, then generics, strict comparisons, typeof and ?? |
 | JSON empty-case schema, top-level/field/array, present function omission | nullable_references_json.a | Already covered |
+| Nullable JSON replacer keys and indentation arguments | No existing nullable argument-position program found | nullable_coverage_json_arguments.a |
 | typeof null RegExp match/exec results | nullable_references_typeof_match.a | Already covered |
 | Two empty cases, defaulted nullable arguments, changed nullable views, assertions and loose equality | internal/lower/nullable_test.go | Deliberate refusals, not agreeing runnable fixtures |
 
@@ -53,4 +54,20 @@ Go go1.27.1, clang 20.1.8, nproc 5. Stable-checkout setup timing:
 go, clang, node and submodules ready at 0s; build cache warm at 80s; done at 80s.
 The initial setup overlapped checkout and failed its cache warm; the stable rerun passed.
 
-Commands and complete validation logs are reported with the final result.
+The final eight-fixture oracle passed uncached in 1.642 seconds. Every standalone
+build and run exited zero and matched Node. Final counts updated in 17.742 seconds;
+the earlier seven-fixture combined counts and fixture check passed in 46.858 seconds. Formatting
+and vet passed. See commands.txt and the saved logs.
+
+The first full gate compiled its oracle test binary with six new fixtures, then
+the seventh fixture and counts row were added while it ran. Its counts comparison
+failed against the changed table. The entire oracle package was rerun uncached
+against the final seven-fixture checkout and passed in 185.983 seconds. This is a validation-order mistake,
+not a program output difference.
+
+The original full uncached gate completed with exit 1 solely for the counts
+snapshot mismatch described above. Every other package passed, including
+Unicode properties (858.511 seconds) and stage-1 JSON (553.763 seconds).
+Compiler source is restored. Only new fixture rows changed in counts.md.
+
+The final eight-fixture full oracle package passed uncached: ok  	github.com/system-inc/adamic/internal/oracle	88.839s

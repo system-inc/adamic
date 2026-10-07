@@ -1,0 +1,37 @@
+?   	github.com/system-inc/adamic/bench	[no test files]
+?   	github.com/system-inc/adamic/bench/regex	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic	[no test files]
+?   	github.com/system-inc/adamic/cmd/adamic-fuzz	[no test files]
+ok  	github.com/system-inc/adamic/cmd/adamic-meter	0.514s
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	125.099s
+ok  	github.com/system-inc/adamic/internal/flow	102.068s
+ok  	github.com/system-inc/adamic/internal/fresh	42.650s
+ok  	github.com/system-inc/adamic/internal/fuzz	11.003s
+?   	github.com/system-inc/adamic/internal/ir	[no test files]
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+ok  	github.com/system-inc/adamic/internal/load	2.066s
+ok  	github.com/system-inc/adamic/internal/lower	27.138s
+ok  	github.com/system-inc/adamic/internal/native	387.592s
+--- FAIL: TestCountsAreRecorded (197.94s)
+    counts_test.go:200: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):
+FAIL
+gate cache: native hits=0 misses=1084
+gate cache: node hits=0 misses=599
+gate cache: probe hits=0 misses=24
+FAIL	github.com/system-inc/adamic/internal/oracle	213.252s
+ok  	github.com/system-inc/adamic/internal/regexp	13.115s
+ok  	github.com/system-inc/adamic/internal/unicodeproperties	858.511s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssnumbers	170.757s
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	32.213s
+ok  	github.com/system-inc/adamic/stage1/cohere/formatfiles	43.760s
+ok  	github.com/system-inc/adamic/stage1/cohere/gitignore	49.266s
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	116.141s
+ok  	github.com/system-inc/adamic/stage1/cohere/json	553.763s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	338.675s
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	17.089s
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	39.730s
+ok  	github.com/system-inc/adamic/stage1/cohere/suppression	54.678s
+ok  	github.com/system-inc/adamic/stage1/cohere/values	72.217s
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	273.911s
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	96.248s
+FAIL
