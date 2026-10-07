@@ -1,15 +1,21 @@
 package lint
 
 import (
+	"crypto/sha256"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"sync"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native"
 )
 
 var checkerBuildMutex sync.Mutex
 var checkerArchives = map[bool]string{}
+var checkerBinaryMutex sync.Mutex
+var checkerBinaries = map[string]string{}
 var checkerBuildDirectories []string
 
 // A single archive per instrumentation mode and test process, with its sources from the landed tree.
@@ -32,8 +38,9 @@ func checkerArchive(t *testing.T, sanitize bool) string {
 	}
 	command := exec.Command("go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
 	command.Dir = root
+	command.Env = append(os.Environ(), "GOMAXPROCS=4")
 	if sanitize {
-		command.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
+		command.Env = append(command.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 	}
 	log, err := os.Create(filepath.Join(directory, "build.log"))
 	if err != nil {
@@ -48,6 +55,36 @@ func checkerArchive(t *testing.T, sanitize bool) string {
 	}
 	checkerArchives[sanitize] = archive
 	return archive
+}
+
+// Identical generated C and build options share one binary for this test process.
+// Mutants change the source hash, so each still compiles and runs independently.
+func checkerBinary(t *testing.T, source, archive string, sanitize bool) string {
+	t.Helper()
+	key := fmt.Sprintf("%x:%s:%t", sha256.Sum256([]byte(source)), archive, sanitize)
+	checkerBinaryMutex.Lock()
+	defer checkerBinaryMutex.Unlock()
+	if path := checkerBinaries[key]; path != "" {
+		return path
+	}
+	directory, err := os.MkdirTemp("", "adamic-lint-native-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	checkerBuildMutex.Lock()
+	checkerBuildDirectories = append(checkerBuildDirectories, directory)
+	checkerBuildMutex.Unlock()
+	path := filepath.Join(directory, "scanner")
+	if archive != "" {
+		err = native.BuildTSGo(source, path, archive, native.Options{Sanitize: sanitize})
+	} else {
+		err = native.Build(source, path, native.Options{Sanitize: sanitize})
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	checkerBinaries[key] = path
+	return path
 }
 func cleanupCheckerArchives() {
 	for _, directory := range checkerBuildDirectories {

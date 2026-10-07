@@ -148,6 +148,24 @@ export class Rule {
             ].includes(parent.kind) && parent.children[0] === index
         );
     }
+    // The parser omits absent for clauses. Locate the first delimiter while skipping
+    // the complete initializer node, so nested expressions and regex literals stay opaque.
+    forCondition(node: ParseNode, current: number): boolean {
+        let child = 0;
+        this.context.scanAt(node.pos);
+        let token = this.context.scanAt(this.context.scanEnd());
+        if(token === 'AwaitKeyword') { child++; token = this.context.scanAt(this.context.scanEnd()); }
+        if(token !== 'OpenParenToken') { panic('missing for opening delimiter'); }
+        token = this.context.scanAt(this.context.scanEnd());
+        if(token !== 'SemicolonToken') {
+            const initializer = node.children[child] ?? panic('missing for initializer');
+            child++;
+            this.context.scanAt(this.context.node(initializer).end);
+        }
+        if(this.context.scanKind() !== 'SemicolonToken') { panic('missing for initializer delimiter'); }
+        token = this.context.scanAt(this.context.scanEnd());
+        return token !== 'SemicolonToken' && node.children[child] === current;
+    }
     conditional(index: number): boolean {
         let current = index;
         while(this.context.parent(current) >= 0) {
@@ -162,7 +180,7 @@ export class Rule {
                 case 'ConditionalExpression': if(node.children[0] === current) { return true; } current = parent; continue;
                 case 'IfStatement': case 'WhileStatement': return node.children[0] === current;
                 case 'DoStatement': return node.children[1] === current;
-                case 'ForStatement': return node.children[node.children.length - 3] === current;
+                case 'ForStatement': return this.forCondition(node, current);
                 default: return false;
             }
         }

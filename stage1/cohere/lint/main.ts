@@ -4,7 +4,7 @@ import { Parser } from '../../typescript/parser/parser.ts';
 import { Scanner } from '../../typescript/scanner/scanner.ts';
 import { Linter } from './lint.ts';
 import { Settings } from './settings.ts';
-import { Checker, openProgram, releaseProgram } from './checker.a';
+import { Checker, openProgram, releaseProgram, type ProgramResult } from './checker.a';
 import { hash } from './checker_hash.a';
 
 // Test only: see Linter.junkRows.
@@ -51,7 +51,7 @@ function run(row: string, countOnly: boolean, program = 0, replayPrefix = '', re
             console.log(`refused ${refusal.rule} ${path} ${refusal.start} ${refusal.end} ${written(refusal.reason)}`);
         }
     }
-    if(program === 0 && replayPrefix === '') { for(const skipped of linter.skipped) { console.log(skipped); } }
+    if(!countOnly && program === 0 && replayPrefix === '') { for(const skipped of linter.skipped) { console.log(skipped); } }
     if(countOnly) {
         return linter.findings.length;
     }
@@ -217,9 +217,9 @@ if(first === '--manifest') {
         if(recorded.kind === 'Error') { headerError = recorded.message; }
         else if(recorded.text !== header) { headerError = 'transcript program differs'; }
     }
-    const opened = config === '' || replayPrefix !== '' ? 0 : openProgram(config, []);
-    const program = typeof opened === 'number' ? opened : 0;
-    if(typeof opened !== 'number') { headerError = opened.message; }
+    const opened: ProgramResult = config === '' || replayPrefix !== '' ? { kind: 'Ok', value: 0 } : openProgram(config, []);
+    const program = opened.kind === 'Ok' ? opened.value : 0;
+    if(opened.kind === 'Error') { headerError = opened.message; }
     let count = 0;
     let caseNumber = 0;
     for(const row of rows) {
@@ -237,7 +237,7 @@ if(first === '--manifest') {
     }
     if(program !== 0) {
         const released = releaseProgram(program);
-        if(released !== undefined) { console.log(`refused checker ${config} 0 0 ${written(released.message)}`); }
+        if(released.kind === 'Error') { console.log(`refused checker ${config} 0 0 ${written(released.message)}`); }
     }
     if(countOnly) {
         console.log(`${count}`);

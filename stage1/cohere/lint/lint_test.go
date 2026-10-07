@@ -147,21 +147,16 @@ func buildPort(t *testing.T, directory string, sanitize bool) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "scanner")
 	source := native.C(lowered)
+	archive := ""
 	if native.UsesTSGo(lowered) {
 		source, err = native.TSGoC(lowered)
 		if err != nil {
 			t.Fatal(err)
 		}
-		err = native.BuildTSGo(source, binary, checkerArchive(t, sanitize), native.Options{Sanitize: sanitize})
-	} else {
-		err = native.Build(source, binary, native.Options{Sanitize: sanitize})
+		archive = checkerArchive(t, sanitize)
 	}
-	if err != nil {
-		t.Fatal(err)
-	}
-	return binary
+	return checkerBinary(t, source, archive, sanitize)
 }
 
 func node(t *testing.T, directory, manifest string, count bool) execution {
@@ -318,7 +313,21 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
 		t.Fatal(err)
 	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
+	typedHarness := filepath.Join(root, "internal/lint/testing/program.go")
+	typedData, err := os.ReadFile(typedHarness)
+	if err != nil {
+		t.Fatal(err)
+	}
+	typedOriginal := "return Result{\n\t\tDiagnostics: diagnostics,\n\t\tSourceFile:  sourceFile,\n\t\tcapture:     newCapturedRun(subject, subjectFileName, len(files)-1, options),\n\t}"
+	if strings.Count(string(typedData), typedOriginal) != 1 {
+		t.Fatal("typed capture overlay anchor changed")
+	}
+	typedReplacement := "result := Result{\n\t\tDiagnostics: diagnostics,\n\t\tSourceFile: sourceFile,\n\t\tcapture: newCapturedRun(subject, subjectFileName, len(files)-1, options),\n\t}\n\tRecordAssertedCase(t,result)\n\treturn result"
+	typedSide := filepath.Join(directory, "program.go")
+	if err := os.WriteFile(typedSide, []byte(strings.Replace(string(typedData), typedOriginal, typedReplacement, 1)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side, typedHarness: typedSide}})
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
@@ -424,6 +433,29 @@ func compare(t *testing.T, oracle, binary, directory, path string) []byte {
 func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module string) []byte {
 	t.Helper()
 	want := execute(t, "", oracle, "--manifest", path)
+	manifestText, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bytes.HasPrefix(manifestText, []byte("program ")) {
+		prefix := filepath.Join(t.TempDir(), "transcript")
+		native := execute(t, "", binary, "--manifest", path, "--record", prefix)
+		runner := filepath.Join(repository, "oracle/node.mjs")
+		for _, side := range []struct {
+			name string
+			run  execution
+		}{
+			{"native", native},
+			{"Node", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--replay", prefix)},
+			{"emitted JavaScript", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, module, "--manifest", path, "--replay", prefix)},
+		} {
+			if diff := difference(side.run.output, want.output); diff != "" {
+				t.Fatalf("%s: %s", side.name, diff)
+			}
+		}
+		t.Logf("live Go, native, Node and emitted JavaScript replay identical: %d bytes", len(want.output))
+		return want.output
+	}
 	for _, side := range []struct {
 		name string
 		run  execution
@@ -445,8 +477,21 @@ func TestRulesAgree(t *testing.T) {
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
 	rows := generated(t)
+	module := emittedJavaScript(t, directory)
+	typed := map[string]bool{}
+	for _, descriptor := range prepareRegistry(t, directory) {
+		typed[descriptor.Name] = descriptor.Typed
+	}
 	for _, row := range upstream(t) {
-		if strings.HasSuffix(row, "\tunsupported-recovery") {
+		fields := strings.Split(row, "\t")
+		if len(fields) > 1 && typed[fields[1]] {
+			config := filepath.Join(t.TempDir(), "tsconfig.json")
+			options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, fields[0])
+			if err := os.WriteFile(config, []byte(options), 0644); err != nil {
+				t.Fatal(err)
+			}
+			compareWithJavaScript(t, oracle, binary, directory, manifest(t, []string{"program " + config, row}), module)
+		} else if strings.HasSuffix(row, "\tunsupported-recovery") {
 			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
 			checkRecoveryRefusal(t, oracle, binary, directory, row)
 		} else {

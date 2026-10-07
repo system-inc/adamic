@@ -35,6 +35,20 @@ func TestOwnedWitnesses(t *testing.T) {
 	for _, d := range prepareRegistry(t, ".") {
 		for _, row := range ownedWitnessRows(t, directory, d) {
 			path := strings.SplitN(row, "\t", 2)[0]
+			if d.Typed {
+				config := filepath.Join(t.TempDir(), "tsconfig.json")
+				options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, path)
+				if err := os.WriteFile(config, []byte(options), 0644); err != nil {
+					t.Fatal(err)
+				}
+				projectManifest := manifest(t, []string{"program " + config, row, path + "\tall"})
+				compare(t, oracle, buildPort(t, directory, true), directory, projectManifest)
+				answer := execute(t, "", oracle, "--manifest", manifest(t, []string{"program " + config, row}), "--count")
+				if string(answer.output) == "0\n" {
+					t.Fatalf("%s typed witness reports no findings", d.Name)
+				}
+				continue
+			}
 			pair := recoveryRows(t, oracle, []string{row, path + "\tall"})
 			answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
 			if string(answer.output) == "0\n" {

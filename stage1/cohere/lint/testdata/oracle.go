@@ -58,7 +58,7 @@ func run(row string, countOnly bool, out *bufio.Writer, graph *program.Graph) in
 		panic(err)
 	}
 	source := string(data)
-	if graph == nil {
+	if graph == nil && !countOnly {
 		for _, item := range registeredRules() {
 			if item.subject.NeedsTypeChecker && (fields[1] == "" || fields[1] == "all" || fields[1] == item.subject.Name) {
 				fmt.Fprintf(out, "skipped %s no program\n", item.subject.Name)

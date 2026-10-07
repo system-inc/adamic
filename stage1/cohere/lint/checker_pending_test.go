@@ -4,14 +4,15 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"fmt"
-	"github.com/microsoft/TypeScript/tsc/shim/ast"
-	"github.com/microsoft/TypeScript/tsc/shim/tspath"
-	nativechecker "github.com/system-inc/adamic/bridge/tsgo/checker"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 	"unicode/utf16"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	nativechecker "github.com/system-inc/adamic/bridge/tsgo/checker"
 )
 
 func TestCheckerNoProgramCoverage(t *testing.T) {
@@ -57,7 +58,8 @@ func TestCheckerBridgeRefusalPending(t *testing.T) {
 	}
 	path := manifest(t, []string{"program " + config, source + "\t@typescript-eslint/no-unnecessary-boolean-literal-compare"})
 	prefix := filepath.Join(project, "facts")
-	native := execute(t, "", buildPort(t, directory, true), "--manifest", path, "--record", prefix).output
+	binary := buildPort(t, directory, true)
+	native := execute(t, "", binary, "--manifest", path, "--record", prefix).output
 	if !bytes.Contains(native, []byte("refused @typescript-eslint/no-unnecessary-boolean-literal-compare ")) {
 		t.Fatalf("bridge error lost: %s", native)
 	}
@@ -66,10 +68,51 @@ func TestCheckerBridgeRefusalPending(t *testing.T) {
 	if diff := difference(replay, native); diff != "" {
 		t.Fatal(diff)
 	}
+	emitted := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emittedJavaScript(t, directory), "--manifest", path, "--replay", prefix).output
+	if diff := difference(emitted, native); diff != "" {
+		t.Fatal(diff)
+	}
+	t.Logf("bridge refusal matches native, Node and emitted JavaScript: %s", native)
+	checkerPath := filepath.Join(directory, "checker.a")
+	original, err := os.ReadFile(checkerPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	anchor := "this.refusals.push(new Refusal(this.rule, start, end, reason));"
+	if strings.Count(string(original), anchor) != 1 {
+		t.Fatal("refusal mutant anchor not unique")
+	}
+	changed := strings.Replace(string(original), anchor, "", 1)
+	if err := os.WriteFile(checkerPath, []byte(changed), 0644); err != nil {
+		t.Fatal(err)
+	}
+	mutantPrefix := filepath.Join(project, "mutant-facts")
+	mutantNative := execute(t, "", buildPort(t, directory, true), "--manifest", path, "--record", mutantPrefix).output
+	mutantNode := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--replay", mutantPrefix).output
+	mutantEmitted := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emittedJavaScript(t, directory), "--manifest", path, "--replay", mutantPrefix).output
+	for runtime, got := range map[string][]byte{"native": mutantNative, "Node": mutantNode, "emitted JavaScript": mutantEmitted} {
+		if bytes.Equal(got, native) || bytes.Contains(got, []byte("refused ")) {
+			t.Fatalf("%s refusal handling removal survived: %s", runtime, got)
+		}
+		t.Logf("%s refusal handling mutant builds and runs, caught by wire comparison", runtime)
+	}
+	if err := os.WriteFile(checkerPath, original, 0644); err != nil {
+		t.Fatal(err)
+	}
+	for runtime, got := range map[string][]byte{
+		"native":             execute(t, "", binary, "--manifest", path, "--record", prefix).output,
+		"Node":               execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--replay", prefix).output,
+		"emitted JavaScript": execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emittedJavaScript(t, directory), "--manifest", path, "--replay", prefix).output,
+	} {
+		if diff := difference(got, native); diff != "" {
+			t.Fatalf("restored %s: %s", runtime, diff)
+		}
+	}
+	t.Log("restoring refusal handling passes all three runtime wire comparisons")
 }
 
-// The native transcript producer is blocked by release's result union. This control independently
-// exercises replay with facts from the landed live bridge, never handwritten type facts.
+// Replay is checked against live bridge facts. When the result API is present,
+// native Adamic also produces and verifies this exact transcript.
 func TestCheckerReplayEntryControl(t *testing.T) {
 	directory, err := filepath.Abs(".")
 	if err != nil {
@@ -78,6 +121,9 @@ func TestCheckerReplayEntryControl(t *testing.T) {
 	project := t.TempDir()
 	source := filepath.Join(project, "source.ts")
 	text := "declare const b: boolean; if (b === true) {}\n"
+	if os.Getenv("ADAMIC_LINT_CONSTRAINT_CONTROL") == "1" {
+		text = "function f<T extends boolean>(b: T) { return b === true; }\n"
+	}
 	config := filepath.Join(project, "tsconfig.json")
 	options := `{"compilerOptions":{"strict":true},"files":["source.ts"]}`
 	if err := os.WriteFile(source, []byte(text), 0644); err != nil {
@@ -131,6 +177,31 @@ func TestCheckerReplayEntryControl(t *testing.T) {
 		return execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(port, "main.ts"), "--manifest", path, "--replay", prefix).output
 	}
 	want := execute(t, "", goOracle(t), "--manifest", path).output
+	declarations, err := os.ReadFile(filepath.Join(repository, "internal/load/prelude.d.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bytes.Contains(declarations, []byte("TSGoError")) {
+		live := execute(t, "", buildPort(t, directory, true), "--manifest", path, "--record", prefix).output
+		if diff := difference(live, want); diff != "" {
+			t.Fatal(diff)
+		}
+		actualHeader, err := os.ReadFile(prefix + ".header")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(actualHeader) != header {
+			t.Fatalf("native program header differs from Go SHA-256: %s", actualHeader)
+		}
+		transcript, err := os.ReadFile(prefix + ".0")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(transcript) != rowHeader+first+second {
+			t.Fatalf("native transcript differs from live bridge: %s", transcript)
+		}
+		t.Log("native recording verified against live bridge and Go findings")
+	}
 	before := run(directory, first)
 	if bytes.Equal(before, want) || !bytes.Contains(before, []byte("missing transcript entry")) {
 		t.Fatalf("removed entry survived: %s", before)
@@ -146,6 +217,20 @@ func TestCheckerReplayEntryControl(t *testing.T) {
 		t.Fatalf("extra entry survived: %s", extra)
 	}
 	t.Log("reverse guard rejects an unasked entry")
+	if err := os.WriteFile(prefix+".header", []byte(header+"changed program hash\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	wrongProgram := run(directory, first+second)
+	if bytes.Equal(wrongProgram, want) || !bytes.Contains(wrongProgram, []byte("transcript program differs")) {
+		t.Fatalf("changed program header survived: %s", wrongProgram)
+	}
+	if err := os.WriteFile(prefix+".header", []byte(header), 0644); err != nil {
+		t.Fatal(err)
+	}
+	t.Log("program header mismatch refuses replay; restoring it passes")
+	if diff := difference(run(directory, first+second), want); diff != "" {
+		t.Fatal(diff)
+	}
 	typeMutant := mutant(t, "(!plain && !nullable)", "(plain && !nullable)", "rules/no-unnecessary-boolean-literal-compare/rule.a")
 	if bytes.Equal(run(typeMutant, first+second), want) {
 		t.Fatal("pilot type-verdict mutant survived Node comparison")

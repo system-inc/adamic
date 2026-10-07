@@ -1,6 +1,0 @@
-import { tsgoRelease } from 'adamic';
-type TSGoError = { readonly kind: 'Error'; readonly message: string };
-function release(program: number): void | TSGoError {
-    return tsgoRelease(program);
-}
-release(1);

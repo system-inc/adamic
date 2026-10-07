@@ -4,9 +4,12 @@ import type { Parser } from '../../typescript/parser/parser.ts';
 import { Frames } from '../typeaware/frames.ts';
 
 export type TSGoError = { readonly kind: 'Error'; readonly message: string };
-export function openProgram(config: string, files: readonly string[]): number | TSGoError { return tsgoProgram(config, files); }
-export function releaseProgram(program: number): void | TSGoError { return tsgoRelease(program); }
-function inspect(program: number, path: string, start: number, end: number, kind: string, question: string): string | TSGoError {
+export type ProgramResult = { readonly kind: 'Ok'; readonly value: number } | TSGoError;
+export type InspectResult = { readonly kind: 'Ok'; readonly value: string } | TSGoError;
+export type ReleaseResult = { readonly kind: 'Ok' } | TSGoError;
+export function openProgram(config: string, files: readonly string[]): ProgramResult { return tsgoProgram(config, files); }
+export function releaseProgram(program: number): ReleaseResult { return tsgoRelease(program); }
+function inspect(program: number, path: string, start: number, end: number, kind: string, question: string): InspectResult {
     return tsgoInspect(program, path, start, end, kind, question);
 }
 export class FileQuestion {
@@ -60,7 +63,8 @@ export class Checker {
         if(!this.reads.includes(question.kind)) {
             return this.refuse(0, this.offsets[this.parser.scanner.text.length] ?? 0, `undeclared program read ${question.kind}`);
         }
-        return this.ask(this.root >= 0 ? this.root : panic('checker asked before parsing'), question.text);
+        if(this.root < 0) { panic('checker asked before parsing'); }
+        return this.ask(this.root, question.text);
     }
     ask(index: number, question: string): Answer {
         const node = this.parser.node(index);
@@ -78,13 +82,13 @@ export class Checker {
             if(outcome !== 'Value') { return this.refuse(start, end, 'invalid transcript outcome'); }
         }
         else {
-            // Pending Adamic's returned-error builtin: tsgoInspect still panics on bridge errors.
+            // Library's result envelope preserves the C error buffer verbatim.
             const inspected = inspect(this.program, this.path, start, end, node.kind, question);
-            if(typeof inspected !== 'string') {
+            if(inspected.kind === 'Error') {
                 this.recorded.push(frame(key) + frame('Error') + frame(inspected.message));
                 return this.refuse(start, end, inspected.message);
             }
-            value = inspected;
+            value = inspected.value;
         }
         this.recorded.push(frame(key) + frame('Value') + frame(value));
         return new Answer(value, '');
