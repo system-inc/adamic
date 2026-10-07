@@ -1,8 +1,8 @@
 import type { Rules } from '../rules.ts';
 import { Bindings } from '../bindings.ts';
 import { Support } from './support.a';
-// Numeric SyntaxKind subscriptions, held to pinned Go production registrations.
-export const listenerKinds: readonly number[] = [79];
+// AST kind name subscriptions, held to pinned Go production registrations.
+export const listenerKinds: readonly string[] = ["Identifier"];
 
 export interface RestrictedGlobal { readonly name: string; readonly message: string; }
 export class NoRestrictedGlobals {

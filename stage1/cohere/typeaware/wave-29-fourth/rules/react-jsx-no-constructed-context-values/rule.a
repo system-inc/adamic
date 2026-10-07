@@ -1,7 +1,7 @@
 import { panic } from 'adamic';
 import { RawNode, RawTree } from '../../raw_nodes.a';
 import { And, ArrayLiteralExpression, ArrowFunction, AsExpression, BinaryExpression, ClassExpression, ConditionalExpression, FirstAssignment, FunctionExpression, Identifier, JsxElement, JsxFragment, JsxSelfClosingElement, LastAssignment, NewExpression, Nullish, ObjectLiteralExpression, Or, ParenthesizedExpression, PropertyAccessExpression, RegularExpressionLiteral, SatisfiesExpression } from '../../syntax_kinds.a';
-export const listenerKinds: readonly number[] = [286, 287];
+export const listenerKinds: readonly string[] = ["JsxOpeningElement", "JsxSelfClosingElement"];
 export class Construction {
     readonly kind: string;
     readonly node: number;

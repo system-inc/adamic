@@ -1,14 +1,16 @@
-// Production Go listener registrations are the independent numeric-kind oracle.
+// Production Go listener registrations are the independent named-kind oracle.
 package main
 
 import (
 	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/cohere/internal/lint/rule"
 	core "github.com/system-inc/cohere/internal/lint/rules/core"
 	"github.com/system-inc/cohere/internal/lint/rules/nexus"
 	"github.com/system-inc/cohere/internal/lint/rules/react"
 	"sort"
+	"strings"
 )
 
 func main() {
@@ -45,7 +47,7 @@ func main() {
 		}
 		fmt.Printf("%s\t", s.r.Name)
 		for _, kind := range kinds {
-			fmt.Printf("%d,", kind)
+			fmt.Printf("%s,", strings.TrimPrefix(ast.Kind(kind).String(), "Kind"))
 		}
 		fmt.Println()
 	}

@@ -1,6 +1,6 @@
 import { RawNode, RawTree } from '../../raw_nodes.a';
 import { BindingElement, CallExpression, Identifier, ImportClause, ImportDeclaration, ImportSpecifier, JsxElement, JsxFragment, NamedImports, NoSubstitutionTemplateLiteral, ObjectBindingPattern, PropertyAccessExpression, StringLiteral, VariableDeclaration } from '../../syntax_kinds.a';
-export const listenerKinds: readonly number[] = [285, 286, 289];
+export const listenerKinds: readonly string[] = ["JsxElement", "JsxFragment", "JsxSelfClosingElement"];
 function text(tree: RawTree, id: number, expected: string): boolean {
     return id >= 0 && tree.get(id).kind === Identifier && tree.get(id).text === expected;
 }

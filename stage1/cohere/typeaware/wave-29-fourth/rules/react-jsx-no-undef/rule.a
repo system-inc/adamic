@@ -1,6 +1,6 @@
 import { RawNode, RawTree } from '../../raw_nodes.a';
 import { Identifier, PropertyAccessExpression } from '../../syntax_kinds.a';
-export const listenerKinds: readonly number[] = [286, 287];
+export const listenerKinds: readonly string[] = ["JsxOpeningElement", "JsxSelfClosingElement"];
 export function isComponentName(name: string): boolean {
     if(name.length === 0 || name.includes('-')) { return false; }
     const first = name.charCodeAt(0);

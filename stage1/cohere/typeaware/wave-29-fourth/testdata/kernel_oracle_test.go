@@ -25,12 +25,12 @@ func TestWave29FourthKernels(t *testing.T) {
 	b, _ := json.MarshalIndent(kinds, "", "  ")
 	os.WriteFile(filepath.Join(dir, "kinds.json"), b, 0644)
 	source := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/input.tsx", Path: "/input.tsx"}, "", core.ScriptKindTSX)
-	listeners := map[string][]int{}
+	listeners := map[string][]string{}
 	for _, r := range []rule.Rule{JsxFragments, JsxNoConstructedContextValues, JsxNoUndef} {
 		for k := range r.Run(rule.Context{SourceFile: source, TypeChecker: &checker.Checker{}}, nil) {
-			listeners[r.Name] = append(listeners[r.Name], int(k))
+			listeners[r.Name] = append(listeners[r.Name], strings.TrimPrefix(k.String(), "Kind"))
 		}
-		sort.Ints(listeners[r.Name])
+		sort.Strings(listeners[r.Name])
 	}
 	b, _ = json.MarshalIndent(listeners, "", "  ")
 	os.WriteFile(filepath.Join(dir, "listeners.json"), b, 0644)

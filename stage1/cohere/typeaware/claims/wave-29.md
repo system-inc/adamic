@@ -110,3 +110,13 @@ integration; its supplied-node kernel is green. The third batch remains parked
 for source-to-HIR/SSA/capture integration. Dynamic configured id-match remains
 blocked by nonconstant RegExp lowering and dialect differences. No new claims
 are taken. See [HARNESS_REPORT.md](../wave-29-fourth/HARNESS_REPORT.md).
+
+## Named listener contract correction
+
+Ahra's latest instruction supersedes numeric subscriptions. All twelve owned
+manifests and exported declarations now use the pinned AST kind names. Live Go
+registration comparisons, valid wrong-name manifest mutants and nine compiling
+export mutants pass their failure proofs. The numeric registry refusal is no
+longer a blocker. Full checker-backed JSX source adapters and configured dynamic
+id-match remain incomplete; the React analysis claims remain parked. No new
+claims are taken. See [NAMED_KINDS_REPORT.md](../wave-29-fourth/NAMED_KINDS_REPORT.md).

@@ -1,8 +1,8 @@
 {
   "name": "nexus/concurrency-no-check-then-write",
   "kinds": [
-    247,
-    248,
-    249
+    "DoStatement",
+    "WhileStatement",
+    "ForStatement"
   ]
 }

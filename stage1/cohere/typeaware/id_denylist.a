@@ -4,8 +4,8 @@ import { SymbolProvenance } from './symbol_provenance.a';
 
 // The configured checks follow the production rule. A nil symbol is unresolved,
 // not an environment global; only symbols declared exclusively in declaration files are exempt.
-// Numeric SyntaxKind subscriptions, held to pinned Go production registrations.
-export const listenerKinds: readonly number[] = [79, 80];
+// AST kind name subscriptions, held to pinned Go production registrations.
+export const listenerKinds: readonly string[] = ["Identifier", "PrivateIdentifier"];
 
 export class IdDenylist {
     readonly rules: Rules;

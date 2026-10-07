@@ -1,15 +1,15 @@
 {
   "name": "no-shadow-restricted-names",
   "kinds": [
-    170,
-    209,
-    219,
-    232,
-    261,
-    263,
-    264,
-    274,
-    275,
-    277
+    "Parameter",
+    "BindingElement",
+    "FunctionExpression",
+    "ClassExpression",
+    "VariableDeclaration",
+    "FunctionDeclaration",
+    "ClassDeclaration",
+    "ImportClause",
+    "NamespaceImport",
+    "ImportSpecifier"
   ]
 }

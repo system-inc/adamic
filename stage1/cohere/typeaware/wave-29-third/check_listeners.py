@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Numeric metadata versus live Go rule registrations; no shared driver edits."""
+"""Named-kind metadata versus live Go rule registrations; no shared driver edits."""
 import json,os,re,subprocess,sys,time
 from pathlib import Path
 s=Path(__file__).resolve().parent;r=s.parents[3]
@@ -22,11 +22,11 @@ def manifest_bytes(manifests):
 manifest_names=['id-denylist','id-match','nexus/concurrency-no-check-then-write','no-restricted-globals','no-setter-return','no-shadow-restricted-names','react-hooks/set-state-in-effect','react-hooks/set-state-in-render','react-hooks/static-components']
 manifests=[json.loads((s/'rules'/name.replace('/','-')/'rule.json').read_text()) for name in manifest_names]
 for name,row in zip(manifest_names,manifests):
- assert row['name']==name and row['kinds'] and all(type(kind) is int for kind in row['kinds'])
+ assert row['name']==name and row['kinds'] and all(type(kind) is str for kind in row['kinds'])
 assert manifest_bytes(manifests)==truth
 (d/'manifests.stdout').write_bytes(manifest_bytes(manifests))
 for index,name in enumerate(manifest_names):
- mutated=json.loads(json.dumps(manifests));mutated[index]['kinds'][0]+=1
+ mutated=json.loads(json.dumps(manifests));mutated[index]['kinds'][0]='EndOfFileToken'
  assert manifest_bytes(mutated)!=truth
  print(name+': valid JSON wrong-kind mutant caught only by Go registration comparison',flush=True)
 run('native-build',[c,'build',s/'listener_probe.a','-o',d/'native','--tsgo',archive])
@@ -54,13 +54,13 @@ def imports(text,parent,redirect=None):
  return re.sub(r"from\s+(['\"])(\.[^'\"]+)\1",replace,text)
 for name,module,export in rows:
  local=d/('mutant-'+name);local.mkdir(exist_ok=True)
- text=module.read_text();pattern=r'(export const '+export+r': readonly number\[\] = \[)(\d+)'
+ text=module.read_text();pattern=r'(export const '+export+r': readonly string\[\] = \[)("[^"]+")'
  matches=list(re.finditer(pattern,text));assert len(matches)==1
- text=re.sub(pattern,lambda m:m[1]+str(int(m[2])+1),text)
+ text=re.sub(pattern,lambda m:m[1]+'"EndOfFileToken"',text)
  mutated=local/module.name;mutated.write_text(imports(text,module.parent))
  (local/'listener_declarations.a').write_text(imports((s/'listener_declarations.a').read_text(),s,{module.resolve():mutated}))
  (local/'listener_probe.a').write_text((s/'listener_probe.a').read_text())
  run(name+'-build',[c,'build',local/'listener_probe.a','-o',local/'native','--tsgo',archive])
  got=run(name,[local/'native']);assert got!=truth and not(d/(name+'.stderr')).read_bytes()
- print(name+': wrong numeric subscription compiles and exits 0; only registration-byte comparison catches it',flush=True)
-print('PASS: 9 numeric listener declarations; '+str(len(truth))+' bytes agree across Go/native/Node/sanitized native',flush=True)
+ print(name+': wrong named subscription compiles and exits 0; only registration-byte comparison catches it',flush=True)
+print('PASS: 9 named listener declarations; '+str(len(truth))+' bytes agree across Go/native/Node/sanitized native',flush=True)

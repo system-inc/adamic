@@ -1,3 +1,5 @@
+Current correction: [NAMED_KINDS_REPORT.md](NAMED_KINDS_REPORT.md) supersedes the numeric listener requirement and its registration blocker.
+
 Rebased the owned branch onto current main and the named shared harness; JSX source parsing now passes.
 Source revision: 49c299bc2f8bc8f66d738dfb7f29ae2ebc3c6e9d; main c01907a7; harness ab70f38d4.
 Own Go comparisons, compiling mutants, release checks and sanitizer profiles pass; focused harness tests PASS 131.439s.

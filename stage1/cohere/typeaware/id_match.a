@@ -3,8 +3,8 @@ import { Diagnostic } from './diagnostic.ts';
 import { panic } from 'adamic';
 import { IdDenylist } from './id_denylist.a';
 
-// Numeric SyntaxKind subscriptions, held to pinned Go production registrations.
-export const listenerKinds: readonly number[] = [79, 80];
+// AST kind name subscriptions, held to pinned Go production registrations.
+export const listenerKinds: readonly string[] = ["Identifier", "PrivateIdentifier"];
 
 export interface IdMatchFlags {
     readonly properties: boolean;

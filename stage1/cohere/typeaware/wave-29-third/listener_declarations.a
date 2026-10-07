@@ -7,11 +7,11 @@ import { listenerKinds as shadow } from '../wave-29-next/no_shadow_restricted_na
 import { setStateInEffectKinds, setStateInRenderKinds, staticComponentsKinds } from './react_listener_declarations.a';
 export class ListenerDeclaration {
     readonly rule: string;
-    readonly kinds: readonly number[];
-    constructor(rule: string, kinds: readonly number[]) { this.rule = rule; this.kinds = kinds; }
+    readonly kinds: readonly string[];
+    constructor(rule: string, kinds: readonly string[]) { this.rule = rule; this.kinds = kinds; }
 }
 // Metadata for the incoming kind-indexed driver. No AST node is fetched here.
-export function numericListeners(): ListenerDeclaration[] {
+export function namedListeners(): ListenerDeclaration[] {
     return [
         new ListenerDeclaration('id-denylist', denylist),
         new ListenerDeclaration('id-match', match),

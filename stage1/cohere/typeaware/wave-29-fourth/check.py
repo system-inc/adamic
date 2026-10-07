@@ -21,7 +21,7 @@ kinds=json.loads((d/'kinds.json').read_text())
 for name,value in kinds.items():assert f'export const {name} = {value};' in (s/'syntax_kinds.a').read_text()
 for name,values in json.loads((d/'listeners.json').read_text()).items():
  manifest=json.loads((s/'rules'/name.replace('/','-')/'rule.json').read_text());assert manifest==dict(name=name,kinds=values)
- module=(s/'rules'/name.replace('/','-')/'rule.a').read_text();assert ('export const listenerKinds: readonly number[] = '+str(values)+';') in module
+ module=(s/'rules'/name.replace('/','-')/'rule.a').read_text();assert ('export const listenerKinds: readonly string[] = '+json.dumps(values)+';') in module
 run('native-build',[c,'build',s/'kernel_probe.a','-o',d/'native'])
 assert run('native',[d/'native',frames])==truth and not(d/'native.stderr').read_bytes()
 assert run('node',['node','--disable-warning=ExperimentalWarning',r/'oracle/node.mjs',s/'kernel_probe.a',frames])==truth

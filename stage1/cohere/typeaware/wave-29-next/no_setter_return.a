@@ -1,8 +1,8 @@
 import type { Rules } from '../rules.ts';
 import { SymbolProvenance } from '../symbol_provenance.a';
 import { Support } from './support.a';
-// Numeric SyntaxKind subscriptions, held to pinned Go production registrations.
-export const listenerKinds: readonly number[] = [220, 254];
+// AST kind name subscriptions, held to pinned Go production registrations.
+export const listenerKinds: readonly string[] = ["ArrowFunction", "ReturnStatement"];
 
 export class NoSetterReturn {
     readonly tree: Support;
