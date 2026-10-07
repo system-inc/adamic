@@ -1,0 +1,52 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { message, suggestion } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(index: number, parent: number): void {
+        const node = this.context.node(index);
+        if(node.optional) {
+            if(parent >= 0) {
+                const outer = this.context.node(parent);
+                if(
+                    outer.optional &&
+                    outer.children[0] === index &&
+                    [
+                        'PropertyAccessExpression',
+                        'ElementAccessExpression',
+                        'CallExpression',
+                        'NonNullExpression',
+                    ].includes(outer.kind)
+                ) {
+                    return;
+                }
+            }
+        }
+        else {
+            const inner = this.context.unwrap(node.children[0] ?? panic('assertion operand'));
+            if(!this.context.node(inner).optional) {
+                return;
+            }
+        }
+        const finding = this.context.report(
+            index,
+            '@typescript-eslint/no-non-null-asserted-optional-chain',
+            'noNonNullOptionalChain',
+            message,
+            '',
+            '',
+            '',
+        );
+        finding.suggestions.push(
+            new Suggestion('suggestRemovingNonNull', suggestion, [new SuggestionEdit(node.end - 1, node.end, '')]),
+        );
+    }
+}
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}
