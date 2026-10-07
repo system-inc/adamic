@@ -145,6 +145,52 @@ class WaveCheckTests(unittest.TestCase):
         self.commit(self.repo)
         self.rejected("claim")
 
+    def markdown_reservation(self):
+        path = LINT + "claims/wave-test.md"
+        self.git(self.repo, "rm", CLAIM)
+        self.write(self.repo, path, "# Wave claim\n\nBranch: `" + BRANCH + "`. Base: origin/main.\n\n"
+                   "- 35: wave-example. Claimed here.\n"
+                   "- 36: already-done. Skipped, already ported.\n"
+                   "\n## Unit report\n- unrelated-name: a finding from a corpus, not an assignment.\n")
+        self.commit(self.repo)
+        return path
+
+    def test_markdown_claim_discovered_with_skips_and_appended_report(self):
+        self.markdown_reservation()
+        result = self.run_check()
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_explicit_markdown_claim_and_owned_evidence(self):
+        path = self.markdown_reservation()
+        self.write(self.repo, LINT + "claims/wave-test-evidence/overlay.json", '{"Replace":{}}')
+        self.write(self.repo, LINT + "claims/wave-test-REPORT.md", "Test evidence")
+        self.commit(self.repo)
+        result = self.run_check("--claim", path)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_markdown_wrong_owner(self):
+        path = self.markdown_reservation()
+        self.write(self.repo, path, "Branch: codex/foreign.\n1. wave-example: claimed.\n")
+        self.commit(self.repo)
+        self.rejected("claim", "--claim", path)
+
+    def test_markdown_duplicate_assignment(self):
+        path = self.markdown_reservation()
+        self.write(self.repo, path, "Owner: " + BRANCH + ".\n1. wave-example\n2. wave-example\n")
+        self.commit(self.repo)
+        self.rejected("claim", "--claim", path)
+
+    def test_markdown_not_skipped_is_still_reserved(self):
+        path = self.markdown_reservation()
+        self.write(self.repo, path, "Branch: " + BRANCH + ".\n1. wave-example: claimed, not skipped.\n")
+        self.commit(self.repo)
+        result = self.run_check()
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_foreign_markdown_unreadable_assignments_fail_closed(self):
+        self.foreign("codex/unreadable", {LINT + "claims/unreadable.md": "Branch: codex/unreadable.\nUnstructured assignment: wave-example\n"})
+        self.rejected("claim")
+
     def test_competing_claim_fetched_despite_main_only_config(self):
         self.git(self.repo, "config", "--replace-all", "remote.origin.fetch", "+refs/heads/main:refs/remotes/origin/main")
         path = LINT + "claims/codex/other.json"
@@ -158,6 +204,19 @@ class WaveCheckTests(unittest.TestCase):
     def test_competing_legacy_port(self):
         self.foreign("codex/legacy", {LINT + "lint.ts": "if(this.enabled('wave-example')) { run(); }\n"})
         self.rejected("origin")
+
+    def test_competing_a_port(self):
+        self.foreign("codex/a-port", {LINT + "older-rule.a": "context.report(index, 'wave-example', 'id');\n"})
+        self.rejected("origin")
+
+    def test_competing_markdown_claim_without_implementation(self):
+        self.foreign("codex/wave-other", {LINT + "claims/wave-other.md": "Branch: codex/wave-other.\n1. wave-example: claimed here.\n"})
+        self.rejected("origin")
+
+    def test_foreign_claim_evidence_json_is_not_a_claim(self):
+        self.foreign("codex/evidence", {LINT + "claims/wave-evidence/overlay.json": '{"Replace":{}}'})
+        result = self.run_check()
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_competing_legacy_selection_without_implementation(self):
         self.foreign("codex/selected", {LINT + "batch9-selection.json": '{"selection":[{"name":"wave-example"}]}'})
@@ -287,6 +346,10 @@ class WaveCheckTests(unittest.TestCase):
 
     def test_dirty_tree(self):
         self.write(self.repo, LINT + "rules/wave-example/rule.ts", "// changed since tests")
+        self.rejected("evidence")
+
+    def test_uncommitted_go_overlay(self):
+        self.environment["GOFLAGS"] = "-overlay=/tmp/unapplied-compatibility.json"
         self.rejected("evidence")
 
     def test_origin_changes_after_receipt(self):

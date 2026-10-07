@@ -30,22 +30,38 @@ Claims are reservations: keep them on origin until integration or coordination
 retires them. The final-push checker requires completed implementations and tests;
 it is not a command for publishing an unfinished reservation.
 
+Existing wave Markdown reservations are supported without rewriting them. The
+script discovers the file by its `Branch:` or `Owner:` header, or select it:
+
+```sh
+python3 cloud/lint-wave-check.py --claim stage1/cohere/lint/claims/wave1-12.md
+```
+
+Keep the assignment list before the first `##` report section. Numbered lists
+and bullets, with optional backticks and position prefixes, are read as rule
+names; entries explicitly marked `skip` or `skipped` are excluded. A claim's
+own `<stem>-evidence/` and `<stem>-report.md` files are permitted as owned
+attachments. They are excluded from origin claim parsing. Other workers' claims
+and attachments remain outside the worker's territory. JSON claims are the
+strict format for new reservations.
+
 The checks are:
 
 1. The committed claim exists and matches the worker's branch.
 2. Every origin head is fetched, even with a main-only `remote.origin.fetch`.
    Deleted remote heads are pruned; submodule histories are not fetched. Every
    other head is searched for claims and directory descriptors with the same
-   public name. Legacy batch selection JSON and exact backtick names in BATCH
+   public name. Existing Markdown claims are read too; evidence JSON is excluded.
+   Legacy batch selection JSON and exact backtick names in BATCH
    reports count as reservations, including selections not yet implemented.
-   Legacy production TS modules and their volume-rule metadata are searched too.
+   Legacy production .ts/.a modules and their volume-rule metadata are searched too.
    A quoted name in a legacy production module or batch report blocks the rule
    conservatively; inspect that path rather than assuming it is unported.
    Witnesses, negative fixtures and prose mentions are excluded. The worker's own
    origin head is allowed, as is an identical inherited copy of its reservation.
 3. Every claimed rule has its own `rules/<slug>/rule.json`, omits `order`, and is
    new relative to the registration baseline. Changes under the lint tree may
-   touch only the claimed rule directories and this worker's claim file. Changes
+   touch only the claimed rule directories, this worker's claim and owned evidence. Changes
    to the registry command, shared imports/dispatch, Go oracle, copy/corpus lists,
    shared test harness or another worker's rule fail. Renaming a shared file
    counts as changing it. Generated registration must remain ignored. The actual
@@ -73,6 +89,9 @@ lint-wave-check`). These local files never create shared source lines. The
 receipt records HEAD, the claim, mutant names, command, origin snapshot and the
 test-log SHA-256. HEAD and cleanliness are checked again after execution. All
 origin heads are fetched and collision-checked again before success.
+`GOFLAGS -overlay` is rejected: a passing unapplied compatibility proposal does
+not establish that the committed candidate builds and passes. Commit the needed
+foundation changes through their owners before checking readiness.
 
 Immediately before pushing the same tested commit, verify the receipt without
 rerunning the expensive comparisons:

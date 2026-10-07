@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -71,17 +72,35 @@ class Worker:
         status = self.text("status", "--porcelain", "--untracked-files=all", "--ignore-submodules=none")
         require(not status, "evidence", "commit changes and remove untracked files first:\n" + status)
 
-    def claim(self):
+    def claim(self, requested=None):
         branch = self.text("branch", "--show-current")
         require(branch, "claim", "a named worker branch is required")
-        path = CLAIMS + branch + ".json"
+        path = requested or CLAIMS + branch + ".json"
+        if requested is None and path not in self.tree("HEAD"):
+            candidates = []
+            for candidate, (mode, oid) in self.tree("HEAD").items():
+                if claim_file(candidate):
+                    document = self.read_claim(oid, candidate)
+                    if document["branch"] == branch:
+                        candidates.append(candidate)
+            require(len(candidates) <= 1, "claim", "multiple owned claims; select the reservation with --claim")
+            if candidates:
+                path = candidates[0]
+        require(claim_file(path) and ".." not in Path(path).parts, "claim", "--claim must name a reservation under " + CLAIMS)
         entry = self.tree("HEAD").get(path)
         require(entry is not None, "claim", f"missing committed {path}")
         require(entry[0] == "100644", "claim", f"{path} must be a regular non-executable file")
-        document = self.document(entry[1], "claim", path)
-        validate_claim(document, path)
+        document = self.read_claim(entry[1], path)
         require(document["branch"] == branch, "claim", f"{path} belongs to {document['branch']}")
+        require(document["rules"], "claim", f"{path}: no new rules remain after explicit skips")
         return branch, path, document
+
+    def read_claim(self, oid, path):
+        if path.endswith(".md"):
+            return markdown_claim(self.blob(oid), path)
+        document = self.document(oid, "claim", path)
+        validate_claim(document, path)
+        return document
 
     def origin(self):
         # A main-only remote.fetch is normal in cloud checkouts. Fetch explicitly,
@@ -104,10 +123,9 @@ class Worker:
             if remote_branch == branch:
                 continue  # A worker can check again after publishing its own claim.
             for path, (mode, blob) in self.tree(oid).items():
-                if path.startswith(CLAIMS) and path.endswith(".json"):
+                if claim_file(path):
                     require(mode == "100644", "origin", f"origin/{remote_branch}:{path} is not a claim file")
-                    other = self.document(blob, "origin", f"origin/{remote_branch}:{path}")
-                    validate_claim(other, path)
+                    other = self.read_claim(blob, path)
                     # The same reservation can be inherited on several heads.
                     if path == claim_path and other == claim:
                         continue
@@ -176,14 +194,14 @@ class Worker:
         paths = self.git("diff", "--no-renames", "--name-only", "-z", base, "HEAD").decode().split("\0")
         for path in filter(None, paths):
             if path.startswith(LINT) or path.startswith("cmd/lint-registry/"):
-                require(path == claim_path or any(path.startswith(directory) for directory in owned),
+                require(claim_attachment(path, claim_path) or any(path.startswith(directory) for directory in owned),
                         "registration", f"shared or unclaimed lint change: {path}")
         generated = [p for p in self.tree("HEAD") if "/.generated/" in p]
         require(not generated, "registration", "generated registration must stay ignored: " + ", ".join(generated))
         return base, mutants
 
-    def preflight(self):
-        branch, path, claim = self.claim()
+    def preflight(self, requested=None):
+        branch, path, claim = self.claim(requested)
         self.clean()
         refs = self.origin()
         self.overlaps(refs, branch, path, claim)
@@ -218,13 +236,56 @@ def validate_claim(document, path):
 
 def legacy_source(path):
     relative = path.removeprefix(LINT)
-    return (path.endswith(".ts") and not any(part in {"testdata", "gaps", ".generated", "inventory"}
+    return (path.endswith((".ts", ".a")) and not any(part in {"testdata", "gaps", ".generated", "inventory", "claims"}
                                              for part in relative.split("/"))) or relative == "testdata/volume_rules.json"
 
 
 def legacy_selection(path):
     return (path.endswith(".json") and "selection" in Path(path).name
             and not path.startswith(LINT + "inventory/"))
+
+
+def claim_file(path):
+    if not path.startswith(CLAIMS):
+        return False
+    parts = path.removeprefix(CLAIMS).split("/")
+    if any(p.endswith("-evidence") or p == "evidence" for p in parts[:-1]):
+        return False
+    if path.endswith(".json"):
+        return True
+    name = parts[-1].lower()
+    return path.endswith(".md") and name not in {"readme.md", "claude.md", "agents.md"} and not name.endswith("-report.md")
+
+
+def claim_attachment(path, claim_path):
+    stem = claim_path.rsplit(".", 1)[0]
+    return path == claim_path or path.startswith(stem + "-evidence/") or path.lower() == (stem + "-report.md").lower()
+
+
+def markdown_claim(source, path):
+    # Wave reservations precede appended report sections. Do not mistake later
+    # commands, findings or skipped-rule prose for new assignments.
+    header = source.split("\n## ", 1)[0]
+    owner = re.search(r"(?im)^Branch:\s*`?([^`\s,]+)", header)
+    if owner is None:
+        owner = re.search(r"(?im)^Owner:\s*`?([^`\s,]+)", header)
+    require(owner is not None, "claim", f"{path}: Markdown claim needs Branch: or Owner:")
+    branch = owner.group(1).rstrip(".")
+    rules = []
+    assignments = 0
+    entry = re.compile(r"^\s*(?:[-*]\s+(?:\d+:\s+)?|\d+[.)]\s+)`?((?:@?[A-Za-z0-9_-]+/)*[A-Za-z0-9_-]+)`?(.*)$")
+    for line in header.splitlines():
+        match = entry.match(line)
+        if match and (not match.group(2).strip() or match.group(2).lstrip().startswith((":", "."))):
+            name, disposition = match.groups()
+            assignments += 1
+            if re.match(r"skip(?:ped)?\b", disposition.lstrip(":. "), re.IGNORECASE):
+                continue
+            require(name not in rules and name != "all", "claim", f"{path}: duplicate or invalid assignment {name}")
+            rules.append(name)
+    require(branch and "/" in branch, "claim", f"{path}: owner must be a full branch name")
+    require(assignments, "claim", f"{path}: no readable assignment list before the report section")
+    return {"version": 1, "branch": branch, "rules": rules}
 
 
 def descriptors(worker, revision):
@@ -283,9 +344,12 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def check(root, verify_only=False):
+def check(root, verify_only=False, claim_path=None):
+    flags = shlex.split(os.environ.get("GOFLAGS", ""))
+    require(not any(flag == "-overlay" or flag.startswith("-overlay=") for flag in flags),
+            "evidence", "remove GOFLAGS -overlay; an unapplied compatibility patch is not the committed candidate")
     worker = Worker(root)
-    branch, claim_path, claim, refs, mutants = worker.preflight()
+    branch, claim_path, claim, refs, mutants = worker.preflight(claim_path)
     head = worker.text("rev-parse", "HEAD")
     directory = Path(worker.text("rev-parse", "--git-path", "lint-wave-check"))
     if not directory.is_absolute():
@@ -340,11 +404,12 @@ def check(root, verify_only=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--verify", action="store_true", help="verify this commit's existing receipt instead of rerunning tests")
+    parser.add_argument("--claim", help="existing Markdown reservation path under stage1/cohere/lint/claims (otherwise discovered by owner)")
     args = parser.parse_args()
     try:
         root = subprocess.check_output(["git", "rev-parse", "--show-toplevel"], text=True).strip()
-        check(root, args.verify)
-    except (Rejected, subprocess.SubprocessError, OSError, UnicodeError) as error:
+        check(root, args.verify, args.claim)
+    except (Rejected, subprocess.SubprocessError, OSError, UnicodeError, ValueError) as error:
         print(f"lint-wave-check: FAIL {error}", file=sys.stderr)
         return 1
     return 0
