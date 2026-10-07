@@ -30,7 +30,7 @@ func TestLibraryArrayThirdPassRefusals(t *testing.T) {
 		{"optional reference numeric sort", "const values: (string | undefined)[] = [undefined, 'a']; values.sort((): number => 0);", "undefined partitioning"},
 		{"optional reference copy sort", "const values: (string | undefined)[] = [undefined, 'a']; values.toSorted((): never => {throw new Error('stop');});", "optional elements"},
 		{"function source with erased type", "Array.prototype.shift.call((): void => {});", "array-like or boxed receiver"},
-		{"generator function receiver", "Array.prototype.shift.call(function* () {});", "array-like or boxed receiver"},
+		{"generator function receiver", "Array.prototype.shift.call(function* () {});", "generator function"},
 		{"nonzero function length", "Array.prototype.shift.call((_value: number): void => {});", "array-like or boxed receiver"},
 		{"escaping function receiver", "const receiver = (): void => {}; Array.prototype.shift.call(receiver);", "array-like or boxed receiver"},
 	} {

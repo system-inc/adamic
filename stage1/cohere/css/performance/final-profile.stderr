@@ -1,0 +1,14 @@
+==75699== Callgrind, a call-graph generating cache profiler
+==75699== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==75699== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==75699== Command: /workspace/scratch/css-perf/final/profiled /workspace/scratch/css-perf/final/sample.txt count once
+==75699== 
+==75699== For interactive control, run 'callgrind_control -h'.
+==75699== brk segment overflow in thread #1: can't grow to 0x4858000
+==75699== (see section Limitations in user manual)
+==75699== NOTE: further instances of this message will not be shown
+==75699== 
+==75699== Events    : Ir
+==75699== Collected : 1487775242
+==75699== 
+==75699== I   refs:      1,487,775,242
