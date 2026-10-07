@@ -150,34 +150,34 @@ var mutants = []mutant{
 	{
 		name: "a link round a loop taken for nothing",
 		file: "disk.ts",
-		from: "if (!status.message.endsWith(': permission denied')) {",
+		from: "if(!status.message.endsWith(': permission denied')) {",
 		to:   "if (status.message.endsWith(': no such file')) {",
 	},
 	// The quoting's fast path missing DEL, or a quote, which a file's name can hold.
 	{
 		name: "DEL passed by the quoting's fast path",
 		file: "main.ts",
-		from: "if (unit < 0x20 || unit === 0x7f || unit === 0x22 || unit === 0x5c) {",
+		from: "if(unit < 0x20 || unit === 0x7f || unit === 0x22 || unit === 0x5c) {",
 		to:   "if (unit < 0x20 || unit === 0x22 || unit === 0x5c) {",
 	},
 	{
 		name: "a quote passed by the quoting's fast path",
 		file: "main.ts",
-		from: "if (unit < 0x20 || unit === 0x7f || unit === 0x22 || unit === 0x5c) {",
+		from: "if(unit < 0x20 || unit === 0x7f || unit === 0x22 || unit === 0x5c) {",
 		to:   "if (unit < 0x20 || unit === 0x7f || unit === 0x5c) {",
 	},
 	// A symbolic link to nothing taken for nothing, as fileStatus says, where Lstat finds the link.
 	{
 		name: "a link to nothing taken for nothing",
 		file: "disk.ts",
-		from: "if (listing.kind === 'Ok' && listing.names.includes(base(path))) {",
+		from: "if(listing.kind === 'Ok' && listing.names.includes(base(path))) {",
 		to:   "if (listing.kind === 'Ok' && listing.names.includes(base(path)) && listing.names.length < 0) {",
 	},
 	// filepath.Ext of a name ending in a dot is the dot; dropping it declines o. as (none).
 	{
 		name: "a trailing dot no extension",
 		file: "golang.ts",
-		from: "\t\t\treturn path.slice(index);",
+		from: "return path.slice(index);",
 		to:   "\t\t\treturn index === path.length - 1 ? '' : path.slice(index);",
 	},
 	// HasOwnRepository follows a .git link, as os.Stat does; a link to nothing is no repository.
@@ -191,7 +191,7 @@ var mutants = []mutant{
 	{
 		name: "a .prettierignore link to nothing let through",
 		file: "enumerate.ts",
-		from: "if (lstat(leftover).exists) {",
+		from: "if(lstat(leftover).exists) {",
 		to:   "if (statExists(leftover)) {",
 	},
 }
