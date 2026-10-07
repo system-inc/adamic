@@ -1,0 +1,48 @@
+=== RUN   TestWave2GoNodeNative
+=== RUN   TestWave2GoNodeNative/witnesses.json
+    wave2_test.go:105: Go, Node source and sanitized native match 1386 output lines
+=== RUN   TestWave2GoNodeNative/consumers.json
+    wave2_test.go:105: Go, Node source and sanitized native match 22374 output lines
+--- PASS: TestWave2GoNodeNative (5.39s)
+    --- PASS: TestWave2GoNodeNative/witnesses.json (0.25s)
+    --- PASS: TestWave2GoNodeNative/consumers.json (1.88s)
+=== RUN   TestWave2CompilingMutants
+=== RUN   TestWave2CompilingMutants/class_values_under.aleading:_false,_trailing:_false
+    wave2_test.go:158: sanitized native compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+    wave2_test.go:158: Node source compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+=== RUN   TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.whenFalse,_origin,_edges,_values,_dependencies);
+    wave2_test.go:158: sanitized native compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+    wave2_test.go:158: Node source compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+=== RUN   TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.right,_origin,_edges,_values,_dependencies);
+    wave2_test.go:158: sanitized native compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+    wave2_test.go:158: Node source compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+--- PASS: TestWave2CompilingMutants (8.34s)
+    --- PASS: TestWave2CompilingMutants/class_values_under.aleading:_false,_trailing:_false (2.27s)
+    --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.whenFalse,_origin,_edges,_values,_dependencies); (2.04s)
+    --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.right,_origin,_edges,_values,_dependencies); (1.86s)
+=== RUN   TestWave2ConsumerCoverage
+    wave2_test.go:225: all 11 consumers covered; canonical-class consumer omission caught
+--- PASS: TestWave2ConsumerCoverage (0.01s)
+=== RUN   TestWave2Unescape
+=== RUN   TestWave2Unescape/text-witnesses.json
+    wave2_test.go:253: Go, Node source and sanitized native match 683 text values
+=== RUN   TestWave2Unescape/text-consumers.json
+    wave2_test.go:253: Go, Node source and sanitized native match 783 text values
+--- PASS: TestWave2Unescape (6.06s)
+    --- PASS: TestWave2Unescape/text-witnesses.json (0.49s)
+    --- PASS: TestWave2Unescape/text-consumers.json (0.44s)
+=== RUN   TestWave2UnescapeMutants
+=== RUN   TestWave2UnescapeMutants/if(replacement.valid)
+    wave2_test.go:301: sanitized native compiling mutant caught at line 5: got "", Go "38,38,59,"
+    wave2_test.go:301: Node source compiling mutant caught at line 5: got "", Go "38,38,59,"
+=== RUN   TestWave2UnescapeMutants/index_=_semicolon_+_1;
+    wave2_test.go:301: sanitized native compiling mutant caught at line 8: got "38,116,59,", Go "38,108,116,59,"
+    wave2_test.go:301: Node source compiling mutant caught at line 8: got "38,116,59,", Go "38,108,116,59,"
+--- PASS: TestWave2UnescapeMutants (3.47s)
+    --- PASS: TestWave2UnescapeMutants/if(replacement.valid) (1.38s)
+    --- PASS: TestWave2UnescapeMutants/index_=_semicolon_+_1; (1.38s)
+=== RUN   TestWave2TextConsumerCoverage
+    wave2_test.go:359: all nine text consumers covered; google-font-display omission caught
+--- PASS: TestWave2TextConsumerCoverage (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave2	23.272s
