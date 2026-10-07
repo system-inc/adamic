@@ -5,7 +5,9 @@ from a module diagnosed as TS1205 with inline `type` specifiers. Adamic uses
 `verbatimModuleSyntax`, so a name with no runtime value must explicitly say
 it is a type. This uses the same diagnostic-driven decision as
 `cmd/adamic-meter`'s `importAdaptations`, through stock npm TypeScript 6.0.3.
-The AST verifies the declaration and specifier before each insertion.
+The AST verifies the declaration and specifier before each insertion. The
+generated diagnostics import is fixed at its owner: the output string in
+`scripts/processDiagnosticMessages.mjs`, not the generated artifact.
 
 Run on the current tree, including any earlier adaptations:
 
@@ -22,7 +24,9 @@ use 5.9.3 and are not searched for the adaptation dependency.
 The adaptation does not install packages, generate diagnostics, or build tsc.
 
 The roots are the current `src/compiler/**/*.ts` files, including the generated
-diagnostics source if present. The options match Adamic's strictness settings:
+diagnostics source if present for checking. That generated file is excluded from
+direct edits; its generator template is adapted separately. The options match
+Adamic's strictness settings:
 strict, exact optional properties, unchecked indexed access, implicit returns,
 switch fallthrough, verbatim modules, erasable syntax, ES2024, ESNext modules,
 bundler resolution, forced modules, no emit, no ambient type packages.
@@ -65,13 +69,25 @@ insertions(+), 3,718 deletions(-)**: 3,718 existing lines changed, each by five
 inserted characters. An independent AST audit removes exactly the newly marked
 specifiers' modifiers and recovers every original source byte.
 
-Upstream's diagnostic generator adds one source with one more type-only import:
-`DiagnosticMessage` in `diagnosticInformationMap.generated.ts`. On a prepared
-checkout it is also marked; the original-source scoreboard remains 71 files and
-3,718 lines. Build-generated files are not included in that scoreboard. Generate
-before adapting when integrating with the shared stage-3 pipeline. Upstream's
-ordinary build may regenerate this file; its upstream build configuration does
-not require verbatim import annotations.
+The current adaptation also changes **one line in one generator script**:
+`DiagnosticMessage` in the output import template of
+`scripts/processDiagnosticMessages.mjs`. The generated artifact is never directly
+edited. The apply scoreboard is therefore **72 files, 3,719 lines added, 3,719
+lines removed**: 71 compiler sources plus their generator owner. Upstream's build
+then regenerates the annotated diagnostic source itself.
+
+The generator is parsed as JavaScript. The adapter locates the `result` array in
+`buildInfoFileOutput`, parses its single `./types.js` import string as TypeScript,
+and resolves each imported name against the real exports of `compiler/types.ts`
+using stock 6.0.3's checker. It marks only symbols with a type meaning and no value
+meaning: `DiagnosticMessage`, while retaining the value `DiagnosticCategory`.
+It requires exactly one matching template. Literal content must equal its raw
+source interior, so escaped string encodings are refused rather than edited with
+incorrect decoded offsets. The edit is one insertion at the AST specifier offset
+inside that literal, preserving its original quoting, CRLF, and other bytes.
+Neither script source nor template source is matched with a regular expression.
+Missing, duplicated, malformed, or unresolved templates fail before any writes.
+No diagnostic definitions, codes, messages, or generation logic change.
 
 ## Census proof
 
@@ -163,7 +179,7 @@ Empty local directories are therefore expected and are not independent evidence
 of how many baseline comparisons ran. The 1,085 figure is passing test checks,
 not a claim that all 1,085 each write a baseline file.
 
-## Idempotence and mutants
+## Initial standalone idempotence and mutants
 
 Running the adaptation a second time on `after` produced zero files/imports/
 exports changed; SHA256 maps of all **744 files** were identical. A prepared tree,
@@ -217,7 +233,7 @@ verification caches, upstream sources, logs, and mutant copies are outside the
 Adamic repository under `/workspace/type-imports`, `/tmp`, and the base pipeline
 cache at `~/.cache/adamic-stage3`.
 
-## Base pipeline integration follow-up
+## Initial base pipeline integration (superseded by the owner fix below)
 
 Merged base pipeline commit `8728405` through merge `3fa6403`. Changed only the
 adapter's dependency lookup to `require("typescript")` by default, honoring the
@@ -274,7 +290,8 @@ Its single TS1484 is:
 src/compiler/diagnosticInformationMap.generated.ts:4:30: TS1484: 'DiagnosticMessage' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
 ```
 
-This is a pipeline regeneration finding, not one of the original 3,718 imports:
+This was a pipeline regeneration finding in the previous version, not one of the
+original 3,718 imports:
 upstream's ordinary build reruns `scripts/processDiagnosticMessages.mjs`, whose
 output includes `import { DiagnosticCategory, DiagnosticMessage } ...`. That
 replaces the inline modifier added by apply to the generated source. The other
@@ -284,9 +301,69 @@ original unprepared 77-root population's 2,851.
 
 No adaptation was reapplied between oracle and census, and the generator and
 pipeline were not patched to hide this result. Thus the default oracle is green,
-but **the post-build tree does not have zero TS1484 findings**. Keeping that tree
+but **that previous post-build tree did not have zero TS1484 findings**. Keeping that tree
 at zero requires preserving or reapplying the generated-file annotation after
 upstream regeneration, or a separate generator adaptation. The earlier mutants
 remain the independently caught checks documented above; this follow-up did not
 rerun them. Lint, browser integration, ESLint rule tests, Adamic's uncached gate,
 and native tsc remain outside this default oracle's coverage.
+
+## Generator-owner fix: current pipeline proof
+
+The generated-file regeneration failure above is resolved at its owner. Apply
+now edits 71 compiler sources plus `scripts/processDiagnosticMessages.mjs` and
+**does not edit `diagnosticInformationMap.generated.ts` directly**. At apply's
+completion, the existing artifact still contains the old import; upstream's
+ordinary oracle build regenerates it from the newly annotated template.
+The scoreboard counts the owner's one-line edit, not a derived artifact edit.
+
+Ran these three steps in order, with fresh paths, one at a time:
+
+```sh
+source /workspace/adamic-tools/env.sh
+stage3/apply.sh /workspace/type-imports/generator-adapted > /tmp/type-imports-generator-apply.log 2>&1
+stage3/oracle/run.sh /workspace/type-imports/generator-adapted /workspace/type-imports/generator-oracle > /tmp/type-imports-generator-oracle.log 2>&1
+/workspace/type-imports/census /workspace/type-imports/generator-adapted/src/compiler /workspace/type-imports/generator-census.jsonl > /tmp/type-imports-generator-census.log 2>&1
+```
+
+All three exited 0. Apply reported 72 files, 3,718 source imports, 1 generator
+import, zero exports, and zero declined sites. The regenerated scoreboard row
+is unchanged numerically from the earlier version, but the extra file is now
+the generator owner:
+
+```text
+| 10-type-imports | 72 | 3719 | 3719 |
+```
+
+`/workspace/type-imports/generator-oracle/report.json` records `status: "pass"`,
+`runners: "all"`, `tests: null`, 4 workers, **106,367 passing, 0 failing,
+0 pending**, and `baseline_diffs: []`. `baseline.diff` in that directory is
+**empty, 0 bytes**. Install/build/tests all exited 0, taking 2.207s, 21.329s,
+and 306.494s respectively; total wall time was **330.085s**. The default suites
+and light=false verification were used, with no test filter. The generated
+import after build is `import { DiagnosticCategory, type DiagnosticMessage } ...`.
+
+The census on that exact post-build tree recorded 81 per-file attempts and
+78 whole-program roots: **2,833 diagnostics, TS1484 = 0**. Compared with the
+previous post-build run, TS1484 fell 1 -> 0 and every other diagnostic bucket
+was unchanged. No adaptation was reapplied between oracle and census.
+
+After those three steps completed, reran adaptation through `NODE_PATH`.
+It reported zero files/imports/exports/generator imports changed, no declines;
+SHA256 maps of **82,834 files** in the post-build tree were identical. Git
+metadata and dependency files were excluded. A byte audit proved the generator
+script differs from the pinned script only by inserting `type ` once before
+`DiagnosticMessage`. Logs: `/tmp/type-imports-generator-idempotence.log` and
+`/tmp/type-imports-generator-idempotence-proof.log`.
+
+A dedicated template-ownership mutant renamed both `buildInfoFileOutput` and
+its call in an isolated copy. Adaptation exited 1 with `want one generated types
+import template, got 0`, and all input hashes stayed unchanged. The renamed
+script still ran and produced byte-identical diagnostic outputs using upstream's
+relative input path: only the ownership-location guard caught this mutant.
+An initial comparison passed an absolute input path and differed in the generated
+provenance comment; the corrected relative-path comparison passed. Logs:
+`/tmp/type-imports-generator-guard.log`,
+`/tmp/type-imports-generator-guard-proof.log`, and
+`/tmp/type-imports-generator-guard-runtime.log`. The earlier value-import and
+skipped-import mutants remain documented above; they were not rerun here.

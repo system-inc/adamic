@@ -6,6 +6,62 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
+// The generator owns this import. Parse its output string as TypeScript, then
+// classify its names against the actual exports of compiler/types.ts.
+function generatorEdits(ts, tree, program) {
+    const name = path.join(tree, "scripts/processDiagnosticMessages.mjs");
+    const source = ts.createSourceFile(name, fs.readFileSync(name, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+    if (source.parseDiagnostics.length) throw new Error(`cannot parse generator: ${name}`);
+    const checker = program.getTypeChecker();
+    const types = program.getSourceFile(path.join(tree, "src/compiler/types.ts"));
+    const symbol = types && checker.getSymbolAtLocation(types);
+    if (!symbol) throw new Error("cannot resolve compiler/types.ts exports");
+    const symbols = new Map(checker.getExportsOfModule(symbol).map(item => [item.name, item]));
+    const positions = new Set();
+    let templates = 0;
+    function visit(node) {
+        if (ts.isFunctionDeclaration(node) && node.name?.text === "buildInfoFileOutput") {
+            function findTemplate(child) {
+                if (ts.isVariableDeclaration(child) && ts.isIdentifier(child.name) && child.name.text === "result" &&
+                    child.initializer && ts.isArrayLiteralExpression(child.initializer)) {
+                    for (const literal of child.initializer.elements) {
+                        if (!ts.isStringLiteral(literal)) continue;
+                        const output = ts.createSourceFile("template.ts", literal.text, ts.ScriptTarget.Latest, true);
+                        const declaration = output.statements[0];
+                        if (output.parseDiagnostics.length || output.statements.length !== 1 ||
+                            !ts.isImportDeclaration(declaration) || !ts.isStringLiteral(declaration.moduleSpecifier) ||
+                            declaration.moduleSpecifier.text !== "./types.js") continue;
+                        const clause = declaration.importClause;
+                        if (!clause || clause.isTypeOnly || clause.name || !clause.namedBindings ||
+                            !ts.isNamedImports(clause.namedBindings)) throw new Error("unexpected generated import form");
+                        // Pinned generator uses an unescaped string literal. Refuse an
+                        // encoding change rather than mistake decoded offsets for source offsets.
+                        const start = literal.getStart(source) + 1;
+                        if (source.text.slice(start, literal.end - 1) !== literal.text) {
+                            throw new Error("generated import template contains escaped source characters");
+                        }
+                        templates++;
+                        for (const specifier of clause.namedBindings.elements) {
+                            const exported = symbols.get((specifier.propertyName || specifier.name).text);
+                            if (!exported) throw new Error(`unresolved generated import: ${specifier.name.text}`);
+                            const target = exported.flags & ts.SymbolFlags.Alias ? checker.getAliasedSymbol(exported) : exported;
+                            if (!(target.flags & ts.SymbolFlags.Value) && target.flags & ts.SymbolFlags.Type && !specifier.isTypeOnly) {
+                                positions.add(start + specifier.getStart(output));
+                            }
+                        }
+                    }
+                }
+                ts.forEachChild(child, findTemplate);
+            }
+            ts.forEachChild(node, findTemplate);
+        }
+        ts.forEachChild(node, visit);
+    }
+    visit(source);
+    if (templates !== 1) throw new Error(`want one generated types import template, got ${templates}`);
+    return { source, positions };
+}
+
 function main() {
     if (process.argv.length !== 3) throw new Error("usage: node adapt.cjs <tree>");
     const tree = path.resolve(process.argv[2]);
@@ -38,14 +94,19 @@ function main() {
         getCurrentDirectory: () => tree,
         getNewLine: () => "\n",
     }));
+    const generator = generatorEdits(ts, tree, program);
+    const generated = path.join(directory, "diagnosticInformationMap.generated.ts");
     const owned = new Set(roots.map(name => path.resolve(name)));
     const edits = new Map();
+    if (generator.positions.size) edits.set(generator.source, generator.positions);
     const declined = [];
     let imports = 0;
     let exports = 0;
     for (const diagnostic of program.getSemanticDiagnostics()) {
         if (diagnostic.code !== 1484 && diagnostic.code !== 1205) continue;
         const source = diagnostic.file;
+        // The generator template is adapted instead of its generated artifact.
+        if (source && path.resolve(source.fileName) === generated) continue;
         if (!source || !owned.has(path.resolve(source.fileName))) {
             declined.push({ code: diagnostic.code, file: source?.fileName, reason: "outside src/compiler" });
             continue;
@@ -91,7 +152,7 @@ function main() {
         }
         fs.writeFileSync(source.fileName, text);
     }
-    console.log(JSON.stringify({ files: edits.size, imports, exports, declined }, null, 2));
+    console.log(JSON.stringify({ files: edits.size, imports, exports, generatorImports: generator.positions.size, declined }, null, 2));
     if (declined.length) process.exitCode = 1;
 }
 
