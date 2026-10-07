@@ -1,0 +1,363 @@
+[
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": true,
+      "AllowedNames": null
+    },
+    "sourceText": "class TestClass {\n            constructor() {\n              const inConstructor = this;\n              const asThis: this = this;\n\n              const asString = 'this';\n              const asArray = [this];\n              const asArrayString = ['this'];\n            }\n\n            public act(scope: this = this) {\n              const inMemberFunction = this;\n              const { act1 } = this;\n              const { act2, constructor } = this;\n              const [foo1] = this;\n              const [foo, bar] = this;\n            }\n          }"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "class Z { p = this; }"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": true,
+      "AllowedNames": null
+    },
+    "sourceText": "const [ props, state ] = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const [foo, bar] = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const [foo] = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const self = (0, this);"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const self = (this);"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const self = this as any;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const self = this satisfies any;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const self = this!;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const self = this.foo;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": [
+        "bar"
+      ]
+    },
+    "sourceText": "const self = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": [
+        "self"
+      ]
+    },
+    "sourceText": "const self = this;"
+  },
+  {
+    "file": "/repository/source/Thing.js",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const self = this;"
+  },
+  {
+    "file": "/repository/source/Thing.jsx",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const self = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const self = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const testLambda = () => {\n            const inLambda = this;\n          };"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const { length } = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const { length, toString } = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": true,
+      "AllowedNames": null
+    },
+    "sourceText": "const { props } = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "const { props, state } = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": true,
+      "AllowedNames": null
+    },
+    "sourceText": "const { props, state } = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "declare let foo: any;\nconst r = foo === this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "declare let m: any;\nm.n.o = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "declare let m: any;\nm['n'] = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "function testFunction() {\n            let inFunction = this;\n          }"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "let foo; \nconst other =3;\n\n\n\nfoo = this"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "let foo; ((foo)) = this"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "let foo; (foo as any) = this"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "let foo; (foo satisfies any) = this"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "let foo; (foo!) = this"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "let foo; (foo) = this"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": true,
+      "AllowedNames": null
+    },
+    "sourceText": "let foo; ({foo} = this)"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "let foo; [foo] = this"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": true,
+      "AllowedNames": null
+    },
+    "sourceText": "let foo; [foo] = this"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "let foo; foo += this"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "let foo; foo ??= this"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "let self;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "this.self = this;"
+  },
+  {
+    "file": "/repository/source/Thing.ts",
+    "options": {
+      "ReportDestructuring": false,
+      "AllowedNames": null
+    },
+    "sourceText": "var b = this, c = this;"
+  },
+  {
+    "file": "/source.ts",
+    "options": null,
+    "sourceText": "const self = this; a = this; a += this; const { x } = this; (b as T) = this; const other = (this); this.self = this;\n"
+  },
+  {
+    "file": "/source.ts",
+    "options": {
+      "AllowedNames": [
+        "self"
+      ]
+    },
+    "sourceText": "const self = this; a = this; a += this; const { x } = this; (b as T) = this; const other = (this); this.self = this;\n"
+  },
+  {
+    "file": "/source.ts",
+    "options": {
+      "ReportDestructuring": true
+    },
+    "sourceText": "const self = this; a = this; a += this; const { x } = this; (b as T) = this; const other = (this); this.self = this;\n"
+  },
+  {
+    "file": "/source.ts",
+    "options": {
+      "ReportDestructuring": true,
+      "AllowedNames": [
+        "x",
+        "self"
+      ]
+    },
+    "sourceText": "const self = this; a = this; a += this; const { x } = this; (b as T) = this; const other = (this); this.self = this;\n"
+  },
+  {
+    "file": "/source.js",
+    "options": null,
+    "sourceText": "const self = this; a = this; a += this; const { x } = this; (b as T) = this; const other = (this); this.self = this;\n"
+  }
+]
