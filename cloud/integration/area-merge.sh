@@ -44,7 +44,8 @@ if [ -z "$oracle" ]; then
 	exit 2
 fi
 
-git fetch -q origin
+# A fresh cloud clone fetches only main, so name the two refs this needs.
+git fetch -q origin "+refs/heads/$branch:refs/remotes/origin/$branch" "+refs/heads/area/$area:refs/remotes/origin/area/$area"
 sha=$(git rev-parse --verify "${requested}^{commit}")
 branchTip=$(git rev-parse --verify "refs/remotes/origin/${branch}")
 if [ "$branchTip" != "$sha" ]; then
@@ -111,6 +112,11 @@ while IFS= read -r file; do
 done <<<"$changed"
 if [ "${#packages[@]}" -gt 0 ]; then
 	packages=($(printf '%s\n' "${packages[@]}" | sort -u))
+fi
+if [ "${#packages[@]}" -gt 0 ]; then
+	# A package whose every file sits behind a build tag isn't built by go test ./..., and naming it
+	# fails, so leave those out the way the whole gate does.
+	packages=($(cd "$worktree" && go list -e -f '{{.ImportPath}}{{"\t"}}{{if .Error}}{{.Error.Err}}{{end}}' "${packages[@]}" 2>/dev/null | grep -v 'build constraints exclude all Go files' | cut -f1 | sed 's#^github.com/system-inc/adamic/#./#' || true))
 fi
 
 status=0
