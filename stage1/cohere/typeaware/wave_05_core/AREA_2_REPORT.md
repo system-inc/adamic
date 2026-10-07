@@ -1,0 +1,17 @@
+Built: nine completed wave-05 ports rebased onto latest fetched area/stage1-lint d65a8f93; no new claims.
+Commits: tested rebased tip b2d646b321120d0c8c78376942f9ae0a596d2e16; enclosing commit records validation evidence.
+Commands and outputs: all owned oracle/control/corpus checks, sanitizers, releases, bridge, fresh filtered Node, registry, metadata and vet PASS.
+Mutants: nine verdict inversions and CFG corruption caught only by Go bytes; release-registry and listener checks caught their mutations.
+Not covered: three parked React analysis ports, full repository gate, full option matrices and private-port shared-registry migration.
+
+The requested rebase onto origin/area/stage1-lint now uses d65a8f931c98655936ae04c6899f38f14862b73e, which includes current main 39638d9e278d38bb5aeae887f46d55a70e47aaad and harness 41eb6eab2. All 26 owned commits applied without conflicts. Its runtime heap/string changes and profiling evidence are retained. No shared implementation file is edited or reverted. Push targets only codex/typeaware-wave-05, using an exact lease on prior tip dd5bad60a0d331154789105e84f0676f4a4c4e59 after the explicitly requested rebase.
+
+Revalidation uses the same pinned independent production Go oracles and frozen compiler/repository manifests. Commands and scope are those in AREA_LANDING_REPORT.md, with area2 log prefixes and /workspace/wave-05-area2-first-artifacts. Toolchain shells source /workspace/adamic-tools/env.sh; first-wave and timer/output validators receive ADAMIC_TYPESCRIPT_SOURCE and both corpus manifests explicitly. All subprocess output goes to log files.
+
+Checks include TestWave05AgreementAndMutants, validate_output.py with WAVE05_OUTPUT_SKIP_BENCH=1, validate.py with WAVE05_NEXT_SKIP_BENCH=1, wave_05_core/validate.py, all bridge/tsgo packages, the uncached filtered Node oracle plus one-byte mutant, integrated lint registry package, both owned metadata scripts and bridge vet. Exact outputs are in evidence/area2-*.log. The core run includes 106 parse-valid controls and 76 complete findings/suggestions. The original-three corpus retains 13 repository and 70 compiler findings; the six continuation rules retain zero findings on both frozen corpora. All sanitizer builds compare complete canonical outputs, not only counts.
+
+A fresh scan of 606 fetched origin refs and 33 unique Markdown claim blobs found 172 ranked claimed names and 25 ranked baseline ports covering all 197 ranked checker-dependent names. Nothing unclaimed remains. The three existing React hook claims remain PARKED for the native root/capture/reference-write, HIR/SSA/frozen-value and effect-taint analyses recorded in AREA_LANDING_REPORT.md. JSX is already integrated and no longer a blocker. No new reservations are made.
+
+No new uncontended timing is claimed from overlapping revalidation jobs. Earlier isolated timings remain historical results. Setup remains the successful 82-second run, nproc 5. Full gate, complete option matrices, automatic suggested-edit application and shared emitted-JavaScript rule comparison remain outside the reported checks.
+
+Final results: original-three oracle PASS 160.216s; output validator PASS; timer validator PASS; core validator PASS. Bridge PASS 102.474s and checker PASS 0.266s. Uncached filtered Node oracle PASS 13.295s, native 0 hits/28 misses and Node 0 hits/19 misses. Registry PASS 0.034s. Named and prior listener checks, vet and diff checks PASS. Remote main and area tips were rechecked unchanged immediately before publication.

@@ -1,0 +1,78 @@
+controls 17718 findings 28
+module-none 1232 findings 2
+module-first 606 findings 1
+module-late 1232 findings 2
+module-local-main 611 findings 1
+module-guard-main 1238 findings 2
+module-unstarted 610 findings 1
+module-callback 1236 findings 2
+module-ordered-callback 617 findings 1
+module-await 606 findings 1
+module-unawaited 1237 findings 2
+module-unknown 608 findings 1
+module-computed-import 616 findings 1
+module-two-exits 1804 findings 3
+module-const-arrow 1239 findings 2
+module-let-arrow 610 findings 1
+module-generator 1237 findings 2
+module-ordered-generator 618 findings 1
+module-imported 683 findings 1
+module-shebang-imported 1312 findings 2
+module-type-only 1312 findings 2
+module-load-block 685 findings 1
+module-export-helper 689 findings 1
+module-foreign-global 166 findings 0
+module-foreign-overload 168 findings 0
+module-ordered-argument 617 findings 1
+module-for-await 610 findings 1
+module-recursive 610 findings 1
+module-ambient 608 findings 1
+module-catch-binding 87 findings 0
+module-class-initializer 618 findings 1
+PASS output controls and module cases
+timer-dom 7800 findings 12
+timer-node 7800 findings 12
+controls-asan 17718 findings 28
+module-none-asan 1232 findings 2
+module-first-asan 606 findings 1
+module-late-asan 1232 findings 2
+module-local-main-asan 611 findings 1
+module-guard-main-asan 1238 findings 2
+module-unstarted-asan 610 findings 1
+module-callback-asan 1236 findings 2
+module-ordered-callback-asan 617 findings 1
+module-await-asan 606 findings 1
+module-unawaited-asan 1237 findings 2
+module-unknown-asan 608 findings 1
+module-computed-import-asan 616 findings 1
+module-two-exits-asan 1804 findings 3
+module-const-arrow-asan 1239 findings 2
+module-let-arrow-asan 610 findings 1
+module-generator-asan 1237 findings 2
+module-ordered-generator-asan 618 findings 1
+module-imported-asan 683 findings 1
+module-shebang-imported-asan 1312 findings 2
+module-type-only-asan 1312 findings 2
+module-load-block-asan 685 findings 1
+module-export-helper-asan 689 findings 1
+module-foreign-global-asan 166 findings 0
+module-foreign-overload-asan 168 findings 0
+module-ordered-argument-asan 617 findings 1
+module-for-await-asan 610 findings 1
+module-recursive-asan 610 findings 1
+module-ambient-asan 608 findings 1
+module-catch-binding-asan 87 findings 0
+module-class-initializer-asan 618 findings 1
+timer-dom-asan 7800 findings 12
+timer-node-asan 7800 findings 12
+process mutant exits 0, empty stderr, caught only by Go byte comparison
+blocking mutant exits 0, empty stderr, caught only by Go byte comparison
+cfg mutant exits 0, empty stderr, caught only by Go byte comparison
+output-symbol released handle exact refusal 70
+output-callee released handle exact refusal 70
+runtime-modules released handle exact refusal 70
+repository 18485 findings 0
+repository-asan 18485 findings 0
+compiler 5318 findings 0
+compiler-asan 5318 findings 0
+PASS both output rules, timer regression, corpora, comparison mutants, release and sanitizers

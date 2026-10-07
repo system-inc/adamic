@@ -138,3 +138,9 @@ analysis; no-deriving-state-in-effects needs HIR/SSA/capture/effect-taint analys
 The shared analysis dependency is #dnv6f2c. No React verdict parity is claimed.
 The fresh all-origin ranking has no unclaimed rule. See
 `../wave_05_core/AREA_LANDING_REPORT.md`; no additional rules are reserved.
+
+Latest area landing: all nine completed ports were rebased and revalidated
+on origin/area/stage1-lint d65a8f93, including current main 39638d9e.
+The three React analysis claims stay PARKED with the blockers above.
+All ranked names are ported or claimed; no new reservation is made.
+Validation evidence is in `../wave_05_core/AREA_2_REPORT.md`.
