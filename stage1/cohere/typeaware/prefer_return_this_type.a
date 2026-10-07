@@ -4,7 +4,7 @@ import { types } from './facts.ts';
 import { Repair } from './repair.ts';
 
 // Pinned parser SyntaxKind values for the forthcoming kind-indexed driver.
-export const preferReturnThisTypeSyntaxKinds: number[] = [264, 232];
+export const preferReturnThisTypeSyntaxKinds: string[] = ["ClassDeclaration", "ClassExpression"];
 export class PreferReturnThisType {
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }

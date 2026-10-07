@@ -50,10 +50,10 @@ def main():
     declared,_,_=run('listener-native',[listener]);expected,_,_=run('listener-go',[oracle,'--kinds']);assert declared==expected
     metadata=b''
     for name in ['symbol-description','valid-typeof','require-await']:
-        record=json.loads((OWN/name/'rule.json').read_text());assert record['name']==name and all(type(kind) is int for kind in record['kinds'])
+        record=json.loads((OWN/name/'rule.json').read_text());assert record['name']==name and all(type(kind) is str for kind in record['kinds'])
         metadata+=(name+'\t'+','.join(str(kind) for kind in sorted(record['kinds']))+'\n').encode()
     assert metadata==expected, 'rule.json listener mismatch'
-    changed=json.loads((OWN/'symbol-description/rule.json').read_text());changed['kinds']=[227]
+    changed=json.loads((OWN/'symbol-description/rule.json').read_text());changed['kinds']=['BinaryExpression']
     (dest/'mutant-rule.json').write_text(json.dumps(changed))
     changed=json.loads((dest/'mutant-rule.json').read_text())
     mutated=(changed['name']+'\t'+','.join(str(kind) for kind in sorted(changed['kinds']))+'\n').encode()+metadata.split(b'\n',1)[1]

@@ -42,11 +42,11 @@ func main() {
 	if len(os.Args) > 1 && os.Args[1] == "--kinds" {
 		for _, subject := range []rule.Rule{rules.SymbolDescription, rules.ValidTypeof, rules.RequireAwait} {
 			listeners := subject.Run(rule.Context{}, nil)
-			var kinds []int
+			var kinds []string
 			for kind := range listeners {
-				kinds = append(kinds, int(kind))
+				kinds = append(kinds, strings.TrimPrefix(kind.String(), "Kind"))
 			}
-			sort.Ints(kinds)
+			sort.Strings(kinds)
 			fmt.Printf("%s\t", subject.Name)
 			for at, kind := range kinds {
 				if at > 0 {

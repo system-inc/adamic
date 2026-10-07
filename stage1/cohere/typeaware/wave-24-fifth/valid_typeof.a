@@ -2,7 +2,7 @@ import type {Node,Nodes} from './nodes.a';
 import {Diagnostic} from '../diagnostic.ts';
 import {Suggestion} from '../suggestion.ts';
 import {Repair} from '../repair.ts';
-export const kinds:number[]=[227];
+export const kinds: string[] = ["BinaryExpression"];
 export class ValidTypeof {
     readonly nodes:Nodes;
     constructor(nodes:Nodes){this.nodes=nodes;}

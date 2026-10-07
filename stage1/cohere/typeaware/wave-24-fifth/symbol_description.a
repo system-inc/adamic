@@ -1,6 +1,6 @@
 import type {Node,Nodes} from './nodes.a';
 import {Diagnostic} from '../diagnostic.ts';
-export const kinds:number[]=[214];
+export const kinds: string[] = ["CallExpression"];
 export class SymbolDescription {
     readonly nodes:Nodes;
     constructor(nodes:Nodes){this.nodes=nodes;}

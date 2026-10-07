@@ -1,8 +1,8 @@
-Built require-await, symbol-description and valid-typeof as native Adamic .a modules with numeric handed-node listeners.
+Built require-await, symbol-description and valid-typeof as native Adamic .a modules with AST-name listener declarations and handed-node execution.
 Claim e21595a11 was pushed before implementation; current-main landing refresh follows this implementation commit.
 217 valid controls produce 125 findings with identical full diagnostic/fix/suggestion bytes; 287 repository and 77 compiler roots also agree, including ASan/UBSan.
 Three rule mutants, three raw-question mutants and a listener metadata mutant are caught; new released questions refuse with panic 70.
-Default options only; React claims remain parked, native is slower than Go, and setup cache warming failed with disk exhaustion.
+Default options only; React claims remain parked, native is slower than Go, and the full repository gate is not covered.
 
 ## Implementation and validation
 
@@ -52,3 +52,5 @@ The first timing-runner attempt wrongly required empty Go stderr and failed on t
 The tested implementation and landing report were pushed as 8f07c6af94ed4b41d2bcb97f3a988f2cb099fb43. A normal force-with-lease attempt refused because the default origin refspec fetches only main and the worker tracking ref was stale. An explicit lease on the independently verified, previously pushed claim tip e21595a114b30168da537ff0fbd46772ce674377 succeeded; no concurrent worker changes were overwritten. Both attempts are retained.
 
 After that push, explicitly refreshed all origin heads and scanned 569 origin refs and 33 distinct claim blobs. The conservative mention-based audit counts 164 claimed rules. Eight unclaimed candidates remain, all React rules under the user's parking instruction. No eligible non-React rule remains, so no new claim is made. The complete audit is evidence/wave24-fifth-post-push-audit.json. Main remains c01907a70 and the working tree is clean.
+
+The current named-kind contract and latest full rechecks supersede numeric declaration descriptions above; see [KIND_NAMES_REPORT.md](KIND_NAMES_REPORT.md).

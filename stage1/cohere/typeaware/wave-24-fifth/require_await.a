@@ -4,7 +4,7 @@ import {Diagnostic} from '../diagnostic.ts';
 import {Repair} from '../repair.ts';
 import {Suggestion} from '../suggestion.ts';
 import {ArrowFunction, AsteriskToken, AsyncKeyword, AwaitExpression, AwaitKeyword, Block, ClassDeclaration, ClassExpression, ComputedPropertyName, Constructor, DeclareKeyword, DefaultKeyword, EqualsGreaterThanToken, ExportKeyword, ExpressionStatement, ForOfStatement, FunctionDeclaration, FunctionExpression, GetAccessor, MethodDeclaration, PropertyAssignment, PropertyDeclaration, SetAccessor, SourceFile, VariableDeclarationList, VariableStatement} from './syntax.a';
-export const kinds:number[]=[263, 219, 220, 175, 178, 179, 177];
+export const kinds: string[] = ["FunctionDeclaration", "FunctionExpression", "ArrowFunction", "MethodDeclaration", "GetAccessor", "SetAccessor", "Constructor"];
 const functions:number[]=[FunctionDeclaration,FunctionExpression,ArrowFunction,MethodDeclaration,GetAccessor,SetAccessor,Constructor];
 export class RequireAwait {
  readonly nodes:Nodes;
