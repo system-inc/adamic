@@ -1,5 +1,62 @@
 # Temporary parser repairs: list pushed before implementation
 
+## Current measured result after temporaries 60-63
+
+The feature-integrated scratch checker, with its official Node type import
+control, reports **5 -> 4 -> 3 -> 2 -> 1** findings as the four views are applied.
+Every source edit is on one of the two parser-exclusive files. Exact sequential
+findings are in evidence/temporary-{60,61,62,63}-checker.json. All four complete
+Node dumps remain 35,456,964 bytes with SHA256
+2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5.
+The planted Identifier end mutant is caught in each run, changing just one line.
+
+The initial Mutable<Declaration> view did not clear localSymbol: its optional
+base field disallows explicit undefined under exact optional writes. The
+revised structural view explicitly admits undefined and clears that site.
+Its plan was pushed at da804b0 before the revised implementation. The obsolete
+view's first oracle was intentionally interrupted (test exit -15), not counted
+as a pass; that report is retained in evidence.
+
+verify-temporaries.py removes each final view independently: each restores its
+own diagnostic alongside core's finding. It also plants a runtime change in
+each adapter; all four fail its JavaScript equality assertion before writing.
+The original scratch source is restored byte for byte after every mutant.
+Evidence: temporary-type-view-mutants.json.
+
+The same-source scanner control produces exactly **509,014 tokens**, 27,879,197
+bytes, SHA256 c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f.
+Its control comparison exits zero and token-end mutant comparison exits one.
+No core change was made. Partition 30's actual core counterexamples were
+rerun: both append an own undefined element. The cached-read mutant exits one,
+changing two reads to one and the appended value to 23. Evidence is retained.
+
+**Remaining ordered blocker: core.ts:379:21, TS2345**, from[i] is T or undefined
+at to.push. Lowering is **unreached**: the probe only calls lower.Lower after
+load.Load accepts, and this final input still fails checking. I did not add !,
+cache a read, widen away the T[] return promise, or lower rejected source.
+No truthful, exact core restructuring was established in this unit. That is
+its stopping point, explicitly allowed by the user's latest instruction.
+
+These are temporary type views, not permanent proofs of factory generic
+construction or native Node bindings. The compiler is still the recorded
+scratch feature merge, not a production native gate. The first final-60 default run against the original API reference had
+106,366 passing and one public-API failure. The older 20/40/70 checker rejected
+that snapshot because it lacked partition 32's two handoff owners and 11 public
+host-method owners. Its rejection and the raw API-only baseline diff are saved.
+Partition 32's public-api.cjs reconstructs the exact sanctioned snapshot from
+pristine source and owner ledgers, verifies all 60,930 other references unchanged,
+and accepts only that snapshot in the disposable tree. No new parser exception
+is added. An isolated unowned version declaration mutant (string -> number)
+fails that checker; restored controls pass. All four successive sanctioned default runs pass **106,367 tests each**, zero
+failures/pending, empty baseline diffs, install/build/test exits zero. No test
+filter or weakened upstream compiler option is used; nproc is five and workers
+four, with a 1,536 MiB heap budget. Wall seconds: **60: 243.492; 61: 251.273;
+62: 244.528; 63: 234.146**. Each post-run exact API proof passes and its JSON hash
+is identical, confirming no temporary introduces an API change and all 60,930
+other reference baselines remain original. Reports and compressed phase logs
+are in evidence/temporary-{60,61,62,63}-oracle*, with the aggregate in
+temporary-oracle-summary.json.
+
 This list supersedes the earlier ownership restriction for core.ts only:
 the user now permits that shared file if the scanner oracle remains identical.
 
@@ -593,3 +650,39 @@ subtraction, sequential source blocker removal, temporary adaptations, stage-3
 baseline oracle, native comparison and the planted Node node.end mutant.
 No dump comparison exists yet, so no claim that it catches that mutant is made.
 No compiler or scanner-worker file was edited on the deliverable branch.
+
+
+## Replaying the temporary checks
+
+Use a fresh full tree made by the area/stage3 adaptation pipeline at 7ad8666,
+and preserve its adaptation-20 stdout JSON owner ledger. Build a pristine
+checkout of TypeScript pin 050880ce59e30b356b686bd3144efe24f875ebc8. After applying
+a temporary, build the full tree before checking its emitted API. The existing
+sanctioned API preparation is:
+
+```sh
+TSC_ADAPT_TYPESCRIPT="$typescript_api" node stage3/adapt/32-indexed-reads-program/public-api.cjs "$pristine" "$full_tree" "$optional_owner_ledger" stage3/adapt/30-indexed-reads/remaining-readonly-owners.json --accept-api
+NODE_OPTIONS=--max-old-space-size=1536 bash stage3/oracle/run.sh "$full_tree" "$new_oracle_output" > "$oracle_log" 2>&1
+```
+
+Apply 60, 61, 62, then 63 successively, one per gate; rerun the same API proof
+without --accept-api after every suite. The only changed reference is the
+mechanically sanctioned api/typescript.d.ts. The temporaries themselves change
+no published declaration. Scripts accept either the full adapted tree or a
+copy of the gathered driver slice; CENSUS_TYPESCRIPT selects stock 6.0.3.
+
+```sh
+bash stage3/drivers/parser/run.sh "$driver_slice" "$new_dump_output" --inputs /tmp/parser-adapted10 > "$dump_log" 2>&1
+python3 stage3/drivers/parser/verify-temporaries.py "$driver_slice" "$feature_probe" "$feature_compiler_root" "$new_mutant_output" > "$mutant_log" 2>&1
+bash stage3/drivers/scanner/run.sh "$new_scanner_output" --tree "$scanner_slice" --inputs /tmp/parser-adapted10 --node-only > "$scanner_log" 2>&1
+CENSUS_TYPESCRIPT="$typescript_api" node stage3/adapt/30-indexed-reads/remaining-contracts.cjs "$full_tree" > "$core_control_log" 2>&1
+CENSUS_TYPESCRIPT="$typescript_api" node stage3/adapt/30-indexed-reads/remaining-contracts.cjs "$full_tree" --mutant-cache > "$core_mutant_log" 2>&1
+```
+
+The last command must exit one. The source feature patch and exact branch
+versions needed to rebuild the scratch probe remain in the earlier evidence.
+Use its existing type-only node:fs activation control to load official Node
+declarations; do not replace that library with fabricated declarations or
+relax checker options. The two explicitly listed local call views are temporary
+source adaptations, not a substitute host library. No full merged native compiler gate or
+native binary result is claimed.
