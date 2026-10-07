@@ -46,3 +46,19 @@ main and codex/tsgo-c-library. These are the first three of 64 remaining entries
 in the descending combined ranking with lexical ties. No conflicting claim was
 found. The claim update is pushed before code. Shared registration generators
 and test harnesses remain outside this worker's territory.
+
+## Third continuation
+
+Reserved after the previous nine ports, tests and evidence were pushed at 2203c2f0:
+
+- no-new-func (0 compiler, 0 repository)
+- no-new-native-nonconstructor (0 compiler, 0 repository)
+- no-new-wrappers (0 compiler, 0 repository)
+
+Selection checked all 341 fetched origin refs, 117 claimed ranked rules across
+33 distinct Markdown claim blobs, and the same 26 production ports on main and
+codex/tsgo-c-library. These are the first three of 55 remaining entries in the
+descending combined volume ranking with lexical ties. Earlier eligible entries,
+including no-global-assign, no-implicit-globals and no-import-assign, are now
+claimed on other origin branches and were skipped. No conflicting claim was
+found for these three. This update is pushed before implementation.
