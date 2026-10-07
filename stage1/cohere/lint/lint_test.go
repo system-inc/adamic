@@ -392,7 +392,7 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 			case "type T = { m: => void };":
 				mode = "recovery"
 			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
-				mode = "unsupported-recovery"
+				mode = "recovery"
 			}
 		}
 		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
