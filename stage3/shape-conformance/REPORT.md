@@ -1,3 +1,13 @@
+Built: grouped all 315 diagnostics by code and file, with per-cast dependency and unblock counts.
+Commits: measured input e7f420293e94746095c2f1e2d14124484e1afb63; this report checkpoint is recorded in branch history.
+Commands: diagnostic-actions.py inventory/provenance assertions pass; 315 diagnostics in 79 groups cover 2004 diagnosed sites.
+Mutants: fixing one of two diagnosed producers cannot clear both; the overlapping-dependency mutant is caught.
+Limits: unblock counts describe current diagnosis frontiers, not successful rechecking or free casts.
+
+Current report: [DIAGNOSTIC-ACTIONS-REPORT.md](DIAGNOSTIC-ACTIONS-REPORT.md).
+
+Previous checkpoints follow.
+
 Built: record-property and constant-element allocation flow, with visible-store joins and conservative unknown frontiers.
 Commits: merge checkpoint c1f4c5a70bd7d98fd543f4eb7ff96191be4a338b; implementation commit is in branch history.
 Commands: full lower/IR tests, vet, 43 unchanged graph-region counts, native fixtures against Node, and independent census audits pass.
