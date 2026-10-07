@@ -51,3 +51,20 @@ shared registration edits.
 The timeout port passed independent full-byte controls and both corpora using
 a temporary checker registration overlay. The other two rules are partial,
 not completed ports. See ../WAVE_09_CONTINUATION_REPORT.md for gaps and evidence.
+
+## New continuation claim after withdrawal
+
+The original three rules are complete and pushed. The previous continuation
+reservations remain withdrawn. Fetched all origin heads again: 335 remote refs,
+33 distinct Markdown claim blobs, 114 ranked rule names named in claims.
+Excluded actual native ports on main ef3d907e and bridge branch 5afbdb83,
+including abbreviated TypeScript names, and all names in any origin claim.
+The first three remaining entries in the combined volume ranking with lexical
+ties are reserved on this branch before implementation:
+
+- `no-invalid-regexp` (0 compiler, 0 repository)
+- `no-label-var` (0 compiler, 0 repository)
+- `no-misleading-character-class` (0 compiler, 0 repository)
+
+This claim update is pushed before code. No shared harness or registration
+generator edits. New Adamic files use .a.
