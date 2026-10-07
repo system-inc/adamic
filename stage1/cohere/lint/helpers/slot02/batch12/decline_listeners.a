@@ -1,0 +1,28 @@
+export interface DeclineDependencies {
+    describe: (ruleName: string, system: number) => string;
+    report: (context: number, node: number, id: string, description: string) => void;
+}
+export interface DeclineListeners { sourceFile: (node: number) => void; }
+// The registry subscribes this callback only to the named SourceFile kind.
+export class DeclineListener implements DeclineListeners {
+    private reported: boolean;
+    private readonly context: number;
+    private readonly ruleName: string;
+    private readonly system: number;
+    private readonly deps: DeclineDependencies;
+    constructor(context: number, ruleName: string, system: number, deps: DeclineDependencies) {
+        this.reported = false;
+        this.context = context;
+        this.ruleName = ruleName;
+        this.system = system;
+        this.deps = deps;
+    }
+    sourceFile(node: number): void {
+        if (this.reported) { return; }
+        this.reported = true;
+        this.deps.report(this.context, node, 'designSystemUnavailable', this.deps.describe(this.ruleName, this.system));
+    }
+}
+export function declineListeners(context: number, ruleName: string, system: number, deps: DeclineDependencies): DeclineListener {
+    return new DeclineListener(context, ruleName, system, deps);
+}

@@ -1,0 +1,21 @@
+export interface DeclarationView { type: number; name: number; initializer: number; pattern: boolean; }
+export interface DeclarationDependencies {
+    expression: (builder: number, node: number) => void;
+    bind: (builder: number, node: number) => void;
+    reads: (builder: number, node: number) => void;
+    writes: (builder: number, node: number) => void;
+}
+// The caller projects an actual VariableDeclaration; -1 represents a nil node.
+export function variableDeclaration(builder: number, node: number, declaration: DeclarationView, deps: DeclarationDependencies): void {
+    if (node === -1) { return; }
+    deps.expression(builder, declaration.type);
+    if (declaration.pattern) {
+        deps.expression(builder, declaration.initializer);
+        deps.bind(builder, declaration.name);
+        return;
+    }
+    if (declaration.initializer === -1) { deps.reads(builder, declaration.name); return; }
+    deps.reads(builder, declaration.name);
+    deps.expression(builder, declaration.initializer);
+    deps.writes(builder, declaration.name);
+}

@@ -1,0 +1,74 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { resolve } from './theme_resolve.a';
+import type { ThemeValue } from './theme_resolve.a';
+import { variableDeclaration } from './variable_declaration.a';
+import { declineListeners } from './decline_listeners.a';
+import type { DeclineListener } from './decline_listeners.a';
+const input = readTextFile(programArguments()[0] ?? panic('corpus'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse();
+if (root === -1) { panic(json.error); }
+function field(row: number, name: string): number { return json.field(row,name); }
+function text(row: number, name: string): string { return json.node(field(row,name)).text; }
+function number(row: number, name: string): number { return json.node(field(row,name)).number; }
+function flag(row: number, name: string): boolean { return text(row,name) === 'true'; }
+let trace = ''; let calls = 0;
+for (const row of json.node(field(root,'Theme')).children) {
+    const values = new Map<string,ThemeValue>();
+    for (const value of json.node(field(row,'Values')).children) { values.set(text(value,'Key'),{value:text(value,'Value'),options:number(value,'Options')}); }
+    const keys: string[] = []; for (const key of json.node(field(row,'Keys')).children) { keys.push(json.node(key).text); }
+    trace='';
+    const result = resolve(number(row,'Theme'),text(row,'Candidate'),flag(row,'Present'),keys,number(row,'Options'),values,{
+        key: (theme,candidate,present,received) => {
+            trace += `key:${theme}:${candidate}:${present}:${received === keys};`;
+            for (const key of received) { trace += `${key},`; }
+            return {value:text(row,'Key'),found:flag(row,'KeyFound')};
+        },
+        reference: (theme,key) => { trace += `reference:${theme}:${key};`; return {value:text(row,'Reference'),found:flag(row,'ReferenceFound')}; }
+    });
+    console.log(`theme:${trace}:${result.found}:${result.value}`);
+}
+interface Block { events: number[]; }
+interface Builder { current: number; }
+let blocks: Block[] = [];
+let builders: Builder[] = [];
+let mode = 0;
+function hook(op: string, builder: number, node: number): void {
+    const b = builders[builder] ?? panic('builder identity');
+    calls++; trace += `${op}:${builder}:${node};`;
+    (blocks[b.current] ?? panic('current block')).events.push(node);
+    if (mode === 1) { b.current = 1-builder; (blocks[b.current] ?? panic('next block')).events.push(100+node); }
+}
+for (const row of json.node(field(root,'CFG')).children) {
+    builders = [{current:0},{current:1}]; blocks = [{events:[11]},{events:[22]}]; calls=0;trace='';mode=number(row,'Mode');
+    const builder = number(row,'Builder'); const node = number(row,'Node');
+    variableDeclaration(builder,node,{type:number(row,'Type'),name:number(row,'Name'),initializer:number(row,'Initializer'),pattern:flag(row,'Pattern')},{
+        expression: (b,n) => hook('expr',b,n), bind: (b,n) => hook('bind',b,n), reads: (b,n) => hook('read',b,n), writes: (b,n) => hook('write',b,n)
+    });
+    console.log(`calls:${calls}:${trace}`);
+    for (let i=0;i<builders.length;i++) { console.log(`builder:${i}:${(builders[i] ?? panic('builder')).current}`); }
+    for (let i=0;i<blocks.length;i++) { let values=''; for (const e of (blocks[i] ?? panic('block')).events) { values += `${e},`; } console.log(`block:${i}:${values}`); }
+}
+
+let listeners: DeclineListener[] = [];
+let active = 0;
+let reenter = false;
+let entered = false;
+let descriptions: string[] = [];
+let source = 0;
+function describe(ruleName: string, system: number): string {
+    trace += `describe:${ruleName}:entry:${source}:${system};`;
+    if (reenter && !entered) { entered=true; (listeners[active] ?? panic('reentrant listener')).sourceFile(0); }
+    return descriptions[system] ?? panic('description identity');
+}
+function report(context: number, node: number, id: string, description: string): void { trace += `report:${context}:${node}:${id}:${description};`; }
+const decline = json.node(field(root,'Decline')).children;
+for (let i=0;i<decline.length;i+=2) {
+    const left = decline[i] ?? panic('first listener'); const right = decline[i+1] ?? panic('second listener');
+    source=number(left,'Node');trace='';reenter=number(left,'Mode')===1;entered=false;listeners=[];
+    descriptions=[text(left,'Description'),text(right,'Description')];
+    for (const row of [left,right]) { listeners.push(declineListeners(number(row,'Context'),text(row,'Rule'),number(row,'System'),{describe:(name,system)=>describe(name,system),report:(context,node,id,description)=>report(context,node,id,description)})); }
+    for (active=0;active<2;active++) { const listener=listeners[active] ?? panic('listener'); listener.sourceFile(source); listener.sourceFile(source); }
+    console.log(`decline:${trace}`);
+}

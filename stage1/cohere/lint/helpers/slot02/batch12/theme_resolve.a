@@ -1,0 +1,13 @@
+export interface ThemeValue { value: string; options: number; }
+export interface ThemeResolution { value: string; found: boolean; }
+export interface ThemeResolveDependencies {
+    key: (theme: number, candidate: string, present: boolean, keys: string[]) => ThemeResolution;
+    reference: (theme: number, key: string) => ThemeResolution;
+}
+export function resolve(theme: number, candidate: string, present: boolean, keys: string[], options: number, values: Map<string, ThemeValue>, deps: ThemeResolveDependencies): ThemeResolution {
+    const key = deps.key(theme, candidate, present, keys);
+    if (!key.found) { return {value: '', found: false}; }
+    const value = values.get(key.value) ?? {value: '', options: 0};
+    if (((options | value.options) & 1) !== 0) { return {value: value.value, found: true}; }
+    return deps.reference(theme, key.value);
+}
