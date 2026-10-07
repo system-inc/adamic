@@ -1,3 +1,57 @@
+# Namespace reachability rerun: red before C, 9 of 11 probes green
+
+Merged namespaces-tsc 023a1a34 into unpushed scratch 16d0caa7, yielding
+a0aa1e69. Compiler rebuild succeeds. The old core.ts:11:52 Map-before-namespace
+witness now passes natively against Node (`0:false\n`); its output-byte mutant
+is caught. All eleven probes were rerun: rows 1–5, 7–9 and 11 pass (9/11),
+each with equal stdout/stderr, zero exits and a caught native byte mutant.
+Row 6 still refuses `arguments`; row 10 is the original unchecked cast probe,
+already removed from the real slice by validated adaptation 65. Row 8 retains
+the approved unknown signature. The validated slice was not changed.
+
+The first observed full-build blocker is performance in namespace reachability,
+not a new lowering diagnostic. The C attempt produced zero bytes and no diagnostic
+for approximately six minutes on one busy CPU. Its retained SIGQUIT stack is in
+`lower.namespaceInitialization.func1`, repeatedly following function calls.
+Bounded C/build reruns, with split off and on, retain their stacks and outcomes
+in evidence/front23. A timeout is not counted as a compiler refusal.
+
+Minimal program: native-namespace-call-graph.a. Twenty-four function levels each
+contain two calls to the previous function under `if (false)`. Node prints
+`true\n` without taking any of those branches. C emission exceeds 30 seconds;
+reducing each level to one call takes 0.064 seconds, with identical Node output.
+Two-call depths 12, 16 and 20 take 0.066, 0.217 and 2.675 seconds respectively.
+These timings were taken while the full build was also running. Observation:
+both the full stack and the size-scaling witness implicate namespace traversal.
+Inference from namespaces.go: its active-path map removes a node on return,
+so shared DAG targets are revisited through each path. This supports exponential
+work; it does not establish an infinite loop. No compiler implementation was
+changed or readiness proof bypassed to get past it.
+
+The new reachability/closed-call-graph tests pass in 0.181 seconds. Broader focused
+namespace tests fail separately in 1.136 seconds: Parser and IncrementalParser
+shape tests expected a bodyless-function NotYet but got nil; early_enum expected
+an enum-before-initialization NotYet but got nil. Their expectations were not
+changed. Compiler/lowering merge resolutions are listed in the report and kept
+as a compressed scratch-only patch. The scratch merge is never pushed.
+
+No parser C or binary means no native 81-file or 10,406-case comparison, clang
+split/unsplit/warm timing, binary size or user-time measurement. nproc is 5;
+the previous Node user time is 6.162 seconds. The extended Node reference remains
+36,429,231 bytes, SHA-256
+`686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615`.
+No native parser-output mutant can run without that output. The nine probe byte
+mutants and the cleared namespace-map witness mutant are all caught. No
+arguments.length stub was made: the first observed blocker occurs before a
+lowering diagnostic can identify that site. No new temporary adaptation.
+
+Exact evidence: [front23 report](evidence/front23/report.json), bounded build
+report/stacks, eleven probe comparisons and namespace call-graph scaling inputs.
+Reproduction uses measure-builds.py with `--timeout 60 --jobs 5`,
+probe-stops.py and namespace-call-graph.py against the scratch compiler.
+
+---
+
 # Host method descriptor rerun: process.nextTick truthiness green
 
 Merged host-method-presence 51761b0 (including method-presence-test 722a1c5a)
