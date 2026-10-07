@@ -1,5 +1,5 @@
-// Partial port: the sequence detectors consume parsed class members explicitly.
-// Regex class parsing, reference tracking and cooked/raw source mapping remain prerequisites.
+// Sequence detectors used by the native pattern and literal adapters beside this file.
+// Constructor reference tracking and cooked/raw source mapping remain incomplete.
 import { panic } from 'adamic';
 import { written } from '../../../../typescript/parser/nodes.ts';
 const messageMisleadingSurrogatePairId = "surrogatePair";
@@ -99,6 +99,6 @@ export function patternMeaningChanges(pattern: string): boolean {
     }
     return false;
 }
-export function requireRegexClassAdapter(): never {
-    panic('no-misleading-character-class requires native regexsyntax class parsing, reference tracking and cooked-to-raw source mapping');
+export function requireConstructorAdapter(): never {
+    panic('no-misleading-character-class constructors require native reference tracking and cooked-to-raw source mapping');
 }

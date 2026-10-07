@@ -1,0 +1,37 @@
+// The literal listener only. Constructor tracking is a separate unfinished adapter.
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Diagnostic } from '../../diagnostic.ts';
+import { Suggestion } from '../../suggestion.ts';
+import { Repair } from '../../repair.ts';
+import { patternFindings } from './pattern_findings.a';
+import { patternMeaningChanges } from './no_misleading_character_class.a';
+export function literalFindings(nodes:readonly ParseNode[],offsets:readonly number[],allowEscape:boolean):Diagnostic[] {
+    const findings:Diagnostic[]=[];
+        for(const node of nodes){
+            if(node.kind!=='RegularExpressionLiteral'){continue;}
+            const start=offsets[node.end-node.text.length]??panic('literal offset outside source');
+            const end=offsets[node.end]??panic('literal end outside source');
+            for(const finding of literalTextFindings(node.text,start,end,allowEscape)){findings.push(finding);}
+        }
+    return findings;
+}
+// Kept separate so native judgments can be held even while the combined parser
+// driver is blocked in stage 0's freshness analysis.
+export function literalTextFindings(text:string,literalStart:number,end:number,allowEscape:boolean):Diagnostic[] {
+    const findings:Diagnostic[]=[];
+    if(text.length<2||!text.startsWith('/')){return findings;}
+    const closing=text.lastIndexOf('/');
+    const pattern=closing<1?text.slice(1):text.slice(1,closing);
+    const flags=closing<1?'':text.slice(closing+1);
+    if(pattern===''){return findings;}
+    const start=literalStart+1;
+    for(const found of patternFindings(pattern,flags,allowEscape)){
+                const diagnostic=new Diagnostic('no-misleading-character-class',found.id,found.message,start+found.start,start+found.end,'');
+                if(found.suggest&&!flags.includes('u')&&!flags.includes('v')&&!patternMeaningChanges(pattern)){
+                    diagnostic.suggestions.push(new Suggestion('suggestUnicodeFlag','Add the u flag so the class matches the character rather than its parts. The flag changes how the whole pattern parses, so this is offered rather than applied.',[new Repair(end,end,'u')]));
+                }
+                findings.push(diagnostic);
+            }
+    return findings;
+}

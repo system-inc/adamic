@@ -1,0 +1,18 @@
+// Go's %q rune spelling, required for byte-identical flag diagnostics.
+import { printableRanges } from './printable_ranges.a';
+function printable(value:number):boolean {
+    let low=0;let high=Math.floor(printableRanges.length/2);
+    while(low<high){const middle=Math.floor((low+high)/2);const start=printableRanges[middle*2]??-1;const end=printableRanges[middle*2+1]??-1;if(value<start){high=middle;}else if(value>end){low=middle+1;}else{return true;}}
+    return false;
+}
+export function quoteRune(point:number):string {
+    const value=point<0||point>1114111||(point>=55296&&point<=57343)?65533:point;
+    if(value===39){return "'\\\''";}
+    if(value===92){return "'\\\\'";}
+    if(value===7){return "'\\a'";}if(value===8){return "'\\b'";}if(value===12){return "'\\f'";}if(value===10){return "'\\n'";}if(value===13){return "'\\r'";}if(value===9){return "'\\t'";}if(value===11){return "'\\v'";}
+    if(printable(value)){return "'"+String.fromCodePoint(value)+"'";}
+    if(value<32||value===127){return "'\\x"+value.toString(16).padStart(2,'0')+"'";}
+    if(value<65536){return "'\\u"+value.toString(16).padStart(4,'0')+"'";}
+    return "'\\U"+value.toString(16).padStart(8,'0')+"'";
+}
+export function quoteFlag(flag:string):string{return quoteRune(flag.codePointAt(0)??0);}

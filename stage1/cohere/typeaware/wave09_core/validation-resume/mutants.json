@@ -1,0 +1,56 @@
+[
+  {
+    "name": "surrogate folding",
+    "first_difference": 2888,
+    "expected_sha256": "099d150a7ab7da48e8aabc4d42819cd99af30274424da7533f8ba9030b1a2d5f",
+    "mutant_sha256": "cfb83dc71c611ea4edd287946acb19b92f7dc1696e938933403009f34e612bc8",
+    "exit": 0,
+    "stderr": "empty",
+    "caught_by": "production Go full bytes"
+  },
+  {
+    "name": "malformed whole pattern",
+    "first_difference": 238,
+    "expected_sha256": "a5dd04d240b9c0bb46c67b72385cebbc2c897f4e2c6ee36e9c10e39cfaf8035d",
+    "mutant_sha256": "ccc803ba0058b2b0b2439e50bcffaa2bee7f71543474f24cab2a5d2a9f572121",
+    "exit": 0,
+    "stderr": "empty",
+    "caught_by": "production Go full bytes"
+  },
+  {
+    "name": "rune escaping",
+    "first_difference": 50,
+    "expected_sha256": "868a1271686833562e22cec6440434ae80900144143db9fe39759f5efbb922b9",
+    "mutant_sha256": "fa87d0d03b312e4bdb3e2adb0872731149fe140f9a19801b17f94c216c0485ad",
+    "exit": 0,
+    "stderr": "empty",
+    "caught_by": "production Go full bytes"
+  },
+  {
+    "name": "error prefix trimming",
+    "first_difference": 372,
+    "expected_sha256": "75211f8d3cb45f2c33c6ed613ddacf0ecb7f0f6254627ec25d00ef85c2600042",
+    "mutant_sha256": "4cbe7bea60f30afefec75f2ac5939dd7ba7094d98f0eff515d1e4536627606fc",
+    "exit": 0,
+    "stderr": "empty",
+    "caught_by": "production Go full bytes"
+  },
+  {
+    "name": "native suggestion edit",
+    "first_difference": 1434,
+    "expected_sha256": "494b16fbd8301a9d8c21f73c74db3ec5a7764445e2d1ad9b913b9a2586ff6eaf",
+    "mutant_sha256": "e476a16c1604846ed1dbfe8199e4e8ae544d13dfd06dd8bd43c68d268fabe4d8",
+    "exit": 0,
+    "stderr": "empty",
+    "caught_by": "production Go full bytes"
+  },
+  {
+    "name": "source Node suggestion edit",
+    "first_difference": 1426,
+    "expected_sha256": "f62455fb6de0f7f1aa659cd5722f664a151c4fdebaeca808d19ca6d04d3aa706",
+    "mutant_sha256": "8301f1c2b27e2b427a9dba6b4c2dfdfdfd569dc692149639e5a7a25e39303af0",
+    "exit": 0,
+    "stderr": "empty",
+    "caught_by": "production Go full bytes"
+  }
+]

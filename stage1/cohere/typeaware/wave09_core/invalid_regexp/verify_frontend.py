@@ -13,6 +13,7 @@ virtual=repo/'cohere/wave09_flag_frontend.go'
 overlay=write('overlay.json',json.dumps({'Replace':{str(virtual):str(root/'testdata/oracle.go')}}))
 go=work/'oracle';run('oracle-build',['go','build','-overlay',overlay,'-o',go,virtual],repo/'cohere')
 sources=["RegExp('.', 'z');","new RegExp('.', 'gg');","RegExp('[', 'uv');","new (RegExp)('.', 'ii');","(RegExp)('.', 'vu');","RegExp(variable,'smm');","RegExp('[', 'zgg');","RegExp('[', '🌍');","RegExp();","new RegExp();","function f(RegExp:any){RegExp('[','z');}","const RegExp=(...a:any[])=>0;RegExp('[','z');","class RegExp{constructor(a:any,b:any){}}new RegExp('[','z');","interface RegExp {} RegExp('[','z');","type RegExp=string;RegExp('[','z');","/* 世界 🌍 */\r\nnew RegExp('[','q');\r\n"]
+sources += ['RegExp(".",'+json.dumps(chr(point))+');' for point in [0,7,8,9,10,11,12,13,27,31,32,39,92,127,128,133,160,8203,8232,128077,57344,1114111,55296,56320]]
 paths=[str(write(f'control-{i}.a',source+'\nexport {};')) for i,source in enumerate(sources)]
 manifest=write('manifest','\n'.join(paths)+'\n');config=write('tsconfig.json',json.dumps({'compilerOptions':{'target':'ES2022','module':'NodeNext','moduleResolution':'NodeNext','lib':['es2022','dom']},'files':['root.d.ts']}));write('root.d.ts','declare const variable:string;')
 truth=run('go',[go,config,manifest]);assert b'\tno-invalid-regexp\t' in truth

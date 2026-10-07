@@ -14,7 +14,13 @@ function characters(text: string): string[] {
     for(let at = 0; at < text.length;) {
         const point = text.codePointAt(at) ?? panic('missing flag code point');
         const width = point > 65535 ? 2 : 1;
-        values.push(text.slice(at, at + width)); at += width;
+        // The Go AST carries lone surrogates as WTF-8. Its rune walk reads
+        // each of the three invalid UTF-8 bytes as a replacement rune.
+        if(point >= 55296 && point <= 57343) {
+            values.push('\ufffd'); values.push('\ufffd'); values.push('\ufffd');
+        }
+        else { values.push(text.slice(at, at + width)); }
+        at += width;
     }
     return values;
 }
@@ -34,7 +40,7 @@ export function invalidFlags(flags: string, extra: readonly string[]): FlagFault
 // quoted is the Go-compatible rune spelling supplied by the formatter adapter.
 export function flagsMessage(flags: string, fault: FlagFault, quoted: string): string {
     if(fault.kind === 'none') { return ''; }
-    const prefix = `Invalid regular expression flags: ${flags}. `;
+    const prefix = `Invalid regular expression flags: ${characters(flags).join('')}. `;
     if(fault.kind === 'mutually-exclusive') { return `${prefix}The u and v flags cannot both be set`; }
     return `${prefix}${fault.kind === 'duplicate' ? 'Duplicate' : 'Unknown'} flag ${quoted}`;
 }

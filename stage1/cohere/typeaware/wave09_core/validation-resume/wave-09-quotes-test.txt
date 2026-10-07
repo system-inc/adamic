@@ -1,0 +1,17 @@
+go-build exit 0 seconds 0.064105
+ranges exit 0 seconds 0.06773
+go exit 0 seconds 0.007733
+Unicode 17.0.0 quote inputs 4000
+normal-build exit 0 seconds 2.738328
+normal exit 0 seconds 0.003926
+normal identical bytes 31705
+sanitized-build exit 0 seconds 4.294914
+sanitized exit 0 seconds 0.015729
+sanitized identical bytes 31705
+mutant-build exit 0 seconds 2.522541
+mutant exit 0 seconds 0.003483
+rune escape mutant caught at byte 50
+js-build exit 0 seconds 0.11434
+source exit 0 seconds 0.117591
+emitted exit 0 seconds 0.06384
+PASS rune quoting against Go, source Node, emitted JS, mutant and sanitizers

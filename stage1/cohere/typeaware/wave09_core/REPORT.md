@@ -145,3 +145,10 @@ Validation logs, frozen manifests, measurements, claim audit and parser rejectio
 are saved under validation. Scratch overlays are evidence only; Go copies use
 .go.txt to avoid accidental package discovery. Further claims are not taken while
 these two regex ports remain incomplete.
+
+## Resumed implementation
+
+Native class parsing, pattern judgments, literal diagnostics/suggestions and
+complete Go rune quoting were added after c5647eb1. The complete regex rules
+remain partial. See [RESUME_REPORT.md](RESUME_REPORT.md) for current coverage,
+the native compiler timeout, exact mutants and the new validation evidence.

@@ -1,0 +1,64 @@
+// Pattern-level judgments remain native; this file consumes no Go lint verdict.
+import { panic } from 'adamic';
+import { PatternBytes, RegexFlags, CharacterElement, scanClasses, parseClassWithEnd, skipPatternEscape, classEnd } from './character_class.a';
+import { ClassCharacter, MisleadingFinding, sequenceFindings } from './no_misleading_character_class.a';
+function acceptableEscape(p:PatternBytes,start:number,end:number,value:number):boolean {
+    if(p.at(start)!==92){return false;}
+    let last=start;let at=start;
+    while(at<end){last=at;at+=Math.max(1,p.rune(at).width);}
+    let backslashes=last>start;for(let i=start;i<last;i++){if(p.at(i)!==92){backslashes=false;}}
+    return !(backslashes&&p.rune(last).value===value);
+}
+function appendCharacter(current:ClassCharacter[],p:PatternBytes,f:RegexFlags,value:number,start:number,end:number,brace:boolean,allowEscape:boolean):void {
+    const escaped=allowEscape&&acceptableEscape(p,start,end,value);
+    if(!f.uv()&&value>65535&&!brace){
+        current.push(new ClassCharacter(55296+((value-65536)>>10),start,start,false,escaped));
+        current.push(new ClassCharacter(56320+((value-65536)&1023),start,end,false,escaped));
+    }
+    else{current.push(new ClassCharacter(value,start,end,brace,escaped));}
+}
+export function characterSequences(p:PatternBytes,elements:readonly CharacterElement[],f:RegexFlags,allowEscape:boolean):ClassCharacter[][] {
+    const sequences:ClassCharacter[][]=[];let current:ClassCharacter[]=[];
+    for(const element of elements){
+        if(element.kind===2){if(current.length>0){sequences.push(current);current=[];}continue;}
+        if(element.kind===1){
+            const start=element.start;
+            const width=p.at(start)!==92?p.rune(start).width:f.uv()&&element.value>65535&&p.at(start+1)===117&&p.at(start+2)!==123?12:skipPatternEscape(p,start,f);
+            const minimumEnd=start+width;
+            const consistent=width>0&&minimumEnd<element.end&&p.at(minimumEnd)===45;
+            appendCharacter(current,p,f,element.value,start,consistent?minimumEnd:element.end,element.brace,allowEscape);
+            if(current.length>0){sequences.push(current);current=[];}
+            appendCharacter(current,p,f,element.max,consistent?minimumEnd+1:start,element.end,element.maxBrace,allowEscape);
+        }
+        else{appendCharacter(current,p,f,element.value,element.start,element.end,element.brace,allowEscape);}
+    }
+    if(current.length>0){sequences.push(current);}return sequences;
+}
+function quantifierEnds(p:PatternBytes,index:number):boolean {
+    let at=index+1;const first=at;while(p.at(at)>=48&&p.at(at)<=57){at++;}if(first===at){return false;}
+    if(p.at(at)===44){at++;while(p.at(at)>=48&&p.at(at)<=57){at++;}}
+    return p.at(at)===125;
+}
+export function loneQuantifierBrace(p:PatternBytes,f:RegexFlags):boolean {
+    let i=0;while(i<p.bytes.length){
+        if(p.at(i)===92){const width=skipPatternEscape(p,i,f);if(width===0){return false;}i+=width;}
+        else if(p.at(i)===91){const end=classEnd(p,i,f);if(end<0){return false;}i=end;}
+        else if(p.at(i)===123){if(!quantifierEnds(p,i)){return true;}i++;}
+        else{i++;}
+    }
+    return false;
+}
+export function patternFindings(pattern:string,flags:string,allowEscape:boolean):MisleadingFinding[] {
+    if(!pattern.includes('[')){return [];}
+    const p=new PatternBytes(pattern);const f=new RegexFlags(flags);
+    if(f.uv()&&loneQuantifierBrace(p,f)){return [];}
+    const scan=scanClasses(p,f);if(!scan.ok){return [];}
+    const found:MisleadingFinding[]=[];
+    for(const span of scan.spans){
+        const parsed=parseClassWithEnd(p,span.start,span.end,f);if(!parsed.ok){return [];}
+        for(const sequence of characterSequences(p,parsed.elements,f,allowEscape)){
+            for(const finding of sequenceFindings(sequence)){found.push(finding);}
+        }
+    }
+    return found;
+}

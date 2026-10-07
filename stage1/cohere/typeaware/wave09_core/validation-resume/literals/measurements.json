@@ -1,0 +1,28 @@
+{
+  "default": {
+    "go": 0.06387817100039683,
+    "bytes": 10971,
+    "findings": "findings 22",
+    "source-node": 0.11406419699960679
+  },
+  "allow": {
+    "go": 0.06403395600045769,
+    "bytes": 8806,
+    "findings": "findings 17",
+    "source-node": 0.16413599099996645
+  },
+  "suggestion_mutant_difference": 1426,
+  "compiler": {
+    "go": 0.3195321579996744,
+    "bytes": 7859,
+    "findings": "findings 0",
+    "source-node": 0.870168761000059
+  },
+  "repository": {
+    "go": 0.16823221300001023,
+    "bytes": 18485,
+    "findings": "findings 0",
+    "source-node": 0.26431977599986567
+  },
+  "source_only": true
+}

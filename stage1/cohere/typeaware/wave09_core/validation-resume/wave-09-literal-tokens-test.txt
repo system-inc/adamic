@@ -1,0 +1,13 @@
+normal-build exit 0 seconds 3.527311
+normal exit 0 seconds 0.003647
+normal identical bytes 19791
+sanitized-build exit 0 seconds 5.4382
+sanitized exit 0 seconds 0.031874
+sanitized identical bytes 19791
+mutant-build exit 0 seconds 3.423806
+mutant exit 0 seconds 0.007707
+native suggestion edit mutant caught byte 1434
+js-build exit 0 seconds 0.216666
+source exit 0 seconds 0.11742
+emitted exit 0 seconds 0.114815
+PASS native literal token judgments and suggestion edits; combined native parser is still blocked

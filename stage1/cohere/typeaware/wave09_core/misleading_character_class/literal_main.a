@@ -1,0 +1,18 @@
+import {panic,programArguments,readTextFile} from 'adamic';
+import {Parser} from '../../../../typescript/parser/parser.ts';
+import {sourceOffsets} from './character_class.a';
+import {written} from '../../../../typescript/parser/nodes.ts';
+import {literalFindings} from './literal_rule.a';
+const args=programArguments();
+const manifest=readTextFile(args[1]??panic('missing manifest'));
+if(manifest.kind==='Error'){panic(manifest.message);}
+let count=0;
+for(const path of manifest.text.split('\n').filter((line)=>line!=='')){
+    const source=readTextFile(path);if(source.kind==='Error'){panic(source.message);}
+    const parser=new Parser(source.text,path);parser.file();
+    const findings=literalFindings(parser.nodes,sourceOffsets(source.text),args.includes('--allow-escape'));
+    for(const finding of findings){finding.sortKey=finding.written();}
+    findings.sort((left,right)=>left.sortKey<right.sortKey?-1:left.sortKey>right.sortKey?1:0);
+    count+=findings.length;console.log(`file\t${written(path)}`);for(const finding of findings){console.log(finding.written());}
+}
+console.log(`findings ${count}`);

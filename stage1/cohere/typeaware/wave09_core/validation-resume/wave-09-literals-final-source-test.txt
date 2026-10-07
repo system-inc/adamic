@@ -1,0 +1,18 @@
+go-build exit 0 seconds 0.16502
+valid-filter exit 0 seconds 0.114092
+default-go exit 0 seconds 0.063878
+default-source-node exit 0 seconds 0.114064
+default source-node identical bytes 10971
+allow-go exit 0 seconds 0.064034
+allow-source-node exit 0 seconds 0.164136
+allow source-node identical bytes 8806
+mutant-go exit 0 seconds 0.065808
+mutant exit 0 seconds 0.114275
+suggestion edit mutant caught at byte 1426
+compiler-go exit 0 seconds 0.319532
+compiler-source-node exit 0 seconds 0.870169
+compiler source-node identical bytes 7859
+repository-go exit 0 seconds 0.168232
+repository-source-node exit 0 seconds 0.26432
+repository source-node identical bytes 18485
+PASS available literal diagnostics and suggestions; native whole listener and constructor tracking are not certified

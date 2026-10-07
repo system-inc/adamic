@@ -88,3 +88,14 @@ The final origin refresh found a later duplicate reservation on wave 14:
 350d4776 at 01:22:58 UTC. This wave's claim 0a4e2f17 was committed and pushed at
 01:20:27 UTC and absent from all other claims in the immediate second refresh.
 Both reservations and timestamps are saved for Ahra; this earlier claim remains.
+
+## Regex continuation resumed
+
+The native regex class parser, whole-pattern judgments, literal diagnostics and
+suggestions, Go rune quoting and WTF-8 flag behavior are now ported and compared.
+Native token diagnostics match Go, including suggestion edits; actual-source
+literal comparisons pass on Node over both frozen corpora. The combined native
+parser/listener build still times out at 120 seconds in the shared freshness
+analysis, with captured stacks. The native pattern compiler and constructor
+reference/constant/source-map adapters remain unfinished. No further rules are
+claimed. See ../wave09_core/RESUME_REPORT.md for precise scopes and evidence.
