@@ -108,6 +108,14 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: "delete", Fix: "fixed objects cannot lose fields; use a record or Map"}
 			return true
 		}
+		if err := l.phantomArrayPresenceRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.phantomArrayRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.phantomRefusal(node); err != nil {
 			found = err
 			return true

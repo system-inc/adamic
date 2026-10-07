@@ -26,6 +26,12 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
+	if handled, err := l.phantomArrayCast(node, as.Expression, source, target); handled {
+		return value, err
+	}
+	if l.phantomCast(source, target) {
+		return value, nil
+	}
 	// An object literal's type is fresh, and a fresh type is held to excess properties, so { name, age }
 	// as Named would read as not assignable. Its widened type isn't fresh; its own keeps the literal
 	// fields a discriminated union needs. Either assignable makes an upcast candidate; the sound

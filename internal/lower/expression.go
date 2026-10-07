@@ -30,6 +30,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
+	if l.phantomArrayBase(proven) != nil {
+		return ir.Array, true
+	}
 	flags := proven.Flags()
 	if flags&checker.TypeFlagsObject != 0 && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
 		if l.recordElement(proven) != nil {
@@ -243,6 +246,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 // and result of a function, Weak in both or in neither, all the way down.
 func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
 	from, to = l.present(from), l.present(to)
+	from, to = l.phantomArrayView(from), l.phantomArrayView(to)
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
 	}

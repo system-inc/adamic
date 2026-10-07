@@ -214,6 +214,15 @@ func (l *lowering) phantomMemberType(proven *checker.Type, name string) bool {
 		}
 		return true
 	}
+	if base := l.phantomArrayBase(proven); base != nil {
+		_, fields := l.phantomArrayParts(proven)
+		for _, field := range fields {
+			if field.Name == name {
+				return true
+			}
+		}
+		return false
+	}
 	if l.phantomBase(proven) == nil {
 		return false
 	}

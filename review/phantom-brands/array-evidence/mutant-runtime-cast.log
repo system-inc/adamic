@@ -1,0 +1,5 @@
+--- FAIL: TestPhantomArrayCastsAreErased (0.08s)
+    phantom_array_brands_test.go:68: array brands or casts changed the unbranded IR
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.087s
+FAIL

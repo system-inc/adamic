@@ -141,6 +141,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 // signatures and structural fields; a native representation alone loses those facts.
 // This is also where nullable representations can extend the key.
 func (l *lowering) genericTypeKey(proven *checker.Type) string {
+	proven = l.phantomArrayView(proven)
 	held, known := l.representation(proven)
 	if !known {
 		return "unread"
