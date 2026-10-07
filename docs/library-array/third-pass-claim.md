@@ -19,6 +19,7 @@ refusal can hide prototype mutation, freezing or custom construction.
 |---:|---|---|
 | 4 | Proven intrinsic aliases and metadata | Track effect-free unreassigned bindings, prove every use is an intrinsic observation or supported explicit call, and eliminate the unobservable binding. Preserve typeof, name, length and absence of an own prototype. Refuse escaping or mutable aliases. |
 | 1 | Generic map oversized ArraySpeciesCreate | Port V8's order: evaluate arguments, get length, validate callable, and throw RangeError for a receiver proven to require an invalid Array length. No simulated sparse array. |
+| 1 | Never-returning sort comparator | Preserve abrupt completion from a comparator whose proven return type is never, for sort and toSorted. A void callback has no numeric result to read. |
 | 1 | Fresh function receiver shift | Port V8's generic shift failure on the immutable length of a fresh zero-argument function. Preserve exact observed error text. The same corpus input later exercises descriptors, which remains language work. |
 
 The 16 formerly Array-owned inputs contain these six library blockers, seven
@@ -56,7 +57,6 @@ reproducer. The ledger supplies all complete adapted inputs.
 | Checker diagnostic mismatch | `function f() { return [].concat(arguments); } f();` |
 | Generic array element slots | `function f<T>(a: T[]): T[] { return a.toSorted(); }` |
 | In operator | `const present = "x" in {x: 1};` |
-| Non-numeric comparator result | `[1].sort(() => "0");` |
 | Top-level this | `const target = this;` |
 | Sparse array presence | `const a = new Array<number>(3);` |
 | Indexed extension | `const a = new Array(1, 2); a[2] = 3;` |
@@ -67,7 +67,12 @@ The diagnostic mismatch is retained in refused by the requested runner because
 its tsc diagnostic differs from Adamic's diagnostic. It is checker compatibility,
 not a library algorithm obligation. The JSON ledger retains its reason.
 
-Current classified totals: 348 language, six Array-library, 32 other-library.
+Current classified totals: 347 language, seven Array-library, 32 other-library.
+
+Follow-up claim correction, before sort implementation: the inherited non-numeric
+comparator item actually returns never by throwing. That is an Array callback
+overload, not a language feature. Its exact accepted adapted source is in the
+ledger. Indexed-extension reasons are also distinguished from sparse creation.
 Other-library work: Boolean, String, Number, Date, EvalError and SyntaxError
 constructors, Object.freeze on arrays/functions, and Object.prototype.toString.
 

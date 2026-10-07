@@ -1186,7 +1186,7 @@
     "path": "built-ins/Array/prototype/indexOf/15.4.4.14-10-1.js",
     "sourceSHA256": "c80f33582a84cf3c6ef8d7673602ead765e003631ee67135a88e84782e9173e7",
     "owner": "language",
-    "family": "Sparse array presence",
+    "family": "Indexed extension",
     "reason": "adamic: /tmp/library-array-sources/built-ins/Array/prototype/indexOf/15.4.4.14-10-1.js.ts:99:1: stage 0 can't lower Array construction followed by an indexed write outside a proven dense prefix (indexed extension, sparse presence or non-array integer properties) yet\n"
   },
   {
@@ -1347,7 +1347,7 @@
     "path": "built-ins/Array/prototype/indexOf/15.4.4.14-9-9.js",
     "sourceSHA256": "25b6e4b7dffad57269d80fb3dc91cacfcee12445efe3af8b8b059ed58f3415b3",
     "owner": "language",
-    "family": "Sparse array presence",
+    "family": "Indexed extension",
     "reason": "adamic: /tmp/library-array-sources/built-ins/Array/prototype/indexOf/15.4.4.14-9-9.js.ts:99:1: stage 0 can't lower Array construction followed by an indexed write outside a proven dense prefix (indexed extension, sparse presence or non-array integer properties) yet\n"
   },
   {
@@ -1501,21 +1501,21 @@
     "path": "built-ins/Array/prototype/join/S15.4.4.5_A1.1_T1.js",
     "sourceSHA256": "20d0078b047d2226d22fd604b5d0a1bfb8b754f6b9d79717b2bb698a9833f375",
     "owner": "language",
-    "family": "Sparse array presence",
+    "family": "Indexed extension",
     "reason": "adamic: /tmp/library-array-sources/built-ins/Array/prototype/join/S15.4.4.5_A1.1_T1.js.ts:104:1: stage 0 can't lower Array construction followed by an indexed write outside a proven dense prefix (indexed extension, sparse presence or non-array integer properties) yet\n"
   },
   {
     "path": "built-ins/Array/prototype/join/S15.4.4.5_A1.2_T1.js",
     "sourceSHA256": "1d196ea79c6d02498ef7e35c7bdb144fd9bbbb782cd5388f8044c927df1cc0af",
     "owner": "language",
-    "family": "Sparse array presence",
+    "family": "Indexed extension",
     "reason": "adamic: /tmp/library-array-sources/built-ins/Array/prototype/join/S15.4.4.5_A1.2_T1.js.ts:104:1: stage 0 can't lower Array construction followed by an indexed write outside a proven dense prefix (indexed extension, sparse presence or non-array integer properties) yet\n"
   },
   {
     "path": "built-ins/Array/prototype/join/S15.4.4.5_A1.2_T2.js",
     "sourceSHA256": "7d7552e8014c02fc2c56d53e7650ea16eb0d6ecc35bc2eee682cf7fa7604773b",
     "owner": "language",
-    "family": "Sparse array presence",
+    "family": "Indexed extension",
     "reason": "adamic: /tmp/library-array-sources/built-ins/Array/prototype/join/S15.4.4.5_A1.2_T2.js.ts:104:1: stage 0 can't lower Array construction followed by an indexed write outside a proven dense prefix (indexed extension, sparse presence or non-array integer properties) yet\n"
   },
   {
@@ -1711,7 +1711,7 @@
     "path": "built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-9.js",
     "sourceSHA256": "03e194fcf69fd3d808cec77e5c829225d20d93d5b10472f497ce055c24684313",
     "owner": "language",
-    "family": "Sparse array presence",
+    "family": "Indexed extension",
     "reason": "adamic: /tmp/library-array-sources/built-ins/Array/prototype/lastIndexOf/15.4.4.15-8-9.js.ts:99:1: stage 0 can't lower Array construction followed by an indexed write outside a proven dense prefix (indexed extension, sparse presence or non-array integer properties) yet\n"
   },
   {
@@ -1879,7 +1879,7 @@
     "path": "built-ins/Array/prototype/lastIndexOf/15.4.4.15-9-1.js",
     "sourceSHA256": "fc9bb8f3dc161413fd7354c62d9868d8eece162d298f25da8af8dc72c201ce9a",
     "owner": "language",
-    "family": "Sparse array presence",
+    "family": "Indexed extension",
     "reason": "adamic: /tmp/library-array-sources/built-ins/Array/prototype/lastIndexOf/15.4.4.15-9-1.js.ts:99:1: stage 0 can't lower Array construction followed by an indexed write outside a proven dense prefix (indexed extension, sparse presence or non-array integer properties) yet\n"
   },
   {
@@ -2005,7 +2005,7 @@
     "path": "built-ins/Array/prototype/pop/S15.4.4.6_A1.2_T1.js",
     "sourceSHA256": "beb4db328da45ee0ae0be9fb84ecf6831c18fe698297bf6f0e813313babfabbb",
     "owner": "language",
-    "family": "Sparse array presence",
+    "family": "Indexed extension",
     "reason": "adamic: /tmp/library-array-sources/built-ins/Array/prototype/pop/S15.4.4.6_A1.2_T1.js.ts:117:1: stage 0 can't lower Array construction followed by an indexed write outside a proven dense prefix (indexed extension, sparse presence or non-array integer properties) yet\n"
   },
   {
@@ -2152,7 +2152,7 @@
     "path": "built-ins/Array/prototype/shift/S15.4.4.9_A1.2_T1.js",
     "sourceSHA256": "1806039da4fbbab8cce9313a264d253f76c2d2f0b57e4f1419f2c402ae93f593",
     "owner": "language",
-    "family": "Sparse array presence",
+    "family": "Indexed extension",
     "reason": "adamic: /tmp/library-array-sources/built-ins/Array/prototype/shift/S15.4.4.9_A1.2_T1.js.ts:117:1: stage 0 can't lower Array construction followed by an indexed write outside a proven dense prefix (indexed extension, sparse presence or non-array integer properties) yet\n"
   },
   {
@@ -2487,8 +2487,8 @@
   {
     "path": "built-ins/Array/prototype/sort/S15.4.4.11_A5_T1.js",
     "sourceSHA256": "62a54c0f8a8cbeab3d6df80cef0e4d05fd4d4058df6dc65bf35ac39eaad80c5f",
-    "owner": "language",
-    "family": "Non-numeric comparator result",
+    "owner": "array-library",
+    "family": "Never-returning sort comparator",
     "reason": "adamic: /tmp/library-array-sources/built-ins/Array/prototype/sort/S15.4.4.11_A5_T1.js.ts:103:10: stage 0 can't lower a comparator that doesn't return a number yet\n"
   },
   {
@@ -2670,7 +2670,7 @@
     "path": "built-ins/Array/prototype/toString/S15.4.4.2_A1_T1.js",
     "sourceSHA256": "848a0c106c4556fddd16db222d18c40b8fa9621d0583b97275dc64fb08ae9d68",
     "owner": "language",
-    "family": "Sparse array presence",
+    "family": "Indexed extension",
     "reason": "adamic: /tmp/library-array-sources/built-ins/Array/prototype/toString/S15.4.4.2_A1_T1.js.ts:108:1: stage 0 can't lower Array construction followed by an indexed write outside a proven dense prefix (indexed extension, sparse presence or non-array integer properties) yet\n"
   },
   {
