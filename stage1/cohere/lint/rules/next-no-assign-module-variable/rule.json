@@ -1,0 +1,13 @@
+{
+  "name": "@next/next/no-assign-module-variable",
+  "kinds": [
+    "VariableStatement"
+  ],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleModuleVariable",
+  "upstreamPackage": "next",
+  "upstreamTest": "TestNoAssignModuleVariable"
+}

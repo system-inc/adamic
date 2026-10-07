@@ -1,0 +1,6 @@
+{
+  "name": "module_declaration_suppressed",
+  "file": "rule.a",
+  "from": "name.text === 'module'",
+  "to": "name.text === 'modules'"
+}
