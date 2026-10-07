@@ -196,3 +196,11 @@ runtime checks pass. Cross-file context remains blocked by the full-graph
 shared parser.ts:41:20 constructor refusal, while its standalone adapter runs.
 The context rule remains incomplete, not parked; no new rule was claimed.
 See wave16_seventh/AREA_D65_LANDING.md and area-d65 evidence.
+
+Current-main landing: rebased onto area/stage1-lint b84a9d931, which includes
+main c7991b900. All fifteen previous ports re-green in 431.349s; the new
+60-command gate and five filtered uncached compiler oracles pass with no
+selected skips. The full 17-check repository gate was not run. Cross-file
+context still refuses in the full graph at shared parser.ts:41:20, while its
+standalone adapter succeeds. It remains incomplete, not parked; no new claims.
+See wave16_seventh/AREA_B84_LANDING.md and area-b84 evidence.
