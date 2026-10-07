@@ -61,3 +61,30 @@ source/artifact/idempotence/owner mutants, stock checker brand mismatch mutant
 (TS2322), and API baseline mutant were all caught. Replay of the full adapter
 on 10+30 sources with the three previous helper edits undone reproduced every
 compiler source and the exact API exception; its second pass removed zero.
+
+## Enum display reflection
+
+All 23 sites applied next. formatEnum, getEnumMembers and the cache key use
+Record<string, string | number>, matching forward numeric members and reverse
+string names. Namespace casts project only the actual enum field being read;
+they do not falsely claim every namespace export is an enum or directly read
+const enums as a value in typespace. FileIncludeKind uses its numeric reverse
+map. All actual compiler call sites supply these numeric enums; test-runner
+call sites were inspected and likewise supply ScriptTarget/JSDocParsingMode.
+The existing typeof value === number filter is preserved. No unknown, inserted
+narrowing, runtime statement, callback implementation or host-input edit occurs.
+
+Census 171 -> 148, zero new consumer errors, all 10 emitted JavaScript files
+identical. The only changed declarations are debug.d.ts and
+typescript.internal.d.ts, with precisely formatEnum's enumObject parameter
+changed. Public API reference unchanged from the brand class. The first Map
+AST-parent assumption was rejected before writes; parsing showed NewExpression,
+which is now required by the plan. Type-only positions are checked by the AST
+and the independent source reconstruction.
+
+Full combined-tree oracle: 106,367 passing, zero failing/pending, empty
+baseline.diff, 225.780 seconds. Artifact/census/source/API/idempotence/owner
+mutants are caught; an enumObject Boolean-map mutant produces stock TS2345.
+The real API reference mutant causes one failing test and one baseline diff,
+then exact restoration and zero remaining differences. The earlier brand
+audit and consumer limitations still apply. See evidence/enum-display.

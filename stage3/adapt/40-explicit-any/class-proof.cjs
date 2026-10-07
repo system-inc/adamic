@@ -13,16 +13,21 @@ function enclosing(node) {
 function declarationProjection(text, contracts) {
     const src=ts.createSourceFile('api.d.ts',text,ts.ScriptTarget.Latest,true), edits=[];
     function visit(n) {
-        if ((ts.isPropertyDeclaration(n)||ts.isPropertySignature(n))&&n.type?.kind===ts.SyntaxKind.AnyKeyword&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) edits.push([n.type.getStart(src),n.type.end]);
+        if (((ts.isPropertyDeclaration(n)||ts.isPropertySignature(n))&&className==='brands'||ts.isParameter(n)&&className==='enum-display')&&n.type?.kind===ts.SyntaxKind.AnyKeyword&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) edits.push([n.type.getStart(src),n.type.end]);
         ts.forEachChild(n,visit);
     }
     visit(src);
-    for(const [a,b] of edits.sort((a,b)=>b[0]-a[0]))text=text.slice(0,a)+'undefined'+text.slice(b);
+    for(const [a,b] of edits.sort((a,b)=>b[0]-a[0]))text=text.slice(0,a)+(className==='brands'?'undefined':'Record<string, string | number>')+text.slice(b);
     return text;
 }
 function expectedSource(text,file) {
     const lines=text.split('\n');
     for(const r of rules.filter(r=>r.file===file)) {
+        if(className==='enum-display') {
+            assert.equal(lines[r.line-1].replace(/\r$/,''),r.originalLine,'independent enum owner reconstruction');
+            const at=lines[r.line-1].indexOf('any',r.column-1);assert.equal(at,r.column-1);
+            lines[r.line-1]=lines[r.line-1].slice(0,at)+r.replacement+lines[r.line-1].slice(at+3);continue;
+        }
         const key=r.key.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
         const expression=new RegExp('('+ (r.key.startsWith(' ')?'"'+key+'"':key) +'\\??:\\s*)any\\b','g');
         let count=0;
@@ -51,6 +56,7 @@ fs.mkdirSync(evidence,{recursive:true});
 const statePath=path.join(evidence,'state-before.json');
 const api=path.join(tree,'tests/baselines/reference/api/typescript.d.ts');
 if(mode==='before') {
+    if(className==='brands') {
     const keys=new Set(rules.map(r=>r.key));
     function audit(text,file) {
         const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true);let declarations=0;
@@ -69,10 +75,12 @@ if(mode==='before') {
     for(const f of walk(path.join(tree,'src')).filter(f=>f.endsWith('.ts'))) {markerDeclarations+=audit(fs.readFileSync(f,'utf8'),f);filesAudited++;}
     assert.throws(()=>audit('obj.__pathBrand;','real-reference-mutant.ts'),/runtime marker reference/);
     fs.writeFileSync(path.join(evidence,'marker-audit.json'),JSON.stringify({filesAudited,markerDeclarations,runtimeReferences:0,mutant:'added marker property read caught'},null,2)+'\n');
+    }
     const state=snapshot();
     state.reference=fs.readFileSync(api,'utf8');state.contracts=[];
-    for(const r of rules){const src=ts.createSourceFile(r.file,state.texts[r.file],ts.ScriptTarget.Latest,true);function visit(n){if((ts.isPropertyDeclaration(n)||ts.isPropertySignature(n))&&n.name.text===r.key&&src.getLineAndCharacterOfPosition(n.getStart(src)).line+1===r.line)state.contracts.push({key:r.key,owner:enclosing(n)});ts.forEachChild(n,visit);}visit(src);}
-    assert.equal(state.contracts.length,rules.length);
+    if(className==='enum-display')state.contracts=[{owner:'formatEnum',key:'enumObject'}];
+    else for(const r of rules){const src=ts.createSourceFile(r.file,state.texts[r.file],ts.ScriptTarget.Latest,true);function visit(n){if((ts.isPropertyDeclaration(n)||ts.isPropertySignature(n))&&n.name.text===r.key&&src.getLineAndCharacterOfPosition(n.getStart(src)).line+1===r.line)state.contracts.push({key:r.key,owner:enclosing(n)});ts.forEachChild(n,visit);}visit(src);}
+    assert.equal(state.contracts.length,className==='brands'?rules.length:1);
     fs.writeFileSync(statePath,JSON.stringify(state));
     const {texts,declarations,reference,contracts,...summary}=state;
     fs.writeFileSync(path.join(evidence,'before.json'),JSON.stringify({...summary,contracts},null,2)+'\n');
@@ -110,13 +118,20 @@ if(mode==='before') {
     killed('census dropped site',()=>assert.equal(before.census.length-(after.census.length-1),rules.length));
     killed('unrelated API edit',()=>assert.equal(declarationProjection(before.reference,before.contracts)+'\ntype Unreviewed = string;\n',fs.readFileSync(api,'utf8')));
     killed('idempotence changed byte',()=>assert.equal(after.texts[first.file]+'\n',fs.readFileSync(path.join(tree,first.file),'utf8')));
-    const bad=before.texts[first.file].replace('__incrementalBuildInfoFileIdBrand: any','__incrementalBuildInfoFileIdBrand: string');killed('unreviewed owner type',()=>require('./classes.cjs').plan(bad,first.file));
+    if(className==='brands'){const bad=before.texts[first.file].replace('__incrementalBuildInfoFileIdBrand: any','__incrementalBuildInfoFileIdBrand: string');killed('unreviewed owner type',()=>require('./classes.cjs').plan(bad,first.file));}
+    else {const bad=before.texts[first.file].replace(first.originalLine,first.originalLine.replace('enumObject: any','enumObject: string'));killed('unreviewed enum owner type',()=>require('./classes.cjs').planEnum(bad,first.file));}
     const configPath=path.join(tree,'src/compiler/tsconfig.json');
     const config=ts.parseJsonConfigFileContent(ts.readConfigFile(configPath,ts.sys.readFile).config,ts.sys,path.dirname(configPath),undefined,configPath);
     const host=ts.createCompilerHost(config.options), originalRead=host.readFile;
-    host.readFile=file=>{const text=originalRead(file);return file===path.join(tree,'src/compiler/checker.ts')?text.replace('declare _symbolLinksBrand: undefined;','declare _symbolLinksBrand: string;'):text;};
-    assert(ts.getPreEmitDiagnostics(ts.createProgram(config.fileNames,config.options,host)).some(d=>d.code===2322),'checker catches conflicting brand implementation');
-    mutants.push('real brand implementation mismatch caught by stock checker TS2322');
+    host.readFile=file=>{
+        const text=originalRead(file);
+        if(className==='brands'&&file===path.join(tree,'src/compiler/checker.ts'))return text.replace('declare _symbolLinksBrand: undefined;','declare _symbolLinksBrand: string;');
+        if(className==='enum-display'&&file===path.join(tree,'src/compiler/debug.ts'))return text.replace('enumObject: Record<string, string | number>','enumObject: Record<string, boolean>');
+        return text;
+    };
+    const mutantCode=className==='brands'?2322:2345;
+    assert(ts.getPreEmitDiagnostics(ts.createProgram(config.fileNames,config.options,host)).some(d=>d.code===mutantCode),'checker catches conflicting class contract');
+    mutants.push(className==='brands'?'real brand implementation mismatch caught by stock checker TS2322':'real enum map domain mutation caught by stock checker TS2345');
     const proof={class:className,before:before.census.length,after:after.census.length,removed:rules.length,jsFiles:Object.keys(after.js).length,declarationFiles:Object.keys(after.declarations).length,changedDeclarations,consumerErrors,idempotent:true,mutants};
     fs.writeFileSync(path.join(evidence,'proof.json'),JSON.stringify(proof,null,2)+'\n');console.log(JSON.stringify(proof,null,2));
 } else throw Error('unknown proof mode');

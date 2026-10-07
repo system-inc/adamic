@@ -62,3 +62,37 @@ function apply(tree) {
     console.log(JSON.stringify({class:'brands', removed: plans.reduce((n,p) => n+p.removed,0)}));
 }
 module.exports = {plan,apply,owner};
+
+function planEnum(text,file) {
+    const selected=(rules['enum-display']||[]).filter(r=>r.file===file);
+    const source=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true), lines=text.split('\n');
+    let removed=0;
+    for(const r of selected) {
+        const before=r.originalLine, after=before.slice(0,r.column-1)+r.replacement+before.slice(r.column+2);
+        const current=lines[r.line-1]?.replace(/\r$/,'');
+        if(current===after)continue;
+        if(current!==before)throw Error('unreviewed enum owner/use: '+r.id);
+        let matched=false;
+        function visit(n) {
+            if(n.kind===ts.SyntaxKind.AnyKeyword) {
+                const p=source.getLineAndCharacterOfPosition(n.getStart(source));
+                if(p.line+1===r.line&&p.character+1===r.column) {
+                    if(ts.SyntaxKind[n.parent.kind]!==r.parentKind)throw Error('enum edit is not its reviewed type position');
+                    matched=true;
+                }
+            }
+            ts.forEachChild(n,visit);
+        }
+        visit(source);if(!matched)throw Error('missing reviewed enum any');
+        lines[r.line-1]=after+(lines[r.line-1].endsWith('\r')?'\r':'');removed++;
+    }
+    return {text:lines.join('\n'),removed};
+}
+function applyEnums(tree) {
+    const plans=[...new Set((rules['enum-display']||[]).map(r=>r.file))].map(file=>{const name=path.join(tree,file),before=fs.readFileSync(name,'utf8');return{name,before,...planEnum(before,file)};});
+    for(const p of plans)if(fs.readFileSync(p.name,'utf8')!==p.before)throw Error('concurrent enum source change');
+    for(const p of plans)if(p.before!==p.text)fs.writeFileSync(p.name,p.text);
+    console.log(JSON.stringify({class:'enum-display',removed:plans.reduce((n,p)=>n+p.removed,0)}));
+}
+module.exports.planEnum=planEnum;
+module.exports.applyEnums=applyEnums;

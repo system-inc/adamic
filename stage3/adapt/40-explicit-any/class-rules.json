@@ -252,5 +252,214 @@
       "line": 4289,
       "replacement": "undefined"
     }
+  ],
+  "enum-display": [
+    {
+      "id": 69,
+      "file": "src/compiler/debug.ts",
+      "line": 389,
+      "column": 55,
+      "originalLine": "    export function formatEnum(value = 0, enumObject: any, isFlags?: boolean): string {",
+      "replacement": "Record<string, string | number>",
+      "parentKind": "Parameter"
+    },
+    {
+      "id": 70,
+      "file": "src/compiler/debug.ts",
+      "line": 420,
+      "column": 37,
+      "originalLine": "    const enumMemberCache = new Map<any, SortedReadonlyArray<[number, string]>>();",
+      "replacement": "Record<string, string | number>",
+      "parentKind": "NewExpression"
+    },
+    {
+      "id": 71,
+      "file": "src/compiler/debug.ts",
+      "line": 422,
+      "column": 41,
+      "originalLine": "    function getEnumMembers(enumObject: any) {",
+      "replacement": "Record<string, string | number>",
+      "parentKind": "Parameter"
+    },
+    {
+      "id": 72,
+      "file": "src/compiler/debug.ts",
+      "line": 445,
+      "column": 40,
+      "originalLine": "        return formatEnum(kind, (ts as any).SyntaxKind, /*isFlags*/ false);",
+      "replacement": "Record<\"SyntaxKind\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 73,
+      "file": "src/compiler/debug.ts",
+      "line": 449,
+      "column": 40,
+      "originalLine": "        return formatEnum(kind, (ts as any).SnippetKind, /*isFlags*/ false);",
+      "replacement": "Record<\"SnippetKind\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 74,
+      "file": "src/compiler/debug.ts",
+      "line": 453,
+      "column": 40,
+      "originalLine": "        return formatEnum(kind, (ts as any).ScriptKind, /*isFlags*/ false);",
+      "replacement": "Record<\"ScriptKind\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 75,
+      "file": "src/compiler/debug.ts",
+      "line": 457,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).NodeFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"NodeFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 76,
+      "file": "src/compiler/debug.ts",
+      "line": 461,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).NodeCheckFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"NodeCheckFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 77,
+      "file": "src/compiler/debug.ts",
+      "line": 465,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).ModifierFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"ModifierFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 78,
+      "file": "src/compiler/debug.ts",
+      "line": 469,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).TransformFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"TransformFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 79,
+      "file": "src/compiler/debug.ts",
+      "line": 473,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).EmitFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"EmitFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 80,
+      "file": "src/compiler/debug.ts",
+      "line": 477,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).SymbolFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"SymbolFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 81,
+      "file": "src/compiler/debug.ts",
+      "line": 481,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).TypeFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"TypeFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 82,
+      "file": "src/compiler/debug.ts",
+      "line": 485,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).SignatureFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"SignatureFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 83,
+      "file": "src/compiler/debug.ts",
+      "line": 489,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).ObjectFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"ObjectFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 84,
+      "file": "src/compiler/debug.ts",
+      "line": 493,
+      "column": 41,
+      "originalLine": "        return formatEnum(flags, (ts as any).FlowFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"FlowFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 85,
+      "file": "src/compiler/debug.ts",
+      "line": 497,
+      "column": 42,
+      "originalLine": "        return formatEnum(result, (ts as any).RelationComparisonResult, /*isFlags*/ true);",
+      "replacement": "Record<\"RelationComparisonResult\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 86,
+      "file": "src/compiler/debug.ts",
+      "line": 501,
+      "column": 40,
+      "originalLine": "        return formatEnum(mode, (ts as any).CheckMode, /*isFlags*/ true);",
+      "replacement": "Record<\"CheckMode\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 87,
+      "file": "src/compiler/debug.ts",
+      "line": 505,
+      "column": 40,
+      "originalLine": "        return formatEnum(mode, (ts as any).SignatureCheckMode, /*isFlags*/ true);",
+      "replacement": "Record<\"SignatureCheckMode\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 88,
+      "file": "src/compiler/debug.ts",
+      "line": 509,
+      "column": 41,
+      "originalLine": "        return formatEnum(facts, (ts as any).TypeFacts, /*isFlags*/ true);",
+      "replacement": "Record<\"TypeFacts\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 89,
+      "file": "src/compiler/debug.ts",
+      "line": 540,
+      "column": 62,
+      "originalLine": "                        return formatEnum(this.flags, (ts as any).FlowFlags, /*isFlags*/ true);",
+      "replacement": "Record<\"FlowFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 91,
+      "file": "src/compiler/emitter.ts",
+      "line": 5790,
+      "column": 147,
+      "originalLine": "        return Debug.fail(`Unsupported GeneratedIdentifierKind: ${Debug.formatEnum(autoGenerate.flags & GeneratedIdentifierFlags.KindMask, (ts as any).GeneratedIdentifierFlags, /*isFlags*/ true)}.`);",
+      "replacement": "Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>",
+      "parentKind": "AsExpression"
+    },
+    {
+      "id": 106,
+      "file": "src/compiler/program.ts",
+      "line": 3526,
+      "column": 50,
+      "originalLine": "            fileIncludeKind: (FileIncludeKind as any)[reason.kind],",
+      "replacement": "Record<number, string>",
+      "parentKind": "AsExpression"
+    }
   ]
 }

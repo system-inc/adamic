@@ -161,3 +161,12 @@ Brand-class full oracle: 106,367 passing, zero failing/pending, baseline.diff
 0 bytes. Real API-reference mutant: one failed test and one baseline diff,
 then exact restoration and zero remaining baseline differences. See
 evidence/brands/oracle-report.json and baseline-restoration.json.
+
+## Type-only enum display class
+
+Applied 23 real enum-map/namespace projection types after the brand commit.
+Census 171 -> 148; JavaScript identical; zero new consumers; two internal
+declaration changes precisely explained; public API unchanged. Full oracle
+106,367 passing, zero failures, empty baseline.diff. The enum-domain checker
+mutant and real API-baseline mutant both fail their dedicated checks. Evidence
+is in evidence/enum-display and current progress is in PROGRESS.md.

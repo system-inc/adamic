@@ -1,6 +1,6 @@
 # Explicit any owner adaptation (partial)
 
-Current progress: 39 tokens removed, 171 left. See [PROGRESS.md](PROGRESS.md)
+Current progress: 62 tokens removed, 148 left. See [PROGRESS.md](PROGRESS.md)
 for the combined 10+30+40 proof and reproduction. The section below records
 the original three-owner proof and its historical commands.
 
