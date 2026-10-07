@@ -144,3 +144,6 @@ Latest continuation status: all three non-analysis rules are fully ported and na
 
 
 After the completion push d304ac858, a fresh all-origin-head audit inspected 605 refs, 33 distinct claim blobs and the 197-rule combined ranking. The 25 ranked base/main ports and 172 claimed remaining rules exhaust the ranking. Previously available React candidates, require-atomic-updates and valid-typeof have explicit claims on other waves. Nothing unclaimed remains; no new claim is taken. Main remains 39638d9e2. All own completed rules are native-green and pushed on that base; three React claims remain PARKED.
+
+
+Landing on the requested shared-harness integration branch: rebased cleanly onto origin/area/stage1-lint d65a8f931, which includes current main 39638d9e2. All nine completed native ports pass fresh full Go-byte controls/corpora, sanitizers, mutants and released handles. Incoming shared/allocator changes are retained without editing them. The former JSX parser reproduction now passes, but this does not certify the three PARKED React implementations; their parking status remains under the user's instruction. Shared RuleContext lacks checker/program/source-path attachment, so shared registry integration remains with its worker. No new claim is made. Latest commands, timing and evidence are in wave_10_leaf/README.md and evidence/landing-area.

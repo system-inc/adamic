@@ -1,8 +1,8 @@
-Six completed wave-10 ports are rebased and native-green on main f8013f0b.
-Rebased source tip bbb91e53; previous pushed tip c4964691; branch codex/typeaware-wave-10.
-Fresh builds, six byte-oracles, both frozen corpora, sanitizers, bridge tests, vet and filtered uncached Node pass.
-All six native decision mutants and both released-registry mutants are caught; no React mutant is claimed.
-Three React claims remain blocked by shared JSX and numeric-kind APIs; no new claims or shared edits.
+Nine completed wave-10 ports are rebased and native-green on origin/area/stage1-lint d65a8f931.
+Rebased source tip 9683d8a05; previous pushed tip 3001f75f9; branch codex/typeaware-wave-10.
+All completed-rule byte-oracles, sanitizers, mutants and release checks pass; see ../wave_10_leaf/README.md.
+The old JSX parser reproduction now succeeds; its historical failure below is superseded.
+Three React claims remain PARKED under the user instruction; no full React rule implementation or mutant is certified here.
 
 Claimed rules, in the by-volume order (each combined volume zero):
 
@@ -219,3 +219,6 @@ Ratios are native slowdowns, not speedups.
 | timeout-controls | 0.181971 | 0.040229 | 4.523x |
 | timeout-compiler | 1.704854 | 0.296843 | 5.743x |
 | timeout-repository | 0.281035 | 0.135875 | 2.068x |
+
+
+Latest parser observation on the lint integration base: /workspace/wave-10-area-parser accepts the exact earlier TSX witness with exit 0 and empty stderr, emitting JsxSelfClosingElement. Canonical named kinds replace the historical numeric requirement. These old blockers are closed; this landing pass does not claim a React port. Evidence is in ../wave_10_leaf/evidence/landing-area/jsx.stdout.gz and jsx.stderr.gz.

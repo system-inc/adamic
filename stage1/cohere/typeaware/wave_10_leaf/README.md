@@ -1,5 +1,5 @@
 Completed native require-await contract decisions beside symbol-description and structure/react-hook-no-any-type.
-Implementation 9ab85036b is rebased onto origin/main 39638d9e2; all nine completed ports are oracle-green.
+The branch is rebased onto origin/area/stage1-lint d65a8f931 and all nine completed ports are oracle-green.
 Three live rules match full Go finding/fix/suggestion bytes on controls and compiler77/repository287; require-await also matches 87 upstream sources.
 Native mutants, released-handle rejection, ASan/UBSan, raw-question tests, source lint and the focused uncached Node oracle pass.
 Shared registry/context integration and emitted-JavaScript comparison of the live lint runner remain outside this unit; the three React claims stay PARKED.
@@ -375,3 +375,32 @@ Evidence is preserved in evidence/require-await-complete. Full repository go tes
 Completion and all landing evidence were pushed as d304ac858 to codex/typeaware-wave-10 before this audit; ls-remote confirmed that exact tip. A fresh explicit all-head fetch inspected 605 origin refs and 33 distinct Markdown claim blobs. The frozen combined VOLUME_REPORT ranking has 197 checker-dependent rules: 25 are existing ranked base/main ports, and all 172 others are mentioned in claims. No unclaimed ranked rule remains, so no new reservation is made.
 
 The previously available final fifteen names were individually checked against claim lines: React candidates have explicit reservations on other waves; require-atomic-updates is reserved by wave-01/wave-08; valid-typeof is reserved by wave-05/wave-19/wave-24/wave-27. The audit preserves the exact main sha 39638d9e2 and port source paths in post-completion-availability.json. Shared registry wiring and the live lint runner's emitted-JavaScript comparison remain the exact integration limitations stated above.
+
+## Landing on the shared lint integration branch
+
+The requested rebase onto origin/area/stage1-lint is clean. The fetched tip is d65a8f931c98655936ae04c6899f38f14862b73e, beyond the user-named 50a5f105 merge. It contains current main 39638d9e2. Rebased implementation is 1e4aab909; source tip before this evidence commit is 9683d8a05. Nothing in the nine completed rules changed. Incoming registry, suggestion model, JSX parser and allocator/string-runtime changes are retained. No shared or protected source file was edited during this landing unit. The Go bridge sources are unchanged by the integration base, so the checked normal/sanitized C archives remain valid; stage 0 was rebuilt as /workspace/wave-10-area-stage0.
+
+Commands are the previous landing commands with the fresh stage0 and /tmp/wave10-area-* logs. live_validate.py uses --artifacts /workspace/wave-10-area-live; validate_reporting.py uses /workspace/wave-10-area-reporting. TestWave10AgreementAndMutants passes in 125.459s, TestTimeoutAgreementAndMutants in 122.547s and TestLandingNativeRulesAndMutants in 280.999s. Normal/sanitized controls and compiler77/repository287 match full findings, fixes and suggestions. Original-suite repository output now contains 2 findings and 19044 bytes, rather than the earlier 1/18863: these are changed source contents on the same frozen root list after integration, and both authorities agree. Compiler output remains 9 findings/8346 bytes. Timeout, process and blocking corpus outputs remain 5318/18485 bytes with zero findings.
+
+All three latest live rules pass every control/corpus comparison, ASan/UBSan, released-handle panic 70, native decision mutants and alternating benchmark output equality. Symbol controls remain 2114 bytes, hook 5902, require-await 4866, and require-await's 87 upstream sources 40041. Compiler/repository per-rule outputs remain 5318/18485 bytes. Native mutants are caught only by Go comparison at bytes symbol=66, hook=70, await-using=2266, wrong-union-flag=34397 and generic-self-inference=35762. The original six mutants are caught at loop=548, redundant=4569, includes=8447, timeout=51, process=114 and blocking=13904. Both released-registry mutants are caught by requiring panic 70. The reporting gate matches 20215 bytes normally/sanitized and kills its range mutant at byte 62.
+
+Bridge tests pass in 0.335s, bridge vet is empty, owned source lint reports 0. go run ./cmd/lint-registry succeeds and lists all 15 incoming registered rules; generated output stays untracked. The focused uncached RegExp Node/native/emitted-JavaScript gate passes in 14.795s, including its one-byte mutant; native misses=10, Node misses=7, zero hits. Setup reports Go, clang, Node and submodules ready in 0s each; cache warm and total 109s; nproc=5, cpu.max=400000 100000.
+
+The exact previously parked JSX reproduction now succeeds: the freshly built shared native parser accepts const frame = <iframe /> and emits JsxSelfClosingElement. The former parser and invented numeric-kind blockers are closed; canonical kind names are supported. This parser observation does not certify the three parked React rule implementations, their finding bytes or mutants. Their PARKED status is retained under the user's parking instruction; no React port is claimed here.
+
+The incoming shared RuleContext still has no checker program or source-path attachment. Connecting this owned live Context to it remains the concrete shared-registry integration gap, and no shared files are changed to conceal it. The live lint runner's emitted-JavaScript comparison and full repository go test ./... are not covered. Detailed logs and outputs are in evidence/landing-area.
+
+| Rule / corpus | Native seconds | Go seconds | Native / Go |
+| --- | ---: | ---: | ---: |
+| symbol-controls | 0.056745 | 0.037905 | 1.497x |
+| symbol-compiler | 2.044455 | 0.464823 | 4.398x |
+| symbol-repository | 0.272406 | 0.215180 | 1.266x |
+| hook-controls | 0.023760 | 0.029407 | 0.808x |
+| hook-compiler | 1.568316 | 0.420295 | 3.731x |
+| hook-repository | 0.419808 | 0.239600 | 1.752x |
+| await-controls | 0.050397 | 0.051979 | 0.970x |
+| await-compiler | 2.388200 | 0.474994 | 5.028x |
+| await-repository | 0.398284 | 0.211842 | 1.880x |
+| await-upstream | 0.054693 | 0.066230 | 0.826x |
+
+These are three alternating whole-process medians under concurrent gate load, not evidence of a performance change.
