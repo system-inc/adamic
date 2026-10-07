@@ -40,3 +40,21 @@ Main tip: `ef3d907e`; bridge tip: `5afbdb83`. These are full-ranking positions
 claimed or ported on the checked refs. This update precedes implementation.
 
 No shared registration generator or existing shared test harness will be edited.
+
+## Third batch after all six prior ports were pushed
+
+Previous batch completed, tested and pushed in `cce6c361a94ed730f5a743ce84deab9f91142b58`.
+
+Next three eligible checker-dependent rules:
+
+1. `prefer-promise-reject-errors`
+2. `prefer-regex-literals`
+3. `prefer-rest-params`
+
+Fetched 356 origin refs on October 7, 2026, inspected 33 distinct Markdown
+claim blobs, and excluded ports on main and the bridge branch and all claims
+on every origin branch. Full-ranking positions 158, 159 and 160, each zero
+findings in both frozen populations. Main: `ef3d907ecdc4c771b016f7d9c52372def057a340`.
+Bridge: `5afbdb83da2ed7ad9815657cd3f6ececd5294bf6`. This update precedes implementation.
+
+No shared registration generator or existing shared test harness will be edited.
