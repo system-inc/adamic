@@ -1,5 +1,6 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from '../../options_json.ts';
+import { unescapeStringLiteralText, type EntityResult } from './unescape_string_literal_text.a';
 import { hexValue } from './hex_value.a';
 const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
 if(input.kind === 'Error') { panic(input.message); }
@@ -8,3 +9,24 @@ const root = json.parse();
 if(root < 0) { panic(json.error); }
 for(const item of json.node(json.field(root, 'points')).children) { console.log(`${hexValue(json.node(item).number)}`); }
 for(let point = 0; point <= 0x10ffff; point++) { console.log(`${hexValue(point)}`); }
+
+function render(text: string): string {
+    let result = '';
+    for(let index = 0; index < text.length; index++) { result += `${text.charCodeAt(index)},`; }
+    return result;
+}
+const entities = new Map<string, EntityResult>();
+for(const item of json.node(json.field(root, 'entities')).children) {
+    const body = json.node(json.field(item, 'body')).text;
+    const text = json.node(json.field(item, 'text')).text;
+    const ok = json.node(json.field(item, 'ok')).text === 'true';
+    entities.set(body, { text, ok });
+}
+for(const item of json.node(json.field(root, 'texts')).children) {
+    const calls: string[] = [];
+    const output = unescapeStringLiteralText(json.node(item).text, (body: string): EntityResult => {
+        calls.push(render(body));
+        return entities.get(body) ?? panic('missing real Go entity observation');
+    });
+    console.log(`${render(output)}:${calls.join('|')}`);
+}
