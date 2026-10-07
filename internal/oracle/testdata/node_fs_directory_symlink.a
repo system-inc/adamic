@@ -22,6 +22,7 @@ console.log(readdirSync(root, {withFileTypes: true}).filter(entry => entry.isSym
 try { symlinkSync('target', root + '/default'); } catch (error) { if (error instanceof Error) failure(error); }
 try { symlinkSync('target', root + '/missing/link'); } catch (error) { if (error instanceof Error) failure(error); }
 try { symlinkSync('', root + '/empty'); } catch (error) { if (error instanceof Error) failure(error); }
+try { unlinkSync(root + '/empty'); } catch {}
 try { symlinkSync('a\0b', root + '/nul'); } catch (error) { if (error instanceof Error) failure(error); }
 try { symlinkSync('target', 'a\0b'); } catch (error) { if (error instanceof Error) failure(error); }
 try { symlinkSync('a\0b', 'c\0d'); } catch (error) { if (error instanceof Error) failure(error); }
