@@ -91,3 +91,5 @@ The 41eb6eab2 dedup ledger removes nine losing copies from this unit. Current sc
 Both owned branches now use area 7481e032 and main 39638d9e. AREA_REPORT.md records unmodified shared-harness witnesses, nine rule semantic mutants, regex provenance and current failures. Shared registration is available; top-level await remains refused and JSX fixed-source reparsing loses its script kind. The clean JSX callback itself now matches Go. No new helper claim follows these measured blockers.
 
 Latest area is d65a8f931 after the runtime profile landing. AREA_REPORT.md records the fresh 172.166s shared witness/active-mutant run and empty passing vet, plus the unchanged frontend and fix-reparse blockers. Helper branch is pushed at e053989fb on the same area. No new claim.
+
+Required-input follow-up: the actual shared TestCompilerAndStage1Agree now passed with the real pinned TypeScript sources supplied, no skip: 364 files and 20,648,441 matching Go bytes on all three modes. AREA_REPORT.md retains the command and complete log. This supersedes older broad-corpus exclusions but does not close the upstream top-level-await or JSX fix-reparse blockers. No new claim.

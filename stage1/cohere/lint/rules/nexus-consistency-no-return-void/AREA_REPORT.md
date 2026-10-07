@@ -1,8 +1,8 @@
 Built: eight retained rule ports rebased onto landed area d65a8f931; return-void uses JS RegExp literals and raw regex/JSX controls.
 Commits: this latest-area evidence follows the owned rebase; helper branch is pushed at e053989fb on the same area and main 39638d9e.
-Commands: latest supported shared witnesses PASS (71,769 Go bytes), eight active rule mutants PASS and vet PASS; uncached lastIndexOf oracle PASS.
+Commands: 364 compiler/stage1 files PASS with real inputs (20,648,441 Go bytes); supported witnesses, eight active mutants, vet and uncached lastIndexOf oracle PASS.
 Mutants: all eight active rule mutants and twelve helper mutants compile, finish cleanly and are caught on source Node, emitted JavaScript and sanitized native; the former braces mutant was also caught on area 7481e032.
-Not covered: complete upstream parity, current broad compiler/stage1 corpus, new throughput or full gate; top-level await and JSX fixed-source reparsing block landing, so no new helper claim.
+Not covered: complete upstream-fixture parity, the other required correctness packages, new throughput or full gate; top-level await and JSX fixed-source reparsing block landing, so no new helper claim.
 
 ## Landed harness and ledger
 
@@ -48,3 +48,17 @@ The latest shared command is go test ./stage1/cohere/lint -run '^(TestOwnedWitne
 The fresh uncached TestRuntimeLastIndexOfMatchesNode passed in 5.963s: Node, emitted JavaScript, native release and ASan/UBSan agree on 758 output bytes; native cache hits=0 misses=3, Node hits=0 misses=2. This is an inherited runtime check, not a newly claimed mutant. All twelve helper mutants and 4,470 cases were rerun on this runtime and passed. The final full upstream rule gate and failing JSX fix control above were run on 7481e032; the subsequent area change modifies native runtime code, not the frontend or shared fixed-source parser. Those source-Node failures therefore remain blockers rather than evidence of a new complete green run.
 
 Latest combined shared run exited zero in 172.166s: active mutants 150.98s and supported witness comparison 21.17s, with 71,769 matching Go bytes. Fresh rule/registry vet exited zero with empty output. This is bounded supported coverage; the full upstream failure is not converted into a passing claim. Both branches are on current fetched area d65a8f931 and main 39638d9e. No new work is claimed.
+
+## Required correctness inputs follow-up
+
+Fetched every origin head again. Main 39638d9e and area d65a8f931 are unchanged; both owned branches contain them and both worktrees are clean. No new mandatory-skip gate implementation has appeared in these refs. The instruction to supply correctness inputs is honored directly for the lint compiler/stage1 check, whose existing test otherwise skips without ADAMIC_TYPESCRIPT_SOURCE. No test or shared file is edited, disabled, relaxed or deleted.
+
+Executed from the rebased rule worktree, with the logged setup environment sourced:
+
+```
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 go test ./stage1/cohere/lint -run '^TestCompilerAndStage1Agree$' -count=1 -v -timeout=20m > /tmp/wave13-required-compiler-stage1.log 2>&1
+```
+
+The actual TypeScript checkout pin is 050880ce59e30b356b686bd3144efe24f875ebc8. The test ran, with no skip: 364 compiler and stage1 files, Go/source Node/emitted JavaScript/ASan-UBSan native identical on 20,648,441 output bytes, PASS in 84.933s. Complete output is retained as evidence/parking/required-compiler-stage1.log. This supersedes the earlier limitation about lacking a fresh broad corpus run on this area. No rule implementation changed, so the latest eight active rule mutant and twelve helper mutant results remain applicable.
+
+This check's all-rule source corpus is distinct from the failing upstream-fixture corpus. It does not cover or repair the Go-valid top-level-await delay fixture or JSX fixed-source reparsing. Those remain named with exact inputs and failure logs above, and the branch is not declared fully green or landing-ready. The other input-dependent stage1 correctness packages and full gate were not run; they are not claimed passing or silently skipped. No new helper claim follows the landing cap.

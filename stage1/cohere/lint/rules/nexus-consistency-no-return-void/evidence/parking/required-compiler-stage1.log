@@ -1,0 +1,6 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:466: compiler and stage1: 364 files
+    lint_test.go:467: Go, Node, emitted JavaScript, native identical: 20648441 bytes
+--- PASS: TestCompilerAndStage1Agree (84.92s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	84.933s

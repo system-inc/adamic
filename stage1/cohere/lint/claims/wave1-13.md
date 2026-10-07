@@ -101,3 +101,5 @@ The complete shared DEDUP_LEDGER.md supersedes the historical continuation selec
 Rebased the eight retained ports onto area 7481e032 after checking its identical dedup ledger. The actual shared witness gate and semantic mutants pass, but full TestRulesAgree still refuses top-level await and a JSX fix control exposes fixed-source reparsing without JSX mode. See rules/nexus-consistency-no-return-void/AREA_REPORT.md. No new claim; this branch is not declared fully green or landing-ready.
 
 Latest area follow-up: d65a8f931 retained and rechecked, supported witnesses and all eight active mutants pass. Frontend and JSX fix-reparse blockers remain as named in AREA_REPORT.md. No additional rule or helper is claimed.
+
+Required correctness input follow-up: main and area unchanged; TestCompilerAndStage1Agree executed with the real pinned sources and passed on 364 files, 20,648,441 matching Go bytes and no skip. Upstream-fixture blockers remain. No additional claim.
