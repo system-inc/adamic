@@ -1,5 +1,0 @@
-{
-  "name": "optional chain report suppressed",
-  "from": "return this.context.node(inner).optional;",
-  "to": "return false;"
-}
