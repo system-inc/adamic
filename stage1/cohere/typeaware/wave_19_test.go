@@ -27,6 +27,7 @@ func wave19Controls() []string {
 		"class Box<T>{};const a: //before\r\n Box<string>=new Box();",
 		"declare const o:any;o['key'];o[('key')];o[((`key`))];o[true];o[false];o[null];o['1'];o['é'];o[1];o[`dynamic${1}`];",
 		"declare const o:any;o?.['key'];o['key'].next;o['key']instanceof Object;o[/*keep*/'key'];o['key'/*keep*/];o['x/*y'];o['\\u006bey'];",
+		"declare const o:any;o['key\\n'];o['key\\r'];o['key\\u2028'];o['$foo_1'];08['key'];018['key'];01['key'];5_000['key'];",
 		"5['key'];5_000['key'];0x5['key'];5.0['key'];(5)['key'];",
 		"Array();new Array;new Array();Array(1,2);new Array(1, /*keep*/ 2);Array(...[1,2]);Array(1);new Array<number>(1,2);Array?.(1,2);(Array)(1,2);",
 		"function f(Array:any){return [Array(),new Array(),Array(1,2)];} const g=(Array:any)=>new Array();",

@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"regexp"
+	"strings"
 	"testing"
 )
 
@@ -26,12 +27,16 @@ func TestWave19ThirdNumericMetadata(t *testing.T) {
 			if e != nil {
 				t.Fatal(e)
 			}
-			var metadata struct{ Kinds []int }
+			var metadata struct{ Kinds []string }
 			if e = json.Unmarshal(data, &metadata); e != nil {
 				t.Fatal(e)
 			}
-			if !reflect.DeepEqual(metadata.Kinds, row.kinds) {
-				t.Fatalf("numeric metadata differs: %v want %v", metadata.Kinds, row.kinds)
+			var names []string
+			for _, kind := range row.kinds {
+				names = append(names, strings.TrimPrefix(ast.Kind(kind).String(), "Kind"))
+			}
+			if !reflect.DeepEqual(metadata.Kinds, names) {
+				t.Fatalf("named metadata differs: %v want %v", metadata.Kinds, names)
 			}
 			data, e = os.ReadFile(filepath.Join(root, row.name, "rule.a"))
 			if e != nil {

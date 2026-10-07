@@ -7,32 +7,11 @@ export class DotNotation {
     readonly rules: Rules;
     constructor(rules: Rules) { this.rules = rules; }
     identifier(text: string, first = true): boolean {
-        if(text.length === 0) { return false; }
-        for(let at = 0; at < text.length; at++) {
-            const code = text.charCodeAt(at);
-            if(!((code >= 65 && code <= 90) || (code >= 97 && code <= 122) || code === 95 || code === 36 ||
-                ((!first || at > 0) && code >= 48 && code <= 57))) { return false; }
-        }
-        return true;
+        // Go $ is absolute end; the negative lookahead preserves it in JS.
+        return first ? /^[a-zA-Z_$][\w$]*(?![\s\S])/u.test(text) : /^[a-zA-Z0-9_$]+(?![\s\S])/u.test(text);
     }
     decimal(text: string): boolean {
-        if(text === '0') { return true; }
-        if(text.startsWith('0')) {
-            let nonOctal = false;
-            for(let at = 1; at < text.length; at++) {
-                const code = text.charCodeAt(at);
-                if(code < 48 || code > 57) { return false; }
-                if(code === 56 || code === 57) { nonOctal = true; }
-            }
-            return nonOctal;
-        }
-        if(text.charCodeAt(0) < 49 || text.charCodeAt(0) > 57) { return false; }
-        for(let at = 1; at < text.length; at++) {
-            if(text.slice(at, at + 1) === '_') { at++; }
-            const code = text.charCodeAt(at);
-            if(!Number.isFinite(code) || code < 48 || code > 57) { return false; }
-        }
-        return true;
+        return /^(?:0|0[0-7]*[89][0-9]*|[1-9](?:_?[0-9])*)(?![\s\S])/u.test(text);
     }
     comments(start: number, end: number): boolean {
         // Scan tokens so comment markers inside a string are never trivia.
