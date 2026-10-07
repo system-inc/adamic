@@ -1,0 +1,110 @@
+[
+  {
+    "name": "physical_direction_exemption_lost",
+    "rule": "structure/tailwind-no-physical-direction",
+    "backends": [
+      {
+        "backend": "Node",
+        "exit": 0,
+        "stderrBytes": 0,
+        "wantedSHA256": "f82aa3df68d0ce4b9c851c2d584139b0458c3b279314637c9fa294280882192a",
+        "gotSHA256": "1f79e724e845d5f9a2e5e59a8fd643a86c9b90e7b7f7d8fb55ee3eb80ee682bc",
+        "firstDifferentByte": 572,
+        "wantedExcerpt": "ixed\texport const c = 'flex overflow-hidden';\\u000a\ncase 10\nfixed\texport const c = 'flex ltr:mr-4';\\u000a\ncase 11\nfixed\texport const message = 'You have items left in your cart';\\u000a\ncase 12\nfixed\texport const c = 'flex mlauto';\\u000a\ncas",
+        "gotExcerpt": "ixed\texport const c = 'flex overflow-hidden';\\u000a\ncase 10\nstructure/tailwind-no-physical-direction\tuseLogicalClass\t17 32\tThe class \"ltr:mr-4\" names a physical side, so it points the same way regardless of reading direction and lays out ba"
+      },
+      {
+        "backend": "emitted",
+        "exit": 0,
+        "stderrBytes": 0,
+        "wantedSHA256": "f82aa3df68d0ce4b9c851c2d584139b0458c3b279314637c9fa294280882192a",
+        "gotSHA256": "1f79e724e845d5f9a2e5e59a8fd643a86c9b90e7b7f7d8fb55ee3eb80ee682bc",
+        "firstDifferentByte": 572,
+        "wantedExcerpt": "ixed\texport const c = 'flex overflow-hidden';\\u000a\ncase 10\nfixed\texport const c = 'flex ltr:mr-4';\\u000a\ncase 11\nfixed\texport const message = 'You have items left in your cart';\\u000a\ncase 12\nfixed\texport const c = 'flex mlauto';\\u000a\ncas",
+        "gotExcerpt": "ixed\texport const c = 'flex overflow-hidden';\\u000a\ncase 10\nstructure/tailwind-no-physical-direction\tuseLogicalClass\t17 32\tThe class \"ltr:mr-4\" names a physical side, so it points the same way regardless of reading direction and lays out ba"
+      },
+      {
+        "backend": "native",
+        "exit": 0,
+        "stderrBytes": 0,
+        "wantedSHA256": "f82aa3df68d0ce4b9c851c2d584139b0458c3b279314637c9fa294280882192a",
+        "gotSHA256": "1f79e724e845d5f9a2e5e59a8fd643a86c9b90e7b7f7d8fb55ee3eb80ee682bc",
+        "firstDifferentByte": 572,
+        "wantedExcerpt": "ixed\texport const c = 'flex overflow-hidden';\\u000a\ncase 10\nfixed\texport const c = 'flex ltr:mr-4';\\u000a\ncase 11\nfixed\texport const message = 'You have items left in your cart';\\u000a\ncase 12\nfixed\texport const c = 'flex mlauto';\\u000a\ncas",
+        "gotExcerpt": "ixed\texport const c = 'flex overflow-hidden';\\u000a\ncase 10\nstructure/tailwind-no-physical-direction\tuseLogicalClass\t17 32\tThe class \"ltr:mr-4\" names a physical side, so it points the same way regardless of reading direction and lays out ba"
+      }
+    ]
+  },
+  {
+    "name": "description_ignored",
+    "rule": "@eslint-community/eslint-comments/require-description",
+    "backends": [
+      {
+        "backend": "Node",
+        "exit": 0,
+        "stderrBytes": 0,
+        "wantedSHA256": "f82aa3df68d0ce4b9c851c2d584139b0458c3b279314637c9fa294280882192a",
+        "gotSHA256": "74099e2f3bd6de15040ccbb30327bbe903af70ca4e5736e99ecf54874602a7a1",
+        "firstDifferentByte": 15602,
+        "wantedExcerpt": "s adding.\nfixed\t// eslint-disable-next-line foo -- \ncase 55\nfixed\t// eslint-disable-next-line foo ---  bar\ncase 56\n@eslint-community/eslint-comments/require-description\tmissingDescription\t0 12\tUnexpected undescribed directive comment. Inclu",
+        "gotExcerpt": "s adding.\nfixed\t// eslint-disable-next-line foo -- \ncase 55\n@eslint-community/eslint-comments/require-description\tmissingDescription\t0 40\tUnexpected undescribed directive comment. Include descriptions to explain why the comment is necessary"
+      },
+      {
+        "backend": "emitted",
+        "exit": 0,
+        "stderrBytes": 0,
+        "wantedSHA256": "f82aa3df68d0ce4b9c851c2d584139b0458c3b279314637c9fa294280882192a",
+        "gotSHA256": "74099e2f3bd6de15040ccbb30327bbe903af70ca4e5736e99ecf54874602a7a1",
+        "firstDifferentByte": 15602,
+        "wantedExcerpt": "s adding.\nfixed\t// eslint-disable-next-line foo -- \ncase 55\nfixed\t// eslint-disable-next-line foo ---  bar\ncase 56\n@eslint-community/eslint-comments/require-description\tmissingDescription\t0 12\tUnexpected undescribed directive comment. Inclu",
+        "gotExcerpt": "s adding.\nfixed\t// eslint-disable-next-line foo -- \ncase 55\n@eslint-community/eslint-comments/require-description\tmissingDescription\t0 40\tUnexpected undescribed directive comment. Include descriptions to explain why the comment is necessary"
+      },
+      {
+        "backend": "native",
+        "exit": 0,
+        "stderrBytes": 0,
+        "wantedSHA256": "f82aa3df68d0ce4b9c851c2d584139b0458c3b279314637c9fa294280882192a",
+        "gotSHA256": "74099e2f3bd6de15040ccbb30327bbe903af70ca4e5736e99ecf54874602a7a1",
+        "firstDifferentByte": 15602,
+        "wantedExcerpt": "s adding.\nfixed\t// eslint-disable-next-line foo -- \ncase 55\nfixed\t// eslint-disable-next-line foo ---  bar\ncase 56\n@eslint-community/eslint-comments/require-description\tmissingDescription\t0 12\tUnexpected undescribed directive comment. Inclu",
+        "gotExcerpt": "s adding.\nfixed\t// eslint-disable-next-line foo -- \ncase 55\n@eslint-community/eslint-comments/require-description\tmissingDescription\t0 40\tUnexpected undescribed directive comment. Include descriptions to explain why the comment is necessary"
+      }
+    ]
+  },
+  {
+    "name": "fallback_display_ignored",
+    "rule": "@next/next/google-font-display",
+    "backends": [
+      {
+        "backend": "Node",
+        "exit": 0,
+        "stderrBytes": 0,
+        "wantedSHA256": "f82aa3df68d0ce4b9c851c2d584139b0458c3b279314637c9fa294280882192a",
+        "gotSHA256": "686a8785d65de425191d2108e91f40eafaebea6d0fa8bf013affee2e459d67d0",
+        "firstDifferentByte": 44848,
+        "wantedExcerpt": "<link href=\"https://fonts.googleapis.com/css2\" />;\ncase 168\n@next/next/google-font-display\tgoogleFontDisplayNotRecommended\t26 109\tThis Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text ",
+        "gotExcerpt": "<link href=\"https://fonts.googleapis.com/css2\" />;\ncase 168\nfixed\texport const Test = () => <link href=\"https://fonts.googleapis.com/css2?display=fallback&family=Krona+One\" />;\ncase 169\n@next/next/google-font-display\tgoogleFontDisplayNotRec"
+      },
+      {
+        "backend": "emitted",
+        "exit": 0,
+        "stderrBytes": 0,
+        "wantedSHA256": "f82aa3df68d0ce4b9c851c2d584139b0458c3b279314637c9fa294280882192a",
+        "gotSHA256": "686a8785d65de425191d2108e91f40eafaebea6d0fa8bf013affee2e459d67d0",
+        "firstDifferentByte": 44848,
+        "wantedExcerpt": "<link href=\"https://fonts.googleapis.com/css2\" />;\ncase 168\n@next/next/google-font-display\tgoogleFontDisplayNotRecommended\t26 109\tThis Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text ",
+        "gotExcerpt": "<link href=\"https://fonts.googleapis.com/css2\" />;\ncase 168\nfixed\texport const Test = () => <link href=\"https://fonts.googleapis.com/css2?display=fallback&family=Krona+One\" />;\ncase 169\n@next/next/google-font-display\tgoogleFontDisplayNotRec"
+      },
+      {
+        "backend": "native",
+        "exit": 0,
+        "stderrBytes": 0,
+        "wantedSHA256": "f82aa3df68d0ce4b9c851c2d584139b0458c3b279314637c9fa294280882192a",
+        "gotSHA256": "686a8785d65de425191d2108e91f40eafaebea6d0fa8bf013affee2e459d67d0",
+        "firstDifferentByte": 44848,
+        "wantedExcerpt": "<link href=\"https://fonts.googleapis.com/css2\" />;\ncase 168\n@next/next/google-font-display\tgoogleFontDisplayNotRecommended\t26 109\tThis Google Fonts <link> sets `display` to auto, block, or fallback, each of which blocks or flashes the text ",
+        "gotExcerpt": "<link href=\"https://fonts.googleapis.com/css2\" />;\ncase 168\nfixed\texport const Test = () => <link href=\"https://fonts.googleapis.com/css2?display=fallback&family=Krona+One\" />;\ncase 169\n@next/next/google-font-display\tgoogleFontDisplayNotRec"
+      }
+    ]
+  }
+]

@@ -33,3 +33,11 @@ sources. All three are reserved here before any new implementation code.
 Existing .a registration limitations remain explicit. Any validation workaround
 will be confined to owned files and scratch overlays; no shared production code
 or lists will be edited.
+
+Follow-up handoff: .a candidates exist for the three new claims. Their Go findings
+and unchanged fixes match on the complete compiler and stage1 corpora with independent
+Adamic parsing, plus all captured upstream tests through Go AST projection and 161
+non-JSX upstream cases through Adamic parsing. Production .a registration, 18 native
+JSX upstream cases, malformed options and suppression integration remain uncompleted.
+See ../rules/structure-tailwind-no-physical-direction/REPORT.md. These names remain
+reserved; this is not a declaration that the full requested port bar is met.
