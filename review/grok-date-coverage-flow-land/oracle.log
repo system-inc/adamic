@@ -1,0 +1,61 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_days.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_days.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_calendar.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_calendar.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_limits.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_limits.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_past.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_past.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse_frac.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse_frac.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_limits.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse_frac.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_past.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_calendar.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_days.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a (61.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a (61.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_limits.a (62.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a (62.47s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse_frac.a (63.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_past.a (3.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a (3.75s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a (2.79s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a (2.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_calendar.a (3.92s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a (3.25s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a (3.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_days.a (125.15s)
+PASS
+gate cache: native hits=0 misses=37
+gate cache: node hits=0 misses=26
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	190.390s
