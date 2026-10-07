@@ -1,0 +1,2 @@
+import {execSync} from 'node:child_process';declare const opener:'x'|'<<EOF',value:string;execSync(`echo ${opener} ${value}`);function f<T extends 'x'|'y'>(p:T){execSync(`echo ${p}`);}declare const u:unknown;execSync(`echo ${u}`);
+export {};

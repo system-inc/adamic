@@ -1,0 +1,2 @@
+import {execSync} from 'node:child_process';declare const data:string;execSync(`cat <<'EOF'\n${data}\nEOF\necho ${data}`);execSync(`cat <<'EOF' <<SECOND\n${data}\nEOF\n${data}\nSECOND`);execSync(`cat <<< ${data}`);execSync(`cat <<${data}`);
+export {};

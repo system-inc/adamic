@@ -1,0 +1,22 @@
+=== RUN   TestWave16ThirdAgreementAndMutants
+    wave16_third_test.go:106: controls: 28502 identical finding bytes; findings 50
+    wave16_third_test.go:114: controls-asan: 28502 identical finding bytes; findings 50
+=== RUN   TestWave16ThirdAgreementAndMutants/shell-heredoc
+    wave16_third_test.go:131: shell-heredoc: exit 0, Go byte oracle catches byte 8215; findings 53
+=== RUN   TestWave16ThirdAgreementAndMutants/sql-string
+    wave16_third_test.go:131: sql-string: exit 0, Go byte oracle catches byte 11652; findings 31
+=== RUN   TestWave16ThirdAgreementAndMutants/alert-range
+    wave16_third_test.go:131: alert-range: exit 0, Go byte oracle catches byte 106; findings 50
+=== NAME  TestWave16ThirdAgreementAndMutants
+    wave16_third_test.go:139: repository: 18485 identical finding bytes; findings 0
+    wave16_third_test.go:140: repository-asan: 18485 identical finding bytes; findings 0
+    wave16_third_test.go:147: compiler: 5780 identical finding bytes; findings 0
+    wave16_third_test.go:148: compiler-asan: 5780 identical finding bytes; findings 0
+    wave16_third_test.go:160: released program queried using the existing fact API: panic 70, invalid or released checker handle
+    wave16_third_test.go:165: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave16ThirdAgreementAndMutants (77.95s)
+    --- PASS: TestWave16ThirdAgreementAndMutants/shell-heredoc (5.99s)
+    --- PASS: TestWave16ThirdAgreementAndMutants/sql-string (5.39s)
+    --- PASS: TestWave16ThirdAgreementAndMutants/alert-range (5.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	77.959s

@@ -1,0 +1,6 @@
+=== RUN   TestWave16ThirdAgreementAndMutants
+    wave16_third_test.go:106: controls mismatch byte 6550: native "\t/workspace/wave16-artifacts/third4/control-004.a\n223\t228\tnexus/security-no-interpolated-shell-command\tinterpolatedShellCommand\tThis command string is run by a shell, and a value built into it is not a literal, so the shell parses that value as code: a `\"`, `'` or space in it breaks the command, and" Go "\t/workspace/wave16-artifacts/third4/control-004.a\n147\t162\tnexus/security-no-interpolated-shell-command\tinterpolatedShellCommand\tThis command string is run by a shell, and a value built into it is not a literal, so the shell parses that value as code: a `\"`, `'` or space in it breaks the command, and"
+--- FAIL: TestWave16ThirdAgreementAndMutants (10.81s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	10.819s
+FAIL

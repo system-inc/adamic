@@ -1,0 +1,2 @@
+declare const literal:"O'Brien",safe:'ok'|'yes',unknown:unknown,any:any;`WHERE name='${literal}'`;`WHERE name='${safe}'`;`WHERE name='${unknown}'`;`WHERE name='${any}'`;
+export {};

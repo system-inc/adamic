@@ -1,0 +1,63 @@
+=== RUN   TestWave16ThirdAgreementAndMutants
+    wave16_third_test.go:96: wave16: exit status 1
+        
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:174: error TS1109: Expression expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:206: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:210: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:214: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:218: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:222: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:228: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:232: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:237: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:241: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:248: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:252: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:255: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:259: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:265: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:269: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:273: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:277: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:281: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:285: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:289: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:293: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:299: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:303: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:310: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:314: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:322: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:12:335: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:175: error TS1109: Expression expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:207: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:211: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:215: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:219: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:223: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:229: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:233: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:238: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:242: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:249: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:253: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:256: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:260: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:266: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:270: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:274: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:278: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:282: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:286: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:290: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:294: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:300: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:304: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:311: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:315: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:323: error TS1005: ',' expected.
+        stage1/cohere/typeaware/no_interpolated_sql_string.a:13:582: error TS1005: ',' expected.
+--- FAIL: TestWave16ThirdAgreementAndMutants (18.75s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	18.752s
+FAIL

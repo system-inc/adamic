@@ -1,0 +1,438 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { textTypeFacts, TextTypes, TextType } from './text_type_facts.a';
+import { constInitializer } from './value_declaration.a';
+class SqlSpans {
+    readonly quoted: number[];
+    readonly bare: number[];
+    readonly closeText: number;
+    readonly closeIndex: number;
+    constructor(quoted: number[], bare: number[] = [], closeText = -1, closeIndex = 0) {
+        this.quoted = quoted;
+        this.bare = bare;
+        this.closeText = closeText;
+        this.closeIndex = closeIndex;
+    }
+}
+export class NoInterpolatedSqlString {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly leading = [
+        'SELECT',
+        'INSERT',
+        'UPDATE',
+        'DELETE',
+        'REPLACE',
+        'WITH',
+        'SHOW',
+        'EXPLAIN',
+        'PRAGMA',
+        'WHERE',
+        'AND',
+        'OR',
+        'SET',
+        'VALUES',
+        'HAVING',
+    ];
+    readonly keywords = [
+        'SELECT',
+        'INSERT',
+        'UPDATE',
+        'DELETE',
+        'REPLACE',
+        'WITH',
+        'SHOW',
+        'EXPLAIN',
+        'PRAGMA',
+        'WHERE',
+        'AND',
+        'OR',
+        'SET',
+        'VALUES',
+        'HAVING',
+        'FROM',
+        'INTO',
+        'LIKE',
+        'GLOB',
+        'BETWEEN',
+        'JOIN',
+        'ON',
+        'IN',
+        'IS',
+        'NOT',
+        'NULL',
+        'ORDER',
+        'GROUP',
+        'BY',
+        'LIMIT',
+        'OFFSET',
+        'AS',
+        'DISTINCT',
+        'COUNT',
+        'TABLE',
+        'STATUS',
+        'CASE',
+        'WHEN',
+        'THEN',
+        'ELSE',
+        'END',
+        'UNION',
+        'ESCAPE',
+        'ASC',
+        'DESC',
+    ];
+    readonly values = [
+        '=',
+        '==',
+        '<',
+        '>',
+        '<=',
+        '>=',
+        '<>',
+        '!=',
+        '||',
+        '+',
+        '(',
+        ',',
+        'LIKE',
+        'GLOB',
+        'REGEXP',
+        'RLIKE',
+        'BETWEEN',
+        'AND',
+        'SELECT',
+        'WHEN',
+        'THEN',
+        'ELSE',
+        'ESCAPE',
+        'DEFAULT',
+        'INTERVAL',
+    ];
+    readonly fragments = ['AND', 'OR', 'NOT', 'WHERE', 'SELECT', 'FROM', 'ESCAPE'];
+    readonly comparisons = ['=', '==', '<', '>', '<=', '>=', '<>', '!='];
+    empty(): SqlSpans {
+        const quoted: number[] = [];
+        return new SqlSpans(quoted);
+    }
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+    }
+    word(text: string, index: number): boolean {
+        const c = text.charCodeAt(index);
+        return c === 95 || (c >= 97 && c <= 122) || (c >= 65 && c <= 90) || (c >= 48 && c <= 57);
+    }
+    wordLength(text: string, start: number): number {
+        let end = start;
+        while(end < text.length && this.word(text, end)) end++;
+        return end - start;
+    }
+    space(text: string, index: number): boolean {
+        return [' ', '\t', '\r', '\n'].includes(text.slice(index, index + 1));
+    }
+    leadingWord(head: string): string {
+        let at = 0;
+        while(at < head.length && (this.space(head, at) || head.slice(at, at + 1) === '(')) at++;
+        return head.slice(at, at + this.wordLength(head, at));
+    }
+    statement(texts: readonly string[]): SqlSpans {
+        let state = 0;
+        let previous = '';
+        let count = 0;
+        let opened = false;
+        const quoted: number[] = [];
+        const bare: number[] = [];
+        for(let ti = 0; ti < texts.length; ti++) {
+            const text = texts[ti] ?? '';
+            for(let i = 0; i < text.length;) {
+                const c = text.slice(i, i + 1);
+                if(state === 0) {
+                    if(this.space(text, i)) {
+                        i++;
+                    }
+                    else if(c === "'") {
+                        state = 1;
+                        opened = this.values.includes(previous);
+                        i++;
+                    }
+                    else if(c === '"') {
+                        state = 2;
+                        i++;
+                    }
+                    else if(c === '`') {
+                        state = 3;
+                        i++;
+                    }
+                    else if(c === '-' && text.slice(i + 1, i + 2) === '-') {
+                        if(i + 2 >= text.length || !this.space(text, i + 2)) return this.empty();
+                        state = 4;
+                        i += 3;
+                    }
+                    else if(c === '/' && text.slice(i + 1, i + 2) === '*') {
+                        state = 5;
+                        i += 2;
+                    }
+                    else if(c === '#') {
+                        return this.empty();
+                    }
+                    else if(c === '$') {
+                        const length = this.wordLength(text, i + 1);
+                        if(i + 1 + length < text.length && text.slice(i + 1 + length, i + 2 + length) === '$')
+                            return this.empty();
+                        previous = '$';
+                        i += 1 + length;
+                    }
+                    else if(this.word(text, i)) {
+                        const length = this.wordLength(text, i);
+                        const word = text.slice(i, i + length);
+                        if(this.keywords.includes(word)) count++;
+                        previous = word.toUpperCase();
+                        i += length;
+                    }
+                    else if('=<>!|'.includes(c)) {
+                        let end = i;
+                        while(end < text.length && '=<>!|'.includes(text.slice(end, end + 1))) end++;
+                        previous = text.slice(i, end);
+                        i = end;
+                    }
+                    else {
+                        previous = c;
+                        i++;
+                    }
+                }
+                else if(state === 1) {
+                    if(c === '\\') return this.empty();
+                    if(c === "'") {
+                        if(text.slice(i + 1, i + 2) === "'") {
+                            i += 2;
+                            continue;
+                        }
+                        state = 0;
+                        previous = "'";
+                    }
+                    i++;
+                }
+                else if(state === 2 || state === 3) {
+                    const closing = state === 2 ? '"' : '`';
+                    if(c === '\\') return this.empty();
+                    if(c === closing) {
+                        if(text.slice(i + 1, i + 2) === closing) {
+                            i += 2;
+                            continue;
+                        }
+                        state = 0;
+                        previous = closing;
+                    }
+                    i++;
+                }
+                else if(state === 4) {
+                    if(c === '\n') state = 0;
+                    i++;
+                }
+                else if(state === 5) {
+                    if(c === '*' && text.slice(i + 1, i + 2) === '/') {
+                        state = 0;
+                        i += 2;
+                        continue;
+                    }
+                    i++;
+                }
+            }
+            if(ti === texts.length - 1) break;
+            if(state === 1 && opened) quoted.push(ti);
+            else if(state === 0) {
+                if(this.comparisons.includes(previous)) bare.push(ti);
+                previous = '${}';
+            }
+        }
+        if(
+            (state !== 0 && state !== 4) ||
+            (count < 2 && !['WHERE', 'HAVING'].includes(this.leadingWord(texts[0] ?? '')))
+        )
+            return this.empty();
+        return new SqlSpans(quoted, bare);
+    }
+    readString(texts: readonly string[], textIndex: number, start: number): SqlSpans {
+        const spans: number[] = [];
+        const bare: number[] = [];
+        let index = start;
+        for(let ti = textIndex; ti < texts.length; ti++) {
+            const text = texts[ti] ?? '';
+            for(; index < text.length; index++) {
+                const c = text.slice(index, index + 1);
+                if(c === '\\') return this.empty();
+                if(c === "'") {
+                    if(text.slice(index + 1, index + 2) === "'") {
+                        index++;
+                        continue;
+                    }
+                    return new SqlSpans(spans, bare, ti, index);
+                }
+            }
+            if(ti < texts.length - 1) spans.push(ti);
+            index = 0;
+        }
+        return this.empty();
+    }
+    likePatterns(texts: readonly string[]): number[] {
+        let confirmed = false;
+        for(const text of texts) {
+            for(let i = 0; i < text.length;) {
+                const length = this.wordLength(text, i);
+                if(length === 0) {
+                    i++;
+                    continue;
+                }
+                if(this.fragments.includes(text.slice(i, i + length))) confirmed = true;
+                i += length;
+            }
+        }
+        const quoted: number[] = [];
+        if(!confirmed) return quoted;
+        let quotes = 0;
+        for(let ti = 0; ti < texts.length; ti++) {
+            let text = texts[ti] ?? '';
+            for(let i = 0; i < text.length; i++) {
+                if(text.slice(i, i + 1) === "'") {
+                    quotes++;
+                    continue;
+                }
+                if(!text.slice(i).startsWith('LIKE') || (i > 0 && this.word(text, i - 1))) continue;
+                let quote = i + 4;
+                if(quote >= text.length || !this.space(text, quote)) continue;
+                while(quote < text.length && this.space(text, quote)) quote++;
+                if(quote >= text.length || text.slice(quote, quote + 1) !== "'" || quotes % 2 !== 0) continue;
+                const span = this.readString(texts, ti, quote + 1);
+                if(span.closeText < 0) return quoted;
+                for(const value of span.quoted) quoted.push(value);
+                ti = span.closeText;
+                text = texts[ti] ?? '';
+                i = span.closeIndex;
+            }
+        }
+        return quoted;
+    }
+    canHold(types: TextTypes, id: number, depth: number, quote: boolean): boolean {
+        if(id === 0 || depth > 8) return false;
+        for(const part of types.parts(types.type(id))) {
+            if(this.part(types, types.type(part), depth, quote)) return true;
+        }
+        return false;
+    }
+    part(types: TextTypes, t: TextType, depth: number, quote: boolean): boolean {
+        const flags = t.flags;
+        if(t.error) return false;
+        if((flags & 3) !== 0) return true;
+        if((flags & 1024) !== 0 && quote) return t.literal.includes("'") || t.literal.includes('\\');
+        if((flags & (32 | 8388608)) !== 0) return true;
+        if((flags & 4194304) !== 0) {
+            if(quote && t.texts.some((text) => text.includes("'") || text.includes('\\'))) return true;
+            for(const hole of t.holes) {
+                if(this.canHold(types, hole, depth + 1, quote)) return true;
+            }
+            return false;
+        }
+        if((flags & 268435456) !== 0) {
+            for(const id of t.parts) {
+                const member = types.type(id);
+                if(quote) {
+                    if((member.flags & (32 | 1024 | 4194304 | 8388608)) !== 0)
+                        return this.part(types, member, depth, true);
+                }
+                else if((member.flags & (32 | 8388608)) !== 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        if((flags & (524288 | 2097152 | 4194304 | 8388608 | 16777216 | 33554432 | 67108864)) !== 0) {
+            return t.constraint === 0 || t.constraint === t.id || this.canHold(types, t.constraint, depth + 1, quote);
+        }
+        return false;
+    }
+    replaceStep(index: number): string {
+        const n = this.rules.parser.node(index);
+        if(n.kind !== 'CallExpression' || n.optional || n.list !== 2) return '';
+        const access = this.rules.parser.node(n.children[0] ?? -1);
+        if(access.kind !== 'PropertyAccessExpression') return '';
+        const method = this.rules.parser.node(access.children[access.children.length - 1] ?? -1).text;
+        if(!['replace', 'replaceAll'].includes(method)) return '';
+        const facts = textTypeFacts(this.rules, access.children[0] ?? -1);
+        if(facts.root === 0 || (facts.type(facts.root).flags & (32 | 1024 | 4194304 | 8388608)) === 0) return '';
+        const pattern = this.rules.parser.node(n.children[n.children.length - 2] ?? -1);
+        const replacement = this.rules.parser.node(n.children[n.children.length - 1] ?? -1);
+        if(!['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(replacement.kind)) return '';
+        let character = '';
+        if(pattern.kind === 'RegularExpressionLiteral') {
+            const closing = pattern.text.lastIndexOf('/');
+            if(closing <= 0 || !pattern.text.slice(closing + 1).includes('g')) return '';
+            const content = pattern.text.slice(1, closing);
+            if(content === "'") character = "'";
+            else if(content === '\\\\') character = '\\';
+        }
+        else if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(pattern.kind) && method === 'replaceAll') {
+            character = pattern.text;
+        }
+        return (character === "'" || character === '\\') && replacement.text === character + character ? character : '';
+    }
+    escapeChain(index: number): boolean {
+        const outer = this.replaceStep(index);
+        if(outer === '') return false;
+        const call = this.rules.parser.node(index);
+        const access = this.rules.parser.node(call.children[0] ?? -1);
+        const receiver = this.rules.skip(access.children[0] ?? -1);
+        const inner = this.replaceStep(receiver);
+        return (outer === "'" && inner === '\\') || (outer === '\\' && inner === "'");
+    }
+    escaped(index: number): boolean {
+        const at = this.rules.skip(index);
+        if(this.escapeChain(at)) return true;
+        const init = constInitializer(this.bindings, at);
+        return init >= 0 && this.escapeChain(this.rules.skip(init));
+    }
+    report(index: number, bare: boolean): void {
+        const n = this.rules.parser.node(index);
+        this.rules.findings.push(
+            new Diagnostic(
+                'security-no-interpolated-sql-string',
+                bare ? 'interpolatedSqlValue' : 'interpolatedSqlString',
+                bare
+                    ? 'This value is written into a SQL statement without quotes, right after a comparison, so it becomes part of the SQL rather than a value: a space, a keyword or a quote in it changes what the query does, and a crafted value runs as SQL. Quoting it does not help, since the value can close the quote. Pass it as a bound parameter (`WHERE id = ?` with the value beside the query). Where the query language has no parameters, as with GAQL, give the value a type that holds only fixed text: a number, a union of literals, or a template literal type such as `${number}`.'
+                    : "This value is written between the single quotes of a SQL string, so a quote in it ends the string early: the query breaks on ordinary input like `O'Brien`, and a crafted value runs as SQL. Pass it as a bound parameter (`WHERE name LIKE ?` with the value beside the query). Where the query language has no parameters, give the value a type that cannot hold a quote (a number, a union of literals, a template literal type such as `${number}-${number}-${number}`), or escape it in place with `.replace(/\\\\/g, '\\\\\\\\').replace(/'/g, \"''\")`, which doubles backslashes as well as quotes.",
+                this.rules.byte(this.rules.start(n)),
+                this.rules.byte(n.end),
+                'nexus/',
+            ),
+        );
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const n = this.rules.parser.node(i);
+            const parentIndex = this.rules.parents[i] ?? -1;
+            if(n.kind !== 'TemplateExpression' || parentIndex < 0) continue;
+            const parent = this.rules.parser.node(parentIndex);
+            if(parent.kind === 'TaggedTemplateExpression') continue;
+            const texts = [this.rules.parser.node(n.children[0] ?? -1).text];
+            const expressions: number[] = [];
+            for(let j = 1; j < n.children.length; j++) {
+                const span = this.rules.parser.node(n.children[j] ?? -1);
+                expressions.push(span.children[0] ?? -1);
+                texts.push(this.rules.parser.node(span.children[1] ?? -1).text);
+            }
+            const spans = this.leading.includes(this.leadingWord(texts[0] ?? ''))
+                ? this.statement(texts)
+                : new SqlSpans(this.likePatterns(texts));
+            for(const span of spans.quoted) {
+                const expr = expressions[span] ?? -1;
+                const facts = textTypeFacts(this.rules, expr);
+                if(this.canHold(facts, facts.root, 0, true) && !this.escaped(expr)) this.report(expr, false);
+            }
+            for(const span of spans.bare) {
+                const expr = expressions[span] ?? -1;
+                const facts = textTypeFacts(this.rules, expr);
+                if(this.canHold(facts, facts.root, 0, false)) this.report(expr, true);
+            }
+        }
+    }
+}

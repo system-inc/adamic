@@ -1,0 +1,5 @@
+=== RUN   TestWave16TextQuestions
+    wave16_text_questions_test.go:197: raw template holes/texts, literal values, constraints and value declaration match direct checker; malformed node and non-UTF-8 refusals pass
+--- PASS: TestWave16TextQuestions (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.040s

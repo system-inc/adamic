@@ -1,0 +1,8 @@
+=== RUN   TestWave16ThirdAgreementAndMutants
+    wave16_third_test.go:96: wave16: exit status 1
+        
+        adamic: /workspace/adamic/stage1/cohere/typeaware/no_interpolated_sql_string.a:47:307: stage 0 can't lower an array of never yet
+--- FAIL: TestWave16ThirdAgreementAndMutants (3.61s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	3.620s
+FAIL

@@ -1,0 +1,13 @@
+import { Bindings } from './bindings.ts';
+export function constInitializer(bindings: Bindings, index: number): number {
+    if(bindings.rules.parser.node(index).kind !== 'Identifier') return -1;
+    const declarations = bindings.list(index, 'value-declaration', false);
+    if(declarations.length !== 1) return -1;
+    const d = declarations[0] ?? -1;
+    const n = bindings.rules.parser.node(d);
+    if(n.kind !== 'VariableDeclaration' || bindings.rules.parser.node(bindings.shape.name(d)).kind !== 'Identifier')
+        return -1;
+    const parent = bindings.rules.parser.node(bindings.parent(d));
+    if(parent.kind !== 'VariableDeclarationList' || !bindings.rules.text(parent).startsWith('const')) return -1;
+    return bindings.shape.initializer(d);
+}

@@ -1,0 +1,2 @@
+declare const word:string,n:number,status:'Active'|'Paused';`SELECT name FROM t WHERE name LIKE '%${word}%'`;`SELECT * FROM t WHERE id = '${n}' AND status='${status}'`;`WHERE id = ${word}`;`SELECT * FROM t WHERE id=${word}`;`WHERE id=${n}`;
+export {};

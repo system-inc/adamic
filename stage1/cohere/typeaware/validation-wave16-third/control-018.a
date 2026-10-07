@@ -1,0 +1,4 @@
+/* 世界 🌍 */
+import {execSync} from 'node:child_process';declare const word:string;execSync(`echo ${word}`);`WHERE name='${word}'`;window.alert();
+
+export {};

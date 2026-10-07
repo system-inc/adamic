@@ -1,0 +1,8 @@
+=== RUN   TestWave16ThirdAgreementAndMutants
+    wave16_third_test.go:106: controls-native: exit status 70
+        
+        adamic: panic: missing node
+--- FAIL: TestWave16ThirdAgreementAndMutants (16.62s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	16.625s
+FAIL

@@ -1,0 +1,2 @@
+import * as cp from 'node:child_process';declare const input:string;const prefix='echo ';const command=prefix+input;cp.execSync(command);let opaque=`echo ${input}`;cp.execSync(opaque);function f(command:string){cp.execSync(command);}function execSync(x:string){}execSync(`echo ${input}`);
+export {};

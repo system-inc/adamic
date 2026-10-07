@@ -1,0 +1,2 @@
+declare const word:string;const escaped=word.replaceAll('\\','\\\\').replaceAll("'","''");`WHERE name='${escaped}'`;`WHERE name='${word.replaceAll("'","''")}'`;`WHERE name='${word.replace(/\\\\/g,'\\\\').replace(/'/g,"''")}'`;
+export {};

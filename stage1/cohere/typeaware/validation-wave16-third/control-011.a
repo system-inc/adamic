@@ -1,0 +1,2 @@
+declare const word:string;`SELECT * FROM t -- ${word}\nWHERE name='${word}'`;`SELECT * FROM t /* '${word}' */ WHERE name='${word}'`;`SELECT * FROM t WHERE name='${word}`;`SELECT * FROM t # name='${word}'`;`SELECT * FROM t WHERE x--1='${word}'`;
+export {};

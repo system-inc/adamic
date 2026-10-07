@@ -1,0 +1,52 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { ambientName } from './wave16_facts.a';
+export class NoAlert {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const call = this.rules.parser.node(i);
+            if(call.kind !== 'CallExpression' || (this.rules.parents[i] ?? -1) < 0) continue;
+            const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+            let name = '';
+            if(callee.kind === 'Identifier') {
+                if(
+                    ['alert', 'confirm', 'prompt'].includes(callee.text) &&
+                    ambientName(this.rules, this.rules.skip(call.children[0] ?? -1), true, true)
+                )
+                    name = callee.text;
+            }
+            else if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(callee.kind)) {
+                const receiver = this.rules.skip(callee.children[0] ?? -1);
+                const object = this.rules.parser.node(receiver);
+                if(
+                    object.kind !== 'Identifier' ||
+                    !['window', 'globalThis'].includes(object.text) ||
+                    !ambientName(this.rules, receiver, true, true)
+                )
+                    continue;
+                const key = this.rules.parser.node(this.rules.skip(callee.children[callee.children.length - 1] ?? -1));
+                if(
+                    (callee.kind === 'PropertyAccessExpression' && key.kind === 'Identifier') ||
+                    ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(key.kind)
+                )
+                    name = key.text;
+            }
+            if(!['alert', 'confirm', 'prompt'].includes(name)) continue;
+            const message = `This calls \`${name}\`, which freezes the whole page on a dialog the user cannot style, move, or dismiss with anything but the one button the browser drew. It is almost always debugging left in, and where it is deliberate it belongs in the application's own interface rather than the browser's.`;
+            this.rules.findings.push(
+                new Diagnostic(
+                    'no-alert',
+                    'unexpected',
+                    message,
+                    this.rules.byte(this.rules.start(call)),
+                    this.rules.byte(call.end),
+                    '',
+                ),
+            );
+        }
+    }
+}

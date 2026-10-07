@@ -1,0 +1,2 @@
+declare const word:string;`SELECT * FROM t WHERE name='a''${word}'`;`SELECT * FROM t WHERE name='a\\${word}'`;`SELECT * FROM t WHERE name="${word}"`;`SELECT * FROM t WHERE name='${word}' AND fragment=${word}`;
+export {};

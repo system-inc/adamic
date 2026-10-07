@@ -1,0 +1,6 @@
+=== RUN   TestWave16TextQuestions
+    wave16_text_questions_test.go:195: non-UTF-8 literal accepted: <nil>
+--- FAIL: TestWave16TextQuestions (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.055s
+FAIL

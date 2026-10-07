@@ -1,0 +1,86 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class TextType {
+    readonly id: number;
+    readonly flags: number;
+    readonly error: boolean;
+    readonly literalKind: string;
+    readonly literal: string;
+    readonly constraint: number;
+    readonly parts: number[];
+    readonly texts: string[];
+    readonly holes: number[];
+    constructor(
+        id: number,
+        flags: number,
+        error: boolean,
+        literalKind: string,
+        literal: string,
+        constraint: number,
+        parts: number[],
+        texts: string[],
+        holes: number[],
+    ) {
+        this.id = id;
+        this.flags = flags;
+        this.error = error;
+        this.literalKind = literalKind;
+        this.literal = literal;
+        this.constraint = constraint;
+        this.parts = parts;
+        this.texts = texts;
+        this.holes = holes;
+    }
+}
+export class TextTypes {
+    readonly root: number;
+    readonly constrained: number;
+    readonly records: TextType[];
+    constructor(root: number, constrained: number, records: TextType[]) {
+        this.root = root;
+        this.constrained = constrained;
+        this.records = records;
+    }
+    type(id: number): TextType {
+        for(const t of this.records) {
+            if(t.id === id) return t;
+        }
+        panic('missing text type identity');
+    }
+    parts(type: TextType): number[] {
+        return (type.flags & 134217728) !== 0 ? type.parts : [type.id];
+    }
+}
+export function textTypeFacts(rules: Rules, index: number): TextTypes {
+    const frames = new Frames(rules.ask(index, 'text-type-facts'));
+    header(frames, 'text-type-facts');
+    const root = frames.natural();
+    const constrained = frames.natural();
+    const count = frames.natural();
+    const records: TextType[] = [];
+    for(let i = 0; i < count; i++) {
+        const id = frames.natural();
+        const flags = frames.natural();
+        const error = frames.yes();
+        const kind = frames.field();
+        const value = frames.field();
+        const constraint = frames.natural();
+        const parts = frames.ids();
+        const texts: string[] = [];
+        const length = frames.natural();
+        for(let j = 0; j < length; j++) texts.push(frames.field());
+        const holes = frames.ids();
+        records.push(new TextType(id, flags, error, kind, value, constraint, parts, texts, holes));
+    }
+    frames.end();
+    const result = new TextTypes(root, constrained, records);
+    if(root !== 0) result.type(root);
+    if(constrained !== 0) result.type(constrained);
+    for(const record of records) {
+        if(record.constraint !== 0) result.type(record.constraint);
+        for(const id of record.parts) result.type(id);
+        for(const id of record.holes) result.type(id);
+    }
+    return result;
+}

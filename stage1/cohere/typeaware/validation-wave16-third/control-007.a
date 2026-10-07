@@ -1,0 +1,2 @@
+import {execSync} from 'node:child_process';declare const flag:boolean,input:string,n:number;execSync(flag?`echo ${input}`:'echo safe');execSync(`echo ${flag?'safe':'ok'}`);execSync(`echo ${flag?`a ${input}`:`n ${n}`}`);
+export {};

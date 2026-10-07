@@ -1,0 +1,318 @@
+import type { Rules } from './rules.ts';
+import { Bindings } from './bindings.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { signatureAncestry } from './signature_ancestry.a';
+import { textTypeFacts } from './text_type_facts.a';
+import { constInitializer } from './value_declaration.a';
+class ShellPiece {
+    readonly text: string;
+    readonly value: number;
+    constructor(text: string, value = -1) {
+        this.text = text;
+        this.value = value;
+    }
+}
+class Heredoc {
+    readonly delimiter: string;
+    readonly length: number;
+    readonly quoted: boolean;
+    readonly tabs: boolean;
+    constructor(delimiter: string, length: number, quoted: boolean, tabs = false) {
+        this.delimiter = delimiter;
+        this.length = length;
+        this.quoted = quoted;
+        this.tabs = tabs;
+    }
+}
+export class NoInterpolatedShellCommand {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.bindings = new Bindings(rules);
+    }
+    functionName(index: number): string {
+        const chain = signatureAncestry(this.rules, index);
+        const declaration = chain[0];
+        if(declaration === undefined || declaration.kind !== 'FunctionDeclaration' || declaration.name === '')
+            return '';
+        let name = declaration.name;
+        let owner = 2;
+        if(chain[1]?.kind !== 'ModuleBlock' || chain[owner]?.kind !== 'ModuleDeclaration') return '';
+        if(name === '__promisify__' && chain[owner]?.nameKind === 'Identifier') {
+            name = chain[owner]?.name ?? '';
+            owner = 4;
+            if(chain[3]?.kind !== 'ModuleBlock' || chain[owner]?.kind !== 'ModuleDeclaration') return '';
+        }
+        const module = chain[owner];
+        return module !== undefined &&
+            module.nameKind === 'StringLiteral' &&
+            ['child_process', 'node:child_process'].includes(module.name)
+            ? name
+            : '';
+    }
+    hasShell(arguments_: readonly number[]): boolean {
+        for(const argument of arguments_) {
+            const object = this.rules.parser.node(this.rules.skip(argument));
+            if(object.kind !== 'ObjectLiteralExpression') continue;
+            for(const child of object.children) {
+                const p = this.rules.parser.node(child);
+                if(p.kind !== 'PropertyAssignment') continue;
+                const key = this.rules.parser.node(p.children[0] ?? -1);
+                if(!['Identifier', 'StringLiteral'].includes(key.kind) || key.text !== 'shell') continue;
+                const facts = textTypeFacts(this.rules, p.children[p.children.length - 1] ?? -1);
+                if(facts.root === 0) return false;
+                return facts.parts(facts.type(facts.root)).every((id) => {
+                    const t = facts.type(id);
+                    return (
+                        ((t.flags & 8192) !== 0 && t.literal === 'true') || ((t.flags & 1024) !== 0 && t.literal !== '')
+                    );
+                });
+            }
+        }
+        return false;
+    }
+    built(index: number, depth: number): number {
+        if(depth > 16) return -1;
+        const at = this.rules.skip(index);
+        const n = this.rules.parser.node(at);
+        if(n.kind === 'TemplateExpression') return at;
+        if(n.kind === 'BinaryExpression' && this.rules.parser.node(n.children[1] ?? -1).kind === 'PlusToken') return at;
+        if(
+            n.kind === 'ConditionalExpression' &&
+            (this.built(n.children[2] ?? -1, depth + 1) >= 0 || this.built(n.children[4] ?? -1, depth + 1) >= 0)
+        )
+            return at;
+        if(n.kind === 'Identifier') {
+            const init = constInitializer(this.bindings, at);
+            if(init >= 0) return this.built(init, depth + 1);
+        }
+        return -1;
+    }
+    flatten(index: number, depth: number, pieces: ShellPiece[]): boolean {
+        if(depth > 16) return false;
+        const at = this.rules.skip(index);
+        const n = this.rules.parser.node(at);
+        if(['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(n.kind)) {
+            pieces.push(new ShellPiece(n.text));
+            return true;
+        }
+        if(n.kind === 'TemplateExpression') {
+            pieces.push(new ShellPiece(this.rules.parser.node(n.children[0] ?? -1).text));
+            for(let i = 1; i < n.children.length; i++) {
+                const span = this.rules.parser.node(n.children[i] ?? -1);
+                if(!this.flatten(span.children[0] ?? -1, depth + 1, pieces)) return false;
+                pieces.push(new ShellPiece(this.rules.parser.node(span.children[1] ?? -1).text));
+            }
+            return true;
+        }
+        if(n.kind === 'BinaryExpression' && this.rules.parser.node(n.children[1] ?? -1).kind === 'PlusToken')
+            return (
+                this.flatten(n.children[0] ?? -1, depth + 1, pieces) &&
+                this.flatten(n.children[2] ?? -1, depth + 1, pieces)
+            );
+        if(n.kind === 'Identifier') {
+            const init = constInitializer(this.bindings, at);
+            if(
+                init >= 0 &&
+                [
+                    'StringLiteral',
+                    'NoSubstitutionTemplateLiteral',
+                    'TemplateExpression',
+                    'BinaryExpression',
+                    'ConditionalExpression',
+                    'Identifier',
+                ].includes(this.rules.parser.node(this.rules.skip(init)).kind)
+            )
+                return this.flatten(init, depth + 1, pieces);
+        }
+        const facts = textTypeFacts(this.rules, at);
+        if(facts.constrained !== 0) {
+            const t = facts.type(facts.constrained);
+            if((t.flags & 1024) !== 0 && t.literalKind === 'string') {
+                pieces.push(new ShellPiece(t.literal));
+                return true;
+            }
+        }
+        pieces.push(new ShellPiece('', at));
+        return true;
+    }
+    judgeValue(index: number, depth: number): number {
+        const facts = textTypeFacts(this.rules, index);
+        if(facts.constrained !== 0) {
+            const parts = facts.parts(facts.type(facts.constrained));
+            if(
+                parts.every(
+                    (id) =>
+                        (facts.type(id).flags &
+                            (1024 | 64 | 2048 | 65536 | 128 | 4096 | 256 | 8192 | 32768 | 4 | 8)) !==
+                        0,
+                )
+            )
+                return parts.some((id) => (facts.type(id).flags & 1024) !== 0 && facts.type(id).literal.includes('<<'))
+                    ? 2
+                    : 0;
+        }
+        const n = this.rules.parser.node(index);
+        if(n.kind !== 'ConditionalExpression') return 1;
+        let verdict = 0;
+        for(const branch of [n.children[2] ?? -1, n.children[4] ?? -1]) {
+            const pieces: ShellPiece[] = [];
+            if(!this.flatten(branch, depth + 1, pieces) || pieces.some((p) => p.text.includes('<<'))) return 2;
+            const v = this.judge(branch, depth + 1);
+            if(v === 2) return 2;
+            if(v === 1) verdict = 1;
+        }
+        return verdict;
+    }
+    wordLength(text: string): number {
+        let length = 0;
+        while(length < text.length) {
+            const c = text.charCodeAt(length);
+            if(c !== 95 && (c < 48 || c > 57) && (c < 97 || c > 122) && (c < 65 || c > 90)) break;
+            length++;
+        }
+        return length;
+    }
+    delimiter(text: string, tabs: boolean): Heredoc {
+        const first = text.slice(0, 1);
+        if(first === '') return new Heredoc('', 0, false, tabs);
+        if(first === "'" || first === '"') {
+            const closing = text.slice(1).indexOf(first);
+            if(closing <= 0) return new Heredoc('', 0, false, tabs);
+            const word = text.slice(1, 1 + closing);
+            if(word.includes('\x00') || word.includes('\n')) return new Heredoc('', 0, false, tabs);
+            return new Heredoc(word, closing + 2, true, tabs);
+        }
+        if(first === '\\') {
+            const length = this.wordLength(text.slice(1));
+            return new Heredoc(text.slice(1, 1 + length), length === 0 ? 0 : length + 1, true, tabs);
+        }
+        const length = this.wordLength(text);
+        return new Heredoc(text.slice(0, length), length, false, tabs);
+    }
+    quotedValues(pieces: readonly ShellPiece[]): Set<number> | undefined {
+        let text = '';
+        const valueAt = new Map<number, number>();
+        for(let i = 0; i < pieces.length; i++) {
+            const piece = pieces[i];
+            if(piece === undefined) continue;
+            if(piece.value >= 0) {
+                valueAt.set(text.length, i);
+                text += '\x00';
+            }
+            else {
+                text += piece.text;
+            }
+        }
+        const quoted = new Set<number>();
+        let pending: Heredoc[] = [];
+        let body: Heredoc | undefined = undefined;
+        for(let start = 0; start <= text.length;) {
+            const newline = text.indexOf('\n', start);
+            const end = newline < 0 ? text.length : newline;
+            const line = text.slice(start, end);
+            if(body !== undefined) {
+                let candidate = line;
+                if(body.tabs) {
+                    let tab = 0;
+                    while(candidate.slice(tab, tab + 1) === '\t') tab++;
+                    candidate = candidate.slice(tab);
+                }
+                if(candidate === body.delimiter) {
+                    body = undefined;
+                }
+                else if(body.quoted) {
+                    for(let offset = start; offset < end; offset++) {
+                        const value = valueAt.get(offset);
+                        if(value !== undefined) quoted.add(value);
+                    }
+                }
+            }
+            else {
+                for(let offset = 0; offset < line.length;) {
+                    const opener = line.indexOf('<<', offset);
+                    if(opener < 0) break;
+                    let cursor = opener + 2;
+                    if(line.slice(cursor, cursor + 1) === '<') {
+                        offset = cursor + 1;
+                        continue;
+                    }
+                    const tabs = line.slice(cursor, cursor + 1) === '-';
+                    if(tabs) cursor++;
+                    while([' ', '\t'].includes(line.slice(cursor, cursor + 1))) cursor++;
+                    const opened = this.delimiter(line.slice(cursor), tabs);
+                    if(opened.length === 0) return undefined;
+                    pending.push(opened);
+                    offset = cursor + opened.length;
+                }
+            }
+            if(body === undefined && pending.length > 0 && end < text.length) {
+                body = pending[0];
+                pending = pending.slice(1);
+            }
+            start = end + 1;
+        }
+        return quoted;
+    }
+    judge(index: number, depth: number): number {
+        if(depth > 16) return 2;
+        const pieces: ShellPiece[] = [];
+        if(!this.flatten(index, depth, pieces)) return 2;
+        const quoted = this.quotedValues(pieces);
+        if(quoted === undefined) return 2;
+        let verdict = 0;
+        for(let i = 0; i < pieces.length; i++) {
+            const piece = pieces[i];
+            if(piece === undefined || piece.value < 0 || quoted.has(i)) continue;
+            const v = this.judgeValue(piece.value, depth);
+            if(v === 2) return 2;
+            if(v === 1) verdict = 1;
+        }
+        return verdict;
+    }
+    report(index: number): void {
+        const n = this.rules.parser.node(index);
+        this.rules.findings.push(
+            new Diagnostic(
+                'security-no-interpolated-shell-command',
+                'interpolatedShellCommand',
+                "This command string is run by a shell, and a value built into it is not a literal, so the shell parses that value as code: a `\"`, `'` or space in it breaks the command, and a `$(...)` or backtick in it runs. Quoting it by hand is one escape away from the same bug. Pass the program and its arguments separately instead, `execFileSync('sqlite3', [databasePath, query])` (or `spawn` with an argument array and no `shell`), so no shell ever reads the value.",
+                this.rules.byte(this.rules.start(n)),
+                this.rules.byte(n.end),
+                'nexus/',
+            ),
+        );
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const call = this.rules.parser.node(i);
+            if(call.kind !== 'CallExpression' || call.list < 1 || (this.rules.parents[i] ?? -1) < 0) continue;
+            const name = this.functionName(i);
+            const arguments_ = call.children.slice(call.children.length - call.list);
+            if(
+                !['exec', 'execSync'].includes(name) &&
+                (!['spawn', 'spawnSync', 'execFile', 'execFileSync'].includes(name) ||
+                    !this.hasShell(arguments_.slice(1)))
+            )
+                continue;
+            const first = arguments_[0] ?? -1;
+            const built = this.built(first, 0);
+            if(built >= 0 && this.judge(built, 0) === 1) {
+                this.report(first);
+                continue;
+            }
+            if(['exec', 'execSync'].includes(name) || arguments_.length < 2) continue;
+            const array = this.rules.parser.node(this.rules.skip(arguments_[1] ?? -1));
+            if(array.kind !== 'ArrayLiteralExpression') continue;
+            for(const element of array.children) {
+                const n = this.rules.parser.node(element);
+                if(['SpreadElement', 'OmittedExpression'].includes(n.kind)) continue;
+                if(this.judge(element, 0) === 1) {
+                    this.report(element);
+                    break;
+                }
+            }
+        }
+    }
+}
