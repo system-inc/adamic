@@ -1,0 +1,478 @@
+=== RUN   TestGoogleFontPreconnectReports
+=== PAUSE TestGoogleFontPreconnectReports
+=== RUN   TestGoogleFontPreconnectIsSilent
+=== PAUSE TestGoogleFontPreconnectIsSilent
+=== RUN   TestGoogleFontPreconnectDecodesEntities
+=== PAUSE TestGoogleFontPreconnectDecodesEntities
+=== RUN   TestInlineScriptIdIsSilentOnUpstreamPassCases
+=== PAUSE TestInlineScriptIdIsSilentOnUpstreamPassCases
+=== RUN   TestInlineScriptIdFiresOnUpstreamFailCases
+=== PAUSE TestInlineScriptIdFiresOnUpstreamFailCases
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite
+=== RUN   TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite
+=== PAUSE TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite
+=== RUN   TestInlineScriptIdPointsAtTheTagName
+=== PAUSE TestInlineScriptIdPointsAtTheTagName
+=== RUN   TestInlineScriptIdRendersItsMessageExactly
+=== PAUSE TestInlineScriptIdRendersItsMessageExactly
+=== RUN   TestInlineScriptIdArmsOnEveryDefaultImportRatherThanTheLastOne
+=== PAUSE TestInlineScriptIdArmsOnEveryDefaultImportRatherThanTheLastOne
+=== RUN   TestInlineScriptIdSeesAnImportWrittenAfterTheJsx
+=== PAUSE TestInlineScriptIdSeesAnImportWrittenAfterTheJsx
+=== RUN   TestInlineScriptIdReadsThroughParenthesesRatherThanAbandoningTheElement
+=== PAUSE TestInlineScriptIdReadsThroughParenthesesRatherThanAbandoningTheElement
+=== RUN   TestNextScriptForGaReports
+=== PAUSE TestNextScriptForGaReports
+=== RUN   TestNextScriptForGaIsSilent
+=== PAUSE TestNextScriptForGaIsSilent
+=== RUN   TestNextScriptForGaReportsTheMeasuredEdgeCases
+=== PAUSE TestNextScriptForGaReportsTheMeasuredEdgeCases
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases
+=== RUN   TestNextScriptForGaReportsOnceWhenBothArmsMatch
+=== PAUSE TestNextScriptForGaReportsOnceWhenBothArmsMatch
+=== RUN   TestNextScriptForGaReadsOnlyTheFirstHtmlKey
+=== PAUSE TestNextScriptForGaReadsOnlyTheFirstHtmlKey
+=== RUN   TestNextScriptForGaPointsAtTheTagName
+=== PAUSE TestNextScriptForGaPointsAtTheTagName
+=== RUN   TestNextScriptForGaMessage
+=== PAUSE TestNextScriptForGaMessage
+=== RUN   TestNextScriptForGaSurvivesPropertyShapesItCannotConvert
+=== PAUSE TestNextScriptForGaSurvivesPropertyShapesItCannotConvert
+=== RUN   TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml
+=== PAUSE TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml
+=== RUN   TestNextScriptForGaDecodesEntities
+=== PAUSE TestNextScriptForGaDecodesEntities
+=== CONT  TestGoogleFontPreconnectReports
+=== RUN   TestGoogleFontPreconnectReports/no_rel_at_all
+=== PAUSE TestGoogleFontPreconnectReports/no_rel_at_all
+=== RUN   TestGoogleFontPreconnectReports/rel_is_present_but_wrong
+=== PAUSE TestGoogleFontPreconnectReports/rel_is_present_but_wrong
+=== RUN   TestGoogleFontPreconnectReports/uppercase_attribute_names
+=== PAUSE TestGoogleFontPreconnectReports/uppercase_attribute_names
+=== RUN   TestGoogleFontPreconnectReports/a_longer_path_on_the_font_host
+=== PAUSE TestGoogleFontPreconnectReports/a_longer_path_on_the_font_host
+=== RUN   TestGoogleFontPreconnectReports/rel_is_a_computed_expression
+=== PAUSE TestGoogleFontPreconnectReports/rel_is_a_computed_expression
+=== CONT  TestGoogleFontPreconnectReports/no_rel_at_all
+=== CONT  TestNextScriptForGaDecodesEntities
+=== RUN   TestNextScriptForGaDecodesEntities/an_encoded_slash_in_the_analytics_src
+=== PAUSE TestNextScriptForGaDecodesEntities/an_encoded_slash_in_the_analytics_src
+=== RUN   TestNextScriptForGaDecodesEntities/an_encoded_slash_in_another_src
+=== PAUSE TestNextScriptForGaDecodesEntities/an_encoded_slash_in_another_src
+=== CONT  TestNextScriptForGaDecodesEntities/an_encoded_slash_in_the_analytics_src
+=== CONT  TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml
+=== RUN   TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/an_empty_object_in_front_of_a_matching_one
+=== PAUSE TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/an_empty_object_in_front_of_a_matching_one
+=== RUN   TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/a_non_object_in_front_of_a_matching_one
+=== PAUSE TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/a_non_object_in_front_of_a_matching_one
+=== RUN   TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/a_differently_cased_spelling_in_front_of_a_matching_one
+=== PAUSE TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/a_differently_cased_spelling_in_front_of_a_matching_one
+=== CONT  TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/an_empty_object_in_front_of_a_matching_one
+=== CONT  TestNextScriptForGaSurvivesPropertyShapesItCannotConvert
+=== RUN   TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_shorthand_property
+=== PAUSE TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_shorthand_property
+=== RUN   TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_shorthand_beside_the_real_key
+=== PAUSE TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_shorthand_beside_the_real_key
+=== RUN   TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_method
+=== PAUSE TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_method
+=== RUN   TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_getter
+=== PAUSE TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_getter
+=== RUN   TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_spread_beside_the_real_key
+=== PAUSE TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_spread_beside_the_real_key
+=== CONT  TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_shorthand_property
+=== CONT  TestNextScriptForGaMessage
+--- PASS: TestNextScriptForGaMessage (0.00s)
+=== CONT  TestNextScriptForGaPointsAtTheTagName
+=== RUN   TestNextScriptForGaPointsAtTheTagName/the_src_arm
+=== PAUSE TestNextScriptForGaPointsAtTheTagName/the_src_arm
+=== RUN   TestNextScriptForGaPointsAtTheTagName/the_inline_arm
+=== PAUSE TestNextScriptForGaPointsAtTheTagName/the_inline_arm
+=== CONT  TestNextScriptForGaPointsAtTheTagName/the_src_arm
+=== CONT  TestNextScriptForGaReadsOnlyTheFirstHtmlKey
+--- PASS: TestNextScriptForGaReadsOnlyTheFirstHtmlKey (0.00s)
+=== CONT  TestNextScriptForGaReportsOnceWhenBothArmsMatch
+--- PASS: TestNextScriptForGaReportsOnceWhenBothArmsMatch (0.00s)
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/the_tag_manager_gtm.js_path_in_a_src
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/the_tag_manager_gtm.js_path_in_a_src
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/the_gtag_js_path_inside_an_inline_value
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/the_gtag_js_path_inside_an_inline_value
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_uppercase_script_tag
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_uppercase_script_tag
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_uppercase_src_value
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_uppercase_src_value
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_expression_valued_src
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_expression_valued_src
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_namespaced_src_attribute
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_namespaced_src_attribute
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_div_carrying_the_inline_loader
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_div_carrying_the_inline_loader
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_string_literal_inline_value
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_string_literal_inline_value
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_url_after_an_interpolation
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_url_after_an_interpolation
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_escaped_period_inside_the_inline_url
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_escaped_period_inside_the_inline_url
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_string___html_key
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_string___html_key
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_computed___html_key
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_computed___html_key
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_parenthesized_object_literal
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_parenthesized_object_literal
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_object_holding_only_a_spread
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_object_holding_only_a_spread
+=== RUN   TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_identifier_rather_than_an_object_literal
+=== PAUSE TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_identifier_rather_than_an_object_literal
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/the_tag_manager_gtm.js_path_in_a_src
+=== CONT  TestNextScriptForGaReportsTheMeasuredEdgeCases
+=== RUN   TestNextScriptForGaReportsTheMeasuredEdgeCases/an_uppercase_src_attribute_name
+=== PAUSE TestNextScriptForGaReportsTheMeasuredEdgeCases/an_uppercase_src_attribute_name
+=== RUN   TestNextScriptForGaReportsTheMeasuredEdgeCases/an_uppercase_dangerouslySetInnerHTML_attribute_name
+=== PAUSE TestNextScriptForGaReportsTheMeasuredEdgeCases/an_uppercase_dangerouslySetInnerHTML_attribute_name
+=== RUN   TestNextScriptForGaReportsTheMeasuredEdgeCases/an_http_scheme_rather_than_https
+=== PAUSE TestNextScriptForGaReportsTheMeasuredEdgeCases/an_http_scheme_rather_than_https
+=== RUN   TestNextScriptForGaReportsTheMeasuredEdgeCases/a_url_before_an_interpolation
+=== PAUSE TestNextScriptForGaReportsTheMeasuredEdgeCases/a_url_before_an_interpolation
+=== RUN   TestNextScriptForGaReportsTheMeasuredEdgeCases/a_non_matching_src_falling_through_to_a_matching_inline_value
+=== PAUSE TestNextScriptForGaReportsTheMeasuredEdgeCases/a_non_matching_src_falling_through_to_a_matching_inline_value
+=== RUN   TestNextScriptForGaReportsTheMeasuredEdgeCases/a_spread_beside_a_matching_inline_value
+=== PAUSE TestNextScriptForGaReportsTheMeasuredEdgeCases/a_spread_beside_a_matching_inline_value
+=== RUN   TestNextScriptForGaReportsTheMeasuredEdgeCases/a_paired_script_element
+=== PAUSE TestNextScriptForGaReportsTheMeasuredEdgeCases/a_paired_script_element
+=== RUN   TestNextScriptForGaReportsTheMeasuredEdgeCases/an___html_key_written_second
+=== PAUSE TestNextScriptForGaReportsTheMeasuredEdgeCases/an___html_key_written_second
+=== CONT  TestNextScriptForGaReportsTheMeasuredEdgeCases/an_uppercase_src_attribute_name
+=== CONT  TestNextScriptForGaIsSilent
+=== RUN   TestNextScriptForGaIsSilent/next/script_components_carrying_gtag_src_and_inline_code
+=== PAUSE TestNextScriptForGaIsSilent/next/script_components_carrying_gtag_src_and_inline_code
+=== RUN   TestNextScriptForGaIsSilent/a_next/script_component_carrying_the_analytics.js_bootstrap
+=== PAUSE TestNextScriptForGaIsSilent/a_next/script_component_carrying_the_analytics.js_bootstrap
+=== RUN   TestNextScriptForGaIsSilent/a_next/script_component_carrying_a_bare_ga_snippet
+=== PAUSE TestNextScriptForGaIsSilent/a_next/script_component_carrying_a_bare_ga_snippet
+=== RUN   TestNextScriptForGaIsSilent/an_intrinsic_script_whose_dangerouslySetInnerHTML_is_empty
+=== PAUSE TestNextScriptForGaIsSilent/an_intrinsic_script_whose_dangerouslySetInnerHTML_is_empty
+=== CONT  TestNextScriptForGaIsSilent/next/script_components_carrying_gtag_src_and_inline_code
+=== CONT  TestNextScriptForGaReports
+=== RUN   TestNextScriptForGaReports/a_gtag_src_beside_a_silent_inline_gtag_snippet
+=== PAUSE TestNextScriptForGaReports/a_gtag_src_beside_a_silent_inline_gtag_snippet
+=== RUN   TestNextScriptForGaReports/an_inline_tag_manager_bootstrap
+=== PAUSE TestNextScriptForGaReports/an_inline_tag_manager_bootstrap
+=== RUN   TestNextScriptForGaReports/an_inline_analytics.js_loader
+=== PAUSE TestNextScriptForGaReports/an_inline_analytics.js_loader
+=== RUN   TestNextScriptForGaReports/a_silent_inline_ga_snippet_beside_an_analytics.js_src
+=== PAUSE TestNextScriptForGaReports/a_silent_inline_ga_snippet_beside_an_analytics.js_src
+=== RUN   TestNextScriptForGaReports/a_call_expression_inline_value_beside_an_analytics.js_src
+=== PAUSE TestNextScriptForGaReports/a_call_expression_inline_value_beside_an_analytics.js_src
+=== CONT  TestNextScriptForGaReports/a_gtag_src_beside_a_silent_inline_gtag_snippet
+=== CONT  TestInlineScriptIdReadsThroughParenthesesRatherThanAbandoningTheElement
+--- PASS: TestInlineScriptIdReadsThroughParenthesesRatherThanAbandoningTheElement (0.00s)
+=== CONT  TestInlineScriptIdSeesAnImportWrittenAfterTheJsx
+--- PASS: TestInlineScriptIdSeesAnImportWrittenAfterTheJsx (0.00s)
+=== CONT  TestInlineScriptIdArmsOnEveryDefaultImportRatherThanTheLastOne
+--- PASS: TestInlineScriptIdArmsOnEveryDefaultImportRatherThanTheLastOne (0.00s)
+=== CONT  TestInlineScriptIdRendersItsMessageExactly
+--- PASS: TestInlineScriptIdRendersItsMessageExactly (0.00s)
+=== CONT  TestInlineScriptIdPointsAtTheTagName
+=== RUN   TestInlineScriptIdPointsAtTheTagName/a_paired_element_reports_on_the_tag_name_and_not_on_the_element_or_its_children
+=== PAUSE TestInlineScriptIdPointsAtTheTagName/a_paired_element_reports_on_the_tag_name_and_not_on_the_element_or_its_children
+=== RUN   TestInlineScriptIdPointsAtTheTagName/a_self_closing_element_reports_on_the_tag_name_and_not_on_the_attribute_that_armed_it
+=== PAUSE TestInlineScriptIdPointsAtTheTagName/a_self_closing_element_reports_on_the_tag_name_and_not_on_the_attribute_that_armed_it
+=== RUN   TestInlineScriptIdPointsAtTheTagName/the_renamed_import_reports_its_own_longer_tag_name,_which_a_hardcoded_span_would_get_wrong
+=== PAUSE TestInlineScriptIdPointsAtTheTagName/the_renamed_import_reports_its_own_longer_tag_name,_which_a_hardcoded_span_would_get_wrong
+=== RUN   TestInlineScriptIdPointsAtTheTagName/an_aliased_import_reports_its_short_alias,_pinning_the_span_against_the_import_rather_than_the_word_Script
+=== PAUSE TestInlineScriptIdPointsAtTheTagName/an_aliased_import_reports_its_short_alias,_pinning_the_span_against_the_import_rather_than_the_word_Script
+=== CONT  TestInlineScriptIdPointsAtTheTagName/a_paired_element_reports_on_the_tag_name_and_not_on_the_element_or_its_children
+=== CONT  TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite
+=== RUN   TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/an_aliased_default_import_used_under_its_alias,_which_no_string_match_on_the_word_Script_would_catch
+=== PAUSE TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/an_aliased_default_import_used_under_its_alias,_which_no_string_match_on_the_word_Script_would_catch
+=== RUN   TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_default_import_written_alongside_a_named_one,_where_the_default_half_still_binds
+=== PAUSE TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_default_import_written_alongside_a_named_one,_where_the_default_half_still_binds
+=== RUN   TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_src_attribute,_which_exempts_nothing_despite_what_the_rule's_own_documentation_suggests
+=== PAUSE TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_src_attribute,_which_exempts_nothing_despite_what_the_rule's_own_documentation_suggests
+=== RUN   TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/children_that_are_whitespace_only,_which_ast.IsWhitespaceOnlyJsxText_would_wrongly_silence
+=== PAUSE TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/children_that_are_whitespace_only,_which_ast.IsWhitespaceOnlyJsxText_would_wrongly_silence
+=== RUN   TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_string_key_in_a_spread,_which_upstream_does_not_read_because_it_is_not_a_static_identifier
+=== PAUSE TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_string_key_in_a_spread,_which_upstream_does_not_read_because_it_is_not_a_static_identifier
+=== RUN   TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_computed_key_in_a_spread,_silent_for_the_same_reason_as_the_string_key
+=== PAUSE TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_computed_key_in_a_spread,_silent_for_the_same_reason_as_the_string_key
+=== RUN   TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_nested_spread_inside_the_spread_object,_which_contributes_no_key_at_all
+=== PAUSE TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_nested_spread_inside_the_spread_object,_which_contributes_no_key_at_all
+=== RUN   TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_namespaced_attribute_name,_which_is_not_a_JsxAttributeName_Identifier_upstream
+=== PAUSE TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_namespaced_attribute_name,_which_is_not_a_JsxAttributeName_Identifier_upstream
+=== CONT  TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/an_aliased_default_import_used_under_its_alias,_which_no_string_match_on_the_word_Script_would_catch
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_local_component_named_Script_with_no_import_at_all,_which_is_the_whole_negative_half_the_corpus_never_writes
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_local_component_named_Script_with_no_import_at_all,_which_is_the_whole_negative_half_the_corpus_never_writes
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_default_import_from_a_different_module,_guarding_the_exact_specifier_compare
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_default_import_from_a_different_module,_guarding_the_exact_specifier_compare
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_module_whose_name_merely_extends_the_specifier,_which_a_substring_compare_would_bind
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_module_whose_name_merely_extends_the_specifier,_which_a_substring_compare_would_bind
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_named_import,_which_does_not_bind_here_even_though_the_sibling_rule's_upstream_binds_it
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_named_import,_which_does_not_bind_here_even_though_the_sibling_rule's_upstream_binds_it
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_namespace_import,_silent_for_the_same_reason_as_the_named_one
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_namespace_import,_silent_for_the_same_reason_as_the_named_one
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_member_expression_tag,_where_the_kind_guard_is_load_bearing_because_Text_panics_on_a_property_access
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_member_expression_tag,_where_the_kind_guard_is_load_bearing_because_Text_panics_on_a_property_access
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_opaque_spread_with_children_and_no_id,_the_half_of_vercel/next.js#34030_the_corpus_cannot_isolate
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_opaque_spread_with_children_and_no_id,_the_half_of_vercel/next.js#34030_the_corpus_cannot_isolate
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_opaque_spread_abandoning_the_element_before_dangerouslySetInnerHTML_is_ever_consulted
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_opaque_spread_abandoning_the_element_before_dangerouslySetInnerHTML_is_ever_consulted
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_parenthesized_object_spread_supplying_the_id,_which_upstream_reaches_through_without_parentheses
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_parenthesized_object_spread_supplying_the_id,_which_upstream_reaches_through_without_parentheses
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_shorthand_property_in_a_spread_supplying_the_id,_whose_key_is_a_static_identifier
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_shorthand_property_in_a_spread_supplying_the_id,_whose_key_is_a_static_identifier
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_element_with_zero_children_between_its_tags,_which_is_not_inline
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_element_with_zero_children_between_its_tags,_which_is_not_inline
+=== RUN   TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_external_script_that_is_self_closing,_carrying_neither_trigger
+=== PAUSE TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_external_script_that_is_self_closing,_carrying_neither_trigger
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_local_component_named_Script_with_no_import_at_all,_which_is_the_whole_negative_half_the_corpus_never_writes
+=== CONT  TestInlineScriptIdFiresOnUpstreamFailCases
+=== RUN   TestInlineScriptIdFiresOnUpstreamFailCases/children_and_no_id
+=== PAUSE TestInlineScriptIdFiresOnUpstreamFailCases/children_and_no_id
+=== RUN   TestInlineScriptIdFiresOnUpstreamFailCases/dangerouslySetInnerHTML_and_no_id,_self_closing
+=== PAUSE TestInlineScriptIdFiresOnUpstreamFailCases/dangerouslySetInnerHTML_and_no_id,_self_closing
+=== RUN   TestInlineScriptIdFiresOnUpstreamFailCases/the_renamed_default_import_MyScript_with_children_and_no_id
+=== PAUSE TestInlineScriptIdFiresOnUpstreamFailCases/the_renamed_default_import_MyScript_with_children_and_no_id
+=== RUN   TestInlineScriptIdFiresOnUpstreamFailCases/the_renamed_default_import_MyScript_with_dangerouslySetInnerHTML_and_no_id,_self_closing
+=== PAUSE TestInlineScriptIdFiresOnUpstreamFailCases/the_renamed_default_import_MyScript_with_dangerouslySetInnerHTML_and_no_id,_self_closing
+=== CONT  TestInlineScriptIdFiresOnUpstreamFailCases/children_and_no_id
+=== CONT  TestInlineScriptIdIsSilentOnUpstreamPassCases
+=== RUN   TestInlineScriptIdIsSilentOnUpstreamPassCases/an_id_attribute_alongside_children
+=== PAUSE TestInlineScriptIdIsSilentOnUpstreamPassCases/an_id_attribute_alongside_children
+=== RUN   TestInlineScriptIdIsSilentOnUpstreamPassCases/an_id_attribute_alongside_dangerouslySetInnerHTML,_self_closing
+=== PAUSE TestInlineScriptIdIsSilentOnUpstreamPassCases/an_id_attribute_alongside_dangerouslySetInnerHTML,_self_closing
+=== RUN   TestInlineScriptIdIsSilentOnUpstreamPassCases/an_external_script_with_a_src_and_nothing_inline
+=== PAUSE TestInlineScriptIdIsSilentOnUpstreamPassCases/an_external_script_with_a_src_and_nothing_inline
+=== RUN   TestInlineScriptIdIsSilentOnUpstreamPassCases/the_renamed_default_import_MyScript_with_an_id_and_children
+=== PAUSE TestInlineScriptIdIsSilentOnUpstreamPassCases/the_renamed_default_import_MyScript_with_an_id_and_children
+=== RUN   TestInlineScriptIdIsSilentOnUpstreamPassCases/the_renamed_default_import_MyScript_with_an_id_and_dangerouslySetInnerHTML
+=== PAUSE TestInlineScriptIdIsSilentOnUpstreamPassCases/the_renamed_default_import_MyScript_with_an_id_and_dangerouslySetInnerHTML
+=== RUN   TestInlineScriptIdIsSilentOnUpstreamPassCases/an_object_spread_that_does_not_supply_id,_next_to_a_real_id_written_as_an_expression_container
+=== PAUSE TestInlineScriptIdIsSilentOnUpstreamPassCases/an_object_spread_that_does_not_supply_id,_next_to_a_real_id_written_as_an_expression_container
+=== RUN   TestInlineScriptIdIsSilentOnUpstreamPassCases/an_object_spread_that_supplies_the_id_entirely,_which_is_the_surprising_case
+=== PAUSE TestInlineScriptIdIsSilentOnUpstreamPassCases/an_object_spread_that_supplies_the_id_entirely,_which_is_the_surprising_case
+=== RUN   TestInlineScriptIdIsSilentOnUpstreamPassCases/an_opaque_spread,_which_abandons_the_element_before_the_id_it_also_carries_is_ever_consulted
+=== PAUSE TestInlineScriptIdIsSilentOnUpstreamPassCases/an_opaque_spread,_which_abandons_the_element_before_the_id_it_also_carries_is_ever_consulted
+=== CONT  TestInlineScriptIdIsSilentOnUpstreamPassCases/an_id_attribute_alongside_children
+=== CONT  TestGoogleFontPreconnectDecodesEntities
+=== RUN   TestGoogleFontPreconnectDecodesEntities/encoded_slashes_in_the_font_host
+=== PAUSE TestGoogleFontPreconnectDecodesEntities/encoded_slashes_in_the_font_host
+=== RUN   TestGoogleFontPreconnectDecodesEntities/an_encoded_letter_in_rel
+=== PAUSE TestGoogleFontPreconnectDecodesEntities/an_encoded_letter_in_rel
+=== CONT  TestGoogleFontPreconnectDecodesEntities/encoded_slashes_in_the_font_host
+=== CONT  TestGoogleFontPreconnectIsSilent
+=== RUN   TestGoogleFontPreconnectIsSilent/preconnect_is_present
+=== PAUSE TestGoogleFontPreconnectIsSilent/preconnect_is_present
+=== RUN   TestGoogleFontPreconnectIsSilent/preconnect_written_in_mixed_case
+=== PAUSE TestGoogleFontPreconnectIsSilent/preconnect_written_in_mixed_case
+=== RUN   TestGoogleFontPreconnectIsSilent/computed_href
+=== PAUSE TestGoogleFontPreconnectIsSilent/computed_href
+=== RUN   TestGoogleFontPreconnectIsSilent/href_built_from_a_URL_object
+=== PAUSE TestGoogleFontPreconnectIsSilent/href_built_from_a_URL_object
+=== RUN   TestGoogleFontPreconnectIsSilent/a_different_host
+=== PAUSE TestGoogleFontPreconnectIsSilent/a_different_host
+=== RUN   TestGoogleFontPreconnectIsSilent/the_googleapis_host_rather_than_gstatic
+=== PAUSE TestGoogleFontPreconnectIsSilent/the_googleapis_host_rather_than_gstatic
+=== RUN   TestGoogleFontPreconnectIsSilent/no_href
+=== PAUSE TestGoogleFontPreconnectIsSilent/no_href
+=== RUN   TestGoogleFontPreconnectIsSilent/spread_attributes
+=== PAUSE TestGoogleFontPreconnectIsSilent/spread_attributes
+=== RUN   TestGoogleFontPreconnectIsSilent/member_expression_name
+=== PAUSE TestGoogleFontPreconnectIsSilent/member_expression_name
+=== CONT  TestGoogleFontPreconnectIsSilent/preconnect_is_present
+=== CONT  TestGoogleFontPreconnectReports/rel_is_a_computed_expression
+=== CONT  TestGoogleFontPreconnectReports/a_longer_path_on_the_font_host
+=== CONT  TestGoogleFontPreconnectReports/uppercase_attribute_names
+=== CONT  TestGoogleFontPreconnectReports/rel_is_present_but_wrong
+--- PASS: TestGoogleFontPreconnectReports (0.00s)
+    --- PASS: TestGoogleFontPreconnectReports/no_rel_at_all (0.00s)
+    --- PASS: TestGoogleFontPreconnectReports/rel_is_a_computed_expression (0.00s)
+    --- PASS: TestGoogleFontPreconnectReports/a_longer_path_on_the_font_host (0.00s)
+    --- PASS: TestGoogleFontPreconnectReports/uppercase_attribute_names (0.00s)
+    --- PASS: TestGoogleFontPreconnectReports/rel_is_present_but_wrong (0.00s)
+=== CONT  TestNextScriptForGaDecodesEntities/an_encoded_slash_in_another_src
+--- PASS: TestNextScriptForGaDecodesEntities (0.00s)
+    --- PASS: TestNextScriptForGaDecodesEntities/an_encoded_slash_in_the_analytics_src (0.00s)
+    --- PASS: TestNextScriptForGaDecodesEntities/an_encoded_slash_in_another_src (0.00s)
+=== CONT  TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/a_differently_cased_spelling_in_front_of_a_matching_one
+=== CONT  TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/a_non_object_in_front_of_a_matching_one
+--- PASS: TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml (0.00s)
+    --- PASS: TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/an_empty_object_in_front_of_a_matching_one (0.00s)
+    --- PASS: TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/a_differently_cased_spelling_in_front_of_a_matching_one (0.00s)
+    --- PASS: TestNextScriptForGaAnswersFromTheFirstDangerouslySetInnerHtml/a_non_object_in_front_of_a_matching_one (0.00s)
+=== CONT  TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_spread_beside_the_real_key
+=== CONT  TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_getter
+=== CONT  TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_method
+=== CONT  TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_shorthand_beside_the_real_key
+--- PASS: TestNextScriptForGaSurvivesPropertyShapesItCannotConvert (0.00s)
+    --- PASS: TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_shorthand_property (0.00s)
+    --- PASS: TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_spread_beside_the_real_key (0.00s)
+    --- PASS: TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_getter (0.00s)
+    --- PASS: TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_method (0.00s)
+    --- PASS: TestNextScriptForGaSurvivesPropertyShapesItCannotConvert/a_shorthand_beside_the_real_key (0.00s)
+=== CONT  TestNextScriptForGaPointsAtTheTagName/the_inline_arm
+--- PASS: TestNextScriptForGaPointsAtTheTagName (0.00s)
+    --- PASS: TestNextScriptForGaPointsAtTheTagName/the_src_arm (0.00s)
+    --- PASS: TestNextScriptForGaPointsAtTheTagName/the_inline_arm (0.00s)
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_identifier_rather_than_an_object_literal
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_object_holding_only_a_spread
+=== CONT  TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/children_that_are_whitespace_only,_which_ast.IsWhitespaceOnlyJsxText_would_wrongly_silence
+=== CONT  TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_string_key_in_a_spread,_which_upstream_does_not_read_because_it_is_not_a_static_identifier
+=== CONT  TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_src_attribute,_which_exempts_nothing_despite_what_the_rule's_own_documentation_suggests
+=== CONT  TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_default_import_written_alongside_a_named_one,_where_the_default_half_still_binds
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_external_script_that_is_self_closing,_carrying_neither_trigger
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_element_with_zero_children_between_its_tags,_which_is_not_inline
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_shorthand_property_in_a_spread_supplying_the_id,_whose_key_is_a_static_identifier
+=== CONT  TestNextScriptForGaReportsTheMeasuredEdgeCases/a_non_matching_src_falling_through_to_a_matching_inline_value
+=== CONT  TestNextScriptForGaReportsTheMeasuredEdgeCases/a_url_before_an_interpolation
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_parenthesized_object_literal
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_parenthesized_object_spread_supplying_the_id,_which_upstream_reaches_through_without_parentheses
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_computed___html_key
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_string___html_key
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_escaped_period_inside_the_inline_url
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_url_after_an_interpolation
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_string_literal_inline_value
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_uppercase_script_tag
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/the_gtag_js_path_inside_an_inline_value
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_div_carrying_the_inline_loader
+=== CONT  TestNextScriptForGaReportsTheMeasuredEdgeCases/an___html_key_written_second
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_namespaced_src_attribute
+=== CONT  TestNextScriptForGaReportsTheMeasuredEdgeCases/an_http_scheme_rather_than_https
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_expression_valued_src
+=== CONT  TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_uppercase_src_value
+=== CONT  TestNextScriptForGaReportsTheMeasuredEdgeCases/a_paired_script_element
+--- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/the_tag_manager_gtm.js_path_in_a_src (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_identifier_rather_than_an_object_literal (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_object_holding_only_a_spread (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_parenthesized_object_literal (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_computed___html_key (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_string___html_key (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_escaped_period_inside_the_inline_url (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_url_after_an_interpolation (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_string_literal_inline_value (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_uppercase_script_tag (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/the_gtag_js_path_inside_an_inline_value (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_div_carrying_the_inline_loader (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/a_namespaced_src_attribute (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_expression_valued_src (0.00s)
+    --- PASS: TestNextScriptForGaIsSilentOnTheMeasuredEdgeCases/an_uppercase_src_value (0.00s)
+=== CONT  TestInlineScriptIdIsSilentOnUpstreamPassCases/an_object_spread_that_does_not_supply_id,_next_to_a_real_id_written_as_an_expression_container
+=== CONT  TestNextScriptForGaReportsTheMeasuredEdgeCases/an_uppercase_dangerouslySetInnerHTML_attribute_name
+=== CONT  TestNextScriptForGaReportsTheMeasuredEdgeCases/a_spread_beside_a_matching_inline_value
+=== CONT  TestNextScriptForGaIsSilent/an_intrinsic_script_whose_dangerouslySetInnerHTML_is_empty
+--- PASS: TestNextScriptForGaReportsTheMeasuredEdgeCases (0.00s)
+    --- PASS: TestNextScriptForGaReportsTheMeasuredEdgeCases/an_uppercase_src_attribute_name (0.00s)
+    --- PASS: TestNextScriptForGaReportsTheMeasuredEdgeCases/a_non_matching_src_falling_through_to_a_matching_inline_value (0.00s)
+    --- PASS: TestNextScriptForGaReportsTheMeasuredEdgeCases/a_url_before_an_interpolation (0.00s)
+    --- PASS: TestNextScriptForGaReportsTheMeasuredEdgeCases/an___html_key_written_second (0.00s)
+    --- PASS: TestNextScriptForGaReportsTheMeasuredEdgeCases/an_http_scheme_rather_than_https (0.00s)
+    --- PASS: TestNextScriptForGaReportsTheMeasuredEdgeCases/a_paired_script_element (0.00s)
+    --- PASS: TestNextScriptForGaReportsTheMeasuredEdgeCases/an_uppercase_dangerouslySetInnerHTML_attribute_name (0.00s)
+    --- PASS: TestNextScriptForGaReportsTheMeasuredEdgeCases/a_spread_beside_a_matching_inline_value (0.00s)
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_module_whose_name_merely_extends_the_specifier,_which_a_substring_compare_would_bind
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_default_import_from_a_different_module,_guarding_the_exact_specifier_compare
+=== CONT  TestInlineScriptIdFiresOnUpstreamFailCases/the_renamed_default_import_MyScript_with_dangerouslySetInnerHTML_and_no_id,_self_closing
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_opaque_spread_abandoning_the_element_before_dangerouslySetInnerHTML_is_ever_consulted
+=== CONT  TestNextScriptForGaIsSilent/a_next/script_component_carrying_a_bare_ga_snippet
+=== CONT  TestInlineScriptIdFiresOnUpstreamFailCases/the_renamed_default_import_MyScript_with_children_and_no_id
+=== CONT  TestInlineScriptIdFiresOnUpstreamFailCases/dangerouslySetInnerHTML_and_no_id,_self_closing
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_opaque_spread_with_children_and_no_id,_the_half_of_vercel/next.js#34030_the_corpus_cannot_isolate
+--- PASS: TestInlineScriptIdFiresOnUpstreamFailCases (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnUpstreamFailCases/children_and_no_id (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnUpstreamFailCases/the_renamed_default_import_MyScript_with_dangerouslySetInnerHTML_and_no_id,_self_closing (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnUpstreamFailCases/the_renamed_default_import_MyScript_with_children_and_no_id (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnUpstreamFailCases/dangerouslySetInnerHTML_and_no_id,_self_closing (0.00s)
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_member_expression_tag,_where_the_kind_guard_is_load_bearing_because_Text_panics_on_a_property_access
+=== CONT  TestInlineScriptIdIsSilentOnUpstreamPassCases/an_object_spread_that_supplies_the_id_entirely,_which_is_the_surprising_case
+=== CONT  TestInlineScriptIdIsSilentOnUpstreamPassCases/an_opaque_spread,_which_abandons_the_element_before_the_id_it_also_carries_is_ever_consulted
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_namespace_import,_silent_for_the_same_reason_as_the_named_one
+=== CONT  TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_named_import,_which_does_not_bind_here_even_though_the_sibling_rule's_upstream_binds_it
+=== CONT  TestNextScriptForGaIsSilent/a_next/script_component_carrying_the_analytics.js_bootstrap
+=== CONT  TestInlineScriptIdPointsAtTheTagName/an_aliased_import_reports_its_short_alias,_pinning_the_span_against_the_import_rather_than_the_word_Script
+=== CONT  TestNextScriptForGaReports/a_silent_inline_ga_snippet_beside_an_analytics.js_src
+=== CONT  TestNextScriptForGaReports/an_inline_analytics.js_loader
+--- PASS: TestNextScriptForGaIsSilent (0.00s)
+    --- PASS: TestNextScriptForGaIsSilent/next/script_components_carrying_gtag_src_and_inline_code (0.00s)
+    --- PASS: TestNextScriptForGaIsSilent/an_intrinsic_script_whose_dangerouslySetInnerHTML_is_empty (0.00s)
+    --- PASS: TestNextScriptForGaIsSilent/a_next/script_component_carrying_a_bare_ga_snippet (0.00s)
+    --- PASS: TestNextScriptForGaIsSilent/a_next/script_component_carrying_the_analytics.js_bootstrap (0.00s)
+=== CONT  TestInlineScriptIdPointsAtTheTagName/the_renamed_import_reports_its_own_longer_tag_name,_which_a_hardcoded_span_would_get_wrong
+--- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_local_component_named_Script_with_no_import_at_all,_which_is_the_whole_negative_half_the_corpus_never_writes (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_external_script_that_is_self_closing,_carrying_neither_trigger (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_element_with_zero_children_between_its_tags,_which_is_not_inline (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_shorthand_property_in_a_spread_supplying_the_id,_whose_key_is_a_static_identifier (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_default_import_from_a_different_module,_guarding_the_exact_specifier_compare (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_module_whose_name_merely_extends_the_specifier,_which_a_substring_compare_would_bind (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_opaque_spread_abandoning_the_element_before_dangerouslySetInnerHTML_is_ever_consulted (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/an_opaque_spread_with_children_and_no_id,_the_half_of_vercel/next.js#34030_the_corpus_cannot_isolate (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_member_expression_tag,_where_the_kind_guard_is_load_bearing_because_Text_panics_on_a_property_access (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_namespace_import,_silent_for_the_same_reason_as_the_named_one (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_named_import,_which_does_not_bind_here_even_though_the_sibling_rule's_upstream_binds_it (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnCasesUpstreamDoesNotWrite/a_parenthesized_object_spread_supplying_the_id,_which_upstream_reaches_through_without_parentheses (0.00s)
+=== CONT  TestInlineScriptIdIsSilentOnUpstreamPassCases/the_renamed_default_import_MyScript_with_an_id_and_dangerouslySetInnerHTML
+=== CONT  TestNextScriptForGaReports/a_call_expression_inline_value_beside_an_analytics.js_src
+=== CONT  TestNextScriptForGaReports/an_inline_tag_manager_bootstrap
+=== CONT  TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_namespaced_attribute_name,_which_is_not_a_JsxAttributeName_Identifier_upstream
+=== CONT  TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_nested_spread_inside_the_spread_object,_which_contributes_no_key_at_all
+--- PASS: TestNextScriptForGaReports (0.00s)
+    --- PASS: TestNextScriptForGaReports/a_gtag_src_beside_a_silent_inline_gtag_snippet (0.00s)
+    --- PASS: TestNextScriptForGaReports/a_silent_inline_ga_snippet_beside_an_analytics.js_src (0.00s)
+    --- PASS: TestNextScriptForGaReports/an_inline_analytics.js_loader (0.00s)
+    --- PASS: TestNextScriptForGaReports/an_inline_tag_manager_bootstrap (0.00s)
+    --- PASS: TestNextScriptForGaReports/a_call_expression_inline_value_beside_an_analytics.js_src (0.00s)
+=== CONT  TestInlineScriptIdPointsAtTheTagName/a_self_closing_element_reports_on_the_tag_name_and_not_on_the_attribute_that_armed_it
+=== CONT  TestGoogleFontPreconnectIsSilent/spread_attributes
+=== CONT  TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_computed_key_in_a_spread,_silent_for_the_same_reason_as_the_string_key
+--- PASS: TestInlineScriptIdPointsAtTheTagName (0.00s)
+    --- PASS: TestInlineScriptIdPointsAtTheTagName/a_paired_element_reports_on_the_tag_name_and_not_on_the_element_or_its_children (0.00s)
+    --- PASS: TestInlineScriptIdPointsAtTheTagName/an_aliased_import_reports_its_short_alias,_pinning_the_span_against_the_import_rather_than_the_word_Script (0.00s)
+    --- PASS: TestInlineScriptIdPointsAtTheTagName/the_renamed_import_reports_its_own_longer_tag_name,_which_a_hardcoded_span_would_get_wrong (0.00s)
+    --- PASS: TestInlineScriptIdPointsAtTheTagName/a_self_closing_element_reports_on_the_tag_name_and_not_on_the_attribute_that_armed_it (0.00s)
+=== CONT  TestInlineScriptIdIsSilentOnUpstreamPassCases/an_id_attribute_alongside_dangerouslySetInnerHTML,_self_closing
+=== CONT  TestGoogleFontPreconnectDecodesEntities/an_encoded_letter_in_rel
+--- PASS: TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/an_aliased_default_import_used_under_its_alias,_which_no_string_match_on_the_word_Script_would_catch (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/children_that_are_whitespace_only,_which_ast.IsWhitespaceOnlyJsxText_would_wrongly_silence (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_src_attribute,_which_exempts_nothing_despite_what_the_rule's_own_documentation_suggests (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_default_import_written_alongside_a_named_one,_where_the_default_half_still_binds (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_string_key_in_a_spread,_which_upstream_does_not_read_because_it_is_not_a_static_identifier (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_namespaced_attribute_name,_which_is_not_a_JsxAttributeName_Identifier_upstream (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_nested_spread_inside_the_spread_object,_which_contributes_no_key_at_all (0.00s)
+    --- PASS: TestInlineScriptIdFiresOnCasesUpstreamDoesNotWrite/a_computed_key_in_a_spread,_silent_for_the_same_reason_as_the_string_key (0.00s)
+=== CONT  TestGoogleFontPreconnectIsSilent/a_different_host
+--- PASS: TestGoogleFontPreconnectDecodesEntities (0.00s)
+    --- PASS: TestGoogleFontPreconnectDecodesEntities/encoded_slashes_in_the_font_host (0.00s)
+    --- PASS: TestGoogleFontPreconnectDecodesEntities/an_encoded_letter_in_rel (0.00s)
+=== CONT  TestGoogleFontPreconnectIsSilent/member_expression_name
+=== CONT  TestGoogleFontPreconnectIsSilent/no_href
+=== CONT  TestGoogleFontPreconnectIsSilent/the_googleapis_host_rather_than_gstatic
+=== CONT  TestGoogleFontPreconnectIsSilent/computed_href
+=== CONT  TestInlineScriptIdIsSilentOnUpstreamPassCases/the_renamed_default_import_MyScript_with_an_id_and_children
+=== CONT  TestGoogleFontPreconnectIsSilent/preconnect_written_in_mixed_case
+=== CONT  TestGoogleFontPreconnectIsSilent/href_built_from_a_URL_object
+=== CONT  TestInlineScriptIdIsSilentOnUpstreamPassCases/an_external_script_with_a_src_and_nothing_inline
+--- PASS: TestInlineScriptIdIsSilentOnUpstreamPassCases (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnUpstreamPassCases/an_id_attribute_alongside_children (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnUpstreamPassCases/an_object_spread_that_does_not_supply_id,_next_to_a_real_id_written_as_an_expression_container (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnUpstreamPassCases/an_object_spread_that_supplies_the_id_entirely,_which_is_the_surprising_case (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnUpstreamPassCases/an_opaque_spread,_which_abandons_the_element_before_the_id_it_also_carries_is_ever_consulted (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnUpstreamPassCases/an_id_attribute_alongside_dangerouslySetInnerHTML,_self_closing (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnUpstreamPassCases/the_renamed_default_import_MyScript_with_an_id_and_children (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnUpstreamPassCases/an_external_script_with_a_src_and_nothing_inline (0.00s)
+    --- PASS: TestInlineScriptIdIsSilentOnUpstreamPassCases/the_renamed_default_import_MyScript_with_an_id_and_dangerouslySetInnerHTML (0.00s)
+--- PASS: TestGoogleFontPreconnectIsSilent (0.00s)
+    --- PASS: TestGoogleFontPreconnectIsSilent/preconnect_is_present (0.00s)
+    --- PASS: TestGoogleFontPreconnectIsSilent/spread_attributes (0.00s)
+    --- PASS: TestGoogleFontPreconnectIsSilent/a_different_host (0.00s)
+    --- PASS: TestGoogleFontPreconnectIsSilent/no_href (0.00s)
+    --- PASS: TestGoogleFontPreconnectIsSilent/member_expression_name (0.00s)
+    --- PASS: TestGoogleFontPreconnectIsSilent/the_googleapis_host_rather_than_gstatic (0.00s)
+    --- PASS: TestGoogleFontPreconnectIsSilent/computed_href (0.00s)
+    --- PASS: TestGoogleFontPreconnectIsSilent/preconnect_written_in_mixed_case (0.00s)
+    --- PASS: TestGoogleFontPreconnectIsSilent/href_built_from_a_URL_object (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/next	0.044s

@@ -1,0 +1,6 @@
+=== RUN   TestClaimedRulesNeedJSX
+    jsx_gap_test.go:45: /tmp/adamic-gate/TestClaimedRulesNeedJSX1611685961/001/mutant.a:7:1: stage 0 can't lower a PropertyAccessExpression as a statement yet
+--- FAIL: TestClaimedRulesNeedJSX (0.43s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/next-google-font-preconnect	0.445s
+FAIL

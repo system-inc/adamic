@@ -1,0 +1,6 @@
+=== RUN   TestClaimedRulesNeedJSX
+    jsx_gap_test.go:28: load: no file at /workspace/stage1/cohere/lint/rules/next-google-font-preconnect/parser-probe.a
+--- FAIL: TestClaimedRulesNeedJSX (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/next-google-font-preconnect	0.006s
+FAIL

@@ -1,0 +1,18 @@
+=== RUN   TestClaimedRulesNeedJSX
+    jsx_gap_test.go:61: Go witnesses: exit status 2 panic: fileName should be normalized and absolute: "Component.tsx"
+        
+        goroutine 1 [running]:
+        github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewSourceFile(0x31e44a09510, {{0x8e096e, 0xd}, {0x8e096e, 0xd}, {0x0, 0x0}}, {0x31e448d2370, 0x45}, 0x31e448c7620, ...)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2528 +0x24e
+        github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSourceFileWorker(0x31e44a09508)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:449 +0x2a7
+        github.com/microsoft/TypeScript/tsc/internal/parser.ParseSourceFile({{0x8e096e, 0xd}, {0x8e096e, 0xd}, {0x0, 0x0}}, {0x31e448d2370, 0x45}, 0x4)
+        	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:143 +0x14b
+        github.com/microsoft/TypeScript/tsc/shim/parser.ParseSourceFile(...)
+        	/workspace/adamic/cohere/TypeScript-shim/parser/shim.go:16
+        main.main()
+        	/workspace/adamic/cohere/adamic_wave12_next_probe.go:16 +0x294
+--- FAIL: TestClaimedRulesNeedJSX (24.88s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/next-google-font-preconnect	24.914s
+FAIL
