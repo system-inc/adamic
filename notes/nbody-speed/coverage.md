@@ -25,7 +25,7 @@ Existing programs below are under internal/oracle/testdata. New names omit the n
 | Optional cache miss with present/absent field | literal_optional_shapes.a, field_access_paths.a | optional_references |
 | Optional cache hit on present and absent shape, alternating back again | literal_optional_shapes.a: repeated empty objects | optional_references: repeated string and object presence and absence |
 | Present optional property written after narrowing | field_write_paths.a: extra | optional_references: string and object replacement |
-| Absent optional property written without presence proof | No oracle program creates a missing optional slot; native/field_write_absent.a is a safety test | optional_write_number.a and optional_write_string.a differ, kept here |
+| Absent optional property written without presence proof | No oracle program creates a missing optional slot; native/field_write_absent.a is a safety test | optional_write_number.a, optional_write_string.a and optional_write_unknown.a differ, kept here |
 | Optional chaining on undefined receiver vs absent property | literal_optional_shapes.a, optional_class_method.a | Existing coverage retained |
 | Numeric representation: number, NaN, signed zero, number or undefined, undefined-only readonly view | maybe_number_slots.a, literal_optional_shapes.a, e4eec87_u01_undefined_field_widened.a | field_values: class writes undefined then -0 |
 | Boolean stores and reads | maybe_booleans.a: Lamp | field_values, slot_kinds, static_collision |
@@ -47,12 +47,15 @@ Existing programs below are under internal/oracle/testdata. New names omit the n
 
 ## Differences
 
-Both programs build successfully. The oracle runs also agreed between sanitized native and release native, and between Node and the JavaScript backend. Native differs from source Node in both cases. This is the fixed-layout limitation documented by the branch, not evidence of a new regression introduced by the branch.
+All three programs build successfully. The oracle runs also agreed between sanitized native and release native, and between Node and the JavaScript backend. Native differs from source Node in all three cases. This is the fixed-layout limitation documented by the branch, not evidence of a new regression introduced by the branch.
 
-- optional_write_number.a: Node stdout `undefined\n2\n`, exit 0; native stdout `undefined\n`, stderr `adamic: panic: compiler bug: a field the checker proved is there is missing\n`, exit 70.
+- optional_write_number.a: Node stdout `1\n2\nundefined\n2\n`, exit 0; native stdout `1\n2\nundefined\n`, stderr `adamic: panic: compiler bug: a field the checker proved is there is missing\n`, exit 70.
+- optional_write_unknown.a: Node stdout `undefined\n2\n`, exit 0; native stdout `undefined\n`, the same stderr, exit 70.
 - optional_write_string.a: Node stdout `absent\ncreated1\n`, exit 0; native stdout `absent\n`, the same stderr, exit 70.
 
-The branch routes a nonstatic write to checked data lookup in internal/native/emit_objects.go:80. adamic_object_find in internal/native/runtime/object.c:54 panics instead of extending a missing property's layout. The number probe has no known amount offset and uses checked lookup. The string probe has the runtime-reserved text offset but no matching literal guard and also falls back to lookup. Adding a missing property remains unsupported.
+The uncached oracle also labels the repeated exit-70 panic from its leak-check execution as a failure; that output contains no LeakSanitizer leak report.
+
+The branch routes a nonstatic write to checked data lookup in internal/native/emit_objects.go:80. adamic_object_find in internal/native/runtime/object.c:54 panics instead of extending a missing property's layout. The number probe first writes a present amount slot, then an absent one: emitted C checks the known literal shape and falls back on the empty shape. The unknown probe has no known amount offset and uses checked lookup. The string probe has the runtime-reserved text offset but no matching literal guard and also falls back to lookup. Adding a missing property remains unsupported.
 
 ## Cases that cannot be tested as supported source programs
 
@@ -89,3 +92,9 @@ setup: build cache warm (97s)
 setup: done in 97s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
 nproc: 5
 ```
+
+## Final validation result
+
+Ten new oracle fixtures agree across source Node, native under ASan/UBSan, release native and the JavaScript backend, with leak checks passing. Each standalone build agrees with source Node. The final counts update adds exactly ten rows and changes no existing row. Three notes programs differ at the documented missing-property limitation; two additional notes programs are refused by lowering.
+
+The uncached repository gate exited 1 solely because TestMarkdownUnicodeWidths could not load the Node reference package emoji-regex from /tmp/adamic-markdown-width. Every other package passed, and every other test in markdownblocks finished without a reported failure. Installed the exact reference versions documented in generate_width: emoji-regex 10.6.0, get-east-asian-width 1.6.0 and narrow-emojis 0.0.3, with npm lifecycle scripts disabled. Reran only TestMarkdownUnicodeWidths uncached; it passed in 132.306s. The full command was not repeated after this environment fix. The original failure and successful isolated retry are both recorded in repository-gate.log and width-retry.log.
