@@ -100,3 +100,9 @@ origin/main e8ba3d5d. All implemented wave-30 gates, inherited corpus comparison
 sanitisers and released handles re-pass; the complete React analyses remain
 partial and no new rules were claimed. See ../WAVE_30_LANDING_REPORT.md and
 validation-wave-30-landing/rebase.json for current commits and failure proofs.
+
+Numeric listener update: dc40511f declares pinned numeric SyntaxKind lists for all
+eight implemented behavior ports. All nine existing oracle gates and eight new
+listener-comparison mutants pass on unchanged origin/main e8ba3d5d. Numeric
+ParseNode/handed-node driver APIs and complete React analysis prerequisites remain
+blocked shared work; no new rules are claimed. See ../WAVE_30_LISTENERS_REPORT.md.
