@@ -1,5 +1,22 @@
 # Frequency-prioritized twenty-rule continuation
 
+This is the dated record of how the ten rules below were selected and first verified. Since
+2026-10-07 they live on the registry like every other rule, one directory each under `rules/`
+(`no-plusplus`, `no-negated-condition`, `no-return-assign`, `base-consistency-no-console`,
+`nexus-consistency-require-type-suffix`, `nexus-consistency-no-enum`, `adamic-no-type-predicate`,
+`typescript-method-signature-style`, `typescript-no-wrapper-object-types`,
+`typescript-prefer-literal-enum-member`). The files this record names have moved:
+
+- `volume.ts` is gone; each rule's code is its directory's `rule.ts`.
+- `volume_messages.ts` and `testdata/generate_volume_messages.py`, which generated it, are gone; each
+  rule's exact descriptions are its directory's `messages.ts`. `testdata/volume_rules.json`, the
+  generator's input, is gone; the selection table below is the same data.
+- `TestVolumeMutants` and `volume_test.go` are gone; each of the ten mutants in the table below is its
+  rule's `mutant.json`, run by `TestMutants`. The volume source and its four option rows are part of
+  `generated()` in `lint_test.go`, and each rule has its own witness.
+- `testdata/frequency.go` and `volume_evidence/` remain, as the ranking tool and the logs of the runs
+  described here. The commands below are the ones those runs used.
+
 Baseline `e27d185a488c1c23c685ad0ed686b891dc2a8588`. The Go ranking runs
 unmodified registered rules with default options, before any new verdicts are
 ported. It visits 77 pinned TypeScript 6.0.3 compiler files and 321 tracked

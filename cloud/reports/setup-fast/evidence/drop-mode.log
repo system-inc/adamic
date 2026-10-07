@@ -1,0 +1,13 @@
+.F..
+======================================================================
+FAIL: test_every_component_invalidates (__main__.WarmingKey.test_every_component_invalidates) (component='mode')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup.py", line 38, in test_every_component_invalidates
+    self.assertNotEqual(answer, key.warming_key(**changed), component)
+AssertionError: '555349a8ce1eb6eab5a301675a7688035d42ebe21d34c4f9975404cc2f30bc07' == '555349a8ce1eb6eab5a301675a7688035d42ebe21d34c4f9975404cc2f30bc07' : mode
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+FAILED (failures=1)

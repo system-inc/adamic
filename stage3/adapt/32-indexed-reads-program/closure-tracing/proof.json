@@ -1,0 +1,130 @@
+{
+  "file": "tracing.ts",
+  "before": {
+    "roots": 78,
+    "count": 6,
+    "diagnostics": [
+      "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:122:13: error TS2412: Type 'undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+      "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:40:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:63:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:66:81: error TS18046: 'e' is of type 'unknown'.",
+      "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:82:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:83:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    ],
+    "whole_tree": 370
+  },
+  "after": {
+    "roots": 78,
+    "count": 5,
+    "diagnostics": [
+      "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:40:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:63:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:66:81: error TS18046: 'e' is of type 'unknown'.",
+      "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:82:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "/tmp/adapt32-close-source-only/src/compiler/tracing.ts:83:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    ],
+    "whole_tree": 369,
+    "whole_files_at_zero": 40
+  },
+  "type_mutant": {
+    "count": 6,
+    "diagnostics": [
+      "/tmp/adapt32-tracing-type-mutant/src/compiler/tracing.ts:122:13: error TS2412: Type 'undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+      "/tmp/adapt32-tracing-type-mutant/src/compiler/tracing.ts:40:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "/tmp/adapt32-tracing-type-mutant/src/compiler/tracing.ts:63:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "/tmp/adapt32-tracing-type-mutant/src/compiler/tracing.ts:66:81: error TS18046: 'e' is of type 'unknown'.",
+      "/tmp/adapt32-tracing-type-mutant/src/compiler/tracing.ts:82:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "/tmp/adapt32-tracing-type-mutant/src/compiler/tracing.ts:83:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    ]
+  },
+  "emitted_javascript": "byte-identical for all 26 partition files",
+  "idempotence": "zero second-run edits",
+  "oracle": {
+    "tree": "/tmp/adapt32-close-before",
+    "nproc": 5,
+    "workers": 4,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 4.8
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 2.77
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=4",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 0,
+        "seconds": 410.157
+      }
+    },
+    "status": "pass",
+    "counts": {
+      "passing": 106367,
+      "failing": 0,
+      "pending": 0
+    },
+    "baseline_diffs": [],
+    "wall_seconds": 417.797
+  },
+  "source_before_sha256": "d64b6d3c6b63d39b05886f79059b3a9baf42bdf9dadc37de0a47757d7e403295",
+  "source_after_sha256": "39ba5c1e2c30059a157c3f5cb913b0bb23e6f5958d6abc9a4c20b1ea7e9adda6",
+  "remaining_findings": [
+    {
+      "file": "tracing.ts",
+      "line": 40,
+      "code": "TS2591",
+      "action": "decline",
+      "reason": "fs module is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract."
+    },
+    {
+      "file": "tracing.ts",
+      "line": 63,
+      "code": "TS2591",
+      "action": "decline",
+      "reason": "require is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract."
+    },
+    {
+      "file": "tracing.ts",
+      "line": 82,
+      "code": "TS2591",
+      "action": "decline",
+      "reason": "process.pid is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract."
+    },
+    {
+      "file": "tracing.ts",
+      "line": 83,
+      "code": "TS2591",
+      "action": "decline",
+      "reason": "process.pid is a Node host binding. This needs the compiler require-builtins/Node host declaration work; adding guessed source declarations or suppressing the diagnostic would not prove the contract."
+    },
+    {
+      "file": "tracing.ts",
+      "line": 66,
+      "code": "TS18046",
+      "action": "decline",
+      "reason": "The catch variable is unknown. require can throw arbitrary values; surrounding code does not prove an object with a message field. Casting to Error or any is unproved; a runtime guard changes the existing error path and emitted JavaScript."
+    }
+  ]
+}

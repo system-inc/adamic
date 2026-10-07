@@ -1,0 +1,13 @@
+.F..
+======================================================================
+FAIL: test_every_component_invalidates (__main__.WarmingKey.test_every_component_invalidates) (component='version')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup.py", line 38, in test_every_component_invalidates
+    self.assertNotEqual(answer, key.warming_key(**changed), component)
+AssertionError: '6acd4ac3cdc3ec31caaf9a7f7f5c8f81e1bc47b6ce9577dafd0365451d87cf77' == '6acd4ac3cdc3ec31caaf9a7f7f5c8f81e1bc47b6ce9577dafd0365451d87cf77' : version
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+FAILED (failures=1)
