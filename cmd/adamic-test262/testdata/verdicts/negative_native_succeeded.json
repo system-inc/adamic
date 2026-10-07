@@ -1,0 +1,8 @@
+{
+  "name": "negative runtime but native exited 0",
+  "negativePhase": "runtime",
+  "negativeType": "TypeError",
+  "node": {"exit": 1, "stdout": "", "stderr": "TypeError: no\n"},
+  "native": {"exit": 0, "stdout": "", "stderr": ""},
+  "want": "fail"
+}

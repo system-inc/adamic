@@ -1,0 +1,29 @@
+let order = '';
+function mark(label: string): string {
+    order += label + '|';
+    return label;
+}
+class First {
+    readonly first = mark('first field');
+    constructor(value = mark('first default')) {
+        mark('first body ' + value);
+    }
+}
+class Second extends First {
+    readonly second = mark('second field');
+    constructor(value = mark('second default')) {
+        mark('before super');
+        super();
+        mark('second body ' + value);
+    }
+}
+class Third extends Second {
+    readonly third = mark('third field');
+    constructor() {
+        super();
+        mark('third body');
+    }
+}
+const value = new Third();
+console.log(order);
+console.log(`${value.first}/${value.second}/${value.third}`);

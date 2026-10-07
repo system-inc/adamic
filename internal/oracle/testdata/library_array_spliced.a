@@ -1,0 +1,13 @@
+const numbers = [1, 2, 3, 4];
+const starts = [-Infinity, -10, -1.9, 0, 1.9, 4, Infinity, NaN];
+for (const start of starts) {
+	console.log(`${start}: ${numbers.toSpliced(start).join('|')} / ${numbers.toSpliced(start, 2, 8, 9).join('|')} / ${numbers.join('|')}`);
+}
+console.log(numbers.toSpliced(0, 0, 7).join('|'));
+const words = ['a'.repeat(2), 'b'.repeat(2), 'c'.repeat(2)];
+const after = words.toSpliced(1, 1, 'd'.repeat(2));
+words.splice(0, 3);
+console.log(after.join('|'));
+const source = [1, 2, 3];
+function change(): number { source.push(4); return 1; }
+console.log(`${source.toSpliced(change(), 1).join('|')} / ${source.join('|')}`);

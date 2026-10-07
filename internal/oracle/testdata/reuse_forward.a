@@ -1,0 +1,16 @@
+// A borrowed parameter forwarded to a consumed one: movable (reuse.go) moves it, though its count is
+// the caller's, so bump sees count 1 and reuses, then releases, the caller's object. ASan:
+// heap-use-after-free; unsanitized -O2 prints "2 start1 2 start1" where Node prints "1 start1 2 start1".
+type Point = { x: number; name: string };
+function bump(point: Point): Point {
+	return { ...point, x: point.x + 1 };
+}
+function forward(point: Point): Point {
+	return bump(point);
+}
+function main(): void {
+	const start: Point = { x: 1, name: `start${1}` };
+	const moved = forward(start);
+	console.log(`${start.x} ${start.name} ${moved.x} ${moved.name}`);
+}
+main();

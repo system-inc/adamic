@@ -1,0 +1,54 @@
+// object?.method(...) on a class's object that may be undefined (R's round-12 x_optional_method.a,
+// which crashed the compiler): undefined where the object is, with the method not looked up and the
+// arguments not evaluated, and the call where it's there. The strings are built at runtime.
+class Point {
+	readonly x: number;
+	constructor(x: number) {
+		this.x = x;
+	}
+	describe(prefix: string): string {
+		return `${prefix}point${this.x}`;
+	}
+	doubled(): number {
+		return this.x * 2;
+	}
+}
+
+class Box<T> {
+	private readonly value: T;
+	constructor(value: T) {
+		this.value = value;
+	}
+	open(): T {
+		return this.value;
+	}
+}
+
+function maybe(x: number): Point | undefined {
+	return x > 0 ? new Point(x) : undefined;
+}
+
+let evaluated = 0;
+function prefix(index: number): string {
+	evaluated += 1;
+	return [`p`, `${index}`, ':'].join('');
+}
+
+for (const x of [1, 0, 3]) {
+	const point = maybe(x);
+	console.log(`${point?.describe(prefix(x)) ?? 'none'} ${point?.doubled() ?? -1} ${evaluated}`);
+}
+
+interface Holder {
+	point: Point | undefined;
+}
+const holders: Holder[] = [{ point: maybe(4) }, { point: maybe(-1) }];
+for (const holder of holders) {
+	console.log(holder.point?.describe(prefix(9)) ?? 'empty');
+}
+
+const boxes: (Box<string> | undefined)[] = [new Box<string>(['bo', 'xed'].join('')), undefined];
+for (const box of boxes) {
+	console.log(box?.open() ?? 'no box');
+}
+console.log(`${evaluated}`);

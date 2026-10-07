@@ -1,0 +1,9 @@
+class Item {
+ value: number = 3;
+ readonly name: string = 'item';
+ describe(): string { return this.name; }
+}
+const item = new Item();
+console.log(`${Object.hasOwn(item, 'value')} ${Object.hasOwn(item, 'name')} ${Object.hasOwn(item, 'describe')}`);
+const object = { value: 3, name: 'built' + '-name' };
+console.log(`${Object.hasOwn(object, 'value')} ${Object.hasOwn(object, 'name')}`);

@@ -1,0 +1,160 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+    css_test.go:121: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:116: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES
+            adamic_port_side_test.go:148: corpus files: map[.css:1]
+            adamic_port_side_test.go:216: 23496 cases, 4530 parsed
+            adamic_port_side_test.go:234: Go: 234960 stylesheets in 1.66075091s, 141478 stylesheets/s; 45300 parsed, 61710 children
+        --- PASS: TestAdamicPortCases (2.28s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	2.289s
+=== RUN   TestThePortParsesAsGoCohereDoes/Go_agreement
+    css_test.go:141: 23496 cases agree with Go, leak clean
+=== RUN   TestThePortParsesAsGoCohereDoes/PostCSS
+    css_test.go:183: PostCSS: 23494 exact agreements, 2 occurrences of the proved surrogate gap
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_custom_properties_lose_their_block_values
+    css_test.go:201: native caught: line 162, byte 396: ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":{\"raw\":\" \",\"value\":\"\"}},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offse", Go cohere ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offset\":14}},\"type\":\"decl\",\"value\":\""
+    css_test.go:201: Node caught: line 162, byte 396: ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":{\"raw\":\" \",\"value\":\"\"}},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offse", Go cohere ":\"--b\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":20,\"line\":1,\"offset\":20},\"start\":{\"column\":15,\"line\":1,\"offset\":14}},\"type\":\"decl\",\"value\":\""
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values
+    css_test.go:201: native caught: line 3126, byte 302: ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"cd\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* y */ g\"", Go cohere ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"c/* x */d\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* "
+    css_test.go:201: Node caught: line 3126, byte 302: ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"cd\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* y */ g\"", Go cohere ":1,\"offset\":2}},\"type\":\"decl\",\"value\":\"c/* x */d\"},{\"keys\":[\"raws\",\"source\",\"prop\",\"value\"],\"prop\":\"e\",\"raws\":{\"before\":\" \",\"between\":\":\",\"value\":{\"raw\":\"f, /* "
+=== RUN   TestThePortParsesAsGoCohereDoes/catches_closing_braces_no_longer_include_the_closing_byte
+    css_test.go:201: native caught: line 6, byte 659: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw"
+    css_test.go:201: Node caught: line 6, byte 659: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"},{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raw"
+--- PASS: TestThePortParsesAsGoCohereDoes (62.63s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/Go_agreement (28.42s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/PostCSS (1.75s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_custom_properties_lose_their_block_values (12.29s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values (8.87s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/catches_closing_braces_no_longer_include_the_closing_byte (8.34s)
+=== RUN   TestCompositionOnNodeMatchesGo
+    css_test.go:354: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:116: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES
+            adamic_port_side_test.go:148: corpus files: map[.css:1]
+            adamic_port_side_test.go:216: 23496 cases, 4530 parsed
+            adamic_port_side_test.go:234: Go: 234960 stylesheets in 2.028968028s, 115803 stylesheets/s; 45300 parsed, 61710 children
+        --- PASS: TestAdamicPortCases (2.74s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	2.743s
+    css_test.go:376: === RUN   TestAdamicCompositionCases
+            adamic_compose_side_test.go:79: composed trees: 23496 inputs, 4493 parsed
+        --- PASS: TestAdamicCompositionCases (0.88s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	0.895s
+=== RUN   TestCompositionOnNodeMatchesGo/catches_custom_properties_lose_their_block_values
+    css_test.go:402: Node composition caught: line 162, byte 1001: "tOffset\":14},\"type\":\"css-decl\",\"value\":\"\"},{\"nodes\":[{\"prop\":\"a\",\"raws\":{\"before\":\"\",\"between\":\":\",\"value\":\"b\"},\"source\":{\"end\":{\"column\":28,\"line\":1,\"offset\":2", Go cohere "tOffset\":14},\"type\":\"css-decl\",\"value\":\" \"},{\"prop\":\"--c\",\"raws\":{\"before\":\"\",\"between\":\":\"},\"source\":{\"end\":{\"column\":30,\"line\":1,\"offset\":30},\"endOffset\":30,\""
+=== RUN   TestCompositionOnNodeMatchesGo/catches_comments_always_disappear_from_values
+    css_test.go:402: Node composition caught: line 3126, byte 77: "s\":{\"before\":\"\",\"between\":\":\",\"value\":\"cd\"},\"source\":{\"end\":{\"column\":14,\"line\":1,\"offset\":14},\"endOffset\":14,\"start\":{\"column\":3,\"line\":1,\"offset\":2},\"startOff", Go cohere "s\":{\"before\":\"\",\"between\":\":\",\"value\":\"c/* x */d\"},\"source\":{\"end\":{\"column\":14,\"line\":1,\"offset\":14},\"endOffset\":14,\"start\":{\"column\":3,\"line\":1,\"offset\":2},\"s"
+=== RUN   TestCompositionOnNodeMatchesGo/catches_closing_braces_no_longer_include_the_closing_byte
+    css_test.go:402: Node composition caught: line 6, byte 2264: ":{\"end\":{\"column\":28,\"line\":1,\"offset\":27},\"endOffset\":27,\"start\":{\"column\":1,\"line\":1,\"offset\":0},\"startOffset\":0},\"type\":\"css-rule\"},{\"nodes\":[],\"raws\":{\"afte", Go cohere ":{\"end\":{\"column\":28,\"line\":1,\"offset\":28},\"endOffset\":28,\"start\":{\"column\":1,\"line\":1,\"offset\":0},\"startOffset\":0},\"type\":\"css-rule\"},{\"nodes\":[],\"raws\":{\"afte"
+=== NAME  TestCompositionOnNodeMatchesGo
+    css_test.go:408: 23496 composed trees/error positions agree with Go
+--- PASS: TestCompositionOnNodeMatchesGo (14.49s)
+    --- PASS: TestCompositionOnNodeMatchesGo/catches_custom_properties_lose_their_block_values (2.51s)
+    --- PASS: TestCompositionOnNodeMatchesGo/catches_comments_always_disappear_from_values (2.63s)
+    --- PASS: TestCompositionOnNodeMatchesGo/catches_closing_braces_no_longer_include_the_closing_byte (2.06s)
+=== RUN   TestCSSThroughput
+    css_test.go:415: set ADAMIC_CSS_BENCH=1 for throughput
+--- SKIP: TestCSSThroughput (0.00s)
+=== RUN   TestTheCanonicalRangeChecksCanFail
+    css_test.go:487: public Range corruption caught on raw native, raw Node and composition Node; raw leak clean
+--- PASS: TestTheCanonicalRangeChecksCanFail (3.96s)
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_regex_and_value_tree.ts
+    gaps_test.go:41: Node prints "Parsed\nOk\n"; Adamic refuses: /workspace/adamic/stage1/cohere/values/nodes.ts:92:2: Adamic 0.1 refuses ValueTree.nodes, a readonly field, which its constructor writes, of type readonly ValueTree[], which can reach back to the ValueTree holding it: a cycle reference counting can't free, and a write in Parser_attribute may close one (ir.RegExpCall is a node the cycle finder doesn't know); declare it nodes: Weak<readonly ValueTree[]> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts
+    gaps_test.go:41: Node prints "a\n1\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/2_array_shift.ts:2:16: stage 0 can't lower .shift on a value yet
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean_condition.ts
+    gaps_test.go:41: Node prints "important\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/3_optional_boolean_condition.ts:3:13: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts
+    gaps_test.go:41: Node prints "0\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/4_empty_array_union.ts:2:9: stage 0 can't lower an array of never yet
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts
+    gaps_test.go:41: Node prints "a\n"; Adamic refuses: /workspace/adamic/stage1/cohere/css/gaps/5_repeat_in_try.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (2.76s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_regex_and_value_tree.ts (0.85s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts (0.49s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean_condition.ts (0.49s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts (0.48s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts (0.44s)
+=== RUN   TestNativeCompositionIsBlockedByTheRecordedGap
+    gaps_test.go:61: /workspace/adamic/stage1/cohere/mediaquery/nodes.ts:24:2: Adamic 0.1 refuses MediaNode.nodes, a readonly field, which its constructor writes, of type readonly MediaNode[] | undefined, which can reach back to the MediaNode holding it: a cycle reference counting can't free, and a write in Parser_raw may close one (ir.RegExpCall is a node the cycle finder doesn't know); declare it nodes: Weak<readonly MediaNode[]> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+--- PASS: TestNativeCompositionIsBlockedByTheRecordedGap (1.60s)
+=== RUN   TestCSSPrinterAgreesWithGo
+    print_test.go:54: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:116: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES
+            adamic_port_side_test.go:148: corpus files: map[.css:1]
+            adamic_port_side_test.go:216: 23496 cases, 4530 parsed
+            adamic_port_side_test.go:234: Go: 234960 stylesheets in 3.643231391s, 64492 stylesheets/s; 45300 parsed, 61710 children
+        --- PASS: TestAdamicPortCases (4.40s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	4.409s
+=== RUN   TestCSSPrinterAgreesWithGo/default
+    print_test.go:57: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 23496 inputs, 4475 formatted, elapsed 750.607984ms
+        --- PASS: TestAdamicPrinterCases (0.75s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	0.766s
+    print_test.go:66: 23496 stylesheet formats and refusals agree byte for byte
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons
+    print_test.go:78: Node caught: line 2, byte 69: "larations,\\n  empty rules,\\n  semicolons\\n\"", Go cohere "larations,\\n  empty rules,\\n  semicolons;\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_rule_bodies_lose_indentation
+    print_test.go:78: Node caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n  color: red;\\n  background: blue;\\n}\\nb {\\n}\\nc {\\n  color: red;\\n}\\n\\nd {\\n  color: Red;\\n}\\ne {\\n  margin: 0;\\n}\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/default/catches_groups_ignore_the_remaining_width
+    print_test.go:78: Node caught: line 26, byte 12: "\"selectors: combinators, pseudo-classes, pseudo-elements, attributes, namespaces,\\n  lists;\\n\"", Go cohere "\"selectors:\\n  combinators, pseudo-classes, pseudo-elements, attributes, namespaces, lists;\\n\""
+=== NAME  TestCSSPrinterAgreesWithGo/default
+    print_test.go:82: Prettier npm default: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+    print_test.go:84: Prettier fork default: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+=== RUN   TestCSSPrinterAgreesWithGo/narrow
+    print_test.go:57: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 23496 inputs, 4475 formatted, elapsed 916.522369ms
+        --- PASS: TestAdamicPrinterCases (0.92s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	0.931s
+    print_test.go:66: 23496 stylesheet formats and refusals agree byte for byte
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_declarations_lose_their_semicolons
+    print_test.go:78: Node caught: line 2, byte 69: "larations,\\n\\tempty rules,\\n\\tsemicolons\\n\"", Go cohere "larations,\\n\\tempty rules,\\n\\tsemicolons;\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_rule_bodies_lose_indentation
+    print_test.go:78: Node caught: line 6, byte 7: "\"a {\\ncolor: red;\\nbackground: blue;\\n}\\nb {\\n}\\nc {\\ncolor: red;\\n}\\n\\nd {\\ncolor: Red;\\n}\\ne {\\nmargin: 0;\\n}\\n\"", Go cohere "\"a {\\n\\tcolor: red;\\n\\tbackground: blue;\\n}\\nb {\\n}\\nc {\\n\\tcolor: red;\\n}\\n\\nd {\\n\\tcolor: Red;\\n}\\ne {\\n\\tmargin: 0;\\n}\\n\""
+=== RUN   TestCSSPrinterAgreesWithGo/narrow/catches_groups_ignore_the_remaining_width
+    print_test.go:78: Node caught: line 26, byte 12: "\"selectors: combinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\"", Go cohere "\"selectors:\\n\\tcombinators,\\n\\tpseudo-classes,\\n\\tpseudo-elements,\\n\\tattributes,\\n\\tnamespaces, lists;\\n\""
+=== NAME  TestCSSPrinterAgreesWithGo/narrow
+    print_test.go:82: Prettier npm narrow: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+    print_test.go:84: Prettier fork narrow: 4463 byte-identical formats, 19013 shared refusals, 20 exact recorded discrepancy occurrences: map[BOM boundary:10 CR normalization:2 whitespace fast path:2 yaml embedding:6]
+--- PASS: TestCSSPrinterAgreesWithGo (67.20s)
+    --- PASS: TestCSSPrinterAgreesWithGo/default (31.68s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons (1.80s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_rule_bodies_lose_indentation (2.98s)
+        --- PASS: TestCSSPrinterAgreesWithGo/default/catches_groups_ignore_the_remaining_width (3.34s)
+    --- PASS: TestCSSPrinterAgreesWithGo/narrow (30.24s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_declarations_lose_their_semicolons (1.67s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_rule_bodies_lose_indentation (1.73s)
+        --- PASS: TestCSSPrinterAgreesWithGo/narrow/catches_groups_ignore_the_remaining_width (2.14s)
+=== RUN   TestNativeCSSPrinterHasTheRecordedCompositionGap
+=== RUN   TestNativeCSSPrinterHasTheRecordedCompositionGap/gaps/6_printer_regex_tree.ts
+    print_test.go:112: /workspace/adamic/stage1/cohere/mediaquery/nodes.ts:24:2: Adamic 0.1 refuses MediaNode.nodes, a readonly field, which its constructor writes, of type readonly MediaNode[] | undefined, which can reach back to the MediaNode holding it: a cycle reference counting can't free, and a write in the top level may close one (ir.RegExpNew is a node the cycle finder doesn't know); declare it nodes: Weak<readonly MediaNode[]> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+=== RUN   TestNativeCSSPrinterHasTheRecordedCompositionGap/print_main.ts
+    print_test.go:112: /workspace/adamic/stage1/cohere/mediaquery/nodes.ts:24:2: Adamic 0.1 refuses MediaNode.nodes, a readonly field, which its constructor writes, of type readonly MediaNode[] | undefined, which can reach back to the MediaNode holding it: a cycle reference counting can't free, and a write in the top level may close one (ir.RegExpNew is a node the cycle finder doesn't know); declare it nodes: Weak<readonly MediaNode[]> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or write into it only values this function made, or only into what it made (adamic/cycle-capable)
+--- PASS: TestNativeCSSPrinterHasTheRecordedCompositionGap (0.98s)
+    --- PASS: TestNativeCSSPrinterHasTheRecordedCompositionGap/gaps/6_printer_regex_tree.ts (0.19s)
+    --- PASS: TestNativeCSSPrinterHasTheRecordedCompositionGap/print_main.ts (0.79s)
+=== RUN   TestCSSPrinterThroughput
+    print_test.go:189: set ADAMIC_CSS_PRINTER_BENCH=1
+--- SKIP: TestCSSPrinterThroughput (0.00s)
+=== RUN   TestCSSPrinterBoundaryProofs
+    print_test.go:278: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 4 inputs, 2 formatted, elapsed 358.467µs
+        --- PASS: TestAdamicPrinterCases (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	0.007s
+    print_test.go:289: Go and Node direct-printer proofs:
+        "a {\n  b: c;\n}\n"
+        "// x\ra {\n}\n"
+        error {"column":1,"endColumn":2,"endLine":1,"endOffset":2,"line":1,"name":"CssSyntaxError","offset":0,"reason":"Unknown word  "}
+        error "css: yaml front matter is formatted by the yaml printer, which css.Format cannot reach"
+    print_test.go:299: original Prettier proofs:
+        {"input":"﻿a{b:c}","output":"﻿a {\n  b: c;\n}\n"}
+        {"input":"// x\ra{}","output":"// x\na {\n}\n"}
+        {"input":" ","output":""}
+        {"input":"---\na:     b\n---\na{}","output":"---\na: b\n---\n\na {\n}\n"}
+--- PASS: TestCSSPrinterBoundaryProofs (1.30s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	154.929s

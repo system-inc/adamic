@@ -1,0 +1,15 @@
+const numbers: readonly (number | undefined)[] = [1, undefined, NaN, Infinity, -0];
+const strings: readonly (string | undefined)[] = ['é', undefined, '\ud800'];
+const booleans: readonly boolean[] = [true, false];
+const grid: readonly (readonly number[])[] = [[1, 2], [], [3]];
+console.log(JSON.stringify(numbers) ?? '<undefined>');
+console.log(JSON.stringify(strings) ?? '<undefined>');
+console.log(JSON.stringify(booleans) ?? '<undefined>');
+console.log(JSON.stringify(grid) ?? '<undefined>');
+console.log(JSON.stringify([1, 'two', false, undefined, NaN]) ?? '<undefined>');
+console.log(JSON.stringify([null, undefined, () => 1, { x: 2, y: undefined }, numbers]) ?? '<undefined>');
+console.log(JSON.stringify({ z: 0, '10': 10, '2': 2, '01': 1, a: true, missing: undefined, fn: () => 1, nil: null, list: [1, { b: 'hé', a: null }] }) ?? '<undefined>');
+console.log(JSON.stringify({ '4294967295': 5, '4294967294': 4, '0': 0, '\u0000': 'NUL', '\ud800': 'surrogate' }) ?? '<undefined>');
+console.log(JSON.stringify(new Map<string, number>([['x', 1]])) ?? '<undefined>');
+console.log(JSON.stringify(new Set<number>([1, 2])) ?? '<undefined>');
+console.log(JSON.stringify({ map: new Map<string, number>(), set: new Set<string>(['x']) }) ?? '<undefined>');

@@ -1,0 +1,143 @@
+{
+  "adamic": "ef3d907ecdc4c771b016f7d9c52372def057a340",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_version": "6.0.3",
+  "pipeline": "8728405135d329efc12c837a7a6c293234abbe1c",
+  "adaptation10": "a3ef0dc93d5b2a6cf58f74669c763dc83a1aad0e",
+  "adaptation20": false,
+  "setup": {
+    "Go_seconds": 0,
+    "clang_seconds": 0,
+    "Node_seconds": 0,
+    "submodules_seconds": 1,
+    "build_cache_seconds": 127,
+    "total_seconds": 127,
+    "nproc": 5,
+    "cpu_quota": 4
+  },
+  "sites": {
+    "assert": 144,
+    "zero": 4,
+    "decline": 43
+  },
+  "census": {
+    "before": 165,
+    "after": 6,
+    "required_read_mutant": 7,
+    "roots": 78
+  },
+  "idempotence": [
+    {
+      "file": "core.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 15
+    },
+    {
+      "file": "utilities.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 22
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "assertions": 0,
+      "zeros": 0,
+      "declined": 6
+    }
+  ],
+  "verification_log": "PASS core.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS utilities.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS utilitiesPublic.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+  "pipeline_verification_log": "PASS core.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS utilities.ts: stock emitted JavaScript bytes, site contract, idempotence\nPASS utilitiesPublic.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+  "zero_probe_log": "PASS 12 source-extracted encode/decode cases against Node Buffer, including all tail lengths and decoder exhaustion\n",
+  "mutants": [
+    {
+      "site": "src/compiler/utilities.ts:10364:24",
+      "before": "arr[0]!",
+      "after": "(arr[0] ?? 0)",
+      "census_total": 7,
+      "census_new_code": "TS2345",
+      "emitted_js_exit": 1,
+      "site_contract_exit": 1,
+      "site_contract_diagnostic": "required read defaulted: utilities.ts:10364:24",
+      "zero_probe_exit": 0,
+      "default_oracle": "not run on mutant; catches above establish rejection",
+      "census_new_diagnostic": "src/compiler/utilities.ts:10364:25: error TS2345: Argument of type '0 | NonNullable<T>' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to '0 | NonNullable<T>'."
+    },
+    {
+      "site": "src/compiler/utilities.ts:7685:52",
+      "before": "(charCodes[i + 1] ?? 0) >> 4",
+      "after": "(charCodes[i + 1] ?? 64) >> 4",
+      "zero_probe_exit": 1,
+      "zero_probe_diagnostic": "'YU==' !== 'YQ=='"
+    }
+  ],
+  "source_sha256": {
+    "core.ts": {
+      "before": "6c5e20bdd0996b964b7bd0fcf5654a64421dca39b017016269cc18b55a5098a3",
+      "after": "a47a2101267f7d23cb2360dfdd95e9c8d381a6e6d5f36f86869a9272e68539e4",
+      "pipeline": "a47a2101267f7d23cb2360dfdd95e9c8d381a6e6d5f36f86869a9272e68539e4"
+    },
+    "utilities.ts": {
+      "before": "9802c3e3819367280b7028d663148ea8d6053c5c43ed51acec6fb42be2018b8a",
+      "after": "2cd6200ccb1ae5dc918d2e627b8f8e7731d024c7319d5ba7d4c555d85442f561",
+      "pipeline": "2cd6200ccb1ae5dc918d2e627b8f8e7731d024c7319d5ba7d4c555d85442f561"
+    },
+    "utilitiesPublic.ts": {
+      "before": "cafc0e1b45571b170a5b8cb6c3bd44a2f0f67745877131bdf77a9eca073d38e8",
+      "after": "5cec72ffc4e4a90f651aae534f1edabde8b38868accb02a8b239a68403d4803f",
+      "pipeline": "5cec72ffc4e4a90f651aae534f1edabde8b38868accb02a8b239a68403d4803f"
+    }
+  },
+  "census_reproduction": "PASS: committed exporter reproduces captured after-census exactly",
+  "oracle": {
+    "tree": "/tmp/stage3-indexed-10-tree",
+    "nproc": 5,
+    "workers": 4,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 2.273
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 23.068
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=4",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 0,
+        "seconds": 331.654
+      }
+    },
+    "status": "pass",
+    "counts": {
+      "passing": 106367,
+      "failing": 0,
+      "pending": 0
+    },
+    "baseline_diffs": [],
+    "wall_seconds": 357.034
+  },
+  "baseline_diff_bytes": 0,
+  "baseline_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,26 @@
+// What a narrowing a call undid must not stop: asking whether the value is there, and writing to an
+// object read before the call that replaced it, which JavaScript writes to all the same.
+interface Link {
+	value: number;
+	label: string;
+}
+let count: number | undefined = 1;
+let flag: boolean | undefined = true;
+let chain: Link | undefined = { value: 1, label: `built ${1}` };
+function drop(): number {
+	count = undefined;
+	flag = undefined;
+	chain = undefined;
+	return 5;
+}
+if (count !== undefined && chain !== undefined) {
+	chain.value = drop();
+	console.log(`${count === undefined} ${undefined !== count} ${flag === undefined} ${chain === undefined}`);
+}
+let other: Link = { value: 2, label: `made ${2}` };
+function replace(): string {
+	other = { value: 3, label: `new ${3}` };
+	return `x${other.value}`;
+}
+other.label = replace();
+console.log(`${other.label} ${other.value}`);

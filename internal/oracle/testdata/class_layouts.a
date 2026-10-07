@@ -1,0 +1,78 @@
+// Class fields keep their prefix layout. Structural literals are read through an interface,
+// with fields in different orders and fewer slots before them. Reads and writes of numbers,
+// strings, arrays and objects cover this, ?., compound assignment and generic classes.
+// next is Weak: a mutable Point | undefined in a Point could close a cycle, which 0.1 refuses.
+
+import type { Weak } from 'adamic';
+
+class Point {
+    y = 0;
+    x = 0;
+    label = 'point'.repeat(1);
+    tags: string[] = [];
+    next: Weak<Point> = undefined;
+
+    move(by: number): number {
+        this.x += by;
+        this.y -= by * 2;
+        return this.x * 10 + this.y;
+    }
+}
+
+interface PointView {
+    x: number;
+    y: number;
+    label: string;
+    readonly tags: string[];
+    readonly next: Weak<Point>;
+    readonly move: (by: number) => number;
+}
+
+function describe(point: PointView): string {
+    return `${point.label}(${point.x},${point.y})[${point.tags.join('+')}]${point.next?.label ?? '-'}`;
+}
+
+const first = new Point();
+first.x = 3;
+first.y = 4;
+first.label = `first-${first.x}`;
+first.tags.push('a'.repeat(2));
+const second = new Point();
+second.next = first;
+second.label += '!';
+console.log(`${describe(first)} ${describe(second)} ${first.move(5)} ${describe(first)}`);
+
+// Structural literals with fields in other orders and fewer slots before them.
+const literal: PointView = { x: 7, y: 8, label: 'literal', tags: ['t'], next: first, move: (by: number) => by };
+const reordered: PointView = { next: undefined, tags: [], label: 'reordered', x: -1, y: -2, move: (by: number) => -by };
+console.log(`${describe(literal)} ${describe(reordered)}`);
+literal.x += 10;
+reordered.y = literal.x * 2;
+reordered.label = `${reordered.label}:${literal.next?.x ?? -1}`;
+console.log(`${describe(literal)} ${describe(reordered)} ${literal.x + reordered.y}`);
+
+// Mixed in one array, read in one loop: the same place in the program sees both shapes in turn.
+// readonly: a literal's move can be any closure, which could hold this array, so a mutable one is refused.
+const points: readonly PointView[] = [first, literal, second, reordered, new Point()];
+let total = 0;
+const labels: string[] = [];
+for(const point of points) {
+    total += point.x * 3 + point.y;
+    point.y += 1;
+    labels.push(point.label);
+}
+console.log(`${total} ${labels.join(',')} ${points.map((point) => point.y).join(',')}`);
+
+// A generic class has a layout per instantiation, and is read by name.
+class Box<Item> {
+    count = 0;
+    value: Item;
+    constructor(value: Item) {
+        this.value = value;
+    }
+}
+const box = new Box<string>('boxed'.repeat(2));
+const numbers = new Box<number>(42);
+box.count += 2;
+numbers.value += 1;
+console.log(`${box.value} ${box.count} ${numbers.value} ${numbers.count}`);

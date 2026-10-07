@@ -1,0 +1,44 @@
+// undefined where a string, an array, a function or an object may be missing: returned, chosen by a
+// conditional, assigned, stored and defaulted; and ?.length on an array or a string that may be.
+function find(words: readonly string[], prefix: string): string | undefined {
+	for (const word of words) {
+		if (word.startsWith(prefix)) {
+			return word;
+		}
+	}
+	return undefined;
+}
+
+function longEnough(words: readonly string[]): readonly string[] | undefined {
+	return words.length > 1 ? words : undefined;
+}
+
+function doubler(flag: boolean): ((value: number) => number) | undefined {
+	if (flag) {
+		return (value) => value * 2;
+	}
+	return undefined;
+}
+
+interface Box {
+	label: string | undefined;
+}
+
+function label(flag: boolean): string | undefined {
+	return flag ? 'yes' : undefined;
+}
+
+function greet(name: string | undefined = undefined): string {
+	return name ?? 'nobody';
+}
+
+let current: string | undefined = 'x';
+current = undefined;
+const box: Box = { label: undefined };
+const before = box.label ?? 'none';
+box.label = label(true);
+const twice = doubler(true);
+const chosen: string | undefined = 2 > 1 ? undefined : 'never';
+console.log(`${find(['ab', 'cd'], 'c') ?? 'none'} ${find([], 'x') ?? 'none'} ${current ?? 'gone'} ${before} ${box.label ?? 'none'}`);
+console.log(`${twice === undefined ? 'none' : twice(4)} ${doubler(false) === undefined} ${label(false) ?? 'none'} ${greet()} ${greet('Ahra')} ${chosen ?? 'undefined'}`);
+console.log(`${longEnough(['a', 'b'])?.length ?? -1} ${longEnough(['a'])?.length ?? -1} ${find(['héllo'], 'h')?.length ?? -1} ${find([], 'h')?.length ?? -1}`);

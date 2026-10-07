@@ -1,0 +1,22 @@
+// A global moved into a call that takes its array, while another argument calls a function whose
+// Map forEach runs a function value held in a variable that reads the global. Nothing the move
+// check can see is a closure made there, so the forEach itself must count as a call it can't see
+// into, or the callback reads the global moved out (NULL).
+function word(stem: string, index: number): string {
+	return `${stem}${index}`;
+}
+function grown(items: string[], extra: number): string[] {
+	return [...items, word('extra ', extra)];
+}
+let list: string[] = [word('item ', 1), word('item ', 2)];
+const ages = new Map<string, number>();
+ages.set(word('ann', 1), 31);
+const peek = (value: number, key: string): void => {
+	console.log(`${key} ${value} sees ${list.length} items, the first ${list[0] ?? 'none'}`);
+};
+function visit(): number {
+	ages.forEach(peek);
+	return 3;
+}
+list = grown(list, visit());
+console.log(list.join(', '));
