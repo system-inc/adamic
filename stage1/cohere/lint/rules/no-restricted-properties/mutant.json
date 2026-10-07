@@ -1,0 +1,6 @@
+{
+  "Name": "invent-unconfigured-restriction",
+  "File": "rule.a",
+  "From": "if(root < 0) { panic('invalid no-restricted-properties options'); }",
+  "To": "if(root < 0) { panic('invalid no-restricted-properties options'); }\n        this.properties.set('bar', root);"
+}
