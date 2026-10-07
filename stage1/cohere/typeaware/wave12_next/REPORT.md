@@ -67,7 +67,7 @@ Failures were used to strengthen the implementation:
 - Native build initially refused `??=`, spread arguments, Array.from(Set), untyped empty array fallbacks, a default sort comparator, and Number conversion. Owned code uses supported explicit initialization, loops, typed arrays, comparison and parser token values; no shared compiler changes were made.
 - Top-level `await import(...)` initially lacked await context in the owned loader. The external-module fact now initializes that context.
 - The byte oracle caught an incorrect pinned `never` bit and an extra blocking-streams finding for a class initializer the production CFG does not record. Both are corrected.
-- The first full compiler run panicked because raw ancestry serialization called Node.Text on a destructuring binding pattern. Compound names now use their raw source span, and the direct checker regression verifies this case. The failed run is preserved as `compound-name-failure.log`. The complete corrected run passed above.
+- The first full compiler run panicked because raw ancestry serialization called Node.Text on a destructuring binding pattern. Compound names now use their raw source span, and the direct checker regression verifies this case. The failed run is preserved as `compound-name-failure.log.gz`. The complete corrected run passed above.
 - Early test-only overlays had a quoting/path error; those build failures were not counted as caught mutants. The final run records all mutants compiling and exiting normally.
 
 ## Mutants
