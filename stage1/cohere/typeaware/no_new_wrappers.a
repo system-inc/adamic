@@ -1,0 +1,32 @@
+import type { Rules } from './rules.ts';
+import { ConstructorBindingFacts } from './constructor_binding_facts.a';
+export class NoNewWrappers {
+    readonly rules: Rules;
+    readonly facts: ConstructorBindingFacts;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.facts = new ConstructorBindingFacts(rules);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) < 0) {
+                continue;
+            }
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'NewExpression') {
+                continue;
+            }
+            const callee = this.rules.skip(node.children[0] ?? -1);
+            const name = this.rules.parser.node(callee);
+            if(
+                name.kind !== 'Identifier' ||
+                !['String', 'Number', 'Boolean'].includes(name.text) ||
+                !this.facts.global(callee)
+            ) {
+                continue;
+            }
+            const message = `This calls \`new ${name.text}()\`. Constructed, ${name.text} returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by \`===\`, and reports its \`typeof\` as "object". Drop the \`new\` and call ${name.text} directly.`;
+            this.facts.report(index, 'no-new-wrappers', 'noNewWrappers', message);
+        }
+    }
+}

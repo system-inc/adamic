@@ -1,0 +1,62 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import { Diagnostic } from './diagnostic.ts';
+// Production resolvesToAGlobal reads the FIRST declaration, not every source
+// declaration, and requires a resolved symbol with at least one declaration.
+export class ConstructorBindingFacts {
+    readonly rules: Rules;
+    readonly globals = new Map<number, boolean>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    global(index: number): boolean {
+        if(this.globals.has(index)) {
+            return this.globals.get(index) ?? false;
+        }
+        const frames = new Frames(this.rules.ask(index, 'node-symbol-details'));
+        header(frames, 'node-symbol-details');
+        let firstDeclarationFile = false;
+        if(frames.yes()) {
+            frames.natural();
+            frames.natural();
+            frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                const declarationFile = frames.yes();
+                if(at === 0) {
+                    firstDeclarationFile = declarationFile;
+                }
+                frames.yes();
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                const tags = frames.natural();
+                for(let t = 0; t < tags; t++) {
+                    frames.field();
+                    frames.field();
+                    frames.natural();
+                    frames.natural();
+                    frames.field();
+                }
+                const parameters = frames.natural();
+                for(let t = 0; t < parameters; t++) {
+                    frames.field();
+                }
+            }
+        }
+        frames.end();
+        this.globals.set(index, firstDeclarationFile);
+        return firstDeclarationFile;
+    }
+    report(index: number, rule: string, id: string, message: string): void {
+        const node = this.rules.parser.node(index);
+        this.rules.findings.push(
+            new Diagnostic(rule, id, message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''),
+        );
+    }
+}

@@ -1,0 +1,29 @@
+import type { Rules } from './rules.ts';
+import { ConstructorBindingFacts } from './constructor_binding_facts.a';
+export class NoNewNativeNonconstructor {
+    readonly rules: Rules;
+    readonly facts: ConstructorBindingFacts;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.facts = new ConstructorBindingFacts(rules);
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if((this.rules.parents[index] ?? -1) < 0) {
+                continue;
+            }
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'NewExpression') {
+                continue;
+            }
+            // Production deliberately does not skip callee parentheses for this rule.
+            const callee = node.children[0] ?? -1;
+            const name = this.rules.parser.node(callee);
+            if(name.kind !== 'Identifier' || !['Symbol', 'BigInt'].includes(name.text) || !this.facts.global(callee)) {
+                continue;
+            }
+            const message = `This calls \`new ${name.text}()\`. ${name.text} is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without \`new\`.`;
+            this.facts.report(callee, 'no-new-native-nonconstructor', 'noNewNativeNonconstructor', message);
+        }
+    }
+}
