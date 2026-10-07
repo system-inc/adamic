@@ -1,0 +1,18 @@
+=== RUN   TestUndecidedCycleReadsUseReadyChecks
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/indirect_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_extends
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_extends
+--- PASS: TestUndecidedCycleReadsUseReadyChecks (1.92s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_value (0.26s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_value (0.26s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/indirect_value (0.27s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_plain_class (0.27s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class (0.30s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_extends (0.27s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_extends (0.30s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.925s

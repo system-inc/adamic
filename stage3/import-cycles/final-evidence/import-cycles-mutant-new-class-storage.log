@@ -1,0 +1,11 @@
+=== RUN   TestUndecidedCycleReadsUseReadyChecks
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_plain_class
+    import_cycle_ready_test.go:96: /workspace/adamic-tools/bin/node: got "7\n", want "adamic: panic: ReferenceError: Cannot access 'Box' before initialization\n" (error <nil>)
+    import_cycle_ready_test.go:96: expected exit 70, got <nil>
+    import_cycle_ready_test.go:103: /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_plain_class1212862554/001/native: got "7\n", want "adamic: panic: ReferenceError: Cannot access 'Box' before initialization\n" (error <nil>)
+    import_cycle_ready_test.go:103: expected exit 70, got <nil>
+--- FAIL: TestUndecidedCycleReadsUseReadyChecks (0.29s)
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/early_plain_class (0.29s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.302s
+FAIL

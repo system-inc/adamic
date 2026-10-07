@@ -201,8 +201,9 @@ type (
 	StringConstant  struct{ Index int }
 
 	// Read reads a local. Of is the local's type, so a Read is typed without the program in hand.
-	// Checked is a read of a global from inside a function, which may run before the global's
-	// declaration has: JavaScript throws there (the temporal dead zone), and so does Adamic, out loud.
+	// Checked is a global read whose initialization is not proven, including function
+	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
+	// Adamic checks it out loud.
 	Read struct {
 		Local   int
 		Of      Type

@@ -3,6 +3,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
@@ -11,6 +12,19 @@ import (
 // depth-first in the order they're written, then the module itself. The prelude's 'adamic' module
 // has no body to run. A module already in progress is the cycle back edge and is skipped.
 func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
+	order, cyclic := esmModuleOrder(l.checker, entry)
+	l.cyclicModules = cyclic
+	if cyclic {
+		if err := l.loadTimeReads(order); err != nil {
+			return nil, err
+		}
+	}
+	return order, nil
+}
+
+// esmModuleOrder is shared with the source-ledger audit so it measures the
+// compiler's actual scheduling proof, rather than replaying observed Node order.
+func esmModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast.SourceFile, bool) {
 	order := []*ast.SourceFile{}
 	state := map[*ast.SourceFile]int{} // 1 while its imports are being visited, 2 once placed
 	cyclic := false
@@ -35,7 +49,7 @@ func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error)
 			if specifier == nil {
 				continue
 			}
-			target := l.checker.GetSymbolAtLocation(specifier)
+			target := typeChecker.GetSymbolAtLocation(specifier)
 			if target == nil || len(target.Declarations) == 0 || target.Declarations[0].Kind != ast.KindSourceFile {
 				// 'adamic' is an ambient module in the prelude: nothing to run.
 				continue
@@ -50,13 +64,7 @@ func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error)
 		order = append(order, module)
 	}
 	visit(entry)
-	l.cyclicModules = cyclic
-	if cyclic {
-		if err := l.loadTimeReads(order); err != nil {
-			return nil, err
-		}
-	}
-	return order, nil
+	return order, cyclic
 }
 
 // declareModule registers the module's globals and functions before anything is lowered, so a

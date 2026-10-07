@@ -37,6 +37,11 @@ func (l *lowering) loadTimeReads(files []*ast.SourceFile) error {
 		return fmt.Errorf("lower: import-cycle rule: %w", err)
 	}
 	l.cycleReadFindings = findings
+	l.proveModuleReads(files)
+	return nil
+}
+
+func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
 	l.provenModuleReads = map[*ast.Node]bool{}
 	positions := map[*ast.SourceFile]int{}
 	for index, file := range files {
@@ -91,7 +96,6 @@ func (l *lowering) loadTimeReads(files []*ast.SourceFile) error {
 		}
 		visit(file.AsNode())
 	}
-	return nil
 }
 
 func (l *lowering) checkedModuleRead(node *ast.Node, local int) bool {

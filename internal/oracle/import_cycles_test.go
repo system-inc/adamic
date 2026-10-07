@@ -13,6 +13,8 @@ func init() {
 	for _, path := range []string{
 		"internal/oracle/testdata/import_cycles/order/main.a",
 		"internal/oracle/testdata/import_cycles/runtime/even.a",
+		"stage3/drivers/scanner/probes/cyclic-initialized-value/main.a",
+		"stage3/drivers/scanner/probes/cyclic-premature-value/main.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path            string

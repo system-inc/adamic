@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -56,6 +57,12 @@ func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
 			program, err := Lower(context.Background(), loaded)
 			if err != nil {
 				t.Fatal(err)
+			}
+			if probe.name == "initialized value" && strings.Contains(native.C(program), "ReferenceError: Cannot access 'value'") {
+				t.Error("proven imported read retained a TDZ check")
+			}
+			if probe.name == "initialized extends" && strings.Contains(native.C(program), "ReferenceError: Cannot access 'Base'") {
+				t.Error("proven base class read retained a TDZ check")
 			}
 			binary := filepath.Join(directory, "native")
 			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {

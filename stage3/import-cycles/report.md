@@ -1,8 +1,10 @@
-Built: existing cycle ordering and TDZ checkpoint retained; public runner found at ca939db5 but requested dependency bump fails shim compatibility.
-Commits: prior checkpoint 56b95a9, fixture merge a852810, evidence through 6b17636; failing submodule change remains uncommitted.
-Checks: ca939db5 go build ./... exits 1; full load/lower test command exits 1 at compilation; no runner integration or original-ledger lowering executed.
-Mutants: prior eight compiler mutants and two ledger artifact mutants caught; no new mutants run because the compatibility prerequisite failed.
-Not covered: public-runner integration and original-ledger classification; 58 statements and 914 observed reads remain unassessed, not safe or checked.
+Built: public RunRule integration, ESM-order proof with no checks on proven reads, TDZ fallback without cycle-read refusals, re-export barrels, and original-ledger classifications.
+Commits: main merge 8017f4c, integration shim merge cac8c24, runtime acceptance 2f5277e, immediate scanner unblock push 824de024ac3093fab75f95b1f53824118ac1f795.
+Checks: build, full load/lower packages, all uncached Node/native fixtures (50.753s), counts, formatting and vet passed; exact enum probe prints 1 with its existing enum dependency.
+Mutants: seven current mutants caught for order, TDZ fallback, class readiness, source error names, proof/check elimination and public-runner invocation; earlier interim mutants are historical.
+Not covered: full native tsc or unexecuted branches; ledger binding obligations are 55 proven/3 checked/0 refused statements and 905 proven/9 checked/0 refused reads.
+
+The final ruling and current results are in the final section below. Earlier sections retain historical checkpoints and are superseded where they describe the interim guard or blocked dependencies.
 
 The latest instruction supersedes the interim implementation. The working tree still holds that earlier, tested checkpoint; it is not a completed public-runner integration. No cohere source was copied. The replacement adapter is drafted at /tmp/import-cycles-public-adapter.go, with the exact new error return, Finding type, rule name, and a mutex protecting calls across programs. I have not installed an unavailable dependency or claimed it builds.
 
@@ -153,3 +155,57 @@ The compiler-host API no longer takes the current-directory argument. Source fil
 This is the previously specified stop condition: “Check that the submodule bump doesn't break the shims (go build ./... and the load/lower tests); if it does, stop and tell me what broke.” I did not repair the wider shim migration, change go.mod, replace the interim, update the verified-pin constant, or push an unbuildable dependency bump. The cohere checkout is left at the tested requested pin as an uncommitted submodule change; the report commit retains the previous recorded pin. The TDZ fallback code remains intact.
 
 The original ledger totals remain 58 statements and 914 observed reads unassessed. No classification as refused/checked/proven safe was obtained for these original source sites; the ten reduced-fixture interim refusals are separate evidence. Continuing requires a shim-compatible public-runner pin or a separate authorized migration of the loader and bridge APIs. Only codex/import-cycles is pushed; no main or area/ branch is modified.
+
+## Final ruling: accept or check, never refuse a cyclic read
+
+Merged current origin/main c7991b9 into codex/import-cycles. The only conflict was counts.md: kept both import-cycle rows and main's devirtualize row; regeneration moved the latter to its actual registration order without changing its values. Then merged integration's origin/codex/cohere-bump-ca939db tip 1ef4b34, which records cohere 7945d102. No independent cohere bump was made. The integrated loader/bridge adaptations remove the earlier shim blocker.
+
+Removed the conservative implementation completely. The small adapter calls the public `rule_runner.RunRule(program, checker, files, "nexus/correctness-no-import-cycle-load-time-read")` under a process-wide mutex while Lower holds the checker exclusively. The rule returns hazardous-read findings, not positive proof certificates. Its findings are retained as evidence, and no finding causes a Refused result. Absence of a finding does not waive a TDZ check.
+
+The actual entry's DFS post-order proves a direct module-body read initialized when the declaration's provider module finished earlier. Only module-level function declarations receive the unconditional hoisting proof; a function nested in a namespace does not. Reads in deferred function/constructor/instance-initializer code remain checked because this pass does not propagate call-time context. Unproved global reads keep the existing ready checks, including indirect calls, class construction and extends. Proven class reads also omit redundant guards. Import/re-export declarations are linked through checker symbols and schedule their dependencies; the declarations themselves have no body instruction. ExportAssignment remains governed by the existing policy.
+
+### Immediate scanner publication
+
+The exact four-file probe from codex/stage3-scanner-proof was copied unchanged. Current main still rejects its const-enum syntax with TS1294: that is the existing enum unit's prerequisite, not a cycle refusal. An isolated worktree combined cycles with codex/flag-enums ec67b02, preserving main's predicate/invariance behavior and the enum checks. Its re-export barrels required the now-published no-op admission through the graph linker. The isolated combination was never pushed.
+
+Native and independent Node both printed `1\n`, exit 0. The generated C contains no `ReferenceError: Cannot access` guard. Published codex/import-cycles immediately at 824de024ac3093fab75f95b1f53824118ac1f795 and sent that SHA before continuing. The source probe, its existing enum dependency, output and generated-C hash are recorded in final-evidence/scanner-probe.json. The cycles feature does not claim to implement enums.
+
+The pinned premature variant uses a lexical `const Category = { Error: 1 }` and imports types before the barrel, so the reader reaches Category while its provider is in progress. Source Node, sanitized native, release native and generated JavaScript agree on empty stdout, exit 70, and:
+
+```
+adamic: panic: ReferenceError: Cannot access 'Category' before initialization
+```
+
+A safe sibling enters the same object-binding graph through the barrel and prints 1. Both are registered in the differential oracle. A premature const-enum constant-folding example would not be a valid TDZ witness, so the early-read fixture deliberately uses a runtime lexical binding.
+
+### Original ledger classification
+
+Fetched pristine TypeScript v6.0.3 at the exact ledger commit 050880ce59e30b356b686bd3144efe24f875ebc8 and generated diagnosticInformationMap with upstream's own script. The audit builds one compiler program rooted at src/tsc/tsc.ts, calls the actual public rule, and uses the same esmModuleOrder/proveModuleReads helpers as Lower. Its computed order of all 80 modules equals the independently verified Node order byte for byte. Every one of the 914 original read occurrences resolves at its source location to the exact declaration/provider recorded by the ledger; missing or mismatched identities fail instead of being counted safe. The direct conditional Debug read is classified too.
+
+| Bounded ledger population | Proven | Checked | Refused |
+| --- | ---: | ---: | ---: |
+| Original top-level statements | 55 | 3 | 0 |
+| Observed original read occurrences | 905 | 9 | 0 |
+
+The checked statements are semver.ts:46, parser.ts:1437 and binder.ts:499. Their checked occurrences are Debug at semver.ts:63,64,65,70,71; emptyArray at semver.ts:68; Debug at scanner.ts:4020 and scanner.ts:1115; and Debug at binder.ts:496. These are inside deferred bodies and retain the runtime fallback rather than inheriting the observed invocation's safe timing. Hoisted module function bindings and direct reads after their provider completes are proven. A row is checked if any of its bounded ledger reads is checked; otherwise it is proven.
+
+These are source binding-initialization proof/check obligations, not a claim that complete native tsc artifacts were emitted. Other feature gaps still prevent that build. A proven row covers its bounded recorded reads and the one inventoried conditional read, not every possible branch of its initializer. Unexecuted branches in deferred code retain checks. The run produced 10 real cohere findings; findings such as timestamp in performance.ts:62 are accepted under the fixed entry-order proof instead of being refused. The full original rule ids and messages are preserved in original-ledger-classification.json.
+
+Reproduce the source audit after cloning the pinned upstream source and running its diagnostic generator:
+
+```
+source /workspace/adamic-tools/env.sh
+ADAMIC_CYCLE_LEDGER_ROOT=/tmp/import-cycles-original-tsc ADAMIC_CYCLE_LEDGER_OUTPUT=/tmp/cycle-ledger.json go test ./internal/lower -run '^TestOriginalCycleLedger$' -count=1 -v > /tmp/cycle-ledger.log 2>&1
+```
+
+### Validation and limits
+
+`go build ./...` passed after the integration merge and adapter update. Full `go test -count=1 -timeout 30m ./internal/load ./internal/lower` passed (load 0.643s, lower 12.135s). `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestImportCycle|TestNativeAgreesWithNode' -count=1 -timeout 30m` passed in 50.753s across the complete registered Node/native fixture corpus. The explicit value-probe filter selected both new fixtures and passed uncached. The seven ready-check cases passed. The original-ledger audit passed in 2.253s.
+
+`go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts` passed in 12.662s. Changes: the safe value probe adds `3 3 0 4 3 0` for its object/formatting lifetime; the premature probe adds all zeroes because it stops before its provider allocates; devirtualize's existing row moves with unchanged counts to match registration order. No other count values changed. `gofmt -l cmd internal` printed nothing, `go vet ./...` exited 0, and git diff --check passed. Test output was retained in log files.
+
+All ten reduced tsc fixtures were rerun through the real runner and fresh Node. They no longer fail on cycle reads. Six stop on the existing boolean|undefined truthiness refusal (01-04, 07, 08); two stop on never[] representation (05, 06); two stop on unknown representation (09, 10). Complete diagnostics and Node outputs are under runner-run/. No unrelated compiler feature was added to close those gaps.
+
+Seven current mutants all exit 1 due to the intended observations, not compilation warnings: wrong module order changes Node's printed sequence; removing ready checks produces undefined/0 instead of the value TDZ panic; keeping a proven value check violates the emitted-C assertion; bypassing RunRule empties the pinned original-source findings; dropping class storage prints 7 instead of the Box TDZ panic; checking the internal base storage says Base_class instead of Base; keeping a proven extends check violates its emitted-C assertion. Logs are in final-evidence/. The earlier drop-refusal mutant is superseded because cycle-read refusal is now explicitly wrong.
+
+The full all-packages gate and full native TypeScript compiler were not run. Multi-entry remains out of scope. A normal workspace build is green; go mod tidy's transitive dependency-test download of klauspost/compress v1.20.0 was denied by the proxy, so tidy is not reported as successful. No cohere implementation was copied. Only codex/import-cycles is pushed; main and area/ branches remain integration-owned.
