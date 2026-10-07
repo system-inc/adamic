@@ -1,0 +1,50 @@
+{
+  "original": {
+    "compiler": {
+      "go": 0.519623314,
+      "native": 2.24370054,
+      "native_over_go": 4.317936627454711
+    },
+    "repository": {
+      "go": 0.194594863,
+      "native": 0.377187624,
+      "native_over_go": 1.9383226164608467
+    }
+  },
+  "timeout": {
+    "compiler": {
+      "go": 0.427880342,
+      "native": 2.495564633,
+      "native_over_go": 5.832389077131287
+    },
+    "repository": {
+      "go": 0.222235767,
+      "native": 0.375772518,
+      "native_over_go": 1.6908732697378996
+    }
+  },
+  "process": {
+    "compiler": {
+      "go": 0.457771292,
+      "native": 2.23082444,
+      "native_over_go": 4.873229228188473
+    },
+    "repository": {
+      "go": 0.192318858,
+      "native": 0.323866173,
+      "native_over_go": 1.6840063234984475
+    }
+  },
+  "blocking": {
+    "compiler": {
+      "go": 0.456103637,
+      "native": 2.189305601,
+      "native_over_go": 4.800017854275518
+    },
+    "repository": {
+      "go": 0.225853552,
+      "native": 0.34454405,
+      "native_over_go": 1.525519731476262
+    }
+  }
+}

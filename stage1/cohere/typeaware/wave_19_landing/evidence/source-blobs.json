@@ -1,0 +1,173 @@
+{
+  "old": "wave19-before-landing-165964a0",
+  "head": "e15f1df46955cac014ea6b1281f0751658527c7c",
+  "main": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "compared": [
+    {
+      "path": "bridge/tsgo/checker/declaration_ancestry.go",
+      "before": "bb69be5d5448f2a91ffd0018c0e6749f8993f333",
+      "after": "bb69be5d5448f2a91ffd0018c0e6749f8993f333"
+    },
+    {
+      "path": "bridge/tsgo/checker/declaration_ancestry_test.go",
+      "before": "5c2eea9e6aa66338c314db9130a319c3a8373f22",
+      "after": "5c2eea9e6aa66338c314db9130a319c3a8373f22"
+    },
+    {
+      "path": "bridge/tsgo/checker/facts.go",
+      "before": "81524ba0214a99bf80bc62dbac2b116ac85066bd",
+      "after": "81524ba0214a99bf80bc62dbac2b116ac85066bd"
+    },
+    {
+      "path": "bridge/tsgo/checker/index_signature_access.go",
+      "before": "6d9a2e54a91a14eabceb687fd5c4d99abedeee79",
+      "after": "6d9a2e54a91a14eabceb687fd5c4d99abedeee79"
+    },
+    {
+      "path": "bridge/tsgo/checker/isolated_declarations.go",
+      "before": "0ec108ce32a578cc1851fd65d9ac1f6b45b1df07",
+      "after": "0ec108ce32a578cc1851fd65d9ac1f6b45b1df07"
+    },
+    {
+      "path": "bridge/tsgo/checker/node_symbol_origin.go",
+      "before": "2f7a5137a9bd1fa72c6ba7dd1c866036391585ad",
+      "after": "2f7a5137a9bd1fa72c6ba7dd1c866036391585ad"
+    },
+    {
+      "path": "bridge/tsgo/checker/program_modules.go",
+      "before": "72f39a47930e75cd6c0a49e9035b9a1c92952787",
+      "after": "72f39a47930e75cd6c0a49e9035b9a1c92952787"
+    },
+    {
+      "path": "bridge/tsgo/checker/resolved_callee.go",
+      "before": "4f0436de1cde5bf1d98e2caabc2b78a6e68b4db2",
+      "after": "4f0436de1cde5bf1d98e2caabc2b78a6e68b4db2"
+    },
+    {
+      "path": "bridge/tsgo/checker/wave_19_facts_test.go",
+      "before": "a08e92c23f2ea580ad34a23ff8e41c7adacfa099",
+      "after": "a08e92c23f2ea580ad34a23ff8e41c7adacfa099"
+    },
+    {
+      "path": "stage1/cohere/typeaware/consistent_generic_constructors.a",
+      "before": "4ef857cb49e73e26db214629f74f5ba5cd7a177a",
+      "after": "4ef857cb49e73e26db214629f74f5ba5cd7a177a"
+    },
+    {
+      "path": "stage1/cohere/typeaware/declaration_ancestry.a",
+      "before": "be8c2102404c8af8574b16ebee8b8d9e453cf7a0",
+      "after": "be8c2102404c8af8574b16ebee8b8d9e453cf7a0"
+    },
+    {
+      "path": "stage1/cohere/typeaware/dot_notation.a",
+      "before": "b2386931ca3551e48fe0bb938b1d813a2998e62f",
+      "after": "b2386931ca3551e48fe0bb938b1d813a2998e62f"
+    },
+    {
+      "path": "stage1/cohere/typeaware/index_signature_access.a",
+      "before": "84dcb63dc55b66d0c85e97097c6bc257a0c1cd2f",
+      "after": "84dcb63dc55b66d0c85e97097c6bc257a0c1cd2f"
+    },
+    {
+      "path": "stage1/cohere/typeaware/isolated_declarations.a",
+      "before": "86ce9bd9a280606d14e50f335f56c6c7ce133156",
+      "after": "86ce9bd9a280606d14e50f335f56c6c7ce133156"
+    },
+    {
+      "path": "stage1/cohere/typeaware/no_array_constructor.a",
+      "before": "7160854d3720e7e9b802c6e477367d9611a3651c",
+      "after": "7160854d3720e7e9b802c6e477367d9611a3651c"
+    },
+    {
+      "path": "stage1/cohere/typeaware/no_process_exit_after_output.a",
+      "before": "a1e3fdf9be7c7ee8f93ae1c1c3fe43c88bfcf726",
+      "after": "a1e3fdf9be7c7ee8f93ae1c1c3fe43c88bfcf726"
+    },
+    {
+      "path": "stage1/cohere/typeaware/no_uncleared_race_timeout.a",
+      "before": "361a65a8940725b28882c3b0273a4897a6350e44",
+      "after": "361a65a8940725b28882c3b0273a4897a6350e44"
+    },
+    {
+      "path": "stage1/cohere/typeaware/node_symbol_origin.a",
+      "before": "0397da23a56fcd7bf9c0b2be8bbdad8e8f275261",
+      "after": "0397da23a56fcd7bf9c0b2be8bbdad8e8f275261"
+    },
+    {
+      "path": "stage1/cohere/typeaware/program_modules.a",
+      "before": "042e064c38f2079808ed7fe74ea53e0dc2fe5c7d",
+      "after": "042e064c38f2079808ed7fe74ea53e0dc2fe5c7d"
+    },
+    {
+      "path": "stage1/cohere/typeaware/require_blocking_standard_streams.a",
+      "before": "32c394ec2d89a09b1dc7555faa0cf341774c9fcb",
+      "after": "32c394ec2d89a09b1dc7555faa0cf341774c9fcb"
+    },
+    {
+      "path": "stage1/cohere/typeaware/resolved_callee.a",
+      "before": "ace73d7c0b3306ed90b1a690aa473710be03e4c2",
+      "after": "ace73d7c0b3306ed90b1a690aa473710be03e4c2"
+    },
+    {
+      "path": "stage1/cohere/typeaware/stream_graph.a",
+      "before": "3cde8e415cd22cf9a79818f6da86f1170d55a356",
+      "after": "3cde8e415cd22cf9a79818f6da86f1170d55a356"
+    },
+    {
+      "path": "stage1/cohere/typeaware/testdata/oracle_wave_19.go",
+      "before": "b2941de1642ec448159e3de418c79e599df6f4ff",
+      "after": "b2941de1642ec448159e3de418c79e599df6f4ff"
+    },
+    {
+      "path": "stage1/cohere/typeaware/testdata/oracle_wave_19_blocking.go",
+      "before": "fc096d05e598b857655f271f7750a8cad2bcbe92",
+      "after": "fc096d05e598b857655f271f7750a8cad2bcbe92"
+    },
+    {
+      "path": "stage1/cohere/typeaware/testdata/oracle_wave_19_process.go",
+      "before": "c65b909c642ba82efe2b14ca1b66298b0f561ab1",
+      "after": "c65b909c642ba82efe2b14ca1b66298b0f561ab1"
+    },
+    {
+      "path": "stage1/cohere/typeaware/testdata/oracle_wave_19_timeout.go",
+      "before": "61dfab8f102eb086a43c8d8453df269bd1bfe5ae",
+      "after": "61dfab8f102eb086a43c8d8453df269bd1bfe5ae"
+    },
+    {
+      "path": "stage1/cohere/typeaware/wave_19.a",
+      "before": "f3a516225acea5072a702177cc0c232e2acfa177",
+      "after": "f3a516225acea5072a702177cc0c232e2acfa177"
+    },
+    {
+      "path": "stage1/cohere/typeaware/wave_19_blocking.a",
+      "before": "ea2676072c4ca4d7a8f9da4209c77869b7645057",
+      "after": "ea2676072c4ca4d7a8f9da4209c77869b7645057"
+    },
+    {
+      "path": "stage1/cohere/typeaware/wave_19_process.a",
+      "before": "2da2a05df7d062dde0494d421efe3482107194e7",
+      "after": "2da2a05df7d062dde0494d421efe3482107194e7"
+    },
+    {
+      "path": "stage1/cohere/typeaware/wave_19_stream_test.go",
+      "before": "47e2df643afe9214e1ca9633619d0bc87e59f334",
+      "after": "47e2df643afe9214e1ca9633619d0bc87e59f334"
+    },
+    {
+      "path": "stage1/cohere/typeaware/wave_19_test.go",
+      "before": "5d5fe602b5eb19f3946685fd49899538a30ebb79",
+      "after": "5d5fe602b5eb19f3946685fd49899538a30ebb79"
+    },
+    {
+      "path": "stage1/cohere/typeaware/wave_19_timeout.a",
+      "before": "61f2eb74090112ffcde235391a1683312c1b263e",
+      "after": "61f2eb74090112ffcde235391a1683312c1b263e"
+    },
+    {
+      "path": "stage1/cohere/typeaware/wave_19_timeout_test.go",
+      "before": "7ff1d59a45ea7b7930c3084b631c85dba8a68a39",
+      "after": "7ff1d59a45ea7b7930c3084b631c85dba8a68a39"
+    }
+  ],
+  "changed": []
+}

@@ -1,0 +1,73 @@
+=== RUN   TestWave19ProcessPendingRegistration
+    wave_19_stream_test.go:128: 58 controls
+    wave_19_stream_test.go:129: process-controls: 19954 identical finding bytes; findings 32
+    wave_19_stream_test.go:136: no_process_exit_after_output.a mutant exit 0, empty stderr, only Go bytes catch byte 53
+    wave_19_stream_test.go:139: process-controls-asan: 19954 identical finding bytes; findings 32
+    wave_19_stream_test.go:157: compiler: 5241 identical finding bytes; findings 0
+    wave_19_stream_test.go:158: compiler-asan: 5241 identical finding bytes; findings 0
+    wave_19_stream_test.go:157: repository: 18485 identical finding bytes; findings 0
+    wave_19_stream_test.go:158: repository-asan: 18485 identical finding bytes; findings 0
+--- PASS: TestWave19ProcessPendingRegistration (117.14s)
+=== RUN   TestWave19BlockingPendingRegistration
+    wave_19_stream_test.go:249: 43 controls
+    wave_19_stream_test.go:250: blocking-controls: 17421 identical finding bytes; findings 24
+    wave_19_stream_test.go:257: require_blocking_standard_streams.a mutant exit 0, empty stderr, only Go bytes catch byte 54
+    wave_19_stream_test.go:258: require_blocking_standard_streams.a mutant exit 0, empty stderr, only Go bytes catch byte 14432
+    wave_19_stream_test.go:261: blocking-controls-asan: 17421 identical finding bytes; findings 24
+    wave_19_stream_test.go:279: compiler: 5241 identical finding bytes; findings 0
+    wave_19_stream_test.go:280: compiler-asan: 5241 identical finding bytes; findings 0
+    wave_19_stream_test.go:279: repository: 18485 identical finding bytes; findings 0
+    wave_19_stream_test.go:280: repository-asan: 18485 identical finding bytes; findings 0
+--- PASS: TestWave19BlockingPendingRegistration (102.43s)
+=== RUN   TestWave19StreamReleasedHandles
+    wave_19_stream_test.go:354: all three questions refuse released handles in normal and ASan/UBSan/LSan builds
+    wave_19_stream_test.go:387: retained-registry mutant exits 0 with empty stderr; all three required-panic checks kill it
+    wave_19_stream_test.go:403: unmodified production archive refuses all three unregistered questions with panic 70
+--- PASS: TestWave19StreamReleasedHandles (39.31s)
+=== RUN   TestWave19AgreementAndMutants
+    wave_19_test.go:149: 212 targeted and production-table inputs before independent parse filtering
+    wave_19_test.go:159: 212 parse-valid controls; 0 excluded by independent Go parser
+    wave_19_test.go:171: one production input excluded from agreement: let.if(); is refused by the existing Adamic parser with panic 70, semicolon at 4; Go defaults report zero
+    wave_19_test.go:173: controls: 79740 identical finding bytes; findings 171
+    wave_19_test.go:181: controls-asan: 79740 identical finding bytes; findings 171
+    wave_19_test.go:192: generic mutant: exit 0, empty stderr, byte oracle catches byte 54
+    wave_19_test.go:192: dot mutant: exit 0, empty stderr, byte oracle catches byte 6490
+    wave_19_test.go:192: array mutant: exit 0, empty stderr, byte oracle catches byte 10897
+    wave_19_test.go:203: isolated: 72329 identical finding bytes; findings 133
+    wave_19_test.go:204: isolated-asan: 72329 identical finding bytes; findings 133
+    wave_19_test.go:203: index: 1773 identical finding bytes; findings 4
+    wave_19_test.go:204: index-asan: 1773 identical finding bytes; findings 4
+    wave_19_test.go:220: isolated-option checker mutant: exit 0, empty stderr, byte oracle catches byte 54
+    wave_19_test.go:220: index-key checker mutant: exit 0, empty stderr, byte oracle catches byte 1335
+    wave_19_test.go:220: symbol-origin checker mutant: exit 0, empty stderr, byte oracle catches byte 2308
+    wave_19_test.go:252: repository: 18485 identical finding bytes; findings 0
+    wave_19_test.go:253: repository-asan: 18485 identical finding bytes; findings 0
+    wave_19_test.go:258: repository Go whole process 0.365212s; findings 0; cohere: load_ns=193140390 rule_ns=1478022 run_ns=133316675
+    wave_19_test.go:258: repository native whole process 0.378486s; findings 0; tsgo: load_ns=128092410 query_ns=4252376 queries=574 first_query_ns=19435 run_ns=241757787
+    wave_19_test.go:252: compiler: 5241 identical finding bytes; findings 0
+    wave_19_test.go:253: compiler-asan: 5241 identical finding bytes; findings 0
+    wave_19_test.go:258: compiler Go whole process 0.462982s; findings 0; cohere: load_ns=362627334 rule_ns=8314135 run_ns=67049057
+    wave_19_test.go:258: compiler native whole process 2.472364s; findings 0; tsgo: load_ns=434238294 query_ns=6112405 queries=154 first_query_ns=22977 run_ns=2017637939
+    wave_19_test.go:270: released handle: panic 70, invalid or released checker handle
+    wave_19_test.go:278: released-registry mutant: exit 0 caught by required panic 70
+--- PASS: TestWave19AgreementAndMutants (171.15s)
+=== RUN   TestWave19TimeoutPendingRegistration
+    wave_19_timeout_test.go:105: 18 production table controls; 49 controls total
+    wave_19_timeout_test.go:108: controls: 15809 identical finding bytes; findings 24
+    wave_19_timeout_test.go:114: controls-asan: 15809 identical finding bytes; findings 24
+    wave_19_timeout_test.go:142: timeout mutant: exit 0, empty stderr, Go bytes catch byte 53
+    wave_19_timeout_test.go:164: compiler: 5241 identical finding bytes; findings 0
+    wave_19_timeout_test.go:165: compiler-asan: 5241 identical finding bytes; findings 0
+    wave_19_timeout_test.go:170: compiler Go whole process 0.418054s; cohere: load_ns=343189049 rule_ns=2993698 run_ns=48995924
+    wave_19_timeout_test.go:170: compiler native whole process 2.165148s; tsgo: load_ns=332343515 query_ns=0 queries=0 first_query_ns=0 run_ns=1814216049
+    wave_19_timeout_test.go:164: repository: 18485 identical finding bytes; findings 0
+    wave_19_timeout_test.go:165: repository-asan: 18485 identical finding bytes; findings 0
+    wave_19_timeout_test.go:170: repository Go whole process 0.216393s; cohere: load_ns=121353400 rule_ns=1152463 run_ns=62606260
+    wave_19_timeout_test.go:170: repository native whole process 0.412702s; tsgo: load_ns=124503219 query_ns=0 queries=0 first_query_ns=0 run_ns=279204177
+    wave_19_timeout_test.go:180: released handle correctly refused
+    wave_19_timeout_test.go:212: released-registry mutant: exit 0; required panic check kills it
+    wave_19_timeout_test.go:219: unregistered production archive explicitly refuses declaration-ancestry; this is the integration blocker
+    wave_19_timeout_test.go:230: ancestry dispatch is pending integration; comparisons above use only a scratch Go build overlay
+--- PASS: TestWave19TimeoutPendingRegistration (119.18s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	549.236s

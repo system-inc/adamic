@@ -1,0 +1,63 @@
+=== RUN   TestBridge
+    bridge_test.go:72: C ABI: 100 queries, outputs survive release, stale and zero handles rejected, second handle distinct; "世界🌍"
+    bridge_test.go:77: input length off by one: ASan heap-buffer-overflow
+    bridge_test.go:90: build, C and JavaScript commands refuse unlinked checker calls
+    bridge_test.go:149: go: tsgo: load_ns=402150488 query_ns=300089259 queries=1600
+    bridge_test.go:154: oracle: 1600 positions across 4 files, 54982 bytes identical under ASan/UBSan/LSan
+    bridge_test.go:156: native-round-1: tsgo: load_ns=412705382 query_ns=175337216 queries=1600 first_query_ns=76773 run_ns=178643026
+    bridge_test.go:157: go-round-1: tsgo: load_ns=317820684 query_ns=327834133 queries=1600
+    bridge_test.go:156: native-round-2: tsgo: load_ns=391573602 query_ns=139900351 queries=1600 first_query_ns=80026 run_ns=143087322
+    bridge_test.go:157: go-round-2: tsgo: load_ns=298585590 query_ns=287487185 queries=1600
+    bridge_test.go:156: native-round-3: tsgo: load_ns=403661113 query_ns=152597353 queries=1600 first_query_ns=188819 run_ns=155466339
+    bridge_test.go:157: go-round-3: tsgo: load_ns=383560813 query_ns=552889714 queries=1600
+    bridge_test.go:197: output string length off by one: ASan heap-buffer-overflow
+    bridge_test.go:207: released handle kept live: stale-handle assertion catches it
+    bridge_test.go:217: type from source-file position: oracle mismatch at byte 6
+    bridge_test.go:224: link opt-in guard removed: refusal test catches it
+    bridge_test.go:235: C output free removed: LeakSanitizer detects the leaked buffers
+    bridge_test.go:273: region probe: Go and native answer 6; adamic: counts: allocations 9 frees 8 retains 6 releases 14 peak 8 regions 1
+    bridge_test.go:283: region entry allocates on heap: LeakSanitizer catches the unowned result
+--- PASS: TestBridge (135.08s)
+=== RUN   TestTSGoRequiresLink
+--- PASS: TestTSGoRequiresLink (0.09s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo	135.178s
+?   	github.com/system-inc/adamic/bridge/tsgo/archive	[no test files]
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.02s)
+=== RUN   TestWave19DeclarationAncestry
+    declaration_ancestry_test.go:101: raw ancestry equals checker declarations; global augmentation, library member and refusal controls pass
+--- PASS: TestWave19DeclarationAncestry (0.03s)
+=== RUN   TestWave19ResolvedCalleeAndProgramModules
+    declaration_ancestry_test.go:189: resolved signature declaration/body and program import targets agree with direct checker APIs
+--- PASS: TestWave19ResolvedCalleeAndProgramModules (0.02s)
+=== RUN   TestWave19AncestryAliasAndBindingNames
+    declaration_ancestry_test.go:243: aliases match the checker and binding-pattern ancestor names do not panic
+--- PASS: TestWave19AncestryAliasAndBindingNames (0.12s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestWave19CheckerQuestions
+=== RUN   TestWave19CheckerQuestions/false
+=== RUN   TestWave19CheckerQuestions/true
+--- PASS: TestWave19CheckerQuestions (0.02s)
+    --- PASS: TestWave19CheckerQuestions/false (0.01s)
+    --- PASS: TestWave19CheckerQuestions/true (0.01s)
+=== CONT  TestFactEncoding
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestShapeAndNameFacts
+--- PASS: TestShapeAndNameFacts (0.06s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.15s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.15s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.370s
+?   	github.com/system-inc/adamic/bridge/tsgo/cost	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/oracle	[no test files]
+?   	github.com/system-inc/adamic/bridge/tsgo/spec	[no test files]
