@@ -155,6 +155,7 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	active := map[cycleNode]bool{}
 	stack := []cycleNode{}
 	graph := map[cycleNode]bool{}
+	var throughPromise []cycleNode
 	var visit func(cycleNode)
 	visit = func(node cycleNode) {
 		next++
@@ -189,12 +190,35 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		if selected {
 			for _, each := range component {
 				graph[each] = true
+				if each.proven != nil && f.l.isLibraryType(each.proven, "Promise") && throughPromise == nil {
+					throughPromise = component
+				}
 			}
 		}
 	}
 	for node := range edges {
 		if index[node] == 0 {
 			visit(node)
+		}
+	}
+	// A region frees a cycle only when every value on it is a member. A Promise never is (its
+	// payload is a counted value outside any region), so a cycle through one would keep its region
+	// alive forever: refuse it, as before graph regions.
+	if throughPromise != nil {
+		var where *ast.Node
+		for _, each := range throughPromise {
+			if each.proven != nil && f.where[each.proven] != nil {
+				where = f.where[each.proven]
+				break
+			}
+		}
+		if where == nil {
+			where = modules[0].AsNode()
+		}
+		return &Refused{
+			Where: f.l.program.Where(where),
+			What:  "a Promise whose payload can reach back to what holds it: a cycle reference counting can't free, and a Promise can't join a graph region",
+			Fix:   "don't keep a Promise in a value its result can reach, or declare the field Weak<...> (adamic/cycle-capable)",
 		}
 	}
 	// An otherwise acyclic cache of graph elements belongs inside their graph too.
