@@ -43,3 +43,20 @@ cba8883eebe65ae8e3bef3fdb3c54455b00fd1e8, pushed. Later origin fetches revealed
 concurrent continuation claims; WAVE_02_CONTINUATION_REPORT.md records them.
 Ahra's correction arrived after this reservation and validation; no further
 rules were claimed. The original three wave-02 rules were already done and pushed.
+
+## Continuation 2
+
+All six earlier reserved rules are implemented, tested and pushed through
+84ecd45cc047337244e0257934bc5aa69d8a0406. After fetching all 325 origin refs,
+checked claim contents (including compressed evidence blobs), and main/bridge
+implementations against VOLUME_REPORT.md's combined checker-dependent ranking.
+The first three eligible rules, all zero compiler and repository volume, are:
+
+1. nexus/correctness-no-process-exit-after-output
+2. nexus/correctness-no-uncleared-race-timeout
+3. nexus/correctness-require-blocking-standard-streams
+
+These names occur only in inventory/skip-types records on main and the base,
+and in none of the fetched typeaware claim files. They are reserved for this
+branch before implementation. New native sources remain .a. Existing shared
+registration generators and test harness files will not be edited.
