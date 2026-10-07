@@ -1,0 +1,106 @@
+=== RUN   TestSlot01Wave7TableMatchesCohere
+    slot01_wave7_test.go:228: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1284 table batches
+    slot01_wave7_test.go:228: 28248 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:228: compiled collapse_new_table.a mutant caught at output line 2: got "false 79 891 0 0", Go "false 0 0 0 0"
+--- PASS: TestSlot01Wave7TableMatchesCohere (9.39s)
+=== RUN   TestSlot01Wave7TableReadingCopyMutant
+    slot01_wave7_test.go:231: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1284 table batches
+    slot01_wave7_test.go:231: 28248 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:231: compiled collapse_new_table.a mutant caught at output line 41: got "99999 0 0", Go "1 1 1 99999"
+--- PASS: TestSlot01Wave7TableReadingCopyMutant (8.12s)
+=== RUN   TestSlot01Wave7TablePropertyAliasMutant
+    slot01_wave7_test.go:234: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1284 table batches
+    slot01_wave7_test.go:234: 28248 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:234: compiled collapse_new_table.a mutant caught at output line 44: got "297", Go "99999"
+--- PASS: TestSlot01Wave7TablePropertyAliasMutant (8.56s)
+=== RUN   TestSlot01Wave7TableOrderMutant
+    slot01_wave7_test.go:237: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1284 table batches
+    slot01_wave7_test.go:237: 28248 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:237: compiled collapse_new_table.a mutant caught at output line 25: got "table.addRepositoryStatics(system),table.addThemeNamespaces(system.theme),table.addRepositoryFunctionalRoots(system)", Go "table.addThemeNamespaces(system.theme),table.addRepositoryStatics(system),table.addRepositoryFunctionalRoots(system)"
+--- PASS: TestSlot01Wave7TableOrderMutant (8.74s)
+=== RUN   TestSlot01Wave7TableDescriptorMapMutant
+    slot01_wave7_test.go:241: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1284 table batches
+    slot01_wave7_test.go:241: 28248 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:241: compiled collapse_new_table.a mutant caught at output line 35: got "true 78 891 359 7", Go "true 79 891 359 7"
+--- PASS: TestSlot01Wave7TableDescriptorMapMutant (8.63s)
+=== RUN   TestSlot01Wave7TableFrameworkMutant
+    slot01_wave7_test.go:244: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1284 table batches
+    slot01_wave7_test.go:244: 28248 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:244: compiled collapse_new_table.a mutant caught at output line 24: got "true 79 1 359 7", Go "true 79 891 359 7"
+--- PASS: TestSlot01Wave7TableFrameworkMutant (7.17s)
+=== RUN   TestSlot01Wave7TableHeaderCopyMutant
+    slot01_wave7_test.go:248: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1284 table batches
+    slot01_wave7_test.go:248: 28248 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:248: compiled collapse_new_table.a mutant caught at output line 41: got "1 0 0", Go "1 1 1 99999"
+--- PASS: TestSlot01Wave7TableHeaderCopyMutant (8.33s)
+=== RUN   TestSlot01Wave7TableBackingShareMutant
+    slot01_wave7_test.go:251: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_variant_order_test.go: 46 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        Go framework metadata: 78 descriptor handles, 890 static registrations, 359 property positions
+        625 fixture strings; 1284 table batches
+    slot01_wave7_test.go:251: 28248 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:251: compiled collapse_new_table.a mutant caught at output line 41: got "1 1 1 39", Go "1 1 1 99999"
+--- PASS: TestSlot01Wave7TableBackingShareMutant (8.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	67.552s

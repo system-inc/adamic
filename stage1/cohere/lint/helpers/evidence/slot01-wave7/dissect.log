@@ -1,0 +1,38 @@
+=== RUN   TestSlot01Wave7DissectMatchesCohere
+    slot01_wave7_test.go:266: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        679 fixture strings; 706 helper batches
+    slot01_wave7_test.go:266: 2118 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:266: compiled tailwind_dissect_class.a mutant caught at output line 91: got "35:99,111,110,115,116,32,101,108,101,109,101,110,116,32,61,32,60,100,105,118,32,99,108,97,115,115,78,97,109,101,61,34,115,109,58,", Go "43:99,111,110,115,116,32,101,108,101,109,101,110,116,32,61,32,60,100,105,118,32,99,108,97,115,115,78,97,109,101,61,34,115,109,58,112,120,45,52,32,115,109,58,"
+--- PASS: TestSlot01Wave7DissectMatchesCohere (5.39s)
+=== RUN   TestSlot01Wave7DissectSuffixMutant
+    slot01_wave7_test.go:269: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        679 fixture strings; 706 helper batches
+    slot01_wave7_test.go:269: 2118 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:269: compiled tailwind_dissect_class.a mutant caught at output line 332: got "5:112,120,45,52,33,", Go "4:112,120,45,52,"
+--- PASS: TestSlot01Wave7DissectSuffixMutant (4.99s)
+=== RUN   TestSlot01Wave7DissectColonMutant
+    slot01_wave7_test.go:272: Go fixture observations:
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_canonical_classes_test.go: 119 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_consistent_class_order_test.go: 155 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/enforce_shorthand_classes_test.go: 67 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_conflicting_classes_test.go: 109 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_unknown_classes_test.go: 129 string inputs
+        /workspace/adamic/cohere/internal/lint/rules/tailwind/no_deprecated_classes_test.go: 100 string inputs
+        679 fixture strings; 706 helper batches
+    slot01_wave7_test.go:272: 2118 Go output lines matched source Node, sanitized native and emitted JavaScript
+    slot01_wave7_test.go:272: compiled tailwind_dissect_class.a mutant caught at output line 7: got "55:99,111,110,115,116,32,101,61,60,100,105,118,32,104,114,101,102,61,34,34,32,72,82,69,70,61,34,38,35,52,55,59,97,98,111,117,116,34,32,123,46,46,46,112,114,111,112,115,125,32,120,108,105,110,107,", Go "56:99,111,110,115,116,32,101,61,60,100,105,118,32,104,114,101,102,61,34,34,32,72,82,69,70,61,34,38,35,52,55,59,97,98,111,117,116,34,32,123,46,46,46,112,114,111,112,115,125,32,120,108,105,110,107,58,"
+--- PASS: TestSlot01Wave7DissectColonMutant (4.92s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	15.309s
