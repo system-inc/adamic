@@ -166,6 +166,54 @@ fi
 if [ "${#packages[@]}" -gt 0 ]; then
 	go vet "${packages[@]}" >"$logs/vet.log" 2>&1 || { echo "go vet failed: $logs/vet.log"; status=1; }
 fi
+# Every runtime .c is compiled into runtime.a for every target, so one call wasi-libc lacks breaks
+# the WebAssembly leg of every program, and Mac merges never run that leg (library's unguarded mkdtemp
+# reached a stack gate as 529 oracle failures). A change to the runtime or to how it's built builds
+# runtime.a for wasm32-wasi here, through native.RuntimeLibrary itself so the flags can't drift.
+# The program is added by an overlay, so the worktree is untouched. Its cache key hashes every source,
+# flag and the compiler's version, and a failed build leaves nothing cached, so a hit is a tree
+# already proven to build.
+if printf '%s\n' "$changed" | grep -qE '^internal/native/(runtime/|library\.go$|native\.go$|target\.go$)'; then
+	wasiSysroot=${WASI_SYSROOT:-}
+	if [ -z "$wasiSysroot" ]; then
+		for candidate in /opt/adamic-tools/wasi-sdk/share/wasi-sysroot "$HOME/.adamic-wasi-sdk/wasi-sdk-27.0-$(uname -m | sed 's/aarch64/arm64/')-$(uname -s | tr '[:upper:]' '[:lower:]' | sed 's/darwin/macos/')/share/wasi-sysroot"; do
+			[ -d "$candidate" ] && { wasiSysroot=$candidate; break; }
+		done
+	fi
+	if [ -z "$wasiSysroot" ]; then
+		echo "refused to judge a runtime change without the WebAssembly build: no WASI sysroot (set WASI_SYSROOT, run cloud/setup.sh --wasi-sdk, or unpack wasi-sdk 27.0 under ~/.adamic-wasi-sdk)"
+		status=1
+	else
+		mkdir -p "$logs/wasm-runtime"
+		cat >"$logs/wasm-runtime/main.go" <<'PROGRAM'
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/system-inc/adamic/internal/native"
+)
+
+func main() {
+	library, err := native.RuntimeLibrary("", native.Options{Target: "wasm32-wasi"})
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	fmt.Println(library)
+}
+PROGRAM
+		printf '{"Replace":{"%s/internal/native/wasmruntimecheck/main.go":"%s/wasm-runtime/main.go"}}' "$PWD" "$logs" >"$logs/wasm-runtime/overlay.json"
+		if WASI_SYSROOT=$wasiSysroot GOWORK=off go run -overlay "$logs/wasm-runtime/overlay.json" ./internal/native/wasmruntimecheck >"$logs/wasm-runtime.log" 2>&1; then
+			echo "ran: runtime.a for wasm32-wasi builds ($wasiSysroot)"
+		else
+			echo "runtime.a doesn't build for wasm32-wasi ($logs/wasm-runtime.log):"
+			grep -m 5 -E 'error:|compiling runtime' "$logs/wasm-runtime.log" | sed 's/^/  /'
+			status=1
+		fi
+	fi
+fi
 oraclePattern=""
 if [ "$compiler" = no ] && [ "${#fixtures[@]}" -gt 0 ]; then
 	oraclePattern="^(TestNativeAgreesWithNode|TestCountsAreRecorded)\$/internal/oracle/testdata/($(printf '%s\n' "${fixtures[@]}" | sort -u | sed 's/[.]/[.]/g' | paste -sd '|' -))\$"
