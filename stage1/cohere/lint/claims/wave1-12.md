@@ -298,3 +298,24 @@ serializer rejects their legitimate suggestion subranges. Dropping those edits
 would break parity. No shared files are edited and no additional claim is made.
 Work stops at those exact blockers, as instructed. Full evidence and rates are
 in [the fourth-batch report](wave1-12-batch4-evidence/REPORT.md).
+
+## Fifth batch, October 7
+
+Previous claimed work is pushed through 97b9922b. The two suggestion rules are
+implemented in 1fe40525 and a93ba8ef and compare byte for byte against the exact
+published suggestion-capable harness. The five JSX claims now have tested
+independent decision candidates in 6d7aded4; extraction remains explicitly blocked.
+See the optional-chain rule REPORT.md for full evidence and limits.
+
+Fetched main remains ef3d907e. All 339 origin refs and 52 unique claim Markdown
+blobs were searched along with main lint .a/.ts sources and rule descriptors.
+All 46 helper-ready names are unavailable. In the inventory array order,
+the first remaining needs_type_information=false names are claimed here:
+
+1. better-tailwindcss/enforce-shorthand-classes
+2. better-tailwindcss/no-concatenated-classes
+3. better-tailwindcss/no-conflicting-classes
+
+Owned directories are better-tailwindcss-enforce-shorthand-classes,
+better-tailwindcss-no-concatenated-classes and
+better-tailwindcss-no-conflicting-classes. This claim is pushed before new code.
