@@ -1,0 +1,67 @@
+=== RUN   TestWave13StringsCorpusAndBackends
+    lint_test.go:297: independent upstream core: ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.161s
+    lint_test.go:297: independent upstream next: ok  	github.com/system-inc/cohere/internal/lint/rules/next	0.007s
+    lint_test.go:297: independent upstream nexus: ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.020s
+    lint_test.go:297: independent upstream tailwind: ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.023s
+    lint_test.go:297: independent upstream typescript: ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.019s
+    lint_test.go:337: EXPLICIT GAP: JSX case from /repository/source/ConsistencyNoReturnVoid.tsx for nexus/consistency-no-return-void; upstream Go test passed but stage1 parser has no JSX adapter
+    lint_test.go:353: cohere cases: 868 unique source/rule/options combinations
+    lint_test.go:677: no-multi-str: 21 upstream cases and 356 compiler/stage1 files (.ts and .a)
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends653574228/007/case-727.tsx source="var a = <div attr='Line 1 \\\n Line 2' />;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends653574228/007/case-728.tsx source="var a = <div attr={'Line 1 \\\n Line 2'} />;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends653574228/007/case-729.tsx source="var a = <div {...'Line 1 \\\n Line 2'} />;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected GreaterThanToken, got OpenBraceToken at 13 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends653574228/007/case-730.tsx source="var a = <div {...{a: 'Line 1 \\\n Line 2'}} />;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice has no JSX string ancestry adapter source="var a = <div>{'Line 1 \\\n Line 2'}</div>;"
+    lint_test.go:843: supported 373 rows; explicit parser gaps 5
+    lint_test.go:680: Go, Node, native identical: 13176427 bytes
+    lint_test.go:685: no-multi-str emitted JavaScript identical: 13176427 bytes
+    lint_test.go:708: no-multi-str round 1 Go 0.362840s findings=9
+    lint_test.go:708: no-multi-str round 1 native 1.420692s findings=9
+    lint_test.go:708: no-multi-str round 1 Node 0.962755s findings=9
+    lint_test.go:708: no-multi-str round 2 Go 0.306708s findings=9
+    lint_test.go:708: no-multi-str round 2 native 1.439518s findings=9
+    lint_test.go:708: no-multi-str round 2 Node 1.330202s findings=9
+    lint_test.go:708: no-multi-str round 3 Go 0.325247s findings=9
+    lint_test.go:708: no-multi-str round 3 native 1.389487s findings=9
+    lint_test.go:708: no-multi-str round 3 Node 1.081547s findings=9
+    lint_test.go:716: no-multi-str Go 29.34 findings/s (9 findings, 0.306708s)
+    lint_test.go:716: no-multi-str native 6.48 findings/s (9 findings, 1.389487s)
+    lint_test.go:716: no-multi-str Node 9.35 findings/s (9 findings, 0.962755s)
+    lint_test.go:677: no-nonoctal-decimal-escape: 31 upstream cases and 356 compiler/stage1 files (.ts and .a)
+    lint_test.go:843: supported 388 rows; explicit parser gaps 0
+    lint_test.go:680: Go, Node, native identical: 13188947 bytes
+    lint_test.go:685: no-nonoctal-decimal-escape emitted JavaScript identical: 13188947 bytes
+    lint_test.go:708: no-nonoctal-decimal-escape round 1 Go 0.468095s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 1 native 1.847525s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 1 Node 1.516122s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 2 Go 0.447914s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 2 native 1.629535s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 2 Node 1.150946s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 3 Go 0.460842s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 3 native 1.689748s findings=18
+    lint_test.go:708: no-nonoctal-decimal-escape round 3 Node 1.298177s findings=18
+    lint_test.go:716: no-nonoctal-decimal-escape Go 40.19 findings/s (18 findings, 0.447914s)
+    lint_test.go:716: no-nonoctal-decimal-escape native 11.05 findings/s (18 findings, 1.629535s)
+    lint_test.go:716: no-nonoctal-decimal-escape Node 15.64 findings/s (18 findings, 1.150946s)
+    lint_test.go:677: no-octal: 31 upstream cases and 356 compiler/stage1 files (.ts and .a)
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected semicolon at 10 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends653574228/007/case-773.ts source="var a = 01.5;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected semicolon at 12 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends653574228/007/case-778.ts source="var a = 0755n;"
+    lint_test.go:840: EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: adamic: panic: parser slice expected semicolon at 12 in /tmp/adamic-gate/TestWave13StringsCorpusAndBackends653574228/007/case-779.ts source="var a = 0777.5;"
+    lint_test.go:843: supported 385 rows; explicit parser gaps 3
+    lint_test.go:680: Go, Node, native identical: 13179350 bytes
+    lint_test.go:685: no-octal emitted JavaScript identical: 13179350 bytes
+    lint_test.go:708: no-octal round 1 Go 0.455712s findings=13
+    lint_test.go:708: no-octal round 1 native 1.403377s findings=13
+    lint_test.go:708: no-octal round 1 Node 1.316741s findings=13
+    lint_test.go:708: no-octal round 2 Go 0.438266s findings=13
+    lint_test.go:708: no-octal round 2 native 1.549275s findings=13
+    lint_test.go:708: no-octal round 2 Node 1.317621s findings=13
+    lint_test.go:708: no-octal round 3 Go 0.430060s findings=13
+    lint_test.go:708: no-octal round 3 native 1.618620s findings=13
+    lint_test.go:708: no-octal round 3 Node 1.271137s findings=13
+    lint_test.go:716: no-octal Go 30.23 findings/s (13 findings, 0.430060s)
+    lint_test.go:716: no-octal native 9.26 findings/s (13 findings, 1.403377s)
+    lint_test.go:716: no-octal Node 10.23 findings/s (13 findings, 1.271137s)
+--- PASS: TestWave13StringsCorpusAndBackends (291.80s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	291.821s

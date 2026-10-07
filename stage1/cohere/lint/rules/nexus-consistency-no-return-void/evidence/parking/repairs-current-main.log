@@ -1,0 +1,101 @@
+=== RUN   TestWave13RepairsMutants
+=== RUN   TestWave13RepairsMutants/typescript-no-unnecessary-type-constraint-repair-mutant
+    lint_test.go:766: typescript-no-unnecessary-type-constraint-repair-mutant caught only by comparison on Node: case 0 line 2: port "/tmp/adamic-gate/TestWave13RepairsMutantstypescript-no-unnecessary-type-constrai692775989/001/typescript-no-unnecessary-type-constraint-0.ts:2:13", Go "/tmp/adamic-gate/TestWave13RepairsMutantstypescript-no-unnecessary-type-constrai692775989/001/typescript-no-unnecessary-type-constraint-0.ts:1:12"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13RepairsMutantstypescript-no-unnecessary-type-constrai692775989/001/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint
+        suggestion removeTheConstraint	Remove the constraint that does nothing.
+    lint_test.go:766: typescript-no-unnecessary-type-constraint-repair-mutant caught only by comparison on native: case 0 line 2: port "/tmp/adamic-gate/TestWave13RepairsMutantstypescript-no-unnecessary-type-constrai692775989/001/typescript-no-unnecessary-type-constraint-0.ts:2:13", Go "/tmp/adamic-gate/TestWave13RepairsMutantstypescript-no-unnecessary-type-constrai692775989/001/typescript-no-unnecessary-type-constraint-0.ts:1:12"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13RepairsMutantstypescript-no-unnecessary-type-constrai692775989/001/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint
+        suggestion removeTheConstraint	Remove the constraint that does nothing.
+    lint_test.go:766: typescript-no-unnecessary-type-constraint-repair-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "/tmp/adamic-gate/TestWave13RepairsMutantstypescript-no-unnecessary-type-constrai692775989/001/typescript-no-unnecessary-type-constraint-0.ts:2:13", Go "/tmp/adamic-gate/TestWave13RepairsMutantstypescript-no-unnecessary-type-constrai692775989/001/typescript-no-unnecessary-type-constraint-0.ts:1:12"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13RepairsMutantstypescript-no-unnecessary-type-constrai692775989/001/typescript-no-unnecessary-type-constraint-0.ts:1:12
+          @typescript-eslint/no-unnecessary-type-constraint  A type parameter with no `extends` clause is already constrained to `unknown`, so writing `extends any` or `extends unknown` constrains nothing. The clause reads as a deliberate bound and communicates one, which makes it worse than noise: a reader looking for where `T` is restricted finds this and stops. Remove it.
+        
+        range 11 12 noUnnecessaryTypeConstraint
+        suggestion removeTheConstraint	Remove the constraint that does nothing.
+=== RUN   TestWave13RepairsMutants/typescript-prefer-as-const-repair-mutant
+    lint_test.go:766: typescript-prefer-as-const-repair-mutant caught only by comparison on Node: case 0 line 7: port "fix 20 20\t as mutable", Go "fix 20 20\t as const"
+        Go context:
+        /tmp/adamic-gate/TestWave13RepairsMutantstypescript-prefer-as-const-repair-mutan2849883827/001/typescript-prefer-as-const-0.ts:1:8
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 7 12 preferAsConst
+        fix 5 12	
+        fix 20 20	 as const
+        fixed	let a = 'bar' as const;\u000a
+    lint_test.go:766: typescript-prefer-as-const-repair-mutant caught only by comparison on native: case 0 line 7: port "fix 20 20\t as mutable", Go "fix 20 20\t as const"
+        Go context:
+        /tmp/adamic-gate/TestWave13RepairsMutantstypescript-prefer-as-const-repair-mutan2849883827/001/typescript-prefer-as-const-0.ts:1:8
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 7 12 preferAsConst
+        fix 5 12	
+        fix 20 20	 as const
+        fixed	let a = 'bar' as const;\u000a
+    lint_test.go:766: typescript-prefer-as-const-repair-mutant caught only by comparison on emitted JavaScript: case 0 line 7: port "fix 20 20\t as mutable", Go "fix 20 20\t as const"
+        Go context:
+        /tmp/adamic-gate/TestWave13RepairsMutantstypescript-prefer-as-const-repair-mutan2849883827/001/typescript-prefer-as-const-0.ts:1:8
+          @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+        
+        range 7 12 preferAsConst
+        fix 5 12	
+        fix 20 20	 as const
+        fixed	let a = 'bar' as const;\u000a
+=== RUN   TestWave13RepairsMutants/typescript-prefer-enum-initializers-repair-mutant
+    lint_test.go:766: typescript-prefer-enum-initializers-repair-mutant caught only by comparison on Node: case 0 line 8: port "suggestion defineInitializerSuggestion\tCan be fixed to A = 2", Go "suggestion defineInitializerSuggestion\tCan be fixed to A = 1"
+        Go context:
+          @typescript-eslint/prefer-enum-initializers  The value of the member 'A' should be explicitly defined.
+        
+        range 9 10 defineInitializer
+        suggestion defineInitializerSuggestion	Can be fixed to A = 0
+        edit 9 10	A = 0
+        suggestion defineInitializerSuggestion	Can be fixed to A = 1
+        edit 9 10	A = 1
+        suggestion defineInitializerSuggestion	Can be fixed to A = 'A'
+        edit 9 10	A = 'A'
+        /tmp/adamic-gate/TestWave13RepairsMutantstypescript-prefer-enum-initializers-rep1562715110/001/typescript-prefer-enum-initializers-0.ts:1:21
+    lint_test.go:766: typescript-prefer-enum-initializers-repair-mutant caught only by comparison on native: case 0 line 8: port "suggestion defineInitializerSuggestion\tCan be fixed to A = 2", Go "suggestion defineInitializerSuggestion\tCan be fixed to A = 1"
+        Go context:
+          @typescript-eslint/prefer-enum-initializers  The value of the member 'A' should be explicitly defined.
+        
+        range 9 10 defineInitializer
+        suggestion defineInitializerSuggestion	Can be fixed to A = 0
+        edit 9 10	A = 0
+        suggestion defineInitializerSuggestion	Can be fixed to A = 1
+        edit 9 10	A = 1
+        suggestion defineInitializerSuggestion	Can be fixed to A = 'A'
+        edit 9 10	A = 'A'
+        /tmp/adamic-gate/TestWave13RepairsMutantstypescript-prefer-enum-initializers-rep1562715110/001/typescript-prefer-enum-initializers-0.ts:1:21
+    lint_test.go:766: typescript-prefer-enum-initializers-repair-mutant caught only by comparison on emitted JavaScript: case 0 line 8: port "suggestion defineInitializerSuggestion\tCan be fixed to A = 2", Go "suggestion defineInitializerSuggestion\tCan be fixed to A = 1"
+        Go context:
+          @typescript-eslint/prefer-enum-initializers  The value of the member 'A' should be explicitly defined.
+        
+        range 9 10 defineInitializer
+        suggestion defineInitializerSuggestion	Can be fixed to A = 0
+        edit 9 10	A = 0
+        suggestion defineInitializerSuggestion	Can be fixed to A = 1
+        edit 9 10	A = 1
+        suggestion defineInitializerSuggestion	Can be fixed to A = 'A'
+        edit 9 10	A = 'A'
+        /tmp/adamic-gate/TestWave13RepairsMutantstypescript-prefer-enum-initializers-rep1562715110/001/typescript-prefer-enum-initializers-0.ts:1:21
+--- PASS: TestWave13RepairsMutants (33.17s)
+    --- PASS: TestWave13RepairsMutants/typescript-no-unnecessary-type-constraint-repair-mutant (9.35s)
+    --- PASS: TestWave13RepairsMutants/typescript-prefer-as-const-repair-mutant (10.63s)
+    --- PASS: TestWave13RepairsMutants/typescript-prefer-enum-initializers-repair-mutant (10.69s)
+=== RUN   TestParkingWitnesses
+    lint_test.go:931: Go, Node, native identical: 2793 bytes
+    lint_test.go:940: fresh current-main Go witness comparison: 3 rows
+--- PASS: TestParkingWitnesses (12.92s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	46.096s

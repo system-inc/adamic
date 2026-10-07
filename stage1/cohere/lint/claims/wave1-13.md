@@ -87,3 +87,7 @@ exhausted. The first three unclaimed syntax-ready inventory entries are:
 - no-octal: claimed here.
 
 This update is committed and pushed before implementation.
+
+## Current-main rebase and parking assessment
+
+Replayed owned commits onto c01907a7 while retaining main shared files. All 17 rule witness comparisons and compiling mutants pass with the scratch compatibility harness; the broader supported corpus also passes. Shared registration remains blocked on #zmh9v36. Eleven parser/adapter exclusions remain beyond that harness gap, so no claim that the only-harness parking condition is met. No additional helper is claimed. See rules/nexus-consistency-no-return-void/PARKING_REPORT.md for commands, fresh logs, throughput and exclusions.

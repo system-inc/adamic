@@ -1,0 +1,4017 @@
+{
+  "origin_refs": 532,
+  "claim_blobs": 17,
+  "unclaimed": [
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].accessOrCall",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].appendSuccessor",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].binaryExpression",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].bindWithDefault",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].classLike",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].condition",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].conditionalExpression",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].decorators",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].doStatement",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].enter",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].enterDisconnected",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].expr",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].firstThrowableFork",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].forInOfStatement",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].forStatement",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].forkOptionalChain",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].ifStatement",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].labeledStatement",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].link",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].linkWithCycleBarrier",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].loop",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeBreak",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeContinue",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeReturn",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeThrow",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeUnreachable",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].makeYield",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].markFinal",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].markThrown",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].memberHeader",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].nestedFunction",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].newBlock",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].parameter",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].patternBind",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].patternReads",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].patternWrites",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].popJump",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].pushJump",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].reachedStatement",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].restoreForks",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].returnFrame",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].setCycleBarrier",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].snapshotForks",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].statement",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].statements",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].switchStatement",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].throwFrame",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].tryStatement",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeArguments",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].typeParameters",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].updateExpression",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclaration",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].variableDeclarationList",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].visitUnknown",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].whileStatement",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].write",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.IsRoot",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isAlwaysTruthyTest",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isBreakableStatement",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isDestructuringTarget",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.isThrowableIdentifier",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.labelsOf",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.normalizeBigIntLiteral",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.throwTarget",
+      "rules": [
+        "array-callback-return",
+        "consistent-return",
+        "no-unreachable-loop",
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsHookCall",
+      "rules": [
+        "structure/consistency-require-matching-file-name",
+        "structure/react-component-no-destructuring",
+        "structure/react-component-no-separate-named-export",
+        "structure/react-component-require-properties-parameter"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.*RegExp.Test",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.Canonicalize",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.CaseClass",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.CaseEquivalenceGroups",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.CaseEquivalents",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.buildCaseTables",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.caseExtras",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.caseTables",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.checkGroupConstruct",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.classAtom.write",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.classAtoms",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeEscape",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeFixedHex",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeNumericEscape",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodePropertyEscape",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.decodeUnicodeEscape",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.expandsOnUppercase",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.joinRanges",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.modifierGroup",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.parseFlags",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.readClass",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.simpleFold",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexp.writeClass",
+      "rules": [
+        "@next/next/no-html-link-for-pages",
+        "@typescript-eslint/no-empty-object-type",
+        "no-restricted-exports",
+        "no-restricted-imports"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.DecodeCompilerRuleOptions",
+      "rules": [
+        "react-hooks/config",
+        "react-hooks/error-boundaries",
+        "react-hooks/incompatible-library",
+        "react-hooks/void-use-memo"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isEs5ComponentCallStrict",
+      "rules": [
+        "react/no-direct-mutation-state",
+        "react/no-this-in-sfc",
+        "react/prefer-es6-class",
+        "react/require-render-return"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.skipParenthesesOptional",
+      "rules": [
+        "react/default-props-match-prop-types",
+        "react/no-access-state-in-setstate",
+        "react/no-set-state",
+        "react/no-unused-state"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.HasJsxOrReactHookCalls",
+      "rules": [
+        "structure/consistency-require-matching-file-name",
+        "structure/react-component-no-destructuring",
+        "structure/react-component-no-separate-named-export",
+        "structure/react-component-require-properties-parameter"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.descendsForJsxSearch",
+      "rules": [
+        "structure/consistency-require-matching-file-name",
+        "structure/react-component-no-destructuring",
+        "structure/react-component-no-separate-named-export",
+        "structure/react-component-require-properties-parameter"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.parameterTypeNode",
+      "rules": [
+        "structure/network-require-hook-options-parameter",
+        "structure/network-require-hook-variables-type",
+        "structure/next-require-api-parameter-name",
+        "structure/react-component-require-properties-type-suffix"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.searchForJsxOrHook",
+      "rules": [
+        "structure/consistency-require-matching-file-name",
+        "structure/react-component-no-destructuring",
+        "structure/react-component-no-separate-named-export",
+        "structure/react-component-require-properties-parameter"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.classTokensIn",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-deprecated-classes",
+        "better-tailwindcss/no-duplicate-classes",
+        "better-tailwindcss/no-unnecessary-whitespace"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.classTokensOf",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-deprecated-classes",
+        "better-tailwindcss/no-duplicate-classes",
+        "better-tailwindcss/no-unnecessary-whitespace"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.declineListeners",
+      "rules": [
+        "better-tailwindcss/enforce-canonical-classes",
+        "better-tailwindcss/enforce-consistent-variant-order",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.ResolveWith",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.variableReference",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*UtilityEvaluator.compile",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.modifierAsValue",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveArbitraryArgument",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveBareArgument",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveDeclaration",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveThemeArgument",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveValueFunction",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.resolveValueFunctions",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*utilityEvaluation.walk",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.InferDataType",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsColor",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsLength",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsNamedColor",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsPositiveInteger",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.cloneNode",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.cloneNodes",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.escapeCSSIdentifier",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.formatJavaScriptNumber",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isAngle",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundPosition",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isBackgroundSize",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFamilyName",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFraction",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isImage",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isLineWidth",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isMultipleOf",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isNumber",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isPercentage",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidSpacingMultiplier",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.matchesDataType",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.modFloat",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.removeNodes",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.roundTripsAsJavaScriptNumber",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-conflicting-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 4
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.HasPathSegment",
+      "rules": [
+        "nexus/boundary-no-internal-import",
+        "nexus/import-require-path-alias",
+        "nexus/localization-no-untranslated-value"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.SourceVisitors",
+      "rules": [
+        "nexus/boundary-no-internal-import",
+        "nexus/boundary-no-nexus-outside-import",
+        "nexus/boundary-no-project-import"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.SpecifierNode",
+      "rules": [
+        "nexus/boundary-no-internal-import",
+        "nexus/boundary-no-nexus-outside-import",
+        "nexus/boundary-no-project-import"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsDocumentFile",
+      "rules": [
+        "@next/next/no-head-import-in-document",
+        "@next/next/no-page-custom-font",
+        "@next/next/no-styled-jsx-in-document"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.lastSeparator",
+      "rules": [
+        "@next/next/no-head-import-in-document",
+        "@next/next/no-page-custom-font",
+        "@next/next/no-styled-jsx-in-document"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.splitPath",
+      "rules": [
+        "@next/next/no-head-import-in-document",
+        "@next/next/no-page-custom-font",
+        "@next/next/no-styled-jsx-in-document"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/property.AccessedName",
+      "rules": [
+        "no-prototype-builtins",
+        "react/no-render-return-value",
+        "yoda"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/property.NameTagged",
+      "rules": [
+        "@typescript-eslint/no-dupe-class-members",
+        "no-dupe-class-members",
+        "react/jsx-props-no-spread-multi"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.AllHexDigits",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces",
+        "no-useless-escape"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ClassEnd",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces",
+        "no-useless-escape"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.IsHexDigit",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces",
+        "no-useless-escape"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ParseRegexFlags",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces",
+        "no-useless-escape"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.PatternAndFlags",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces",
+        "no-useless-escape"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.RegexFlags.UV",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces",
+        "no-useless-escape"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.SkipPatternEscape",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces",
+        "no-useless-escape"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/scope.NameOf",
+      "rules": [
+        "structure/react-component-no-destructuring",
+        "structure/react-hook-no-destructuring",
+        "structure/react-hook-no-properties-in-dependencies"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/scope.borrowedName",
+      "rules": [
+        "structure/react-component-no-destructuring",
+        "structure/react-hook-no-destructuring",
+        "structure/react-hook-no-properties-in-dependencies"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.appendNodeSignature",
+      "rules": [
+        "no-dupe-else-if",
+        "no-useless-call",
+        "prefer-spread"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.appendTokensBetween",
+      "rules": [
+        "no-dupe-else-if",
+        "no-useless-call",
+        "prefer-spread"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.tokenSignature",
+      "rules": [
+        "no-dupe-else-if",
+        "no-useless-call",
+        "prefer-spread"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.DecodeNoMethodSetStateOptions",
+      "rules": [
+        "react/no-did-mount-set-state",
+        "react/no-did-update-set-state",
+        "react/no-will-update-set-state"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isComponentClass",
+      "rules": [
+        "react/no-access-state-in-setstate",
+        "react/no-set-state",
+        "react/no-unused-state"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isCreateReactClassCall",
+      "rules": [
+        "react/no-access-state-in-setstate",
+        "react/no-set-state",
+        "react/no-unused-state"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isReactComponentBase",
+      "rules": [
+        "react/no-access-state-in-setstate",
+        "react/no-set-state",
+        "react/no-unused-state"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isReactComponentBaseName",
+      "rules": [
+        "react/no-access-state-in-setstate",
+        "react/no-set-state",
+        "react/no-unused-state"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collectFunctionDeclaration",
+      "rules": [
+        "structure/network-require-hook-options-parameter",
+        "structure/network-require-hook-request-suffix",
+        "structure/network-require-hook-variables-type"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.*NetworkFileAnalysis.collectVariableStatement",
+      "rules": [
+        "structure/network-require-hook-options-parameter",
+        "structure/network-require-hook-request-suffix",
+        "structure/network-require-hook-variables-type"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.IsLikelyReactComponent",
+      "rules": [
+        "structure/consistency-require-matching-file-name",
+        "structure/react-component-no-display-name",
+        "structure/react-component-require-named-export"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.NetworkFileAnalysisFor",
+      "rules": [
+        "structure/network-require-hook-options-parameter",
+        "structure/network-require-hook-request-suffix",
+        "structure/network-require-hook-variables-type"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.bodyCallsNetworkService",
+      "rules": [
+        "structure/network-require-hook-options-parameter",
+        "structure/network-require-hook-request-suffix",
+        "structure/network-require-hook-variables-type"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.findNetworkServiceCalls",
+      "rules": [
+        "structure/network-require-hook-options-parameter",
+        "structure/network-require-hook-request-suffix",
+        "structure/network-require-hook-variables-type"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.isJsxValue",
+      "rules": [
+        "structure/consistency-require-matching-file-name",
+        "structure/react-component-no-display-name",
+        "structure/react-component-require-named-export"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.isNetworkServiceHookCall",
+      "rules": [
+        "structure/network-require-hook-options-parameter",
+        "structure/network-require-hook-request-suffix",
+        "structure/network-require-hook-variables-type"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.jsxAfterParentheses",
+      "rules": [
+        "structure/consistency-require-matching-file-name",
+        "structure/react-component-no-display-name",
+        "structure/react-component-require-named-export"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.returnArgumentLooksLikeJsx",
+      "rules": [
+        "structure/consistency-require-matching-file-name",
+        "structure/react-component-no-display-name",
+        "structure/react-component-require-named-export"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.typeReferenceName",
+      "rules": [
+        "structure/network-require-hook-options-parameter",
+        "structure/network-require-hook-variables-type",
+        "structure/react-component-require-properties-type-suffix"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.anyCandidateResolves",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.classesOf",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-deprecated-classes",
+        "better-tailwindcss/no-unnecessary-whitespace"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.segmentsOfTemplate",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-duplicate-classes",
+        "better-tailwindcss/no-unnecessary-whitespace"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.splitVariantPrefix",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-important-position",
+        "better-tailwindcss/enforce-consistent-variable-syntax",
+        "better-tailwindcss/enforce-shorthand-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.trimDelimiters",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-duplicate-classes",
+        "better-tailwindcss/no-unnecessary-whitespace"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.DeclaresFunctionalUtility",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*UtilityEvaluator.Reading",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ClassValueResolvesIn",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.Description",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.Description",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ResolveFunctionalUtilityValue",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValueHandler",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValuePredicate",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.bareValueTransform",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.borderSideDescription",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.colorArm",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.descriptionForRoot",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.gapRootAcceptsModifierOnArbitrary",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isFontStretchPercentage",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isPositiveInteger",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isStrictPositiveInteger",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidOpacityValue",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.maskStopDescription",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveArm",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveArmByInferredType",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveArmColor",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.resolveNamedValue",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.themeArm",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.widthArm",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 3
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/classmembers.ForEachDuplicate",
+      "rules": [
+        "@typescript-eslint/no-dupe-class-members",
+        "no-dupe-class-members"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/classmembers.IsAccessorKind",
+      "rules": [
+        "@typescript-eslint/no-dupe-class-members",
+        "no-dupe-class-members"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/classmembers.IsOverloadSignature",
+      "rules": [
+        "@typescript-eslint/no-dupe-class-members",
+        "no-dupe-class-members"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/classmembers.KeyOf",
+      "rules": [
+        "@typescript-eslint/no-dupe-class-members",
+        "no-dupe-class-members"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/classmembers.MemberName",
+      "rules": [
+        "@typescript-eslint/no-dupe-class-members",
+        "no-dupe-class-members"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/module.HasDefaultModifier",
+      "rules": [
+        "@next/next/no-page-custom-font",
+        "structure/next-require-page-default-export"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/module.forEachDeclaredTypeName",
+      "rules": [
+        "@typescript-eslint/no-unsafe-function-type",
+        "structure/react-component-require-properties-type-suffix"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsDocumentPage",
+      "rules": [
+        "@next/next/no-before-interactive-script-outside-document",
+        "@next/next/no-document-import-in-page"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsInApplicationDirectory",
+      "rules": [
+        "@next/next/no-before-interactive-script-outside-document",
+        "@next/next/no-head-element"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.splitSegments",
+      "rules": [
+        "@next/next/no-typos",
+        "structure/next-no-near-miss-route-export"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsCreateElementCall",
+      "rules": [
+        "react/no-children-prop",
+        "react/void-dom-elements-no-children"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.applyQuantifier",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.emit",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.emitAndQuantify",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.kindFromSource",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.readEscape",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.*walker.walkClass",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.braceQuantifierEnd",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.consumeDigits",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.decodeRune",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.escapeValue",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.extendOctalEscape",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.groupPrologueEnd",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.isAsciiLetter",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.octalEscapeValue",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.quantifierAt",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexpattern.unicodeEscapeValue",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ParseHexUint",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.ParseRegexCharacterClassWithEnd",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.parseRegexCharacterClass",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.readClassEscape",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/regexsyntax.readRawClassChar",
+      "rules": [
+        "no-control-regex",
+        "no-regex-spaces"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.BestMatch",
+      "rules": [
+        "@next/next/no-typos",
+        "structure/next-no-near-miss-route-export"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.MinimumEditDistance",
+      "rules": [
+        "@next/next/no-typos",
+        "structure/next-no-near-miss-route-export"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.hasSameTokens",
+      "rules": [
+        "no-dupe-else-if",
+        "no-useless-call"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.isEmptyBracketLiteral",
+      "rules": [
+        "no-dupe-else-if",
+        "no-useless-call"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isComponentIdentifierName",
+      "rules": [
+        "react-hooks/error-boundaries",
+        "react-hooks/void-use-memo"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isHookIdentifierName",
+      "rules": [
+        "react-hooks/error-boundaries",
+        "react-hooks/void-use-memo"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.parameterName",
+      "rules": [
+        "structure/network-require-hook-options-parameter",
+        "structure/network-require-hook-variables-type"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassTemplateSegmentsIn",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-duplicate-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.classExistsIn",
+      "rules": [
+        "better-tailwindcss/enforce-shorthand-classes",
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.Variants",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-consistent-variant-order"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*RunVariantOrder.IndexOf",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-consistent-variant-order"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*VariantRegistry.BuildVariantOrder",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-consistent-variant-order"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.Emit",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.staticValueEmitter",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.Emit",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.appendVariantAndNested",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-consistent-variant-order"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareComposing",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareComposingMask",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareComposingWebkit",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareProperties",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareProperty",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareSorted",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.declareWrapped",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.variantsAreEqual",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order",
+        "better-tailwindcss/enforce-consistent-variant-order"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/typescript.isTypeScriptSourceFile",
+      "rules": [
+        "@typescript-eslint/no-this-alias",
+        "@typescript-eslint/triple-slash-reference"
+      ],
+      "count": 2
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.HasValue",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.IsGenerator",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.IsScope",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.Judge",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.ReportRange",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.Verb",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.canRunOffEnd",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.capitaliseFirst",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.isExemptFromEndJudgment",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.judgeReturns",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.judgeScope",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/consistentreturn.staticName",
+      "rules": [
+        "consistent-return"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Block[E].Index",
+      "rules": [
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].Emit",
+      "rules": [
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*PathAnalysis[E].IsCyclic",
+      "rules": [
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*PathAnalysis[E].IsOnEveryFinalPath",
+      "rules": [
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*PathAnalysis[E].countFinalPaths",
+      "rules": [
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*PathAnalysis[E].findFinalPathDominators",
+      "rules": [
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*PathAnalysis[E].findShortestPaths",
+      "rules": [
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*cyclePaths[E].countToEnd",
+      "rules": [
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.AnalyzePaths",
+      "rules": [
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.IndexRoots",
+      "rules": [
+        "no-unreachable-loop"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.newCyclePaths",
+      "rules": [
+        "react-hooks/rules-of-hooks"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/decorators.CallName",
+      "rules": [
+        "base/security-require-context-access"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/decorators.HasDecoratorInSet",
+      "rules": [
+        "base/security-require-context-access"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/decorators.Of",
+      "rules": [
+        "base/security-require-context-access"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.ParseDisable",
+      "rules": [
+        "@eslint-community/eslint-comments/require-description"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.ParseEnable",
+      "rules": [
+        "@eslint-community/eslint-comments/require-description"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.Recognize",
+      "rules": [
+        "@eslint-community/eslint-comments/require-description"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.endsWord",
+      "rules": [
+        "@eslint-community/eslint-comments/require-description"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.isLineComment",
+      "rules": [
+        "@eslint-community/eslint-comments/require-description"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.parseRuleNames",
+      "rules": [
+        "@eslint-community/eslint-comments/require-description"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.splitDirective",
+      "rules": [
+        "@eslint-community/eslint-comments/require-description"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.splitReason",
+      "rules": [
+        "@eslint-community/eslint-comments/require-description"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.splitScope",
+      "rules": [
+        "@eslint-community/eslint-comments/require-description"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/directives.stripCommentMarkers",
+      "rules": [
+        "@eslint-community/eslint-comments/require-description"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.CompileAllowPattern",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.Listeners",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.checkComputed",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.computedFix",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.continuesAnIdentifier",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.hasCommentBetween",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.isOptionalAccess",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.jsonQuote",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.keywordFix",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.literalKey",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.useBracketsMessage",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/dotnotation.useDotMessage",
+      "rules": [
+        "dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.LocalNameOfDefaultImport",
+      "rules": [
+        "@next/next/inline-script-id"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/literal.CookedToRaw",
+      "rules": [
+        "no-regex-spaces"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/literal.cookedBytesProducedBy",
+      "rules": [
+        "no-regex-spaces"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/literal.escapeWidthInStringLiteral",
+      "rules": [
+        "no-regex-spaces"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/literal.producesNoCookedBytes",
+      "rules": [
+        "no-regex-spaces"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/module.AllDeclaredTypeNames",
+      "rules": [
+        "structure/react-component-require-properties-type-suffix"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/module.DeclaresTypeNamed",
+      "rules": [
+        "@typescript-eslint/no-unsafe-function-type"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/module.IsDefaultExported",
+      "rules": [
+        "@next/next/no-page-custom-font"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.IsInPagesDirectory",
+      "rules": [
+        "@next/next/no-typos"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.RouteContractExports",
+      "rules": [
+        "structure/next-no-near-miss-route-export"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/nextjs.buildRouteFileContracts",
+      "rules": [
+        "structure/next-no-near-miss-route-export"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.FunctionBody",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.FunctionParameters",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsCompilerComponentName",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsCompilerHookName",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsComponentOrHookLike",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.IsReachableRootPosition",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.SkipParenthesesUpward",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.callsHooksOrCreatesJsx",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.containsRef",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.containsSubstring",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.hasComponentOrHookName",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.hasComponentShapedParameters",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.hasPrimitiveTypeAnnotation",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.inferredFunctionName",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.isCompilerHookCallee",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.isJsxNode",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.isSkippedNestedFunction",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/react.isSpreadParameter",
+      "rules": [
+        "react-hooks/incompatible-library"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/scope.BodyOf",
+      "rules": [
+        "structure/react-component-no-destructuring"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/scope.EnclosingFunctionLike",
+      "rules": [
+        "structure/react-component-no-destructuring"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.GraphemeCount",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.continuesCluster",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulJoins",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulLeading",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulSyllable",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulTrailing",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulVowel",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.hangulVowelSyllable",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.isGraphemeControl",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.isGraphemeExtend",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.isIndicLinker",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.isPictograph",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/text.isRegionalIndicator",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.bodyDefinitelyExits",
+      "rules": [
+        "no-this-before-super"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.codePathRoots",
+      "rules": [
+        "no-unreachable-loop"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.consistentReturnIsGenerator",
+      "rules": [
+        "no-empty-function"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.idDenylistIsDestructuringTarget",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.idDenylistIsImportAttributeKey",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.idDenylistIsImportOptionsObject",
+      "rules": [
+        "id-length"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.isNullOrUndefined",
+      "rules": [
+        "no-useless-call"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.isSeparateEvaluationContext",
+      "rules": [
+        "constructor-super"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.memberAccessObject",
+      "rules": [
+        "no-useless-call"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.noRestrictedExportsNameText",
+      "rules": [
+        "no-restricted-imports"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.numericLiteralSign",
+      "rules": [
+        "no-constant-condition"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.switchStatementExits",
+      "rules": [
+        "no-this-before-super"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/core.tryStatementExits",
+      "rules": [
+        "no-this-before-super"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/next.urlQueryValue",
+      "rules": [
+        "@next/next/no-unwanted-polyfillio"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.attributesOf",
+      "rules": [
+        "react/jsx-key"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.commentValueOf",
+      "rules": [
+        "react/jsx-key"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.enclosingClassOf",
+      "rules": [
+        "react/default-props-match-prop-types"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.enclosingComponentOf",
+      "rules": [
+        "react/no-access-state-in-setstate"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.enclosingFunctionOf",
+      "rules": [
+        "react-hooks/void-use-memo"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.functionBodyBlock",
+      "rules": [
+        "react/default-props-match-prop-types"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.hasValidComponentParameters",
+      "rules": [
+        "react-hooks/void-use-memo"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isFunctionLike",
+      "rules": [
+        "react-hooks/void-use-memo"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isJavaScriptIdentifier",
+      "rules": [
+        "react/jsx-key"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isNonNodeExpression",
+      "rules": [
+        "react-hooks/void-use-memo"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isPureComponentBase",
+      "rules": [
+        "react/prefer-stateless-function"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isReactCompiledFunction",
+      "rules": [
+        "react-hooks/void-use-memo"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isRestParameter",
+      "rules": [
+        "react-hooks/void-use-memo"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isThisExpression",
+      "rules": [
+        "react/no-unused-class-component-methods"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.isTopLevelCompilationCandidate",
+      "rules": [
+        "react-hooks/void-use-memo"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.jsxAnnotationIn",
+      "rules": [
+        "react/jsx-key"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.mentionsRef",
+      "rules": [
+        "react-hooks/void-use-memo"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.parametersOf",
+      "rules": [
+        "react-hooks/void-use-memo"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.reactFunctionNameOf",
+      "rules": [
+        "react-hooks/void-use-memo"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.reactPragmaFor",
+      "rules": [
+        "react/jsx-key"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.returnsNonNode",
+      "rules": [
+        "react-hooks/void-use-memo"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.semanticParentOf",
+      "rules": [
+        "react/default-props-match-prop-types"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.sortDefaultPropsInitializerOf",
+      "rules": [
+        "react/default-props-match-prop-types"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.sourceSliceOf",
+      "rules": [
+        "react/jsx-key"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/react.stylePropObjectUnwrapParentheses",
+      "rules": [
+        "react/no-arrow-function-lifecycle"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.callExpressionCallee",
+      "rules": [
+        "structure/network-no-invalidate-cache-in-on-success"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.isAnonymousWrapperCall",
+      "rules": [
+        "structure/consistency-require-matching-file-name"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.isCacheInvalidateCall",
+      "rules": [
+        "structure/network-no-invalidate-cache-in-on-success"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/structure.isForwardRefCall",
+      "rules": [
+        "structure/react-component-no-const-assignment"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassSegmentsIn",
+      "rules": [
+        "better-tailwindcss/no-unnecessary-whitespace"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassTemplatesIn",
+      "rules": [
+        "better-tailwindcss/no-concatenated-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.atoi",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.boundaryAfterHole",
+      "rules": [
+        "better-tailwindcss/no-concatenated-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.boundaryBeforeHole",
+      "rules": [
+        "better-tailwindcss/no-concatenated-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.buildClass",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.candidateValueText",
+      "rules": [
+        "better-tailwindcss/enforce-canonical-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.classOrderKeys",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.compareVariantMasks",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.compileIgnorePatterns",
+      "rules": [
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.composesForRoot",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.containsString",
+      "rules": [
+        "better-tailwindcss/no-deprecated-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.deprecationFor",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.endsWithWhitespace",
+      "rules": [
+        "better-tailwindcss/no-concatenated-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.isArbitraryVariant",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.isArrayIndexKey",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.isIgnored",
+      "rules": [
+        "better-tailwindcss/no-unknown-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.jsKeyOrder",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.newStrictVariantLevel",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.parseTailwindVersion",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.propertyIndexBeyond",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.readingFor",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.repositoryClassFacts",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.resolveClassFactsIn",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.sortClassesByKey",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.sourceValueAfterRoot",
+      "rules": [
+        "better-tailwindcss/enforce-canonical-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.splitCandidateIn",
+      "rules": [
+        "better-tailwindcss/enforce-canonical-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.startsWithWhitespace",
+      "rules": [
+        "better-tailwindcss/no-concatenated-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.strictClassOrder",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.strictVariantsOf",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.tailwindAtLeast",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.templateExpressionOf",
+      "rules": [
+        "better-tailwindcss/no-concatenated-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.templatesFrom",
+      "rules": [
+        "better-tailwindcss/no-concatenated-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.valueIsColorIn",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind.valueResolutionIn",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Descriptor.axisFor",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*RunVariantOrder.VariantBitmask",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.ArbitraryPropertyReading",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.Lookup",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.bareReading",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.frameworkReading",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.AxisReadings.readingForType",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.CompareVariantBitmasks",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ComposesFor",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.DeclaredPropertiesFor",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.EmitGapRoot",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.Reading",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.ReadingFor",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.readingOf",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsColorKeyword",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ModifierAxisFor",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.PrintVariant",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.SelectorShapeForRoot",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.SelectorShapeOfNodes",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.UtilityBranch.isOneOf",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.UtilityBranch.maskStopIsColor",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.UtilityBranch.shadowIsColor",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.UtilityBranchFor",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.absentValued",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.appendVisibleProperty",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.borderSideEmitter",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.collectVisibleProperties",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.containsString",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.emitFunctionalRoot",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.emitRootWithValue",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.escapeUnderscoreAndSpace",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.escapeUnderscoresAndSpaces",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.gapTypeListFor",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.gradientPositionEmitter",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isLoneVar",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isSpaceSeparator",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.maskEdgeEmitter",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.maskGradientEmitter",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.printArbitraryValue",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.printModifier",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.printNodesCss",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.ringEmitter",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.rotateEmitter",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scaleEmitter",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.shadowFamilyEmitter",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.toPrintNodes",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.unwrapIsSelector",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.visibleDeclarationText",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.withResolvedValue",
+      "rules": [
+        "better-tailwindcss/no-conflicting-classes"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.withoutRemoved",
+      "rules": [
+        "better-tailwindcss/enforce-consistent-class-order"
+      ],
+      "count": 1
+    },
+    {
+      "helper": "github.com/system-inc/cohere/internal/lint/rules/typescript.nonNullAssertionOperatorRange",
+      "rules": [
+        "@typescript-eslint/no-non-null-asserted-optional-chain"
+      ],
+      "count": 1
+    }
+  ],
+  "claims": {
+    "39d072d761335302b4e63fcfbf83a806a3af5f9b": [
+      "refs/remotes/origin/codex/lint-helpers-01:stage1/cohere/lint/helpers/claims/01.md"
+    ],
+    "37ed21dddd5d54df81290f697f352de3ccc5e3d4": [
+      "refs/remotes/origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/claims/02.md"
+    ],
+    "29e156bb1c5b63b65367894d56d042a6374a2952": [
+      "refs/remotes/origin/codex/lint-helpers-03:stage1/cohere/lint/helpers/claims/03.md"
+    ],
+    "a41a5990867dad6a432b578863855c5997354863": [
+      "refs/remotes/origin/codex/lint-helpers-04:stage1/cohere/lint/helpers/claims/04.md"
+    ],
+    "14c26da936c3488f9e1b0ea5504ab9ff7a11dfcd": [
+      "refs/remotes/origin/codex/lint-helpers-05:stage1/cohere/lint/helpers/claims/05.md"
+    ],
+    "d48a2a59b1f84e0518b613d748b3b7ccd3f36b14": [
+      "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-03:stage1/cohere/lint/helpers/claims/codex-lint-wave1-03.md"
+    ],
+    "48accd39bf17e24651a0ac458cd9b791b1896712": [
+      "refs/remotes/origin/codex/lint-helpers-from-codex-lint-wave1-14:stage1/cohere/lint/helpers/claims/codex-lint-wave1-14.md"
+    ],
+    "76905e9cfd144731d498bcf3d9bdcaf3b40645ec": [
+      "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-04:stage1/cohere/lint/helpers/claims/codex/lint-wave1-04.md"
+    ],
+    "d9e75fbdfc36cd5106668f964034d42d32ab2730": [
+      "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-06:stage1/cohere/lint/helpers/claims/codex/lint-wave1-06.md"
+    ],
+    "1a21cf81014794f0d5070e0055aa300d9a8c39a6": [
+      "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-09:stage1/cohere/lint/helpers/claims/codex/lint-wave1-09.md"
+    ],
+    "6aa4b1c4a2d6a782c2ed617b86f004d14a2a230b": [
+      "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-10:stage1/cohere/lint/helpers/claims/codex/lint-wave1-10.md"
+    ],
+    "9b0c779f01031b93bd79e8e45fd1c4c6ede0f1b7": [
+      "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-11:stage1/cohere/lint/helpers/claims/codex/lint-wave1-11.md"
+    ],
+    "26d6f11212da1dcfad9a4cec38916c597f2aabf1": [
+      "refs/remotes/origin/codex/lint-helpers-from-codex/lint-wave1-15:stage1/cohere/lint/helpers/claims/codex/lint-wave1-15.md"
+    ],
+    "25c4b51eb47368edb75a7dce1e369d78a94545ac": [
+      "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-05:stage1/cohere/lint/helpers/claims/lint-wave1-05.md"
+    ],
+    "ddd80a22ef7fba1f0d87df78600cb5ce16f0bda5": [
+      "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-08:stage1/cohere/lint/helpers/claims/lint-wave1-08.md"
+    ],
+    "4855c4cb1e4270134a14ecc966654e9864f78b7b": [
+      "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-12:stage1/cohere/lint/helpers/claims/lint-wave1-12.md"
+    ],
+    "6f7c00b2a304bb12b1a8e4c59f03e7955641f450": [
+      "refs/remotes/origin/codex/lint-helpers-from-lint-wave1-13:stage1/cohere/lint/helpers/claims/lint-wave1-13.md"
+    ]
+  }
+}

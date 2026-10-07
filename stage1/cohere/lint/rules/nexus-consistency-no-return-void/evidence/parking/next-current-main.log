@@ -1,0 +1,110 @@
+=== RUN   TestWave13NextMutants
+=== RUN   TestWave13NextMutants/next-no-assign-module-variable-wrong-answer
+    lint_test.go:762: next-no-assign-module-variable-wrong-answer caught only by comparison on Node: case 0 line 2: port "fixed\tlet a = 1, module = {};\\u000aconst { module: renamed } = object;\\u000afor(let module of modules) {}\\u000afunction local(module: unknown) { let module = {}; }\\u000adeclare const module: unknown;\\u000a", Go "/tmp/adamic-gate/TestWave13NextMutantsnext-no-assign-module-variable-wrong-answe1556595470/001/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13NextMutantsnext-no-assign-module-variable-wrong-answe1556595470/001/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 		
+        /tmp/adamic-gate/TestWave13NextMutantsnext-no-assign-module-variable-wrong-answe1556595470/001/next-no-assign-module-variable-0.ts:4:35
+    lint_test.go:762: next-no-assign-module-variable-wrong-answer caught only by comparison on native: case 0 line 2: port "fixed\tlet a = 1, module = {};\\u000aconst { module: renamed } = object;\\u000afor(let module of modules) {}\\u000afunction local(module: unknown) { let module = {}; }\\u000adeclare const module: unknown;\\u000a", Go "/tmp/adamic-gate/TestWave13NextMutantsnext-no-assign-module-variable-wrong-answe1556595470/001/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13NextMutantsnext-no-assign-module-variable-wrong-answe1556595470/001/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 		
+        /tmp/adamic-gate/TestWave13NextMutantsnext-no-assign-module-variable-wrong-answe1556595470/001/next-no-assign-module-variable-0.ts:4:35
+    lint_test.go:762: next-no-assign-module-variable-wrong-answer caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tlet a = 1, module = {};\\u000aconst { module: renamed } = object;\\u000afor(let module of modules) {}\\u000afunction local(module: unknown) { let module = {}; }\\u000adeclare const module: unknown;\\u000a", Go "/tmp/adamic-gate/TestWave13NextMutantsnext-no-assign-module-variable-wrong-answe1556595470/001/next-no-assign-module-variable-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13NextMutantsnext-no-assign-module-variable-wrong-answe1556595470/001/next-no-assign-module-variable-0.ts:1:1
+          @next/next/no-assign-module-variable  Declaring a variable named `module` shadows the CommonJS `module` object that the bundler relies on, so code compiled into a CommonJS context loses its reference to its own exports. The failure surfaces at runtime as an export that is silently missing rather than as a build error. Rename the variable.
+        
+        range 0 23 noAssignModuleVariable 		
+        /tmp/adamic-gate/TestWave13NextMutantsnext-no-assign-module-variable-wrong-answe1556595470/001/next-no-assign-module-variable-0.ts:4:35
+=== RUN   TestWave13NextMutants/typescript-default-param-last-wrong-answer
+    lint_test.go:762: typescript-default-param-last-wrong-answer caught only by comparison on Node: case 0 line 6: port "/tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:4:27", Go "/tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:2:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:1:14
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 13 18 shouldBeLast 		
+        /tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:2:14
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 47 57 shouldBeLast 		
+        /tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:4:27
+    lint_test.go:762: typescript-default-param-last-wrong-answer caught only by comparison on native: case 0 line 6: port "/tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:4:27", Go "/tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:2:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:1:14
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 13 18 shouldBeLast 		
+        /tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:2:14
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 47 57 shouldBeLast 		
+        /tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:4:27
+    lint_test.go:762: typescript-default-param-last-wrong-answer caught only by comparison on emitted JavaScript: case 0 line 6: port "/tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:4:27", Go "/tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:2:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:1:14
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 13 18 shouldBeLast 		
+        /tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:2:14
+          @typescript-eslint/default-param-last  A parameter with a default sits before a parameter without one, so the default can never be taken without passing `undefined` explicitly at every call site. Move it after the required parameters, where omitting it is what selects the default.
+        
+        range 47 57 shouldBeLast 		
+        /tmp/adamic-gate/TestWave13NextMutantstypescript-default-param-last-wrong-answer787293259/001/typescript-default-param-last-0.ts:4:27
+=== RUN   TestWave13NextMutants/tailwind-direction-aware-exemption-removed
+    lint_test.go:762: tailwind-direction-aware-exemption-removed caught only by comparison on Node: case 0 line 7: port "  structure/tailwind-no-physical-direction  The class \"rtl:mr-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"rtl:me-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"md:hover:scroll-pr-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"md:hover:scroll-pe-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        /tmp/adamic-gate/TestWave13NextMutantstailwind-direction-aware-exemption-removed3803196726/001/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 75 useLogicalClass 		
+        /tmp/adamic-gate/TestWave13NextMutantstailwind-direction-aware-exemption-removed3803196726/001/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "md:hover:scroll-pr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:scroll-pe-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 75 useLogicalClass 		
+        /tmp/adamic-gate/TestWave13NextMutantstailwind-direction-aware-exemption-removed3803196726/001/structure-tailwind-no-physical-direction-0.ts:2:38
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+    lint_test.go:762: tailwind-direction-aware-exemption-removed caught only by comparison on native: case 0 line 7: port "  structure/tailwind-no-physical-direction  The class \"rtl:mr-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"rtl:me-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"md:hover:scroll-pr-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"md:hover:scroll-pe-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        /tmp/adamic-gate/TestWave13NextMutantstailwind-direction-aware-exemption-removed3803196726/001/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 75 useLogicalClass 		
+        /tmp/adamic-gate/TestWave13NextMutantstailwind-direction-aware-exemption-removed3803196726/001/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "md:hover:scroll-pr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:scroll-pe-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 75 useLogicalClass 		
+        /tmp/adamic-gate/TestWave13NextMutantstailwind-direction-aware-exemption-removed3803196726/001/structure-tailwind-no-physical-direction-0.ts:2:38
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+    lint_test.go:762: tailwind-direction-aware-exemption-removed caught only by comparison on emitted JavaScript: case 0 line 7: port "  structure/tailwind-no-physical-direction  The class \"rtl:mr-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"rtl:me-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.", Go "  structure/tailwind-no-physical-direction  The class \"md:hover:scroll-pr-4\" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use \"md:hover:scroll-pe-4\", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale."
+        Go context:
+        /tmp/adamic-gate/TestWave13NextMutantstailwind-direction-aware-exemption-removed3803196726/001/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 75 useLogicalClass 		
+        /tmp/adamic-gate/TestWave13NextMutantstailwind-direction-aware-exemption-removed3803196726/001/structure-tailwind-no-physical-direction-0.ts:1:24
+          structure/tailwind-no-physical-direction  The class "md:hover:scroll-pr-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "md:hover:scroll-pe-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+        
+        range 23 75 useLogicalClass 		
+        /tmp/adamic-gate/TestWave13NextMutantstailwind-direction-aware-exemption-removed3803196726/001/structure-tailwind-no-physical-direction-0.ts:2:38
+          structure/tailwind-no-physical-direction  The class "ml-4" names a physical side, so it points the same way regardless of reading direction and lays out backwards in a right-to-left locale. Use "ms-4", which is defined relative to the start and end of the line rather than to left and right, so one class is correct in every locale.
+--- PASS: TestWave13NextMutants (42.28s)
+    --- PASS: TestWave13NextMutants/next-no-assign-module-variable-wrong-answer (12.20s)
+    --- PASS: TestWave13NextMutants/typescript-default-param-last-wrong-answer (13.65s)
+    --- PASS: TestWave13NextMutants/tailwind-direction-aware-exemption-removed (13.90s)
+=== RUN   TestParkingWitnesses
+    lint_test.go:906: Go, Node, native identical: 10178 bytes
+    lint_test.go:915: fresh current-main Go witness comparison: 3 rows
+--- PASS: TestParkingWitnesses (16.67s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	58.964s

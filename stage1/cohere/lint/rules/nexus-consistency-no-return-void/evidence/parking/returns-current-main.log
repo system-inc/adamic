@@ -1,0 +1,86 @@
+=== RUN   TestWave13ReturnsMutants
+=== RUN   TestWave13ReturnsMutants/no-constructor-return-semantic-mutant
+    lint_test.go:762: no-constructor-return-semantic-mutant caught only by comparison on Node: case 0 line 2: port "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant646759480/001/no-constructor-return-0.ts:1:46", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant646759480/001/no-constructor-return-0.ts:1:59"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant646759480/001/no-constructor-return-0.ts:1:59
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 58 67 noConstructorReturn 		
+        fixed	class C { constructor() { const fn = () => { return 2; }; return 1; } }\u000a
+    lint_test.go:762: no-constructor-return-semantic-mutant caught only by comparison on native: case 0 line 2: port "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant646759480/001/no-constructor-return-0.ts:1:46", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant646759480/001/no-constructor-return-0.ts:1:59"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant646759480/001/no-constructor-return-0.ts:1:59
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 58 67 noConstructorReturn 		
+        fixed	class C { constructor() { const fn = () => { return 2; }; return 1; } }\u000a
+    lint_test.go:762: no-constructor-return-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant646759480/001/no-constructor-return-0.ts:1:46", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant646759480/001/no-constructor-return-0.ts:1:59"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-constructor-return-semantic-mutant646759480/001/no-constructor-return-0.ts:1:59
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 58 67 noConstructorReturn 		
+        fixed	class C { constructor() { const fn = () => { return 2; }; return 1; } }\u000a
+=== RUN   TestWave13ReturnsMutants/no-delete-var-semantic-mutant
+    lint_test.go:762: no-delete-var-semantic-mutant caught only by comparison on Node: case 0 line 2: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant784565661/001/no-delete-var-0.ts:1:29"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant784565661/001/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 		
+        fixed	function f(value: number) { delete (value); }\u000a
+    lint_test.go:762: no-delete-var-semantic-mutant caught only by comparison on native: case 0 line 2: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant784565661/001/no-delete-var-0.ts:1:29"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant784565661/001/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 		
+        fixed	function f(value: number) { delete (value); }\u000a
+    lint_test.go:762: no-delete-var-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant784565661/001/no-delete-var-0.ts:1:29"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-delete-var-semantic-mutant784565661/001/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 		
+        fixed	function f(value: number) { delete (value); }\u000a
+=== RUN   TestWave13ReturnsMutants/no-eq-null-semantic-mutant
+    lint_test.go:762: no-eq-null-semantic-mutant caught only by comparison on Node: case 0 line 2: port "fixed\tif ((null) == value) use(value);\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant799265301/001/no-eq-null-0.ts:1:5"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant799265301/001/no-eq-null-0.ts:1:5
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 4 19 unexpected 		
+        fixed	if ((null) == value) use(value);\u000a
+    lint_test.go:762: no-eq-null-semantic-mutant caught only by comparison on native: case 0 line 2: port "fixed\tif ((null) == value) use(value);\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant799265301/001/no-eq-null-0.ts:1:5"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant799265301/001/no-eq-null-0.ts:1:5
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 4 19 unexpected 		
+        fixed	if ((null) == value) use(value);\u000a
+    lint_test.go:762: no-eq-null-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tif ((null) == value) use(value);\\u000a", Go "/tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant799265301/001/no-eq-null-0.ts:1:5"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13ReturnsMutantsno-eq-null-semantic-mutant799265301/001/no-eq-null-0.ts:1:5
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 4 19 unexpected 		
+        fixed	if ((null) == value) use(value);\u000a
+--- PASS: TestWave13ReturnsMutants (42.03s)
+    --- PASS: TestWave13ReturnsMutants/no-constructor-return-semantic-mutant (12.95s)
+    --- PASS: TestWave13ReturnsMutants/no-delete-var-semantic-mutant (12.70s)
+    --- PASS: TestWave13ReturnsMutants/no-eq-null-semantic-mutant (13.50s)
+=== RUN   TestParkingWitnesses
+    lint_test.go:947: Go, Node, native identical: 1724 bytes
+    lint_test.go:956: fresh current-main Go witness comparison: 3 rows
+--- PASS: TestParkingWitnesses (16.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	58.182s

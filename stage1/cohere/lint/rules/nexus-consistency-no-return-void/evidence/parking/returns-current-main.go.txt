@@ -1,0 +1,957 @@
+package lint
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"io/fs"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"regexp"
+	"sort"
+	"strings"
+	"testing"
+	"time"
+
+	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
+
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+)
+
+const repository = "../../.."
+const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
+
+func prepareRegistry(t *testing.T, directory string) []registry.Descriptor {
+	t.Helper()
+	descriptors, err := registry.Generate(directory)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return descriptors
+}
+
+func portFiles(t *testing.T) []string {
+	t.Helper()
+	var files []string
+	err := filepath.WalkDir(".", func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() && (path == "gaps" || strings.HasSuffix(path, "testdata")) {
+			return filepath.SkipDir
+		}
+		if !entry.IsDir() && ((strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) || strings.HasSuffix(path, "rule.json") || strings.HasSuffix(path, "mutant.json") || strings.HasSuffix(path, "oracle.go")) {
+			files = append(files, path)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return files
+}
+
+type execution struct {
+	output   []byte
+	duration time.Duration
+}
+
+// Output is a file, never a pipe: the large corpus must also work on Node's writev path.
+func execute(t *testing.T, directory, name string, args ...string) execution {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+	defer cancel()
+	command := exec.CommandContext(ctx, name, args...)
+	command.Dir = directory
+	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	command.Stdout = output
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	started := time.Now()
+	err = command.Run()
+	duration := time.Since(started)
+	if err != nil || stderr.Len() != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	data, err := os.ReadFile(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	return execution{data, duration}
+}
+
+func goOracle(t *testing.T) string {
+	t.Helper()
+	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	side, err := filepath.Abs("testdata/oracle.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	descriptors := prepareRegistry(t, ".")
+	directory := t.TempDir()
+	replacements := map[string]string{}
+	var virtualFiles []string
+	add := func(name, source string) {
+		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
+		absolute, err := filepath.Abs(source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		replacements[virtual] = absolute
+		virtualFiles = append(virtualFiles, virtual)
+	}
+	oracleSource, err := os.ReadFile(side)
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracleText := strings.Replace(string(oracleSource), "source, core.ScriptKindTS)", "source, scriptKind(path))", 1)
+	oracleText += `
+func scriptKind(path string) core.ScriptKind {
+    if strings.HasSuffix(path, ".tsx") { return core.ScriptKindTSX }
+    if strings.HasSuffix(path, ".jsx") { return core.ScriptKindJSX }
+    if strings.HasSuffix(path, ".js") { return core.ScriptKindJS }
+    return core.ScriptKindTS
+}
+`
+	side = filepath.Join(directory, "oracle-source.go")
+	if err := os.WriteFile(side, []byte(oracleText), 0644); err != nil {
+		t.Fatal(err)
+	}
+	add("oracle", side)
+	add("registry", ".generated/registry.go")
+	for _, d := range descriptors {
+		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join("rules", d.Slug, "oracle.go"))
+	}
+	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(path, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(directory, "oracle")
+	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
+	execute(t, root, "go", args...)
+	return binary
+}
+
+func buildPort(t *testing.T, directory string, sanitize bool) string {
+	t.Helper()
+	prepareRegistry(t, directory)
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "scanner")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+		t.Fatal(err)
+	}
+	return binary
+}
+
+func node(t *testing.T, directory, manifest string, count bool) execution {
+	t.Helper()
+	prepareRegistry(t, directory)
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	args := []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", manifest}
+	if count {
+		args = append(args, "--count")
+	}
+	return execute(t, "", "node", args...)
+}
+
+func difference(got, want []byte) string {
+	if bytes.Equal(got, want) {
+		return ""
+	}
+	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
+	for i := 0; i < len(a) || i < len(b); i++ {
+		left, right := "<EOF>", "<EOF>"
+		if i < len(a) {
+			left = a[i]
+		}
+		if i < len(b) {
+			right = b[i]
+		}
+		if left != right {
+			caseLine := ""
+			for j := i; j >= 0; j-- {
+				if j < len(b) && strings.HasPrefix(b[j], "case ") {
+					caseLine = b[j]
+					break
+				}
+			}
+			start := i - 5
+			if start < 0 {
+				start = 0
+			}
+			end := i + 5
+			if end > len(b) {
+				end = len(b)
+			}
+			return fmt.Sprintf("%s line %d: port %q, Go %q\nGo context:\n%s", caseLine, i+1, left, right, strings.Join(b[start:end], "\n"))
+		}
+	}
+	return "different bytes"
+}
+
+func manifest(t *testing.T, rows []string) string {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "manifest.txt")
+	if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	return path
+}
+func generated(t *testing.T) []string {
+	sources := []string{
+		"debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}",
+		"if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}",
+		"a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';",
+		"var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}",
+		"switch(x){case f( a /* c */ ):break;case f(a):break;case a?.b:break;case a.b:break;case (a):break;case a:break;case /[/*]/:break;case /[/*]/:break;case -1:break;case +1:break;case 1.0:break;case 1:break;}",
+		"const é = '😀';\r\n é == null;\n debugger;\r\n if(é){} // outside\n",
+	}
+	var rows []string
+	for i, source := range sources {
+		path := filepath.Join(t.TempDir(), fmt.Sprintf("generated-%d.ts", i))
+		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+			t.Fatal(err)
+		}
+		for _, options := range []string{"all\tAlways\tAlways\tfalse", "all\tSmart\t\ttrue", "all\tAlways\tNever\tfalse", "all\tAlways\tIgnore\ttrue"} {
+			rows = append(rows, path+"\t"+options)
+		}
+	}
+	return rows
+}
+
+// Capture every Run, including tests that assert repair fields directly. The overlay changes no rule.
+func upstream(t *testing.T) []string {
+	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	harness := filepath.Join(root, "internal/lint/testing/rule_testing.go")
+	data, err := os.ReadFile(harness)
+	if err != nil {
+		t.Fatal(err)
+	}
+	original := "return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
+	replacement := "result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result"
+	if strings.Count(string(data), original) != 1 {
+		t.Fatal("capture overlay anchor changed")
+	}
+	directory := t.TempDir()
+	side := filepath.Join(directory, "rule_testing.go")
+	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
+	overlayPath := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	capture := filepath.Join(directory, "capture")
+	t.Setenv("COHERE_DOCS_CAPTURE", capture)
+	descriptors := prepareRegistry(t, ".")
+	selected := map[string]bool{}
+	packages := map[string][]string{}
+	for _, d := range descriptors {
+		selected[d.Name] = true
+		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
+	}
+	var packageNames []string
+	for name := range packages {
+		packageNames = append(packageNames, name)
+	}
+	sort.Strings(packageNames)
+	for _, name := range packageNames {
+		result := execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=10m")
+		if strings.Contains(string(result.output), "no tests to run") {
+			t.Fatal("upstream filter matched no tests")
+		}
+		t.Logf("independent upstream %s: %s", name, strings.TrimSpace(string(result.output)))
+	}
+	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	type record struct {
+		Rule, Source, Outcome, FixedSource, File string
+		Options                                  json.RawMessage
+	}
+	unique := map[string]record{}
+	for _, path := range files {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, line := range bytes.Split(data, []byte("\n")) {
+			if len(line) == 0 {
+				continue
+			}
+			var row record
+			if err := json.Unmarshal(line, &row); err != nil {
+				t.Fatal(err)
+			}
+			if !selected[row.Rule] {
+				continue
+			}
+			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
+			unique[key] = row
+		}
+	}
+	var keys []string
+	for key := range unique {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	var rows []string
+	for i, key := range keys {
+		row := unique[key]
+		if strings.Contains(row.Source, "<Button onClick") {
+			t.Logf("EXPLICIT GAP: JSX case from %s for %s; upstream Go test passed but stage1 parser has no JSX adapter", row.File, row.Rule)
+			continue
+		}
+		path := filepath.Join(directory, fmt.Sprintf("case-%03d%s", i, filepath.Ext(row.File)))
+		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
+			t.Fatal(err)
+		}
+		options := "null"
+		if len(row.Options) > 0 {
+			options = string(row.Options)
+		}
+		rows = append(rows, fmt.Sprintf("%s\t%s\t\t\tfalse\t%s", path, row.Rule, options))
+	}
+	if len(rows) < 150 {
+		t.Fatalf("capture unexpectedly small: %d cases", len(rows))
+	}
+	t.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
+	return rows
+}
+func compare(t *testing.T, oracle, binary, directory, path string) []byte {
+	t.Helper()
+	want := execute(t, "", oracle, "--manifest", path)
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{{"Node", node(t, directory, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}} {
+		if diff := difference(side.run.output, want.output); diff != "" {
+			t.Fatalf("%s: %s", side.name, diff)
+		}
+	}
+	t.Logf("Go, Node, native identical: %d bytes", len(want.output))
+	return want.output
+}
+func TestRulesAgree(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, true)
+	rows := append(generated(t), upstream(t)...)
+	compare(t, oracle, binary, directory, manifest(t, rows))
+}
+func TestCompilerAndStage1Agree(t *testing.T) {
+	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if source == "" {
+		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3")
+	}
+	pin := execute(t, "", "git", "-C", source, "rev-parse", "HEAD")
+	if strings.TrimSpace(string(pin.output)) != compilerCommit {
+		t.Fatal("compiler corpus pin differs")
+	}
+	var rows []string
+	for _, root := range []string{filepath.Join(source, "src/compiler"), filepath.Join(repository, "stage1")} {
+		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
+				absolute, err := filepath.Abs(path)
+				if err != nil {
+					return err
+				}
+				rows = append(rows, absolute)
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("compiler and stage1: %d files", len(rows))
+	compare(t, goOracle(t), buildPort(t, directory, true), directory, manifest(t, rows))
+}
+func mutant(t *testing.T, from, to string, targets ...string) string {
+	directory := t.TempDir()
+	changed := 0
+	prepareRegistry(t, ".")
+	for _, file := range portFiles(t) {
+		data, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		source := string(data)
+		selected := len(targets) == 0 || filepath.Clean(file) == filepath.Clean(targets[0])
+		if from != "" && selected && !strings.HasSuffix(file, "mutant.json") && strings.Contains(source, from) {
+			if strings.Count(source, from) != 1 {
+				t.Fatalf("mutant anchor repeated in %s", file)
+			}
+			source = strings.Replace(source, from, to, 1)
+			changed++
+		}
+		if strings.HasSuffix(file, ".ts") || strings.HasSuffix(file, ".a") {
+			source = rewritePortImports(t, file, source)
+		}
+		destination := filepath.Join(directory, file)
+		if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(destination, []byte(source), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	// Validation requires each rule's owned witnesses too.
+	for _, d := range prepareRegistry(t, ".") {
+		paths, _ := filepath.Glob(filepath.Join("rules", d.Slug, "testdata", "*.ts.txt"))
+		for _, path := range paths {
+			data, err := os.ReadFile(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			target := filepath.Join(directory, path)
+			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(target, data, 0644); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	if from != "" && changed != 1 {
+		t.Fatalf("mutant anchor count: %d for %q", changed, from)
+	}
+	return directory
+}
+func TestMutants(t *testing.T) {
+	oracle := goOracle(t)
+	for _, descriptor := range prepareRegistry(t, ".") {
+		var change struct{ Name, File, From, To string }
+		data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := json.Unmarshal(data, &change); err != nil {
+			t.Fatal(err)
+		}
+		t.Run(change.Name, func(t *testing.T) {
+			rows := generated(t)
+			for _, source := range ownedWitnesses(t, ".", descriptor.Slug) {
+				rows = append(rows, source+"\t"+descriptor.Name)
+			}
+			path := manifest(t, rows)
+			want := execute(t, "", oracle, "--manifest", path).output
+			if change.File == "" {
+				change.File = "rule.ts"
+			}
+			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
+			for _, side := range []struct {
+				name string
+				run  execution
+			}{{"Node", node(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
+				if bytes.Equal(side.run.output, want) {
+					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
+				}
+				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
+			}
+		})
+	}
+}
+
+func TestThroughput(t *testing.T) {
+	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
+		t.Skip("set ADAMIC_LINT_BENCH=1")
+	}
+	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if source == "" {
+		t.Fatal("missing pinned compiler checkout")
+	}
+	var rows []string
+	err := filepath.WalkDir(filepath.Join(source, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
+			rows = append(rows, path)
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := manifest(t, rows)
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, false)
+	machine := execute(t, "", "uname", "-a")
+	cpu, err := os.ReadFile("/proc/cpuinfo")
+	if err != nil {
+		t.Fatal(err)
+	}
+	model := ""
+	for _, line := range strings.Split(string(cpu), "\n") {
+		if strings.HasPrefix(line, "model name") {
+			model = line
+			break
+		}
+	}
+	loadBefore, _ := os.ReadFile("/proc/loadavg")
+	t.Logf("machine %s; %s; load before %s", strings.TrimSpace(string(machine.output)), model, strings.TrimSpace(string(loadBefore)))
+	best := map[string]time.Duration{}
+	var want []byte
+	for round := 0; round < 5; round++ {
+		for _, name := range []string{"Go", "native", "Node"} {
+			var result execution
+			switch name {
+			case "Go":
+				result = execute(t, "", oracle, "--manifest", path, "--count")
+			case "native":
+				result = execute(t, "", binary, "--manifest", path, "--count")
+			case "Node":
+				result = node(t, directory, path, true)
+			}
+			if want == nil {
+				want = result.output
+			}
+			if !bytes.Equal(want, result.output) {
+				t.Fatalf("count differs on %s: %q vs %q", name, result.output, want)
+			}
+			if best[name] == 0 || result.duration < best[name] {
+				best[name] = result.duration
+			}
+			t.Logf("round %d %s %s findings=%s", round+1, name, result.duration, strings.TrimSpace(string(result.output)))
+		}
+	}
+	var count int
+	if _, err := fmt.Sscan(string(want), &count); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"Go", "native", "Node"} {
+		t.Logf("best of 5 %s: %.6fs, %.2f findings/s (%d files, %d findings)", name, best[name].Seconds(), float64(count)/best[name].Seconds(), len(rows), count)
+	}
+	loadAfter, _ := os.ReadFile("/proc/loadavg")
+	t.Logf("load after %s", strings.TrimSpace(string(loadAfter)))
+}
+
+var portImport = regexp.MustCompile(`(?m)(^import\s+[^;]*?\s+from\s+)(['"])([^'"]+)(['"])`)
+
+// Preserve imports within the copied port, and resolve outside imports from their
+// original module directory. Rules may be arbitrarily deeper than context.ts.
+func rewritePortImports(t *testing.T, file, source string) string {
+	t.Helper()
+	root, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	return portImport.ReplaceAllStringFunc(source, func(declaration string) string {
+		parts := portImport.FindStringSubmatch(declaration)
+		if !strings.HasPrefix(parts[3], ".") {
+			return declaration
+		}
+		absolute := filepath.Clean(filepath.Join(root, filepath.Dir(file), parts[3]))
+		relative, err := filepath.Rel(root, absolute)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			return declaration
+		}
+		return parts[1] + parts[2] + filepath.ToSlash(absolute) + parts[4]
+	})
+}
+
+// Not parallel: captures upstream fixtures using process-wide environment state.
+func TestWave13ReturnsCorpusAndBackends(t *testing.T) {
+	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if source == "" {
+		t.Fatal("compiler corpus path required")
+	}
+	pin := execute(t, "", "git", "-C", source, "rev-parse", "HEAD")
+	if strings.TrimSpace(string(pin.output)) != compilerCommit {
+		t.Fatal("wrong compiler pin")
+	}
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, true)
+	release := buildPort(t, directory, false)
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	emitted := filepath.Join(t.TempDir(), "main.mjs")
+	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	captured := upstream(t)
+	var files []string
+	for _, root := range []string{filepath.Join(source, "src/compiler"), filepath.Join(repository, "stage1")} {
+		err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a")) {
+				absolute, err := filepath.Abs(path)
+				if err != nil {
+					return err
+				}
+				files = append(files, absolute)
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, rule := range []string{"no-constructor-return", "no-delete-var", "no-eq-null"} {
+		var rows []string
+		cases := 0
+		for _, row := range captured {
+			if strings.Split(row, "\t")[1] == rule {
+				rows = append(rows, row)
+				cases++
+			}
+		}
+		if cases == 0 {
+			t.Fatalf("no captured tests for %s", rule)
+		}
+		for _, descriptor := range prepareRegistry(t, ".") {
+			if descriptor.Name == rule {
+				for _, witness := range ownedWitnesses(t, ".", descriptor.Slug) {
+					rows = append(rows, witness+"\t"+rule)
+				}
+			}
+		}
+		for _, file := range files {
+			rows = append(rows, file+"\t"+rule)
+		}
+		t.Logf("%s: %d upstream cases and %d compiler/stage1 files (.ts and .a)", rule, cases, len(files))
+		rows = supportedWave13Rows(t, directory, binary, oracle, emitted, rows)
+		path := manifest(t, rows)
+		want := compare(t, oracle, binary, directory, path)
+		result := execute(t, "", "node", "--disable-warning=ExperimentalWarning", filepath.Join(directory, "../../../oracle/node.mjs"), emitted, "--manifest", path)
+		if diff := difference(result.output, want); diff != "" {
+			t.Fatalf("emitted JavaScript: %s", diff)
+		}
+		t.Logf("%s emitted JavaScript identical: %d bytes", rule, len(want))
+		best := map[string]time.Duration{}
+		var countBytes []byte
+		for round := 0; round < 3; round++ {
+			for _, side := range []string{"Go", "native", "Node"} {
+				var result execution
+				switch side {
+				case "Go":
+					result = execute(t, "", oracle, "--manifest", path, "--count")
+				case "native":
+					result = execute(t, "", release, "--manifest", path, "--count")
+				case "Node":
+					result = node(t, directory, path, true)
+				}
+				if countBytes == nil {
+					countBytes = result.output
+				}
+				if !bytes.Equal(result.output, countBytes) {
+					t.Fatalf("count differs for %s: %s", side, result.output)
+				}
+				if best[side] == 0 || result.duration < best[side] {
+					best[side] = result.duration
+				}
+				t.Logf("%s round %d %s %.6fs findings=%s", rule, round+1, side, result.duration.Seconds(), strings.TrimSpace(string(result.output)))
+			}
+		}
+		var count int
+		if _, err := fmt.Sscan(string(countBytes), &count); err != nil || count == 0 {
+			t.Fatalf("no positive measurement: %q %v", countBytes, err)
+		}
+		for _, side := range []string{"Go", "native", "Node"} {
+			t.Logf("%s %s %.2f findings/s (%d findings, %.6fs)", rule, side, float64(count)/best[side].Seconds(), count, best[side].Seconds())
+		}
+	}
+}
+
+func TestWave13ReturnsMutants(t *testing.T) {
+	oracle := goOracle(t)
+	for _, descriptor := range prepareRegistry(t, ".") {
+		if descriptor.Name != "no-constructor-return" && descriptor.Name != "no-delete-var" && descriptor.Name != "no-eq-null" {
+			continue
+		}
+		var change struct{ Name, File, From, To string }
+		data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := json.Unmarshal(data, &change); err != nil {
+			t.Fatal(err)
+		}
+		t.Run(change.Name, func(t *testing.T) {
+			var rows []string
+			for _, source := range ownedWitnesses(t, ".", descriptor.Slug) {
+				rows = append(rows, source+"\t"+descriptor.Name)
+			}
+			path := manifest(t, rows)
+			want := execute(t, "", oracle, "--manifest", path).output
+			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
+			program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+			if err != nil {
+				t.Fatal(err)
+			}
+			lowered, err := lower.Lower(context.Background(), program)
+			if err != nil {
+				t.Fatal(err)
+			}
+			emitted := filepath.Join(t.TempDir(), "mutant.mjs")
+			if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+				t.Fatal(err)
+			}
+			for _, side := range []struct {
+				name string
+				run  execution
+			}{
+				{"Node", node(t, directory, path, false)},
+				{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
+				{"emitted JavaScript", execute(t, "", "node", "--disable-warning=ExperimentalWarning", filepath.Join(mustRepository(t), "oracle/node.mjs"), emitted, "--manifest", path)},
+			} {
+				if bytes.Equal(side.run.output, want) {
+					t.Fatalf("mutant survived on %s", side.name)
+				}
+				t.Logf("%s caught only by comparison on %s: %s", change.Name, side.name, difference(side.run.output, want))
+			}
+		})
+	}
+}
+
+func mustRepository(t *testing.T) string {
+	path, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return path
+}
+func supportedWave13Rows(t *testing.T, directory, binary, oracle, emitted string, rows []string) []string {
+	runner := filepath.Join(mustRepository(t), "oracle/node.mjs")
+	var supported []string
+	gaps := 0
+	for _, row := range rows {
+		path := manifest(t, []string{row})
+		output, err := os.CreateTemp(t.TempDir(), "preflight-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		command := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--count")
+		command.Stdout = output
+		var stderr bytes.Buffer
+		command.Stderr = &stderr
+		err = command.Run()
+		output.Close()
+		if err == nil && stderr.Len() == 0 {
+			supported = append(supported, row)
+			continue
+		}
+		exit, ok := err.(*exec.ExitError)
+		if !ok || exit.ExitCode() != 70 || !strings.Contains(stderr.String(), "parser slice") {
+			t.Fatalf("unexpected preflight failure: %s %v %s", row, err, &stderr)
+		}
+		execute(t, "", oracle, "--manifest", path, "--count")
+		nativeOutput, err := os.CreateTemp(t.TempDir(), "native-gap-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		nativeCommand := exec.Command(binary, "--manifest", path, "--count")
+		nativeCommand.Stdout = nativeOutput
+		var nativeStderr bytes.Buffer
+		nativeCommand.Stderr = &nativeStderr
+		nativeError := nativeCommand.Run()
+		nativeOutput.Close()
+		nativeExit, ok := nativeError.(*exec.ExitError)
+		if !ok || nativeExit.ExitCode() != 70 || !bytes.Equal(nativeStderr.Bytes(), stderr.Bytes()) {
+			t.Fatalf("native gap differs: %v %s", nativeError, &nativeStderr)
+		}
+		jsOutput, err := os.CreateTemp(t.TempDir(), "js-gap-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		jsCommand := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, emitted, "--manifest", path, "--count")
+		jsCommand.Stdout = jsOutput
+		var jsStderr bytes.Buffer
+		jsCommand.Stderr = &jsStderr
+		jsError := jsCommand.Run()
+		jsOutput.Close()
+		jsExit, ok := jsError.(*exec.ExitError)
+		if !ok || jsExit.ExitCode() != 70 || !bytes.Equal(jsStderr.Bytes(), stderr.Bytes()) {
+			t.Fatalf("emitted JS gap differs: %v %s", jsError, &jsStderr)
+		}
+		source, err := os.ReadFile(strings.Split(row, "\t")[0])
+		if err != nil {
+			t.Fatal(err)
+		}
+		preview := string(source)
+		if len(preview) > 150 {
+			preview = preview[:150]
+		}
+		t.Logf("EXPLICIT PARSER GAP: Go accepts; Node, emitted JavaScript and sanitized native refuse identically: %s source=%q", strings.TrimSpace(stderr.String()), preview)
+		gaps++
+	}
+	t.Logf("supported %d rows; explicit parser gaps %d", len(supported), gaps)
+	return supported
+}
+
+func TestWave13JsxGap(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := buildPort(t, directory, true)
+	data, err := os.ReadFile("rules/nexus-consistency-no-return-void/gaps/jsx-callback.ts.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	fixture := filepath.Join(t.TempDir(), "callback.tsx")
+	if err := os.WriteFile(fixture, data, 0644); err != nil {
+		t.Fatal(err)
+	}
+	path := manifest(t, []string{fixture + "\tnexus/consistency-no-return-void"})
+	runner := filepath.Join(mustRepository(t), "oracle/node.mjs")
+	var want []byte
+	for _, side := range []struct {
+		name    string
+		command *exec.Cmd
+	}{
+		{"Node", exec.Command("node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path)},
+		{"native", exec.Command(binary, "--manifest", path)},
+	} {
+		output, err := os.CreateTemp(t.TempDir(), "jsx-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		side.command.Stdout = output
+		var stderr bytes.Buffer
+		side.command.Stderr = &stderr
+		err = side.command.Run()
+		output.Close()
+		exit, ok := err.(*exec.ExitError)
+		if !ok || exit.ExitCode() != 70 || !strings.Contains(stderr.String(), "parser slice") {
+			t.Fatalf("unexpected JSX result on %s: %v %s", side.name, err, &stderr)
+		}
+		if want == nil {
+			want = stderr.Bytes()
+		} else if !bytes.Equal(want, stderr.Bytes()) {
+			t.Fatal("JSX refusal differs")
+		}
+		t.Logf("%s JSX gap: exit 70 %s", side.name, strings.TrimSpace(stderr.String()))
+	}
+	answer := execute(t, filepath.Join(mustRepository(t), "cohere"), "go", "test", "./internal/lint/rules/nexus", "-run", "^TestConsistencyNoReturnVoidStaysSilent$/^the_arrow-shorthand_callback_idiom$", "-count=1", "-v")
+	if !bytes.Contains(answer.output, []byte("--- PASS: TestConsistencyNoReturnVoidStaysSilent/the_arrow-shorthand_callback_idiom")) {
+		t.Fatalf("Go JSX test did not execute: %s", answer.output)
+	}
+	t.Log("Go cohere JSX callback test passed; parser refuses on Node and sanitized native")
+}
+
+func TestWave13ReturnsOwnedWitnesses(t *testing.T) {
+	oracle := goOracle(t)
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := buildPort(t, directory, true)
+	var rows []string
+	for _, descriptor := range prepareRegistry(t, ".") {
+		if descriptor.Name != "no-constructor-return" && descriptor.Name != "no-delete-var" && descriptor.Name != "no-eq-null" {
+			continue
+		}
+		for _, witness := range ownedWitnesses(t, ".", descriptor.Slug) {
+			result := execute(t, "", oracle, "--manifest", manifest(t, []string{witness + "\t" + descriptor.Name}), "--count")
+			if strings.TrimSpace(string(result.output)) == "0" {
+				t.Fatal("owned witness has no Go finding")
+			}
+			rows = append(rows, witness+"\t"+descriptor.Name, witness+"\tall")
+		}
+	}
+	path := manifest(t, rows)
+	want := compare(t, oracle, binary, directory, path)
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	emitted := filepath.Join(t.TempDir(), "main.mjs")
+	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	result := execute(t, "", "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), emitted, "--manifest", path)
+	if diff := difference(result.output, want); diff != "" {
+		t.Fatal(diff)
+	}
+	t.Logf("selected and all-rule owned witnesses match on all three backends: %d rows", len(rows))
+}
+
+func TestParkingWitnesses(t *testing.T) {
+ oracle := goOracle(t)
+ directory, err := filepath.Abs(".")
+ if err != nil { t.Fatal(err) }
+ binary := buildPort(t, directory, true)
+ var rows []string
+ for _, descriptor := range prepareRegistry(t, ".") {
+ if descriptor.Name != "no-constructor-return" && descriptor.Name != "no-delete-var" && descriptor.Name != "no-eq-null" { continue }
+ for _, witness := range ownedWitnesses(t, ".", descriptor.Slug) { rows = append(rows, witness+"\t"+descriptor.Name) }
+ }
+ if len(rows) == 0 { t.Fatal("no owned witness rows") }
+ path := manifest(t, rows)
+ want := compare(t, oracle, binary, directory, path)
+ program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+ if err != nil { t.Fatal(err) }
+ lowered, err := lower.Lower(context.Background(), program)
+ if err != nil { t.Fatal(err) }
+ emitted := filepath.Join(t.TempDir(), "parking.mjs")
+ if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil { t.Fatal(err) }
+ result := execute(t, "", "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), emitted, "--manifest", path)
+ if diff := difference(result.output, want); diff != "" { t.Fatal(diff) }
+ t.Logf("fresh current-main Go witness comparison: %d rows", len(rows))
+}
