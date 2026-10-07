@@ -1,0 +1,18 @@
+import { createHash } from 'node:crypto';
+function createSHA256Hash(data: string): string { const hash = createHash('sha256'); hash.update(data); return hash.digest('hex'); }
+function createSystemHash(data: string): string { return createSHA256Hash(data); }
+for (const text of ['', 'abc', 'héllo 🌍', '\ud800', '\udfff', 'a\u0000b', 'x'.repeat(55), 'x'.repeat(56), 'x'.repeat(63), 'x'.repeat(64), 'x'.repeat(65), 'x'.repeat(1000)]) {
+ console.log(createSHA256Hash(text));
+ console.log(createSystemHash(text));
+ console.log(createHash('sha256').update(text).digest('hex'));
+}
+const first = createHash('sha256');
+const second = createHash('sha256');
+const alias = first;
+alias.update('a').update('b');
+second.update('123');
+first.update('c');
+console.log(first.digest('hex'));
+console.log(second.digest('hex'));
+console.log(createHash('sha256').update('YWJj', 'base64').digest('hex'));
+console.log(createHash('sha256').update('610062006300', 'ucs2').digest('hex'));
