@@ -44,8 +44,12 @@ func (e *emitter) classDeclarations(builder *strings.Builder) {
 }
 
 func (e *emitter) callCode(call ir.Call, arguments []string) string {
-	if call.Virtual == 0 {
-		return fmt.Sprintf("%s(%s)", e.functionName(call.Function), strings.Join(arguments, ", "))
+	targets := e.program.CallTargets(call)
+	if len(targets) == 1 {
+		return fmt.Sprintf("%s(%s)", e.functionName(targets[0]), strings.Join(arguments, ", "))
+	}
+	if class := e.exactReceiverClass(call.Arguments[0]); class != 0 {
+		return fmt.Sprintf("%s(%s)", e.functionName(e.program.Classes[class-1].Methods[call.Virtual-1]), strings.Join(arguments, ", "))
 	}
 	signature := e.program.Functions[call.Function]
 	parameters := []string{}
