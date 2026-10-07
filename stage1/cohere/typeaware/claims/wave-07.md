@@ -69,3 +69,12 @@ origin heads, the first eligible rules in the combined 197-row volume ranking ar
 This claim is pushed before implementation. New native files use .a and remain
 in the worker-owned wave07_next directory; shared harness and generators are
 not edited.
+
+## Second continuation implementation status
+
+The second trio is implemented and validated. prefer-rest-params and
+prefer-promise-reject-errors use the normal archive; prefer-regex-literals uses a
+private overlay pending one shared dispatcher case. Full byte streams including
+nonempty regex suggestions, per-rule mutants, a raw-fact mutant, released-handle
+checks and ASan/UBSan/LSan gates pass. See ../wave07_next/REPORT.md and evidence.
+No additional claims are taken after this trio.

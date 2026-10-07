@@ -1,0 +1,688 @@
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.01s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestTypeReferenceGraphFacts
+=== PAUSE TestTypeReferenceGraphFacts
+=== RUN   TestWave07FlowAndModuleFacts
+--- PASS: TestWave07FlowAndModuleFacts (0.04s)
+=== RUN   TestWave07RegexStructure
+--- PASS: TestWave07RegexStructure (0.00s)
+=== RUN   TestWave07SymbolContext
+--- PASS: TestWave07SymbolContext (0.01s)
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestTypeReferenceGraphFacts
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestShapeAndNameFacts
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+--- PASS: TestShapeAndNameFacts (0.02s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.08s)
+--- PASS: TestTypeReferenceGraphFacts (0.08s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.09s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.157s
+=== RUN   TestWalkReportsHowACharacterWasSpelled
+=== PAUSE TestWalkReportsHowACharacterWasSpelled
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter
+=== RUN   TestWalkRaisesQuantifierDepthForAQuantifiedClass
+=== PAUSE TestWalkRaisesQuantifierDepthForAQuantifiedClass
+=== RUN   TestWalkConsumesQuantifiersExactly
+=== PAUSE TestWalkConsumesQuantifiersExactly
+=== RUN   TestWalkBoundsAnOctalEscape
+=== PAUSE TestWalkBoundsAnOctalEscape
+=== RUN   TestWalkRaisesDepthInsideACharacterClass
+=== PAUSE TestWalkRaisesDepthInsideACharacterClass
+=== RUN   TestWalkSkipsGroupSyntax
+=== PAUSE TestWalkSkipsGroupSyntax
+=== RUN   TestWalkReportsNothingForNonCharacters
+=== PAUSE TestWalkReportsNothingForNonCharacters
+=== RUN   TestCountCapturingGroups
+=== PAUSE TestCountCapturingGroups
+=== RUN   TestWalkReportsPatternRelativeSpans
+=== PAUSE TestWalkReportsPatternRelativeSpans
+=== RUN   TestWalkStopsWhenTheCallbackDeclines
+=== PAUSE TestWalkStopsWhenTheCallbackDeclines
+=== RUN   TestWalkRefusesMalformedInput
+=== PAUSE TestWalkRefusesMalformedInput
+=== CONT  TestWalkReportsHowACharacterWasSpelled
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_plain_character
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_plain_character
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_raw_space
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_raw_space
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_null_escape
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_null_escape
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_hexadecimal_escape
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_hexadecimal_escape
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_hexadecimal_escape_with_a_value
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_hexadecimal_escape_with_a_value
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_fixed-width_unicode_escape
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_fixed-width_unicode_escape
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_braced_unicode_escape
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_braced_unicode_escape
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_named_escape
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_named_escape
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_newline_escape
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_newline_escape
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_control-letter_escape
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_control-letter_escape
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_lowercase_control-letter_escape
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_lowercase_control-letter_escape
+=== RUN   TestWalkReportsHowACharacterWasSpelled/an_octal_escape
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/an_octal_escape
+=== RUN   TestWalkReportsHowACharacterWasSpelled/a_multi-digit_octal_escape
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/a_multi-digit_octal_escape
+=== RUN   TestWalkReportsHowACharacterWasSpelled/an_octal_escape_with_a_leading_zero
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/an_octal_escape_with_a_leading_zero
+=== RUN   TestWalkReportsHowACharacterWasSpelled/an_identity_escape
+=== PAUSE TestWalkReportsHowACharacterWasSpelled/an_identity_escape
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_plain_character
+=== CONT  TestWalkRefusesMalformedInput
+=== RUN   TestWalkRefusesMalformedInput/an_unterminated_class
+=== PAUSE TestWalkRefusesMalformedInput/an_unterminated_class
+=== RUN   TestWalkRefusesMalformedInput/a_trailing_backslash
+=== PAUSE TestWalkRefusesMalformedInput/a_trailing_backslash
+=== CONT  TestWalkRefusesMalformedInput/an_unterminated_class
+=== CONT  TestWalkStopsWhenTheCallbackDeclines
+--- PASS: TestWalkStopsWhenTheCallbackDeclines (0.00s)
+=== CONT  TestWalkReportsPatternRelativeSpans
+--- PASS: TestWalkReportsPatternRelativeSpans (0.00s)
+=== CONT  TestCountCapturingGroups
+=== RUN   TestCountCapturingGroups/none
+=== PAUSE TestCountCapturingGroups/none
+=== RUN   TestCountCapturingGroups/one
+=== PAUSE TestCountCapturingGroups/one
+=== RUN   TestCountCapturingGroups/two
+=== PAUSE TestCountCapturingGroups/two
+=== RUN   TestCountCapturingGroups/nested
+=== PAUSE TestCountCapturingGroups/nested
+=== RUN   TestCountCapturingGroups/non-capturing_does_not_count
+=== PAUSE TestCountCapturingGroups/non-capturing_does_not_count
+=== RUN   TestCountCapturingGroups/lookahead_does_not_count
+=== PAUSE TestCountCapturingGroups/lookahead_does_not_count
+=== RUN   TestCountCapturingGroups/negative_lookahead_does_not_count
+=== PAUSE TestCountCapturingGroups/negative_lookahead_does_not_count
+=== RUN   TestCountCapturingGroups/lookbehind_does_not_count
+=== PAUSE TestCountCapturingGroups/lookbehind_does_not_count
+=== RUN   TestCountCapturingGroups/negative_lookbehind_does_not_count
+=== PAUSE TestCountCapturingGroups/negative_lookbehind_does_not_count
+=== RUN   TestCountCapturingGroups/a_named_group_counts
+=== PAUSE TestCountCapturingGroups/a_named_group_counts
+=== RUN   TestCountCapturingGroups/a_paren_inside_a_class_does_not_count
+=== PAUSE TestCountCapturingGroups/a_paren_inside_a_class_does_not_count
+=== RUN   TestCountCapturingGroups/an_escaped_paren_does_not_count
+=== PAUSE TestCountCapturingGroups/an_escaped_paren_does_not_count
+=== RUN   TestCountCapturingGroups/a_mixture
+=== PAUSE TestCountCapturingGroups/a_mixture
+=== CONT  TestWalkReportsHowACharacterWasSpelled/an_octal_escape
+=== CONT  TestCountCapturingGroups/none
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_lowercase_control-letter_escape
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_fixed-width_unicode_escape
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_hexadecimal_escape_with_a_value
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_hexadecimal_escape
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_braced_unicode_escape
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_raw_space
+=== CONT  TestWalkRefusesMalformedInput/a_trailing_backslash
+--- PASS: TestWalkRefusesMalformedInput (0.00s)
+    --- PASS: TestWalkRefusesMalformedInput/an_unterminated_class (0.00s)
+    --- PASS: TestWalkRefusesMalformedInput/a_trailing_backslash (0.00s)
+=== CONT  TestCountCapturingGroups/a_mixture
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_null_escape
+=== CONT  TestCountCapturingGroups/an_escaped_paren_does_not_count
+=== CONT  TestCountCapturingGroups/a_paren_inside_a_class_does_not_count
+=== CONT  TestCountCapturingGroups/a_named_group_counts
+=== CONT  TestCountCapturingGroups/lookbehind_does_not_count
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_newline_escape
+=== CONT  TestCountCapturingGroups/negative_lookahead_does_not_count
+=== CONT  TestCountCapturingGroups/lookahead_does_not_count
+=== CONT  TestCountCapturingGroups/non-capturing_does_not_count
+=== CONT  TestCountCapturingGroups/nested
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_named_escape
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_control-letter_escape
+=== CONT  TestCountCapturingGroups/two
+=== CONT  TestWalkSkipsGroupSyntax
+=== CONT  TestWalkReportsNothingForNonCharacters
+=== RUN   TestWalkSkipsGroupSyntax/a_capturing_group
+=== PAUSE TestWalkSkipsGroupSyntax/a_capturing_group
+=== RUN   TestWalkSkipsGroupSyntax/a_non-capturing_group
+=== PAUSE TestWalkSkipsGroupSyntax/a_non-capturing_group
+=== RUN   TestWalkSkipsGroupSyntax/a_named_group
+=== PAUSE TestWalkSkipsGroupSyntax/a_named_group
+=== RUN   TestWalkSkipsGroupSyntax/a_lookahead
+=== PAUSE TestWalkSkipsGroupSyntax/a_lookahead
+=== RUN   TestWalkSkipsGroupSyntax/a_negative_lookahead
+=== PAUSE TestWalkSkipsGroupSyntax/a_negative_lookahead
+=== RUN   TestWalkReportsNothingForNonCharacters/a_start_anchor
+=== RUN   TestWalkSkipsGroupSyntax/a_lookbehind
+=== PAUSE TestWalkSkipsGroupSyntax/a_lookbehind
+=== RUN   TestWalkSkipsGroupSyntax/a_negative_lookbehind
+=== PAUSE TestWalkSkipsGroupSyntax/a_negative_lookbehind
+=== RUN   TestWalkSkipsGroupSyntax/several_groups_in_a_row
+=== PAUSE TestWalkSkipsGroupSyntax/several_groups_in_a_row
+=== CONT  TestWalkRaisesDepthInsideACharacterClass
+=== CONT  TestWalkBoundsAnOctalEscape
+=== PAUSE TestWalkReportsNothingForNonCharacters/a_start_anchor
+=== RUN   TestWalkBoundsAnOctalEscape/three_digits
+--- PASS: TestWalkRaisesDepthInsideACharacterClass (0.00s)
+=== PAUSE TestWalkBoundsAnOctalEscape/three_digits
+=== CONT  TestCountCapturingGroups/negative_lookbehind_does_not_count
+=== RUN   TestWalkBoundsAnOctalEscape/two_digits
+=== CONT  TestWalkRaisesQuantifierDepthForAQuantifiedClass
+=== PAUSE TestWalkBoundsAnOctalEscape/two_digits
+=== RUN   TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_quantified_class
+=== PAUSE TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_quantified_class
+=== RUN   TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_counted_class
+=== PAUSE TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_counted_class
+=== RUN   TestWalkRaisesQuantifierDepthForAQuantifiedClass/an_unquantified_class
+=== PAUSE TestWalkRaisesQuantifierDepthForAQuantifiedClass/an_unquantified_class
+=== RUN   TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_quantified_class_beside_a_plain_one
+=== PAUSE TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_quantified_class_beside_a_plain_one
+=== CONT  TestWalkReportsHowACharacterWasSpelled/an_identity_escape
+=== CONT  TestWalkReportsHowACharacterWasSpelled/an_octal_escape_with_a_leading_zero
+=== CONT  TestWalkReportsHowACharacterWasSpelled/a_multi-digit_octal_escape
+--- PASS: TestWalkReportsHowACharacterWasSpelled (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_plain_character (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/an_octal_escape (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_lowercase_control-letter_escape (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_fixed-width_unicode_escape (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_hexadecimal_escape_with_a_value (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_hexadecimal_escape (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_braced_unicode_escape (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_raw_space (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_null_escape (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_newline_escape (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_control-letter_escape (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_named_escape (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/an_identity_escape (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/an_octal_escape_with_a_leading_zero (0.00s)
+    --- PASS: TestWalkReportsHowACharacterWasSpelled/a_multi-digit_octal_escape (0.00s)
+=== RUN   TestWalkBoundsAnOctalEscape/a_value_above_255_stops_early
+=== PAUSE TestWalkBoundsAnOctalEscape/a_value_above_255_stops_early
+=== RUN   TestWalkBoundsAnOctalEscape/a_fourth_digit_is_literal
+=== PAUSE TestWalkBoundsAnOctalEscape/a_fourth_digit_is_literal
+=== RUN   TestWalkBoundsAnOctalEscape/a_non-octal_digit_ends_it
+=== PAUSE TestWalkBoundsAnOctalEscape/a_non-octal_digit_ends_it
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/a_star
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/a_star
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/a_plus
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/a_plus
+=== CONT  TestWalkConsumesQuantifiersExactly
+=== RUN   TestWalkConsumesQuantifiersExactly/a_lazy_star
+=== PAUSE TestWalkConsumesQuantifiersExactly/a_lazy_star
+=== RUN   TestWalkConsumesQuantifiersExactly/a_lazy_counted_quantifier
+=== PAUSE TestWalkConsumesQuantifiersExactly/a_lazy_counted_quantifier
+=== RUN   TestWalkConsumesQuantifiersExactly/a_brace_holding_no_digits
+=== PAUSE TestWalkConsumesQuantifiersExactly/a_brace_holding_no_digits
+=== RUN   TestWalkConsumesQuantifiersExactly/a_brace_holding_a_trailing_comma_only
+=== PAUSE TestWalkConsumesQuantifiersExactly/a_brace_holding_a_trailing_comma_only
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/an_optional
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/an_optional
+=== CONT  TestWalkSkipsGroupSyntax/a_lookbehind
+=== CONT  TestWalkSkipsGroupSyntax/a_negative_lookahead
+=== CONT  TestWalkSkipsGroupSyntax/a_lookahead
+=== CONT  TestWalkSkipsGroupSyntax/a_named_group
+=== CONT  TestWalkSkipsGroupSyntax/a_non-capturing_group
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/a_counted_quantifier
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/a_counted_quantifier
+=== CONT  TestWalkSkipsGroupSyntax/several_groups_in_a_row
+=== CONT  TestWalkSkipsGroupSyntax/a_capturing_group
+=== CONT  TestWalkSkipsGroupSyntax/a_negative_lookbehind
+=== CONT  TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_quantified_class
+=== CONT  TestWalkBoundsAnOctalEscape/a_non-octal_digit_ends_it
+=== CONT  TestWalkBoundsAnOctalEscape/a_fourth_digit_is_literal
+=== CONT  TestWalkBoundsAnOctalEscape/a_value_above_255_stops_early
+--- PASS: TestWalkSkipsGroupSyntax (0.00s)
+    --- PASS: TestWalkSkipsGroupSyntax/a_lookbehind (0.00s)
+    --- PASS: TestWalkSkipsGroupSyntax/a_negative_lookahead (0.00s)
+    --- PASS: TestWalkSkipsGroupSyntax/a_lookahead (0.00s)
+    --- PASS: TestWalkSkipsGroupSyntax/a_named_group (0.00s)
+    --- PASS: TestWalkSkipsGroupSyntax/a_non-capturing_group (0.00s)
+    --- PASS: TestWalkSkipsGroupSyntax/a_capturing_group (0.00s)
+    --- PASS: TestWalkSkipsGroupSyntax/a_negative_lookbehind (0.00s)
+    --- PASS: TestWalkSkipsGroupSyntax/several_groups_in_a_row (0.00s)
+=== CONT  TestWalkBoundsAnOctalEscape/two_digits
+=== CONT  TestWalkBoundsAnOctalEscape/three_digits
+=== CONT  TestWalkRaisesQuantifierDepthForAQuantifiedClass/an_unquantified_class
+=== CONT  TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_counted_class
+=== CONT  TestWalkConsumesQuantifiersExactly/a_lazy_star
+--- PASS: TestWalkBoundsAnOctalEscape (0.00s)
+    --- PASS: TestWalkBoundsAnOctalEscape/a_non-octal_digit_ends_it (0.00s)
+    --- PASS: TestWalkBoundsAnOctalEscape/a_fourth_digit_is_literal (0.00s)
+    --- PASS: TestWalkBoundsAnOctalEscape/a_value_above_255_stops_early (0.00s)
+    --- PASS: TestWalkBoundsAnOctalEscape/two_digits (0.00s)
+    --- PASS: TestWalkBoundsAnOctalEscape/three_digits (0.00s)
+=== CONT  TestWalkConsumesQuantifiersExactly/a_brace_holding_no_digits
+=== CONT  TestWalkConsumesQuantifiersExactly/a_brace_holding_a_trailing_comma_only
+=== CONT  TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_quantified_class_beside_a_plain_one
+=== CONT  TestWalkConsumesQuantifiersExactly/a_lazy_counted_quantifier
+=== RUN   TestWalkReportsNothingForNonCharacters/an_end_anchor
+--- PASS: TestWalkRaisesQuantifierDepthForAQuantifiedClass (0.00s)
+    --- PASS: TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_quantified_class (0.00s)
+    --- PASS: TestWalkRaisesQuantifierDepthForAQuantifiedClass/an_unquantified_class (0.00s)
+    --- PASS: TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_counted_class (0.00s)
+    --- PASS: TestWalkRaisesQuantifierDepthForAQuantifiedClass/a_quantified_class_beside_a_plain_one (0.00s)
+=== CONT  TestCountCapturingGroups/one
+=== PAUSE TestWalkReportsNothingForNonCharacters/an_end_anchor
+--- PASS: TestWalkConsumesQuantifiersExactly (0.00s)
+    --- PASS: TestWalkConsumesQuantifiersExactly/a_lazy_star (0.00s)
+    --- PASS: TestWalkConsumesQuantifiersExactly/a_brace_holding_no_digits (0.00s)
+    --- PASS: TestWalkConsumesQuantifiersExactly/a_brace_holding_a_trailing_comma_only (0.00s)
+    --- PASS: TestWalkConsumesQuantifiersExactly/a_lazy_counted_quantifier (0.00s)
+=== RUN   TestWalkReportsNothingForNonCharacters/alternation
+--- PASS: TestCountCapturingGroups (0.00s)
+    --- PASS: TestCountCapturingGroups/none (0.00s)
+    --- PASS: TestCountCapturingGroups/a_mixture (0.00s)
+    --- PASS: TestCountCapturingGroups/an_escaped_paren_does_not_count (0.00s)
+    --- PASS: TestCountCapturingGroups/a_paren_inside_a_class_does_not_count (0.00s)
+    --- PASS: TestCountCapturingGroups/a_named_group_counts (0.00s)
+    --- PASS: TestCountCapturingGroups/lookbehind_does_not_count (0.00s)
+    --- PASS: TestCountCapturingGroups/negative_lookahead_does_not_count (0.00s)
+    --- PASS: TestCountCapturingGroups/lookahead_does_not_count (0.00s)
+    --- PASS: TestCountCapturingGroups/non-capturing_does_not_count (0.00s)
+    --- PASS: TestCountCapturingGroups/nested (0.00s)
+    --- PASS: TestCountCapturingGroups/two (0.00s)
+    --- PASS: TestCountCapturingGroups/negative_lookbehind_does_not_count (0.00s)
+    --- PASS: TestCountCapturingGroups/one (0.00s)
+=== PAUSE TestWalkReportsNothingForNonCharacters/alternation
+=== RUN   TestWalkReportsNothingForNonCharacters/a_digit_class_escape
+=== PAUSE TestWalkReportsNothingForNonCharacters/a_digit_class_escape
+=== RUN   TestWalkReportsNothingForNonCharacters/a_word_class_escape
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/an_open-ended_range
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/an_open-ended_range
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/a_closed_range
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/a_closed_range
+=== PAUSE TestWalkReportsNothingForNonCharacters/a_word_class_escape
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/a_lazy_quantifier
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/a_lazy_quantifier
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/only_the_quantified_character
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/only_the_quantified_character
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/two_spaces_where_the_second_is_quantified
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/two_spaces_where_the_second_is_quantified
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/two_spaces_where_the_second_is_counted
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/two_spaces_where_the_second_is_counted
+=== RUN   TestWalkReportsNothingForNonCharacters/a_whitespace_class_escape
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/a_brace_that_is_not_a_quantifier
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/a_brace_that_is_not_a_quantifier
+=== RUN   TestWalkRaisesDepthForAQuantifiedCharacter/nothing_quantified
+=== PAUSE TestWalkRaisesDepthForAQuantifiedCharacter/nothing_quantified
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/a_star
+=== PAUSE TestWalkReportsNothingForNonCharacters/a_whitespace_class_escape
+=== RUN   TestWalkReportsNothingForNonCharacters/a_word_boundary
+=== PAUSE TestWalkReportsNothingForNonCharacters/a_word_boundary
+=== RUN   TestWalkReportsNothingForNonCharacters/a_negated_class_escape
+=== PAUSE TestWalkReportsNothingForNonCharacters/a_negated_class_escape
+=== CONT  TestWalkReportsNothingForNonCharacters/a_start_anchor
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/nothing_quantified
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/a_brace_that_is_not_a_quantifier
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/a_plus
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/an_optional
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/a_lazy_quantifier
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/two_spaces_where_the_second_is_counted
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/an_open-ended_range
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/a_counted_quantifier
+=== CONT  TestWalkReportsNothingForNonCharacters/a_word_class_escape
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/a_closed_range
+=== CONT  TestWalkReportsNothingForNonCharacters/a_word_boundary
+=== CONT  TestWalkReportsNothingForNonCharacters/alternation
+=== CONT  TestWalkReportsNothingForNonCharacters/a_digit_class_escape
+=== CONT  TestWalkReportsNothingForNonCharacters/an_end_anchor
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/two_spaces_where_the_second_is_quantified
+=== CONT  TestWalkRaisesDepthForAQuantifiedCharacter/only_the_quantified_character
+--- PASS: TestWalkRaisesDepthForAQuantifiedCharacter (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/a_star (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/nothing_quantified (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/a_brace_that_is_not_a_quantifier (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/a_plus (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/an_optional (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/a_lazy_quantifier (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/two_spaces_where_the_second_is_counted (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/an_open-ended_range (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/a_counted_quantifier (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/a_closed_range (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/two_spaces_where_the_second_is_quantified (0.00s)
+    --- PASS: TestWalkRaisesDepthForAQuantifiedCharacter/only_the_quantified_character (0.00s)
+=== CONT  TestWalkReportsNothingForNonCharacters/a_negated_class_escape
+=== CONT  TestWalkReportsNothingForNonCharacters/a_whitespace_class_escape
+--- PASS: TestWalkReportsNothingForNonCharacters (0.00s)
+    --- PASS: TestWalkReportsNothingForNonCharacters/a_start_anchor (0.00s)
+    --- PASS: TestWalkReportsNothingForNonCharacters/a_word_class_escape (0.00s)
+    --- PASS: TestWalkReportsNothingForNonCharacters/a_word_boundary (0.00s)
+    --- PASS: TestWalkReportsNothingForNonCharacters/alternation (0.00s)
+    --- PASS: TestWalkReportsNothingForNonCharacters/a_digit_class_escape (0.00s)
+    --- PASS: TestWalkReportsNothingForNonCharacters/an_end_anchor (0.00s)
+    --- PASS: TestWalkReportsNothingForNonCharacters/a_negated_class_escape (0.00s)
+    --- PASS: TestWalkReportsNothingForNonCharacters/a_whitespace_class_escape (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/wave07_regex/regexpattern	0.004s
+=== RUN   TestIterateRegexCharacterClasses_Basic
+=== PAUSE TestIterateRegexCharacterClasses_Basic
+=== RUN   TestIterateRegexCharacterClasses_EscapedBracketsInVFlag
+=== PAUSE TestIterateRegexCharacterClasses_EscapedBracketsInVFlag
+=== RUN   TestIterateRegexCharacterClasses_DeepNesting
+=== PAUSE TestIterateRegexCharacterClasses_DeepNesting
+=== RUN   TestIterateRegexCharacterClasses_QBraceContainsBracket
+=== PAUSE TestIterateRegexCharacterClasses_QBraceContainsBracket
+=== RUN   TestIterateRegexCharacterClasses_PropertyEscapeContainsBracket
+=== PAUSE TestIterateRegexCharacterClasses_PropertyEscapeContainsBracket
+=== RUN   TestParseRegexCharacterClass_SetDifferenceWithClass
+=== PAUSE TestParseRegexCharacterClass_SetDifferenceWithClass
+=== RUN   TestParseRegexCharacterClass_MultipleRangesAndSets
+=== PAUSE TestParseRegexCharacterClass_MultipleRangesAndSets
+=== RUN   TestIterateRegexCharacterClasses_VFlagNested
+=== PAUSE TestIterateRegexCharacterClasses_VFlagNested
+=== RUN   TestIterateRegexCharacterClasses_EscapeBoundaries
+=== PAUSE TestIterateRegexCharacterClasses_EscapeBoundaries
+=== RUN   TestIterateRegexCharacterClasses_Malformed
+=== PAUSE TestIterateRegexCharacterClasses_Malformed
+=== RUN   TestParseRegexCharacterClass_BasicChars
+=== PAUSE TestParseRegexCharacterClass_BasicChars
+=== RUN   TestParseRegexCharacterClass_Negated
+=== PAUSE TestParseRegexCharacterClass_Negated
+=== RUN   TestParseRegexCharacterClass_Empty
+=== PAUSE TestParseRegexCharacterClass_Empty
+=== RUN   TestParseRegexCharacterClass_Range
+=== PAUSE TestParseRegexCharacterClass_Range
+=== RUN   TestParseRegexCharacterClass_RangeWithEscape
+=== PAUSE TestParseRegexCharacterClass_RangeWithEscape
+=== RUN   TestParseRegexCharacterClass_DashAtBoundary
+=== PAUSE TestParseRegexCharacterClass_DashAtBoundary
+=== RUN   TestParseRegexCharacterClass_HexEscapes
+=== PAUSE TestParseRegexCharacterClass_HexEscapes
+=== RUN   TestParseRegexCharacterClass_UBraceUnderUFlag
+=== PAUSE TestParseRegexCharacterClass_UBraceUnderUFlag
+=== RUN   TestParseRegexCharacterClass_UBraceUnderNonUFlag
+=== PAUSE TestParseRegexCharacterClass_UBraceUnderNonUFlag
+=== RUN   TestParseRegexCharacterClass_SurrogatePairCollapse
+=== PAUSE TestParseRegexCharacterClass_SurrogatePairCollapse
+=== RUN   TestParseRegexCharacterClass_CharacterSetBreaker
+=== PAUSE TestParseRegexCharacterClass_CharacterSetBreaker
+=== RUN   TestParseRegexCharacterClass_PropertyEscape
+=== PAUSE TestParseRegexCharacterClass_PropertyEscape
+=== RUN   TestParseRegexCharacterClass_QuotedDisjunction
+=== PAUSE TestParseRegexCharacterClass_QuotedDisjunction
+=== RUN   TestParseRegexCharacterClass_VFlagSetOperator
+=== PAUSE TestParseRegexCharacterClass_VFlagSetOperator
+=== RUN   TestParseRegexCharacterClass_VFlagNestedAsBreaker
+=== PAUSE TestParseRegexCharacterClass_VFlagNestedAsBreaker
+=== RUN   TestParseRegexCharacterClass_BackspaceBInClass
+=== PAUSE TestParseRegexCharacterClass_BackspaceBInClass
+=== RUN   TestParseRegexCharacterClass_RawAstral
+=== PAUSE TestParseRegexCharacterClass_RawAstral
+=== RUN   TestParseRegexCharacterClass_Position
+=== PAUSE TestParseRegexCharacterClass_Position
+=== RUN   TestParseRegexCharacterClassWithEnd
+=== PAUSE TestParseRegexCharacterClassWithEnd
+=== RUN   TestParseRegexCharacterClass_RangeWithDashChain
+=== PAUSE TestParseRegexCharacterClass_RangeWithDashChain
+=== RUN   TestParseRegexFlagsReadsBothModeFlags
+=== PAUSE TestParseRegexFlagsReadsBothModeFlags
+=== RUN   TestHexHelpers
+=== PAUSE TestHexHelpers
+=== RUN   TestPatternAndFlags
+=== PAUSE TestPatternAndFlags
+=== CONT  TestIterateRegexCharacterClasses_Basic
+=== CONT  TestParseRegexCharacterClass_CharacterSetBreaker
+--- PASS: TestParseRegexCharacterClass_CharacterSetBreaker (0.00s)
+=== CONT  TestParseRegexCharacterClass_HexEscapes
+--- PASS: TestParseRegexCharacterClass_HexEscapes (0.00s)
+=== CONT  TestParseRegexCharacterClass_DashAtBoundary
+--- PASS: TestParseRegexCharacterClass_DashAtBoundary (0.00s)
+=== CONT  TestParseRegexCharacterClass_RangeWithEscape
+--- PASS: TestParseRegexCharacterClass_RangeWithEscape (0.00s)
+=== CONT  TestParseRegexCharacterClass_Range
+--- PASS: TestParseRegexCharacterClass_Range (0.00s)
+=== CONT  TestParseRegexCharacterClass_Empty
+--- PASS: TestParseRegexCharacterClass_Empty (0.00s)
+=== CONT  TestParseRegexCharacterClass_Negated
+--- PASS: TestParseRegexCharacterClass_Negated (0.00s)
+=== CONT  TestParseRegexCharacterClass_BasicChars
+--- PASS: TestParseRegexCharacterClass_BasicChars (0.00s)
+=== CONT  TestIterateRegexCharacterClasses_Malformed
+--- PASS: TestIterateRegexCharacterClasses_Malformed (0.00s)
+=== CONT  TestIterateRegexCharacterClasses_EscapeBoundaries
+=== RUN   TestIterateRegexCharacterClasses_EscapeBoundaries/\x41[ab]
+=== PAUSE TestIterateRegexCharacterClasses_EscapeBoundaries/\x41[ab]
+=== RUN   TestIterateRegexCharacterClasses_EscapeBoundaries/\u0041[ab]
+=== PAUSE TestIterateRegexCharacterClasses_EscapeBoundaries/\u0041[ab]
+=== RUN   TestIterateRegexCharacterClasses_EscapeBoundaries/\u{41}[ab]
+=== PAUSE TestIterateRegexCharacterClasses_EscapeBoundaries/\u{41}[ab]
+=== RUN   TestIterateRegexCharacterClasses_EscapeBoundaries/\u{41}[ab]#01
+=== PAUSE TestIterateRegexCharacterClasses_EscapeBoundaries/\u{41}[ab]#01
+=== RUN   TestIterateRegexCharacterClasses_EscapeBoundaries/\p{Letter}[ab]
+=== PAUSE TestIterateRegexCharacterClasses_EscapeBoundaries/\p{Letter}[ab]
+=== RUN   TestIterateRegexCharacterClasses_EscapeBoundaries/\cI[ab]
+=== PAUSE TestIterateRegexCharacterClasses_EscapeBoundaries/\cI[ab]
+=== RUN   TestIterateRegexCharacterClasses_EscapeBoundaries/(\d)[ab]
+=== PAUSE TestIterateRegexCharacterClasses_EscapeBoundaries/(\d)[ab]
+=== RUN   TestIterateRegexCharacterClasses_Basic/[abc]
+=== PAUSE TestIterateRegexCharacterClasses_Basic/[abc]
+=== RUN   TestIterateRegexCharacterClasses_Basic/[a][b]
+=== PAUSE TestIterateRegexCharacterClasses_Basic/[a][b]
+=== RUN   TestIterateRegexCharacterClasses_Basic/foo[abc]bar
+=== PAUSE TestIterateRegexCharacterClasses_Basic/foo[abc]bar
+=== RUN   TestIterateRegexCharacterClasses_Basic/[^abc]
+=== PAUSE TestIterateRegexCharacterClasses_Basic/[^abc]
+=== RUN   TestIterateRegexCharacterClasses_Basic/[]
+=== PAUSE TestIterateRegexCharacterClasses_Basic/[]
+=== RUN   TestIterateRegexCharacterClasses_Basic/[^]
+=== PAUSE TestIterateRegexCharacterClasses_Basic/[^]
+=== RUN   TestIterateRegexCharacterClasses_Basic/[\]]
+=== PAUSE TestIterateRegexCharacterClasses_Basic/[\]]
+=== RUN   TestIterateRegexCharacterClasses_Basic/[[]
+=== PAUSE TestIterateRegexCharacterClasses_Basic/[[]
+=== RUN   TestIterateRegexCharacterClasses_Basic/[\\]
+=== PAUSE TestIterateRegexCharacterClasses_Basic/[\\]
+=== RUN   TestIterateRegexCharacterClasses_Basic/(\[abc\])
+=== PAUSE TestIterateRegexCharacterClasses_Basic/(\[abc\])
+=== RUN   TestIterateRegexCharacterClasses_Basic/\[abc\]
+=== PAUSE TestIterateRegexCharacterClasses_Basic/\[abc\]
+=== CONT  TestIterateRegexCharacterClasses_VFlagNested
+=== RUN   TestIterateRegexCharacterClasses_VFlagNested/[[a]]
+=== PAUSE TestIterateRegexCharacterClasses_VFlagNested/[[a]]
+=== RUN   TestIterateRegexCharacterClasses_VFlagNested/[[[x]]]
+=== PAUSE TestIterateRegexCharacterClasses_VFlagNested/[[[x]]]
+=== RUN   TestIterateRegexCharacterClasses_VFlagNested/[[a][b]]
+=== PAUSE TestIterateRegexCharacterClasses_VFlagNested/[[a][b]]
+=== RUN   TestIterateRegexCharacterClasses_VFlagNested/[a--[b]]
+=== PAUSE TestIterateRegexCharacterClasses_VFlagNested/[a--[b]]
+=== RUN   TestIterateRegexCharacterClasses_VFlagNested/[a\q{xy}]
+=== PAUSE TestIterateRegexCharacterClasses_VFlagNested/[a\q{xy}]
+=== CONT  TestParseRegexCharacterClass_SurrogatePairCollapse
+--- PASS: TestParseRegexCharacterClass_SurrogatePairCollapse (0.00s)
+=== CONT  TestIterateRegexCharacterClasses_PropertyEscapeContainsBracket
+--- PASS: TestIterateRegexCharacterClasses_PropertyEscapeContainsBracket (0.00s)
+=== CONT  TestIterateRegexCharacterClasses_QBraceContainsBracket
+--- PASS: TestIterateRegexCharacterClasses_QBraceContainsBracket (0.00s)
+=== CONT  TestIterateRegexCharacterClasses_DeepNesting
+--- PASS: TestIterateRegexCharacterClasses_DeepNesting (0.00s)
+=== CONT  TestIterateRegexCharacterClasses_EscapedBracketsInVFlag
+--- PASS: TestIterateRegexCharacterClasses_EscapedBracketsInVFlag (0.00s)
+=== CONT  TestParseRegexCharacterClass_Position
+--- PASS: TestParseRegexCharacterClass_Position (0.00s)
+=== CONT  TestPatternAndFlags
+--- PASS: TestPatternAndFlags (0.00s)
+=== CONT  TestHexHelpers
+--- PASS: TestHexHelpers (0.00s)
+=== CONT  TestParseRegexFlagsReadsBothModeFlags
+--- PASS: TestParseRegexFlagsReadsBothModeFlags (0.00s)
+=== CONT  TestParseRegexCharacterClass_RangeWithDashChain
+--- PASS: TestParseRegexCharacterClass_RangeWithDashChain (0.00s)
+=== CONT  TestParseRegexCharacterClassWithEnd
+=== RUN   TestParseRegexCharacterClassWithEnd/prefixed_class
+=== PAUSE TestParseRegexCharacterClassWithEnd/prefixed_class
+=== RUN   TestParseRegexCharacterClassWithEnd/empty
+=== PAUSE TestParseRegexCharacterClassWithEnd/empty
+=== RUN   TestParseRegexCharacterClassWithEnd/negated_empty
+=== PAUSE TestParseRegexCharacterClassWithEnd/negated_empty
+=== RUN   TestParseRegexCharacterClassWithEnd/negated
+=== PAUSE TestParseRegexCharacterClassWithEnd/negated
+=== RUN   TestParseRegexCharacterClassWithEnd/escaped_bracket
+=== PAUSE TestParseRegexCharacterClassWithEnd/escaped_bracket
+=== CONT  TestParseRegexCharacterClass_MultipleRangesAndSets
+--- PASS: TestParseRegexCharacterClass_MultipleRangesAndSets (0.00s)
+=== CONT  TestParseRegexCharacterClass_VFlagNestedAsBreaker
+=== RUN   TestParseRegexCharacterClassWithEnd/raw_astral
+=== CONT  TestParseRegexCharacterClass_RawAstral
+=== PAUSE TestParseRegexCharacterClassWithEnd/raw_astral
+=== CONT  TestParseRegexCharacterClass_BackspaceBInClass
+=== CONT  TestParseRegexCharacterClass_QuotedDisjunction
+=== CONT  TestParseRegexCharacterClass_VFlagSetOperator
+=== RUN   TestParseRegexCharacterClassWithEnd/unicode_code_point
+=== CONT  TestParseRegexCharacterClass_PropertyEscape
+=== CONT  TestIterateRegexCharacterClasses_EscapeBoundaries/\x41[ab]
+=== PAUSE TestParseRegexCharacterClassWithEnd/unicode_code_point
+=== RUN   TestParseRegexCharacterClassWithEnd/unicode_property
+=== PAUSE TestParseRegexCharacterClassWithEnd/unicode_property
+=== RUN   TestParseRegexCharacterClassWithEnd/unicode_sets_nested
+=== PAUSE TestParseRegexCharacterClassWithEnd/unicode_sets_nested
+=== CONT  TestIterateRegexCharacterClasses_Basic/[abc]
+=== CONT  TestIterateRegexCharacterClasses_EscapeBoundaries/(\d)[ab]
+=== CONT  TestIterateRegexCharacterClasses_EscapeBoundaries/\cI[ab]
+=== CONT  TestIterateRegexCharacterClasses_EscapeBoundaries/\p{Letter}[ab]
+=== CONT  TestIterateRegexCharacterClasses_EscapeBoundaries/\u{41}[ab]#01
+=== CONT  TestIterateRegexCharacterClasses_EscapeBoundaries/\u{41}[ab]
+=== CONT  TestIterateRegexCharacterClasses_EscapeBoundaries/\u0041[ab]
+=== CONT  TestIterateRegexCharacterClasses_Basic/[^abc]
+=== CONT  TestIterateRegexCharacterClasses_Basic/foo[abc]bar
+=== CONT  TestIterateRegexCharacterClasses_Basic/[a][b]
+=== CONT  TestIterateRegexCharacterClasses_VFlagNested/[a\q{xy}]
+=== CONT  TestIterateRegexCharacterClasses_VFlagNested/[a--[b]]
+=== CONT  TestIterateRegexCharacterClasses_VFlagNested/[[a][b]]
+=== CONT  TestIterateRegexCharacterClasses_VFlagNested/[[[x]]]
+=== CONT  TestIterateRegexCharacterClasses_Basic/[[]
+=== CONT  TestParseRegexCharacterClass_UBraceUnderNonUFlag
+=== CONT  TestIterateRegexCharacterClasses_Basic/(\[abc\])
+=== CONT  TestIterateRegexCharacterClasses_Basic/[\\]
+=== CONT  TestIterateRegexCharacterClasses_Basic/[^]
+=== CONT  TestIterateRegexCharacterClasses_Basic/[\]]
+=== CONT  TestIterateRegexCharacterClasses_Basic/[]
+=== CONT  TestIterateRegexCharacterClasses_Basic/\[abc\]
+=== CONT  TestParseRegexCharacterClassWithEnd/unicode_sets_nested
+=== CONT  TestParseRegexCharacterClassWithEnd/unicode_property
+=== CONT  TestParseRegexCharacterClassWithEnd/unicode_code_point
+=== CONT  TestParseRegexCharacterClassWithEnd/prefixed_class
+=== CONT  TestParseRegexCharacterClassWithEnd/raw_astral
+=== CONT  TestParseRegexCharacterClassWithEnd/escaped_bracket
+=== CONT  TestParseRegexCharacterClassWithEnd/negated
+=== CONT  TestParseRegexCharacterClassWithEnd/negated_empty
+=== CONT  TestParseRegexCharacterClassWithEnd/empty
+--- PASS: TestParseRegexCharacterClass_VFlagNestedAsBreaker (0.00s)
+--- PASS: TestParseRegexCharacterClass_RawAstral (0.00s)
+--- PASS: TestParseRegexCharacterClass_BackspaceBInClass (0.00s)
+--- PASS: TestParseRegexCharacterClass_QuotedDisjunction (0.00s)
+--- PASS: TestParseRegexCharacterClass_VFlagSetOperator (0.00s)
+--- PASS: TestParseRegexCharacterClass_PropertyEscape (0.00s)
+=== CONT  TestParseRegexCharacterClass_UBraceUnderUFlag
+--- PASS: TestParseRegexCharacterClass_UBraceUnderUFlag (0.00s)
+=== CONT  TestParseRegexCharacterClass_SetDifferenceWithClass
+--- PASS: TestParseRegexCharacterClass_SetDifferenceWithClass (0.00s)
+=== CONT  TestIterateRegexCharacterClasses_VFlagNested/[[a]]
+--- PASS: TestIterateRegexCharacterClasses_EscapeBoundaries (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_EscapeBoundaries/\x41[ab] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_EscapeBoundaries/(\d)[ab] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_EscapeBoundaries/\cI[ab] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_EscapeBoundaries/\p{Letter}[ab] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_EscapeBoundaries/\u{41}[ab]#01 (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_EscapeBoundaries/\u{41}[ab] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_EscapeBoundaries/\u0041[ab] (0.00s)
+--- PASS: TestIterateRegexCharacterClasses_VFlagNested (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_VFlagNested/[a\q{xy}] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_VFlagNested/[a--[b]] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_VFlagNested/[[a][b]] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_VFlagNested/[[[x]]] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_VFlagNested/[[a]] (0.00s)
+--- PASS: TestParseRegexCharacterClass_UBraceUnderNonUFlag (0.00s)
+--- PASS: TestIterateRegexCharacterClasses_Basic (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_Basic/[abc] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_Basic/[^abc] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_Basic/foo[abc]bar (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_Basic/[a][b] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_Basic/[[] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_Basic/[] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_Basic/(\[abc\]) (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_Basic/[^] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_Basic/[\]] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_Basic/[\\] (0.00s)
+    --- PASS: TestIterateRegexCharacterClasses_Basic/\[abc\] (0.00s)
+--- PASS: TestParseRegexCharacterClassWithEnd (0.00s)
+    --- PASS: TestParseRegexCharacterClassWithEnd/unicode_sets_nested (0.00s)
+    --- PASS: TestParseRegexCharacterClassWithEnd/unicode_property (0.00s)
+    --- PASS: TestParseRegexCharacterClassWithEnd/unicode_code_point (0.00s)
+    --- PASS: TestParseRegexCharacterClassWithEnd/prefixed_class (0.00s)
+    --- PASS: TestParseRegexCharacterClassWithEnd/raw_astral (0.00s)
+    --- PASS: TestParseRegexCharacterClassWithEnd/escaped_bracket (0.00s)
+    --- PASS: TestParseRegexCharacterClassWithEnd/negated (0.00s)
+    --- PASS: TestParseRegexCharacterClassWithEnd/negated_empty (0.00s)
+    --- PASS: TestParseRegexCharacterClassWithEnd/empty (0.00s)
+=== RUN   FuzzParseRegexCharacterClassWithEndParity
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#0
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#1
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#2
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#3
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#4
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#5
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#6
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#7
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#8
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#9
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#10
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#11
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#12
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#13
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#14
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#15
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#16
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#17
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#18
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#19
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#20
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#21
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#22
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#23
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#24
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#25
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#26
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#27
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#28
+=== RUN   FuzzParseRegexCharacterClassWithEndParity/seed#29
+--- PASS: FuzzParseRegexCharacterClassWithEndParity (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#0 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#1 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#2 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#3 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#4 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#5 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#6 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#7 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#8 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#9 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#10 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#11 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#12 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#13 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#14 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#15 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#16 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#17 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#18 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#19 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#20 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#21 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#22 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#23 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#24 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#25 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#26 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#27 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#28 (0.00s)
+    --- PASS: FuzzParseRegexCharacterClassWithEndParity/seed#29 (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/wave07_regex/regexsyntax	0.005s

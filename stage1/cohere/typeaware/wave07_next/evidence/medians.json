@@ -1,0 +1,32 @@
+{
+  "rest": {
+    "repository": {
+      "native": 0.247672454,
+      "go": 0.130114926
+    },
+    "compiler": {
+      "native": 1.819632674,
+      "go": 0.346379391
+    }
+  },
+  "promise": {
+    "repository": {
+      "native": 0.228299303,
+      "go": 0.118278246
+    },
+    "compiler": {
+      "native": 1.605190564,
+      "go": 0.294662002
+    }
+  },
+  "regex": {
+    "repository": {
+      "native": 0.229747631,
+      "go": 0.125628657
+    },
+    "compiler": {
+      "native": 1.825777474,
+      "go": 0.329350921
+    }
+  }
+}
