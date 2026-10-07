@@ -34,6 +34,10 @@ export function listTerminator(kind: string, context: string, lineBreak: boolean
         case 'bindingArray':
         case 'tuple':
             return kind === 'CloseBracketToken';
+        case 'heritage':
+            return ['OpenBraceToken', 'ExtendsKeyword', 'ImplementsKeyword'].includes(kind);
+        case 'heritageClauses':
+            return kind === 'OpenBraceToken' || kind === 'CloseBraceToken';
         case 'typeArguments':
             return kind !== 'CommaToken';
         case 'typeParameters':
@@ -113,6 +117,10 @@ export function listDiagnostic(kind: string, context: string): ListDiagnosticInt
                 code: 1068,
                 message: 'Unexpected token. A constructor, method, accessor, or property was expected.',
             };
+        case 'heritage':
+            return { code: 1109, message: 'Expression expected.' };
+        case 'heritageClauses':
+            return { code: 1179, message: "Unexpected token. '{' expected." };
         case 'enum':
             return { code: 1132, message: 'Enum member expected.' };
         case 'switch':
