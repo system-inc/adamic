@@ -49,3 +49,18 @@ Continuation implementations completed in `99c9e8d3`. All three pass complete
 native/Go comparisons over the frozen compiler and repository manifests,
 positive controls, ASan/UBSan/leaks, per-rule span mutants and released-handle
 checks. See [the continuation report](../wave_04_next/REPORT.md).
+
+## Second continuation claim
+
+The first continuation is complete and pushed through `8673be2b`.
+After a fresh fetch of all 358 origin references, the combined volume ranking
+contains 197 checker-dependent rules. The 25 ranked baseline ports and 139
+rules named in remote claim files are excluded. The first three remaining are:
+
+- `react-hooks/preserve-manual-memoization` (0)
+- `react-hooks/purity` (0)
+- `react-hooks/refs` (0)
+
+These three are claimed before implementation. Their zero inventory counts are
+selection evidence only. Native code will live in `wave_04_react/`; shared harness
+and registration files remain outside this worker's changes.
