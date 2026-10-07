@@ -1,0 +1,21 @@
+=== RUN   TestWave11ThirdAgreementAndMutants
+    wave_11_third_test.go:168: controls: 116555 identical finding bytes; findings 191
+    wave_11_third_test.go:176: controls-asan: 116555 identical finding bytes; findings 191
+    wave_11_third_test.go:189: eval mutant: exit 0, empty stderr, independent Go bytes catch byte 44
+    wave_11_third_test.go:189: extend mutant: exit 0, empty stderr, independent Go bytes catch byte 19538
+    wave_11_third_test.go:189: assign mutant: exit 0, empty stderr, independent Go bytes catch byte 27693
+    wave_11_third_test.go:189: global mutant: exit 0, empty stderr, independent Go bytes catch byte 1734
+    wave_11_third_test.go:189: anchor mutant: exit 0, empty stderr, independent Go bytes catch byte 35045
+    wave_11_third_test.go:213: repository: 18485 identical finding bytes; findings 0
+    wave_11_third_test.go:214: repository-asan: 18485 identical finding bytes; findings 0
+    wave_11_third_test.go:219: repository go process=201.062318ms cohere: load_ns=95374354 rule_ns=11109362 run_ns=87348287
+    wave_11_third_test.go:219: repository native process=392.470622ms tsgo: load_ns=94335452 query_ns=37678211 queries=636 first_query_ns=228234 run_ns=291994692
+    wave_11_third_test.go:213: compiler: 5318 identical finding bytes; findings 0
+    wave_11_third_test.go:214: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_11_third_test.go:219: compiler go process=452.720235ms cohere: load_ns=268170278 rule_ns=74080804 run_ns=142159523
+    wave_11_third_test.go:219: compiler native process=2.452395511s tsgo: load_ns=361434288 query_ns=275323220 queries=9190 first_query_ns=3675395 run_ns=2053371460
+    wave_11_third_test.go:232: released query: panic 70, invalid or released checker handle
+    wave_11_third_test.go:237: released-registry mutant exits 0, caught by required panic 70
+--- PASS: TestWave11ThirdAgreementAndMutants (124.43s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	124.433s
