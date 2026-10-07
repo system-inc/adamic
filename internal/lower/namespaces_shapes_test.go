@@ -13,9 +13,9 @@ func TestTscNamespaceDeclarationShapes(t *testing.T) {
 	for _, test := range []struct{ name, reason string }{
 		{"BuilderState", ""}, {"JsxNames", ""}, {"ReactNames", ""}, {"BinaryExpressionState", ""},
 		{"Parser.JSDocParser", ""},
-		{"Debug", "call before all runtime namespaces"},
+		{"Debug", "class inside a namespace"},
 		{"Debug.log", "callable object properties"},
-		{"Parser", "call before all runtime namespaces"},
+		{"Parser", "function without a body"},
 		{"IncrementalParser", "function without a body"},
 		{"tracingEnabled", "no runtime container is emitted"},
 	} {

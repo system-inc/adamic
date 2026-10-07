@@ -26,5 +26,6 @@ func (l *lowering) namespaceReturnAssignment(expression *ast.Node) ([]ir.Stateme
 	if err != nil {
 		return nil, true, err
 	}
-	return append(statements, ir.Return{Value: fit(l.localRead(target, local), l.function.Returns)}), true, nil
+	value := l.localRead(target, local)
+	return append(statements, ir.Return{Value: fit(value, l.function.Returns)}), true, nil
 }
