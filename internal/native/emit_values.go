@@ -74,3 +74,15 @@ func cNumber(value float64) string {
 	}
 	return "(" + strconv.FormatFloat(value, 'x', -1, 64) + ")"
 }
+
+// zeroInitializer is zero at static storage, where C requires an initializer list
+// rather than a compound literal for an aggregate.
+func zeroInitializer(valueType ir.Type) string {
+	switch valueType {
+	case ir.MaybeNumber:
+		return "{false, 0.0}"
+	case ir.MaybeBoolean:
+		return "{false, false}"
+	}
+	return zero(valueType)
+}
