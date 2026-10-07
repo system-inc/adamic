@@ -1,0 +1,23 @@
+// Property propagation from cohere's MIT-licensed react/purity.go. Native HIR
+// supplies the object value; this component does not classify render contexts.
+export class PurityValue {
+    readonly kind: number;
+    readonly canonicalName: string;
+    constructor(kind: number, canonicalName: string) {
+        this.kind = kind;
+        this.canonicalName = canonicalName;
+    }
+}
+export function purityProperty(object: PurityValue | undefined, property: string): PurityValue | undefined {
+    if(object === undefined || object.kind !== 1) { return undefined; }
+    if(object.canonicalName === '') {
+        if(property === 'Math' || property === 'Date' || property === 'performance') {
+            return new PurityValue(1, property);
+        }
+        return undefined;
+    }
+    if(object.canonicalName === 'Math' && property === 'random') { return new PurityValue(2, 'Math.random'); }
+    if(object.canonicalName === 'Date' && property === 'now') { return new PurityValue(2, 'Date.now'); }
+    if(object.canonicalName === 'performance' && property === 'now') { return new PurityValue(2, 'performance.now'); }
+    return undefined;
+}

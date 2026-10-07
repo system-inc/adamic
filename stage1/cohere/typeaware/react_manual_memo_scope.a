@@ -1,0 +1,17 @@
+// Scope condition from cohere's MIT-licensed preserve_manual_memoization.go.
+// These are HIR analysis inputs, not checker questions or lint findings.
+export class ManualMemoScope {
+    scoped = false;
+    live = false;
+    pruned = false;
+    walked = false;
+    prunedByChain = false;
+    immutableParameter = false;
+}
+export function manualMemoScopeLost(kind: number, scope: ManualMemoScope): boolean {
+    if(!scope.scoped || scope.live) { return false; }
+    if(kind === 0 && scope.pruned) { return false; }
+    if(kind === 0 && !scope.walked && !scope.prunedByChain) { return false; }
+    if(kind === 0 && scope.immutableParameter) { return false; }
+    return true;
+}

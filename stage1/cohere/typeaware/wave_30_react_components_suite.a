@@ -1,0 +1,88 @@
+import { RefAccess, RefFunction, RefLattice } from './react_refs_lattice.a';
+import { PurityValue, purityProperty } from './react_purity_properties.a';
+import { ManualMemoScope, manualMemoScopeLost } from './react_manual_memo_scope.a';
+import { panic, programArguments } from 'adamic';
+function base(kind: number, variant: number): RefAccess {
+    const result = new RefAccess(kind);
+    result.refId = variant % 2;
+    result.hasRefId = variant >= 2;
+    result.span = variant % 2;
+    result.hasSpan = variant >= 2;
+    result.refSpan = 9 + variant;
+    result.hasRefSpan = variant % 2 === 1;
+    return result;
+}
+function fixture(id: number): RefAccess | undefined {
+    if(id === 0) { return undefined; }
+    if(id <= 24) { return base(Math.floor((id - 1) / 4), (id - 1) % 4); }
+    const result = new RefAccess(5);
+    if(id <= 28) { result.value = base(3, id - 25); }
+    else if(id <= 32) { result.value = base(4, id - 29); }
+    else if(id <= 36) {
+        const variant = id - 33;
+        const fn = new RefFunction();
+        fn.readRefEffect = variant % 2 === 1;
+        fn.refAccessSpan = 20 + variant;
+        fn.hasRefAccessSpan = variant >= 2;
+        fn.returnType = base(variant % 2 === 0 ? 3 : 4, variant);
+        result.functionType = fn;
+    }
+    else if(id === 37) { result.value = fixture(25); }
+    else if(id === 38 || id === 39) {
+        const fn = new RefFunction();
+        fn.readRefEffect = id === 38;
+        fn.hasRefAccessSpan = true;
+        fn.refAccessSpan = 77;
+        if(id === 39) { fn.returnType = new RefAccess(0); }
+        result.functionType = fn;
+    }
+    else { panic('invalid fixture'); }
+    return result;
+}
+function wire(value: RefAccess | undefined): string {
+    if(value === undefined) { return 'nil'; }
+    const fn = value.functionType;
+    const fnText = fn === undefined ? 'nil' : `${fn.readRefEffect},${fn.refAccessSpan},${fn.hasRefAccessSpan}(${wire(fn.returnType)})`;
+    return `${value.kind},${value.refId},${value.hasRefId},${value.span},${value.hasSpan},${value.refSpan},${value.hasRefSpan}{${wire(value.value)}}{${fnText}}`;
+}
+const mode = programArguments()[0] ?? panic('missing mode');
+if(mode === 'refs') {
+    for(let a = 0; a < 40; a++) {
+        for(let b = 0; b < 40; b++) {
+            const left = fixture(a); const right = fixture(b);
+            const lattice = new RefLattice();
+            const joined = lattice.join(left, right);
+            const folded = lattice.many([left, right, fixture(29)]);
+            console.log(`${a},${b}\t${lattice.equal(left, right)}\t${wire(joined)}\t${wire(folded)}\t${wire(lattice.destructure(left))}`);
+        }
+    }
+}
+else if(mode === 'purity') {
+    const names = ['', 'Math', 'Date', 'performance', 'window', 'globalThis', 'other'];
+    const properties = ['', 'Math', 'Date', 'performance', 'random', 'now', 'floor'];
+    for(let kind = -1; kind < 4; kind++) {
+        for(const name of names) {
+            for(const property of properties) {
+                const object = kind < 0 ? undefined : new PurityValue(kind, name);
+                const result = purityProperty(object, property) ?? new PurityValue(2, 'preserved');
+                console.log(`${kind},${name},${property}\t${result.kind},${result.canonicalName}`);
+            }
+        }
+    }
+}
+else if(mode === 'memo') {
+    for(let kind = 0; kind < 2; kind++) {
+        for(let flags = 0; flags < 64; flags++) {
+            const scope = new ManualMemoScope();
+            scope.scoped = (flags & 1) !== 0;
+            scope.live = (flags & 2) !== 0;
+            scope.pruned = (flags & 4) !== 0;
+            scope.walked = (flags & 8) !== 0;
+            scope.prunedByChain = (flags & 16) !== 0;
+            scope.immutableParameter = (flags & 32) !== 0;
+            const finding = manualMemoScopeLost(kind, scope) ? `1,7,42,${kind}` : '';
+            console.log(`${kind},${flags}\t${finding}`);
+        }
+    }
+}
+else { panic('unknown mode'); }

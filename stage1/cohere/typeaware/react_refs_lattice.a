@@ -1,0 +1,100 @@
+// Ref access lattice from cohere's MIT-licensed react/refs.go. This component
+// needs native React HIR before it can be used as a complete lint rule.
+export class RefAccess {
+    readonly kind: number;
+    refId = 0;
+    hasRefId = false;
+    span = 0;
+    hasSpan = false;
+    refSpan = 0;
+    hasRefSpan = false;
+    value: RefAccess | undefined = undefined;
+    functionType: RefFunction | undefined = undefined;
+    constructor(kind: number) { this.kind = kind; }
+}
+export class RefFunction {
+    readRefEffect = false;
+    refAccessSpan = 0;
+    hasRefAccessSpan = false;
+    returnType: RefAccess | undefined = undefined;
+}
+export class RefLattice {
+    nextId = 1000;
+    equal(a: RefAccess | undefined, b: RefAccess | undefined): boolean {
+        if(a === undefined || b === undefined) { return a === undefined && b === undefined; }
+        if(a.kind !== b.kind) { return false; }
+        if(a.kind === 0 || a.kind === 1) { return true; }
+        if(a.kind === 2) { return a.refId === b.refId && a.hasRefId === b.hasRefId; }
+        if(a.kind === 3) { return true; }
+        if(a.kind === 4) { return a.span === b.span && a.hasSpan === b.hasSpan; }
+        if(a.kind === 5) { return this.equal(a.value, b.value) && this.functionEqual(a.functionType, b.functionType); }
+        return false;
+    }
+    functionEqual(a: RefFunction | undefined, b: RefFunction | undefined): boolean {
+        if(a === undefined || b === undefined) { return a === undefined && b === undefined; }
+        return a.readRefEffect === b.readRefEffect && this.equal(a.returnType, b.returnType);
+    }
+    fresh(): RefAccess {
+        this.nextId++;
+        const result = new RefAccess(3);
+        result.refId = this.nextId;
+        result.hasRefId = true;
+        return result;
+    }
+    join(left: RefAccess | undefined, right: RefAccess | undefined): RefAccess {
+        const a = left ?? new RefAccess(0);
+        const b = right ?? new RefAccess(0);
+        if(a.kind === 0) { return b; }
+        if(b.kind === 0) { return a; }
+        if(a.kind === 2 && b.kind === 2) {
+            return a.refId === b.refId && a.hasRefId === b.hasRefId ? a : new RefAccess(0);
+        }
+        if((a.kind === 2 && b.kind === 1) || (a.kind === 1 && b.kind === 2)) { return new RefAccess(0); }
+        if(a.kind === 2) { return b; }
+        if(b.kind === 2) { return a; }
+        if(a.kind === 1) { return b; }
+        if(b.kind === 1) { return a; }
+        return this.carrying(a, b);
+    }
+    carrying(a: RefAccess, b: RefAccess): RefAccess {
+        if(a.kind === 4 && b.kind === 4) {
+            return a.hasRefId && b.hasRefId && a.refId === b.refId ? a : new RefAccess(4);
+        }
+        if(a.kind === 4 || b.kind === 4) { return new RefAccess(4); }
+        if(a.kind === 3 && b.kind === 3) {
+            return a.hasRefId && b.hasRefId && a.refId === b.refId ? a : this.fresh();
+        }
+        if(a.kind === 3 || b.kind === 3) { return this.fresh(); }
+        const result = new RefAccess(5);
+        if(a.functionType === undefined) { result.functionType = b.functionType; }
+        else if(b.functionType === undefined) { result.functionType = a.functionType; }
+        else {
+            const fn = new RefFunction();
+            fn.returnType = this.join(a.functionType.returnType, b.functionType.returnType);
+            fn.readRefEffect = a.functionType.readRefEffect || b.functionType.readRefEffect;
+            if(a.functionType.hasRefAccessSpan) {
+                fn.refAccessSpan = a.functionType.refAccessSpan;
+                fn.hasRefAccessSpan = true;
+            }
+            else if(b.functionType.hasRefAccessSpan) {
+                fn.refAccessSpan = b.functionType.refAccessSpan;
+                fn.hasRefAccessSpan = true;
+            }
+            result.functionType = fn;
+        }
+        if(a.value === undefined) { result.value = b.value; }
+        else if(b.value === undefined) { result.value = a.value; }
+        else { result.value = this.carrying(a.value, b.value); }
+        return result;
+    }
+    many(values: readonly (RefAccess | undefined)[]): RefAccess {
+        let result = new RefAccess(0);
+        for(const value of values) { result = this.join(result, value); }
+        return result;
+    }
+    destructure(value: RefAccess | undefined): RefAccess {
+        let current = value;
+        while(current !== undefined && current.kind === 5 && current.value !== undefined) { current = current.value; }
+        return current ?? new RefAccess(0);
+    }
+}
