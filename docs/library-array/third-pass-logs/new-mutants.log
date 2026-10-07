@@ -1,0 +1,54 @@
+=== RUN   TestLibraryArrayNewFamilyMutants
+=== PAUSE TestLibraryArrayNewFamilyMutants
+=== CONT  TestLibraryArrayNewFamilyMutants
+=== RUN   TestLibraryArrayNewFamilyMutants/aliased_isArray_classification
+=== PAUSE TestLibraryArrayNewFamilyMutants/aliased_isArray_classification
+=== RUN   TestLibraryArrayNewFamilyMutants/aliased_every_result
+=== PAUSE TestLibraryArrayNewFamilyMutants/aliased_every_result
+=== RUN   TestLibraryArrayNewFamilyMutants/join_intrinsic_own_prototype
+=== PAUSE TestLibraryArrayNewFamilyMutants/join_intrinsic_own_prototype
+=== RUN   TestLibraryArrayNewFamilyMutants/aliased_includes_nullish_error
+=== PAUSE TestLibraryArrayNewFamilyMutants/aliased_includes_nullish_error
+=== RUN   TestLibraryArrayNewFamilyMutants/aliased_indexOf_boundary
+=== PAUSE TestLibraryArrayNewFamilyMutants/aliased_indexOf_boundary
+=== RUN   TestLibraryArrayNewFamilyMutants/aliased_lastIndexOf_negative_bound
+=== PAUSE TestLibraryArrayNewFamilyMutants/aliased_lastIndexOf_negative_bound
+=== RUN   TestLibraryArrayNewFamilyMutants/map_oversized_RangeError_message
+=== PAUSE TestLibraryArrayNewFamilyMutants/map_oversized_RangeError_message
+=== RUN   TestLibraryArrayNewFamilyMutants/shift_function_readonly_message
+=== PAUSE TestLibraryArrayNewFamilyMutants/shift_function_readonly_message
+=== CONT  TestLibraryArrayNewFamilyMutants/aliased_isArray_classification
+=== CONT  TestLibraryArrayNewFamilyMutants/map_oversized_RangeError_message
+=== CONT  TestLibraryArrayNewFamilyMutants/aliased_lastIndexOf_negative_bound
+=== CONT  TestLibraryArrayNewFamilyMutants/aliased_indexOf_boundary
+=== CONT  TestLibraryArrayNewFamilyMutants/aliased_includes_nullish_error
+=== NAME  TestLibraryArrayNewFamilyMutants/aliased_isArray_classification
+    library_array_mutants_test.go:374: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayNewFamilyMutants/join_intrinsic_own_prototype
+=== NAME  TestLibraryArrayNewFamilyMutants/aliased_indexOf_boundary
+    library_array_mutants_test.go:374: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayNewFamilyMutants/aliased_every_result
+=== NAME  TestLibraryArrayNewFamilyMutants/aliased_includes_nullish_error
+    library_array_mutants_test.go:374: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayNewFamilyMutants/shift_function_readonly_message
+=== NAME  TestLibraryArrayNewFamilyMutants/map_oversized_RangeError_message
+    library_array_mutants_test.go:374: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== NAME  TestLibraryArrayNewFamilyMutants/aliased_lastIndexOf_negative_bound
+    library_array_mutants_test.go:374: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== NAME  TestLibraryArrayNewFamilyMutants/join_intrinsic_own_prototype
+    library_array_mutants_test.go:374: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== NAME  TestLibraryArrayNewFamilyMutants/aliased_every_result
+    library_array_mutants_test.go:374: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== NAME  TestLibraryArrayNewFamilyMutants/shift_function_readonly_message
+    library_array_mutants_test.go:374: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+--- PASS: TestLibraryArrayNewFamilyMutants (0.00s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/aliased_isArray_classification (0.38s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/aliased_indexOf_boundary (0.49s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/aliased_includes_nullish_error (0.58s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/map_oversized_RangeError_message (0.59s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/aliased_lastIndexOf_negative_bound (0.61s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/join_intrinsic_own_prototype (0.34s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/aliased_every_result (0.33s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/shift_function_readonly_message (0.28s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.871s

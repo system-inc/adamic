@@ -1,0 +1,5 @@
+=== RUN   TestArrayMapGuardMutantNodeOnly
+    library_array_manual_mutant_test.go:35: caught only by stdout comparison with Node: native "RangeError Invalid array length\n"; Node "mapped\n"; both exit 0, no sanitizer or leak report
+--- PASS: TestArrayMapGuardMutantNodeOnly (0.29s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.300s

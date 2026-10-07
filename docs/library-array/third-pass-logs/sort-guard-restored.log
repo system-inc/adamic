@@ -1,0 +1,18 @@
+=== RUN   TestLibraryArrayThirdPassRefusals
+=== PAUSE TestLibraryArrayThirdPassRefusals
+=== CONT  TestLibraryArrayThirdPassRefusals
+=== RUN   TestLibraryArrayThirdPassRefusals/optional_reference_never_sort
+=== PAUSE TestLibraryArrayThirdPassRefusals/optional_reference_never_sort
+=== RUN   TestLibraryArrayThirdPassRefusals/optional_reference_numeric_sort
+=== PAUSE TestLibraryArrayThirdPassRefusals/optional_reference_numeric_sort
+=== RUN   TestLibraryArrayThirdPassRefusals/optional_reference_copy_sort
+=== PAUSE TestLibraryArrayThirdPassRefusals/optional_reference_copy_sort
+=== CONT  TestLibraryArrayThirdPassRefusals/optional_reference_never_sort
+=== CONT  TestLibraryArrayThirdPassRefusals/optional_reference_copy_sort
+=== CONT  TestLibraryArrayThirdPassRefusals/optional_reference_numeric_sort
+--- PASS: TestLibraryArrayThirdPassRefusals (0.00s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/optional_reference_never_sort (0.05s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/optional_reference_numeric_sort (0.05s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/optional_reference_copy_sort (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.058s

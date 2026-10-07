@@ -1,0 +1,20 @@
+[codex/library-array-3 fa291a9] Lower proven Array intrinsic aliases and remaining callback errors
+ 30 files changed, 919 insertions(+), 6 deletions(-)
+ create mode 100644 internal/lower/library_array_alias.go
+ create mode 100644 internal/lower/library_array_alias_test.go
+ create mode 100644 internal/lower/library_array_call_function.go
+ create mode 100644 internal/lower/library_array_call_map.go
+ create mode 100644 internal/lower/library_array_sort.go
+ create mode 100644 internal/native/runtime/array_sort.h
+ create mode 100644 internal/oracle/library_array_third_test.go
+ create mode 100644 internal/oracle/testdata/library_array_alias_every.a
+ create mode 100644 internal/oracle/testdata/library_array_alias_includes.a
+ create mode 100644 internal/oracle/testdata/library_array_alias_is_array.a
+ create mode 100644 internal/oracle/testdata/library_array_alias_join.a
+ create mode 100644 internal/oracle/testdata/library_array_alias_search.a
+ create mode 100644 internal/oracle/testdata/library_array_map_oversized.a
+ create mode 100644 internal/oracle/testdata/library_array_refused/library_array_map_length_escape.a
+ create mode 100644 internal/oracle/testdata/library_array_refused/library_array_sort_never_optional_references.a
+ create mode 100644 internal/oracle/testdata/library_array_shift_function.a
+ create mode 100644 internal/oracle/testdata/library_array_sort_never.a
+ create mode 100644 internal/oracle/testdata/library_array_to_sorted_never.a
