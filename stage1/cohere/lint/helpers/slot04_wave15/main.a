@@ -1,0 +1,15 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { isPositiveInteger } from './positive_integer.a';
+import { roundTripsAsJavaScriptNumber } from './round_trip.a';
+import { isValidSpacingMultiplier } from './spacing_multiplier.a';
+import type { FloatParse } from '../slot04_wave14/multiple_of.a';
+function field(c: OptionsJson,row: number,name: string): number {const n=c.node(row);const i=n.keys.indexOf(name);if(i<0){panic('field');}return n.children[i] ?? panic('value');}
+function text(c: OptionsJson,row: number,name: string): string {return c.node(field(c,row,name)).text;}
+const path=programArguments()[0] ?? panic('path');const input=readTextFile(path);if(input.kind==='Error'){panic(input.message);}
+const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+for(const row of c.node(root).children){
+    const value=text(c,row,'Source');const result: FloatParse={ok:text(c,row,'ParseOK')==='true',value:Number(text(c,row,'Parsed'))};
+    const parse=(_source: string): FloatParse => result;
+    console.log(`${isPositiveInteger(value,parse)}|${roundTripsAsJavaScriptNumber(value,parse)}|${isValidSpacingMultiplier(value,parse)}`);
+}

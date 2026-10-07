@@ -1,0 +1,8 @@
+import type { FloatParse } from '../slot04_wave14/multiple_of.a';
+import { formatJavaScriptNumber } from '../slot04_wave14/format_number.a';
+export function roundTripsAsJavaScriptNumber(value: string, parse: (source: string) => FloatParse): boolean {
+    const parsed=parse(value);
+    if(!parsed.ok) { return false; }
+    if(parsed.value >= 1e21) { return false; }
+    return formatJavaScriptNumber(parsed.value) === value;
+}

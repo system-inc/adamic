@@ -1,0 +1,66 @@
+=== RUN   TestIntegerGoNodeNativeJavaScript
+=== RUN   TestIntegerGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 638 integer predicate observations
+=== RUN   TestIntegerGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 112 integer predicate observations
+=== RUN   TestIntegerGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 6 integer predicate observations
+--- PASS: TestIntegerGoNodeNativeJavaScript (2.10s)
+    --- PASS: TestIntegerGoNodeNativeJavaScript/witnesses.json (0.46s)
+    --- PASS: TestIntegerGoNodeNativeJavaScript/consumers.json (0.22s)
+    --- PASS: TestIntegerGoNodeNativeJavaScript/calls.json (0.20s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/positive_integer.a/[^0-9]/u
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/positive_integer.avalue_===_''_||
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/positive_integer.avalue.length_>_15
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/positive_integer.avalue.startsWith('0')
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/round_trip.aif(!parsed.ok)
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/round_trip.aif(parsed.value_>=_1e21)
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/round_trip.aformatJavaScriptNumber(parsed.value)_===_value
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/spacing_multiplier.avalue,0.25,parse
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/spacing_multiplier.areturn_isMultipleOf(
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (11.89s)
+    --- PASS: TestCompilingMutants/positive_integer.a/[^0-9]/u (1.16s)
+    --- PASS: TestCompilingMutants/positive_integer.avalue_===_''_|| (1.36s)
+    --- PASS: TestCompilingMutants/positive_integer.avalue.length_>_15 (1.10s)
+    --- PASS: TestCompilingMutants/positive_integer.avalue.startsWith('0') (1.28s)
+    --- PASS: TestCompilingMutants/round_trip.aif(!parsed.ok) (1.23s)
+    --- PASS: TestCompilingMutants/round_trip.aif(parsed.value_>=_1e21) (1.22s)
+    --- PASS: TestCompilingMutants/round_trip.aformatJavaScriptNumber(parsed.value)_===_value (1.27s)
+    --- PASS: TestCompilingMutants/spacing_multiplier.avalue,0.25,parse (1.87s)
+    --- PASS: TestCompilingMutants/spacing_multiplier.areturn_isMultipleOf( (1.13s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:265: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:265: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:265: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:265: consumer omission caught: better-tailwindcss/no-unknown-classes
+--- PASS: TestConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave15	14.004s

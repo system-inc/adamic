@@ -1,0 +1,9 @@
+import { roundTripsAsJavaScriptNumber } from './round_trip.a';
+import type { FloatParse } from '../slot04_wave14/multiple_of.a';
+const nonDigits = /[^0-9]/u;
+export function isPositiveInteger(value: string, parse: (source: string) => FloatParse): boolean {
+    if(value === '' || nonDigits.test(value)) { return false; }
+    if(value.length > 1 && value.startsWith('0')) { return false; }
+    if(value.length > 15) { return roundTripsAsJavaScriptNumber(value,parse); }
+    return true;
+}

@@ -1,0 +1,5 @@
+import { isMultipleOf } from '../slot04_wave14/multiple_of.a';
+import type { FloatParse } from '../slot04_wave14/multiple_of.a';
+export function isValidSpacingMultiplier(value: string, parse: (source: string) => FloatParse): boolean {
+    return isMultipleOf(value,0.25,parse);
+}
