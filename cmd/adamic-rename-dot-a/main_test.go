@@ -252,3 +252,34 @@ func TestMixedTypeScriptConfig(t *testing.T) {
 		t.Fatalf("mixed repeat: %+v %v", again, err)
 	}
 }
+
+func TestRegistryRenameWitness(t *testing.T) {
+	t.Parallel()
+	source := `package registry
+func witness() {
+ os.Rename(filepath.Join(directory, "rule.ts"), filepath.Join(directory, "rule.a"))
+ os.WriteFile(filepath.Join(directory, "rule.ts"), []byte("stale rename"), 0644)
+}
+`
+	root := repository(t, map[string]string{
+		"stage1/cohere/lint/rules/no-debugger/rule.ts": "export const x = 1;",
+		"stage1/cohere/lint/registry/registry_test.go": source,
+	})
+	plan, err := prepare(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(plan.changes) != 1 || len(plan.changes[0].edits) != 1 {
+		t.Fatalf("stale TypeScript witness changed: %+v", plan.changes)
+	}
+	if err := plan.apply(root); err != nil {
+		t.Fatal(err)
+	}
+	data, err := os.ReadFile(filepath.Join(root, "stage1/cohere/lint/registry/registry_test.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(data), `os.Rename(filepath.Join(directory, "rule.a")`) || !strings.Contains(string(data), `os.WriteFile(filepath.Join(directory, "rule.ts")`) {
+		t.Fatalf("registry witness: %s", data)
+	}
+}

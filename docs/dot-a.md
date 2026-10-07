@@ -92,14 +92,23 @@ Branches adding new `.ts` Adamic files must rename them at merge with
 
 Main advanced during verification to `71d7e49`, the pinned stage 3 stack merge.
 This branch merges it with `b06f366`. The current committed
-[dry run](../cloud/dot-a-dry-run.txt) contains **337 files, 1,876 reference rewrites
+[dry run](../cloud/dot-a-dry-run.txt) contains **337 files, 1,875 reference rewrites
 in 346 files**. The additional 88 renamed files are stage 1 lint registry code.
 The exact integration command remains `go run ./cmd/adamic-rename-dot-a --apply .`.
 The merge was conflict-free and retains the shared loader's transform mode.
+The registry's deliberately stale `.ts` ambiguity witness is kept as TypeScript;
+a parsed Go call distinguishes that negative input from the real module path.
+Its generated, ignored `.generated/registry.ts` is pre-gate TypeScript emitted by
+Go, and is intentionally still generated with that suffix; the shared loader
+supports it. The real registry-owned rule modules move to `.a`.
 
 The fresh current-main scratch checkout is `/tmp/dot-a-stack-main`. Its apply,
-idempotence, build, vet, whole uncached oracle, stage 3 and stage 1 tests are being
-run; results below for `b6b1538` are earlier evidence, not a claim that this new
+idempotence, build and vet completed with exit 0. The literal command printed
+`TOTAL files=337 references=1876 reference_files=346` before protecting the new
+stale witness, and its immediate repeat was empty. The final stale-witness fix
+removes one reference edit, giving 1,875; a final fresh apply is recorded below.
+The whole uncached oracle, stage 3 and all stage 1 tests are running.
+Results below for `b6b1538` are earlier evidence, not a claim that this new
 main revision has completed its gate.
 
 ## October 7 refresh
@@ -171,7 +180,7 @@ setup: build cache warm (118s)
 setup: done in 118s on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB
 ```
 
-Fifteen new mutants were caught, each by a test failure with exit 1:
+Sixteen new mutants were caught, each by a test failure with exit 1:
 
 | Mutant | What caught it |
 | --- | --- |
@@ -190,6 +199,7 @@ Fifteen new mutants were caught, each by a test failure with exit 1:
 | Omit mixed-config handling | `TestMixedTypeScriptConfig`: `.a` include is absent |
 | Omit the custom `.a` source extension | Same test: source-extension metadata is absent |
 | Omit the prelude validation seed | Same test: stock tsc config has no seed input |
+| Rewrite the deliberately stale TypeScript module | `TestRegistryRenameWitness`: ambiguity witness acquires an unwanted edit |
 
 Mutant logs are `/tmp/dot-a-refresh-mutant-*.log`. An earlier attempt that removed
 only stage 3's suffix fallback survived: that fixture's local path already

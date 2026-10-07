@@ -318,6 +318,36 @@ func mixedConfigEdits(source string) []edit {
 // Recorded observations and upstream provenance describe literal TypeScript data.
 // They are not fixture paths, even when a basename matches an Adamic port.
 func observationRanges(name, source string) [][2]int {
+	// The registry's stale-rename witness creates an old TypeScript module beside
+	// an Adamic module to prove the ambiguity check. Its old suffix is the input.
+	if strings.HasSuffix(name, "_test.go") {
+		positions := token.NewFileSet()
+		file, err := goparser.ParseFile(positions, name, source, 0)
+		if err != nil {
+			return nil
+		}
+		var protected [][2]int
+		goast.Inspect(file, func(node goast.Node) bool {
+			call, ok := node.(*goast.CallExpr)
+			if !ok || len(call.Args) != 3 {
+				return true
+			}
+			selector, ok := call.Fun.(*goast.SelectorExpr)
+			if !ok || selector.Sel.Name != "WriteFile" {
+				return true
+			}
+			receiver, ok := selector.X.(*goast.Ident)
+			if !ok || receiver.Name != "os" {
+				return true
+			}
+			value := source[positions.Position(call.Args[1].Pos()).Offset:positions.Position(call.Args[1].End()).Offset]
+			if value == `[]byte("stale rename")` {
+				protected = append(protected, [2]int{positions.Position(call.Args[0].Pos()).Offset, positions.Position(call.Args[0].End()).Offset})
+			}
+			return true
+		})
+		return protected
+	}
 	if filepath.Ext(name) != ".json" {
 		return nil
 	}

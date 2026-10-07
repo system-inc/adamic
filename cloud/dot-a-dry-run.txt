@@ -1252,7 +1252,6 @@ EDIT stage1/cohere/lint/registration_test.go:191 byte 6167: "main.ts" -> "main.a
 EDIT stage1/cohere/lint/registration_test.go:239 byte 7841: "main.ts" -> "main.a"
 EDIT stage1/cohere/lint/registry/registry.go:226 byte 7851: "../context.ts" -> "../context.a"
 EDIT stage1/cohere/lint/registry/registry_test.go:154 byte 4391: "rule.ts" -> "rule.a"
-EDIT stage1/cohere/lint/registry/registry_test.go:165 byte 4717: "rule.ts" -> "rule.a"
 EDIT stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts:1 byte 47: ".ts" -> ".a"
 EDIT stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts:2 byte 120: ".ts" -> ".a"
 EDIT stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts:3 byte 174: ".ts" -> ".a"
@@ -2221,4 +2220,4 @@ EDIT verify/catalog/catalog.json:383 byte 16654: "internal/fresh/testdata/regexp
 EDIT verify/catalog/catalog.json:384 byte 16704: "internal/load/testdata/0.1/compile/09_tree.ts" -> "internal/load/testdata/0.1/compile/09_tree.a"
 EDIT verify/catalog/catalog.json:429 byte 18921: "internal/fresh/testdata/regexp_tree.ts" -> "internal/fresh/testdata/regexp_tree.a"
 EDIT verify/catalog/catalog.json:430 byte 18971: "internal/load/testdata/0.1/compile/09_tree.ts" -> "internal/load/testdata/0.1/compile/09_tree.a"
-TOTAL files=337 references=1876 reference_files=346
+TOTAL files=337 references=1875 reference_files=346
