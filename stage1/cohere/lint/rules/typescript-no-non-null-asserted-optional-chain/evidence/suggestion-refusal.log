@@ -1,0 +1,10 @@
+=== RUN   TestSharedSuggestionRefusal
+    validation_test.go:545: Node requires the complete-suggestion adapter explicitly
+    validation_test.go:545: emitted JavaScript requires the complete-suggestion adapter explicitly
+    validation_test.go:545: sanitized native requires the complete-suggestion adapter explicitly
+    validation_test.go:565: Node compiling integration-guard mutant exits 0; the exact exit-70 refusal check catches it
+    validation_test.go:565: emitted JavaScript compiling integration-guard mutant exits 0; the exact exit-70 refusal check catches it
+    validation_test.go:565: sanitized native compiling integration-guard mutant exits 0; the exact exit-70 refusal check catches it
+--- PASS: TestSharedSuggestionRefusal (24.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain	24.647s

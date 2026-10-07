@@ -1,0 +1,29 @@
+patching file stage1/cohere/lint/registry/registry.go
+=== RUN   TestRulesAndSuggestions
+    validation_test.go:397: @typescript-eslint/no-non-null-asserted-optional-chain upstream unique configurations=24
+    validation_test.go:397: @typescript-eslint/no-non-null-assertion upstream unique configurations=36
+    validation_test.go:397: @typescript-eslint/no-this-alias upstream unique configurations=40
+    validation_test.go:398: Node line 125 port="suggestions 1" Go="suggestions 0"
+        Go context:
+        finding @typescript-eslint/no-non-null-assertion noNonNull 25 29	A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        fixes 0
+        suggestions 0
+        fixed	declare const foo: any;\u000a(foo!.bar as number)++;\u000aexport const r = foo;\u000a
+        case 26
+        finding @typescript-eslint/no-non-null-assertion noNonNull 30 34	A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        fixes 0
+        suggestions 0
+        fixed	declare const foo: any;\u000a({ k: foo!.bar } = { k: 0 });\u000aexport const r = foo;\u000a
+        case 27
+        finding @typescript-eslint/no-non-null-assertion noNonNull 26 30	A non-null assertion tells the compiler to stop checking, and it is erased before the code runs, so when the value is missing anyway the failure lands somewhere else, as a property access on `undefined` in code the types promised was safe. Fix it in this order. If the value can really be missing on a reachable path (input, disk, the network, an external API), guard it: return early, `continue`, or throw an error that says what was missing, because that is the case the type is warning about. If it cannot, fix the type that says it can (a type predicate in `.filter`, a tuple type, a field made required), so there is no claim left to check. If an index is what makes it optional, restructure so the index goes away (`for...of`, `.entries()`, a destructured head checked once), because a value you never index is never possibly missing. Where none of those fit, state the proof with `assert(value !== undefined, 'why it holds')` or, in an expression, `required(value, 'why it holds')` from `@nexus/source/errors/Assert`, which narrows the same way and throws that sentence if the proof is ever wrong. `?.`, `?? ''` and `as T` are not repairs on their own: each makes the missing value disappear instead of handling it.
+        fixes 0
+--- FAIL: TestRulesAndSuggestions (15.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain	15.131s
+FAIL
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/validate.py", line 20, in <module>
+    subprocess.run(['go', 'test', '-overlay=' + str(overlay), '-count=1', '-v', '-timeout=20m',
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'test', '-overlay=/tmp/adamic-gate/lint-wave1-04-registry-8_wqv0x2/overlay.json', '-count=1', '-v', '-timeout=20m', './stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain', '-run', '^TestRulesAndSuggestions$']' returned non-zero exit status 1.
