@@ -1314,8 +1314,9 @@ and inherited field names use the existing cycleFieldMatches identity rule.
 From those sinks it follows the lowered value producers backwards: declaration
 initializers, every assignment to a local, both conditional branches, direct
 calls and all recorded virtual targets, caller arguments into formal parameters,
-and function return expressions. Statically known sibling and compatible
-function-value calls are included. Boxes, narrowing, unwraps and checked casts
+and function return expressions. Program.CallTargets supplies every direct or
+virtual target that can run. Program.ClosureTargets supplies proven function-value
+targets; Unknown makes that call opaque to this flow analysis. Boxes, narrowing, unwraps and checked casts
 forward the same demand. A work list processes each local/result flow node once;
 loops and recursion join all possible producers. Reaching an allocation selects
 its site identity in GraphTypes. A program whose cycle proof has no graph
@@ -1324,8 +1325,8 @@ components never runs this pass and keeps the previous emission.
 This adds compile-time IR traversal, allocation-site metadata and flow edges;
 there is no runtime flow analysis, branch, annotation or alias promotion. The
 pass keeps a linear number of nodes and producer edges for ordinary direct
-flows, plus recorded virtual/function-value targets; compatible closure matching
-can compare calls with multiple closure records. The conservative type proof
+flows, plus recorded virtual/function-value targets. This pass uses the shared
+call-target proof rather than matching checker-compatible closure signatures. The conservative type proof
 can select an allocation on an unexecuted branch. Selected allocations pay the
 existing 16-byte graph prefix, boundary counts and region machinery, with a
 region record still created lazily. No new runtime or emission helper was added.
@@ -1333,8 +1334,9 @@ region record still created lazily. No new runtime or emission helper was added.
 This is not a general heap points-to analysis. The new pass does not itself
 trace a property/index/Map.get result back through arbitrary storage aliases;
 its typed slot/initializer seeds and the existing structural type graph cover
-those writes when their slot type is selected. Opaque function-value callees
-without a known local/closure view, library callback transfer rules not present
+those writes when their slot type is selected. Function-value calls whose shared
+ClosureTargets answer is Unknown (including parameters, mutable bindings,
+properties, returned values and joins), library callback transfer rules not present
 in this pass, and allocation IR kinds without GraphTypes/adoption metadata
 remain outside its producer tracing. These are analysis frontiers, not proven
 new leaks or claims that every future IR operation is covered. Such a miss must
@@ -1418,6 +1420,68 @@ Format and vet logs are empty. Both flow mutants were rerun after this merge;
 each fails both classification and leak-clean tests, and the restored sources
 pass. The full repository gate was not run in this continuation. Concurrency
 and the flow frontiers described above remain outside this change.
+
+
+### Shared call targets and graph leak checks on area/runtime 94a9c832
+
+Merged area/runtime 94a9c832 before these changes, then developer-tools
+stage1-leaks f6eef5df because area/runtime did not contain internal/leakcheck.
+The graph flow pass now uses Program.CallTargets both when collecting argument
+producers and when demanding returned values. It uses Program.ClosureTargets
+for function values and treats Unknown as an opaque, leak-only frontier; there
+is no speculative target chosen from a compatible checker signature.
+
+classification_override.a passes a derived instance through a base parameter.
+The override returns a fresh literal; the caller stores a self edge through its
+Link view, returns it, and reads it after the builder frame has gone. Source on
+Node and both backends print `override1 override1`. The graph allocation frees
+at its last outside release: allocations 6, frees 6, retains 4, releases 9,
+peak 5; no region record is needed for its self link.
+
+Every graph runtime harness now uses leakcheck.Report, and the graduated flow
+probes use leakcheck.Check with their exit-stack/register-root exclusion on
+Linux. Native graph tests use the external native_test package because the
+shared helper itself imports native. The call-target guard resolves the test
+variant of a helper dependency in that arrangement; its protected-reader
+allowlist is unchanged.
+
+The anchor mutant is detected through the helper on Linux (383 bytes in five
+malloc allocations, including the region record). A separate non-sanitized
+counted run exercises exactly leakcheck.Unbalanced, the predicate used by the
+helper on darwin: anchor mode balances 5 allocations/5 frees; the unreleased
+anchor reports four heap values leaked, 5 allocations/1 free/0 statement-region
+values. This is not a macOS execution: this worker is Linux, and macOS's
+`leaks --atExit` command was not run here.
+
+Mutants in internal/lower/testdata/graph-review-mutants.py are restored before
+gates. Following only Call.Function rather than CallTargets fails the protected
+reader guard and the override allocation classification test; output still
+matches Node under ASan/UBSan, then the shared leak check reports 129 bytes in
+two allocations. Removing the deliberately unreleased anchor from the harness
+makes both its shared-leak-check assertion and its counted-predicate assertion
+fail, proving both assertions are live.
+
+Restored-tree evidence, with toolchain environment sourced and every command's
+output written directly to its log:
+
+```text
+ADAMIC_GATE_UNCACHED=1 python3 internal/lower/testdata/graph-review-mutants.py > /tmp/graph-review-mutants-results.log 2>&1
+# base-only-guard, base-only-classification, base-only-oracle, anchor-mutant-disabled: each exit 1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/fresh -count=1 -timeout 30m > /tmp/graph-area-review-packages.log 2>&1
+# PASS: lower 29.944s, fresh 46.488s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/ir -run '^TestGraph|^TestCallTargetReaders$' -count=1 -v -timeout 15m > /tmp/graph-area-review-native-guard.log 2>&1
+# PASS: native 10.264s (all six graph tests), ir 2.634s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-area-review-counts-update.log 2>&1
+# PASS 60.033s; all 542 existing numeric rows unchanged, only override row added
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(regions|weak|fresh|nested|string_views)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestGraphAllocationFlow|TestWeakRegionReview|TestNested.*|TestCountsAreRecorded' -count=1 -v -timeout 30m > /tmp/graph-area-review-oracle-final.log 2>&1
+# PASS 113.286s; native misses 944, Node misses 254, cache hits zero
+gofmt -l cmd internal > /tmp/graph-area-review-format.log 2>&1
+go vet ./... > /tmp/graph-area-review-vet.log 2>&1
+```
+
+Format/vet logs are empty and git diff --check passes. The full repository gate
+and a macOS host run were not performed. Pointer/map traversal and its timing
+follow-ups are preserved separately and follow this repair.
 
 ## Arenas
 

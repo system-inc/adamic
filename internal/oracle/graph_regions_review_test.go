@@ -41,6 +41,9 @@ func TestWeakRegionReviewFreesWithoutRegions(t *testing.T) {
 	if err := native.Build(native.C(program), binary, native.Options{Count: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
+	if report := leakChecked(t, native.C(program), binary); report != "" {
+		t.Fatal(report)
+	}
 	result := execute(t, binary)
 	counts := countsLine.FindSubmatch(result.stderr)
 	if result.exitCode != 0 || counts == nil {

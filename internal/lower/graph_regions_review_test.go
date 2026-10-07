@@ -68,7 +68,7 @@ func TestWeakRegionReviewStaysCounted(t *testing.T) {
 
 // Allocation-site flow IDs must select literals even when fresh checker IDs do not.
 func TestGraphAllocationFlowClassification(t *testing.T) {
-	for _, name := range []string{"return", "conditional", "mixed"} {
+	for _, name := range []string{"return", "conditional", "mixed", "override"} {
 		t.Run(name, func(t *testing.T) {
 			checked, err := load.Load([]string{"../oracle/testdata/graph_regions/classification_" + name + ".a"})
 			if err != nil {
@@ -83,6 +83,11 @@ func TestGraphAllocationFlowClassification(t *testing.T) {
 				walk(function.Body, func(node any) bool {
 					literal, ok := node.(ir.ObjectLiteral)
 					if !ok {
+						return true
+					}
+					// Empty class-constructor payloads remain counted. The
+					// returned Link literals, including the override, are graph.
+					if name == "override" && len(literal.Fields) == 0 {
 						return true
 					}
 					if program.IsGraph(literal.GraphTypes) {
