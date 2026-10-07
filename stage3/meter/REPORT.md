@@ -29,15 +29,72 @@ The compiling returnTrue seed was also built with `--sanitize` and run with
 Its build log is /tmp/stage3-seed-sanitize-build.log and output files are
 /tmp/stage3-seed-native.stdout and /tmp/stage3-seed-native.stderr.
 
-Not done: fixtures_test.go, its small oracle hook, -update, and all three requested
-runner mutants. Automatic approval review rejected both writes because the later
-shared fixture instructions prohibit editing the runner. The unit-specific
-assignment expressly assigns it here; a clarification request is pending.
-No compiler/oracle source file was changed. No other fixture bucket was touched.
-No cron job, message delivery, full uncached gate, or upstream test suite was run.
+The runner and its small oracle hook are now complete following the user's
+ownership clarification. The only internal/oracle addition is the 35-line
+stage3_hook_test.go; existing helpers and oracle_test.go are unchanged. No other
+fixture bucket or production compiler file was changed. No cron job, message
+delivery, full uncached gate, or upstream TypeScript suite was run.
 
 Filtered oracle command: `go test ./internal/oracle -run
 'TestNativeAgreesWithNode/internal/oracle/testdata/(functions|library_object_order)\.a$'
 -count=1 -timeout 30m -v > /tmp/stage3-filtered-oracle.log 2>&1`.
 It passed functions.a, generic_functions.a, and library_object_order.a in 2.872s.
 The cache reported three native hits, six native misses and six Node misses.
+
+## Completed fixture gate
+
+`go test ./stage3/fixtures -count=1 -timeout 10m -v` passed all three seeds
+in 4.937s, with output in /tmp/stage3-runner-baseline.log. The compiling seed's
+native check calls the existing sanitizer and leak helpers uncached.
+`go vet ./stage3/fixtures ./internal/oracle` passes, with output saved in
+/tmp/stage3-runner-vet.log.
+
+The audit command is `python3 /tmp/stage3-runner-audit.py`, with its summary in
+/tmp/stage3-runner-audit.log. Scratch inputs are under
+/tmp/stage3-runner-audit-gcalu7y1. Each Go test invocation ran to completion with
+stdout/stderr redirected to its own log, not piped.
+
+| Mutant | Named check and observed catch |
+| --- | --- |
+| Recorded Node stdout true\n changed by one byte to truf\n | TestFixtures/runner/03_return_true.a/node: recorded Node byte comparison failed; exit 1 |
+| Recorded Compiles changed to NotYet, diagnostic unchanged | TestFixtures/runner/03_return_true.a/stage0: gap changed: update status.json and check the native output; exit 1 |
+| Scratch runtime/string_build_impl.h changes ADAMIC_STRING("true") to ADAMIC_STRING("truf") | TestFixtures/runner/03_return_true.a/native: native versus Node byte comparison failed, native stdout truf\n, Node true\n; both exit 0, empty stderr |
+| Refused fixture's diagnostic appended with !, outcome unchanged | TestFixtures/runner/02_is_string.a/stage0: gap changed; exit 1 |
+
+The native mutant ran through a Go -overlay file used to rebuild the oracle hook.
+The live runtime was not edited. Node remained true\n, the stage0 outcome and
+diagnostic remained Compiles/empty, clang and ASan/UBSan/leaks passed, and only
+the native byte comparison failed. The other two requested mutants each failed
+only their intended check. Detailed logs: /tmp/stage3-runner-node-mutant.log,
+/tmp/stage3-runner-stage0-mutant.log, /tmp/stage3-runner-native-mutant.log and
+/tmp/stage3-runner-diagnostic-mutant.log.
+
+## Update evidence
+
+A scratch compiling record changed to NotYet with diagnostic "old" was refreshed
+by -update, exit 0. An independent byte comparison verified that the entire
+status file changed only at that stage0 value; a normal gate on the refreshed
+record then passed. The real seed status.json was unchanged throughout.
+
+Three update refusals each returned exit 1 and left the complete status file
+byte-for-byte unchanged: stale recorded Node, the one-byte native runtime mutant
+with stale stage0, and a stale outcome on the noncompiling nested-function gap.
+The latter proves -update does not bless an unexecuted native program. Logs:
+/tmp/stage3-runner-update-success.log, /tmp/stage3-runner-updated-baseline.log,
+/tmp/stage3-runner-update-node-rejected.log,
+/tmp/stage3-runner-update-native-rejected.log and
+/tmp/stage3-runner-update-gap-rejected.log.
+
+Not covered: other workers' incoming fixture buckets were not present here;
+nonerasable enum/namespace Node runner changes are not merged into this base.
+This gate uses the current oracle/node.mjs and does not weaken checker options
+or substitute Adamic-generated JavaScript for Node's source oracle.
+
+Final baseline after aligning Node/native working directories:
+`go test ./stage3/fixtures -count=1 -timeout 10m -v` passed in 1.888s,
+log /tmp/stage3-runner-final-baseline.log. The complete mutant/update audit was
+rerun afterward and all nine assertions passed. The combined touched-package
+and filtered oracle gate passed (fixtures 2.115s, oracle 0.671s), log
+/tmp/stage3-runner-final-gate.log. It selected TestFixtures, the dormant hook,
+and functions.a, generic_functions.a and library_object_order.a. No full gate
+was attempted for this harness-only change.
