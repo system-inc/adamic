@@ -1,10 +1,14 @@
 package lower
 
 import (
+	"sort"
+	"strconv"
+	"strings"
+	_ "unsafe"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/fresh"
-	_ "unsafe"
 )
 
 // Use the exact property test used by checker narrowing, through the pinned checker as in
@@ -30,10 +34,17 @@ func (l *lowering) discriminantFields(modules []*ast.SourceFile) []discriminantF
 			return
 		}
 		seen[proven] = true
+		if proven.Flags()&checker.TypeFlagsTypeParameter != 0 {
+			note(l.checker.GetBaseConstraintOfType(proven))
+		}
+		for _, signature := range l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall) {
+			note(l.checker.GetReturnTypeOfSignature(signature))
+		}
+
 		if proven.Flags()&checker.TypeFlagsUnion != 0 {
 			for _, member := range proven.Types() {
 				for _, property := range l.checker.GetPropertiesOfType(member) {
-					if l.fieldLiteral(member, property.Name) != nil && discriminantProperty(l.checker, proven, property.Name) {
+					if discriminantProperty(l.checker, proven, property.Name) {
 						fields = append(fields, discriminantField{member, property.Name})
 					}
 				}
@@ -44,7 +55,7 @@ func (l *lowering) discriminantFields(modules []*ast.SourceFile) []discriminantF
 	for _, module := range modules {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
-			if ast.IsExpression(node) || node.Kind == ast.KindTypeAliasDeclaration || node.Kind == ast.KindTypeReference || node.Kind == ast.KindUnionType {
+			if ast.IsExpression(node) || ast.IsTypeNode(node) || ast.IsFunctionLike(node) || node.Kind == ast.KindVariableDeclaration || node.Kind == ast.KindParameter || node.Kind == ast.KindPropertyDeclaration || node.Kind == ast.KindPropertySignature {
 				note(l.checker.GetTypeAtLocation(node))
 			}
 			return node.ForEachChild(visit)
@@ -54,26 +65,115 @@ func (l *lowering) discriminantFields(modules []*ast.SourceFile) []discriminantF
 	return fields
 }
 
-func (l *lowering) discriminantView(fields []discriminantField, holder *checker.Type, name string) bool {
+// A union view denotes all its members. A broader interface can hide any union member
+// assignable to it. A member view retains its own declared property domain, including a
+// domain wider than one literal. Narrowing and assignability come from the same checker.
+func (l *lowering) discriminantMembers(fields []discriminantField, holder *checker.Type, name string) []*checker.Type {
 	if holder == nil {
-		return false
+		return nil
 	}
 	if holder.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		holder = l.checker.GetBaseConstraintOfType(holder)
-		if holder == nil {
-			return false
+	}
+	if holder == nil {
+		return nil
+	}
+	if holder.Flags()&checker.TypeFlagsUnion != 0 && discriminantProperty(l.checker, holder, name) {
+		return holder.Types()
+	}
+	var members []*checker.Type
+	seen := map[*checker.Type]bool{}
+	for _, field := range fields {
+		if field.name == name && l.checker.IsTypeAssignableTo(field.member, holder) && !seen[field.member] {
+			members = append(members, field.member)
+			seen[field.member] = true
 		}
 	}
-	for _, field := range fields {
-		if field.name == name && l.checker.IsTypeAssignableTo(field.member, holder) {
+	if len(members) > 0 && !seen[holder] {
+		members = append(members, holder)
+	}
+	return members
+}
+
+func (l *lowering) unsafeDiscriminantWrite(fields []discriminantField, holder, value *checker.Type, name string) bool {
+	for _, member := range l.discriminantMembers(fields, holder, name) {
+		declared := l.checker.GetTypeOfPropertyOfType(member, name)
+		if value == nil || declared == nil || !l.checker.IsTypeAssignableTo(value, declared) {
 			return true
 		}
 	}
 	return false
 }
 
-func (l *lowering) discriminantWriteRefusal(node *ast.Node, name string) error {
-	return &Refused{Where: l.program.Where(node), What: "a write to discriminant field '" + name + "' after construction", Fix: "changing variant means building a new object"}
+func (l *lowering) discriminantWriteRefusal(node *ast.Node, name string, holder, value *checker.Type, fields []discriminantField) error {
+	variant := "an unproven variant"
+	destinations := map[string]bool{}
+	for _, member := range l.discriminantMembers(fields, holder, name) {
+		declared := l.checker.GetTypeOfPropertyOfType(member, name)
+		if declared != nil && value != nil && l.checker.IsTypeAssignableTo(declared, value) {
+			destinations[l.checker.TypeToString(declared)] = true
+		}
+	}
+	var names []string
+	for name := range destinations {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	if len(names) > 0 {
+		variant = strings.Join(names, " or ")
+	} else if value != nil {
+		variant = l.checker.TypeToString(value)
+	}
+
+	return &Refused{Where: l.program.Where(node), What: "a write to discriminant field '" + name + "' that could move the object to variant " + variant, Fix: "changing variant means building a new object"}
+}
+
+// Obtain the value written, rather than the property's contextual type. Destructuring
+// follows the source property's domain down to each target; updates use their result type.
+func (l *lowering) discriminantWrittenType(target *ast.Node) *checker.Type {
+	var path []string
+	node := target
+	for node.Parent != nil {
+		parent := node.Parent
+		switch parent.Kind {
+		case ast.KindParenthesizedExpression:
+		case ast.KindBinaryExpression:
+			binary := parent.AsBinaryExpression()
+			if !ast.IsAssignmentOperator(binary.OperatorToken.Kind) {
+				return nil
+			}
+			var value *checker.Type
+			if binary.OperatorToken.Kind == ast.KindEqualsToken {
+				value = l.checker.GetTypeAtLocation(binary.Right)
+			} else {
+				value = l.checker.GetTypeAtLocation(parent)
+			}
+			for index := len(path) - 1; index >= 0 && value != nil; index-- {
+				property := l.checker.GetTypeOfPropertyOfType(value, path[index])
+				if property == nil {
+					property = l.checker.GetIndexTypeOfType(value, l.checker.GetNumberType())
+				}
+				value = property
+			}
+			return value
+		case ast.KindPrefixUnaryExpression, ast.KindPostfixUnaryExpression:
+			return l.checker.GetTypeAtLocation(parent)
+		case ast.KindPropertyAssignment:
+			path = append(path, parent.Name().Text())
+		case ast.KindObjectLiteralExpression:
+		case ast.KindArrayLiteralExpression:
+			for index, element := range parent.AsArrayLiteralExpression().Elements.Nodes {
+				if element == node {
+					path = append(path, strconv.Itoa(index))
+					break
+				}
+			}
+		default:
+			return nil
+		}
+		node = parent
+	}
+	return nil
 }
 
 // Refuse writes through every view before lowering, including assignment-pattern leaves and
@@ -92,7 +192,8 @@ func (l *lowering) refuseDiscriminantWrites(module *ast.SourceFile) error {
 		}
 		receiver, name := l.discriminantTarget(node)
 		if receiver != nil && ast.IsAssignmentTarget(node) {
-			if l.discriminantView(fields, l.checker.GetTypeAtLocation(receiver), name) {
+			value := l.discriminantWrittenType(node)
+			if l.unsafeDiscriminantWrite(fields, l.checker.GetTypeAtLocation(receiver), value, name) {
 				owner := node.Parent
 				for owner != nil && !ast.IsFunctionLike(owner) {
 					owner = owner.Parent
@@ -101,8 +202,8 @@ func (l *lowering) refuseDiscriminantWrites(module *ast.SourceFile) error {
 					found = &Refused{Where: l.program.Where(node), What: "a compound write to discriminant field '" + name + "' whose result is not proven to keep its declared literal", Fix: "initialize the declared literal directly; changing variant means building a new object"}
 					return true
 				}
-				if owner == nil || owner.Kind != ast.KindConstructor {
-					found = l.discriminantWriteRefusal(node, name)
+				if (owner == nil || owner.Kind != ast.KindConstructor) && !l.discriminantLocalCandidate(receiver) {
+					found = l.discriminantWriteRefusal(node, name, l.checker.GetTypeAtLocation(receiver), value, fields)
 					return true
 				}
 			}
@@ -120,11 +221,13 @@ func (l *lowering) checkDiscriminantConstruction(modules []*ast.SourceFile) erro
 	fields := l.discriminantFields(modules)
 	sites := map[int]bool{}
 	for index, site := range l.writeSites {
-		for _, field := range fields {
-			if l.discriminantView(fields, site.holder, field.name) {
-				sites[index+1] = true
-				break
-			}
+		target := site.node.Parent
+		if target == nil {
+			continue
+		}
+		_, name := l.discriminantTarget(target)
+		if name != "" && ast.IsAssignmentTarget(target) && l.unsafeDiscriminantWrite(fields, site.holder, l.discriminantWrittenType(target), name) {
+			sites[index+1] = true
 		}
 	}
 	if len(sites) == 0 {
@@ -135,12 +238,9 @@ func (l *lowering) checkDiscriminantConstruction(modules []*ast.SourceFile) erro
 			continue
 		}
 		site := l.writeSites[write.Site-1]
-		if l.discriminantView(fields, site.holder, write.Name) {
-			node := site.node
-			if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression {
-				node = parent
-			}
-			return l.discriminantWriteRefusal(node, write.Name)
+		node := site.node.Parent
+		if node != nil && l.unsafeDiscriminantWrite(fields, site.holder, l.discriminantWrittenType(node), write.Name) {
+			return l.discriminantWriteRefusal(node, write.Name, site.holder, l.discriminantWrittenType(node), fields)
 		}
 	}
 	return nil
@@ -183,4 +283,19 @@ func (l *lowering) discriminantConstructionUpdate(target, receiver *ast.Node, na
 	}
 	declared := l.checker.GetTypeOfSymbol(field)
 	return !l.checker.IsTypeAssignableTo(l.checker.GetTypeAtLocation(parent), declared)
+}
+
+// This is only a route to the existing heap proof, never evidence of freshness.
+// An initialized local may still be under construction outside a constructor;
+// publication, aliases and calls are decided by ProveFreshHolders below.
+func (l *lowering) discriminantLocalCandidate(receiver *ast.Node) bool {
+	receiver = ast.SkipParentheses(receiver)
+	if receiver.Kind != ast.KindIdentifier {
+		return false
+	}
+	symbol := l.checker.GetSymbolAtLocation(receiver)
+	if symbol == nil || symbol.ValueDeclaration == nil || symbol.ValueDeclaration.Kind != ast.KindVariableDeclaration {
+		return false
+	}
+	return symbol.ValueDeclaration.AsVariableDeclaration().Initializer != nil
 }
