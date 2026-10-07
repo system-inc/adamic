@@ -16,7 +16,7 @@ import (
 	"path/filepath"
 )
 
-// Lower lowers a checked program, entry file first.
+// Lower lowers a checked program from one entry, in ESM evaluation order.
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	files := program.Files()
 	if len(files) != 1 {
@@ -35,16 +35,22 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, err
 	}
 	lowering.noteInheritance(modules)
+	if err := lowering.enumInitialization(modules); err != nil {
+		return nil, err
+	}
 	lowering.noteAccessorNames(modules)
 	for _, module := range modules {
 		if err := lowering.refuse(module); err != nil {
 			return nil, err
 		}
 	}
+	// Link every declaration before lowering any function body, including across back edges.
+	var declarations []*ast.Node
 	for _, module := range modules {
-		if err := lowering.declareModule(module.Statements.Nodes); err != nil {
-			return nil, err
-		}
+		declarations = append(declarations, module.Statements.Nodes...)
+	}
+	if err := lowering.declareModule(declarations); err != nil {
+		return nil, err
 	}
 	lowering.recordExports(entry)
 	for _, module := range modules {
@@ -98,6 +104,11 @@ type lowering struct {
 	// what the cycle finder follows into when an Apple object may hold one (cycles.go).
 	appleTypes  map[string]*checker.Type
 	appleHanded []*checker.Type
+
+	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
+	cyclicModules     bool
+	provenModuleReads map[*ast.Node]bool
+	cycleReadFindings []Finding
 
 	// strings indexes result.Strings, so a constant used twice is stored once.
 	strings map[string]int

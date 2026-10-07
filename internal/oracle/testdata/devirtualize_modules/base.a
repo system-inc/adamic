@@ -1,0 +1,5 @@
+export class Base {
+    stable(): string { return 'base-stable'; }
+    changing(): string { return 'base-changing'; }
+}
+export function visit(value: Base): string { return `${value.stable()}/${value.changing()}`; }
