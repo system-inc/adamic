@@ -1,0 +1,152 @@
+=== RUN   TestWave14NextRules
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:296: NOT COMPARED: upstream JSX silence fixture, Adamic parser has no JSX support
+    lint_test.go:327: cohere cases: 343 unique source/rule/options combinations
+=== RUN   TestWave14NextRules/typescript-eslint-no-duplicate-enum-values
+    wave1_14_next_test.go:36: captured upstream cases: 57
+    wave1_14_next_test.go:40: findings: 35
+    wave1_14_next_test.go:42: Go, Node, native identical: 23111 bytes
+    wave1_14_next_test.go:42: emitted JavaScript identical: 23111 bytes
+=== RUN   TestWave14NextRules/typescript-eslint-no-dynamic-delete
+    wave1_14_next_test.go:36: captured upstream cases: 42
+    wave1_14_next_test.go:40: findings: 25
+    wave1_14_next_test.go:42: Go, Node, native identical: 8616 bytes
+    wave1_14_next_test.go:42: emitted JavaScript identical: 8616 bytes
+--- PASS: TestWave14NextRules (36.50s)
+    --- PASS: TestWave14NextRules/typescript-eslint-no-duplicate-enum-values (0.64s)
+    --- PASS: TestWave14NextRules/typescript-eslint-no-dynamic-delete (0.62s)
+=== RUN   TestWave14NextCorpus
+=== RUN   TestWave14NextCorpus/typescript-eslint-no-duplicate-enum-values
+    wave1_14_next_test.go:21: /tmp/lint-wave1-14-typescript-pinned/src/compiler corpus files: 77
+    wave1_14_next_test.go:21: ../../../stage1 corpus files: 139
+    wave1_14_next_test.go:52: Go, Node, native identical: 12341922 bytes
+    wave1_14_next_test.go:52: emitted JavaScript identical: 12341922 bytes
+=== RUN   TestWave14NextCorpus/typescript-eslint-no-dynamic-delete
+    wave1_14_next_test.go:21: /tmp/lint-wave1-14-typescript-pinned/src/compiler corpus files: 77
+    wave1_14_next_test.go:21: ../../../stage1 corpus files: 139
+    wave1_14_next_test.go:52: Go, Node, native identical: 12340345 bytes
+    wave1_14_next_test.go:52: emitted JavaScript identical: 12340345 bytes
+--- PASS: TestWave14NextCorpus (43.54s)
+    --- PASS: TestWave14NextCorpus/typescript-eslint-no-duplicate-enum-values (14.88s)
+    --- PASS: TestWave14NextCorpus/typescript-eslint-no-dynamic-delete (15.01s)
+=== RUN   TestWave14NextMutants
+=== RUN   TestWave14NextMutants/typescript-eslint-no-duplicate-enum-values
+    wave1_14_next_test.go:73: numeric duplicate anchor advances: Node source caught only by comparison: case 0 line 6: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:21", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:2:14
+    wave1_14_next_test.go:73: numeric duplicate anchor advances: sanitized native caught only by comparison: case 0 line 6: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:21", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:2:14
+    wave1_14_next_test.go:73: numeric duplicate anchor advances: emitted JavaScript caught only by comparison: case 0 line 6: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:21", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:1:14
+          @typescript-eslint/no-duplicate-enum-values  Two members of this enum are initialized to the same value. TypeScript permits it, but a reader expects members of one enum to name distinct things, and a reverse lookup by value can only return one of them, so the later member silently wins. The usual cause is a copied line whose value was never changed. Give each member its own value.
+        
+        range 13 14 noDuplicateEnumValues 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-duplicate-enum-values1437136534/002/typescript-eslint-no-duplicate-enum-values-0.ts:2:14
+=== RUN   TestWave14NextMutants/typescript-eslint-no-dynamic-delete
+    wave1_14_next_test.go:73: unary plus accepted as static key: Node source caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:2:10", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:1:10"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:1:10
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 9 11 dynamicDelete 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:2:10
+    wave1_14_next_test.go:73: unary plus accepted as static key: sanitized native caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:2:10", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:1:10"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:1:10
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 9 11 dynamicDelete 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:2:10
+    wave1_14_next_test.go:73: unary plus accepted as static key: emitted JavaScript caught only by comparison: case 0 line 2: port "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:2:10", Go "/tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:1:10"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:1:10
+          @typescript-eslint/no-dynamic-delete  Do not delete dynamically computed property keys.
+        
+        range 9 11 dynamicDelete 		
+        /tmp/adamic-gate/TestWave14NextMutantstypescript-eslint-no-dynamic-delete4157614507/002/typescript-eslint-no-dynamic-delete-0.ts:2:10
+--- PASS: TestWave14NextMutants (28.59s)
+    --- PASS: TestWave14NextMutants/typescript-eslint-no-duplicate-enum-values (13.12s)
+    --- PASS: TestWave14NextMutants/typescript-eslint-no-dynamic-delete (13.41s)
+=== RUN   TestWave14NextThroughput
+=== RUN   TestWave14NextThroughput/typescript-eslint-no-duplicate-enum-values
+    wave1_14_next_test.go:21: /tmp/lint-wave1-14-typescript-pinned/src/compiler corpus files: 77
+    wave1_14_next_test.go:21: ../../../stage1 corpus files: 139
+    wave1_14_next_test.go:86: natural findings: 4
+    wave1_14_next_test.go:100: round 1 Go 205.970386ms count=4
+    wave1_14_next_test.go:100: round 1 native 1.371262194s count=4
+    wave1_14_next_test.go:100: round 1 Node 981.347148ms count=4
+    wave1_14_next_test.go:100: round 2 Go 292.266269ms count=4
+    wave1_14_next_test.go:100: round 2 native 1.78676101s count=4
+    wave1_14_next_test.go:100: round 2 Node 1.767031802s count=4
+    wave1_14_next_test.go:100: round 3 Go 324.518558ms count=4
+    wave1_14_next_test.go:100: round 3 native 1.557738225s count=4
+    wave1_14_next_test.go:100: round 3 Node 1.219098321s count=4
+    wave1_14_next_test.go:100: round 4 Go 268.074397ms count=4
+    wave1_14_next_test.go:100: round 4 native 2.12485342s count=4
+    wave1_14_next_test.go:100: round 4 Node 1.842143889s count=4
+    wave1_14_next_test.go:100: round 5 Go 329.383545ms count=4
+    wave1_14_next_test.go:100: round 5 native 1.308366937s count=4
+    wave1_14_next_test.go:100: round 5 Node 884.200032ms count=4
+    wave1_14_next_test.go:104: native 1.308367s 3.06 findings/s count=4 files=216
+    wave1_14_next_test.go:104: Node 0.884200s 4.52 findings/s count=4 files=216
+    wave1_14_next_test.go:104: Go 0.205970s 19.42 findings/s count=4 files=216
+=== RUN   TestWave14NextThroughput/typescript-eslint-no-dynamic-delete
+    wave1_14_next_test.go:21: /tmp/lint-wave1-14-typescript-pinned/src/compiler corpus files: 77
+    wave1_14_next_test.go:21: ../../../stage1 corpus files: 139
+    wave1_14_next_test.go:86: natural findings: 2
+    wave1_14_next_test.go:100: round 1 Go 212.74726ms count=2
+    wave1_14_next_test.go:100: round 1 native 1.252121787s count=2
+    wave1_14_next_test.go:100: round 1 Node 881.177877ms count=2
+    wave1_14_next_test.go:100: round 2 Go 206.142808ms count=2
+    wave1_14_next_test.go:100: round 2 native 1.232448373s count=2
+    wave1_14_next_test.go:100: round 2 Node 911.10939ms count=2
+    wave1_14_next_test.go:100: round 3 Go 217.449299ms count=2
+    wave1_14_next_test.go:100: round 3 native 1.342484559s count=2
+    wave1_14_next_test.go:100: round 3 Node 852.23894ms count=2
+    wave1_14_next_test.go:100: round 4 Go 209.655921ms count=2
+    wave1_14_next_test.go:100: round 4 native 1.275372279s count=2
+    wave1_14_next_test.go:100: round 4 Node 870.831028ms count=2
+    wave1_14_next_test.go:100: round 5 Go 225.337843ms count=2
+    wave1_14_next_test.go:100: round 5 native 1.331974503s count=2
+    wave1_14_next_test.go:100: round 5 Node 878.674626ms count=2
+    wave1_14_next_test.go:104: native 1.232448s 1.62 findings/s count=2 files=216
+    wave1_14_next_test.go:104: Node 0.852239s 2.35 findings/s count=2 files=216
+    wave1_14_next_test.go:104: Go 0.206143s 9.70 findings/s count=2 files=216
+--- PASS: TestWave14NextThroughput (37.05s)
+    --- PASS: TestWave14NextThroughput/typescript-eslint-no-duplicate-enum-values (16.49s)
+    --- PASS: TestWave14NextThroughput/typescript-eslint-no-dynamic-delete (12.11s)
+=== RUN   TestWave14NextSuggestionBlocker
+    wave1_14_next_test.go:137: "a! == b;": independently built upstream oracle exits 2: unexpected suggestion shape
+    wave1_14_next_test.go:137: "a + b! == c;": independently built upstream oracle exits 2: unexpected suggestion shape
+    wave1_14_next_test.go:137: "a! in b;": independently built upstream oracle exits 2: unexpected suggestion shape
+--- PASS: TestWave14NextSuggestionBlocker (5.05s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	150.735s

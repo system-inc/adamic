@@ -26,3 +26,12 @@ the syntax ready for AST/API adaptation list at origin/codex/lint-inventory.
 These are the first three entries neither implemented on origin/main ef3d907e
 nor named by any direct claim Markdown file on fetched origin branches.
 This update is committed and pushed before implementation.
+
+### Next-three outcome
+
+No-duplicate-enum-values and no-dynamic-delete are implemented as directory-owned
+.a ports and passed four-way fixture/corpus parity and compiling semantic mutants.
+No-confusing-non-null-assertion stays claimed but blocked: the shared Finding and
+oracle serializer cannot carry its suggestion ranges, arrays and multiple edits.
+The exact independent probes and limits are recorded in
+../rules/typescript-eslint-no-duplicate-enum-values/REPORT.md.
