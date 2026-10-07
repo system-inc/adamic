@@ -13,6 +13,9 @@ import (
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.RegExpNew:
+		if expression.Index < 0 {
+			return e.dynamicRegExp(expression)
+		}
 		for _, argument := range expression.Arguments {
 			e.value(argument)
 		}

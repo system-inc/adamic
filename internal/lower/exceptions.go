@@ -157,6 +157,10 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
 				return false
 			}
+		case ir.RegExpNew:
+			if node.Index < 0 {
+				found = true
+			}
 		case ir.Throw:
 			found = true
 		case ir.Call:

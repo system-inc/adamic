@@ -1,0 +1,759 @@
+--- FAIL: TestRuntimeStaticsParallel (18.09s)
+    --- FAIL: TestRuntimeStaticsParallel/map (0.71s)
+        runtime_statics_parallel_test.go:29: fixture failed (attempt 1): exit status 66
+            ==================
+            WARNING: ThreadSanitizer: data race (pid=51006)
+              Write of size 8 at 0x72c000000078 by main thread:
+                #0 compact /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/map.c:138:12 (map+0x10127f)
+                #1 return_inline /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/map.c:145:2 (map+0x10127f)
+                #2 adamic_map_iterator_close /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/map.c:321:3 (map+0x10127f)
+                #3 free_one /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/heap.c:377:3 (map+0xf617b)
+                #4 release_last /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/heap.c:396:30 (map+0xf617b)
+                #5 adamic_release_slow /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/heap.c:401:31 (map+0xf5ab8)
+                #6 adamic_release /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/adamic.h:87:2 (map+0xe7f77)
+                #7 exercise /workspace/adamic/internal/native/testdata/runtime-statics/map.c:16:2 (map+0xe7f77)
+                #8 work /workspace/adamic/internal/native/testdata/runtime-statics/harness.h:31:58 (map+0xe7f77)
+                #9 execute_range /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/parallel.c:197:25 (map+0x108968)
+                #10 parallel_map /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/parallel.c:323:3 (map+0x108211)
+                #11 adamic_parallel_map /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/parallel.c:342:9 (map+0x1082c5)
+                #12 main /workspace/adamic/internal/native/testdata/runtime-statics/harness.h:41:26 (map+0xe7c5e)
+            
+              Previous read of size 8 at 0x72c000000078 by thread T4:
+                #0 find /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/map.c:108:39 (map+0xffb5d)
+                #1 adamic_map_get /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/map.c:205:17 (map+0xffa9e)
+                #2 exercise /workspace/adamic/internal/native/testdata/runtime-statics/map.c:12:24 (map+0xe7fad)
+                #3 work /workspace/adamic/internal/native/testdata/runtime-statics/harness.h:31:58 (map+0xe7fad)
+                #4 execute_range /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/parallel.c:197:25 (map+0x108968)
+                #5 worker_main /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/parallel.c:235:3 (map+0x1083c9)
+            
+              Location is heap block of size 65536 at 0x72c000000000 allocated by main thread:
+                #0 malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_posix.cpp:676:5 (map+0x62ed0)
+                #1 new_chunk /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/heap.c:128:10 (map+0xf55f8)
+                #2 take /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/heap.c:163:10 (map+0xf55f8)
+                #3 adamic_allocate /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/heap.c:240:10 (map+0xf55f8)
+                #4 adamic_map_new /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/map.c:26:20 (map+0xff7b3)
+                #5 prepare /workspace/adamic/internal/native/testdata/runtime-statics/map.c:5:8 (map+0xe7bc2)
+                #6 main /workspace/adamic/internal/native/testdata/runtime-statics/harness.h:37:2 (map+0xe7bc2)
+            
+              Thread T4 (tid=51012, running) created by main thread at:
+                #0 pthread_create /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_posix.cpp:1041:3 (map+0x64e0a)
+                #1 start /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/parallel.c:275:7 (map+0x1079a7)
+                #2 pthread_once /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_posix.cpp:1633:5 (map+0x68d7d)
+                #3 parallel_map /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/parallel.c:290:2 (map+0x107c7c)
+                #4 adamic_parallel_map /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/parallel.c:342:9 (map+0x1082c5)
+                #5 main /workspace/adamic/internal/native/testdata/runtime-statics/harness.h:41:26 (map+0xe7c5e)
+            
+            SUMMARY: ThreadSanitizer: data race /tmp/adamic-gate/TestRuntimeStaticsParallel2866782835/001/map.c:138:12 in compact
+            ==================
+--- FAIL: TestRuntimeStaticsProtectionMutants (124.42s)
+    --- FAIL: TestRuntimeStaticsProtectionMutants/shared_string_index (5.86s)
+        runtime_statics_parallel_test.go:69: SUMMARY: ThreadSanitizer: data race /tmp/adamic-gate/TestRuntimeStaticsProtectionMutantsshared_string_index3255506086/001/string_index.c:131:35 in shared_index
+        runtime_statics_parallel_test.go:69: SUMMARY: ThreadSanitizer: data race /tmp/adamic-gate/TestRuntimeStaticsProtectionMutantsshared_string_index3255506086/001/string_index.c:131:35 in shared_index
+        runtime_statics_parallel_test.go:69: race mutant was not caught (attempt 3): <nil>
+            adamic: counts: allocations 8196 frees 8196 retains 8192 releases 8196 peak 8 regions 0
+            runtime statics clean
+--- FAIL: TestRuntimeStaticsSignalAndExit (42.32s)
+    --- FAIL: TestRuntimeStaticsSignalAndExit/handler_buffer_mutant (4.90s)
+        runtime_statics_parallel_test.go:94: signal mutant not caught: signal: terminated
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+            signal worker line
+--- FAIL: TestRuntimeFieldLayoutsAreIncluded (0.00s)
+    fields_test.go:168: regexp.c: runtime field "#compiler" at 12 is absent or conflicting in the layout proof
+--- FAIL: TestParallelMemory (5.29s)
+    --- FAIL: TestParallelMemory/tsan (1.25s)
+        parallel_test.go:90: threads=4 attempt=1: exit status 66
+            
+            ==================
+            WARNING: ThreadSanitizer: data race (pid=60558)
+              Read of size 8 at 0x72c000020078 by thread T3:
+                #0 adamic_map_iterator_next /home/agent/.cache/adamic/runtime/.build-1112480597/map.c (harness-tsan+0x1010e4)
+                #1 run /tmp/adamic-gate/adamic-build-213010263/main.c:59:8 (harness-tsan+0xe8725)
+            
+              Previous write of size 8 at 0x72c000020078 by thread T2:
+                #0 compact /home/agent/.cache/adamic/runtime/.build-1112480597/map.c:138:12 (harness-tsan+0x10147f)
+                #1 return_inline /home/agent/.cache/adamic/runtime/.build-1112480597/map.c:145:2 (harness-tsan+0x10147f)
+                #2 adamic_map_iterator_close /home/agent/.cache/adamic/runtime/.build-1112480597/map.c:321:3 (harness-tsan+0x10147f)
+                #3 free_one /home/agent/.cache/adamic/runtime/.build-1112480597/heap.c:377:3 (harness-tsan+0xf64eb)
+                #4 release_last /home/agent/.cache/adamic/runtime/.build-1112480597/heap.c:396:30 (harness-tsan+0xf64eb)
+                #5 adamic_release_slow /home/agent/.cache/adamic/runtime/.build-1112480597/heap.c:401:31 (harness-tsan+0xf5e68)
+                #6 adamic_release /home/agent/.cache/adamic/runtime/c80b69b3ee6a454dc0d013c18e7d6919d2088cff3d099de87394287b510d4c4f/adamic.h:87:2 (harness-tsan+0xe8784)
+                #7 run /tmp/adamic-gate/adamic-build-213010263/main.c:60:3 (harness-tsan+0xe8784)
+            
+              As if synchronized via sleep:
+                #0 nanosleep /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_posix.cpp:406:3 (harness-tsan+0x61d0a)
+                #1 adamic_tsan_pause /home/agent/.cache/adamic/runtime/.build-1112480597/parallel.c:79:2 (harness-tsan+0x10783b)
+                #2 adamic_slot_cache_store /home/agent/.cache/adamic/runtime/.build-1112480597/object.c:51:2 (harness-tsan+0x106f7b)
+                #3 adamic_object_find /home/agent/.cache/adamic/runtime/.build-1112480597/object.c:58:4 (harness-tsan+0x106f7b)
+                #4 adamic_object_data_field /home/agent/.cache/adamic/runtime/c80b69b3ee6a454dc0d013c18e7d6919d2088cff3d099de87394287b510d4c4f/adamic.h:309:9 (harness-tsan+0xe83a1)
+                #5 adamic_object_field /home/agent/.cache/adamic/runtime/c80b69b3ee6a454dc0d013c18e7d6919d2088cff3d099de87394287b510d4c4f/adamic.h:314:9 (harness-tsan+0xe83a1)
+                #6 run /tmp/adamic-gate/adamic-build-213010263/main.c:49:25 (harness-tsan+0xe83a1)
+            
+              Location is heap block of size 65536 at 0x72c000020000 allocated by main thread:
+                #0 malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_posix.cpp:676:5 (harness-tsan+0x62ed0)
+                #1 new_chunk /home/agent/.cache/adamic/runtime/.build-1112480597/heap.c:128:10 (harness-tsan+0xf59a8)
+                #2 take /home/agent/.cache/adamic/runtime/.build-1112480597/heap.c:163:10 (harness-tsan+0xf59a8)
+                #3 adamic_allocate /home/agent/.cache/adamic/runtime/.build-1112480597/heap.c:240:10 (harness-tsan+0xf59a8)
+                #4 adamic_map_new /home/agent/.cache/adamic/runtime/.build-1112480597/map.c:26:20 (harness-tsan+0xffa23)
+                #5 main /tmp/adamic-gate/adamic-build-213010263/main.c:87:8 (harness-tsan+0xe7da9)
+            
+              Thread T3 (tid=60574, running) created by main thread at:
+                #0 pthread_create /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_posix.cpp:1041:3 (harness-tsan+0x64e0a)
+                #1 main /tmp/adamic-gate/adamic-build-213010263/main.c:97:39 (harness-tsan+0xe7e9f)
+            
+              Thread T2 (tid=60573, running) created by main thread at:
+                #0 pthread_create /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_posix.cpp:1041:3 (harness-tsan+0x64e0a)
+                #1 main /tmp/adamic-gate/adamic-build-213010263/main.c:97:39 (harness-tsan+0xe7e9f)
+            
+            SUMMARY: ThreadSanitizer: data race /home/agent/.cache/adamic/runtime/.build-1112480597/map.c in adamic_map_iterator_next
+            ==================
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	464.462s
+ok  	github.com/system-inc/adamic/internal/regexp	16.224s
+--- FAIL: TestRegExpNativeRefusals (0.05s)
+    regexp_test.go:24: expected loud NotYet for function made(pattern: string): RegExp { return new RegExp(pattern); }: <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	26.551s
+ok  	github.com/system-inc/adamic/internal/fresh	32.763s
+?   	github.com/system-inc/adamic/internal/javascript	[no test files]
+FAIL

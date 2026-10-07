@@ -254,5 +254,8 @@ func TestRegExpRuntimeCompilerNotLinked(t *testing.T) {
 	if bytes.Contains(output, []byte("regex_compile_")) {
 		t.Fatal("a program without dynamic RegExp linked compiler symbols or tables")
 	}
-	t.Log("nm: no regex_compile_ symbols in a program without dynamic RegExp")
+	if bytes.Contains(output, []byte("adamic_regex_new_owned")) {
+		t.Fatal("compiler ownership linked into a program without dynamic RegExp")
+	}
+	t.Log("nm: no compiler or ownership symbols in a program without dynamic RegExp")
 }

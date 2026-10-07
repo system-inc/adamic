@@ -1,0 +1,14 @@
+import { programArguments } from 'adamic';
+let pattern = programArguments()[0] ?? 'TODO';
+let trace = '';
+function first(): string { trace += 'pattern '; return pattern; }
+function flags(): string { trace += 'flags '; pattern = 'OTHER'; return 'u'; }
+const regex = new RegExp(first(), flags());
+console.log(`${regex.test('TODO')} ${regex.test('OTHER')} ${trace}`);
+let calls = 0;
+function throwing(pattern: string): RegExp { calls++; return new RegExp(pattern, 'u'); }
+function pass(pattern: string): RegExp { return throwing(pattern); }
+try { pass('?'); } catch (error) {
+ if (error instanceof Error) console.log(`${error.name} ${calls}`);
+}
+console.log(`${new RegExp(programArguments()[1] ?? '', 'u').source}`);

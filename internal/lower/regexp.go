@@ -37,14 +37,14 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 			var ok bool
 			pattern, ok = l.constantPattern(args[0], 0)
 			if !ok {
-				return nil, l.notYet(args[0], "RegExp with a nonconstant pattern")
+				return l.dynamicRegExp(node, args)
 			}
 		}
 		if len(args) > 1 {
 			var ok bool
 			flags, ok = l.constantPattern(args[1], 0)
 			if !ok {
-				return nil, l.notYet(args[1], "RegExp with nonconstant flags")
+				return l.dynamicRegExp(node, args)
 			}
 		}
 		for _, arg := range args {

@@ -10,7 +10,6 @@ import (
 
 func TestRegExpNativeRefusals(t *testing.T) {
 	for _, source := range []string{
-		"function made(pattern: string): RegExp { return new RegExp(pattern); }",
 		"const matches = /a{18446744073709551616}/.test('a');",
 		"console.log('a'.replace(/a/, (value: string) => value));",
 		"try { console.log('a'.replaceAll(/a/, 'b')); } catch {}",
@@ -50,5 +49,13 @@ func TestRegExpSourceNode(t *testing.T) {
 	lone := string([]byte{0xed, 0xa0, 0x80})
 	if escapeRegexSource(lone, "") != lone {
 		t.Error("source differs: lone surrogate bytes changed")
+	}
+}
+
+func TestRegExpRuntimeConstructionLowers(t *testing.T) {
+	for _, source := range []string{"function made(pattern: string): RegExp { return new RegExp(pattern); }", "function made(flags: string): RegExp { return new RegExp('a',flags); }"} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Fatal(err)
+		}
 	}
 }

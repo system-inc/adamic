@@ -40,6 +40,8 @@ typedef struct {
 } adamic_regex_parse_result;
 void adamic_regex_parse(const unsigned char *pattern, size_t length,
     const unsigned char *flags, size_t flag_length, adamic_regex_parse_result *result);
+/* Transfer malloc blocks to a counted owner; the callback owns each block. */
+void adamic_regex_parse_take_memory(adamic_regex_parse_result *result, void (*take)(void *, void *), void *owner);
 void adamic_regex_parse_free(adamic_regex_parse_result *result);
 /* Compiler temporaries share this result's allocation ownership. */
 void *adamic_regex_parse_allocate(adamic_regex_parse_result *result, size_t size);

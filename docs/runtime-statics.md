@@ -378,3 +378,14 @@ its arena. Their only shared inputs are the existing immutable folding tables.
 
 - `runtime-file:regexp_compile_v8.c`
 - `runtime-file:regexp_compile_v8.h`
+
+Runtime construction transfers its per-call malloc arena into counted raw-array
+owners. Regex clones and named-group dictionaries retain that immutable storage.
+Constructor code, error names and ownership shapes have no mutable statics.
+
+- `runtime-file:regexp_compile_runtime.c`
+
+ADAMIC_REGEXP_RUNTIME_OWNER selects only the matcher ownership hooks in dynamic
+modules. The archive cache includes that flag. Ordinary archives preprocess the
+original matcher constructor, clone and result paths; the compiler feature flag
+remains confined to generated dynamic source. No startup registration exists.

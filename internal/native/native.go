@@ -130,7 +130,7 @@ func Build(source string, output string, options Options) error {
 	}
 	defer os.RemoveAll(directory)
 
-	library, err := RuntimeLibrary("", options)
+	library, err := runtimeLibraryForSource(source, options)
 	if err != nil {
 		return err
 	}

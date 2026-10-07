@@ -32,6 +32,10 @@ void *adamic_regex_parse_allocate(adamic_regex_parse_result *result, size_t size
     regex_parser parser = {.result = result};
     return regex_parse_allocate(&parser, size);
 }
+void adamic_regex_parse_take_memory(adamic_regex_parse_result *result, void (*take)(void *, void *), void *owner) {
+    adamic_regex_parse_memory *memory=result->memory;result->memory=NULL;
+    while(memory!=NULL){adamic_regex_parse_memory *next=memory->next;take(owner,memory);memory=next;}
+}
 void adamic_regex_parse_free(adamic_regex_parse_result *result) {
     adamic_regex_parse_memory *memory = result->memory;
     while (memory != NULL) {

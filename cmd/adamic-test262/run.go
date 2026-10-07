@@ -20,14 +20,15 @@ import (
 // engine is one checkout's adamic command and its runtime, compiled once. Each test is then
 // `adamic c` plus a link, the way the fuzzer avoids compiling the runtime per program.
 type engine struct {
-	test262 string
-	work    string
-	adamic  string
-	runtime []string
-	include string
-	flags   []string
-	log     io.Writer
-	adapt   bool
+	test262      string
+	work         string
+	adamic       string
+	runtime      []string
+	runtimeRegex []string
+	include      string
+	flags        []string
+	log          io.Writer
+	adapt        bool
 }
 
 func prepare(root string, test262 string, work string) (*engine, error) {
@@ -152,7 +153,13 @@ func (e *engine) attempt(test classified) result {
 	}
 	binary := filepath.Join(e.work, "program.bin")
 	arguments := append(append([]string{}, e.flags...), "-I", e.include, "-o", binary, cPath)
-	arguments = append(arguments, e.runtime...)
+	objects, err := e.regexpRuntime(lowered.Stdout)
+	if err != nil {
+		base.Kind = outcomeCrashed
+		base.Reason = err.Error()
+		return base
+	}
+	arguments = append(arguments, objects...)
 	arguments = append(arguments, "-lm")
 	linked := runCommand(2*time.Minute, nil, "clang", arguments...)
 	if linked.Exit != 0 || linked.TimedOut {
