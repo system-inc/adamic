@@ -1,3 +1,23 @@
+Unknown-error source narrowing is blocked by Refused `in` at node_process_errors.a:5:66; runtime own string code/message and exact Node errors are built.
+Commits pushed: d06ed47 performance first, 157f53e process/tmpdir; adaptation cf976e8 merged as dd3c56f, exact helpers now used in both error fixtures.
+Commands: post-adaptation errors PASS 5.234s; affected packages load/lower/native PASS 3.661s/14.170s/78.865s; full counts PASS 13.247s; affected-package vet PASS.
+Mutants: original 19 host mutants and ancillary process/exit/env/cache mutants remain green; new ERR_OUT_OF_RANGE, removed-cwd code, tmpdir and performance-hook mutants are caught only by Node observations.
+Not covered: eight unchanged System acceptance fixtures stop at fs.mkdtempSync on both backends; unknown/in source execution, timers, nextTick scheduling, Date System.now and native tsc remain incomplete.
+
+## Adaptation 47 error contract
+
+Merged the requested complete branch at cf976e8. The source fixtures contain the helper text copied exactly from its adapt.cjs, and a drift check compares the text. Node's real errors pass through errorCode/errorMessage, which take unknown and use typeof, !== null and in. The source lowerer remains Refused; this is also the adaptation's documented compiler blocker. No assertion, private declaration, or syntax-policy exemption replaces those helpers. The separate runtime oracle explicitly constructs typed IR and is not counted as source acceptance.
+
+All seven mapped chdir errno are exercised: ENOENT, ENOTDIR, EACCES, ELOOP, ENAMETOOLONG against real directories, ENOMEM and EIO with the same Linux libc fault shim loaded into Node and native. Empty paths, embedded NUL and a lone surrogate are tested. Node truncates the error destination at NUL and replaces lone surrogates when converting it to the native path; the runtime now does the same. Both exit and exitCode are exercised with NaN, positive/negative infinity and a fraction. Own code and message properties are checked for every caught error.
+
+A real parent-process removal of the child's cwd tests uncached process.cwd after chdir invalidates the bootstrap cache. This exposed Node 24.19's longer ENOENT description, now copied exactly: `process.cwd failed with error no such file or directory, the current working directory was likely removed without changing the working directory`. Both backends match its full message and own fields. A code mutant exits normally and differs only in Node stdout. Sanitizers cover all runs; regular runtime tests include leak comparison, while the removal driver's sanitizer leak detection is disabled because the deleted cwd interferes with its exit probe.
+
+Linux is the gate. macOS uses the same POSIX host code but its fault-injection branch is not run; no macOS execution is claimed. Machine-dependent pid, memory, clock types/ranges/order and native executable-path rationale remain in the contract table below.
+
+Landing rule is acknowledged: create codex/host-process-land, rebase onto current origin/main, re-green, push that branch only. Never push main and never force-push.
+
+Earlier checkpoint reports below are historical; this supersedes their untested ENOMEM/EIO and removed-cwd-message statements.
+
 Process unknown-error narrowing remains blocked by the compiler's explicit refusal of `in`; runtime own string code/message and Node messages are implemented.
 Built os.tmpdir and official Node process integration; performance checkpoint d06ed47 was pushed first, with shared loader 69c71d5 merged.
 Commands: every process unit test plus all four registered process fixtures PASS 8.706s; layouts/uniform-field check PASS 7.352s; tmpdir matrix PASS 6.202s.

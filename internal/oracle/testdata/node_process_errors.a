@@ -1,11 +1,23 @@
 import 'node:process';
-// The adapted tsc errorCode narrowing. No assertion to Error or ErrnoException.
-for (const path of process.argv.slice(2)) {
+// Exact helper source from adaptation 47, cf976e8. No cast or assertion.
+/** @internal */
+export function errorCode(error: unknown): string | undefined {
+    return typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
+}
+
+/** @internal */
+export function errorMessage(error: unknown): string | undefined {
+    return typeof error === "object" && error !== null && "message" in error && typeof error.message === "string" ? error.message : undefined;
+}
+
+for (const path of [...process.argv.slice(2), '', '\0', 'absent\0ignored', 'absent\ud800']) {
     try { process.chdir(path); }
     catch (error: unknown) {
-        if (typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' && 'message' in error && typeof error.message === 'string') {
-            console.log(error.code);
-            console.log(error.message);
+        const code = errorCode(error);
+        const message = errorMessage(error);
+        if (code !== undefined && message !== undefined) {
+            console.log(code);
+            console.log(message);
             console.log(String(Object.prototype.hasOwnProperty.call(error, 'code') && Object.prototype.hasOwnProperty.call(error, 'message')));
         }
     }
@@ -13,17 +25,21 @@ for (const path of process.argv.slice(2)) {
 for (const value of [NaN, Infinity, -Infinity, 0.5]) {
     try { process.exitCode = value; }
     catch (error: unknown) {
-        if (typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' && 'message' in error && typeof error.message === 'string') {
-            console.log(error.code);
-            console.log(error.message);
+        const code = errorCode(error);
+        const message = errorMessage(error);
+        if (code !== undefined && message !== undefined) {
+            console.log(code);
+            console.log(message);
             console.log(String(Object.prototype.hasOwnProperty.call(error, 'code') && Object.prototype.hasOwnProperty.call(error, 'message')));
         }
     }
     try { process.exit(value); }
     catch (error: unknown) {
-        if (typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' && 'message' in error && typeof error.message === 'string') {
-            console.log(error.code);
-            console.log(error.message);
+        const code = errorCode(error);
+        const message = errorMessage(error);
+        if (code !== undefined && message !== undefined) {
+            console.log(code);
+            console.log(message);
             console.log(String(Object.prototype.hasOwnProperty.call(error, 'code') && Object.prototype.hasOwnProperty.call(error, 'message')));
         }
     }
