@@ -36,10 +36,11 @@ identity = {'nproc': capture(['nproc']), 'cpu.max': Path('/sys/fs/cgroup/cpu.max
                             '-Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls '
                             '-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all'}
 commits = {name: capture(['git', 'rev-parse', 'HEAD'], root) for name, root in roots.items()}
-go_cache = capture(['go', 'env', 'GOCACHE'])
+go_caches = {variant: str(output / ('go-build-' + variant)) for variant in roots}
 
 def environment(cache):
-    return dict(os.environ, XDG_CACHE_HOME=str(cache), GOCACHE=go_cache, GOMAXPROCS='4', ADAMIC_GATE_UNCACHED='0')
+    variant = cache.name.rsplit('-', 1)[1]
+    return dict(os.environ, XDG_CACHE_HOME=str(cache), GOCACHE=go_caches[variant], GOMAXPROCS='4', ADAMIC_GATE_UNCACHED='0')
 
 def instrument(command, env):
     return ' '.join(k + '=' + shlex.quote(env[k]) for k in ['XDG_CACHE_HOME', 'GOCACHE', 'GOMAXPROCS', 'ADAMIC_GATE_UNCACHED']) + ' ' + shlex.join(command)
@@ -123,7 +124,7 @@ def run(variant, label, directory, kind, round_number, env, binary, build_comman
     compact['runs'] = records
     (output / 'measurements.json').write_text(json.dumps(compact, indent=2) + '\n')
 
-compact = {'method': 'Same box, paired before/after for three rounds; edits include rebuilding runner then invoking it. Prime each loop, mutate one runtime comment byte or one lowering whitespace byte, restore after every run. Cold runs use fresh result/runtime cache roots; Go build cache warm.',
+compact = {'method': 'Same box, paired before/after for three rounds; edits include rebuilding runner then invoking it. Prime each loop, mutate one runtime comment byte or one lowering whitespace byte, restore after every run. Cold runs use fresh result/runtime cache roots; Private Go build caches for each runner warmed by the untimed original-source primes, preventing artifacts from earlier experiments from biasing rebuild costs.',
            'identity': identity, 'commits': commits, 'cold_profiles': {}, 'runs': []}
 
 # Original-program caches are shared between edit kinds; every changed byte is unique and
@@ -138,6 +139,7 @@ for name, directory, runtime_file, lowering_file in loops:
         comment = original.index(b'//') + 2
         while not (65 <= original[comment] <= 90 or 97 <= original[comment] <= 122):
             comment += 1
+        edit_hashes = set()
         for round_number in range(3):
             for variant in ['before', 'after']:
                 root = roots[variant]
@@ -154,10 +156,16 @@ for name, directory, runtime_file, lowering_file in loops:
                     # Removing a blank-line byte preserves Go semantics but moves different
                     # source regions in each round, including compiler debug line tables.
                     blanks = [index + 1 for index in range(len(original) - 1) if original[index:index + 2] == b'\n\n']
-                    offset = min(blanks, key=lambda index: abs(index - len(original) * (round_number + 1) / 5))
+                    for number in range(round_number + 1):
+                        offset = min(blanks, key=lambda index: abs(index - len(original) * (number + 1) / 5))
+                        blanks.remove(offset)
                     replacement = 32
                 changed = original[:offset] + bytes([replacement]) + original[offset + 1:]
                 assert sum(a != b for a, b in zip(original, changed)) == 1
+                if variant == 'before':
+                    digest = hashlib.sha256(changed).hexdigest()
+                    assert digest not in edit_hashes, 'repeated edit input'
+                    edit_hashes.add(digest)
                 path = root / relative
                 try:
                     path.write_bytes(changed)
