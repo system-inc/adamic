@@ -2,7 +2,7 @@
 // can't hold, so it's an inserted check, the same in both backends. Found by adamic-fuzz (seed 138):
 // native panicked and the JavaScript backend ran on.
 interface Holder {
-	list: number[];
+    list: number[];
 }
 
 const holder: Holder = { list: [100, 1e21, 7] };

@@ -4,12 +4,12 @@ import { programArguments } from 'adamic';
 
 const given = programArguments();
 console.log(`${given.length} arguments`);
-for (const argument of given) {
-	const units: number[] = [];
-	for (let index = 0; index < argument.length; index += 1) {
-		units.push(argument.charCodeAt(index));
-	}
-	console.log(`[${argument}] ${argument.length}: ${units.join(' ')}`);
+for(const argument of given) {
+    const units: number[] = [];
+    for(let index = 0; index < argument.length; index += 1) {
+        units.push(argument.charCodeAt(index));
+    }
+    console.log(`[${argument}] ${argument.length}: ${units.join(' ')}`);
 }
 // Each call is a new array, as process.argv.slice(2) is.
 console.log(`${programArguments() === given}`);

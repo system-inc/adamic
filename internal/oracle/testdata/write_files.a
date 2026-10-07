@@ -7,22 +7,26 @@ import { panic, programArguments, readTextFile, writeTextFile } from 'adamic';
 const directory = programArguments()[0] ?? panic('pass a directory to write in');
 
 function units(text: string): string {
-	const codes: number[] = [];
-	for (let index = 0; index < text.length; index += 1) {
-		codes.push(text.charCodeAt(index));
-	}
-	return codes.join(' ');
+    const codes: number[] = [];
+    for(let index = 0; index < text.length; index += 1) {
+        codes.push(text.charCodeAt(index));
+    }
+    return codes.join(' ');
 }
 
 function write(name: string, text: string): void {
-	const result = writeTextFile(name.length > 0 ? `${directory}/${name}` : '', text);
-	if (result.kind === 'Error') {
-		console.log(`error: ${result.message.replace(directory, '<dir>')}`);
-		return;
-	}
-	const back = readTextFile(`${directory}/${name}`);
-	// Code unit by code unit for the short ones; the large one is held to Node by the file it leaves.
-	console.log(back.kind === 'Ok' ? `wrote ${name}, read back ${back.text.length}: ${back.text.length < 100 ? units(back.text) : 'long'}` : `wrote ${name}, then ${back.message.replace(directory, '<dir>')}`);
+    const result = writeTextFile(name.length > 0 ? `${directory}/${name}` : '', text);
+    if(result.kind === 'Error') {
+        console.log(`error: ${result.message.replace(directory, '<dir>')}`);
+        return;
+    }
+    const back = readTextFile(`${directory}/${name}`);
+    // Code unit by code unit for the short ones; the large one is held to Node by the file it leaves.
+    console.log(
+        back.kind === 'Ok'
+            ? `wrote ${name}, read back ${back.text.length}: ${back.text.length < 100 ? units(back.text) : 'long'}`
+            : `wrote ${name}, then ${back.message.replace(directory, '<dir>')}`,
+    );
 }
 
 write('plain.txt', 'hello\n');

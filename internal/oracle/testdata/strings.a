@@ -3,13 +3,13 @@ greeting += ', world';
 const shout = greeting + '!';
 console.log(shout);
 let built = '';
-for (let index = 0; index < 5; index += 1) {
-	built = built + `${index}`;
-	if (index === 3) {
-		continue;
-	}
-	const piece = `[${index}:${built}]`;
-	console.log(piece);
+for(let index = 0; index < 5; index += 1) {
+    built = built + `${index}`;
+    if(index === 3) {
+        continue;
+    }
+    const piece = `[${index}:${built}]`;
+    console.log(piece);
 }
 console.log(built === '01234' ? 'equal' : 'different');
 console.log(`${built !== 'x'} ${built === built}`);

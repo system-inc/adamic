@@ -7,71 +7,71 @@
 // kept value is read after its statement, so a region freed under it would be read after it ended.
 // Labels are built at runtime, so a region's end has heap strings to let go of.
 interface Node {
-	readonly label: string;
-	readonly left: Node | undefined;
-	readonly right: Node | undefined;
+    readonly label: string;
+    readonly left: Node | undefined;
+    readonly right: Node | undefined;
 }
 
 interface Holder {
-	node: Node | undefined;
+    node: Node | undefined;
 }
 
 function build(depth: number): Node {
-	if (depth === 0) {
-		return { label: `leaf${depth}`, left: undefined, right: undefined };
-	}
-	return { label: `node${depth}`, left: build(depth - 1), right: build(depth - 1) };
+    if(depth === 0) {
+        return { label: `leaf${depth}`, left: undefined, right: undefined };
+    }
+    return { label: `node${depth}`, left: build(depth - 1), right: build(depth - 1) };
 }
 
 function count(node: Node | undefined): number {
-	if (node === undefined) {
-		return 0;
-	}
-	return 1 + count(node.left) + count(node.right) + (node.label.length > 4 ? 0 : 0);
+    if(node === undefined) {
+        return 0;
+    }
+    return 1 + count(node.left) + count(node.right) + (node.label.length > 4 ? 0 : 0);
 }
 
 let kept: Node | undefined = undefined;
 
 // Read through a function: at the top level the checker narrows kept to the undefined it started as.
 function keptLabel(): string {
-	return kept?.label ?? '-';
+    return kept?.label ?? '-';
 }
 
 function keep(node: Node): number {
-	kept = node;
-	return 1;
+    kept = node;
+    return 1;
 }
 
 function keepLeft(node: Node): number {
-	kept = node.left;
-	return 2;
+    kept = node.left;
+    return 2;
 }
 
 function same(node: Node): Node {
-	return node;
+    return node;
 }
 
 function attach(holder: Holder, node: Node): number {
-	holder.node = node;
-	return 3;
+    holder.node = node;
+    return 3;
 }
 
 const holder: Holder = { node: undefined };
 
 function buildInto(depth: number): Node {
-	const node: Node = { label: `kept${depth}`, left: undefined, right: build(depth) };
-	holder.node = node;
-	return node;
+    const node: Node = { label: `kept${depth}`, left: undefined, right: build(depth) };
+    holder.node = node;
+    return node;
 }
 
 function buildKeeping(depth: number): Node {
-	kept = build(depth);
-	return { label: `pair${depth}`, left: build(depth), right: undefined };
+    kept = build(depth);
+    return { label: `pair${depth}`, left: build(depth), right: undefined };
 }
 
 let total = 0;
-for (let round = 0; round < 3; round++) {
-	total += count(build(3));
+for(let round = 0; round < 3; round++) {
+    total += count(build(3));
 }
 console.log(`counted ${total}`);
 

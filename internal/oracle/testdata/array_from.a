@@ -6,8 +6,8 @@ console.log(squares.join(' '));
 // The length as JavaScript reads it: a fraction truncates, and NaN and anything below 1 make none.
 const length = 2.9;
 console.log(`${Array.from({ length }, (_, index) => index).length}`);
-for (const count of [-3, -0.5, 0, NaN, 1]) {
-	console.log(`${count}: [${Array.from({ length: count }, (_, index) => `${index}`).join(',')}]`);
+for(const count of [-3, -0.5, 0, NaN, 1]) {
+    console.log(`${count}: [${Array.from({ length: count }, (_, index) => `${index}`).join(',')}]`);
 }
 
 // Strings the program builds, so a reference counted wrong shows under the sanitizers.
@@ -19,8 +19,8 @@ console.log(missing.join(' '));
 // Objects, and a closure that captures and counts.
 let calls = 0;
 const points = Array.from({ length: 3 }, (_, index) => {
-	calls += 1;
-	return { x: index, label: `p${index}` };
+    calls += 1;
+    return { x: index, label: `p${index}` };
 });
 console.log(`${points.map((point) => `${point.label}=${point.x}`).join(' ')} after ${calls} calls`);
 
@@ -31,11 +31,11 @@ console.log(grid.map((cells) => cells.join(',')).join(' / '));
 // The length is evaluated once, before any call.
 const order: string[] = [];
 function size(): number {
-	order.push('length');
-	return 2;
+    order.push('length');
+    return 2;
 }
 const made = Array.from({ length: size() }, (_, index) => {
-	order.push(`call ${index}`);
-	return index;
+    order.push(`call ${index}`);
+    return index;
 });
 console.log(`${made.join(',')}: ${order.join(', ')}`);

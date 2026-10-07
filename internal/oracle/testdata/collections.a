@@ -4,20 +4,20 @@
 // built at run time, so a reference a collection didn't take would be caught.
 
 interface Point {
-	readonly x: number;
-	readonly y: number;
+    readonly x: number;
+    readonly y: number;
 }
 
 class Tag {
-	readonly name: string;
+    readonly name: string;
 
-	constructor(name: string) {
-		this.name = name;
-	}
+    constructor(name: string) {
+        this.name = name;
+    }
 }
 
 function word(stem: string, index: number): string {
-	return `${stem}${index}`;
+    return `${stem}${index}`;
 }
 
 // Objects by identity: two points with the same fields are two keys.
@@ -27,14 +27,16 @@ const labels = new Map<Point, string>();
 labels.set(here, word('here', 1));
 labels.set(alsoHere, word('also', 2));
 labels.set(here, word('here', 3));
-console.log(`${labels.size} ${labels.get(here) ?? 'none'} ${labels.get(alsoHere) ?? 'none'} ${labels.get({ x: 1, y: 2 }) ?? 'none'}`);
+console.log(
+    `${labels.size} ${labels.get(here) ?? 'none'} ${labels.get(alsoHere) ?? 'none'} ${labels.get({ x: 1, y: 2 }) ?? 'none'}`,
+);
 console.log(`${labels.has(alsoHere)} ${labels.delete(alsoHere)} ${labels.has(alsoHere)} ${labels.size}`);
 
 const tags = [new Tag(word('red', 0)), new Tag(word('blue', 1)), new Tag(word('red', 0))];
 const seen = new Set<Tag>();
-for (const tag of tags) {
-	seen.add(tag);
-	seen.add(tag);
+for(const tag of tags) {
+    seen.add(tag);
+    seen.add(tag);
 }
 console.log(`${seen.size} ${seen.has(tags[2] ?? new Tag('none'))} ${seen.has(new Tag('red0'))}`);
 
@@ -54,20 +56,24 @@ const outer = new Map<Map<string, number>, string>([[inner, word('inner', 0)]]);
 console.log(`${outer.get(inner) ?? 'none'} ${outer.has(new Map<string, number>())}`);
 
 // forEach: value, key, and the collection, live.
-const scores = new Map<string, number>([[word('k', 1), 10], [word('k', 2), 20], [word('k', 3), 30]]);
+const scores = new Map<string, number>([
+    [word('k', 1), 10],
+    [word('k', 2), 20],
+    [word('k', 3), 30],
+]);
 const visited: string[] = [];
 scores.forEach((value, key, all) => {
-	visited.push(`${key}=${value}/${all.size}`);
-	if (key === 'k1') {
-		all.delete('k2');
-		all.set(word('k', 4), 40);
-	}
+    visited.push(`${key}=${value}/${all.size}`);
+    if(key === 'k1') {
+        all.delete('k2');
+        all.set(word('k', 4), 40);
+    }
 });
 console.log(visited.join(' '));
 const elements: string[] = [];
 const letters = new Set<string>([word('x', 1), word('y', 2)]);
 letters.forEach((value, again, all) => {
-	elements.push(`${value}:${again}:${all.size}`);
+    elements.push(`${value}:${again}:${all.size}`);
 });
 console.log(elements.join(' '));
 // A callback's result is dropped.
@@ -75,13 +81,16 @@ letters.forEach((value) => `${value}!`);
 
 // clear, and clear during a loop: what's added after it is visited.
 const order: string[] = [];
-const live = new Map<string, number>([[word('p', 1), 1], [word('p', 2), 2]]);
-for (const [key, value] of live) {
-	order.push(`${key}:${value}`);
-	if (value === 1) {
-		live.clear();
-		live.set(word('q', 3), 3);
-	}
+const live = new Map<string, number>([
+    [word('p', 1), 1],
+    [word('p', 2), 2],
+]);
+for(const [key, value] of live) {
+    order.push(`${key}:${value}`);
+    if(value === 1) {
+        live.clear();
+        live.set(word('q', 3), 3);
+    }
 }
 console.log(`${order.join(' ')} ${live.size}`);
 const cleared = new Set<Tag>(tags);
@@ -92,11 +101,11 @@ console.log(`${cleared.size}`);
 
 // A Set's entries: each element twice.
 const pairs: string[] = [];
-for (const [first, second] of letters.entries()) {
-	pairs.push(`${first}${second}`);
+for(const [first, second] of letters.entries()) {
+    pairs.push(`${first}${second}`);
 }
-for (const [, only] of letters.entries()) {
-	pairs.push(only);
+for(const [, only] of letters.entries()) {
+    pairs.push(only);
 }
 console.log(pairs.join(','));
 
@@ -109,47 +118,55 @@ console.log(`${keys.join(',')} ${values.join(',')} ${entries.length} ${members.j
 
 // new Set from anything iterable.
 console.log(`${new Set('héllo \u{1F30D}\u{1F30D}').size} ${[...new Set(`${'ab'.repeat(3)}c`)].join('')}`);
-console.log(`${new Set(letters).size} ${new Set(scores.keys()).size} ${new Set(scores.values()).has(40)} ${new Set(scores).size}`);
+console.log(
+    `${new Set(letters).size} ${new Set(scores.keys()).size} ${new Set(scores.values()).has(40)} ${new Set(scores).size}`,
+);
 
 // new Map from pairs.
 const built: [string, number][] = [];
-for (let index = 0; index < 5; index += 1) {
-	built.push([word('n', index % 3), index]);
+for(let index = 0; index < 5; index += 1) {
+    built.push([word('n', index % 3), index]);
 }
 const fromPairs = new Map(built);
 const copied = new Map(fromPairs);
 const fromEntries = new Map(fromPairs.entries());
 copied.set(word('n', 9), 9);
 const shown: string[] = [];
-for (const [key, value] of [...fromPairs]) {
-	shown.push(`${key}=${value}`);
+for(const [key, value] of [...fromPairs]) {
+    shown.push(`${key}=${value}`);
 }
 console.log(`${fromPairs.size} ${shown.join(',')} ${copied.size} ${fromEntries.size}`);
-const maybe: [string, number | undefined][] = [[word('m', 0), undefined], [word('m', 1), 1]];
+const maybe: [string, number | undefined][] = [
+    [word('m', 0), undefined],
+    [word('m', 1), 1],
+];
 const maybes = new Map(maybe);
 console.log(`${maybes.has('m0')} ${maybes.get('m0') ?? -1} ${maybes.get('m1') ?? -1}`);
 
 // A callback that deletes its own entry still has its key and value.
-const own = new Map<string, string>([[word('own', 1), word('value', 1)], [word('own', 2), word('value', 2)]]);
+const own = new Map<string, string>([
+    [word('own', 1), word('value', 1)],
+    [word('own', 2), word('value', 2)],
+]);
 const kept: string[] = [];
 own.forEach((value, key, all) => {
-	all.delete(key);
-	kept.push(`${key}>${value}`);
+    all.delete(key);
+    kept.push(`${key}>${value}`);
 });
 console.log(`${kept.join(' ')} ${own.size}`);
 
 // Holes in a destructured entry.
-for (const [, value] of scores) {
-	kept.push(`${value}`);
+for(const [, value] of scores) {
+    kept.push(`${value}`);
 }
-for (const [, count] of [...scores]) {
-	kept.push(`${count}`);
+for(const [, count] of [...scores]) {
+    kept.push(`${count}`);
 }
 console.log(kept.join(','));
 
 // A fixed tuple's length is its type's: a tuple is an object of fields, with no length of its own.
-for (const entry of [...scores]) {
-	console.log(`${entry.length} ${entry[0]}`);
+for(const entry of [...scores]) {
+    console.log(`${entry.length} ${entry[0]}`);
 }
 const pair: [string, number] = [word('only', 1), 1];
 console.log(`${pair.length}`);
@@ -157,21 +174,21 @@ console.log(`${pair.length}`);
 // A tuple returned and destructured: at the module's top, where each name is a global a function
 // can read, and inside a function.
 function cut(text: string): readonly [string, number] {
-	return [text.slice(1), text.length];
+    return [text.slice(1), text.length];
 }
 const [rest, length] = cut(word('abc', 1));
 function describeCut(): string {
-	return `${rest}/${length}`;
+    return `${rest}/${length}`;
 }
 console.log(describeCut());
 function swapped(text: string): [number, string | undefined, number | undefined] {
-	const [tail, size] = cut(text);
-	let [, middle] = cut(tail);
-	middle += 100;
-	if (size > 3) {
-		return [size + middle, tail, undefined];
-	}
-	return [size + middle, undefined, size];
+    const [tail, size] = cut(text);
+    let [, middle] = cut(tail);
+    middle += 100;
+    if(size > 3) {
+        return [size + middle, tail, undefined];
+    }
+    return [size + middle, undefined, size];
 }
 const [total, maybeTail, maybeSize] = swapped(word('wxyz', 9));
 const [otherTotal, , otherSize] = swapped(word('a', 1));

@@ -3,31 +3,31 @@
 // Node. Every name is built by the program.
 
 interface Animal {
-	readonly name: string;
+    readonly name: string;
 }
 interface Dog extends Animal {
-	readonly bark: string;
+    readonly bark: string;
 }
 interface Kennel {
-	readonly pet: Dog;
-	readonly litter: readonly Dog[];
+    readonly pet: Dog;
+    readonly litter: readonly Dog[];
 }
 interface Pen {
-	readonly pet: Animal;
-	readonly litter: readonly Animal[];
+    readonly pet: Animal;
+    readonly litter: readonly Animal[];
 }
 
 function names(animals: readonly Animal[]): string {
-	return animals.map((animal) => animal.name).join(', ');
+    return animals.map((animal) => animal.name).join(', ');
 }
 
 function describe(pen: Pen): string {
-	return `${pen.pet.name} with ${names(pen.litter)}`;
+    return `${pen.pet.name} with ${names(pen.litter)}`;
 }
 
 const dogs: Dog[] = [];
-for (let index = 0; index < 3; index++) {
-	dogs.push({ name: `dog${index}`, bark: 'woof'.repeat(index + 1) });
+for(let index = 0; index < 3; index++) {
+    dogs.push({ name: `dog${index}`, bark: 'woof'.repeat(index + 1) });
 }
 const animals: readonly Animal[] = dogs;
 console.log(names(animals));
@@ -37,6 +37,6 @@ console.log(`${animals.length} seen, the last ${animals[animals.length - 1]?.nam
 const first = dogs[0] ?? { name: 'stray', bark: '' };
 const kennel: Kennel = { pet: first, litter: dogs };
 console.log(describe(kennel));
-for (const dog of kennel.litter) {
-	console.log(`${dog.name}: ${dog.bark}`);
+for(const dog of kennel.litter) {
+    console.log(`${dog.name}: ${dog.bark}`);
 }

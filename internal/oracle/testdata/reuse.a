@@ -5,82 +5,82 @@
 // every pass, and a list rebuilt down its length, once uniquely held and once shared. Strings are
 // built at runtime, since literals are immortal.
 interface Counter {
-	readonly count: number;
-	readonly label: string;
+    readonly count: number;
+    readonly label: string;
 }
 
 interface Item {
-	readonly value: number;
-	readonly next: Item | undefined;
+    readonly value: number;
+    readonly next: Item | undefined;
 }
 
 interface Pair {
-	readonly left: string;
-	readonly right: string;
+    readonly left: string;
+    readonly right: string;
 }
 
 function countUp(times: number): string {
-	let counter: Counter = { count: 0, label: `counter ${times}` };
-	for (let index = 0; index < times; index++) {
-		counter = { ...counter, count: counter.count + 1 };
-	}
-	return `${counter.label}: ${counter.count}`;
+    let counter: Counter = { count: 0, label: `counter ${times}` };
+    for(let index = 0; index < times; index++) {
+        counter = { ...counter, count: counter.count + 1 };
+    }
+    return `${counter.label}: ${counter.count}`;
 }
 
 function readAfter(): string {
-	const base: Counter = { count: 1, label: `base ${1}` };
-	const next = { ...base, count: 2, label: `next ${2}` };
-	return `${base.count} ${base.label} ${next.count} ${next.label}`;
+    const base: Counter = { count: 1, label: `base ${1}` };
+    const next = { ...base, count: 2, label: `next ${2}` };
+    return `${base.count} ${base.label} ${next.count} ${next.label}`;
 }
 
 function heldElsewhere(): string {
-	const first: Counter = { count: 1, label: `first ${1}` };
-	const alias = first;
-	const changed = { ...first, label: `changed ${3}` };
-	return `${alias.label} ${changed.label}`;
+    const first: Counter = { count: 1, label: `first ${1}` };
+    const alias = first;
+    const changed = { ...first, label: `changed ${3}` };
+    return `${alias.label} ${changed.label}`;
 }
 
 function bumpAll(item: Item | undefined): Item | undefined {
-	if (item === undefined) {
-		return undefined;
-	}
-	return { ...item, value: item.value + 1, next: bumpAll(item.next) };
+    if(item === undefined) {
+        return undefined;
+    }
+    return { ...item, value: item.value + 1, next: bumpAll(item.next) };
 }
 
 function list(length: number): Item | undefined {
-	let head: Item | undefined = undefined;
-	for (let index = length; index > 0; index--) {
-		head = { value: index * 10, next: head };
-	}
-	return head;
+    let head: Item | undefined = undefined;
+    for(let index = length; index > 0; index--) {
+        head = { value: index * 10, next: head };
+    }
+    return head;
 }
 
 function show(item: Item | undefined): string {
-	let text = '';
-	let current = item;
-	while (current !== undefined) {
-		text += `${current.value} `;
-		current = current.next;
-	}
-	return text;
+    let text = '';
+    let current = item;
+    while(current !== undefined) {
+        text += `${current.value} `;
+        current = current.next;
+    }
+    return text;
 }
 
 function joined(left: string, right: string): string {
-	return `${left}+${right}`;
+    return `${left}+${right}`;
 }
 
 function readTwice(pair: Pair): Pair {
-	return { ...pair, left: joined(pair.left, pair.left) };
+    return { ...pair, left: joined(pair.left, pair.left) };
 }
 
 let state: Counter = { count: 0, label: `state ${0}` };
 
 function peek(): number {
-	return state.count;
+    return state.count;
 }
 
 function advance(counter: Counter): Counter {
-	return { ...counter, count: counter.count + peek() + 1 };
+    return { ...counter, count: counter.count + peek() + 1 };
 }
 
 console.log(countUp(5));
@@ -96,5 +96,5 @@ state = advance(state);
 console.log(`${state.count} ${state.label}`);
 
 function described(pair: Pair): string {
-	return `${pair.left} ${pair.right}`;
+    return `${pair.left} ${pair.right}`;
 }

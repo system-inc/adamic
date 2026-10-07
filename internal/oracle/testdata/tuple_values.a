@@ -4,35 +4,39 @@
 type Pair = readonly [string, number];
 
 function cut(text: string, prefix: string): readonly [string, boolean] {
-	if (text.startsWith(prefix)) {
-		return [text.slice(prefix.length), true];
-	}
-	return [text, false];
+    if(text.startsWith(prefix)) {
+        return [text.slice(prefix.length), true];
+    }
+    return [text, false];
 }
 
 function describe(pair: Pair): string {
-	const [word, count] = pair;
-	return `${word}=${count}`;
+    const [word, count] = pair;
+    return `${word}=${count}`;
 }
 
 function swap(pair: Pair): readonly [number, string] {
-	return [pair[1], pair[0]];
+    return [pair[1], pair[0]];
 }
 
 function maybeFirst(words: readonly string[]): [string | undefined, number] {
-	return [words[0], words.length];
+    return [words[0], words.length];
 }
 
 const [rest, found] = cut('prefix/rest', 'prefix/');
 const [unchanged, notFound] = cut('other', 'prefix/');
 console.log(`${rest} ${found} ${unchanged} ${notFound}`);
 
-const pairs: Pair[] = [['b', 2], ['a', 3], ['c', 1]];
+const pairs: Pair[] = [
+    ['b', 2],
+    ['a', 3],
+    ['c', 1],
+];
 pairs.push(['d', 0]);
 pairs.sort((left, right) => left[1] - right[1]);
 console.log(pairs.map(describe).join(' '));
-for (const [word, count] of pairs) {
-	console.log(`${word.repeat(count)}|`);
+for(const [word, count] of pairs) {
+    console.log(`${word.repeat(count)}|`);
 }
 const swapped = pairs.map((pair): readonly [number, string] => [pair[1], `${pair[0]}!`]);
 console.log(swapped.map((pair) => `${pair[0]}:${pair[1]}`).join(' '));
@@ -44,8 +48,8 @@ const [present] = maybeFirst(['only']);
 console.log(`${second} ${missing ?? 'none'} ${size} ${present ?? 'none'}`);
 
 interface Holder {
-	readonly pair: Pair;
-	readonly name: string;
+    readonly pair: Pair;
+    readonly name: string;
 }
 
 const holder: Holder = { pair: ['held', 7], name: 'holder' };
@@ -55,46 +59,46 @@ console.log(`${describe(holder.pair)} ${same === holder.pair} ${describe(['held'
 const counts = new Map<string, Pair>();
 counts.set('one', ['uno', 1]);
 const fetched = counts.get('one');
-if (fetched !== undefined) {
-	const [spanish, number] = fetched;
-	console.log(`${spanish} ${number}`);
+if(fetched !== undefined) {
+    const [spanish, number] = fetched;
+    console.log(`${spanish} ${number}`);
 }
 
 function deep(depth: number): readonly [string, number] {
-	if (depth === 0) {
-		return ['bottom', 0];
-	}
-	const [label, below] = deep(depth - 1);
-	return [`${label}<`, below + 1];
+    if(depth === 0) {
+        return ['bottom', 0];
+    }
+    const [label, below] = deep(depth - 1);
+    return [`${label}<`, below + 1];
 }
 const [label, levels] = deep(3);
 console.log(`${label} ${levels}`);
 
 // Two elements of one type, and holes in a for...of pattern, over an array and a map.
 function bounds(values: readonly number[]): readonly [number, number] {
-	let smallest = Infinity;
-	let largest = -Infinity;
-	for (const value of values) {
-		smallest = Math.min(smallest, value);
-		largest = Math.max(largest, value);
-	}
-	return [smallest, largest];
+    let smallest = Infinity;
+    let largest = -Infinity;
+    for(const value of values) {
+        smallest = Math.min(smallest, value);
+        largest = Math.max(largest, value);
+    }
+    return [smallest, largest];
 }
 const [low, high] = bounds([4, 9, 1]);
 console.log(`${low}..${high} ${high - low}`);
-for (const [, count] of pairs) {
-	console.log(`${count}`);
+for(const [, count] of pairs) {
+    console.log(`${count}`);
 }
-for (const [, spanish] of counts) {
-	console.log(spanish[0]);
+for(const [, spanish] of counts) {
+    console.log(spanish[0]);
 }
 
 // Destructuring assignment: the tuple whole first, then each name in order, a union taking a string,
 // number | undefined taking a number, and a hole.
 let remainder = 'a/b/c';
 let below = true;
-while (below) {
-	[remainder, below] = cut(remainder, 'a/');
+while(below) {
+    [remainder, below] = cut(remainder, 'a/');
 }
 let either: string | number = 0;
 let maybeCount: number | undefined = undefined;
@@ -107,4 +111,6 @@ console.log(`${either} ${typeof either}`);
 const optional: [number, string?] = [5];
 const both: [number, string?] = [6, 'six'];
 const maybeCounts: [string, number?, number?] = ['m'];
-console.log(`${optional[0]} ${optional[1] ?? 'none'} ${both[1] ?? 'none'} ${maybeCounts[1] ?? -1} ${maybeCounts[2] ?? -2}`);
+console.log(
+    `${optional[0]} ${optional[1] ?? 'none'} ${both[1] ?? 'none'} ${maybeCounts[1] ?? -1} ${maybeCounts[2] ?? -2}`,
+);

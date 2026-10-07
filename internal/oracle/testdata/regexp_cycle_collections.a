@@ -1,7 +1,7 @@
 const patterns: RegExp[] = [/\d+/, /[a-z]+/g];
 patterns.push(/A/i);
 const hits: string[] = [];
-for (const pattern of patterns) {
+for(const pattern of patterns) {
     hits.push(pattern.test('a1B') ? 'yes' : 'no');
 }
 console.log(hits.join('|'));
@@ -30,11 +30,13 @@ function shelf(depth: number): Shelf {
     const patterns = new Map<string, RegExp>();
     patterns.set(`digits`, /\d+/);
     const node: Shelf = { name: `s${depth}`, byName: patterns, next: undefined };
-    if (depth > 0) node.next = shelf(depth - 1);
+    if(depth > 0) node.next = shelf(depth - 1);
     return node;
 }
 const top = shelf(1);
 const found = top.byName.get(`digits`);
 const child = top.next;
 const childFound = child === undefined ? undefined : child.byName.get(`digits`);
-console.log(`${top.name}:${found === undefined ? 'missing' : found.test('9')}:${child === undefined ? 'none' : child.name}:${childFound === undefined ? 'missing' : childFound.source}`);
+console.log(
+    `${top.name}:${found === undefined ? 'missing' : found.test('9')}:${child === undefined ? 'none' : child.name}:${childFound === undefined ? 'missing' : childFound.source}`,
+);

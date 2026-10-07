@@ -3,10 +3,10 @@
 // the deep one runs out of stack as Node's does. (Shallow enough for Node first: Node stops near ten
 // thousand frames, native much deeper, so what has to match is how the deep one ends.)
 function count(n: number): number {
-	if (n === 0) {
-		return 0;
-	}
-	return count(n - 1);
+    if(n === 0) {
+        return 0;
+    }
+    return count(n - 1);
 }
 console.log(`${count(1000)}`);
 console.log(`${count(1e9)}`);

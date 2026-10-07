@@ -8,8 +8,8 @@ count = count;
 let name = `built ${count}`;
 name = name;
 function again(value: number, text: string): string {
-	value = value;
-	text = text;
-	return `${value} ${text}`;
+    value = value;
+    text = text;
+    return `${value} ${text}`;
 }
 console.log(`${flag} ${count} ${name} ${again(2, name)}`);

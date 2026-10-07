@@ -4,8 +4,8 @@ numbers[0] = 10;
 numbers[2] = numbers[1] ?? 0;
 words[1] = 'bee';
 words[1] = words[1] ?? 'missing';
-for (let index = 0; index < words.length; index += 1) {
-	words[index] = `${words[index] ?? '?'}!`;
+for(let index = 0; index < words.length; index += 1) {
+    words[index] = `${words[index] ?? '?'}!`;
 }
 console.log(`${numbers.join(',')} ${words.join(',')}`);
 const alias = words;

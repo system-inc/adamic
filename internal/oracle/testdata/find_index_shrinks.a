@@ -3,8 +3,8 @@
 const others: number[] = [4, 5, 6];
 console.log(`${others.findIndex((item) => item === 5)}`);
 const at = others.findIndex((item) => {
-	console.log(`${item}`);
-	others.pop();
-	return item > 5;
+    console.log(`${item}`);
+    others.pop();
+    return item > 5;
 });
 console.log(`${at}`);

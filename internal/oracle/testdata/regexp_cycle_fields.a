@@ -26,7 +26,7 @@ interface Chain {
 }
 function chain(depth: number): Chain {
     const node: Chain = { label: `n${depth}`, pattern: /a/g, next: undefined };
-    if (depth > 0) {
+    if(depth > 0) {
         node.next = chain(depth - 1);
     }
     return node;
@@ -34,7 +34,7 @@ function chain(depth: number): Chain {
 const root = chain(2);
 let current: Chain | undefined = root;
 const labels: string[] = [];
-while (current !== undefined) {
+while(current !== undefined) {
     labels.push(`${current.label}:${current.pattern.test('ba') ? 'yes' : 'no'}`);
     current = current.next;
 }
@@ -51,7 +51,7 @@ class Link {
         this.items = [/b/, /c/];
     }
     grow(depth: number): Link {
-        if (depth > 0) {
+        if(depth > 0) {
             const child = new Link(`n${depth}`);
             this.next = child;
             child.grow(depth - 1);
@@ -62,9 +62,11 @@ class Link {
 const linked = new Link(`root`).grow(2);
 const parts: string[] = [];
 let cursor: Link | undefined = linked;
-while (cursor !== undefined) {
+while(cursor !== undefined) {
     const item = cursor.items[0];
-    parts.push(`${cursor.label}:${cursor.pattern.test('xa') ? 'yes' : 'no'}:${item === undefined ? 'missing' : item.source}`);
+    parts.push(
+        `${cursor.label}:${cursor.pattern.test('xa') ? 'yes' : 'no'}:${item === undefined ? 'missing' : item.source}`,
+    );
     cursor = cursor.next;
 }
 console.log(parts.join('|'));

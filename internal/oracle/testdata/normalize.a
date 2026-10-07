@@ -3,16 +3,16 @@
 // compiler, on strings the program builds.
 
 function units(text: string): string {
-	const codes: number[] = [];
-	for (let index = 0; index < text.length; index++) {
-		codes.push(text.charCodeAt(index));
-	}
-	return codes.join(',');
+    const codes: number[] = [];
+    for(let index = 0; index < text.length; index++) {
+        codes.push(text.charCodeAt(index));
+    }
+    return codes.join(',');
 }
 
 function show(label: string, text: string): void {
-	const forms = [text.normalize(), text.normalize('NFD'), text.normalize('NFKC'), text.normalize('NFKD')];
-	console.log(`${label}: ${forms.map((form) => `[${units(form)}]`).join(' ')}`);
+    const forms = [text.normalize(), text.normalize('NFD'), text.normalize('NFKC'), text.normalize('NFKD')];
+    console.log(`${label}: ${forms.map((form) => `[${units(form)}]`).join(' ')}`);
 }
 
 show('ascii', 'plain text');
@@ -30,7 +30,11 @@ show('lone surrogates', `${high}́${low} e${low}́`);
 
 // Normalizing is idempotent, and NFC of NFD is NFC.
 const built = `${'Amélie'.repeat(2)}-${'ǅ'}`;
-console.log(`${built.normalize('NFD').normalize() === built.normalize()} ${built.normalize('NFKD').normalize('NFKD') === built.normalize('NFKD')}`);
+console.log(
+    `${built.normalize('NFD').normalize() === built.normalize()} ${built.normalize('NFKD').normalize('NFKD') === built.normalize('NFKD')}`,
+);
 const decomposed: string = 'e\u0301';
 const precomposed: string = '\u00e9';
-console.log(`${decomposed === precomposed} ${decomposed.normalize() === precomposed} ${precomposed.normalize('NFD').length}`);
+console.log(
+    `${decomposed === precomposed} ${decomposed.normalize() === precomposed} ${precomposed.normalize('NFD').length}`,
+);

@@ -1,22 +1,48 @@
-interface Note { label: string; }
+interface Note {
+    label: string;
+}
 class Holder {
     #text = '';
     #note: Note = { label: '' };
     #lines: readonly string[] = [];
-    get text(): string { return this.#text; }
-    set text(value: string) { this.#text = value; }
-    get note(): Note { return this.#note; }
-    set note(value: Note) { this.#note = value; }
-    get lines(): readonly string[] { return this.#lines; }
-    set lines(value: readonly string[]) { this.#lines = value; }
+    get text(): string {
+        return this.#text;
+    }
+    set text(value: string) {
+        this.#text = value;
+    }
+    get note(): Note {
+        return this.#note;
+    }
+    set note(value: Note) {
+        this.#note = value;
+    }
+    get lines(): readonly string[] {
+        return this.#lines;
+    }
+    set lines(value: readonly string[]) {
+        this.#lines = value;
+    }
 }
 class Loud extends Holder {
-    get text(): string { return super.text; }
-    set text(value: string) { super.text = `${value}!`; }
-    get note(): Note { return super.note; }
-    set note(value: Note) { super.note = { label: `wrapped${value.label}` }; }
-    get lines(): readonly string[] { return super.lines; }
-    set lines(value: readonly string[]) { super.lines = [...value, `extra${6}`]; }
+    get text(): string {
+        return super.text;
+    }
+    set text(value: string) {
+        super.text = `${value}!`;
+    }
+    get note(): Note {
+        return super.note;
+    }
+    set note(value: Note) {
+        super.note = { label: `wrapped${value.label}` };
+    }
+    get lines(): readonly string[] {
+        return super.lines;
+    }
+    set lines(value: readonly string[]) {
+        super.lines = [...value, `extra${6}`];
+    }
 }
 function plant(holder: Holder): void {
     holder.text = `hello${4}`;

@@ -8,7 +8,9 @@ class Seal {
         this.stamp = `${stamp}!`;
         this.#code = `base${2}`;
     }
-    #open(): string { return this.#code; }
+    #open(): string {
+        return this.#code;
+    }
     reveal(): string {
         const helper = (): string => this.#open();
         return helper();
@@ -17,11 +19,15 @@ class Seal {
         const helper = (box: Seal): string => box.#code;
         return helper(this);
     }
-    retitle(value: string): void { this.#code = value; }
+    retitle(value: string): void {
+        this.#code = value;
+    }
 }
 class ChildSeal extends Seal {
     #code = `child${3}`;
-    #open(): string { return `m${this.#code}`; }
+    #open(): string {
+        return `m${this.#code}`;
+    }
     revealChild(): string {
         const helper = (): string => this.#open();
         return helper();
@@ -30,7 +36,9 @@ class ChildSeal extends Seal {
         const helper = (box: ChildSeal): string => box.#code;
         return helper(this);
     }
-    rewrite(value: string): void { this.#code = value; }
+    rewrite(value: string): void {
+        this.#code = value;
+    }
 }
 function show(box: Seal): string {
     return `${box.stamp}/${box.payload.text}/${box.reveal()}/${box.passed()}`;

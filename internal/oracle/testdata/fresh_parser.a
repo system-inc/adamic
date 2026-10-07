@@ -6,92 +6,97 @@
 import type { Weak } from 'adamic';
 
 interface Node {
-	readonly kind: string;
-	readonly text: string;
-	readonly nodes: Node[];
+    readonly kind: string;
+    readonly text: string;
+    readonly nodes: Node[];
 }
 
 let position = 0;
 let source = '';
 
 function skipSpaces(): void {
-	while (position < source.length && source[position] === ' ') {
-		position += 1;
-	}
+    while(position < source.length && source[position] === ' ') {
+        position += 1;
+    }
 }
 
 function parseWord(): Node {
-	let text = '';
-	while (position < source.length && source[position] !== ' ' && source[position] !== '(' && source[position] !== ')') {
-		text += source[position] ?? '';
-		position += 1;
-	}
-	return { kind: 'word', text, nodes: [] };
+    let text = '';
+    while(
+        position < source.length &&
+        source[position] !== ' ' &&
+        source[position] !== '(' &&
+        source[position] !== ')'
+    ) {
+        text += source[position] ?? '';
+        position += 1;
+    }
+    return { kind: 'word', text, nodes: [] };
 }
 
 // A list's node is made first, and each child is pushed into it as it's parsed: the holder is fresh.
 // (One function, since stage 0 can't call a function declared after the caller yet.)
 function parseItem(): Node {
-	if (source[position] !== '(') {
-		return parseWord();
-	}
-	const node: Node = { kind: 'list', text: '', nodes: [] };
-	position += 1;
-	skipSpaces();
-	while (position < source.length && source[position] !== ')') {
-		node.nodes.push(parseItem());
-		skipSpaces();
-	}
-	position += 1;
-	return node;
+    if(source[position] !== '(') {
+        return parseWord();
+    }
+    const node: Node = { kind: 'list', text: '', nodes: [] };
+    position += 1;
+    skipSpaces();
+    while(position < source.length && source[position] !== ')') {
+        node.nodes.push(parseItem());
+        skipSpaces();
+    }
+    position += 1;
+    return node;
 }
 
 // The children gathered in a local array first, then handed to the node: gap 5's shape.
 function parseAll(text: string): Node {
-	source = text;
-	position = 0;
-	const children: Node[] = [];
-	skipSpaces();
-	while (position < source.length) {
-		children.push(parseItem());
-		skipSpaces();
-	}
-	return { kind: 'root', text: `${children.length} items`, nodes: children };
+    source = text;
+    position = 0;
+    const children: Node[] = [];
+    skipSpaces();
+    while(position < source.length) {
+        children.push(parseItem());
+        skipSpaces();
+    }
+    return { kind: 'root', text: `${children.length} items`, nodes: children };
 }
 
 function show(node: Node): string {
-	if (node.kind === 'word') {
-		return node.text;
-	}
-	const parts: string[] = [];
-	for (const child of node.nodes) {
-		parts.push(show(child));
-	}
-	return `(${parts.join(' ')})`;
+    if(node.kind === 'word') {
+        return node.text;
+    }
+    const parts: string[] = [];
+    for(const child of node.nodes) {
+        parts.push(show(child));
+    }
+    return `(${parts.join(' ')})`;
 }
 
 function count(node: Node): number {
-	let total = 1;
-	for (const child of node.nodes) {
-		total += count(child);
-	}
-	return total;
+    let total = 1;
+    for(const child of node.nodes) {
+        total += count(child);
+    }
+    return total;
 }
 
-for (const text of ['a (b c) d', '(defn f (x) (+ x 1))', '((()))', '', 'one']) {
-	const tree = parseAll(text);
-	console.log(`${tree.text}: ${show(tree)} with ${count(tree)} nodes`);
+for(const text of ['a (b c) d', '(defn f (x) (+ x 1))', '((()))', '', 'one']) {
+    const tree = parseAll(text);
+    console.log(`${tree.text}: ${show(tree)} with ${count(tree)} nodes`);
 }
 
 // Gap 4's shape: a class whose children array starts empty, a root held by a global, and fresh nodes
 // pushed into it. The value is fresh: new TreeNode is summarized as returning what it made.
 class TreeNode {
-	readonly name: string;
-	readonly nodes: TreeNode[] = [];
-	parent: Weak<TreeNode>;
-	constructor(name: string) {
-		this.name = name;
-	}
+    readonly name: string;
+    readonly nodes: TreeNode[] = [];
+    parent: Weak<TreeNode>;
+    constructor(name: string) {
+        this.name = name;
+    }
 }
 
 const root = new TreeNode(`root${source.length}`);
@@ -101,10 +106,10 @@ root.nodes.push(new TreeNode('b'));
 // A helper given the parent: the holder is a parameter, so the child must be fresh, and its parent
 // pointer is Weak, which keeps nothing.
 function adopt(parent: TreeNode, name: string): TreeNode {
-	const child = new TreeNode(name);
-	child.parent = parent;
-	parent.nodes.push(child);
-	return child;
+    const child = new TreeNode(name);
+    child.parent = parent;
+    parent.nodes.push(child);
+    return child;
 }
 
 const c = adopt(root, 'c');
@@ -112,10 +117,10 @@ adopt(c, 'c1');
 adopt(c, 'c2');
 
 function walk(node: TreeNode, depth: number): void {
-	const parent = node.parent;
-	console.log(`${'  '.repeat(depth)}${node.name} under ${parent === undefined ? 'nothing' : parent.name}`);
-	for (const child of node.nodes) {
-		walk(child, depth + 1);
-	}
+    const parent = node.parent;
+    console.log(`${'  '.repeat(depth)}${node.name} under ${parent === undefined ? 'nothing' : parent.name}`);
+    for(const child of node.nodes) {
+        walk(child, depth + 1);
+    }
 }
 walk(root, 0);

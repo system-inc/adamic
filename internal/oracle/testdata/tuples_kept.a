@@ -5,30 +5,30 @@
 type Pair = [string, number];
 
 function swap(pair: Pair): [number, string] {
-	const [name, count] = pair;
-	return [count, name];
+    const [name, count] = pair;
+    return [count, name];
 }
 
 function describe(pair: readonly [string, number]): string {
-	const [name, count] = pair;
-	return `${name}=${count}`;
+    const [name, count] = pair;
+    return `${name}=${count}`;
 }
 
 let current: Pair = [`a${1}`, 1];
 const pairs: Pair[] = [current];
-for (let index = 2; index <= 3; index++) {
-	current = [`a${index}`, index];
-	pairs.push(current);
+for(let index = 2; index <= 3; index++) {
+    current = [`a${index}`, index];
+    pairs.push(current);
 }
 const held: { readonly pair: Pair } = { pair: current };
 const byName = new Map<string, Pair>();
-for (const pair of pairs) {
-	const [name] = pair;
-	byName.set(name, pair);
+for(const pair of pairs) {
+    const [name] = pair;
+    byName.set(name, pair);
 }
-for (const pair of pairs) {
-	const [count, name] = swap(pair);
-	console.log(`${describe(pair)} ${count} ${name}`);
+for(const pair of pairs) {
+    const [count, name] = swap(pair);
+    console.log(`${describe(pair)} ${count} ${name}`);
 }
 const [lastName, lastCount] = held.pair;
 console.log(`${lastName} ${lastCount} ${byName.size} ${pairs.length}`);

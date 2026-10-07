@@ -2,26 +2,26 @@ let log = '';
 let counter = 0;
 
 function note(label: string): boolean {
-	log = log + label;
-	counter += 1;
-	return label === 'a' || label === 'c';
+    log = log + label;
+    counter += 1;
+    return label === 'a' || label === 'c';
 }
 
 function bump(): number {
-	counter += 10;
-	return counter;
+    counter += 10;
+    return counter;
 }
 
 function label(): string {
-	return `#${counter}`;
+    return `#${counter}`;
 }
 
 function shout(text: string): void {
-	console.log(text + '!');
-	if (counter > 1000) {
-		return;
-	}
-	log = log + text;
+    console.log(text + '!');
+    if(counter > 1000) {
+        return;
+    }
+    log = log + text;
 }
 
 const first = note('a') && note('b');

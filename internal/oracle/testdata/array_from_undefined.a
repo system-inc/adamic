@@ -3,7 +3,7 @@
 // word, where a null reference would read as 0; a string, an object or anything unknown is a null
 // reference. (Found by reviewer stream R: the packed case printed "0 at 0".)
 const packed = Array.from({ length: 3 }, (value: number | undefined, index: number) =>
-	value === undefined ? `undefined at ${index}` : `${value} at ${index}`,
+    value === undefined ? `undefined at ${index}` : `${value} at ${index}`,
 );
 console.log(packed.join(', '));
 const kept = Array.from({ length: 2 }, (value: number | undefined) => value);
@@ -13,7 +13,7 @@ const text = Array.from({ length: 2 }, (value: string | undefined, index: number
 console.log(text.join(', '));
 
 interface Point {
-	readonly x: number;
+    readonly x: number;
 }
 const points = Array.from({ length: 2 }, (value: Point | undefined, index: number) => value?.x ?? -index);
 console.log(points.join(', '));

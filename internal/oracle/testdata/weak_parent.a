@@ -4,34 +4,34 @@ import { panic, type Weak } from 'adamic';
 // are no cycle: when the last strong reference to the root goes, the whole tree is freed. A Weak reads
 // as the node it points to, or undefined.
 interface TreeNode {
-	readonly name: string;
-	parent: Weak<TreeNode>;
-	readonly children: readonly TreeNode[];
+    readonly name: string;
+    parent: Weak<TreeNode>;
+    readonly children: readonly TreeNode[];
 }
 
 function leaf(name: string): TreeNode {
-	return { name: name.repeat(1), parent: undefined, children: [] };
+    return { name: name.repeat(1), parent: undefined, children: [] };
 }
 
 function branch(name: string, children: readonly TreeNode[]): TreeNode {
-	const made: TreeNode = { name: `${name}`, parent: undefined, children };
-	for (const child of children) {
-		child.parent = made;
-	}
-	return made;
+    const made: TreeNode = { name: `${name}`, parent: undefined, children };
+    for(const child of children) {
+        child.parent = made;
+    }
+    return made;
 }
 
 function path(node: TreeNode): string {
-	const up = node.parent;
-	return up === undefined ? node.name : `${path(up)}/${node.name}`;
+    const up = node.parent;
+    return up === undefined ? node.name : `${path(up)}/${node.name}`;
 }
 
 function depth(node: Weak<TreeNode>): number {
-	return node === undefined ? 0 : 1 + depth(node.parent);
+    return node === undefined ? 0 : 1 + depth(node.parent);
 }
 
 function child(node: TreeNode, index: number): TreeNode {
-	return node.children[index] ?? panic(`${node.name} has no child ${index}`);
+    return node.children[index] ?? panic(`${node.name} has no child ${index}`);
 }
 
 let root = branch('root', [branch('a', [leaf('a1'), leaf('a2')]), leaf('b')]);
@@ -51,19 +51,23 @@ console.log(`${path(a2)} ${a2.parent === undefined}`);
 // tree while the tree is held.
 const seen: Weak<TreeNode>[] = [root, a, undefined];
 const byName = new Map<string, Weak<TreeNode>>();
-for (const child of root.children) {
-	byName.set(child.name, child);
+for(const child of root.children) {
+    byName.set(child.name, child);
 }
 let last: Weak<TreeNode> = undefined;
 const remember = (node: TreeNode): void => {
-	last = node;
+    last = node;
 };
 remember(root);
 function lastName(): string {
-	return last?.name ?? '-';
+    return last?.name ?? '-';
 }
-console.log(`${seen.length} ${seen[0]?.name ?? '-'} ${seen[1]?.name ?? '-'} ${seen[2]?.name ?? '-'} ${seen.indexOf(a)} ${seen.includes(undefined)}`);
-console.log(`${byName.get('a')?.name ?? '-'} ${byName.get('b')?.name ?? '-'} ${byName.get('z')?.name ?? '-'} ${lastName()}`);
+console.log(
+    `${seen.length} ${seen[0]?.name ?? '-'} ${seen[1]?.name ?? '-'} ${seen[2]?.name ?? '-'} ${seen.indexOf(a)} ${seen.includes(undefined)}`,
+);
+console.log(
+    `${byName.get('a')?.name ?? '-'} ${byName.get('b')?.name ?? '-'} ${byName.get('z')?.name ?? '-'} ${lastName()}`,
+);
 seen.push(b);
 seen[0] = undefined;
 console.log(seen.map((node) => node?.name ?? '-').join(','));
@@ -71,12 +75,15 @@ console.log(seen.map((node) => node?.name ?? '-').join(','));
 // A second tree, made and dropped inside a function: everything in it is freed when the function
 // returns, whatever pointed at it weakly.
 function throwaway(count: number): number {
-	const made = branch('t', Array.from({ length: count }, (_, index) => leaf(`t${index}`)));
-	let total = 0;
-	for (const child of made.children) {
-		total += depth(child);
-	}
-	return total;
+    const made = branch(
+        't',
+        Array.from({ length: count }, (_, index) => leaf(`t${index}`)),
+    );
+    let total = 0;
+    for(const child of made.children) {
+        total += depth(child);
+    }
+    return total;
 }
 console.log(`${throwaway(5)} ${throwaway(0)}`);
 

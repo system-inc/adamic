@@ -4,12 +4,12 @@
 // would free the string the parameter still names. The strings are built at runtime, since
 // literals are immortal, and the array holds the only count on each.
 const names: string[] = [];
-for (let index = 0; index < 4; index++) {
-	names.push(`name${index * 3}`);
+for(let index = 0; index < 4; index++) {
+    names.push(`name${index * 3}`);
 }
 const described = names.map((name, index) => {
-	names[index] = `replaced${index}`;
-	return `${name}:${name.length}`;
+    names[index] = `replaced${index}`;
+    return `${name}:${name.length}`;
 });
 console.log(described.join(' '));
 console.log(names.join(' '));

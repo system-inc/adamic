@@ -5,12 +5,12 @@ const list: number[] = [1];
 const counts = new Map<string, number>();
 let calls = 0;
 function interfere(): number {
-	calls++;
-	holder.value = 100;
-	holder.name = `after ${calls}`;
-	list.push(calls);
-	counts.set(`key ${calls}`, calls);
-	return 1;
+    calls++;
+    holder.value = 100;
+    holder.name = `after ${calls}`;
+    list.push(calls);
+    counts.set(`key ${calls}`, calls);
+    return 1;
 }
 console.log(`${holder.value + interfere()}`);
 console.log(`${list.length + interfere()}`);

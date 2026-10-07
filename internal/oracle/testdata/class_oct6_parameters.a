@@ -5,7 +5,9 @@ class Base {
         this.text = text + '/base';
         this.count = count + 1;
     }
-    read(): string { return `${this.text}:${this.count}`; }
+    read(): string {
+        return `${this.text}:${this.count}`;
+    }
 }
 class Child extends Base {
     readonly fromBase = this.text + '/field';
@@ -17,12 +19,14 @@ class Child extends Base {
         this.own = text + '/child';
         this.amount = this.count + count;
     }
-    override read(): string { return `${super.read()}/${this.fromField}/${this.own}:${this.amount}`; }
+    override read(): string {
+        return `${super.read()}/${this.fromField}/${this.own}:${this.amount}`;
+    }
 }
 class Grandchild extends Child {
     readonly final = this.fromField + '/grandchild';
 }
-for (const count of [0, 3, 11]) {
+for(const count of [0, 3, 11]) {
     const child = new Grandchild(`input${count}`, count);
     const base: Base = child;
     console.log(`${base.read()}/${child.final}`);

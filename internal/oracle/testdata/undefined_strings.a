@@ -2,13 +2,13 @@
 // from a function returning string | undefined once reached clang as an object pointer returned as
 // a string's (found writing undefined_keys.a).
 function find(index: number): string | undefined {
-	if (index > 1) {
-		return undefined;
-	}
-	return `k${index}`;
+    if(index > 1) {
+        return undefined;
+    }
+    return `k${index}`;
 }
 function show(key: string | undefined): string {
-	return key ?? 'none';
+    return key ?? 'none';
 }
 let held: string | undefined = undefined;
 console.log(show(held));
@@ -22,9 +22,9 @@ console.log(`${keys.length} ${show(keys[0])} ${show(keys[2])}`);
 const box: { readonly name: string | undefined } = { name: undefined };
 console.log(show(box.name));
 const pick = (flag: boolean): string | undefined => {
-	if (flag) {
-		return `p${1}`;
-	}
-	return undefined;
+    if(flag) {
+        return `p${1}`;
+    }
+    return undefined;
 };
 console.log(`${show(pick(true))} ${show(pick(false))}`);

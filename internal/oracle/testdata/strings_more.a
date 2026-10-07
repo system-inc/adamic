@@ -9,8 +9,8 @@ console.log(`${'ab'.replaceAll('', '-')} ${'ab'.replace('', '-')} ${''.replaceAl
 // An empty search falls between the halves of an emoji, too.
 const split = 'a🌍'.replaceAll('', '|');
 const codes: number[] = [];
-for (let index = 0; index < split.length; index++) {
-	codes.push(split.charCodeAt(index));
+for(let index = 0; index < split.length; index++) {
+    codes.push(split.charCodeAt(index));
 }
 console.log(codes.join(','));
 
@@ -25,12 +25,14 @@ console.log(word.replace('middle', '$1 $<name> $ $x'));
 console.log(word.replace('middle', 'end$'));
 console.log('a.b.c'.replaceAll('.', '$&$&'));
 
-console.log(`${text.lastIndexOf('one')} ${text.lastIndexOf('four')} ${text.lastIndexOf('')} ${'a🌍'.lastIndexOf('a🌍'.slice(2))}`);
+console.log(
+    `${text.lastIndexOf('one')} ${text.lastIndexOf('four')} ${text.lastIndexOf('')} ${'a🌍'.lastIndexOf('a🌍'.slice(2))}`,
+);
 
 const padded = '  \tpadded text\n ';
 console.log(`[${padded.trimStart()}] [${padded.trimEnd()}] [${padded.trim()}]`);
 
 const letters = 'abc';
-for (const index of [0, 2, -1, -3, -4, 3, 1.5, -1.5, 0 / 0]) {
-	console.log(`${index}: ${letters.at(index) ?? 'none'}`);
+for(const index of [0, 2, -1, -3, -4, 3, 1.5, -1.5, 0 / 0]) {
+    console.log(`${index}: ${letters.at(index) ?? 'none'}`);
 }

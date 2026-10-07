@@ -10,9 +10,9 @@ const copied = [...parts, undefined, 'e'.repeat(3)];
 console.log(copied.join('|'));
 console.log(parts.concat(copied).slice(2).join(':'));
 let present = 0;
-for (const part of copied) {
-	if (part !== undefined) {
-		present += part.length;
-	}
+for(const part of copied) {
+    if(part !== undefined) {
+        present += part.length;
+    }
 }
 console.log(`${present} ${parts.reverse().join(',')} ${parts.at(-1) ?? 'missing'} ${parts[1] ?? 'missing'}`);

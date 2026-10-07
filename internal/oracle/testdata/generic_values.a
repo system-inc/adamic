@@ -2,44 +2,44 @@
 // instantiation's ownership. The object and nested Box values are built at runtime so ASan and the
 // leak check can catch a missing retain.
 class Box<Value> {
-	readonly value: Value;
-	constructor(value: Value) {
-		this.value = value;
-	}
+    readonly value: Value;
+    constructor(value: Value) {
+        this.value = value;
+    }
 }
 
 interface Named {
-	readonly name: string;
+    readonly name: string;
 }
 
 function local<Value>(value: Value): Value {
-	const held: Value = value;
-	return held;
+    const held: Value = value;
+    return held;
 }
 
 function arrayOf<Value>(value: Value): Value[] {
-	const values: Value[] = [value];
-	return values;
+    const values: Value[] = [value];
+    return values;
 }
 
 function mapOf<Value>(value: Value): Map<string, Value> {
-	const values = new Map<string, Value>();
-	values.set('value', value);
-	return values;
+    const values = new Map<string, Value>();
+    values.set('value', value);
+    return values;
 }
 
 function setOf<Value>(value: Value): Set<Value> {
-	const values = new Set<Value>();
-	values.add(value);
-	return values;
+    const values = new Set<Value>();
+    values.add(value);
+    return values;
 }
 
 function captured<Value>(value: Value): () => Value {
-	return (): Value => value;
+    return (): Value => value;
 }
 
 function through<Value>(value: Value): Value {
-	return local(value);
+    return local(value);
 }
 
 const maybe: number | undefined = 7;

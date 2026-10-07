@@ -1,23 +1,23 @@
 class Box<Item> {
-	#item: Item;
-	readonly label: string;
+    #item: Item;
+    readonly label: string;
 
-	constructor(item: Item, label: string) {
-		this.#item = item;
-		this.label = label;
-	}
+    constructor(item: Item, label: string) {
+        this.#item = item;
+        this.label = label;
+    }
 
-	get(): Item {
-		return this.#item;
-	}
+    get(): Item {
+        return this.#item;
+    }
 
-	put(item: Item): void {
-		this.#item = item;
-	}
+    put(item: Item): void {
+        this.#item = item;
+    }
 
-	describe(): string {
-		return `<${this.label}>`;
-	}
+    describe(): string {
+        return `<${this.label}>`;
+    }
 }
 
 const numbers = new Box<number>(1, 'numbers');
@@ -29,17 +29,17 @@ words.put(words.get() + ' two');
 console.log(`${numbers.get()} ${words.get()} ${alias === numbers} ${numbers.describe()} ${words.label}`);
 
 class Counter {
-	private count = 0;
+    private count = 0;
 
-	increment(): number {
-		this.count = this.count + 1;
-		return this.count;
-	}
+    increment(): number {
+        this.count = this.count + 1;
+        return this.count;
+    }
 
-	twice(): number {
-		this.increment();
-		return this.increment();
-	}
+    twice(): number {
+        this.increment();
+        return this.increment();
+    }
 }
 
 const counter = new Counter();

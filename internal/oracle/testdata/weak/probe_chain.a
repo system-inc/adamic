@@ -3,33 +3,33 @@
 // every target freed: natively each Weak then reads undefined, on Node each still reads its box.
 import type { Weak } from 'adamic';
 interface Box {
-	readonly label: string;
+    readonly label: string;
 }
 interface Holder {
-	kept: Weak<Box>;
+    kept: Weak<Box>;
 }
 function make(n: number): Holder[] {
-	const targets: Box[] = [];
-	const holders: Holder[] = [];
-	for (let i = 0; i < n; i++) {
-		const t: Box = { label: `t${i}` };
-		targets.push(t);
-		holders.push({ kept: t });
-	}
-	for (let i = 0; i < n; i += 2) {
-		const h = holders[i];
-		if (h !== undefined) {
-			h.kept = undefined;
-		}
-	}
-	return holders;
+    const targets: Box[] = [];
+    const holders: Holder[] = [];
+    for(let i = 0; i < n; i++) {
+        const t: Box = { label: `t${i}` };
+        targets.push(t);
+        holders.push({ kept: t });
+    }
+    for(let i = 0; i < n; i += 2) {
+        const h = holders[i];
+        if(h !== undefined) {
+            h.kept = undefined;
+        }
+    }
+    return holders;
 }
 const holders = make(200);
 let present = 0;
-for (const h of holders) {
-	const k = h.kept;
-	if (k !== undefined && k.label.length > 0) {
-		present++;
-	}
+for(const h of holders) {
+    const k = h.kept;
+    if(k !== undefined && k.label.length > 0) {
+        present++;
+    }
 }
 console.log(`${present}`);

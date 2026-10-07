@@ -3,7 +3,7 @@
 // the signal ends it, killed by that signal as Node is.
 console.log('started, about to work for a long time');
 let spins = 0;
-while (spins >= 0) {
-	spins += 1;
+while(spins >= 0) {
+    spins += 1;
 }
 console.log(`never ${spins}`);

@@ -1,15 +1,25 @@
-const map = new Map<number, string>([[1, 'a'.repeat(2)], [2, 'b'.repeat(2)], [3, 'c'.repeat(2)]]);
+const map = new Map<number, string>([
+    [1, 'a'.repeat(2)],
+    [2, 'b'.repeat(2)],
+    [3, 'c'.repeat(2)],
+]);
 const keys = map.keys();
 const values = map.values();
 const entries = map.entries();
 console.log(`${keys.next().value} ${values.next().value}`);
 const entry = entries.next();
-if (!entry.done) { console.log(`${entry.value[0]}=${entry.value[1]}`); }
+if(!entry.done) {
+    console.log(`${entry.value[0]}=${entry.value[1]}`);
+}
 map.delete(2);
-for (let index = 4; index < 20; index += 1) { map.set(index, `${index}`); }
+for(let index = 4; index < 20; index += 1) {
+    map.set(index, `${index}`);
+}
 console.log(`${keys.next().value} ${values.next().value}`);
 const nextEntry = entries.next();
-if (!nextEntry.done) { console.log(`${nextEntry.value[0]}=${nextEntry.value[1]}`); }
+if(!nextEntry.done) {
+    console.log(`${nextEntry.value[0]}=${nextEntry.value[1]}`);
+}
 map.clear();
 map.set(99, 'new');
 console.log(`${keys.next().value} ${values.next().value}`);
@@ -24,11 +34,15 @@ const setValues = set.values();
 const setEntries = set.entries();
 console.log(`${setKeys.next().value} ${setValues.next().value}`);
 const setEntry = setEntries.next();
-if (!setEntry.done) { console.log(`${setEntry.value[0]} ${setEntry.value[1]}`); }
+if(!setEntry.done) {
+    console.log(`${setEntry.value[0]} ${setEntry.value[1]}`);
+}
 set.delete(NaN);
 set.add(8);
 console.log(`${setKeys.next().value} ${setValues.next().value}`);
 const secondEntry = setEntries.next();
-if (!secondEntry.done) { console.log(`${secondEntry.value[0]} ${secondEntry.value[1]}`); }
+if(!secondEntry.done) {
+    console.log(`${secondEntry.value[0]} ${secondEntry.value[1]}`);
+}
 const otherKeys = set.keys();
 console.log(`${otherKeys.next().value} ${setKeys.next().value}`);

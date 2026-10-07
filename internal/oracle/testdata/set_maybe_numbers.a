@@ -13,16 +13,19 @@ values.add(-3.5);
 console.log(`${values.size}`);
 console.log(`${values.has(0)} ${values.has(-0)} ${values.has(NaN)} ${values.has(undefined)}`);
 console.log(`${values.has(1)} ${values.has(-3.5)} ${values.has(2)}`);
-for (const value of values) {
-	if (value === undefined) {
-		console.log('undefined');
-	} else if (value !== value) {
-		console.log('NaN');
-	} else if (value === 0) {
-		console.log(`${1 / value}`);
-	} else {
-		console.log(`${value}`);
-	}
+for(const value of values) {
+    if(value === undefined) {
+        console.log('undefined');
+    }
+    else if(value !== value) {
+        console.log('NaN');
+    }
+    else if(value === 0) {
+        console.log(`${1 / value}`);
+    }
+    else {
+        console.log(`${value}`);
+    }
 }
 
 console.log(`${values.delete(-0)} ${values.has(0)} ${values.size}`);

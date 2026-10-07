@@ -5,22 +5,22 @@
 // the program, so a key let go too early is a use after free under ASan.
 
 function name(index: number): string | undefined {
-	if (index % 3 === 0) {
-		return undefined;
-	}
-	return `k${index}`;
+    if(index % 3 === 0) {
+        return undefined;
+    }
+    return `k${index}`;
 }
 
 function show(key: string | undefined): string {
-	if (key === undefined) {
-		return 'undefined';
-	}
-	return `'${key}'`;
+    if(key === undefined) {
+        return 'undefined';
+    }
+    return `'${key}'`;
 }
 
 const keys: (string | undefined)[] = [];
-for (let index = 0; index < 7; index++) {
-	keys.push(name(index));
+for(let index = 0; index < 7; index++) {
+    keys.push(name(index));
 }
 keys.push(`${''}`);
 const missing = name(0);
@@ -36,12 +36,12 @@ set.add(name(3));
 console.log(`readded at the end: ${[...set].map((key) => show(key)).join(' ')}`);
 
 const map = new Map<string | undefined, number>();
-for (let index = 0; index < keys.length; index++) {
-	map.set(keys[index], index);
+for(let index = 0; index < keys.length; index++) {
+    map.set(keys[index], index);
 }
 console.log(`map size ${map.size}, undefined is ${map.get(missing)}, '' is ${map.get(empty)}`);
-for (const [key, value] of map) {
-	console.log(`${show(key)} => ${value}`);
+for(const [key, value] of map) {
+    console.log(`${show(key)} => ${value}`);
 }
 console.log(`keys ${[...map.keys()].map((key) => show(key)).join(' ')}`);
 console.log(`values ${[...map.values()].join(' ')}`);
@@ -49,8 +49,8 @@ map.delete(missing);
 console.log(`deleted: ${map.has(missing)} ${map.get(missing) ?? 'missing'} ${map.size}`);
 map.set(missing, 99);
 const after: string[] = [];
-for (const [key, value] of map.entries()) {
-	after.push(`${show(key)}:${value}`);
+for(const [key, value] of map.entries()) {
+    after.push(`${show(key)}:${value}`);
 }
 console.log(`set again, last: ${after.join(' ')}`);
 map.clear();

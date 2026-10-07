@@ -5,17 +5,17 @@
 // units writes a string's UTF-16 code units, so a lone surrogate is seen as itself and not as the
 // U+FFFD stdout would print.
 function units(text: string): string {
-	const codes: number[] = [];
-	for (let index = 0; index < text.length; index++) {
-		codes.push(text.charCodeAt(index));
-	}
-	return codes.join(',');
+    const codes: number[] = [];
+    for(let index = 0; index < text.length; index++) {
+        codes.push(text.charCodeAt(index));
+    }
+    return codes.join(',');
 }
 
 function show(label: string, text: string): void {
-	const upper = text.toUpperCase();
-	const lower = text.toLowerCase();
-	console.log(`${label}: ${upper} [${units(upper)}] ${lower} [${units(lower)}]`);
+    const upper = text.toUpperCase();
+    const lower = text.toLowerCase();
+    console.log(`${label}: ${upper} [${units(upper)}] ${lower} [${units(lower)}]`);
 }
 
 // ASCII, and nothing to change.
@@ -56,9 +56,9 @@ show('lone after sigma', `AΣ${low}`);
 
 // Strings the program builds, freed while the mapped ones live on.
 const built: string[] = [];
-for (const word of ['ǅemal', 'ǈubljana', 'Ǌoj']) {
-	built.push(`${word}-${word.length}`.toUpperCase());
-	built.push(word.repeat(2).toLowerCase());
+for(const word of ['ǅemal', 'ǈubljana', 'Ǌoj']) {
+    built.push(`${word}-${word.length}`.toUpperCase());
+    built.push(word.repeat(2).toLowerCase());
 }
 console.log(built.join(' '));
 console.log(`${'ß'.toUpperCase().length} ${'İ'.toLowerCase().length} ${'ΐ'.toUpperCase().length}`);

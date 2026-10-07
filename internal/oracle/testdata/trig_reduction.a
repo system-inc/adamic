@@ -3,12 +3,11 @@
 // third iteration of runtime/ieee754.c's ieee754_rem_pio2 (i > 49), and the bit sweep in
 // ieee754_test.go never draws one: dropping that iteration passes the sweep and fails here.
 const values: number[] = [
-	642615.9188844458, 321307.9594422229, 413441.44719405076, 505574.93494587863,
-	597708.4226977065, 687523.4150711851, 458348.94338079006, 229174.47169039503,
-	781975.3982013622, 732430.9112579244, 366215.4556289622, 183107.7278144811,
+    642615.9188844458, 321307.9594422229, 413441.44719405076, 505574.93494587863, 597708.4226977065, 687523.4150711851,
+    458348.94338079006, 229174.47169039503, 781975.3982013622, 732430.9112579244, 366215.4556289622, 183107.7278144811,
 ];
-for (const value of values) {
-	for (const x of [value, -value]) {
-		console.log(`${x}: sin ${Math.sin(x)}, cos ${Math.cos(x)}, tan ${Math.tan(x)}`);
-	}
+for(const value of values) {
+    for(const x of [value, -value]) {
+        console.log(`${x}: sin ${Math.sin(x)}, cos ${Math.cos(x)}, tan ${Math.tan(x)}`);
+    }
 }

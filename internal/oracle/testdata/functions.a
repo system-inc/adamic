@@ -1,29 +1,29 @@
 function factorial(value: number): number {
-	if (value <= 1) {
-		return 1;
-	}
-	return value * factorial(value - 1);
+    if(value <= 1) {
+        return 1;
+    }
+    return value * factorial(value - 1);
 }
 
 function fibonacci(index: number): number {
-	return index < 2 ? index : fibonacci(index - 1) + fibonacci(index - 2);
+    return index < 2 ? index : fibonacci(index - 1) + fibonacci(index - 2);
 }
 
 function greet(name: string, times: number): string {
-	let result = '';
-	for (let count = 0; count < times; count += 1) {
-		const piece = `hi ${name}`;
-		if (count === 2) {
-			return result + piece + '!';
-		}
-		result = result + piece + ' ';
-	}
-	return result;
+    let result = '';
+    for(let count = 0; count < times; count += 1) {
+        const piece = `hi ${name}`;
+        if(count === 2) {
+            return result + piece + '!';
+        }
+        result = result + piece + ' ';
+    }
+    return result;
 }
 
 function rename(name: string): string {
-	name = name + ' the second';
-	return name;
+    name = name + ' the second';
+    return name;
 }
 
 console.log(`${factorial(10)} ${factorial(20)} ${factorial(171)} ${fibonacci(20)}`);

@@ -1,16 +1,27 @@
 class Parent {
     readonly label: string;
     child: Child | undefined = undefined;
-    constructor(label: string) { this.label = label; }
-    read(): string { return this.label; }
+    constructor(label: string) {
+        this.label = label;
+    }
+    read(): string {
+        return this.label;
+    }
 }
 class Child extends Parent {
     readonly detail: string;
-    constructor(label: string) { super(label + '/parent'); this.detail = label + '/child'; }
-    override read(): string { return super.read() + '/' + this.detail; }
+    constructor(label: string) {
+        super(label + '/parent');
+        this.detail = label + '/child';
+    }
+    override read(): string {
+        return super.read() + '/' + this.detail;
+    }
 }
 class Grandchild extends Child {
-    override read(): string { return super.read() + '/grandchild'; }
+    override read(): string {
+        return super.read() + '/grandchild';
+    }
 }
 function family(index: number): void {
     const parent = new Parent(`root${index}`);
@@ -22,4 +33,6 @@ function family(index: number): void {
     parent.child = undefined;
     console.log(`${saved.read()}/${parent.child === undefined}`);
 }
-for (const index of [1, 2, 3]) { family(index); }
+for(const index of [1, 2, 3]) {
+    family(index);
+}

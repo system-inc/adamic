@@ -4,32 +4,32 @@
 // strings are built at runtime and held only by what's reassigned, so a read that took no count
 // would be freed under its reader.
 interface Holder {
-	name: string;
+    name: string;
 }
 
 let text = `abc${1}`;
 function change(): number {
-	text = `xyz${2}`;
-	return 0;
+    text = `xyz${2}`;
+    return 0;
 }
 
 const holder: Holder = { name: `field${3}` };
 function rename(): number {
-	holder.name = `other${4}`;
-	return 1;
+    holder.name = `other${4}`;
+    return 1;
 }
 
 function pick(first: number, second: number): number {
-	return first + second * 0;
+    return first + second * 0;
 }
 
 function captured(): string {
-	let label = `label${5}`;
-	const relabel = (): number => {
-		label = `relabeled${6}`;
-		return 2;
-	};
-	return `${label.charCodeAt(relabel())} ${label}`;
+    let label = `label${5}`;
+    const relabel = (): number => {
+        label = `relabeled${6}`;
+        return 2;
+    };
+    return `${label.charCodeAt(relabel())} ${label}`;
 }
 
 console.log(`${text.charCodeAt(change())} ${text}`);

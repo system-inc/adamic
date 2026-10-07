@@ -6,16 +6,16 @@
 import { panic, readTextFile } from 'adamic';
 
 const result = readTextFile('reading/malformed.txt');
-if (result.kind === 'Error') {
-	panic(result.message);
+if(result.kind === 'Error') {
+    panic(result.message);
 }
 const text = result.kind === 'Ok' ? result.text : '';
 let number = 0;
-for (const line of text.split('\n')) {
-	const units: number[] = [];
-	for (let index = 0; index < line.length; index += 1) {
-		units.push(line.charCodeAt(index));
-	}
-	console.log(`${number} ${units.join(' ')}`);
-	number += 1;
+for(const line of text.split('\n')) {
+    const units: number[] = [];
+    for(let index = 0; index < line.length; index += 1) {
+        units.push(line.charCodeAt(index));
+    }
+    console.log(`${number} ${units.join(' ')}`);
+    number += 1;
 }

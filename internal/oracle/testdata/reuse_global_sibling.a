@@ -3,10 +3,10 @@
 type Tree = { value: number; label: string };
 let tree: Tree = { value: 1, label: `tree${1}` };
 function size(): number {
-	return tree.value;
+    return tree.value;
 }
 function insert(node: Tree, extra: number): Tree {
-	return { ...node, value: node.value + extra };
+    return { ...node, value: node.value + extra };
 }
 tree = insert(tree, size());
 console.log(`${tree.value} ${tree.label}`);

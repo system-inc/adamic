@@ -4,18 +4,18 @@ import type { Weak } from 'adamic';
 // to a source that's gone should read undefined (docs/memory.md); Node keeps the old target.
 // Natively, what does it read?
 interface Item {
-	label: string;
-	count: number;
+    label: string;
+    count: number;
 }
 interface Holder {
-	item: Weak<Item>;
+    item: Weak<Item>;
 }
 const holder: Holder = { item: undefined };
 function run(): void {
-	const item: Item = { label: `old${1}`, count: 1 };
-	holder.item = item;
-	const next = { ...item, label: `new${2}` };
-	const seen = holder.item;
-	console.log(`${seen === undefined ? 'undefined' : seen.label} ${seen === next} ${next.label}`);
+    const item: Item = { label: `old${1}`, count: 1 };
+    holder.item = item;
+    const next = { ...item, label: `new${2}` };
+    const seen = holder.item;
+    console.log(`${seen === undefined ? 'undefined' : seen.label} ${seen === next} ${next.label}`);
 }
 run();

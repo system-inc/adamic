@@ -1,3 +1,3 @@
 const map = new Map<string, MapIterator<string>>();
-map.set("cursor", (map.keys)()); // closes the cycle
+map.set('cursor', map.keys()); // closes the cycle
 console.log(`${map.size}`);

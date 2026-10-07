@@ -4,20 +4,20 @@
 // The strings are built at runtime, since literals are immortal, and each is held only by the
 // caller's own variable, so a release that isn't the callee's to make frees it.
 function louder(text: string, times: number): string {
-	for (let index = 0; index < times; index++) {
-		text = `${text}!`;
-	}
-	return text;
+    for(let index = 0; index < times; index++) {
+        text = `${text}!`;
+    }
+    return text;
 }
 
 // The parameter here is only read, so it's borrowed, beside one that's reassigned.
 function framed(text: string): string {
-	return `[${text}]`;
+    return `[${text}]`;
 }
 
 const words = ['quiet', 'calm', 'still'];
-for (let index = 0; index < words.length; index++) {
-	const built = `${words[index] ?? ''}${index}`;
-	const result = louder(built, index + 1);
-	console.log(`${built} ${result} ${framed(built)} ${built.length}`);
+for(let index = 0; index < words.length; index++) {
+    const built = `${words[index] ?? ''}${index}`;
+    const result = louder(built, index + 1);
+    console.log(`${built} ${result} ${framed(built)} ${built.length}`);
 }

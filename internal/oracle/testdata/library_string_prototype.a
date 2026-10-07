@@ -19,6 +19,9 @@ console.log(String.prototype.normalize.call('e\u0301', 'NFC'));
 console.log(String.prototype.toString.call('abc'));
 console.log(String.prototype.valueOf.call('abc'));
 let text = 'before';
-function change(): number { text = 'after'; return 1; }
+function change(): number {
+    text = 'after';
+    return 1;
+}
 console.log(String.prototype.slice.call(text, change()));
 console.log(text);

@@ -6,42 +6,42 @@
 console.log(apply(early, word('before the declaration ', 0)));
 
 function word(stem: string, index: number): string {
-	return `${stem}${index}`;
+    return `${stem}${index}`;
 }
 function early(value: string): string {
-	return `early ${value}`;
+    return `early ${value}`;
 }
 function shout(value: string): string {
-	return `${value.toUpperCase()}!`;
+    return `${value.toUpperCase()}!`;
 }
 function byLength(left: string, right: string): number {
-	return left.length - right.length;
+    return left.length - right.length;
 }
 function show(value: string, index: number): void {
-	console.log(`${index}: ${value}`);
+    console.log(`${index}: ${value}`);
 }
 function failing(value: string): string {
-	if (value === 'bb2') {
-		throw new Error(`failing at ${value}`);
-	}
-	return value;
+    if(value === 'bb2') {
+        throw new Error(`failing at ${value}`);
+    }
+    return value;
 }
 function apply(run: (value: string) => string, value: string): string {
-	return run(value);
+    return run(value);
 }
 function pick(loud: boolean): (value: string) => string {
-	return loud ? shout : early;
+    return loud ? shout : early;
 }
 let calls = 0;
 function counted(value: number): number {
-	calls += 1;
-	return value * 2;
+    calls += 1;
+    return value * 2;
 }
 function size(items: readonly string[]): number {
-	return items.length;
+    return items.length;
 }
 function factorial(value: number): number {
-	return value <= 1 ? 1 : value * factorial(value - 1);
+    return value <= 1 ? 1 : value * factorial(value - 1);
 }
 
 const words = [word('a', 1), word('bb', 2), word('c', 3)];
@@ -50,9 +50,10 @@ console.log([...words].sort(byLength).join(', '));
 words.forEach(show);
 console.log(words.map(word).join(', '));
 try {
-	console.log(words.map(failing).join(', '));
-} catch (error) {
-	console.log(error instanceof Error ? error.message : 'something');
+    console.log(words.map(failing).join(', '));
+}
+catch(error) {
+    console.log(error instanceof Error ? error.message : 'something');
 }
 
 const held = shout;
@@ -79,6 +80,6 @@ const ages = new Map<string, string>();
 ages.set(word('ann', 1), word('age ', 31));
 ages.set(word('bob', 2), word('age ', 42));
 function listed(value: string, key: string): void {
-	console.log(`${key} is ${value}`);
+    console.log(`${key} is ${value}`);
 }
 ages.forEach(listed);

@@ -3,25 +3,25 @@
 // goes anywhere, so the constructor rule (this escaping before its fields are set) lets it through
 // to the cycle finder, which must refuse the second write to parent.
 interface Link {
-  readonly owner: Node;
+    readonly owner: Node;
 }
 
 class Node {
-  readonly links: Link[] = [];
-  readonly parent: Node | undefined;
-  constructor(parent: Node | undefined) {
-    this.parent = undefined; // every field set before this goes anywhere
-    if (parent !== undefined) {
-      parent.links.push({ owner: this });
+    readonly links: Link[] = [];
+    readonly parent: Node | undefined;
+    constructor(parent: Node | undefined) {
+        this.parent = undefined; // every field set before this goes anywhere
+        if(parent !== undefined) {
+            parent.links.push({ owner: this });
+        }
+        this.parent = parent; // closes the cycle
     }
-    this.parent = parent; // closes the cycle
-  }
 }
 
 function build(): number {
-  const root = new Node(undefined);
-  const child = new Node(root);
-  return root.links.length + (child.parent === undefined ? 0 : 1);
+    const root = new Node(undefined);
+    const child = new Node(root);
+    return root.links.length + (child.parent === undefined ? 0 : 1);
 }
 
 console.log(`${build()}`);

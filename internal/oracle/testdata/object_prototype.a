@@ -1,11 +1,13 @@
 class Box {
-	readonly label = 'box';
-	method(): number { return 1; }
+    readonly label = 'box';
+    method(): number {
+        return 1;
+    }
 }
 let calls = 0;
 function object(): { readonly label: string } {
-	calls += 1;
-	return { label: `call${calls}` };
+    calls += 1;
+    return { label: `call${calls}` };
 }
 const plain = { label: 'plain', optional: undefined };
 const box = new Box();
@@ -17,7 +19,9 @@ console.log(plain.toLocaleString());
 console.log(box.toLocaleString());
 console.log(`${plain.valueOf() === plain} ${box.valueOf() === box}`);
 console.log(`${plain.hasOwnProperty('label')} ${plain.hasOwnProperty('missing')} ${plain.hasOwnProperty('toString')}`);
-console.log(`${plain.propertyIsEnumerable('label')} ${plain.propertyIsEnumerable('optional')} ${plain.propertyIsEnumerable('toString')}`);
+console.log(
+    `${plain.propertyIsEnumerable('label')} ${plain.propertyIsEnumerable('optional')} ${plain.propertyIsEnumerable('toString')}`,
+);
 console.log(`${box.hasOwnProperty('label')} ${box.hasOwnProperty('method')} ${box.propertyIsEnumerable('method')}`);
 console.log('hello'.toString());
 console.log('hello'.toLocaleString());
@@ -41,44 +45,84 @@ const set = new Set<number>();
 console.log(map.toString());
 console.log(set.toLocaleString());
 const own = {
-	unique: 1,
-	toString: (): string => 'own string',
-	valueOf: (): number => 99,
-	toLocaleString: (): string => 'own locale',
-	hasOwnProperty: (key: string): boolean => key === 'custom',
-	propertyIsEnumerable: (key: string): boolean => key === 'custom',
-	isPrototypeOf: (value: { readonly label: string }): boolean => true,
+    unique: 1,
+    toString: (): string => 'own string',
+    valueOf: (): number => 99,
+    toLocaleString: (): string => 'own locale',
+    hasOwnProperty: (key: string): boolean => key === 'custom',
+    propertyIsEnumerable: (key: string): boolean => key === 'custom',
+    isPrototypeOf: (value: { readonly label: string }): boolean => true,
 };
 console.log(own.toString());
 console.log(`${own.valueOf()}`);
 console.log(own.toLocaleString());
 const ownHas = own.hasOwnProperty;
-console.log(`${ownHas('custom')} ${own.hasOwnProperty('unique')} ${own.propertyIsEnumerable('custom')} ${own.isPrototypeOf(plain)}`);
+console.log(
+    `${ownHas('custom')} ${own.hasOwnProperty('unique')} ${own.propertyIsEnumerable('custom')} ${own.isPrototypeOf(plain)}`,
+);
 const indexed: (number | undefined)[] = [undefined, 7];
 const unicode = 'A🌍';
-for (const key of ['0', '1', '2', '3', 'length', '-0', '-1', '01', '1x', '1.0', '1e0', ' 1', 'NaN', 'Infinity', '9999999999999999999999', 'toString', 'constructor', '']) {
-	console.log(`${key}: array ${indexed.hasOwnProperty(key)} ${indexed.propertyIsEnumerable(key)} string ${unicode.hasOwnProperty(key)} ${unicode.propertyIsEnumerable(key)}`);
-	console.log(`${(42).hasOwnProperty(key)} ${true.hasOwnProperty(key)} ${map.hasOwnProperty(key)} ${set.propertyIsEnumerable(key)}`);
+for(const key of [
+    '0',
+    '1',
+    '2',
+    '3',
+    'length',
+    '-0',
+    '-1',
+    '01',
+    '1x',
+    '1.0',
+    '1e0',
+    ' 1',
+    'NaN',
+    'Infinity',
+    '9999999999999999999999',
+    'toString',
+    'constructor',
+    '',
+]) {
+    console.log(
+        `${key}: array ${indexed.hasOwnProperty(key)} ${indexed.propertyIsEnumerable(key)} string ${unicode.hasOwnProperty(key)} ${unicode.propertyIsEnumerable(key)}`,
+    );
+    console.log(
+        `${(42).hasOwnProperty(key)} ${true.hasOwnProperty(key)} ${map.hasOwnProperty(key)} ${set.propertyIsEnumerable(key)}`,
+    );
 }
 indexed.pop();
 console.log(`${indexed.hasOwnProperty('1')} ${indexed.hasOwnProperty('0')}`);
 const empty: string[] = [];
 console.log(`${empty.hasOwnProperty('0')} ${''.hasOwnProperty('0')}`);
 const callable = (): number => 1;
-console.log(`${callable.propertyIsEnumerable('name')} ${callable.propertyIsEnumerable('length')} ${callable.propertyIsEnumerable('prototype')}`);
+console.log(
+    `${callable.propertyIsEnumerable('name')} ${callable.propertyIsEnumerable('length')} ${callable.propertyIsEnumerable('prototype')}`,
+);
 let order = '';
-function receiverNumber(): number { order += 'receiver '; return 42; }
-function receiverArray(): number[] { order += 'receiver '; return [7]; }
-function propertyKey(): string { order += 'key '; return '0'; }
+function receiverNumber(): number {
+    order += 'receiver ';
+    return 42;
+}
+function receiverArray(): number[] {
+    order += 'receiver ';
+    return [7];
+}
+function propertyKey(): string {
+    order += 'key ';
+    return '0';
+}
 console.log(`${receiverNumber().hasOwnProperty(propertyKey())} ${order}`);
 order = '';
 console.log(`${receiverArray().hasOwnProperty(propertyKey())} ${order}`);
-function named(value: number): number { return value; }
+function named(value: number): number {
+    return value;
+}
 const namedAlias = named;
 const arrowAlias = callable;
-for (const key of ['name', 'length', 'prototype', 'arguments', 'caller', 'toString']) {
-	console.log(`${key}: named ${named.hasOwnProperty(key)} ${named.propertyIsEnumerable(key)} arrow ${callable.hasOwnProperty(key)} ${callable.propertyIsEnumerable(key)}`);
-	console.log(`${namedAlias.hasOwnProperty(key)} ${arrowAlias.hasOwnProperty(key)}`);
+for(const key of ['name', 'length', 'prototype', 'arguments', 'caller', 'toString']) {
+    console.log(
+        `${key}: named ${named.hasOwnProperty(key)} ${named.propertyIsEnumerable(key)} arrow ${callable.hasOwnProperty(key)} ${callable.propertyIsEnumerable(key)}`,
+    );
+    console.log(`${namedAlias.hasOwnProperty(key)} ${arrowAlias.hasOwnProperty(key)}`);
 }
 const error = new Error('message');
 console.log(`${error.valueOf() === error}`);

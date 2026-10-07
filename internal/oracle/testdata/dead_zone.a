@@ -1,5 +1,5 @@
 function readLater(): number {
-	return later * 2;
+    return later * 2;
 }
 
 console.log('before');

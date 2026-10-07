@@ -22,4 +22,6 @@ const chained = new RegExp(third, 'u');
 const chainRun = chained.exec('🌍🌍');
 console.log(chainRun === null ? 'null' : `${chainRun[0].length} ${chained.source === '🌍+'}`);
 const reversed = new RegExp('\udf0d' + high, 'u');
-console.log(`${reversed.test('\udf0d\ud83c')} ${reversed.test('🌍')} ${reversed.source === '\udf0d\ud83c'} ${reversed.source.length}`);
+console.log(
+    `${reversed.test('\udf0d\ud83c')} ${reversed.test('🌍')} ${reversed.source === '\udf0d\ud83c'} ${reversed.source.length}`,
+);

@@ -5,9 +5,9 @@ const list: number[] = [1, 2, 3];
 const seen: string[] = [];
 console.log(`${list.find((item) => item > 1) ?? -1}`);
 const found = list.find((item) => {
-	seen.push(`${item}`);
-	console.log(seen.join(','));
-	list.pop();
-	return false;
+    seen.push(`${item}`);
+    console.log(seen.join(','));
+    list.pop();
+    return false;
 });
 console.log(`${found ?? -1}`);

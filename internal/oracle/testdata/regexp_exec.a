@@ -1,15 +1,15 @@
 // exec walks with lastIndex. g and y both clear it after a miss. An empty match advances one unit.
 function walk(regex: RegExp, text: string): string {
-	const seen: string[] = [];
-	for (let step = 0; step < 8; step += 1) {
-		const match = regex.exec(text);
-		if (match === null) {
-			seen.push(`null:${regex.lastIndex}`);
-			break;
-		}
-		seen.push(`${match.index}:${regex.lastIndex}`);
-	}
-	return seen.join('|');
+    const seen: string[] = [];
+    for(let step = 0; step < 8; step += 1) {
+        const match = regex.exec(text);
+        if(match === null) {
+            seen.push(`null:${regex.lastIndex}`);
+            break;
+        }
+        seen.push(`${match.index}:${regex.lastIndex}`);
+    }
+    return seen.join('|');
 }
 const global = /a/g;
 console.log(walk(global, 'aaba'));

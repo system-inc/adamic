@@ -1,7 +1,7 @@
 // splice(start, count, ...items): removes, inserts, and is what it removed, with start and count
 // clamped as ECMAScript says.
 function show(label: string, removed: number[], left: number[]): void {
-	console.log(`${label}: [${removed.join(',')}] [${left.join(',')}]`);
+    console.log(`${label}: [${removed.join(',')}] [${left.join(',')}]`);
 }
 
 let values = [0, 1, 2, 3, 4, 5];

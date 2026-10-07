@@ -6,12 +6,12 @@ Branch: `codex/library-math-number`. Main: `fe3b9f2`. Runner merged by fast-forw
 
 Corpus: `tc39/test262` at `7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd`. Every pass compares the native result with Node 24.19.0; the runner uses ASan and UBSan.
 
-| Run | Directory | Pass | Disagree | Refused | Crash | Skip | Total |
-|---|---|---:|---:|---:|---:|---:|---:|
-| Before | built-ins/Math | 83 | 0 | 83 | 0 | 161 | 327 |
-| Before | built-ins/Number | 61 | 0 | 205 | 0 | 74 | 340 |
-| After | built-ins/Math | 100 | 0 | 66 | 0 | 161 | 327 |
-| After | built-ins/Number | 152 | 0 | 114 | 0 | 74 | 340 |
+| Run    | Directory        | Pass | Disagree | Refused | Crash | Skip | Total |
+| ------ | ---------------- | ---: | -------: | ------: | ----: | ---: | ----: |
+| Before | built-ins/Math   |   83 |        0 |      83 |     0 |  161 |   327 |
+| Before | built-ins/Number |   61 |        0 |     205 |     0 |   74 |   340 |
+| After  | built-ins/Math   |  100 |        0 |      66 |     0 |  161 |   327 |
+| After  | built-ins/Number |  152 |        0 |     114 |     0 |   74 |   340 |
 
 108 newly passing tests; no previous pass was lost. Zero disagreements and crashes before and after.
 
@@ -31,43 +31,43 @@ Math.sign, Math.cbrt and the other transcendental functions were already impleme
 
 **built-ins/Math**
 
-| Reason | Count |
-|---|---:|
-| refuses var | 50 |
-| error TS2345: Argument of type '…' is not assignable to parameter of type '…'. | 9 |
-| error TS2550: Property '…' does not exist on type '…'. Do you need to change your target library? Try changing the '…' compiler option to '…' or later. | 4 |
-| error TS18048: '…' is possibly '…'. | 1 |
-| refuses a method read as a value (max would lose its object, and this with it) | 1 |
-| refuses a method read as a value (min would lose its object, and this with it) | 1 |
+| Reason                                                                                                                                                  | Count |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----: |
+| refuses var                                                                                                                                             |    50 |
+| error TS2345: Argument of type '…' is not assignable to parameter of type '…'.                                                                          |     9 |
+| error TS2550: Property '…' does not exist on type '…'. Do you need to change your target library? Try changing the '…' compiler option to '…' or later. |     4 |
+| error TS18048: '…' is possibly '…'.                                                                                                                     |     1 |
+| refuses a method read as a value (max would lose its object, and this with it)                                                                          |     1 |
+| refuses a method read as a value (min would lose its object, and this with it)                                                                          |     1 |
 
 **built-ins/Number**
 
-| Reason | Count |
-|---|---:|
-| not yet: new an Identifier | 39 |
-| error TS2345: Argument of type '…' is not assignable to parameter of type '…'. | 24 |
-| refuses var | 12 |
-| error TS2551: Property '…' does not exist on type '…'. Did you mean '…'? | 5 |
-| error TS7006: Parameter '…' implicitly has an '…' type. | 5 |
-| error TS2339: Property '…' does not exist on type '…'. | 3 |
-| error TS2790: The operand of a '…' operator must be optional. | 3 |
-| error TS2322: Type '…' is not assignable to type '…'. | 2 |
-| not yet: a try around toString, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) | 2 |
-| not yet: reading Function | 2 |
-| not yet: reading isFinite | 2 |
-| refuses a method read as a value (toString would lose its object, and this with it) | 2 |
-| refuses for...in | 2 |
-| error TS2403: Subsequent variable declarations must have the same type.  Variable '…' must be of type '…', but here has type '…'. | 1 |
-| error TS2554: Expected 0 arguments, but got 1. | 1 |
-| not yet: a BinaryExpression with a string and a number | 1 |
-| not yet: a try around toExponential, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) | 1 |
-| not yet: a try around toFixed, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) | 1 |
-| not yet: a try around toPrecision, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) | 1 |
-| not yet: a value argument to toExponential | 1 |
-| not yet: reading Object | 1 |
-| refuses == | 1 |
-| refuses a method read as a value (toFixed would lose its object, and this with it) | 1 |
-| refuses the void operator | 1 |
+| Reason                                                                                                                           | Count |
+| -------------------------------------------------------------------------------------------------------------------------------- | ----: |
+| not yet: new an Identifier                                                                                                       |    39 |
+| error TS2345: Argument of type '…' is not assignable to parameter of type '…'.                                                   |    24 |
+| refuses var                                                                                                                      |    12 |
+| error TS2551: Property '…' does not exist on type '…'. Did you mean '…'?                                                         |     5 |
+| error TS7006: Parameter '…' implicitly has an '…' type.                                                                          |     5 |
+| error TS2339: Property '…' does not exist on type '…'.                                                                           |     3 |
+| error TS2790: The operand of a '…' operator must be optional.                                                                    |     3 |
+| error TS2322: Type '…' is not assignable to type '…'.                                                                            |     2 |
+| not yet: a try around toString, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)          |     2 |
+| not yet: reading Function                                                                                                        |     2 |
+| not yet: reading isFinite                                                                                                        |     2 |
+| refuses a method read as a value (toString would lose its object, and this with it)                                              |     2 |
+| refuses for...in                                                                                                                 |     2 |
+| error TS2403: Subsequent variable declarations must have the same type. Variable '…' must be of type '…', but here has type '…'. |     1 |
+| error TS2554: Expected 0 arguments, but got 1.                                                                                   |     1 |
+| not yet: a BinaryExpression with a string and a number                                                                           |     1 |
+| not yet: a try around toExponential, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)     |     1 |
+| not yet: a try around toFixed, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)           |     1 |
+| not yet: a try around toPrecision, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)       |     1 |
+| not yet: a value argument to toExponential                                                                                       |     1 |
+| not yet: reading Object                                                                                                          |     1 |
+| refuses ==                                                                                                                       |     1 |
+| refuses a method read as a value (toFixed would lose its object, and this with it)                                               |     1 |
+| refuses the void operator                                                                                                        |     1 |
 
 Across both directories, `var` is the biggest refusal reason (62 tests). The largest remaining library gap is boxed `new Number(...)` (39 tests). A boxed Number requires object identity, [[NumberData]], prototype behavior and memory ownership; lowering it to a primitive would silently change behavior. It remains refused.
 
@@ -81,25 +81,25 @@ Registered in internal/oracle/oracle_test.go:
 - library_math_number_convert.a: strict string grammar, Unicode space, embedded NUL, invalid suffixes and separators, base literals, optional values and primitive unions, metadata and own properties.
 - library_math_number_prototype.a: direct prototype calls, numeric .call receivers, formatting edges and signed zero.
 
-| Fixture | Allocations | Frees | Retains | Releases | Peak | Regions |
-|---|---:|---:|---:|---:|---:|---:|
-| internal/oracle/testdata/library_math_number_math.a | 1280 | 1280 | 50 | 1331 | 8 | 0 |
-| internal/oracle/testdata/library_math_number_convert.a | 199 | 199 | 197 | 365 | 7 | 0 |
-| internal/oracle/testdata/library_math_number_prototype.a | 71 | 71 | 2 | 74 | 8 | 0 |
+| Fixture                                                  | Allocations | Frees | Retains | Releases | Peak | Regions |
+| -------------------------------------------------------- | ----------: | ----: | ------: | -------: | ---: | ------: |
+| internal/oracle/testdata/library_math_number_math.a      |        1280 |  1280 |      50 |     1331 |    8 |       0 |
+| internal/oracle/testdata/library_math_number_convert.a   |         199 |   199 |     197 |      365 |    7 |       0 |
+| internal/oracle/testdata/library_math_number_prototype.a |          71 |    71 |       2 |       74 |    8 |       0 |
 
 ## Mutants run
 
 `TestMathNumberOracleCatchesMutants` builds each mutant under ASan/UBSan and requires exit 0 with empty stderr. Each was caught only by comparing its stdout with the original source on Node.
 
-| Family | Mutation | Caught by |
-|---|---|---|
-| clz32 | Emit fround instead | Node stdout differs |
-| fround | Emit sign instead | Node stdout differs |
-| imul | Emit pow instead | Node stdout differs |
-| constants | Change LN10 by one binary64 ULP | Node stdout differs |
-| conversion | Parse only the decimal prefix instead of the complete string | Node stdout differs |
-| own properties | Invert hasOwnProperty | Node stdout differs |
-| prototype formatting | Add one to the toFixed receiver | Node stdout differs |
+| Family               | Mutation                                                     | Caught by           |
+| -------------------- | ------------------------------------------------------------ | ------------------- |
+| clz32                | Emit fround instead                                          | Node stdout differs |
+| fround               | Emit sign instead                                            | Node stdout differs |
+| imul                 | Emit pow instead                                             | Node stdout differs |
+| constants            | Change LN10 by one binary64 ULP                              | Node stdout differs |
+| conversion           | Parse only the decimal prefix instead of the complete string | Node stdout differs |
+| own properties       | Invert hasOwnProperty                                        | Node stdout differs |
+| prototype formatting | Add one to the toFixed receiver                              | Node stdout differs |
 
 ## Commands and outputs
 

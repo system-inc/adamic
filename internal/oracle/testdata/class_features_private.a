@@ -2,19 +2,37 @@ import type { Weak } from 'adamic';
 class Vault {
     readonly label: string;
     #secret: string;
-    constructor(value: string) { this.label = `public${value}`; this.#secret = `private${value}`; }
-    #read(): string { return this.#secret; }
-    read(): string { return this.#read(); }
-    replace(value: string): void { this.#secret = `changed${value}`; }
+    constructor(value: string) {
+        this.label = `public${value}`;
+        this.#secret = `private${value}`;
+    }
+    #read(): string {
+        return this.#secret;
+    }
+    read(): string {
+        return this.#read();
+    }
+    replace(value: string): void {
+        this.#secret = `changed${value}`;
+    }
 }
 class ChildVault extends Vault {
     readonly child = 'child';
     #parent: Weak<Vault> = undefined;
-    attach(parent: Vault): void { this.#parent = parent; }
-    parentLabel(): string { const parent = this.#parent; return parent === undefined ? 'none' : parent.label; }
+    attach(parent: Vault): void {
+        this.#parent = parent;
+    }
+    parentLabel(): string {
+        const parent = this.#parent;
+        return parent === undefined ? 'none' : parent.label;
+    }
     #secret = `child${1}`;
-    #read(): string { return this.#secret; }
-    readChild(): string { return this.#read(); }
+    #read(): string {
+        return this.#secret;
+    }
+    readChild(): string {
+        return this.#read();
+    }
 }
 const child = new ChildVault('one');
 console.log(`${child.read()}/${child.readChild()}`);
@@ -34,7 +52,10 @@ console.log(Object.keys(ordinary).join(','));
 class ReadonlyBox {
     readonly value: string;
     readonly contents = { text: `initial${3}` };
-    constructor() { this.value = `first${4}`; this.value = `last${5}`; }
+    constructor() {
+        this.value = `first${4}`;
+        this.value = `last${5}`;
+    }
 }
 const readonlyBox = new ReadonlyBox();
 readonlyBox.contents.text = `changed${6}`;

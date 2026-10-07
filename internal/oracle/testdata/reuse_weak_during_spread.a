@@ -5,25 +5,25 @@ import type { Weak } from 'adamic';
 // first, then evaluates label, whose call writes count through the Weak into the source, not into
 // the result.
 interface Item {
-	label: string;
-	count: number;
+    label: string;
+    count: number;
 }
 interface Holder {
-	item: Weak<Item>;
+    item: Weak<Item>;
 }
 const holder: Holder = { item: undefined };
 function touch(): string {
-	const item = holder.item;
-	if (item !== undefined) {
-		item.count = 100;
-		return `touched${item.count}`;
-	}
-	return 'untouched';
+    const item = holder.item;
+    if(item !== undefined) {
+        item.count = 100;
+        return `touched${item.count}`;
+    }
+    return 'untouched';
 }
 function run(): void {
-	const item: Item = { label: `first${1}`, count: 1 };
-	holder.item = item;
-	const next = { ...item, label: touch() };
-	console.log(`${next.count} ${next.label}`);
+    const item: Item = { label: `first${1}`, count: 1 };
+    holder.item = item;
+    const next = { ...item, label: touch() };
+    console.log(`${next.count} ${next.label}`);
 }
 run();

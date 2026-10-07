@@ -1,6 +1,6 @@
 // Each escape on its own, then the same characters as object keys.
 function show(value: string): void {
-	console.log(JSON.stringify(value) ?? '<undefined>');
+    console.log(JSON.stringify(value) ?? '<undefined>');
 }
 show('"');
 show('\\');

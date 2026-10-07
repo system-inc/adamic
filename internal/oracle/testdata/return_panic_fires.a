@@ -3,15 +3,15 @@
 import { panic } from 'adamic';
 
 class Registry {
-	readonly names: string[] = ['Kirk'];
+    readonly names: string[] = ['Kirk'];
 
-	find(index: number): string {
-		const name = this.names[index];
-		if (name !== undefined) {
-			return name;
-		}
-		return panic(`no name at ${index}`);
-	}
+    find(index: number): string {
+        const name = this.names[index];
+        if(name !== undefined) {
+            return name;
+        }
+        return panic(`no name at ${index}`);
+    }
 }
 
 const registry = new Registry();

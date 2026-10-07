@@ -3,15 +3,15 @@
 let later: () => string = () => '-';
 
 class Counter {
-	label: string;
-	constructor(count: number) {
-		this.label = `counter${count}`;
-		later = () => this.label;
-	}
+    label: string;
+    constructor(count: number) {
+        this.label = `counter${count}`;
+        later = () => this.label;
+    }
 }
 
 function size(counter: Counter): number {
-	return counter.label.length;
+    return counter.label.length;
 }
 
 console.log(`${size(new Counter(5))}`);
