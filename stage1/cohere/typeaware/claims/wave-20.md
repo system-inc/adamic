@@ -96,9 +96,9 @@ The first three eligible rules, each with combined volume zero, are:
 
 | Rule | Status |
 | --- | --- |
-| react/jsx-fragments | Claimed |
+| react/jsx-fragments | Native analysis tested; shared registration blocked |
 | react/jsx-no-constructed-context-values | Claimed |
-| react/jsx-no-undef | Claimed |
+| react/jsx-no-undef | Native analysis tested; shared registration blocked |
 
 These rules use AST and checker facts, not the parked native React HIR/SSA
 pipeline. Claim update is pushed before any implementation. Shared JSX and
@@ -134,3 +134,8 @@ and released query PASS. Current main b8fb957aa and named harness 41eb6eab2
 are ancestors. Shared checker-context registration remains pending for the
 two JSX source analyses; jsx-no-constructed-context-values remains unfinished.
 No further rules were claimed. See react-jsx-fragments/ANALYSIS_REPORT.md.
+
+Latest-main landing: main advanced to 39638d9e2 during the push verification.
+Own commits were rebased onto a base containing that main and harness 41eb6eab2.
+Fragment source is now 4e4d58063; validated landing source is 5dc1ba68f.
+No new rules claimed. See react-jsx-fragments/LANDING_39638D9E2_REPORT.md.
