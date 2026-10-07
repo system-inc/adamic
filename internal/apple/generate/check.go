@@ -98,6 +98,12 @@ func (g *generator) emitCheck() (string, error) {
 				}
 				fmt.Fprintf(&text, "\t%s header%d;\n\t__builtin_memcpy(&header%d, &%s, sizeof(header%d));\n", header, index, index, argument, index)
 				argument = fmt.Sprintf("header%d", index)
+			} else if strings.HasPrefix(native.tag, "enum(") {
+				// An enumeration crosses as a long whichever its signedness: 64 bits either way.
+				fmt.Fprintf(&text, "\t_Static_assert(__builtin_types_compatible_p(long, %s) || __builtin_types_compatible_p(unsigned long, %s), \"%s parameter %d ABI\");\n", native.header, native.header, call.selector, index)
+			} else if strings.HasPrefix(native.tag, "options(") {
+				// Option bits cross as an unsigned long; unsigned long long is the same 64 bits.
+				fmt.Fprintf(&text, "\t_Static_assert(__builtin_types_compatible_p(unsigned long, %s) || __builtin_types_compatible_p(unsigned long long, %s), \"%s parameter %d ABI\");\n", native.header, native.header, call.selector, index)
 			} else if native.c != "id" {
 				fmt.Fprintf(&text, "\t_Static_assert(__builtin_types_compatible_p(%s, %s), \"%s parameter %d ABI\");\n", tagCType(native.tag), native.header, call.selector, index)
 			}

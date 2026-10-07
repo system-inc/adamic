@@ -29,12 +29,9 @@ func (g *generator) build() (Output, error) {
 				m.comments = append(m.comments, "// Skipped "+name+": only CGRect structs cross the bridge.")
 			}
 		case naming.Class, naming.Protocol:
-			g.declarations = append(g.declarations, def.declaration)
-			body, err := g.emitClass(def)
-			if err != nil {
+			if err := g.emitDefinition(def); err != nil {
 				return Output{}, err
 			}
-			m.declarations = append(m.declarations, body)
 		}
 	}
 	for _, n := range g.nodes {
@@ -96,6 +93,53 @@ func (g *generator) build() (Output, error) {
 	output.Check = []byte(check)
 	return output, nil
 }
+
+// emitDefinition writes a class or protocol once, its superclass first.
+func (g *generator) emitDefinition(def *definition) error {
+	if def.emitted {
+		return nil
+	}
+	def.emitted = true
+	if parent := g.types[def.node.Super.Name]; parent != nil && def.declaration.Kind == naming.Class {
+		if err := g.emitDefinition(parent); err != nil {
+			return err
+		}
+	}
+	g.declarations = append(g.declarations, def.declaration)
+	body, err := g.emitClass(def)
+	if err != nil {
+		return err
+	}
+	m := g.getModule(def.output.Module)
+	m.declarations = append(m.declarations, body)
+	return nil
+}
+
+// taken is every name a method of this staticness may not take: properties, its own or inherited,
+// and inherited methods none of which it overrides.
+func taken(def *definition, static bool, selector string) []string {
+	names := []string{}
+	for name, members := range def.surface[static] {
+		overrides := false
+		for _, existing := range members {
+			overrides = overrides || !existing.property && existing.selector == selector
+		}
+		if !overrides {
+			names = append(names, name)
+		}
+	}
+	sort.Strings(names)
+	return names
+}
+func contains(names []string, name string) bool {
+	for _, candidate := range names {
+		if candidate == name {
+			return true
+		}
+	}
+	return false
+}
+
 func doc(original string, tags []string, indent string) string {
 	text := indent + "/**\n" + indent + " * " + original + "\n"
 	for _, tag := range tags {
@@ -124,6 +168,13 @@ func (g *generator) emitClass(def *definition) (string, error) {
 	nodes := append([]*node{}, n.Children...)
 	for _, category := range g.nodes {
 		if !protocol && category.Kind == "ObjCCategoryDecl" && category.Interface.Name == n.Name {
+			// A category on the root class is an informal protocol (NSURLClient's
+			// url(_:resourceDataDidBecomeAvailable:)): methods a delegate may implement, declared
+			// on NSObject for the compiler, not methods NSObject has.
+			if n.Name == "NSObject" {
+				m.comments = append(m.comments, "// Skipped category "+category.Name+": an informal protocol on NSObject, not its own methods.")
+				continue
+			}
 			_, _, unavailable, err := g.attributes(category)
 			if err != nil {
 				return "", err
@@ -214,30 +265,88 @@ func (g *generator) emitClass(def *definition) (string, error) {
 	}
 	members := []string{}
 	constructor := false
-	// values holds the Adamic names of the properties, static and instance apart, so a method that
-	// would share one's name can give way.
-	values := map[bool][]string{}
+	// A class sees its ancestors' members, already written: their properties and methods are names
+	// its own give way to or reconcile with.
+	inherited := map[bool]map[string][]member{false: {}, true: {}}
+	def.surface = map[bool]map[string][]member{false: {}, true: {}}
+	if parent := g.types[n.Super.Name]; parent != nil && !protocol && parent.emitted {
+		for _, static := range []bool{false, true} {
+			for name, entries := range parent.surface[static] {
+				inherited[static][name] = entries
+				def.surface[static][name] = entries
+			}
+		}
+	}
 	for _, p := range properties {
-		member, name, err := g.emitProperty(def, p, protocol)
+		text, entry, name, err := g.emitProperty(def, p, protocol, inherited[p.ClassProperty])
 		if err != nil {
 			return "", err
 		}
-		if member != "" {
-			members = append(members, member)
-			values[p.ClassProperty] = append(values[p.ClassProperty], name)
+		if text != "" {
+			members = append(members, text)
+			def.surface[p.ClassProperty][name] = []member{entry}
+		}
+	}
+	// Swift's conflict rule: methods whose shortened names collide keep their words, each of them
+	// whose name omission changed (addObject: beside add:, both add(_:) once Object is dropped).
+	shortened := map[string][]*node{}
+	own := map[bool]map[string][]member{false: {}, true: {}}
+	for _, child := range nodes {
+		if child.Kind != "ObjCMethodDecl" || child.Implicit || accessors[child.Name] {
+			continue
+		}
+		key, ok := g.methodKey(def, child, taken(def, !child.Instance, child.Name))
+		if ok {
+			shortened[key] = append(shortened[key], child)
+		}
+	}
+	for _, key := range sortedKeys(shortened) {
+		if len(shortened[key]) < 2 {
+			continue
+		}
+		for _, child := range shortened[key] {
+			child.KeepNeedlessWords = true
+			if kept, _ := g.methodKey(def, child, taken(def, !child.Instance, child.Name)); kept == key {
+				child.KeepNeedlessWords = false
+			}
 		}
 	}
 	for _, child := range nodes {
 		if child.Kind != "ObjCMethodDecl" || child.Implicit || accessors[child.Name] {
 			continue
 		}
-		member, isConstructor, err := g.emitMethod(def, child, protocol, initializers, values[!child.Instance])
+		text, entry, name, isConstructor, err := g.emitMethod(def, child, protocol, initializers, taken(def, !child.Instance, child.Name), inherited[!child.Instance])
 		if err != nil {
 			return "", err
 		}
-		if member != "" {
-			members = append(members, member)
+		if text != "" {
+			members = append(members, text)
 			constructor = constructor || isConstructor
+			if !isConstructor {
+				own[!child.Instance][name] = append(own[!child.Instance][name], entry)
+			}
+		}
+	}
+	// A method name the class shares with an ancestor's is one overload set: the class re-declares
+	// the inherited overloads it doesn't override (NSStackView's remove(view) beside NSView's
+	// four), which send the ancestor's selector, as the class inherits them.
+	for _, static := range []bool{false, true} {
+		for _, name := range sortedKeys(own[static]) {
+			entries := own[static][name]
+			for _, existing := range inherited[static][name] {
+				overridden := existing.property
+				for _, entry := range entries {
+					overridden = overridden || entry.selector == existing.selector
+				}
+				if !overridden {
+					members = append(members, existing.text)
+					for _, reference := range existing.references {
+						g.addImport(m, def.output.Module, reference)
+					}
+					entries = append(entries, existing)
+				}
+			}
+			def.surface[static][name] = entries
 		}
 	}
 	sort.Strings(members)
@@ -269,6 +378,20 @@ func (g *generator) emitClass(def *definition) (string, error) {
 	text.WriteString("\t}\n")
 	return text.String(), nil
 }
+
+// methodKey is a method's slot and shape as it would be emitted, static and instance apart.
+func (g *generator) methodKey(owner *definition, n *node, values []string) (string, bool) {
+	kind := naming.InstanceMethod
+	if !n.Instance {
+		kind = naming.ClassMethod
+	}
+	_, out, _, _, reason, err := g.callable(n, kind, owner.node.Name, owner.declaration.SwiftName, g.propertyNames(owner, map[string]bool{}), values)
+	if err != nil || reason != "" {
+		return "", false
+	}
+	return fmt.Sprintf("%t %s%s", n.Instance, out.Name, naming.Shape(out.Arguments)), true
+}
+
 func containsNode(nodes []*node, n *node) bool {
 	for _, other := range nodes {
 		if n == other {
@@ -288,12 +411,12 @@ func propertySelectors(n *node) (string, string) {
 	}
 	return getter, setter
 }
-func (g *generator) emitProperty(owner *definition, n *node, protocol bool) (string, string, error) {
+func (g *generator) emitProperty(owner *definition, n *node, protocol bool, inherited map[string][]member) (string, member, string, error) {
 	d, unavailable, err := g.description(n, naming.Property, owner.node.Name)
 	d.ParentSwiftName = owner.declaration.SwiftName
 	d.ClassProperty = n.ClassProperty
 	if err != nil {
-		return "", "", err
+		return "", member{}, "", err
 	}
 	m := g.getModule(owner.output.Module)
 	skip := func(reason string) {
@@ -301,22 +424,22 @@ func (g *generator) emitProperty(owner *definition, n *node, protocol bool) (str
 	}
 	if unavailable {
 		skip("unavailable on " + g.configuration.Platform)
-		return "", "", nil
+		return "", member{}, "", nil
 	}
 	if protocol {
 		optional, err := g.protocolOptional(owner.node, n)
 		if err != nil {
-			return "", "", err
+			return "", member{}, "", err
 		}
 		if optional {
 			skip("optional protocol properties are not proven present")
-			return "", "", nil
+			return "", member{}, "", nil
 		}
 	}
 	native, err := g.native(n.Type, owner.node.Name, true)
 	if err != nil {
 		skip(err.Error())
-		return "", "", nil
+		return "", member{}, "", nil
 	}
 	getter, setter := propertySelectors(n)
 	d.Getter = getter
@@ -327,7 +450,20 @@ func (g *generator) emitProperty(owner *definition, n *node, protocol bool) (str
 		// One member the naming layer can't name yet is left out with its reason; a collision
 		// between names that were given stays fatal in naming.Build.
 		skip("no Adamic name yet: " + err.Error())
-		return "", "", nil
+		return "", member{}, "", nil
+	}
+	// A property an ancestor already has stands as the ancestor declared it when this one disagrees:
+	// NSMatrix's selectedCell, a method in NSControl, or NSSavePanel's title, nullable where
+	// NSWindow's isn't. The ancestor's declaration sends the same getter.
+	for _, existing := range inherited[out.Name] {
+		if !existing.property {
+			skip("an ancestor declares " + out.Name + " as a method, which stands")
+			return "", member{}, "", nil
+		}
+		if existing.adamic != native.adamic {
+			skip("an ancestor declares " + out.Name + " as " + existing.adamic + ", which stands")
+			return "", member{}, "", nil
+		}
 	}
 	g.declarations = append(g.declarations, d)
 	g.addImport(m, owner.output.Module, native.reference)
@@ -337,7 +473,7 @@ func (g *generator) emitProperty(owner *definition, n *node, protocol bool) (str
 		prefix = "static "
 		if protocol {
 			skip("class protocol properties have no receiver class")
-			return "", "", nil
+			return "", member{}, "", nil
 		}
 	}
 	readonly := ""
@@ -352,7 +488,7 @@ func (g *generator) emitProperty(owner *definition, n *node, protocol bool) (str
 		original += ", " + methodOriginal(owner.node.Name, setter, !n.ClassProperty)
 		g.checks = append(g.checks, checkCall{owner: owner, selector: setter, instance: !n.ClassProperty, parameters: []nativeType{native}, result: nativeType{tag: "void", c: "void", header: "void"}})
 	}
-	return doc(original, tags, "\t\t") + "\t\t" + prefix + readonly + out.Name + ": " + native.adamic + ";\n", out.Name, nil
+	return doc(original, tags, "\t\t") + "\t\t" + prefix + readonly + out.Name + ": " + native.adamic + ";\n", member{selector: getter, property: true, adamic: native.adamic}, out.Name, nil
 }
 func methodOriginal(parent, selector string, instance bool) string {
 	prefix := "+"
@@ -375,6 +511,9 @@ func (g *generator) callable(n *node, kind naming.Kind, parent, parentSwiftName 
 	}
 	if kind != naming.CFunction && (n.Name == "retain" || n.Name == "release" || n.Name == "autorelease" || n.Name == "dealloc") {
 		return d, naming.Output{}, nil, nativeType{}, "manual reference-count messages bypass Adamic ownership", nil
+	}
+	if kind == naming.ClassMethod && (n.Name == "initialize" || n.Name == "load") {
+		return d, naming.Output{}, nil, nativeType{}, "the runtime sends this message itself, once", nil
 	}
 	if n.Variadic {
 		return d, naming.Output{}, nil, nativeType{}, "variadic declarations are not carried by the bridge", nil
@@ -404,7 +543,8 @@ func (g *generator) callable(n *node, kind naming.Kind, parent, parentSwiftName 
 	}
 	d.Result = naming.Type{Spelling: namingSpelling(n.Result, result), Object: result.c == "id", Framework: referenceFramework(result, n.Framework), Nullability: naming.Nonnull}
 	d.PropertyNames = properties
-	d.ValueNames = values
+	d.TakenNames = values
+	d.KeepNeedlessWords = n.KeepNeedlessWords
 	out, e := naming.Name(d)
 	if e != nil {
 		return d, out, nil, result, "no Adamic name yet: " + e.Error(), nil
@@ -439,16 +579,16 @@ func signature(out naming.Output, natives []nativeType) (string, string) {
 	}
 	return strings.Join(parameters, ", "), suffix
 }
-func (g *generator) emitMethod(owner *definition, n *node, protocol bool, initializers map[string]bool, values []string) (string, bool, error) {
+func (g *generator) emitMethod(owner *definition, n *node, protocol bool, initializers map[string]bool, values []string, inherited map[string][]member) (string, member, string, bool, error) {
 	if protocol {
 		optional, err := g.protocolOptional(owner.node, n)
 		if err != nil {
-			return "", false, err
+			return "", member{}, "", false, err
 		}
 		if optional {
 			m := g.getModule(owner.output.Module)
 			m.comments = append(m.comments, "// Skipped "+n.Name+": optional protocol methods are not proven present.")
-			return "", false, nil
+			return "", member{}, "", false, nil
 		}
 	}
 	kind := naming.InstanceMethod
@@ -457,25 +597,32 @@ func (g *generator) emitMethod(owner *definition, n *node, protocol bool, initia
 	}
 	d, out, natives, result, reason, err := g.callable(n, kind, owner.node.Name, owner.declaration.SwiftName, g.propertyNames(owner, map[string]bool{}), values)
 	if err != nil {
-		return "", false, err
+		return "", member{}, "", false, err
 	}
 	m := g.getModule(owner.output.Module)
 	if reason != "" {
 		m.comments = append(m.comments, "// Skipped "+methodOriginal(owner.node.Name, n.Name, n.Instance)+": "+reason+".")
-		return "", false, nil
+		return "", member{}, "", false, nil
 	}
 	constructor := out.Arguments.Constructor
 	if constructor && !n.Instance && initializers[naming.Shape(out.Arguments)] {
 		m.comments = append(m.comments, "// Skipped "+methodOriginal(owner.node.Name, n.Name, false)+": an initializer of the same shape is the constructor.")
-		return "", false, nil
+		return "", member{}, "", false, nil
 	}
 	if has(n, "NSConsumesSelfAttr") && !constructor {
 		m.comments = append(m.comments, "// Skipped "+n.Name+": a consumed receiver cannot be passed borrowed.")
-		return "", false, nil
+		return "", member{}, "", false, nil
+	}
+	for _, existing := range inherited[out.Name] {
+		// +[NSCalendarDate distantFuture] beside NSDate's class property: the ancestor's stands.
+		if existing.property && !constructor {
+			m.comments = append(m.comments, "// Skipped "+methodOriginal(owner.node.Name, n.Name, n.Instance)+": an ancestor declares "+out.Name+" as a property, which stands.")
+			return "", member{}, "", false, nil
+		}
 	}
 	if protocol && (!n.Instance || constructor) {
 		m.comments = append(m.comments, "// Skipped "+n.Name+": protocol construction and class messages need a concrete class.")
-		return "", false, nil
+		return "", member{}, "", false, nil
 	}
 	g.declarations = append(g.declarations, d)
 	for _, native := range append(append([]nativeType{}, natives...), result) {
@@ -501,12 +648,16 @@ func (g *generator) emitMethod(owner *definition, n *node, protocol bool, initia
 	text := doc(methodOriginal(owner.node.Name, n.Name, n.Instance), []string{tag}, "\t\t")
 	if constructor {
 		text += "\t\tconstructor(" + parameters + ");\n"
-	} else if protocol {
-		text += "\t\treadonly " + out.Name + ": (" + parameters + ") => " + result.adamic + ";\n"
 	} else {
 		text += "\t\t" + prefix + out.Name + "(" + parameters + "): " + result.adamic + ";\n"
 	}
-	return text, constructor, nil
+	references := []*definition{}
+	for _, native := range append(append([]nativeType{}, natives...), result) {
+		if native.reference != nil {
+			references = append(references, native.reference)
+		}
+	}
+	return text, member{selector: n.Name, text: text, references: references}, out.Name, constructor, nil
 }
 func retainedFamily(selector string) bool {
 	for _, family := range []string{"alloc", "new", "copy", "mutableCopy"} {

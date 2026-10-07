@@ -48,7 +48,7 @@ inspection work; it neither links an Apple framework nor emulates one.
 | Class definitions | Naming chooses the class and module. Emit `@objc class`, original-name documentation and callable members. Forward declarations are not exports. A class with no bound constructor has a private constructor, or a protected one when bound subclasses need to extend it. |
 | Class inheritance | Import and extend the bound superclass. Inherited property names are supplied to naming's word-omission protection. |
 | Categories | Merge members into their owning class; do not manufacture a separate runtime class. |
-| Protocols | Export structural interfaces with tagged callable properties and tagged instance properties. Object parameters use the protocol's interface type. Class messages and constructors need a concrete class and are omitted. Optional protocol markers are recovered from source; optional members are omitted because presence cannot be proved. Delegate implementation is outside this generator. |
+| Protocols | Export structural interfaces with tagged method signatures, so a protocol's overloads can share a name, and tagged instance properties. Object parameters use the protocol's interface type. Class messages and constructors need a concrete class and are omitted. Optional protocol markers are recovered from source; optional members are omitted because presence cannot be proved. Delegate implementation is outside this generator. |
 | Explicit Swift names | Read the attribute's source expansion range and balance parentheses to recover `NS_SWIFT_NAME`, including initializer labels. Direct `swift_name("...")` attributes are also read. |
 | Refined declarations | Feed `SwiftPrivateAttr` to naming; keep the original selector in the tag. No handwritten Swift overlay is synthesized. |
 | Availability | Read `API_UNAVAILABLE` or direct `availability(...,unavailable)` attributes. Omit declarations unavailable on the selected platform. Availability for another platform does not suppress a declaration. Unknown attribute spellings fail explicitly. |
@@ -57,7 +57,7 @@ inspection work; it neither links an Apple framework nor emulates one.
 | Instance/class methods | Keep Apple's selector in `method`/`static` tags. Naming supplies the base and argument labels. An unlabeled first argument is positional; labeled arguments use a single trailing object. |
 | Initializers/factories | Naming identifies constructors; instance initializers use `init`, class factories use `static`. All declared parameters remain required; nullability does not invent default arguments. |
 | Ownership | Object results in alloc/new/copy/mutableCopy families, or with `NSReturnsRetainedAttr`, use `new object`; explicit `NSReturnsNotRetainedAttr` overrides the family inference. Retained C object/string results use the same ownership tag. |
-| Enum constants | Recover evaluated nested ConstantExpr values, including shifted expressions; implicit values increment the previous value. Naming strips the common word prefix and rejects collisions. Enumeration values must fit a signed 64-bit long; option bits are unsigned and may reach bit 63 (`NSAlignRectFlipped`), written unsigned in the tag and with a `UL` suffix in the witness, and carried in the bridge's long with their bits intact. |
+| Enum constants | Recover evaluated nested ConstantExpr values, including shifted expressions; implicit values increment the previous value. Naming strips the common word prefix and rejects collisions. Enumeration values must fit a signed 64-bit long, over `NSInteger` or `NSUInteger` (both 64 bits in the bridge's long, the check file accepting either); option bits, over `NSUInteger` or `unsigned long long`, are unsigned and may reach bit 63 (`NSAlignRectFlipped`), written unsigned in the tag and with a `UL` suffix in the witness, and carried in the bridge's long with their bits intact. |
 | `FlagEnumAttr` | Emit PascalCase literal domains, readonly-array parameters and `options(Name=bit,...)` tags. Ordinary enums use unions and `enum(Name=value,...)`. Fixed underlying types must match the bridge's long/unsigned long ABI when passed. |
 | Scalars | Double/CGFloat, long/NSInteger, unsigned long/NSUInteger and BOOL use their documented tags and Adamic number/boolean types. NSString pointers become strings. Narrow integers and float are omitted because the bridge has no matching native call type. |
 | CGRect/NSRect | Resolve NSRect's desugared CGRect identity. Emit the four-number Rectangle interface and rectangle argument tag. No rectangle result is emitted. |
@@ -67,6 +67,13 @@ inspection work; it neither links an Apple framework nor emulates one.
 | Class and protocol of one name | Swift's rule: the protocol imports as `...Protocol` (`NSAccessibilityElement` and `AccessibilityElementProtocol`), whichever is declared first; `id<Name>` means the protocol and `Name *` the class, and the protocol's members carry its imported name in their identity. |
 | Factory beside an initializer | Swift's rule: a class factory imported as an initializer gives way to an instance initializer of the same shape (`+[NSAffineTransform transform]` beside `-init`). |
 | Method beside a property | Swift tells `abbreviation(for:)` from the property `abbreviation` by labels; a class can't, so the method folds its first label into its name and takes that argument positionally, Objective-C's own reading: `abbreviationFor(date)`, `isValidDateIn(calendar)`. Only properties of the same staticness count. |
+| Inherited members | A class is written after its superclass and carries its whole member surface, its own and inherited, by Adamic name. A method that would take an inherited name without overriding that selector folds its first label in (`cellAtRow(row, { column })` beside `NSControl`'s `cell`). A method name shared with an ancestor's is one overload set: the class re-declares the inherited overloads it doesn't override, which send the ancestor's selector (`NSStackView`'s `remove(view)` beside `NSView`'s four). A property or class method meeting an ancestor's declaration of that name that disagrees (a method, another type, a property) is dropped, and the ancestor's stands, sending the same getter: `NSMatrix`'s `selectedCell`, `NSSavePanel`'s nullable `title`, `+[NSCalendarDate distantFuture]`. |
+| Informal protocols | Categories on `NSObject` itself are delegate methods declared on the root for the compiler (`NSURLClient`), not methods `NSObject` has, and are left out. |
+| Swift's conflict rule | Methods whose shortened names would collide keep their omitted words, each one whose name omission changed: `addObject(object)` beside the action `add(sender)`. |
+| Any object | `id` binds as `NSObject`, `FoundationObject` in Adamic, which `objc/NSObject.h` declares and Foundation's module holds. |
+| Moved headers | `CGRect`, `CGPoint` and `CGSize` are defined in CoreFoundation's `CFCGTypes.h` on current SDKs and generated with CoreGraphics, where every caller finds them. |
+| Framework availability macros | A framework's own function-like macro over `availability(...)` (CoreGraphics' `SCREEN_CAPTURE_OBSOLETE(10.5,14.0,15.0)`) is expanded from its `#define`; `unavailable` or `obsoleted` on this platform leaves the declaration out. Macro names read with their digits. |
+| Runtime-only messages | `+initialize` and `+load` are the runtime's to send, and are left out. |
 | Redeclared properties | A category that redeclares a class's property (`NSSlider`'s `vertical`, readonly in a category beside the class's readwrite) is dropped, unless it widens readonly to readwrite. |
 | Unnameable members | A member the naming layer can't name yet (a zero-argument named initializer without an explicit Swift name, such as `initListDescriptor`) is left out with its reason rather than stopping the framework. |
 
@@ -133,22 +140,28 @@ must generate the real files and compile the header witness before using them.
 
 ## The real SDK (macOS 27.0 SDK, October 6, 2026)
 
-`go run ./cmd/adamic-apple-bindings Foundation AppKit -o <directory>` generates
-both frameworks whole: 1,249 modules, 7.6 MB, about 5 seconds. Its check file
-holds 7,297 calls and compiles clean against the real headers with
+`go run ./cmd/adamic-apple-bindings Foundation AppKit CoreGraphics -o <directory>`
+generates all three whole: 1,378 modules, 8.7 MB, about 6 seconds. Its check
+file holds 8,160 calls and compiles clean against the real headers with
 `xcrun clang -x objective-c -fsyntax-only -fno-objc-arc -Werror
 -Wno-deprecated-declarations -fmodules`, the bridge's own mode. Under ARC, the
-seven checks of `NSAutoreleasePool` and `NSGarbageCollector` are refused, as
-they should be; without `-Wno-deprecated-declarations`, 20 deprecated
-declarations warn.
+checks of `NSAutoreleasePool` and `NSGarbageCollector` are refused, as they
+should be; without `-Wno-deprecated-declarations`, deprecated declarations warn.
+
+Every module type-checks under Adamic's own compiler with no errors: all of
+them concatenated in place of one seed, the other seeds blanked, and a program
+importing it compiled with `go run -overlay <overlay> ./cmd/adamic c`. The
+first such run held 197 errors: duplicates of the hand-written seeds, protocol
+overloads written as properties, and, most of them, subclass members meeting
+inherited ones.
 
 Each rule above marked as Swift's, and the unsigned option bits, the protocol
 results, and the redeclared properties, is a wall the real headers showed, held
 on Linux by `Collision.h`, `Shapes.h` and the golden fixture. The largest
-omissions, by count: global constants (2,700), unbound types such as `id` and
-`SEL` (1,168), pointer-to-pointer parameters (329), enumeration and option
-results (261), enumerations over `NSUInteger` (152), and anything taking a
-`CGRect` while CoreGraphics isn't generated (110).
+omissions, by count: global constants (2,835); unbound types (1,748), mostly
+`NSRange`, `NSPoint`, `NSSize`, `CGContextRef`, `SEL` and `Class`;
+enumeration and option results (413); pointer-to-pointer parameters (331); and
+rectangle results (82).
 Output.Write does not delete old seed or previously generated files; removing
 obsolete modules is a separate SDK-generation integration step.
 

@@ -3,6 +3,7 @@ package generate
 import (
 	"fmt"
 	"math/big"
+	"os"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -19,6 +20,21 @@ type definition struct {
 	members     []string
 	values      []string
 	options     bool
+	// emitted marks a class or protocol written out; a class is written after its superclass, so
+	// it can see what its ancestors' members are called.
+	emitted bool
+	// surface is every member the class has by Adamic name, its own and its ancestors', static
+	// (true) and instance apart, so a subclass can reconcile its members with what it inherits.
+	surface map[bool]map[string][]member
+}
+
+// member is one declaration under a name: a property, or one overload of a method.
+type member struct {
+	selector   string
+	property   bool
+	adamic     string        // a property's type
+	text       string        // a method's declaration, re-declared by a subclass that overloads its name
+	references []*definition // the types that text names, for the subclass's imports
 }
 type module struct {
 	imports      map[string]string
@@ -100,7 +116,9 @@ func (g *generator) text(l location) (string, error) {
 		return "", fmt.Errorf("attribute offset outside %s", name)
 	}
 	end := l.Offset
-	for end < len(source) && (source[end] >= 'a' && source[end] <= 'z' || source[end] >= 'A' && source[end] <= 'Z' || source[end] == '_') {
+	// A macro's name takes digits after its first character
+	// (DEPRECATED_IN_MAC_OS_X_VERSION_10_0_AND_LATER).
+	for end < len(source) && (source[end] >= 'a' && source[end] <= 'z' || source[end] >= 'A' && source[end] <= 'Z' || source[end] == '_' || end > l.Offset && source[end] >= '0' && source[end] <= '9') {
 		end++
 	}
 	for end < len(source) && (source[end] == ' ' || source[end] == '\t') {
@@ -144,7 +162,8 @@ func (g *generator) text(l location) (string, error) {
 }
 
 // regionMacro is an availability macro written without arguments, its platforms in its name.
-var regionMacro = regexp.MustCompile(`^[A-Z][A-Z0-9_]*(AVAILABLE|DEPRECATED)[A-Z0-9_]*`)
+// The word may open the name (DEPRECATED_IN_MAC_OS_X_VERSION_10_1_AND_LATER).
+var regionMacro = regexp.MustCompile(`^[A-Z0-9_]*?(AVAILABLE|DEPRECATED)[A-Z0-9_]*`)
 
 // unavailableByName reports whether a macro like APPKIT_API_UNAVAILABLE_BEGIN_MACCATALYST makes its
 // declarations unavailable on the platform being generated: the words after UNAVAILABLE name the
@@ -206,15 +225,96 @@ func (g *generator) attributes(n *node) (swift string, refined, unavailable bool
 							unavailable = true
 						}
 					}
-				} else if !strings.Contains(upper, "AVAILABLE") && !strings.Contains(upper, "DEPRECATED") && !strings.HasPrefix(text, "availability(") {
-					err = fmt.Errorf("unrecognized availability attribute %q", text)
-					return
+				} else if strings.HasPrefix(text, "availability(") {
+					unavailable = unavailable || g.unavailableIn(text)
+				} else if !strings.Contains(upper, "AVAILABLE") && !strings.Contains(upper, "DEPRECATED") {
+					// A framework's own macro over availability (CoreGraphics'
+					// SCREEN_CAPTURE_OBSOLETE(10.5,14.0,15.0)): expand it from its #define.
+					expanded, found := g.expandMacro(text, child.Begin.File)
+					if !found || !strings.Contains(expanded, "availability(") {
+						err = fmt.Errorf("unrecognized availability attribute %q", text)
+						return
+					}
+					unavailable = unavailable || g.unavailableIn(expanded)
 				}
 			}
 		}
 	}
 	return
 }
+
+// unavailableIn reads availability(platform, ...) clauses: a declaration is unavailable on this
+// platform when its clause says unavailable or obsoleted, since every obsoleted version precedes
+// the SDK being generated.
+func (g *generator) unavailableIn(text string) bool {
+	platform := g.configuration.Platform
+	for rest := text; ; {
+		at := strings.Index(rest, "availability(")
+		if at < 0 {
+			return false
+		}
+		rest = rest[at+len("availability("):]
+		end := strings.IndexByte(rest, ')')
+		if end < 0 {
+			return false
+		}
+		clauses := strings.Split(rest[:end], ",")
+		name := strings.TrimSpace(clauses[0])
+		if name == platform || platform == "macos" && name == "macosx" || platform == "visionos" && name == "xros" {
+			for _, clause := range clauses[1:] {
+				clause = strings.Join(strings.Fields(clause), "")
+				if clause == "unavailable" || strings.HasPrefix(clause, "obsoleted=") {
+					return true
+				}
+			}
+		}
+		rest = rest[end:]
+	}
+}
+
+// expandMacro expands one use of a function-like macro, NAME(arguments), from its #define in the
+// use's own header or any header of the frameworks being generated. It substitutes whole-word
+// parameters and nothing else: enough for a framework's availability macros, which is all it's for.
+func (g *generator) expandMacro(use, file string) (string, bool) {
+	left := strings.IndexByte(use, '(')
+	if left <= 0 || !strings.HasSuffix(use, ")") {
+		return "", false
+	}
+	name := use[:left]
+	arguments := strings.Split(use[left+1:len(use)-1], ",")
+	definition := regexp.MustCompile(`(?m)^[ \t]*#[ \t]*define[ \t]+` + regexp.QuoteMeta(name) + `\(([^)]*)\)((?:[^\n]*\\\n)*[^\n]*)`)
+	files := []string{file}
+	for _, framework := range g.configuration.Frameworks {
+		entries, _ := os.ReadDir(framework.Headers)
+		for _, entry := range entries {
+			if strings.HasSuffix(entry.Name(), ".h") {
+				files = append(files, filepath.Join(framework.Headers, entry.Name()))
+			}
+		}
+	}
+	for _, candidate := range files {
+		source, err := g.configuration.ReadSource(candidate)
+		if err != nil {
+			continue
+		}
+		match := definition.FindSubmatch(source)
+		if match == nil {
+			continue
+		}
+		parameters := strings.Split(string(match[1]), ",")
+		if len(parameters) != len(arguments) {
+			return "", false
+		}
+		body := strings.ReplaceAll(string(match[2]), "\\\n", " ")
+		for i, parameter := range parameters {
+			word := regexp.MustCompile(`\b` + regexp.QuoteMeta(strings.TrimSpace(parameter)) + `\b`)
+			body = word.ReplaceAllLiteralString(body, strings.TrimSpace(arguments[i]))
+		}
+		return body, true
+	}
+	return "", false
+}
+
 func (g *generator) description(n *node, kind naming.Kind, parent string) (naming.Declaration, bool, error) {
 	swift, refined, unavailable, err := g.attributes(n)
 	return naming.Declaration{Kind: kind, Name: n.Name, Parent: parent, Framework: n.Framework, SwiftName: swift, RefinedForSwift: refined}, unavailable, err
@@ -503,7 +603,10 @@ func (g *generator) native(t writtenType, parent string, result bool) (nativeTyp
 			tag = "options"
 			mapped.adamic = "readonly " + def.output.Name + "[]"
 		}
-		if underlying != want {
+		// An enumeration over NSUInteger crosses in the bridge's long, and an option set over
+		// unsigned long long (NSEventMask) in its unsigned long: the same register and bits, since
+		// every case's value is held by the check file.
+		if underlying != want && !(tag == "enum" && underlying == "unsigned long") && !(tag == "options" && underlying == "unsigned long long") {
 			return mapped, fmt.Errorf("enum width/sign %s cannot cross as %s", underlying, want)
 		}
 		if result {
@@ -534,6 +637,10 @@ func (g *generator) native(t writtenType, parent string, result bool) (nativeTyp
 		mapped.c = "adamic_apple_rectangle"
 		mapped.reference = def
 		return mapped, nil
+	}
+	if q == "id" {
+		// Any object: every object the bridge holds is an NSObject (FoundationObject).
+		q = "NSObject *"
 	}
 	if q == "NSString *" {
 		mapped.tag = "string"

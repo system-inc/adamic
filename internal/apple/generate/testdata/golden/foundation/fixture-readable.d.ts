@@ -9,6 +9,6 @@ declare module 'apple/foundation/fixture-readable' {
 		 * -[NSFixtureReadable readText]
 		 * @objc method readText -> string
 		 */
-		readonly readText: () => string;
+		readText(): string;
 	}
 }

@@ -44,8 +44,8 @@ void adamic_binding_check_5(void) {
 }
 
 void adamic_binding_check_6(NSFixturePanel * _Nonnull receiver, long argument0, unsigned long argument1) {
-	_Static_assert(__builtin_types_compatible_p(long, NSFixtureMode), "configureMode:style: parameter 0 ABI");
-	_Static_assert(__builtin_types_compatible_p(unsigned long, NSFixtureStyle), "configureMode:style: parameter 1 ABI");
+	_Static_assert(__builtin_types_compatible_p(long, NSFixtureMode) || __builtin_types_compatible_p(unsigned long, NSFixtureMode), "configureMode:style: parameter 0 ABI");
+	_Static_assert(__builtin_types_compatible_p(unsigned long, NSFixtureStyle) || __builtin_types_compatible_p(unsigned long long, NSFixtureStyle), "configureMode:style: parameter 1 ABI");
 	[receiver configureMode:argument0 style:argument1];
 }
 

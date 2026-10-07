@@ -27,6 +27,9 @@ type node struct {
 	Instance, Implicit, Variadic, Readonly, ClassProperty, Complete bool
 	Children                                                        []*node
 	Framework                                                       string
+	// KeepNeedlessWords is the generator's, not clang's: a method whose shortened name would
+	// collide with a sibling's keeps its full one (see emitClass).
+	KeepNeedlessWords bool
 }
 type astStream struct {
 	decoder *json.Decoder

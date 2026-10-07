@@ -468,7 +468,7 @@ func swiftName(d Declaration) (string, string, []string, error) {
 				}
 			}
 		}
-		if d.Kind != CFunction {
+		if d.Kind != CFunction && !d.KeepNeedlessWords {
 			base, labels = omitNeedlessWords(base, labels, d)
 		}
 	} else if isCase(d.Kind) {

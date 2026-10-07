@@ -3,6 +3,7 @@ import type { Window } from 'apple/appkit/window';
 export type BindingGeneratorAnchor = Window;
 import { FixturePanel } from 'apple/appkit/fixture-panel';
 import { FixtureRecord } from 'apple/foundation/fixture-record';
+import type { FixtureReadable } from 'apple/foundation/fixture-readable';
 import { fixtureAdd } from 'apple/foundation/fixture-add';
 import { fixtureCreateText } from 'apple/foundation/fixture-create-text';
 
@@ -15,6 +16,8 @@ panel.take(undefined);
 record.text = 'fixture';
 record.label = 'paired getter';
 record.takeProtocol(record);
+const readable: FixtureReadable = record;
+console.log(readable.readText());
 panel.paint();
 panel.show('overloaded text');
 panel.show(4);

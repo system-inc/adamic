@@ -83,12 +83,16 @@ type Declaration struct {
 	RefinedForSwift bool         // NS_REFINED_FOR_SWIFT; retained, never silently hidden.
 	Enumerators     []Enumerator // all siblings, required for inferred case names
 	PropertyNames   []string     // includes inherited properties, for omission protection
-	// ValueNames are the Adamic names of the owner's properties of the same staticness. A method
-	// whose name would be one of them gives way (see foldFirstLabel).
-	ValueNames    []string
-	ClassProperty bool   // a property of the class, not its instances (@property (class))
-	Getter        string // a property's getter selector, including a BOOL is-prefixed getter
-	Setter        string
+	// TakenNames are names this member may not take, of the same staticness: the owner's and its
+	// ancestors' properties, and inherited methods it doesn't override. A method whose name would be
+	// one of them gives way (see foldFirstLabel).
+	TakenNames    []string
+	ClassProperty bool // a property of the class, not its instances (@property (class))
+	// KeepNeedlessWords is Swift's conflict rule: a method whose omitted name would collide with
+	// a sibling's keeps its words (NSArrayController's addObject: beside add:).
+	KeepNeedlessWords bool
+	Getter            string // a property's getter selector, including a BOOL is-prefixed getter
+	Setter            string
 	// AccessorProperty joins getter/setter declarations to a property. Such
 	// accessors are emitted through the property, not independently by Build.
 	AccessorProperty string
@@ -210,7 +214,7 @@ func Name(d Declaration) (Output, error) {
 			}
 		}
 		result.Arguments = layout
-		if (d.Kind == InstanceMethod || d.Kind == ClassMethod) && !layout.Constructor && len(layout.Options) > 0 && contains(d.ValueNames, result.Name) {
+		if (d.Kind == InstanceMethod || d.Kind == ClassMethod) && !layout.Constructor && len(layout.Options) > 0 && contains(d.TakenNames, result.Name) {
 			foldFirstLabel(&result, d)
 		}
 	}
@@ -229,8 +233,9 @@ func Name(d Declaration) (Output, error) {
 	return result, nil
 }
 
-// foldFirstLabel renames a method that would share a property's name: Swift tells
-// abbreviation(for:) from the property abbreviation by its labels, and a class member can't, so the
+// foldFirstLabel renames a method that would take a name already taken: Swift tells
+// abbreviation(for:) from the property abbreviation, and NSMatrix's cell(atRow:column:) from
+// NSControl's cell, by their labels, and a class member can't, so the
 // first label joins the name and its argument becomes positional, Objective-C's own reading
 // (abbreviationForDate: is abbreviationFor(date), isValidDateInCalendar: is isValidDateIn(calendar)).
 func foldFirstLabel(result *Output, d Declaration) {

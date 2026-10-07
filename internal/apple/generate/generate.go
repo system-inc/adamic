@@ -68,7 +68,13 @@ func Generate(input io.Reader, configuration Configuration) (Output, error) {
 		}
 		for _, f := range configuration.Frameworks {
 			relative, err := filepath.Rel(f.Headers, file)
-			if err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) && strings.HasSuffix(strings.ToLower(file), ".h") {
+			home := ""
+			for moved, framework := range movedHeaders {
+				if strings.HasSuffix(filepath.ToSlash(file), "/"+moved) {
+					home = framework
+				}
+			}
+			if home == f.Name || home == "" && err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) && strings.HasSuffix(strings.ToLower(file), ".h") {
 				n.Framework = f.Name
 				g.nodes = append(g.nodes, n)
 				break
@@ -81,6 +87,15 @@ func Generate(input io.Reader, configuration Configuration) (Output, error) {
 	}
 	return g.build()
 }
+
+// movedHeaders are headers Apple moved below the framework their declarations belong to: CGRect,
+// CGPoint and CGSize are defined in CoreFoundation's CFCGTypes.h, while Swift and every caller
+// find them in CoreGraphics, so they're generated there when CoreGraphics is.
+//
+// NSObject is declared by the Objective-C runtime's objc/NSObject.h; the rename table already names
+// it FoundationObject, so it's generated with Foundation, and any object (id) binds to it.
+var movedHeaders = map[string]string{"CoreFoundation.framework/Headers/CFCGTypes.h": "CoreGraphics", "usr/include/objc/NSObject.h": "Foundation"}
+
 func safeName(s string) bool {
 	if s == "" {
 		return false

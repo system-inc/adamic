@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"reflect"
+	"slices"
 	"sort"
 	"strings"
 	"testing"
@@ -298,7 +299,7 @@ func TestCompilerLowersGeneratedModules(t *testing.T) {
 	if runError != nil {
 		t.Fatalf("go run ./cmd/adamic c: %v\n%s", runError, content)
 	}
-	for _, want := range []string{"objc_msgSend", "NSFixturePanel", "setFrame:display:animate:", "configureMode:style:", "NSFixtureAdd", "adamic_apple_rectangle", "adamic_apple_options", "adamic_apple_string", "NSFixtureCreateText", "objc_release(result);", "showText:", "showCount:", "initWithTitle:"} {
+	for _, want := range []string{"objc_msgSend", "NSFixturePanel", "setFrame:display:animate:", "configureMode:style:", "NSFixtureAdd", "adamic_apple_rectangle", "adamic_apple_options", "adamic_apple_string", "NSFixtureCreateText", "objc_release(result);", "showText:", "showCount:", "initWithTitle:", "readText"} {
 		if !bytes.Contains(content, []byte(want)) {
 			t.Errorf("lowered C missing %q", want)
 		}
@@ -354,10 +355,10 @@ func TestDeclarationKindCollision(t *testing.T) {
 	}
 	for path, wants := range map[string][]string{
 		"foundation/fixture-ambiguous.d.ts":          {"export class FixtureAmbiguous", "takeProtocol(protocol: FixtureAmbiguousProtocol)", "takeClass(value: FixtureAmbiguous)", "protocolValue(): FixtureAmbiguousProtocol;", "import type { FixtureAmbiguousProtocol } from 'apple/foundation/fixture-ambiguous-protocol';"},
-		"foundation/fixture-ambiguous-protocol.d.ts": {"/** NSFixtureAmbiguous */\n\texport interface FixtureAmbiguousProtocol {", "readonly doThing: () => void;"},
+		"foundation/fixture-ambiguous-protocol.d.ts": {"/** NSFixtureAmbiguous */\n\texport interface FixtureAmbiguousProtocol {", "doThing(): void;"},
 		"foundation/fixture-element.d.ts":            {"export class FixtureElement", "activate(): void;"},
 		"foundation/fixture-holder.d.ts":             {"readonly element: FixtureElementProtocol;"},
-		"foundation/fixture-element-protocol.d.ts":   {"export interface FixtureElementProtocol {", "readonly describe: () => void;"},
+		"foundation/fixture-element-protocol.d.ts":   {"export interface FixtureElementProtocol {", "describe(): void;"},
 	} {
 		content, ok := files[path]
 		if !ok {
@@ -420,5 +421,83 @@ func TestMemberShapes(t *testing.T) {
 	}
 	if t.Failed() {
 		t.Log(zone)
+	}
+}
+
+// Each pattern here stopped the real Foundation, AppKit or CoreGraphics once, or failed to
+// type-check across inheritance; Inheritance.h holds them.
+func TestInheritedMembers(t *testing.T) {
+	t.Parallel()
+	output, err := RunClang(context.Background(), clangPath(t), []string{"-x", "objective-c", "-fobjc-runtime=macosx-10.13", "-fsyntax-only", "-fblocks", "-Werror", "-Wno-nullability-completeness", "-F", "testdata/SDK", "-Xclang", "-ast-dump=json", "testdata/SDK/Foundation.framework/Headers/Inheritance.h"}, fixtureConfiguration(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := map[string]string{}
+	for _, file := range output.Files {
+		files[file.Path] = string(file.Content)
+	}
+	for path, wants := range map[string][]string{
+		"foundation/fixture-base.d.ts": {
+			"add(sender: FoundationObject | undefined): void;",
+			"addObject(object: FoundationObject): void;",
+			"@objc method storeBacking:mask: 0:enum(Retained=0,Buffered=2) 1.mask:options(Down=2,Up=4) -> void",
+			"// Skipped -[NSFixtureBase captureOld]: unavailable on macos.",
+			"drawOld(): void;",
+		},
+		"foundation/fixture-advanced.d.ts": {
+			"@objc method removeCount: 0:integer -> void\n\t\t */\n\t\tremove(count: number): void;",
+			"@objc method removeItem: 0:string -> void\n\t\t */\n\t\tremove(item: string): void;",
+			"// Skipped NSFixtureAdvanced.selectedCell: an ancestor declares selectedCell as a method, which stands.",
+			"// Skipped NSFixtureAdvanced.title: an ancestor declares title as string, which stands.",
+			"// Skipped +[NSFixtureAdvanced shared]: an ancestor declares shared as a property, which stands.",
+			"cellAtRow(row: number, options: { readonly column: number }): FixtureCell | undefined;",
+		},
+		"foundation/foundation-object.d.ts": {
+			"// Skipped category NSFixtureInformal: an informal protocol on NSObject, not its own methods.",
+		},
+	} {
+		for _, want := range wants {
+			if !strings.Contains(files[path], want) {
+				t.Errorf("%s missing %q", path, want)
+			}
+		}
+	}
+	_, body, _ := strings.Cut(files["foundation/foundation-object.d.ts"], "declare module")
+	if strings.Contains(body, "fixtureDidFinish") || strings.Contains(body, "initialize") {
+		t.Errorf("an informal protocol or a runtime-only message was bound:\n%s", files["foundation/foundation-object.d.ts"])
+	}
+	if !strings.Contains(string(output.Check), "|| __builtin_types_compatible_p(unsigned long long, NSFixtureMask)") {
+		t.Error("check file doesn't hold 64-bit option bits")
+	}
+	if t.Failed() {
+		for _, path := range []string{"foundation/fixture-base.d.ts", "foundation/fixture-advanced.d.ts", "foundation/foundation-object.d.ts"} {
+			t.Log(path + "\n" + files[path])
+		}
+	}
+}
+
+// Apple moved CGRect, CGPoint and CGSize into CoreFoundation's CFCGTypes.h; they're generated with
+// CoreGraphics, where Swift and every caller find them.
+func TestMovedHeaders(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	configuration := Configuration{Frameworks: []Framework{{Name: "CoreGraphics", Headers: filepath.Join(root, "CoreGraphics.framework/Headers")}}, Platform: "macos", ReadSource: func(string) ([]byte, error) { return nil, nil }}
+	moved, _ := json.Marshal(filepath.Join(root, "CoreFoundation.framework/Headers/CFCGTypes.h"))
+	elsewhere, _ := json.Marshal(filepath.Join(root, "CoreFoundation.framework/Headers/CFBase.h"))
+	input := `{"kind":"TranslationUnitDecl","inner":[
+ {"kind":"RecordDecl","name":"CGRect","tagUsed":"struct","completeDefinition":true,"loc":{"file":MOVED,"offset":1}},
+ {"kind":"RecordDecl","name":"CFRange","tagUsed":"struct","completeDefinition":true,"loc":{"file":ELSEWHERE,"offset":1}}
+ ]}`
+	input = strings.ReplaceAll(strings.ReplaceAll(input, "MOVED", string(moved)), "ELSEWHERE", string(elsewhere))
+	output, err := Generate(strings.NewReader(input), configuration)
+	if err != nil {
+		t.Fatal(err)
+	}
+	paths := []string{}
+	for _, file := range output.Files {
+		paths = append(paths, file.Path)
+	}
+	if !slices.Contains(paths, "coregraphics/rectangle.d.ts") || len(paths) != 1 {
+		t.Fatalf("moved header not generated with CoreGraphics alone: %v", paths)
 	}
 }
