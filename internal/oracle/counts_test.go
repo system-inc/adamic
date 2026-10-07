@@ -77,7 +77,7 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 	if input {
 		context = cacheKey(context, inputIdentity(t))
 	}
-	key := nativeResultKey(native.C(program), given.libraries[2], given.nodeVersion, context)
+	key := nativeResultKey(native.C(program), given.libraries[countedBuild], given.nodeVersion, context)
 	executeCounted := func() recordedRun {
 		var result run
 		if input {
