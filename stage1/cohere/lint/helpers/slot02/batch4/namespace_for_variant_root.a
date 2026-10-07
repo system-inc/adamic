@@ -1,0 +1,3 @@
+export function namespaceForVariantRoot(root: string): string {
+    return root.startsWith('@') ? '--container' : '--breakpoint';
+}

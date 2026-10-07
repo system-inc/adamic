@@ -1,0 +1,37 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { isValidThemePrefix } from './valid_theme_prefix.a';
+import { namespaceForVariantRoot } from './namespace_for_variant_root.a';
+import { convertUnderscoresToWhitespace } from './convert_underscores_to_whitespace.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('corpus path'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if (root === -1) { panic(json.error); }
+function observe(text: string): void {
+    console.log(`prefix:${isValidThemePrefix(text)}`);
+    console.log(`namespace:${namespaceForVariantRoot(text)}`);
+    console.log(`convert:${convertUnderscoresToWhitespace(text, false)}`);
+    console.log(`keep:${convertUnderscoresToWhitespace(text, true)}`);
+}
+for (const index of json.node(json.field(root, 'Texts')).children) { observe(json.node(index).text); }
+for (let first = 0; first < 128; first++) {
+    for (let second = 0; second < 128; second++) { observe(String.fromCharCode(first, second)); }
+}
+let prefixCount = 0;
+let namespaceCount = 0;
+for (let code = 0; code <= 1114111; code++) {
+    const value = String.fromCodePoint(code >= 55296 && code <= 57343 ? 65533 : code);
+    if (isValidThemePrefix('a' + value + 'b')) {
+        console.log(`prefix-code:${code}`);
+        prefixCount++;
+    }
+    const namespace = namespaceForVariantRoot(value + 'root');
+    if (namespace !== '--breakpoint') {
+        console.log(`namespace-code:${code}:${namespace}`);
+        namespaceCount++;
+    }
+}
+console.log(`prefix-count:${prefixCount}`);
+console.log(`namespace-count:${namespaceCount}`);

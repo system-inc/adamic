@@ -1,0 +1,8 @@
+export function isValidThemePrefix(prefix: string): boolean {
+    if (prefix.length === 0) { return false; }
+    for (let index = 0; index < prefix.length; index++) {
+        const code = prefix.charCodeAt(index);
+        if (code < 97 || code > 122) { return false; }
+    }
+    return true;
+}
