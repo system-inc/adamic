@@ -52,9 +52,9 @@ def variance_breakdown(findings,raw,texts):
   entry['findings'].append(record);sites.append(record)
  return dict(measurement=LABEL,total=len(sites),owning_declaration_count=len(groups),families=dict(sorted(collections.Counter(s['variance_family'] for s in sites).items())),per_declaration=dict(sorted(groups.items())))
 
-def summarize(raw,manifest):
+def summarize(raw,manifest,denominator=78):
  header=raw[0];assert header['checker_rejected'] and header['status']=='measurement'
- assert {r['file'] for r in raw[1:]}=={f['file'] for f in manifest} and len(raw[1:])==78
+ assert {r['file'] for r in raw[1:]}=={f['file'] for f in manifest} and len(raw[1:])==denominator
  keys={site(f) for r in raw[1:] for f in r['findings']}
  units=[u for r in raw[1:] for u in r['units']]
  per_file={}
@@ -62,7 +62,7 @@ def summarize(raw,manifest):
   file=row['file'];own={s for s in keys if s[1].rsplit(':',2)[0]==file}
   per_file[file]=dict(measurement=LABEL,checker=sum(d['file']==file for d in header['diagnostic_sites']),**counts(own),per_reason=reasons(own),functions_attempted=sum(u['kind']=='KindFunctionDeclaration' and u['status']!='skipped_checker_body' for u in row['units']),bodies_skipped=sum(u['status']=='skipped_checker_body' for u in row['units']))
  clean=sorted(f for f,v in per_file.items() if v['checker']==0)
- return dict(measurement=LABEL,checker_rejected=True,checker_total=len(header['diagnostics']),checker_per_reason=dict(sorted(collections.Counter(d.split('error ')[1].split(':')[0] for d in header['diagnostics']).items())),checker_clean_files=clean,checker_clean_ratio=dict(measurement=LABEL,numerator=len(clean),denominator=78,fraction=f'{len(clean)}/78',percent=100*len(clean)/78),lowering_counts=counts(keys),per_reason=reasons(keys),per_file=per_file,top_level_units=len(units),functions_attempted=sum(u['kind']=='KindFunctionDeclaration' and u['status']!='skipped_checker_body' for u in units),bodies_skipped=sum(u['status']=='skipped_checker_body' for u in units),recorded_events=sum(len(r['findings']) for r in raw[1:]),findings=[dict(measurement=LABEL,kind=k[0],where=k[1],reason=k[2],text=k[3]) for k in sorted(keys)])
+ return dict(measurement=LABEL,checker_rejected=True,checker_total=len(header['diagnostics']),checker_per_reason=dict(sorted(collections.Counter(d.split('error ')[1].split(':')[0] for d in header['diagnostics']).items())),checker_clean_files=clean,checker_clean_ratio=dict(measurement=LABEL,numerator=len(clean),denominator=denominator,fraction=f'{len(clean)}/{denominator}',percent=100*len(clean)/denominator),lowering_counts=counts(keys),per_reason=reasons(keys),per_file=per_file,top_level_units=len(units),functions_attempted=sum(u['kind']=='KindFunctionDeclaration' and u['status']!='skipped_checker_body' for u in units),bodies_skipped=sum(u['status']=='skipped_checker_body' for u in units),recorded_events=sum(len(r['findings']) for r in raw[1:]),findings=[dict(measurement=LABEL,kind=k[0],where=k[1],reason=k[2],text=k[3]) for k in sorted(keys)])
 
 def delta(current,previous):
  files=current['per_file'];pr=previous['per_reason'];cr=current['per_reason']

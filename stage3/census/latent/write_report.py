@@ -2,6 +2,10 @@
 import json
 from pathlib import Path
 root=Path(__file__).resolve().parent;result=json.loads((root/'REPORT.json').read_text());runs=result['runs'];base=runs[0]
+if result.get('meter_version') == 4:
+ import runpy
+ runpy.run_path(str(root/'unmerged4.py'), run_name='__main__')
+ raise SystemExit(0)
 if result.get('meter_version') == 3:
  import runpy
  runpy.run_path(str(root/'meter3.py'), run_name='__main__')
