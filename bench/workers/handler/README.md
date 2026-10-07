@@ -216,6 +216,7 @@ proof exits nonzero if either mutant escapes or the positive comparison fails.
 Linux execution is verified in this unit; macOS wait4 unit conversion is
 implemented but has not been exercised here. No diagnosis/profile pass is run.
 
-The recorded run, raw samples, release commands and mutant results are linked in
-[REPORT.md](REPORT.md). Its measured compiler SHA is separate from the delivery
-base and the subsequent landing compatibility check.
+Keep run results and evidence on the task, outside the repository. Run with
+`--output` pointing to a scratch path, such as `/tmp/handler-results.json`, and
+redirect the markdown output there too. Node-source's parse time includes Node's
+type stripping, which a bundled TypeScript Worker does not pay.
