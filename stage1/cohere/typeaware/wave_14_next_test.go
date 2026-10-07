@@ -132,23 +132,15 @@ declare module "test" {export namespace nested {export class MockTracker{propert
 			h.compare(corpus.name+"-asan", oracle, asan, corpus.config, corpus.manifest)
 		}
 	}
-	jsx := h.write("jsx-witness.a", "declare const count:number;export const view=<p>{count&&'some'}</p>;\n")
+	// Raw lint input is TSX so both independent checker programs parse JSX.
+	jsx := h.write("jsx-witness.tsx", "declare const count:number;export const view=<p>{count&&'some'}</p>;\n")
 	jsxManifest := h.write("jsx-witness.manifest", jsx+"\n")
-	jsxResult := h.run("jsx-native-refusal", exec.Command(binary, config, jsxManifest))
-	if code, ok := jsxResult.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(jsxResult.stderr, []byte("parser slice expected CloseBraceToken, got AmpersandAmpersandToken")) {
-		t.Fatalf("JSX boundary changed: %v %s", jsxResult.err, jsxResult.stderr)
+	jsxTruth := h.compare("jsx", oracle, binary, config, jsxManifest)
+	h.compare("jsx-asan", oracle, asan, config, jsxManifest)
+	if !bytes.Contains(jsxTruth.stdout, []byte("\tleakedNumberRender\t")) {
+		t.Fatal("missing positive real JSX finding")
 	}
-	virtual := filepath.Join(repository, "cohere/internal/lint/rules/nexus/adamic_wave14_jsx_test.go")
-	witnessSource := filepath.Join(repository, "stage1/cohere/typeaware/testdata/jsx_wave_14_next_test.go")
-	witnessOverlay := h.write("jsx-overlay.json", fmt.Sprintf("{\"Replace\":{%q:%q}}", virtual, witnessSource))
-	witness := exec.Command("go", "test", "-overlay", witnessOverlay, "./internal/lint/rules/nexus", "-run", "^TestAdamicWave14JSXWitness$", "-count=1", "-v", "-timeout=30m")
-	witness.Dir = filepath.Join(repository, "cohere")
-	witness.Env = append(os.Environ(), "ADAMIC_WAVE14_JSX_WITNESS="+jsx)
-	oracleWitness := h.must("jsx-go-positive", witness)
-	if !bytes.Contains(oracleWitness.stdout, []byte("leakedNumberRender")) {
-		t.Fatal("missing Go-positive JSX witness")
-	}
-	t.Log("leaked-number-render: Go reports the .a witness as virtual TSX; native refuses parsing with panic 70, so this rule remains unported")
+	t.Log("Real JSX findings now agree byte for byte with production Go under sanitizers")
 	released := h.write("released.a", `import {programArguments,tsgoProgram,tsgoRelease,tsgoInspect} from 'adamic';
 const args=programArguments();const file=args[1]??'';const program=tsgoProgram(args[0]??'',[file]);tsgoRelease(program);
 console.log(tsgoInspect(program,file,0,1,'Identifier','symbol-context'));

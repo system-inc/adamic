@@ -98,5 +98,42 @@ func TestWave14RenderJudgmentsAndMutant(t *testing.T) {
 			renderCompare(h, corpus.name+"-asan", oracle, asan, corpus.config, corpus.manifest)
 		}
 	}
-	t.Log("Real JSX source remains blocked by the shared native parser; synthetic-context agreement proves the judgments, not JSX parsing")
+	// These are raw TSX lint inputs, not compiled Adamic modules.
+	realSources := []string{
+		"declare const count:number;export const view=<p>{count&&'some'}</p>;",
+		"/* 世界 🌍 */\r\ndeclare const count:number;export const view=<>{((count))&&'some'}</>;\r\n",
+		"declare const count:number|null|undefined;export const view=<p>{count&&'some'}</p>;",
+		"declare const count:string|number;export const view=<p>{count&&'some'}</p>;",
+		"declare const count:boolean;export const view=<p>{count&&'some'}</p>;",
+		"declare const count:bigint;export const view=<p>{count&&'some'}</p>;",
+		"declare const count:0n|1n;export const view=<p>{count&&'some'}</p>;",
+		"declare const count:1n|2n;export const view=<p>{count&&'some'}</p>;",
+		"declare const count:0|1;export const view=<p>{count&&'some'}</p>;",
+		"declare const count:1|2;export const view=<p>{count&&'some'}</p>;",
+		"declare const count:any;declare const value:unknown;export const view=<p>{count&&'some'}{value&&'some'}</p>;",
+		"declare const count:number;declare const flag:boolean;export const view=<p>{flag&&count&&'some'}</p>;",
+		"declare const count:number;declare const flag:boolean;export const view=<p>{(flag?count:false)&&'some'}{flag?count&&'some':null}</p>;",
+		"declare const count:number|null;declare const next:number;export const view=<p>{(count??next)&&'some'}{count??(next&&'some')}</p>;",
+		"declare const count:number;export const view=<p title={count&&'some'} />;",
+		"export function view<T extends number>(count:T){return <p>{count&&'some'}</p>;}export function other<T>(count:T){return <p>{count&&'some'}</p>;}",
+	}
+	var realPaths []string
+	for index, source := range realSources {
+		realPaths = append(realPaths, h.write(fmt.Sprintf("jsx-control-%03d.tsx", index), source+"\nexport {};\n"))
+	}
+	realManifest := h.write("jsx.manifest", strings.Join(realPaths, "\n")+"\n")
+	realTruth := renderCompare(h, "jsx", oracle, binary, config, realManifest)
+	renderCompare(h, "jsx-asan", oracle, asan, config, realManifest)
+	if !bytes.Contains(realTruth.stdout, []byte("\tleakedNumberRender\t")) {
+		t.Fatal("missing positive real JSX judgment")
+	}
+	unused = wave14NextMutant(h, stage0, archive, "real-render-verdict", "no_leaked_number_render.a", "this.union(subject, facts.root().id, 0) === 2", "this.union(subject, facts.root().id, 0) === 1")
+	os.Remove(unused)
+	realMutant := h.build(stage0, "real-render-mutant", filepath.Join(directory, "real-render-verdict-source/wave_14_render.a"), archive, false)
+	changed := h.must("real-render-mutant-run", exec.Command(realMutant, config, realManifest))
+	if len(changed.stderr) != 0 || bytes.Equal(changed.stdout, realTruth.stdout) {
+		t.Fatal("real JSX judgment mutant survived")
+	}
+	t.Logf("real JSX mutant exits 0 with empty stderr; byte comparison catches byte %d", firstDifference(changed.stdout, realTruth.stdout))
+	os.Remove(realMutant)
 }
