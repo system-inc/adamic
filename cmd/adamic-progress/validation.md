@@ -96,3 +96,81 @@ Logs: `/tmp/progress-parse-tests.log`, `/tmp/progress-parse-vet.log`,
 `/tmp/progress-parse-mutants.log`, individual `/tmp/progress-mutants/parse-*-final.log`.
 No parse benchmark or full compiler gate was run. Reported whole-run Go counts
 are retained only as contextual observations, never credited as parse alone.
+
+## Bounded backlog and partial reports
+
+The previous all-diff pipe and shared eight-second deadline could kill backlog
+hashing on a real checkout. Hashing now runs in batches of at most 16 commits,
+with SHA-keyed entries atomically checkpointed under the Git directory after
+each completed batch. A warm run never hashes cached commits. Its independent
+60-second context and bounded pipe cleanup leave other sections available.
+Backlog failure is `null` in JSON with its error and an explained missing line in
+text, not zero or a nonzero command exit. Individual record/section failures also
+leave the rest of the report intact. Repository bootstrap/output failures remain
+errors. Existing rebase and shared-patch deduplication tests still pass.
+
+Tests create 300 independent remote branches and 3,000 off-main commits
+(3,003 total) with Git fast-import, inside a 60-second context. They verify actual
+counts, persisted SHA entries, 16-commit bounds, a warm run forbidden to invoke
+patch-id, hashing only one newly added commit, and the full native CLI. Both
+backends of the progress output (text/JSON), plus --history, exit zero when a
+fixture kills patch-id. Additional checks cover abbreviated deadlines, the
+independent timeout, corrupted caches, an interrupted later batch retaining the
+first checkpoint, and other failed sections preserving available Apple evidence.
+
+Commands and results (test output redirected to logs before reading):
+
+* `go test ./cmd/adamic-progress -count=1 -v -timeout=90s`: passed; scale test
+  completed in 2.255s including fixture construction, both backlog runs,
+  full report, native CLI build and invocation.
+* `go test -race -count=1 ./cmd/adamic-progress ./internal/stage1progress ./cmd/adamic-meter ./cmd/adamic-stage1-progress ./documentation/progress`: passed.
+* `go test -race ./cmd/adamic-progress -count=1 -v -timeout=90s`: passed on the
+  final code; its instrumented scale test completed in 11.051s, still under its
+  60-second context (cold backlog 7.002s, warm 0.175s, native CLI 0.224s).
+* `go vet ./...`, formatting and `git diff --check`: passed.
+* `go run ./cmd/adamic-progress --json` on the actual fetched cloud checkout:
+  cold 9.167s, warm 2.245s, exit 0 with no section errors.
+
+| Repository/run | Observed wall time | Instrument |
+| --- | --- | --- |
+| Actual cloud checkout: 386 remote refs, 1,702 commits off main, cold full go run | 9.167s | Bash time wall clock |
+| Same checkout, warm full go run | 2.245s | Bash time wall clock |
+| Same checkout, cold backlog: 1,623 SHAs, 102 batches | 8.343s | Go time.Now/time.Since monotonic clock, JSON stats |
+| Same checkout, warm backlog: zero hashes, 1,623 cache hits | 0.194s | Go time.Now/time.Since monotonic clock, JSON stats |
+| Generated 300-branch/3,000-commit fixture, cold backlog | 1.215s | Go time.Now/time.Since monotonic clock |
+| Generated fixture, warm backlog | 0.060s | Go time.Now/time.Since monotonic clock |
+| Generated fixture, complete cached native CLI | 0.076s | Go time.Now/time.Since monotonic clock |
+
+Both observed actual-repo counts remained labelled: 1,702 commit identities and
+1,545 pending patches. Go compilation is included in Bash go run wall time;
+fixture CLI timings use the compiled executable. Timings vary with CPU/cache
+load. These measurements are Linux x86_64 observations; Kirk's Mac was not
+accessible in this execution environment.
+
+All new mutants compiled and then failed the named assertion checks:
+
+| Mutant | Check that caught it |
+| --- | --- |
+| bounded-unbounded-batch | `TestPatchBatchBoundAndIncrementalCache` |
+| bounded-ignore-cache | `TestPatchBatchBoundAndIncrementalCache` |
+| bounded-no-checkpoint | `TestCompletedPatchBatchesSurviveFailure` |
+| bounded-fatal-section | `TestBacklogFailureKeepsReport` |
+| bounded-invent-zero | `TestBacklogFailureKeepsReport` |
+| bounded-shared-timeout | `TestBacklogBudgetIndependentOfReportReads` |
+| bounded-ignore-deadline | `TestBacklogFailureKeepsReport` |
+| bounded-trust-invalid-cache | `TestCompletedPatchBatchesSurviveFailure` |
+| bounded-fatal-track | `TestFailedSectionKeepsOtherTracks` |
+
+The original 15 bar/count/rate/deadline mutants were rerun against this final
+implementation and caught by their previously listed tests. Logs:
+`/tmp/progress-bounded-tests.log`, `/tmp/progress-bounded-tests-final.log`,
+`/tmp/progress-bounded-race.log`, `/tmp/progress-bounded-progress-race.log`,
+`/tmp/progress-bounded-vet.log`, `/tmp/progress-bounded-mutants.log`,
+`/tmp/progress-previous-mutants-rerun.log`, and individual
+`/tmp/progress-mutants/bounded-*-final.log`.
+Actual-repo outputs: `/tmp/progress-bounded-real-{cold,warm}.json`,
+`/tmp/progress-bounded-real-warm.time`.
+
+Not covered: an actual macOS run, full compiler gate, or peak-memory profiling.
+Neither gates nor fixtures are executed by the progress command. This correction
+is to recorded-evidence reads, patch hashing, cache persistence and reporting.

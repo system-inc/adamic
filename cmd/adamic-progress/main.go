@@ -109,6 +109,13 @@ Sources and accounting:
     Rebases/cherry-picks with identical patches count once. Merge/empty commits
     have no standalone patch; whitespace is ignored. Squashes or conflict edits
     may change patch identity. Both labelled counts remain visible.
+    Hash at most 16 commits per git log/patch-id batch. Cache by commit SHA in
+    git rev-parse --git-path adamic-progress/patch-ids-v1.json (atomic checkpoint
+    after each batch). Cache version fixes Myers, stable, binary, no-renames
+    settings. A second run hashes only uncached commits; refs are reevaluated.
+    Backlog has its own 60-second budget, independent of other reads. Failure
+    or timeout leaves the count unknown/null and prints why; report still succeeds.
+    --json patch_backlog_stats exposes hashes, hits, batches and wall seconds.
     documentation/velocity/landings.csv: timestamp or timestamp_utc column,
     optional landings count (default 1), summed into UTC hour buckets.
     Absence explicitly reported. Velocity has no goal percentage.
@@ -117,7 +124,8 @@ Sources and accounting:
     documentation/velocity/patch-backlog.csv (timestamp,count) records patch counts;
     without it past backlog is unknown. The hourly-falling checkpoint requires
     an observation each elapsed hour and a strictly decreasing count.
-Malformed recorded data is an error, never silently converted to zero.
+Malformed evidence marks the affected section unavailable with its error; the rest
+of the report still prints. Unknown values are never silently converted to zero.
 `
 
 var mdt = time.FixedZone("MDT", -6*3600)
@@ -165,33 +173,49 @@ type velocity struct {
 	Day          int            `json:"landed_24h"`
 	Hour         int            `json:"landed_1h"`
 	Backlog      int            `json:"distinct_backlog"`
-	PatchBacklog int            `json:"distinct_patch_backlog"`
+	PatchBacklog *int           `json:"distinct_patch_backlog"`
+	PatchError   string         `json:"patch_backlog_error,omitempty"`
+	PatchStats   *backlogResult `json:"patch_backlog_stats,omitempty"`
+	Error        string         `json:"error,omitempty"`
 	Landings     map[string]int `json:"landings_per_hour"`
 	Note         string         `json:"note,omitempty"`
 }
 type dashboard struct {
-	Milestones []milestoneResult `json:"milestones"`
-	Time       time.Time         `json:"time"`
-	Day        int               `json:"creation_day"`
-	Main       string            `json:"main_commit"`
-	Tracks     []track           `json:"tracks"`
-	Velocity   velocity          `json:"velocity"`
-	Slowest    string            `json:"slowest"`
+	SectionErrors []string          `json:"section_errors,omitempty"`
+	Milestones    []milestoneResult `json:"milestones"`
+	Time          time.Time         `json:"time"`
+	Day           int               `json:"creation_day"`
+	Main          string            `json:"main_commit"`
+	Tracks        []track           `json:"tracks"`
+	Velocity      velocity          `json:"velocity"`
+	Slowest       string            `json:"slowest"`
 }
 type repository struct {
-	at        time.Time
-	cache     map[string][]byte
-	root, ref string
-	ctx       context.Context
-	paths     []string
+	backlogContext context.Context
+	backlogBudget  time.Duration
+	gitExecutable  string
+	at             time.Time
+	cache          map[string][]byte
+	root, ref      string
+	ctx            context.Context
+	paths          []string
 }
 
+func (r repository) gitCommand(args ...string) *exec.Cmd {
+	executable := r.gitExecutable
+	if executable == "" {
+		executable = "git"
+	}
+	command := exec.CommandContext(r.ctx, executable, append([]string{"-C", r.root}, args...)...)
+	command.WaitDelay = 100 * time.Millisecond
+	return command
+}
 func (r repository) git(args ...string) ([]byte, error) {
 	key := r.root + "\x00" + strings.Join(args, "\x00")
 	if b, ok := r.cache[key]; ok {
 		return b, nil
 	}
-	c := exec.CommandContext(r.ctx, "git", append([]string{"-C", r.root}, args...)...)
+	c := r.gitCommand(args...)
 	b, e := c.Output()
 	if e != nil {
 		return nil, fmt.Errorf("git %s: %w", strings.Join(args, " "), e)
@@ -667,9 +691,12 @@ func measureVelocity(r repository, now time.Time, patches bool) (velocity, error
 	}
 	v.Pending = pending
 	if patches {
-		v.PatchBacklog, e = r.patchBacklog(pending)
-		if e != nil {
-			return v, e
+		result, err := r.cachedPatchBacklog(pending)
+		v.PatchStats = &result
+		if err != nil {
+			v.PatchError = err.Error()
+		} else {
+			v.PatchBacklog = &result.Count
 		}
 	}
 	b, ok, e := r.blob("documentation/velocity/landings.csv")
@@ -732,57 +759,82 @@ func collect(r repository, now time.Time, lines func(string, string) (*stage1pro
 	r.paths = strings.Fields(string(paths))
 	s3, e := stage3(r)
 	if e != nil {
-		return d, e
+		d.SectionErrors = append(d.SectionErrors, "Stage 3: "+e.Error())
+		s3 = missingTrack("Stage 3", beginning.Add(5*24*time.Hour), e)
 	}
 	s1, e := stage1(r, lines)
 	if e != nil {
-		return d, e
+		d.SectionErrors = append(d.SectionErrors, "Stage 1: "+e.Error())
+		s1 = missingTrack("Stage 1", beginning.Add(6*24*time.Hour), e)
 	}
 	a, e := apple(r)
 	if e != nil {
-		return d, e
+		d.SectionErrors = append(d.SectionErrors, "Apple: "+e.Error())
+		a = missingTrack("Apple", beginning.Add(6*24*time.Hour), e)
 	}
 	d.Tracks = []track{s3, s1, a}
 	for i := range d.Tracks {
 		if e = finish(&d.Tracks[i], r, now); e != nil {
-			return d, e
+			d.SectionErrors = append(d.SectionErrors, d.Tracks[i].Name+": "+e.Error())
 		}
 	}
 	d.Velocity, e = measureVelocity(r, now, false)
 	if e != nil {
-		return d, e
+		d.Velocity.Error = e.Error()
+		d.SectionErrors = append(d.SectionErrors, "velocity: "+e.Error())
 	}
 	type patchResult struct {
-		count int
-		err   error
+		result backlogResult
+		err    error
 	}
 	patches := make(chan patchResult, 1)
 	patchRepo := r
-	patchRepo.cache = nil // No shared mutable read cache across these computations.
+	patchRepo.cache = nil
+	if r.backlogContext != nil {
+		patchRepo.ctx = r.backlogContext
+	}
 	pending := append([]string{}, d.Velocity.Pending...)
+	metadataError := d.Velocity.Error
 	go func() {
-		count, err := patchRepo.patchBacklog(pending)
-		patches <- patchResult{count, err}
+		if metadataError != "" {
+			patches <- patchResult{err: fmt.Errorf("backlog metadata unavailable: %s", metadataError)}
+			return
+		}
+		result, err := patchRepo.cachedPatchBacklog(pending)
+		patches <- patchResult{result, err}
 	}()
 	if e = reconstruct(r, &d, lines); e != nil {
-		return d, e
+		d.SectionErrors = append(d.SectionErrors, "history: "+e.Error())
+		initializeMissingHistory(&d)
 	}
-	patch := <-patches
-	if patch.err != nil {
-		return d, patch.err
-	}
-	d.Velocity.PatchBacklog = patch.count
-	m := &d.Velocity.Measures[4]
-	m.Done = float64(patch.count)
-	points := m.Progress.Timeline
-	points[24] = point(*m, now, d.Main)
-	m.Progress = calculate(points, time.Time{}, now)
 	d.Milestones, e = milestones(r, d)
 	if e != nil {
-		return d, e
+		d.SectionErrors = append(d.SectionErrors, "milestones: "+e.Error())
 	}
+	patch := <-patches
+	d.Velocity.PatchStats = &patch.result
+	if patch.err != nil {
+		d.Velocity.PatchError = patch.err.Error()
+	} else {
+		d.Velocity.PatchBacklog = &patch.result.Count
+	}
+	m := &d.Velocity.Measures[4]
+	progress := m.Progress
+	*m = velocityMetrics(d.Velocity, now)[4]
+	points := progress.Timeline
+	points[24] = point(*m, now, d.Main)
+	m.Progress = calculate(points, time.Time{}, now)
 	d.Slowest = slowest(d.Tracks, now)
 	return d, nil
+}
+func missingTrack(name string, deadline time.Time, err error) track {
+	return track{Name: name, Deadline: deadline, Measures: []metric{unknown("track measurements", 1, name, "section unavailable: "+err.Error())}}
+}
+func patchCount(count *int) string {
+	if count == nil {
+		return "unknown"
+	}
+	return strconv.Itoa(*count)
 }
 func printMetric(w io.Writer, m metric) {
 	percent := "unknown"
@@ -839,7 +891,17 @@ func renderReport(w io.Writer, d dashboard, history bool) {
 		fmt.Fprintf(w, "  ETA: %s; %s\n", eta, t.ETAScope)
 	}
 	v := d.Velocity
-	fmt.Fprintf(w, "\nVelocity | %d commits on main | %d landed/24h | %d landed/1h | %d distinct commits waiting (identity count) | %d distinct patches waiting (patch-id count)\n", v.Total, v.Day, v.Hour, v.Backlog, v.PatchBacklog)
+	if v.Error != "" {
+		fmt.Fprintln(w, "\nVelocity missing:", v.Error)
+	} else {
+		fmt.Fprintf(w, "\nVelocity | %d commits on main | %d landed/24h | %d landed/1h | %d distinct commits waiting (identity count) | %s distinct patches waiting (patch-id count)\n", v.Total, v.Day, v.Hour, v.Backlog, patchCount(v.PatchBacklog))
+	}
+	if v.PatchError != "" {
+		fmt.Fprintln(w, "Backlog missing:", v.PatchError)
+	}
+	for _, err := range d.SectionErrors {
+		fmt.Fprintln(w, "Section missing:", err)
+	}
 	if v.Note != "" {
 		fmt.Fprintln(w, "Landings/hour:", v.Note)
 	} else {
@@ -877,9 +939,11 @@ func run(args []string, out, errOut io.Writer) int {
 		flags.Usage()
 		return 2
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 8*time.Second)
+	rootCtx, rootCancel := context.WithCancel(context.Background())
+	defer rootCancel()
+	ctx, cancel := context.WithTimeout(rootCtx, 8*time.Second)
 	defer cancel()
-	d, e := collect(repository{root: ".", ref: "origin/main", ctx: ctx}, time.Now(), stage1progress.NewMeasurer(ctx))
+	d, e := collect(repository{root: ".", ref: "origin/main", ctx: ctx, backlogContext: rootCtx}, time.Now(), stage1progress.NewMeasurer(ctx))
 	if e != nil {
 		fmt.Fprintln(errOut, "adamic-progress:", e)
 		return 1

@@ -44,7 +44,7 @@ func TestPatchBacklogRebasedAndSharedChanges(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if v.Backlog != 4 || v.PatchBacklog != 1 {
+	if v.Backlog != 4 || v.PatchBacklog == nil || *v.PatchBacklog != 1 {
 		t.Fatalf("want 4 identities, 1 patch: %#v", v)
 	}
 	// The landing gets a new ID and leaves the original remote commits waiting.
@@ -53,7 +53,7 @@ func TestPatchBacklogRebasedAndSharedChanges(t *testing.T) {
 	git("update-ref", "refs/remotes/origin/main", "HEAD")
 	r.cache = nil
 	v, err = speed(r, time.Now().Add(time.Second))
-	if err != nil || v.Backlog != 4 || v.PatchBacklog != 0 {
+	if err != nil || v.Backlog != 4 || v.PatchBacklog == nil || *v.PatchBacklog != 0 {
 		t.Fatalf("landed patch still waiting: %#v, %v", v, err)
 	}
 }

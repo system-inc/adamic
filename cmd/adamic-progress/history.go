@@ -385,12 +385,21 @@ func renderHistory(w io.Writer, d dashboard) {
 
 func velocityMetrics(v velocity, moment time.Time) []metric {
 	result := []metric{measured("commits on main", float64(v.Total), 0, "git rev-list main"), measured("commits landed in last 24h", float64(v.Day), 0, "main commit timestamps"), measured("commits landed in last hour", float64(v.Hour), 0, "main commit timestamps"), measured("distinct commits waiting (identity count)", float64(v.Backlog), 0, "fetched origin commit union minus main")}
+	if v.Error != "" {
+		for i := range result {
+			result[i] = unknown(result[i].Name, 0, result[i].Source, v.Error)
+		}
+	}
 	landings := unknown("recorded landings in current UTC hour", 0, "documentation/velocity/landings.csv", "no landings.csv on main yet")
 	if v.Landings != nil {
 		key := moment.UTC().Truncate(time.Hour).Format(time.RFC3339)
 		landings = measured(landings.Name, float64(v.Landings[key]), 0, landings.Source)
 	}
-	result = append(result, measured("distinct patches waiting (patch-id count)", float64(v.PatchBacklog), 0, "stable patch IDs of fetched origin changes minus main patches"))
+	patch := unknown("distinct patches waiting (patch-id count)", 0, "stable cached patch IDs of fetched origin changes minus main patches", v.PatchError)
+	if v.PatchBacklog != nil {
+		patch = measured(patch.Name, float64(*v.PatchBacklog), 0, patch.Source)
+	}
+	result = append(result, patch)
 	return append(result, landings)
 }
 func historicalVelocity(r repository, moment time.Time) ([]metric, error) {
@@ -471,4 +480,28 @@ func historicalVelocity(r repository, moment time.Time) ([]metric, error) {
 		}
 	}
 	return metrics, nil
+}
+
+// Keep the available current values, with explicitly unknown past observations.
+func initializeMissingHistory(d *dashboard) {
+	attach := func(m *metric, deadline time.Time) {
+		points := make([]observation, 25)
+		for i := range points {
+			points[i] = observation{Time: d.Time.Add(time.Duration(i-24) * time.Hour)}
+		}
+		points[24] = point(*m, d.Time, d.Main)
+		m.Progress = calculate(points, deadline, d.Time)
+	}
+	for i := range d.Tracks {
+		t := &d.Tracks[i]
+		attach(&t.Overall, t.Deadline)
+		for j := range t.Measures {
+			attach(&t.Measures[j], t.Deadline)
+		}
+		t.ETA = nil
+	}
+	d.Velocity.Measures = velocityMetrics(d.Velocity, d.Time)
+	for i := range d.Velocity.Measures {
+		attach(&d.Velocity.Measures[i], time.Time{})
+	}
 }
