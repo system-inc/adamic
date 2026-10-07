@@ -57,3 +57,9 @@ Observed combined package PASS 35.664s, repository static gate PASS 12.65s and c
 ## Environment and ownership
 
 Worktree /workspace/adamic-helpers06; branch codex/lint-helpers-from-codex/lint-wave1-06 based on origin/codex/lint-helpers 95100eb4. bash cloud/setup.sh passed: Go ready 0s, clang ready 1s, Node ready 1s, submodules ready 20s, cache warm/done 490s, nproc 5. Go 1.27.1, clang 20.1.8, Node 24.19.0; cohere pin 715ba94f3608a6500086b1076ce5cb7e51b836db. The older runtime APIs and nullable-array compiler refusal were accommodated only in owned adapters. No shared compiler, shared registration generator, shared harness, other worker directory or cohere worktree source was edited.
+
+## Landing audit, October 7
+
+Rebased this helper branch onto origin/main e8ba3d5d81de4d3773c723914fccd4c76248b965. The combined owned helper oracle passed again in 30.482 seconds: 1,212,743 attachment bytes and 169,528 repository bytes matched Go on source Node, emitted JavaScript and sanitized native. All eight mutants completed cleanly and differed only at byte comparison on all three backends. go vet passed. Logs are evidence/landing-test.log and evidence/landing-vet.log.
+
+The separate codex/lint-wave1-06 branch remains at ae71cb01f4089a42b5260fbe82363b3dd6c6c47b. Its rebase stopped applying registration foundation 29175443, with conflicts in stage1/cohere/lint/README.md, lint.ts, lint_test.go and testdata/oracle.go. These shared files are outside this unit ownership, so the rebase was aborted without changing them. No further helpers were claimed. Full repository gate and consuming-rule integration were not rerun.
