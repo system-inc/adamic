@@ -1,0 +1,15 @@
+package main
+import (
+ "encoding/json"
+ "fmt"
+ react "github.com/system-inc/cohere/internal/lint/rules/react"
+)
+func main() {
+ options, err := react.DecodeNoUnescapedEntitiesOptions([]byte(`{"forbid":["&"]}`))
+ if err != nil { panic(err) }
+ captured, err := json.Marshal(options)
+ if err != nil { panic(err) }
+ fmt.Println(string(captured))
+ _, err = react.DecodeNoUnescapedEntitiesOptions(captured)
+ fmt.Println(err)
+}
