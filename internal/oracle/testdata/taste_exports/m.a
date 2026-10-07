@@ -1,0 +1,7 @@
+console.log('module m');
+const a = 'original a';
+const b = 'original b';
+let count = 0;
+function increment(): void { count += 1; }
+class Box { readonly value = 'box'; }
+export { a, b as renamed, count, increment as add, Box as Crate };

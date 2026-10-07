@@ -1,0 +1,5 @@
+export { value as before } from './before.a';
+console.log('module bridge');
+export { a, renamed, count as live, add, Crate } from './m.a';
+export type { Shape } from './erased.a';
+export { type Marker } from './inline.a';

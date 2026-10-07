@@ -30,8 +30,14 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		// What an import brings in is resolved through the checker at each use, and the module it
 		// names runs first (moduleOrder).
 		return nil, nil
-	case ast.KindExportDeclaration, ast.KindExportAssignment:
-		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
+	case ast.KindExportDeclaration:
+		if clause := node.AsExportDeclaration().ExportClause; clause != nil && clause.Kind == ast.KindNamedExports {
+			// The checker resolves each live binding, and moduleOrder runs re-export dependencies.
+			return nil, nil
+		}
+		return nil, &Refused{Where: l.program.Where(node), What: "export *", Fix: "export named bindings"}
+	case ast.KindExportAssignment:
+		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export named bindings"}
 	case ast.KindFunctionDeclaration:
 		if l.function != nil {
 			return nil, l.notYet(node, "a function inside a function (a closure)")

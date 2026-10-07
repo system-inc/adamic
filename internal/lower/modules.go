@@ -26,6 +26,11 @@ func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error)
 			if statement.Kind != ast.KindImportDeclaration && statement.Kind != ast.KindExportDeclaration {
 				continue
 			}
+			if statement.Kind == ast.KindExportDeclaration && statement.AsExportDeclaration().IsTypeOnly {
+				// A whole type-only export is erased, including its dependency. Inline type
+				// specifiers leave a module request, so those still run in source order.
+				continue
+			}
 			specifier := statement.ModuleSpecifier()
 			if specifier == nil {
 				continue
