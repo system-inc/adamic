@@ -224,6 +224,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.own(expression.To, fmt.Sprintf("(%s)adamic_retain(%s(%s))", cType(expression.To), target, e.value(expression.Value)))
 	case ir.Narrow:
 		return e.narrow(expression)
+	case ir.ArrayIsArray:
+		value := e.snapshot(ir.Union, e.value(expression.Value))
+		return fmt.Sprintf("(%s != NULL && %s->kind == adamic_kind_array)", value, value)
 	case ir.TypeOf:
 		return e.typeOf(expression)
 	case ir.UnionToString:

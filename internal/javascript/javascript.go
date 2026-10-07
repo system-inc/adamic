@@ -784,6 +784,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.Narrow:
 		return e.value(expression.Value)
+	case ir.ArrayIsArray:
+		return "Array.isArray(" + e.value(expression.Value) + ")"
 	case ir.TypeOf:
 		return "adamicTypeOf(" + e.value(expression.Value) + ")"
 	case ir.UnionToString:

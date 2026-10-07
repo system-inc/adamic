@@ -23,7 +23,7 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 && (node.Kind == ast.KindVoidExpression || voidInitializer(node)) {
 		return ir.Object, nil
 	}
-	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
+	if valueType, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown {
 		return valueType, nil
 	}
 	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
@@ -442,7 +442,7 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
 		if l.result.Locals[local].Type == ir.Union {
 			// Where the checker has narrowed it to fewer members held one way, it's read as that.
-			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined == 0 {
+			if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined == 0 {
 				read = ir.Narrow{Value: read, To: narrowed}
 			}
 		}
@@ -818,7 +818,7 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		case ir.MaybeNumber, ir.MaybeBoolean:
 			value = ir.MaybeToString{Value: value}
 		case ir.Union:
-			if !l.writable(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression)) {
+			if !l.writable(l.arrayPredicateObservedType(span.AsTemplateSpan().Expression)) {
 				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
 			}
 			value = ir.UnionToString{Value: value}
