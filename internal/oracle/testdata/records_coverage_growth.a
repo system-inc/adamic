@@ -1,0 +1,10 @@
+const r: Record<string, string> = {};
+for (let i = 0; i < 100; i = i + 1) r['k' + String(i)] = 'v' + String(i);
+const keys = Object.keys(r);
+for (let i = 0; i < 90; i = i + 1) delete r['k' + String(i)];
+for (let i = 0; i < 10; i = i + 1) r['k' + String(i)] = 'new' + String(i);
+console.log(String(keys.length));
+console.log(Object.keys(r).join(','));
+console.log(Object.values(r).join(','));
+const held = r['k99']; r['k99'] = r['k99'] ?? '';
+console.log(String(held));

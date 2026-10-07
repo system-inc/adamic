@@ -1,0 +1,2 @@
+const mixed: Record<string, number | string> = {n: 1, s: 'text'};
+console.log(String(mixed['n'])); console.log(String(mixed['s'])); console.log(String(mixed['missing']));

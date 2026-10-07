@@ -1,0 +1,4 @@
+interface R {[key: string]: R}
+const r: R = {};
+r['self'] = r;
+console.log(Object.keys(r).join(','));

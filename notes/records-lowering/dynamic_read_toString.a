@@ -1,0 +1,3 @@
+const r: Record<string, number> = {};
+function probe(key: string): void {console.log(String(r[key]));}
+probe('toString');

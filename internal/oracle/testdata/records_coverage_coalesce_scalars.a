@@ -1,0 +1,14 @@
+const numbers: Record<string, number> = {zero: 0};
+let calls = 0;
+function make(): number {calls = calls + 1; return 5;}
+console.log(String(numbers['zero'] ??= make()));
+console.log(String(numbers['missing'] ??= make()));
+console.log(String(numbers['missing'] ??= make()));
+const booleans: Record<string, boolean> = {no: false};
+console.log(String(booleans['no'] ??= true));
+console.log(String(booleans['missing'] ??= true));
+console.log(String(calls));
+const strings: Record<string, string | undefined> = {empty: undefined, blank: ''};
+console.log(strings['empty'] ??= 'filled');
+console.log(strings['blank'] ??= 'unused');
+console.log(String(Object.hasOwn(strings, 'empty')));

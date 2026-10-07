@@ -1,0 +1,7 @@
+const r: Record<string, string | undefined> = {quote: '"\\\n', missing: undefined, ['\u0000']: 'nul', ['\ud800']: 'surrogate', ['😀']: 'emoji'};
+console.log(String(JSON.stringify(r)));
+console.log(String(JSON.stringify(r, ['😀', 'quote', 'missing', 'absent', 'quote'], 2)));
+const n: Record<string, number> = {inf: Infinity, minus: -Infinity, zero: -0, nan: NaN};
+console.log(String(JSON.stringify(n)));
+const child: Record<string, Record<string, number>> = {outer: {x: 1, y: 2}};
+console.log(String(JSON.stringify(child, ['outer', 'y'], '--')));

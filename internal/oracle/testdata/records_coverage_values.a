@@ -1,0 +1,9 @@
+const flags: Record<string, boolean> = {x: false};
+flags['x'] = true; flags['y'] = false;
+console.log(String(flags['x'])); console.log(String(flags['absent']));
+console.log(String(delete flags['y'])); console.log(String('y' in flags));
+const functions: Record<string, () => string> = {f: () => 'called'};
+const f = functions['f']; if (f !== undefined) console.log(f());
+const maps: Record<string, Map<string, number>> = {m: new Map<string, number>()};
+const m = maps['m']; if (m !== undefined) {m.set('x', 3); console.log(String(m.get('x')));}
+console.log(Object.values(functions).map(g => g()).join(','));

@@ -1,0 +1,17 @@
+function show(key: string): void {
+ const r: Record<string, string | undefined> = {[key]: undefined};
+ console.log(String(key in r));
+ console.log(String(Object.hasOwn(r, key)));
+ console.log(String(r[key]));
+ console.log(Object.keys(r).join(','));
+ const copy: Record<string, string | undefined> = {...r};
+ console.log(String(Object.hasOwn(copy, key)));
+ console.log(String(JSON.stringify(copy)));
+ const valued: Record<string, string> = {[key]: 'own'};
+ console.log(String(valued[key]));
+ console.log(String(key in valued));
+ console.log(String(delete valued[key]));
+ console.log(String(Object.hasOwn(valued, key)));
+ console.log(String(Object.hasOwn(r, 'toString')));
+}
+for (const key of ['toString', 'constructor', 'hasOwnProperty', '__proto__']) show(key);

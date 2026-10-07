@@ -1,0 +1,14 @@
+const r: Record<string, string> = {x: 'old'};
+function receiver(): Record<string, string> {console.log('receiver'); return r;}
+function key(): string {console.log('key'); return 'x';}
+function value(): string {console.log('value'); return 'new';}
+console.log(receiver()[key()] = value());
+console.log(String(key() in receiver()));
+console.log(String(Object.hasOwn(receiver(), key())));
+console.log(String(delete receiver()[key()]));
+console.log(receiver()[key()] ??= value());
+console.log(receiver()[key()] ??= value());
+function change(): string {r['x'] = 'later'; return 'extra';}
+const copy: Record<string, string> = {...r, extra: change()};
+console.log(String(copy['x']));
+console.log(String(r['x']));
