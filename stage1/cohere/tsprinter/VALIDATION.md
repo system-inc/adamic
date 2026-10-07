@@ -984,3 +984,41 @@ Both mutants compile and finish normally with exit 0 and empty stderr on Node an
 mismatch only in output. Await becomes `void`: first mismatch line 114228, **286.01 s**.
 Yield delegation disappears: first mismatch line 114260, **284.74 s**. Complete mutant command
 **291.807 s**, exit 0. No internal compiler or parser file changed.
+
+## Variable statements and expression-statement composition
+
+This family adds 646 variable-declaration cases and 40 retained statement-composition regressions.
+An independent statement preview found receiver indentation, conditional receiver parentheses and
+five two-segment assignment chains with the wrong wrapping. They were corrected before this gate.
+A separate hashbang probe found header loss on both Node and native; the port now refuses it
+rather than returning misleading output. The typed tagged-template gap now has a proving input.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+ADAMIC_TS_PRINTER_KEEP=/tmp/ts-printer-variables-composed-corpus \
+ADAMIC_TS_PRINTER_ARTIFACTS=/tmp/ts-printer-variables-composed-artifacts \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestExpressionsAgainstGoAndPrettier$' > /tmp/ts-printer-variables-composed-test.log 2>&1
+ADAMIC_TS_PRETTIER=/tmp/graphql-printer-prettier \
+ADAMIC_TYPESCRIPT_SOURCE=/tmp/adamic-tsc-strictness/typescript \
+go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter \
+  -run '^TestMutants$/(variable|hashbang|assignment_chain)' > /tmp/ts-printer-variables-composed-mutants.log 2>&1
+```
+
+The mutant command exits 0 in **353.987 s**. All three mutants compile and finish normally,
+exit 0 and empty stderr, on both Node and native before the byte comparison catches them:
+variable keyword removal at line 114276 (**344.78 s**), hashbang refusal removal on proving-input
+line 14 (**318.34 s**), and assignment-chain statement boundary removal at line 114296
+(**348.21 s**). Hashbang uses the gap corpus deliberately: the accepted corpus excludes headers.
+
+Source cohere prints 276 rules, ten checked, 100% Adamic-ready. Package vet and whitespace checks
+pass. The full native oracle outcome follows below; no full-repository gate was run.
+
+Full gate exits 0 in **483.463 s: 146,607 / 146,607**, from 199 files with zero full-file parse
+failures. Source Node, native ASan/UBSan, JavaScript backend, native release and the separate leak
+pass agree with Go cohere, npm Prettier 3.9.6 and the embedded fork. All **15** exact gap reasons
+pass. The running gate printed the old hardcoded count of 13; only that log statement was changed
+after its test binary was built, and the actual assertions already checked every proving input.
+Coverage is in `results/variable-coverage.json`. No compiler or parser source changed.

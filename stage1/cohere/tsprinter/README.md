@@ -74,7 +74,7 @@ and the JavaScript backend must match Go byte for byte. The actual npm Prettier 
 TypeScript printer are separate comparisons; every selected case must agree with them too. The
 separate unported proving corpus records one anonymous-function spacing difference in `testdata/prettier-differences.json`; accepted cases have
 no exceptions.
-Thirteen unported shapes are checked for `NotYet` on all three executions, while Go and Prettier
+Fifteen unported shapes are checked for `NotYet` on all three executions, while Go and Prettier
 prove that the same source texts are formatable. Native release output is also compared.
 
 Three mutants must compile and finish normally before a byte mismatch counts as a catch: a group
@@ -192,3 +192,8 @@ Contextual await, bare yield and delegated yield compose with supported async ar
 functions, generators and object methods. Receiver and callee await groups, nesting, precedence,
 assignments and long operands follow Go. The input parser retains its actual async/generator
 context; the formatter does not force those words into operators globally.
+
+The current expression gate additionally covers named functions, arrows and basic bodies,
+object methods/accessors, ordinary tags, contextual await/yield and identifier variable statements.
+Incremental coverage, exact commands and mutation results are recorded in VALIDATION.md;
+the original corpus totals above describe the initial slice rather than the latest increment.

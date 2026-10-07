@@ -442,6 +442,28 @@ export function unsupported(parser: Parser, source: string, index: number): stri
 export function statementUnsupported(parser: Parser, source: string, index: number): string {
     const node = syntaxNode(parser, index);
     switch(node.kind) {
+        case 'VariableStatement': {
+            if(
+                node.children.length !== 1 ||
+                syntaxNode(parser, syntaxChild(parser, index, 0)).kind !== 'VariableDeclarationList'
+            )
+                return 'variable-modifiers';
+            const list = syntaxNode(parser, syntaxChild(parser, index, 0));
+            for(const child of list.children) {
+                const declaration = syntaxNode(parser, child);
+                const name = syntaxNode(parser, declaration.children[0] ?? panic('missing variable name'));
+                if(name.kind !== 'Identifier') return 'variable-pattern';
+                if(declaration.children.length > 2) return 'variable-types';
+                if(declaration.children.length === 2) {
+                    const initializer = declaration.children[1] ?? panic('missing variable value');
+                    if(!source.slice(name.end, syntaxNode(parser, initializer).pos).includes('='))
+                        return 'variable-types';
+                    const reason = unsupported(parser, source, initializer);
+                    if(reason !== '') return reason;
+                }
+            }
+            return '';
+        }
         case 'Block':
             for(const child of node.children) {
                 const reason = statementUnsupported(parser, source, child);

@@ -30,7 +30,7 @@ func supportedExpression(node *estree.Node) bool {
 	case "Identifier", "PrivateIdentifier", "Literal", "ThisExpression", "Super":
 		return true
 	case "ObjectExpression", "Property", "ConditionalExpression", "AssignmentExpression", "SequenceExpression", "UnaryExpression", "UpdateExpression", "BinaryExpression", "LogicalExpression", "MemberExpression", "ArrayExpression", "SpreadElement", "TSNonNullExpression", "ChainExpression":
-	case "AwaitExpression", "YieldExpression", "TemplateLiteral", "FunctionExpression", "ArrowFunctionExpression", "AssignmentPattern", "RestElement", "BlockStatement", "ExpressionStatement", "ReturnStatement", "ThrowStatement", "EmptyStatement", "DebuggerStatement", "BreakStatement", "ContinueStatement":
+	case "VariableDeclaration", "VariableDeclarator", "AwaitExpression", "YieldExpression", "TemplateLiteral", "FunctionExpression", "ArrowFunctionExpression", "AssignmentPattern", "RestElement", "BlockStatement", "ExpressionStatement", "ReturnStatement", "ThrowStatement", "EmptyStatement", "DebuggerStatement", "BreakStatement", "ContinueStatement":
 	case "CallExpression", "NewExpression", "TaggedTemplateExpression":
 		if node.Child("typeArguments") != nil {
 			return false
@@ -119,6 +119,34 @@ func TestAdamicExpressionCorpus(t *testing.T) {
 		for _, right := range []string{"g(" + value + ")", "g(" + value + ").x"} {
 			add("assignment-short-argument-boundary", "veryLongIdentifierAlphaVeryLongIdentifierBetaVeryLongIdentifierGamma="+right)
 		}
+	}
+	for _, body := range []string{
+		"const kind=this.node(node.children[offset]??panic('missing method prefix')).kind;",
+		"return (this.sequenceBoundaries.has(left)?[left]:this.sequenceParts(left)).concat([this.child(index,2)]);",
+		"return (a?b:c).method();", "throw (a?b:c).method();", "const value=(a?b:c).method();",
+		"nameIndexToNewNameIndexMap[raw.nameIndex]=newNameIndex=addName(map.names[raw.nameIndex]);",
+		"links[id]=graphNode={id,flowNode,edges:[],text:'',lane:-1,endLane:-1,level:-1,circular:false};",
+		"memberInfo.memberDescriptorName=descriptorName=createHelperVariable(member,'descriptor');",
+		"initializersName=memberInfo.memberInitializersName??=createHelperVariable(member,'initializers');",
+		"const x=longIdentifierAlpha=longIdentifierBeta=veryLongFunctionName(veryLongArgumentAlpha,veryLongArgumentBeta);",
+	} {
+		value := "function named(){" + body + "}"
+		for _, context := range []string{"(" + value + ")", "x=" + value, "f(" + value + ")", "({method:" + value + "})"} {
+			add("statement-composition-regression", context)
+		}
+	}
+	for _, keyword := range []string{"const", "let", "var", "using"} {
+		for _, declarations := range []string{"x=1", "x=a+b", "x=a?b:c", "x={a:1,b:2}", "x=f(a,b,c)", "x=a=b=c", "x=veryLongIdentifierAlpha+veryLongIdentifierBeta+veryLongIdentifierGamma", "x=1,y=2,z=3", "longIdentifierAlpha=foo,longIdentifierBeta=bar", "x=tag`a${b}b`"} {
+			body := "{" + keyword + " " + declarations + ";return x;}"
+			for _, value := range []string{"x=>" + body, "function named()" + body, "async function named()" + body, "function* named()" + body} {
+				for _, context := range []string{"(" + value + ")", "x=" + value, "f(" + value + ")", "({method:" + value + "})"} {
+					add("variable-statement-composition", context)
+				}
+			}
+		}
+	}
+	for _, source := range []string{"(function named(){let x,y,z;})", "(function named(){var veryLongIdentifierAlphaVeryLongIdentifierAlpha,veryLongIdentifierBetaVeryLongIdentifierBeta,veryLongIdentifierGammaVeryLongIdentifierGamma;})", "(async function named(){await using x=f();})", "(function named(){const x=longName(a=b=c);})", "(async function named(){const x=await foo;})", "(function* named(){const x=yield;})"} {
+		add("variable-statement-edge", source)
 	}
 	for _, operand := range []string{"x", "1", "f(x)", "({x:1})", "[1,2]", "a+b", "a?b:c", "veryLongIdentifierAlpha+veryLongIdentifierBeta+veryLongIdentifierGamma", "object.first().second().third()"} {
 		for _, body := range []string{"return await " + operand + ";", "return (await " + operand + ").value;", "return (await " + operand + ")(x);", "return await (await " + operand + ").value;", "return !(await " + operand + ");", "return await " + operand + "+x;"} {
@@ -562,6 +590,18 @@ func supportedSyntax(node *ast.Node) bool {
 	case ast.KindParameter:
 		item := node.AsParameterDeclaration()
 		return item.Name().Kind == ast.KindIdentifier && item.Type == nil && item.QuestionToken == nil && supportedSyntax(item.Initializer)
+	case ast.KindVariableStatement:
+		return node.Modifiers() == nil && supportedSyntax(node.AsVariableStatement().DeclarationList)
+	case ast.KindVariableDeclarationList:
+		for _, declaration := range node.AsVariableDeclarationList().Declarations.Nodes {
+			if !supportedSyntax(declaration) {
+				return false
+			}
+		}
+		return true
+	case ast.KindVariableDeclaration:
+		item := node.AsVariableDeclaration()
+		return node.Name().Kind == ast.KindIdentifier && item.Type == nil && item.ExclamationToken == nil && supportedSyntax(item.Initializer)
 	case ast.KindBlock, ast.KindExpressionStatement, ast.KindReturnStatement, ast.KindThrowStatement, ast.KindBreakStatement, ast.KindContinueStatement:
 		valid := true
 		node.ForEachChild(func(child *ast.Node) bool {

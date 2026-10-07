@@ -411,6 +411,11 @@ export class Expressions {
             chainChild !== index &&
             enclosing >= 0 &&
             ((this.isAssignment(enclosing) && this.child(enclosing, 2) === chainChild) ||
+                (this.node(enclosing).kind === 'VariableDeclaration' && this.child(enclosing, 1) === chainChild) ||
+                (['ReturnStatement', 'ThrowStatement', 'AwaitExpression'].includes(this.node(enclosing).kind) &&
+                    this.child(enclosing, 0) === chainChild) ||
+                (this.node(enclosing).kind === 'YieldExpression' &&
+                    this.child(enclosing, this.node(enclosing).children.length - 1) === chainChild) ||
                 (['PrefixUnaryExpression', 'DeleteExpression', 'VoidExpression', 'TypeOfExpression'].includes(
                     this.node(enclosing).kind,
                 ) &&
@@ -558,7 +563,15 @@ export class Expressions {
     ): number {
         const tail = !this.isAssignment(rightIndex);
         const ancestor = this.ancestors[this.ancestors.length - 3] ?? -1;
-        const chain = this.isAssignment(parent) && (!tail || ancestor >= 0);
+        const assignedParent =
+            this.isAssignment(parent) || (parent >= 0 && this.node(parent).kind === 'VariableDeclaration');
+        const chain =
+            assignedParent &&
+            (!tail ||
+                (ancestor >= 0 &&
+                    !['ExpressionStatement', 'VariableDeclarationList', 'VariableStatement'].includes(
+                        this.node(ancestor).kind,
+                    )));
         if(chain)
             return this.docs.concat([
                 this.docs.group(left),
@@ -764,6 +777,8 @@ export class Expressions {
         const node = this.node(index);
         const parts: number[] = [];
         switch(node.kind) {
+            case 'VariableStatement':
+                return this.variableDoc(this.child(index, 0));
             case 'Block': {
                 let directive = true;
                 for(const child of node.children) {
@@ -871,6 +886,56 @@ export class Expressions {
     }
     functionUnsupported(index: number): string {
         return functionUnsupported(this.parser, this.source, index);
+    }
+    variableDoc(index: number): number {
+        const list = this.node(index);
+        const printed: number[] = [];
+        let initialized = false;
+        this.ancestors.push(index);
+        for(const declaration of list.children) {
+            const item = this.node(declaration);
+            const name = this.child(declaration, 0);
+            this.ancestors.push(declaration);
+            const left = this.print(name, declaration, 'id');
+            if(item.children.length === 1) printed.push(left);
+            else {
+                initialized = true;
+                const value = this.child(declaration, 1);
+                const right = this.print(value, declaration, 'init');
+                printed.push(this.valueDoc(declaration, index, left, right, value, this.docs.text(' =')));
+            }
+            this.ancestors.pop();
+        }
+        this.ancestors.pop();
+        const kind =
+            list.semantic === '2'
+                ? 'const'
+                : list.semantic === '1'
+                  ? 'let'
+                  : list.semantic === '4'
+                    ? 'using'
+                    : list.semantic === '6'
+                      ? 'await using'
+                      : 'var';
+        const first = printed[0] ?? panic('missing variable declaration');
+        const rest: number[] = [];
+        for(let position = 1; position < printed.length; position++)
+            rest.push(
+                this.docs.concat([
+                    this.docs.text(','),
+                    initialized ? this.docs.hardline() : this.docs.line(),
+                    printed[position] ?? panic('missing variable doc'),
+                ]),
+            );
+        return this.docs.group(
+            this.docs.concat([
+                this.docs.text(kind),
+                this.docs.text(' '),
+                printed.length === 1 ? first : this.docs.indent(first),
+                this.docs.indent(this.docs.concat(rest)),
+                this.docs.text(';'),
+            ]),
+        );
     }
     functionDoc(index: number): number {
         const node = this.node(index);
@@ -1624,6 +1689,7 @@ export class Expressions {
                         coercion ||
                         this.isAssignment(parent) ||
                         outer === 'PropertyAssignment' ||
+                        outer === 'VariableDeclaration' ||
                         outer === 'TemplateExpression' ||
                         outer === 'ReturnStatement' ||
                         outer === 'ThrowStatement' ||
@@ -1763,7 +1829,10 @@ export class Expressions {
                     const enclosing = this.ancestors[firstNonMember] ?? -1;
                     const assignmentInline =
                         (this.isAssignment(enclosing) && this.node(this.child(enclosing, 0)).kind !== 'Identifier') ||
-                        (this.isAssignment(this.ancestors[ancestor] ?? -1) &&
+                        ((this.isAssignment(this.ancestors[ancestor] ?? -1) ||
+                            (ancestor >= 0 &&
+                                this.node(this.ancestors[ancestor] ?? panic('missing assignment ancestor')).kind ===
+                                    'VariableDeclaration')) &&
                             this.node(object).kind === 'CallExpression' &&
                             this.node(object).list > 0);
                     const inline =
@@ -1859,7 +1928,8 @@ export class Expressions {
     }
 }
 export function formatExpression(source: string, settings: SettingsOptions): ResultType {
-    if(source.includes('/*') || source.includes('//')) return { kind: 'NotYet', reason: 'comment-attachment' };
+    if(source.startsWith('#!') || source.startsWith('\ufeff#!') || source.includes('/*') || source.includes('//'))
+        return { kind: 'NotYet', reason: 'comment-attachment' };
     if(hasBlankLine(source) || source.includes('\r')) return { kind: 'NotYet', reason: 'source-trivia' };
     const parser = new Parser(source, 'expression.ts');
     const root = parser.expression();

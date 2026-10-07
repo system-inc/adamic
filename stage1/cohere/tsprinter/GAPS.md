@@ -17,7 +17,7 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 | `({method(x:number){return x;}})` | `function-types` | Typed method signatures |
 | `[a,b]=items` | `assignment-pattern` | Destructuring target patterns and their assignment layout |
 | `` test.each`a\|b\n${1}\|${2}` `` | `jest-template-table` | Jest column layout |
-| `(function () {return 1;})` | `FunctionExpression` | Function parameters and statement bodies |
+| `(function () {return 1;})` | `FunctionExpression` | Anonymous-function spacing differs upstream; named functions and supported bodies are ported |
 | `f<T>(x)` | `type-arguments` | Type printing and type-argument layout |
 | `a as T` | `AsExpression` | Cast/type composition |
 | `a /* comment */ + b` | `comment-attachment` | Shared comment attachment and printer hooks |
@@ -26,11 +26,13 @@ recorded below. The composed driver, natively with leak detection, on Node and t
 | String with a backslash-newline continuation | `string-literal-layout` | Multiline raw literal layout |
 | `async x=>await (x as T)` | `AsExpression` | Await composes; cast/type syntax remains a type-printer gap |
 | Numeric array with a whitespace-only blank line | `source-trivia` | Preserve empty lines containing spaces |
+| Hashbang followed by `f()` | `comment-attachment` | Preserve program headers rather than silently dropping them |
+| ``tag<T>`a${b}``` | `tag-type-arguments` | Type-argument printing |
 
 Comments are conservatively detected by raw marker substrings. This also declines a marker inside
 a string or regex; it never pretends to attach it. Blank lines, including whitespace-only lines, and CR source are likewise declined. Parentheses that stop an active optional chain are preserved, including in flat interpolation previews.
 This core does not promise arbitrary multiline literal handling, JSX, anonymous function/class expressions,
-tagged templates, yield/await, TypeScript assertion/satisfies expressions or whole-file syntax.
+Jest tagged tables, TypeScript assertion/satisfies expressions or whole-file syntax. Ordinary tagged templates and contextual await/yield are ported.
 No accepted-corpus disagreement is put on an ignore list. The document generator covers conditional
 groups and suffixes already, so the missing expression layouts can use them without another doc
 engine port.
@@ -276,3 +278,17 @@ separate precedence rules. These corrected prototypes were not counted as green 
 Context belongs to the parsed source. The driver does not force every `await` or `yield` token into
 expression syntax: call-like uses outside those contexts retain the parser's interpretation.
 Typed await operands remain the explicit `AsExpression` proving gap. No compiler file changed.
+
+## Variable statements and composition
+
+Untyped identifier declarations now compose inside supported function bodies: var, let, const,
+using and await using, multiple initialized or uninitialized declarations, and long initializers.
+Binding patterns, annotated declarations and declaration modifiers remain loud gaps. The next
+file driver will provide separate proving inputs for these declaration boundaries.
+
+An independent complete-file preview found two layout differences in receiver/conditional
+composition and five assignment chains whose expression-statement wrapper changed their layout.
+Those inputs are retained in the expression corpus. The assignment-chain boundary mutant proves
+that the layout distinction matters. A hashbang audit also found a real silent header loss in
+both Node and native execution; hashbang and BOM-plus-hashbang are now refused, with a mutant
+that removes that refusal and compares the proving corpus rather than accepted cases.

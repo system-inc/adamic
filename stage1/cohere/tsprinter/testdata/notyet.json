@@ -50,5 +50,13 @@
   {
     "Source": "(x: number) => x",
     "Reason": "function-types"
+  },
+  {
+    "Source": "#!/usr/bin/env node\nf()",
+    "Reason": "comment-attachment"
+  },
+  {
+    "Source": "tag<T>`a${b}`",
+    "Reason": "tag-type-arguments"
   }
 ]

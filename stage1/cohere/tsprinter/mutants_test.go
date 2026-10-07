@@ -10,6 +10,9 @@ import (
 type mutation struct{ name, file, from, to, entry string }
 
 var mutations = []mutation{
+	{"assignment chain ignores statement boundaries", "expressions.ts", "!['ExpressionStatement', 'VariableDeclarationList', 'VariableStatement']", "!['UnrelatedStatement', 'VariableDeclarationList', 'VariableStatement']", "main.ts"},
+	{"hashbang loses its refusal", "expressions.ts", "source.startsWith('#!') || source.startsWith('\\ufeff#!') || ", "", "main.ts"},
+	{"variable statement loses its keyword", "expressions.ts", "this.docs.text(kind),", "this.docs.text(''),", "main.ts"},
 	{"await loses its keyword", "expressions.ts", "this.docs.text('await ')", "this.docs.text('void ')", "main.ts"},
 	{"yield loses delegation", "expressions.ts", "delegated ? 'yield*' : 'yield'", "delegated ? 'yield' : 'yield'", "main.ts"},
 	{"tagged template loses its tag", "expressions.ts", "this.print(this.child(id, 0), id, 'tag')", "this.docs.text('')", "main.ts"},
@@ -82,6 +85,15 @@ func TestMutants(t *testing.T) {
 			arguments := []string{cases}
 			if change.entry == "main.ts" {
 				cases, want = expressions, expressionWant
+				arguments = []string{"--cases", cases, "80"}
+			}
+			if change.name == "hashbang loses its refusal" {
+				cases = filepath.Join(filepath.Dir(expressions), "gaps.txt")
+				gapWant, err := os.ReadFile(filepath.Join(filepath.Dir(expressions), "gap-answers.txt"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				want = string(gapWant)
 				arguments = []string{"--cases", cases, "80"}
 			}
 			path := mutatedPort(t, change)
