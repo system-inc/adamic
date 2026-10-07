@@ -927,3 +927,8 @@ compiler proof counts, independent of the runtime allocation counts above.
 | internal/lower/testdata/predicates/overload_some_false_valid.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_objects.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_true_only.a | 1 | 1 | 1 | 1 |
+
+| internal/oracle/testdata/array_literal_empty_first.a | 25 | 25 | 17 | 39 | 11 | 0 |
+| internal/oracle/testdata/array_literal_empty_last.a | 28 | 28 | 21 | 43 | 14 | 0 |
+| internal/oracle/testdata/array_literal_empty_typed.a | 17 | 17 | 13 | 31 | 10 | 0 |
+| internal/oracle/testdata/array_literal_empty_union.a | 22 | 22 | 10 | 29 | 13 | 0 |
