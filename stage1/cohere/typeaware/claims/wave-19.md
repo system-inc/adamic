@@ -31,3 +31,9 @@ rules are reserved for this branch:
 
 No implementation for this continuation precedes this claim commit and push.
 Shared registration generator and test harness remain untouched.
+
+Continuation status: claimed, not implemented. The existing bridge lacks raw
+ancestry/global-augmentation, resolved callee declaration and program module-graph
+facts; registering new question files requires the shared facts.go dispatch,
+which Ahra's correction forbids editing outside owned rule files. Stopped without
+editing shared files. See ../WAVE_19_NEXT_REPORT.md for the exact blocker.
