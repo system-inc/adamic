@@ -136,6 +136,22 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		return nil, errors.New("load: the compiler built no program")
 	}
 
+	if usesNodeModules(program) {
+		index, err := nodeTypesIndex(workingDirectory)
+		if err != nil {
+			return nil, err
+		}
+		fs.nodeTypes = true
+		roots = append(roots, index)
+		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
+		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, tspath.ComparePathsOptions{UseCaseSensitiveFileNames: fileSystem.UseCaseSensitiveFileNames(), CurrentDirectory: currentDirectory})
+		host = compiler.NewCachedFSCompilerHost(currentDirectory, fileSystem, bundled.LibPath(), nil, nil, nil)
+		program = compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+		if program == nil {
+			return nil, errors.New("load: the compiler built no Node program")
+		}
+	}
+
 	loaded := &Program{compiler: program, fs: fs}
 	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
 		return nil, &CheckError{Diagnostics: diagnostics}
@@ -146,7 +162,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	for _, sourceFile := range program.GetSourceFiles() {
 		byPath[sourceFile.Path()] = sourceFile
 	}
-	for _, root := range roots[:len(roots)-1] {
+	for _, root := range roots[:len(paths)] {
 		sourceFile, isLoaded := byPath[tspath.ToPath(root, currentDirectory, fileSystem.UseCaseSensitiveFileNames())]
 		if !isLoaded {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))

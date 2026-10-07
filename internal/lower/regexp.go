@@ -193,19 +193,18 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if name == "split" {
 		if len(arguments) == 1 {
-			arguments = append(arguments, ir.NumberConstant{Value: 4294967295})
+			arguments = append(arguments, ir.Undefined{})
 		}
+		undefined := false
 		if len(arguments) == 2 {
-			if _, undefined := arguments[1].(ir.Undefined); undefined {
-				arguments[1] = ir.NumberConstant{Value: 4294967295}
-			}
-			if arguments[1].Type() == ir.MaybeNumber {
-				arguments[1] = ir.Coalesce{Value: arguments[1], Fallback: ir.NumberConstant{Value: 4294967295}, Of: ir.Number}
-			}
+			_, undefined = arguments[1].(ir.Undefined)
 		}
-		if len(arguments) != 2 || arguments[1].Type() != ir.Number {
+		if len(arguments) != 2 || !undefined && arguments[1].Type() != ir.Number && arguments[1].Type() != ir.MaybeNumber {
 			return nil, true, l.notYet(node, "regex split limit other than a number")
 		}
+	}
+	if name == "split" && !l.regexSplitLimitProven(args[0], arguments[1]) {
+		return nil, true, l.notYet(node, "RegExp split numeric limit with unproved V8 Smi representation at a Unicode assertion")
 	}
 	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
 		return nil, true, l.notYet(node, "an optional RegExp call")
@@ -296,9 +295,14 @@ func (l *lowering) regexUnsupportedUse(node *ast.Node) error {
 	if parent.Kind == ast.KindSpreadAssignment {
 		return l.notYet(parent, "spreading a RegExp or its iterator")
 	}
-	if parent.Kind == ast.KindPropertyAccessExpression && parent.Parent != nil && parent.Parent.Kind == ast.KindBinaryExpression {
+	if (parent.Kind == ast.KindPropertyAccessExpression || parent.Kind == ast.KindElementAccessExpression) && parent.Parent != nil && parent.Parent.Kind == ast.KindBinaryExpression {
 		assignment := parent.Parent.AsBinaryExpression()
-		if assignment.Left == parent && assignment.OperatorToken.Kind == ast.KindEqualsToken && (parent.Name().Text() != "lastIndex" || l.regexGroups(node)) {
+		lastIndex := parent.Kind == ast.KindPropertyAccessExpression && parent.Name().Text() == "lastIndex"
+		if parent.Kind == ast.KindElementAccessExpression {
+			key := ast.SkipParentheses(parent.AsElementAccessExpression().ArgumentExpression)
+			lastIndex = key.Kind == ast.KindStringLiteral && key.Text() == "lastIndex"
+		}
+		if assignment.Left == parent && ast.IsAssignmentOperator(assignment.OperatorToken.Kind) && (!lastIndex || l.regexGroups(node)) {
 			return l.notYet(parent, "overriding a RegExp or iterator property")
 		}
 	}

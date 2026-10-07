@@ -1,0 +1,37 @@
+Preparing worktree (new branch 'scratch/parser-namespaces')
+HEAD is now at ef3d907 Regenerate Linux counts so the merged fixture order is recorded
+Auto-merging internal/ir/ir.go
+Auto-merging internal/javascript/javascript.go
+Auto-merging internal/load/load.go
+Auto-merging internal/load/load_test.go
+Auto-merging internal/lower/class.go
+Auto-merging internal/lower/class_inheritance.go
+CONFLICT (content): Merge conflict in internal/lower/class_inheritance.go
+Auto-merging internal/lower/expression.go
+Auto-merging internal/lower/locals.go
+Auto-merging internal/lower/lower.go
+CONFLICT (content): Merge conflict in internal/lower/lower.go
+Auto-merging internal/lower/modules.go
+Auto-merging internal/lower/object.go
+Auto-merging internal/lower/refusals.go
+CONFLICT (content): Merge conflict in internal/lower/refusals.go
+Auto-merging internal/lower/statements.go
+Auto-merging internal/native/emit_statements.go
+Auto-merging internal/oracle/counts.md
+CONFLICT (content): Merge conflict in internal/oracle/counts.md
+Automatic merge failed; fix conflicts and then commit the result.
+[scratch/parser-namespaces f0048f0] Resolve scratch feature conflicts using incoming files
+error obtaining VCS status: exit status 128
+	Use -buildvcs=false to disable VCS stamping.
+# github.com/system-inc/adamic/internal/lower
+internal/lower/class.go:334:11: l.staticGlobals undefined (type *lowering has no field or method staticGlobals)
+internal/lower/class_accessors.go:79:50: l.staticGlobals undefined (type *lowering has no field or method staticGlobals)
+internal/lower/class_accessors.go:114:32: l.accessorCaptures undefined (type *lowering has no field or method accessorCaptures)
+internal/lower/class_accessors.go:382:39: l.staticGlobals undefined (type *lowering has no field or method staticGlobals)
+internal/lower/class_accessors.go:396:21: l.staticGlobals undefined (type *lowering has no field or method staticGlobals)
+internal/lower/class_accessors.go:409:4: l.accessorNames undefined (type *lowering has no field or method accessorNames)
+internal/lower/class_accessors.go:414:7: l.accessorNames undefined (type *lowering has no field or method accessorNames)
+internal/lower/class_generic_calls.go:58:7: l.classGenericInstances undefined (type *lowering has no field or method classGenericInstances)
+internal/lower/class_generic_calls.go:59:5: l.classGenericInstances undefined (type *lowering has no field or method classGenericInstances)
+internal/lower/class_generic_calls.go:61:14: l.classGenericInstances undefined (type *lowering has no field or method classGenericInstances)
+internal/lower/class_generic_calls.go:61:14: too many errors

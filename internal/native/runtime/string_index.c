@@ -269,3 +269,9 @@ void adamic_string_prepare_shared(adamic_string *string) {
 	size_t units = adamic_string_units(string);
 	(void)usable(string, units);
 }
+
+// RegExp borrows the same immutable view published by the shared string index.
+// Short strings and ownerless stack pieces use the caller's temporary decoder.
+const uint16_t *adamic_string_utf16_view(adamic_string *string) {
+	return adamic_string_unit_view(string);
+}
