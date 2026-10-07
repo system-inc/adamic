@@ -131,7 +131,9 @@ if [ "${#fixtures[@]}" -gt 0 ]; then
 	done < <(git -C "$worktree" grep -l "oracle/testdata" -- '*_test.go' | xargs -n1 dirname | sort -u)
 fi
 if [ "${#packages[@]}" -gt 0 ]; then
-	packages=($(printf '%s\n' "${packages[@]}" | sort -u))
+	# Whichever way a path got here, a testdata directory is never a package (go test ./... skips
+	# them on purpose), so it counts as the package above it.
+	packages=($(printf '%s\n' "${packages[@]}" | sed -E 's#/testdata(/.*)?$##' | grep -v -x '\./testdata' | sort -u))
 fi
 if [ "${#packages[@]}" -gt 0 ]; then
 	# A package whose every file sits behind a build tag isn't built by go test ./..., and naming it
