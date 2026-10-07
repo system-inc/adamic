@@ -52,9 +52,6 @@ func (l *lowering) accessorRefusal(node *ast.Node) error {
 		if ast.HasSyntacticModifier(node, ast.ModifierFlagsStatic) {
 			return l.notYet(node, "static accessors (adamic/static-accessor)")
 		}
-		if len(node.Parent.TypeParameters()) > 0 {
-			return l.notYet(node, "accessors on generic classes (adamic/generic-accessor)")
-		}
 		if !ast.IsIdentifier(node.Name()) {
 			return l.notYet(node, "computed or private accessor names (adamic/accessor-name)")
 		}
@@ -249,7 +246,7 @@ func (l *lowering) updateAccessor(node, target *ast.Node, operator ast.Kind, val
 	return []ir.Statement{ir.Block{Body: []ir.Statement{held, read, ir.Evaluate{Value: setter}}}}, nil
 }
 
-func (l *lowering) checkAccessorOverride(member *ast.Node, inherited *ast.Symbol) error {
+func (l *lowering) checkAccessorOverride(member *ast.Node, inherited *ast.Symbol, classType, baseType *checker.Type, checkABI bool) error {
 	refuse := func(reason string) error {
 		return &Refused{Where: l.program.Where(member), What: reason, Fix: "keep the inherited accessor descriptor and its read and write types"}
 	}
@@ -271,24 +268,44 @@ func (l *lowering) checkAccessorOverride(member *ast.Node, inherited *ast.Symbol
 		if old == nil {
 			continue
 		}
-		oldSignature := l.checker.GetSignatureFromDeclaration(old)
-		newSignature := l.checker.GetSignatureFromDeclaration(next)
 		var source, target *checker.Type
 		if kind == ast.KindGetAccessor {
-			source = l.checker.GetReturnTypeOfSignature(newSignature)
-			target = l.checker.GetReturnTypeOfSignature(oldSignature)
+			source = l.accessorType(next, classType)
+			target = l.accessorType(old, baseType)
 		} else {
-			source = l.checker.GetTypeOfSymbol(oldSignature.Parameters()[0])
-			target = l.checker.GetTypeOfSymbol(newSignature.Parameters()[0])
+			source = l.accessorType(old, baseType)
+			target = l.accessorType(next, classType)
 		}
 		if !l.classAssignable(source, target) || l.widened(source, target, map[[2]*checker.Type]bool{}) != nil {
 			return refuse("an unsound accessor override (adamic/accessor-override)")
 		}
 		a, knownA := l.representation(source)
 		b, knownB := l.representation(target)
-		if !knownA || !knownB || a != b {
+		if checkABI && (!knownA || !knownB || a != b) {
 			return l.notYet(member, "an accessor override changing native representation (adamic/accessor-override-representation)")
 		}
 	}
 	return nil
+}
+
+// A declaration's signature still names its own type parameters, including when
+// the inherited property symbol comes from an instantiated base. Substitute via
+// that declaration's nominal view, not the descendant's argument positions.
+func (l *lowering) accessorType(declaration *ast.Node, receiver *checker.Type) *checker.Type {
+	signature := l.checker.GetSignatureFromDeclaration(declaration)
+	var proven *checker.Type
+	if declaration.Kind == ast.KindGetAccessor {
+		proven = l.checker.GetReturnTypeOfSignature(signature)
+	} else {
+		proven = l.checker.GetTypeOfSymbol(signature.Parameters()[0])
+	}
+	view := l.classView(receiver, declaration.Parent)
+	if view == nil {
+		return proven
+	}
+	mapper := l.typeMapperOf(declaration.Parent, view)
+	if mapper == nil {
+		return proven
+	}
+	return instantiateType(l.checker, proven, mapper)
 }

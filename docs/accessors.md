@@ -1,7 +1,7 @@
 # Accessors lowered as methods
 
 Stage 0 opens this part of the 0.2 accessor decision. Named instance getters and
-setters on non-generic classes lower to ordinary typed methods. Each descriptor
+setters lower to ordinary typed methods, monomorphized with generic classes. Each descriptor
 half has its own virtual slot. A getter can compute, mutate, allocate or throw;
 it is never a field load in the IR. The existing flow, alias, freshness, borrow,
 region and reuse analyses therefore see a call and its virtual targets.
@@ -36,8 +36,8 @@ between a call and a stored field true.
 | A getter class and a field class passed through the same `interface View { x: number }` | Refused at the accessor conversion with `adamic/accessor-field-view`. Choosing a load for one implementation and a call for another would lie about effects and storage. The rule also applies inside arrays, fields, signatures, casts and inferred views. |
 | `const erased: {} = a`, or an upcast to a class omitting an accessor | Refused, `adamic/accessor-view-erasure`. Erasing the descriptor could later expose it as an optional structural field with unchecked writes. Keep a nominal view declaring that accessor. |
 | `const o = { get x() { return 1; } }` or an object-literal setter | NotYet, `adamic/object-accessor`. Own enumerable descriptors need a separate object layout and spread implementation. |
-| `class C { static get x() { return 1; } }` and static setters | NotYet, `adamic/static-accessor`. The accessors-2 unit stopped here: inherited descriptors must receive the constructor used at the access site as `this`, and class values have no runtime receiver representation. See the static receiver probe below. |
-| `class C<T> { get x() { return 1; } }` and generic class setters | NotYet, `adamic/generic-accessor`. Declared generic accessors need substituted descriptor and override proofs. Inheriting an unchanged non-generic accessor does not add a new descriptor. |
+| `class C { static get x() { return 1; } }` and static setters | NotYet, `adamic/static-accessor`. A static getter's receiver is the class value: `Base.x` and `Derived.x` differ. The IR has no class-value representation yet. |
+| `class C<T> { get x() { return 1; } }` and generic class setters | Admitted. Accessors are monomorphized with the class. Override proofs substitute the read and write types through each declaration's nominal class view; mutable contents and native representations are checked on those substituted types. |
 | `interface View { get x(): number; }` or another descriptor declaration outside a class | NotYet, `adamic/accessor-declaration`. Structural descriptor syntax still does not prove a nominal virtual layout. |
 | `function read<T extends A>(value: T) { return value.x; }` | NotYet, `adamic/generic-accessor-receiver`. The up-front pass cannot yet prove every instantiation has the constraint's nominal table rather than a structural property. |
 | A derived getter returning `super.x` or a setter assigning `super.x` | NotYet, `adamic/super-accessor`. Super property access needs the base descriptor with the current receiver, rather than ordinary virtual dispatch. |
@@ -86,13 +86,13 @@ Fifteen mutants were run and caught, then restored:
 | Setter-only read fabricated as zero | The setter-only read probe became admitted. |
 | Spread and destructuring treated as loads | Three refusal probes became admitted. The indexed probe still reached an older NotYet guard, so that part is masked. |
 
-## Accessors-2 stopping point
+## Static accessor stopping point
 
 The ordered follow-on unit starts from `origin/codex/accessors` at `d785e87`:
 that commit is not an ancestor of the fetched `origin/main` at `ef3d907`.
-It stops before admitting static accessors. Generic descriptors, super descriptor
-calls, update values and object-literal descriptors remain NotYet and were not
-implemented in this unit.
+The first commit stopped before admitting static accessors. The follow-on work
+continues with generic descriptors, super descriptor calls and update values.
+Object-literal descriptors remain NotYet.
 
 Observed on Node 24.19.0, `review/accessors-2/static_receiver.a` exits 0 and prints:
 
@@ -145,3 +145,25 @@ Validation for the stopping-point commit (logs in `/tmp/accessors-2-*.log`):
 
 The full repository gate was not run. No fixture was added to the admitted
 oracle list and no allocation-count row changed.
+
+## Generic-class accessors
+
+`accessors_generic.a` holds number, string and object instantiations, a derived
+class whose base uses its second type argument, nominal base dispatch, owned
+getter results kept across setter calls, and a throwing virtual getter that
+prevents the operand and setter. The fixture passes source Node, the JavaScript
+backend, native release, ASan/UBSan and LeakSanitizer. The counts update passed
+and added only this fixture's row.
+
+Two mutants were restored after failing:
+
+- Leaving accessor signatures unsubstituted refuses the sound reordered-argument
+  override in `TestGenericAccessorOverridesUseSubstitutedTypes`.
+- Omitting the read/write type relation admits the mutable array covariance
+  probe in `TestGenericAccessorOverrideRejectsMutableCovariance` (`got <nil>`).
+
+Commands: `go test -count=1 -timeout 10m ./internal/lower`, the uncached
+`TestNativeAgreesWithNode/internal/oracle/testdata/accessors` filter, and
+`go test -count=1 -timeout 30m ./internal/oracle -run TestCountsAreRecorded -args -update-counts`.
+Logs are `/tmp/accessors-2-generic-*.log`. Static accessors and generic function
+receivers remain NotYet. Getters remain virtual `ir.Call` nodes.

@@ -37,7 +37,6 @@ func TestAccessorRefusals(t *testing.T) {
 		{"interface descriptor", `interface View { get x(): number; }`, "accessor-declaration", true},
 		{"setter parameter narrowing", `class A { get x(): number { return 1; } set x(value: number) {} } class B extends A { override get x(): number { return 1; } override set x(value: 1) {} } const b = new B();`, "accessor-override", false},
 		{"override representation", `class A { get x(): number | string { return 1; } } class B extends A { override get x(): number { return 1; } } const b = new B();`, "accessor-override-representation", true},
-		{"generic", `class A<T> { get x(): number { return 1; } } const a = new A<number>();`, "generic-accessor", true},
 		{"super", `class A { get x(): number { return 1; } } class B extends A { override get x(): number { return super.x + 1; } } const b = new B();`, "super-accessor", true},
 		{"literal", `const value = { get x(): number { return 1; } };`, "object-accessor", true},
 		{"optional", `class A { get x(): number { return 1; } } function read(a: A | undefined): number | undefined { return a?.x; }`, "optional-accessor", true},
@@ -142,5 +141,27 @@ class B extends A { override get x(): 1 { return 1; } override set x(value: numb
 const value: A = new B(); value.x = 2; console.log(value.x.toString());`)
 	if err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestGenericAccessorOverridesUseSubstitutedTypes(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `class Base<T> { stored: T; constructor(value: T) { this.stored = value; } get x(): T { return this.stored; } set x(value: T) { this.stored = value; } }
+class Derived<A, B> extends Base<B> { override get x(): B { return this.stored; } override set x(value: B) { this.stored = value; } }
+const value: Base<string> = new Derived<number, string>('yes'); console.log(value.x); value.x = 'next';`)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestGenericAccessorOverrideRejectsMutableCovariance(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `interface Animal { readonly name: string } interface Dog extends Animal { readonly bark: () => string }
+class Base<T> { get x(): T[] { return []; } }
+class Derived<T extends Animal> extends Base<Animal> { override get x(): T[] { return []; } }
+const value = new Derived<Dog>();`)
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "accessor-override") {
+		t.Fatalf("want accessor override refusal, got %v", err)
 	}
 }

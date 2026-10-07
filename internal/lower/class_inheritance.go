@@ -53,7 +53,7 @@ func (l *lowering) checkOverrides(declaration *ast.Node, classType *checker.Type
 			continue
 		}
 		if accessorSymbol(inherited) || member.Kind == ast.KindGetAccessor || member.Kind == ast.KindSetAccessor {
-			if err := l.checkAccessorOverride(member, inherited); err != nil {
+			if err := l.checkAccessorOverride(member, inherited, classType, base, checkABI); err != nil {
 				return err
 			}
 			continue

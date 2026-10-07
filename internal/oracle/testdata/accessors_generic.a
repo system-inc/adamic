@@ -1,0 +1,30 @@
+class Cell<T> {
+ stored: T;
+ constructor(value: T) { this.stored = value; }
+ get value(): T { console.log('base get'); return this.stored; }
+ set value(next: T) { console.log('base set'); this.stored = next; }
+}
+class Derived<Unused, T> extends Cell<T> {
+ override get value(): T { console.log('derived get'); return this.stored; }
+ override set value(next: T) { console.log('derived set'); this.stored = next; }
+}
+const number = new Cell<number>(3);
+number.value += 2;
+console.log(`${number.value}`);
+const derived = new Derived<number, string>(`text${number.value}`);
+const base: Cell<string> = derived;
+const saved = base.value;
+base.value = `${saved}!`;
+console.log(`${saved} ${derived.value}`);
+interface Box { readonly label: string; }
+const boxed = new Cell<Box>({ label: `box${number.value}` });
+const old = boxed.value;
+boxed.value = { label: `${old.label}!` };
+console.log(`${old.label} ${boxed.value.label}`);
+class Throwing<T> extends Cell<T> {
+ override get value(): T { throw new Error('generic getter'); }
+ override set value(next: T) { console.log('unexpected setter'); this.stored = next; }
+}
+function operand(): number { console.log('unexpected operand'); return 1; }
+const throws: Cell<number> = new Throwing<number>(7);
+try { throws.value += operand(); } catch { console.log('caught'); }
