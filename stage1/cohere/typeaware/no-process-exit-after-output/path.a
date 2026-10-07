@@ -1,0 +1,8 @@
+export class Path {
+    readonly block: number;
+    readonly chains: readonly string[];
+    constructor(block: number, chains: readonly string[]) {
+        this.block = block;
+        this.chains = chains;
+    }
+}

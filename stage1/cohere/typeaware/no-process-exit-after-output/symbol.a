@@ -1,0 +1,13 @@
+import type { Declaration } from './declaration.a';
+export class SymbolFact {
+    readonly id: number;
+    readonly flags: number;
+    readonly name: string;
+    readonly declarations: readonly Declaration[];
+    constructor(id: number, flags: number, name: string, declarations: readonly Declaration[]) {
+        this.id = id;
+        this.flags = flags;
+        this.name = name;
+        this.declarations = declarations;
+    }
+}

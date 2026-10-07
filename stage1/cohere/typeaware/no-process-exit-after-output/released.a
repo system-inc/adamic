@@ -1,0 +1,17 @@
+import { panic, programArguments, tsgoProgram, tsgoRelease, tsgoInspect } from 'adamic';
+const args = programArguments();
+const config = args[0] ?? panic('missing config');
+const path = args[1] ?? panic('missing source');
+const question = args[2] ?? panic('missing question');
+const program = tsgoProgram(config, [path]);
+tsgoRelease(program);
+console.log(
+    tsgoInspect(
+        program,
+        path,
+        0,
+        question === 'resolved-callee' ? 3 : 5,
+        question === 'resolved-callee' ? 'CallExpression' : 'SourceFile',
+        question,
+    ),
+);

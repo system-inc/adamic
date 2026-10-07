@@ -1,0 +1,149 @@
+import type { Rules } from '../rules.ts';
+import type { DeclarationChain } from './declaration_chain.a';
+import { makeDeclarationChain } from './declaration_chain.a';
+import type { Syntax } from './syntax.a';
+import { makeSyntax } from './syntax.a';
+import type { Contexts } from './context.a';
+import { resolvedCallee, neverTypeFlag } from './resolved_callee.a';
+export class OutputEvents {
+    readonly rules: Rules;
+    readonly facts: DeclarationChain;
+    readonly syntax: Syntax;
+    readonly contexts: Contexts;
+    readonly exits = new Map<number, boolean>();
+    readonly writes = new Map<number, boolean>();
+    constructor(rules: Rules, contexts: Contexts) {
+        this.rules = rules;
+        this.contexts = contexts;
+        this.facts = makeDeclarationChain(rules);
+        this.syntax = makeSyntax(rules);
+    }
+    exit(index: number): boolean {
+        const cached = this.exits.get(index);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const name = this.syntax.member(this.syntax.child(index, 0));
+        const result = name >= 0 && this.rules.parser.node(name).text === 'exit' && this.facts.processMember(name);
+        this.exits.set(index, result);
+        return result;
+    }
+    write(index: number): boolean {
+        const cached = this.writes.get(index);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const callee = this.rules.skip(this.syntax.child(index, 0));
+        let result = false;
+        if(['PropertyAccessExpression', 'ElementAccessExpression'].includes(this.syntax.kind(callee))) {
+            const parsedNode = this.rules.parser.node(callee);
+            const key = this.rules.parser.node(this.syntax.last(callee));
+            const member =
+                parsedNode.kind === 'PropertyAccessExpression'
+                    ? key.text
+                    : ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(key.kind)
+                      ? key.text
+                      : '';
+            const receiver = this.rules.skip(this.syntax.child(callee, 0));
+            if(
+                ['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'].includes(member) &&
+                this.syntax.kind(receiver) === 'Identifier' &&
+                this.rules.parser.node(receiver).text === 'console'
+            ) {
+                result = this.facts.globalVariable(receiver);
+            }
+            if(member === 'write') {
+                const stream = this.syntax.member(receiver);
+                result =
+                    stream >= 0 &&
+                    ['stdout', 'stderr'].includes(this.rules.parser.node(stream).text) &&
+                    this.facts.processMember(stream);
+            }
+        }
+        this.writes.set(index, result);
+        return result;
+    }
+    holdsExit(index: number): boolean {
+        for(const child of this.rules.parser.node(index).children) {
+            if(this.syntax.isRoot(child)) {
+                continue;
+            }
+            if(this.syntax.kind(child) === 'CallExpression' && this.exit(child)) {
+                return true;
+            }
+            if(this.holdsExit(child)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    followedWrite(index: number): boolean {
+        if(this.write(index)) {
+            return true;
+        }
+        const resolved = resolvedCallee(this.rules, index);
+        if(resolved === undefined) {
+            return false;
+        }
+        const path = resolved.file;
+        const first = resolved.start;
+        const last = resolved.end;
+        const flags = resolved.functionFlags;
+        if(
+            !['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(
+                resolved.kind,
+            ) ||
+            !resolved.body ||
+            (!resolved.external && path !== this.rules.path) ||
+            (flags & 1) !== 0 ||
+            (resolved.returnFlags & neverTypeFlag) !== 0
+        ) {
+            return false;
+        }
+        let parent = this.syntax.parent(index);
+        while(this.syntax.kind(parent) === 'ParenthesizedExpression') {
+            parent = this.syntax.parent(parent);
+        }
+        if((flags & 2) !== 0 && this.syntax.kind(parent) !== 'AwaitExpression') {
+            return false;
+        }
+        const rules = this.contexts.get(path);
+        const declaration = rules.parser.nodes.findIndex(
+            (parsedNode) =>
+                parsedNode.kind === resolved.kind &&
+                rules.byte(parsedNode.pos) === first &&
+                rules.byte(parsedNode.end) === last,
+        );
+        if(declaration < 0) {
+            return false;
+        }
+        const events = new OutputEvents(rules, this.contexts);
+        const root = events.syntax.body(declaration);
+        if(root < 0) {
+            return false;
+        }
+        return events.bodyWrites(root);
+    }
+    bodyWrites(index: number): boolean {
+        const held: number[] = [index];
+        let wrote = false;
+        while(held.length > 0) {
+            const current = held.pop() ?? -1;
+            if(current < 0 || this.syntax.isRoot(current)) {
+                continue;
+            }
+            if(this.syntax.kind(current) === 'CallExpression') {
+                if(this.exit(current)) {
+                    return false;
+                }
+                if(this.write(current)) {
+                    wrote = true;
+                }
+            }
+            for(const child of this.rules.parser.node(current).children) {
+                held.push(child);
+            }
+        }
+        return wrote;
+    }
+}

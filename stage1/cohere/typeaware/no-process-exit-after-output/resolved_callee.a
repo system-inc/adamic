@@ -1,0 +1,55 @@
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+// The pinned checker assigns Never bit 18, not the erased compiler's layout.
+export const neverTypeFlag = 262144;
+export class ResolvedCallee {
+    readonly returnFlags: number;
+    readonly file: string;
+    readonly external: boolean;
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    readonly functionFlags: number;
+    readonly body: boolean;
+    constructor(
+        returnFlags: number,
+        file: string,
+        external: boolean,
+        kind: string,
+        start: number,
+        end: number,
+        functionFlags: number,
+        body: boolean,
+    ) {
+        this.returnFlags = returnFlags;
+        this.file = file;
+        this.external = external;
+        this.kind = kind;
+        this.start = start;
+        this.end = end;
+        this.functionFlags = functionFlags;
+        this.body = body;
+    }
+}
+export function resolvedCallee(rules: Rules, index: number): ResolvedCallee | undefined {
+    const frames = new Frames(rules.ask(index, 'resolved-callee'));
+    header(frames, 'resolved-callee');
+    if(!frames.yes()) {
+        frames.end();
+        return undefined;
+    }
+    const returnFlags = frames.natural();
+    if(!frames.yes()) {
+        frames.end();
+        return undefined;
+    }
+    const file = frames.field();
+    const external = frames.yes();
+    const kind = frames.field();
+    const start = frames.natural();
+    const end = frames.natural();
+    const functionFlags = frames.natural();
+    const body = frames.yes();
+    frames.end();
+    return new ResolvedCallee(returnFlags, file, external, kind, start, end, functionFlags, body);
+}

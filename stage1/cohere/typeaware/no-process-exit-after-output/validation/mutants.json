@@ -1,0 +1,44 @@
+[
+  {
+    "mutant": "output",
+    "case": "case-1055269108",
+    "byte": 121,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "mutant": "timer",
+    "case": "case-1049730460",
+    "byte": 119,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "mutant": "blocking",
+    "case": "case-1105167505",
+    "byte": 1942,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "mutant": "declaration-chain",
+    "case": "case-1049730460",
+    "byte": 119,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "mutant": "resolved-callee",
+    "case": "case-1148031436",
+    "byte": 121,
+    "exit": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "mutant": "module-records",
+    "case": "case-1170353498",
+    "byte": 1415,
+    "exit": 0,
+    "stderr_bytes": 0
+  }
+]

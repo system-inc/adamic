@@ -1,0 +1,6 @@
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+export function report(rules: Rules, name: string, id: string, message: string, index: number): Diagnostic {
+    const node = rules.parser.node(index);
+    return new Diagnostic(name, id, message, rules.byte(rules.start(node)), rules.byte(node.end), '');
+}

@@ -1,0 +1,58 @@
+import { report } from '../no-process-exit-after-output/report.a';
+import type { Rules } from '../rules.ts';
+import type { Contexts } from './context.a';
+import { makeContexts } from './context.a';
+import { OutputEvents } from './events.a';
+import { Graph } from './graph.a';
+import { Walk } from './walk.a';
+export class NoProcessExitAfterOutput {
+    readonly rules: Rules;
+    readonly contexts: Contexts;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.contexts = makeContexts(rules);
+    }
+    run(): void {
+        const events = new OutputEvents(this.rules, this.contexts);
+        const roots: number[] = [];
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            if(events.syntax.kind(index) === 'CallExpression' && events.exit(index)) {
+                const root = events.syntax.root(index);
+                if(root >= 0 && !roots.includes(root)) {
+                    roots.push(root);
+                }
+            }
+        }
+        for(const root of roots) {
+            let writes = false;
+            for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+                if(
+                    events.syntax.kind(index) === 'CallExpression' &&
+                    events.syntax.root(index) === root &&
+                    events.followedWrite(index)
+                ) {
+                    writes = true;
+                    break;
+                }
+            }
+            if(!writes) {
+                continue;
+            }
+            const graph = new Graph(this.rules);
+            graph.root(root);
+            const walk = new Walk(this.rules, events, root);
+            walk.run(graph, true);
+            for(const exit of walk.exits) {
+                this.rules.findings.push(
+                    report(
+                        this.rules,
+                        'nexus/correctness-no-process-exit-after-output',
+                        'exitAfterOutput',
+                        'This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.',
+                        exit,
+                    ),
+                );
+            }
+        }
+    }
+}

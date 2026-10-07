@@ -1,0 +1,258 @@
+import { report } from '../no-process-exit-after-output/report.a';
+import { panic } from 'adamic';
+import type { Rules } from '../rules.ts';
+import type { DeclarationChain } from '../no-process-exit-after-output/declaration_chain.a';
+import { makeDeclarationChain } from '../no-process-exit-after-output/declaration_chain.a';
+import { Frames, header } from '../frames.ts';
+export class NoUnclearedRaceTimeout {
+    readonly rules: Rules;
+    readonly facts: DeclarationChain;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.facts = makeDeclarationChain(rules);
+    }
+    parent(index: number): number {
+        return this.rules.parents[index] ?? -1;
+    }
+    child(index: number, at: number): number {
+        return this.rules.parser.node(index).children[at] ?? -1;
+    }
+    kind(index: number): string {
+        return index < 0 ? '' : this.rules.parser.node(index).kind;
+    }
+    outer(index: number): number {
+        let current = index;
+        while(this.kind(this.parent(current)) === 'ParenthesizedExpression') {
+            current = this.parent(current);
+        }
+        return current;
+    }
+    initializer(index: number): number {
+        const node = this.rules.parser.node(index);
+        const last = node.children[node.children.length - 1] ?? -1;
+        if(last < 0 || node.children.length < 2) {
+            return -1;
+        }
+        let at = this.rules.parser.node(last).pos - 1;
+        while(at >= node.pos && [' ', '\t', '\r', '\n'].includes(this.rules.scanner.text.slice(at, at + 1))) {
+            at--;
+        }
+        return this.rules.scanner.text.slice(at, at + 1) === '=' ? last : -1;
+    }
+    promise(index: number): number {
+        let element = this.rules.skip(index);
+        if(this.kind(element) === 'Identifier') {
+            const declaration = this.facts.local(element);
+            if(
+                this.kind(declaration) !== 'VariableDeclaration' ||
+                this.rules.parser.node(this.parent(declaration)).semantic !== '2'
+            ) {
+                return -1;
+            }
+            const initializer = this.initializer(declaration);
+            if(initializer < 0) {
+                return -1;
+            }
+            element = this.rules.skip(initializer);
+        }
+        if(this.kind(element) !== 'NewExpression') {
+            return -1;
+        }
+        const constructor = this.rules.skip(this.child(element, 0));
+        if(this.kind(constructor) !== 'Identifier' || this.rules.parser.node(constructor).text !== 'Promise') {
+            return -1;
+        }
+        const declarations = this.facts.symbol(constructor).declarations;
+        return declarations.length > 0 && declarations.every((declarationRecord) => declarationRecord.library)
+            ? element
+            : -1;
+    }
+    timer(index: number): boolean {
+        const callee = this.rules.skip(this.child(index, 0));
+        let name = callee;
+        if(this.kind(callee) === 'PropertyAccessExpression') {
+            const receiver = this.rules.skip(this.child(callee, 0));
+            if(
+                this.kind(receiver) !== 'Identifier' ||
+                !['globalThis', 'window'].includes(this.rules.parser.node(receiver).text)
+            ) {
+                return false;
+            }
+            name = this.rules.parser.node(callee).children[this.rules.parser.node(callee).children.length - 1] ?? -1;
+        }
+        else if(this.kind(callee) !== 'Identifier') {
+            return false;
+        }
+        if(this.kind(name) !== 'Identifier' || this.rules.parser.node(name).text !== 'setTimeout') {
+            return false;
+        }
+        const declarations = this.facts.symbol(name).declarations;
+        return (
+            declarations.length > 0 &&
+            declarations.every(
+                (declarationRecord) =>
+                    declarationRecord.ambient &&
+                    ((declarationRecord.kinds[1] === 'SourceFile' && !declarationRecord.external) ||
+                        (declarationRecord.kinds[1] === 'ModuleBlock' && declarationRecord.globals[2] === true) ||
+                        (declarationRecord.kinds[1] === 'InterfaceDeclaration' &&
+                            declarationRecord.names[1] === 'WindowOrWorkerGlobalScope' &&
+                            declarationRecord.library)),
+            )
+        );
+    }
+    assignmentTarget(index: number): boolean {
+        const outer = this.outer(index);
+        const parent = this.parent(outer);
+        return (
+            this.kind(parent) === 'BinaryExpression' &&
+            this.kind(this.child(parent, 1)) === 'EqualsToken' &&
+            this.child(parent, 0) === outer
+        );
+    }
+    neverRead(index: number): boolean {
+        const symbol = this.facts.symbol(index);
+        const declaration = this.facts.local(index);
+        if(this.kind(declaration) !== 'VariableDeclaration') {
+            return false;
+        }
+        const declared = this.child(declaration, 0);
+        const name = this.rules.parser.node(declared).text;
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at);
+            if(at === declared || node.kind !== 'Identifier' || node.text !== name) {
+                continue;
+            }
+            const frames = new Frames(this.rules.ask(at, 'symbol-identities'));
+            header(frames, 'symbol-identities');
+            let id = frames.natural();
+            frames.natural();
+            frames.yes();
+            frames.natural();
+            const shorthand = frames.natural();
+            frames.end();
+            if(this.kind(this.parent(at)) === 'ShorthandPropertyAssignment' && shorthand !== 0) {
+                id = shorthand;
+            }
+            if(id === symbol.id && !this.assignmentTarget(at)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    lost(executor: number, index: number): boolean {
+        const outer = this.outer(index);
+        const parent = this.parent(outer);
+        if(parent < 0) {
+            return false;
+        }
+        if(['ExpressionStatement', 'VoidExpression'].includes(this.kind(parent)) || parent === executor) {
+            return true;
+        }
+        if(this.kind(parent) === 'VariableDeclaration' && this.initializer(parent) === outer) {
+            const name = this.child(parent, 0);
+            return this.kind(name) === 'Identifier' && this.neverRead(name);
+        }
+        if(
+            this.kind(parent) === 'BinaryExpression' &&
+            this.kind(this.child(parent, 1)) === 'EqualsToken' &&
+            this.child(parent, 2) === outer
+        ) {
+            const target = this.rules.skip(this.child(parent, 0));
+            return (
+                this.kind(target) === 'Identifier' &&
+                this.kind(this.parent(this.outer(parent))) === 'ExpressionStatement' &&
+                this.neverRead(target)
+            );
+        }
+        return false;
+    }
+    visit(executor: number, index: number): void {
+        const kind = this.kind(index);
+        if(
+            [
+                'FunctionDeclaration',
+                'FunctionExpression',
+                'ArrowFunction',
+                'MethodDeclaration',
+                'Constructor',
+                'GetAccessor',
+                'SetAccessor',
+                'ClassDeclaration',
+                'ClassExpression',
+            ].includes(kind)
+        ) {
+            return;
+        }
+        if(kind === 'CallExpression' && this.timer(index) && this.lost(executor, index)) {
+            this.rules.findings.push(
+                report(
+                    this.rules,
+                    'nexus/correctness-no-uncleared-race-timeout',
+                    'unclearedRaceTimeout',
+                    'This `setTimeout` arms the losing side of a `Promise.race`, and its handle is thrown away, so nothing can ever clear it. When the work wins the race, the timer stays armed for its whole duration: in Node it holds the process open (a batch that finished its last item sits until the timeout elapses), and its callback still runs, rejecting a promise nobody is waiting on. Keep the handle (`timer = setTimeout(...)`) and `clearTimeout(timer)` in a `finally` around the race.',
+                    index,
+                ),
+            );
+        }
+        for(const child of this.rules.parser.node(index).children) {
+            this.visit(executor, child);
+        }
+    }
+    run(): void {
+        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'CallExpression' || node.list < 1) {
+                continue;
+            }
+            const callee = this.rules.skip(this.child(index, 0));
+            if(this.kind(callee) !== 'PropertyAccessExpression') {
+                continue;
+            }
+            const name =
+                this.rules.parser.node(callee).children[this.rules.parser.node(callee).children.length - 1] ?? -1;
+            if(this.kind(name) !== 'Identifier' || this.rules.parser.node(name).text !== 'race') {
+                continue;
+            }
+            const declarations = this.facts.symbol(name).declarations;
+            if(
+                declarations.length === 0 ||
+                !declarations.every(
+                    (declarationRecord) =>
+                        declarationRecord.library &&
+                        declarationRecord.kinds[1] === 'InterfaceDeclaration' &&
+                        declarationRecord.names[1] === 'PromiseConstructor',
+                )
+            ) {
+                continue;
+            }
+            const array = this.rules.skip(
+                node.children[node.children.length - node.list] ?? panic('missing race argument'),
+            );
+            if(this.kind(array) !== 'ArrayLiteralExpression') {
+                continue;
+            }
+            for(const element of this.rules.parser.node(array).children) {
+                const promise = this.promise(element);
+                if(promise < 0) {
+                    continue;
+                }
+                const made = this.rules.parser.node(promise);
+                if(made.list < 1) {
+                    continue;
+                }
+                const executor = this.rules.skip(
+                    made.children[made.children.length - made.list] ?? panic('missing executor'),
+                );
+                if(!['ArrowFunction', 'FunctionExpression'].includes(this.kind(executor))) {
+                    continue;
+                }
+                const body =
+                    this.rules.parser.node(executor).children[this.rules.parser.node(executor).children.length - 1] ??
+                    -1;
+                if(body >= 0) {
+                    this.visit(executor, body);
+                }
+            }
+        }
+    }
+}

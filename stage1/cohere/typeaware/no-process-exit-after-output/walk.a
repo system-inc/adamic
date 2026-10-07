@@ -1,0 +1,168 @@
+import type { Rules } from '../rules.ts';
+import type { Graph } from './graph.a';
+import type { OutputEvents } from './events.a';
+import type { Syntax } from './syntax.a';
+import { makeSyntax } from './syntax.a';
+import { Path } from './path.a';
+export class Walk {
+    readonly rules: Rules;
+    readonly events: OutputEvents;
+    readonly syntax: Syntax;
+    readonly root: number;
+    readonly tries = new Map<number, number>();
+    readonly exits: number[] = [];
+    readonly started: number[] = [];
+    constructor(rules: Rules, events: OutputEvents, root: number) {
+        this.rules = rules;
+        this.events = events;
+        this.root = root;
+        this.syntax = makeSyntax(rules);
+    }
+    tryId(index: number): number {
+        const cached = this.tries.get(index);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const id = this.tries.size;
+        this.tries.set(index, id);
+        return id;
+    }
+    chain(index: number): string {
+        const ids: number[] = [];
+        let previous = index;
+        let current = this.syntax.parent(index);
+        while(current >= 0 && current !== this.root) {
+            if(
+                this.syntax.kind(current) === 'TryStatement' &&
+                this.syntax.child(current, 0) === previous &&
+                this.rules.parser.node(current).children.some((child) => this.syntax.kind(child) === 'CatchClause')
+            ) {
+                ids.push(this.tryId(current));
+            }
+            previous = current;
+            current = this.syntax.parent(current);
+        }
+        ids.sort((leftBranch, rightBranch) => leftBranch - rightBranch);
+        return `,${ids.length > 0 ? `${ids.join(',')},` : ''}`;
+    }
+    holds(outer: string, inner: string): boolean {
+        return inner.split(',').every((id) => id === '' || outer.includes(`,${id},`));
+    }
+    with(chains: readonly string[], chain: string): string[] {
+        if(chains.some((held) => this.holds(chain, held))) {
+            return chains.slice();
+        }
+        const next = chains.filter((held) => !this.holds(held, chain));
+        next.push(chain);
+        next.sort((leftBranch, rightBranch) => (leftBranch < rightBranch ? -1 : leftBranch > rightBranch ? 1 : 0));
+        return next;
+    }
+    inCatch(index: number): boolean {
+        let previous = index;
+        let current = this.syntax.parent(index);
+        while(current >= 0 && current !== this.root) {
+            if(
+                this.syntax.kind(current) === 'CatchClause' &&
+                this.syntax.child(current, 0) === previous &&
+                this.syntax.kind(previous) === 'VariableDeclaration'
+            ) {
+                return true;
+            }
+            previous = current;
+            current = this.syntax.parent(current);
+        }
+        return false;
+    }
+    // Blocking callbacks are injected by the blocking-streams rule, not by this graph.
+    run(
+        graph: Graph,
+        follow: boolean,
+        blocks: readonly number[] = [],
+        runCalls: readonly number[] = [],
+        runFunctions: readonly number[][] = [],
+        handsOn: readonly number[][] = [],
+        argumentsBlock: readonly boolean[] = [],
+        ordered = false,
+    ): void {
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            if(
+                this.syntax.kind(at) === 'CallExpression' &&
+                this.syntax.root(at) === this.root &&
+                this.events.exit(at) &&
+                (!graph.recorded.includes(at) || this.inCatch(at))
+            ) {
+                return;
+            }
+        }
+        const seen = new Map<string, boolean>();
+        const queue: Path[] = [new Path(0, [])];
+        seen.set('0:', true);
+        for(const position of queue) {
+            let state = position.chains.slice();
+            let ended = false;
+            for(const index of graph.block(position.block).events) {
+                if(index < 0) {
+                    const member = `,${this.tryId(-index - 1)},`;
+                    state = state.filter((held) => !held.includes(member));
+                    continue;
+                }
+                if(this.inCatch(index)) {
+                    continue;
+                }
+                if(this.syntax.kind(index) === 'CallExpression') {
+                    if(this.events.exit(index)) {
+                        if(state.length > 0 && !this.exits.includes(index)) {
+                            this.exits.push(index);
+                        }
+                        ended = true;
+                        break;
+                    }
+                    if(
+                        (follow ? this.events.followedWrite(index) : this.events.write(index)) &&
+                        !this.events.holdsExit(index)
+                    ) {
+                        state = this.with(state, this.chain(index));
+                    }
+                }
+                const call = runCalls.indexOf(index);
+                if(call >= 0) {
+                    if(argumentsBlock[call] !== true) {
+                        const functions: readonly number[] = runFunctions[call] ?? [];
+                        for(const functionIndex of functions) {
+                            if(!this.started.includes(functionIndex)) {
+                                this.started.push(functionIndex);
+                            }
+                        }
+                    }
+                    if(!ordered) {
+                        const callbacks: readonly number[] = handsOn[call] ?? [];
+                        for(const functionIndex of callbacks) {
+                            if(!this.started.includes(functionIndex)) {
+                                this.started.push(functionIndex);
+                            }
+                        }
+                    }
+                }
+                if(blocks.includes(index)) {
+                    ended = true;
+                    break;
+                }
+            }
+            if(ended) {
+                continue;
+            }
+            const key = state.join('|');
+            for(const successor of graph.block(position.block).successors) {
+                if(!graph.block(successor).reachable) {
+                    continue;
+                }
+                const mark = `${successor}:${key}`;
+                if(seen.has(mark)) {
+                    continue;
+                }
+                seen.set(mark, true);
+                queue.push(new Path(successor, state));
+            }
+        }
+    }
+}

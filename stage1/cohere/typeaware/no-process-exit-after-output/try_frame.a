@@ -1,0 +1,16 @@
+export class TryFrame {
+    readonly catchEntry: number;
+    readonly finallyEntry: number;
+    catching = false;
+    forked = false;
+    returned = false;
+    thrown = false;
+    readonly implicit: number[] = [];
+    constructor(catchEntry: number, finallyEntry: number) {
+        this.catchEntry = catchEntry;
+        this.finallyEntry = finallyEntry;
+    }
+    target(): number {
+        return !this.catching && this.catchEntry >= 0 ? this.catchEntry : this.finallyEntry;
+    }
+}

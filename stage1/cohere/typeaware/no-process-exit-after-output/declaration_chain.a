@@ -1,0 +1,107 @@
+import { panic } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+import { Declaration } from './declaration.a';
+import { SymbolFact } from './symbol.a';
+export class DeclarationChain {
+    readonly rules: Rules;
+    readonly cache = new Map<number, SymbolFact>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    symbol(index: number): SymbolFact {
+        const cached = this.cache.get(index);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const frames = new Frames(this.rules.ask(index, 'declaration-chain'));
+        header(frames, 'declaration-chain');
+        const id = frames.natural();
+        const flags = frames.natural();
+        const name = frames.field();
+        const count = frames.natural();
+        const declarations: Declaration[] = [];
+        for(let declarationRecord = 0; declarationRecord < count; declarationRecord++) {
+            if(!frames.yes()) {
+                panic('declaration without a source');
+            }
+            const file = frames.field();
+            const ambient = frames.yes();
+            const library = frames.yes();
+            const external = frames.yes();
+            const depth = frames.natural();
+            const kinds: string[] = [];
+            const names: string[] = [];
+            const starts: number[] = [];
+            const ends: number[] = [];
+            const bits: number[] = [];
+            const globals: boolean[] = [];
+            for(let at = 0; at < depth; at++) {
+                kinds.push(frames.field());
+                names.push(frames.field());
+                starts.push(frames.natural());
+                ends.push(frames.natural());
+                bits.push(frames.natural());
+                globals.push(frames.yes());
+            }
+            declarations.push(
+                new Declaration(file, ambient, library, external, kinds, names, starts, ends, bits, globals),
+            );
+        }
+        frames.end();
+        const result = new SymbolFact(id, flags, name, declarations);
+        this.cache.set(index, result);
+        return result;
+    }
+    local(index: number): number {
+        const declarations = this.symbol(index).declarations;
+        if(declarations.length !== 1) {
+            return -1;
+        }
+        const declaration = declarations[0] ?? panic('missing declaration');
+        if(declaration.file !== this.rules.path) {
+            return -1;
+        }
+        return this.rules.parser.nodes.findIndex(
+            (node) =>
+                node.kind === declaration.kinds[0] &&
+                this.rules.byte(node.pos) === declaration.starts[0] &&
+                this.rules.byte(node.end) === declaration.ends[0],
+        );
+    }
+    globalVariable(index: number): boolean {
+        const declarations = this.symbol(index).declarations;
+        return (
+            declarations.length > 0 &&
+            declarations.every(
+                (declarationRecord) =>
+                    declarationRecord.ambient &&
+                    declarationRecord.kinds[0] === 'VariableDeclaration' &&
+                    declarationRecord.kinds[1] === 'VariableDeclarationList' &&
+                    declarationRecord.kinds[2] === 'VariableStatement' &&
+                    ((declarationRecord.kinds[3] === 'SourceFile' && !declarationRecord.external) ||
+                        (declarationRecord.kinds[3] === 'ModuleBlock' && declarationRecord.globals[4] === true)),
+            )
+        );
+    }
+    processMember(index: number): boolean {
+        const declarations = this.symbol(index).declarations;
+        return (
+            declarations.length > 0 &&
+            declarations.every(
+                (declarationRecord) =>
+                    declarationRecord.ambient &&
+                    ['MethodSignature', 'PropertySignature'].includes(declarationRecord.kinds[0] ?? '') &&
+                    declarationRecord.kinds[1] === 'InterfaceDeclaration' &&
+                    declarationRecord.names[1] === 'Process' &&
+                    declarationRecord.kinds[2] === 'ModuleBlock' &&
+                    declarationRecord.kinds[3] === 'ModuleDeclaration' &&
+                    declarationRecord.names[3] === 'NodeJS',
+            )
+        );
+    }
+}
+
+export function makeDeclarationChain(rules: Rules): DeclarationChain {
+    return new DeclarationChain(rules);
+}

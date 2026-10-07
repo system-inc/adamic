@@ -1,0 +1,6 @@
+export class Block {
+    readonly events: number[] = [];
+    readonly successors: number[] = [];
+    reachable = false;
+    incoming = false;
+}

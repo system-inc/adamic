@@ -1,0 +1,12 @@
+export class Jump {
+    readonly labels: readonly string[];
+    readonly breakTo: number;
+    readonly continueTo: number;
+    readonly breakable: boolean;
+    constructor(labels: readonly string[], breakTo: number, continueTo: number, breakable: boolean) {
+        this.labels = labels;
+        this.breakTo = breakTo;
+        this.continueTo = continueTo;
+        this.breakable = breakable;
+    }
+}

@@ -1,0 +1,64 @@
+import { panic } from 'adamic';
+import type { Rules } from '../rules.ts';
+import { Frames, header } from '../frames.ts';
+import { Module } from './module.a';
+export class ModuleRecords {
+    readonly files = new Map<string, Module>();
+    readonly imported: string[] = [];
+    readonly canBlock: string[] = [];
+    constructor(rules: Rules, root: number) {
+        const frames = new Frames(rules.ask(root, 'module-records'));
+        header(frames, 'module-records');
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            const path = frames.field();
+            const declaration = frames.yes();
+            const text = frames.field();
+            const file = new Module(path, declaration, text);
+            const records = frames.natural();
+            for(let recordIndex = 0; recordIndex < records; recordIndex++) {
+                const kind = frames.field();
+                const typeOnly = frames.yes();
+                const literal = frames.yes();
+                const target = frames.field();
+                if(declaration || typeOnly) {
+                    continue;
+                }
+                if(kind === 'call' && !literal) {
+                    file.computed = true;
+                }
+                if(literal && target !== '' && target !== path) {
+                    file.edges.push(target);
+                }
+            }
+            this.files.set(path, file);
+        }
+        frames.end();
+        for(const path of this.files.keys()) {
+            const file = this.files.get(path) ?? panic('missing module');
+            if(
+                file.computed ||
+                path.endsWith('/source/system/StandardStreams.ts') ||
+                path.endsWith('/source/system/StandardStreams.d.ts')
+            ) {
+                this.canBlock.push(path);
+            }
+            for(const target of file.edges) {
+                if(this.files.has(target) && !this.imported.includes(target)) {
+                    this.imported.push(target);
+                }
+            }
+        }
+        let changed = true;
+        while(changed) {
+            changed = false;
+            for(const path of this.files.keys()) {
+                const file = this.files.get(path) ?? panic('missing module');
+                if(!this.canBlock.includes(path) && file.edges.some((target) => this.canBlock.includes(target))) {
+                    this.canBlock.push(path);
+                    changed = true;
+                }
+            }
+        }
+    }
+}

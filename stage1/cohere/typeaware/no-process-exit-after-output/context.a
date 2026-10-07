@@ -1,0 +1,40 @@
+import { panic, readTextFile } from 'adamic';
+import { Parser } from '../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../typescript/scanner/scanner.ts';
+import { Rules } from '../rules.ts';
+import { UnaryMinus, byteOffsets } from '../unary_minus.ts';
+export class Contexts {
+    readonly program: number;
+    readonly files = new Map<string, Rules>();
+    constructor(rules: Rules) {
+        this.program = rules.program;
+        this.files.set(rules.path, rules);
+    }
+    get(path: string): Rules {
+        const cached = this.files.get(path);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const source = readTextFile(path);
+        if(source.kind === 'Error') {
+            panic(source.message);
+        }
+        const parser = new Parser(source.text, path);
+        const scanner = new Scanner(source.text);
+        const offsets = byteOffsets(source.text);
+        const unary = new UnaryMinus(this.program, path, parser, scanner, offsets);
+        const rules = new Rules(this.program, path, parser, scanner, offsets, unary);
+        parser.awaitContext = true;
+        const root = parser.file();
+        for(const parent of parser.nodes.map(() => -1)) {
+            rules.parents.push(parent);
+        }
+        rules.links(root, -1);
+        this.files.set(path, rules);
+        return rules;
+    }
+}
+
+export function makeContexts(rules: Rules): Contexts {
+    return new Contexts(rules);
+}

@@ -1,0 +1,12 @@
+export class Module {
+    readonly path: string;
+    readonly declaration: boolean;
+    readonly text: string;
+    readonly edges: string[] = [];
+    computed = false;
+    constructor(path: string, declaration: boolean, text: string) {
+        this.path = path;
+        this.declaration = declaration;
+        this.text = text;
+    }
+}

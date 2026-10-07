@@ -1,0 +1,124 @@
+import type { Rules } from '../rules.ts';
+export class Syntax {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    kind(index: number): string {
+        return index < 0 ? '' : this.rules.parser.node(index).kind;
+    }
+    child(index: number, at: number): number {
+        return index < 0 ? -1 : (this.rules.parser.node(index).children[at] ?? -1);
+    }
+    last(index: number): number {
+        const parsedNode = this.rules.parser.node(index);
+        return parsedNode.children[parsedNode.children.length - 1] ?? -1;
+    }
+    parent(index: number): number {
+        return this.rules.parents[index] ?? -1;
+    }
+    initializer(index: number): number {
+        const parsedNode = this.rules.parser.node(index);
+        const last = this.last(index);
+        if(last < 0 || parsedNode.children.length < 2) {
+            return -1;
+        }
+        let at = this.rules.parser.node(last).pos - 1;
+        while(at >= parsedNode.pos && [' ', '\t', '\r', '\n'].includes(this.rules.scanner.text.slice(at, at + 1))) {
+            at--;
+        }
+        return this.rules.scanner.text.slice(at, at + 1) === '=' ? last : -1;
+    }
+    functionKind(index: number): boolean {
+        return [
+            'FunctionDeclaration',
+            'FunctionExpression',
+            'ArrowFunction',
+            'MethodDeclaration',
+            'Constructor',
+            'GetAccessor',
+            'SetAccessor',
+        ].includes(this.kind(index));
+    }
+    isRoot(index: number): boolean {
+        return (
+            this.functionKind(index) ||
+            ['SourceFile', 'ClassStaticBlockDeclaration'].includes(this.kind(index)) ||
+            (this.kind(index) === 'PropertyDeclaration' && this.initializer(index) >= 0)
+        );
+    }
+    body(index: number): number {
+        if(this.kind(index) === 'SourceFile') {
+            return index;
+        }
+        if(this.kind(index) === 'PropertyDeclaration') {
+            return this.initializer(index);
+        }
+        const last = this.last(index);
+        return this.kind(index) === 'ArrowFunction' || this.kind(last) === 'Block' ? last : -1;
+    }
+    root(index: number): number {
+        let previous = index;
+        let decorator = -1;
+        let current = this.parent(index);
+        while(current >= 0) {
+            if(this.kind(current) === 'Decorator') {
+                decorator = current;
+            }
+            if(this.kind(current) === 'SourceFile') {
+                return current;
+            }
+            if(this.isRoot(current)) {
+                if(this.kind(current) === 'PropertyDeclaration') {
+                    if(this.initializer(current) === previous) {
+                        return current;
+                    }
+                }
+                else if(this.kind(current) === 'ClassStaticBlockDeclaration') {
+                    if(this.body(current) === previous) {
+                        return current;
+                    }
+                }
+                else if(
+                    !(
+                        this.child(current, 0) === previous &&
+                        [
+                            'Identifier',
+                            'ComputedPropertyName',
+                            'StringLiteral',
+                            'NumericLiteral',
+                            'PrivateIdentifier',
+                        ].includes(this.kind(previous))
+                    ) &&
+                    (decorator < 0 || ![current, previous].includes(this.parent(decorator)))
+                ) {
+                    return current;
+                }
+            }
+            previous = current;
+            current = this.parent(current);
+        }
+        return -1;
+    }
+    member(index: number): number {
+        const skipped = this.rules.skip(index);
+        return this.kind(skipped) === 'Identifier'
+            ? skipped
+            : this.kind(skipped) === 'PropertyAccessExpression' && this.kind(this.last(skipped)) === 'Identifier'
+              ? this.last(skipped)
+              : -1;
+    }
+    arguments(index: number): number[] {
+        const parsedNode = this.rules.parser.node(index);
+        return parsedNode.list > 0 && ['CallExpression', 'NewExpression'].includes(parsedNode.kind)
+            ? parsedNode.children.slice(parsedNode.children.length - parsedNode.list)
+            : [];
+    }
+    callLike(index: number): boolean {
+        return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(this.kind(index));
+    }
+}
+
+export function makeSyntax(rules: Rules): Syntax {
+    return new Syntax(rules);
+}

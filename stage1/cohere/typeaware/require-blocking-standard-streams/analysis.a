@@ -1,0 +1,248 @@
+import { panic } from 'adamic';
+import type { Rules } from '../rules.ts';
+import type { Declaration } from '../no-process-exit-after-output/declaration.a';
+import type { Contexts } from '../no-process-exit-after-output/context.a';
+import { OutputEvents } from '../no-process-exit-after-output/events.a';
+import type { ModuleRecords } from './module_records.a';
+function makeEvents(rules: Rules, contexts: Contexts): OutputEvents {
+    return new OutputEvents(rules, contexts);
+}
+
+export class Analysis {
+    readonly rules: Rules;
+    readonly modules: ModuleRecords;
+    readonly contexts: Contexts;
+    readonly events: OutputEvents;
+    readonly memo: Map<string, number>;
+    constructor(rules: Rules, modules: ModuleRecords, contexts: Contexts, memo: Map<string, number>) {
+        this.rules = rules;
+        this.modules = modules;
+        this.contexts = contexts;
+        this.memo = memo;
+        this.events = makeEvents(rules, contexts);
+    }
+    resolve(declaration: Declaration): number {
+        const rules = this.contexts.get(declaration.file);
+        return rules.parser.nodes.findIndex(
+            (node) =>
+                node.kind === declaration.kinds[0] &&
+                rules.byte(node.pos) === declaration.starts[0] &&
+                rules.byte(node.end) === declaration.ends[0],
+        );
+    }
+    localFunction(index: number): number {
+        const expression = this.rules.skip(index);
+        const kind = this.events.syntax.kind(expression);
+        if(['FunctionExpression', 'ArrowFunction'].includes(kind)) {
+            return expression;
+        }
+        if(kind !== 'Identifier') {
+            return -1;
+        }
+        for(const declaration of this.events.facts.symbol(expression).declarations) {
+            if(declaration.file !== this.rules.path) {
+                continue;
+            }
+            const local = this.resolve(declaration);
+            if(local < 0) {
+                continue;
+            }
+            if(declaration.kinds[0] === 'FunctionDeclaration' && this.events.syntax.body(local) >= 0) {
+                return local;
+            }
+            if(
+                declaration.kinds[0] === 'VariableDeclaration' &&
+                this.rules.parser.node(this.events.syntax.parent(local)).semantic === '2'
+            ) {
+                const initializer = this.events.syntax.initializer(local);
+                if(initializer >= 0) {
+                    const skipped = this.rules.skip(initializer);
+                    if(['FunctionExpression', 'ArrowFunction'].includes(this.events.syntax.kind(skipped))) {
+                        return skipped;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+    callMayBlock(index: number): boolean {
+        const node = this.rules.parser.node(index);
+        if(
+            node.kind === 'CallExpression' &&
+            this.events.syntax.kind(this.events.syntax.child(index, 0)) === 'ImportKeyword'
+        ) {
+            return true;
+        }
+        for(const argument of this.events.syntax.arguments(index)) {
+            const skipped = this.rules.skip(argument);
+            const kind = this.events.syntax.kind(skipped);
+            if(['FunctionExpression', 'ArrowFunction'].includes(kind) && this.mayBlock(skipped)) {
+                return true;
+            }
+            if(kind === 'Identifier') {
+                const symbol = this.events.facts.symbol(skipped);
+                if((symbol.flags & 16) !== 0 && this.symbolMayBlock(skipped)) {
+                    return true;
+                }
+            }
+        }
+        const callee = this.rules.skip(this.events.syntax.child(index, 0));
+        if(['FunctionExpression', 'ArrowFunction'].includes(this.events.syntax.kind(callee))) {
+            return this.mayBlock(callee);
+        }
+        const name = this.events.syntax.member(callee);
+        if(name < 0) {
+            return true;
+        }
+        return this.symbolMayBlock(name);
+    }
+    symbolMayBlock(name: number): boolean {
+        const symbol = this.events.facts.symbol(name);
+        if(symbol.declarations.length === 0) {
+            return true;
+        }
+        for(const declaration of symbol.declarations) {
+            if(this.declarationMayBlock(declaration, name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    declarationMayBlock(declaration: Declaration, name: number): boolean {
+        if(!this.modules.canBlock.includes(declaration.file)) {
+            return declaration.ambient && this.rules.parser.node(name).text === 'require';
+        }
+        if(
+            declaration.ambient ||
+            (declaration.kinds[0] === 'FunctionDeclaration' &&
+                declaration.names[0] === 'blockStandardStreams' &&
+                (declaration.file.endsWith('/source/system/StandardStreams.ts') ||
+                    declaration.file.endsWith('/source/system/StandardStreams.d.ts')))
+        ) {
+            return true;
+        }
+        const rules = this.contexts.get(declaration.file);
+        const index = this.resolve(declaration);
+        if(index < 0) {
+            panic('missing checker declaration in parsed module');
+        }
+        const analysis = new Analysis(rules, this.modules, this.contexts, this.memo);
+        const kind = analysis.events.syntax.kind(index);
+        if(['FunctionDeclaration', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(kind)) {
+            if(analysis.events.syntax.body(index) < 0) {
+                return kind !== 'FunctionDeclaration' || ((declaration.flags[0] ?? 0) & 8388608) !== 0;
+            }
+            return analysis.mayBlock(index);
+        }
+        if(kind === 'VariableDeclaration') {
+            const initializer = analysis.events.syntax.initializer(index);
+            if(initializer >= 0) {
+                const skipped = rules.skip(initializer);
+                if(['FunctionExpression', 'ArrowFunction'].includes(analysis.events.syntax.kind(skipped))) {
+                    return analysis.mayBlock(skipped);
+                }
+            }
+        }
+        if(['ClassDeclaration', 'ClassExpression'].includes(kind)) {
+            return analysis.mayBlock(index);
+        }
+        return true;
+    }
+    mayBlock(index: number): boolean {
+        const key = `${this.rules.path}:${index}`;
+        const cached = this.memo.get(key);
+        if(cached !== undefined) {
+            return cached === 1;
+        }
+        this.memo.set(key, 3);
+        const queue = this.rules.parser.node(index).children.slice();
+        let blocks = false;
+        while(queue.length > 0 && !blocks) {
+            const child = queue.pop() ?? -1;
+            if(child < 0) {
+                continue;
+            }
+            if(this.events.syntax.callLike(child) && this.callMayBlock(child)) {
+                blocks = true;
+                break;
+            }
+            for(const part of this.rules.parser.node(child).children) {
+                queue.push(part);
+            }
+        }
+        this.memo.set(key, blocks ? 1 : 2);
+        return blocks;
+    }
+    topLevelMayBlock(root: number): boolean {
+        const queue = this.rules.parser.node(root).children.slice();
+        while(queue.length > 0) {
+            const index = queue.pop() ?? -1;
+            if(index < 0) {
+                continue;
+            }
+            if(this.events.syntax.functionKind(index) && this.events.syntax.body(index) >= 0) {
+                continue;
+            }
+            if(this.events.syntax.callLike(index) && this.callMayBlock(index)) {
+                return true;
+            }
+            for(const child of this.rules.parser.node(index).children) {
+                queue.push(child);
+            }
+        }
+        return false;
+    }
+    importsBlockAtLoad(): boolean {
+        const seen: string[] = [this.rules.path];
+        const queue: string[] = [this.rules.path];
+        for(const path of queue) {
+            const file = this.modules.files.get(path);
+            if(file === undefined) {
+                continue;
+            }
+            for(const next of file.edges) {
+                if(seen.includes(next)) {
+                    continue;
+                }
+                seen.push(next);
+                queue.push(next);
+                if(!this.modules.canBlock.includes(next)) {
+                    continue;
+                }
+                const imported = this.modules.files.get(next);
+                if(imported === undefined || imported.declaration) {
+                    return true;
+                }
+                const rules = this.contexts.get(next);
+                const analysis = new Analysis(rules, this.modules, this.contexts, this.memo);
+                const root = rules.parser.nodes.findIndex((node) => node.kind === 'SourceFile');
+                if(analysis.topLevelMayBlock(root)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    argumentsMayBlock(index: number): boolean {
+        const queue = this.events.syntax.arguments(index);
+        while(queue.length > 0) {
+            const current = queue.pop() ?? -1;
+            if(current < 0) {
+                continue;
+            }
+            if(this.events.syntax.functionKind(current) && this.events.syntax.body(current) >= 0) {
+                continue;
+            }
+            if(
+                this.events.syntax.kind(current) === 'AwaitExpression' ||
+                (this.events.syntax.callLike(current) && this.callMayBlock(current))
+            ) {
+                return true;
+            }
+            for(const child of this.rules.parser.node(current).children) {
+                queue.push(child);
+            }
+        }
+        return false;
+    }
+}

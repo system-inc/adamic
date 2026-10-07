@@ -203,6 +203,12 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "module-records":
+		return p.moduleRecords(out, node, question)
+	case "resolved-callee":
+		return p.resolvedCallee(out, c, node, question)
+	case "declaration-chain":
+		return p.declarationChain(out, c, node, question)
 	case "callback-parameters":
 		return p.callbackParameters(out, c, node, question)
 	case "accessed-property":

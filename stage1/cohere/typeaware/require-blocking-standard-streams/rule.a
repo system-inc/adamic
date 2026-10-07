@@ -1,0 +1,180 @@
+import { report } from '../no-process-exit-after-output/report.a';
+import type { Rules } from '../rules.ts';
+import type { Contexts } from '../no-process-exit-after-output/context.a';
+import { makeContexts } from '../no-process-exit-after-output/context.a';
+import { Graph } from '../no-process-exit-after-output/graph.a';
+import { Walk } from '../no-process-exit-after-output/walk.a';
+import { ModuleRecords } from './module_records.a';
+import { Analysis } from './analysis.a';
+import { OutputEvents } from '../no-process-exit-after-output/events.a';
+export class RequireBlockingStandardStreams {
+    readonly rules: Rules;
+    readonly contexts: Contexts;
+    constructor(rules: Rules) {
+        this.rules = rules;
+        this.contexts = makeContexts(rules);
+    }
+    run(): void {
+        if(!this.rules.scanner.text.includes('exit')) {
+            return;
+        }
+        const root = this.rules.parser.nodes.findIndex((node) => node.kind === 'SourceFile');
+        const events = new OutputEvents(this.rules, this.contexts);
+        const exitRoots: number[] = [];
+        const writeRoots: number[] = [];
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            if(events.syntax.kind(at) !== 'CallExpression') {
+                continue;
+            }
+            const owner = events.syntax.root(at);
+            if(events.exit(at)) {
+                exitRoots.push(owner);
+            }
+            else if(events.write(at)) {
+                writeRoots.push(owner);
+            }
+        }
+        const candidate = exitRoots.some((owner) => writeRoots.includes(owner));
+        if(!candidate) {
+            return;
+        }
+        const modules = new ModuleRecords(this.rules, root);
+        const memo = new Map<string, number>();
+        const analysis = new Analysis(this.rules, modules, this.contexts, memo);
+        const shebang = this.rules.scanner.text.startsWith('#!');
+        if(!shebang && modules.imported.includes(this.rules.path)) {
+            return;
+        }
+        const ordered = modules.canBlock.includes(this.rules.path);
+        if(ordered && analysis.importsBlockAtLoad()) {
+            return;
+        }
+        const queued: number[] = [root];
+        const exits: number[] = [];
+        for(const owner of queued) {
+            const graph = new Graph(this.rules);
+            graph.root(owner);
+            const blocks: number[] = [];
+            const calls: number[] = [];
+            const runs: number[][] = [];
+            const callbacks: number[][] = [];
+            const argumentsBlock: boolean[] = [];
+            let unrecordable = false;
+            for(let index = 0; index < this.rules.parser.nodes.length; index++) {
+                const kind = events.syntax.kind(index);
+                let current = events.syntax.parent(index);
+                let runsHere = true;
+                while(current >= 0 && current !== owner) {
+                    if(events.syntax.functionKind(current) && events.syntax.body(current) >= 0) {
+                        runsHere = false;
+                        break;
+                    }
+                    current = events.syntax.parent(current);
+                }
+                if(current !== owner) {
+                    runsHere = false;
+                }
+                if(
+                    ordered &&
+                    runsHere &&
+                    !graph.recorded.includes(index) &&
+                    (kind === 'AwaitExpression' || (events.syntax.callLike(index) && analysis.callMayBlock(index)))
+                ) {
+                    unrecordable = true;
+                }
+                if(events.syntax.root(index) !== owner) {
+                    continue;
+                }
+                if(
+                    ordered &&
+                    (kind === 'AwaitExpression' || (events.syntax.callLike(index) && analysis.callMayBlock(index)))
+                ) {
+                    if(!graph.recorded.includes(index)) {
+                        unrecordable = true;
+                    }
+                    blocks.push(index);
+                }
+                if(
+                    kind === 'ForOfStatement' &&
+                    this.rules.parser.node(index).children.some((child) => events.syntax.kind(child) === 'AwaitKeyword')
+                ) {
+                    if(ordered) {
+                        blocks.push(index);
+                    }
+                }
+                if(kind === 'VariableStatement' && ordered) {
+                    const list =
+                        this.rules.parser
+                            .node(index)
+                            .children.find((child) => events.syntax.kind(child) === 'VariableDeclarationList') ?? -1;
+                    if(list >= 0 && this.rules.parser.node(list).semantic === '6') {
+                        blocks.push(index);
+                    }
+                }
+                if(!events.syntax.callLike(index)) {
+                    continue;
+                }
+                const run: number[] = [];
+                const handed: number[] = [];
+                if(kind === 'CallExpression' || kind === 'TaggedTemplateExpression') {
+                    const local = analysis.localFunction(events.syntax.child(index, 0));
+                    if(local >= 0) {
+                        if(
+                            this.rules.parser
+                                .node(local)
+                                .children.some((child) => events.syntax.kind(child) === 'AsteriskToken')
+                        ) {
+                            handed.push(local);
+                        }
+                        else {
+                            run.push(local);
+                        }
+                    }
+                }
+                for(const argument of events.syntax.arguments(index)) {
+                    const local = analysis.localFunction(argument);
+                    if(local >= 0) {
+                        handed.push(local);
+                    }
+                }
+                calls.push(index);
+                runs.push(run);
+                callbacks.push(handed);
+                argumentsBlock.push(ordered && run.length > 0 && analysis.argumentsMayBlock(index));
+            }
+            if(unrecordable) {
+                continue;
+            }
+            const walk = new Walk(this.rules, analysis.events, owner);
+            walk.run(graph, false, blocks, calls, runs, callbacks, argumentsBlock, ordered);
+            for(const exit of walk.exits) {
+                if(!exits.includes(exit)) {
+                    exits.push(exit);
+                }
+            }
+            for(const started of walk.started) {
+                if(!queued.includes(started)) {
+                    queued.push(started);
+                }
+            }
+        }
+        if(exits.length === 0) {
+            return;
+        }
+        exits.sort(
+            (leftBranch, rightBranch) =>
+                this.rules.parser.node(leftBranch).pos - this.rules.parser.node(rightBranch).pos,
+        );
+        const reason = shebang ? 'it starts with `#!`' : 'nothing in the program imports it';
+        const count = exits.length > 1 ? `, the first of ${exits.length} such exits in this file` : '';
+        this.rules.findings.push(
+            report(
+                this.rules,
+                'nexus/correctness-require-blocking-standard-streams',
+                'exitBeforeBlockingStandardStreams',
+                `This file runs as a process (${reason}), and this \`process.exit()\` runs after a write to stdout or stderr before the process has called \`blockStandardStreams()\`${count}. Node writes to a pipe asynchronously, and \`process.exit()\` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's \`blockStandardStreams()\` (\`source/system/StandardStreams\`) before anything that can exit: first in the module, or first in the main it runs.`,
+                exits[0] ?? -1,
+            ),
+        );
+    }
+}

@@ -1,0 +1,35 @@
+export class Declaration {
+    readonly file: string;
+    readonly ambient: boolean;
+    readonly library: boolean;
+    readonly external: boolean;
+    readonly kinds: readonly string[];
+    readonly names: readonly string[];
+    readonly starts: readonly number[];
+    readonly ends: readonly number[];
+    readonly flags: readonly number[];
+    readonly globals: readonly boolean[];
+    constructor(
+        file: string,
+        ambient: boolean,
+        library: boolean,
+        external: boolean,
+        kinds: readonly string[],
+        names: readonly string[],
+        starts: readonly number[],
+        ends: readonly number[],
+        flags: readonly number[],
+        globals: readonly boolean[],
+    ) {
+        this.file = file;
+        this.ambient = ambient;
+        this.library = library;
+        this.external = external;
+        this.kinds = kinds;
+        this.names = names;
+        this.starts = starts;
+        this.ends = ends;
+        this.flags = flags;
+        this.globals = globals;
+    }
+}
