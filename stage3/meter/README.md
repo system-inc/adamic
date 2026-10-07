@@ -39,6 +39,30 @@ The existing whole_program field remains the separate aggregate all-roots run.
 Refused and NotYet pass the checker and fail lowering. A checker failure blocks
 lowering. Missing, duplicate or unknown census rows prevent a partial report.
 
+After each tree's ordinary checker census, the meter runs the existing latent
+census through its scratch Go overlay. The overlay is built from the same compiler
+checkout and never edits production compiler files. `LATENT_ASSERT_NO_OUTPUT=1`
+checks that ordinary loading cannot expose a rejected program and lowering
+cannot return usable IR. No backend is invoked.
+
+After the checker table, report.md shows each tree's latent NotYet and Refused
+totals and its top ten reasons, labeled **measured on a checker-rejected program**.
+The four checker numbers, their calculations and existing JSON fields remain
+unchanged. Each tree's JSON adds `latent_lowering`, with the measurement label,
+checker_rejected flag, totals, full per_reason counts and ranked top_reasons.
+The root's latent_lowering is the area observation, matching existing JSON fields.
+
+Counts deduplicate `(kind, where, reason, text)` across attempts, matching the
+latent census's count definition. SkippedDependency, error and panic totals are
+retained separately and excluded from the NotYet/Refused ranking. The measurement
+skips function bodies with checker diagnostics and can stop at the first error
+inside an attempted unit. It measures observed blockers, not exhaustive blockers
+or successful compilation. See ../census/latent/README.md for the tool's limits.
+
+Each main/area directory also retains latent.jsonl.gz and latent.log; overlay and
+build logs are at the run root. Missing coverage or invalid measurement labels
+prevent publishing a paired report. Raw latent JSONL is excluded from Git.
+
 For morning and evening execution, a host can use this cron entry with its own
 repository/toolchain paths:
 
@@ -64,3 +88,20 @@ CENSUS_BINARY=/tmp/stage3-census python3 -m unittest discover -s stage3/meter -p
 The probe starts with two checker-clean files. Changing the dependency's number
 initializer to a string makes both loaded programs fail, while only the
 dependency's own-file result changes. Without CENSUS_BINARY this probe is skipped.
+
+To run the real planted-NotYet attribution probe, set LATENT_CENSUS_BINARY to
+the built overlay binary in addition to CENSUS_BINARY when invoking unittest.
+It uses the latent tool's overlay-only LATENT_MUTANT_FUNCTION hook to plant one
+extra NotYet on a checker-rejected program with existing NotYet and Refused findings. Only that reason's
+count may increase; every existing reason and the Refused total must stay fixed.
+
+Reason tables group identical reason text across NotYet and Refused and show an
+owner column. owners.json is a flat reason-to-owner map. Exact matches win,
+then the longest matching prefix. The explicit "seen as" entry also matches
+that phrase inside variance messages, whose source type precedes it.
+Unknown reasons get OWNER BLANK. The Unowned section appears immediately after
+the checker table and before owned reason tables. It lists only reasons with at least 10 unique sites on either tree, sorted by
+the larger per-tree count. A final line summarizes the number of omitted reasons
+and their total sites summed across both trees.
+Each row compares both trees; JSON retains the complete unowned_reasons list,
+and each tree's reason_rows carries its owner and counts by kind.

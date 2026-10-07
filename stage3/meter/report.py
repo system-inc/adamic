@@ -1,10 +1,123 @@
 #!/usr/bin/env python3
 """Validate census coverage and emit the morning/evening checker/lowering meter."""
 import json
+from collections import Counter
+from html import escape
 import re
 from pathlib import Path
 import subprocess
 import sys
+
+
+MEASUREMENT = 'measured on a checker-rejected program'
+
+
+def reason_owner(reason, owners):
+    if reason in owners:
+        return owners[reason]
+    for prefix in sorted(owners, key=lambda key: (-len(key), key)):
+        if prefix != 'seen as' and reason.startswith(prefix):
+            return owners[prefix]
+    # Variance messages put the source type before this phrase, so a prefix
+    # cannot match them. The explicit map entry owns this diagnostic family.
+    if ' seen as ' in reason and 'seen as' in owners:
+        return owners['seen as']
+    return 'OWNER BLANK'
+
+
+def latent_summary(tree, run):
+    records = [json.loads(line) for line in (run / 'latent.jsonl').read_text().splitlines()]
+    if not records or records[0].get('measurement') != MEASUREMENT or records[0].get('status') != 'measurement':
+        raise ValueError('invalid latent measurement header')
+    expected = {str(path.resolve()) for path in (tree / 'src/compiler').rglob('*')
+                if path.is_file() and path.suffix in ('.ts', '.a')}
+    seen = set()
+    sites = set()
+    events = 0
+    for record in records[1:]:
+        name = str(Path(record['file']).resolve())
+        if name not in expected or name in seen or record.get('measurement') != MEASUREMENT:
+            raise ValueError('invalid or duplicate latent census file')
+        seen.add(name)
+        for finding in record.get('findings') or []:
+            if finding.get('measurement') != MEASUREMENT or finding['kind'] not in ('NotYet', 'Refused', 'SkippedDependency', 'error', 'panic'):
+                raise ValueError('invalid latent finding')
+            sites.add(tuple(finding[key] for key in ('kind', 'where', 'reason', 'text')))
+            events += 1
+    if seen != expected:
+        raise ValueError('latent census coverage incomplete')
+    counts = Counter(site[0] for site in sites)
+    reasons = Counter((site[0], site[2]) for site in sites if site[0] in ('NotYet', 'Refused'))
+    ranked = sorted(reasons, key=lambda key: (-reasons[key], key))
+    owners = json.loads(Path(__file__).with_name('owners.json').read_text())
+    groups = {}
+    for (kind, reason), count in reasons.items():
+        row = groups.setdefault(reason, {'reason': reason, 'owner': reason_owner(reason, owners),
+                                         'NotYet': 0, 'Refused': 0, 'count': 0})
+        row[kind] += count
+        row['count'] += count
+    reason_rows = sorted(groups.values(), key=lambda row: (-row['count'], row['reason']))
+    return {
+        'measurement': MEASUREMENT,
+        'checker_rejected': records[0]['checker_rejected'],
+        'count_definition': 'unique (kind, where, reason, text) sites across all attempts',
+        'totals': {kind: counts[kind] for kind in ('NotYet', 'Refused', 'SkippedDependency', 'error', 'panic')},
+        'per_reason': {kind + ': ' + reason: reasons[kind, reason] for kind, reason in sorted(reasons)},
+        'reason_rows': reason_rows,
+        'unowned_reasons': [row for row in reason_rows if row['owner'] == 'OWNER BLANK'],
+        'top_reasons': [{'kind': kind, 'reason': reason, 'count': reasons[kind, reason], 'owner': reason_owner(reason, owners)}
+                        for kind, reason in ranked[:10]],
+        'source_files': len(seen),
+        'recorded_events': events,
+    }
+
+
+def latent_table(label, summary):
+    totals = summary['totals']
+    lines = ['', f'Latent lowering, {label}: {MEASUREMENT}.',
+             f"NotYet: {totals['NotYet']}; Refused: {totals['Refused']}.", '',
+             '| Reason | Owner | NotYet | Refused | Total |', '| --- | --- | ---: | ---: | ---: |']
+    for item in summary['reason_rows'][:10]:
+        reason = escape(item['reason']).replace('|', '&#124;').replace('\n', ' ')
+        lines.append(f"| {reason} | {item['owner']} | {item['NotYet']} | {item['Refused']} | {item['count']} |")
+    if not summary['top_reasons']:
+        lines.append('| No NotYet or Refused findings | | 0 | 0 | 0 |')
+    lines += ['', 'Counts are unique finding sites, not attempt events. Skipped dependencies, errors and panics',
+              'are retained separately in JSON. This measurement does not establish successful lowering or native output.']
+    return lines
+
+
+def unowned_table(trees):
+    rows = {}
+    for label, tree in trees.items():
+        for item in tree['latent_lowering']['unowned_reasons']:
+            row = rows.setdefault(item['reason'], {'reason': item['reason'], 'owner': 'OWNER BLANK',
+                                                  'main_NotYet': 0, 'main_Refused': 0,
+                                                  'area_NotYet': 0, 'area_Refused': 0})
+            for kind in ('NotYet', 'Refused'):
+                row[label + '_' + kind] = item[kind]
+    def count(row):
+        return max(row['main_NotYet'] + row['main_Refused'], row['area_NotYet'] + row['area_Refused'])
+    ordered = sorted(rows.values(), key=lambda row: (-count(row), row['reason']))
+    visible = [row for row in ordered if count(row) >= 10]
+    tail = [row for row in ordered if count(row) < 10]
+    lines = ['', '### Unowned', '', MEASUREMENT + '.',
+             'OWNER BLANK rows go to @system_adamic. Counts are grouped by exact reason.', '']
+    def table(items):
+        result = ['| Reason | Owner | Main NotYet | Main Refused | Area NotYet | Area Refused |',
+                  '| --- | --- | ---: | ---: | ---: | ---: |']
+        for row in items:
+            reason = escape(row['reason']).replace('|', '&#124;').replace('\n', ' ')
+            result.append(f"| {reason} | OWNER BLANK | {row['main_NotYet']} | {row['main_Refused']} | {row['area_NotYet']} | {row['area_Refused']} |")
+        return result
+    if visible:
+        lines += table(visible)
+    else:
+        lines.append('No unowned reasons with at least 10 sites on either tree.')
+    tail_sites = sum(row[key] for row in tail for key in
+                     ('main_NotYet', 'main_Refused', 'area_NotYet', 'area_Refused'))
+    lines += ['', f'{len(tail)} more unowned reasons, {tail_sites} sites in all']
+    return ordered, lines
 
 
 def report(tree, run, stamp):
@@ -102,9 +215,13 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
         trees[label] = report(tree, run / label, stamp)
         trees[label]['tree_ref'] = 'origin/main' if label == 'main' else 'origin/area/stage3'
         trees[label]['tree_commit'] = commit
+        trees[label]['latent_lowering'] = latent_summary(tree, run / label)
+        with (run / label / 'report.md').open('a') as output:
+            output.write('\n'.join(latent_table(label, trees[label]['latent_lowering'])) + '\n')
         (run / label / 'report.json').write_text(json.dumps(trees[label], indent=2) + '\n')
     # Preserve the existing area's single-tree fields for JSON consumers.
-    result = dict(trees['area'], trees=trees)
+    unowned, unowned_lines = unowned_table(trees)
+    result = dict(trees['area'], trees=trees, unowned_reasons=unowned)
     (run / 'report.json').write_text(json.dumps(result, indent=2) + '\n')
     lines = []
     for key, title in [('checker_whole_program', 'Whole program'), ('checker_own_file', 'Own file')]:
@@ -123,6 +240,9 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
             for key in ['checker_whole_program', 'checker_own_file']:
                 cells.append('absent' if row is None else 'pass' if row[key] else 'fail')
         lines.append('| ' + ' | '.join([name, *cells]) + ' |')
+    lines += unowned_lines
+    for label in trees:
+        lines += latent_table(label, trees[label]['latent_lowering'])
     lines += ['', 'Whole program includes imported diagnostics. Own file uses the primary diagnostic location.',
               'Global and external diagnostics are counted separately in JSON; they have no compiler-file location.',
               'Non-source inputs fail the extension gate and are excluded from source denominators.', '']

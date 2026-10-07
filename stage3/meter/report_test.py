@@ -5,7 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from report import report, report_pair
+from report import report, report_pair, latent_summary, MEASUREMENT, reason_owner, unowned_table
 
 
 class ReportTests(unittest.TestCase):
@@ -79,8 +79,24 @@ class ReportTests(unittest.TestCase):
                 record['kind'] = 'checker'
                 record['diagnostics'] = [f'{self.tree}/src/compiler/good.ts:1:1: error TS2322: area only']
         (self.run / 'area/census.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in self.records))
+        for label in ['main', 'area']:
+            latent = [{'measurement': MEASUREMENT, 'status': 'measurement', 'checker_rejected': True}]
+            latent += [{'measurement': MEASUREMENT, 'file': str(path), 'findings': []}
+                       for path in sorted((self.tree / 'src/compiler').glob('*.ts'))]
+            if label == 'area':
+                latent[1]['findings'] = [{'measurement': MEASUREMENT, 'kind': 'NotYet',
+                                         'where': latent[1]['file'] + f':{line}:1',
+                                         'reason': 'area-only blocker', 'text': 'area-only blocker'}
+                                        for line in range(1, 11)]
+            (self.run / label / 'latent.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in latent))
         result = report_pair(self.tree, self.tree, self.run, 'stamp', 'main-sha', 'area-sha')
         self.assertEqual(result['files'], result['trees']['area']['files'])
+        text = (self.run / 'report.md').read_text()
+        self.assertIn(MEASUREMENT, text)
+        self.assertIn('| area-only blocker | OWNER BLANK |', text)
+        self.assertLess(text.index('### Unowned'), text.index('Latent lowering, main:'))
+        self.assertEqual(result['trees']['main']['latent_lowering']['totals']['NotYet'], 0)
+        self.assertEqual(result['trees']['area']['latent_lowering']['totals']['NotYet'], 10)
         self.assertEqual(result['trees']['main']['tree_ref'], 'origin/main')
         self.assertEqual((self.run / 'report.md').read_text().splitlines()[:2],
                          ['Whole program: main: 3/4; area: 0/4', 'Own file: main: 4/4; area: 3/4'])
@@ -114,6 +130,138 @@ class ReportTests(unittest.TestCase):
         self.records[-1]['roots'].pop()
         with self.assertRaisesRegex(ValueError, 'whole-program'):
             self.render()
+
+
+class LatentReportTests(unittest.TestCase):
+    def setUp(self):
+        self.scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(self.scratch.cleanup)
+        self.run = Path(self.scratch.name)
+        self.tree = self.run / 'tree'
+        compiler = self.tree / 'src/compiler'
+        compiler.mkdir(parents=True)
+        self.source = compiler / 'main.a'
+        self.source.write_text('')
+        self.records = [{'measurement': MEASUREMENT, 'status': 'measurement', 'checker_rejected': True},
+                        {'measurement': MEASUREMENT, 'file': str(self.source), 'findings': [
+                            self.finding('NotYet', 'existing', 1), self.finding('Refused', 'policy', 2)]}]
+
+    def finding(self, kind, reason, line):
+        return {'measurement': MEASUREMENT, 'kind': kind, 'reason': reason,
+                'where': f'{self.source}:{line}:1', 'text': reason}
+
+    def render(self):
+        (self.run / 'latent.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in self.records))
+        return latent_summary(self.tree, self.run)
+
+    def test_planted_notyet_moves_only_its_reason_count(self):
+        before = self.render()
+        planted = self.finding('NotYet', 'planted', 3)
+        self.records[1]['findings'] += [planted, planted]
+        after = self.render()
+        changed = {key: after['per_reason'].get(key, 0) - before['per_reason'].get(key, 0)
+                   for key in before['per_reason'].keys() | after['per_reason'].keys()
+                   if after['per_reason'].get(key, 0) != before['per_reason'].get(key, 0)}
+        self.assertEqual(changed, {'NotYet: planted': 1})
+        self.assertEqual(after['totals']['NotYet'], before['totals']['NotYet'] + 1)
+        self.assertEqual(after['totals']['Refused'], before['totals']['Refused'])
+
+    def test_unmatched_reason_is_owner_blank_and_in_unowned_first(self):
+        self.records[1]['findings'] += [self.finding('NotYet', 'existing', line) for line in range(3, 12)]
+        result = self.render()
+        row = next(row for row in result['reason_rows'] if row['reason'] == 'existing')
+        self.assertEqual(row['owner'], 'OWNER BLANK')
+        rows, lines = unowned_table({'main': {'latent_lowering': result}, 'area': {'latent_lowering': result}})
+        self.assertIn('### Unowned', lines)
+        text = '\n'.join(lines)
+        self.assertIn('| existing | OWNER BLANK | 10 | 0 | 10 | 0 |', text)
+        self.assertTrue(any(row['reason'] == 'existing' for row in rows))
+
+    def test_unowned_threshold_uses_either_tree_and_summarizes_tail(self):
+        def row(reason, notyet, refused):
+            return {'reason': reason, 'owner': 'OWNER BLANK', 'NotYet': notyet, 'Refused': refused}
+        main = [row('nine on both', 9, 0), row('main edge', 6, 4), row('large', 11, 0), row('tiny', 1, 0)]
+        area = [row('nine on both', 9, 0), row('area edge', 10, 0)]
+        all_rows, lines = unowned_table({'main': {'latent_lowering': {'unowned_reasons': main}},
+                                        'area': {'latent_lowering': {'unowned_reasons': area}}})
+        text = '\n'.join(lines)
+        self.assertIn('| main edge | OWNER BLANK | 6 | 4 | 0 | 0 |', text)
+        self.assertIn('| area edge | OWNER BLANK | 0 | 0 | 10 | 0 |', text)
+        self.assertNotIn('| nine on both |', text)
+        self.assertNotIn('| tiny |', text)
+        self.assertLess(text.index('| large |'), text.index('| main edge |'))
+        self.assertIn('2 more unowned reasons, 19 sites in all', text)
+        self.assertEqual(len(all_rows), 5)
+
+    def test_exact_prefix_and_variance_owners(self):
+        owners = json.loads((Path(__file__).parent / 'owners.json').read_text())
+        self.assertEqual(reason_owner('a type predicate', owners), '01a1143b-d691')
+        self.assertEqual(reason_owner('reading SyntaxKind.SomeFlag', owners), 'compiler/stage3-front')
+        self.assertEqual(reason_owner('a method call through a structural signature on X', owners), '01a1143c')
+        self.assertEqual(reason_owner('a value of type X seen as Y', owners), 'adaptation 70, stage 3')
+        self.assertEqual(reason_owner('unmatched', owners), 'OWNER BLANK')
+        self.assertEqual(reason_owner('reading SyntaxKind', {'reading': 'general', 'reading SyntaxKind': 'specific'}), 'specific')
+
+    def test_table_groups_same_reason_across_kinds(self):
+        self.records[1]['findings'].append(self.finding('Refused', 'existing', 3))
+        result = self.render()
+        group = next(row for row in result['reason_rows'] if row['reason'] == 'existing')
+        self.assertEqual((group['NotYet'], group['Refused'], group['count']), (1, 1, 2))
+
+    def test_missing_source_is_rejected(self):
+        self.records.pop()
+        with self.assertRaisesRegex(ValueError, 'coverage incomplete'):
+            self.render()
+
+    def test_measurement_label_is_required(self):
+        self.records[1]['findings'][0]['measurement'] = 'compiled'
+        with self.assertRaisesRegex(ValueError, 'invalid latent finding'):
+            self.render()
+
+    def test_top_ten_excludes_dependency_skips_and_orders_ties(self):
+        self.records[1]['findings'] += [self.finding('NotYet', f'reason {n:02}', n+3) for n in range(12)]
+        self.records[1]['findings'] += [self.finding('SkippedDependency', 'skip', 20)]
+        result = self.render()
+        self.assertEqual(len(result['top_reasons']), 10)
+        self.assertNotIn('SkippedDependency: skip', result['per_reason'])
+        self.assertEqual(result['totals']['SkippedDependency'], 1)
+        self.assertEqual(result['top_reasons'][0]['reason'], 'existing')
+
+
+@unittest.skipUnless(os.environ.get('LATENT_CENSUS_BINARY'), 'set LATENT_CENSUS_BINARY for the real latent probe')
+class LatentCensusTests(unittest.TestCase):
+    def test_overlay_planted_notyet_moves_only_its_reason_count(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            tree = Path(scratch) / 'tree'
+            compiler = tree / 'src/compiler'
+            compiler.mkdir(parents=True)
+            (compiler / 'main.a').write_text('function target(): number { return 1; }\n'
+                                             'function existing(value: any): number { return value; }\n'
+                                             'function asserted(value: number | undefined): number { return value!; }\n'
+                                             'function bad(): number { return "wrong"; }\n')
+            observations = []
+            for label in ['before', 'planted']:
+                run = Path(scratch) / label
+                run.mkdir()
+                env = dict(os.environ, LATENT_ASSERT_NO_OUTPUT='1')
+                env.pop('LATENT_MUTANT_FUNCTION', None)
+                env.pop('LATENT_MUTANT_WHERE', None)
+                if label == 'planted':
+                    env['LATENT_MUTANT_FUNCTION'] = 'target'
+                with (run / 'latent.log').open('w') as log:
+                    subprocess.run([os.environ['LATENT_CENSUS_BINARY'], str(compiler), str(run / 'latent.jsonl')],
+                                   check=True, env=env, stdout=log, stderr=log)
+                observations.append(latent_summary(tree, run))
+            before, after = observations
+            self.assertTrue(before['checker_rejected'])
+            self.assertGreater(before['totals']['NotYet'], 0)
+            self.assertGreater(before['totals']['Refused'], 0)
+            changed = {key: after['per_reason'].get(key, 0) - before['per_reason'].get(key, 0)
+                       for key in before['per_reason'].keys() | after['per_reason'].keys()
+                       if after['per_reason'].get(key, 0) != before['per_reason'].get(key, 0)}
+            self.assertEqual(changed, {'NotYet: latent planted extra NotYet': 1})
+            self.assertEqual(after['totals']['NotYet'], before['totals']['NotYet'] + 1)
+            self.assertEqual(after['totals']['Refused'], before['totals']['Refused'])
 
 
 @unittest.skipUnless(os.environ.get('CENSUS_BINARY'), 'set CENSUS_BINARY for the real checker attribution probe')
