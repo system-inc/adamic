@@ -105,3 +105,45 @@ The completed earlier correctness trio's normal/sanitized corpus results, three
 comparison-only rule mutants, released-handle registry mutant and timings remain
 in [its complete report](../wave_04_next/REPORT.md): compiler medians native
 1.815s versus Go 0.335s; repository native 0.266s versus Go 0.118s.
+
+## Dependency refresh on 2026-10-07
+
+Fetched every origin head again and froze all 399 reference SHAs in
+[evidence/refresh/origin-inventory.json](evidence/refresh/origin-inventory.json).
+The inventory searches native source filenames for HIR, React, memoization and
+JSX candidates; it is not an exhaustive semantic search of all source bodies.
+Main is `e011f8f6`, the bridge branch `5afbdb83`, and the harness branch
+`f4d98cab`. None supplies a native React HIR implementation in this inventory.
+
+There is now a reusable isolated JSX parser on `origin/codex/typeaware-wave-16`,
+SHA `58d204d3`, in four `wave16_jsx*.a` dependency files. Its follow-up report
+records positive JSX comparison controls. The narrow JSX adapter helpers on the
+helper branches describe raw JSX nodes; they do not implement React HIR. Thus
+JSX is a potential integration dependency, rather than evidence that no JSX
+implementation exists anywhere. This branch still uses the unchanged shared
+parser, which rejects the original purity control. No copied parser or shared
+parser edits were added while the separate HIR prerequisite remains missing.
+
+The React worker on wave 08 independently records missing HIR lowering, SSA and
+instruction transfer. Its partial lattice/derivation kernels do not supply the
+three pipelines needed here. Worker reports are frozen beside the inventory.
+
+Rebuilt and reran the owned partial validation:
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_04_react/validate_partial.py /workspace/typeaware-wave-04-react/refresh > /workspace/typeaware-wave-04-react/refresh-validation.log 2>&1
+```
+
+PASS: the 11 reporting records still match Go at 5948 bytes in native, sanitized
+native, source Node and emitted JavaScript. All three end+1 renderer mutants
+exit zero with empty stderr and are caught by byte comparison; all three
+removed-refusal mutants are caught by the expected-panic assertion. Memo and
+refs parse controls pass; the purity JSX parser probe and all three explicit
+analysis refusals still exit 70. These remain partial reporting/refusal checks,
+not completed rule ports, full-rule mutants, corpus analysis or rule timings.
+
+No further rules were claimed. The exact remaining prerequisite is native
+React HIR lowering and SSA/capture propagation, plus memoization's reactive-scope
+passes. The user instruction to stop on prerequisites outside the owned rule
+directories still applies. The prior completed six rule ports remain pushed.

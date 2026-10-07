@@ -1,0 +1,198 @@
+[
+  {
+    "label": "go-controls",
+    "exit": 0,
+    "stdout_bytes": 160,
+    "stderr_bytes": 0,
+    "seconds": 2.2423239199997624
+  },
+  {
+    "label": "build-normal",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 1.9645223699999406
+  },
+  {
+    "label": "run-normal",
+    "exit": 0,
+    "stdout_bytes": 5948,
+    "stderr_bytes": 0,
+    "seconds": 0.0012924659995405818
+  },
+  {
+    "label": "build-asan",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 3.2690318940003635
+  },
+  {
+    "label": "run-asan",
+    "exit": 0,
+    "stdout_bytes": 5948,
+    "stderr_bytes": 0,
+    "seconds": 0.009298691000367398
+  },
+  {
+    "label": "run-source-node",
+    "exit": 0,
+    "stdout_bytes": 5948,
+    "stderr_bytes": 0,
+    "seconds": 0.07546845300021232
+  },
+  {
+    "label": "emit-js",
+    "exit": 0,
+    "stdout_bytes": 15356,
+    "stderr_bytes": 0,
+    "seconds": 0.03680423400055588
+  },
+  {
+    "label": "run-js",
+    "exit": 0,
+    "stdout_bytes": 5948,
+    "stderr_bytes": 0,
+    "seconds": 0.037883427000451775
+  },
+  {
+    "label": "parser-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 3.995689902000777
+  },
+  {
+    "label": "parser-memo",
+    "exit": 0,
+    "stdout_bytes": 23,
+    "stderr_bytes": 0,
+    "seconds": 0.0012149390004196903
+  },
+  {
+    "label": "parser-purity",
+    "exit": 70,
+    "stdout_bytes": 0,
+    "stderr_bytes": 134,
+    "seconds": 0.0009707789995445637
+  },
+  {
+    "label": "parser-refs",
+    "exit": 0,
+    "stdout_bytes": 23,
+    "stderr_bytes": 0,
+    "seconds": 0.0013224209997133585
+  },
+  {
+    "label": "analysis-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 1.9753538280001521
+  },
+  {
+    "label": "analysis-memo",
+    "exit": 70,
+    "stdout_bytes": 0,
+    "stderr_bytes": 112,
+    "seconds": 0.001333779000560753
+  },
+  {
+    "label": "analysis-purity",
+    "exit": 70,
+    "stdout_bytes": 0,
+    "stderr_bytes": 94,
+    "seconds": 0.001169340000160446
+  },
+  {
+    "label": "analysis-refs",
+    "exit": 70,
+    "stdout_bytes": 0,
+    "stderr_bytes": 97,
+    "seconds": 0.0009437379994778894
+  },
+  {
+    "label": "memo-span-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 2.018680571999539
+  },
+  {
+    "label": "memo-span-run",
+    "exit": 0,
+    "stdout_bytes": 5948,
+    "stderr_bytes": 0,
+    "seconds": 0.0014383870002347976
+  },
+  {
+    "label": "memo-refusal-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 2.097632850000082
+  },
+  {
+    "label": "memo-refusal-run",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 0.001258002999747987
+  },
+  {
+    "label": "purity-span-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 2.079952523999964
+  },
+  {
+    "label": "purity-span-run",
+    "exit": 0,
+    "stdout_bytes": 5948,
+    "stderr_bytes": 0,
+    "seconds": 0.0016966379998848424
+  },
+  {
+    "label": "purity-refusal-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 1.9455617260000508
+  },
+  {
+    "label": "purity-refusal-run",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 0.0010278159998051706
+  },
+  {
+    "label": "refs-span-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 1.905368763000297
+  },
+  {
+    "label": "refs-span-run",
+    "exit": 0,
+    "stdout_bytes": 5948,
+    "stderr_bytes": 0,
+    "seconds": 0.001277784000194515
+  },
+  {
+    "label": "refs-refusal-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 1.9968709640006637
+  },
+  {
+    "label": "refs-refusal-run",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "seconds": 0.001182859999971697
+  }
+]
