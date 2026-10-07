@@ -126,6 +126,52 @@ func TestBatch12Mutants(t *testing.T) {
 	}
 }
 
+// Not parallel: compiling semantic variants run serially with sanitizer observations.
+func TestBatch12ArgumentMutants(t *testing.T) {
+	cases, want := batch12Oracle(t)
+	for _, mutant := range []struct{ file, old, new, prefix string }{
+		{"is_angle.a", "numberWithSuffix(value,", "numberWithSuffix(value + 'x',", ""},
+		{"is_number.a", "dependencies.scanNumber(value)", "dependencies.scanNumber(value + 'x')", ""},
+		{"is_number.a", "dependencies.hasMathFunction(value)", "dependencies.hasMathFunction(value + 'x')", ""},
+	} {
+		t.Run(mutant.file, func(t *testing.T) {
+			scratch := t.TempDir()
+			for _, file := range []string{"is_angle.a", "is_number.a", "is_percentage.a", "main.a"} {
+				data, err := os.ReadFile(filepath.Join("batch12", file))
+				if err != nil {
+					t.Fatal(err)
+				}
+				text := string(data)
+				if file == mutant.file {
+					if strings.Count(text, mutant.old) != 1 {
+						t.Fatal("mutant anchor changed")
+					}
+					text = mutant.prefix + strings.Replace(text, mutant.old, mutant.new, 1)
+				}
+				if file == "main.a" {
+					reader, _ := filepath.Abs("../options_json.ts")
+					text = strings.ReplaceAll(text, "../../options_json.ts", filepath.ToSlash(reader))
+				}
+				if err = os.WriteFile(filepath.Join(scratch, file), []byte(text), 0644); err != nil {
+					t.Fatal(err)
+				}
+			}
+			got := command(t, "", build(t, filepath.Join(scratch, "main.a")), cases)
+			if bytes.Equal(got, want) {
+				t.Fatal("semantic mutant survived")
+			}
+			a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
+			for i := 0; i < len(a) && i < len(b); i++ {
+				if a[i] != b[i] {
+					t.Logf("compiled semantic mutant caught at line %d: got %q Go %q", i+1, a[i], b[i])
+					return
+				}
+			}
+			t.Fatal("no changed output line")
+		})
+	}
+}
+
 func batch12JavaScript(t *testing.T, entry string) string {
 	t.Helper()
 	program, err := load.Load([]string{entry})

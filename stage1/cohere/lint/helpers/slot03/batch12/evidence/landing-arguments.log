@@ -1,0 +1,13 @@
+=== RUN   TestBatch12ArgumentMutants
+=== RUN   TestBatch12ArgumentMutants/is_angle.a
+    batch12_test.go:166: compiled semantic mutant caught at line 1: got "false/suffix:deg,rad,grad,turn;wrong-value;" Go "false/suffix:deg,rad,grad,turn;"
+=== RUN   TestBatch12ArgumentMutants/is_number.a
+    batch12_test.go:166: compiled semantic mutant caught at line 2: got "false/scan;wrong-value;math;" Go "false/scan;math;"
+=== RUN   TestBatch12ArgumentMutants/is_number.a#01
+    batch12_test.go:166: compiled semantic mutant caught at line 2: got "false/scan;math;wrong-value;" Go "false/scan;math;"
+--- PASS: TestBatch12ArgumentMutants (3.51s)
+    --- PASS: TestBatch12ArgumentMutants/is_angle.a (1.05s)
+    --- PASS: TestBatch12ArgumentMutants/is_number.a (0.99s)
+    --- PASS: TestBatch12ArgumentMutants/is_number.a#01 (1.16s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	3.518s
