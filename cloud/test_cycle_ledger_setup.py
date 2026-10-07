@@ -51,7 +51,7 @@ class Ledger(unittest.TestCase):
             root = Path(temporary)
             upstream, pin, node, inputs = self.fixture(root)
             before = gate.ledger_key(upstream, 'v24.19.0')
-            for name in ['TS_COMMIT', 'TS_URL']:
+            for name in ['TS_COMMIT', 'TS_URL', 'LEDGER_SPARSE']:
                 with self.subTest(name=name), patch.object(gate, name, 'changed'):
                     self.assertNotEqual(before, gate.ledger_key(upstream, 'v24.19.0'), name)
             with patch.object(gate, 'source_hash', return_value='changed'):

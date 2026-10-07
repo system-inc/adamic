@@ -19,6 +19,7 @@ npm = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(npm)
 TS_COMMIT = '050880ce59e30b356b686bd3144efe24f875ebc8'
 TS_URL = 'https://github.com/microsoft/TypeScript.git'
+LEDGER_SPARSE = ['src', 'scripts']
 LEDGER_SCRIPT = 'scripts/processDiagnosticMessages.mjs'
 LEDGER_DIAGNOSTICS = 'src/compiler/diagnosticMessages.json'
 LEDGER_GENERATED = ['src/compiler/diagnosticInformationMap.generated.ts',
@@ -130,7 +131,7 @@ def typescript(root):
 
 def ledger_key(checkout, node_version):
     return cache_key(kind='cycle-ledger', commit=TS_COMMIT, url=TS_URL,
-                     script=file_hash(checkout / LEDGER_SCRIPT),
+                     sparse=LEDGER_SPARSE, script=file_hash(checkout / LEDGER_SCRIPT),
                      diagnostics=file_hash(checkout / LEDGER_DIAGNOSTICS),
                      node=node_version, helper=source_hash())
 
@@ -139,6 +140,9 @@ def validate_ledger(checkout):
     actual = command(['git', '-C', str(checkout), 'rev-parse', 'HEAD'])
     if actual != TS_COMMIT:
         raise ValueError(f'cycle ledger source pin: expected {TS_COMMIT}, got {actual}')
+    sparse = command(['git', '-C', str(checkout), 'sparse-checkout', 'list']).splitlines()
+    if sorted(sparse) != sorted(LEDGER_SPARSE):
+        raise ValueError(f'cycle ledger sparse paths: expected {LEDGER_SPARSE}, got {sparse}')
     # Generated diagnostics and our stamp are ignored/untracked. Tracked source
     # must remain upstream's original bytes, not the parser's adapted corpus.
     subprocess.run(['git', '-C', str(checkout), 'diff', '--exit-code', 'HEAD', '--'],
@@ -173,10 +177,18 @@ def cycle_ledger(root, node):
     with tempfile.TemporaryDirectory(prefix='cycle-ledger-', dir=root) as temporary:
         install = Path(temporary) / 'checkout'
         subprocess.run(['git', 'init', str(install)], check=True, timeout=30)
-        subprocess.run(['git', '-C', str(install), 'fetch', '--depth=1', TS_URL, TS_COMMIT],
-                       check=True, timeout=600)
-        subprocess.run(['git', '-C', str(install), 'checkout', '--detach', 'FETCH_HEAD'],
+        subprocess.run(['git', '-C', str(install), 'remote', 'add', 'origin', TS_URL],
+                       check=True, timeout=30)
+        subprocess.run(['git', '-C', str(install), 'fetch', '--depth=1', '--filter=blob:none',
+                        'origin', TS_COMMIT], check=True, timeout=600)
+        subprocess.run(['git', '-C', str(install), 'sparse-checkout', 'init', '--cone'],
+                       check=True, timeout=30)
+        subprocess.run(['git', '-C', str(install), 'sparse-checkout', 'set', *LEDGER_SPARSE],
                        check=True, timeout=60)
+        subprocess.run(['git', '-C', str(install), 'checkout', '--detach', 'FETCH_HEAD'],
+                       check=True, timeout=600)
+        if command(['git', '-C', str(install), 'rev-parse', 'HEAD']) != TS_COMMIT:
+            raise ValueError('cycle ledger source commit integrity mismatch')
         subprocess.run(['git', '-C', str(install), 'fsck', '--full', '--no-reflogs'],
                        check=True, timeout=120)
         key = ledger_key(install, node_version)
