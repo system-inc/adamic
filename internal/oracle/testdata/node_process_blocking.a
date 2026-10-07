@@ -1,0 +1,3 @@
+const handle = process.stdout._handle;
+if (handle !== undefined) { handle.setBlocking(true); }
+process.stdout.write('x'.repeat(200000));

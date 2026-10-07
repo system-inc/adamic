@@ -6,6 +6,9 @@ import (
 )
 
 func (e *emitter) processCall(call ir.ProcessCall) string {
+	if value, known := e.nodeProcessCall(call); known {
+		return value
+	}
 	switch call.Operation {
 	case "exitCode":
 		return e.snapshot(ir.MaybeNumber, "adamic_process_exit_code()")

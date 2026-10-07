@@ -1,0 +1,3 @@
+performance.mark('keep');
+performance.clearMarks();
+performance.measure('failure', 'keep');

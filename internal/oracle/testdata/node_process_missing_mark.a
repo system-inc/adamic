@@ -1,0 +1,4 @@
+performance.mark('keep');
+performance.mark('drop');
+performance.clearMarks('drop');
+performance.measure('failure', 'absent', 'drop');

@@ -1,0 +1,6 @@
+console.log(`width ${process.stdout.columns ?? -1}`);
+console.log(`tty ${process.stdout.isTTY ?? false}`);
+const handle = process.stdout._handle;
+console.log(`handle ${handle === undefined ? 'undefined' : typeof handle.setBlocking}`);
+if (handle !== undefined) { handle.setBlocking(true); }
+process.stdout.write('set blocking\n');

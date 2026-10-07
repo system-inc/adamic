@@ -85,7 +85,7 @@ func processOutputProgram(t *testing.T, source, mutation string) (string, string
 			t.Fatal("flush mutant anchor changed")
 		}
 		runtimeSource = strings.Replace(runtimeSource, before, after, 1)
-		for _, name := range []string{"adamic_start", "adamic_write_line", "adamic_output_flush", "adamic_panic", "adamic_unreachable", "adamic_process_exit_now"} {
+		for _, name := range []string{"adamic_start", "adamic_write_line", "adamic_write_raw", "adamic_output_flush", "adamic_panic", "adamic_unreachable", "adamic_process_exit_now"} {
 			runtimeSource = strings.ReplaceAll(runtimeSource, name, "mutant_"+name)
 			code = strings.ReplaceAll(code, name, "mutant_"+name)
 		}

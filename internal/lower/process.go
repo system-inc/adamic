@@ -42,6 +42,9 @@ func (l *lowering) isProcessExit(node *ast.Node) bool {
 // processValue handles only complete supported operations. Intermediate objects cannot escape
 // into ordinary object storage, whose slots could not model this live external state.
 func (l *lowering) processValue(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.nodeProcessValue(node); known {
+		return value, known, err
+	}
 	if l.isProcessExit(node) {
 		arguments := node.AsCallExpression().Arguments.Nodes
 		if len(arguments) > 1 {

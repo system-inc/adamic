@@ -207,6 +207,10 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				visited[node.Comparator] = true
 				failing = l.libraryFailure(l.result.Functions[node.Comparator].Body, visited)
 			}
+		case ir.ProcessCall:
+			if node.Operation == "cwd" || node.Operation == "measure" {
+				failing = "the Node host " + node.Operation + " operation"
+			}
 		case ir.SetProperty:
 			if l.objectCanFreeze() {
 				failing = "a write to a potentially frozen object"

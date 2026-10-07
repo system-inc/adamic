@@ -501,6 +501,9 @@ var operators = map[ir.Operator]string{
 func (e *emitter) value(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.ProcessCall:
+		if value, known := e.nodeProcessCall(expression); known {
+			return value
+		}
 		switch expression.Operation {
 		case "exitCode":
 			return "process.exitCode"

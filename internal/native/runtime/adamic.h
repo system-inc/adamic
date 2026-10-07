@@ -792,3 +792,5 @@ adamic_maybe_boolean adamic_process_is_tty(enum adamic_stream stream);
 adamic_string *adamic_process_environment(const adamic_string *name);
 
 #endif
+
+#include "node_process.h"
