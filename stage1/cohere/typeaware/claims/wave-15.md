@@ -34,3 +34,10 @@ namespace mock ports are implemented and validated. The leaked-number-render
 reservation is blocked by missing JSX parser support on this branch; no port
 is claimed for it. No additional rules will be reserved. See the continuation
 report outside this claims directory for the exact refusal and evidence.
+
+Remaining continuation update: leaked-number-render now has a complete native
+judgment/traversal implementation, positive production-Go wrapper comparisons,
+a compiling byte-oracle mutant, raw facts tests and sanitizer checks. Actual
+JSX parsing remains a shared integration gap. See WAVE_15_LEAKED_REPORT.md.
+The implementation is committed locally, but two HTTPS credential failures
+prevented its push. No additional rules are claimed.

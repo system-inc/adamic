@@ -1,0 +1,202 @@
+=== RUN   TestCorrectnessNoLeakedNumberRenderFiresOnTheRealSites
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFiresOnTheRealSites
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilentOnTheFixedSites
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilentOnTheFixedSites
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent
+=== CONT  TestCorrectnessNoLeakedNumberRenderFiresOnTheRealSites
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/a_number
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/a_number
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/an_optional_number
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/an_optional_number
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/a_nullable_number
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/a_nullable_number
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/a_length
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/a_length
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/a_bigint
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/a_bigint
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_comparison
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilentOnTheFixedSites
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_comparison
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_length_compared
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_length_compared
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/double_negation
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/double_negation
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/Boolean()
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/Boolean()
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ternary_that_renders_null
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ternary_that_renders_null
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_boolean
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_boolean
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/a_literal_union_that_holds_zero
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/a_literal_union_that_holds_zero
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_string,_whose_empty_value_renders_nothing
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_string,_whose_empty_value_renders_nothing
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/a_number_or_false
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_string_or_a_number,_rendered_as_text_by_intent
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/a_number_or_false
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/a_branded_number
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/a_branded_number
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/a_numeric_enum_with_a_zero_member
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_string_or_a_number,_rendered_as_text_by_intent
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/a_numeric_enum_with_a_zero_member
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ReactNode
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/in_a_fragment
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/in_a_fragment
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ReactNode
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/in_parentheses
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_literal_union_with_no_zero
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/in_parentheses
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/the_second_operand_of_a_chain
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_literal_union_with_no_zero
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_numeric_enum_with_no_zero_member
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/the_second_operand_of_a_chain
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/both_operands_of_a_chain
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/both_operands_of_a_chain
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/narrowed_to_a_number_by_the_operand_before_it
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/narrowed_to_a_number_by_the_operand_before_it
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/inside_a_ternary_branch
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/inside_a_ternary_branch
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/behind_an_or
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/behind_an_or
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/the_right_side_of_an_or_in_the_operand
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/the_right_side_of_an_or_in_the_operand
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/a_ternary_as_the_operand
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/a_ternary_as_the_operand
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/a_generic_constrained_to_number
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/a_generic_constrained_to_number
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/nested_inside_an_attribute's_element
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/nested_inside_an_attribute's_element
+=== RUN   TestCorrectnessNoLeakedNumberRenderFires/a_number_known_positive_only_by_a_guard_the_type_cannot_carry
+=== PAUSE TestCorrectnessNoLeakedNumberRenderFires/a_number_known_positive_only_by_a_guard_the_type_cannot_carry
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/a_number
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/nested_inside_an_attribute's_element
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_numeric_enum_with_no_zero_member
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_non-zero_constant
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_non-zero_constant
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/any
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/any
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/unknown
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/unknown
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_generic_with_no_constraint
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_generic_with_no_constraint
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_right_of_the_and,_rendered_on_purpose
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_right_of_the_and,_rendered_on_purpose
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_left_of_an_or,_rendered_only_when_truthy
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_left_of_an_or,_rendered_only_when_truthy
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/an_and_that_an_or_catches,_so_a_zero_falls_through_to_the_fallback
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/an_and_that_an_or_catches,_so_a_zero_falls_through_to_the_fallback
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_left_of_an_or_in_the_operand,_returned_only_when_truthy
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_left_of_an_or_in_the_operand,_returned_only_when_truthy
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ternary's_condition
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ternary's_condition
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/an_attribute,_not_a_child
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/an_attribute,_not_a_child
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/an_and_outside_JSX
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/an_and_outside_JSX
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_spread_child,_which_spreads_rather_than_renders_the_value
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_spread_child,_which_spreads_rather_than_renders_the_value
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_rendered_whole
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_rendered_whole
+=== RUN   TestCorrectnessNoLeakedNumberRenderStaysSilent/a_template
+=== PAUSE TestCorrectnessNoLeakedNumberRenderStaysSilent/a_template
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/a_number_known_positive_only_by_a_guard_the_type_cannot_carry
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/in_parentheses
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/a_generic_constrained_to_number
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/a_ternary_as_the_operand
+--- PASS: TestCorrectnessNoLeakedNumberRenderFiresOnTheRealSites (0.02s)
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/the_right_side_of_an_or_in_the_operand
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/behind_an_or
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/inside_a_ternary_branch
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/narrowed_to_a_number_by_the_operand_before_it
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/both_operands_of_a_chain
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/the_second_operand_of_a_chain
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/a_literal_union_that_holds_zero
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/in_a_fragment
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/a_numeric_enum_with_a_zero_member
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/a_branded_number
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/a_number_or_false
+--- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilentOnTheFixedSites (0.02s)
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/a_length
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/a_bigint
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/a_nullable_number
+=== CONT  TestCorrectnessNoLeakedNumberRenderFires/an_optional_number
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_comparison
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/unknown
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_template
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_rendered_whole
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_spread_child,_which_spreads_rather_than_renders_the_value
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/an_and_outside_JSX
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/an_attribute,_not_a_child
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ternary's_condition
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_left_of_an_or_in_the_operand,_returned_only_when_truthy
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/an_and_that_an_or_catches,_so_a_zero_falls_through_to_the_fallback
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_left_of_an_or,_rendered_only_when_truthy
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_right_of_the_and,_rendered_on_purpose
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_generic_with_no_constraint
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_string_or_a_number,_rendered_as_text_by_intent
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/any
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_non-zero_constant
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_numeric_enum_with_no_zero_member
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_literal_union_with_no_zero
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ReactNode
+--- PASS: TestCorrectnessNoLeakedNumberRenderFires (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/a_number (0.01s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/in_parentheses (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/a_number_known_positive_only_by_a_guard_the_type_cannot_carry (0.01s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/a_generic_constrained_to_number (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/a_ternary_as_the_operand (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/the_right_side_of_an_or_in_the_operand (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/behind_an_or (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/inside_a_ternary_branch (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/narrowed_to_a_number_by_the_operand_before_it (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/both_operands_of_a_chain (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/the_second_operand_of_a_chain (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/nested_inside_an_attribute's_element (0.02s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/a_literal_union_that_holds_zero (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/a_number_or_false (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/a_branded_number (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/a_bigint (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/a_nullable_number (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/a_numeric_enum_with_a_zero_member (0.01s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/an_optional_number (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/in_a_fragment (0.01s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderFires/a_length (0.01s)
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ternary_that_renders_null
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_string,_whose_empty_value_renders_nothing
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_boolean
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/double_negation
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/Boolean()
+=== CONT  TestCorrectnessNoLeakedNumberRenderStaysSilent/a_length_compared
+--- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_comparison (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/unknown (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_template (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_rendered_whole (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_spread_child,_which_spreads_rather_than_renders_the_value (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/an_and_outside_JSX (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/an_attribute,_not_a_child (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ternary's_condition (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_left_of_an_or_in_the_operand,_returned_only_when_truthy (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/an_and_that_an_or_catches,_so_a_zero_falls_through_to_the_fallback (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_right_of_the_and,_rendered_on_purpose (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_on_the_left_of_an_or,_rendered_only_when_truthy (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_string_or_a_number,_rendered_as_text_by_intent (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_generic_with_no_constraint (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/any (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_numeric_enum_with_no_zero_member (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_non-zero_constant (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ReactNode (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_ternary_that_renders_null (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/double_negation (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_boolean (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/Boolean() (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_string,_whose_empty_value_renders_nothing (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_length_compared (0.00s)
+    --- PASS: TestCorrectnessNoLeakedNumberRenderStaysSilent/a_number_literal_union_with_no_zero (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.043s

@@ -1,0 +1,19 @@
+=== RUN   TestWave15LeakedAgreementAndMutants
+    wave_15_leaked_test.go:63: controls: 8866 identical bytes; native=21.512211ms Go=22.447342ms
+    wave_15_leaked_test.go:63: controls-asan: 8866 identical bytes; native=41.817381ms Go=22.120242ms
+=== RUN   TestWave15LeakedAgreementAndMutants/leaked
+    wave_15_leaked_test.go:109: leaked: exit 0, independent Go bytes catch byte 6236
+=== NAME  TestWave15LeakedAgreementAndMutants
+    wave_15_leaked_test.go:121: repository: 18485 identical finding bytes; findings 0
+    wave_15_leaked_test.go:122: repository-asan: 18485 identical finding bytes; findings 0
+    wave_15_leaked_test.go:130: repository native=194.499196ms Go=112.722041ms; tsgo: load_ns=64830755 query_ns=0 queries=0 first_query_ns=0 run_ns=125566875
+         cohere: load_ns=59097300 rule_ns=0 run_ns=40291872
+    wave_15_leaked_test.go:121: compiler: 5318 identical finding bytes; findings 0
+    wave_15_leaked_test.go:122: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_15_leaked_test.go:130: compiler native=2.445545584s Go=564.9288ms; tsgo: load_ns=595167080 query_ns=0 queries=0 first_query_ns=0 run_ns=1838012261
+         cohere: load_ns=448911657 rule_ns=0 run_ns=69135863
+    wave_15_leaked_test.go:142: released handle: panic 70, invalid or released checker handle
+--- PASS: TestWave15LeakedAgreementAndMutants (40.95s)
+    --- PASS: TestWave15LeakedAgreementAndMutants/leaked (4.44s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	40.953s
