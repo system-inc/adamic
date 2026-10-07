@@ -22,11 +22,9 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
-	ast.KindLabeledStatement:  {"a label", "move the loop into a function and return from it"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
-	ast.KindEnumDeclaration:   {"enum", "use a union of string literals, like 'Circle' | 'Square'"},
 	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
@@ -80,6 +78,19 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
+		}
+		if err := l.enumRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		checkedCast := false
+		if node.Kind == ast.KindAsExpression {
+			proof, err := l.castProof(node)
+			if err != nil {
+				found = err
+				return true
+			}
+			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		var assertion *ast.Node
 		if node.Kind == ast.KindPropertyDeclaration {
@@ -159,9 +170,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			}
 		}
 		// Prefer the writable-slot explanation when both a mutable view and nominal ancestry fail.
-		if err := l.refuseStringWidening(node); err != nil {
-			found = err
-			return true
+		// A checked cast relates only members selected by its tag, not excluded source members.
+		if !checkedCast {
+			if err := l.refuseStringWidening(node); err != nil {
+				found = err
+				return true
+			}
 		}
 		if err := l.classViewRefusal(node); err != nil {
 			found = err
