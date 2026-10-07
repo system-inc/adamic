@@ -62,3 +62,24 @@ Compressed fetch/setup/test/probe and claim-push logs are in evidence/. No test 
 ## Work required to resume
 
 Provide or port native React HIR lowering with SSA, source identities, nested capture mappings, memoization preparation and post-dominator/control-dependence analyses; provide native JSX parsing for static-components. Then implement these three validators in their own .a modules and run independent pinned production Go byte comparisons, meaningful mutants and normal/sanitized corpora. Until that exists, these three claims remain blocked and must not be reported as completed.
+
+## Continuation recheck
+
+A subsequent keep-cooking request resumed these same three unfinished claims.
+A fresh fetch of every origin head now exposes 417 origin refs. The same native
+HIR path audit still found no matches. Current origin/main and
+origin/codex/lint-harness-dot-a parser source modules contain neither JsxElement
+nor JsxSelfClosingElement, so the JSX substrate gap is also unchanged. These are
+source/path observations; no native agreement is inferred from them. No new
+rule was claimed, no shared source was edited and no placeholder port was added.
+
+Required setup was rerun: Go, clang, Node and submodules ready 0s; cache warm
+36s; total 36s; nproc 5; cgroup four-core quota and 17.6 GB. The same pinned
+Go reference-control command above was rerun into
+/tmp/wave-12-resume-go-controls.log: PASS 0.140s, 38 matching top-level tests.
+There is still no new native port, byte-comparison result, mutant, sanitizer
+check or performance measurement for this batch. Existing claims remain blocked
+on native React HIR, with JSX additionally required for static-components.
+
+Compressed fresh fetch, setup and reference-control logs are preserved in
+evidence/wave-12-resume-*.log.gz.
