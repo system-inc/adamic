@@ -29,3 +29,7 @@ Set `ADAMIC_SLOT05_EVIDENCE` to an existing directory to save per-consumer liter
 ## Third batch
 
 [batch3/REPORT.md](batch3/REPORT.md) records the next three completed helpers: exact JSX matching, filename normalization and Unicode hook-name recognition. They add 21 dependency removals; conservative accounting across all eight retained slot 05 helpers covers 64 rules and removes four final helper blockers in total.
+
+## Fourth batch
+
+[batch4/REPORT.md](batch4/REPORT.md) records ordered theme iteration, entries and namespace keys, validated against actual Go, Node source, emitted JavaScript and sanitized native. These remove 18 dependency occurrences across six Tailwind rules; none loses its last blocker from this batch alone. Eleven retained slot 05 helpers now cover 64 rules and remove 115 dependency occurrences, including four final helper blockers.

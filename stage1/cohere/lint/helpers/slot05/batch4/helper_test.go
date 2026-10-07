@@ -57,7 +57,7 @@ func verify(t *testing.T, mode, target, old, replacement string) {
 		t.Fatal(e)
 	}
 	t.Logf("consumer coverage: %s", coverage)
-	if evidence := os.Getenv("ADAMIC_SLOT05_BATCH3_EVIDENCE"); evidence != "" {
+	if evidence := os.Getenv("ADAMIC_SLOT05_BATCH4_EVIDENCE"); evidence != "" {
 		if e = os.WriteFile(filepath.Join(evidence, mode+"-coverage.json"), coverage, 0644); e != nil {
 			t.Fatal(e)
 		}

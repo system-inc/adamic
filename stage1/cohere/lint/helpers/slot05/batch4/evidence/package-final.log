@@ -9,7 +9,7 @@
           "better-tailwindcss/no-unknown-classes": 239
         }
     helper_test.go:133: theme_live_keys.a mutant caught at verdict 22: mutant 1, Go 3
---- PASS: TestSlot05LiveKeys (13.79s)
+--- PASS: TestSlot05LiveKeys (13.44s)
 === RUN   TestSlot05ThemeEntries
     helper_test.go:49: 6 consumers, 639 distinct test-file literals, 1923 state/prefix cases with fresh reads, 11520 Go entries
     helper_test.go:59: consumer coverage: {
@@ -21,7 +21,7 @@
           "better-tailwindcss/no-unknown-classes": 239
         }
     helper_test.go:133: theme_entries.a mutant caught at verdict 10: mutant 0, Go 17
---- PASS: TestSlot05ThemeEntries (4.71s)
+--- PASS: TestSlot05ThemeEntries (4.75s)
 === RUN   TestSlot05KeysInNamespaces
     helper_test.go:49: 6 consumers, 639 distinct test-file literals, 2556 theme/namespace cases, 12640 Go returned keys and a refusal
     helper_test.go:59: consumer coverage: {
@@ -34,6 +34,6 @@
         }
     helper_test.go:97: Go, Node source, emitted JavaScript and native agree on matched too-short-key refusal
     helper_test.go:133: theme_keys_in_namespaces.a mutant caught at verdict 1: mutant 9, Go 6
---- PASS: TestSlot05KeysInNamespaces (27.56s)
+--- PASS: TestSlot05KeysInNamespaces (29.02s)
 PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch4	46.063s
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch4	47.216s
