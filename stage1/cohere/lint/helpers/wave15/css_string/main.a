@@ -1,0 +1,20 @@
+import { readTextFile, programArguments, panic } from 'adamic';
+import { parseCssString } from './parse_css_string.a';
+function bytes(text: string): number[] {
+    const result: number[] = [];
+    for(let position = 0; position < text.length; position += 2) { result.push(parseInt(text.slice(position, position + 2), 16)); }
+    return result;
+}
+function hex(values: readonly number[]): string {
+    let result = '';
+    for(const value of values) { result += value.toString(16).padStart(2, '0'); }
+    return result;
+}
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const fields = line.split('\t');
+    const result = parseCssString(bytes(fields[0] ?? ''), parseInt(fields[1] ?? '', 10), parseInt(fields[2] ?? '', 10));
+    console.log(`${result.index}\t${result.failed}\t${result.offset}\t${hex(result.message)}.`);
+}

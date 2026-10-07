@@ -1,0 +1,10 @@
+package tailwind
+
+func Wave15CSSString(input string, start int, quote byte) (int, bool, int, string) {
+	end, err := parseCSSString(input, start, quote)
+	if err == nil {
+		return end, false, 0, ""
+	}
+	syntax := err.(*CSSSyntaxError)
+	return end, true, syntax.Offset, syntax.Message
+}

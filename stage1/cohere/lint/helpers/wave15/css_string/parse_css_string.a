@@ -1,0 +1,36 @@
+import { panic } from 'adamic';
+// Go indexes raw bytes, including ill-formed UTF-8. The adapter supplies bytes.
+export class CssStringResult {
+    readonly index: number;
+    readonly failed: boolean;
+    readonly offset: number;
+    readonly message: readonly number[];
+    constructor(index: number, failed: boolean, offset: number, message: readonly number[]) {
+        this.index = index; this.failed = failed; this.offset = offset; this.message = message;
+    }
+}
+export function parseCssString(input: readonly number[], start: number, quote: number): CssStringResult {
+    if(!Number.isInteger(start) || start < 0 || start > input.length || !Number.isInteger(quote) || quote < 0 || quote > 255) {
+        panic('Refused: CSS string requires a valid byte offset and quote byte');
+    }
+    for(let position = start + 1; position < input.length; position++) {
+        const current = input[position] ?? 0;
+        if(current === 92) { position++; continue; }
+        if(current === quote) { const empty: number[] = []; return new CssStringResult(position, false, 0, empty); }
+        const next = input[position + 1] ?? 0;
+        const after = input[position + 2] ?? 0;
+        let ending = -1;
+        if(current === 59 && (next === 10 || (next === 13 && after === 10))) { ending = position + 1; }
+        else if(current === 10 || (current === 13 && next === 10)) { ending = position; }
+        if(ending >= 0) {
+            const prefix: number[] = [];
+            for(const character of 'Unterminated string: ') { prefix.push(character.charCodeAt(0)); }
+            // fmt's %c formats the quote byte as a Unicode rune, not a raw byte.
+            const suffix: readonly number[] = quote < 128 ? [quote] : [192 | (quote >> 6), 128 | (quote & 63)];
+            return new CssStringResult(0, true, start, [...prefix, ...input.slice(start, ending), ...suffix]);
+        }
+    }
+    const empty: number[] = [];
+    // Go intentionally succeeds at the starting offset when EOF arrives first.
+    return new CssStringResult(start, false, 0, empty);
+}

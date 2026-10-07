@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	rules "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse"
@@ -13,27 +14,15 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"unicode/utf16"
 )
 
-func encode(value string) string {
-	var b strings.Builder
-	for _, c := range utf16.Encode([]rune(value)) {
-		fmt.Fprintf(&b, "%04x", c)
-	}
-	return b.String()
-}
+func encode(value string) string { return hex.EncodeToString([]byte(value)) }
 func decode(value string) string {
-	units := []uint16{}
-	for len(value) > 0 {
-		v, e := strconv.ParseUint(value[:4], 16, 16)
-		if e != nil {
-			panic(e)
-		}
-		units = append(units, uint16(v))
-		value = value[4:]
+	b, e := hex.DecodeString(value)
+	if e != nil {
+		panic(e)
 	}
-	return string(utf16.Decode(units))
+	return string(b)
 }
 func main() {
 	if os.Args[1] == "generate" {
@@ -74,15 +63,32 @@ func main() {
 			sort.Strings(keys)
 			coverage[stem] = len(keys)
 			for _, root := range keys {
-				fmt.Fprintf(output, "query\t%s\n", encode(root))
-				for _, kind := range []string{"static", "functional", "compound", "arbitrary", "", "unknown", "🌍"} {
-					fmt.Fprintf(output, "set\t%s\t%s\nquery\t%s\n", encode(root), encode(kind), encode(root))
+				for _, quote := range []byte{34, 39} {
+					input := string(quote) + root + string(quote)
+					fmt.Fprintf(output, "%s\t0\t%d\n", encode(input), quote)
 				}
-				fmt.Fprintf(output, "delete\t%s\nquery\t%s\n", encode(root), encode(root))
+				for position := 0; position < len(root); position++ {
+					if root[position] == 34 || root[position] == 39 {
+						fmt.Fprintf(output, "%s\t%d\t%d\n", encode(root), position, root[position])
+					}
+				}
 			}
 		}
-		for _, root := range []string{"", "nul\x00name", "é", "🌍", "a\tb\nc", "static", "missing"} {
-			fmt.Fprintf(output, "set\t%s\t\nquery\t%s\nset\t%s\t%s\nquery\t%s\ndelete\t%s\nquery\t%s\n", encode(root), encode(root), encode(root), encode("compound"), encode(root), encode(root), encode(root))
+		for quote := 0; quote < 256; quote++ {
+			for value := 0; value < 256; value++ {
+				for _, input := range []string{string([]byte{byte(quote), byte(value), byte(quote)}), string([]byte{byte(quote), 92, byte(value), byte(quote)}), string([]byte{0, 255, byte(quote), byte(value), 59, 13, 10})} {
+					start := 0
+					if input[0] == 0 && len(input) == 7 {
+						start = 2
+					}
+					fmt.Fprintf(output, "%s\t%d\t%d\n", encode(input), start, quote)
+				}
+			}
+		}
+		for _, input := range []string{"", "'", "'unterminated", "'x\rtext'", "'x;\n", "'x\r\n", "'x\\\ntext'", "é'🌍;\n"} {
+			for start := 0; start <= len(input); start++ {
+				fmt.Fprintf(output, "%s\t%d\t39\n", encode(input), start)
+			}
 		}
 		data, e := json.MarshalIndent(coverage, "", "  ")
 		if e != nil {
@@ -100,25 +106,19 @@ func main() {
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
 	scanner.Buffer(make([]byte, 4096), 16*1024*1024)
-	registrations := map[string]string{}
-	queries := 0
 	for scanner.Scan() {
 		fields := strings.Split(scanner.Text(), "\t")
-		if len(fields) < 2 {
-			panic("bad command")
+		input := decode(fields[0])
+		start, e := strconv.Atoi(fields[1])
+		if e != nil {
+			panic(e)
 		}
-		root := decode(fields[1])
-		switch fields[0] {
-		case "set":
-			registrations[root] = decode(fields[2])
-		case "delete":
-			delete(registrations, root)
-		case "query":
-			fmt.Printf("%d\t%s\n", queries, encode(rules.Wave15VariantKind(registrations, root)))
-			queries++
-		default:
-			panic("bad command")
+		quote, e := strconv.Atoi(fields[2])
+		if e != nil {
+			panic(e)
 		}
+		index, failed, offset, message := rules.Wave15CSSString(input, start, byte(quote))
+		fmt.Printf("%d\t%t\t%d\t%s.\n", index, failed, offset, encode(message))
 	}
 	if e = scanner.Err(); e != nil {
 		panic(e)

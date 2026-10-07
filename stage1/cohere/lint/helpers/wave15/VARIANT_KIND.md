@@ -1,4 +1,4 @@
-Built DesignSystem.VariantKind in variant_kind.a over a live registration-kind map.
+Withdrawn DesignSystem.VariantKind: slot 04 claimed it earlier; no duplicate source is delivered.
 Claim 4f3c8f1f was pushed before code on codex/lint-helpers-from-codex/lint-wave1-15.
 validate.py passed 7,248 queries and 216,218 identical output bytes on Go, Node, emitted JavaScript and sanitized native; consumer Go tests passed.
 A missing-root fallback mutant, static to functional, compiled and was caught by output comparison alone on all three backends.
@@ -41,3 +41,8 @@ explicitly reserved comment bundle, and the per-rule strict-options marker.
 All remaining named helpers above six consumers were reserved. VariantKind was
 chosen from the six-consumer tie. The original rule branch remains pushed; its
 previous parser/repair/registration limitations are separate integration work.
+
+Ownership correction: slot 04 8890cfce (02:29:54 UTC) precedes this slot
+4f3c8f1f (02:31:36 UTC). The local comparisons remain historical evidence
+only. The duplicate source and runner were removed in a forward commit.
+Do not count these six prerequisites as this slot's delivered work.
