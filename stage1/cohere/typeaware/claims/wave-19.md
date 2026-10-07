@@ -96,3 +96,9 @@ React-family candidates are parked under Ahra's instruction. require-atomic-upda
 - valid-typeof (compiler 0, repository 0)
 
 These rules are reserved for codex/typeaware-wave-19. New modules will be .a, declare rule.json kinds, and consume handed nodes through numeric kind dispatch. Shared parser, registration generator and test harness remain outside this worker's edits.
+
+## Third continuation completion
+
+Require-await, symbol-description and valid-typeof algorithms are implemented in owned .a directories with numeric rule.json kinds and handed-node listeners. All nine wave-19 algorithms were rebased onto origin/main b8fb957aa and rebuilt against Go again normally and under sanitizers. Each new rule has a compiled byte-only mutant. Contract, strict-option, ASI, raw-fact and released-handle checks have additional mutation proofs. No additional rules are claimed.
+
+Integration remains pending: four dispatch lines in wave_19_third/registration.patch, three earlier lines in wave_19_next_registration.patch, and shared rule/harness registration. The unmodified production archive explicitly refuses those questions. See wave_19_third/REPORT.md for evidence and native versus Go timing.
