@@ -16,6 +16,7 @@ for name in ['require_await','symbol_description','valid_typeof']:
    if 'useMemo(function' in text and 'function useMemo' not in text:text=prelude+text
    texts.append(text)
 texts += [
+ "function identity<T>(value:T):T{return value;} identity?.(async()=>1);",
  "const f=async()=>async()=>await work();",
  "const f=async()=>class C{async run(){await work();}};",
  "import {Symbol} from './ambient.a'; Symbol();",

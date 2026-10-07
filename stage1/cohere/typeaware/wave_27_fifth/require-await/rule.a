@@ -489,8 +489,9 @@ export class Rule {
         if(at < 0 || args.slice(0, at).some((arg) => arg.kind === K.SpreadElement)) {
             return -1;
         }
-        // children between the callee and argument tail are explicit type arguments.
-        if(call.syntax.children.length > args.length + 1) {
+        // Optional-call punctuation is not an explicit type argument.
+        const prefix = call.syntax.children.slice(1, call.syntax.children.length - args.length);
+        if(prefix.some((index) => c.node(index).kind !== K.QuestionDotToken)) {
             return -1;
         }
         const facts = this.links.call(call);
