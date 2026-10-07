@@ -1,0 +1,23 @@
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.03s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestScopeExportSymbols
+    scope_export_symbols_test.go:106: 4 direct-checker scope/alias controls, malformed flags and node kind rejected
+--- PASS: TestScopeExportSymbols (0.14s)
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestShapeAndNameFacts
+=== CONT  TestExactIndexMatchesCompilerNodes
+--- PASS: TestShapeAndNameFacts (0.06s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.16s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.17s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.363s
