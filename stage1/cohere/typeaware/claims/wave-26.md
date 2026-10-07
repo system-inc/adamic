@@ -212,3 +212,12 @@ The original 197-rule by-volume population has 25 baseline/main ports and
 There are zero unclaimed candidates. No additional rules were claimed.
 The complete ref SHAs, claim blobs, names and ranking are preserved in
 wave-26-exhausted-audit.json.gz. Work stops at the requested exhaustion gate.
+
+## Landing re-green on b8fb957a, October 7
+
+All twenty-one ports were rebased onto main b8fb957a and their complete
+oracles, rule/question mutants, both corpora, sanitizers and released-handle
+checks passed again. See ../wave_26_react_attributes/LANDING_B8_REPORT.md
+for the exact command ledger, mutant observations and native/Go costs.
+The final all-branch fetch scanned 554 origin refs and again found zero
+unclaimed ranked rules. No new claim was made.
