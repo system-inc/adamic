@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	_ "embed"
 	"fmt"
 	"os"
 	"os/exec"
@@ -11,11 +12,24 @@ import (
 	"strings"
 )
 
+//go:embed observer/notify.c
+var notificationSource string
+
 var syscallPattern = regexp.MustCompile(`^([a-zA-Z0-9_]+)\(`)
 var quotedPattern = regexp.MustCompile(`"(?:[^"\\]|\\.)*"`)
 var descriptorPattern = regexp.MustCompile(`<(/[^>]*)>`)
 
-func tracedRun(root string, pkg packageInfo, binary, stem string, value *closure) error {
+func tracedRun(root string, pkg packageInfo, binary, stem string, value *closure, observerPaths ...string) error {
+	observer := ""
+	if len(observerPaths) > 0 {
+		observer = observerPaths[0]
+	} else {
+		var err error
+		observer, err = buildNotificationObserver(filepath.Dir(stem))
+		if err != nil {
+			return err
+		}
+	}
 	events, err := os.Create(value.Events)
 	if err != nil {
 		return err
@@ -26,24 +40,24 @@ func tracedRun(root string, pkg packageInfo, binary, stem string, value *closure
 		return err
 	}
 	defer errors.Close()
-	// -yy gives absolute cwd/dirfd annotations, including after fork and chdir.
-	// -ff prevents interleaved unfinished syscall records. %file includes failed
-	// existence checks and modern stat calls; getdents64 includes actual listings.
-	args := []string{"-ff", "-yy", "-s", "0", "-e", "trace=%file,getdents64", "-o", stem + ".trace", "go", "tool", "test2json", "-t", "-p", pkg.ImportPath, binary, "-test.v=test2json", "-test.timeout=30m"}
-	command := exec.Command("strace", args...)
+	// Seccomp notifications are inherited by the whole process tree without
+	// ptrace, so LeakSanitizer remains enabled. The decoder also accepts the
+	// equivalent pathname/descriptor annotations produced by strace -yy.
+	args := []string{"-o", stem + ".trace", "--", "go", "tool", "test2json", "-t", "-p", pkg.ImportPath, binary, "-test.v=test2json", "-test.timeout=30m"}
+	command := exec.Command(observer, args...)
 	command.Dir = pkg.Dir
 	command.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1")
 	command.Stdout = events
 	command.Stderr = errors
 	if err := command.Run(); err != nil {
-		return fmt.Errorf("traced uncached %s: %w; see %s and %s.stderr (sanitizers may reject ptrace)", pkg.ImportPath, err, value.Events, stem)
+		return fmt.Errorf("traced uncached %s: %w; see %s and %s.stderr", pkg.ImportPath, err, value.Events, stem)
 	}
-	traces, err := filepath.Glob(stem + ".trace.*")
+	traces, err := filepath.Glob(stem + ".trace")
 	if err != nil {
 		return err
 	}
 	if len(traces) == 0 {
-		return fmt.Errorf("strace produced no process logs")
+		return fmt.Errorf("observer produced no process log")
 	}
 	for _, path := range traces {
 		file, err := os.Open(path)
@@ -69,7 +83,7 @@ func observeLine(root, cwd, line string, value *closure) {
 	}
 	call := syscallPattern.FindStringSubmatch(line)
 	if len(call) == 0 {
-		value.Uncertain = append(value.Uncertain, "unparsed trace line")
+		value.Uncertain = append(value.Uncertain, "unparsed trace line: "+line)
 		return
 	}
 	if strings.Contains(line, "<unfinished ...>") || strings.Contains(line, "<...") {
@@ -167,7 +181,7 @@ func observeLine(root, cwd, line string, value *closure) {
 
 // A sanitizer-using gate cannot produce a green record under an incompatible
 // observer. Test that premise before spending a full gate tracing packages.
-func observerCompatible(directory string) error {
+func observerCompatible(directory, observer string) error {
 	source := filepath.Join(directory, "observer-probe.c")
 	binary := filepath.Join(directory, "observer-probe")
 	if err := os.WriteFile(source, []byte("#include <stdlib.h>\nint main(void) { void *value = malloc(32); free(value); return 0; }\n"), 0600); err != nil {
@@ -180,8 +194,20 @@ func observerCompatible(directory string) error {
 		return err
 	}
 	log := filepath.Join(directory, "observer-traced.log")
-	if err := logged(directory, log, "strace", "-f", "-yy", "-s", "0", "-e", "trace=%file,getdents64", "-o", filepath.Join(directory, "observer.trace"), binary); err != nil {
+	if err := logged(directory, log, observer, "-o", filepath.Join(directory, "observer.trace"), "--", binary); err != nil {
 		return fmt.Errorf("observer cannot preserve the sanitizer gate; no record published; see %s: %w", log, err)
 	}
 	return nil
+}
+
+func buildNotificationObserver(directory string) (string, error) {
+	source := filepath.Join(directory, "notification-observer.c")
+	binary := filepath.Join(directory, "notification-observer")
+	if err := os.WriteFile(source, []byte(notificationSource), 0600); err != nil {
+		return "", err
+	}
+	if err := logged(directory, filepath.Join(directory, "notification-observer-build.log"), "clang", "-O2", "-Wall", "-Wextra", "-Werror", source, "-o", binary); err != nil {
+		return "", err
+	}
+	return binary, nil
 }

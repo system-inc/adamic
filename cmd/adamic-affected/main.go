@@ -15,9 +15,10 @@ import (
 	"reflect"
 	"sort"
 	"strings"
+	"unicode/utf8"
 )
 
-const formatVersion = 1
+const formatVersion = 2
 
 type packageInfo struct {
 	ImportPath, Dir                                          string
@@ -118,9 +119,13 @@ func run(args []string) error {
 		if err != nil {
 			return err
 		}
+		observer, err := buildNotificationObserver(logs)
+		if err != nil {
+			return err
+		}
 		for _, pkg := range packages {
 			if pkg.ImportPath == "github.com/system-inc/adamic/internal/native" {
-				if err := observerCompatible(logs); err != nil {
+				if err := observerCompatible(logs, observer); err != nil {
 					return err
 				}
 				break
@@ -155,7 +160,7 @@ func run(args []string) error {
 				return err
 			}
 			value.Events = stem + ".jsonl"
-			if err := tracedRun(root, pkg, binary, stem, &value); err != nil {
+			if err := tracedRun(root, pkg, binary, stem, &value, observer); err != nil {
 				return err
 			}
 			for path, after := range value.Observed {
@@ -352,6 +357,9 @@ func fingerprint(path string) (string, error) {
 	return digest(data.Bytes()), nil
 }
 func add(root, path string, inputs map[string]string) error {
+	if !utf8.ValidString(path) {
+		return fmt.Errorf("input pathname is not valid UTF-8")
+	}
 	value, err := fingerprint(path)
 	if err != nil {
 		return err
@@ -453,6 +461,7 @@ func toolchain(root string) (map[string]string, error) {
 	sort.Strings(environment)
 	values["environment SHA256"] = digest([]byte(strings.Join(environment, "\x00")))
 	values["uid"] = fmt.Sprint(os.Getuid())
+	values["observer implementation SHA256"] = digest([]byte(notificationSource))
 	return values, nil
 }
 func submoduleIdentity(root string) (string, error) {

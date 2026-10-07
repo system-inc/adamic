@@ -2,7 +2,7 @@
 
 Status: implementation and small real-process proofs, not a proven integration gate.
 The five full-repository branch proofs and the affected-versus-whole timing comparison
-are blocked by the observer's incompatibility with LeakSanitizer. Do not use this
+remain uncompleted: there is no certified green full-main record. Do not use this
 prototype to omit integration packages until those proofs have been completed.
 
 `cmd/adamic-affected` records inputs and selects packages. It does not reuse test
@@ -59,22 +59,30 @@ Generated test-main files returned as absolute paths stay absolute.
 
 Observed inputs are collected separately for each test binary and all of its children:
 
-```sh
-strace -ff -yy -s 0 -e trace=%file,getdents64 -o PACKAGE.trace \
-  go tool test2json -t -p IMPORT_PATH PACKAGE.test \
-  -test.v=test2json -test.timeout=30m
-```
+The embedded Linux seccomp notification observer is compiled outside the repository
+for each record invocation. Its inherited syscall filter pauses pathname operations
+in the test process tree, records them, and lets the kernel execute the original
+syscall with `SECCOMP_USER_NOTIF_FLAG_CONTINUE`. It covers open/openat, exec, stat,
+access, readlink and directory enumeration. Cwd and directory descriptors resolve
+through `/proc/<tid>/cwd` and `/proc/<tid>/fd`; pathname memory uses
+`process_vm_readv`, with `/proc/<tid>/mem` as a fallback. It does not attach ptrace,
+so LeakSanitizer remains enabled. Trace entries use the parser's strace-like format.
+Withdrawn notifications have not received CONTINUE and have not executed a file
+operation; restarts produce new notifications. Other notification errors abort.
 
-`-ff` gives one log per process without interleaved syscall fragments. `-yy` resolves
-cwd and directory descriptors, including after fork or chdir. `%file` includes
-`open`, `openat`, `execve`, old and modern stat variants, access and failed existence
-probes. `getdents64` supplies directory listings, which the requested four-syscall
-filter alone would miss. Directory fingerprints include names and entry types;
-file fingerprints include mode and bytes, and symbolic links include their target
-and the target's fingerprint. Missing paths and their parent directories are explicit inputs. Undecodable paths,
-truncated records and unsupported input types prevent skipping the package. Writes
-into repository inputs also prevent skipping it. Syscall logs do not request expanded
-`execve` environments; the environment identity stores a digest rather than values.
+Directory fingerprints include names and entry types; file fingerprints include
+mode and bytes, and symbolic links include their target and the target's fingerprint.
+Missing paths and parents are explicit inputs. Undecodable paths, unsupported
+operations and repository writes prevent skipping. Non-UTF-8 input names refuse
+recording rather than allowing JSON to replace bytes in pathname keys. Trace logs
+omit expanded environments; the environment identity stores a digest.
+
+This is an experimental equivalent observer, not a complete integration proof.
+Node on this box invokes `io_uring` syscalls. They are intercepted but undecoded,
+so the package is uncertain and always selected. `openat2`, multi-path operations,
+foreign syscall architectures and unreadable child memory also force selection.
+A supported observer must additionally prove namespaces, inherited descriptors,
+other asynchronous input interfaces and arbitrary external inputs before deployment.
 
 CGo source lists do not establish a complete closure for arbitrary `#include` paths
 used while building a cached binary. Repository CGo dependencies therefore force
@@ -115,11 +123,11 @@ normally and failed under tracing, for both clean control binaries. These checks
 were left enabled. The recorder refuses a failed traced package rather than turning
 that failed observation into a green record.
 
-The environment has no effective capabilities, no mounted tracefs, and no installed
-`bpftrace` or `perf`. A non-ptrace observer needs additional platform support and a
-separate proof of PID-tree attribution, directory listings, failed probes, path
-resolution, and lost-event detection. Merely running once without tracing and once
-with leak checks disabled would not establish that both runs opened the same files.
+An unprivileged seccomp listener is available on this kernel. The replacement
+observer passes both the leak-free sanitizer control and the actual native
+`TestFreedValuesAreCaughtWithSlabs` test, with leak checking enabled. The latter
+log is `/tmp/affected-notify-native.log`. This removes the specific ptrace conflict,
+not the remaining closure and full-branch proof obligations.
 
 ## Evidence and mutants
 
@@ -135,13 +143,13 @@ reading markdowninline, and scanner tests reading cohere's generated identifier 
 The environment audit also includes optional TypeScript corpora and library paths.
 
 The real process-tree proof builds a small uncached Go package outside the repository,
-traces it and its Node child, then changes real files and runs the same test binary
+observes it, then changes real files and runs the same test binary
 again without tracing. This is a controlled observer proof, not one of the five
 requested full-main branch proofs.
 
 | Mutant | Observed bad decision | Independent check that catches it |
 |---|---|---|
-| Remove observed inputs | Relative fixture change wrongly skipped | Fresh Go test and Node child both fail on changed fixture bytes |
+| Remove observed inputs | Relative fixture change wrongly skipped | Fresh Go test fails on changed fixture bytes |
 | Remove directory inputs | New fixture wrongly skipped | Fresh test fails because enumeration finds two files instead of one |
 | Compile a selector without toolchain comparison, then change the recorded Node version | Both packages wrongly skipped | Independent `node --version` requires both packages; the original selector prints both import paths |
 
@@ -167,16 +175,27 @@ packages to run. This is not an altered Node installation or a completed whole-A
 branch proof. Observed-input and directory-input mutants also run through the real
 CLI; a fresh `go test -count=1 ./pkg` catches each wrongful skip.
 
+A separate Node observation test verifies its relative fixture read is captured
+and undecoded asynchronous syscalls remain uncertain. It is not a skip proof for
+Node packages. The initial strace process-tree mutant also passed, but that backend
+is incompatible with the real sanitizer controls and is no longer the recorder.
+
 Validation commands and complete logs:
 
 ```sh
-ADAMIC_GATE_UNCACHED=1 go test -count=1 -v ./cmd/adamic-affected > /tmp/affected-command-tests.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -v -timeout 5m ./cmd/adamic-affected > /tmp/affected-notification-tests.log 2>&1
 go vet ./cmd/adamic-affected > /tmp/affected-vet.log 2>&1
 gofmt -l cmd internal > /tmp/affected-gofmt.log
 go vet ./... > /tmp/affected-full-vet.log 2>&1
 ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/numbers.a$' > /tmp/affected-filtered-oracle.log 2>&1
 ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m -json ./... > /tmp/affected-main-gate.jsonl 2> /tmp/affected-main-gate.stderr
 ```
+
+The workspace restart interrupted whole-gate validation. Its log ends with 29
+packages passed, 13 having no tests, and two lacking terminal package events.
+The old processes were zombies; elapsed process age was not gate wall time.
+This is not a green gate. The changed command package and filtered oracle completed
+uncached. No full-main record was produced.
 
 Other evidence: `/tmp/affected-setup.log`, `/tmp/affected-lsan-plain.log`,
 `/tmp/affected-lsan-traced.log`, `/tmp/affected-native-plain.log`,

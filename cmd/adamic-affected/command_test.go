@@ -11,8 +11,8 @@ import (
 
 func TestRecordAndSelectCommand(t *testing.T) {
 	// Not parallel: this builds and runs the real command with a controlled Git main.
-	if _, err := exec.LookPath("strace"); err != nil {
-		t.Skip("Linux strace unavailable")
+	if _, err := exec.LookPath("clang"); err != nil {
+		t.Skip("observer compiler unavailable")
 	}
 	root := t.TempDir()
 	writeInput(t, filepath.Join(root, "go.mod"), "module affected-command-proof\n\ngo 1.27\n")
@@ -176,7 +176,7 @@ func TestListing(t *testing.T){entries,e:=os.ReadDir("../oracle/fixtures");if e!
 	}
 	mutantRoot := t.TempDir()
 	writeInput(t, filepath.Join(mutantRoot, "go.mod"), "module affected-selector-mutant\n\ngo 1.27\n")
-	for _, name := range []string{"main.go", "trace.go"} {
+	for _, name := range []string{"main.go", "trace.go", "observer/notify.c"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)

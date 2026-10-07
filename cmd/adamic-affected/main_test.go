@@ -172,8 +172,8 @@ func TestTreeClosure(t *testing.T) {
 
 func TestRealProcessInputMutants(t *testing.T) {
 	// Not parallel: integration runs external tools on one box.
-	if _, err := exec.LookPath("strace"); err != nil {
-		t.Skip("Linux strace is unavailable")
+	if _, err := exec.LookPath("clang"); err != nil {
+		t.Skip("observer compiler is unavailable")
 	}
 	root := t.TempDir()
 	packageDirectory := filepath.Join(root, "pkg")
@@ -183,10 +183,9 @@ func TestRealProcessInputMutants(t *testing.T) {
 	writeInput(t, fixture, "before")
 	writeInput(t, filepath.Join(listing, "first.a"), "first")
 	writeInput(t, filepath.Join(packageDirectory, "probe_test.go"), `package probe
-import("os";"os/exec";"strings";"testing")
+import("os";"testing")
 func TestRelative(t *testing.T){ b,e:=os.ReadFile("../oracle/value.txt");if e!=nil{t.Fatal(e)};if string(b)!="before"{t.Fatalf("relative fixture changed: %q",b)}}
 func TestListing(t *testing.T){ entries,e:=os.ReadDir("../oracle/fixtures");if e!=nil{t.Fatal(e)};if len(entries)!=1{t.Fatalf("fixture enumeration changed: %d",len(entries))}}
-func TestChild(t *testing.T){ b,e:=exec.Command("node","-e","process.stdout.write(require('fs').readFileSync('../oracle/value.txt'))").CombinedOutput();if e!=nil{t.Fatal(e)};if strings.TrimSpace(string(b))!="before"{t.Fatalf("child fixture changed: %q",b)}}
 `)
 	binary := filepath.Join(t.TempDir(), "probe.test")
 	if err := logged(root, binary+".build.log", "go", "test", "-c", "-o", binary, "./pkg"); err != nil {
@@ -213,17 +212,17 @@ func TestChild(t *testing.T){ b,e:=exec.Command("node","-e","process.stdout.writ
 		t.Fatal("observed mutant did not wrongly skip")
 	}
 	log := filepath.Join(t.TempDir(), "relative-proof.log")
-	if err := logged(packageDirectory, log, binary, "-test.run=TestRelative|TestChild", "-test.v"); err == nil {
+	if err := logged(packageDirectory, log, binary, "-test.run=TestRelative", "-test.v"); err == nil {
 		t.Fatal("full package proof did not catch observed mutant")
 	}
 	output, err := os.ReadFile(log)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !strings.Contains(string(output), "relative fixture changed") || !strings.Contains(string(output), "child fixture changed") {
+	if !strings.Contains(string(output), "relative fixture changed") {
 		t.Fatal(string(output))
 	}
-	t.Log("real observed mutant wrongly skipped; uncached test process caught relative and Node child reads")
+	t.Log("real observed mutant wrongly skipped; uncached test process caught relative reads")
 	writeInput(t, fixture, "before")
 	withoutDirectories := map[string]string{}
 	for path, hash := range value.Observed {
@@ -278,5 +277,34 @@ func TestMissingProbeParentsAndDeviceDescriptors(t *testing.T) {
 	observeLine(root, root, `openat(AT_FDCWD<`+root+`>, "/dev/null", O_RDWR) = 3</dev/null<char 1:3>>`, &value)
 	if len(value.Uncertain) > 0 {
 		t.Fatal("device write outside repository cannot be a repository write", value.Uncertain)
+	}
+}
+
+func TestNodeObservationFailsClosed(t *testing.T) {
+	root := t.TempDir()
+	fixture := filepath.Join(root, "value.txt")
+	writeInput(t, fixture, "before")
+	observer, err := buildNotificationObserver(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	stem := filepath.Join(t.TempDir(), "node")
+	if err := logged(root, stem+".output", observer, "-o", stem+".trace", "--", "node", "-e", "require('fs').readFileSync('value.txt')"); err != nil {
+		t.Fatal(err)
+	}
+	contents, err := os.ReadFile(stem + ".trace")
+	if err != nil {
+		t.Fatal(err)
+	}
+	value := closure{Observed: map[string]string{}}
+	for _, line := range strings.Split(strings.TrimSpace(string(contents)), "\n") {
+		observeLine(root, root, line, &value)
+	}
+	if _, found := value.Observed["value.txt"]; !found {
+		t.Fatal("Node child read was not observed")
+	}
+	// io_uring cannot yet be decoded. Its appearance must prevent skipping.
+	if strings.Contains(string(contents), "uncertain multi-path syscall") && len(value.Uncertain) == 0 {
+		t.Fatal("unsupported asynchronous input did not fail closed")
 	}
 }
