@@ -31,7 +31,11 @@ for(const path of paths) {
     // Rules supplies only the finding sink; no second parser walk is needed.
     const syntax = new SyntaxProjection(program, path);
     new UnsupportedSyntax(linter, syntax).run();
-    new UseMemo(linter, syntax).run();
+    const memo = new UseMemo(linter, syntax);
+    for(let identity = 1; identity <= syntax.nodes.length; identity++) {
+        const node = syntax.node(identity);
+        if(node.kind === 'CallExpression') { memo.visit(node, identity); }
+    }
     new BooleanPropNaming(linter, syntax, args.includes('--boolean-defaults')).run();
     for(const finding of linter.findings) {
         finding.sortKey = finding.written();

@@ -347,3 +347,28 @@ The previously reported partial paths and speed limitations remain: imported
 props, typed wrappers, handed-node dispatch and string-kind removal are not
 complete. These are not IR/SSA/capture blockers eligible for the React parking
 exception. Boolean-prop-naming stays reserved and partial; no next batch claimed.
+
+## Use-memo handed-node visitor, October 7
+
+The clarified names-based listener contract is implemented for use-memo in
+its own runner. UseMemo.visit takes the SyntaxNode and its projection identity
+already fetched by the caller. It no longer scans the file, fetches the entry
+node itself, or compares that entry node's kind to decide relevance.
+The runner dispatches only CallExpression nodes to it, matching the existing
+rule.json kinds declaration. The missing-callback finding uses the handed
+node's range directly. Descendant inspection and checker questions remain
+semantic analysis of that call. This is an own-runner change, not an edit to
+the shared registry or harness, and no integration factory is advertised.
+
+The fifth agreement/mutant and refusal suites passed in 109.867s. Default
+controls again matched 61,122 bytes and 141 findings; nil-option controls
+matched 53,794 bytes and 84 findings. All corpus and sanitizer comparisons
+passed, as did released handles. eval-library, memo-inline and boolean-capital
+mutants compiled, exited 0 with empty stderr, and only Go bytes caught offsets
+70, 19,756 and 44,875. Exact test output and source hashes are archived under
+validation-wave-25-listener. Unaffected suites retain the fourth landing gate.
+
+This does not establish a shared kind-indexed driver for all wave rules.
+Unsupported-syntax and boolean-prop-naming retain their earlier traversal;
+those dispatch migrations remain unfinished. Other partial boolean paths and
+the dynamic RegExp lowering blocker remain. No new claim was made.

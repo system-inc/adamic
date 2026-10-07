@@ -1,0 +1,9 @@
+{
+  "base": "c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06",
+  "previous_tip": "b4216278582af6c3cc4ca0a8a138ce634f796bbc",
+  "source_hashes": {
+    "use_memo.a": "990d2be98261ea22d99bd763fd40be288503d05d6c2564f6de44d02480bdb2cb",
+    "wave_25_fifth_suite.a": "18d4d3838f8f1dd9711e8a0f4d0bf61285bda64c02aade3f83b10ab48a4b4329"
+  },
+  "command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-25-corpus ADAMIC_WAVE25_FIFTH_ARTIFACTS=/workspace/wave-25-landing-second/fifth ADAMIC_WAVE25_FIFTH_REFUSALS=/workspace/wave-25-listener-refusals go test ./stage1/cohere/typeaware -run ^TestWave25Fifth(AgreementAndMutants|BooleanRefusals)$ -count=1 -v -timeout 20m"
+}
