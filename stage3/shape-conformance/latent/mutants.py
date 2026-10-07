@@ -3,6 +3,7 @@ import pathlib,subprocess,sys
 root=pathlib.Path.cwd();scratch=pathlib.Path(sys.argv[1]);scratch.mkdir(parents=True,exist_ok=True)
 source=(root/'stage3/shape-conformance/latent/lower.go.txt').read_text()
 mutants={
+ 'latent-drop-diagnostic-provenance':source.replace('counts := map[string]map[string]int{}','for i:=range sites { sites[i].DiagnosticCauses=nil }; counts := map[string]map[string]int{}'),
  'latent-ignore-field-type':source.replace('if !checked.IsTypeAssignableTo(declared, expected) {','if false {'),
  'latent-ignore-readiness':source.replace('if staged {\n\t\t\t\t\tready = false','if false {\n\t\t\t\t\tready = false'),
  'latent-ignore-diagnosed-body':source.replace('skipped := len(program.LatentDiagnosticsIn(node.Body())) > 0','skipped := false').replace('ast.IsFunctionLike(parent) && len(program.LatentDiagnosticsIn(parent.Body())) > 0','false'),

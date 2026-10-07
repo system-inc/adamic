@@ -1,8 +1,8 @@
 """Package the observed census, preserving the original ledger identities."""
 import collections,gzip,hashlib,json,pathlib,sys
-result_path,map_path,control_path,adapted_root=map(pathlib.Path,sys.argv[1:])
+result_path,map_path,control_path,adapted_root=map(pathlib.Path,sys.argv[1:5])
 r=json.loads(result_path.read_text());mapped=json.loads(map_path.read_text());control=json.loads(control_path.read_text())
-root=pathlib.Path('stage3/shape-conformance');label=r['measurement']
+root=pathlib.Path(sys.argv[5]) if len(sys.argv)>5 else pathlib.Path('stage3/shape-conformance');root.mkdir(parents=True,exist_ok=True);label=r['measurement']
 def write(name,value):
  (root/name).write_text(json.dumps(value,indent=2)+'\n')
 def compressed(name,text):

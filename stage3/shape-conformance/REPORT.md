@@ -1,3 +1,13 @@
+Built: merge main 48c05d09 with checked views, readiness and lane 3 hooks retained; fresh adapted-tree census.
+Commits: previous census ffe5a90e; this merge is recorded in branch history.
+Commands: full lower/IR packages, scoped uncached oracle, 43 graph-count guards, cast oracle, vet and independent census audits pass.
+Mutants: native wrong-shape/readiness plus measurement type/readiness/body/provenance and host/body forgery mutants caught.
+Limits: all tsc sites still need views; complete erasure and host runtime metadata remain unproven.
+
+Current report: [MERGED-SHARE-REPORT.md](MERGED-SHARE-REPORT.md).
+
+Previous checkpoint follows.
+
 Built: per-function allocation-flow share over every original ledger site, measured on a checker-rejected program.
 Commits: production eraser 59db5d63; lane 1 609ed395 is already merged through 40ad020d; measurement 2ab6be95.
 Commands: exact AST mapping, corpus/control measurement, independent diagnostic-span audit and production graph/eraser regression pass.

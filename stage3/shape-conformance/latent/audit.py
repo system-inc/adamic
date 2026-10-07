@@ -24,6 +24,11 @@ def audit(result,mapped,root,fixtures=False):
   assert row['measurement']==LABEL and row['outcome'] in OUTCOMES
   counts[row['kind']][row['outcome']]+=1
   if row['outcome']=='unknown':assert row['reason'] in REASONS;reasons[row['kind']][row['reason']]+=1
+  if row['reason']=='diagnosed body' and 'diagnostic_causes' in row:
+   assert row['diagnostic_causes'],'diagnosed site lacks provenance'
+   for cause in row['diagnostic_causes']:
+    assert cause['scope'] in ('own function','dependency') and cause['diagnostics'],'empty diagnostic cause'
+    assert all(d in {raw['text'] for raw in result['diagnostic_sites']} for d in cause['diagnostics']),'invented diagnostic provenance'
   if row.get('host_values'):assert row['outcome']=='unknown','host value certified free'
   if row['outcome']!='unknown':assert row['allocation_sites'] and all(site<0 for site in row['allocation_sites']),'vacuous allocation proof'
   if row['outcome']=='conforms-if':assert row['fields'] and all(f['name'] and f['reason'] for f in row['fields'])

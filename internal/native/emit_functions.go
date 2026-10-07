@@ -86,8 +86,8 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.line("return (adamic_value){.number = 0};")
 		}
 	} else {
-		// The checker proved every path returns (noImplicitReturns), so this is never reached; C
-		// can't see that, and if it ever is reached it's a compiler bug, said out loud.
+		// Lowering records every permitted implicit return in the IR. C cannot always see
+		// that all paths return; reaching this guard still means an IR exit was lost.
 		e.line("adamic_unreachable();")
 	}
 	e.scopes = e.scopes[:e.functionDepth]

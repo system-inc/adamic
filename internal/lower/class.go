@@ -2,7 +2,8 @@ package lower
 
 import (
 	"sort"
-	"strconv"
+	"strings"
+	_ "unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -89,11 +90,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 		substitution[l.checker.GetTypeAtLocation(parameter.Name())] = representation
 		arguments = append(arguments, representation)
 	}
-	key := declaration.Name().Text()
-	for _, argument := range typeArguments {
-		key += "," + strconv.Itoa(int(argument.Id()))
-	}
-	key = l.program.Where(declaration) + ":" + key
+	key := l.classInstanceKey(declaration, typeArguments)
 	mapper := l.typeMapperOf(declaration, classType)
 	if err := l.nominalTypeArguments(declaration, typeArguments, mapper, where); err != nil {
 		return nil, err
@@ -521,7 +518,7 @@ func (l *lowering) classOf(access *ast.Node) int {
 	if class == nil || class.Kind != ast.KindClassDeclaration || len(class.TypeParameters()) > 0 {
 		return 0
 	}
-	if lowered, isLowered := l.instances[l.program.Where(class)+":"+class.Name().Text()]; isLowered {
+	if lowered, isLowered := l.instances[l.classInstanceKey(class, nil)]; isLowered {
 		return lowered.constructor + 1
 	}
 	return 0
@@ -599,4 +596,40 @@ func (l *lowering) useOfThis(node *ast.Node) error {
 		}
 	}
 	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this"}
+}
+
+// The checker owns type identity, including recursive structural types. Reuse the
+// first representative's key rather than treating a fresh checker object as a new type.
+//
+//go:linkname identicalTypes github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeIdenticalTo
+func identicalTypes(checker *checker.Checker, source, target *checker.Type) bool
+
+func (l *lowering) classKeyPrefix(declaration *ast.Node) string {
+	return l.program.Where(declaration) + ":" + declaration.Name().Text()
+}
+
+func (l *lowering) sameClassArguments(from, to []*checker.Type) bool {
+	if len(from) != len(to) {
+		return false
+	}
+	for index := range from {
+		if !identicalTypes(l.checker, from[index], to[index]) {
+			return false
+		}
+	}
+	return true
+}
+
+func (l *lowering) classInstanceKey(declaration *ast.Node, arguments []*checker.Type) string {
+	prefix := l.classKeyPrefix(declaration)
+	key := prefix
+	for _, argument := range arguments {
+		key += "," + l.genericTypeKey(argument)
+	}
+	return key
+}
+
+func (l *lowering) classKeyMatches(key string, declaration *ast.Node) bool {
+	prefix := l.classKeyPrefix(declaration)
+	return key == prefix || strings.HasPrefix(key, prefix+",")
 }

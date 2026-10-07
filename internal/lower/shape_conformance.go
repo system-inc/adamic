@@ -155,3 +155,16 @@ func (l *lowering) certifiedCheckedCast(node *ast.Node, value ir.CheckedCast, ta
 	value.ViewContract = contract
 	return value, nil
 }
+
+// checkedViewTarget preserves checked structural admission alongside main's tag proof.
+func (l *lowering) checkedViewTarget(node *ast.Node) bool {
+	if node.Kind != ast.KindAsExpression {
+		return false
+	}
+	source := l.checker.GetTypeAtLocation(node.AsAsExpression().Expression)
+	target := l.checker.GetTypeAtLocation(node)
+	if source.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 || isClassInstance(target) {
+		return false
+	}
+	return target.Flags()&checker.TypeFlagsObject != 0 && !l.checker.IsTypeAssignableTo(source, target) && !l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target)
+}

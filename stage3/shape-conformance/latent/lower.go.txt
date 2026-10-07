@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"sort"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -32,13 +33,14 @@ type LatentShapeSite struct {
 		End   int    `json:"end"`
 		Owner string `json:"owner"`
 	} `json:"adapted"`
-	Measurement     string             `json:"measurement"`
-	Outcome         string             `json:"outcome"`
-	Reason          string             `json:"reason"`
-	Detail          []string           `json:"detail"`
-	AllocationSites []int              `json:"allocation_sites"`
-	Fields          []latentShapeField `json:"fields"`
-	HostValues      []string           `json:"host_values"`
+	Measurement      string                       `json:"measurement"`
+	Outcome          string                       `json:"outcome"`
+	Reason           string                       `json:"reason"`
+	Detail           []string                     `json:"detail"`
+	AllocationSites  []int                        `json:"allocation_sites"`
+	Fields           []latentShapeField           `json:"fields"`
+	HostValues       []string                     `json:"host_values"`
+	DiagnosticCauses []latentShapeDiagnosticCause `json:"diagnostic_causes"`
 }
 type latentShapeField struct {
 	Name     string `json:"name"`
@@ -46,7 +48,15 @@ type latentShapeField struct {
 	Declared string `json:"declared,omitempty"`
 	Expected string `json:"expected,omitempty"`
 }
-type latentShapeUnknown struct{ Category, Reason, Value string }
+type latentShapeUnknown struct {
+	Category, Reason, Value string
+	Diagnostics             []string
+}
+type latentShapeDiagnosticCause struct {
+	Scope       string   `json:"scope"`
+	Origin      string   `json:"origin"`
+	Diagnostics []string `json:"diagnostics"`
+}
 
 func (latentShapeUnknown) Type() ir.Type { return ir.Object }
 
@@ -121,8 +131,29 @@ func (m *latentShapeMeter) materialize(node *ast.Node, value ir.Expression) ir.E
 	m.Memo[node] = read
 	return read
 }
-func (m *latentShapeMeter) unknown(node *ast.Node, category, reason, value string) ir.Expression {
-	return m.materialize(node, latentShapeUnknown{Category: category, Reason: reason + " at " + m.Loaded.Where(node), Value: value})
+func (m *latentShapeMeter) diagnosticCauses(node *ast.Node) []string {
+	for current := node; current != nil; current = current.Parent {
+		if ast.IsFunctionLike(current) && current.Body() != nil {
+			return m.Loaded.LatentDiagnosticsIn(current.Body())
+		}
+		if current.Kind == ast.KindVariableStatement || current.Kind == ast.KindExpressionStatement {
+			if diagnoses := m.Loaded.LatentDiagnosticsIn(current); len(diagnoses) > 0 {
+				return diagnoses
+			}
+		}
+	}
+	return nil
+}
+func (m *latentShapeMeter) unknown(node *ast.Node, category, reason, value string, origin ...*ast.Node) ir.Expression {
+	source := node
+	if len(origin) > 0 {
+		source = origin[0]
+	}
+	var diagnoses []string
+	if category == "diagnosed body" {
+		diagnoses = m.diagnosticCauses(source)
+	}
+	return m.materialize(node, latentShapeUnknown{Category: category, Reason: reason + " at " + m.Loaded.Where(node), Value: value, Diagnostics: diagnoses})
 }
 
 var latentHostNominal = regexp.MustCompile(`\b([A-Za-z_$][A-Za-z0-9_$]*Host|Host|System|FileSystem)\b`)
@@ -238,7 +269,7 @@ func (m *latentShapeMeter) expression(node *ast.Node) ir.Expression {
 						return m.unknown(node, "flow the graph can't see", "method/closure dispatch not certified", m.text(call.Expression))
 					}
 					if function.Skipped {
-						return m.unknown(node, "diagnosed body", "callee body skipped", m.text(call.Expression))
+						return m.unknown(node, "diagnosed body", "callee body skipped", m.text(call.Expression), function.Node)
 					}
 					if len(declaration.TypeParameters()) != 0 {
 						return m.unknown(node, "flow the graph can't see", "generic call substitution not modeled", m.text(call.Expression))
@@ -295,7 +326,7 @@ func (m *latentShapeMeter) body(root *ast.Node) {
 			if node.Kind == ast.KindVariableStatement {
 				for _, declaration := range node.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
 					if ast.IsIdentifier(declaration.Name()) {
-						m.append(ir.Declare{Local: m.local(declaration.Name()), Value: latentShapeUnknown{Category: "diagnosed body", Reason: "diagnosed module initializer skipped at " + m.Loaded.Where(declaration)}})
+						m.append(ir.Declare{Local: m.local(declaration.Name()), Value: latentShapeUnknown{Category: "diagnosed body", Reason: "diagnosed module initializer skipped at " + m.Loaded.Where(declaration), Diagnostics: m.diagnosticCauses(declaration)}})
 					}
 				}
 			}
@@ -424,11 +455,11 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 		visit = func(node *ast.Node) bool {
 			if function, ok := m.Functions[node]; ok && function.Skipped {
 				for _, parameter := range m.IR.Functions[function.Index].Parameters {
-					m.IR.Main = append(m.IR.Main, ir.Assign{Local: parameter, Value: latentShapeUnknown{Category: "diagnosed body", Reason: "captured parameter of skipped function at " + program.Where(node)}})
+					m.IR.Main = append(m.IR.Main, ir.Assign{Local: parameter, Value: latentShapeUnknown{Category: "diagnosed body", Reason: "captured parameter of skipped function at " + program.Where(node), Diagnostics: m.diagnosticCauses(node)}})
 				}
 			}
 			if node.Kind == ast.KindVariableDeclaration && m.Diagnosed[node] && ast.IsIdentifier(node.Name()) {
-				m.IR.Main = append(m.IR.Main, ir.Assign{Local: m.local(node.Name()), Value: latentShapeUnknown{Category: "diagnosed body", Reason: "local initializer in skipped body at " + program.Where(node)}})
+				m.IR.Main = append(m.IR.Main, ir.Assign{Local: m.local(node.Name()), Value: latentShapeUnknown{Category: "diagnosed body", Reason: "local initializer in skipped body at " + program.Where(node), Diagnostics: m.diagnosticCauses(node)}})
 			}
 			node.ForEachChild(visit)
 			return false
@@ -486,7 +517,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 								category, reason = "diagnosed body", "incoming arguments from a skipped diagnosed body"
 							}
 							for _, parameter := range m.IR.Functions[function.Index].Parameters {
-								m.IR.Main = append(m.IR.Main, ir.Assign{Local: parameter, Value: latentShapeUnknown{Category: category, Reason: reason + " at " + program.Where(node), Value: m.text(node)}})
+								m.IR.Main = append(m.IR.Main, ir.Assign{Local: parameter, Value: latentShapeUnknown{Category: category, Reason: reason + " at " + program.Where(node), Value: m.text(node), Diagnostics: m.diagnosticCauses(node)}})
 							}
 						}
 					}
@@ -581,6 +612,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 		if m.Diagnosed[node] {
 			site.Reason = "diagnosed body"
 			site.Detail = append(site.Detail, "containing function body has checker diagnostics; body skipped")
+			site.DiagnosticCauses = append(site.DiagnosticCauses, latentShapeDiagnosticCause{Scope: "own function", Origin: program.Where(node), Diagnostics: m.diagnosticCauses(node)})
 			continue
 		}
 		expression, exists := m.Queries[key]
@@ -595,6 +627,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 			for _, boundary := range frontier {
 				site.Detail = append(site.Detail, boundary.Reason)
 				if boundary.Category == "diagnosed body" {
+					site.DiagnosticCauses = append(site.DiagnosticCauses, latentShapeDiagnosticCause{Scope: "dependency", Origin: boundary.Reason, Diagnostics: boundary.Diagnostics})
 					site.Reason = "diagnosed body"
 				}
 				if boundary.Category == "host metadata" {
@@ -667,6 +700,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 						unsupported = true
 						site.Detail = append(site.Detail, boundary.Reason)
 						if boundary.Category == "diagnosed body" {
+							site.DiagnosticCauses = append(site.DiagnosticCauses, latentShapeDiagnosticCause{Scope: "dependency", Origin: boundary.Reason, Diagnostics: boundary.Diagnostics})
 							site.Reason = "diagnosed body"
 						} else {
 							if site.Reason != "diagnosed body" {
@@ -723,6 +757,19 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 		} else {
 			site.Outcome = "conforms but not proven ready (readiness checks only)"
 		}
+	}
+	// Repeated graph paths do not create distinct diagnostic obligations.
+	for i := range sites {
+		seen := map[string]bool{}
+		causes := []latentShapeDiagnosticCause{}
+		for _, cause := range sites[i].DiagnosticCauses {
+			key := cause.Scope + "\x00" + strings.Join(cause.Diagnostics, "\x00")
+			if !seen[key] {
+				seen[key] = true
+				causes = append(causes, cause)
+			}
+		}
+		sites[i].DiagnosticCauses = causes
 	}
 	counts := map[string]map[string]int{}
 	reasons := map[string]map[string]int{}
