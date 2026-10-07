@@ -4,6 +4,7 @@ import type { Node } from '../../wave-22-sixth/common/node.a';
 import { Kind } from '../../wave-22-sixth/common/kinds.a';
 import { hookName, defaultPropName } from './patterns.a';
 export class Rule {
+    readonly statelessParents=new Map<number,number>();
     readonly context: Context;readonly components: Components;readonly allowAsProps: boolean;
     constructor(context: Context,components: Components,allowAsProps=false){this.context=context;this.components=components;this.allowAsProps=allowAsProps;}
     closest(node: Node,match: (node: Node)=>boolean): Node|undefined {
@@ -35,8 +36,11 @@ export class Rule {
         const callee=c.skip(c.first(call));return callee.kind===Kind.Identifier&&hookName.test(callee.text);
     }
     statelessParent(node: Node): Node|undefined {
-        let current:Node|undefined=node;
-        while(current!==undefined){if([Kind.FunctionDeclaration,Kind.FunctionExpression,Kind.ArrowFunction].includes(current.kind)){const component=this.components.stateless(current,false);if(component!==undefined){return component;}}current=this.context.parent(current);}return undefined;
+        const cached=this.statelessParents.get(node.index);if(cached!==undefined){return cached<0?undefined:this.context.node(cached);}
+        let result:Node|undefined;
+        if([Kind.FunctionDeclaration,Kind.FunctionExpression,Kind.ArrowFunction].includes(node.kind)){result=this.components.stateless(node,false);}
+        if(result===undefined){const parent=this.context.parent(node);if(parent!==undefined){result=this.statelessParent(parent);}}
+        this.statelessParents.set(node.index,result===undefined?-1:result.index);return result;
     }
     recovered(node: Node): boolean {
         let current:Node|undefined=node;let parent:Node|undefined;

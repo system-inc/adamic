@@ -5,6 +5,9 @@ import { Rule as Elements } from '../../wave-22-sixth/no-adjacent-inline-element
 export class Components {
     readonly context: Context;readonly elements: Elements;
     ready=false;
+    readonly returned=new Map<number,boolean>();
+    readonly reactImports=new Map<string,boolean>();
+    readonly unnamedStateless=new Map<number,number>();
     readonly detected=new Set<number>();readonly names=new Set<string>();
     constructor(context: Context){this.context=context;this.elements=new Elements(context);}
     capital(node: Node): boolean {
@@ -32,11 +35,19 @@ export class Components {
         return node.children.some((i)=>this.statements(c.node(i),acceptNull));
     }
     returns(node: Node,acceptNull=false): boolean {
+        const key=node.index*2+(acceptNull?1:0);const cached=this.returned.get(key);if(cached!==undefined){return cached;}
+        const result=this.computeReturns(node,acceptNull);this.returned.set(key,result);return result;
+    }
+    computeReturns(node: Node,acceptNull: boolean): boolean {
         const body=this.context.body(node);if(body===undefined){return false;}
         if(node.kind===Kind.ArrowFunction&&body.kind!==Kind.Block){return this.value(body,acceptNull);}
         return body.kind===Kind.Block&&this.statements(body,acceptNull);
     }
     fromReact(name: string): boolean {
+        const cached=this.reactImports.get(name);if(cached!==undefined){return cached;}
+        const result=this.computeFromReact(name);this.reactImports.set(name,result);return result;
+    }
+    computeFromReact(name: string): boolean {
         const c=this.context;
         for(let i=0;i<c.sourceCount;i++){const node=c.node(i);if(node.parent<0){continue;}
             if(node.kind===Kind.ImportSpecifier){const local=c.name(node);if(local!==undefined&&local.text===name&&c.importModule(node)==='react'){return true;}}
@@ -88,6 +99,11 @@ export class Components {
         if(parent.kind!==Kind.BinaryExpression){return false;}return c.op(parent)===Kind.EqualsToken||(c.op(parent)===Kind.CommaToken&&c.skip(c.last(parent)).index===node.index&&this.allowed(parent));
     }
     stateless(node: Node,useNames=true): Node|undefined {
+        if(useNames){return this.classifyStateless(node,true);}
+        const cached=this.unnamedStateless.get(node.index);if(cached!==undefined){return cached<0?undefined:this.context.node(cached);}
+        const result=this.classifyStateless(node,false);this.unnamedStateless.set(node.index,result===undefined?-1:result.index);return result;
+    }
+    classifyStateless(node: Node,useNames: boolean): Node|undefined {
         const c=this.context;
         if(node.kind===Kind.FunctionDeclaration){const name=c.name(node);return !this.asyncGenerator(node)&&(name===undefined||this.capital(name))&&this.returns(node,true)?node:undefined;}
         if(!this.function(node)||(node.kind===Kind.FunctionExpression&&this.asyncGenerator(node))){return undefined;}

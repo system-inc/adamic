@@ -21,8 +21,8 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/cohere/internal/lint/registry"
-"github.com/system-inc/cohere/internal/lint/rules/react"
 	"github.com/system-inc/cohere/internal/lint/rule"
+	"github.com/system-inc/cohere/internal/lint/rules/react"
 )
 
 func written(text string) string {
@@ -123,9 +123,15 @@ func main() {
 		cache := rule.NewFileCache()
 		for _, subject := range subjects {
 			var options any
-            if subject.Name == "react/sort-default-props" && slices.Contains(args, "--ignore-case") { options = react.SortDefaultPropsOptions{IgnoreCase:true} }
-            if subject.Name == "react/no-unstable-nested-components" && slices.Contains(args, "--allow-as-props") { settings := react.DefaultNoUnstableNestedComponentsOptions(); settings.AllowAsProps=true; options=settings }
-            listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, options)
+			if subject.Name == "react/sort-default-props" && slices.Contains(args, "--ignore-case") {
+				options = react.SortDefaultPropsOptions{IgnoreCase: true}
+			}
+			if subject.Name == "react/no-unstable-nested-components" && slices.Contains(args, "--allow-as-props") {
+				settings := react.DefaultNoUnstableNestedComponentsOptions()
+				settings.AllowAsProps = true
+				options = settings
+			}
+			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, options)
 			for kind, callback := range listeners {
 				callbacks[kind] = append(callbacks[kind], callback)
 			}
