@@ -1,3 +1,5 @@
+Runtime ownership: the fix and input fixture are on `codex/wasi-empty-path`; the engine branch retains exact walk.a assertions for the pending bug.
+
 # Empty directory and status paths on WASI
 
 Observed: Node source returns `cannot read directory : no such directory` and
@@ -5,7 +7,7 @@ Observed: Node source returns `cannot read directory : no such directory` and
 `adamic build --target wasm32-wasi` returns `listed a directory` and `directory`
 on both wasmtime 38.0.3 and V8 / Node 24.19.0, with exit 0 on all three runs.
 
-The exact minimal source is `cloud/reports/wasm-engines/empty-path.a`. The
+The minimal source has moved to `internal/oracle/testdata/empty-path.a` on `codex/wasi-empty-path`. The
 registered fixture `internal/oracle/testdata/walk.a` also catches both errors.
 This is a real Adamic WASI runtime portability bug, shared by both engines.
 It is not a bug that only V8 hides. The existing WASI oracle's ordinary fixture
@@ -20,11 +22,10 @@ Reproduce from the repository root after sourcing the setup environment:
 
 ```sh
 go build -o /tmp/adamic ./cmd/adamic
-/tmp/adamic build --target wasm32-wasi cloud/reports/wasm-engines/empty-path.a -o /tmp/empty-path.wasm
-node --disable-warning=ExperimentalWarning oracle/node.mjs cloud/reports/wasm-engines/empty-path.a
+/tmp/adamic build --target wasm32-wasi internal/oracle/testdata/empty-path.a -o /tmp/empty-path.wasm
+node --disable-warning=ExperimentalWarning oracle/node.mjs internal/oracle/testdata/empty-path.a
 node --disable-warning=ExperimentalWarning oracle/wasi.mjs /tmp/empty-path.wasm
 wasmtime run --dir /::/ /tmp/empty-path.wasm
 ```
 
-The probe is a report artifact, not a newly registered oracle fixture. There is
-no new counts-table row.
+Run these commands on `codex/wasi-empty-path`: the source is now an input oracle fixture with its required count-table row. The engine branch keeps the pending runtime disagreement asserted by name until that fix is integrated.

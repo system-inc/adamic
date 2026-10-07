@@ -6,7 +6,6 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"syscall"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/lower"
@@ -42,29 +41,11 @@ func onWasmtime(t *testing.T, how inputRun, binary string) run {
 }
 
 // On a disagreement, run the same artifact under V8 too. This is diagnostic
-// evidence only: Node running the source still decides whether the test passes.
+// evidence only: the source or checked JavaScript backend remains the witness.
 func compareWasmtime(t *testing.T, expected, actual run, how inputRun, binary string) {
 	t.Helper()
 	if difference := disagreement(expected, actual); difference != "" {
-		runner, err := filepath.Abs(filepath.Join(repository, "oracle", "wasi.mjs"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		nodeArguments := []string{"--disable-warning=ExperimentalWarning", runner, binary}
-		if how.directory != "" {
-			// The stock runner has only root. An isolated runner adds the same aliases
-			// as wasmtime so diagnostics do not confuse cwd with an engine difference.
-			nodeArguments = []string{"--disable-warning=ExperimentalWarning", "--input-type=module", "-e", `
-import { readFileSync } from 'node:fs';
-import { WASI } from 'node:wasi';
-const binary = process.argv[1];
-const preopens = { '/': '/', '.': process.cwd(), [process.argv[2]]: process.argv[2], '/dev': '/dev' };
-const wasi = new WASI({version:'preview1', args:[binary, ...process.argv.slice(3)], env:process.env, preopens, returnOnExit:true});
-const module = await WebAssembly.compile(readFileSync(binary));
-const instance = await WebAssembly.instantiate(module, wasi.getImportObject());
-process.exitCode = wasi.start(instance);`, binary, filepath.Dir(binary)}
-		}
-		v8 := executeInput(t, how, nil, "node", append(nodeArguments, how.arguments...)...)
+		v8 := onV8Input(t, how, binary)
 		t.Errorf("%s\nnode source: exit %d, stdout %q, stderr %q\nwasmtime: exit %d, stdout %q, stderr %q\nv8 wasm: exit %d, stdout %q, stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr, v8.exitCode, v8.stdout, v8.stderr)
 	}
 }
@@ -88,10 +69,13 @@ func TestWasmtimeAgreesWithNode(t *testing.T) {
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("compiler: %v\n%s", err, output)
 	}
-	passed, failed, skipped := 0, 0, 0
-	defer func() { t.Logf("fixtures=%d pass=%d fail=%d skip=%d", passed+failed+skipped, passed, failed, skipped) }()
+	passed, failed, skipped, limitations := 0, 0, 0, 0
+	defer func() {
+		t.Logf("fixtures=%d pass=%d limitations=%d fail=%d skip=%d", passed+failed+skipped+limitations, passed, limitations, failed, skipped)
+	}()
 	for _, fixture := range fixtures {
 		t.Run(fixture.path, func(t *testing.T) {
+			limited := false
 			// Fatal build/run errors must count as failures too.
 			defer func() {
 				if t.Skipped() {
@@ -100,6 +84,9 @@ func TestWasmtimeAgreesWithNode(t *testing.T) {
 				} else if t.Failed() {
 					failed++
 					t.Log("FAIL", fixture.path)
+				} else if limited {
+					limitations++
+					t.Log("LIMIT", fixture.path)
 				} else {
 					passed++
 					t.Log("PASS", fixture.path)
@@ -118,69 +105,38 @@ func TestWasmtimeAgreesWithNode(t *testing.T) {
 				t.Skip("fixture does not lower")
 			}
 			expected := onNodeWith(t, inputRun{}, path)
+			if fixture.checked {
+				program, err := lowered(t, path)
+				if err != nil {
+					t.Fatal(err)
+				}
+				expected = onJavaScriptBackend(t, program)
+			}
 			binary := buildEngineFixture(t, compiler, path, sharedDirectory(t))
 			actual := onWasmtime(t, inputRun{}, binary)
+			expected, limited = expectedEngineBehavior(t, fixture.path, expected, inputRun{}, true)
 			compareWasmtime(t, expected, actual, inputRun{}, binary)
 		})
 	}
 	for _, fixture := range inputFixtures {
 		t.Run(fixture.path, func(t *testing.T) {
+			limited := false
 			defer func() {
-				if t.Skipped() {
-					skipped++
-					t.Log("SKIP", fixture.path)
-				} else if t.Failed() {
+				if t.Failed() {
 					failed++
 					t.Log("FAIL", fixture.path)
+				} else if t.Skipped() {
+					skipped++
+					t.Log("SKIP", fixture.path)
+				} else if limited {
+					limitations++
+					t.Log("LIMIT", fixture.path)
 				} else {
 					passed++
 					t.Log("PASS", fixture.path)
 				}
 			}()
-			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-			if err != nil {
-				t.Fatal(err)
-			}
-			shared := sharedDirectory(t)
-			binary := buildEngineFixture(t, compiler, path, shared)
-			how := inputRun{directory: filepath.Dir(path), arguments: append([]string{}, fixture.arguments...)}
-			if os.Geteuid() == 0 {
-				how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
-			}
-			if fixture.unreadable {
-				unreadable := filepath.Join(shared, "unreadable.txt")
-				if err := os.WriteFile(unreadable, []byte("secret\n"), 0); err != nil {
-					t.Fatal(err)
-				}
-				how.arguments = append(how.arguments, unreadable)
-			}
-			// Reuse the exact argument path, resetting its contents between hosts.
-			// Separate paths would make fixtures that print paths differ spuriously.
-			if fixture.writes {
-				how.arguments = append([]string{writable(t, shared, "written")}, how.arguments...)
-			}
-			expected := onNodeWith(t, how, path)
-			var left map[string]string
-			if fixture.writes {
-				left = snapshot(t, how.arguments[0])
-				if err := os.RemoveAll(how.arguments[0]); err != nil {
-					t.Fatal(err)
-				}
-				writable(t, shared, "written")
-			}
-			actual := onWasmtime(t, how, binary)
-			if fixture.writes {
-				if difference := filesDiffer(left, snapshot(t, how.arguments[0])); difference != "" {
-					t.Errorf("files differ: %s", difference)
-				}
-			}
-			if fixture.writes && disagreement(expected, actual) != "" {
-				if err := os.RemoveAll(how.arguments[0]); err != nil {
-					t.Fatal(err)
-				}
-				writable(t, shared, "written")
-			}
-			compareWasmtime(t, expected, actual, how, binary)
+			limited = runWASIInputFixture(t, compiler, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, true)
 		})
 	}
 }

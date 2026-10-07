@@ -1,3 +1,5 @@
+The following is the original W5 report. The corrected witness, named assertions, and expanded V8 coverage are recorded in [follow-up.md](follow-up.md). The runtime fix belongs to the separate `codex/wasi-empty-path` branch.
+
 Built: pinned wasmtime installer and opt-in source differential tests over ordinary and input fixtures.
 Commits: claim 753ff69; implementation ef23383; fixture mappings f58d76b; main merge 2a5c93f; final pushed SHA accompanies this report.
 Commands: post-merge native oracle PASS 181.322s; V8 WASI PASS 277.968s; wasmtime 329 fixtures, 314 pass, 15 fail, 0 skip, 240.886s.
@@ -103,7 +105,7 @@ probe establishes that it is outside Adamic's generated code.
 The other walk.a difference is a real shared Adamic WASI runtime bug:
 `readDirectory('')` lists the cwd and `fileStatus('')` returns directory. Node
 source returns empty-path errors. Both V8 and wasmtime show the bug with matched
-preopens. See handoff.md and the exact empty-path.a source. No Adamic bug uniquely
+preopens. See handoff.md and the exact source in handoff.md. No Adamic bug uniquely
 hidden by V8 was found. The shared bug is still useful coverage: the prior WASI
 oracle does not run the separate input fixtures.
 
