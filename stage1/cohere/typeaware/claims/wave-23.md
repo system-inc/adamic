@@ -31,3 +31,18 @@ origin refs. Existing suites and their independent production Go oracles identif
 the ports, including rules whose native registration uses an abbreviated name.
 All 30 distinct claim files were searched. No conflicting claim was found.
 The claim update is pushed before implementation starts.
+
+## Second continuation
+
+Reserved after the previous six ports, tests and reports were pushed at 6b1e4e2f:
+
+- no-eval (0 compiler, 0 repository)
+- no-extend-native (0 compiler, 0 repository)
+- no-func-assign (0 compiler, 0 repository)
+
+All 330 fetched origin refs were checked, with 108 claimed ranked rules across
+33 distinct Markdown claim blobs and the same 26 existing production ports on
+main and codex/tsgo-c-library. These are the first three of 64 remaining entries
+in the descending combined ranking with lexical ties. No conflicting claim was
+found. The claim update is pushed before code. Shared registration generators
+and test harnesses remain outside this worker's territory.
