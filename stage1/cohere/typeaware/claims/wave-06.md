@@ -72,3 +72,6 @@ entries (descending combined volume, lexical ties) are reserved before code:
 
 The intervening constructor and other core entries are now claimed elsewhere.
 Native implementations and evidence belong in `wave_06_callbacks/`.
+
+The third continuation is complete; its native rules and complete comparison
+evidence live in `wave_06_callbacks/REPORT.md` and `wave_06_callbacks/validation/`.

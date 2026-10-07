@@ -1,0 +1,10 @@
+import type {Rules} from '../../rules.ts';
+import {RegExpReferences} from './reference.a';
+import {Structure,Capture} from './structure.a';
+export class NoUselessBackreference {
+ readonly trace:RegExpReferences;constructor(rules:Rules){this.trace=new RegExpReferences(rules);}
+ check(at:number,pattern:string,flags:string):void{const s=new Structure(pattern,flags);if(!s.scan())return;for(const r of s.refs){const groups:Capture[]=[];for(let i=0;i<s.groups.length;i++){const group=s.groups[i];if(group!==undefined&&(r.name!==''?group.name===r.name:i===r.index-1))groups.push(group);}if(groups.length===0)continue;let reachable=false;const all:number[]=[],same:number[]=[];for(let i=0;i<groups.length;i++){const group=groups[i];if(group===undefined)continue;const id=s.classify(r,group);if(id===''){reachable=true;break;}all.push(i);if(id!=='disjunctive')same.push(i);}if(reachable)continue;const chosen=same.length>0?same:all;const group=groups[chosen[0]??-1];if(group!==undefined){const id=s.classify(r,group);this.trace.g.report('no-useless-backreference',id,s.message(r,group,id,chosen.length-1),at);}}}
+ run():void{const g=this.trace.g;for(let at=0;at<g.rules.parser.nodes.length;at++)if(g.kind(at)==='RegularExpressionLiteral'){const raw=g.text(at).trim(),end=raw.lastIndexOf('/');if(raw[0]==='/'&&end>0&&end>1)this.check(at,raw.slice(1,end),raw.slice(end+1));}
+  for(const call of this.trace.run()){const children=g.children(call).slice(1).filter(c=>g.kind(c)!=='QuestionDotToken');if(children.length===0)continue;const pattern=this.trace.constant(children[0]??-1);if(!pattern.known)continue;const flags=children.length>1?this.trace.constant(children[1]??-1).text:'';this.check(call,pattern.text,flags);}
+ }
+}

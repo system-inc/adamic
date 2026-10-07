@@ -1,0 +1,34 @@
+export class RegexNode {kind:string;negative:boolean;constructor(kind:string,negative=false){this.kind=kind;this.negative=negative;}}
+export class Capture {name='';start=0;end=0;index=0;path:number[]=[];}
+export class Structure {
+ readonly pattern:string;readonly uv:boolean;readonly v:boolean;readonly nodes:RegexNode[]=[];readonly groups:Capture[]=[];readonly refs:Capture[]=[];readonly stack:number[]=[];readonly groupStack:number[]=[];
+ constructor(pattern:string,flags:string){this.pattern=pattern;this.uv=flags.includes('u')||flags.includes('v');this.v=flags.includes('v');}
+ push(kind:string,negative=false):void{this.nodes.push(new RegexNode(kind,negative));this.stack.push(this.nodes.length-1);}
+ hex(text:string):boolean{return text.length>0&&text.split('').every(c=>'0123456789abcdefABCDEF'.includes(c));}
+ escape(i:number):number{const p=this.pattern,c=p[i+1]??'';if(c==='')return -1;if(c==='x'&&i+3<p.length&&this.hex(p.slice(i+2,i+4)))return i+4;if(c==='u'){if(p[i+2]==='{'){const end=p.indexOf('}',i+3);return this.uv&&end>=0?end+1:i+2;}if(i+5<p.length&&this.hex(p.slice(i+2,i+6)))return i+6;}if(c==='c'&&i+2<p.length)return i+3;if(['p','P','q'].includes(c)&&this.uv&&p[i+2]==='{'){const end=p.indexOf('}',i+3);if(end>=0)return end+1;}const code=p.charCodeAt(i+1);return i+(code>=55296&&code<=56319?3:2);}
+ cls(i:number):number{const p=this.pattern;let depth=1;i++;while(i<p.length){if(p[i]==='\\'){i=this.escape(i);if(i<0)return -1;}else if(p[i]==='['&&this.v){depth++;i++;}else if(p[i]===']'){depth--;i++;if(depth===0)return i;}else i++;}return -1;}
+ digit(c:string):boolean{return c!==''&&c>='0'&&c<='9';}
+ scan():boolean{const p=this.pattern;this.push('group');this.push('alternative');let i=0;while(i<p.length){const c=p[i]??'';
+  if(c==='\\'){const next=p[i+1]??'';if(next==='')return false;let end=-1;const r=new Capture();r.start=i;r.path=this.stack.slice();
+   if(next>='1'&&next<='9'){end=i+1;while(this.digit(p[end]??'')){r.index=r.index*10+(p.charCodeAt(end)-48);end++;}}
+   else if(next==='k'&&p[i+2]==='<'){const close=p.indexOf('>',i+3);if(close>=0){r.name=p.slice(i+3,close);end=close+1;}}
+   if(end>=0){r.end=end;this.refs.push(r);i=end;}else{i=this.escape(i);if(i<0)return false;}continue;
+  }
+  if(c==='['){i=this.cls(i);if(i<0)return false;continue;}
+  if(c==='('){let next=i+1,kind='capture',negative=false,name='';if(p[next]==='?'){const one=p[next+1]??'',two=p[next+2]??'';if(one===':'){kind='group';next+=2;}else if(one==='='||one==='!'){kind='ahead';negative=one==='!';next+=2;}else if(one==='<'&&(two==='='||two==='!')){kind='behind';negative=two==='!';next+=3;}else if(one==='<'){const close=p.indexOf('>',next+2);if(close<0){kind='group';next+=2;}else{name=p.slice(next+2,close);next=close+1;}}else{kind='group';next+=2;}}
+   this.push(kind,negative);if(kind==='capture'){const g=new Capture();g.name=name;g.start=i;g.path=this.stack.slice();this.groups.push(g);this.groupStack.push(this.groups.length-1);}else this.groupStack.push(-1);this.push('alternative');i=next;continue;
+  }
+  if(c===')'){if(this.groupStack.length===0)return false;this.stack.pop();const index=this.groupStack.pop()??-1;if(index>=0){const g=this.groups[index];if(g!==undefined)g.end=i+1;}this.stack.pop();i++;continue;}
+  if(c==='|'){this.stack.pop();this.push('alternative');i++;continue;}i++;
+ }
+ return this.groupStack.length===0&&this.valid();}
+ valid():boolean{const named=this.groups.some(g=>g.name!=='');for(const r of this.refs){if(r.name!==''){if(!this.groups.some(g=>g.name===r.name)&&(named||this.uv))return false;}else if(this.uv&&r.index>this.groups.length)return false;}
+  if(this.uv){const p=this.pattern;for(let i=0;i<p.length;){if(p[i]==='\\'){i=this.escape(i);if(i<0)return false;}else if(p[i]==='['){i=this.cls(i);if(i<0)return false;}else if(p[i]==='{'){let cursor=i+1;while(this.digit(p[cursor]??''))cursor++;if(cursor===i+1)return false;if(p[cursor]===','){cursor++;while(this.digit(p[cursor]??''))cursor++;}if(p[cursor]!=='}')return false;i++;}else i++;}}
+  return true;
+ }
+ classify(r:Capture,g:Capture):string{if(g.start<=r.start&&r.end<=g.end)return 'nested';let common=1;while(common<r.path.length&&common<g.path.length&&r.path[common]===g.path[common])common++;const cut=g.path.slice(common);let backwards=false;for(let i=common-1;i>=0;i--){const n=this.nodes[r.path[i]??-1];if(n!==undefined&&(n.kind==='ahead'||n.kind==='behind')){backwards=n.kind==='behind';break;}}
+  if(cut.length>0&&this.nodes[cut[0]??-1]?.kind==='alternative')return 'disjunctive';if(!backwards&&r.end<=g.start)return 'forward';if(backwards&&g.end<=r.start)return 'backward';for(const i of cut){const n=this.nodes[i];if(n!==undefined&&n.negative&&['ahead','behind'].includes(n.kind))return 'intoNegativeLookaround';}return '';
+ }
+ reason(id:string):string{if(id==='nested')return 'encloses the reference and so has captured nothing yet when it is reached';if(id==='disjunctive')return 'sits in a different branch of the same disjunction, and only one branch ever runs';if(id==='forward')return 'appears later in the pattern, and matching runs left to right';if(id==='backward')return 'appears earlier in a lookbehind, which matches right to left';return 'sits in a negative lookaround, so it only runs on a path that then fails';}
+ message(r:Capture,g:Capture,id:string,others:number):string{const also=others===1?' (and so does one other group of that name)':others>1?` (and so do ${others} other groups of that name)`:'';return `The backreference ${this.pattern.slice(r.start,r.end)} can never match, because ${this.pattern.slice(g.start,g.end)} ${this.reason(id)}${also}. It matches the empty string instead of failing, so the pattern quietly matches more than it looks like it does.`;}
+}

@@ -1,0 +1,380 @@
+[
+  {
+    "name": "stage0-build",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/wave-06-callbacks-final/adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 1.6670533740007158
+  },
+  {
+    "name": "archive-build",
+    "command": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave-06-callbacks-final/checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "seconds": 1.8269973079995907
+  },
+  {
+    "name": "native-build",
+    "command": [
+      "/workspace/wave-06-callbacks-final/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_callbacks/suite.a",
+      "-o",
+      "/workspace/wave-06-callbacks-final/native",
+      "--tsgo",
+      "/workspace/wave-06-callbacks-final/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 6.303881324000031
+  },
+  {
+    "name": "oracle-build",
+    "command": [
+      "go",
+      "-C",
+      "/workspace/adamic/cohere",
+      "build",
+      "-overlay",
+      "/workspace/wave-06-callbacks-final/oracle-overlay.json",
+      "-o",
+      "/workspace/wave-06-callbacks-final/oracle",
+      "/workspace/adamic/cohere/adamic_wave06nextoracle.go"
+    ],
+    "exit": 0,
+    "seconds": 2.4278588220004167
+  },
+  {
+    "name": "controls-native",
+    "command": [
+      "/workspace/wave-06-callbacks-final/native",
+      "/workspace/wave-06-callbacks-final/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.1047906370004057
+  },
+  {
+    "name": "controls-go",
+    "command": [
+      "/workspace/wave-06-callbacks-final/oracle",
+      "/workspace/wave-06-callbacks-final/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.11137016100019537
+  },
+  {
+    "name": "archive-asan-build",
+    "command": [
+      "go",
+      "build",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave-06-callbacks-final/checker-asan.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "seconds": 5.484314385000289
+  },
+  {
+    "name": "native-asan-build",
+    "command": [
+      "/workspace/wave-06-callbacks-final/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_callbacks/suite.a",
+      "-o",
+      "/workspace/wave-06-callbacks-final/native-asan",
+      "--tsgo",
+      "/workspace/wave-06-callbacks-final/checker-asan.a",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 16.430170999999973
+  },
+  {
+    "name": "controls-asan-native",
+    "command": [
+      "/workspace/wave-06-callbacks-final/native-asan",
+      "/workspace/wave-06-callbacks-final/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.2434720589999415
+  },
+  {
+    "name": "controls-asan-go",
+    "command": [
+      "/workspace/wave-06-callbacks-final/oracle",
+      "/workspace/wave-06-callbacks-final/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.10558078000030946
+  },
+  {
+    "name": "no_throw_literal-mutant-build",
+    "command": [
+      "/workspace/wave-06-callbacks-final/adamic",
+      "build",
+      "/workspace/wave-06-callbacks-final/no_throw_literal-source/suite.a",
+      "-o",
+      "/workspace/wave-06-callbacks-final/no_throw_literal-mutant",
+      "--tsgo",
+      "/workspace/wave-06-callbacks-final/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 6.3173661970004105
+  },
+  {
+    "name": "no_throw_literal-mutant-run",
+    "command": [
+      "/workspace/wave-06-callbacks-final/no_throw_literal-mutant",
+      "/workspace/wave-06-callbacks-final/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.10422282199942856
+  },
+  {
+    "name": "no_useless_backreference-mutant-build",
+    "command": [
+      "/workspace/wave-06-callbacks-final/adamic",
+      "build",
+      "/workspace/wave-06-callbacks-final/no_useless_backreference-source/suite.a",
+      "-o",
+      "/workspace/wave-06-callbacks-final/no_useless_backreference-mutant",
+      "--tsgo",
+      "/workspace/wave-06-callbacks-final/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 6.157663179999872
+  },
+  {
+    "name": "no_useless_backreference-mutant-run",
+    "command": [
+      "/workspace/wave-06-callbacks-final/no_useless_backreference-mutant",
+      "/workspace/wave-06-callbacks-final/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.10288610899988271
+  },
+  {
+    "name": "prefer_arrow_callback-mutant-build",
+    "command": [
+      "/workspace/wave-06-callbacks-final/adamic",
+      "build",
+      "/workspace/wave-06-callbacks-final/prefer_arrow_callback-source/suite.a",
+      "-o",
+      "/workspace/wave-06-callbacks-final/prefer_arrow_callback-mutant",
+      "--tsgo",
+      "/workspace/wave-06-callbacks-final/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 6.232896394999443
+  },
+  {
+    "name": "prefer_arrow_callback-mutant-run",
+    "command": [
+      "/workspace/wave-06-callbacks-final/prefer_arrow_callback-mutant",
+      "/workspace/wave-06-callbacks-final/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.09748636400036048
+  },
+  {
+    "name": "released-build",
+    "command": [
+      "/workspace/wave-06-callbacks-final/adamic",
+      "build",
+      "/workspace/wave-06-callbacks-final/released.a",
+      "-o",
+      "/workspace/wave-06-callbacks-final/released",
+      "--tsgo",
+      "/workspace/wave-06-callbacks-final/checker.a"
+    ],
+    "exit": 0,
+    "seconds": 2.2581778559997474
+  },
+  {
+    "name": "released-run",
+    "command": [
+      "/workspace/wave-06-callbacks-final/released",
+      "/workspace/wave-06-callbacks-final/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/control-0.a"
+    ],
+    "exit": 70,
+    "seconds": 0.05596796100053325
+  },
+  {
+    "name": "question-mutant-archive",
+    "command": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave-06-callbacks-final/question-mutant-overlay.json",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave-06-callbacks-final/question-mutant.a",
+      "./bridge/tsgo/archive"
+    ],
+    "exit": 0,
+    "seconds": 10.213383420000355
+  },
+  {
+    "name": "question-mutant-build",
+    "command": [
+      "/workspace/wave-06-callbacks-final/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_callbacks/suite.a",
+      "-o",
+      "/workspace/wave-06-callbacks-final/question-mutant",
+      "--tsgo",
+      "/workspace/wave-06-callbacks-final/question-mutant.a"
+    ],
+    "exit": 0,
+    "seconds": 6.292225791999954
+  },
+  {
+    "name": "question-mutant-run",
+    "command": [
+      "/workspace/wave-06-callbacks-final/question-mutant",
+      "/workspace/wave-06-callbacks-final/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/controls.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.10600061599961919
+  },
+  {
+    "name": "compiler-native",
+    "command": [
+      "/workspace/wave-06-callbacks-final/native",
+      "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 2.9988614630001393
+  },
+  {
+    "name": "compiler-go",
+    "command": [
+      "/workspace/wave-06-callbacks-final/oracle",
+      "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.4410278750001453
+  },
+  {
+    "name": "compiler-asan-native",
+    "command": [
+      "/workspace/wave-06-callbacks-final/native-asan",
+      "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 11.599487517999478
+  },
+  {
+    "name": "compiler-asan-go",
+    "command": [
+      "/workspace/wave-06-callbacks-final/oracle",
+      "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.4283029210000677
+  },
+  {
+    "name": "compiler-timed-native",
+    "command": [
+      "/workspace/wave-06-callbacks-final/native",
+      "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 2.9437042580002526
+  },
+  {
+    "name": "compiler-timed-go",
+    "command": [
+      "/workspace/wave-06-callbacks-final/oracle",
+      "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.41942128200025763
+  },
+  {
+    "name": "repository-native",
+    "command": [
+      "/workspace/wave-06-callbacks-final/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.4024910269999964
+  },
+  {
+    "name": "repository-go",
+    "command": [
+      "/workspace/wave-06-callbacks-final/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.14791243999934522
+  },
+  {
+    "name": "repository-asan-native",
+    "command": [
+      "/workspace/wave-06-callbacks-final/native-asan",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 1.4908094929996878
+  },
+  {
+    "name": "repository-asan-go",
+    "command": [
+      "/workspace/wave-06-callbacks-final/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.15358841400029632
+  },
+  {
+    "name": "repository-timed-native",
+    "command": [
+      "/workspace/wave-06-callbacks-final/native",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.39195814699996845
+  },
+  {
+    "name": "repository-timed-go",
+    "command": [
+      "/workspace/wave-06-callbacks-final/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-06-callbacks-final/repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.1432696740002939
+  }
+]

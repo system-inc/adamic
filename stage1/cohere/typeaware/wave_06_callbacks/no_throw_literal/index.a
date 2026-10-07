@@ -1,0 +1,15 @@
+import type {Rules} from '../../rules.ts';
+import {Tools} from '../../wave_06_next/tools.a';
+export class NoThrowLiteral {
+ readonly g:Tools;constructor(rules:Rules){this.g=new Tools(rules);}
+ could(at:number):boolean{const g=this.g,k=g.kind(at);
+  if(['Identifier','CallExpression','NewExpression','PropertyAccessExpression','ElementAccessExpression','TaggedTemplateExpression','YieldExpression','AwaitExpression'].includes(k))return true;
+  if(k==='ConditionalExpression')return this.could(g.child(at,2))||this.could(g.child(at,4));
+  if(k==='BinaryExpression'){const op=g.kind(g.child(at,1));if(['EqualsToken','AmpersandAmpersandEqualsToken','AmpersandAmpersandToken','CommaToken'].includes(op))return this.could(g.child(at,2));if(['BarBarEqualsToken','QuestionQuestionEqualsToken','BarBarToken','QuestionQuestionToken'].includes(op))return this.could(g.child(at))||this.could(g.child(at,2));}
+  return false;
+ }
+ run():void{const g=this.g;for(let at=0;at<g.rules.parser.nodes.length;at++){if(g.kind(at)!=='ThrowStatement')continue;const arg=g.child(at);if(arg<0)continue;
+  if(!this.could(arg))g.report('no-throw-literal','object','This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead.',at);
+  else if(g.kind(arg)==='Identifier'&&g.rules.parser.node(arg).text==='undefined'){let shadow=false;for(const d of g.symbol(arg).items)if(!d.ambient)shadow=true;if(!shadow)g.report('no-throw-literal','undef','This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead.',at);}
+ }}
+}

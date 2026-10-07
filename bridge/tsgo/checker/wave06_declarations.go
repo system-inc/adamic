@@ -47,7 +47,7 @@ func (p *Program) wave06Declarations(out *fields, c *checker.Checker, node *ast.
 		}
 		out.text(strings.TrimPrefix(declaration.Kind.String(), "Kind"))
 		name := ""
-		if declaration.Name() != nil {
+		if wave06TextName(declaration.Name()) {
 			name = declaration.Name().Text()
 		}
 		out.text(name)
@@ -64,7 +64,7 @@ func (p *Program) wave06Declarations(out *fields, c *checker.Checker, node *ast.
 		for _, parent := range parents {
 			out.text(strings.TrimPrefix(parent.Kind.String(), "Kind"))
 			name = ""
-			if parent.Name() != nil {
+			if wave06TextName(parent.Name()) {
 				name = parent.Name().Text()
 			}
 			out.text(name)
@@ -95,4 +95,16 @@ func (p *Program) wave06Question(out *fields, c *checker.Checker, node *ast.Node
 		return "", err
 	}
 	return out.String(), nil
+}
+
+// Binding patterns and computed names have no Node.Text projection.
+func wave06TextName(node *ast.Node) bool {
+	if node == nil {
+		return false
+	}
+	switch node.Kind {
+	case ast.KindIdentifier, ast.KindPrivateIdentifier, ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindNoSubstitutionTemplateLiteral:
+		return true
+	}
+	return false
 }

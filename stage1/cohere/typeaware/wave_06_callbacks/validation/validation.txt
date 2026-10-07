@@ -1,0 +1,13 @@
+controls 50914 identical bytes findings 136
+controls-asan 50914 identical bytes findings 136
+no_throw_literal semantic mutant exits 0, Go byte comparison catches it
+no_useless_backreference semantic mutant exits 0, Go byte comparison catches it
+prefer_arrow_callback semantic mutant exits 0, Go byte comparison catches it
+fact mutant exits 0, Go finding bytes catch the wrong declaration-file flag; released handle panic 70 verified
+compiler 5318 identical bytes findings 0
+compiler-asan 5318 identical bytes findings 0
+compiler-timed 5318 identical bytes findings 0
+repository 18485 identical bytes findings 0
+repository-asan 18485 identical bytes findings 0
+repository-timed 18485 identical bytes findings 0
+PASS

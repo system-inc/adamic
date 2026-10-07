@@ -1,0 +1,38 @@
+import type {Rules} from '../../rules.ts';
+import {Tools} from '../../wave_06_next/tools.a';
+import {Diagnostic} from '../../diagnostic.ts';
+import {Repair} from '../../repair.ts';
+export class CallbackInfo {callback=false;lexical=false;member=-1;call=-1;}
+export class Frame {thisUsed=false;superUsed=false;target=false;argumentsUsed=false;}
+export class PreferArrowCallback {
+ readonly g:Tools;constructor(rules:Rules){this.g=new Tools(rules);}
+ name(at:number):string{return at<0?'':this.g.rules.parser.node(at).text;}
+ declarationName(at:number):boolean{const g=this.g,p=g.parent(at);return ['VariableDeclaration','Parameter','FunctionDeclaration','FunctionExpression','ClassDeclaration','BindingElement'].includes(g.kind(p))&&g.bindings.shape.name(p)===at;}
+ owns(at:number,f:Frame):void{const g=this.g,k=g.kind(at);if(k==='ThisKeyword')f.thisUsed=true;if(k==='SuperKeyword')f.superUsed=true;if(k==='MetaProperty'&&g.text(at).trimStart().startsWith('new'))f.target=true;
+  if(k==='Identifier'&&this.name(at)==='arguments'&&!this.declarationName(at)&&g.symbol(at).items.length===0)f.argumentsUsed=true;
+  for(const c of g.children(at))if(!['FunctionDeclaration','FunctionExpression','MethodDeclaration','GetAccessor','SetAccessor','Constructor','ClassStaticBlockDeclaration'].includes(g.kind(c)))this.owns(c,f);
+ }
+ info(at:number):CallbackInfo{const g=this.g,r=new CallbackInfo();let bound=false;while(at>=0){const p=g.parent(at),k=g.kind(p);if(['ConditionalExpression','ParenthesizedExpression'].includes(k)){at=p;continue;}if(k==='BinaryExpression'&&['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(g.kind(g.child(p,1)))){at=p;continue;}
+  if(k==='PropertyAccessExpression'&&g.child(p)===at&&g.kind(g.last(p))==='Identifier'&&this.name(g.last(p))==='bind'){let callee=p;while(g.kind(g.parent(callee))==='ParenthesizedExpression')callee=g.parent(callee);const call=g.parent(callee);if(g.kind(call)!=='CallExpression'||g.child(call)!==callee)return r;if(!bound){bound=true;const args=this.args(call);r.lexical=args.length===1&&g.kind(args[0]??-1)==='ThisKeyword';r.member=p;r.call=call;}at=call;continue;}
+  if(['CallExpression','NewExpression'].includes(k))r.callback=g.child(p)!==at;return r;
+ }return r;}
+ args(at:number):number[]{const g=this.g,out:number[]=[];for(const c of g.children(at).slice(1))if(!['QuestionDotToken','TypeReference','ExpressionWithTypeArguments'].includes(g.kind(c)))out.push(c);return out;}
+ comment(text:string,start:number,end:number):boolean{for(let i=start;i<end-1;i++){const c=text[i]??'';if(["'",'"','`'].includes(c)){i++;while(i<end&&text[i]!==c){if(text[i]==='\\')i++;i++;}}else if(c==='/'&&['/','*'].includes(text[i+1]??''))return true;}return false;}
+ parens(at:number):boolean{const g=this.g;if(g.kind(g.parent(at))==='ParenthesizedExpression')return true;const n=g.rules.parser.node(at),s=g.rules.scanner.text;let b=n.pos-1,a=n.end;while(b>=0&&[' ','\t','\n','\r'].includes(s[b]??''))b--;while(a<s.length&&[' ','\t','\n','\r'].includes(s[a]??''))a++;return s[b]==='('&&s[a]===')';}
+ run():void{const g=this.g;for(let at=0;at<g.rules.parser.nodes.length;at++){if(g.kind(at)!=='FunctionExpression')continue;const children=g.children(at);if(children.some(c=>g.kind(c)==='AsteriskToken'))continue;
+  let name=-1;for(const c of children)if(g.kind(c)==='Identifier'){name=c;break;}
+  let self=false;if(name>=0){for(const c of g.descendants(at))if(c!==name&&g.kind(c)==='Identifier'&&this.name(c)===this.name(name)&&g.same(c,name))self=true;}if(self)continue;
+  const f=new Frame();this.owns(at,f);if(f.argumentsUsed||f.superUsed||f.target)continue;const info=this.info(at);if(!info.callback||(f.thisUsed&&!info.lexical))continue;
+  const n=g.rules.parser.node(at),d=new Diagnostic('prefer-arrow-callback','preferArrowCallback','An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.',g.rules.byte(g.rules.start(n)),g.rules.byte(n.end),'');
+  this.fix(at,name,f,info,d);g.rules.findings.push(d);
+ }}
+ fix(at:number,name:number,f:Frame,info:CallbackInfo,d:Diagnostic):void{const g=this.g,n=g.rules.parser.node(at),s=g.rules.scanner.text;const params=g.children(at).filter(c=>g.kind(c)==='Parameter');const seen=new Set<string>();let dup=false;for(const p of params){const id=g.child(p);if(g.kind(id)!=='Identifier'){dup=false;break;}const value=this.name(id);if(seen.has(value)){dup=true;break;}seen.add(value);}if(dup||(params.length>0&&this.name(g.child(params[0]??-1))==='this'))return;
+  const body=g.last(at);if(body<0)return;const b=g.rules.parser.node(body);let fn=s.indexOf('function',n.pos),open=s.indexOf('(',n.pos);if(fn<0||fn+8>n.end||open<fn+8||open>=b.pos)return;
+  if(g.children(at).some(c=>g.kind(c)==='AsyncKeyword')&&s.slice(fn+8,open).includes('\n'))return;
+  if(info.lexical){if(g.parent(at)!==info.member||g.parent(info.member)!==info.call)return;const start=n.end,end=g.rules.parser.node(info.call).end;if(end<=start||this.comment(s,start,end))return;d.repairs.push(new Repair(g.rules.byte(start),g.rules.byte(end),''));}
+  if(this.comment(s,fn+8,open)){d.repairs.push(new Repair(g.rules.byte(fn),g.rules.byte(fn+8),''));if(name>=0){const id=g.rules.parser.node(name);d.repairs.push(new Repair(g.rules.byte(g.rules.start(id)),g.rules.byte(id.end),''));}}
+  else d.repairs.push(new Repair(g.rules.byte(fn),g.rules.byte(open),''));
+  let insert=b.pos;while(insert>0&&[' ','\t','\n','\r'].includes(s[insert-1]??''))insert--;d.repairs.push(new Repair(g.rules.byte(insert),g.rules.byte(insert),' =>'));
+  const replaced=info.lexical?info.call:at;if(!['CallExpression','NewExpression','ConditionalExpression'].includes(g.kind(g.parent(replaced)))&&!this.parens(replaced)&&!this.parens(at)){const r=g.rules.parser.node(replaced);d.repairs.push(new Repair(g.rules.byte(g.rules.start(r)),g.rules.byte(g.rules.start(r)),'('));d.repairs.push(new Repair(g.rules.byte(r.end),g.rules.byte(r.end),')'));}
+ }
+}

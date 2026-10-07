@@ -1,0 +1,28 @@
+import type {Rules} from '../../rules.ts';
+import {Tools} from '../../wave_06_next/tools.a';
+export class Value {text='';string=false;known=false;constructor(text='',string=false,known=false){this.text=text;this.string=string;this.known=known;}}
+export class RegExpReferences {
+ readonly g:Tools;readonly found:number[]=[];readonly following=new Set<string>();
+ constructor(rules:Rules){this.g=new Tools(rules);}
+ name(at:number):string{return at<0?'':this.g.rules.parser.node(at).text;}
+ constant(at:number,scope=true,seen=new Set<number>()):Value{const g=this.g;while(g.kind(at)==='ParenthesizedExpression')at=g.child(at);const k=g.kind(at);if(['StringLiteral','NoSubstitutionTemplateLiteral'].includes(k))return new Value(this.name(at),true,true);if(k==='NumericLiteral')return new Value(this.name(at),false,true);if(['TrueKeyword','FalseKeyword','NullKeyword'].includes(k))return new Value(g.text(at).trim(),false,true);
+  if(scope&&k==='RegularExpressionLiteral')return new Value(g.text(at).trim(),true,true);
+  if(k==='BinaryExpression'&&g.kind(g.child(at,1))==='PlusToken'){const a=this.constant(g.child(at),scope,seen),b=this.constant(g.child(at,2),scope,seen);if(a.known&&b.known&&(a.string||b.string))return new Value(a.text+b.text,true,true);}
+  if(k==='TemplateExpression'){let text=this.name(g.child(at));for(const span of g.children(at).slice(1)){const v=this.constant(g.child(span),scope,seen);if(!v.known)return new Value();text+=v.text+this.name(g.last(span));}return new Value(text,true,true);}
+  if(scope&&k==='Identifier'){const symbol=g.symbol(at);if(symbol.id===0||seen.has(symbol.id))return new Value();const ds=symbol.items.filter(d=>d.file===g.rules.path);const first=ds[0];if(ds.length!==1||first===undefined||first.kind!=='VariableDeclaration'||first.ambient)return new Value();const decl=g.bindings.declarations(at);if(decl.length!==1)return new Value();const d=decl[0]??-1;const init=g.bindings.shape.initializer(d);if(init<0)return new Value();const id=g.bindings.shape.name(d);const constant=(first.flags[0]??0)&2; if(constant===0){for(let c=0;c<g.rules.parser.nodes.length;c++)if(c!==id&&g.kind(c)==='Identifier'&&this.name(c)===this.name(id)&&g.writes(c)&&g.same(c,id))return new Value();}seen.add(symbol.id);const v=this.constant(init,scope,seen);seen.delete(symbol.id);return v;}
+  return new Value();
+ }
+ refs(name:string,id=-1):number[]{const g=this.g,out:number[]=[];for(let at=0;at<g.rules.parser.nodes.length;at++){if(g.kind(at)!=='Identifier'||this.name(at)!==name||g.nameOnly(at))continue;const sym=g.symbol(at);if(id<0){if(sym.items.some(d=>!d.ambient))continue;if(g.writes(at))return [];}else if(sym.id!==id)continue;out.push(at);}return out;}
+ reads(key:string,refs:readonly number[],level:number):void{if(this.following.has(key))return;this.following.add(key);for(const at of refs)this.value(at,level);this.following.delete(key);}
+ target(at:number,level:number):void{const g=this.g;while(g.kind(at)==='ParenthesizedExpression')at=g.child(at);const k=g.kind(at);if(k==='Identifier'){const id=g.symbol(at).id;if(id!==0)this.reads(`symbol:${id}`,this.refs(this.name(at),id),level);return;}
+  if(k==='BinaryExpression'&&g.kind(g.child(at,1))==='EqualsToken'){this.target(g.child(at),level);return;}
+  if(level!==0)return;if(['ObjectBindingPattern','ObjectLiteralExpression'].includes(k)){for(const e of g.children(at)){if(g.children(e).some(c=>g.kind(c)==='DotDotDotToken')||g.kind(e)==='SpreadAssignment')continue;let key=g.child(e),value=g.last(e);if(g.kind(e)==='BindingElement'){value=g.bindings.shape.name(e);key=g.child(e);if(g.children(e).length===1)key=value;}if(g.kind(e)==='ShorthandPropertyAssignment')value=key;let name=this.name(key);if(g.kind(key)==='ComputedPropertyName')name=this.constant(g.child(key),false).text;if(name==='RegExp')this.target(value,1);}}
+ }
+ pass(at:number):boolean{const g=this.g,p=g.parent(at),k=g.kind(p);if(['ParenthesizedExpression','AsExpression','SatisfiesExpression','TypeAssertionExpression','NonNullExpression','ExpressionWithTypeArguments'].includes(k))return true;if(k==='ConditionalExpression')return g.child(p,2)===at||g.child(p,4)===at;if(k==='BinaryExpression'){const op=g.kind(g.child(p,1));return ['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(op)||(op==='CommaToken'&&g.child(p,2)===at);}return false;}
+ value(at:number,level:number):void{const g=this.g;while(this.pass(at))at=g.parent(at);const p=g.parent(at),k=g.kind(p);if(['PropertyAccessExpression','ElementAccessExpression'].includes(k)&&g.child(p)===at&&level===0){const name=k==='PropertyAccessExpression'?this.name(g.last(p)):this.constant(g.last(p),false).text;if(name==='RegExp')this.value(p,1);return;}
+  if(['CallExpression','NewExpression'].includes(k)&&g.child(p)===at&&level===1){this.found.push(p);return;}
+  if(k==='BinaryExpression'&&g.child(p,2)===at&&['EqualsToken','BarBarEqualsToken','AmpersandAmpersandEqualsToken','QuestionQuestionEqualsToken'].includes(g.kind(g.child(p,1)))){this.target(g.child(p),level);this.value(p,level);return;}
+  if(['VariableDeclaration','Parameter','BindingElement','ShorthandPropertyAssignment'].includes(k)&&g.bindings.shape.initializer(p)===at)this.target(g.bindings.shape.name(p),level);
+ }
+ run():readonly number[]{if(!this.g.rules.scanner.text.includes('RegExp'))return this.found;this.reads('global:RegExp',this.refs('RegExp'),1);for(const name of ['global','globalThis','self','window'])this.reads(`global:${name}`,this.refs(name),0);return this.found;}
+}
