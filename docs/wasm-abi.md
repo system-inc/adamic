@@ -14,6 +14,13 @@ adamic build --target wasm32-wasi entry.a -o out.wasm --reactor \
 `--reactor` is accepted immediately after `--target wasm32-wasi` or after the
 output path. Export selection and ABI JSON options follow the output path.
 
+**Release flags.** wasm32-wasi builds default to clang `-Oz` for generated C
+and the runtime, and `-Wl,--strip-debug` at link. Debug custom sections are
+removed; the `name` section remains for profiles. Counted builds use the same
+WASI defaults and retain their counters. Native builds keep their existing
+flags. An optional post-step is `wasm-opt -Oz -g out.wasm -o optimized.wasm`
+(`-g` preserves function names). Binaryen is a separate installation and is not included in the WASI SDK.
+
 The reactor exports every entry-module `export function` in the crossing set.
 Repeatable `--export` selects only those names and refuses missing names or an
 unsupported signature, including its failing field path. Automatic selection

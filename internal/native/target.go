@@ -54,7 +54,7 @@ func archiverName(compiler string) string {
 
 // WASILinkFlags selects commands unless the driver emitted a request handler.
 func WASILinkFlags(options Options) []string {
-	flags := []string{"-Wl,-z,stack-size=131072"}
+	flags := []string{"-Wl,-z,stack-size=131072", "-Wl,--strip-debug"}
 	if !options.Request {
 		return append(flags, "-mexec-model=command")
 	}
