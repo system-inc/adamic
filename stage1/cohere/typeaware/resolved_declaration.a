@@ -1,0 +1,16 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ResolvedDeclaration {
+    readonly present: boolean; readonly path: string; readonly kind: string; readonly pos: number; readonly end: number;
+    readonly declarationFile: boolean; readonly external: boolean; readonly body: boolean; readonly async: boolean; readonly generator: boolean; readonly returnFlags: number; readonly text: string;
+    constructor(present: boolean, path: string, kind: string, pos: number, end: number, declarationFile: boolean, external: boolean, body: boolean, async: boolean, generator: boolean, returnFlags: number, text: string) {
+        this.present = present; this.path = path; this.kind = kind; this.pos = pos; this.end = end; this.declarationFile = declarationFile; this.external = external; this.body = body; this.async = async; this.generator = generator; this.returnFlags = returnFlags; this.text = text;
+    }
+}
+export function resolvedDeclaration(rules: Rules, index: number): ResolvedDeclaration {
+    const f = new Frames(rules.ask(index, 'resolved-declaration')); header(f, 'resolved-declaration');
+    const present = f.yes();
+    let result = new ResolvedDeclaration(false, '', '', 0, 0, false, false, false, false, false, 0, '');
+    if(present) { result = new ResolvedDeclaration(true, f.field(), f.field(), f.natural(), f.natural(), f.yes(), f.yes(), f.yes(), f.yes(), f.yes(), f.natural(), f.field()); }
+    f.end(); return result;
+}

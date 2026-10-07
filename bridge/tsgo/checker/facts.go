@@ -203,6 +203,12 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "resolved-declaration":
+		return p.resolvedDeclaration(out, c, node, question)
+	case "program-modules":
+		return p.programModules(out, question)
+	case "node-symbol-context":
+		return p.nodeSymbolContext(out, c, node, question)
 	case "awaited-shape":
 		return p.awaitedShape(out, c, node, question)
 	case "type-declaration-ancestors":

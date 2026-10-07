@@ -1,0 +1,32 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { Rules as NativeRules } from './rules.ts';
+import { Parser } from '../../typescript/parser/parser.ts';
+import { Scanner } from '../../typescript/scanner/scanner.ts';
+import { UnaryMinus, byteOffsets } from './unary_minus.ts';
+import { Bindings } from './bindings.ts';
+export class ProcessSource {
+    readonly rules: Rules; readonly root: number; readonly bindings: Bindings; readonly spans = new Map<string, number>();
+    constructor(rules: Rules, root: number) {
+        this.rules = rules; this.root = root; this.bindings = new Bindings(rules);
+        for(let i = 0; i < rules.parser.nodes.length; i++) {
+            const node = rules.parser.node(i); this.spans.set(`${node.kind}:${rules.byte(node.pos)}:${rules.byte(node.end)}`, i);
+        }
+    }
+    node(kind: string, pos: number, end: number): number { return this.spans.get(`${kind}:${pos}:${end}`) ?? panic('checker declaration absent from native tree'); }
+}
+export class ProcessWorld {
+    readonly program: number; readonly sources = new Map<string, ProcessSource>();
+    constructor(rules: Rules) { this.program = rules.program; this.sources.set(rules.path, new ProcessSource(rules, rules.parser.nodes.length - 1)); }
+    source(path: string, text: string): ProcessSource {
+        let found = this.sources.get(path);
+        if(found === undefined) {
+            const parser = new Parser(text, path); const scanner = new Scanner(text); const offsets = byteOffsets(text);
+            const unary = new UnaryMinus(this.program, path, parser, scanner, offsets); const rules = new NativeRules(this.program, path, parser, scanner, offsets, unary);
+            parser.awaitContext = true;
+    const root = parser.file(); for(let i = 0; i < parser.nodes.length; i++) { rules.parents.push(-1); } rules.links(root, -1);
+            found = new ProcessSource(rules, root); this.sources.set(path, found);
+        }
+        return found;
+    }
+}

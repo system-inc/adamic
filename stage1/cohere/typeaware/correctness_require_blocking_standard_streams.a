@@ -1,0 +1,164 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { ProcessWorld, ProcessSource } from './process_world.a';
+import { ProcessGraph } from './process_graph.a';
+import { NoProcessExitAfterOutput, OutputWalk, OutputPosition } from './correctness_no_process_exit_after_output.a';
+import { ModuleFile, programModules } from './program_modules.a';
+import { ContextDeclaration } from './node_symbol_context.a';
+import { report } from './wave_21_next_facts.a';
+const suffixes = ['/source/system/StandardStreams.ts', '/source/system/StandardStreams.d.ts'];
+const functionKinds = ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'];
+export class BlockingIndex {
+    readonly files = new Map<string, ModuleFile>(); readonly edges = new Map<string, string[]>();
+    readonly imported: string[] = []; readonly canBlock: string[] = [];
+    constructor(files: readonly ModuleFile[]) {
+        for(const file of files) { this.files.set(file.path, file); if(suffixes.some((s) => file.path.endsWith(s))) { this.canBlock.push(file.path); } }
+        for(const file of files) {
+            if(file.declarationFile) { continue; }
+            const targets: string[] = [];
+            for(const edge of file.edges) {
+                if(edge.typeOnly) { continue; }
+                if(edge.kind === 'CallExpression') {
+                    if(!file.text.includes('import(') && !file.text.includes('require(')) { continue; }
+                    if(!edge.literal) { if(!this.canBlock.includes(file.path)) { this.canBlock.push(file.path); } continue; }
+                }
+                if(edge.literal && edge.target !== file.path && this.files.has(edge.target) && !targets.includes(edge.target)) {
+                    targets.push(edge.target); if(!this.imported.includes(edge.target)) { this.imported.push(edge.target); }
+                }
+            }
+            this.edges.set(file.path, targets);
+        }
+        let changed = true;
+        while(changed) { changed = false; for(const file of files) { if(!this.canBlock.includes(file.path) && (this.edges.get(file.path) ?? ([] as string[])).some((p) => this.canBlock.includes(p))) { this.canBlock.push(file.path); changed = true; } } }
+    }
+}
+export class BlockingResult {
+    readonly exits: readonly number[]; readonly started: readonly number[];
+    constructor(exits: readonly number[], started: readonly number[]) { this.exits = exits; this.started = started; }
+}
+export class RequireBlockingStandardStreams {
+    readonly rules: Rules; readonly world: ProcessWorld; readonly source: ProcessSource; readonly output: NoProcessExitAfterOutput;
+    readonly memo = new Map<string, number>(); index: BlockingIndex; ordered = false;
+    constructor(rules: Rules, world: ProcessWorld) { this.rules = rules; this.world = world; this.source = world.source(rules.path, rules.scanner.text); this.output = new NoProcessExitAfterOutput(rules, world); this.index = new BlockingIndex([] as ModuleFile[]); }
+    functionBody(source: ProcessSource, at: number): boolean { return functionKinds.includes(source.rules.parser.node(at).kind) && this.output.body(source, at) >= 0; }
+    callLike(source: ProcessSource, at: number): boolean { return ['CallExpression', 'NewExpression', 'TaggedTemplateExpression'].includes(source.rules.parser.node(at).kind); }
+    args(source: ProcessSource, at: number): number[] { const node = source.rules.parser.node(at); return node.kind === 'TaggedTemplateExpression' ? [] : node.children.slice(1); }
+    handsMayBlock(source: ProcessSource, at: number): boolean {
+        at = source.rules.skip(at); const node = source.rules.parser.node(at);
+        if(['FunctionExpression', 'ArrowFunction'].includes(node.kind)) { return this.mayBlock(source, at); }
+        if(node.kind !== 'Identifier') { return false; }
+        const symbol = this.output.symbol(source, at, true);
+        return (symbol.flags & 16) !== 0 && this.symbolMayBlock(source, at);
+    }
+    callMayBlock(source: ProcessSource, at: number): boolean {
+        const node = source.rules.parser.node(at); if(!this.callLike(source, at)) { return false; }
+        const callee = source.rules.skip(node.children[0] ?? -1); const c = source.rules.parser.node(callee);
+        if(node.kind === 'CallExpression' && c.kind === 'ImportKeyword') { return true; }
+        if(this.args(source, at).some((a) => this.handsMayBlock(source, a))) { return true; }
+        if(['FunctionExpression', 'ArrowFunction'].includes(c.kind)) { return this.mayBlock(source, callee); }
+        const member = this.output.member(source, callee); return member < 0 || this.symbolMayBlock(source, member);
+    }
+    symbolMayBlock(source: ProcessSource, name: number): boolean {
+        const symbol = this.output.symbol(source, name, true);
+        if(symbol.declarations.length === 0) { return true; }
+        return symbol.declarations.some((d) => this.declarationMayBlock(d, source.rules.parser.node(name).text));
+    }
+    declarationMayBlock(d: ContextDeclaration, name: string): boolean {
+        if(!this.index.canBlock.includes(d.path)) { return d.declarationFile && name === 'require'; }
+        if(d.declarationFile || (d.kind(0) === 'FunctionDeclaration' && d.name(0) === 'blockStandardStreams' && suffixes.some((s) => d.path.endsWith(s)))) { return true; }
+        const file = this.index.files.get(d.path); if(file === undefined) { return true; }
+        const source = this.world.source(d.path, file.text); const declaration = d.chain[0] ?? panic('declaration'); const at = source.node(d.kind(0), declaration.pos, declaration.end);
+        if(['FunctionDeclaration', 'MethodDeclaration', 'Constructor', 'GetAccessor', 'SetAccessor'].includes(d.kind(0))) {
+            if(this.output.body(source, at) < 0) { return d.kind(0) !== 'FunctionDeclaration' || (d.flag(0) & 8388608) !== 0; }
+            return this.mayBlock(source, at);
+        }
+        if(d.kind(0) === 'VariableDeclaration') {
+            const initializer = source.bindings.shape.initializer(at); if(initializer >= 0) { const init = source.rules.skip(initializer); if(['FunctionExpression', 'ArrowFunction'].includes(source.rules.parser.node(init).kind)) { return this.mayBlock(source, init); } }
+        }
+        if(['ClassDeclaration', 'ClassExpression'].includes(d.kind(0))) { return this.mayBlock(source, at); }
+        return true;
+    }
+    mayBlock(source: ProcessSource, at: number): boolean {
+        const key = `${source.rules.path}:${at}`; const known = this.memo.get(key) ?? 0; if(known !== 0) { return known === 1; }
+        this.memo.set(key, 3); const queue = source.rules.parser.node(at).children.slice(); let blocks = false;
+        while(queue.length > 0 && !blocks) { const child = queue.pop() ?? -1; if(this.callLike(source, child) && this.callMayBlock(source, child)) { blocks = true; } else { for(const c of source.rules.parser.node(child).children) { queue.push(c); } } }
+        this.memo.set(key, blocks ? 1 : 2); return blocks;
+    }
+    localFunction(at: number): number {
+        at = this.rules.skip(at); const node = this.rules.parser.node(at); if(['FunctionExpression', 'ArrowFunction'].includes(node.kind)) { return at; }
+        if(node.kind !== 'Identifier') { return -1; }
+        for(const d of this.output.symbol(this.source, at).declarations) {
+            if(d.path !== this.rules.path) { continue; }
+            const declaration = d.chain[0] ?? panic('declaration'); const target = this.source.node(d.kind(0), declaration.pos, declaration.end);
+            if(d.kind(0) === 'FunctionDeclaration' && this.output.body(this.source, target) >= 0) { return target; }
+            if(d.kind(0) === 'VariableDeclaration' && d.kind(1) === 'VariableDeclarationList' && (d.flag(1) & 2) !== 0) { const initial = this.source.bindings.shape.initializer(target); if(initial >= 0) { const i = this.rules.skip(initial); if(['FunctionExpression', 'ArrowFunction'].includes(this.rules.parser.node(i).kind)) { return i; } } }
+        }
+        return -1;
+    }
+    starts(at: number): BlockingResult {
+        const node = this.rules.parser.node(at); const runs: number[] = []; const hands: number[] = [];
+        if(node.kind !== 'NewExpression') { const callee = this.localFunction(node.children[0] ?? -1); if(callee >= 0) { if(this.rules.parser.node(callee).children.some((c) => this.rules.parser.node(c).kind === 'AsteriskToken')) { hands.push(callee); } else { runs.push(callee); } } }
+        for(const arg of this.args(this.source, at)) { const f = this.localFunction(arg); if(f >= 0) { hands.push(f); } }
+        return new BlockingResult(runs, hands);
+    }
+    argumentsMayBlock(at: number): boolean {
+        const queue = this.args(this.source, at);
+        while(queue.length > 0) { const current = queue.pop() ?? -1; if(this.functionBody(this.source, current)) { continue; } if(this.rules.parser.node(current).kind === 'AwaitExpression' || (this.callLike(this.source, current) && this.callMayBlock(this.source, current))) { return true; } for(const c of this.rules.parser.node(current).children) { queue.push(c); } }
+        return false;
+    }
+    topLevelMayBlock(source: ProcessSource): boolean {
+        const queue = source.rules.parser.node(source.root).children.slice();
+        while(queue.length > 0) { const at = queue.pop() ?? -1; if(this.functionBody(source, at)) { continue; } if(this.callLike(source, at) && this.callMayBlock(source, at)) { return true; } for(const c of source.rules.parser.node(at).children) { queue.push(c); } }
+        return false;
+    }
+    importsBlockAtLoad(): boolean {
+        const queue = [this.rules.path]; const seen = queue.slice(); let cursor = 0;
+        while(cursor < queue.length) { const current = queue[cursor] ?? panic('module'); cursor++; for(const next of this.index.edges.get(current) ?? ([] as string[])) { if(seen.includes(next)) { continue; } seen.push(next); queue.push(next); if(!this.index.canBlock.includes(next)) { continue; } const file = this.index.files.get(next); if(file === undefined || file.declarationFile) { return true; } if(this.topLevelMayBlock(this.world.source(next, file.text))) { return true; } } }
+        return false;
+    }
+    inRun(at: number, root: number): boolean { let parent = this.rules.parents[at] ?? -1; while(parent >= 0 && parent !== root) { if(this.functionBody(this.source, parent)) { return false; } parent = this.rules.parents[parent] ?? -1; } return parent === root; }
+    analyze(root: number): BlockingResult {
+        const walk = new OutputWalk(this.source, root); const graph = walk.graph; graph.build(root);
+        const recorded: number[] = []; const exits: number[] = []; const started: number[] = [];
+        for(const b of graph.blocks) { if(b.index >= 0 && !this.output.catchBinding(this.source, b.index, root)) { recorded.push(b.index); } }
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            if(graph.root(i) === root && this.output.exit(this.source, i) && !recorded.includes(i)) { return new BlockingResult([], []); }
+            if(this.ordered && this.inRun(i, root) && !recorded.includes(i) && (this.rules.parser.node(i).kind === 'AwaitExpression' || (this.callLike(this.source, i) && this.callMayBlock(this.source, i)))) { return new BlockingResult([], []); }
+        }
+        const visited: string[] = []; const queue: OutputPosition[] = [new OutputPosition(0, [])]; let cursor = 0;
+        while(cursor < queue.length) {
+            const current = queue[cursor] ?? panic('position'); cursor++; const block = graph.blocks[current.block] ?? panic('block'); if(!block.reachable) { continue; }
+            const key = `${current.block}:${current.state.join('|')}`; if(visited.includes(key)) { continue; } visited.push(key); let state = current.state.slice(); const at = block.index;
+            if(at >= 0 && recorded.includes(at)) {
+                const node = this.rules.parser.node(at); const parent = this.rules.parents[at] ?? -1;
+                if(node.kind === 'Block' && parent >= 0 && this.rules.parser.node(parent).kind === 'CatchClause') { state = walk.entering(this.rules.parents[parent] ?? -1, state); }
+                if(this.ordered && (node.kind === 'AwaitExpression' || (node.kind === 'ForOfStatement' && node.children.some((c) => this.rules.parser.node(c).kind === 'AwaitKeyword')) || (node.kind === 'VariableStatement' && this.rules.scanner.text.slice(node.pos, node.end).trimStart().startsWith('await using')))) { continue; }
+                if(this.callLike(this.source, at)) {
+                    if(this.output.exit(this.source, at)) { if(state.length > 0 && !exits.includes(at)) { exits.push(at); } continue; }
+                    if(this.output.directWrite(this.source, at) && !this.output.holdsExit(this.source, at)) { state = walk.with(state, walk.chain(at)); }
+                    const functions = this.starts(at);
+                    if(!this.ordered || !this.argumentsMayBlock(at)) { for(const f of functions.exits) { if(!started.includes(f)) { started.push(f); } } }
+                    if(!this.ordered) { for(const f of functions.started) { if(!started.includes(f)) { started.push(f); } } }
+                    if(this.ordered && this.callMayBlock(this.source, at)) { continue; }
+                }
+            }
+            for(const successor of block.successors) { queue.push(new OutputPosition(successor, state)); }
+        }
+        return new BlockingResult(exits, started);
+    }
+    run(): void {
+        if(!this.rules.scanner.text.includes('exit')) { return; }
+        const graph = new ProcessGraph(this.rules); const exitRoots: number[] = []; const writeRoots: number[] = [];
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) { if(this.output.exit(this.source, i)) { exitRoots.push(graph.root(i)); } else if(this.output.directWrite(this.source, i)) { writeRoots.push(graph.root(i)); } }
+        if(!exitRoots.some((r) => writeRoots.includes(r))) { return; }
+        this.index = new BlockingIndex(programModules(this.rules, this.source.root));
+        const shebang = this.rules.scanner.text.startsWith('#!'); if(!shebang && this.index.imported.includes(this.rules.path)) { return; }
+        this.ordered = this.index.canBlock.includes(this.rules.path); if(this.ordered && this.importsBlockAtLoad()) { return; }
+        const queue = [this.source.root]; const seen = queue.slice(); const exits: number[] = []; let cursor = 0;
+        while(cursor < queue.length) { const root = queue[cursor] ?? panic('root'); cursor++; const result = this.analyze(root); for(const e of result.exits) { if(!exits.includes(e)) { exits.push(e); } } for(const f of result.started) { if(!seen.includes(f)) { seen.push(f); queue.push(f); } } }
+        if(exits.length === 0) { return; } exits.sort((a, b) => this.rules.parser.node(a).pos - this.rules.parser.node(b).pos);
+        const reason = shebang ? 'it starts with `#!`' : 'nothing in the program imports it'; const count = exits.length === 1 ? '' : `, the first of ${exits.length} such exits in this file`;
+        const message = `This file runs as a process (${reason}), and this \`process.exit()\` runs after a write to stdout or stderr before the process has called \`blockStandardStreams()\`${count}. Node writes to a pipe asynchronously, and \`process.exit()\` does not wait: a reader piping this process gets the output cut off (measured: 65,536 of 1 MiB), with exit status 0 and no error. Call Nexus's \`blockStandardStreams()\` (\`source/system/StandardStreams\`) before anything that can exit: first in the module, or first in the main it runs.`;
+        report(this.rules, 'correctness-require-blocking-standard-streams', 'exitBeforeBlockingStandardStreams', message, exits[0] ?? panic('exit'));
+    }
+}

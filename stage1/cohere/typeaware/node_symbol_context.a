@@ -1,0 +1,36 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class SyntaxContext {
+    readonly kind: string; readonly pos: number; readonly end: number; readonly flags: number; readonly name: string; readonly global: boolean;
+    constructor(kind: string, pos: number, end: number, flags: number, name: string, global: boolean) {
+        this.kind = kind; this.pos = pos; this.end = end; this.flags = flags; this.name = name; this.global = global;
+    }
+}
+export class ContextDeclaration {
+    readonly path: string; readonly declarationFile: boolean; readonly library: boolean; readonly external: boolean; readonly chain: readonly SyntaxContext[];
+    constructor(path: string, declarationFile: boolean, library: boolean, external: boolean, chain: readonly SyntaxContext[]) {
+        this.path = path; this.declarationFile = declarationFile; this.library = library; this.external = external; this.chain = chain;
+    }
+    kind(at: number): string { const item = this.chain[at]; return item === undefined ? '' : item.kind; }
+    name(at: number): string { const item = this.chain[at]; return item === undefined ? '' : item.name; }
+    flag(at: number): number { const item = this.chain[at]; return item === undefined ? 0 : item.flags; }
+    augmentation(at: number): boolean { const item = this.chain[at]; return item !== undefined && item.global; }
+}
+export class SymbolContext {
+    readonly id: number; readonly flags: number; readonly name: string; readonly declarations: readonly ContextDeclaration[];
+    constructor(id: number, flags: number, name: string, declarations: readonly ContextDeclaration[]) { this.id = id; this.flags = flags; this.name = name; this.declarations = declarations; }
+}
+export function symbolContext(rules: Rules, index: number, follow = false): SymbolContext {
+    const f = new Frames(rules.ask(index, follow ? 'node-symbol-context\nfollow-alias' : 'node-symbol-context')); header(f, 'node-symbol-context');
+    let id = 0; let flags = 0; let name = ''; const declarations: ContextDeclaration[] = [];
+    if(f.yes()) {
+        id = f.natural(); flags = f.natural(); name = f.field(); const count = f.natural();
+        for(let i = 0; i < count; i++) {
+            const path = f.field(); const declarationFile = f.yes(); const library = f.yes(); const external = f.yes();
+            const length = f.natural(); const chain: SyntaxContext[] = [];
+            for(let j = 0; j < length; j++) { chain.push(new SyntaxContext(f.field(), f.natural(), f.natural(), f.natural(), f.field(), f.yes())); }
+            declarations.push(new ContextDeclaration(path, declarationFile, library, external, chain));
+        }
+    }
+    f.end(); return new SymbolContext(id, flags, name, declarations);
+}

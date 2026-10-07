@@ -1,0 +1,174 @@
+import { panic } from 'adamic';
+import type { Rules } from './rules.ts';
+import { ProcessGraph } from './process_graph.a';
+import { ProcessWorld, ProcessSource } from './process_world.a';
+import { symbolContext, SymbolContext } from './node_symbol_context.a';
+import { resolvedDeclaration } from './resolved_declaration.a';
+import { report } from './wave_21_next_facts.a';
+const message = "This calls `process.exit()` on a path that has already written to stdout or stderr in this function. `process.exit()` ends the process without waiting for writes still in flight, and a write to a pipe can be one: a reader piping this command (`| grep`, `execSync`, a spawned child) gets the output cut at 64 KB, with exit status 0 and no error. Set `process.exitCode = n` and return instead, so the process ends on its own once the output has drained.";
+const writers = ['log', 'info', 'debug', 'warn', 'error', 'trace', 'table', 'dir', 'dirxml'];
+export class OutputWalk {
+    readonly source: ProcessSource; readonly graph: ProcessGraph; readonly root: number;
+    readonly tries = new Map<number, number>(); readonly chains = new Map<number, string>();
+    constructor(source: ProcessSource, root: number) { this.source = source; this.root = root; this.graph = new ProcessGraph(source.rules); }
+    tryId(index: number): number { if(!this.tries.has(index)) { this.tries.set(index, this.tries.size); } return this.tries.get(index) ?? panic('try id'); }
+    chain(index: number): string {
+        if(this.chains.has(index)) { return this.chains.get(index) ?? ''; }
+        const ids: number[] = []; let previous = index; let parent = this.source.rules.parents[index] ?? -1;
+        while(parent >= 0 && parent !== this.root) {
+            const node = this.source.rules.parser.node(parent);
+            if(node.kind === 'TryStatement' && node.children[0] === previous && node.children.some((c) => this.source.rules.parser.node(c).kind === 'CatchClause')) { ids.push(this.tryId(parent)); }
+            previous = parent; parent = this.source.rules.parents[parent] ?? -1;
+        }
+        ids.sort((a, b) => a - b); const chain = `,${ids.map((id) => `${id},`).join('')}`; this.chains.set(index, chain); return chain;
+    }
+    entering(index: number, state: readonly string[]): string[] { const id = this.tryId(index); return state.filter((chain) => !chain.includes(`,${id},`)); }
+    holds(outer: string, inner: string): boolean { return inner.split(',').every((id) => id === '' || outer.includes(`,${id},`)); }
+    with(state: readonly string[], chain: string): string[] {
+        if(state.some((held) => this.holds(chain, held))) { return state.slice(); }
+        const next = state.filter((held) => !this.holds(held, chain)); next.push(chain); next.sort((a, b) => a < b ? -1 : a > b ? 1 : 0); return next;
+    }
+}
+export class OutputPosition {
+    readonly block: number; readonly state: readonly string[];
+    constructor(block: number, state: readonly string[]) { this.block = block; this.state = state; }
+}
+export class NoProcessExitAfterOutput {
+    readonly rules: Rules; readonly world: ProcessWorld; readonly source: ProcessSource;
+    readonly symbols = new Map<string, SymbolContext>(); readonly writerCache = new Map<string, boolean>();
+    constructor(rules: Rules, world: ProcessWorld) { this.rules = rules; this.world = world; this.source = world.source(rules.path, rules.scanner.text); }
+    symbol(source: ProcessSource, index: number, follow = false): SymbolContext {
+        const key = `${source.rules.path}:${index}:${follow}`;
+        if(!this.symbols.has(key)) { this.symbols.set(key, symbolContext(source.rules, index, follow)); }
+        return this.symbols.get(key) ?? panic('symbol context');
+    }
+    member(source: ProcessSource, index: number): number {
+        const node = source.rules.parser.node(source.rules.skip(index));
+        if(node.kind === 'Identifier') { return source.rules.skip(index); }
+        if(node.kind === 'PropertyAccessExpression') {
+            const name = node.children[node.children.length - 1] ?? -1; return source.rules.parser.node(name).kind === 'Identifier' ? name : -1;
+        }
+        return -1;
+    }
+    processMember(source: ProcessSource, index: number): boolean {
+        const symbol = this.symbol(source, index, true);
+        return symbol.declarations.length > 0 && symbol.declarations.every((d) => d.declarationFile &&
+            ['MethodSignature', 'PropertySignature'].includes(d.kind(0)) && d.kind(1) === 'InterfaceDeclaration' && d.name(1) === 'Process' &&
+            d.kind(2) === 'ModuleBlock' && d.kind(3) === 'ModuleDeclaration' && d.name(3) === 'NodeJS');
+    }
+    exit(source: ProcessSource, index: number): boolean {
+        const node = source.rules.parser.node(index); if(node.kind !== 'CallExpression') { return false; }
+        const name = this.member(source, node.children[0] ?? -1);
+        return name >= 0 && source.rules.parser.node(name).text === 'exit' && this.processMember(source, name);
+    }
+    globalConsole(source: ProcessSource, index: number): boolean {
+        const symbol = this.symbol(source, index);
+        return symbol.declarations.length > 0 && symbol.declarations.every((d) => d.declarationFile && d.kind(0) === 'VariableDeclaration' &&
+            d.kind(1) === 'VariableDeclarationList' && d.kind(2) === 'VariableStatement' &&
+            ((d.kind(3) === 'SourceFile' && !d.external) || (d.kind(3) === 'ModuleBlock' && d.augmentation(4))));
+    }
+    directWrite(source: ProcessSource, index: number): boolean {
+        const call = source.rules.parser.node(index); if(call.kind !== 'CallExpression') { return false; }
+        const callee = source.rules.parser.node(source.rules.skip(call.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression' && callee.kind !== 'ElementAccessExpression') { return false; }
+        const member = source.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+        if(member.kind !== 'Identifier' && member.kind !== 'StringLiteral' && member.kind !== 'NumericLiteral') { return false; }
+        const receiver = source.rules.skip(callee.children[0] ?? -1); const r = source.rules.parser.node(receiver);
+        if(writers.includes(member.text) && r.kind === 'Identifier' && r.text === 'console') { return this.globalConsole(source, receiver); }
+        if(member.text !== 'write') { return false; }
+        const stream = this.member(source, receiver);
+        return stream >= 0 && ['stdout', 'stderr'].includes(source.rules.parser.node(stream).text) && this.processMember(source, stream);
+    }
+    awaited(source: ProcessSource, index: number): boolean {
+        let parent = source.rules.parents[index] ?? -1;
+        while(parent >= 0 && source.rules.parser.node(parent).kind === 'ParenthesizedExpression') { parent = source.rules.parents[parent] ?? -1; }
+        return parent >= 0 && source.rules.parser.node(parent).kind === 'AwaitExpression';
+    }
+    body(source: ProcessSource, index: number): number {
+        const node = source.rules.parser.node(index);
+        if(node.kind === 'ArrowFunction') { return node.children[node.children.length - 1] ?? -1; }
+        return node.children.find((c) => source.rules.parser.node(c).kind === 'Block') ?? -1;
+    }
+    bodyWrites(source: ProcessSource, index: number): boolean {
+        const graph = new ProcessGraph(source.rules); const body = this.body(source, index); if(body < 0) { return false; }
+        const nodes: number[] = source.rules.parser.node(body).kind === 'Block' ? source.rules.parser.node(body).children.slice() : [body];
+        let wrote = false;
+        while(nodes.length > 0) {
+            const at = nodes.pop() ?? -1; if(graph.isRoot(at)) { continue; }
+            const node = source.rules.parser.node(at);
+            if(node.kind === 'CallExpression') { if(this.exit(source, at)) { return false; } if(this.directWrite(source, at)) { wrote = true; } }
+            for(const child of node.children) { nodes.push(child); }
+        }
+        return wrote;
+    }
+    writes(source: ProcessSource, index: number): boolean {
+        if(this.directWrite(source, index)) { return true; }
+        const declaration = resolvedDeclaration(source.rules, index);
+        if(!declaration.present || !declaration.body || declaration.declarationFile || !['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(declaration.kind) ||
+            (declaration.path !== source.rules.path && !declaration.external) || declaration.generator || (declaration.async && !this.awaited(source, index)) || (declaration.returnFlags & 262144) !== 0) { return false; }
+        const key = `${declaration.path}:${declaration.pos}:${declaration.end}`;
+        if(!this.writerCache.has(key)) {
+            const target = this.world.source(declaration.path, declaration.text); const node = target.node(declaration.kind, declaration.pos, declaration.end);
+            this.writerCache.set(key, this.bodyWrites(target, node));
+        }
+        return this.writerCache.get(key) ?? false;
+    }
+    holdsExit(source: ProcessSource, index: number): boolean {
+        const graph = new ProcessGraph(source.rules); const pending = source.rules.parser.node(index).children.slice();
+        while(pending.length > 0) {
+            const child = pending.pop() ?? -1; if(graph.isRoot(child)) { continue; }
+            if(this.exit(source, child)) { return true; }
+            for(const nested of source.rules.parser.node(child).children) { pending.push(nested); }
+        }
+        return false;
+    }
+    catchBinding(source: ProcessSource, index: number, root: number): boolean {
+        let previous = index; let parent = source.rules.parents[index] ?? -1;
+        while(parent >= 0 && parent !== root) {
+            const node = source.rules.parser.node(parent);
+            if(node.kind === 'CatchClause' && source.rules.parser.node(previous).kind === 'VariableDeclaration') { return true; }
+            previous = parent; parent = source.rules.parents[parent] ?? -1;
+        }
+        return false;
+    }
+    analyze(root: number, exits: readonly number[]): number[] {
+        const walk = new OutputWalk(this.source, root); const graph = walk.graph; graph.build(root);
+        const recorded: number[] = []; const writeNodes: number[] = [];
+        for(const block of graph.blocks) {
+            const index = block.index; if(index < 0) { continue; }
+            const node = this.rules.parser.node(index);
+            if(node.kind !== 'CallExpression' || this.catchBinding(this.source, index, root)) { continue; }
+            if(this.exit(this.source, index)) { recorded.push(index); }
+            else if(this.writes(this.source, index) && !this.holdsExit(this.source, index)) { writeNodes.push(index); }
+        }
+        if(exits.some((e) => !recorded.includes(e))) { return []; }
+        const reported: number[] = []; const visited: string[] = []; const queue: OutputPosition[] = [new OutputPosition(0, [])];
+        let cursor = 0;
+        while(cursor < queue.length) {
+            const current = queue[cursor] ?? panic('position'); cursor++; const block = graph.blocks[current.block] ?? panic('block'); if(!block.reachable) { continue; }
+            const key = `${current.block}:${current.state.join('|')}`; if(visited.includes(key)) { continue; } visited.push(key);
+            let state = current.state.slice(); const index = block.index;
+            if(index >= 0) {
+                const node = this.rules.parser.node(index); const parent = this.rules.parents[index] ?? -1;
+                if(node.kind === 'Block' && parent >= 0 && this.rules.parser.node(parent).kind === 'CatchClause') { state = walk.entering(this.rules.parents[parent] ?? -1, state); }
+                if(writeNodes.includes(index)) { state = walk.with(state, walk.chain(index)); }
+                if(recorded.includes(index)) { if(state.length > 0 && !reported.includes(index)) { reported.push(index); } continue; }
+            }
+            for(const successor of block.successors) { queue.push(new OutputPosition(successor, state)); }
+        }
+        return reported;
+    }
+    run(): void {
+        const graph = new ProcessGraph(this.rules); const roots = new Map<number, number[]>();
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            if(this.exit(this.source, i)) { const root = graph.root(i); if(root >= 0) { const list: number[] = roots.get(root) ?? []; list.push(i); roots.set(root, list); } }
+        }
+        for(const root of roots.keys()) {
+            const exits: number[] = roots.get(root) ?? []; let hasWrite = false;
+            for(let i = 0; i < this.rules.parser.nodes.length && !hasWrite; i++) {
+                if(this.rules.parser.node(i).kind === 'CallExpression' && graph.root(i) === root && this.writes(this.source, i)) { hasWrite = true; }
+            }
+            if(hasWrite) { for(const exit of this.analyze(root, exits)) { report(this.rules, 'correctness-no-process-exit-after-output', 'exitAfterOutput', message, exit); } }
+        }
+    }
+}

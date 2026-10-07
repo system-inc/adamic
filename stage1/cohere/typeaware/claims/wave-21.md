@@ -65,3 +65,8 @@ resolution facts under Ahra's restriction on shared-file edits. See
 ../WAVE_21_RELEASED_REPORT.md and ../validation-wave-21-released/ for the live
 checker control, explicit refusals, probe mutants and Go production tests.
 No further rules were claimed.
+
+Released-reservation-aware continuation completion: all three rules are now
+implemented and validated. See ../WAVE_21_PROCESS_REPORT.md and
+../validation-wave-21-process/. The previous missing-program-facts blocker was
+resolved with isolated raw bridge questions and three dispatch arms.

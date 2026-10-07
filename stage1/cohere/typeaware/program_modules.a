@@ -1,0 +1,24 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class ModuleEdge {
+    readonly kind: string; readonly pos: number; readonly end: number; readonly typeOnly: boolean; readonly clause: boolean; readonly literal: boolean; readonly target: string;
+    constructor(kind: string, pos: number, end: number, typeOnly: boolean, clause: boolean, literal: boolean, target: string) {
+        this.kind = kind; this.pos = pos; this.end = end; this.typeOnly = typeOnly; this.clause = clause; this.literal = literal; this.target = target;
+    }
+}
+export class ModuleFile {
+    readonly path: string; readonly declarationFile: boolean; readonly external: boolean; readonly text: string; readonly edges: readonly ModuleEdge[];
+    constructor(path: string, declarationFile: boolean, external: boolean, text: string, edges: readonly ModuleEdge[]) {
+        this.path = path; this.declarationFile = declarationFile; this.external = external; this.text = text; this.edges = edges;
+    }
+}
+export function programModules(rules: Rules, root: number): ModuleFile[] {
+    const f = new Frames(rules.ask(root, 'program-modules')); header(f, 'program-modules'); const files: ModuleFile[] = []; const count = f.natural();
+    for(let i = 0; i < count; i++) {
+        const path = f.field(); const declarationFile = f.yes(); const external = f.yes(); const text = f.field();
+        const edges: ModuleEdge[] = []; const length = f.natural();
+        for(let j = 0; j < length; j++) { edges.push(new ModuleEdge(f.field(), f.natural(), f.natural(), f.yes(), f.yes(), f.yes(), f.field())); }
+        files.push(new ModuleFile(path, declarationFile, external, text, edges));
+    }
+    f.end(); return files;
+}
