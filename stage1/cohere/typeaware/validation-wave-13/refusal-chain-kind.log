@@ -1,0 +1,8 @@
+=== RUN   TestExportCheckerQuestions
+=== PAUSE TestExportCheckerQuestions
+=== CONT  TestExportCheckerQuestions
+    export_facts_test.go:87: accepted invalid export-symbol-chain
+--- FAIL: TestExportCheckerQuestions (0.22s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.240s
+FAIL

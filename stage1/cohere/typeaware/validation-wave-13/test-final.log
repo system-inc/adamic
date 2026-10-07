@@ -1,0 +1,19 @@
+=== RUN   TestWave13AgreementAndMutants
+    wave_13_test.go:131: controls: 18855 identical finding bytes; findings 32
+    wave_13_test.go:139: controls-asan: 18855 identical finding bytes; findings 32
+    wave_13_test.go:150: unassigned: exit 0, empty stderr, only Go bytes catch offset 1339
+    wave_13_test.go:150: caught: exit 0, empty stderr, only Go bytes catch offset 4116
+    wave_13_test.go:150: exports: exit 0, empty stderr, only Go bytes catch offset 14883
+    wave_13_test.go:166: export-chain-flags: exit 0, empty stderr, only Go bytes catch offset 14601
+    wave_13_test.go:166: export-module-lookup: exit 0, empty stderr, only Go bytes catch offset 17024
+    wave_13_test.go:180: released handle: panic 70, invalid or released checker handle
+    wave_13_test.go:185: released registry mutant exits 0, required panic catches it
+    wave_13_test.go:197: repository: 19144 identical finding bytes; findings 1
+    wave_13_test.go:198: repository-asan: 19144 identical finding bytes; findings 1
+    wave_13_test.go:207: repository whole process: native 0.408702s Go 0.137045s; findings 1
+    wave_13_test.go:197: compiler: 7087 identical finding bytes; findings 4
+    wave_13_test.go:198: compiler-asan: 7087 identical finding bytes; findings 4
+    wave_13_test.go:207: compiler whole process: native 5.877436s Go 1.921875s; findings 4
+--- PASS: TestWave13AgreementAndMutants (243.05s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	243.094s
