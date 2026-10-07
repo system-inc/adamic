@@ -38,21 +38,23 @@ func TestOptionalWideningRefused(t *testing.T) {
 			if filepath.Base(path) == "spread_other_missing.a" {
 				property = "z"
 			}
-			if !errors.As(err, &refused) || !(strings.Contains(refused.What, "optional property "+property) || strings.Contains(refused.What, "optional field "+property)) || !strings.Contains(refused.Fix, "adamic/no-optional-widening") {
+			cast := filepath.Base(path) == "cast.a"
+			if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "adamic/no-optional-widening") || (!cast && !strings.Contains(refused.What, "optional property "+property)) || (cast && !strings.Contains(refused.What, "an unproven relation")) {
 				t.Fatalf("want optional-property refusal, got %v", err)
 			}
-			if (strings.HasPrefix(filepath.Base(path), "class_") && filepath.Base(path) != "class_field.a") || strings.HasPrefix(filepath.Base(path), "widening_") {
-				want, readErr := os.ReadFile(strings.TrimSuffix(path, ".a") + ".refused")
-				if readErr != nil {
-					t.Fatal(readErr)
-				}
-				normalized := refused.Error()
-				// Both the relation and the conflicting declaration use the fixture's path.
-				absolute, _ := filepath.Abs(path)
-				normalized = strings.ReplaceAll(normalized, absolute, path)
-				if !strings.HasSuffix(normalized, strings.TrimSpace(string(want))) {
-					t.Fatalf("diagnostic: got %q, want %q", refused.Error(), strings.TrimSpace(string(want)))
-				}
+			// Casts reach main's proven-relation refusal first. Other positions must retain
+			// the optional-widening diagnostic. Pin every complete message independently.
+			want, readErr := os.ReadFile(strings.TrimSuffix(path, ".a") + ".refused")
+			if readErr != nil {
+				t.Fatal(readErr)
+			}
+			absolute, err := filepath.Abs(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			got := strings.ReplaceAll(refused.Error(), absolute, path)
+			if got != strings.TrimSpace(string(want)) {
+				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(want)))
 			}
 			if filepath.Base(path) == "initializer.a" {
 				want := "testdata/optional_widening/initializer.a:3:42: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source { x: number; }, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
