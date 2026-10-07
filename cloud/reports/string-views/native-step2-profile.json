@@ -1,0 +1,442 @@
+{
+  "method": "SIGPROF PC sampling, nominal 1ms, unmodified O2 binary, serve loop only",
+  "cpuSeconds": 9.746218504,
+  "sampleCount": 2429,
+  "observedSamplesPerCPUSecond": 249.22486593165345,
+  "top10ResolvedFunctions": [
+    {
+      "function": "adamic_string_slice",
+      "samples": 290,
+      "selfPercent": 11.939069575957184,
+      "selfMilliseconds": 1163.6078082173735,
+      "source": "internal/native/runtime/string_slice_impl.h:13"
+    },
+    {
+      "function": "adamic_string_locate",
+      "samples": 205,
+      "selfPercent": 8.4396871140387,
+      "selfMilliseconds": 822.5503471881433,
+      "source": "internal/native/runtime/string_index.c:161"
+    },
+    {
+      "function": "release_last",
+      "samples": 200,
+      "selfPercent": 8.233841086867024,
+      "selfMilliseconds": 802.4881435981886,
+      "source": "SDK/engine/host (no repository definition)"
+    },
+    {
+      "function": "adamic_function_13_Parser_string",
+      "samples": 184,
+      "selfPercent": 7.575133799917662,
+      "selfMilliseconds": 738.2890921103335,
+      "source": "emitted C: Parser_string"
+    },
+    {
+      "function": "adamic_allocate",
+      "samples": 157,
+      "selfPercent": 6.463565253190613,
+      "selfMilliseconds": 629.953192724578,
+      "source": "internal/native/runtime/heap.c:188"
+    },
+    {
+      "function": "adamic_string_at",
+      "samples": 131,
+      "selfPercent": 5.3931659118979,
+      "selfMilliseconds": 525.6297340568135,
+      "source": "internal/native/runtime/string_slice_impl.h:70"
+    },
+    {
+      "function": "adamic_string_equal",
+      "samples": 109,
+      "selfPercent": 4.487443392342528,
+      "selfMilliseconds": 437.35603826101277,
+      "source": "internal/native/runtime/string_build_impl.h:122"
+    },
+    {
+      "function": "adamic_string_share",
+      "samples": 88,
+      "selfPercent": 3.62289007822149,
+      "selfMilliseconds": 353.094783183203,
+      "source": "internal/native/runtime/string_share.c:26"
+    },
+    {
+      "function": "adamic_string_append",
+      "samples": 85,
+      "selfPercent": 3.499382461918485,
+      "selfMilliseconds": 341.0574610292301,
+      "source": "internal/native/runtime/string_append.c:33"
+    },
+    {
+      "function": "adamic_string_allocate",
+      "samples": 53,
+      "selfPercent": 2.181967888019761,
+      "selfMilliseconds": 212.65935805351998,
+      "source": "internal/native/runtime/string_build_impl.h:15"
+    }
+  ],
+  "unresolvedSamples": {
+    "/usr/lib/x86_64-linux-gnu/libc.so.6": 303,
+    "/workspace/scratch/string-views/service-step2": 67,
+    "/usr/lib/x86_64-linux-gnu/libm.so.6": 13
+  },
+  "allResolvedFunctions": [
+    {
+      "function": "adamic_string_slice",
+      "samples": 290,
+      "selfPercent": 11.939069575957184,
+      "selfMilliseconds": 1163.6078082173735,
+      "source": "internal/native/runtime/string_slice_impl.h:13"
+    },
+    {
+      "function": "adamic_string_locate",
+      "samples": 205,
+      "selfPercent": 8.4396871140387,
+      "selfMilliseconds": 822.5503471881433,
+      "source": "internal/native/runtime/string_index.c:161"
+    },
+    {
+      "function": "release_last",
+      "samples": 200,
+      "selfPercent": 8.233841086867024,
+      "selfMilliseconds": 802.4881435981886,
+      "source": "SDK/engine/host (no repository definition)"
+    },
+    {
+      "function": "adamic_function_13_Parser_string",
+      "samples": 184,
+      "selfPercent": 7.575133799917662,
+      "selfMilliseconds": 738.2890921103335,
+      "source": "emitted C: Parser_string"
+    },
+    {
+      "function": "adamic_allocate",
+      "samples": 157,
+      "selfPercent": 6.463565253190613,
+      "selfMilliseconds": 629.953192724578,
+      "source": "internal/native/runtime/heap.c:188"
+    },
+    {
+      "function": "adamic_string_at",
+      "samples": 131,
+      "selfPercent": 5.3931659118979,
+      "selfMilliseconds": 525.6297340568135,
+      "source": "internal/native/runtime/string_slice_impl.h:70"
+    },
+    {
+      "function": "adamic_string_equal",
+      "samples": 109,
+      "selfPercent": 4.487443392342528,
+      "selfMilliseconds": 437.35603826101277,
+      "source": "internal/native/runtime/string_build_impl.h:122"
+    },
+    {
+      "function": "adamic_string_share",
+      "samples": 88,
+      "selfPercent": 3.62289007822149,
+      "selfMilliseconds": 353.094783183203,
+      "source": "internal/native/runtime/string_share.c:26"
+    },
+    {
+      "function": "adamic_string_append",
+      "samples": 85,
+      "selfPercent": 3.499382461918485,
+      "selfMilliseconds": 341.0574610292301,
+      "source": "internal/native/runtime/string_append.c:33"
+    },
+    {
+      "function": "adamic_string_allocate",
+      "samples": 53,
+      "selfPercent": 2.181967888019761,
+      "selfMilliseconds": 212.65935805351998,
+      "source": "internal/native/runtime/string_build_impl.h:15"
+    },
+    {
+      "function": "find",
+      "samples": 51,
+      "selfPercent": 2.099629477151091,
+      "selfMilliseconds": 204.6344766175381,
+      "source": "internal/native/runtime/map.c:105 or internal/native/runtime/weak.c:57"
+    },
+    {
+      "function": "adamic_release",
+      "samples": 39,
+      "selfPercent": 1.6055990119390695,
+      "selfMilliseconds": 156.48518800164678,
+      "source": "internal/native/runtime/heap.c:334"
+    },
+    {
+      "function": "adamic_string_free_index",
+      "samples": 37,
+      "selfPercent": 1.5232606010703993,
+      "selfMilliseconds": 148.4603065656649,
+      "source": "internal/native/runtime/string_index.c:224"
+    },
+    {
+      "function": "adamic_function_15_Parser_value",
+      "samples": 37,
+      "selfPercent": 1.5232606010703993,
+      "selfMilliseconds": 148.4603065656649,
+      "source": "emitted C: Parser_value"
+    },
+    {
+      "function": "adamic_function_11_Parser_peek",
+      "samples": 36,
+      "selfPercent": 1.4820913956360642,
+      "selfMilliseconds": 144.44786584767394,
+      "source": "emitted C: Parser_peek"
+    },
+    {
+      "function": "adamic_string_char_code",
+      "samples": 34,
+      "selfPercent": 1.399752984767394,
+      "selfMilliseconds": 136.42298441169206,
+      "source": "internal/native/runtime/string_decode_impl.h:44"
+    },
+    {
+      "function": "usable",
+      "samples": 29,
+      "selfPercent": 1.1939069575957184,
+      "selfMilliseconds": 116.36078082173734,
+      "source": "internal/native/runtime/string_index.c:113"
+    },
+    {
+      "function": "adamic_string_put",
+      "samples": 22,
+      "selfPercent": 0.9057225195553725,
+      "selfMilliseconds": 88.27369579580075,
+      "source": "internal/native/runtime/string_build_impl.h:76"
+    },
+    {
+      "function": "adamic_string_units",
+      "samples": 20,
+      "selfPercent": 0.8233841086867023,
+      "selfMilliseconds": 80.24881435981887,
+      "source": "internal/native/runtime/string_index.c:43"
+    },
+    {
+      "function": "adamic_retain",
+      "samples": 19,
+      "selfPercent": 0.7822149032523672,
+      "selfMilliseconds": 76.23637364182791,
+      "source": "internal/native/runtime/heap.c:218"
+    },
+    {
+      "function": "adamic_function_12_Parser_space",
+      "samples": 19,
+      "selfPercent": 0.7822149032523672,
+      "selfMilliseconds": 76.23637364182791,
+      "source": "emitted C: Parser_space"
+    },
+    {
+      "function": "adamic_string_split",
+      "samples": 17,
+      "selfPercent": 0.699876492383697,
+      "selfMilliseconds": 68.21149220584603,
+      "source": "internal/native/runtime/string_split_impl.h:13"
+    },
+    {
+      "function": "malloc",
+      "samples": 17,
+      "selfPercent": 0.699876492383697,
+      "selfMilliseconds": 68.21149220584603,
+      "source": "WASI libc / allocator (SDK 27)"
+    },
+    {
+      "function": "adamic_map_set",
+      "samples": 16,
+      "selfPercent": 0.6587072869493619,
+      "selfMilliseconds": 64.19905148785509,
+      "source": "internal/native/runtime/map.c:172 or internal/native/runtime/set.c:12"
+    },
+    {
+      "function": "adamic_weak_forget",
+      "samples": 15,
+      "selfPercent": 0.6175380815150268,
+      "selfMilliseconds": 60.186610769864146,
+      "source": "internal/native/runtime/weak.c:147"
+    },
+    {
+      "function": "free",
+      "samples": 14,
+      "selfPercent": 0.5763688760806917,
+      "selfMilliseconds": 56.1741700518732,
+      "source": "WASI libc / allocator (SDK 27)"
+    },
+    {
+      "function": "append",
+      "samples": 11,
+      "selfPercent": 0.45286125977768626,
+      "selfMilliseconds": 44.136847897900374,
+      "source": "internal/native/runtime/json_stringify.c:28 or internal/native/runtime/number.c:11"
+    },
+    {
+      "function": "adamic_string_join_halves",
+      "samples": 11,
+      "selfPercent": 0.45286125977768626,
+      "selfMilliseconds": 44.136847897900374,
+      "source": "internal/native/runtime/string_build_impl.h:101"
+    },
+    {
+      "function": "adamic_object_free_children",
+      "samples": 11,
+      "selfPercent": 0.45286125977768626,
+      "selfMilliseconds": 44.136847897900374,
+      "source": "internal/native/runtime/class_inheritance.c:30"
+    },
+    {
+      "function": "adamic_array_push",
+      "samples": 11,
+      "selfPercent": 0.45286125977768626,
+      "selfMilliseconds": 44.136847897900374,
+      "source": "internal/native/runtime/array.c:28 or internal/native/runtime/class_features.c:53 or internal/native/runtime/directory.c:128 or internal/native/runtime/input.c:153 or internal/native/runtime/library_array.c:44 or internal/native/runtime/library_language.c:42 or internal/native/runtime/library_object.c:104 or internal/native/runtime/map.c:288 or internal/native/runtime/regexp.c:552 or internal/native/runtime/string_split_impl.h:7"
+    },
+    {
+      "function": "adamic_string_concat",
+      "samples": 9,
+      "selfPercent": 0.37052284890901604,
+      "selfMilliseconds": 36.111966461918485,
+      "source": "internal/native/runtime/array.c:104 or internal/native/runtime/directory.c:59 or internal/native/runtime/from_codes.c:64 or internal/native/runtime/input.c:195 or internal/native/runtime/string_build_impl.h:37 or internal/native/runtime/string_builder_impl.h:51"
+    },
+    {
+      "function": "quote",
+      "samples": 9,
+      "selfPercent": 0.37052284890901604,
+      "selfMilliseconds": 36.111966461918485,
+      "source": "internal/native/runtime/json_stringify.c:70"
+    },
+    {
+      "function": "units_next",
+      "samples": 8,
+      "selfPercent": 0.32935364347468093,
+      "selfMilliseconds": 32.09952574392754,
+      "source": "internal/native/runtime/string_walk_impl.h:20"
+    },
+    {
+      "function": "adamic_function_19_serveBatch",
+      "samples": 7,
+      "selfPercent": 0.2881844380403458,
+      "selfMilliseconds": 28.0870850259366,
+      "source": "emitted C: serveBatch"
+    },
+    {
+      "function": "adamic_string_unit_view",
+      "samples": 6,
+      "selfPercent": 0.24701523260601072,
+      "selfMilliseconds": 24.074644307945658,
+      "source": "internal/native/runtime/string_index.c:216"
+    },
+    {
+      "function": "adamic_function_14_Parser_digits",
+      "samples": 6,
+      "selfPercent": 0.24701523260601072,
+      "selfMilliseconds": 24.074644307945658,
+      "source": "emitted C: Parser_digits"
+    },
+    {
+      "function": "adamic_string_compare",
+      "samples": 6,
+      "selfPercent": 0.24701523260601072,
+      "selfMilliseconds": 24.074644307945658,
+      "source": "internal/native/runtime/string_slice_impl.h:122"
+    },
+    {
+      "function": "let_go",
+      "samples": 6,
+      "selfPercent": 0.24701523260601072,
+      "selfMilliseconds": 24.074644307945658,
+      "source": "internal/native/runtime/heap.c:250"
+    },
+    {
+      "function": "adamic_map_get",
+      "samples": 4,
+      "selfPercent": 0.16467682173734047,
+      "selfMilliseconds": 16.04976287196377,
+      "source": "internal/native/runtime/map.c:167"
+    },
+    {
+      "function": "adamic_number_format",
+      "samples": 3,
+      "selfPercent": 0.12350761630300536,
+      "selfMilliseconds": 12.037322153972829,
+      "source": "internal/native/runtime/number.c:18"
+    },
+    {
+      "function": "realloc",
+      "samples": 2,
+      "selfPercent": 0.08233841086867023,
+      "selfMilliseconds": 8.024881435981886,
+      "source": "WASI libc / allocator (SDK 27)"
+    },
+    {
+      "function": "adamic_function_6_OrderLine_new",
+      "samples": 2,
+      "selfPercent": 0.08233841086867023,
+      "selfMilliseconds": 8.024881435981886,
+      "source": "emitted C: OrderLine_new"
+    },
+    {
+      "function": "builder_unit",
+      "samples": 2,
+      "selfPercent": 0.08233841086867023,
+      "selfMilliseconds": 8.024881435981886,
+      "source": "internal/native/runtime/string_builder_impl.h:32"
+    },
+    {
+      "function": "write_value",
+      "samples": 1,
+      "selfPercent": 0.04116920543433512,
+      "selfMilliseconds": 4.012440717990943,
+      "source": "internal/native/runtime/json_stringify.c:147"
+    },
+    {
+      "function": "adamic_number_parse_float",
+      "samples": 1,
+      "selfPercent": 0.04116920543433512,
+      "selfMilliseconds": 4.012440717990943,
+      "source": "internal/native/runtime/parse.c:223"
+    },
+    {
+      "function": "sorted_or_stopped",
+      "samples": 1,
+      "selfPercent": 0.04116920543433512,
+      "selfMilliseconds": 4.012440717990943,
+      "source": "internal/native/runtime/sort.c:553"
+    },
+    {
+      "function": "convert",
+      "samples": 1,
+      "selfPercent": 0.04116920543433512,
+      "selfMilliseconds": 4.012440717990943,
+      "source": "internal/native/runtime/case.c:185"
+    },
+    {
+      "function": "adamic_function_1_text",
+      "samples": 1,
+      "selfPercent": 0.04116920543433512,
+      "selfMilliseconds": 4.012440717990943,
+      "source": "emitted C: text"
+    },
+    {
+      "function": "adamic_object_new",
+      "samples": 1,
+      "selfPercent": 0.04116920543433512,
+      "selfMilliseconds": 4.012440717990943,
+      "source": "internal/native/runtime/object.c:7"
+    },
+    {
+      "function": "__libc_calloc",
+      "samples": 1,
+      "selfPercent": 0.04116920543433512,
+      "selfMilliseconds": 4.012440717990943,
+      "source": "SDK/engine/host (no repository definition)"
+    },
+    {
+      "function": "adamic_map_free_children",
+      "samples": 1,
+      "selfPercent": 0.04116920543433512,
+      "selfMilliseconds": 4.012440717990943,
+      "source": "internal/native/runtime/map.c:226"
+    }
+  ]
+}
