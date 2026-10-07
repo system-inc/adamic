@@ -1,0 +1,5 @@
+Go all scalar values IsUpper 1886 uppercase points
+Node literal matches Go across 1114112 code points
+unicode PASS all 1114112 code points 10634 bytes; ns 248545085
+unicode-asan PASS all 1114112 code points 10634 bytes; ns 2941301543
+Unicode Lu to Ll mutant compiled exit 0; external Go and Node bytes catch it

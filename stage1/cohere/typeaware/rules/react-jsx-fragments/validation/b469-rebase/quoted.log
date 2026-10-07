@@ -1,0 +1,5 @@
+quoted PASS 13409957 bytes, 1112064 scalar values and seven strings; ns 857715623
+quoted-asan PASS 13409957 bytes, 1112064 scalar values and seven strings; ns 6332181091
+Emitted JavaScript on Node matches independent Go bytes
+Escape-prefix mutant compiled and exited zero; independent Go bytes caught it
+Surrogate guard mutant compiled and exited zero; required refusal 70 caught it
