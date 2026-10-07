@@ -25,3 +25,9 @@ The runner builds the native .a probe and Go production oracle into the specifie
 There is no native versus Go rule-time comparison because the native rule cannot run. The Go positive control timing is logged for reproducibility, not treated as parity evidence. No new bridge questions or handles were introduced; earlier batches' sanitizer and released-handle results remain in their own reports. No additional rules were claimed, no PR was opened, and this batch stops pending shared parser JSX support.
 
 Toolchain setup: Go 1.27.1 ready 0s; clang 20.1.8 ready 1s; Node 24.19.0 ready 1s; submodules 1s; cache 19s; done 19s; nproc 5 (quota 4).
+
+## Resume audit
+
+A subsequent fetch found 417 origin refs and four distinct versions of `stage1/typescript/parser/parser.ts`. One remote version now contains JSX support: `origin/codex/stage1-jsx-lint`, tip `a8a62d62ca49db7415e14c3887dd305022b17309`. The implementation commit is `e715ef4a2f898230af63c40195dea6586a557899`; it modifies shared parser, lookahead and scanner files and adds `jsx.ts`. Main remains `e011f8f60899586d6373a5ccb07335ad82cfbf3c`, and this worker's branch still uses the parser that refuses the valid JSX positive control with exit 70.
+
+The earlier inference is now narrower: JSX support exists on another worker's branch, but is not integrated into this branch. The user requires changes to remain in the owned rule directories and says to stop on other blockers rather than editing shared files. Therefore this worker did not cherry-pick the shared parser/scanner implementation or claim more rules. Integration of that dependency would remove the measured parser blocker; it does not by itself establish HIR or rule parity. No additional port, per-rule mutant, corpus, sanitizer or performance result is claimed by this resume audit.
