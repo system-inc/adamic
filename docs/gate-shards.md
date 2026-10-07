@@ -187,5 +187,79 @@ remain outside the repository. The evidence manifest identifies each artifact an
 Toolchain setup reported `go ready (0s)`, `clang ready (0s)`, `node ready (0s)`,
 `submodules ready (0s)`, `build cache warm (94s)`, and `done in 94s` on `nproc=5`,
 with `cpu.max=400000 100000`. Setup load averages were not recorded; its raw step lines are
-reported rather than treated as a controlled performance comparison. Proof/prediction metadata
-and the 8/10/12 plan tables follow below after the clean-commit plans are generated.
+reported rather than treated as a controlled performance comparison. The clean-commit prediction metadata and tables follow below.
+
+## Predicted plans at 64c9144
+
+These are scheduling predictions from known elapsed weights, not measured shard wall times.
+There are 725 units. Each table includes positive repeated parent setup; unknown durations,
+compilation, discovery and vet can add time. The eight-shard maximum rises with the volume
+subdivision because the 44.98-second parent setup repeats on multiple workers. No speedup
+or distributed equivalence is claimed by these predictions.
+
+| Loop | Before | After (predicted maximum) | Instrument (exact command, from `/workspace/adamic`) |
+| --- | --- | ---: | --- |
+| 8 shards | Full measurement stopped by request | 1356.21 s | `ADAMIC_GATE_UNCACHED=1 ADAMIC_MARKDOWNWIDTH_DEPS=/workspace/adamic-markdown-width TMPDIR=/workspace/gate-evidence/typeaware-select-scratch /workspace/adamic-gate plan -count 8` |
+| 10 shards | Full measurement stopped by request | 1097.44 s | `ADAMIC_GATE_UNCACHED=1 ADAMIC_MARKDOWNWIDTH_DEPS=/workspace/adamic-markdown-width TMPDIR=/workspace/gate-evidence/typeaware-select-scratch /workspace/adamic-gate plan -count 10` |
+| 12 shards | Full measurement stopped by request | 921.60 s | `ADAMIC_GATE_UNCACHED=1 ADAMIC_MARKDOWNWIDTH_DEPS=/workspace/adamic-markdown-width TMPDIR=/workspace/gate-evidence/typeaware-select-scratch /workspace/adamic-gate plan -count 12` |
+
+Build-flags lines for the three plan calculations, all uncached discovery on the same box:
+
+```text
+count=8 commit=64c914495d3ddba632f229400b869348e4eb2909 nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.16 0.47 1.74 1/229 193406" load_after="0.13 0.45 1.72 1/228 193925" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps="/workspace/adamic-markdown-width"
+count=10 commit=64c914495d3ddba632f229400b869348e4eb2909 nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="0.13 0.45 1.72 1/228 193925" load_after="1.75 0.79 1.81 1/228 194444" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps="/workspace/adamic-markdown-width"
+count=12 commit=64c914495d3ddba632f229400b869348e4eb2909 nproc=5 cpu.max="400000 100000" go="go version go1.27.1 linux/amd64" clang="clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)" node="v24.19.0" load_before="1.75 0.79 1.81 1/228 194444" load_after="2.62 1.01 1.87 1/228 195049" uncached=1 GOFLAGS="" CGO_ENABLED="" GOMAXPROCS="" width_deps="/workspace/adamic-markdown-width"
+```
+
+### 8 shards
+
+| Shard | Predicted seconds | Largest unit | Unit seconds |
+| ---: | ---: | --- | ---: |
+| 0 | 1342.15 | `internal/unicodeproperties::TestCanonicalizeUnicodeNode` | 742.71 |
+| 1 | 1356.20 | `bridge/tsgo::TestBridge` | 507.44 |
+| 2 | 1345.05 | `stage1/cohere/markdownblocks::TestMarkdownASTPreprocessing` | 473.38 |
+| 3 | 1341.73 | `stage1/cohere/json::TestPortMatchesGoCohere` | 432.18 |
+| 4 | 1356.21 | `stage1/cohere/markdownblocks::TestMarkdownWhitespaceLayout` | 416.56 |
+| 5 | 1345.04 | `stage1/cohere/markdowninline::TestMarkdownInline` | 394.16 |
+| 6 | 1345.04 | `stage1/cohere/markdownblocks::TestMarkdownRootLayout` | 367.03 |
+| 7 | 1300.06 | `stage1/cohere/markdownblocks::TestMarkdownQuoteLayout` | 346.11 |
+
+### 10 shards
+
+| Shard | Predicted seconds | Largest unit | Unit seconds |
+| ---: | ---: | --- | ---: |
+| 0 | 1086.28 | `internal/unicodeproperties::TestCanonicalizeUnicodeNode` | 742.71 |
+| 1 | 1083.38 | `bridge/tsgo::TestBridge` | 507.44 |
+| 2 | 1083.39 | `stage1/cohere/markdownblocks::TestMarkdownASTPreprocessing` | 473.38 |
+| 3 | 1086.28 | `stage1/cohere/json::TestPortMatchesGoCohere` | 432.18 |
+| 4 | 1094.11 | `stage1/cohere/markdownblocks::TestMarkdownWhitespaceLayout` | 416.56 |
+| 5 | 1082.94 | `stage1/cohere/markdowninline::TestMarkdownInline` | 394.16 |
+| 6 | 1086.27 | `stage1/cohere/markdownblocks::TestMarkdownRootLayout` | 367.03 |
+| 7 | 1041.30 | `stage1/cohere/markdownblocks::TestMarkdownQuoteLayout` | 346.11 |
+| 8 | 1097.44 | `stage1/cohere/markdownblocks::TestMarkdownStructureLayout` | 330.65 |
+| 9 | 1082.95 | `stage1/cohere/markdownblocks::TestMarkdownListLayout` | 288.38 |
+
+### 12 shards
+
+| Shard | Predicted seconds | Largest unit | Unit seconds |
+| ---: | ---: | --- | ---: |
+| 0 | 910.86 | `internal/unicodeproperties::TestCanonicalizeUnicodeNode` | 742.71 |
+| 1 | 910.86 | `bridge/tsgo::TestBridge` | 507.44 |
+| 2 | 921.59 | `stage1/cohere/markdownblocks::TestMarkdownASTPreprocessing` | 473.38 |
+| 3 | 910.46 | `stage1/cohere/json::TestPortMatchesGoCohere` | 432.18 |
+| 4 | 913.78 | `stage1/cohere/markdownblocks::TestMarkdownWhitespaceLayout` | 416.56 |
+| 5 | 910.43 | `stage1/cohere/markdowninline::TestMarkdownInline` | 394.16 |
+| 6 | 913.77 | `stage1/cohere/markdownblocks::TestMarkdownRootLayout` | 367.03 |
+| 7 | 910.44 | `stage1/cohere/markdownblocks::TestMarkdownQuoteLayout` | 346.11 |
+| 8 | 868.78 | `stage1/cohere/markdownblocks::TestMarkdownStructureLayout` | 330.65 |
+| 9 | 913.76 | `stage1/cohere/markdownblocks::TestMarkdownListLayout` | 288.38 |
+| 10 | 921.60 | `stage1/cohere/typeaware::TestSixRuleAgreementAndMutants` | 271.06 |
+| 11 | 910.44 | `stage1/cohere/markdownblocks::TestMarkdownTextSplitting` | 260.02 |
+
+The largest units overall are Unicode canonicalization (742.71 s), bridge integration
+(507.44 s), Markdown AST preprocessing (473.38 s), the JSON batch oracle (432.18 s),
+and Markdown whitespace layout (416.56 s). The new type-aware largest unit is
+`TestSixRuleAgreementAndMutants` (271.06 s); its 24 units include the 15 volume children.
+Lint has 38 units with `TestRulesAgree` largest (192.82 s), and CSS has 17 with
+`TestComposedMemoryChecksCanFail` largest (130.16 s). Bridge has two top-level units;
+`TestBridge` has no enumerable subtests.
