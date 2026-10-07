@@ -1,0 +1,37 @@
+import { panic, programArguments, readTextFile, tsgoProgram, tsgoRelease } from 'adamic';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { UnaryMinus, byteOffsets } from '../../unary_minus.ts';
+import { Rules } from '../../rules.ts';
+import { Bindings } from '../../bindings.ts';
+import { Kind } from '../wave-22-sixth/common/kinds.a';
+import { Context } from './common/context.a';
+import { Rule as Defaults } from './no-object-type-as-default-prop/rule.a';
+import { Components } from './common/components.a';
+import { Rule as Nested } from './no-unstable-nested-components/rule.a';
+import { Rule as Sorted } from './sort-default-props/rule.a';
+const args=programArguments();const config=args[0]??panic('missing config');const manifest=readTextFile(args[1]??panic('missing manifest'));
+if(manifest.kind==='Error'){panic(manifest.message);}const paths=manifest.text.split('\n').filter((path)=>path!=='');
+const program=tsgoProgram(config,paths);let total=0;
+for(const path of paths) {
+    const source=readTextFile(path);if(source.kind==='Error'){panic(source.message);}
+    const parser=new Parser(source.text,path);const scanner=new Scanner(source.text);const offsets=byteOffsets(source.text);
+    const unary=new UnaryMinus(program,path,parser,scanner,offsets);const rules=new Rules(program,path,parser,scanner,offsets,unary);
+    const root=parser.file();for(let at=0;at<parser.nodes.length;at++){rules.parents.push(-1);}rules.links(root,-1);
+    const bindings=new Bindings(rules);const context=new Context(bindings);
+    const components=new Components(context);const defaults=new Defaults(context,components);const nested=new Nested(context,components,args.includes('--allow-as-props'));const sorted=new Sorted(context,args.includes('--ignore-case'));
+    for(let index=0;index<context.sourceCount;index++) {
+        const node=context.node(index);if(node.parent<0&&index!==root){continue;}
+        switch(node.kind) {
+            case 307: defaults.visit(node);nested.visit(node);break;
+            case 173:
+            case 227: sorted.visit(node);break;
+        }
+    }
+    for(const finding of rules.findings){finding.sortKey=finding.written();}
+    rules.findings.sort((left,right)=>left.sortKey<right.sortKey?-1:left.sortKey>right.sortKey?1:0);
+    total+=rules.findings.length;
+    if(!args.includes('--count')){console.log(`file\t${written(path)}`);for(const finding of rules.findings){console.log(finding.written());}}
+}
+console.log(`findings ${total}`);tsgoRelease(program);

@@ -1,0 +1,17 @@
+{
+  "name": "react/sort-default-props",
+  "kinds": [
+    173,
+    227
+  ],
+  "kindNames": [
+    "PropertyDeclaration",
+    "BinaryExpression"
+  ],
+  "source": "rule.a",
+  "class": "Rule",
+  "factory": "create",
+  "visit": "visit",
+  "node": true,
+  "needsChecker": true
+}
