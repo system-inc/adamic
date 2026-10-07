@@ -16,10 +16,10 @@ import (
 	"path/filepath"
 )
 
-// Lower lowers a checked program, all roots in the order supplied.
+// Lower lowers a checked program from its explicit execution entries in the order supplied.
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	files := []*ast.SourceFile{}
-	for _, file := range program.Files() {
+	for _, file := range program.Entries() {
 		if !file.IsDeclarationFile {
 			files = append(files, file)
 		}

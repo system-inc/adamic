@@ -40,7 +40,8 @@ type Program struct {
 	fs       *sourceFS
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
-	files []*ast.SourceFile
+	files   []*ast.SourceFile
+	entries []*ast.SourceFile
 }
 
 // CheckError is a program the checker rejected, with every diagnostic it gave.
@@ -181,6 +182,9 @@ func loadInput(paths []string, overlay map[string]string, project string) (*Prog
 			loaded.files = append(loaded.files, sourceFile)
 		}
 	}
+	if projectConfig == nil {
+		loaded.entries = loaded.files
+	}
 	return loaded, nil
 }
 
@@ -188,6 +192,9 @@ func loadInput(paths []string, overlay map[string]string, project string) (*Prog
 func (p *Program) Files() []*ast.SourceFile {
 	return p.files
 }
+
+// Entries returns explicitly selected execution entries. Project checking roots never become entries.
+func (p *Program) Entries() []*ast.SourceFile { return p.entries }
 
 // Checker returns the checker that owns a file, and the function that releases it.
 func (p *Program) Checker(ctx context.Context, sourceFile *ast.SourceFile) (*checker.Checker, func()) {

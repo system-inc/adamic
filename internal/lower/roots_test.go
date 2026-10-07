@@ -57,7 +57,7 @@ func TestMultipleRootsAgreeWithNode(t *testing.T) {
 			var program *load.Program
 			var err error
 			if project {
-				program, err = load.LoadProject(filepath.Join(directory, "tsconfig.json"))
+				program, err = load.LoadProjectEntry(filepath.Join(directory, "tsconfig.json"), paths[0])
 			} else {
 				program, err = load.Load(paths)
 			}
@@ -68,6 +68,13 @@ func TestMultipleRootsAgreeWithNode(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			want := truth
+			if project {
+				want, err = exec.Command("node", "--disable-warning=ExperimentalWarning", oraclePath, paths[0]).CombinedOutput()
+				if err != nil {
+					t.Fatalf("Node entry: %v: %s", err, want)
+				}
+			}
 			binary := filepath.Join(scratch, "native-"+name)
 			if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
@@ -75,16 +82,16 @@ func TestMultipleRootsAgreeWithNode(t *testing.T) {
 			command := exec.Command(binary)
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
 			observed, err := command.CombinedOutput()
-			if err != nil || string(observed) != string(truth) {
-				t.Fatalf("native: %v\n got %q\nNode %q", err, observed, truth)
+			if err != nil || string(observed) != string(want) {
+				t.Fatalf("native: %v\n got %q\nNode %q", err, observed, want)
 			}
 			jsPath := filepath.Join(scratch, name+".mjs")
 			if err := os.WriteFile(jsPath, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
 				t.Fatal(err)
 			}
 			observed, err = exec.Command("node", "--disable-warning=ExperimentalWarning", oraclePath, jsPath).CombinedOutput()
-			if err != nil || string(observed) != string(truth) {
-				t.Fatalf("JavaScript: %v\n got %q\nNode %q", err, observed, truth)
+			if err != nil || string(observed) != string(want) {
+				t.Fatalf("JavaScript: %v\n got %q\nNode %q", err, observed, want)
 			}
 		})
 	}

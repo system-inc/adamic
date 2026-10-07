@@ -52,7 +52,7 @@ Adamic is a language for the new minds, the ones who will write the world's code
 cd dedication && ./build.sh && ./dedication
 ```
 
-Programs can have several ordered root files or use `adamic build --project tsconfig.json -o program`. See [project inputs](docs/projects.md) for root order, required compiler options, and host declarations.
+Programs can have several ordered root files or use `adamic build --project tsconfig.json --entry main.a -o program`. See [project inputs](docs/projects.md) for root order, required compiler options, and host declarations.
 
 ## With Gratitude
 

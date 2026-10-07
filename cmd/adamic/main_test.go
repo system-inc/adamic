@@ -17,7 +17,7 @@ func TestBuildAcceptsRootsAndProject(t *testing.T) {
 	for _, project := range []bool{false, true} {
 		arguments := []string{"build"}
 		if project {
-			arguments = append(arguments, "--project", filepath.Join(directory, "tsconfig.json"))
+			arguments = append(arguments, "--project", filepath.Join(directory, "tsconfig.json"), "--entry", filepath.Join(directory, "third.a"))
 		} else {
 			for _, name := range []string{"third.a", "first.a", "second.a"} {
 				arguments = append(arguments, filepath.Join(directory, name))
@@ -31,8 +31,19 @@ func TestBuildAcceptsRootsAndProject(t *testing.T) {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 		output, err := exec.CommandContext(ctx, binary).CombinedOutput()
 		cancel()
-		if err != nil || string(output) != "leaf\nthird leaf\nshared leaf\nfirst shared\nsecond shared\n" {
+		want := "leaf\nthird leaf\nshared leaf\nfirst shared\nsecond shared\n"
+		if project {
+			want = "leaf\nthird leaf\n"
+		}
+		if err != nil || string(output) != want {
 			t.Fatalf("%v: %v, %q", arguments, err, output)
 		}
+	}
+}
+
+func TestProjectBuildRequiresExplicitEntry(t *testing.T) {
+	t.Parallel()
+	if code := run([]string{"build", "--project", "../../internal/lower/testdata/project_entry/tsconfig.json", "-o", filepath.Join(t.TempDir(), "program")}); code != 2 {
+		t.Fatalf("project build without --entry: exit %d, want usage refusal", code)
 	}
 }

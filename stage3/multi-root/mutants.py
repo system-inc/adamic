@@ -8,6 +8,16 @@ repository = pathlib.Path(__file__).resolve().parents[2]
 scratch = pathlib.Path(sys.argv[1]).resolve()
 scratch.mkdir(parents=True, exist_ok=True)
 variants = [
+    ('config-roots-as-entries', 'internal/lower/lower.go',
+     'for _, file := range program.Entries() {', 'for _, file := range program.Files() {',
+     './internal/lower', '^TestProjectEntryAgreesWithNode$'),
+    ('unchecked-unimported-config-files', 'internal/load/project.go',
+     'program, err := LoadProject(path)', 'program, err := Load([]string{entry})',
+     './internal/load', '^TestProjectChecksUnimportedFiles$'),
+    ('outside-config-entry', 'internal/load/project.go',
+     'return nil, fmt.Errorf("load: entry %s is outside',
+     'program.entries = program.files[:1]; return program, nil; return nil, fmt.Errorf("load: entry %s is outside',
+     './internal/load', '^TestProjectEntryMustBeConfigured$'),
     ('drop-direct-declarations', 'internal/load/load.go',
      'if projectConfig == nil || !sourceFile.IsDeclarationFile {',
      'if !sourceFile.IsDeclarationFile {', './internal/load', '^TestDirectDeclarationInputStillReportsTypes$'),

@@ -28,7 +28,7 @@ const usage = `usage:
   adamic c <file.a|file.ts>...
   adamic js <file.a|file.ts>...
   adamic build <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>]
-  adamic build --project <tsconfig.json> -o <out> [--count] [--sanitize] [--tsgo <archive>]`
+  adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>]`
 
 func main() {
 	os.Exit(run(os.Args[1:]))
@@ -74,19 +74,29 @@ func run(arguments []string) int {
 		start := 1
 		if arguments[1] == "--project" {
 			project = arguments[2]
-			start = 3
+			if len(arguments) < 7 || arguments[3] != "--entry" {
+				break
+			}
+			start = 5
 		}
 		for index := start; index+1 < len(arguments); index++ {
 			if arguments[index] == "-o" {
 				if project == "" && index == start || project != "" && index != start {
 					break
 				}
-				return buildInput(arguments[start:index], project, arguments[index+1], arguments[index+2:])
+				return buildInput(projectPaths(arguments, start, index, project), project, arguments[index+1], arguments[index+2:])
 			}
 		}
 	}
 	fmt.Fprintln(os.Stderr, usage)
 	return 2
+}
+
+func projectPaths(arguments []string, start, end int, project string) []string {
+	if project != "" {
+		return []string{arguments[4]}
+	}
+	return arguments[start:end]
 }
 
 // check loads a program, printing why when it can't. A nil program comes with the exit code.
@@ -96,7 +106,11 @@ func checkInput(paths []string, project string) (*load.Program, int) {
 	var program *load.Program
 	var err error
 	if project != "" {
-		program, err = load.LoadProject(project)
+		entry := ""
+		if len(paths) == 1 {
+			entry = paths[0]
+		}
+		program, err = load.LoadProjectEntry(project, entry)
 	} else {
 		program, err = load.Load(paths)
 	}

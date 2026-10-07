@@ -2,10 +2,13 @@ package load
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs"
 )
 
@@ -19,6 +22,37 @@ func (h projectHost) GetCurrentDirectory() string { return h.directory }
 
 // LoadProject uses the checker's own config parser, including inherited options and root order.
 func LoadProject(path string) (*Program, error) { return loadInput(nil, nil, path) }
+
+// LoadProjectEntry checks the entire project and selects one configured source as its runtime entry.
+// Entry paths are relative to the current directory, like direct file arguments.
+func LoadProjectEntry(path, entry string) (*Program, error) {
+	if entry == "" {
+		return nil, fmt.Errorf("load: project builds require --entry <file>; select a runtime entry from the config's files/include")
+	}
+	program, err := LoadProject(path)
+	if err != nil {
+		return nil, err
+	}
+	directory, err := os.Getwd()
+	if err != nil {
+		return nil, err
+	}
+	absoluteEntry, err := filepath.Abs(entry)
+	if err != nil {
+		return nil, err
+	}
+	root, err := rootFileName(program.fs, tspath.NormalizePath(directory), absoluteEntry)
+	if err != nil {
+		return nil, err
+	}
+	for _, file := range program.files {
+		if file.FileName() == root {
+			program.entries = []*ast.SourceFile{file}
+			return program, nil
+		}
+	}
+	return nil, fmt.Errorf("load: entry %s is outside the project's configured source file list; add it to files/include in %s or choose an entry already listed", entry, path)
+}
 
 func parseProject(path, directory string, fs *sourceFS) (*tsoptions.ParsedCommandLine, error) {
 	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(path, nil, nil, projectHost{directory, &projectFS{FS: fs}}, nil)

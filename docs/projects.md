@@ -4,7 +4,7 @@ A program can have several roots:
 
 ```
 adamic build third.a first.a second.a -o program
-adamic build --project path/to/tsconfig.json -o program
+adamic build --project path/to/tsconfig.json --entry path/to/main.a -o program
 adamic c third.a first.a second.a
 adamic js third.a first.a second.a
 ```
@@ -19,7 +19,19 @@ declaration-only program is refused by lowering.
 
 ## Roots and evaluation
 
-Explicit CLI roots retain their input order. Project roots retain the upstream
+Explicit CLI roots retain their input order and are execution entries.
+Project roots are checking inputs only: they never become execution entries implicitly.
+A project build requires exactly one `--entry`, resolved from the current working
+directory, which must appear in the config's resolved `files/include` list.
+An outside entry is refused with the fix: add it to `files/include` or choose
+an already listed entry. Imported dependencies alone do not qualify as configured entries.
+All configured files are checked, including unimported files and declaration roots;
+only the selected entry's module graph is lowered. Unimported configuration roots
+cannot print, allocate, or trigger lowering refusals. `load.LoadProject` checks only;
+`load.LoadProjectEntry` additionally selects the runtime entry.
+`Program.Files()` lists checking sources and `Program.Entries()` lists execution entries.
+
+Project checking roots retain the upstream
 parser's order: literal `files` first in listed order, then wildcard matches in
 include-pattern order and the parser's directory/file sorting order. Normalized
 paths are deduplicated at their first occurrence. Excludes do not remove literal
@@ -56,8 +68,8 @@ builder checks project references with `tsc -b`.
 
 TypeScript's config root order determines checking/emission inputs; it does not
 make every emitted module a runtime entry. To reproduce the CLI's runtime entry,
-build `tsc.ts` and its dependency graph, rather than execute every library source
-as a root. This unit does not implement TypeScript's bundling/build scripts or
+use `adamic build --project src/tsc/tsconfig.json --entry src/tsc/tsc.ts -o tsc`.
+The config still controls checking; its file order has no effect on runtime entry selection. This unit does not implement TypeScript's bundling/build scripts or
 project-reference graph, and does not claim to build native tsc.
 
 ## Compiler option contract
