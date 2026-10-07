@@ -36,7 +36,7 @@ func TestTypescriptControls(t *testing.T) {
 	}
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
-			source, err := os.ReadFile(filepath.Join("testdata/typescript", test.name+".ts"))
+			source, err := os.ReadFile(filepath.Join("testdata/typescript", test.name+".a"))
 			if err != nil {
 				t.Fatal(err)
 			}

@@ -1,0 +1,72 @@
+[
+  {
+    "path": "review/library-date-3/gaps/ancestry.a",
+    "source": "console.log(String(Function.prototype.isPrototypeOf(Date)));",
+    "stockTSCodes": [],
+    "nodeExit": 0,
+    "nodeStdout": "true\n",
+    "nodeStderr": "",
+    "compilerExit": 1,
+    "diagnostic": "adamic: /workspace/adamic/review/library-date-3/gaps/ancestry.a:1:20: Adamic 0.1 refuses isPrototypeOf; Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant\n"
+  },
+  {
+    "path": "review/library-date-3/gaps/boxed-string.a",
+    "source": "const s = new String(\"\");",
+    "stockTSCodes": [],
+    "nodeExit": 0,
+    "nodeStdout": "",
+    "nodeStderr": "",
+    "compilerExit": 1,
+    "diagnostic": "adamic: /workspace/adamic/review/library-date-3/gaps/boxed-string.a:1:11: stage 0 can't lower new an Identifier yet\n"
+  },
+  {
+    "path": "review/library-date-3/gaps/caught-validation.a",
+    "source": "try { new Date(NaN).toISOString(); } catch (e) { console.log(String(e instanceof Error)); }",
+    "stockTSCodes": [],
+    "nodeExit": 0,
+    "nodeStdout": "true\n",
+    "nodeStderr": "",
+    "compilerExit": 1,
+    "diagnostic": "adamic: /workspace/adamic/review/library-date-3/gaps/caught-validation.a:1:1: stage 0 can't lower a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet\n"
+  },
+  {
+    "path": "review/library-date-3/gaps/detached.a",
+    "source": "const f = new Date(0).toString; console.log(f.call(new Date(0)));",
+    "stockTSCodes": [],
+    "nodeExit": 0,
+    "nodeStdout": "Thu Jan 01 1970 00:00:00 GMT+0000 (Coordinated Universal Time)\n",
+    "nodeStderr": "",
+    "compilerExit": 1,
+    "diagnostic": "adamic: /workspace/adamic/review/library-date-3/gaps/detached.a:1:11: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n"
+  },
+  {
+    "path": "review/library-date-3/gaps/evolving-any.a",
+    "source": "let result; result = new Date(0).getTime(); console.log(String(result));",
+    "stockTSCodes": [],
+    "nodeExit": 0,
+    "nodeStdout": "0\n",
+    "nodeStderr": "",
+    "compilerExit": 1,
+    "diagnostic": "adamic: /workspace/adamic/review/library-date-3/gaps/evolving-any.a:1:5: stage 0 can't lower a value of type any yet\n"
+  },
+  {
+    "path": "review/library-date-3/gaps/missing-slot.a",
+    "source": "try { Date.prototype.toISOString.call({}); } catch (e) { console.log(String(e instanceof Error)); }",
+    "stockTSCodes": [],
+    "nodeExit": 0,
+    "nodeStdout": "true\n",
+    "nodeStderr": "",
+    "compilerExit": 1,
+    "diagnostic": "adamic: /workspace/adamic/review/library-date-3/gaps/missing-slot.a:1:7: stage 0 can't lower Date prototype method requires a Date internal slot yet\n"
+  },
+  {
+    "path": "review/library-date-3/gaps/prototype.a",
+    "source": "console.log(typeof Date.prototype);",
+    "stockTSCodes": [],
+    "nodeExit": 0,
+    "nodeStdout": "object\n",
+    "nodeStderr": "",
+    "compilerExit": 1,
+    "diagnostic": "adamic: /workspace/adamic/review/library-date-3/gaps/prototype.a:1:20: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
+  }
+]

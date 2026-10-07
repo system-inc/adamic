@@ -1,0 +1,10 @@
+=== RUN   TestTypescriptControls
+=== RUN   TestTypescriptControls/argument
+=== RUN   TestTypescriptControls/missing
+=== RUN   TestTypescriptControls/disagree
+--- PASS: TestTypescriptControls (3.35s)
+    --- PASS: TestTypescriptControls/argument (0.53s)
+    --- PASS: TestTypescriptControls/missing (0.22s)
+    --- PASS: TestTypescriptControls/disagree (0.16s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	3.356s

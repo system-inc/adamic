@@ -1,0 +1,8 @@
+stock tsc 6.0.3
+ancestry.a tsc [] Node 0 'true\n' compiler 1 adamic: /workspace/adamic/review/library-date-3/gaps/ancestry.a:1:20: Adamic 0.1 refuses isPrototypeOf; Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant
+boxed-string.a tsc [] Node 0 '' compiler 1 adamic: /workspace/adamic/review/library-date-3/gaps/boxed-string.a:1:11: stage 0 can't lower new an Identifier yet
+caught-validation.a tsc [] Node 0 'true\n' compiler 1 adamic: /workspace/adamic/review/library-date-3/gaps/caught-validation.a:1:1: stage 0 can't lower a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+detached.a tsc [] Node 0 'Thu Jan 01 1970 00:00:00 GMT+0000 (Coordinated Universal Time)\n' compiler 1 adamic: /workspace/adamic/review/library-date-3/gaps/detached.a:1:11: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)
+evolving-any.a tsc [] Node 0 '0\n' compiler 1 adamic: /workspace/adamic/review/library-date-3/gaps/evolving-any.a:1:5: stage 0 can't lower a value of type any yet
+missing-slot.a tsc [] Node 0 'true\n' compiler 1 adamic: /workspace/adamic/review/library-date-3/gaps/missing-slot.a:1:7: stage 0 can't lower Date prototype method requires a Date internal slot yet
+prototype.a tsc [] Node 0 'object\n' compiler 1 adamic: /workspace/adamic/review/library-date-3/gaps/prototype.a:1:20: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)

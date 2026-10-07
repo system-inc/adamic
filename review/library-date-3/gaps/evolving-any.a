@@ -1,1 +1,1 @@
-let result; result = new Date(0).getTime(); console.log(result);
+let result; result = new Date(0).getTime(); console.log(String(result));

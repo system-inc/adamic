@@ -1,0 +1,15 @@
+pass 1/1 pass=1 fail=0 refused=0 not-typescript=0 crashed=0 skipped=0
+skip 1/1 pass=0 fail=0 refused=0 not-typescript=0 crashed=0 skipped=1
+refuse 1/1 pass=0 fail=0 refused=1 not-typescript=0 crashed=0 skipped=0
+large.js 1/1 pass=1 fail=0 refused=0 not-typescript=0 crashed=0 skipped=0
+--- FAIL: TestTypescriptControls (7.36s)
+    --- FAIL: TestTypescriptControls/argument (0.00s)
+        typescript_test.go:41: open testdata/typescript/argument.ts: no such file or directory
+    --- FAIL: TestTypescriptControls/missing (0.00s)
+        typescript_test.go:41: open testdata/typescript/missing.ts: no such file or directory
+    --- FAIL: TestTypescriptControls/disagree (0.00s)
+        typescript_test.go:41: open testdata/typescript/disagree.ts: no such file or directory
+    typescript_test.go:62: cache stats: {Version:6.0.3 Checks:0 Hits:0 Milliseconds:0}
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-test262	51.132s
+FAIL

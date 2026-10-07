@@ -43,13 +43,13 @@ internal/load/prelude.d.ts. These are language boundaries, not implementation ta
 
 | Feature | Reproducer |
 |---|---|
-| General evolving any local | `let result; result = new Date(0).getTime(); console.log(result);` |
+| General evolving any local | `let result; result = new Date(0).getTime(); console.log(String(result));` |
 | Detached inherited method | `const f = new Date(0).toString; console.log(f.call(new Date(0)));` |
 | Observable Date.prototype | `console.log(typeof Date.prototype);` |
-| Native library validation caught by user code | `try { new Date(NaN).toISOString(); } catch (e) { console.log(e instanceof Error); }` |
-| Missing Date slot throws catchable TypeError | `try { Date.prototype.toISOString.call({}); } catch (e) { console.log(e instanceof Error); }` |
-| Boxed String constructor | `console.log(new String("date").valueOf());` |
-| Observable intrinsic prototype ancestry | `console.log(Function.prototype.isPrototypeOf(Date));` |
+| Native library validation caught by user code | `try { new Date(NaN).toISOString(); } catch (e) { console.log(String(e instanceof Error)); }` |
+| Missing Date slot throws catchable TypeError | `try { Date.prototype.toISOString.call({}); } catch (e) { console.log(String(e instanceof Error)); }` |
+| Boxed String constructor | `const s = new String("");` |
+| Observable intrinsic prototype ancestry | `console.log(String(Function.prototype.isPrototypeOf(Date)));` |
 
 The any language repro is not an excuse to add dynamic values: its test262
 instances already admit an erasable, checked annotation in the existing adapter.

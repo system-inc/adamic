@@ -1,0 +1,14 @@
+=== RUN   TestTypescriptControls
+=== RUN   TestTypescriptControls/argument
+=== RUN   TestTypescriptControls/missing
+=== RUN   TestTypescriptControls/disagree
+    typescript_test.go:50: got {Path:disagree Directory: Kind:not-typescript Reason:TS2322 Adaptations:map[]}, want refused containing tsc: TS2304 (tsc [TS2304])
+=== NAME  TestTypescriptControls
+    typescript_test.go:62: cache stats: {Version:6.0.3 Checks:3 Hits:4 Milliseconds:823}
+--- FAIL: TestTypescriptControls (3.92s)
+    --- PASS: TestTypescriptControls/argument (0.60s)
+    --- PASS: TestTypescriptControls/missing (0.23s)
+    --- FAIL: TestTypescriptControls/disagree (0.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-test262	3.923s
+FAIL

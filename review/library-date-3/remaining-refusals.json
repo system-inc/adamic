@@ -1,0 +1,488 @@
+[
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T1.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T1.js.a:108:10: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T1.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses inherited library member prototype read as an own field",
+    "sourceSHA256": "62563087989ad0fd77eae206d3ca027e9aacd217cea7e84a5ed895eb3aac4bf3"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T2.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T2.js.a:108:10: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T2.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses inherited library member prototype read as an own field",
+    "sourceSHA256": "529db5c78a7a0c401ff54376674213e5bf90c97b1133c1a83e908fc1410e382d"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T3.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T3.js.a:108:10: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T3.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses inherited library member prototype read as an own field",
+    "sourceSHA256": "eb5abe0bcd8d6520742de16dcc4558509d9e3af35d70fdeafd2637f90cd35e77"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T4.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T4.js.a:108:10: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T4.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses inherited library member prototype read as an own field",
+    "sourceSHA256": "b8f0bfbdd94f126a13c3e063ed6cb0ab00b02a972377326d63483a9604b3f8c3"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T5.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T5.js.a:108:10: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T5.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses inherited library member prototype read as an own field",
+    "sourceSHA256": "0920c0f03477c2bf415aa98f3da3eb54867b08bec4dfd34b0c3fd35195a5286c"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A2_T6.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T6.js.a:108:10: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A2_T6.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses inherited library member prototype read as an own field",
+    "sourceSHA256": "48fd0d66832a632f2033f7090d6bd263c5a207edcce796e6b4af064e003d6f2b"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T1.1.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T1.1.js.a:108:3: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T1.1.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "eaff6bcebb987f3d838dab5a9157efbab75ac45e150853a06c7eeaa13953b9e7"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T1.2.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T1.2.js.a:105:1: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T1.2.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "29cffdf49dd9398a305f42f0d7bfdc8b00b92f36525a628881364dd9b2a7d143"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T2.1.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T2.1.js.a:108:3: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T2.1.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "86b78b181e5d66ae44e9543b4518382d88a43eee2b4ff6d9aa4e5cfd2ca6a8eb"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T2.2.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T2.2.js.a:105:1: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T2.2.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "177456c4183277336b45eef4255e5c89fa83e5a75a940e084bc758a0f34733b4"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T3.1.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T3.1.js.a:108:3: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T3.1.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "1134608f056756ded91d749dd284c67ca1c571b6f54d6b7a2a34a1453131cd89"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T3.2.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T3.2.js.a:105:1: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T3.2.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "1190af35f96298065126dac49bef546d803905ef426e9485d9af41e3fb9f1268"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T4.1.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T4.1.js.a:108:3: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T4.1.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "890b8c53b1985eb0fe22c483bdbf19314ae672492802a42d5ac1409cbee53501"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T4.2.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T4.2.js.a:105:1: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T4.2.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "f4f1481511dd47ee86ce5b1db6fb8d02886919830db199d75e3106f455e199c4"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T5.1.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T5.1.js.a:108:3: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T5.1.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "23cc6b683a5d584054292db214b8bdf63f02b53213a37e6a203b7ac1f7ac17fb"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T5.2.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T5.2.js.a:105:1: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T5.2.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "8916ce16d41c11f23e84c068efdffc8ccbc6eac55c6f5f608256f6d2e380ee1b"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T6.1.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T6.1.js.a:108:3: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T6.1.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "aca94533d9e0bfc49e737615f80b14bdc6c801619e7cba5f8581b6ffd45add30"
+  },
+  {
+    "path": "built-ins/Date/S15.9.3.1_A3_T6.2.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T6.2.js.a:105:1: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.3.1_A3_T6.2.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "e20d1dddbc8bd2265f840716c0905fee579e4a6d1b34a9cb37dffeb7687d716f"
+  },
+  {
+    "path": "built-ins/Date/S15.9.4_A4.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/S15.9.4_A4.js.a:104:8: Adamic 0.1 refuses isPrototypeOf; Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/S15.9.4_A4.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses isPrototypeOf",
+    "sourceSHA256": "14797e4b534400f88da0c2d221b48a01b48a783508a7102715cb226a074c7af3"
+  },
+  {
+    "path": "built-ins/Date/construct_with_date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/construct_with_date.js.a:108:1: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => oldDate.toString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/construct_with_date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it)",
+    "sourceSHA256": "b9065b2ecb8d319100be5e4b3919c8a163ca89229aac4d8ef2605c34c01229b0"
+  },
+  {
+    "path": "built-ins/Date/now/15.9.4.4-0-1.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/now/15.9.4.4-0-1.js.a:105:24: Adamic 0.1 refuses Date.now; the wall clock is nondeterministic, so the oracle cannot compare it with Node; pass an explicit timestamp\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/now/15.9.4.4-0-1.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses Date.now",
+    "sourceSHA256": "12dba229354ffcac65be86efbbcb678dce43c228537010d6c452a595e3e6fe75"
+  },
+  {
+    "path": "built-ins/Date/now/15.9.4.4-0-2.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/now/15.9.4.4-0-2.js.a:105:17: Adamic 0.1 refuses Date.now; the wall clock is nondeterministic, so the oracle cannot compare it with Node; pass an explicit timestamp\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/now/15.9.4.4-0-2.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses Date.now",
+    "sourceSHA256": "def24d706394142c3be66dc5f976349c05951821e71471669ddc6dab3c6bf055"
+  },
+  {
+    "path": "built-ins/Date/now/15.9.4.4-0-3.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/now/15.9.4.4-0-3.js.a:105:11: Adamic 0.1 refuses Date.now; the wall clock is nondeterministic, so the oracle cannot compare it with Node; pass an explicit timestamp\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/now/15.9.4.4-0-3.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses Date.now",
+    "sourceSHA256": "791b2cb86182cf9143b50dfa0fbb719607cff89a7ec78364ed174521cf73234c"
+  },
+  {
+    "path": "built-ins/Date/now/15.9.4.4-0-4.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/now/15.9.4.4-0-4.js.a:105:24: Adamic 0.1 refuses Date.now; the wall clock is nondeterministic, so the oracle cannot compare it with Node; pass an explicit timestamp\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/now/15.9.4.4-0-4.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses Date.now",
+    "sourceSHA256": "fafd25937982c6e444602323f3b3346fff7b0f07fac4ceaded9de1b9112697e8"
+  },
+  {
+    "path": "built-ins/Date/prototype/getDate/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getDate/this-value-non-date.js.a:104:15: Adamic 0.1 refuses a method read as a value (getDate would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getDate() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getDate/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getDate would lose its object, and this with it)",
+    "sourceSHA256": "8ed318c8fa5c329bd502ac1ea503a2631af9ab56e120918d69df0bf17447abc4"
+  },
+  {
+    "path": "built-ins/Date/prototype/getDay/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getDay/this-value-non-date.js.a:104:14: Adamic 0.1 refuses a method read as a value (getDay would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getDay() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getDay/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getDay would lose its object, and this with it)",
+    "sourceSHA256": "0ec158bee9f215d2f69bea2a27e832a45f7cc6c61a4e4c92144267081de81446"
+  },
+  {
+    "path": "built-ins/Date/prototype/getFullYear/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getFullYear/this-value-non-date.js.a:104:19: Adamic 0.1 refuses a method read as a value (getFullYear would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getFullYear() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getFullYear/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getFullYear would lose its object, and this with it)",
+    "sourceSHA256": "e01aa14cc392a07a97191c46a64e1905c3da16a2d8f8e9e833d3d13cfb960cce"
+  },
+  {
+    "path": "built-ins/Date/prototype/getHours/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getHours/this-value-non-date.js.a:104:16: Adamic 0.1 refuses a method read as a value (getHours would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getHours() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getHours/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getHours would lose its object, and this with it)",
+    "sourceSHA256": "5581c02ef254e75ec31cef1b5cd5bee3915eca203144da28bb84c7739f2ddbb1"
+  },
+  {
+    "path": "built-ins/Date/prototype/getMilliseconds/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getMilliseconds/this-value-non-date.js.a:104:23: Adamic 0.1 refuses a method read as a value (getMilliseconds would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getMilliseconds() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getMilliseconds/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getMilliseconds would lose its object, and this with it)",
+    "sourceSHA256": "ac922d539604548c318ab1ebf5118db580f5401de36936ca67b09e223f1310fe"
+  },
+  {
+    "path": "built-ins/Date/prototype/getMinutes/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getMinutes/this-value-non-date.js.a:104:18: Adamic 0.1 refuses a method read as a value (getMinutes would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getMinutes() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getMinutes/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getMinutes would lose its object, and this with it)",
+    "sourceSHA256": "6990924b3c72af55aa9b0d918fc78537db1b6b28dd1700072c016297d9bb60cc"
+  },
+  {
+    "path": "built-ins/Date/prototype/getMonth/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getMonth/this-value-non-date.js.a:104:16: Adamic 0.1 refuses a method read as a value (getMonth would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getMonth() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getMonth/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getMonth would lose its object, and this with it)",
+    "sourceSHA256": "fc2fa6fc2194ead65602b12935b680a33fd4ab247cba0c9c7429ff41e9c0c550"
+  },
+  {
+    "path": "built-ins/Date/prototype/getSeconds/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getSeconds/this-value-non-date.js.a:104:18: Adamic 0.1 refuses a method read as a value (getSeconds would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getSeconds() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getSeconds/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getSeconds would lose its object, and this with it)",
+    "sourceSHA256": "34220a645aa983b95df2db331971a923ecee782c40d4674c44ea9b2da6a64aa6"
+  },
+  {
+    "path": "built-ins/Date/prototype/getTime/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getTime/this-value-non-date.js.a:104:15: Adamic 0.1 refuses a method read as a value (getTime would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getTime() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getTime/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getTime would lose its object, and this with it)",
+    "sourceSHA256": "a81172cfb708daaef11375e1138c6c7cfabef7f3ed3caac2854451825b78d301"
+  },
+  {
+    "path": "built-ins/Date/prototype/getTimezoneOffset/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getTimezoneOffset/this-value-non-date.js.a:104:25: Adamic 0.1 refuses a method read as a value (getTimezoneOffset would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getTimezoneOffset() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getTimezoneOffset/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getTimezoneOffset would lose its object, and this with it)",
+    "sourceSHA256": "aa1e9c08d775c2bd9aa533987ada26492e130d2c1a3eb95d8a0bc5376f9c3f77"
+  },
+  {
+    "path": "built-ins/Date/prototype/getTimezoneOffset/this-value-valid-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getTimezoneOffset/this-value-valid-date.js.a:121:10: Adamic 0.1 refuses new Date() without arguments; the wall clock is nondeterministic, so the oracle cannot compare it with Node; pass an explicit timestamp\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getTimezoneOffset/this-value-valid-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses new Date() without arguments",
+    "sourceSHA256": "fe0024e8feedb7abf81b1ebdf1f17f3996cd88bde9f063c9b33b459182c24952"
+  },
+  {
+    "path": "built-ins/Date/prototype/getUTCDate/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCDate/this-value-non-date.js.a:104:18: Adamic 0.1 refuses a method read as a value (getUTCDate would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getUTCDate() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCDate/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getUTCDate would lose its object, and this with it)",
+    "sourceSHA256": "768624b196c3c1288961b099dcae8f225cf4d6adf97d346747cf9a43abd984a6"
+  },
+  {
+    "path": "built-ins/Date/prototype/getUTCDay/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCDay/this-value-non-date.js.a:104:17: Adamic 0.1 refuses a method read as a value (getUTCDay would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getUTCDay() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCDay/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getUTCDay would lose its object, and this with it)",
+    "sourceSHA256": "cc026ef22aa25a2e06f154346a9cfa877feb7e8cb2ac0f13a3e108cd09f4cbde"
+  },
+  {
+    "path": "built-ins/Date/prototype/getUTCFullYear/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCFullYear/this-value-non-date.js.a:104:22: Adamic 0.1 refuses a method read as a value (getUTCFullYear would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getUTCFullYear() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCFullYear/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getUTCFullYear would lose its object, and this with it)",
+    "sourceSHA256": "15ad8e5ab5bfcce1d4e84b2aca66b4f98921253823008264d6383328410243f5"
+  },
+  {
+    "path": "built-ins/Date/prototype/getUTCHours/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCHours/this-value-non-date.js.a:104:19: Adamic 0.1 refuses a method read as a value (getUTCHours would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getUTCHours() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCHours/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getUTCHours would lose its object, and this with it)",
+    "sourceSHA256": "0adbd8b341d5dc750b0adcf5b83dfebda3b8b2f2434a53ca1a4ea8b2ef7e9aac"
+  },
+  {
+    "path": "built-ins/Date/prototype/getUTCMilliseconds/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCMilliseconds/this-value-non-date.js.a:104:26: Adamic 0.1 refuses a method read as a value (getUTCMilliseconds would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getUTCMilliseconds() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCMilliseconds/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getUTCMilliseconds would lose its object, and this with it)",
+    "sourceSHA256": "fdd8ebc116797cda4e8cd30707d133f187ed0c62131d9c20c1ac899f53c65fb1"
+  },
+  {
+    "path": "built-ins/Date/prototype/getUTCMinutes/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCMinutes/this-value-non-date.js.a:104:21: Adamic 0.1 refuses a method read as a value (getUTCMinutes would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getUTCMinutes() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCMinutes/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getUTCMinutes would lose its object, and this with it)",
+    "sourceSHA256": "bae2ab51624a2d69fb5a30dad80a3fe85967db6363c9c5116c0f93eb90b75e42"
+  },
+  {
+    "path": "built-ins/Date/prototype/getUTCMonth/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCMonth/this-value-non-date.js.a:104:19: Adamic 0.1 refuses a method read as a value (getUTCMonth would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getUTCMonth() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCMonth/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getUTCMonth would lose its object, and this with it)",
+    "sourceSHA256": "19edaaf9e1c4d68eeb4247d2b448e81d54e14716d07acdc4d2fad514501161be"
+  },
+  {
+    "path": "built-ins/Date/prototype/getUTCSeconds/this-value-non-date.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCSeconds/this-value-non-date.js.a:104:21: Adamic 0.1 refuses a method read as a value (getUTCSeconds would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.getUTCSeconds() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/getUTCSeconds/this-value-non-date.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (getUTCSeconds would lose its object, and this with it)",
+    "sourceSHA256": "211a948af6180ab019750d92cf2a699054c20d855bb6720cefc2ad3140e9d517"
+  },
+  {
+    "path": "built-ins/Date/prototype/no-date-value.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/no-date-value.js.a:105:3: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/no-date-value.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses inherited library member prototype read as an own field",
+    "sourceSHA256": "fffda634aacd53c8f5c88047b47db4cd00134331f55e7abcfac4d59cb9c9778a"
+  },
+  {
+    "path": "built-ins/Date/prototype/setFullYear/15.9.5.40_1.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/setFullYear/15.9.5.40_1.js.a:107:3: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/setFullYear/15.9.5.40_1.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses inherited library member prototype read as an own field",
+    "sourceSHA256": "a5ce35ea95ade627ef0369ab1a111d319284ff724818c2da1053e79a93c425a7"
+  },
+  {
+    "path": "built-ins/Date/prototype/toISOString/15.9.5.43-0-13.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-13.js.a:87:2: stage 0 can't lower a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-13.js.a",
+    "stockTSCodes": [],
+    "reason": "stage 0 can't lower a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet",
+    "sourceSHA256": "c045d28942841b69fb8eb79ff331bdf609206d4cd664738354fdcedc3b0ad377"
+  },
+  {
+    "path": "built-ins/Date/prototype/toISOString/15.9.5.43-0-14.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-14.js.a:87:2: stage 0 can't lower a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-14.js.a",
+    "stockTSCodes": [],
+    "reason": "stage 0 can't lower a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet",
+    "sourceSHA256": "8f7259f27d368407824133148b946b95eee6a6898b86d330f245d58f583ea07a"
+  },
+  {
+    "path": "built-ins/Date/prototype/toISOString/15.9.5.43-0-15.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-15.js.a:87:2: stage 0 can't lower a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-15.js.a",
+    "stockTSCodes": [],
+    "reason": "stage 0 can't lower a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet",
+    "sourceSHA256": "4db833ea6862b9f63e81502938e1081502791cbac0c71ed5fd33d17f8b96c919"
+  },
+  {
+    "path": "built-ins/Date/prototype/toISOString/15.9.5.43-0-16.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-16.js.a:105:12: stage 0 can't lower new an Identifier yet\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-16.js.a",
+    "stockTSCodes": [],
+    "reason": "stage 0 can't lower new an Identifier yet",
+    "sourceSHA256": "21569e503512de759ae1805a8e35464727af590b70950952de3f2c621b7e2526"
+  },
+  {
+    "path": "built-ins/Date/prototype/toISOString/15.9.5.43-0-3.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-3.js.a:105:24: Adamic 0.1 refuses a method read as a value (toISOString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toISOString() (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-3.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses a method read as a value (toISOString would lose its object, and this with it)",
+    "sourceSHA256": "b0875cc8a87bb54b0a7a374f5c5430eb46c829225582226cd4a2f388560c5bef"
+  },
+  {
+    "path": "built-ins/Date/prototype/toISOString/15.9.5.43-0-6.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-6.js.a:107:3: stage 0 can't lower Date prototype method requires a Date internal slot yet\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-6.js.a",
+    "stockTSCodes": [],
+    "reason": "stage 0 can't lower Date prototype method requires a Date internal slot yet",
+    "sourceSHA256": "228a006923c544bb0aacec3a0bcb2fd26a2e0b5fae2dc52c3e975f082ea0015d"
+  },
+  {
+    "path": "built-ins/Date/prototype/toISOString/15.9.5.43-0-7.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-7.js.a:107:3: stage 0 can't lower Date prototype method requires a Date internal slot yet\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-7.js.a",
+    "stockTSCodes": [],
+    "reason": "stage 0 can't lower Date prototype method requires a Date internal slot yet",
+    "sourceSHA256": "85accf10bb2c46c209c7545ddb11f3fce3ba5e98868fba04400bd58ea64a2ce2"
+  },
+  {
+    "path": "built-ins/Date/prototype/toISOString/15.9.5.43-0-8.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-8.js.a:87:2: stage 0 can't lower a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/toISOString/15.9.5.43-0-8.js.a",
+    "stockTSCodes": [],
+    "reason": "stage 0 can't lower a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet",
+    "sourceSHA256": "60e1b90e70decc21bca865baec06484775574a3cfa3ba37e10ed45d53111a9e0"
+  },
+  {
+    "path": "built-ins/Date/prototype/toString/non-date-receiver.js",
+    "kind": "refused",
+    "diagnostic": "adamic: /tmp/date3-triage-after-sources/built-ins/Date/prototype/toString/non-date-receiver.js.a:105:33: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n",
+    "source": "/tmp/date3-triage-after-sources/built-ins/Date/prototype/toString/non-date-receiver.js.a",
+    "stockTSCodes": [],
+    "reason": "Adamic 0.1 refuses inherited library member prototype read as an own field",
+    "sourceSHA256": "98c4497b0705ba952f6cfd60630d1c7e6ddc8dda2e60f553c1ceafbc6d6c4d8f"
+  }
+]

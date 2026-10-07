@@ -1,1 +1,1 @@
-console.log(Function.prototype.isPrototypeOf(Date));
+console.log(String(Function.prototype.isPrototypeOf(Date)));

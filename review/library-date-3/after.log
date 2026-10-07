@@ -1,0 +1,161 @@
+built-ins/Date 50/594 pass=8 fail=0 refused=18 not-typescript=14 crashed=0 skipped=10
+built-ins/Date 100/594 pass=30 fail=0 refused=24 not-typescript=19 crashed=0 skipped=27
+built-ins/Date 150/594 pass=68 fail=0 refused=24 not-typescript=19 crashed=0 skipped=39
+built-ins/Date 200/594 pass=78 fail=0 refused=29 not-typescript=19 crashed=0 skipped=74
+built-ins/Date 250/594 pass=90 fail=0 refused=36 not-typescript=19 crashed=0 skipped=105
+built-ins/Date 300/594 pass=102 fail=0 refused=43 not-typescript=19 crashed=0 skipped=136
+built-ins/Date 350/594 pass=111 fail=0 refused=45 not-typescript=45 crashed=0 skipped=149
+built-ins/Date 400/594 pass=122 fail=0 refused=45 not-typescript=70 crashed=0 skipped=163
+built-ins/Date 450/594 pass=133 fail=0 refused=45 not-typescript=87 crashed=0 skipped=185
+built-ins/Date 500/594 pass=146 fail=0 refused=45 not-typescript=102 crashed=0 skipped=207
+built-ins/Date 550/594 pass=154 fail=0 refused=54 not-typescript=106 crashed=0 skipped=236
+built-ins/Date 594/594 pass=163 fail=0 refused=54 not-typescript=107 crashed=0 skipped=270
+test262 3fd3eab12309bd7732f4b5ddeaae19c5d95ad9dd
+adapt on
+tsc 6.0.3 checks=107 cache-hits=0 cost=13381ms
+
+built-ins/Date
+pass 163   fail 0   refused 54   not-typescript 107   crashed 0   skipped 270   total 594
+
+directory                                      pass    fail   refused  not-typescript   crashed   skipped
+built-ins/Date                                   13       0        20              16         0        29
+built-ins/Date/UTC                               10       0         0               3         0         4
+built-ins/Date/now                                0       0         4               0         0         2
+built-ins/Date/parse                              4       0         0               0         0         4
+built-ins/Date/prototype                         42       0         1               0         0         1
+built-ins/Date/prototype/Symbol.toPrimitive       0       0         0               0         0        18
+built-ins/Date/prototype/constructor              0       0         0               0         0         1
+built-ins/Date/prototype/getDate                  2       0         1               0         0         5
+built-ins/Date/prototype/getDay                   2       0         1               0         0         5
+built-ins/Date/prototype/getFullYear              2       0         1               0         0         5
+built-ins/Date/prototype/getHours                 2       0         1               0         0         5
+built-ins/Date/prototype/getMilliseconds          2       0         1               0         0         5
+built-ins/Date/prototype/getMinutes               2       0         1               0         0         5
+built-ins/Date/prototype/getMonth                 2       0         1               0         0         5
+built-ins/Date/prototype/getSeconds               2       0         1               0         0         5
+built-ins/Date/prototype/getTime                  2       0         1               0         0         5
+built-ins/Date/prototype/getTimezoneOffset        1       0         2               0         0         5
+built-ins/Date/prototype/getUTCDate               2       0         1               0         0         5
+built-ins/Date/prototype/getUTCDay                2       0         1               0         0         5
+built-ins/Date/prototype/getUTCFullYear           2       0         1               0         0         5
+built-ins/Date/prototype/getUTCHours              2       0         1               0         0         5
+built-ins/Date/prototype/getUTCMilliseconds       2       0         1               0         0         5
+built-ins/Date/prototype/getUTCMinutes            2       0         1               0         0         5
+built-ins/Date/prototype/getUTCMonth              2       0         1               0         0         5
+built-ins/Date/prototype/getUTCSeconds            2       0         1               0         0         5
+built-ins/Date/prototype/setDate                  3       0         0               6         0         5
+built-ins/Date/prototype/setFullYear              5       0         1               9         0         5
+built-ins/Date/prototype/setHours                 6       0         0              12         0         5
+built-ins/Date/prototype/setMilliseconds          3       0         0               6         0         5
+built-ins/Date/prototype/setMinutes               2       0         0              11         0         5
+built-ins/Date/prototype/setMonth                 4       0         0               8         0         5
+built-ins/Date/prototype/setSeconds               4       0         0               8         0         5
+built-ins/Date/prototype/setTime                  3       0         0               3         0         5
+built-ins/Date/prototype/setUTCDate               0       0         0               3         0         4
+built-ins/Date/prototype/setUTCFullYear           0       0         0               2         0         4
+built-ins/Date/prototype/setUTCHours              4       0         0               3         0         4
+built-ins/Date/prototype/setUTCMilliseconds       1       0         0               3         0         4
+built-ins/Date/prototype/setUTCMinutes            1       0         0               3         0         4
+built-ins/Date/prototype/setUTCMonth              2       0         0               3         0         4
+built-ins/Date/prototype/setUTCSeconds            2       0         0               3         0         4
+built-ins/Date/prototype/toDateString             3       0         0               0         0         4
+built-ins/Date/prototype/toISOString              5       0         8               2         0         2
+built-ins/Date/prototype/toJSON                   0       0         0               2         0        11
+built-ins/Date/prototype/toLocaleDateString       0       0         0               0         0         4
+built-ins/Date/prototype/toLocaleString           0       0         0               0         0         4
+built-ins/Date/prototype/toLocaleTimeString       0       0         0               0         0         4
+built-ins/Date/prototype/toString                 3       0         1               0         0         4
+built-ins/Date/prototype/toTemporalInstant        0       0         0               0         0         8
+built-ins/Date/prototype/toTimeString             2       0         0               0         0         4
+built-ins/Date/prototype/toUTCString              5       0         0               0         0         4
+built-ins/Date/prototype/valueOf                  1       0         0               1         0         4
+
+not-typescript reasons
+  76  TS2345
+  13  TS7006
+  11  TS7034
+   4  TS2554
+   3  TS2769
+
+refusal reasons
+  13  refuses a method read as a value (toString would lose its object, and this with it)
+   9  refuses inherited library member prototype read as an own field
+   4  not yet: a try around Date.toISOString validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)
+   4  refuses Date.now
+   2  not yet: Date prototype method requires a Date internal slot
+   1  not yet: new an Identifier
+   1  refuses a method read as a value (getDate would lose its object, and this with it)
+   1  refuses a method read as a value (getDay would lose its object, and this with it)
+   1  refuses a method read as a value (getFullYear would lose its object, and this with it)
+   1  refuses a method read as a value (getHours would lose its object, and this with it)
+   1  refuses a method read as a value (getMilliseconds would lose its object, and this with it)
+   1  refuses a method read as a value (getMinutes would lose its object, and this with it)
+   1  refuses a method read as a value (getMonth would lose its object, and this with it)
+   1  refuses a method read as a value (getSeconds would lose its object, and this with it)
+   1  refuses a method read as a value (getTime would lose its object, and this with it)
+  ... and 12 more
+
+skip reasons
+  144  harness include propertyHelper.js
+   48  harness include isConstructor.js
+   27  feature Symbol
+   25  feature Symbol.toPrimitive
+    6  harness include assertRelativeDateMs.js
+    4  getters
+    4  harness include dateConstants.js
+    3  features Reflect, cross-realm
+    3  features Symbol, Symbol.toPrimitive
+    2  feature Temporal
+    1  feature Reflect
+    1  feature Reflect.construct
+    1  features BigInt, Symbol, Temporal
+    1  features BigInt, Temporal
+
+adaptations
+  1054  var-to-let
+    71  date-local
+    21  throw-error
+
+passes (163)
+  built-ins/Date/15.9.1.15-1.js
+  built-ins/Date/S15.9.3.1_A1_T1.js
+  built-ins/Date/S15.9.3.1_A1_T2.js
+  built-ins/Date/S15.9.3.1_A1_T3.js
+  built-ins/Date/S15.9.3.1_A1_T4.js
+  built-ins/Date/S15.9.3.1_A1_T5.js
+  built-ins/Date/S15.9.3.1_A1_T6.js
+  built-ins/Date/S15.9.4_A1.js
+  built-ins/Date/S15.9.4_A2.js
+  built-ins/Date/S15.9.4_A3.js
+  built-ins/Date/S15.9.4_A5.js
+  built-ins/Date/TimeClip_negative_zero.js
+  built-ins/Date/UTC/fp-evaluation-order.js
+  built-ins/Date/UTC/infinity-make-day.js
+  built-ins/Date/UTC/infinity-make-time.js
+  built-ins/Date/UTC/nans.js
+  built-ins/Date/UTC/non-integer-values.js
+  built-ins/Date/UTC/overflow-make-day.js
+  built-ins/Date/UTC/overflow-make-time.js
+  built-ins/Date/UTC/return-value.js
+  built-ins/Date/UTC/time-clip.js
+  built-ins/Date/UTC/year-offset.js
+  built-ins/Date/parse/time-value-maximum-range.js
+  built-ins/Date/parse/without-utc-offset.js
+  built-ins/Date/parse/year-zero.js
+  built-ins/Date/parse/zero.js
+  built-ins/Date/prototype/S15.9.5_A01_T1.js
+  built-ins/Date/prototype/S15.9.5_A02_T1.js
+  built-ins/Date/prototype/S15.9.5_A03_T1.js
+  built-ins/Date/prototype/S15.9.5_A04_T1.js
+  built-ins/Date/prototype/S15.9.5_A05_T1.js
+  built-ins/Date/prototype/S15.9.5_A06_T1.js
+  built-ins/Date/prototype/S15.9.5_A07_T1.js
+  built-ins/Date/prototype/S15.9.5_A08_T1.js
+  built-ins/Date/prototype/S15.9.5_A09_T1.js
+  built-ins/Date/prototype/S15.9.5_A10_T1.js
+  built-ins/Date/prototype/S15.9.5_A11_T1.js
+  built-ins/Date/prototype/S15.9.5_A12_T1.js
+  built-ins/Date/prototype/S15.9.5_A13_T1.js
+  built-ins/Date/prototype/S15.9.5_A14_T1.js
+  ... and 123 more
+
