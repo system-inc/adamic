@@ -15,6 +15,8 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
+var ruleSemanticChange = flag.Bool("rule-semantic-change", false, "benchmark one message-ID token edit in a private snapshot")
+
 var ruleWhole = flag.Bool("rule-whole", false, "benchmark the ordinary whole-file compiler")
 var ruleHelperChange = flag.Bool("rule-helper-change", false, "benchmark a private snapshot with an additional identity helper")
 
@@ -64,6 +66,9 @@ func selectedPortMutation(t *testing.T, d registry.Descriptor, from, to, target 
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 			t.Fatal(err)
 		}
+	}
+	if *ruleSemanticChange {
+		applySemanticEdit(t, directory, d)
 	}
 	prepareRegistry(t, directory)
 	return directory
@@ -196,7 +201,12 @@ func TestRule(t *testing.T) {
 		}
 	})
 	phase("emitted JavaScript build", func() { module = emittedJavaScript(t, directory) })
-	phase("Go Node JavaScript native comparison", func() { compareWithJavaScript(t, oracle, binary, directory, path, module) })
+	phase("Go Node JavaScript native comparison", func() {
+		if *ruleSemanticChange {
+			semanticComparison(t, oracle, binary, directory, path, module)
+		}
+		compareWithJavaScript(t, oracle, binary, directory, path, module)
+	})
 	phase("owned mutant", func() {
 		// Keep today's exact mutant corpus, including all-rule inherited rows.
 		mutantPath := manifest(t, append(stableRows(t, generated(t)), owned...))

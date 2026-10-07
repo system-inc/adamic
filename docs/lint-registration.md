@@ -226,3 +226,25 @@ private rule snapshot, exercising declaration and numbering changes without
 editing the checkout. It can also be passed to `TestSplitWholeParity`.
 See [split evidence](../stage1/cohere/lint/split-evidence/REPORT.md) for paired
 cold, byte-edit, unchanged and helper-edit timings and actual object counts.
+
+## For rule authors
+
+From the repository root, check your directory slug with one command:
+
+```sh
+go test ./stage1/cohere/lint -run '^TestRule$' -count=1 -args -rule <slug>
+```
+
+The check validates every descriptor, then checks your owned witnesses, captured
+upstream cases, inherited corner cases and options against unchanged Go cohere,
+source Node, emitted JavaScript and ASan/UBSan native. It also checks your owned
+mutant on all three port runtimes and reports phase timings. The selected native
+build uses split compilation; correct and mutant builds run concurrently.
+
+The uncached all-rule run remains the integration witness: every registration,
+every upstream package, inherited corpus, owned witnesses and mutants, volume
+and count guards. `ADAMIC_GATE_UNCACHED=1` bypasses the lint caches, and those
+full-registration native builds use ordinary whole-file compilation. A fast
+selected-rule pass does not replace this run. Diagnostic IDs, descriptions,
+ranges, fixes and suggestions are part of the byte comparison; changing an ID
+must fail even when Node and native agree on the changed result.
