@@ -15,3 +15,23 @@ validation-volume/compiler-all.counts and repository-all.counts.
 All origin branches were fetched and inspected for typeaware claims and existing
 stage1 implementations of these rule names. None were found; no candidate skipped.
 No rule implementation was written before this claim commit was pushed.
+
+## Continuation after the original three ports
+
+Original rules completed and pushed in 85ad9cf11e2fe77cecd70e919f37b60b7adea675.
+Fetched all origin heads again on October 7, 2026, inspecting main at ef3d907e
+and tsgo-c-library at 5afbdb83, the source ports and all origin claim documents.
+Ranking is descending combined volume with lexical ties, as in the first claim.
+The next three available checker-dependent entries are reserved here:
+
+1. nexus/correctness-require-child-process-error-listener (0 compiler, 0 repository).
+2. nexus/correctness-require-response-status-check (0 compiler, 0 repository).
+3. nexus/performance-no-independent-await-in-loop (0 compiler, 0 repository).
+
+An initial scan found process-exit-after-output, uncleared-race-timeout and
+blocking-standard-streams available, but the immediate pre-claim refresh found
+new origin claims for them. They were skipped without implementation.
+Released older reservations were also checked: their rules now have active
+continuation claims on wave 22. No selected rule was ported on main or the
+bridge branch or named in an origin claim at the final pre-claim inspection.
+This claim update is committed and pushed before implementation begins.
