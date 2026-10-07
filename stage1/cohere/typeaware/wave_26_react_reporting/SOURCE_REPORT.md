@@ -1,5 +1,5 @@
 Built: native .a source validators for react-hooks/static-components, set-state-in-render and set-state-in-effect, with an isolated raw HIR bridge; eighteen wave 26 ports now have native Go agreement.
-Commits: base e8ba3d5d81de4d3773c723914fccd4c76248b965; preceding reporting commit ae7bfd8cb19cc05a12b4a0eec8ddd3753067f36d; implementation d7a62ceddbbb63191d903cb160d241bc2a24fa5a.
+Commits: base f8013f0baac41ddc340d76f83bddde38536a8f07; preceding reporting commit 78a33c0d; implementation 4a71495a.
 Checks: 129 source controls, 69 findings, 77 compiler files and 287 repository files per rule match production Go under normal native execution and sanitizers; original-source Node matches all controls; previous fifteen ports re-green.
 Mutants: three new analysis mutants, four reporting mutants, three no-input refusal mutants, omitted SSA, retained released handle, fifteen prior rule mutants, thirteen prior question runs, five prior handle mutants, seven ABI mutants and Node's one-byte mutant were caught.
 Not covered: checker-linked JavaScript emission and shared registration, the full root gate, larger application corpora, or Go's arbitrary creation-message choice when multiple dynamic phi operands have distinct creators.
@@ -79,7 +79,7 @@ The five prior suites pass again with 218 controls and 225 findings, their norma
 and sanitizer corpus comparisons, fifteen rule mutants, thirteen raw question
 mutant runs and five released-registry mutants. Their complete logs name every
 mutation and its catcher. The filtered Node/native/JavaScript regression passes
-fifteen fixtures and its one-byte mutant. Worker caches were used there; no
+thirty fixtures and its one-byte mutant. Worker caches were used there; no
 integration uncached gate is claimed. Vet, owned Go formatting and diff checks
 pass with empty output.
 
@@ -87,13 +87,13 @@ Three alternating quiet rounds compare full bytes on every timing run:
 
 | Rule | Compiler native / Go median | Repository native / Go median |
 | --- | ---: | ---: |
-| static-components | 5.907155 / 7.080944 s | 0.870340 / 0.289425 s |
-| set-state-in-render | 5.674237 / 6.869089 s | 0.757792 / 0.295794 s |
-| set-state-in-effect | 6.641709 / 5.740106 s | 0.790862 / 0.226920 s |
+| static-components | 4.927836 / 6.033081 s | 0.823728 / 0.281131 s |
+| set-state-in-render | 5.096181 / 6.982836 s | 1.074130 / 0.233292 s |
+| set-state-in-effect | 4.551512 / 5.826697 s | 0.903077 / 0.314630 s |
 
 These are process times, including program load and serialization. They measure
-three separate rule runners, not a combined eighteen-rule lint. Native is slower
-on the repository corpus and for effect linting on the compiler corpus.
+three separate rule runners, not a combined eighteen-rule lint. Native is faster
+on the compiler corpus and slower on the repository corpus in these rounds.
 
 Run the owned validate_hir.py, validate_static.py, validate_state.py,
 validate_node.py, validate_partial.py and validate_cost.py with the arguments
@@ -126,3 +126,12 @@ source_validation preserves deterministic gzip outputs, source and diagnostic
 hashes, fixture inputs, every command and elapsed observation. Earlier partial
 reporting artifacts remain historical evidence. The native source port supersedes
 the old raw-HIR engineering blocker documented in the claim.
+
+The final refresh found main f8013f0b, so the branch was rebased again without
+conflicts. All eighteen rule comparisons and their mutants were rerun on it,
+along with raw HIR, source Node, reporting, bridge, vet and thirty filtered
+Node fixtures. New upstream map/narrowing cases are included. The first push
+was rejected by its stale lease and changed no remote branch. git ls-remote
+showed the actual owned remote at ae7bfd8c; its rebased patches are preserved.
+landing_validation holds the final-base observations. source_validation retains
+the earlier e8ba3d5d observations and timings. No additional rules claimed.

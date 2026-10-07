@@ -1,0 +1,47 @@
+{
+  "static-controls": {
+    "controls-go.stdout": "4ee086425223641cd52cae931acb60359c4bf3b8c2ff9390e89703d910c5ce4b",
+    "controls-native.stdout": "4ee086425223641cd52cae931acb60359c4bf3b8c2ff9390e89703d910c5ce4b",
+    "controls-asan.stdout": "4ee086425223641cd52cae931acb60359c4bf3b8c2ff9390e89703d910c5ce4b"
+  },
+  "static-compiler": {
+    "compiler-go.stdout": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602",
+    "compiler-native.stdout": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602",
+    "compiler-asan.stdout": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602"
+  },
+  "static-repository": {
+    "repository-go.stdout": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "repository-native.stdout": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "repository-asan.stdout": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "render-controls": {
+    "controls-go.stdout": "13b46e2bb51280316a04eb5a252caadc468fe9046e3840fced2d6179de794ec5",
+    "controls-native.stdout": "13b46e2bb51280316a04eb5a252caadc468fe9046e3840fced2d6179de794ec5",
+    "controls-asan.stdout": "13b46e2bb51280316a04eb5a252caadc468fe9046e3840fced2d6179de794ec5"
+  },
+  "render-compiler": {
+    "compiler-go.stdout": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602",
+    "compiler-native.stdout": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602",
+    "compiler-asan.stdout": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602"
+  },
+  "render-repository": {
+    "repository-go.stdout": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "repository-native.stdout": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "repository-asan.stdout": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  "effect-controls": {
+    "controls-go.stdout": "bd6039a496e632d5b570fad2b8ed72c6e13929928369f26b279d032ab7260548",
+    "controls-native.stdout": "bd6039a496e632d5b570fad2b8ed72c6e13929928369f26b279d032ab7260548",
+    "controls-asan.stdout": "bd6039a496e632d5b570fad2b8ed72c6e13929928369f26b279d032ab7260548"
+  },
+  "effect-compiler": {
+    "compiler-go.stdout": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602",
+    "compiler-native.stdout": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602",
+    "compiler-asan.stdout": "094e10e9d5164d0bdb77cf79f9f390b0a4c43b2b5f01ebc705cba4bfc7886602"
+  },
+  "effect-repository": {
+    "repository-go.stdout": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "repository-native.stdout": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f",
+    "repository-asan.stdout": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  }
+}

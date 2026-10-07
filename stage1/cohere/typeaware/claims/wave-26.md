@@ -162,3 +162,12 @@ previous fifteen ports re-green on main e8ba3d5d. See
 wave_26_react_reporting/SOURCE_REPORT.md for commands, complete mutation logs,
 timings and limits. Checker-linked JavaScript emission still refuses in the
 shared CLI; shared registration remains with its owner. No new claims taken.
+
+### Current-main landing recheck
+
+Main advanced to f8013f0b during the final refresh. The branch was rebased
+without conflicts and all eighteen rule suites, their corpus/sanitizer bytes
+and mutants, raw HIR, source Node, bridge and filtered Node regressions passed
+again. landing_validation preserves this run; SOURCE_REPORT.md has updated
+native/Go timings. Checker-linked JavaScript emission and shared registration
+remain the documented integration gaps. No additional rules claimed.
