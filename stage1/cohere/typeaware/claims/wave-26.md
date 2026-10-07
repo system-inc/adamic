@@ -32,3 +32,19 @@ These are the first three remaining by combined volume descending and lexical ti
 
 Reserved for this same branch before implementation. The previous three remain
 claimed and completed. Positive controls will exercise these zero-volume rules.
+
+## Third batch, October 7
+
+After completing and pushing both prior batches (a21c17fb), fetched all
+330 origin refs. Base remains 5afbdb83 and main ef3d907e. Excluding ranked
+base/main ports and 108 rule names mentioned in origin Markdown claims,
+the first three available by combined volume and lexical ties are:
+
+| Rule | Combined findings |
+| --- | ---: |
+| no-eval | 0 |
+| no-extend-native | 0 |
+| no-func-assign | 0 |
+
+Reserved on codex/typeaware-wave-26 before implementation. No further
+rules are reserved in this batch.
