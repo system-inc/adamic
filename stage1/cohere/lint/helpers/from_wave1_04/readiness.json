@@ -141,7 +141,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -357,7 +358,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidSpacingMultiplier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidThemePrefix",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.joinSegments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.leadingInteger",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.maskStopDescription",
@@ -547,7 +547,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -707,7 +708,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidSpacingMultiplier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidThemePrefix",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.joinSegments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.leadingInteger",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.maskStopDescription",
@@ -755,7 +755,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -934,7 +935,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidSpacingMultiplier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidThemePrefix",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.joinSegments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.leadingInteger",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.maskEdgeEmitter",
@@ -983,7 +983,8 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix"
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector"
       ],
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
@@ -1146,7 +1147,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidSpacingMultiplier",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValidThemePrefix",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isValueSeparator",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.joinSegments",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.leadingInteger",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.maskStopDescription",
@@ -1193,7 +1193,8 @@
     "github.com/system-inc/cohere/internal/lint/rules/tailwind.loadDesignSystemForProgram",
     "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.trimLeadingJavaScriptSpace",
     "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.scanNumber",
-    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix"
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.numberWithSuffix",
+    "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.isVector"
   ],
-  "dependency_removals": 24
+  "dependency_removals": 28
 }

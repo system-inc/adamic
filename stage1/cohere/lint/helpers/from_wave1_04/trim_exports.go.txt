@@ -32,3 +32,11 @@ func Wave104Suffix(value string, suffixes []string) (bool, []string) {
 	wave104ObserveScan = false
 	return result, wave104ScanTrace
 }
+
+func Wave104Vector(value string) (bool, []string) {
+	wave104ScanTrace = nil
+	wave104ObserveScan = true
+	result := isVector(value)
+	wave104ObserveScan = false
+	return result, wave104ScanTrace
+}

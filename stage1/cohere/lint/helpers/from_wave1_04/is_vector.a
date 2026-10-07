@@ -1,0 +1,16 @@
+// The Go vector grammar uses literal ASCII spaces and exactly three components.
+// scanNumber consumes ASCII only, so its byte count is also a UTF-16 index.
+export function isVector(value: string, scanNumber: (value: string) => number): boolean {
+    let rest = value;
+    for(let component = 0; component < 3; component++) {
+        const consumed = scanNumber(rest);
+        if(consumed === 0) { return false; }
+        rest = rest.slice(consumed);
+        if(component === 2) { break; }
+        let spaces = 0;
+        while(spaces < rest.length && rest.charCodeAt(spaces) === 32) { spaces++; }
+        if(spaces === 0) { return false; }
+        rest = rest.slice(spaces);
+    }
+    return rest === '';
+}

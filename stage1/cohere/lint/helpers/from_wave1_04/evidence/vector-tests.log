@@ -1,0 +1,29 @@
+=== RUN   TestVectorMatchesGo
+    vector_test.go:46: 170369 actual Go comparisons across four consumer fixture domains, numeric triples and all BMP scalar separators
+    vector_test.go:54: 4378863 exact Go bytes include result and lazy scanner call count and arguments on three targets
+--- PASS: TestVectorMatchesGo (11.36s)
+=== RUN   TestVectorMutants
+    vector_test.go:60: 170369 actual Go comparisons across four consumer fixture domains, numeric triples and all BMP scalar separators
+=== RUN   TestVectorMutants/accept_two_components
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept two components on emitted JavaScript: line 101580 got="101579\tfalse\t2\t1 2 3\t2 3\t" Go="101579\ttrue\t3\t1 2 3\t2 3\t3"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept two components on ASan/UBSan native: line 101580 got="101579\tfalse\t2\t1 2 3\t2 3\t" Go="101579\ttrue\t3\t1 2 3\t2 3\t3"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept two components on source Node: line 101580 got="101579\tfalse\t2\t1 2 3\t2 3\t" Go="101579\ttrue\t3\t1 2 3\t2 3\t3"
+=== RUN   TestVectorMutants/accept_a_tab_separator
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept a tab separator on source Node: line 356 got="355\tfalse\t2\t1\\u0009X\tX\t" Go="355\tfalse\t1\t1\\u0009X\t\t"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept a tab separator on emitted JavaScript: line 356 got="355\tfalse\t2\t1\\u0009X\tX\t" Go="355\tfalse\t1\t1\\u0009X\t\t"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught accept a tab separator on ASan/UBSan native: line 356 got="355\tfalse\t2\t1\\u0009X\tX\t" Go="355\tfalse\t1\t1\\u0009X\t\t"
+=== RUN   TestVectorMutants/ignore_the_trailing_remainder
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught ignore the trailing remainder on source Node: line 165060 got="165059\ttrue\t3\t0 0 1e\t0 1e\t1e" Go="165059\tfalse\t3\t0 0 1e\t0 1e\t1e"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught ignore the trailing remainder on emitted JavaScript: line 165060 got="165059\ttrue\t3\t0 0 1e\t0 1e\t1e" Go="165059\tfalse\t3\t0 0 1e\t0 1e\t1e"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught ignore the trailing remainder on ASan/UBSan native: line 165060 got="165059\ttrue\t3\t0 0 1e\t0 1e\t1e" Go="165059\tfalse\t3\t0 0 1e\t0 1e\t1e"
+=== RUN   TestVectorMutants/scan_twice
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught scan twice on source Node: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2\titems-center\\u000a    flex\\u000a    gap-2\t" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2\t\t"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught scan twice on emitted JavaScript: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2\titems-center\\u000a    flex\\u000a    gap-2\t" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2\t\t"
+    vector_test.go:74: compiled and completed cleanly; only Go comparison caught scan twice on ASan/UBSan native: line 1 got="0\tfalse\t2\titems-center\\u000a    flex\\u000a    gap-2\titems-center\\u000a    flex\\u000a    gap-2\t" Go="0\tfalse\t1\titems-center\\u000a    flex\\u000a    gap-2\t\t"
+--- PASS: TestVectorMutants (28.14s)
+    --- PASS: TestVectorMutants/accept_two_components (6.53s)
+    --- PASS: TestVectorMutants/accept_a_tab_separator (6.78s)
+    --- PASS: TestVectorMutants/ignore_the_trailing_remainder (6.65s)
+    --- PASS: TestVectorMutants/scan_twice (7.32s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_04	39.515s

@@ -43,7 +43,7 @@ func written(value string) string {
 	return b.String()
 }
 func main() {
-	if os.Args[1] == "--generate" || (os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix") {
+	if os.Args[1] == "--generate" || (os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" || os.Args[1] == "--generate-vector") {
 		data, err := os.ReadFile(os.Args[2])
 		if err != nil {
 			panic(err)
@@ -86,7 +86,7 @@ func main() {
 				continue
 			}
 			prefix := " "
-			if os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" {
+			if os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" || os.Args[1] == "--generate-vector" {
 				prefix = "1"
 			}
 			corpus.Cases = append(corpus.Cases, Case{Value: prefix + string(point) + "X"})
@@ -95,7 +95,7 @@ func main() {
 			corpus.Cases = append(corpus.Cases, Case{Value: value})
 		}
 
-		if os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" {
+		if os.Args[1] == "--generate-scan" || os.Args[1] == "--generate-suffix" || os.Args[1] == "--generate-vector" {
 			var words func(string, int)
 			words = func(word string, depth int) {
 				corpus.Cases = append(corpus.Cases, Case{Value: word})
@@ -113,6 +113,27 @@ func main() {
 				}
 			}
 		}
+		if os.Args[1] == "--generate-vector" {
+			for point := rune(0); point <= 65535; point++ {
+				if point >= 0xd800 && point <= 0xdfff {
+					continue
+				}
+				corpus.Cases = append(corpus.Cases, Case{Value: "1" + string(point) + "2 3"})
+			}
+			numbers := []string{"0", "1", "-1", "+.5", ".5", "5.", "1e", "1e+", "1e2", "1e-2", "é"}
+			for _, a := range numbers {
+				for _, b := range numbers {
+					for _, c := range numbers {
+						for _, separators := range [][2]string{{" ", " "}, {"  ", "   "}, {"\t", " "}, {" ", "\n"}} {
+							corpus.Cases = append(corpus.Cases, Case{Value: a + separators[0] + b + separators[1] + c})
+						}
+					}
+				}
+			}
+			for _, value := range []string{"1 2", "1 2 3", "1 2 3 4", " 1 2 3", "1 2 3 ", "1 2 3px", "1 2 3\x00", "1 2 3😀", "1 2 3\n", "1 2 3e+"} {
+				corpus.Cases = append(corpus.Cases, Case{Value: value})
+			}
+		}
 		if os.Args[1] == "--generate-suffix" {
 			corpus.SuffixSets = [][]string{nil, {}, {""}, {"%"}, {"px"}, {"em"}, {"deg", "rad"}, {"", "px", "em", "%"}, {"x", "X"}, {"é", "😀", "\u0000"}, {"PX", "EM"}, {"px", "px"}}
 		}
@@ -126,7 +147,7 @@ func main() {
 		return
 	}
 	input := os.Args[1]
-	if input == "--scan" || input == "--suffix" {
+	if input == "--scan" || input == "--suffix" || input == "--vector" {
 		input = os.Args[2]
 	}
 	data, err := os.ReadFile(input)
@@ -139,6 +160,19 @@ func main() {
 	}
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
+	if os.Args[1] == "--vector" {
+		for i, c := range corpus.Cases {
+			result, trace := collapse.Wave104Vector(c.Value)
+			arguments := [3]string{}
+			for j, arg := range trace {
+				if j < 3 {
+					arguments[j] = arg
+				}
+			}
+			fmt.Fprintf(out, "%d\t%t\t%d\t%s\t%s\t%s\n", i, result, len(trace), written(arguments[0]), written(arguments[1]), written(arguments[2]))
+		}
+		return
+	}
 	if os.Args[1] == "--suffix" {
 		ordinal := 0
 		for _, c := range corpus.Cases {

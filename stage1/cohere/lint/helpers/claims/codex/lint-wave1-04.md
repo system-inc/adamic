@@ -126,3 +126,5 @@ See from_wave1_04/SUFFIX_REPORT.md. No further helper is claimed yet.
    Compare actual Go over all four consumer fixture domains, grammar boundaries
    and Unicode separator controls on Node, emitted JavaScript and sanitized native.
    Require compiling semantic mutants; one helper per .a file. Claim pushed first.
+
+Delivery 6: isVector implemented and tested. 170,369 cases, 4,378,863 exact Go result/scanner bytes, four compiling mutants caught on three targets. Complete six-helper gate PASS 125.376s, all sixteen mutants; vet PASS. See from_wave1_04/VECTOR_REPORT.md.
