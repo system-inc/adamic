@@ -1,0 +1,21 @@
+// Const literal callbacks across every runtime callback family.
+function run(): void {
+    const words = [`word${1}`, `long${22}`];
+    const map = (value: string): string => `${value}!`;
+    const visit = (value: string): void => { console.log(value); };
+    const test = (value: string): boolean => value.length > 5;
+    const reduce = (sum: string, value: string): string => `${sum}/${value}`;
+    console.log(words.map(map).join(','));
+    words.forEach(visit);
+    console.log(words.filter(test).join(','));
+    console.log(words.find(test) ?? 'none');
+    console.log(`${words.some(test)}/${words.every(test)}`);
+    console.log(words.reduce(reduce, `start${0}`));
+    console.log(Array.from({ length: 2 }, (_value, index) => `from${index}`).join(','));
+    const entries = new Map<string, string>([[`key${1}`, words[0] ?? 'none']]);
+    const mapVisit = (value: string, key: string): void => { console.log(`${key}/${value}`); };
+    entries.forEach(mapVisit);
+    const set = new Set<string>(words);
+    set.forEach(visit);
+}
+run();

@@ -1,0 +1,98 @@
+// Object keys and values are identity references. The callback keeps both after the map lets go.
+interface Box {
+	readonly label: string;
+}
+
+function box(label: string): Box {
+	return { label: `${label}` };
+}
+
+function labels(items: readonly Box[]): string {
+	return items.map((item) => item.label).join(",");
+}
+
+function probe(mode: number): void {
+	const keys: Box[] = [];
+	const values: Box[] = [];
+	const collection = new Map<Box, Box>();
+	for (let index = 0; index < 8; index += 1) {
+		const madeKey = box(`k${index}`);
+		const madeValue = box(`v${index}`);
+		keys.push(madeKey);
+		values.push(madeValue);
+		collection.set(madeKey, madeValue);
+	}
+	const first = keys[0] ?? box("missing-key");
+	const second = keys[1] ?? box("missing-later");
+	const keptKeys: Box[] = [];
+	const keptValues: Box[] = [];
+	try {
+		collection.forEach((item, current, owner) => {
+			if (mode === 0) { owner.delete(current); }
+			if (mode === 1 && current === first) { owner.delete(second); }
+			if (mode === 2) { owner.clear(); }
+			if (mode === 3) { owner.set(current, box(`changed${current.label}`)); }
+			if (mode === 4 && current === first) {
+				owner.delete(current);
+				owner.set(box("k8"), box("v8"));
+			}
+			if (mode === 5) {
+				owner.delete(current);
+				keptKeys.push(current);
+				keptValues.push(item);
+				throw new Error(`deleted ${current.label} ${item.label}`);
+			}
+			keptKeys.push(current);
+			keptValues.push(item);
+			console.log(`${mode}: ${current.label} ${item.label} ${owner.size}`);
+		});
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : "unexpected");
+	}
+	console.log(`kept ${mode}: ${labels(keptKeys)} ${labels(keptValues)}`);
+	console.log(`remaining ${mode}: ${collection.size}`);
+	collection.forEach((item, current) => { console.log(`after ${current.label} ${item.label}`); });
+}
+
+function returned(): void {
+	const collection = new Map<Box, Box>();
+	const key = box("only");
+	const value = box("kept");
+	collection.set(key, value);
+	const kept: Box[] = [];
+	collection.forEach((item, current, owner): Box => {
+		owner.delete(current);
+		kept.push(current);
+		kept.push(item);
+		console.log(`return ${current.label} ${item.label}`);
+		return item;
+	});
+	console.log(`returned ${labels(kept)} ${collection.size}`);
+}
+
+let seenContext = "";
+
+function context(): Box {
+	const made = box("context");
+	seenContext = made.label;
+	return made;
+}
+
+function withContext(): void {
+	seenContext = "";
+	const collection = new Map<Box, Box>();
+	collection.set(box("k0"), box("v0"));
+	collection.set(box("k1"), box("v1"));
+	const kept: Box[] = [];
+	collection.forEach((item, current, owner) => {
+		owner.delete(current);
+		kept.push(current);
+		kept.push(item);
+		console.log(`this ${current.label} ${item.label} ${owner.size}`);
+	}, context());
+	console.log(`context ${seenContext} ${labels(kept)} ${collection.size}`);
+}
+
+for (let mode = 0; mode < 6; mode += 1) { probe(mode); }
+returned();
+withContext();
