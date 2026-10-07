@@ -1,5 +1,5 @@
 Built: logical-assignment-operators, no-unsafe-return, and correctness-no-nullish-stripping-assertion in separate .a files.
-Commits: claim e3fdad37 pushed before code; implementation ec89dc1858cdbda70d31e72ab226835496afac7f.
+Commits: claim e3fdad37 pushed before code; implementation ec89dc1858cdbda70d31e72ab226835496afac7f; evidence 2df67a22 (final evidence cleanup follows in branch history).
 Checks: wave byte oracle PASS (78.303s), bridge packages PASS, filtered Node oracle PASS, lint/type/format PASS.
 Mutants: three running rule mutants caught by Go bytes; two checker mutants caught by identity; released-registry mutant caught by panic 70; foundation mutants listed below.
 Limits: default rule options, frozen corpora, filtered runtime gate; native is slower than Go; full repository test suite not run.

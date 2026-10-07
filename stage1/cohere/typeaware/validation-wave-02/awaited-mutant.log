@@ -1,0 +1,8 @@
+=== RUN   TestWave02CheckerQuestions
+=== PAUSE TestWave02CheckerQuestions
+=== CONT  TestWave02CheckerQuestions
+    wave_02_facts_test.go:77: awaited-shape differs from direct checker operation
+--- FAIL: TestWave02CheckerQuestions (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/bridge/tsgo/checker	0.011s
+FAIL

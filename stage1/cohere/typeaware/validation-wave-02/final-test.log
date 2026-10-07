@@ -1,0 +1,22 @@
+=== RUN   TestWave02AgreementAndMutants
+    wave_02_test.go:106: controls: 10323 identical finding bytes; findings 28
+    wave_02_test.go:114: controls-asan: 10323 identical finding bytes; findings 28
+=== RUN   TestWave02AgreementAndMutants/logical
+    wave_02_test.go:131: logical: exit 0, Go byte oracle catches byte 305; findings 28
+=== RUN   TestWave02AgreementAndMutants/unsafe-return
+    wave_02_test.go:131: unsafe-return: exit 0, Go byte oracle catches byte 4775; findings 28
+=== RUN   TestWave02AgreementAndMutants/nullish
+    wave_02_test.go:131: nullish: exit 0, Go byte oracle catches byte 6368; findings 31
+=== NAME  TestWave02AgreementAndMutants
+    wave_02_test.go:139: repository: 19425 identical finding bytes; findings 3
+    wave_02_test.go:140: repository-asan: 19425 identical finding bytes; findings 3
+    wave_02_test.go:147: compiler: 142372 identical finding bytes; findings 363
+    wave_02_test.go:148: compiler-asan: 142372 identical finding bytes; findings 363
+    wave_02_test.go:160: released program queried using a new question: panic 70, invalid or released checker handle
+    wave_02_test.go:165: released-registry mutant exits 0, caught by the required panic 70
+--- PASS: TestWave02AgreementAndMutants (78.30s)
+    --- PASS: TestWave02AgreementAndMutants/logical (6.76s)
+    --- PASS: TestWave02AgreementAndMutants/unsafe-return (5.74s)
+    --- PASS: TestWave02AgreementAndMutants/nullish (5.56s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	78.303s
