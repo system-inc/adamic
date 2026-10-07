@@ -1,0 +1,13 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class CallbackSymbol {
+    readonly identity: number;
+    readonly declarations: number;
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'callback-symbol'));
+        header(frames, 'callback-symbol');
+        this.identity = frames.natural();
+        this.declarations = frames.natural();
+        frames.end();
+    }
+}

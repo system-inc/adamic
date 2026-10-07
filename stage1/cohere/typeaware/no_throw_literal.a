@@ -1,0 +1,93 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { throwIsGlobal } from './throw_binding.a';
+export class NoThrowLiteral {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    couldBeError(index: number): boolean {
+        if(index < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(index);
+        if(
+            [
+                'Identifier',
+                'CallExpression',
+                'NewExpression',
+                'PropertyAccessExpression',
+                'ElementAccessExpression',
+                'TaggedTemplateExpression',
+                'YieldExpression',
+                'AwaitExpression',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(node.kind === 'BinaryExpression') {
+            const left = node.children[0] ?? -1;
+            const operator = this.rules.parser.node(node.children[1] ?? -1).kind;
+            const right = node.children[2] ?? -1;
+            if(
+                ['EqualsToken', 'AmpersandAmpersandEqualsToken', 'AmpersandAmpersandToken', 'CommaToken'].includes(
+                    operator,
+                )
+            ) {
+                return this.couldBeError(right);
+            }
+            if(
+                ['BarBarEqualsToken', 'QuestionQuestionEqualsToken', 'BarBarToken', 'QuestionQuestionToken'].includes(
+                    operator,
+                )
+            ) {
+                return this.couldBeError(left) || this.couldBeError(right);
+            }
+        }
+        if(node.kind === 'ConditionalExpression') {
+            return this.couldBeError(node.children[2] ?? -1) || this.couldBeError(node.children[4] ?? -1);
+        }
+        return false;
+    }
+    run(): void {
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at);
+            if(node.kind !== 'ThrowStatement') {
+                continue;
+            }
+            const argument = node.children[0] ?? -1;
+            if(argument < 0) {
+                continue;
+            }
+            const expression = this.rules.parser.node(argument);
+            let id = '';
+            let message = '';
+            if(!this.couldBeError(argument)) {
+                id = 'object';
+                message =
+                    'This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead.';
+            }
+            else if(
+                expression.kind === 'Identifier' &&
+                expression.text === 'undefined' &&
+                throwIsGlobal(this.rules, argument)
+            ) {
+                id = 'undef';
+                message =
+                    'This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead.';
+            }
+            if(id !== '') {
+                this.rules.findings.push(
+                    new Diagnostic(
+                        'no-throw-literal',
+                        id,
+                        message,
+                        this.rules.byte(this.rules.start(node)),
+                        this.rules.byte(node.end),
+                        '',
+                    ),
+                );
+            }
+        }
+    }
+}
