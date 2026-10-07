@@ -1,0 +1,127 @@
+{
+  "old_remote": "70ffa3fb99806db67b0f76b46f502515580ad486",
+  "base": "c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06",
+  "validated_tip": "cc2f5cd6e49979c3c5500c23cc984d422c425cc8",
+  "commits": [
+    {
+      "before": "9dfbe970ee47e7d2748e238dd54acf16deb5ff5a",
+      "after": "7462cab5ace555aabe6c0b049c17c5bf2f86e239",
+      "subject": "Port ten inventory-ranked lint rules through the checker bridge"
+    },
+    {
+      "before": "6a5502a9b79e2ed839f437ba52dbc2509e4fb7c7",
+      "after": "b7f594752282d2db299e9dff7d4454328c80d14b",
+      "subject": "Claim the three rules assigned to type-aware wave 30"
+    },
+    {
+      "before": "7a730fefc5c3dd58cc14f02264bdf5a5b4219f14",
+      "after": "e1886c84e78af0660795d21a44ef6ed414aa83f2",
+      "subject": "Port ISO date truncation and callback parse-try rules with Go parity evidence"
+    },
+    {
+      "before": "db208ccd02b7f95dc1f2c83805be8bec0a808572",
+      "after": "ec3fb7a8dc671f55e10648856c5bc36ee9447c45",
+      "subject": "Claim the next three unclaimed type-aware rules"
+    },
+    {
+      "before": "4c2e7278cb425f59b07556294ad20401404981c8",
+      "after": "15f9d68ee03264fbe797536ba08b6030094a1f58",
+      "subject": "Port collection misuse and discarded outcome and pure result rules"
+    },
+    {
+      "before": "94f371e4154186aab3823915b41b7a453ab2d67f",
+      "after": "f400f5da5f4c2d88934e01dfb2bc93235b268060",
+      "subject": "Record byte parity and failure proofs for the three continuation rules"
+    },
+    {
+      "before": "53d7ce61deb13657f6f717948e673a6f7fa6b356",
+      "after": "fefddf7e0f8feb61c01255c222d21003fb33be8a",
+      "subject": "Claim the next three unclaimed process and timeout rules"
+    },
+    {
+      "before": "45326bd1fd9e864da472d92ea3bdb832b8627207",
+      "after": "999924972aff6724ed9f3718f92e8cf2b1673a0c",
+      "subject": "Port uncleared race timeouts and process output path state"
+    },
+    {
+      "before": "e6713cfa9ac11ccd4a7665f8e2c8dfd6a574df8c",
+      "after": "7cda91634e2ccd079d5ac1f7defddfeb0b73567e",
+      "subject": "Record timer agreement and remaining process analysis gaps"
+    },
+    {
+      "before": "d63870049d19ede2265fdbe0f58f39b2c5ee931a",
+      "after": "972ac176096b92e372c938d3077bbf1c83e268fa",
+      "subject": "Port process exit and blocking standard stream rules"
+    },
+    {
+      "before": "6009e014f120736e35cfd6c6f4f62cbe257bf786",
+      "after": "f7704e887b1dd5e55a926dba677b17c7a1f886a2",
+      "subject": "Record completed process rule validation and timings"
+    },
+    {
+      "before": "bfdbe532528fd2b2044ae95e6e9af5bd834f6dc0",
+      "after": "f9fd0843f84bdb47bd5b2ea1780feaee469b88df",
+      "subject": "Claim next three available React hook rules"
+    },
+    {
+      "before": "bbc4dfde55d21c70d6104e43643a4cdf3458547a",
+      "after": "09f793a5ce6744d73d0db88fe54973da763fe2df",
+      "subject": "Record native JSX and React HIR prerequisites for claimed rules"
+    },
+    {
+      "before": "60d39a232eacf722548afcdfd4e18d0793284066",
+      "after": "e654378a683f544d2d8de1da03c82743f83fff82",
+      "subject": "Port independent React rule lattice and scope components"
+    },
+    {
+      "before": "6f7560bc4774892e793e007485e27ad8c944d79d",
+      "after": "ca32bafad7d6154ccee43d79a1ccc6cab2ce673b",
+      "subject": "Record partial React component parity and remaining integration gaps"
+    },
+    {
+      "before": "e8b00de362de429a98472ca81af9386a30e97fb8",
+      "after": "f58e2e82c5b340c5a46b359fc252ae44c9480e72",
+      "subject": "Record landing rebase and renewed oracle parity on current main"
+    },
+    {
+      "before": "964aec3f72a7fbfb63e1cea6e740828329151c79",
+      "after": "80591966ed6a71de630039210d03034bdf0e7db5",
+      "subject": "Declare numeric syntax listeners for wave 30 rules"
+    },
+    {
+      "before": "4735c1cd66fd35afe57da594489b4ec1bfe52dc1",
+      "after": "542ea6cde25022d40ef031f5509afa35c7c1bfc3",
+      "subject": "Record numeric listener parity and shared infrastructure blockers"
+    },
+    {
+      "before": "609b0876fce32a8aef9a8c9ed25d084bdf557661",
+      "after": "591447be8d724da20218d2e94656ac01d76cd818",
+      "subject": "Preserve wave 30 listener validation logs"
+    },
+    {
+      "before": "79fe1533290285ef4c1990e54bfdba8eb9dd4343",
+      "after": "d97a62ba38c9aaf11eb0f898ee71b3b3c46f4aa6",
+      "subject": "Record wave 30 rebase and renewed oracle checks on current main"
+    },
+    {
+      "before": "1f12ffd471c9195c408df5215cc9322bbb28230c",
+      "after": "79ec5a49505a44fe8697687467845d4659e70a6d",
+      "subject": "Park React analysis claims and claim three JSX rules"
+    },
+    {
+      "before": "1d023cc6c3ca5179ddfee748633025b8b6c3653c",
+      "after": "66dc7a0c5ec38ed80e3380993e0102810a8325a0",
+      "subject": "Port JSX rule components and reproduce shared parser prerequisites"
+    },
+    {
+      "before": "7da8050c76ae23babc71195f6257f87ff28e53f8",
+      "after": "16ffa3bc9296a1c91746dd31434965cec242839d",
+      "subject": "Record JSX component parity and shared source rule blockers"
+    },
+    {
+      "before": "70ffa3fb99806db67b0f76b46f502515580ad486",
+      "after": "cc2f5cd6e49979c3c5500c23cc984d422c425cc8",
+      "subject": "Match setup step timings to the recorded log"
+    }
+  ]
+}

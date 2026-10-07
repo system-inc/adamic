@@ -1,0 +1,83 @@
+{
+  "cohere_pin": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "table_branch": "origin/codex/lint-regex",
+  "table_tip": "071fb012848ce0408428c61aba0857cca472236f",
+  "table_blob": "7c25a8a58f31214adee6a2fffeafd11ea199fd54",
+  "table_rows": 107,
+  "matching_rows": [],
+  "rule_sources": [
+    {
+      "file": "cohere/internal/lint/rules/nexus/consistency_no_iso_string_date_cut.go",
+      "sha256": "50a8045a892836a8eced5a5d66f8be2eea7abf6ae2020f9bcf09553efc3846fb",
+      "imports_regexp": false,
+      "compile_call_present": false
+    },
+    {
+      "file": "cohere/internal/lint/rules/nexus/correctness_no_callback_in_parse_try.go",
+      "sha256": "85417deb414dfacaf89bd72206645188d3ba0ca0f243e56201816ea73f4bbf7b",
+      "imports_regexp": false,
+      "compile_call_present": false
+    },
+    {
+      "file": "cohere/internal/lint/rules/nexus/correctness_no_collection_misuse.go",
+      "sha256": "675c1abd22a200e998acadb6b562118aba61c0d440273937632958a3bff16daa",
+      "imports_regexp": false,
+      "compile_call_present": false
+    },
+    {
+      "file": "cohere/internal/lint/rules/nexus/correctness_no_discarded_outcome.go",
+      "sha256": "721786124d27d3a2137e84dc34a51f39a777c38946a9a63c4fa7b18570674b67",
+      "imports_regexp": false,
+      "compile_call_present": false
+    },
+    {
+      "file": "cohere/internal/lint/rules/nexus/correctness_no_discarded_pure_result.go",
+      "sha256": "2e1458c8293e96e0657e40af5e027775970e602a072099d3d02ef2758d648785",
+      "imports_regexp": false,
+      "compile_call_present": false
+    },
+    {
+      "file": "cohere/internal/lint/rules/nexus/correctness_no_process_exit_after_output.go",
+      "sha256": "49df9d83875cd3ec5936ad46ce8155a633961ad8ebe36a215b059a8a0f852f19",
+      "imports_regexp": false,
+      "compile_call_present": false
+    },
+    {
+      "file": "cohere/internal/lint/rules/nexus/correctness_no_uncleared_race_timeout.go",
+      "sha256": "4acddb7a2ac2cd18a1be3691a3f3adcbb0d546f347cf0a02883b7d90f6e86cc9",
+      "imports_regexp": false,
+      "compile_call_present": false
+    },
+    {
+      "file": "cohere/internal/lint/rules/nexus/correctness_require_blocking_standard_streams.go",
+      "sha256": "37537aa3616001f413e943d48a6c77767ccf12a286ea38282c6e71e075a446a5",
+      "imports_regexp": false,
+      "compile_call_present": false
+    },
+    {
+      "file": "cohere/internal/lint/rules/react/jsx_fragments.go",
+      "sha256": "9596f11467510e0638a604cd20259f14e6fb087d42064bbf8c2a31a414e9009c",
+      "imports_regexp": false,
+      "compile_call_present": false
+    },
+    {
+      "file": "cohere/internal/lint/rules/react/jsx_no_undef.go",
+      "sha256": "8b1515afc5b018edc2dc71422243beb8e3d6f0c238217e29508f1c104ee3eb30",
+      "imports_regexp": false,
+      "compile_call_present": false
+    },
+    {
+      "file": "cohere/internal/lint/rules/react/jsx_no_constructed_context_values.go",
+      "sha256": "638d0eeb99665d4211cec14ccc5baedcee96863159471883f739a2111787d510",
+      "imports_regexp": false,
+      "compile_call_present": false
+    },
+    {
+      "file": "cohere/internal/lint/rules/react/jsx_no_constructed_context_values_stability.go",
+      "sha256": "3b7f683cf84af6d22d24c786fa78c267a96c75f1a62fbc5cba4f0ce9c93ccb10",
+      "imports_regexp": false,
+      "compile_call_present": false
+    }
+  ],
+  "jsx_and_react_utility_regexp_imports": false
+}

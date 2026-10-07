@@ -149,3 +149,9 @@ All three full Go TSX controls report while the native parser refuses them. Full
 source-rule findings, fixes/suggestions, corpora and timings remain blocked by
 shared native JSX AST and numeric handed-node/registration interfaces. These are
 partial components, not completed rule ports. See ../WAVE_30_FIFTH_REPORT.md.
+
+Landing and regex refresh: wave-30 was rebased cleanly onto origin/main c01907a70,
+with all twelve gates and twenty-four comparison mutants green again. A source
+and shared-table audit finds no Go regex matcher for these rules, so no regex
+replacement is introduced. Parked analysis claims and partial JSX statuses remain
+unchanged; no new rules claimed. See ../WAVE_30_REGEX_LANDING_REPORT.md.
