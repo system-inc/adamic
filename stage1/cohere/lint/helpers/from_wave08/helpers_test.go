@@ -65,7 +65,7 @@ func cases(t *testing.T, root string) string {
 	if err = json.Unmarshal(data, &consumers); err != nil {
 		t.Fatal(err)
 	}
-	values := []string{"", "--color-a", "\x00", "é", "😀", "--*", "--text-sm--line-height"}
+	values := []string{"", "--color-a", "\x00", "é", "😀", "--*", "--text-sm--line-height", "var(--x)", "VAR(--x)", "xvar(--x)", ""}
 	for _, consumer := range consumers {
 		count := 0
 		for _, path := range consumer.Tests {
@@ -182,4 +182,8 @@ func compareHelper(t *testing.T, helperName, mainName, anchor, replacement, mode
 			}
 		})
 	}
+}
+
+func TestBreakpointWidth(t *testing.T) {
+	compareHelper(t, "breakpoint_width.a", "width_main.a", "variant.value.includes('var(')", "false", "width")
 }

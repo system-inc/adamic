@@ -1,0 +1,24 @@
+import {panic, programArguments, readTextFile} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {breakpointWidth} from './breakpoint_width.a';
+const input = readTextFile(programArguments()[0] ?? panic('cases'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const child of json.node(root).children) {
+    const sample = json.node(child).text;
+    for(const kind of ['static', 'functional', 'compound', 'arbitrary']) {
+        for(const valueKind of ['named', 'arbitrary']) {
+            for(const hasValue of [false, true]) {
+                for(const themePresent of [false, true]) {
+                    for(const name of [sample, '@' + sample]) {
+                        const width = breakpointWidth(themePresent, {kind, root: name, hasValue, valueKind, value: sample}, (value, namespace) => ({value: namespace === '--container' ? '24rem' : '40rem', found: true}));
+                        const codes: number[] = [];
+                        for(let i = 0; i < width.value.length; i++) { codes.push(width.value.charCodeAt(i)); }
+                        console.log(`${width.found} ${codes.join(',')}`);
+                    }
+                }
+            }
+        }
+    }
+}

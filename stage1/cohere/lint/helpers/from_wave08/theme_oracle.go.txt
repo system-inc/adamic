@@ -1,5 +1,5 @@
 package tailwind
-import "fmt"
+import ("fmt"; "unicode/utf16"; "strings")
 func Wave08NewTheme(key string) string {
  left,right:=NewTheme(),NewTheme()
  output:=fmt.Sprintf("%t %d %d %d\n",left.Prefix=="",len(left.values),len(left.keyOrder),left.deadKeys)
@@ -22,4 +22,15 @@ func Wave08ClearNamespace(sample string) string {
  output+=fmt.Sprintf("%d %d %d %s %s\n",len(theme.values),theme.deadKeys,len(theme.keyOrder),present,order)
  }}
  return output
+}
+
+func Wave08Width(sample string) string {
+ var output strings.Builder
+ for _,kind:=range []ParsedVariantKind{"static","functional","compound","arbitrary"}{for _,valueKind:=range []ParsedValueKind{"named","arbitrary"}{for _,hasValue:=range []bool{false,true}{for _,themePresent:=range []bool{false,true}{for _,name:=range []string{sample,"@"+sample}{
+ var theme *Theme
+ if themePresent {theme=NewTheme();theme.values["--breakpoint-"+sample]=themeValue{value:"40rem"};theme.values["--breakpoint-"+name]=themeValue{value:"40rem"};theme.values["--container-"+sample]=themeValue{value:"24rem"}}
+ variant:=ParsedVariant{Kind:kind,Root:name};if hasValue{variant.Value=&ParsedVariantValue{Kind:valueKind,Value:sample}}
+ value,found:=resolveBreakpointWidth(theme,variant);codes:=[]string{};for _,unit:=range utf16.Encode([]rune(value)){codes=append(codes,fmt.Sprint(unit))};fmt.Fprintf(&output,"%t %s\n",found,strings.Join(codes,","))
+ }}}}}
+ return output.String()
 }

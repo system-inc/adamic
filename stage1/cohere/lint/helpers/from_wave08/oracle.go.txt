@@ -1,3 +1,3 @@
 package main
 import("encoding/json";"os";"fmt"; tw "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse")
-func main(){data,err:=os.ReadFile(os.Args[1]);if err!=nil{panic(err)};var cases []string;if err=json.Unmarshal(data,&cases);err!=nil{panic(err)};for _,key:=range cases{if len(os.Args)>2 && os.Args[2]=="clear"{fmt.Print(tw.Wave08ClearNamespace(key))}else{fmt.Print(tw.Wave08NewTheme(key))}}}
+func main(){data,err:=os.ReadFile(os.Args[1]);if err!=nil{panic(err)};var cases []string;if err=json.Unmarshal(data,&cases);err!=nil{panic(err)};for _,key:=range cases{if len(os.Args)>2 && os.Args[2]=="width"{fmt.Print(tw.Wave08Width(key))}else if len(os.Args)>2 && os.Args[2]=="clear"{fmt.Print(tw.Wave08ClearNamespace(key))}else{fmt.Print(tw.Wave08NewTheme(key))}}}

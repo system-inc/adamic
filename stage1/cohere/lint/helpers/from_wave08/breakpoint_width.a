@@ -1,0 +1,22 @@
+export interface Width { readonly value: string; readonly found: boolean; }
+export interface BreakpointVariant {
+    readonly kind: string;
+    readonly root: string;
+    readonly hasValue: boolean;
+    readonly valueKind: string;
+    readonly value: string;
+}
+// The separately owned theme resolver supplies named lookup results.
+export function breakpointWidth(themePresent: boolean, variant: BreakpointVariant, lookup: (value: string, namespace: string) => Width): Width {
+    if(!themePresent) { return {value: '', found: false}; }
+    if(variant.kind === 'static') { return lookup(variant.root, '--breakpoint'); }
+    if(variant.kind === 'functional') {
+        if(!variant.hasValue) { return {value: '', found: false}; }
+        if(variant.valueKind === 'arbitrary') {
+            if(variant.value.includes('var(')) { return {value: '', found: false}; }
+            return {value: variant.value, found: true};
+        }
+        return lookup(variant.value, variant.root.startsWith('@') ? '--container' : '--breakpoint');
+    }
+    return {value: '', found: false};
+}
