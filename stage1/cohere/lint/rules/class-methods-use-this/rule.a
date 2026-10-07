@@ -1,5 +1,5 @@
 import type { RuleContext } from '../../context.ts';
-import { Diagnostic, publish } from '../typescript-no-unnecessary-type-constraint/records.a';
+import { Diagnostic, publish } from '../typescript-no-unused-expressions/records.a';
 import { message } from './messages.a';
 
 export class Rule {

@@ -1,6 +1,0 @@
-{
-  "name": "any_constraint_ignored",
-  "file": "rule.a",
-  "from": "if(kind !== 'AnyKeyword' && kind !== 'UnknownKeyword')",
-  "to": "if(kind !== 'NeverKeyword' && kind !== 'UnknownKeyword')"
-}

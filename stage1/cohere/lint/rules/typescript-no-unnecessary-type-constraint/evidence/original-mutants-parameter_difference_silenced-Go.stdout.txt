@@ -1,6 +1,0 @@
-case 0
-/tmp/lint-wave1-03-original-options/typescript-unified-signatures-witness.ts:1:41
-  @typescript-eslint/unified-signatures  These overloads can be combined into one signature taking `string | number`.
-
-shape 40 49 singleParameterDifference fixes=0 suggestions=0
-fixed	function f(a: string): void; function f(a: number): void;\u000a

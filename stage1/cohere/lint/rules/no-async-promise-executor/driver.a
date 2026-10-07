@@ -8,7 +8,7 @@ import { Settings } from '../../settings.ts';
 import { create as constraint } from './rule.a';
 import { create as asConst } from '../no-case-declarations/rule.a';
 import { create as enumInitializers } from '../no-compare-neg-zero/rule.a';
-import { Diagnostic, Edit } from '../typescript-no-unnecessary-type-constraint/records.a';
+import { Diagnostic, Edit } from '../typescript-no-unused-expressions/records.a';
 
 function bytes(source: string, end: number): number {
     let result = 0;

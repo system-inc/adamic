@@ -140,7 +140,7 @@ if args.typescript:
 if args.mutants:
     for slug,_ in subjects:
         directory=s/('mutant-'+slug);root=directory/'rules';root.mkdir(parents=True)
-        for child in [slug for slug,_ in subjects]+['typescript-no-unnecessary-type-constraint']:
+        for child in [slug for slug,_ in subjects]+['typescript-no-unused-expressions']:
             dest=root/child;dest.mkdir()
             for file in (owned.parent/child).glob('*.a'):
                 content=file.read_text()
@@ -178,4 +178,4 @@ if args.benchmark:
                 best[side]=min(best.get(side,duration),duration)
         count=int(expected)
         print('THROUGHPUT '+slug+' '+json.dumps({'findings':count,'files':len(compiler)+1,'per_second':{side:count/duration for side,duration in best.items()}}),flush=True)
-print('PASS complete owned validation; shared serializer integration remains explicitly blocked',flush=True)
+print('PASS complete owned validation; see LANDING.md for shared harness coverage',flush=True)

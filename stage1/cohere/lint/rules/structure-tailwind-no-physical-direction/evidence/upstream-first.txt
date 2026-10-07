@@ -1,8 +1,0 @@
-=== RUN   TestContinuationCorpus
-    lint_test.go:272: go [test -overlay=/tmp/adamic-gate/TestContinuationCorpus1301744959/001/overlay.json ./internal/lint/rules/core -run ^(TestNoDebugger|TestNoEmpty|TestEqeqeq|TestNoVar|TestNoDuplicateCase) -count=1 -timeout=10m]: <nil>
-        go: downloading github.com/dlclark/regexp2/v2 v2.5.2
-        go: downloading github.com/dlclark/regexp2 v1.11.5
---- FAIL: TestContinuationCorpus (54.37s)
-FAIL
-FAIL	github.com/system-inc/adamic/stage1/cohere/lint	54.376s
-FAIL

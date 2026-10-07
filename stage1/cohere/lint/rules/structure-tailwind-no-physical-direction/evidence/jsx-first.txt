@@ -1,6 +1,0 @@
-=== RUN   TestContinuationJSXRefusal
-    continuation_overlay_test.go:86: go [test ./internal/lint/rules/tailwind -run ^TestNoPhysicalDirectionFires$/a_jsx_attribute$ -count=1 -v]: chdir /workspace/cohere: no such file or directory
---- FAIL: TestContinuationJSXRefusal (0.00s)
-FAIL
-FAIL	github.com/system-inc/adamic/stage1/cohere/lint	0.008s
-FAIL

@@ -1,6 +1,0 @@
-{
-  "name": "annotation_fix_changes_type",
-  "file": "rule.a",
-  "from": "new Edit(end, end, ' as const')",
-  "to": "new Edit(end, end, ' as string')"
-}

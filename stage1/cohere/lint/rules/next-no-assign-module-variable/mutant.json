@@ -1,6 +1,0 @@
-{
-  "name": "module_binding_ignored",
-  "file": "rule.a",
-  "from": ".text === 'module'",
-  "to": ".text === 'moduleName'"
-}

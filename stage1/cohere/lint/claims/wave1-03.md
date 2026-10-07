@@ -152,3 +152,7 @@ implementations remain intact and pushed. This branch is not landing-ready, so
 no further claims are permitted. Raw conflict hunks, exact commands and fresh
 helper mutant results are in
 ../rules/typescript-no-unnecessary-type-constraint/LANDING.md.
+
+## Landed harness and dedup update
+
+Rebased onto origin/area/stage1-lint 7481e0324, retaining six unique ports and dropping six losing copies as required by DEDUP_LEDGER.md. Shared owned witnesses match 57,889 bytes and all six own mutants pass all three paths. Full TestRulesAgree remains red on the decorated async executor recovery fixture; no corpus cases or shared files changed. Current evidence supersedes historical references to removed rule directories: ../rules/no-async-promise-executor/LANDING.md. No new claim.

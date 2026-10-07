@@ -1,6 +1,0 @@
-{
-  "name": "required_parameter_ignored",
-  "file": "rule.a",
-  "from": "if(category === 0) { lastPlain = position; }",
-  "to": "if(category === 2) { lastPlain = position; }"
-}
