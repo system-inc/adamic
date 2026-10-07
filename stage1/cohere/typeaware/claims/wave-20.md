@@ -127,3 +127,10 @@ The three current JSX rule.json declarations use named ast.Kind values.
 Numeric-kind blockers in earlier reports are superseded by the user correction.
 Shared checker-context registration and the other two JSX analyses remain unfinished.
 No additional claims. See react-jsx-fragments/LANDING_B8FB957AA_REPORT.md.
+
+Fifth-batch progress: react/jsx-fragments now has a tested native analysis
+(7f646aa90): 57 controls/34 findings, both corpora, sanitizer, semantic mutant
+and released query PASS. Current main b8fb957aa and named harness 41eb6eab2
+are ancestors. Shared checker-context registration remains pending for the
+two JSX source analyses; jsx-no-constructed-context-values remains unfinished.
+No further rules were claimed. See react-jsx-fragments/ANALYSIS_REPORT.md.

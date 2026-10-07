@@ -85,3 +85,11 @@ or context file was changed. The JSX fragment and constructed-context source
 analyses remain unfinished; jsx-no-undef has a tested private native analysis.
 These syntax/checker rules are not parked HIR/SSA rules. No further claims were
 made. The current landing report records revalidation against main b8fb957aa.
+
+## Native source analysis now implemented
+
+Source 7f646aa90 ports the full Go fragment predicate and both modes.
+57 controls/34 findings, corpora, sanitizer, semantic mutant and released
+question pass. Shared registration still lacks the checker lease/context;
+see ANALYSIS_REPORT.md. The old source-not-ported statements are historical.
+jsx-no-constructed-context-values remains unfinished, not parked.
