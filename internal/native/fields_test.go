@@ -195,3 +195,44 @@ func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
 		}
 	}
 }
+
+// realPath's runtime path is slot 1; a source object can put path in slot 0.
+// The whole-program proof must see both before specializing either read.
+func TestRealPathFieldConflictMatchesNode(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	path := filepath.Join(directory, "realpath-fields.ts")
+	source := `import { realPath } from 'adamic';
+const literal = { path: 'literal' };
+console.log(literal.path);
+const resolved = realPath(` + strconv.Quote(directory) + `);
+if (resolved.kind === 'Ok') { console.log(resolved.path); }
+else { console.log(resolved.message); }
+`
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	generated := C(program)
+	runner, err := filepath.Abs("../../oracle/node.mjs")
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", runner, path)
+	for _, sanitize := range []bool{false, true} {
+		binary := filepath.Join(directory, "realpath-fields")
+		if err := Build(generated, binary, Options{Sanitize: sanitize}); err != nil {
+			t.Fatal(err)
+		}
+		if got := runWithInput(t, "", binary); got != want {
+			t.Fatalf("sanitize %v: native %q; Node %q", sanitize, got, want)
+		}
+	}
+}
