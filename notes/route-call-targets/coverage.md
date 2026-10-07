@@ -202,5 +202,8 @@ The oracle also checked the JavaScript backend, ASan/UBSan and leaks.
 ```sh
 git add internal/oracle/oracle_test.go internal/oracle/counts.md internal/oracle/testdata/route_targets_*.a notes/route-call-targets
 git commit -m "Cover routed call targets with oracle programs"
+git add -f notes/route-call-targets/gate.log notes/route-call-targets/width-retry.log
+git add notes/route-call-targets/coverage.md
+git commit -m "Record gate output and the repaired width check"
 git push -u origin coverage/route-call-targets
 ```
