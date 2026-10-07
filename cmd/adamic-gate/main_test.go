@@ -2,11 +2,13 @@ package main
 
 import (
 	"os"
-	"os/exec"
+
 	"path/filepath"
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/boundedrun"
 )
 
 // Ask Go itself which tests ran. A regex-only check would miss Go's slash splitting rules.
@@ -38,12 +40,13 @@ func TestOther(t *testing.T) {}
 		if err != nil {
 			t.Fatal(err)
 		}
-		cmd := exec.Command("go", "test", "-count=1", "-json", "-run", pattern, ".")
+		cmd, release := boundedrun.Command(boundedrun.Build, "go", "test", "-count=1", "-json", "-run", pattern, ".")
 		cmd.Dir = directory
 		cmd.Env = append(os.Environ(), "GOWORK=off")
 		cmd.Stdout = f
 		cmd.Stderr = f
 		err = cmd.Run()
+		release()
 		f.Close()
 		if err != nil {
 			t.Fatal(err)

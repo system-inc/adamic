@@ -23,6 +23,8 @@ import (
 	"strings"
 	"syscall"
 	"time"
+
+	"github.com/system-inc/adamic/internal/boundedrun"
 )
 
 const timingPath = "cmd/adamic-gate/timings.json"
@@ -160,7 +162,13 @@ func run(args []string) error {
 	return fmt.Errorf("unknown command %q", args[0])
 }
 func output(name string, args ...string) (string, error) {
-	b, err := exec.Command(name, args...).CombinedOutput()
+	limit := boundedrun.Probe
+	if name == "go" && len(args) > 0 && (args[0] == "list" || args[0] == "test") {
+		limit = boundedrun.Build
+	}
+	command, release := boundedrun.Command(limit, name, args...)
+	defer release()
+	b, err := command.CombinedOutput()
 	if err != nil {
 		return "", fmt.Errorf("%s %v: %w\n%s", name, args, err, b)
 	}
@@ -761,7 +769,8 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	}
 	var commandStderr io.Writer = stderr
 	runCommand := func(name string, args []string, tmp string, w io.Writer) int {
-		cmd := exec.Command(name, args...)
+		cmd, release := shardCommand(name, args...)
+		defer release()
 		cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
 		if name == "go" && len(args) > 0 && args[0] == "test" && p.WASI != nil && p.WASI.Shard == index && strings.HasSuffix(args[len(args)-1], "/internal/native") && args[len(args)-2] == "^TestWASI$" {
 			cmd.Env = append(cmd.Env, "PATH="+filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin")+string(os.PathListSeparator)+os.Getenv("PATH"))
@@ -1297,4 +1306,14 @@ func compare(path, log string) error {
 	}
 	fmt.Println("diff: empty")
 	return nil
+}
+
+// Shard tests already request Go's 60m timer. The outer 70m deadline also
+// covers a stuck build or Go itself. Formatting/vet fit the measured 32.8s setup.
+func shardCommand(name string, args ...string) (*boundedrun.Cmd, func()) {
+	limit := boundedrun.Build
+	if name == "go" && len(args) > 0 && args[0] == "test" {
+		limit = boundedrun.Shard
+	}
+	return boundedrun.Command(limit, name, args...)
 }

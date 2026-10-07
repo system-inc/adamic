@@ -6,6 +6,9 @@ import os
 from pathlib import Path
 import shlex
 import subprocess
+import sys
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[2] / "internal" / "boundedrun"))
+from python import run as bounded_run
 import time
 
 parser = argparse.ArgumentParser()
@@ -18,7 +21,7 @@ output = Path(arguments.output)
 output.mkdir(parents=True, exist_ok=True)
 
 def capture(command):
-    return subprocess.check_output(command, text=True).strip()
+    return bounded_run(command, stdout=subprocess.PIPE, text=True, check=True).stdout.strip()
 
 identity = {
     'commit': capture(['git', 'rev-parse', 'HEAD']),
@@ -61,7 +64,7 @@ for label, corpus, directory in filters:
                 load_before = Path('/proc/loadavg').read_text().strip()
                 start = time.monotonic()
                 with (output / (name + '.json')).open('w') as stdout, (output / (name + '.log')).open('w') as stderr:
-                    result = subprocess.run(command, env=environment, stdout=stdout, stderr=stderr)
+                    result = bounded_run(command, env=environment, stdout=stdout, stderr=stderr)
                 seconds = time.monotonic() - start
                 record = dict(identity, loop=label, round=round_number, temperature=temperature,
                               variant=variant, seconds=seconds, exit=result.returncode,
