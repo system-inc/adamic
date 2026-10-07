@@ -1,0 +1,373 @@
+=== RUN   TestRulesAgree
+    lint_test.go:399: cohere cases: 2268 unique source/rule/options combinations
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1710303745/019/case-079/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1710303745/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-079/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-079/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1710303745/019/case-081/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1710303745/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:433: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1710303745/019/case-085/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1710303745/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-085/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-085/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1710303745/019/case-086/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1710303745/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-086/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-086/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1710303745/019/case-095/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1710303745/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-095/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected OpenBraceToken, got EndOfFile at 11 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-095/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1710303745/019/case-097/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1710303745/019/case-097/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 33 errorMethod fix	m: (a: string) => void;		14 33
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1710303745/003/scanner: timeout=true: signal: killed: 
+    lint_test.go:433: explicit unsupported recovery: node: timeout=true: signal: killed: 
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1710303745/019/case-099/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1710303745/019/case-099/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 34 errorMethod fix	m: (a: string) => void;		14 34
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1710303745/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-099/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got Identifier at 17 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-099/Thing.ts
+    lint_test.go:432: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1710303745/019/case-100/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"property"}	unsupported-recovery
+    lint_test.go:433: Go recovered output: case 0
+        /tmp/adamic-gate/TestRulesAgree1710303745/019/case-100/Thing.ts:1:15
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 14 27 errorMethod 			14 27
+        recovery findings only
+    lint_test.go:433: explicit unsupported recovery: /tmp/adamic-gate/TestRulesAgree1710303745/003/scanner: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-100/Thing.ts
+    lint_test.go:433: explicit unsupported recovery: node: timeout=false: exit status 70: adamic: panic: parser slice expected GreaterThanToken, got OpenParenToken at 17 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-100/Thing.ts
+    lint_test.go:438: node [--disable-warning=ExperimentalWarning /tmp/adamic-wave13-park/oracle/node.mjs /tmp/adamic-wave13-park/stage1/cohere/lint/main.ts --manifest /tmp/adamic-gate/TestRulesAgree1710303745/068/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected semicolon at 6 in /tmp/adamic-gate/TestRulesAgree1710303745/019/case-459/ConsistencyNoHandRolledDelay.ts
+--- FAIL: TestRulesAgree (46.27s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:514: compiler and stage1: 411 files
+    lint_test.go:515: Go, Node, emitted JavaScript, native identical: 20649216 bytes
+--- PASS: TestCompilerAndStage1Agree (87.41s)
+=== RUN   TestMutants
+=== RUN   TestMutants/default-case-last-semantic-mutant
+    lint_test.go:759: default-case-last-semantic-mutant caught on Node: case 145 line 2786: port "fixed\tswitch (value) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3915861654/016/default-case-last-0.ts:1:18"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3915861654/016/default-case-last-0.ts:1:18
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 17 32 notLast 			17 32
+        fixed	switch (value) { default: break; case 1: break; }\u000a
+    lint_test.go:759: default-case-last-semantic-mutant caught on emitted JavaScript: case 145 line 2786: port "fixed\tswitch (value) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3915861654/016/default-case-last-0.ts:1:18"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3915861654/016/default-case-last-0.ts:1:18
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 17 32 notLast 			17 32
+        fixed	switch (value) { default: break; case 1: break; }\u000a
+    lint_test.go:759: default-case-last-semantic-mutant caught on native: case 145 line 2786: port "fixed\tswitch (value) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3915861654/016/default-case-last-0.ts:1:18"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsdefault-case-last-semantic-mutant3915861654/016/default-case-last-0.ts:1:18
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 17 32 notLast 			17 32
+        fixed	switch (value) { default: break; case 1: break; }\u000a
+=== RUN   TestMutants/for-direction-semantic-mutant
+    lint_test.go:759: for-direction-semantic-mutant caught on Node: case 145 line 2786: port "fixed\tfor(let i = 0; i < 10; i--) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant556300462/016/for-direction-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant556300462/016/for-direction-0.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 30 incorrectDirection 			0 30
+        fixed	for(let i = 0; i < 10; i--) {}\u000a
+    lint_test.go:759: for-direction-semantic-mutant caught on emitted JavaScript: case 145 line 2786: port "fixed\tfor(let i = 0; i < 10; i--) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant556300462/016/for-direction-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant556300462/016/for-direction-0.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 30 incorrectDirection 			0 30
+        fixed	for(let i = 0; i < 10; i--) {}\u000a
+    lint_test.go:759: for-direction-semantic-mutant caught on native: case 145 line 2786: port "fixed\tfor(let i = 0; i < 10; i--) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant556300462/016/for-direction-0.ts:1:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsfor-direction-semantic-mutant556300462/016/for-direction-0.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 30 incorrectDirection 			0 30
+        fixed	for(let i = 0; i < 10; i--) {}\u000a
+=== RUN   TestMutants/guard-for-in-semantic-mutant
+    lint_test.go:759: guard-for-in-semantic-mutant caught on Node: case 30 line 546: port "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:32", Go "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:36"
+        Go context:
+        range 23 26 unexpectedUnaryOp 			23 26
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:28
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 27 29 unexpectedBlock 			27 29
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:36
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 35 40 unexpectedVar 			35 40
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:36
+    lint_test.go:759: guard-for-in-semantic-mutant caught on emitted JavaScript: case 30 line 546: port "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:32", Go "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:36"
+        Go context:
+        range 23 26 unexpectedUnaryOp 			23 26
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:28
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 27 29 unexpectedBlock 			27 29
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:36
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 35 40 unexpectedVar 			35 40
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:36
+    lint_test.go:759: guard-for-in-semantic-mutant caught on native: case 30 line 546: port "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:32", Go "/tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:36"
+        Go context:
+        range 23 26 unexpectedUnaryOp 			23 26
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:28
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 27 29 unexpectedBlock 			27 29
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:36
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 35 40 unexpectedVar 			35 40
+        /tmp/adamic-gate/TestMutantsguard-for-in-semantic-mutant1246171329/004/generated-3.ts:1:36
+=== RUN   TestMutants/delay-resolve-name-ignored
+    lint_test.go:759: delay-resolve-name-ignored caught on Node: case 145 line 2786: port "fixed\tasync function poll(milliseconds: number) {\\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\\u000a}\\u000a", Go "/tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored1543519455/016/nexus-consistency-no-hand-rolled-delay-0.ts:2:11"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored1543519455/016/nexus-consistency-no-hand-rolled-delay-0.ts:2:11
+          nexus/consistency-no-hand-rolled-delay  This `new Promise` around a `setTimeout` is a hand-rolled `delay`. Write `await delay(milliseconds);` with `import { delay } from '@nexus/source/coordination/Delay';`. The promise does nothing but resolve after a timer, which is exactly what `delay` does, and spelling it out at every call site makes the reader check each one for the variant it might be (a value passed to `resolve`, a timer kept for cancelling, a reject path) before they can read past it. One named wait says it is a plain wait.
+        
+        range 54 113 handRolledDelay 			54 113
+        fixed	async function poll(milliseconds: number) {\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\u000a}\u000a
+    lint_test.go:759: delay-resolve-name-ignored caught on emitted JavaScript: case 145 line 2786: port "fixed\tasync function poll(milliseconds: number) {\\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\\u000a}\\u000a", Go "/tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored1543519455/016/nexus-consistency-no-hand-rolled-delay-0.ts:2:11"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored1543519455/016/nexus-consistency-no-hand-rolled-delay-0.ts:2:11
+          nexus/consistency-no-hand-rolled-delay  This `new Promise` around a `setTimeout` is a hand-rolled `delay`. Write `await delay(milliseconds);` with `import { delay } from '@nexus/source/coordination/Delay';`. The promise does nothing but resolve after a timer, which is exactly what `delay` does, and spelling it out at every call site makes the reader check each one for the variant it might be (a value passed to `resolve`, a timer kept for cancelling, a reject path) before they can read past it. One named wait says it is a plain wait.
+        
+        range 54 113 handRolledDelay 			54 113
+        fixed	async function poll(milliseconds: number) {\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\u000a}\u000a
+    lint_test.go:759: delay-resolve-name-ignored caught on native: case 145 line 2786: port "fixed\tasync function poll(milliseconds: number) {\\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\\u000a}\\u000a", Go "/tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored1543519455/016/nexus-consistency-no-hand-rolled-delay-0.ts:2:11"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsdelay-resolve-name-ignored1543519455/016/nexus-consistency-no-hand-rolled-delay-0.ts:2:11
+          nexus/consistency-no-hand-rolled-delay  This `new Promise` around a `setTimeout` is a hand-rolled `delay`. Write `await delay(milliseconds);` with `import { delay } from '@nexus/source/coordination/Delay';`. The promise does nothing but resolve after a timer, which is exactly what `delay` does, and spelling it out at every call site makes the reader check each one for the variant it might be (a value passed to `resolve`, a timer kept for cancelling, a reject path) before they can read past it. One named wait says it is a plain wait.
+        
+        range 54 113 handRolledDelay 			54 113
+        fixed	async function poll(milliseconds: number) {\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\u000a}\u000a
+=== RUN   TestMutants/return-void-unicode-whitespace-mutant
+    lint_test.go:759: return-void-unicode-whitespace-mutant caught on Node: case 146 line 2799: port "range 73 93 returnVoid fix\tstop(); return;\t\t73 93", Go "range 73 93 returnVoid \t\t\t73 93"
+        Go context:
+        
+        range 24 44 returnVoid fix	stop(); return;		24 44
+        /tmp/adamic-gate/TestMutantsreturn-void-unicode-whitespace-mutant3997576388/017/nexus-consistency-no-return-void-1.ts:2:27
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 73 93 returnVoid 			73 93
+        /tmp/adamic-gate/TestMutantsreturn-void-unicode-whitespace-mutant3997576388/017/nexus-consistency-no-return-void-1.ts:3:26
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 121 141 returnVoid 			121 141
+    lint_test.go:759: return-void-unicode-whitespace-mutant caught on emitted JavaScript: case 146 line 2799: port "range 73 93 returnVoid fix\tstop(); return;\t\t73 93", Go "range 73 93 returnVoid \t\t\t73 93"
+        Go context:
+        
+        range 24 44 returnVoid fix	stop(); return;		24 44
+        /tmp/adamic-gate/TestMutantsreturn-void-unicode-whitespace-mutant3997576388/017/nexus-consistency-no-return-void-1.ts:2:27
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 73 93 returnVoid 			73 93
+        /tmp/adamic-gate/TestMutantsreturn-void-unicode-whitespace-mutant3997576388/017/nexus-consistency-no-return-void-1.ts:3:26
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 121 141 returnVoid 			121 141
+    lint_test.go:759: return-void-unicode-whitespace-mutant caught on native: case 146 line 2799: port "range 73 93 returnVoid fix\tstop(); return;\t\t73 93", Go "range 73 93 returnVoid \t\t\t73 93"
+        Go context:
+        
+        range 24 44 returnVoid fix	stop(); return;		24 44
+        /tmp/adamic-gate/TestMutantsreturn-void-unicode-whitespace-mutant3997576388/017/nexus-consistency-no-return-void-1.ts:2:27
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 73 93 returnVoid 			73 93
+        /tmp/adamic-gate/TestMutantsreturn-void-unicode-whitespace-mutant3997576388/017/nexus-consistency-no-return-void-1.ts:3:26
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 121 141 returnVoid 			121 141
+=== RUN   TestMutants/no-constructor-return-semantic-mutant
+    lint_test.go:759: no-constructor-return-semantic-mutant caught on Node: case 60 line 1174: port "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:208", Go "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:251"
+        Go context:
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:251
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 250 258 unexpectedVar 			250 258
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:251
+    lint_test.go:759: no-constructor-return-semantic-mutant caught on emitted JavaScript: case 60 line 1174: port "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:208", Go "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:251"
+        Go context:
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:251
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 250 258 unexpectedVar 			250 258
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:251
+    lint_test.go:759: no-constructor-return-semantic-mutant caught on native: case 60 line 1174: port "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:208", Go "/tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:251"
+        Go context:
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:251
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 250 258 unexpectedVar 			250 258
+        /tmp/adamic-gate/TestMutantsno-constructor-return-semantic-mutant4217256818/007/generated-6.ts:1:251
+=== RUN   TestMutants/no-delete-var-semantic-mutant
+    lint_test.go:759: no-delete-var-semantic-mutant caught on Node: case 145 line 2786: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant1768220966/016/no-delete-var-0.ts:1:29"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant1768220966/016/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 			28 42
+        fixed	function f(value: number) { delete (value); }\u000a
+    lint_test.go:759: no-delete-var-semantic-mutant caught on emitted JavaScript: case 145 line 2786: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant1768220966/016/no-delete-var-0.ts:1:29"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant1768220966/016/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 			28 42
+        fixed	function f(value: number) { delete (value); }\u000a
+    lint_test.go:759: no-delete-var-semantic-mutant caught on native: case 145 line 2786: port "fixed\tfunction f(value: number) { delete (value); }\\u000a", Go "/tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant1768220966/016/no-delete-var-0.ts:1:29"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-delete-var-semantic-mutant1768220966/016/no-delete-var-0.ts:1:29
+          no-delete-var  `delete` removes a property from an object; it cannot remove a variable. Applied to a bare name this does nothing in strict mode and throws a SyntaxError where strict mode is enforced, which every module in this codebase is. So the line either has no effect or breaks the file, and neither is what it reads as doing. To drop a reference, assign undefined; to remove a property, delete the property.
+        
+        range 28 42 unexpectedDeleteVar 			28 42
+        fixed	function f(value: number) { delete (value); }\u000a
+=== RUN   TestMutants/no-eq-null-semantic-mutant
+    lint_test.go:759: no-eq-null-semantic-mutant caught on Node: case 20 line 370: port "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:71", Go "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:67"
+        Go context:
+        range 18 20 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	18 20
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:37
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 36 38 unexpected fix	!==		36 38
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:67
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 66 77 unexpected 			66 77
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:71
+    lint_test.go:759: no-eq-null-semantic-mutant caught on emitted JavaScript: case 20 line 370: port "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:71", Go "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:67"
+        Go context:
+        range 18 20 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	18 20
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:37
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 36 38 unexpected fix	!==		36 38
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:67
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 66 77 unexpected 			66 77
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:71
+    lint_test.go:759: no-eq-null-semantic-mutant caught on native: case 20 line 370: port "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:71", Go "/tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:67"
+        Go context:
+        range 18 20 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	18 20
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:37
+          eqeqeq  This compares with `!=`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `!==`, which compares without coercing.
+        
+        range 36 38 unexpected fix	!==		36 38
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:67
+          no-eq-null  This compares against `null` with `==` or `!=`, which also matches `undefined`. That coercion is usually what the author wanted and is never what the code says, so a reader cannot tell a deliberate both-values check from a typo. Write `=== null` when only null is meant, or `== null` deliberately somewhere the convention says so.
+        
+        range 66 77 unexpected 			66 77
+        /tmp/adamic-gate/TestMutantsno-eq-null-semantic-mutant3657529726/003/generated-2.ts:1:71
+--- PASS: TestMutants (163.84s)
+    --- PASS: TestMutants/default-case-last-semantic-mutant (20.75s)
+    --- PASS: TestMutants/for-direction-semantic-mutant (19.39s)
+    --- PASS: TestMutants/guard-for-in-semantic-mutant (19.45s)
+    --- PASS: TestMutants/delay-resolve-name-ignored (19.68s)
+    --- PASS: TestMutants/return-void-unicode-whitespace-mutant (21.14s)
+    --- PASS: TestMutants/no-constructor-return-semantic-mutant (20.03s)
+    --- PASS: TestMutants/no-delete-var-semantic-mutant (20.28s)
+    --- PASS: TestMutants/no-eq-null-semantic-mutant (20.74s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 116148 bytes
+--- PASS: TestOwnedWitnesses (24.49s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	322.032s
+FAIL

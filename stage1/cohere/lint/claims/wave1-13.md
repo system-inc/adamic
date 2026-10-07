@@ -105,3 +105,5 @@ Latest area follow-up: d65a8f931 retained and rechecked, supported witnesses and
 Required correctness input follow-up: main and area unchanged; TestCompilerAndStage1Agree executed with the real pinned sources and passed on 364 files, 20,648,441 matching Go bytes and no skip. Upstream-fixture blockers remain. No additional claim.
 
 Current main c7991b900 / area b84a9d931: clean rebase and fresh shared real-input corpus, supported witness, active-mutant and vet checks complete. Upstream top-level await and JSX fixed-source reparsing remain named blockers. No new rule or helper claim; not declared fully green.
+
+Area b46914832 directory-only legacy migration: clean rebase, unchanged dedup ledger, fresh 411-file real-input parity, supported witnesses, all eight active mutants and vet pass. Full upstream parity remains blocked by named shared parser/fix-reparse inputs. No new rule or helper claim.

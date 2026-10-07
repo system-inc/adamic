@@ -1,7 +1,7 @@
-Built: eight retained rule ports rebased onto landed area b84a9d931; return-void uses JS RegExp literals and raw regex/JSX controls.
-Commits: this latest-area evidence follows the owned rebase; helper branch is pushed at cdb36d199 on the same area and main c7991b900.
-Commands: 364 compiler/stage1 files PASS with real inputs (20,648,441 Go bytes); fresh supported witnesses (71,653 bytes), eight active mutants and vet PASS; the inherited lastIndexOf result above is historical.
-Mutants: all eight active rule mutants and twelve helper mutants compile, finish cleanly and are caught on source Node, emitted JavaScript and sanitized native; the former braces mutant was also caught on area 7481e032.
+Built: eight retained rule ports rebased onto landed area b46914832; return-void uses JS RegExp literals and raw regex/JSX controls.
+Commits: this latest-area evidence follows the owned rebase; helper branch is pushed at 39d68709a on the same area and main c7991b900.
+Commands: fresh 411-file corpus PASS (20,649,216 Go bytes), shared witnesses PASS (116,148 bytes), eight active mutants and vet PASS; full upstream TestRulesAgree FAIL.
+Mutants: all eight active rule mutants and twelve helper mutants compile, finish cleanly and are caught on source Node, emitted JavaScript and sanitized native on area b46914832.
 Not covered: complete upstream-fixture parity, the other required correctness packages, new throughput or full gate; top-level await and JSX fixed-source reparsing block landing, so no new helper claim.
 
 ## Landed harness and ledger
@@ -91,3 +91,17 @@ node --disable-warning=ExperimentalWarning oracle/node.mjs stage1/cohere/lint/ma
 ```
 
 Both issues remain explicit blockers, not passing parity or newly skipped checks. No shared file, finding model, registry generator, oracle or comparison is edited. This branch is rebased and pushed with bounded green checks but is not declared fully green or landing-ready; no new helper claim follows.
+
+## Directory-only legacy dispatcher landing
+
+Area advanced to b46914832d70e00847d82d5d221ab7bb24040c53, carrying the remaining legacy and volume rules in registered rule directories. Main stays c7991b900. Its complete dedup ledger remains byte-identical to the pinned, already-read ledger. Both owned branches rebased cleanly; incoming shared context, dispatcher, oracle, legacy rule directories and tests were retained without edits. The eight owned implementations and mutant descriptors are unchanged. Helper branch is pushed at 39d68709a after the same three helper suites, 4,470 cases, 820,676 matching Go bytes, all twelve semantic mutants and vet pass on this area.
+
+Reran the same four-test selected shared command recorded above, supplying ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/typescript-6.0.3 (actual pin 050880ce59e30b356b686bd3144efe24f875ebc8), with output directly to /tmp/wave13-b469-rules.log. TestRulesAgree still fails at the delay's Go-valid top-level await: source Node exits 70 with parser slice expected semicolon at 6, duration 46.27s. The captured file is ConsistencyNoHandRolledDelay.ts. TestCompilerAndStage1Agree passes on the migrated sources: 411 files and 20,649,216 matching Go bytes across source Node, emitted JavaScript and sanitized native, duration 87.41s. No selected correctness test skips or is weakened. Other required packages and the complete gate remain outside this filtered run.
+
+A fresh explicit .tsx manifest reproduces the JSX fixed-source issue on the migrated driver: the expected return-void finding and fix are emitted, then source Node exits 70 with expected GreaterThanToken, got Identifier at 24 in fixed source. Complete output is retained as b469-jsx-reparse.log. The original failing source stays under the owned gaps directory; the migrated Linter still rebuilds new Parser(result, 'fixed source'). Shared code is not edited.
+
+This fresh source corpus supersedes the earlier 364-file observations as current-area coverage. The full upstream failure remains distinct from those passing supported sources. No new rule or helper is claimed while the recorded blockers keep the branch from complete landing parity.
+
+Final migrated-dispatch results: combined selected suite exits 1 in 322.032s solely because TestRulesAgree fails at the named top-level-await fixture. TestCompilerAndStage1Agree passes in 87.41s (411 files, 20,649,216 matching Go bytes); all eight active TestMutants pass in 163.84s; TestOwnedWitnesses passes in 24.49s (116,148 matching Go bytes, now including the additional shared legacy witnesses). Fresh rule/registry vet passes with empty output. No selected correctness test skips. All fresh stdout/stderr is retained under evidence/parking/b469-rules.log, b469-vet.log and b469-jsx-reparse.log. The supported witness count reflects the migrated shared rules and does not withdraw either unsupported fixture.
+
+The branch remains a pushed, rebased work product with explicit full-parity blockers, not a fully green or landing-ready branch. The shared parser and fixed-source harness are outside the unit's files. No new helper is claimed under the landing cap, and no main or area branch is pushed.
