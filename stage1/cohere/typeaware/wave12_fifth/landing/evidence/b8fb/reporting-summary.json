@@ -1,0 +1,486 @@
+{
+  "reporting_only": true,
+  "cases": 15,
+  "findings": {
+    "react/jsx-fragments": 1,
+    "react/jsx-no-undef": 1,
+    "react/jsx-no-constructed-context-values": 13
+  },
+  "bytes": 6093,
+  "mutants": [
+    {
+      "rule": "jsx_fragments",
+      "first_difference": 75
+    },
+    {
+      "rule": "jsx_no_undef",
+      "first_difference": 347
+    },
+    {
+      "rule": "jsx_no_constructed_context_values",
+      "first_difference": 758
+    }
+  ],
+  "guards": [
+    {
+      "guard": "ascii",
+      "normal_exit": 70,
+      "mutant_exit": 0
+    },
+    {
+      "guard": "construction-range",
+      "normal_exit": 70,
+      "mutant_exit": 0
+    }
+  ],
+  "metadata_mutants": [
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "refetch-instead-of-supplied-node"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "refetch-instead-of-supplied-node"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "refetch-instead-of-supplied-node"
+    },
+    {
+      "declaration": "no_redeclare.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "no_redeclare.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "no_redeclare.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "no_test_on_global_regex.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "no_test_on_global_regex.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "no_test_on_global_regex.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "no_write_only_collection.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "no_write_only_collection.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "no_write_only_collection.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_next/no_process_exit_after_output.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_next/no_process_exit_after_output.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_next/no_process_exit_after_output.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_next/no_uncleared_race_timeout.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_next/no_uncleared_race_timeout.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_next/no_uncleared_race_timeout.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_next/require_blocking_standard_streams.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_next/require_blocking_standard_streams.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_next/require_blocking_standard_streams.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_third/no_new_func.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_third/no_new_func.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_third/no_new_func.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_third/no_new_native_nonconstructor.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_third/no_new_native_nonconstructor.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_third/no_new_native_nonconstructor.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_third/no_new_wrappers.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_third/no_new_wrappers.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_third/no_new_wrappers.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_regex_literals.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_regex_literals.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_regex_literals.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_rest_params.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_rest_params.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_fourth/prefer_rest_params.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "wave12_fourth/exhaustive_deps.a",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "wave12_fourth/exhaustive_deps.a",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "wave12_fourth/exhaustive_deps.a",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "jsx_fragments",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "jsx_no_constructed_context_values",
+      "mutation": "wrong-listener"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "unknown-name"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "numeric-kind"
+    },
+    {
+      "declaration": "jsx_no_undef",
+      "mutation": "wrong-listener"
+    }
+  ],
+  "commands": [
+    {
+      "name": "oracle-build",
+      "args": [
+        "go",
+        "build",
+        "-overlay",
+        "/workspace/wave-12/b8fb/sixth/overlay.json",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/oracle",
+        "/workspace/adamic/cohere/adamic_wave12_sixth_oracle.go"
+      ],
+      "code": 0
+    },
+    {
+      "name": "production-go",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/oracle",
+        "/workspace/wave-12/b8fb/sixth/tsconfig.json",
+        "/workspace/wave-12/b8fb/sixth/manifest"
+      ],
+      "code": 0
+    },
+    {
+      "name": "stage0",
+      "args": [
+        "go",
+        "build",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "./cmd/adamic"
+      ],
+      "code": 0
+    },
+    {
+      "name": "native-build",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "build",
+        "/workspace/wave-12/b8fb/sixth/source/main.a",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/native"
+      ],
+      "code": 0
+    },
+    {
+      "name": "native-run",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/native"
+      ],
+      "code": 0
+    },
+    {
+      "name": "native-asan-build",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "build",
+        "/workspace/wave-12/b8fb/sixth/source/main.a",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/native-asan",
+        "--sanitize"
+      ],
+      "code": 0
+    },
+    {
+      "name": "native-asan-run",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/native-asan"
+      ],
+      "code": 0
+    },
+    {
+      "name": "source-node",
+      "args": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/wave-12/b8fb/sixth/source/main.a"
+      ],
+      "code": 0
+    },
+    {
+      "name": "emitted-build",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "js",
+        "/workspace/wave-12/b8fb/sixth/source/main.a"
+      ],
+      "code": 0
+    },
+    {
+      "name": "emitted-node",
+      "args": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/wave-12/b8fb/sixth/emitted.mjs"
+      ],
+      "code": 0
+    },
+    {
+      "name": "jsx_fragments-mutant-build",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "build",
+        "/workspace/wave-12/b8fb/sixth/source/main.a",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/jsx_fragments-mutant"
+      ],
+      "code": 0
+    },
+    {
+      "name": "jsx_fragments-mutant-run",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/jsx_fragments-mutant"
+      ],
+      "code": 0
+    },
+    {
+      "name": "jsx_no_undef-mutant-build",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "build",
+        "/workspace/wave-12/b8fb/sixth/source/main.a",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/jsx_no_undef-mutant"
+      ],
+      "code": 0
+    },
+    {
+      "name": "jsx_no_undef-mutant-run",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/jsx_no_undef-mutant"
+      ],
+      "code": 0
+    },
+    {
+      "name": "jsx_no_constructed_context_values-mutant-build",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "build",
+        "/workspace/wave-12/b8fb/sixth/source/main.a",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/jsx_no_constructed_context_values-mutant"
+      ],
+      "code": 0
+    },
+    {
+      "name": "jsx_no_constructed_context_values-mutant-run",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/jsx_no_constructed_context_values-mutant"
+      ],
+      "code": 0
+    },
+    {
+      "name": "ascii-guard-build",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "build",
+        "/workspace/wave-12/b8fb/sixth/source/main.a",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/ascii-guard"
+      ],
+      "code": 0
+    },
+    {
+      "name": "ascii-guard-run",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/ascii-guard"
+      ],
+      "code": 70
+    },
+    {
+      "name": "ascii-guard-mutant-build",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "build",
+        "/workspace/wave-12/b8fb/sixth/source/main.a",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/ascii-guard-mutant"
+      ],
+      "code": 0
+    },
+    {
+      "name": "ascii-guard-mutant-run",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/ascii-guard-mutant"
+      ],
+      "code": 0
+    },
+    {
+      "name": "construction-range-guard-build",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "build",
+        "/workspace/wave-12/b8fb/sixth/source/main.a",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/construction-range-guard"
+      ],
+      "code": 0
+    },
+    {
+      "name": "construction-range-guard-run",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/construction-range-guard"
+      ],
+      "code": 70
+    },
+    {
+      "name": "construction-range-guard-mutant-build",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "build",
+        "/workspace/wave-12/b8fb/sixth/source/main.a",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/construction-range-guard-mutant"
+      ],
+      "code": 0
+    },
+    {
+      "name": "construction-range-guard-mutant-run",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/construction-range-guard-mutant"
+      ],
+      "code": 0
+    },
+    {
+      "name": "ast-kind-names",
+      "args": [
+        "go",
+        "run",
+        "/workspace/adamic/stage1/cohere/typeaware/wave12_sixth/kind_names.go"
+      ],
+      "code": 0
+    },
+    {
+      "name": "shared-parser-build",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/adamic",
+        "build",
+        "/workspace/adamic/stage1/typescript/parser/main.ts",
+        "-o",
+        "/workspace/wave-12/b8fb/sixth/shared-parser"
+      ],
+      "code": 0
+    },
+    {
+      "name": "shared-parser-refusal",
+      "args": [
+        "/workspace/wave-12/b8fb/sixth/shared-parser",
+        "/workspace/wave-12/b8fb/sixth/fragment.tsx",
+        "--whole"
+      ],
+      "code": 70
+    }
+  ]
+}
