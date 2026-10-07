@@ -1,0 +1,384 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/empty_function_body_reported
+    lint_test.go:755: empty function body reported caught on Node: case 0 line 26: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:755: empty function body reported caught on emitted JavaScript: case 0 line 26: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+    lint_test.go:755: empty function body reported caught on native: case 0 line 26: port "/tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:104", Go "/tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:125"
+        Go context:
+        range 52 61 unexpectedDebugger 			52 61
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:77
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 76 85 unexpectedDebugger fix			76 85
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported2474849396/001/generated-0.ts:1:125
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 124 133 unexpectedDebugger fix			124 133
+        fixed	 if(x) debugger; while(x) debugger; label: debugger; function f(){  } function noop(){} switch(x){case 1: }
+=== RUN   TestMutants/no-octal-escape_mutant_from_batch_8
+    lint_test.go:755: no-octal-escape mutant from batch 8 caught on Node: case 145 line 2738: port "recovery findings only", Go "/tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_887889984/016/no-octal-escape-0.ts:1:26"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_887889984/016/no-octal-escape-0.ts:1:26
+          no-octal-escape  Do not use the octal escape `\123`. This is a legacy octal escape, a numbering the language kept only for old web pages and forbids outright in strict mode and in modules, where it is a syntax error rather than a character. It also reads as decimal to almost everybody: the escape here is not the number it looks like. A unicode escape says the same character in a numbering that is unambiguous and legal everywhere.
+        
+        range 25 35 octalEscapeSequence 			25 35
+        recovery findings only
+    lint_test.go:755: no-octal-escape mutant from batch 8 caught on emitted JavaScript: case 145 line 2738: port "recovery findings only", Go "/tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_887889984/016/no-octal-escape-0.ts:1:26"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_887889984/016/no-octal-escape-0.ts:1:26
+          no-octal-escape  Do not use the octal escape `\123`. This is a legacy octal escape, a numbering the language kept only for old web pages and forbids outright in strict mode and in modules, where it is a syntax error rather than a character. It also reads as decimal to almost everybody: the escape here is not the number it looks like. A unicode escape says the same character in a numbering that is unambiguous and legal everywhere.
+        
+        range 25 35 octalEscapeSequence 			25 35
+        recovery findings only
+    lint_test.go:755: no-octal-escape mutant from batch 8 caught on native: case 145 line 2738: port "recovery findings only", Go "/tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_887889984/016/no-octal-escape-0.ts:1:26"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_887889984/016/no-octal-escape-0.ts:1:26
+          no-octal-escape  Do not use the octal escape `\123`. This is a legacy octal escape, a numbering the language kept only for old web pages and forbids outright in strict mode and in modules, where it is a syntax error rather than a character. It also reads as decimal to almost everybody: the escape here is not the number it looks like. A unicode escape says the same character in a numbering that is unambiguous and legal everywhere.
+        
+        range 25 35 octalEscapeSequence 			25 35
+        recovery findings only
+=== RUN   TestMutants/prefer-template_mutant_from_batch_8
+    lint_test.go:755: prefer-template mutant from batch 8 caught on Node: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const x='\\u03b2` ${' + value;\\u000d\\u000afoo()\\u000a'a' + bar;", Go "/tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83536887078/016/prefer-template-0.ts:1:25"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83536887078/016/prefer-template-0.ts:1:25
+          prefer-template  This builds a string by concatenating a literal with something that is not one. The `+` operator does double duty in JavaScript, so a reader has to work out from the operands whether a line adds or joins, and a single non-string operand silently changes the answer for the whole expression. A template literal says which one is meant in its first character, keeps the literal text contiguous instead of split across quotes and plus signs, and does not change meaning when an operand's type does.
+        
+        range 24 40 unexpectedStringConcatenation fix	`\u03b2\u005c` \u005c${${  value}`		24 40
+        /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83536887078/016/prefer-template-0.ts:3:1
+    lint_test.go:755: prefer-template mutant from batch 8 caught on emitted JavaScript: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const x='\\u03b2` ${' + value;\\u000d\\u000afoo()\\u000a'a' + bar;", Go "/tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83536887078/016/prefer-template-0.ts:1:25"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83536887078/016/prefer-template-0.ts:1:25
+          prefer-template  This builds a string by concatenating a literal with something that is not one. The `+` operator does double duty in JavaScript, so a reader has to work out from the operands whether a line adds or joins, and a single non-string operand silently changes the answer for the whole expression. A template literal says which one is meant in its first character, keeps the literal text contiguous instead of split across quotes and plus signs, and does not change meaning when an operand's type does.
+        
+        range 24 40 unexpectedStringConcatenation fix	`\u03b2\u005c` \u005c${${  value}`		24 40
+        /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83536887078/016/prefer-template-0.ts:3:1
+    lint_test.go:755: prefer-template mutant from batch 8 caught on native: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const x='\\u03b2` ${' + value;\\u000d\\u000afoo()\\u000a'a' + bar;", Go "/tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83536887078/016/prefer-template-0.ts:1:25"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83536887078/016/prefer-template-0.ts:1:25
+          prefer-template  This builds a string by concatenating a literal with something that is not one. The `+` operator does double duty in JavaScript, so a reader has to work out from the operands whether a line adds or joins, and a single non-string operand silently changes the answer for the whole expression. A template literal says which one is meant in its first character, keeps the literal text contiguous instead of split across quotes and plus signs, and does not change meaning when an operand's type does.
+        
+        range 24 40 unexpectedStringConcatenation fix	`\u03b2\u005c` \u005c${${  value}`		24 40
+        /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_83536887078/016/prefer-template-0.ts:3:1
+=== RUN   TestMutants/react-no-is-mounted_mutant_from_batch_8
+    lint_test.go:755: react-no-is-mounted mutant from batch 8 caught on Node: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const c={m(){this['isMounted']();},field:()=>this.isMounted()};", Go "/tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83075611658/016/react-no-is-mounted-0.ts:1:30"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83075611658/016/react-no-is-mounted-0.ts:1:30
+          react/no-is-mounted  `isMounted` is called on `this`. It was removed from React and never existed on a function component, so the call either throws or silently reads `undefined`. Where it does still run, it is an anti-pattern: it hides a leak rather than fixing one, because the only reason to ask whether a component is still mounted is that something asynchronous outlived it. Cancel that work when the component unmounts instead, so nothing is left holding a reference to ask about.
+        
+        range 29 48 noIsMounted 			29 48
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83075611658/016/react-no-is-mounted-0.ts:1:62
+    lint_test.go:755: react-no-is-mounted mutant from batch 8 caught on emitted JavaScript: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const c={m(){this['isMounted']();},field:()=>this.isMounted()};", Go "/tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83075611658/016/react-no-is-mounted-0.ts:1:30"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83075611658/016/react-no-is-mounted-0.ts:1:30
+          react/no-is-mounted  `isMounted` is called on `this`. It was removed from React and never existed on a function component, so the call either throws or silently reads `undefined`. Where it does still run, it is an anti-pattern: it hides a leak rather than fixing one, because the only reason to ask whether a component is still mounted is that something asynchronous outlived it. Cancel that work when the component unmounts instead, so nothing is left holding a reference to ask about.
+        
+        range 29 48 noIsMounted 			29 48
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83075611658/016/react-no-is-mounted-0.ts:1:62
+    lint_test.go:755: react-no-is-mounted mutant from batch 8 caught on native: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const c={m(){this['isMounted']();},field:()=>this.isMounted()};", Go "/tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83075611658/016/react-no-is-mounted-0.ts:1:30"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83075611658/016/react-no-is-mounted-0.ts:1:30
+          react/no-is-mounted  `isMounted` is called on `this`. It was removed from React and never existed on a function component, so the call either throws or silently reads `undefined`. Where it does still run, it is an anti-pattern: it hides a leak rather than fixing one, because the only reason to ask whether a component is still mounted is that something asynchronous outlived it. Cancel that work when the component unmounts instead, so nothing is left holding a reference to ask about.
+        
+        range 29 48 noIsMounted 			29 48
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_83075611658/016/react-no-is-mounted-0.ts:1:62
+=== RUN   TestMutants/enum_bitwise_option_ignored
+    lint_test.go:755: enum bitwise option ignored caught on Node: case 140 line 2664: port "/tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:415", Go "/tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:409"
+        Go context:
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:389
+          nexus/consistency-no-enum  TypeScript enum is banned. Use `as const` with the Kind and KindType pattern instead: `export const FooKind = { A: 'A' } as const; export type FooKindType = (typeof FooKind)[keyof typeof FooKind];`
+        
+        range 388 397 noEnum 			388 397
+        /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:409
+          @typescript-eslint/prefer-literal-enum-member  Explicit enum value must only be a literal value (string or number).
+        
+        range 408 413 notLiteral 			408 413
+        /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:415
+    lint_test.go:755: enum bitwise option ignored caught on emitted JavaScript: case 140 line 2664: port "/tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:415", Go "/tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:409"
+        Go context:
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:389
+          nexus/consistency-no-enum  TypeScript enum is banned. Use `as const` with the Kind and KindType pattern instead: `export const FooKind = { A: 'A' } as const; export type FooKindType = (typeof FooKind)[keyof typeof FooKind];`
+        
+        range 388 397 noEnum 			388 397
+        /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:409
+          @typescript-eslint/prefer-literal-enum-member  Explicit enum value must only be a literal value (string or number).
+        
+        range 408 413 notLiteral 			408 413
+        /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:415
+    lint_test.go:755: enum bitwise option ignored caught on native: case 140 line 2664: port "/tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:415", Go "/tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:409"
+        Go context:
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:389
+          nexus/consistency-no-enum  TypeScript enum is banned. Use `as const` with the Kind and KindType pattern instead: `export const FooKind = { A: 'A' } as const; export type FooKindType = (typeof FooKind)[keyof typeof FooKind];`
+        
+        range 388 397 noEnum 			388 397
+        /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:409
+          @typescript-eslint/prefer-literal-enum-member  Explicit enum value must only be a literal value (string or number).
+        
+        range 408 413 notLiteral 			408 413
+        /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored3787204323/015/options.ts:1:415
+=== RUN   TestMutants/interface_accepts_type_suffix
+    lint_test.go:755: interface accepts type suffix caught on Node: case 140 line 2616: port "/tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:75", Go "/tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:41"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:11
+          nexus/consistency-require-type-suffix  Interface "Bare" should end in "Interface", "Properties", or "Options". Rename to "BareInterface", "BareProperties" if it shapes React component props, or "BareOptions" if it is an options or config bag.
+        
+        range 10 14 noInterfaceSuffix 			10 14
+        /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:41
+          nexus/consistency-require-type-suffix  Interface "WrongType" should end in "Interface", "Properties", or "Options". Rename to "WrongTypeInterface", "WrongTypeProperties" if it shapes React component props, or "WrongTypeOptions" if it is an options or config bag.
+        
+        range 40 49 noInterfaceSuffix 			40 49
+        /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:75
+    lint_test.go:755: interface accepts type suffix caught on emitted JavaScript: case 140 line 2616: port "/tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:75", Go "/tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:41"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:11
+          nexus/consistency-require-type-suffix  Interface "Bare" should end in "Interface", "Properties", or "Options". Rename to "BareInterface", "BareProperties" if it shapes React component props, or "BareOptions" if it is an options or config bag.
+        
+        range 10 14 noInterfaceSuffix 			10 14
+        /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:41
+          nexus/consistency-require-type-suffix  Interface "WrongType" should end in "Interface", "Properties", or "Options". Rename to "WrongTypeInterface", "WrongTypeProperties" if it shapes React component props, or "WrongTypeOptions" if it is an options or config bag.
+        
+        range 40 49 noInterfaceSuffix 			40 49
+        /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:75
+    lint_test.go:755: interface accepts type suffix caught on native: case 140 line 2616: port "/tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:75", Go "/tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:41"
+        Go context:
+        case 140
+        /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:11
+          nexus/consistency-require-type-suffix  Interface "Bare" should end in "Interface", "Properties", or "Options". Rename to "BareInterface", "BareProperties" if it shapes React component props, or "BareOptions" if it is an options or config bag.
+        
+        range 10 14 noInterfaceSuffix 			10 14
+        /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:41
+          nexus/consistency-require-type-suffix  Interface "WrongType" should end in "Interface", "Properties", or "Options". Rename to "WrongTypeInterface", "WrongTypeProperties" if it shapes React component props, or "WrongTypeOptions" if it is an options or config bag.
+        
+        range 40 49 noInterfaceSuffix 			40 49
+        /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix1872629080/015/options.ts:1:75
+=== RUN   TestMutants/regex_fix_eats_extra_byte
+    lint_test.go:755: regex fix eats extra byte caught on Node: case 80 line 1613: port "range 61 68 unexpected fix\t[=]\t\t62 64", Go "range 61 68 unexpected fix\t[=]\t\t62 63"
+        Go context:
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte1146840340/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte1146840340/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+    lint_test.go:755: regex fix eats extra byte caught on emitted JavaScript: case 80 line 1613: port "range 61 68 unexpected fix\t[=]\t\t62 64", Go "range 61 68 unexpected fix\t[=]\t\t62 63"
+        Go context:
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte1146840340/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte1146840340/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+    lint_test.go:755: regex fix eats extra byte caught on native: case 80 line 1613: port "range 61 68 unexpected fix\t[=]\t\t62 64", Go "range 61 68 unexpected fix\t[=]\t\t62 63"
+        Go context:
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte1146840340/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte1146840340/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+=== RUN   TestMutants/for_update_option_ignored
+    lint_test.go:755: for update option ignored caught on Node: case 30 line 514: port "/tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:24"
+        Go context:
+        range 11 18 unexpectedVar 			11 18
+        /tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:12
+          vars-on-top  All 'var' declarations must be at the top of the function scope. A `var` is hoisted to the top of its function whatever line it is written on, so a declaration buried in a loop or a branch reads as scoped to that block and is not. Writing them together at the top makes the text say what the engine already does.
+        
+        range 11 18 top 			11 18
+        /tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:24
+          no-plusplus  Unary operator `++` used. It mutates its operand and evaluates to a different value depending on which side it sits, so `a[i++]` and `a[++i]` read almost identically and index different elements. Automatic semicolon insertion compounds it: a line ending in a value followed by a line starting with `++` joins into one statement. Write the assignment out as `x += 1`, which does one thing and reads the same wherever it appears.
+        
+        range 23 26 unexpectedUnaryOp 			23 26
+        /tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:28
+    lint_test.go:755: for update option ignored caught on emitted JavaScript: case 30 line 514: port "/tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:24"
+        Go context:
+        range 11 18 unexpectedVar 			11 18
+        /tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:12
+          vars-on-top  All 'var' declarations must be at the top of the function scope. A `var` is hoisted to the top of its function whatever line it is written on, so a declaration buried in a loop or a branch reads as scoped to that block and is not. Writing them together at the top makes the text say what the engine already does.
+        
+        range 11 18 top 			11 18
+        /tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:24
+          no-plusplus  Unary operator `++` used. It mutates its operand and evaluates to a different value depending on which side it sits, so `a[i++]` and `a[++i]` read almost identically and index different elements. Automatic semicolon insertion compounds it: a line ending in a value followed by a line starting with `++` joins into one statement. Write the assignment out as `x += 1`, which does one thing and reads the same wherever it appears.
+        
+        range 23 26 unexpectedUnaryOp 			23 26
+        /tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:28
+    lint_test.go:755: for update option ignored caught on native: case 30 line 514: port "/tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:28", Go "/tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:24"
+        Go context:
+        range 11 18 unexpectedVar 			11 18
+        /tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:12
+          vars-on-top  All 'var' declarations must be at the top of the function scope. A `var` is hoisted to the top of its function whatever line it is written on, so a declaration buried in a loop or a branch reads as scoped to that block and is not. Writing them together at the top makes the text say what the engine already does.
+        
+        range 11 18 top 			11 18
+        /tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:24
+          no-plusplus  Unary operator `++` used. It mutates its operand and evaluates to a different value depending on which side it sits, so `a[i++]` and `a[++i]` read almost identically and index different elements. Automatic semicolon insertion compounds it: a line ending in a value followed by a line starting with `++` joins into one statement. Write the assignment out as `x += 1`, which does one thing and reads the same wherever it appears.
+        
+        range 23 26 unexpectedUnaryOp 			23 26
+        /tmp/adamic-gate/TestMutantsfor_update_option_ignored594657997/004/generated-3.ts:1:28
+=== RUN   TestMutants/empty_placeholder_reported
+    lint_test.go:755: empty placeholder reported caught on Node: case 80 line 1610: port "/tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:43", Go "/tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:62"
+        Go context:
+        case 80
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:19
+          no-template-curly-in-string  This ordinary string contains a template placeholder, so the placeholder is not a placeholder: it is four literal characters that will be sent, rendered, or stored exactly as written. The failure is silent, because the string is a perfectly valid string and nothing at runtime objects to it. Backticks are almost always what was meant.
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:94
+    lint_test.go:755: empty placeholder reported caught on emitted JavaScript: case 80 line 1610: port "/tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:43", Go "/tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:62"
+        Go context:
+        case 80
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:19
+          no-template-curly-in-string  This ordinary string contains a template placeholder, so the placeholder is not a placeholder: it is four literal characters that will be sent, rendered, or stored exactly as written. The failure is silent, because the string is a perfectly valid string and nothing at runtime objects to it. Backticks are almost always what was meant.
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:94
+    lint_test.go:755: empty placeholder reported caught on native: case 80 line 1610: port "/tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:43", Go "/tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:62"
+        Go context:
+        case 80
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:19
+          no-template-curly-in-string  This ordinary string contains a template placeholder, so the placeholder is not a placeholder: it is four literal characters that will be sent, rendered, or stored exactly as written. The failure is silent, because the string is a perfectly valid string and nothing at runtime objects to it. Backticks are almost always what was meant.
+        
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported1804207741/009/generated-8.ts:1:94
+=== RUN   TestMutants/nested_generator_owns_outer_yield
+    lint_test.go:755: nested generator owns outer yield caught on Node: case 60 line 1122: port "/tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:251", Go "/tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:160"
+        Go context:
+        range 107 115 noNewStatement 			107 115
+        /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:143
+          no-sparse-arrays  This array literal has a hole: two commas with nothing between them. A hole is not undefined, it is an absent index, and the difference is visible exactly where it is least expected. `map` and `forEach` skip holes while `for...of` and spread produce undefined for them, so the same array reads as two different lengths of data depending on how it is walked. Almost every hole is a typo for one comma. If the absence is deliberate, write undefined and say so.
+        
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:251
+    lint_test.go:755: nested generator owns outer yield caught on emitted JavaScript: case 60 line 1122: port "/tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:251", Go "/tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:160"
+        Go context:
+        range 107 115 noNewStatement 			107 115
+        /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:143
+          no-sparse-arrays  This array literal has a hole: two commas with nothing between them. A hole is not undefined, it is an absent index, and the difference is visible exactly where it is least expected. `map` and `forEach` skip holes while `for...of` and spread produce undefined for them, so the same array reads as two different lengths of data depending on how it is walked. Almost every hole is a typo for one comma. If the absence is deliberate, write undefined and say so.
+        
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:251
+    lint_test.go:755: nested generator owns outer yield caught on native: case 60 line 1122: port "/tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:251", Go "/tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:160"
+        Go context:
+        range 107 115 noNewStatement 			107 115
+        /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:143
+          no-sparse-arrays  This array literal has a hole: two commas with nothing between them. A hole is not undefined, it is an absent index, and the difference is visible exactly where it is least expected. `map` and `forEach` skip holes while `for...of` and spread produce undefined for them, so the same array reads as two different lengths of data depending on how it is walked. Almost every hole is a typo for one comma. If the absence is deliberate, write undefined and say so.
+        
+        range 142 147 unexpectedSparseArray 			142 147
+        /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:160
+          require-yield  This generator function contains no `yield`, so calling it returns an iterator that finishes immediately with the function's return value and never produces anything. A caller writing `for(const item of generate())` gets zero iterations. Either the asterisk is left over from a refactor and the function should be a plain one, or a `yield` is missing.
+        
+        range 159 217 missingYield 			159 217
+        /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield3717225517/007/generated-6.ts:1:251
+--- PASS: TestMutants (539.05s)
+    --- PASS: TestMutants/empty_function_body_reported (76.96s)
+    --- PASS: TestMutants/no-octal-escape_mutant_from_batch_8 (61.10s)
+    --- PASS: TestMutants/prefer-template_mutant_from_batch_8 (47.32s)
+    --- PASS: TestMutants/react-no-is-mounted_mutant_from_batch_8 (43.81s)
+    --- PASS: TestMutants/enum_bitwise_option_ignored (52.08s)
+    --- PASS: TestMutants/interface_accepts_type_suffix (62.67s)
+    --- PASS: TestMutants/regex_fix_eats_extra_byte (56.32s)
+    --- PASS: TestMutants/for_update_option_ignored (41.02s)
+    --- PASS: TestMutants/empty_placeholder_reported (42.63s)
+    --- PASS: TestMutants/nested_generator_owns_outer_yield (48.59s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	539.095s

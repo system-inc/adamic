@@ -1,0 +1,384 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/suggestion_applied_as_fix
+    lint_test.go:755: suggestion applied as fix caught on Node: case 20 line 357: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 20
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix250717351/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix250717351/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===		10 12
+    lint_test.go:755: suggestion applied as fix caught on emitted JavaScript: case 20 line 357: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 20
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix250717351/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix250717351/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===		10 12
+    lint_test.go:755: suggestion applied as fix caught on native: case 20 line 357: port "range 2 4 unexpected fix\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4", Go "range 2 4 unexpected suggestion\t===\tUse `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.\t2 4"
+        Go context:
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 20
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix250717351/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix250717351/003/generated-2.ts:1:11
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 10 12 unexpected fix	===		10 12
+=== RUN   TestMutants/no-unexpected-multiline_mutant_from_batch_8
+    lint_test.go:755: no-unexpected-multiline mutant from batch 8 caught on Node: case 40 line 934: port "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:17", Go "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:42"
+        Go context:
+        case 38
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 39
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 40
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:135
+    lint_test.go:755: no-unexpected-multiline mutant from batch 8 caught on emitted JavaScript: case 40 line 934: port "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:17", Go "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:42"
+        Go context:
+        case 38
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 39
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 40
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:135
+    lint_test.go:755: no-unexpected-multiline mutant from batch 8 caught on native: case 40 line 934: port "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:17", Go "/tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:42"
+        Go context:
+        case 38
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 39
+        fixed	var a; for(var x=0;x<3;x++){}; for(var y in z){}; for(var q of z){}; declare var b; declare global{ var c; namespace N{var d;} } namespace M{var e;}
+        case 40
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_84039979972/005/generated-4.ts:1:135
+=== RUN   TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8
+    lint_test.go:755: react-forward-ref-uses-ref mutant from batch 8 caught on Node: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=forwardRef(( /* \\u03b2 */ props: P, )=>props);forwardRef(function(props){return props});", Go "/tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_81186450965/016/react-forward-ref-uses-ref-0.ts:1:36"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_81186450965/016/react-forward-ref-uses-ref-0.ts:1:36
+          react/forward-ref-uses-ref  A function wrapped in `forwardRef` takes only one parameter, so the ref React passes as the second one is dropped on the floor. Every consumer writing `<Component ref={r} />` gets a ref that never attaches, and it fails silently rather than erroring. Accept the second parameter and forward it to whatever should receive it, or drop the `forwardRef` wrapper, which does nothing for a component that ignores the ref.
+        
+        range 35 64 forwardRefUsesRef suggestions			35 64
+        suggestion	forwardRefRemoveWrapper	Remove the `forwardRef` wrapper.	1
+    lint_test.go:755: react-forward-ref-uses-ref mutant from batch 8 caught on emitted JavaScript: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=forwardRef(( /* \\u03b2 */ props: P, )=>props);forwardRef(function(props){return props});", Go "/tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_81186450965/016/react-forward-ref-uses-ref-0.ts:1:36"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_81186450965/016/react-forward-ref-uses-ref-0.ts:1:36
+          react/forward-ref-uses-ref  A function wrapped in `forwardRef` takes only one parameter, so the ref React passes as the second one is dropped on the floor. Every consumer writing `<Component ref={r} />` gets a ref that never attaches, and it fails silently rather than erroring. Accept the second parameter and forward it to whatever should receive it, or drop the `forwardRef` wrapper, which does nothing for a component that ignores the ref.
+        
+        range 35 64 forwardRefUsesRef suggestions			35 64
+        suggestion	forwardRefRemoveWrapper	Remove the `forwardRef` wrapper.	1
+    lint_test.go:755: react-forward-ref-uses-ref mutant from batch 8 caught on native: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=forwardRef(( /* \\u03b2 */ props: P, )=>props);forwardRef(function(props){return props});", Go "/tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_81186450965/016/react-forward-ref-uses-ref-0.ts:1:36"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_81186450965/016/react-forward-ref-uses-ref-0.ts:1:36
+          react/forward-ref-uses-ref  A function wrapped in `forwardRef` takes only one parameter, so the ref React passes as the second one is dropped on the floor. Every consumer writing `<Component ref={r} />` gets a ref that never attaches, and it fails silently rather than erroring. Accept the second parameter and forward it to whatever should receive it, or drop the `forwardRef` wrapper, which does nothing for a component that ignores the ref.
+        
+        range 35 64 forwardRefUsesRef suggestions			35 64
+        suggestion	forwardRefRemoveWrapper	Remove the `forwardRef` wrapper.	1
+=== RUN   TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8
+    lint_test.go:755: react-no-redundant-should-component-update mutant from batch 8 caught on Node: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};", Go "/tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr3699235729/016/react-no-redundant-should-component-update-0.ts:1:25"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr3699235729/016/react-no-redundant-should-component-update-0.ts:1:25
+          react/no-redundant-should-component-update  C extends PureComponent and also writes shouldComponentUpdate. PureComponent's whole contribution IS an implementation of that method, a shallow comparison of props and state, and defining your own replaces it rather than adding to it. So the class pays for the base class and then discards what it bought, and a reader who sees PureComponent in the heritage will believe a shallow compare is happening when it is not. Extend Component instead, or delete the method.
+        
+        range 24 87 noShouldCompUpdate 			24 87
+        fixed	const \u00e9='\ud83d\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};
+    lint_test.go:755: react-no-redundant-should-component-update mutant from batch 8 caught on emitted JavaScript: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};", Go "/tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr3699235729/016/react-no-redundant-should-component-update-0.ts:1:25"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr3699235729/016/react-no-redundant-should-component-update-0.ts:1:25
+          react/no-redundant-should-component-update  C extends PureComponent and also writes shouldComponentUpdate. PureComponent's whole contribution IS an implementation of that method, a shallow comparison of props and state, and defining your own replaces it rather than adding to it. So the class pays for the base class and then discards what it bought, and a reader who sees PureComponent in the heritage will believe a shallow compare is happening when it is not. Extend Component instead, or delete the method.
+        
+        range 24 87 noShouldCompUpdate 			24 87
+        fixed	const \u00e9='\ud83d\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};
+    lint_test.go:755: react-no-redundant-should-component-update mutant from batch 8 caught on native: case 145 line 2738: port "fixed\tconst \\u00e9='\\ud83d\\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};", Go "/tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr3699235729/016/react-no-redundant-should-component-update-0.ts:1:25"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr3699235729/016/react-no-redundant-should-component-update-0.ts:1:25
+          react/no-redundant-should-component-update  C extends PureComponent and also writes shouldComponentUpdate. PureComponent's whole contribution IS an implementation of that method, a shallow comparison of props and state, and defining your own replaces it rather than adding to it. So the class pays for the base class and then discards what it bought, and a reader who sees PureComponent in the heritage will believe a shallow compare is happening when it is not. Extend Component instead, or delete the method.
+        
+        range 24 87 noShouldCompUpdate 			24 87
+        fixed	const \u00e9='\ud83d\ude00';const C=class extends (React.PureComponent){#shouldComponentUpdate(){}};
+=== RUN   TestMutants/predicate_finding_widened_to_its_owner
+    lint_test.go:755: predicate finding widened to its owner caught on Node: case 140 line 2628: port "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:126", Go "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:154"
+        Go context:
+        range 74 79 noTypeAliasSuffix 			74 79
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:97
+          nexus/consistency-require-type-suffix  Const enum-shaped object "Choice" should end in "Kind". Rename to "ChoiceKind" with a paired "ChoiceKindType" alias, so the runtime value and the type that indexes it are visibly one thing.
+        
+        range 96 102 noConstEnumSuffix 			96 102
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:154
+          adamic/no-type-predicate  A written type predicate is trusted and never checked: tsc narrows the argument on this function's word, and nothing makes its body agree, so a guard that returns true for the wrong value turns every narrowed use into a TypeError. Narrow where you use the value (`if (pet.kind === 'Cat')`), or drop the annotation and let TypeScript infer the predicate, which it does only when the body proves it (`(x) => x !== undefined`).
+        
+        range 153 164 typePredicate 			153 164
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:183
+    lint_test.go:755: predicate finding widened to its owner caught on emitted JavaScript: case 140 line 2628: port "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:126", Go "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:154"
+        Go context:
+        range 74 79 noTypeAliasSuffix 			74 79
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:97
+          nexus/consistency-require-type-suffix  Const enum-shaped object "Choice" should end in "Kind". Rename to "ChoiceKind" with a paired "ChoiceKindType" alias, so the runtime value and the type that indexes it are visibly one thing.
+        
+        range 96 102 noConstEnumSuffix 			96 102
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:154
+          adamic/no-type-predicate  A written type predicate is trusted and never checked: tsc narrows the argument on this function's word, and nothing makes its body agree, so a guard that returns true for the wrong value turns every narrowed use into a TypeError. Narrow where you use the value (`if (pet.kind === 'Cat')`), or drop the annotation and let TypeScript infer the predicate, which it does only when the body proves it (`(x) => x !== undefined`).
+        
+        range 153 164 typePredicate 			153 164
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:183
+    lint_test.go:755: predicate finding widened to its owner caught on native: case 140 line 2628: port "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:126", Go "/tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:154"
+        Go context:
+        range 74 79 noTypeAliasSuffix 			74 79
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:97
+          nexus/consistency-require-type-suffix  Const enum-shaped object "Choice" should end in "Kind". Rename to "ChoiceKind" with a paired "ChoiceKindType" alias, so the runtime value and the type that indexes it are visibly one thing.
+        
+        range 96 102 noConstEnumSuffix 			96 102
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:154
+          adamic/no-type-predicate  A written type predicate is trusted and never checked: tsc narrows the argument on this function's word, and nothing makes its body agree, so a guard that returns true for the wrong value turns every narrowed use into a TypeError. Narrow where you use the value (`if (pet.kind === 'Cat')`), or drop the annotation and let TypeScript infer the predicate, which it does only when the body proves it (`(x) => x !== undefined`).
+        
+        range 153 164 typePredicate 			153 164
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner184499942/015/options.ts:1:183
+=== RUN   TestMutants/await_crosses_function_boundary
+    lint_test.go:755: await crosses function boundary caught on Node: case 60 line 1110: port "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:81", Go "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:94"
+        Go context:
+        range 32 44 unexpectedLabelInBreak 			32 44
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:46
+          no-await-in-loop  This waits inside a loop, so each iteration blocks on the one before it and the work runs one at a time. Where the iterations do not depend on each other, collecting the promises and awaiting them together turns a sum of latencies into a maximum. Where they do depend on each other, the sequencing is deliberate and the loop is the right shape, which is why this reports rather than repairs.
+        
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:94
+          no-with  A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.
+        
+        range 93 97 noWith 			93 97
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:108
+    lint_test.go:755: await crosses function boundary caught on emitted JavaScript: case 60 line 1110: port "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:81", Go "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:94"
+        Go context:
+        range 32 44 unexpectedLabelInBreak 			32 44
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:46
+          no-await-in-loop  This waits inside a loop, so each iteration blocks on the one before it and the work runs one at a time. Where the iterations do not depend on each other, collecting the promises and awaiting them together turns a sum of latencies into a maximum. Where they do depend on each other, the sequencing is deliberate and the loop is the right shape, which is why this reports rather than repairs.
+        
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:94
+          no-with  A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.
+        
+        range 93 97 noWith 			93 97
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:108
+    lint_test.go:755: await crosses function boundary caught on native: case 60 line 1110: port "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:81", Go "/tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:94"
+        Go context:
+        range 32 44 unexpectedLabelInBreak 			32 44
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:46
+          no-await-in-loop  This waits inside a loop, so each iteration blocks on the one before it and the work runs one at a time. Where the iterations do not depend on each other, collecting the promises and awaiting them together turns a sum of latencies into a maximum. Where they do depend on each other, the sequencing is deliberate and the loop is the right shape, which is why this reports rather than repairs.
+        
+        range 45 54 unexpectedAwait 			45 54
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:94
+          no-with  A `with` block splices an object's properties into the local scope, so a bare name inside it cannot be resolved by reading the code: whether `x` means the object's property or an outer variable is decided at runtime by what the object happens to hold. That defeats the checker and every reader. Bind what you need to a name instead, as in `const { x, y } = point;`.
+        
+        range 93 97 noWith 			93 97
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary4263295367/007/generated-6.ts:1:108
+=== RUN   TestMutants/label_option_widened
+    lint_test.go:755: label option widened caught on Node: case 60 line 1090: port "/tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:17", Go "/tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:1"
+        Go context:
+        case 58
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 59
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 60
+        /tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:1
+          no-labels  This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.
+        
+        range 0 92 unexpectedLabel 			0 92
+        /tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:17
+    lint_test.go:755: label option widened caught on emitted JavaScript: case 60 line 1090: port "/tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:17", Go "/tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:1"
+        Go context:
+        case 58
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 59
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 60
+        /tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:1
+          no-labels  This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.
+        
+        range 0 92 unexpectedLabel 			0 92
+        /tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:17
+    lint_test.go:755: label option widened caught on native: case 60 line 1090: port "/tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:17", Go "/tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:1"
+        Go context:
+        case 58
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 59
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a debugger;\u000d\u000a if(\u00e9){} // outside\u000a
+        case 60
+        /tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:1
+          no-labels  This labels a statement. A label is a second naming system that only `break` and `continue` can read, so control can leave from a line that carries no visible marker and land somewhere the reader has to search the file to find. Reading the code top to bottom no longer tells you where it goes. Extract the labeled region into a function and return from it, or restructure the loops so the exit is local.
+        
+        range 0 92 unexpectedLabel 			0 92
+        /tmp/adamic-gate/TestMutantslabel_option_widened2514930555/007/generated-6.ts:1:17
+=== RUN   TestMutants/return_parentheses_option_reversed
+    lint_test.go:755: return parentheses option reversed caught on Node: case 140 line 2696: port "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:605", Go "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:644"
+        Go context:
+        range 540 556 unexpectedNegated 			540 556
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:575
+          no-return-assign  This arrow function's body is an assignment, so calling it writes to something outside itself and returns what it wrote. A concise arrow body reads as a value, which is what makes the write easy to miss at the call site. Give the arrow a block body and assign inside it, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 574 588 arrowAssignment 			574 588
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:644
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+    lint_test.go:755: return parentheses option reversed caught on emitted JavaScript: case 140 line 2696: port "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:605", Go "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:644"
+        Go context:
+        range 540 556 unexpectedNegated 			540 556
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:575
+          no-return-assign  This arrow function's body is an assignment, so calling it writes to something outside itself and returns what it wrote. A concise arrow body reads as a value, which is what makes the write easy to miss at the call site. Give the arrow a block body and assign inside it, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 574 588 arrowAssignment 			574 588
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:644
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+    lint_test.go:755: return parentheses option reversed caught on native: case 140 line 2696: port "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:605", Go "/tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:644"
+        Go context:
+        range 540 556 unexpectedNegated 			540 556
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:575
+          no-return-assign  This arrow function's body is an assignment, so calling it writes to something outside itself and returns what it wrote. A concise arrow body reads as a value, which is what makes the write easy to miss at the call site. Give the arrow a block body and assign inside it, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 574 588 arrowAssignment 			574 588
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed1894661358/015/options.ts:1:644
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+=== RUN   TestMutants/boolean_inverse_changed
+    lint_test.go:755: boolean inverse changed caught on Node: case 90 line 1973: port "range 51 72 unnecessaryConditionalExpression fix\ta !== b\t\t51 72", Go "range 51 72 unnecessaryConditionalExpression fix\ta != b\t\t51 72"
+        Go context:
+        
+        range 14 26 unnecessaryConditionalExpression fix	!!a		14 26
+        /tmp/adamic-gate/TestMutantsboolean_inverse_changed2793260397/010/generated-9.ts:1:52
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+        
+        range 51 72 unnecessaryConditionalExpression fix	a != b		51 72
+        /tmp/adamic-gate/TestMutantsboolean_inverse_changed2793260397/010/generated-9.ts:1:54
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 53 55 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	53 55
+    lint_test.go:755: boolean inverse changed caught on emitted JavaScript: case 90 line 1973: port "range 51 72 unnecessaryConditionalExpression fix\ta !== b\t\t51 72", Go "range 51 72 unnecessaryConditionalExpression fix\ta != b\t\t51 72"
+        Go context:
+        
+        range 14 26 unnecessaryConditionalExpression fix	!!a		14 26
+        /tmp/adamic-gate/TestMutantsboolean_inverse_changed2793260397/010/generated-9.ts:1:52
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+        
+        range 51 72 unnecessaryConditionalExpression fix	a != b		51 72
+        /tmp/adamic-gate/TestMutantsboolean_inverse_changed2793260397/010/generated-9.ts:1:54
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 53 55 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	53 55
+    lint_test.go:755: boolean inverse changed caught on native: case 90 line 1973: port "range 51 72 unnecessaryConditionalExpression fix\ta !== b\t\t51 72", Go "range 51 72 unnecessaryConditionalExpression fix\ta != b\t\t51 72"
+        Go context:
+        
+        range 14 26 unnecessaryConditionalExpression fix	!!a		14 26
+        /tmp/adamic-gate/TestMutantsboolean_inverse_changed2793260397/010/generated-9.ts:1:52
+          no-unneeded-ternary  This conditional returns a boolean literal on both branches, so the whole ternary is a long way of writing the condition itself. The branches carry no information the test does not already have, and a reader has to check both to learn that. Write the condition, negated if the branches are the other way round.
+        
+        range 51 72 unnecessaryConditionalExpression fix	a != b		51 72
+        /tmp/adamic-gate/TestMutantsboolean_inverse_changed2793260397/010/generated-9.ts:1:54
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 53 55 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	53 55
+=== RUN   TestMutants/bom_removes_two_marks
+    lint_test.go:755: bom removes two marks caught on Node: case 110 line 2375: port "range 0 0 unexpected fix\t\t\t0 6", Go "range 0 0 unexpected fix\t\t\t0 3"
+        Go context:
+        fixed	// TODO: fix this xxx\u000aconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\u000a// TODO\u00e9 and fixme\u000a/** TODO decorated */ const arr=[1, // FIXME trailing comma\u000a]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});
+        case 110
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks3797548014/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+        
+        range 0 0 unexpected fix			0 3
+        fixed	 // TODO two marks\u000aconst x=1;
+        case 111
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks3797548014/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+    lint_test.go:755: bom removes two marks caught on emitted JavaScript: case 110 line 2375: port "range 0 0 unexpected fix\t\t\t0 6", Go "range 0 0 unexpected fix\t\t\t0 3"
+        Go context:
+        fixed	// TODO: fix this xxx\u000aconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\u000a// TODO\u00e9 and fixme\u000a/** TODO decorated */ const arr=[1, // FIXME trailing comma\u000a]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});
+        case 110
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks3797548014/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+        
+        range 0 0 unexpected fix			0 3
+        fixed	 // TODO two marks\u000aconst x=1;
+        case 111
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks3797548014/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+    lint_test.go:755: bom removes two marks caught on native: case 110 line 2375: port "range 0 0 unexpected fix\t\t\t0 6", Go "range 0 0 unexpected fix\t\t\t0 3"
+        Go context:
+        fixed	// TODO: fix this xxx\u000aconst url='http://todo'; const fake=/[/*]TODO/; const template=`// TODO ${f() /* FIXME */} /* XXX */`; /* eslint no-warning-comments: error todo */\u000a// TODO\u00e9 and fixme\u000a/** TODO decorated */ const arr=[1, // FIXME trailing comma\u000a]; import data from 'data' with {/* TODO attributes */}; type Empty=import('data', {with:{/* TODO import type */}});
+        case 110
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks3797548014/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+        
+        range 0 0 unexpected fix			0 3
+        fixed	 // TODO two marks\u000aconst x=1;
+        case 111
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks3797548014/012/generated-11.ts:1:1
+          unicode-bom  This file starts with a byte order mark. In a project that is already UTF-8 everywhere the mark carries no information and is invisible in an editor, while tools that read the first bytes literally see it: a shell script stops being executable, a concatenated bundle gains a stray character mid-file, and a diff shows a change on a line nobody edited.
+--- PASS: TestMutants (500.51s)
+    --- PASS: TestMutants/suggestion_applied_as_fix (49.34s)
+    --- PASS: TestMutants/no-unexpected-multiline_mutant_from_batch_8 (35.55s)
+    --- PASS: TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8 (62.72s)
+    --- PASS: TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8 (57.73s)
+    --- PASS: TestMutants/predicate_finding_widened_to_its_owner (48.30s)
+    --- PASS: TestMutants/await_crosses_function_boundary (49.16s)
+    --- PASS: TestMutants/label_option_widened (60.58s)
+    --- PASS: TestMutants/return_parentheses_option_reversed (48.73s)
+    --- PASS: TestMutants/boolean_inverse_changed (40.80s)
+    --- PASS: TestMutants/bom_removes_two_marks (40.69s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	500.553s

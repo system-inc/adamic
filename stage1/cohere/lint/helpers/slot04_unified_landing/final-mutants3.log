@@ -1,0 +1,384 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/var_declaration_suppressed
+    lint_test.go:755: var declaration suppressed caught on Node: case 30 line 502: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:12", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:1"
+        Go context:
+        case 28
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 29
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 30
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 			0 5
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:12
+    lint_test.go:755: var declaration suppressed caught on emitted JavaScript: case 30 line 502: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:12", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:1"
+        Go context:
+        case 28
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 29
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 30
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 			0 5
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:12
+    lint_test.go:755: var declaration suppressed caught on native: case 30 line 502: port "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:12", Go "/tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:1"
+        Go context:
+        case 28
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 29
+        fixed	a == b; 1 == 2; 1 == 1n; (typeof a) != 'number'; (null) === null; /a/ == null; `a` != 'b';
+        case 30
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:1
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 0 5 unexpectedVar 			0 5
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed1734770983/004/generated-3.ts:1:12
+=== RUN   TestMutants/no-unused-private-class-members_mutant_from_batch_8
+    lint_test.go:755: no-unused-private-class-members mutant from batch 8 caught on Node: case 145 line 2738: port "fixed\tclass C{#x; async m(){for await(this.#x of values){}}}", Go "/tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_84197244302/016/no-unused-private-class-members-0.ts:1:9"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_84197244302/016/no-unused-private-class-members-0.ts:1:9
+          no-unused-private-class-members  '#x' is declared but nothing in this class ever reads it. A private member is visible only inside its own class body, so a value no line here reads back can never be observed and the code that maintains it is dead too. Read it, or remove the member and its writes.
+        
+        range 8 10 noUnusedPrivateClassMember 			8 10
+        fixed	class C{#x; async m(){for await(this.#x of values){}}}
+    lint_test.go:755: no-unused-private-class-members mutant from batch 8 caught on emitted JavaScript: case 145 line 2738: port "fixed\tclass C{#x; async m(){for await(this.#x of values){}}}", Go "/tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_84197244302/016/no-unused-private-class-members-0.ts:1:9"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_84197244302/016/no-unused-private-class-members-0.ts:1:9
+          no-unused-private-class-members  '#x' is declared but nothing in this class ever reads it. A private member is visible only inside its own class body, so a value no line here reads back can never be observed and the code that maintains it is dead too. Read it, or remove the member and its writes.
+        
+        range 8 10 noUnusedPrivateClassMember 			8 10
+        fixed	class C{#x; async m(){for await(this.#x of values){}}}
+    lint_test.go:755: no-unused-private-class-members mutant from batch 8 caught on native: case 145 line 2738: port "fixed\tclass C{#x; async m(){for await(this.#x of values){}}}", Go "/tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_84197244302/016/no-unused-private-class-members-0.ts:1:9"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_84197244302/016/no-unused-private-class-members-0.ts:1:9
+          no-unused-private-class-members  '#x' is declared but nothing in this class ever reads it. A private member is visible only inside its own class body, so a value no line here reads back can never be observed and the code that maintains it is dead too. Read it, or remove the member and its writes.
+        
+        range 8 10 noUnusedPrivateClassMember 			8 10
+        fixed	class C{#x; async m(){for await(this.#x of values){}}}
+=== RUN   TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8
+    lint_test.go:755: react-jsx-no-comment-textnodes mutant from batch 8 caught on Node: case 146 line 2744: port "fixed\tconst view = <div>// comment</div>;\\u000a", Go "/tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_81205817446/017/react-jsx-no-comment-textnodes-1.tsx:1:19"
+        Go context:
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 29 68 putCommentInBraces 			29 68
+        fixed	const \u00e9='\ud83d\ude00';const C=<div>\u000a // \u03b2 \ud83d\ude00\u000a text // clean\u000a /* next */</div>;
+        case 146
+        /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_81205817446/017/react-jsx-no-comment-textnodes-1.tsx:1:19
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 18 28 putCommentInBraces 			18 28
+        fixed	const view = <div>// comment</div>;\u000a
+    lint_test.go:755: react-jsx-no-comment-textnodes mutant from batch 8 caught on emitted JavaScript: case 146 line 2744: port "fixed\tconst view = <div>// comment</div>;\\u000a", Go "/tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_81205817446/017/react-jsx-no-comment-textnodes-1.tsx:1:19"
+        Go context:
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 29 68 putCommentInBraces 			29 68
+        fixed	const \u00e9='\ud83d\ude00';const C=<div>\u000a // \u03b2 \ud83d\ude00\u000a text // clean\u000a /* next */</div>;
+        case 146
+        /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_81205817446/017/react-jsx-no-comment-textnodes-1.tsx:1:19
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 18 28 putCommentInBraces 			18 28
+        fixed	const view = <div>// comment</div>;\u000a
+    lint_test.go:755: react-jsx-no-comment-textnodes mutant from batch 8 caught on native: case 146 line 2744: port "fixed\tconst view = <div>// comment</div>;\\u000a", Go "/tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_81205817446/017/react-jsx-no-comment-textnodes-1.tsx:1:19"
+        Go context:
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 29 68 putCommentInBraces 			29 68
+        fixed	const \u00e9='\ud83d\ude00';const C=<div>\u000a // \u03b2 \ud83d\ude00\u000a text // clean\u000a /* next */</div>;
+        case 146
+        /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_81205817446/017/react-jsx-no-comment-textnodes-1.tsx:1:19
+          react/jsx-no-comment-textnodes  This looks like a comment but it is not one. Inside a tag's children, `//` and `/*` are ordinary text, so React renders them to the page and the words the author meant only for other developers become part of the interface. The failure is silent: nothing errors, nothing warns, and the text shows up in the product. Wrap it in braces as `{/* ... */}`, which is the form React reads as a comment and drops.
+        
+        range 18 28 putCommentInBraces 			18 28
+        fixed	const view = <div>// comment</div>;\u000a
+=== RUN   TestMutants/method_listener_lost
+    lint_test.go:755: method listener lost caught on Node: case 140 line 2656: port "/tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:389", Go "/tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:305"
+        Go context:
+        range 269 276 unexpectedUnaryOp 			269 276
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:290
+          nexus/consistency-require-type-suffix  Interface "CallableType" should end in "Interface", "Properties", or "Options". Rename to "CallableTypeInterface", "CallableTypeProperties" if it shapes React component props, or "CallableTypeOptions" if it is an options or config bag.
+        
+        range 289 301 noInterfaceSuffix 			289 301
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:305
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:389
+    lint_test.go:755: method listener lost caught on emitted JavaScript: case 140 line 2656: port "/tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:389", Go "/tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:305"
+        Go context:
+        range 269 276 unexpectedUnaryOp 			269 276
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:290
+          nexus/consistency-require-type-suffix  Interface "CallableType" should end in "Interface", "Properties", or "Options". Rename to "CallableTypeInterface", "CallableTypeProperties" if it shapes React component props, or "CallableTypeOptions" if it is an options or config bag.
+        
+        range 289 301 noInterfaceSuffix 			289 301
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:305
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:389
+    lint_test.go:755: method listener lost caught on native: case 140 line 2656: port "/tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:389", Go "/tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:305"
+        Go context:
+        range 269 276 unexpectedUnaryOp 			269 276
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:290
+          nexus/consistency-require-type-suffix  Interface "CallableType" should end in "Interface", "Properties", or "Options". Rename to "CallableTypeInterface", "CallableTypeProperties" if it shapes React component props, or "CallableTypeOptions" if it is an options or config bag.
+        
+        range 289 301 noInterfaceSuffix 			289 301
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:305
+          @typescript-eslint/method-signature-style  This is written as a shorthand method signature, which TypeScript checks bivariantly: a parameter can be narrowed by an implementer and the compiler will not object, so a call that type-checks can still be wrong at runtime. A function property is checked the strict way and catches that.
+        
+        range 304 334 errorMethod fix	method: (value: string) => number;		304 334
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost3403345537/015/options.ts:1:389
+=== RUN   TestMutants/console_receiver_widened
+    lint_test.go:755: console receiver widened caught on Node: case 40 line 938: port "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:58", Go "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:135"
+        Go context:
+        case 40
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:135
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 134 140 unexpected 			134 140
+        fixed	switch(x){case f( a /* c */ ):break;case f(a):break;case a?.b:break;case a.b:break;case (a):break;case a:break;case /[/*]/:break;case /[/*]/:break;case -1:break;case +1:break;case 1.0:break;case 1:break;}
+    lint_test.go:755: console receiver widened caught on emitted JavaScript: case 40 line 938: port "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:58", Go "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:135"
+        Go context:
+        case 40
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:135
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 134 140 unexpected 			134 140
+        fixed	switch(x){case f( a /* c */ ):break;case f(a):break;case a?.b:break;case a.b:break;case (a):break;case a:break;case /[/*]/:break;case /[/*]/:break;case -1:break;case +1:break;case 1.0:break;case 1:break;}
+    lint_test.go:755: console receiver widened caught on native: case 40 line 938: port "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:58", Go "/tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:135"
+        Go context:
+        case 40
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:42
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 41 45 unexpected 			41 45
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened2172078808/005/generated-4.ts:1:135
+          no-duplicate-case  Duplicate case label: an earlier arm in this switch tests the same expression, so this one can never run. Almost always a clause was copied and its test never updated, which means the body here is dead and the case it was meant to handle falls through to `default`. Change the test to the value this arm was written for, or delete the arm.
+        
+        range 134 140 unexpected 			134 140
+        fixed	switch(x){case f( a /* c */ ):break;case f(a):break;case a?.b:break;case a.b:break;case (a):break;case a:break;case /[/*]/:break;case /[/*]/:break;case -1:break;case +1:break;case 1.0:break;case 1:break;}
+=== RUN   TestMutants/int32_hint_option_ignored
+    lint_test.go:755: int32 hint option ignored caught on Node: case 80 line 1614: port "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:99", Go "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:94"
+        Go context:
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:99
+    lint_test.go:755: int32 hint option ignored caught on emitted JavaScript: case 80 line 1614: port "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:99", Go "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:94"
+        Go context:
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:99
+    lint_test.go:755: int32 hint option ignored caught on native: case 80 line 1614: port "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:99", Go "/tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:94"
+        Go context:
+        range 18 28 unexpectedTemplateExpression 			18 28
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:62
+          no-div-regex  This regular expression begins with an equals sign, so its first two characters are the divide-assign operator spelled backwards, and a reader scanning the line has to work out which one it is. Writing the equals sign as a one-member character class matches exactly the same input and can only be read one way.
+        
+        range 61 68 unexpected fix	[=]		62 63
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:94
+          no-bitwise  Unexpected use of '|'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 93 96 unexpected 			93 96
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored4156823189/009/generated-8.ts:1:99
+=== RUN   TestMutants/condition_polarity_reversed
+    lint_test.go:755: condition polarity reversed caught on Node: case 10 line 194: port "/tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:1", Go "/tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:6"
+        Go context:
+        case 8
+        fixed	debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}
+        case 9
+        fixed	debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}
+        case 10
+        /tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:6
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 5 7 unexpectedBlock 			5 7
+        /tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:34
+    lint_test.go:755: condition polarity reversed caught on emitted JavaScript: case 10 line 194: port "/tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:1", Go "/tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:6"
+        Go context:
+        case 8
+        fixed	debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}
+        case 9
+        fixed	debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}
+        case 10
+        /tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:6
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 5 7 unexpectedBlock 			5 7
+        /tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:34
+    lint_test.go:755: condition polarity reversed caught on native: case 10 line 194: port "/tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:1", Go "/tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:6"
+        Go context:
+        case 8
+        fixed	debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}
+        case 9
+        fixed	debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}
+        case 10
+        /tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:6
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 5 7 unexpectedBlock 			5 7
+        /tmp/adamic-gate/TestMutantscondition_polarity_reversed4042472978/002/generated-1.ts:1:34
+=== RUN   TestMutants/comma_chain_reports_inner
+    lint_test.go:755: comma chain reports inner caught on Node: case 80 line 1634: port "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:128", Go "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:135"
+        Go context:
+        range 110 116 unexpected 			110 116
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:119
+          no-bitwise  Unexpected use of '~'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 118 120 unexpected 			118 120
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:135
+          no-sequences  This uses the comma operator, which evaluates the expression on its left, throws the result away, and yields the expression on its right. Two statements are hiding inside one, and the discarded half is the part a reader skips: `a = b(), c()` calls both and assigns only the second, which reads as a typo for `a = b()`. Split it into separate statements, or wrap it in its own parentheses to say the sequencing was deliberate.
+        
+        range 134 135 unexpectedCommaExpression 			134 135
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:139
+    lint_test.go:755: comma chain reports inner caught on emitted JavaScript: case 80 line 1634: port "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:128", Go "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:135"
+        Go context:
+        range 110 116 unexpected 			110 116
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:119
+          no-bitwise  Unexpected use of '~'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 118 120 unexpected 			118 120
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:135
+          no-sequences  This uses the comma operator, which evaluates the expression on its left, throws the result away, and yields the expression on its right. Two statements are hiding inside one, and the discarded half is the part a reader skips: `a = b(), c()` calls both and assigns only the second, which reads as a typo for `a = b()`. Split it into separate statements, or wrap it in its own parentheses to say the sequencing was deliberate.
+        
+        range 134 135 unexpectedCommaExpression 			134 135
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:139
+    lint_test.go:755: comma chain reports inner caught on native: case 80 line 1634: port "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:128", Go "/tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:135"
+        Go context:
+        range 110 116 unexpected 			110 116
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:119
+          no-bitwise  Unexpected use of '~'. A bitwise operator here is usually a typo for its logical twin: `&` for `&&`, `|` for `||`. When it is deliberate the intent is worth stating, because the reader has to decide which of the two you meant every time they pass it.
+        
+        range 118 120 unexpected 			118 120
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:135
+          no-sequences  This uses the comma operator, which evaluates the expression on its left, throws the result away, and yields the expression on its right. Two statements are hiding inside one, and the discarded half is the part a reader skips: `a = b(), c()` calls both and assigns only the second, which reads as a typo for `a = b()`. Split it into separate statements, or wrap it in its own parentheses to say the sequencing was deliberate.
+        
+        range 134 135 unexpectedCommaExpression 			134 135
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner2004131104/009/generated-8.ts:1:139
+=== RUN   TestMutants/comment_self_directive_exemption_removed
+    lint_test.go:755: comment self directive exemption removed caught on Node: case 104 line 2288: port "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:2:104", Go "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:3:1"
+        Go context:
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:2:79
+          no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 100 111 unexpectedComment 			100 111
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:3:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODOé and fixme". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 170 189 unexpectedComment 			170 189
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:3:1
+    lint_test.go:755: comment self directive exemption removed caught on emitted JavaScript: case 104 line 2288: port "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:2:104", Go "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:3:1"
+        Go context:
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:2:79
+          no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 100 111 unexpectedComment 			100 111
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:3:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODOé and fixme". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 170 189 unexpectedComment 			170 189
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:3:1
+    lint_test.go:755: comment self directive exemption removed caught on native: case 104 line 2288: port "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:2:104", Go "/tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:3:1"
+        Go context:
+        range 0 21 unexpectedComment 			0 21
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:2:79
+          no-warning-comments  This comment opens with `fixme`, which marks the code as knowingly unfinished: "FIXME". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 100 111 unexpectedComment 			100 111
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:3:1
+          no-warning-comments  This comment opens with `todo`, which marks the code as knowingly unfinished: "TODOé and fixme". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.
+        
+        range 170 189 unexpectedComment 			170 189
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed1765637161/011/generated-10.ts:3:1
+=== RUN   TestMutants/directive_prefix_ignored
+    lint_test.go:755: directive prefix ignored caught on Node: case 70 line 1386: port "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:192", Go "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:206"
+        Go context:
+        range 148 160 unexpectedAwait 			148 160
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:192
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 191 198 unexpectedVar 			191 198
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:206
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 205 213 unexpectedVar 			205 213
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:206
+    lint_test.go:755: directive prefix ignored caught on emitted JavaScript: case 70 line 1386: port "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:192", Go "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:206"
+        Go context:
+        range 148 160 unexpectedAwait 			148 160
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:192
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 191 198 unexpectedVar 			191 198
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:206
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 205 213 unexpectedVar 			205 213
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:206
+    lint_test.go:755: directive prefix ignored caught on native: case 70 line 1386: port "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:192", Go "/tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:206"
+        Go context:
+        range 148 160 unexpectedAwait 			148 160
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:192
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 191 198 unexpectedVar 			191 198
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:206
+          no-var  This is a `var` declaration, which is function-scoped and hoisted rather than block-scoped. The binding exists from the top of the enclosing function, so it is readable above the line that declares it and it leaks out of the block it looks like it belongs to: a `var` inside an `if` is still in scope after the `if` ends. A `var` in a loop is one binding shared by every iteration, which is why a closure created in the loop sees the final value rather than its own. Use `let`, or `const` when nothing reassigns it.
+        
+        range 205 213 unexpectedVar 			205 213
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored2067350008/008/generated-7.ts:1:206
+--- PASS: TestMutants (516.65s)
+    --- PASS: TestMutants/var_declaration_suppressed (50.97s)
+    --- PASS: TestMutants/no-unused-private-class-members_mutant_from_batch_8 (47.13s)
+    --- PASS: TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8 (56.19s)
+    --- PASS: TestMutants/method_listener_lost (48.16s)
+    --- PASS: TestMutants/console_receiver_widened (55.74s)
+    --- PASS: TestMutants/int32_hint_option_ignored (60.51s)
+    --- PASS: TestMutants/condition_polarity_reversed (41.13s)
+    --- PASS: TestMutants/comma_chain_reports_inner (51.13s)
+    --- PASS: TestMutants/comment_self_directive_exemption_removed (55.14s)
+    --- PASS: TestMutants/directive_prefix_ignored (47.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	516.731s
