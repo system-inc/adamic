@@ -7,6 +7,11 @@ import { Rules } from '../../rules.ts';
 import {quoteFlag} from './rune_quote.a';
 import { NoInvalidRegExp, PatternCompileResult } from './no_invalid_regexp.a';
 
+function unavailablePatternCompiler(_pattern:string,_flags:string):PatternCompileResult {
+    panic('pattern compiler is unavailable in the flag-only suite');
+    return new PatternCompileResult('',false);
+}
+
 const args = programArguments();
 const config = args[0] ?? panic('usage: wave_09_suite.a tsconfig manifest [--count]');
 const manifest = readTextFile(args[1] ?? panic('missing manifest'));
@@ -31,7 +36,7 @@ for(const path of paths) {
         linter.parents.push(-1);
     }
     linter.links(root, -1);
-    new NoInvalidRegExp(linter, (_pattern, _flags) => { panic('pattern compiler is unavailable in the flag-only suite'); return new PatternCompileResult('', false); }, (flag) => quoteFlag(flag), []).run();
+    new NoInvalidRegExp(linter, unavailablePatternCompiler, (flag) => quoteFlag(flag), []).run();
     for(const finding of linter.findings) {
         finding.sortKey = finding.written();
     }
