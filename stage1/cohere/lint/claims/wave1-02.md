@@ -64,3 +64,21 @@ font display is blocked on shared JSX parsing and has a three-runtime refusal
 probe under gaps/, not a registered placeholder. All three reservations remain
 with slot 02; this is not a claim that three complete ports are certified.
 See wave1-02-continuation-report.md for commits, commands, outputs and limits.
+
+## Third reservation, October 7
+
+Existing work through 339f88af was pushed before fetching all origin heads.
+Main observed: ef3d907ecdc4c771b016f7d9c52372def057a340. The published
+46-rule helper-ready list is exhausted by main ports and origin claims.
+The first three available syntax-only inventory entries are now reserved:
+
+1. @typescript-eslint/no-non-null-asserted-optional-chain
+2. @typescript-eslint/no-non-null-assertion
+3. @typescript-eslint/no-this-alias
+
+Selection examined 320 fetched origin refs and 39 claim Markdown files, using
+whole public rule names, including names followed by sentence punctuation.
+Inventory source: origin/codex/lint-inventory; needs_type_information and
+binding_only are both false for each selection. None is ported on main or
+named in any fetched origin claim. This update is pushed before new code.
+Previous reservations and their explicitly reported integration gaps remain.
