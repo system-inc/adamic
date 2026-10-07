@@ -36,8 +36,18 @@ static void program(const adamic_regex_program *p) {
 func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 	t.Helper()
 	cases, _ := runtimeRegexCompilerCases(t)
+	checked := strings.HasPrefix(mutant, "v8")
+	if checked {
+		for _, prefix := range []string{"", "(?i:^)", "(?-i:^)", "(?i:^)(?:)", "(?i:^)(?-i:)"} {
+			for _, atom := range []string{`[b]`, `[a-z]`, `[0-9]`, `\w`, `[\w]`, `\W`, `[\W]`, `[\w\W]`, `[^\w]`, `[^\W]`, `[^b]`, `\p{Lowercase_Letter}`, `[\q{a}]`, `[a\q{a}]`, `[\q{AB}]`, `[\q{ab}]`, `[\q{Ss|x}]`, `[[\q{a}]&&[A]]`, `[[A]--[\q{a}]]`, `[\q{ab|a|}]`} {
+				for _, flags := range []string{"u", "iu", "v", "iv"} {
+					cases = append(cases, []string{prefix + atom, flags})
+				}
+			}
+		}
+	}
 	var source strings.Builder
-	source.WriteString("#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include \"regexp_compile_bytecode.h\"\n")
+	source.WriteString("#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include \"regexp_compile_v8.h\"\n")
 	source.WriteString(runtimeBytecodeWriter)
 	source.WriteString("struct test {const unsigned char *pattern,*flags;size_t length,flag_length;};\nstatic const struct test cases[]={\n")
 	emit := func(value string) string {
@@ -54,10 +64,15 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 	for i, c := range cases {
 		p, err := reference.Compile(c[0], c[1])
 		status := uint64(0)
+		refusal := ""
+		if err == nil && checked {
+			err = p.NativeCompatibility()
+		}
 		if err != nil {
 			var divergence *reference.V8DivergenceError
 			if errors.As(err, &divergence) {
 				status = 3
+				refusal = err.Error()
 			} else {
 				var syntax *reference.SyntaxError
 				if !errors.As(err, &syntax) {
@@ -80,9 +95,22 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 		}
 		expected[i] = binary.LittleEndian.AppendUint64(nil, status)
 		expected[i] = append(expected[i], wire...)
+		if checked && status == 3 {
+			expected[i] = binary.LittleEndian.AppendUint64(expected[i], uint64(len(refusal)))
+			expected[i] = append(expected[i], refusal...)
+		}
 		fmt.Fprintf(&source, "{%s,%s,%d,%d},\n", emit(c[0]), emit(c[1]), len(c[0]), len(c[1]))
 	}
+	if checked {
+		source.WriteString("#define adamic_regex_compile_bytecode adamic_regex_compile_checked\n")
+	}
 	source.WriteString("};\nint main(void){for(size_t j=0;j<sizeof(cases)/sizeof(cases[0]);j++){const struct test *c=&cases[j];adamic_regex_parse_result r;adamic_regex_parse(c->pattern,c->length,c->flags,c->flag_length,&r);adamic_regex_program *p=NULL;if(r.status==0)p=adamic_regex_compile_bytecode(&r);number((uint64_t)r.status);if(r.status==0)program(p);adamic_regex_parse_free(&r);}return 0;}\n")
+	if checked {
+		text := source.String()
+		text = strings.Replace(text, "if(r.status==0)program(p);", "if(r.status==0)program(p);if(r.status==3){number(r.message_length);fwrite(r.message,1,r.message_length,stdout);}", 1)
+		source.Reset()
+		source.WriteString(text)
+	}
 	dir := t.TempDir()
 	main := filepath.Join(dir, "main.c")
 	if err := os.WriteFile(main, []byte(source.String()), 0600); err != nil {
@@ -121,8 +149,27 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 			t.Fatal(err)
 		}
 	}
+	v8 := filepath.Join(runtimeDirectory, "regexp_compile_v8.c")
+	if mutant == "v8 bypass" {
+		data, err := os.ReadFile(v8)
+		if err != nil {
+			t.Fatal(err)
+		}
+		old := []byte("program==NULL || !adamic_regex_compile_v8_check(result)")
+		if bytes.Count(data, old) != 1 {
+			t.Fatal("v8 mutant site moved")
+		}
+		data = bytes.Replace(data, old, []byte("program==NULL"), 1)
+		v8 = filepath.Join(dir, "v8-mutant.c")
+		if err := os.WriteFile(v8, data, 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
 	binaryPath := filepath.Join(dir, "check")
 	args := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all", "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", runtimeDirectory, main, parser, filepath.Join(runtimeDirectory, "regexp_compile_properties.c"), filepath.Join(runtimeDirectory, "regexp_compile_sets.c"), bytecode, "-o", binaryPath}
+	if checked {
+		args = append(args, v8)
+	}
 	compiler := "clang"
 	if wasi {
 		sysroot := os.Getenv("WASI_SYSROOT")
@@ -182,7 +229,7 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 			break
 		}
 	}
-	if mutant != "" {
+	if mutant != "" && mutant != "v8" {
 		if mismatch == "" {
 			t.Fatal("bytecode mutant survived")
 		}
@@ -205,3 +252,7 @@ func TestRegExpRuntimeBytecodeEmissionMutant(t *testing.T) {
 func TestRegExpRuntimeRejectedPatternMutant(t *testing.T) {
 	runtimeBytecodeIdentity(t, false, "accept syntax")
 }
+
+func TestRegExpRuntimeV8Refusals(t *testing.T)      { runtimeBytecodeIdentity(t, false, "v8") }
+func TestRegExpRuntimeV8WASI(t *testing.T)          { runtimeBytecodeIdentity(t, true, "v8") }
+func TestRegExpRuntimeV8RefusalMutant(t *testing.T) { runtimeBytecodeIdentity(t, false, "v8 bypass") }

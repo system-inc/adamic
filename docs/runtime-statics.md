@@ -372,3 +372,9 @@ Bytecode compiler audit: range/string builders, instruction buffers and capture/
 - `runtime-file:regexp_compile_sets.h`
 - `runtime-file:regexp_compile_bytecode.c`
 - `runtime-file:regexp_compile_bytecode.h`
+
+V8 compatibility checks walk each invocation's AST and allocate diagnostics in
+its arena. Their only shared inputs are the existing immutable folding tables.
+
+- `runtime-file:regexp_compile_v8.c`
+- `runtime-file:regexp_compile_v8.h`

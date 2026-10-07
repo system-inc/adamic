@@ -187,3 +187,11 @@ The reversed oversized quantifier fixture now refuses through V8DivergenceError;
 its filtered uncached Node oracle passes. Optional matcher search optimizations
 are not part of the bytecode snapshot; the existing general VM consumes these
 instructions. Runtime V8 shape checks and dynamic lowering are still pending.
+
+Runtime V8 refusals: the C compatibility walk ports internal/regexp/v8.go.
+The corpus plus 400 scoped/class-string probes compares accepted bytecode and
+exact refusal messages: 7,674 compiled programs, 3,351 rejected/refused cases,
+on sanitized Linux and wasm32-wasi. Bypassing the compatibility walk is caught
+by `[\q{a}]/iv` at case 10,676. Combined compiler/property/parser identities,
+all C mutants and the statics guard pass in 37.392s; touched-package vet passes.
+The checked compilation entry point is mandatory for dynamic construction.
