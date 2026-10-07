@@ -221,7 +221,8 @@ fi
 if printf '%s\n' "$changed" | grep -q '^stage3/' && [ -x stage3/lane/run.sh ]; then
 	# Stage 3's owner keeps the exact judgment (the one sanctioned failing test by name, the API
 	# snapshot diff line for line) in its own lane script; use it when the merged tree has it.
-	stage3/lane/run.sh >"$logs/stage3-lane.log" 2>&1 || { echo "stage3/lane/run.sh failed: $logs/stage3-lane.log"; status=1; }
+	# The lane writes its verdict and logs into a results directory it creates (it refuses one that exists).
+	stage3/lane/run.sh "$logs/stage3-lane" >"$logs/stage3-lane.log" 2>&1 || { echo "stage3/lane/run.sh failed: $logs/stage3-lane.log, results in $logs/stage3-lane"; status=1; }
 	echo "ran: stage3/lane/run.sh on the merged tree"
 elif printf '%s\n' "$changed" | grep -q '^stage3/'; then
 	# Measured by typescript with every adaptation composed: the one sanctioned failure is the API
