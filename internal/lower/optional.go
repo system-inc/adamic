@@ -2,7 +2,6 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
-	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -34,9 +33,5 @@ func (l *lowering) orDefault(node *ast.Node, value ir.Expression, fallback strin
 
 // mayBeUndefined reports whether the checker's type for a node includes undefined.
 func (l *lowering) mayBeUndefined(node *ast.Node) bool {
-	proven := l.checker.GetTypeAtLocation(node)
-	if proven.Flags()&checker.TypeFlagsUndefined != 0 {
-		return true
-	}
-	return proven.Flags()&checker.TypeFlagsUnion != 0 && l.includesUndefined(proven)
+	return l.includesUndefined(l.checker.GetTypeAtLocation(node))
 }

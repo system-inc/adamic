@@ -91,6 +91,10 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	patterns := []patterned{}
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
+		if declaration.Kind == ast.KindMethodDeclaration && ast.HasSyntacticModifier(declaration, ast.ModifierFlagsStatic) && ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
+			// TypeScript's explicit this parameter is erased; the receiver is supplied separately.
+			continue
+		}
 		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
 			incoming := len(l.result.Locals)
 			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: index})

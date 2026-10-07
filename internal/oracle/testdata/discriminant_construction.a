@@ -1,0 +1,19 @@
+class Leaf {
+ kind: 'leaf';
+ readonly value: number;
+ constructor(value: number) {
+  this.kind = 'leaf';
+  this.value = value;
+  this.kind = 'leaf';
+ }
+}
+type SyntaxNode = Leaf | { kind: 'branch'; readonly label: string };
+function show(node: SyntaxNode): void {
+ if (node.kind === 'leaf') {
+  console.log(`${node.kind} ${node.value}`);
+ } else {
+  console.log(`${node.kind} ${node.label}`);
+ }
+}
+show(new Leaf(4));
+show({ kind: 'branch', label: 'built' });

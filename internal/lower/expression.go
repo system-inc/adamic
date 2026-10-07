@@ -3,6 +3,7 @@ package lower
 import (
 	"errors"
 	"reflect"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -30,6 +31,23 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
 	flags := proven.Flags()
+	if flags&checker.TypeFlagsObject != 0 && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
+		if l.recordElement(proven) != nil {
+			return ir.Record, true
+		}
+		regex := false
+		for _, info := range l.checker.GetIndexInfosOfType(proven) {
+			if declaration := info.Declaration(); declaration != nil {
+				file := ast.GetSourceFileOfNode(declaration)
+				if load.IsLibrary(file) && strings.Contains(file.AsSourceFile().FileName().AsString(), ".regexp.") {
+					regex = true
+				}
+			}
+		}
+		if !regex {
+			return 0, false
+		}
+	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
 		substituted, isKnown := l.substitution[proven]
@@ -128,11 +146,12 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 }
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsUndefined != 0
 	}
 	for _, member := range proven.Types() {
-		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+		if l.includesUndefined(member) {
 			return true
 		}
 	}
@@ -140,6 +159,7 @@ func (l *lowering) includesUndefined(proven *checker.Type) bool {
 }
 
 func (l *lowering) includesNull(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsNull != 0
 	}
@@ -161,6 +181,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil && value.Type().IsReference() {
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if member := l.libraryPrototypeView(l.checker.GetTypeAtLocation(node), contextual, map[[2]*checker.Type]bool{}); member != "" {
+				return nil, l.notYet(node, "a structural view of library prototype member "+member+" as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver")
+			}
+		}
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
@@ -169,7 +196,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
 			if own := l.checker.GetTypeAtLocation(node); !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
-				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
+				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly; keep the Weak annotations the same in the view and implementation)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
 			}
@@ -191,6 +218,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// The checker narrowed it to present (Target & WeakBrand).
 		to, present = target, true
 	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
+		// A union of branded targets still represents a Weak even after narrowing.
+		// Its read is present when the checker has removed undefined.
+		present = !l.includesUndefined(read)
 		for _, member := range read.Types() {
 			if target := l.weakTarget(member); target != nil {
 				if to, isKnown = l.representation(target); !isKnown {
@@ -214,6 +244,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
+		return l.sameKeeping(a, b, visited)
+	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
@@ -239,9 +272,8 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		}
 	default:
 		for _, viewed := range l.checker.GetPropertiesOfType(to) {
-			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
-				continue
-			}
+			// Methods carry call signatures too: their parameters and results must
+			// keep Weak handles the same way as the implementation they view.
 			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
 				return false
 			}
@@ -389,6 +421,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
 	}
+	if value, handled, err := l.recordExpression(node); handled {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -422,9 +457,6 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		if _, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
 			return nil, l.notYet(node, "a generic function as a value")
-		}
-		if !isLocal && l.isLibraryGlobal(node, "String") {
-			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")
 		}
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())

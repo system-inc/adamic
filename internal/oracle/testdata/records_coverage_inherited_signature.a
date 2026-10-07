@@ -1,0 +1,11 @@
+interface Base { [key: string]: number }
+interface Table extends Base {}
+function copy(r: Table): Table {return {...r, extra: 9};}
+const r: Table = {first: 1};
+const alias = r;
+const c = copy(alias);
+alias['first'] = 2;
+console.log(String(c['first']));
+console.log(String(r['first']));
+console.log(String(c['extra']));
+console.log(Object.keys(c).join(','));

@@ -211,13 +211,17 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
 		if function, known := e.exactReceiverMethod(property.Object, property.Name); known {
-			// Keep the interface adapter's borrowed-input convention and the same
-			// exception and result handling, but call its proven method directly.
+			// The method thunk keeps the borrowing adapter boundary.
 			method = e.methodThunk(function)
 		} else {
 			method = e.temporary()
 			e.line("adamic_method %s = NULL;", method)
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			callee := e.snapshot(ir.Closure, fmt.Sprintf("adamic_object_callee(%s, %s, &%s, &%s)", receiver, cString(property.Name), e.cache(), method))
+			closure = e.own(ir.Closure, fmt.Sprintf("(%s == NULL ? NULL : adamic_retain(%s))", callee, callee))
+			if e.mostlyNull == nil {
+				e.mostlyNull = map[string]bool{}
+			}
+			e.mostlyNull[closure] = true
 		}
 	}
 	arguments := []string{}

@@ -1,0 +1,3 @@
+import { leaf } from './leaf.a';
+console.log(`shared ${leaf}`);
+export const shared = 'shared';

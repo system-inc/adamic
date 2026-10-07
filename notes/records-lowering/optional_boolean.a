@@ -1,0 +1,2 @@
+const r: Record<string, boolean | undefined> = {x: undefined};
+console.log(String(r['x']));

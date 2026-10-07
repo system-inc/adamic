@@ -96,7 +96,7 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 					plan.spreads[instruction.At] = map[int]bool{}
 				}
 				plan.spreads[instruction.At][source.Local] = true
-				if program.Locals[source.Local].Borrowed {
+				if isParameter(program, source.Local) {
 					plan.consumed[source.Local] = true
 				}
 			}
@@ -109,34 +109,11 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 					plan.arrays[instruction.At] = map[int]bool{}
 				}
 				plan.arrays[instruction.At][source] = true
-				if program.Locals[source].Borrowed {
+				if isParameter(program, source) {
 					plan.consumed[source] = true
 				}
 			}
 		})
-	}
-	// Virtual implementations share an ownership convention. If one consumes a position,
-	// every implementation takes a count, including those that only read and then release it.
-	for changed := true; changed; {
-		changed = false
-		for signature, targets := range program.MethodTargets {
-			for position, parameter := range program.Functions[signature].Parameters {
-				consumed := plan.consumed[parameter]
-				for _, target := range targets {
-					consumed = consumed || plan.consumed[program.Functions[target].Parameters[position]]
-				}
-				if !consumed {
-					continue
-				}
-				for _, target := range append([]int{signature}, targets...) {
-					local := program.Functions[target].Parameters[position]
-					if !plan.consumed[local] {
-						plan.consumed[local] = true
-						changed = true
-					}
-				}
-			}
-		}
 	}
 	for _, each := range functions {
 		forEachInstruction(each.graph, func(instruction *flow.Instruction) {
@@ -186,7 +163,7 @@ func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[
 	if isParameter(program, source) {
 		// Only a parameter nothing assigns, of a named function its callers call directly, can be
 		// handed over: a closure is called from runtime loops, and a comparator from the sort.
-		if !local.Borrowed || program.Functions[function].Closure || comparators[function] {
+		if local.Captured || assignedLocals(program.Functions[function].Body)[source] || program.Functions[function].Closure || comparators[function] {
 			return false
 		}
 	} else if local.Borrowed {
@@ -751,9 +728,12 @@ func uniquelyHeld(value string) string {
 	return fmt.Sprintf("(%s->heap.references == 1 && !adamic_weak_held(%s))", value, value)
 }
 
-// callConsumes requires a count to be handed over at this position for every
-// implementation. MethodTargets joins conventions before moves are planned.
+// Virtual adapters borrow inputs and acquire a count only for the implementation
+// that consumes it. Direct calls can hand their count over without an adapter.
 func (plan *reusePlan) callConsumes(program *ir.Program, call ir.Call, position int) bool {
+	if call.Virtual != 0 {
+		return false
+	}
 	for _, target := range program.CallTargets(call) {
 		parameters := program.Functions[target].Parameters
 		if position >= len(parameters) || !plan.consumed[parameters[position]] {

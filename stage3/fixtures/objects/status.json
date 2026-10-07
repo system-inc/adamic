@@ -10,10 +10,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/01_reference_spreads.a:7:111: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/01_reference_spreads.a:7:111: stage 0 can't lower a spread whose complete ordered own shape is not static (adamic/spread-not-first) yet"}
   },
   {
     "file": "02_polling_levels.a",
@@ -42,10 +39,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/03_resolution_cache_spreads.a:13:9: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "04_trace_metadata.a",
@@ -58,10 +52,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/04_trace_metadata.a:13:67: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/04_trace_metadata.a:14:46: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet"}
   },
   {
     "file": "05_polling_array_metadata.a",
@@ -143,10 +134,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/10_build_options.a:14:54: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet"}
   },
   {
     "file": "12_decorator_descriptor.a",
@@ -227,10 +215,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/17_container_rest.a:13:19: stage 0 can't lower destructuring anything but a tuple into [names] yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/17_container_rest.a:13:42: stage 0 can't lower a structural view of library prototype member toString as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver yet"}
   },
   {
     "file": "19_identifier_multimap.a",
@@ -359,10 +344,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/27_delete_substitution.a:12:23: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet"}
   },
   {
     "file": "28_debugger.a",
@@ -410,8 +392,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/30_host_optional_method.a:6:12: stage 0 can't lower a call through ?. (an optional call) yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/30_host_optional_method.a:8:73: Adamic 0.1 refuses optional property getCompilerHost in ResolutionCacheHost is absent from the source type { name: string; }; the value may hide an incompatible field; declare getCompilerHost with a compatible type on the source type, or copy the declared fields into a new object (adamic/no-optional-widening)"
     }
   }
 ]

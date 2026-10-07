@@ -305,12 +305,17 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	overString := statement.Iterable.Type() == ir.String
 	overMap := statement.MapPart != ""
 	overRegex := statement.RegexIterator
+	borrowLoop := !overMap && !overString && !overRegex && statement.Pattern == nil && e.program.Locals[statement.Local].Borrowed
 	if overMap {
 		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
+	} else if borrowLoop {
+		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, iterable)
 	} else {
 		e.line("%s %s = adamic_retain(%s);", cType(statement.Iterable.Type()), held, iterable)
 	}
-	e.hold(held)
+	if !borrowLoop {
+		e.hold(held)
+	}
 	e.end()
 	index := e.temporary()
 	size := e.temporary()
@@ -383,7 +388,11 @@ func (e *emitter) forOf(statement ir.ForOf) {
 		if statement.Element.IsReference() {
 			element = fmt.Sprintf("(%s)%s", cType(statement.Element), element)
 		}
-		e.declareLocal(statement.Local, element, false)
+		if borrowLoop {
+			e.line("%s %s = %s;", cType(statement.Element), e.localName(statement.Local), element)
+		} else {
+			e.declareLocal(statement.Local, element, false)
+		}
 	}
 	for index := range statement.Body {
 		e.statementAt(&statement.Body[index])

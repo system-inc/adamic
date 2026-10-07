@@ -175,7 +175,7 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 // in the whole program with one of those hazards. This deliberately errs toward refusal.
 func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 	view := l.concrete(l.checker.GetTypeAtLocation(receiver))
-	modules, err := l.moduleOrder(l.program.Files()[0])
+	modules, err := l.moduleOrder(l.program.Entries()[0])
 	if err != nil {
 		return "the program's runtime shapes are not known"
 	}
