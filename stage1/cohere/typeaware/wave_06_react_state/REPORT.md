@@ -46,3 +46,9 @@ TMPDIR=/workspace python3 stage1/cohere/typeaware/wave_06_react_state/validate_p
 All output goes directly to files. Complete compressed stdout/stderr, commands, exits and elapsed times, input sources as JSON, origin refs and hashes are committed under `validation/`. Elapsed reporting time and Go loading/analysis time measure different work and are not presented as a native/Go lint benchmark.
 
 The toolchain was reused from the original successful 77-second setup: nproc 5, CPU quota 4, Go 1.27.1, clang 20.1.8 and Node 24.19.0. Cohere remains pinned at `715ba94f3608a6500086b1076ce5cb7e51b836db`, typescript-go at `8d550c837c90bd1805b047b7eeccc2baac2d5e7a`; no pins changed. The new oracle driver was formatted, Python source compiled successfully and `git diff --check` passed. No root test gate or released-checker test was run for this reporting-only work, which makes no checker bridge calls.
+
+The later [prepared-HIR continuation](CORE_REPORT.md) adds native validator cores
+and post-dominance reused from wave 21, with semantic mutants and Go/native/Node
+comparisons. This report describes the earlier reporting-only stage. Current
+source analyses remain unfinished because the native source-to-HIR adapter,
+source unit gates and memo-scope resolution are still absent.

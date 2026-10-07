@@ -1,11 +1,14 @@
 import {panic} from 'adamic';
 import {Diagnostic} from '../../diagnostic.ts';
+import {HirFunction} from '../cores/hir.a';
+import {StaticComponents as StaticCore} from '../cores/static_components.a';
 
-// Reporting portion only. No source-analysis fallback may silently return no findings.
+// Prepared-HIR validation is separate from the missing native source adapter.
 export class StaticComponents {
+ runPrepared(function_:HirFunction):Diagnostic[]{const findings:Diagnostic[]=[];new StaticCore(findings).run(function_);return findings;}
  render(created:string,start:number,end:number):Diagnostic{
   const where=created!==''?`at \`${created}\``:'in this render';
   return new Diagnostic('react-hooks/static-components','staticComponents',`This component is created during render, ${where}, so it gets a new identity every time this function runs. React compares components by identity, so it unmounts the previous one and mounts this as a fresh component rather than updating it, discarding all of its state and re-rendering its whole subtree on every render. The usual symptom is an input that loses what was typed into it. Move the component to module scope, or pass the value that varies as a prop.`,start,end,'');
  }
- analyze():void{panic('NotYet: react-hooks/static-components needs native React HIR, SSA phi propagation and JSX compilation-unit lowering');}
+ analyze():void{panic('NotYet: react-hooks/static-components needs native JSX source lowering, SSA construction and compilation-unit selection');}
 }

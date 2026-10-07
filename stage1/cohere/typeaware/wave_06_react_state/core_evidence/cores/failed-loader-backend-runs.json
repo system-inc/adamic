@@ -1,0 +1,32 @@
+[
+  {
+    "name": "batch-0-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-0.a"
+    ],
+    "exit": 0,
+    "seconds": 0.10342537699943932
+  },
+  {
+    "name": "batch-0-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-0.a"
+    ],
+    "exit": 0,
+    "seconds": 12.07355040100083
+  },
+  {
+    "name": "batch-0-emitted-node",
+    "command": [
+      "node",
+      "/workspace/wave-06-react-cores/batch-0-emitted.mjs"
+    ],
+    "exit": 1,
+    "seconds": 0.03547320799953013
+  }
+]

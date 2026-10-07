@@ -1,0 +1,450 @@
+[
+  {
+    "name": "batch-0-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-0.a"
+    ],
+    "exit": 0,
+    "seconds": 0.11095327200018801
+  },
+  {
+    "name": "batch-0-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-0.a"
+    ],
+    "exit": 0,
+    "seconds": 13.003786576000493
+  },
+  {
+    "name": "batch-0-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-0-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.05015726899910078
+  },
+  {
+    "name": "batch-1-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-1.a"
+    ],
+    "exit": 0,
+    "seconds": 0.11198830600005749
+  },
+  {
+    "name": "batch-1-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-1.a"
+    ],
+    "exit": 0,
+    "seconds": 12.962378663998606
+  },
+  {
+    "name": "batch-1-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-1-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.04773632300020836
+  },
+  {
+    "name": "batch-2-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-2.a"
+    ],
+    "exit": 0,
+    "seconds": 0.10260069400101202
+  },
+  {
+    "name": "batch-2-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-2.a"
+    ],
+    "exit": 0,
+    "seconds": 8.070594558999801
+  },
+  {
+    "name": "batch-2-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-2-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.04684785200151964
+  },
+  {
+    "name": "batch-3-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-3.a"
+    ],
+    "exit": 0,
+    "seconds": 0.11872421999942162
+  },
+  {
+    "name": "batch-3-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-3.a"
+    ],
+    "exit": 0,
+    "seconds": 32.46479572300086
+  },
+  {
+    "name": "batch-3-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-3-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.052541774999554036
+  },
+  {
+    "name": "batch-4-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-4.a"
+    ],
+    "exit": 0,
+    "seconds": 0.10892280699954426
+  },
+  {
+    "name": "batch-4-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-4.a"
+    ],
+    "exit": 0,
+    "seconds": 19.10656305500015
+  },
+  {
+    "name": "batch-4-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-4-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.04827305099934165
+  },
+  {
+    "name": "batch-5-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-5.a"
+    ],
+    "exit": 0,
+    "seconds": 0.10452109800098697
+  },
+  {
+    "name": "batch-5-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-5.a"
+    ],
+    "exit": 0,
+    "seconds": 21.183533056999295
+  },
+  {
+    "name": "batch-5-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-5-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.045485930999348057
+  },
+  {
+    "name": "batch-6-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-6.a"
+    ],
+    "exit": 0,
+    "seconds": 0.10582440799953474
+  },
+  {
+    "name": "batch-6-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-6.a"
+    ],
+    "exit": 0,
+    "seconds": 15.748874925000564
+  },
+  {
+    "name": "batch-6-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-6-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.04061904500122182
+  },
+  {
+    "name": "batch-7-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-7.a"
+    ],
+    "exit": 0,
+    "seconds": 0.11390964699967299
+  },
+  {
+    "name": "batch-7-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-7.a"
+    ],
+    "exit": 0,
+    "seconds": 9.562958901000457
+  },
+  {
+    "name": "batch-7-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-7-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.044482699000582215
+  },
+  {
+    "name": "batch-8-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-8.a"
+    ],
+    "exit": 0,
+    "seconds": 0.11456666999947629
+  },
+  {
+    "name": "batch-8-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-8.a"
+    ],
+    "exit": 0,
+    "seconds": 37.58241353899939
+  },
+  {
+    "name": "batch-8-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-8-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.046683902000950184
+  },
+  {
+    "name": "batch-9-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-9.a"
+    ],
+    "exit": 0,
+    "seconds": 0.1057093489998806
+  },
+  {
+    "name": "batch-9-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-9.a"
+    ],
+    "exit": 0,
+    "seconds": 23.58475422400079
+  },
+  {
+    "name": "batch-9-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-9-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.04510311699959857
+  },
+  {
+    "name": "batch-10-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-10.a"
+    ],
+    "exit": 0,
+    "seconds": 0.10233460100062075
+  },
+  {
+    "name": "batch-10-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-10.a"
+    ],
+    "exit": 0,
+    "seconds": 12.296646651999254
+  },
+  {
+    "name": "batch-10-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-10-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.04753794399948674
+  },
+  {
+    "name": "batch-11-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-11.a"
+    ],
+    "exit": 0,
+    "seconds": 0.09464863099856302
+  },
+  {
+    "name": "batch-11-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/batch-11.a"
+    ],
+    "exit": 0,
+    "seconds": 3.1047086090002267
+  },
+  {
+    "name": "batch-11-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/batch-11-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.04066999799943005
+  },
+  {
+    "name": "compiler-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/compiler.a"
+    ],
+    "exit": 0,
+    "seconds": 0.09556819899989932
+  },
+  {
+    "name": "compiler-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/compiler.a"
+    ],
+    "exit": 0,
+    "seconds": 0.39451861399902555
+  },
+  {
+    "name": "compiler-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/compiler-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.036287049999373266
+  },
+  {
+    "name": "repository-source-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/repository.a"
+    ],
+    "exit": 0,
+    "seconds": 0.11377712200010137
+  },
+  {
+    "name": "repository-js-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "js",
+      "/workspace/wave-06-react-cores/repository.a"
+    ],
+    "exit": 0,
+    "seconds": 3.9051923219994933
+  },
+  {
+    "name": "repository-emitted-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/wave-06-react-cores/repository-emitted.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.045202973999039386
+  }
+]

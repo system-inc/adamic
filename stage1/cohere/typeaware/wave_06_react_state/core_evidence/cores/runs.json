@@ -1,0 +1,1003 @@
+[
+  {
+    "name": "stage0-build",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/wave-06-react-cores/adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 5.375420746999225
+  },
+  {
+    "name": "oracle-build",
+    "command": [
+      "go",
+      "-C",
+      "/workspace/adamic/cohere",
+      "build",
+      "-overlay",
+      "/workspace/wave-06-react-cores/overlay.json",
+      "-o",
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/adamic/cohere/adamic_wave06cores.go"
+    ],
+    "exit": 0,
+    "seconds": 6.056585029000416
+  },
+  {
+    "name": "source-filter",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/all.manifest",
+      "--valid-sources"
+    ],
+    "exit": 0,
+    "seconds": 0.03139276699948823
+  },
+  {
+    "name": "batch-0-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-0.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.026061567001306685
+  },
+  {
+    "name": "batch-0-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-0.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.02492507600072713
+  },
+  {
+    "name": "batch-0-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-0.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-0"
+    ],
+    "exit": 0,
+    "seconds": 13.017634171999816
+  },
+  {
+    "name": "batch-0-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-0"
+    ],
+    "exit": 0,
+    "seconds": 0.0016876789995876607
+  },
+  {
+    "name": "batch-0-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-0.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-0-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 14.4475753480001
+  },
+  {
+    "name": "batch-0-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-0-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.013550661000408581
+  },
+  {
+    "name": "batch-1-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-1.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.027128232000904973
+  },
+  {
+    "name": "batch-1-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-1.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.024887670999305556
+  },
+  {
+    "name": "batch-1-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-1.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-1"
+    ],
+    "exit": 0,
+    "seconds": 13.31919845199991
+  },
+  {
+    "name": "batch-1-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-1"
+    ],
+    "exit": 0,
+    "seconds": 0.0014320110003609443
+  },
+  {
+    "name": "batch-1-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-1.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-1-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 15.44849080199856
+  },
+  {
+    "name": "batch-1-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-1-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.013071281000520685
+  },
+  {
+    "name": "batch-2-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-2.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.027133440000397968
+  },
+  {
+    "name": "batch-2-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-2.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.027729552000892
+  },
+  {
+    "name": "batch-2-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-2.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-2"
+    ],
+    "exit": 0,
+    "seconds": 8.791157756000757
+  },
+  {
+    "name": "batch-2-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-2"
+    ],
+    "exit": 0,
+    "seconds": 0.0014315799999167211
+  },
+  {
+    "name": "batch-2-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-2.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-2-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 10.649206632000642
+  },
+  {
+    "name": "batch-2-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-2-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.014051952999579953
+  },
+  {
+    "name": "batch-3-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-3.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.04309639699931722
+  },
+  {
+    "name": "batch-3-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-3.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.03261777700026869
+  },
+  {
+    "name": "batch-3-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-3.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-3"
+    ],
+    "exit": 0,
+    "seconds": 34.73425143699933
+  },
+  {
+    "name": "batch-3-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-3"
+    ],
+    "exit": 0,
+    "seconds": 0.0021475760004250333
+  },
+  {
+    "name": "batch-3-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-3.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-3-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 34.116919529998995
+  },
+  {
+    "name": "batch-3-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-3-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.015517501000431366
+  },
+  {
+    "name": "batch-4-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-4.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.02754624299996067
+  },
+  {
+    "name": "batch-4-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-4.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.027958763001151965
+  },
+  {
+    "name": "batch-4-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-4.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-4"
+    ],
+    "exit": 0,
+    "seconds": 19.98205722199964
+  },
+  {
+    "name": "batch-4-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-4"
+    ],
+    "exit": 0,
+    "seconds": 0.0018265779999637743
+  },
+  {
+    "name": "batch-4-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-4.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-4-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 22.285319325001183
+  },
+  {
+    "name": "batch-4-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-4-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.014809259000685415
+  },
+  {
+    "name": "batch-5-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-5.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.031034166999234003
+  },
+  {
+    "name": "batch-5-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-5.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.02982208399953379
+  },
+  {
+    "name": "batch-5-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-5.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-5"
+    ],
+    "exit": 0,
+    "seconds": 23.1869264270008
+  },
+  {
+    "name": "batch-5-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-5"
+    ],
+    "exit": 0,
+    "seconds": 0.0017589319995749975
+  },
+  {
+    "name": "batch-5-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-5.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-5-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 24.871491268999307
+  },
+  {
+    "name": "batch-5-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-5-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.013173506999009987
+  },
+  {
+    "name": "batch-6-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-6.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.025581736999811255
+  },
+  {
+    "name": "batch-6-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-6.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.025592105999749037
+  },
+  {
+    "name": "batch-6-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-6.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-6"
+    ],
+    "exit": 0,
+    "seconds": 17.254009639998912
+  },
+  {
+    "name": "batch-6-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-6"
+    ],
+    "exit": 0,
+    "seconds": 0.0020588610004779184
+  },
+  {
+    "name": "batch-6-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-6.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-6-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 19.205151932999797
+  },
+  {
+    "name": "batch-6-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-6-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.016244295999058522
+  },
+  {
+    "name": "batch-7-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-7.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.024875225999494432
+  },
+  {
+    "name": "batch-7-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-7.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.02574874399942928
+  },
+  {
+    "name": "batch-7-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-7.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-7"
+    ],
+    "exit": 0,
+    "seconds": 11.137555473000248
+  },
+  {
+    "name": "batch-7-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-7"
+    ],
+    "exit": 0,
+    "seconds": 0.0018187839996244293
+  },
+  {
+    "name": "batch-7-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-7.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-7-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 12.181504999000026
+  },
+  {
+    "name": "batch-7-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-7-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.01493403499989654
+  },
+  {
+    "name": "batch-8-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-8.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.032358169000872294
+  },
+  {
+    "name": "batch-8-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-8.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.02783263600031205
+  },
+  {
+    "name": "batch-8-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-8.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-8"
+    ],
+    "exit": 0,
+    "seconds": 39.74936129900016
+  },
+  {
+    "name": "batch-8-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-8"
+    ],
+    "exit": 0,
+    "seconds": 0.0020136460007051937
+  },
+  {
+    "name": "batch-8-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-8.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-8-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 42.63965093600018
+  },
+  {
+    "name": "batch-8-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-8-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.015566091000437154
+  },
+  {
+    "name": "batch-9-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-9.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.02820681099910871
+  },
+  {
+    "name": "batch-9-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-9.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.028672725000433275
+  },
+  {
+    "name": "batch-9-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-9.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-9"
+    ],
+    "exit": 0,
+    "seconds": 24.64260107300106
+  },
+  {
+    "name": "batch-9-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-9"
+    ],
+    "exit": 0,
+    "seconds": 0.0017011670006468194
+  },
+  {
+    "name": "batch-9-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-9.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-9-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 28.113995515999704
+  },
+  {
+    "name": "batch-9-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-9-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.01406982000116841
+  },
+  {
+    "name": "batch-10-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-10.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.02556060699862428
+  },
+  {
+    "name": "batch-10-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-10.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.02647717800027749
+  },
+  {
+    "name": "batch-10-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-10.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-10"
+    ],
+    "exit": 0,
+    "seconds": 13.617248329999711
+  },
+  {
+    "name": "batch-10-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-10"
+    ],
+    "exit": 0,
+    "seconds": 0.0017670359993644524
+  },
+  {
+    "name": "batch-10-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-10.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-10-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 15.680645100999755
+  },
+  {
+    "name": "batch-10-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-10-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.011860386999615002
+  },
+  {
+    "name": "batch-11-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-11.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.024745094999161665
+  },
+  {
+    "name": "batch-11-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-react-cores/tsconfig.json",
+      "/workspace/wave-06-react-cores/batch-11.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.022467034999863245
+  },
+  {
+    "name": "batch-11-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-11.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-11"
+    ],
+    "exit": 0,
+    "seconds": 3.770833466000113
+  },
+  {
+    "name": "batch-11-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-11"
+    ],
+    "exit": 0,
+    "seconds": 0.0016381159985030536
+  },
+  {
+    "name": "batch-11-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/batch-11.a",
+      "-o",
+      "/workspace/wave-06-react-cores/batch-11-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 5.073051811999903
+  },
+  {
+    "name": "batch-11-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/batch-11-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.011715036998793948
+  },
+  {
+    "name": "effect-setter-mutant-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/effect-setter-main.a",
+      "-o",
+      "/workspace/wave-06-react-cores/effect-setter"
+    ],
+    "exit": 0,
+    "seconds": 9.216456014999494
+  },
+  {
+    "name": "effect-setter-mutant-run",
+    "command": [
+      "/workspace/wave-06-react-cores/effect-setter"
+    ],
+    "exit": 0,
+    "seconds": 0.0017084379996958887
+  },
+  {
+    "name": "render-unconditional-mutant-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/render-unconditional-main.a",
+      "-o",
+      "/workspace/wave-06-react-cores/render-unconditional"
+    ],
+    "exit": 0,
+    "seconds": 13.711887879000642
+  },
+  {
+    "name": "render-unconditional-mutant-run",
+    "command": [
+      "/workspace/wave-06-react-cores/render-unconditional"
+    ],
+    "exit": 0,
+    "seconds": 0.0014166639994073194
+  },
+  {
+    "name": "static-creator-mutant-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/static-creator-main.a",
+      "-o",
+      "/workspace/wave-06-react-cores/static-creator"
+    ],
+    "exit": 0,
+    "seconds": 12.884583331000613
+  },
+  {
+    "name": "static-creator-mutant-run",
+    "command": [
+      "/workspace/wave-06-react-cores/static-creator"
+    ],
+    "exit": 0,
+    "seconds": 0.0019118370000796858
+  },
+  {
+    "name": "adjacency-alias-mutant-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/adjacency-alias-main.a",
+      "-o",
+      "/workspace/wave-06-react-cores/adjacency-alias"
+    ],
+    "exit": 0,
+    "seconds": 25.78800964900074
+  },
+  {
+    "name": "adjacency-alias-mutant-run",
+    "command": [
+      "/workspace/wave-06-react-cores/adjacency-alias"
+    ],
+    "exit": 0,
+    "seconds": 0.0019313119992148131
+  },
+  {
+    "name": "compiler-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-06-react-cores/compiler.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 5.772340288998748
+  },
+  {
+    "name": "compiler-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/wave-06-typescript/src/compiler/tsconfig.json",
+      "/workspace/wave-06-react-cores/compiler.manifest"
+    ],
+    "exit": 0,
+    "seconds": 5.2051078709992
+  },
+  {
+    "name": "compiler-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/compiler.a",
+      "-o",
+      "/workspace/wave-06-react-cores/compiler"
+    ],
+    "exit": 0,
+    "seconds": 0.6843183229993883
+  },
+  {
+    "name": "compiler-native",
+    "command": [
+      "/workspace/wave-06-react-cores/compiler"
+    ],
+    "exit": 0,
+    "seconds": 0.0015725840003142366
+  },
+  {
+    "name": "compiler-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/compiler.a",
+      "-o",
+      "/workspace/wave-06-react-cores/compiler-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 1.95722743099941
+  },
+  {
+    "name": "compiler-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/compiler-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.006842414999482571
+  },
+  {
+    "name": "repository-prepare",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-06-react-cores/repository.manifest",
+      "--native-graphs",
+      "/workspace/adamic/stage1/cohere/typeaware/wave_06_react_state"
+    ],
+    "exit": 0,
+    "seconds": 0.21145254499970179
+  },
+  {
+    "name": "repository-go",
+    "command": [
+      "/workspace/wave-06-react-cores/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave-06-react-cores/repository.manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.17998592900039512
+  },
+  {
+    "name": "repository-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/repository.a",
+      "-o",
+      "/workspace/wave-06-react-cores/repository"
+    ],
+    "exit": 0,
+    "seconds": 4.915253107001263
+  },
+  {
+    "name": "repository-native",
+    "command": [
+      "/workspace/wave-06-react-cores/repository"
+    ],
+    "exit": 0,
+    "seconds": 0.0011955000009038486
+  },
+  {
+    "name": "repository-asan-build",
+    "command": [
+      "/workspace/wave-06-react-cores/adamic",
+      "build",
+      "/workspace/wave-06-react-cores/repository.a",
+      "-o",
+      "/workspace/wave-06-react-cores/repository-asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 18.033922631000678
+  },
+  {
+    "name": "repository-asan-native",
+    "command": [
+      "/workspace/wave-06-react-cores/repository-asan"
+    ],
+    "exit": 0,
+    "seconds": 0.007145080999180209
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "seconds": {
+    "native": 0.021281965999150998,
+    "go": 0.3247313470019435,
+    "prepare": 0.34332769099819416
+  },
+  "boundary": "native processes consume prepared fixture HIR; Go performs source loading and analysis; not an end-to-end speed comparison"
+}
