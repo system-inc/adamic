@@ -1,0 +1,26 @@
+=== RUN   TestRepositoryStatics
+    repository_test.go:156: 157 actual captured sources from all 6 consumers
+    repository_test.go:194: 2147 cases, 893 definition bodies, 169528 identical bytes on Go, source Node, emitted JavaScript and sanitized native
+=== RUN   TestRepositoryStatics/skip-overwrite
+    repository_test.go:229: skip-overwrite caught by byte comparison on backend 0 after clean execution
+    repository_test.go:229: skip-overwrite caught by byte comparison on backend 1 after clean execution
+    repository_test.go:229: skip-overwrite caught by byte comparison on backend 2 after clean execution
+=== RUN   TestRepositoryStatics/wrong-count
+    repository_test.go:229: wrong-count caught by byte comparison on backend 0 after clean execution
+    repository_test.go:229: wrong-count caught by byte comparison on backend 1 after clean execution
+    repository_test.go:229: wrong-count caught by byte comparison on backend 2 after clean execution
+=== RUN   TestRepositoryStatics/copy-order
+    repository_test.go:229: copy-order caught by byte comparison on backend 0 after clean execution
+    repository_test.go:229: copy-order caught by byte comparison on backend 1 after clean execution
+    repository_test.go:229: copy-order caught by byte comparison on backend 2 after clean execution
+=== RUN   TestRepositoryStatics/reuse-sort-record
+    repository_test.go:229: reuse-sort-record caught by byte comparison on backend 0 after clean execution
+    repository_test.go:229: reuse-sort-record caught by byte comparison on backend 1 after clean execution
+    repository_test.go:229: reuse-sort-record caught by byte comparison on backend 2 after clean execution
+--- PASS: TestRepositoryStatics (12.50s)
+    --- PASS: TestRepositoryStatics/skip-overwrite (2.38s)
+    --- PASS: TestRepositoryStatics/wrong-count (2.47s)
+    --- PASS: TestRepositoryStatics/copy-order (2.55s)
+    --- PASS: TestRepositoryStatics/reuse-sort-record (2.49s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from-wave1-06	12.507s

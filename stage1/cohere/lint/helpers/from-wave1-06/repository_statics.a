@@ -1,0 +1,14 @@
+export interface OrderView { nil: boolean; values: number[]; }
+export interface Reading { Order: OrderView; Count: number; }
+
+// Repository bodies replace any framework reading for the same root.
+export function addRepositoryStatics<Nodes>(
+  statics: Map<string, Reading>,
+  repositoryBodies: ReadonlyMap<string, Nodes>,
+  propertySort: (nodes: Nodes) => Reading,
+): void {
+  for (const [root, nodes] of repositoryBodies) {
+    const sorted = propertySort(nodes);
+    statics.set(root, { Order: sorted.Order, Count: sorted.Count });
+  }
+}

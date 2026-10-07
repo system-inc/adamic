@@ -1,6 +1,6 @@
 # Active helper
 
-`framework_static_reading.a` owns collapse.FrameworkStaticReading. See STATIC_REPORT.md for its API boundary, exact Go comparisons, consumer removals and five semantic mutants.
+`repository_statics.a` owns collapse.*Table.addRepositoryStatics. See REPOSITORY_REPORT.md for its API, four-backend parity, consumer removals and four semantic mutants. FrameworkStaticReading and NewTheme are withdrawn duplicates; their passing results are historical evidence.
 
 # Withdrawn constructor evidence
 

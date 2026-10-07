@@ -1,0 +1,68 @@
+import { readTextFile, programArguments, panic } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { addRepositoryStatics, type Reading } from './repository_statics.a';
+function compareKeys(left: string, right: string): number {
+  let a = 0; let b = 0;
+  while (a < left.length && b < right.length) {
+    const x = left.codePointAt(a) ?? 0; const y = right.codePointAt(b) ?? 0;
+    if (x !== y) { return x < y ? -1 : 1; }
+    a += x > 65535 ? 2 : 1; b += y > 65535 ? 2 : 1;
+  }
+  return (left.length - a) - (right.length - b);
+}
+function quoted(text: string): string {
+  let result = '"';
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i);
+    if (code === 34 || code === 92) { result += '\\' + text.slice(i, i + 1); }
+    else if (code < 32 || code === 60 || code === 62 || code === 38 || code === 8232 || code === 8233) { result += `\\u${code.toString(16).padStart(4, '0')}`; }
+    else { result += text.slice(i, i + 1); }
+  }
+  return result + '"';
+}
+const args = programArguments();
+const input = readTextFile(args[0] ?? '');
+if (input.kind !== 'Ok') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse();
+if (root < 0) { panic(json.error); }
+const sortResults = new Map<number, Reading>();
+for (const index of json.node(json.field(root, 'Definitions')).children) {
+  const id = json.node(json.field(index, 'Id')).number;
+  const values: number[] = [];
+  for (const child of json.node(json.field(index, 'Order')).children) { values.push(json.node(child).number); }
+  sortResults.set(id, { Order: { nil: json.node(json.field(index, 'OrderNil')).text === 'true', values }, Count: json.node(json.field(index, 'Count')).number });
+}
+for (const index of json.node(json.field(root, 'Cases')).children) {
+  const roots = json.node(json.field(index, 'Roots')).children;
+  const ids = json.node(json.field(index, 'Ids')).children;
+  const statics = new Map<string, Reading>();
+  statics.set('untouched', { Order: { nil: false, values: [-1] }, Count: -99 });
+  const bodies = new Map<string, number>();
+  for (let i = 0; i < roots.length; i++) {
+    const name = json.node(roots[i] ?? panic('missing root')).text;
+    const id = json.node(ids[i] ?? panic('missing id')).number;
+    bodies.set(name, id);
+    statics.set(name, { Order: { nil: false, values: [-1] }, Count: -99 });
+  }
+  const before = statics;
+  addRepositoryStatics(statics, bodies, (nodes: number): Reading => sortResults.get(nodes) ?? panic('missing Go sort result'));
+  console.log(`map ${before.size === statics.size} ${statics.size}`);
+  const keys = [...statics.keys()]; keys.sort(compareKeys);
+  for (const name of keys) {
+    const reading = statics.get(name) ?? panic('missing reading');
+    const prefix = `${quoted(name)} ${reading.Order.nil} ${reading.Count} ${reading.Order.values.join(',')}`;
+    let shared = true; let independent = true;
+    const id = bodies.get(name);
+    if (id !== undefined) {
+      const original = sortResults.get(id) ?? panic('missing original');
+      const count = original.Count;
+      reading.Count += 100; independent = original.Count === count; original.Count = count;
+      if (reading.Order.values.length > 0 && original.Order.values.length === 0) { shared = false; }
+      else if (reading.Order.values.length > 0) {
+        const previous = original.Order.values[0] ?? 0;
+        reading.Order.values[0] = previous + 100; shared = original.Order.values[0] === previous + 100; original.Order.values[0] = previous;
+      }
+    }
+    console.log(`${prefix} ${shared} ${independent}`);
+  }
+}

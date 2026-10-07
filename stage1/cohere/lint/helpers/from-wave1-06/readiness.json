@@ -4,7 +4,7 @@
   "rules": [
     {
       "rule": "better-tailwindcss/enforce-canonical-classes",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
+      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
@@ -38,7 +38,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.splitCandidateIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Node.IsContainer",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryFunctionalRoots",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addThemeNamespaces",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.Add",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.ClearNamespace",
@@ -71,6 +70,7 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.DesignSystem.Prefix",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.DesignSystem.VariantCompoundsWith",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.DesignSystem.VariantKind",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.LoadDesignSystem",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTheme",
@@ -135,7 +135,7 @@
     },
     {
       "rule": "better-tailwindcss/enforce-consistent-class-order",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
+      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassTemplateSegmentsIn",
@@ -199,7 +199,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.ArbitraryPropertyReading",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.Lookup",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryFunctionalRoots",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addThemeNamespaces",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.bareReading",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.frameworkReading",
@@ -261,6 +260,7 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.Emit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.ReadingFor",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.readingOf",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.InferDataType",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsColor",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsLength",
@@ -405,7 +405,7 @@
     },
     {
       "rule": "better-tailwindcss/enforce-consistent-variant-order",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
+      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
@@ -438,7 +438,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Node.IsContainer",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*RunVariantOrder.IndexOf",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryFunctionalRoots",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addThemeNamespaces",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.Add",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.ClearNamespace",
@@ -473,6 +472,7 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.DesignSystem.Prefix",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.DesignSystem.VariantCompoundsWith",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.DesignSystem.VariantKind",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.LoadDesignSystem",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTable",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.NewTheme",
@@ -539,7 +539,7 @@
     },
     {
       "rule": "better-tailwindcss/enforce-shorthand-classes",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
+      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
@@ -574,7 +574,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.Utilities",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Node.IsContainer",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryFunctionalRoots",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addThemeNamespaces",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.Add",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.ClearNamespace",
@@ -624,6 +623,7 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.DesignSystem.VariantKind",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.Description",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.Description",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.InferDataType",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsColor",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsLength",
@@ -746,7 +746,7 @@
     },
     {
       "rule": "better-tailwindcss/no-conflicting-classes",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
+      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
@@ -784,7 +784,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.Utilities",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Node.IsContainer",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryFunctionalRoots",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addThemeNamespaces",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.Add",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.ClearNamespace",
@@ -838,6 +837,7 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.Emit",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.staticValueEmitter",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.Emit",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.InferDataType",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsColor",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsColorKeyword",
@@ -973,7 +973,7 @@
     },
     {
       "rule": "better-tailwindcss/no-unknown-classes",
-      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
+      "removed_helper": "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
       "remaining_helpers": [
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.ClassLiteralsIn",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind.*ClassLiteralReader.attributeValues",
@@ -1011,7 +1011,6 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*LoadedDesignSystem.Utilities",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Node.IsContainer",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryFunctionalRoots",
-        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addRepositoryStatics",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Table.addThemeNamespaces",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.Add",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.*Theme.ClearNamespace",
@@ -1061,6 +1060,7 @@
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.DesignSystem.VariantKind",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkFunctionalUtility.Description",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkMultiDeclarationUtility.Description",
+        "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.FrameworkStaticReading",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.InferDataType",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsColor",
         "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse.IsLength",
