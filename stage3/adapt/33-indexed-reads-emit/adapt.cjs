@@ -3,7 +3,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const sites = require("./sites.json");
-const files = [...new Set(sites.map(site => site.file))];
+const files = require("./files.json");
 
 // Addresses are parsed expressions plus their occurrence in the pinned file.
 // Survey line/column fields are documentation, never edit offsets.

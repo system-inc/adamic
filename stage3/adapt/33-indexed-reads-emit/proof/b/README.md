@@ -32,7 +32,7 @@ node adapt.cjs TREE
 bash census.sh TREE OUTPUT
 node verify.cjs BEFORE TREE
 node adapt.cjs TREE # second run: zero edits
-node mutant.cjs BEFORE TREE NEW_MUTANT_TREE
+MUTANT_FILE=transformers/es2015.ts node mutant.cjs BEFORE TREE NEW_MUTANT_TREE
 stage3/oracle/run.sh TREE OUTPUT # default suites, adaptations 10 + 30 + 33, no 20
 ```
 

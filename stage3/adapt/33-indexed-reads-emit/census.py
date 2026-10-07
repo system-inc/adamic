@@ -6,7 +6,7 @@ import re
 import sys
 source = json.loads(Path(sys.argv[1]).read_text())
 codes = [2345, 18048, 2532, 2322, 2538]
-files = list(dict.fromkeys(site["file"] for site in json.loads(Path(__file__).with_name("sites.json").read_text())))
+files = json.loads(Path(__file__).with_name("files.json").read_text())
 counts = {file: {f"TS{code}": 0 for code in codes} for file in files}
 diagnostics = []
 for text in source["diagnostics"]:
