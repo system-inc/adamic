@@ -2,9 +2,11 @@
 
 #include "adamic.h"
 #include "count.h"
+#include "graph_regions.h"
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Small heap values come from size classes, 16 bytes apart up to 256, carved from 64 KB chunks: each
 // chunk holds one class's slots, its freed ones on a list threaded through them, and each class keeps
@@ -112,7 +114,7 @@ static chunk *new_chunk(size_t class) {
 		if (chunk_count == chunk_capacity) {
 			chunk_capacity = chunk_capacity == 0 ? 64 : chunk_capacity * 2;
 			chunk **grown = realloc(chunks, chunk_capacity * sizeof *grown);
-			if (grown == NULL || chunk_count >= UINT32_MAX) {
+			if (grown == NULL || chunk_count >= ADAMIC_GRAPH_FLAG - 1) {
 				static const char message[] = "out of memory";
 				adamic_panic(message, sizeof message - 1);
 			}
@@ -185,7 +187,7 @@ static void give(void *slot, uint32_t number) {
 	}
 }
 
-void *adamic_allocate(size_t size, enum adamic_kind kind) {
+static void *allocate_storage(size_t size, enum adamic_kind kind) {
 	adamic_heap *heap;
 	uint32_t slab = 0;
 	if (SLABS && size <= CLASSES * GRANULE) {
@@ -202,8 +204,12 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 	heap->references = 1;
 	heap->kind = kind;
 	heap->slab = slab;
-	ADAMIC_COUNT_ALLOCATION();
 	return heap;
+}
+
+void *adamic_allocate(size_t size, enum adamic_kind kind) {
+	ADAMIC_COUNT_ALLOCATION();
+	return allocate_storage(size, kind);
 }
 
 // deallocate gives a value's memory back: to its chunk, or to free.
@@ -215,10 +221,30 @@ static void deallocate(adamic_heap *heap) {
 	give(heap, heap->slab - 1);
 }
 
+// Move a still-new allocation into storage with its graph-only prefix. This is
+// one logical allocation, and must happen before aliases or owned slots exist.
+void *adamic_heap_graph_storage(void *value, size_t size) {
+	adamic_heap *old = value;
+	adamic_heap *storage = allocate_storage(size + sizeof(adamic_graph_header), old->kind);
+	uint32_t slab = storage->slab;
+	adamic_graph_header *prefix = (adamic_graph_header *)storage;
+	adamic_heap *heap = (adamic_heap *)(prefix + 1);
+	memcpy(heap, old, size);
+	heap->slab = slab | ADAMIC_GRAPH_FLAG;
+	*prefix = (adamic_graph_header){NULL, NULL};
+	deallocate(old);
+	return heap;
+}
+
 void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
-	if (heap != NULL && heap->references != 0) {
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = &((adamic_cell *)heap)->owner->heap;
+	}
+	if (adamic_graph_is(heap)) {
+		adamic_graph_retain(heap);
+	} else if (heap != NULL && heap->references != 0) {
 		heap->references++;
 	}
 	return value;
@@ -249,12 +275,17 @@ static void list(void *value) {
 // let_go drops one reference and lists the value if that was its last.
 static void let_go(void *value) {
 	adamic_heap *heap = value;
-	if (heap != NULL && heap->references != 0 && --heap->references == 0) {
-		list(value);
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = &((adamic_cell *)heap)->owner->heap;
+	}
+	if (adamic_graph_is(heap)) {
+		if (adamic_graph_release_last(heap)) { list(heap); }
+	} else if (heap != NULL && heap->references != 0 && --heap->references == 0) {
+		list(heap);
 	}
 }
 
-static void free_one(void *value) {
+void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 	adamic_heap *heap = value;
 	switch (heap->kind) {
 	case adamic_kind_string:
@@ -288,6 +319,14 @@ static void free_one(void *value) {
 		}
 		break;
 	}
+	case adamic_kind_environment: {
+		adamic_environment *environment = value;
+		for (size_t index = 0; index < environment->count; index++) {
+			adamic_cell *cell = &environment->cells[index];
+			if (cell->references) { let_go(cell->value.reference); }
+		}
+		break;
+	}
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;
 		for (size_t index = 0; index < closure->count; index++) {
@@ -311,17 +350,34 @@ static void free_one(void *value) {
 		break;
 	}
 	}
-	// Anything weak that pointed here now points at nothing, before the memory can be anything else.
-	adamic_weak_forget(value);
-	deallocate(value);
+}
+
+void adamic_heap_free_storage(void *value, uint32_t slab) {
+	adamic_heap *heap = value;
+	if (adamic_graph_is(heap)) {
+		heap = (adamic_heap *)adamic_graph_header_of(heap);
+	}
+	heap->slab = slab & ~ADAMIC_GRAPH_FLAG;
+	deallocate(heap);
 	ADAMIC_COUNT_FREE();
 }
 
-void adamic_release(void *value) {
-	ADAMIC_COUNT_RELEASE();
-	let_go(value);
+static void free_one(void *value) {
+	if (adamic_graph_is(value)) {
+		adamic_graph_free(value, let_go);
+		return;
+	}
+	adamic_heap_free_children(value, let_go);
+	// Anything weak that pointed here now points at nothing, before the memory can be anything else.
+	adamic_weak_forget(value);
+	adamic_heap_free_storage(value, ((adamic_heap *)value)->slab);
+}
+
+// Keep destruction out of the common release path: null, immortal and still-shared values need
+// no destruction registers or queue access. The list still drains iteratively, including children.
+__attribute__((noinline)) static void release_last(void *value) {
+	list(value);
 	if (draining) {
-		// An outer release is already working through the list.
 		return;
 	}
 	draining = true;
@@ -329,4 +385,22 @@ void adamic_release(void *value) {
 		free_one(freeing[--freeing_count]);
 	}
 	draining = false;
+}
+
+void adamic_release(void *value) {
+	ADAMIC_COUNT_RELEASE();
+	adamic_heap *heap = value;
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = &((adamic_cell *)heap)->owner->heap;
+	}
+	// A member reaching zero does not mean its region is unowned. The slow
+	// destruction path must only receive the region's last outside release.
+	if (adamic_graph_is(heap)) {
+		if (adamic_graph_release_last(heap)) { release_last(heap); }
+		return;
+	}
+	if (heap == NULL || heap->references == 0 || --heap->references != 0) {
+		return;
+	}
+	release_last(heap);
 }

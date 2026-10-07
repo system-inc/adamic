@@ -44,6 +44,12 @@ func cString(value string) string {
 
 // Options says how to compile.
 type Options struct {
+	// Target is empty for native, or wasm32-wasi for a WASI module.
+	Target string
+
+	// Request selects a WASI reactor containing the emitted request ABI.
+	Request bool
+
 	// Sanitize compiles with the address and undefined-behavior sanitizers, as the tests do.
 	Sanitize bool
 
@@ -75,6 +81,9 @@ func Flags(options Options) []string {
 	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
 	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
 	flags = append(flags, "-fno-optimize-sibling-calls")
+	if options.Target == "wasm32-wasi" {
+		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-mno-atomics")
+	}
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
 	}
@@ -92,6 +101,9 @@ func Flags(options Options) []string {
 
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
+	if err := ValidateOptions(options); err != nil {
+		return err
+	}
 	directory, err := os.MkdirTemp("", "adamic-build-")
 	if err != nil {
 		return fmt.Errorf("native: %w", err)
@@ -105,12 +117,26 @@ func Build(source string, output string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
-	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", output, filepath.Join(directory, "main.c"))
-	arguments = append(arguments, RuntimeLinkFlags(library)...)
+	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", output)
+	if !options.Request {
+		arguments = append(arguments, filepath.Join(directory, "main.c"))
+	}
+	if options.Target == "wasm32-wasi" {
+		arguments = append(arguments, "-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive")
+	} else {
+		arguments = append(arguments, RuntimeLinkFlags(library)...)
+	}
 	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
+	if options.Request {
+		// Runtime constructors precede module initialization at the same default priority.
+		arguments = append(arguments, filepath.Join(directory, "main.c"))
+	}
 	arguments = append(arguments, "-lm")
-	command := exec.Command("clang", arguments...)
+	if options.Target == "wasm32-wasi" {
+		arguments = append(arguments, WASILinkFlags(options)...)
+	}
+	command := exec.Command(compilerName(options), arguments...)
 	if combined, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}

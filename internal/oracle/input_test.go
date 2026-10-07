@@ -34,6 +34,7 @@ var inputFixtures = []struct {
 	writes bool
 }{
 	{"internal/oracle/testdata/read_files.a", nil, false, false},
+	{"internal/oracle/testdata/empty-path.a", nil, false, false},
 	{"internal/oracle/testdata/utf8_sweep.a", nil, false, false},
 	{"internal/oracle/testdata/arguments.a", []string{
 		"plain", "", "with space", "héllo 🌍", "--flag=1",
@@ -58,7 +59,8 @@ type inputRun struct {
 // executeInput runs a command as an input fixture runs, with environment added to the test's own.
 func executeInput(t *testing.T, how inputRun, environment []string, name string, arguments ...string) run {
 	t.Helper()
-	command := bounded(t, name, arguments...)
+	// Set the child's umask explicitly. With 022, 0644 and 0666 create modes look identical.
+	command := bounded(t, "/bin/sh", append([]string{"-c", `umask 0; exec "$0" "$@"`, name}, arguments...)...)
 	command.Dir = how.directory
 	command.SysProcAttr.Credential = how.credential
 	if environment != nil {

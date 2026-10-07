@@ -469,6 +469,956 @@ The analyses that move and reuse values (`internal/flow`, and reuse in place on 
 
 `regions_throw.a` throws out of a region version mid-statement, after nodes are made in the region: at the top level inside a `try`, out of a function into its caller's catch, and through a `finally`, each followed by a region that finishes. Mutant: no region end on the throw path, caught by the leak check (8,627 bytes in 9 allocations: the region's blocks and its label strings).
 
+## Regions for cyclic graphs
+
+Status: design approved by @system_adamic on October 6, 2026, with counting-only
+retention evidence added October 7. Unit 1 starts after `codex/nested-functions`.
+This section supersedes the refusal of unproven data cycles above once its build
+and evidence land. No collector, tracing in release builds, or pauses are allowed.
+
+### Which types
+
+After lowering, the cycle finder and fresh-write proof identify cycle-capable
+slots whose writes remain unproven. Their holders and targets seed graph types,
+closed over the strongly connected part of the ownership type graph. Weak edges
+are excluded. Only those types use graph regions; a program whose finder proves
+every write has no graph types and emits the same C as before. Structural views,
+instantiated containers, closure environments and capture cells must agree about
+an allocation's ownership representation. The sibling-capture proof added by
+nested-functions stays a proof, not an automatic reason to use a region.
+
+The closure includes the strong paths connecting unproven edges, even where a
+connecting slot's writes are proven fresh or it is readonly. Otherwise a graph
+could own a counted object which counts a reference back into the same graph,
+preventing the region from reaching zero. This is a design clarification from
+reading `cycles.go`: its `reaches` follows readonly and proven edges too. It must
+not be implemented as an SCC using only unproven edges.
+
+### Dynamic regions
+
+Every graph allocation starts in its own region with one outside count. Regions
+have union-find records, union by member count and path compression. Member lists
+are intrusive with head and tail, so concatenation on merge is O(1); finding roots
+has the usual amortized union-find cost. Losing region records remain valid until
+the whole merged region ends, since existing members still point to them.
+
+A graph-to-graph slot store merges the holder's and target's regions before
+publishing the pointer. It sums their outside counts. Internal pointers are plain:
+no retain on store and no release on overwrite. A merge never splits again, so an
+overwritten pointer's old target remains allocated until the region ends. This
+applies to initialization, copies, spread and every container operation as well
+as later field writes. Taking an element out into a local or returning it must
+acquire an outside count before the source ownership can disappear.
+
+An array, Map or Set with graph elements, keys or values is a graph allocation,
+including its resizable storage. It joins what it stores. Non-graph contents such
+as string Map keys retain their ordinary counts. A graph-typed closure environment
+and its graph capture cells join regions in the same way; function signatures
+alone do not describe the environment's ownership. Proven acyclic closures keep
+the current counted representation.
+
+### Counts at the boundary
+
+An owned local, kept parameter, global, counted object's field, non-graph
+container entry or counted closure capture owns one count on `find(region)`, not
+on an individual graph object. Borrowed references still borrow and moves still
+transfer their ownership. Every outside retain/release follows the object's
+region record to its current root. No static anchor or annotation is required:
+Program is an anchor only because it holds an outside reference.
+
+At outside count zero, first invalidate Weak handles for all members and release
+everything they own outside the graph, while all graph members remain allocated.
+Then free every member and every merged region record. Freeing must integrate
+with the existing iterative release queue rather than recurse down million-node
+chains. Graph internal links are never passed to counted release. Reuse cannot
+infer object uniqueness from a region count of one: that count says nothing about
+internal aliases. Statement arenas cannot take graph allocations whose lifetime
+is dynamic.
+
+A Weak into a region targets one object, counts only its handle, and expires when
+the region frees. Explicit Weak spelling and its existing expiry semantics stay
+unchanged.
+
+### Threads and long-lived services
+
+Threads are design only. Crossing a thread boundary marks a whole region shared,
+with one atomic region count, never an atomic count per member. Unit 1 must loudly
+reject merging two different regions if either is shared. Actual publication,
+synchronization and concurrent merging are not built here.
+
+Watch mode and language services remain NotYet. Each Program version would hold
+an outside reference to its graph, with returned nodes, symbols, types and client
+handles holding additional counts. Retiring a version drops its Program reference;
+escaping objects keep the region alive. Sharing graph objects across versions
+merges regions permanently, so it can retain old versions. Version isolation or
+copying needs a separate design and measured retention evidence.
+
+### Evidence required by unit 1
+
+Oracle fixtures run source Node, emitted JavaScript on Node, and native, with
+ASan, UBSan and LeakSanitizer: mutable parse parents/children, a doubly linked
+list, flow loops and restored edges, literal self/twin links kept by a cache,
+symbol/declaration inverses, and a cache as sole owner. An escaping local must
+keep a region alive after its root drops, and dropping the last anchor must free
+all of it. Every previously refused fresh probe newly accepted must explicitly
+show leak-clean region destruction. Acceptance alone is no evidence.
+
+Mutants: free despite an outside count (ASan later read); omit outside releases
+(LeakSanitizer); merge without summing counts (ASan or leak); count internal slot
+stores (counts mismatch or leak). Record every changed counts row, region counts
+and merges, and each previously refused fixture now accepted.
+
+Counting builds also measure retained graph garbage from day one. They track
+outside counts per member in addition to the root's aggregate, and mark from
+outside-held members through current strong graph links. At final release,
+measure immediately before dropping the final outside count and report at free
+time: total live members/bytes, reachable members/bytes, and unreachable
+members/bytes. After dropping that count there are no roots, which would classify
+every member as unreachable and obscure overwrite retention. This timing
+clarification makes the requested report meaningful. The diagnostic mark pass is
+compiled only with counting enabled, never decides what is freed, and is never a
+collector. Weak links and stale overwritten links are not traversed. Member bytes
+and container buffer bytes must have stated accounting; region record overhead
+is reported separately.
+
+The million-node generated graph with parent links and cross edges must report
+native peak live bytes versus Node, and the reachable/unreachable object and byte
+figures above. Include deliberate overwritten links so the diagnostic's nonzero
+case is exercised. Scanner/parser slices will use the same report once they
+compile. No measurements are claimed by this design commit.
+
+### Runtime foundation checkpoint, October 7
+
+**Unit 1 is incomplete.** The runtime foundation is built and tested directly
+from C. Graph-type selection and allocation/store emission are not connected.
+The compiler still refuses the same unproven cycles. No previously refused
+fixture is claimed to compile, no existing counts row is changed by this unit,
+and no emission file has a unit change. The nested-functions prerequisite was
+merged at `b15216dabf65ffaa7152f6e64709b7b062ea01a9`; its changes are separate.
+
+The small shared-file changes are in `heap.c`: `adamic_retain` and `let_go`
+dispatch region ownership, `adamic_heap_free_children` separates the outside
+release pass, and `adamic_heap_free_storage` preserves allocator deallocation.
+`graph_regions.c` and `graph_regions.h` carry the union-find records, intrusive
+member list, hold/drop operations, per-object Weak invalidation, shared-merge
+rejection and counting-only mark report. `count.c`/`count.h` add region creations
+and merges, reported on a separate line only when any graph region exists.
+
+The foundation keeps ordinary heap headers and generated C layouts unchanged.
+A graph header uses references `SIZE_MAX` and a member-table index in `slab`;
+the member saves its original allocator slab. The member table hides its pointers
+as Weak's table does, so it cannot conceal a region leak from LeakSanitizer.
+The table is freed when the last region ends. Region metadata uses malloc,
+not an arena. Ordinary retains/releases gain a graph-ownership comparison;
+its performance has not been benchmarked on existing compiled programs.
+
+The adoption API is a compiler seam for a new allocation before any owned
+reference is stored into it. It is not a way to convert a populated counted
+container. Existing array/Map mutators and ownership transfers are not generally
+region-aware yet. The direct C tests use explicit graph hold/drop operations.
+Graph closure environments, their interior cells, graph arrays and Maps are
+exercised, but their language-level emission remains work to do.
+
+`TestGraphRegionsRuntime` keeps a node through an outside local after its root
+drops, reads its parent's dynamically built string, and then frees the region.
+Dropping the anchor also frees it. Both are ASan/UBSan/LeakSanitizer clean, and an
+overwritten node's Weak stays valid until region end, then expires.
+`TestGraphClosureEnvironment` forms a closure/environment cycle and keeps it
+through an interior cell's outside reference. `TestGraphContainerBoundary`
+keeps nodes only through a graph Map cache, then through a counted object's
+field. Its cache remains allocated but unreachable after that handoff: the region
+never splits. Its diagnostic reports 4 members/592 bytes, 3 reachable members/
+192 bytes and 1 unreachable member/400 bytes. All these runtime checks pass.
+
+The direct C counted observations, not rows for accepted Adamic fixtures:
+
+| Runtime case | Allocations | Frees | Retains | Releases | Peak | Graph regions | Merges |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Escaping node or dropped anchor | 5 | 5 | 0 | 4 | 5 | 3 | 2 |
+| Closure/environment | 2 | 2 | 1 | 3 | 2 | 2 | 1 |
+| Graph containers and counted boundary | 6 | 6 | 1 | 5 | 6 | 4 | 3 |
+| Million members | 1000000 | 1000000 | 0 | 1000000 | 1000000 | 1000000 | 999999 |
+
+Five independent source mutants were run and restored, each by
+`go test ./internal/native -run TestGraphRegionsRuntime -count=1 -v`:
+
+| Mutant | Observed check |
+| --- | --- |
+| Free with an outside count held, with the defensive guard also removed | ASan heap-use-after-free on the escaping node's later read |
+| Skip the outside-release pass | LeakSanitizer, the dynamically built label string |
+| Merge without summing counts | ASan heap-use-after-free |
+| Retain an internal slot store | LeakSanitizer |
+| Omit the diagnostic's outside roots | Reachability assertion: 3 unreachable members instead of 1 |
+
+Every mutant exited 1; none was killed by compilation. Logs are
+`/tmp/graph-regions-mutants.log` and `/tmp/graph-regions-mutant-<name>.log`.
+The runner is `/tmp/graph-regions-mutants.py`.
+
+Two further mutants were compiled from isolated runtime copies, leaving the
+checkout used by the gate unchanged. Omitting Weak invalidation made the expiry
+assertion return 4; allowing a shared-region merge reached the assertion return
+2 instead of the expected panic. Neither failed compilation. Leak detection was
+disabled for these two behavior assertions so an intentionally unreleased handle
+or shared test graph could not mask their exit codes; the five core mutants and
+the normal fixtures used LeakSanitizer. The first isolated expiry attempt had
+LeakSanitizer enabled and its intentionally unreleased handle changed exit 4 to
+1, so that attempt did not isolate the desired assertion. Logs are
+`/tmp/graph-regions-extra-mutants.log` and the corresponding per-mutant logs;
+runner `/tmp/graph-regions-extra-isolated.py`.
+
+**Million-member evidence.** `TestGraphRegionsMillion` generates 1,000,000
+members with forward, parent and cross links, deliberately overwriting one
+new member's incoming edge every twentieth allocation. It reports 950,001
+reachable members (60,800,064 bytes) and 49,999 unreachable members (3,199,936
+bytes), out of 64,000,000 live member bytes at the last boundary release.
+All allocations remain until that release, so 64,000,000 is also the peak live
+graph payload. Container buffers are included in diagnostic bytes when present;
+allocator rounding, slab blocks and metadata are excluded. This fixture has no
+container buffers. Counting metadata is separately 104,000,000 bytes, plus the
+member lookup table. A separate million-member sanitizer run is leak-clean.
+
+On this workspace, the final recorded run has peak RSS **165,028 KiB native
+release**, **180,616 KiB native counted**, and **95,104 KiB Node**. Node's reported
+heapUsed after construction is 50,927,736 bytes, a snapshot, not a measured peak
+live heap. Native retains arena garbage; Node may collect it during construction.
+RSS includes allocator and engine overhead and is not the logical payload count.
+These are runtime-foundation measurements, not a compiled Adamic fixture or tsc
+result. The metadata cost is large and the native prototype uses more memory than
+Node here. Scanner/parser measurements have not been run.
+
+**Setup and checks.** `bash cloud/setup.sh > /tmp/graph-regions-setup.log 2>&1`
+passed: Go ready 1s, clang ready 1s, Node ready 1s, submodules ready 1s, build cache
+warm 162s, done 162s; nproc 5, cgroup cpu.max `400000 100000`. The selected env
+file is `/workspace/adamic-tools/env.sh`, sourced for every toolchain command.
+
+The following completed successfully, with test output written to logs:
+
+```sh
+go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/.*(cycle|weak|fresh|regions|nested)|TestFreshWriteProbesStayRefused|TestCountsAreRecorded' -count=1 -timeout 30m > /tmp/graph-regions-oracle.log 2>&1
+go test ./internal/native -run 'TestGraph' -count=1 -v > /tmp/graph-regions-runtime-final.log 2>&1
+gofmt -l cmd internal > /tmp/graph-regions-format.log 2>&1
+go vet ./... > /tmp/graph-regions-vet.log 2>&1
+```
+
+The package gate reported lowering 34.877s, native 217.111s and fresh 50.635s.
+The filtered oracle, including counts and every existing fresh refusal probe,
+reported `ok` in 40.004s. The final graph-only run, after adding the container
+case and separate release-memory measurement, reported `ok` in 9.512s.
+The closure/container counts were additionally asserted and logged by
+`go test ./internal/native -run 'TestGraphClosureEnvironment|TestGraphContainerBoundary' -count=1 -v > /tmp/graph-regions-boundaries-final.log 2>&1`,
+which passed in 0.589s. Formatting and vet logs were empty. The full uncached gate was started with
+`ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > /tmp/graph-regions-full-gate.log 2>&1`;
+it was stopped after more than twelve minutes under the worker-gate allowance,
+exit 143. All 26 remaining descendants of that specific gate process were stopped
+too. Its log had only the bench and bench/regex no-test-file entries, with no
+completed package results to claim. The full gate is partial, not passed.
+
+**Outstanding for unit 1:** compiler type/SCC mapping to actual allocations,
+closure/environment classification, all field/container store and ownership
+transfer emission, the six requested source/JS/native oracle fixtures, migration
+of every newly accepted fresh refusal probe to positive region-free evidence,
+the counts-table integration, and a million-node fixture compiled from Adamic.
+No inference or refusal relaxation may land until that evidence passes. Threads
+and long-lived services remain design-only/NotYet as specified above.
+
+### Compact lazy regions, October 7
+
+This supersedes the foundation's per-member metadata layout, not its compiler
+checkpoint. Only graph allocations gain a 16-byte prefix: one region pointer
+and one intrusive list link. Ordinary heap layouts are unchanged. A high bit in
+`slab` identifies the prefix while preserving the allocator's chunk number.
+A lone graph object holds its outside count in its existing header and has no
+region record. A store between two lone objects creates one 64-byte record;
+adding another lone object needs none. Union of two established regions keeps
+both records until their combined member list frees, with union by size and
+path compression. Lists and record lists concatenate in constant time.
+
+Adoption returns the allocation's final address and must precede all aliases,
+Weak handles and owned slots. Interior environment cells are repaired to that
+address before publication. Counting diagnostics reuse the existing header's
+outside count and borrow its high bit as a temporary mark; their work stack is
+allocated only during the diagnostic pass. No per-member side table remains.
+
+`TestGraphLazyRegions` proves a lone object has no record through retain/release,
+merges two established regions with outside owners on all four members, reads
+through the remaining anchor and frees all members and both records. It also
+frees an unmerged lone object. The sanitizer and leak checks pass. The intentional
+leaked-anchor control now runs in a separate noinline frame: the initial compact
+run left the anchor in main's live stack and LeakSanitizer did not report it.
+With the workload frame gone, the same missing release is caught. This is a
+harness correction, not leak evidence from the failed initial run.
+
+The million-member fixture at clang 20.1.8 uses release flags `-std=c11 -Wall
+-Wextra -Werror -pedantic -Wno-unused-variable -Wno-unused-but-set-variable
+-Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off
+-fno-optimize-sibling-calls -O2`. Counting adds `-DADAMIC_COUNT`; sanitizer
+runs use `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`.
+
+| Measurement | Foundation | Compact lazy regions |
+| --- | ---: | ---: |
+| Member metadata | 104 bytes counted, plus table | 16 bytes, both builds |
+| Metadata for this million-node graph | 104000000 bytes counted, plus table | 16000064 bytes |
+| Region records created | 1000000 | 1 |
+| Native release peak RSS | 165028 KiB | 79028 KiB |
+| Native counted peak RSS | 180616 KiB | 78976 KiB |
+| Node peak RSS | 95104 KiB | 95104 KiB |
+
+Both native builds use `-O2`. RSS is process memory, including slabs and
+allocator overhead, and is not payload bytes. The last-release payload report
+is unchanged: 1000000 live members / 64000000 bytes, 950001 reachable /
+60800064 bytes, 49999 retained unreachable / 3199936 bytes. Native allocates
+and frees all million members, with 999999 merges. Node reports a construction
+heap snapshot of 50918320 bytes, not peak live bytes. These are the same direct
+runtime C and Node model as the foundation, not yet compiled Adamic evidence.
+
+Setup passed in 146s: Go, clang, Node and submodules ready at 0s, build cache warm
+146s, nproc 5, cgroup cpu.max `400000 100000`. The compact runtime check passed:
+`go test ./internal/native -run 'TestGraph' -count=1 -v`, log
+`/tmp/graph-regions-compact-final.log`, 2.761s. All five direct runtime tests,
+including the million-node ASan/UBSan/LeakSanitizer run, passed.
+Six independent compact-source mutants were restored after running: early free,
+missing count sum for a joining lone member, and missing count sum between two
+established regions all produced ASan heap-use-after-free; skipped outside
+release and counted internal stores produced LeakSanitizer reports; omitted
+mark roots failed the unreachable-member assertion. Each test exited 1 and none
+failed compilation. Runner `/tmp/graph-regions-compact-mutants.py`, logs
+`/tmp/graph-regions-compact-mutants.log` and one log per named mutant.
+
+
+### Compiler integration, October 7
+
+This completes the compiler work left at the foundation checkpoint. The compact
+runtime remains the allocation model: 16 bytes per graph member, a lazy region
+record, and the existing header count for a lone member.
+
+`findCycles` now delegates at its old refusal exit to `graphTypes`, in one
+localized change in `cycles.go`. The existing fresh-write proof and Weak tests
+still determine the unproven-slot seeds. Tarjan's strongly connected components
+select graph types, including structural allocation views, concrete generic
+instantiations, function captures and indivisible shared closure environments.
+Arrays, tuples, Maps and Sets containing graph members are promoted as graph
+containers, including caches which do not themselves close a cycle.
+
+Two refinements were required by executable evidence. The component follows
+all strong ownership paths around an unproven cycle, including readonly and
+proven-fresh links; using only unproven links would omit an intermediate owner
+and leave a counted cycle. Also, fresh literal type identities are not stable
+across every checker query. Allocation tags include the contextual type and the
+variable's stable widened view. The literal-method regression exposed the latter
+with a real leak before that allocation was selected.
+
+Outside retain and release use the shared heap entrypoints, which dispatch
+actual graph allocations to region retain/release. Structural views and unions
+therefore keep the same boundary convention. Emitted graph-aware slot holds
+merge graph holders and graph values without counting; overwrite drops nothing
+for those internal edges. Counted holders and non-graph children retain their
+ordinary ownership. Weak slots remain Weak. Graph allocations cannot use
+statement arenas or in-place reuse.
+
+Fresh populated runtime results are adopted before publication. Their immediate
+owned slots are converted to internal edges by joining graph children and
+releasing the old boundary holds. This is initialization, not a reachability
+pass, and it never chooses what to free. Collection iterator adapters carry
+their private state, cell, closure and wrapper with the graph collection; generated
+Map-entry tuples carry graph elements too. The three iterator refusal probes
+exposed their old counted back edges through LeakSanitizer. Statement arena
+headers also needed `slab = 0`: otherwise their uninitialized slab field could
+imitate the graph-prefix bit. The virtual-call probe exposed that under ASan.
+
+**Named shared emission changes:**
+
+- `emit_objects.go`: `objectLiteral` adopts selected allocations and uses graph
+  holds/drops for fields and spread replacements.
+- `emit_expressions.go`: `MakeClosure`, array allocation/derived results,
+  Map/Set allocation and stores, array push/pop, and map callback transfers.
+- `emit_statements.go`: `SetIndex`, `SetProperty`, and per-iteration graph cells.
+- `emit_locals.go`: `store`, `makeCell`, and `allocateEnvironment`; a borrowed
+  parameter's capture cell owns its value independently of the borrowed argument.
+- `emit_arrays.go`: `arrayVisit` filter results and `spliceArguments` ownership.
+- `from.go`: `arrayFrom` allocation and owned callback result transfers.
+- `reuse.go`: `reused`, `mapped`, `spreadArray`, and graph uniqueness guards.
+- `region.go`: `returnsFresh` and `freshValue` exclude graph allocations.
+- New `graph_regions.go` holds the named adoption and ownership helpers.
+
+No edits were made to `emit.go`, `lower.go`, `native.go`, or `closure.c` in this
+continuation. Fixture registration is the only change to `oracle_test.go`.
+
+**Source evidence.** The six requested shapes are `graph_regions_parse`,
+`graph_regions_list`, `graph_regions_flow`, `graph_regions_literals`,
+`graph_regions_symbols`, and `graph_regions_cache`. `graph_regions_escape`
+reads through its saved node after dropping the root; `graph_regions_anchor`
+drops a builder's last returned anchor. Additional source regressions cover
+closure environments, generic and inherited classes, static constructor objects,
+accessors, literal methods, and Map entries. Their Node source, JavaScript backend,
+native sanitizer and native release runs agree. A separate LeakSanitizer run must
+be clean. The counted checks require actual region-free reports as well.
+
+Every one of the 43 existing `fresh_refused/*.a` probes now compiles, agrees with
+Node and the JavaScript backend, passes ASan/UBSan and LeakSanitizer, and reports
+region teardown. Its counted run must satisfy allocations = frees + statement
+arena values. All 43 are listed individually with counts in
+`internal/oracle/counts.md`; none is silently accepted. A self-linked lone graph
+object can report a free without allocating a region record.
+
+The complete counts table gains Graph regions and Graph merges columns. The
+original fixtures' six numeric columns are unchanged. New rows include every
+source regression and all 43 former refusal probes.
+
+**Compiled million-node evidence.** `graph_regions/million.a` is the same
+million-node forward/parent/cross-edge workload, including an overwritten incoming
+edge every twentieth node, compiled from Adamic. At the last boundary release:
+
+| Measurement | Compiled Adamic |
+| --- | ---: |
+| Live graph members / payload bytes | 1000000 / 64000000 |
+| Reachable members / payload bytes | 950001 / 60800064 |
+| Retained unreachable members / payload bytes | 49999 / 3199936 |
+| Member metadata / total metadata bytes | 16 / 16000064 |
+| Region records / merges | 1 / 999999 |
+| Total allocations / frees | 1000003 / 1000003 |
+| Native release peak RSS | 78864 KiB |
+| Native counted peak RSS | 79000 KiB |
+| Node source peak RSS through oracle loader | 112540 KiB |
+
+These observed process-memory numbers are from
+`/tmp/graph-regions-compiled-million.log`, `TestGraphRegionsCompiledMillion`.
+Both native modes use the `-O2` release flags listed in the compact section;
+counted adds `-DADAMIC_COUNT`. Node is 24.19.0 with
+`--disable-warning=ExperimentalWarning` and `oracle/node.mjs`, which strips source
+types. Its heapUsed snapshot was 55215648 bytes, not a peak live heap measurement.
+The earlier direct C/JS comparison remains the like-for-like before/after result:
+native release 165028 to 79028 KiB, Node 95104 KiB. The compiled benchmark includes
+the oracle loader overhead on Node and is recorded separately. The source fixture
+also passes the normal sanitizer, release and separate leak oracle.
+
+**Mutants in the continuation.** Each edit was restored. None was killed by a
+compiler error.
+
+| Mutant | Check that failed |
+| --- | --- |
+| Free with an outside count still held, bypassing the defensive free guard | ASan heap-use-after-free |
+| Skip the outside-release pass | LeakSanitizer |
+| Join a lone member without summing counts | ASan heap-use-after-free |
+| Merge two established regions without summing counts | ASan heap-use-after-free |
+| Count an internal graph store in the runtime | LeakSanitizer |
+| Skip diagnostic mark roots | Unreachable-member count assertion |
+| Omit graph allocation adoption in emission | Counts mismatch and missing region-free report |
+| Emit a counted graph-slot hold | Counts mismatch and missing region-free report |
+| Leave a closure environment counted | Counts mismatch |
+| Leave a derived array counted | Former-refusal counted-free assertion and missing region-free report |
+| Omit graph-type seeds | Counts mismatch and missing graph-type assertion |
+
+The first adoption mutant passed the source-only leak oracle: residual live stack
+pointers can hide a leaked counted cycle from LeakSanitizer. It then failed the
+counted-free check. This is why positive acceptance requires both leak checks
+and counted teardown evidence. Logs: `/tmp/graph-regions-compiler-mutants-final.log`
+and `/tmp/graph-regions-runtime-mutants-final.log`, plus one log per named mutant.
+
+**Completed checks in this continuation.** Setup and processor limits are recorded
+in the compact section. Each test command writes its output directly to a log.
+
+```sh
+go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-package-gate-second.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-counts-complete-update.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(.*(cycle|weak|fresh|regions|nested)|weak)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestNested.*|TestCountsAreRecorded' -count=1 -v -timeout 30m > /tmp/graph-regions-filtered-final.log 2>&1
+gofmt -l cmd internal > /tmp/graph-regions-final-format.log 2>&1
+go vet ./... > /tmp/graph-regions-final-vet.log 2>&1
+```
+
+The package gate passed: lower 52.533s, native 155.014s, fresh 69.724s. That
+package run preceded the final literal-method type-identity fix and Map-entry
+conversion; the final filtered oracle exercises both fixes and passed in
+248.762s. Counts regeneration passed in 30.427s; the subsequent complete counts
+check is included in the final filtered run. Format and vet logs are empty.
+Eight existing programs emit byte-identical C against the `d20bcba` compiler:
+`fresh_writes`, `fresh_calls`, `fresh_parser`, `weak_parent`, `weak_narrowed`,
+`nested_mutual`, `regexp_cycle_weak`, and `reuse_weak_during_spread`. Log:
+`/tmp/graph-regions-c-parity.log`. All original numeric counts rows also remain
+unchanged. The comparison compiler used a read-only Go overlay of the baseline
+sources, with `-buildvcs=false`; the detached scratch build could not inspect the
+symlinked submodule's VCS status and was superseded by that overlay.
+
+The attempted cohere named-file format and type commands reported no files to
+check for `.a`; they are not claimed as validation. The oracle loader type-checks
+each source through the pinned checker before lowering it.
+
+**Full-gate integration check.** The full command was
+`ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./...`, logged to
+`/tmp/graph-regions-full-unit2.log`. Its completed compiler/runtime/oracle
+packages passed on the final implementation: lower 75.810s, native 514.080s,
+fresh 156.296s and oracle 442.509s. The first flow package run failed three
+five-minute trace timeouts because its flat fixture glob picked up the
+million-node benchmark. That benchmark now lives in the dedicated
+`internal/oracle/testdata/graph_regions/million.a` directory; its explicit
+oracle registration and memory/counts checks remain enabled. No flow test was
+changed or weakened. The corrected flow package passed in 226.970s, logged to
+`/tmp/graph-regions-flow-corrected.log`. The relocated source oracle, compiled
+memory test and complete counts check passed in 117.959s, logged to
+`/tmp/graph-regions-relocated-oracle.log`.
+
+A targeted stage1 gap check also failed existing expectations outside this
+unit's territory: `TestStrongAstParentGap` expected refusal but lowering now
+succeeds; markdownblocks `2_state_arrow_cycle` and `4_structural_ranges` likewise
+expected refusal and now succeed. Markdownblocks `1_recursive_state` still
+refuses, with the newer nested-function-reference diagnostic instead of its old
+expected NotYet diagnostic. Those owning-unit tests and GAPS documents were not
+edited. Command: `ADAMIC_GATE_UNCACHED=1 go test ./stage1/typescript/parser
+./stage1/cohere/markdownblocks -run 'TestStrongAstParentGap|TestParserRepresentationProbes'
+-count=1 -v -timeout 10m`, log `/tmp/graph-regions-stage1-gap-check.log`.
+
+The pre-merge full gate was stopped after about 22 minutes when main advanced to
+`f8013f0`; its unfinished outside-unit packages are not claimed as passing. Main
+was merged into this branch, preserving its iterator and narrowing fixes. The
+only conflict was the counts table's added graph columns. Main's changed and new
+rows were preserved with those columns added. The merged package gate passed: lower 28.901s, native 195.293s, fresh 61.408s.
+Its log is `/tmp/graph-regions-merged-package-gate.log`. The merged filtered
+oracle passed behavior, sanitizer, leak and region-free checks but failed
+canonical counts-table ordering in 112.306s. Regenerating the table passed in
+33.254s and a row-by-row comparison proved that no numeric row changed, only
+fixture order. Logs: `/tmp/graph-regions-merged-filtered-oracle.log` and
+`/tmp/graph-regions-merged-counts-update.log`. The merged compiled-memory run
+observed release 79028 KiB, counted 79128 KiB, and Node through the oracle loader
+127212 KiB. Its retained-member and allocation counts match the table above;
+Node's process RSS varies across runs and includes that loader.
+
+Commands for the merge checks:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-merged-package-gate.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(.*(cycle|weak|fresh|regions|nested|iterator|047cb0d)|weak)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestNested.*|TestCountsAreRecorded|TestLibrary.*Iterator|TestNarrowed.*|TestOverride.*' -count=1 -v -timeout 30m > /tmp/graph-regions-merged-filtered-oracle.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-merged-counts-update.log 2>&1
+gofmt -l cmd internal > /tmp/graph-regions-merged-format.log 2>&1
+go vet ./... > /tmp/graph-regions-merged-vet.log 2>&1
+```
+
+The merged format and vet logs are empty. All eleven mutants were rerun against
+this merged implementation and were caught by the same checks in the table
+above; every edit was restored. Commands were
+`python3 /tmp/graph-regions-compact-mutants.py` and
+`python3 /tmp/graph-regions-compiler-mutants.py`, each redirected to its log:
+`/tmp/graph-regions-runtime-mutants-merged.log` and
+`/tmp/graph-regions-compiler-mutants-merged.log`. The restored complete counts
+check, `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$'
+-count=1 -timeout 30m`, passed in 26.710s, logged to
+`/tmp/graph-regions-merged-counts-check.log`.
+
+
+The final restored merged filtered oracle passed in 63.436s, including the
+complete counts table, all 43 formerly refused probes, graph source fixtures,
+Weak/fresh/nested coverage and main's iterator/narrowing regressions. It used the
+same merged filtered command above, with output redirected to
+`/tmp/graph-regions-merged-filtered-final.log`. Gate-cache report: native hits 0,
+misses 797; Node hits 0, misses 254. A final fetch confirmed origin/main remained
+`f8013f0` and was already included in this branch. This is the green unit gate;
+the stopped full gate and stage1 expectation failures remain separate limitations.
+
+Threads, cross-thread atomic counts and long-lived services are not built. The
+shared-region merge rejection remains a tested runtime guard. Program-version
+anchors remain the service design described above; no tsc scanner/parser
+measurement or native tsc compilation is claimed by this unit.
+
+
+### Compiler review of 42e2a35
+
+This continuation merges main at `39638d9` before adding review evidence. No
+production emission or ownership logic changed. Stores in a program with graph
+types use `adamic_graph_hold` and `adamic_graph_drop`, including stores whose
+static slot type is counted. Those helpers inspect both objects' actual headers.
+Two actual graph members merge and have no per-edge count; either counted side
+uses the normal retain/release boundary. Locals, parameters, returns and globals
+use `adamic_retain`/`adamic_release`; heap.c dispatches those from the actual
+header, resolving an interior closure-cell pointer to its owner first. Container
+stores likewise inspect their actual headers. Weak handles remain counted and
+hide their target without retaining it.
+
+Allocation adoption is still selected statically, before the object is
+published. It is not safe to retrofit a graph prefix onto an aliased counted
+allocation. `graph_regions_structural_literal.a` has an inferred literal return
+with no contextual graph annotation, then a structural Link view and a self
+edge. Its whole-program allocation is selected as graph; the lower test checks
+that exact ObjectLiteral IR, and the executable checks teardown. Conversely,
+`graph_regions_counted_container.a` returns a counted Box holding a graph cycle
+after its builder's locals disappear. The lower test proves Box is counted and
+the runtime test reads both nodes before dropping Box. This evidence separates
+allocation classification from runtime boundary dispatch; it does not claim
+arbitrary runtime promotion. An intersection-return version of the first probe
+was refused by existing intersection-return lowering, so the running witness
+uses the inferred return.
+
+Every registered graph fixture now requires allocations equal frees plus
+statement-region allocations, as well as a region-free report and its recorded
+counts. This is independent of merely finding GraphTypes. The accepted lower
+cases have these executable witnesses, each compared to Node and the JavaScript
+backend, and run in native release, ASan/UBSan and LeakSanitizer builds:
+
+| Accepted case | Running witness |
+|---|---|
+| Parent, self link, captures, arrays, map values/keys, sets, map of sets, subtypes, generic instantiations and indirect generic capture | graph_regions_regression_01 through 12 |
+| Generic Tie capture | graph_regions_generic_capture |
+| Inherited private, plain and generic fields | graph_regions_regression_13 through 15 |
+| Static self, child constructor, interface and private field | graph_regions_static, static_parent, static_interface, static_private |
+| Accessor and literal method captures | graph_regions_accessor, literal_method |
+| Nested self and disjoint captures | graph_regions_nested_self, nested_disjoint |
+| Readonly constructor and every fresh refusal carried by regions | fresh_refused/ctor_readonly and all 43 probes in TestFreshWriteProbesUseRegions |
+
+Witnesses retain the ownership cycle with finite behavior. In particular the
+recursive accessor is constructed and dropped without invoking the recursive
+getter; the self and generic capture witnesses use bounded reads.
+
+`weak_region_review.a` closes the parent/child shape with Weak and has no graph
+types: eight allocations, eight frees, no region report. The mixed fixture adds
+an unrelated strong self cycle so Weak is also exercised while graph emission
+helpers are enabled. `graph_regions_throw.a` unwinds a frame holding the only
+outside reference after a finally reads its peer. It must report exactly one
+region teardown and ten allocations/ten frees.
+
+Concurrency has a concrete limitation: current main has no parallelMap export,
+lowering or task runtime. `refusals/graph_regions_parallel.a` passes a graph node
+to that API and TestGraphParallelMapIsUnavailable pins the named checker error
+`has no exported member 'parallelMap'`. This refuses all uses of the unavailable
+API; it is not a graph-specific transfer proof or an executed parallel task.
+The existing runtime shared-region merge refusal remains tested. A task-boundary
+sharing check still needs the real concurrency API; threads remain design only.
+
+Review mutants were run sequentially and restored before the gates. The runner
+is `/tmp/graph-regions-review-mutants.py`; per-mutant logs are
+`/tmp/graph-regions-review-mutant-NAME.log`.
+
+| NAME | Deliberate break | Observation |
+|---|---|---|
+| boundary | Counted holder fails to retain graph child | ASan use-after-free in counted-container read |
+| retain_header | Retain bypasses graph header dispatch | ASan use-after-free in counted-container read |
+| allocation | Literal allocation loses graph tag | Missing region-free report and changed counts |
+| weak | Weak handle retains its target | LeakSanitizer reports 267 bytes in four allocations |
+| throw_skip | Throw omits frame cleanup | Ten allocations, six frees, no region-free report |
+| throw_double | Throw repeats frame cleanup | ASan use-after-free |
+
+The first runner used an incorrect normal-oracle test name for three mutants
+and ran no tests for them. Its corrected rerun selected
+TestNativeAgreesWithNode and caught all six; no no-test run is evidence.
+
+Toolchain setup completed in 203 seconds (ready checks 0 seconds, cache warm
+203 seconds); `nproc` reported 5. Review commands, with output always redirected
+to logs:
+
+```sh
+bash cloud/setup.sh > /tmp/graph-regions-review-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-review-counts-update.log 2>&1
+python3 /tmp/graph-regions-review-mutants.py > /tmp/graph-regions-review-mutants-results.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-review-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(cycle|weak|fresh|regions|nested)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestNested.*|TestCountsAreRecorded|TestWeakRegionReview|TestGraphParallelMap' -count=1 -v -timeout 30m > /tmp/graph-regions-review-oracle.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(cycle|weak|fresh|regions|nested)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestNested.*|TestCountsAreRecorded|TestWeakRegionReview|TestGraphParallelMap|TestProven' -count=1 -v -timeout 30m > /tmp/graph-regions-review-merged-oracle.log 2>&1
+ADAMIC_GATE_UNCACHED=1 timeout 300s go test ./... -count=1 -timeout 5m > /tmp/graph-regions-review-full-gate.log 2>&1
+go vet ./... > /tmp/graph-regions-review-vet.log 2>&1
+```
+
+The initial filtered oracle passed in 113.577s. Counts regeneration passed in
+38.577s. All existing numeric rows were preserved; nine review fixture rows were
+added. Main's inherited-static row moved to canonical fixture order, and its
+five new proven-relation rows received the graph-count columns at merge.
+The initial million-node source rerun measured release native 78996 KiB,
+counted native 79152 KiB and Node through the type-stripping loader 111664 KiB.
+Its report remains 16 bytes per object plus one 64-byte region record, 950001
+reachable members (60800064 payload bytes), and 49999 unreachable members
+(3199936 payload bytes) retained until region free. Release flags are exactly
+the flags printed by TestGraphRegionsCompiledMillion, including `-O2`, without
+ADAMIC_COUNT or sanitizers. The counting build's mark pass remains measurement
+only; no tracing or collection runs in release.
+
+The first required package gate passed: lower 47.209s, native 389.309s,
+fresh 83.618s. The first vet log is empty. Main advanced during the checks;
+`8c84ebb` merges its `c7991b9` tip after the review evidence commit `0d357a7`.
+The five-minute full gate exited 124 at its wall-clock limit. Its log contains
+only the two benchmark packages with no tests; this is not a full-gate pass.
+It ran concurrently with ownership checks and was CPU constrained. Final merged
+package and oracle results are recorded below, separately from that attempt.
+
+The final merged filtered oracle passed in 343.664s, with native cache hits 0,
+misses 798 and Node hits 0, misses 224. It includes the whole counts table,
+all 43 fresh refusal probes, the review fixtures and main's proven-relation
+checks. The merged million-node run measured native release 79036 KiB, counted
+79104 KiB and Node with the oracle loader 112544 KiB; retained-member counts
+and 16000064 metadata bytes were unchanged. Final fetch confirmed current main
+remained `c7991b9` and was included. No production emission file changed in this
+review continuation; the shared assignments.go rebinding refusal is unchanged.
+
+The merged package and vet commands are:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-review-merged-packages.log 2>&1
+go vet ./... > /tmp/graph-regions-review-merged-vet.log 2>&1
+```
+
+The final merged required package gate passed: lower 61.466s, native 217.124s,
+fresh 82.054s. The merged vet and review formatting logs are empty, and
+`git diff --check` passed. These are the completed scoped gates; the full
+repository gate remains the separate timed-out attempt described above.
+
+### Allocation classification gap found in c3074cc
+
+The initial allocation decision can miss a graph view that the cycle finder
+later selects. Three accepted, checked-in witnesses establish the gap:
+
+| Shape under internal/oracle/testdata/graph_regions | What happens | Counts before flow classification | LeakSanitizer observed |
+|---|---|---|---|
+| classification_return.a | An inferred function returns a literal; its caller uses Link and writes a self edge | 3 allocations, 1 free | 56 bytes, 1 allocation |
+| classification_conditional.a | A conditional chooses one literal; a Link view writes a self edge | 3 allocations, 1 free | 122 bytes, 2 allocations |
+| classification_mixed.a | A returned counted literal and an explicitly graph-allocated Link point both ways | 8 allocations, 4 frees | 260 bytes, 4 allocations |
+
+Each builder returns an outside-held node to another frame, which reads it after
+the builder's locals have gone. Source on Node and the JavaScript backend agree
+with native. With ASan leak detection disabled and UBSan stopping on error, all
+three exit zero with no diagnostic. Enabling LeakSanitizer reports only leaks.
+The lower test inspects the allocation IR: the returned literal and both
+conditional branches lack a selected allocation identity; the mixed witness
+has one counted literal and one graph literal. This is a real classification
+miss, not a mutant. At c3074cc these standalone known-gap tests were deliberately outside the
+ordinary leak-clean registry. They graduate into that registry in the flow
+classification build described below.
+LeakSanitizer can conservatively retain a string reachable through a stale stack
+word; allocation/free counts independently show the unfreed values.
+
+With the runtime dispatch invariant restored below, these shapes cannot free
+early. A counted self edge retains the ordinary object, so dropping outside
+locals leaves its own edge's count. In the mixed case, counted-to-graph stores
+retain the actual graph member's outside count, while graph-to-counted stores
+retain the counted member. Both counts therefore stay positive after the
+builder and reader drop their locals. The graph side cannot enter its outside
+release pass while that boundary reference exists. Every actual graph-to-graph
+edge first merges regions and carries no count; all other strong edges carry a
+count decided from the actual header, independent of the structural view.
+The final-reference guard also refuses destruction with a nonzero region count.
+This is a lifetime argument under those ownership invariants, not a universal
+proof that the static classifier cannot miss another shape.
+
+The compiler selected flow-based classification, implemented below. Runtime
+promotion of an aliased counted allocation is not being implemented.
+
+### Area runtime release repair on 14504c7
+
+Merging graph regions through c3074cc onto area/runtime 14504c7 reproduced all
+five named runtime failures. The wrong path was public adamic_release in
+heap.c: the area's noinline destruction optimization decremented the object's
+own count and called release_last directly. It neither decremented the region's
+outside count nor resolved an interior cell to its owning environment. free_one
+correctly recognized the graph header and its region-free guard then panicked
+with `compiler bug: freeing a graph still owned outside`.
+
+The repair restores owner resolution and adamic_graph_release_last before
+entering the noinline helper, and queues the resolved owner. The helper still
+runs only on a true final release; its iterative drain and empty-drain saving
+remain. The fetched 14504c7 adamic.h declares adamic_release; it has no inline
+retain/release implementation to repair. Header inline field/index accessors
+perform no reference-count updates.
+
+The ownership-path audit found these routes:
+
+| Path | Dispatch and lifetime decision |
+|---|---|
+| Public retain | Resolves interior cell owner, then graph retain or ordinary count |
+| Public release, repaired | Resolves owner, then region last-release decision or ordinary count |
+| release_last | Receives only a proven final owner, queues and drains iteratively |
+| Child releases through let_go | Resolves owner and uses region last-release before queuing |
+| Queue destruction through free_one | Graph free with outside-release pass, or counted children then storage |
+| Graph storage free | Removes the graph prefix only after region destruction; slab flag is masked |
+| String views and parent release | View creation retains its owner; string destruction releases parent through let_go |
+| Closure cells and environment release | Interior cells resolve to environment; environment children use let_go or the graph outside pass |
+| Weak | Handle counting remains ordinary; target is hidden and never retained |
+
+The graph-check mutant disables only the repaired public-release graph branch;
+all five TestGraph tests fail with the original panic. The cell-owner mutant
+disables only public-release owner resolution; TestGraphClosureEnvironment
+reports two allocations and zero frees instead of two and two. Both mutants
+were restored. Runner: /tmp/graph-regions-area-mutants.py; outputs:
+/tmp/graph-regions-area-mutants-results.log and the per-mutant
+/tmp/graph-regions-area-mutant-graph-check.log and
+/tmp/graph-regions-area-mutant-cell-owner.log. No compiler emission file changed
+in this repair.
+
+The pre-repair runtime test command failed in 12.586s; after repair the same
+command passed in 30.733s, including ASan, leak checks, counted teardown and the
+million-node runtime measurement. Logs and commands:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native -run '^TestGraph' -count=1 -v > /tmp/graph-regions-area-before.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native -run '^TestGraph' -count=1 -v > /tmp/graph-regions-area-fixed.log 2>&1
+python3 /tmp/graph-regions-area-mutants.py > /tmp/graph-regions-area-mutants-results.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-area-counts-update.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(regions|weak|fresh|nested|string_views)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestGraphAllocationClassificationGapIsLeakOnly|TestWeakRegionReview|TestNested.*' -count=1 -v -timeout 30m > /tmp/graph-regions-area-oracle.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/native ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-area-packages.log 2>&1
+go vet ./... > /tmp/graph-regions-area-vet.log 2>&1
+```
+
+The counts update passed in 124.418s. Against the graph branch for graph/fresh
+rows and the area branch for ordinary rows, 38 rows changed and every changed
+number dropped; no column rose. Ten graph fixture rows drop retains/releases;
+22 fresh probes, three nested fixtures and three proven-relation fixtures also
+drop them. Allocations, frees, peak live values and graph region/merge counts
+are unchanged for those rows. Full per-row evidence is
+/tmp/graph-regions-area-counts-comparison.json. Other apparent differences from
+the older graph branch's ordinary string counts belong to the area's preexisting
+string-view and borrowing optimizations, so the area table is their baseline.
+Canonical fixture ordering accounts for the remaining counts-table diff.
+
+The first merged filtered oracle failed ten stale graph counts rows, all with
+lower retains/releases, and two known-gap LeakSanitizer expectations. Those two
+still had three allocations and one free, but stale stack/register words hid
+the allocations from conservative leak roots in the new release layout. Only
+these intentionally leaking probes now use
+`LSAN_OPTIONS=use_stacks=0:use_registers=0` at exit, after all source owners are
+dropped. Their ASan/UBSan comparison run is unchanged, and allocation counts
+independently require the leak. With these exit roots the return and conditional
+cases each report 122 leaked bytes in two allocations; the mixed case reports
+260 in four. The ordinary leak-clean oracle keeps its normal root policy.
+
+The final repaired area oracle passed in 96.279s with native hits 0, misses
+921 and Node hits 0, misses 244. It includes all graph sources, all 43 fresh
+probes, string-view and nested ownership regressions, the three known-gap
+probes, and the complete regenerated counts table. The final format and vet
+logs are empty and git diff --check passed. The full required-package command
+is an additional running check at this repair checkpoint; lower has passed
+in 85.138s. No full repository gate pass is claimed here.
+
+### Flow-based allocation classification
+
+The three c3074cc programs now allocate graph members from the start and are
+ordinary registered oracle fixtures. TestGraphAllocationFlowClassification
+requires every literal in these witnesses to be selected; the former
+TestGraphAllocationClassificationGapIsLeakOnly is now
+TestGraphAllocationFlowIsLeakClean and requires Node/JavaScript agreement,
+clean ASan/UBSan and LeakSanitizer runs, balanced allocations/frees, and a real
+region-free report.
+
+| Witness | Before, on the repaired area tree | After |
+|---|---|---|
+| classification_return.a | 3 allocations, 1 free, 3 retains, 4 releases | 3 allocations, 3 frees, 2 retains, 4 releases |
+| classification_conditional.a | 3 allocations, 1 free, 5 retains, 6 releases | 3 allocations, 3 frees, 4 retains, 6 releases |
+| classification_mixed.a | 8 allocations, 4 frees, 6 retains, 10 releases | 8 allocations, 8 frees, 4 retains, 10 releases |
+
+The self-link witnesses remain lone graph members without region records. The
+mixed witness now joins two graph members: one region, one merge, 112 payload
+bytes and 96 metadata bytes, and frees both members together. The outside-held
+return keeps each graph alive across its builder's cleanup before the read.
+
+The existing cycle/type proof still selects graph components. Its sole new
+integration seam calls graphFlows after that proof. graph_flow.go assigns a
+negative identity to every allocation expression carrying GraphTypes, scoped
+to one lowered program; positive identities remain checker types. This avoids
+using a fresh literal's unstable checker identity as its only allocation key.
+The pass seeds graph-typed locals, recorded property/index/container write
+slots, and typed initializer fields/elements. Weak slots are excluded. Private
+and inherited field names use the existing cycleFieldMatches identity rule.
+
+From those sinks it follows the lowered value producers backwards: declaration
+initializers, every assignment to a local, both conditional branches, direct
+calls and all recorded virtual targets, caller arguments into formal parameters,
+and function return expressions. Statically known sibling and compatible
+function-value calls are included. Boxes, narrowing, unwraps and checked casts
+forward the same demand. A work list processes each local/result flow node once;
+loops and recursion join all possible producers. Reaching an allocation selects
+its site identity in GraphTypes. A program whose cycle proof has no graph
+components never runs this pass and keeps the previous emission.
+
+This adds compile-time IR traversal, allocation-site metadata and flow edges;
+there is no runtime flow analysis, branch, annotation or alias promotion. The
+pass keeps a linear number of nodes and producer edges for ordinary direct
+flows, plus recorded virtual/function-value targets; compatible closure matching
+can compare calls with multiple closure records. The conservative type proof
+can select an allocation on an unexecuted branch. Selected allocations pay the
+existing 16-byte graph prefix, boundary counts and region machinery, with a
+region record still created lazily. No new runtime or emission helper was added.
+
+This is not a general heap points-to analysis. The new pass does not itself
+trace a property/index/Map.get result back through arbitrary storage aliases;
+its typed slot/initializer seeds and the existing structural type graph cover
+those writes when their slot type is selected. Opaque function-value callees
+without a known local/closure view, library callback transfer rules not present
+in this pass, and allocation IR kinds without GraphTypes/adoption metadata
+remain outside its producer tracing. These are analysis frontiers, not proven
+new leaks or claims that every future IR operation is covered. Such a miss must
+still obey the actual-header boundary counting invariant and leak at worst;
+unchecked or incompatible structural views remain subject to the existing
+mutable-invariance and checked-cast refusals. Threads and Program-version service
+anchors remain separate units.
+
+Two production mutants independently show that both new tests can fail:
+
+| Mutant | Classification test | Native oracle |
+|---|---|---|
+| Omit return producers and their typed initializer seeds | Returned literal and mixed case are counted again | Node output unchanged; ASan/UBSan comparison clean; LeakSanitizer reports 122 bytes/2 allocations and 260 bytes/4 allocations |
+| Omit both conditional source branches | Both conditional literals are counted again | Node output unchanged; LeakSanitizer reports 122 bytes/2 allocations |
+
+The mutations never reached clang as invalid C, and were restored before gates.
+Runners are /tmp/graph-regions-flow-return-mutant.py and
+/tmp/graph-regions-flow-conditional-mutant.py, with results and per-package logs
+under the matching /tmp/graph-regions-flow-*-mutant names. Both runners reported
+classification exit 1 and oracle exit 1. The leak-only exit-root settings from
+the area repair are retained in the graduated dedicated test, so the return-flow
+mutant cannot hide behind stale native stack/register words. Normal source
+behavior comparisons and the ordinary registered fixture oracle also run.
+
+The additional repaired-area package gate completed after its push: lower
+85.138s, native 645.250s, fresh 109.681s; vet passed. The flow-specific package
+gate passed lower 60.274s and fresh 76.386s. Native runtime code is identical to
+the repaired-area runtime tested by that full native package gate. Flow counts
+regeneration passed in 87.753s. Every preexisting numeric counts row on the
+repaired-area baseline is unchanged; only the three graduated rows were added.
+
+Commands, with test output redirected to logs:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run '^TestGraphAllocationFlow' -count=1 -v > /tmp/graph-regions-flow-final-focused.log 2>&1
+python3 /tmp/graph-regions-flow-return-mutant.py > /tmp/graph-regions-flow-return-mutant-results.log 2>&1
+python3 /tmp/graph-regions-flow-conditional-mutant.py > /tmp/graph-regions-flow-conditional-mutant-results.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-flow-area-counts-update.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-flow-area-packages.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(regions|weak|fresh|nested|string_views)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestGraphAllocationFlow|TestWeakRegionReview|TestNested.*|TestCountsAreRecorded' -count=1 -v -timeout 30m > /tmp/graph-regions-flow-area-oracle-final.log 2>&1
+gofmt -l cmd internal > /tmp/graph-regions-flow-format.log 2>&1
+go vet ./... > /tmp/graph-regions-flow-vet.log 2>&1
+```
+
+The final flow oracle passed in 117.168s with native hits 0, misses 933, and
+Node hits 0, misses 250. It includes all 43 formerly refused fresh probes,
+Weak/nested/string-view checks, every graph fixture, the three graduated
+programs and the full counts table. Format and vet logs are empty;
+git diff --check passed. Production compiler changes are the new graph_flow.go
+pass, the single graphTypes integration call, and IR ownership-ID comments.
+No emission file or runtime function changed for flow classification. The
+area release repair remains the separate pushed 850a35e commit.
+
+
+Before delivery, merged current origin/main b6b1538 in 615503e and regenerated
+counts. All existing flow/graph rows remain unchanged. Seven typeof fixtures
+from main are added in canonical order; three have fewer retains/releases
+with the area borrow optimizations (dispatch 9/19 to 6/16, null_compare 11/22
+to 10/21, null_slots 28/38 to 26/36). No numeric count rises.
+The final fetched main still names b6b1538 and is an ancestor of this branch.
+
+Final merged-tree commands and observations (all output redirected to logs):
+
+```text
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/fresh -count=1 -timeout 30m > /tmp/graph-regions-flow-main-packages.log 2>&1
+# lower 35.574s, fresh 80.135s, both PASS
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native -run '^TestGraph' -count=1 -v > /tmp/graph-regions-flow-main-native-graph.log 2>&1
+# all five PASS, 15.878s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/graph-regions-flow-main-counts-update.log 2>&1
+# PASS, 103.150s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/.*(regions|weak|fresh|nested|string_views|typeof)|TestFreshWriteProbesUseRegions|TestGraphRegions|TestGraphAllocationFlow|TestWeakRegionReview|TestNested.*|TestCountsAreRecorded|TestTypeof' -count=1 -v -timeout 30m > /tmp/graph-regions-flow-main-oracle-final.log 2>&1
+# PASS, 117.147s; native misses 967, Node misses 268, cache hits zero
+python3 /tmp/graph-regions-flow-return-mutant.py > /tmp/graph-regions-flow-return-mutant-results.log 2>&1
+python3 /tmp/graph-regions-flow-conditional-mutant.py > /tmp/graph-regions-flow-conditional-mutant-results.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run '^TestGraphAllocationFlow' -count=1 -v > /tmp/graph-regions-flow-main-restored.log 2>&1
+gofmt -l cmd internal > /tmp/graph-regions-flow-main-format.log 2>&1
+go vet ./... > /tmp/graph-regions-flow-main-vet.log 2>&1
+```
+
+Format and vet logs are empty. Both flow mutants were rerun after this merge;
+each fails both classification and leak-clean tests, and the restored sources
+pass. The full repository gate was not run in this continuation. Concurrency
+and the flow frontiers described above remain outside this change.
+
 ## Arenas
 
 Some work allocates a lot and frees it all at once: one request, one file checked by cohere. For that, an arena: allocations bump a pointer, and the arena frees everything in one go at the end. A value allocated in an arena must not outlive it, and proving that is escape analysis. The lowering IR's aliasing analysis (#5jck546) is where that comes from. Arenas are for stage 1 (cohere in Adamic), where cohere's own measurements already show that with the collector off, fresh allocation is the cost.
@@ -884,6 +1834,670 @@ Not covered by this unit: borrowing `for...of` bindings, avoiding the iterator's
 borrowing global call arguments, or resolving virtual override effects. Those need different
 emission or call-effect proofs. The borrowed declaration rule stays conservative on array
 stores, reassignment, removal, closure calls, callbacks and operations it cannot prove.
+### Borrowed loop bindings and global call arguments (built, October 7, 2026)
+
+Starting at `ef3d907`, nbody's indexed declarations already borrow. Its remaining
+7,000,019 retains come from three emission paths:
+
+| Source | Repeated retains | Why the baseline counts it |
+|---|---:|---|
+| `advance`'s five `for...of` bindings | 5,000,000 | `forOf` always calls `declareLocal(..., false)`, which retains every reference binding and schedules its release |
+| `advance`'s iterator array | 1,000,000 | `forOf` holds the array for the loop, including reassignment and unwinding |
+| The global `bodies` argument to `advance` | 1,000,000 | `arguments` calls `value`; a call is not a pure consumer, so `read` snapshots the global with a retain |
+
+The other 19 retains are ten constructor/array-insertion counts, six for
+`offsetMomentum`'s iterator and bindings, and three more global arguments.
+The baseline release count is 7,000,023. Here is the actual generated C, with
+unrelated field operations omitted:
+
+```c
+/* Before, advance's loop. */
+adamic_array * adamic_temporary_86 = adamic_retain(adamic_local_4_bodies);
+for (size_t adamic_temporary_87 = 0; adamic_temporary_87 < adamic_temporary_86->length; adamic_temporary_87++) {
+    adamic_object * adamic_local_30_body = adamic_retain((adamic_object *)adamic_temporary_86->elements[adamic_temporary_87].reference);
+    /* Read and write body's x, y, z fields. */
+    adamic_release(adamic_local_30_body);
+}
+adamic_release(adamic_temporary_86);
+/* Before, the main loop's call. */
+adamic_array * adamic_temporary_194 = adamic_retain(adamic_global_2_bodies);
+adamic_function_2_advance(adamic_temporary_194, (0x1.47ae147ae147bp-07));
+adamic_release(adamic_temporary_194);
+/* After: the binding and argument snapshot hold no count. */
+adamic_object * adamic_local_30_body = (adamic_object *)adamic_temporary_86->elements[adamic_temporary_87].reference;
+adamic_array * adamic_temporary_194 = adamic_global_2_bodies;
+adamic_function_2_advance(adamic_temporary_194, (0x1.47ae147ae147bp-07));
+```
+
+**The loop proof.** `planElementBorrows` also plans a plain array loop binding,
+using `borrowable`'s local, capture, type, and assignment facts, and `changes` on
+the entire body. Both the binding and array must be unassigned throughout the
+function; this is deliberately stronger than checking only the body. The binding
+is marked `Borrowed` before reuse runs, and the array is marked lending. The
+emitter gives the binding the element pointer and schedules no release for it.
+The iterator retains its array and releases it on every exit. Field stores and
+pushes are safe: they do not remove the element. Index stores, removal,
+reordering, in-place array reuse, unknown callbacks, closure calls, and mutating
+named calls still refuse the borrow. Virtual calls are refused because the
+static method's summary does not cover overrides. This uses the same virtual
+guard as the preceding borrowed-element unit, now merged into this branch.
+
+`MakeError` itself cannot remove an element, so it is allowed, with its operands
+still checked. A throw caught inside the body preserves the borrowed pointer;
+a throw leaving the body releases the iterator, never the borrowed binding.
+Maps, strings, regex iterators, destructuring bindings, closures, captured
+sources, and global sources do not receive the new binding optimization.
+
+**The iterator count.** Its hold remains the one array count this loop explicitly
+owns. The million iterator holds in nbody are unchanged. For an iterable already
+owned by the statement, `kept` transfers that count into the iterator instead of
+retaining it again and releasing the temporary. For a local or borrowed parameter,
+`kept` retains as before. Eliminating nbody's iterator hold would need a separate
+proof that another owner survives every body exit; this unit keeps the hold.
+
+**The global argument proof.** `lentArgument` accepts only a direct reference
+global read handed to a borrowed, unconsumed parameter. Every later argument must
+be pure, and `touches` must return false for every `CallTargets` implementation.
+It recursively checks reachable calls and refuses unknown closure and callback
+effects. It also refuses reads of the global, which is stronger than the needed
+no-write proof. Every target must have a borrowed, unconsumed parameter. The
+snapshot and any initialization check remain, preserving JavaScript evaluation
+order. A return of the parameter takes its own count as before. Captured reads,
+pass-through casts and narrowings, unions, consumed parameters, effectful later
+arguments, and calls reaching the global keep their counts. Neither `pureKind`
+nor `consumes` was widened; `TestPassThroughsAreNotConsumers` passes unchanged.
+
+**Measurements.** clang 20.1.8, Go 1.27.1, Node 24.19.0, Linux 6.18.44,
+AMD EPYC 9V74, `nproc` 5, CPU quota 4. `cloud/setup.sh` reported Go ready 0s,
+clang ready 1s, Node ready 1s, submodules ready 1s, build cache warm 15s,
+done 15s. Five before/after native `-O2` runs were interleaved without sanitizers;
+one-minute load was 0.39 both before and after. Best times were 0.423612s before
+and 0.403722s after, a 4.7% difference small enough for cloud noise to hide.
+All ten runs printed `-0.169075164` and `-0.169086185`.
+
+| nbody | Before | After |
+|---|---:|---:|
+| Allocations / frees | 8 / 8 | 8 / 8 |
+| Retains | 7,000,019 | 1,000,011 |
+| Releases | 7,000,023 | 1,000,015 |
+| Peak live / in regions | 7 / 0 | 7 / 0 |
+
+Exactly 5,000,005 binding pairs and 1,000,003 argument pairs disappeared.
+The 1,000,001 iterator holds remain, plus ten constructor/insertion retains.
+The release total additionally includes two formatted strings, final global
+cleanup, and the initial NULL global replacement.
+
+**Fixtures and mutants.** `borrow_loop.a` builds labels at runtime and independently
+exercises index stores, pop, splice, named mutation, closure mutation, an overriding
+mutator, reassignment, push, consumed binding reuse, capture, assignment, temporary
+iterables, and both caught and escaping throws. `borrow_global_call.a` exercises a
+safe borrow, deep global replacement, replacement by a later argument, and an
+overriding callee replacing the global. Both run against source Node, backend Node,
+release native, ASan, UBSan, and LeakSanitizer.
+
+A push alone cannot free the current element. Nor can reassignment of the array
+variable while the iterator owns the old array. Thus there is no honest ASan
+use-after-free fixture for those operations alone. Push is allowed and tested;
+the conservative reassignment refusal is held by the plan assertion, while
+removing the iterator hold makes the reassignment fixture fail under ASan.
+Binding capture and assignment refusals, and the lending bookkeeping assertion,
+are independently checked rather than claimed as sanitizer failures.
+The first captured-binding mutant survived because a closure invocation separately
+refused borrowing. Removing that invocation isolated the guard; its rerun failed.
+
+Run `source /workspace/adamic-tools/env.sh` and
+`python3 internal/native/testdata/run-loop-borrow-mutants.py > /tmp/loop-mutants.log 2>&1`.
+It restores every mutation, writes individual logs under `/tmp/adamic-loop-mutants`,
+and fails if a mutant survives or only breaks a build. Twenty loop/global mutants all
+failed: thirteen ASan reports and seven compiler behavior assertions. The merged runner
+also tests the virtual guard on the earlier indexed-element fixture,
+`borrow_element_virtual_store.a`, as `element-virtual-call`.
+
+| Mutant | Catcher |
+|---|---|
+| Ignore `SetIndex` | ASan, `storeBody` |
+| Allow `ArrayPop` | ASan, `popBody` |
+| Allow `ArraySplice` | ASan, `spliceBody` |
+| Ignore changing named callees | ASan, `callBody` |
+| Allow closure calls | ASan, `closureBody` |
+| Allow virtual calls using only the static summary | ASan, `virtualBody` |
+| Allow an assigned array variable | `TestLoopBorrowPlan`, `reassignBody` |
+| Allow an assigned binding | `TestLoopBorrowPlan`, `assignedBinding` |
+| Allow a captured binding | `TestLoopBorrowPlan`, `capturedBinding` |
+| Do not mark the binding borrowed | ASan, `bindingReuse` |
+| Do not mark the array lending | `TestLoopBorrowPlan`, missing lending fact |
+| Disable loop borrowing | `TestLoopBorrowPlan` and `TestNbodyBorrowedLoopC` |
+| Schedule a borrowed binding's release on a throw | ASan, `throwBody` |
+| Omit the iterator retain in `reassignBody` | ASan, `reassignBody` |
+| Leave the transferred iterator count in the statement cleanup | ASan, `freshBody` |
+| Ignore global `touches` | ASan, `replace` |
+| Ignore later-argument purity | ASan, `read` |
+| Check only the static global callee | ASan, `Replacer.read` |
+| Refuse safe error construction | `TestLoopBorrowPlan`, `throwBody` |
+| Disable global lending | `TestGlobalArgumentLending` |
+
+**Every moved counts row.** Across 136 existing rows, allocations and frees fell
+by one each, retains by 17,238, releases by 17,234, and the sum of peaks by one;
+region counts did not move. Two new rows were added. The complete diff follows.
+A/F/R/L/P/G mean allocations, frees, retains, releases, peak, and in regions.
+Each cause was measured by disabling that feature alone and regenerating the
+entire counts table. Parenthesized R/L numbers are final minus that counterfactual,
+so interacting causes need not add up. Bindings remove loop-element counts;
+global arguments remove safe call snapshot pairs; iterator transfer removes
+redundant temporary pairs. Shared safety is safe error construction plus the
+virtual guard. In `exceptions.a`, error construction permits borrowing; in
+`borrow_element_virtual_move.a`, the guard prevents the first borrow, permits
+safe array moves into consumed parameters, and lets unique mapping reuse an array.
+That row's +1 retain/+4 releases and one fewer allocation/free/peak are the same
+shared-guard effects measured in the preceding unit. `return_panic_fires.a` stops
+before its statement releases temporaries, so its retain and release deltas differ.
+
+| Fixture | Before A/F/R/L/P/G | After A/F/R/L/P/G | Measured cause |
+|---|---|---|---|
+| `library_object_keys.a` | 88/88/35/75/24/0 | 88/88/32/72/24/0 | iterator transfer (-3 R, -3 L) |
+| `library_object_is.a` | 163/163/29/198/7/0 | 163/163/21/190/7/0 | iterator transfer (-8 R, -8 L) |
+| `library_object_order.a` | 84/84/31/71/44/0 | 84/84/30/70/44/0 | iterator transfer (-1 R, -1 L) |
+| `class_oct6_deep.a` | 43/43/23/55/20/0 | 43/43/22/54/20/0 | iterator transfer (-1 R, -1 L) |
+| `class_oct6_parameters.a` | 43/43/16/44/10/0 | 43/43/15/43/10/0 | iterator transfer (-1 R, -1 L) |
+| `class_oct6_release.a` | 372/372/180/441/26/0 | 372/372/177/438/26/0 | iterator transfer (-3 R, -3 L) |
+| `class_oct6_subclass_holder.a` | 76/76/55/116/12/0 | 76/76/54/115/12/0 | iterator transfer (-1 R, -1 L) |
+| `library_array_with.a` | 68/68/57/123/10/0 | 68/68/43/109/10/0 | global arguments (-13 R, -13 L), iterator transfer (-1 R, -1 L) |
+| `library_array_flat_map.a` | 50/50/66/115/17/0 | 50/50/62/111/17/0 | bindings (-4 R, -4 L) |
+| `library_array_flat.a` | 33/33/84/100/19/0 | 33/33/55/71/19/0 | bindings (-24 R, -24 L), global arguments (-5 R, -5 L) |
+| `library_array_spliced.a` | 72/72/59/133/12/0 | 72/72/40/114/12/0 | global arguments (-18 R, -18 L), iterator transfer (-1 R, -1 L) |
+| `library_array_copy_within.a` | 615/615/141/754/7/0 | 615/615/126/739/7/0 | global arguments (-4 R, -4 L), iterator transfer (-11 R, -11 L) |
+| `library_array_search.a` | 87/87/11/98/11/0 | 87/87/10/97/11/0 | iterator transfer (-1 R, -1 L) |
+| `json_stringify_scalars.a` | 100/100/38/170/5/0 | 100/100/37/169/5/0 | iterator transfer (-1 R, -1 L) |
+| `json_stringify_options.a` | 74/74/30/83/6/0 | 74/74/29/82/6/0 | iterator transfer (-1 R, -1 L) |
+| `json_stringify_numbers.a` | 66/66/2/108/3/0 | 66/66/1/107/3/0 | iterator transfer (-1 R, -1 L) |
+| `library_fnexpr_loops.a` | 182/182/197/269/82/0 | 182/182/194/266/82/0 | iterator transfer (-3 R, -3 L) |
+| `library_for_in.a` | 79/79/135/123/65/0 | 79/79/130/118/65/0 | iterator transfer (-5 R, -5 L) |
+| `library_for_in_keys.a` | 38/38/110/79/34/0 | 38/38/108/77/34/0 | iterator transfer (-2 R, -2 L) |
+| `library_for_in_live.a` | 39/39/63/80/21/0 | 39/39/59/76/21/0 | iterator transfer (-4 R, -4 L) |
+| `internal/load/testdata/0.1/compile/03_shapes.ts` | 13/13/17/25/7/0 | 13/13/16/24/7/0 | iterator transfer (-1 R, -1 L) |
+| `internal/load/testdata/0.1/compile/05_wordcount.ts` | 49/49/73/78/26/0 | 49/49/71/76/26/0 | iterator transfer (-2 R, -2 L) |
+| `internal/load/testdata/0.1/compile/06_stack.ts` | 39/39/61/87/7/0 | 39/39/60/86/7/0 | iterator transfer (-1 R, -1 L) |
+| `internal/load/testdata/0.1/compile/07_modules/main.ts` | 14/14/14/26/10/0 | 14/14/9/21/10/0 | bindings (-4 R, -4 L), global arguments (-1 R, -1 L) |
+| `internal/load/testdata/0.1/compile/08_results.ts` | 26/25/37/49/4/0 | 26/25/36/48/4/0 | iterator transfer (-1 R, -1 L) |
+| `internal/load/testdata/0.1/compile/09_tree.ts` | 19/19/85/126/16/0 | 19/19/82/123/16/0 | global arguments (-2 R, -2 L), iterator transfer (-1 R, -1 L) |
+| `bitwise_sweep.a` | 4152674/4152674/2076/4154757/9/0 | 4152674/4152674/1260/4153941/9/0 | iterator transfer (-816 R, -816 L) |
+| `objects.a` | 58/58/59/110/18/0 | 58/58/47/98/18/0 | bindings (-5 R, -5 L), global arguments (-5 R, -5 L), iterator transfer (-2 R, -2 L) |
+| `maps_and_text.a` | 59/59/41/94/10/0 | 59/59/39/92/10/0 | iterator transfer (-2 R, -2 L) |
+| `sorting.a` | 61/61/57/75/38/0 | 61/61/55/73/38/0 | iterator transfer (-2 R, -2 L) |
+| `classes.a` | 16/16/24/42/10/0 | 16/16/16/34/10/0 | global arguments (-8 R, -8 L) |
+| `indexing.a` | 33/33/13/46/6/0 | 33/33/12/45/6/0 | iterator transfer (-1 R, -1 L) |
+| `casts.a` | 9/9/17/25/6/0 | 9/9/16/24/6/0 | iterator transfer (-1 R, -1 L) |
+| `cast_fails.a` | 2/0/5/3/2/0 | 2/0/4/2/2/0 | iterator transfer (-1 R, -1 L) |
+| `updates.a` | 27/27/27/57/9/0 | 27/27/23/53/9/0 | global arguments (-4 R, -4 L) |
+| `string_index.a` | 89/89/29/126/7/0 | 89/89/28/125/7/0 | iterator transfer (-1 R, -1 L) |
+| `visits.a` | 95/95/125/209/23/0 | 95/95/124/208/23/0 | iterator transfer (-1 R, -1 L) |
+| `searches.a` | 106/106/82/174/19/0 | 106/106/81/173/19/0 | iterator transfer (-1 R, -1 L) |
+| `defaults.a` | 38/36/17/52/6/2 | 38/36/15/50/6/2 | global arguments (-2 R, -2 L) |
+| `strings_more.a` | 128/128/30/164/11/0 | 128/128/29/163/11/0 | iterator transfer (-1 R, -1 L) |
+| `library_math_number_math.a` | 1280/1280/50/1331/8/0 | 1280/1280/25/1306/8/0 | iterator transfer (-25 R, -25 L) |
+| `library_math_number_convert.a` | 199/199/197/365/7/0 | 199/199/196/364/7/0 | iterator transfer (-1 R, -1 L) |
+| `library_math_number_prototype.a` | 71/71/2/74/8/0 | 71/71/1/73/8/0 | iterator transfer (-1 R, -1 L) |
+| `navigation.a` | 162/162/40/189/16/0 | 162/162/36/185/16/0 | iterator transfer (-4 R, -4 L) |
+| `number_formats.a` | 235/235/46/263/18/0 | 235/235/45/262/18/0 | iterator transfer (-1 R, -1 L) |
+| `precision_range.a` | 4/3/2/5/2/0 | 4/3/1/4/2/0 | iterator transfer (-1 R, -1 L) |
+| `radixes.a` | 696/696/97/332/25/0 | 696/696/95/330/25/0 | iterator transfer (-2 R, -2 L) |
+| `timsort.a` | 2769/2769/3779/6232/308/0 | 2769/2769/3778/6231/308/0 | iterator transfer (-1 R, -1 L) |
+| `sort_top_level.a` | 33/33/80/97/19/0 | 33/33/79/96/19/0 | iterator transfer (-1 R, -1 L) |
+| `splices.a` | 74/74/41/108/12/0 | 74/74/29/96/12/0 | global arguments (-12 R, -12 L) |
+| `array_from.a` | 94/94/57/132/25/0 | 94/94/56/131/25/0 | iterator transfer (-1 R, -1 L) |
+| `weak_parent.a` | 86/86/264/313/41/0 | 86/86/253/302/41/0 | global arguments (-8 R, -8 L), iterator transfer (-3 R, -3 L) |
+| `doubly_linked.a` | 90/90/545/578/49/0 | 90/90/525/558/49/0 | global arguments (-20 R, -20 L) |
+| `fresh_parser.a` | 294/294/338/508/34/0 | 294/294/292/462/34/0 | global arguments (-4 R, -4 L), iterator transfer (-42 R, -42 L) |
+| `fresh_writes.a` | 330/330/409/525/132/0 | 330/330/369/485/132/0 | global arguments (-4 R, -4 L), iterator transfer (-36 R, -36 L) |
+| `fresh_calls.a` | 147/147/268/323/39/0 | 147/147/239/294/39/0 | global arguments (-2 R, -2 L), iterator transfer (-27 R, -27 L) |
+| `exceptions.a` | 133/133/171/246/20/0 | 133/133/159/234/20/0 | bindings (-5 R, -5 L), global arguments (-3 R, -3 L), iterator transfer (-4 R, -4 L), shared safety (-5 R, -5 L) |
+| `param_assigned_in_try.a` | 46/46/32/67/12/0 | 46/46/31/66/12/0 | global arguments (-1 R, -1 L) |
+| `invariance_readonly.a` | 30/30/39/52/16/0 | 30/30/38/51/16/0 | iterator transfer (-1 R, -1 L) |
+| `tuples_kept.a` | 31/31/54/74/13/0 | 31/31/52/72/13/0 | iterator transfer (-2 R, -2 L) |
+| `undefined_strings.a` | 15/15/21/43/6/0 | 15/15/19/41/6/0 | global arguments (-2 R, -2 L) |
+| `maybe_booleans.a` | 48/48/51/101/11/0 | 48/48/47/97/11/0 | global arguments (-3 R, -3 L), iterator transfer (-1 R, -1 L) |
+| `unions.a` | 1449/1449/1111/2573/16/0 | 1449/1449/1107/2569/16/0 | bindings (-3 R, -3 L), iterator transfer (-1 R, -1 L) |
+| `maybe_number_slots.a` | 484/484/305/798/16/0 | 484/484/304/797/16/0 | iterator transfer (-1 R, -1 L) |
+| `case_mapping.a` | 203/203/20/217/16/0 | 203/203/19/216/16/0 | iterator transfer (-1 R, -1 L) |
+| `undefined_elements.a` | 20/20/46/43/9/0 | 20/20/45/42/9/0 | iterator transfer (-1 R, -1 L) |
+| `map_zero_keys.a` | 29/29/24/49/8/0 | 29/29/23/48/8/0 | iterator transfer (-1 R, -1 L) |
+| `adversarial_exits.a` | 120/120/80/175/25/0 | 120/120/63/158/25/0 | bindings (-13 R, -13 L), global arguments (-3 R, -3 L), iterator transfer (-1 R, -1 L) |
+| `adversarial_iteration.a` | 59/59/120/152/21/0 | 59/59/118/150/21/0 | iterator transfer (-2 R, -2 L) |
+| `string_positions.a` | 436/436/301/607/134/0 | 436/436/300/606/134/0 | iterator transfer (-1 R, -1 L) |
+| `class_layouts.a` | 70/70/112/159/27/0 | 70/70/103/150/27/0 | global arguments (-8 R, -8 L), iterator transfer (-1 R, -1 L) |
+| `size_class_churn.a` | 675173/675173/270039/675213/8005/0 | 675173/675173/270038/675212/8005/0 | iterator transfer (-1 R, -1 L) |
+| `class_as_interface.a` | 372/372/360/525/60/0 | 372/372/356/521/60/0 | global arguments (-1 R, -1 L), iterator transfer (-3 R, -3 L) |
+| `optional_class_method.a` | 40/40/47/74/9/0 | 40/40/44/71/9/0 | iterator transfer (-3 R, -3 L) |
+| `spread_snapshot.a` | 22/22/4/25/11/0 | 22/22/3/24/11/0 | global arguments (-1 R, -1 L) |
+| `reuse.a` | 76/76/57/122/16/0 | 76/76/55/120/16/0 | global arguments (-2 R, -2 L) |
+| `regions.a` | 316/260/219/409/50/56 | 316/260/213/403/50/56 | global arguments (-6 R, -6 L) |
+| `borrow_loop.a` | new | 88/86/94/142/7/2 | new fixture |
+| `borrow_global_call.a` | new | 18/16/10/23/6/2 | new fixture |
+| `borrow_element_virtual_move.a` | 26/24/10/22/12/2 | 25/23/11/26/11/2 | shared safety (1 R, 4 L) |
+| `spread_undefined.a` | 45/45/27/65/10/0 | 45/45/26/64/10/0 | iterator transfer (-1 R, -1 L) |
+| `trig_reduction.a` | 133/133/14/148/7/0 | 133/133/1/135/7/0 | iterator transfer (-13 R, -13 L) |
+| `sets.a` | 224/224/13016/13113/65/0 | 224/224/13011/13108/65/0 | bindings (-4 R, -4 L), iterator transfer (-1 R, -1 L) |
+| `library_map_set.a` | 170/170/219/320/24/0 | 170/170/135/236/24/0 | global arguments (-84 R, -84 L) |
+| `library_map_set_keys.a` | 76/76/70/135/15/0 | 76/76/64/129/15/0 | global arguments (-6 R, -6 L) |
+| `library_map_set_construct.a` | 180/180/229/275/52/0 | 180/180/228/274/52/0 | iterator transfer (-1 R, -1 L) |
+| `maybe_collections.a` | 64/64/166/225/20/0 | 64/64/165/224/20/0 | iterator transfer (-1 R, -1 L) |
+| `collections.a` | 363/363/395/565/101/0 | 363/363/391/561/101/0 | iterator transfer (-4 R, -4 L) |
+| `power_of_two_string.a` | 19/19/2/22/4/0 | 19/19/1/21/4/0 | iterator transfer (-1 R, -1 L) |
+| `declared_later.a` | 56/56/76/128/15/0 | 56/56/75/127/15/0 | iterator transfer (-1 R, -1 L) |
+| `return_panic.a` | 13/13/14/27/9/0 | 13/13/13/26/9/0 | bindings (-1 R, -1 L) |
+| `return_panic_fires.a` | 5/0/8/7/5/0 | 5/0/6/6/5/0 | global arguments (-2 R, -1 L) |
+| `from_codes.a` | 408/408/56/416/12/0 | 408/408/53/413/12/0 | global arguments (-1 R, -1 L), iterator transfer (-2 R, -2 L) |
+| `bitwise.a` | 9304/9304/1406/9379/45/0 | 9304/9304/1369/9342/45/0 | iterator transfer (-37 R, -37 L) |
+| `tuple_values.a` | 119/119/126/207/37/0 | 119/119/122/203/37/0 | global arguments (-2 R, -2 L), iterator transfer (-2 R, -2 L) |
+| `generic_values.a` | 22/22/39/52/10/0 | 22/22/33/46/10/0 | global arguments (-6 R, -6 L) |
+| `undefined_references.a` | 17/17/37/52/11/0 | 17/17/34/49/11/0 | bindings (-3 R, -3 L) |
+| `utf8_view.a` | 59/59/34/80/7/0 | 59/59/33/79/7/0 | iterator transfer (-1 R, -1 L) |
+| `search_from.a` | 292/292/168/329/22/0 | 292/292/159/320/22/0 | iterator transfer (-9 R, -9 L) |
+| `shared_slices.a` | 12675/12675/5999/12774/87/0 | 12675/12675/5992/12767/87/0 | global arguments (-5 R, -5 L), iterator transfer (-2 R, -2 L) |
+| `string_append.a` | 249/249/95/285/49/0 | 249/249/89/279/49/0 | bindings (-6 R, -6 L) |
+| `search_from_sweep.a` | 133/133/34/155/10/0 | 133/133/33/154/10/0 | iterator transfer (-1 R, -1 L) |
+| `integer_format.a` | 106826/106826/58737/146871/20/0 | 106826/106826/48056/136190/20/0 | iterator transfer (-10681 R, -10681 L) |
+| `reuse_spread_method_alias.a` | 8/8/8/15/6/0 | 8/8/7/14/6/0 | iterator transfer (-1 R, -1 L) |
+| `try_assignments.a` | 37/37/9/42/6/0 | 37/37/8/41/6/0 | iterator transfer (-1 R, -1 L) |
+| `library_string_conversion.a` | 15/15/4/21/3/0 | 15/15/3/20/3/0 | iterator transfer (-1 R, -1 L) |
+| `library_string_indices.a` | 639/639/200/845/8/0 | 639/639/56/701/8/0 | global arguments (-129 R, -129 L), iterator transfer (-15 R, -15 L) |
+| `library_string_raw.a` | 45/45/61/95/11/0 | 45/45/58/92/11/0 | global arguments (-3 R, -3 L) |
+| `library_map_set_setops.a` | 590/590/347/666/17/0 | 590/590/336/655/17/0 | global arguments (-11 R, -11 L) |
+| `regexp.a` | 455/455/369/422/62/0 | 455/455/364/417/62/0 | iterator transfer (-5 R, -5 L) |
+| `sweeps/regexp_methods.a` | 448046/448046/131098/340026/68/0 | 448046/448046/126442/335370/68/0 | iterator transfer (-4656 R, -4656 L) |
+| `regexp_exec.a` | 179/179/82/160/18/0 | 179/179/77/155/18/0 | global arguments (-5 R, -5 L) |
+| `regexp_match.a` | 83/83/85/103/18/0 | 83/83/84/102/18/0 | iterator transfer (-1 R, -1 L) |
+| `class_features_static.a` | 110/110/84/191/28/0 | 110/110/59/166/28/0 | global arguments (-25 R, -25 L) |
+| `class_features_static_private.a` | 42/42/71/112/12/0 | 42/42/53/94/12/0 | global arguments (-18 R, -18 L) |
+| `class_features_private.a` | 47/47/37/65/15/0 | 47/47/29/57/15/0 | global arguments (-8 R, -8 L) |
+| `class_features_accessors.a` | 67/67/53/110/21/0 | 67/67/47/104/21/0 | global arguments (-6 R, -6 L) |
+| `class_features_twice.a` | 26/26/6/35/6/0 | 26/26/4/33/6/0 | global arguments (-2 R, -2 L) |
+| `class_features_retained.a` | 48/48/57/88/18/0 | 48/48/42/73/18/0 | global arguments (-15 R, -15 L) |
+| `class_features_distinct.a` | 48/48/50/81/14/0 | 48/48/48/79/14/0 | global arguments (-2 R, -2 L) |
+| `class_inheritance.a` | 150/150/29/170/23/0 | 150/150/24/165/23/0 | global arguments (-4 R, -4 L), iterator transfer (-1 R, -1 L) |
+| `class_inheritance_exceptions.a` | 29/29/22/42/8/0 | 29/29/19/39/8/0 | iterator transfer (-3 R, -3 L) |
+| `class_inheritance_memory.a` | 48/42/22/60/11/6 | 48/42/20/58/11/6 | global arguments (-2 R, -2 L) |
+| `class_inheritance_generic.a` | 89/89/104/167/39/0 | 89/89/85/148/39/0 | global arguments (-18 R, -18 L), iterator transfer (-1 R, -1 L) |
+| `class_inheritance_interface.a` | 37/37/45/71/13/0 | 37/37/44/70/13/0 | iterator transfer (-1 R, -1 L) |
+| `class_inheritance_conditional.a` | 164/164/148/251/35/0 | 164/164/146/249/35/0 | global arguments (-2 R, -2 L) |
+| `user_iterators.a` | 669/669/466/915/67/0 | 669/669/465/914/67/0 | iterator transfer (-1 R, -1 L) |
+| `literal_optional_shapes.a` | 36/36/40/68/9/0 | 36/36/39/67/9/0 | iterator transfer (-1 R, -1 L) |
+| `e4eec87_u03_discriminated_undefined.a` | 10/10/14/20/6/0 | 10/10/12/18/6/0 | global arguments (-1 R, -1 L), iterator transfer (-1 R, -1 L) |
+| `e4eec87_f1_field_narrowed.a` | 1/0/2/3/1/0 | 1/0/1/2/1/0 | global arguments (-1 R, -1 L) |
+| `e4eec87_f1_field_present.a` | 6/6/2/9/3/0 | 6/6/1/8/3/0 | global arguments (-1 R, -1 L) |
+| `object_prototype.a` | 142/142/317/440/22/0 | 142/142/165/288/22/0 | global arguments (-150 R, -150 L), iterator transfer (-2 R, -2 L) |
+| `regexp_cycle_fields.a` | 61/61/134/132/44/0 | 61/61/132/130/44/0 | global arguments (-2 R, -2 L) |
+| `regexp_cycle_collections.a` | 31/31/86/90/23/0 | 31/31/85/89/23/0 | iterator transfer (-1 R, -1 L) |
+| `utf8_sweep.a` | 38498/38498/7702/38502/7706/0 | 38498/38498/7701/38501/7706/0 | iterator transfer (-1 R, -1 L) |
+| `arguments.a` | 77/77/15/69/27/0 | 77/77/14/68/27/0 | iterator transfer (-1 R, -1 L) |
+| `read_arguments.a` | 15/15/12/19/9/0 | 15/15/11/18/9/0 | iterator transfer (-1 R, -1 L) |
+| `walk.a` | 222/222/123/294/36/0 | 222/222/117/288/36/0 | iterator transfer (-6 R, -6 L) |
+
+**Validation run.** Test output went to files, never through a pipe. The final
+unmutated commands and results were:
+
+```text
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native ./internal/oracle
+ok github.com/system-inc/adamic/internal/native 111.817s
+ok github.com/system-inc/adamic/internal/oracle 108.826s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/borrow_|TestLoopBorrowPlan|TestNbodyBorrowedLoopC|TestGlobalArgumentLending|TestPassThroughsAreNotConsumers|TestCountsAreRecorded' -count=1 -timeout 30m
+ok github.com/system-inc/adamic/internal/native 0.188s
+ok github.com/system-inc/adamic/internal/oracle 13.163s
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts
+ok github.com/system-inc/adamic/internal/oracle 12.211s
+go vet ./...
+exit 0, no output
+gofmt -l cmd internal
+exit 0, no output
+git diff --check
+exit 0, no output
+```
+
+The whole repository gate was not run; the complete two touched packages were.
+Iterator hold elimination, borrowing from captured/global sources, closure-body
+binding optimization, destructuring, and write-only global effect summaries were
+not covered. The existing stable-array and borrowed-parameter requirements remain
+conservative. The owned-iterable mutant was further isolated to retain local
+sources correctly but leave an owned temporary scheduled for statement cleanup;
+`freshBody` failed under ASan. This proves the transfer itself, independently of
+the reassignment hold test. Logs are `/tmp/loop-packages.log`,
+`/tmp/loop-worker.log`, `/tmp/loop-counts.log`, `/tmp/loop-vet.log`,
+`/tmp/loop-mutants-final.log`, `/tmp/loop-mutant-transfer-final.log`, and
+`/tmp/loop-bench.log`. The per-feature measurements are
+`/tmp/loop-counts-no-{bindings,global-arguments,iterator-transfer,shared-safety}.md`.
+
+### Merge verification, October 7, 2026
+
+Merged `658dbc4` (`codex/borrowed-element-reads`) into `75d3be5`
+(`codex/borrowed-loop-bindings`) with two parents, without rebasing. Both fixture
+sets and both borrowing reports remain. The shared `MakeError` allowance and
+virtual-call guard are preserved with the loop binding and lending changes.
+`TestNbodyIndexedElementsBorrow` now counts only `ir.Declare` entries in the shared
+plan: its five indexed declarations remain checked independently of the two new
+loop bindings. The throwing declaration test also ignores non-declaration entries.
+
+After all mutants were restored, the focused native checks and sanitizer oracle
+passed for `borrow_element_virtual_store.a`, `borrow_element_throw.a`,
+`borrow_loop.a`, and `borrow_global_call.a` (native 0.228s, oracle 0.800s).
+The original twenty mutants plus `element-virtual-call` were all caught:
+fourteen ASan reports and seven compiler assertions. The additional virtual guard
+mutant fails with ASan heap-use-after-free in `inspect` on
+`borrow_element_virtual_store.a`, proving the earlier main bug remains covered.
+The first focused run overlapped a deliberate mutant and was discarded; the
+reported run was repeated after restoration, before the complete package gate.
+
+```text
+source /workspace/adamic-tools/env.sh
+python3 internal/native/testdata/run-loop-borrow-mutants.py > /tmp/loop-merge-mutants.log 2>&1
+all 21 caught; exit 0
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts
+ok github.com/system-inc/adamic/internal/oracle 12.325s
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native ./internal/oracle
+ok github.com/system-inc/adamic/internal/native 123.226s
+ok github.com/system-inc/adamic/internal/oracle 123.011s
+go vet ./...
+exit 0, no output
+gofmt -l cmd internal
+exit 0, no output
+git diff --check
+exit 0, no output
+```
+
+The regenerated table adds only the two restored fixture rows; existing rows,
+including the loop/global fixtures, did not change from `75d3be5`. The earlier
+fixture counts remain 38/38/34/54/8/0 for throw and 13/11/9/15/7/2 for virtual
+store, in allocations/frees/retains/releases/peak/regions order. Complete native
+and oracle packages were run, not the whole repository gate. Final logs are
+`/tmp/loop-merge-focus-final.log`, `/tmp/loop-merge-mutants.log`,
+`/tmp/loop-merge-packages.log`, `/tmp/loop-merge-counts.log`, and
+`/tmp/loop-merge-vet.log`.
+
+### The loop's array borrows the same owner, October 7, 2026
+
+Starting from `6c6417a` (`codex/borrowed-loop-bindings`), `forOf` now uses the
+existing `elementBorrows` fact for both the binding and its iterator array.
+`loopBorrowable` requires a plain array loop with a lendable reference binding,
+and `borrowable` requires that the binding and the source array are locals of
+this function, uncaptured and never assigned. A parameter qualifies as a local.
+The body's `changes` check proves that no expression, statement, or reachable
+nonvirtual named callee can take an element out of any array. The source is
+marked lending before reuse runs, so a call cannot move its variable's count
+into a consumed parameter. The source's owner therefore outlives every iterator
+step. The emitter snapshots the pointer but takes no iterator count and schedules
+no iterator release, on the normal path or on any early or exceptional exit.
+No new purity or call-effect allowance was added.
+
+This deliberately reuses the whole element proof. Assignment anywhere in the
+function refuses it, even outside the body; assigned or captured bindings,
+non-reference elements, destructuring, closures, maps, strings, regex iterators,
+globals, captured sources, and fresh-call sources keep their existing holds.
+An operation not on the existing allowed list still refuses the borrow.
+
+**A throw is an exit, not an invalidation.** An unchanged local's scope or a
+parameter's caller still holds the array until the iterator has ended, including
+when a throw ends it. Thus `throwBody` can borrow both binding and array. A throw
+alone cannot honestly demonstrate that a redundant iterator hold is needed.
+`throwHeldBody` instead reassigns its source and immediately throws; its iterator
+must own the old array and release that count during unwinding. Its mutant omits
+the retain but preserves the unwind release, which ASan catches on the throw
+path before another length test can run. This specifically proves exceptional
+cleanup ownership, separately from the four full hold-removal mutants.
+
+**Fixtures and mutants.** The existing `borrow_loop.a` has independent
+`reassignBody` and `freshBody` probes. It now also has `closureReassignBody`
+(a called closure writes the captured array variable), `globalReassignBody`
+(a named call writes the global source), `throwHeldBody`, and `parameterBody`
+(a caller-held fresh argument borrowed safely for the entire callee loop).
+Labels and arrays are made at runtime. `TestLoopArrayHoldC` checks the actual
+iterator temporary in eleven fixture functions and both nbody loop functions,
+including positive local, parameter, push, and throw cases. Existing plan tests
+continue to require the borrowed binding and lending facts.
+
+Run `python3 internal/native/testdata/run-loop-array-hold-mutants.py` with the
+setup environment sourced. Every mutation is restored even on failure; complete
+outputs are in `/tmp/adamic-loop-array-hold-mutants/<mutant>.log`.
+All seven mutants were caught, independently:
+
+| Mutant | Catcher |
+|---|---|
+| Remove the entire iterator hold in `reassignBody` | ASan heap-use-after-free, next loop length read |
+| Remove the entire iterator hold in `closureReassignBody` | ASan heap-use-after-free, next loop length read |
+| Remove the entire iterator hold in `globalReassignBody` | ASan heap-use-after-free, next loop length read |
+| Remove the entire iterator hold in `freshBody` | ASan heap-use-after-free, first loop length read after statement cleanup |
+| Omit the retain, keep unwind cleanup in `throwHeldBody` | ASan heap-use-after-free, unwind release |
+| Schedule iterator cleanup for borrowed `throwBody` | ASan heap-use-after-free, array read after its catch |
+| Disable hold elision, preserving binding borrows | `TestLoopArrayHoldC`, redundant owned iterators |
+
+**Nbody, observed.** The only C changes are the array retain and release in
+`offsetMomentum` and in `advance`. The latter runs one million times and the
+former once, removing exactly 1,000,001 pairs. The ten remaining retains are
+five constructor returns and five array insertions. The fourteen releases also
+include the two formatted energy strings, final global cleanup, and the initial
+NULL global replacement.
+
+| nbody | Before | After |
+|---|---:|---:|
+| Allocations / frees | 8 / 8 | 8 / 8 |
+| Retains | 1,000,011 | 10 |
+| Releases | 1,000,015 | 14 |
+| Peak live / in regions | 7 / 0 | 7 / 0 |
+
+clang 20.1.8, Go 1.27.1, Node 24.19.0, Linux 6.18.44, AMD EPYC 9V74.
+`nproc` reports 5, cgroup quota 4 CPUs. `bash cloud/setup.sh` completed:
+Go ready 0s, clang ready 1s, Node ready 1s, submodules ready 1s, cache warm
+105s, done 105s. The generated environment file is
+`/workspace/adamic-tools/env.sh`, sourced in every build and test shell.
+
+`go run ./bench -only nbody -rounds 5` reported best native times 0.442s
+before and 0.412s after, and identical answers against Node (0.719s and
+0.651s). The baseline overlapped setup's cache warming, with one-minute load
+9.34 to 11.38; the after run was at 3.30 to 2.79. These are not comparable
+speedup measurements. Both native binaries were then interleaved for seven
+rounds, alternating which ran first, with no other test workload running.
+Best times were **0.407087s before and 0.410165s after**, at one-minute load
+2.79 to 2.65. All fourteen runs printed `-0.169075164` then `-0.169086185`.
+There is no observed timing improvement despite the deterministic count reduction.
+
+**The entire counts diff.** All 308 rows were regenerated twice: with the new
+fixture and hold elision disabled, then with the final compiler. This isolates
+fixture additions from the optimization. Only the twelve rows below differ from
+`6c6417a`; the other 296 are unchanged. A/F/R/L/P/G mean allocations, frees,
+retains, releases, peak live, and values in regions. The C diff was inspected
+for each row to identify the loops listed, including the lowered library helpers.
+Every optimizer-only change is an equal reduction of retains and releases,
+38 of each in total; no allocation, free, peak, or region changes.
+
+| Fixture | Before A/F/R/L/P/G | After A/F/R/L/P/G | Cause of removed hold pairs |
+|---|---|---|---|
+| `library_array_flat_map.a` | 50/50/62/111/17/0 | 50/50/60/109/17/0 | 2 loop entries in the generated string-array `array_flat_map` helper |
+| `library_array_flat.a` | 33/33/55/71/19/0 | 33/33/41/57/19/0 | 14 loop entries in generated `array_flat` helpers, including nested arrays |
+| `internal/load/testdata/0.1/compile/07_modules/main.ts` | 14/14/9/21/10/0 | 14/14/8/20/10/0 | 1 call to `pathLength` in `07_modules/geometry.ts` |
+| `objects.a` | 58/58/47/98/18/0 | 58/58/45/96/18/0 | 2 calls to `firstNamed` |
+| `exceptions.a` | 133/133/159/234/20/0 | 133/133/156/231/20/0 | 3 calls to `find`, including its throw paths |
+| `unions.a` | 1449/1449/1107/2569/16/0 | 1449/1449/1106/2568/16/0 | 1 entry to `lookups` |
+| `adversarial_exits.a` | 120/120/63/158/25/0 | 120/120/60/155/25/0 | 3 calls to `find`, including continue and return paths |
+| `borrow_loop.a` | 88/86/94/142/7/2 | 128/126/125/196/14/2 | 5 entries: `pushBody`, `throwBody`, `caughtBody`, `bindingReuse`, `parameterBody`; new fixture work measured separately |
+| `sets.a` | 224/224/13011/13108/65/0 | 224/224/13010/13107/65/0 | 1 call to `count` over its array parameter; Set iterator holds are unchanged |
+| `return_panic.a` | 13/13/13/26/9/0 | 13/13/12/25/9/0 | 1 call to `firstWord`; the separate panic-firing fixture is unchanged |
+| `undefined_references.a` | 17/17/34/49/11/0 | 17/17/30/45/11/0 | 4 calls to `find`, including early returns |
+| `string_append.a` | 249/249/89/279/49/0 | 249/249/88/278/49/0 | 1 entry to `seams` over local `pieces` |
+
+With elision disabled but the expanded fixture present, `borrow_loop.a` is
+128/126/130/201/14/2. Its four added probes and the global initializer therefore
+add **40 allocations, 40 frees, 36 retains, 59 releases, and 7 peak live** relative
+to the old fixture. The new global array stays live while the closure-reassignment
+probe runs, contributing to the higher peak. Elision removes five pairs from that
+expanded fixture, giving 128/126/125/196/14/2. This is additional fixture work,
+not a lifetime change in the optimization. Summed across the whole checked-in
+table, the net diff is +40 allocations, +40 frees, -2 retains, +21 releases,
++7 in the sum of peaks, and no change in regions. There are no added rows.
+
+**The previous borrowing guards were rerun.**
+`python3 internal/native/testdata/run-loop-borrow-mutants.py` still catches every
+one of its 21 independent mutants on the final compiler. Each exits 1, with
+14 sanitizer failures and 7 behavior assertions; no build-warning kill counts.
+Together with the new runner, all 28 mutants were caught (20 ASan, 8 assertions).
+The runner's exact names and observed catchers in this run are:
+
+| Mutants | Catcher |
+|---|---|
+| `set-index`, `pop`, `splice`, `named-call`, `closure-call`, `binding-owned`, `throw-owned`, `iterator-hold`, `global-touches`, `later-argument`, `virtual-call`, `global-virtual-targets`, `iterator-transfer`, `element-virtual-call` | ASan heap-use-after-free in the borrowing oracle fixtures |
+| `array-assigned`, `binding-assigned`, `binding-captured`, `lending-fact`, `borrow-disabled`, `error-construction` | `TestLoopBorrowPlan` (also emitted-C assertions for disabled borrowing) |
+| `global-disabled` | `TestGlobalArgumentLending` |
+
+**Validation and limits.** The final unmutated commands wrote their full output
+to log files and passed:
+
+```text
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -run 'TestLoopBorrowPlan|TestLoopArrayHoldC|TestNbodyBorrowedLoopC|TestNativeAgreesWithNode/internal/oracle/testdata/borrow_loop' -count=1 -timeout 30m
+ok github.com/system-inc/adamic/internal/native 0.158s
+ok github.com/system-inc/adamic/internal/oracle 4.772s
+python3 internal/native/testdata/run-loop-array-hold-mutants.py
+7 caught; exit 0
+python3 internal/native/testdata/run-loop-borrow-mutants.py
+21 caught; exit 0
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+holds kept counterfactual: ok github.com/system-inc/adamic/internal/oracle 10.862s
+final compiler: ok github.com/system-inc/adamic/internal/oracle 10.462s
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./internal/native ./internal/oracle
+ok github.com/system-inc/adamic/internal/native 110.598s
+ok github.com/system-inc/adamic/internal/oracle 107.531s
+go vet ./...
+exit 0, no output
+gofmt -l cmd internal
+exit 0, no output
+git diff --check
+exit 0, no output
+```
+
+This includes the entire touched packages, source Node and backend Node,
+release native, ASan, UBSan, LeakSanitizer, and the complete recorded counts
+check. The full repository gate was not run under the worker-gate exception;
+stage-1 packages were only compiled by setup and vetted. This unit does not
+weaken the existing whole-function assignment or element-mutation conditions,
+optimize closure bodies, or remove holds from non-reference, destructured,
+global, captured, map, string, or regex sources.
+
+Logs: `/tmp/loop-hold-setup.log`, `/tmp/loop-hold-focus.log`,
+`/tmp/loop-hold-mutants.log`, `/tmp/loop-hold-regression-mutants.log`,
+`/tmp/loop-hold-counts-kept.log`, `/tmp/loop-hold-counts.log`,
+`/tmp/loop-hold-packages.log`, `/tmp/loop-hold-vet.log`,
+`/tmp/loop-hold-before-bench.log`, `/tmp/loop-hold-after-bench.log`, and
+`/tmp/loop-hold-paired-bench.log`. The counterfactual table is
+`/tmp/loop-hold-counts-kept.md`; preserved generated C is
+`/tmp/loop-hold-before.c` and `/tmp/loop-hold-after.c`.
+
+### Calls that can free a loop's array (coverage, October 7, 2026)
+
+`borrow_loop_calls.a` sits on `2b63ccb`, which is `6c6417a` plus the iterator
+borrowing a stable local or parameter. Both proofs are one fact, so one fixture
+covers both. The strings are built at runtime. A callee that pops (including
+through another parameter holding the same array, a branch, a try, or a deeper
+call), spreads, maps, stores an index, or is reached virtually keeps the
+iterator's count and retains the binding. A callee that reads a length, forwards
+to such a read, or only pushes does not: the binding is borrowed and the
+iterator takes no count. `TestLoopCallCoverage` checks that plan and the
+iterator temporary for all 26 loops.
+
+Two elided loops are cases a call really can free, and another owner still holds
+the array. `scanCopy` copies a global into a local and then calls a function
+that replaces the global; the local's count is the owner. `scanLent` takes the
+global as a borrowed parameter and calls the function that replaces it.
+`reportQuiet` does lend its global, because that callee never touches it.
+`scanLent` does not: lending follows the callee and sees the assignment, so the
+call retains. The loop then borrows. Replacing the global drops the global's
+count and leaves the argument's. Both labels print, and the global's length is
+then 0. A field copied into a local survives a call that replaces the field.
+Iterating the field expression directly does not borrow; the iterator holds
+that read.
+
+| Mutant | Catcher |
+|---|---|
+| A direct call counts as unchanging | ASan heap-use-after-free in `popLocal`, the element `remove` freed |
+| Global lending does not follow callees | ASan heap-use-after-free in `scanLent`, after `resetLent` releases the global |
+
+Run `source /opt/adamic-tools/env.sh` and
+`python3 internal/native/testdata/run-loop-call-mutants.py`. Each mutant is
+restored. Logs are `/tmp/adamic-loop-call-mutants/<mutant>.log`. Both exited 1
+with that ASan report and no other failure mode.
+
+The new counts row is 263/261/189/355/25/2. `TestCountsAreRecorded -update-counts`
+regenerated the whole table after merging `codex/loop-array-hold` into `e8ba3d5`.
+Call targets from that main changed the rows the two sides had disagreed on:
+`library_object_keys.a` 32/72 retains/releases, `library_object_is.a` 21/190,
+`class_as_interface.a` 345/510, `optional_class_method.a` 44/71,
+`class_inheritance_memory.a` 20/58, `class_inheritance_generic.a` 85/148,
+`class_inheritance_interface.a` 44/70, `class_inheritance_conditional.a` 146/249,
+`devirtualize.a` 23/63, `user_iterators.a` 465/914, and `prompt_then_read.a`
+2/2/2/4/2/0. The direct-call mutant now skips `CallTargets` instead of the old
+`Virtual == 0` test, which this main no longer has. It still frees the element
+under `popLocal`.
+
+```text
+source /opt/adamic-tools/env.sh
+go test ./internal/native -run 'TestLoopCallCoverage|TestLoopArrayHoldC|TestLoopBorrowPlan|TestGlobalArgumentLending|TestNbodyBorrowedLoopC' -count=1 -timeout 10m
+ok github.com/system-inc/adamic/internal/native 0.266s
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts
+ok github.com/system-inc/adamic/internal/oracle 22.942s
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/borrow_loop' -count=1 -timeout 30m
+ok github.com/system-inc/adamic/internal/oracle 0.943s
+python3 internal/native/testdata/run-loop-call-mutants.py
+call-unchanging and touches-ignores-callees caught; exit 0
+```
+
+The oracle run is source Node, the JavaScript backend, release native, ASan,
+UBSan, and LeakSanitizer for this fixture. The whole repository gate was not
+run. Closure-body binding optimization, destructuring, and write-only global
+effect summaries remain uncovered, as they were before this fixture.
+
+### Strong field borrow chains
+
+A strong field read can borrow transitively from a stable root (`borrow.go`,
+`element_borrow.go`). For example, `node.parent`, `node.parent.kind`, and
+`node.children` can be read without taking a count; an uncaptured, unassigned
+local initialized by such a read can borrow for its scope too. Existing borrowed
+parameters carry `Local.Borrowed`; an unassigned ordinary local already holds its
+own count. A captured or global root does not qualify.
+
+The proof checks the whole function, including enclosing blocks, loops, catches
+and finallies. No assignment can replace the root. No statement or reachable
+callee can replace any field on the chain. Named calls use every `CallTargets`
+implementation, recursive bodies included; callback calls use `ClosureTargets`,
+with `Unknown` refusing the borrow. Field names conservatively match every holder,
+not just related types, since the native IR does not carry that relation. Unknown
+operations and object spreads refuse. Emission also refuses a root that reuse
+consumes, moves or takes over. Borrowing declarations mark their variables
+`Borrowed` and their root as lending before reuse is planned.
+
+A borrowed chain is snapshotted at its source read. A store or an owned return
+still takes a count through the existing ownership helpers. A captured declaration
+still creates an owning capture cell. An argument to an existing borrowed
+parameter needs no temporary retain when the chain survives the function's calls;
+a consumed argument still takes the count its convention requires.
+
+This proof follows strong property loads and `Defined` only. It does not infer an
+owner through a weak target read, a call result, an optional chain or an indexed
+load. Weak targets need a separate strong owner; accessor results need the
+compiler's borrowed-return provenance. The pass does not change parameter
+conventions, for-of emission, accessor returns or devirtualization.
+
+The nine `borrow_chain_*.a` fixtures run against source on Node, native with
+sanitizers, and the JavaScript backend. The tree-walk fixture loses nine pairs;
+the chained-argument fixture goes from one retain to zero. Refusals keep the count
+that protects the saved parent, override argument or capture. Mutants borrowing
+across a field write, a reassigned root, a writing override or an Unknown callback,
+and a generated capture cell with its retain removed, each fail under ASan.
+Disabling declaration borrowing fails the positive planner control; changing a
+recorded retain fails the counts gate.
+
+The current-main 321-fixture comparison removes 514 retains and 509 releases, with no
+rises or changes to allocation, free, peak or region counts. Five extra removed
+retains are absent optional string reads in `literal_optional_shapes.a`: their
+NULL values were passed on by `??` without a corresponding temporary release.
+Batch8 removes 15,334,163 pairs on the 77-file compiler corpus, while its best
+release time moves only 2.4 percent. Full evidence, commands and remaining
+accessor/iterator work are in [the borrow-chains report](../internal/native/performance/borrow-chains/REPORT.md).
 
 ## Strings, specifically
 
@@ -893,7 +2507,7 @@ Long non-ASCII strings keep a byte checkpoint every 32 UTF-16 units and a cursor
 
 An indexed string with no supplementary points also keeps a compact UTF-16 view, two bytes per unit, for direct `charCodeAt` and `codePointAt` reads. Lone surrogates are BMP units and can use this view. ASCII strings need neither cache; short strings and stack pieces still walk without an index. The view is made when the long string's index is first built, freed with that index, and invalidated with it before an in-place append. This trades extra cache bytes and one decoding pass for cheaper repeated reads. Measurements and the Node sweeps are recorded in [UTF-16 views](utf16-views.md).
 
-Since a string is immutable, a slice can read its parent's bytes in place, as a Go string does, and hold a reference to the parent (its owner) so they outlive it (runtime/string_share.c, fixture `shared_slices.a`). A slice of a slice holds the first one's owner, so no chain grows. Its caches (units and index) are its own, counted from its own first byte. A short slice of a long string is copied instead: a slice shares only when it is at least 64 bytes and a quarter of its owner, so it never keeps more than four times its own bytes alive.
+Since a string is immutable, a slice can read its parent's bytes in place, as a Go string does, and hold a reference to the parent (its owner) so they outlive it (runtime/string_share.c, fixture `shared_slices.a`). A slice of a slice holds the first one's owner, so no chain grows. Its caches (units and index) are its own, counted from its own first byte. A small slice is copied only when its ultimate owner's header and byte capacity exceed eight times the slice's header and byte length. Spare append capacity counts toward that bound. There is no minimum slice length: short views can share small parents. Constants pin no counted storage, so their slices share freely. A stack piece without a count or literal marker is copied, including a whole slice, because no view can keep its bytes alive. Empty slices use the immortal empty string. ASCII indexing uses 128 immortal one-unit strings, so it allocates and copies nothing; longer slices retain their byte owner. UTF-16 slices carry their already known unit length, and a split surrogate boundary still builds the necessary WTF-8 half.
 
 `text = text + more` on a local nothing else can write while `more` is evaluated (not a global, not captured) is an append (runtime/string_append.c, fixture `string_append.a`). When the local holds the only reference, a count of one, no one can see the string change, so the append writes after its last byte if there's room, and resets what was cached about the old bytes (units and index). Otherwise it copies into a new string with twice the room. A loop of n appends allocates about log n times, not n. A string built that way can hold up to twice its bytes. A shared slice, a constant and a string some slice reads are never written: their room is 0, or their count is more than one.
 

@@ -59,7 +59,20 @@ func (e *emitter) statement(statement ir.Statement) {
 		value := e.value(statement.Value)
 		e.line("adamic_write_line(%s, %s);", stream, value)
 		e.end()
+	case ir.AllocateEnvironment:
+		// Emitted at function entry before captured parameters are initialized.
 	case ir.Declare:
+		if statement.Uninitialized {
+			if e.program.Locals[statement.Local].EnvironmentCell {
+				return
+			}
+			local := e.program.Locals[statement.Local]
+			if local.Captured {
+				e.makeCell(statement.Local, zero(local.Type), true)
+				e.line("%s->ready = false;", e.cellReference(statement.Local))
+			}
+			return
+		}
 		if e.elementBorrows[e.at] {
 			e.borrowElement(statement)
 			return
@@ -137,7 +150,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
 		if statement.Element.IsReference() {
-			value = retained(value)
+			value = e.heldReferenceIn(array, value)
 		}
 		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
 		e.end()
@@ -150,15 +163,19 @@ func (e *emitter) statement(statement ir.Statement) {
 		e.line("\tstatic const char message[] = %s;", cString("TypeError: Cannot set properties of undefined (setting '"+statement.Name+"')"))
 		e.line("\tadamic_panic(message, sizeof message - 1);")
 		e.line("}")
-		e.line("adamic_object_check_write(%s, %s);", object, cString(statement.Name))
+		e.line("adamic_object_check_data_write(%s, %s);", object, cString(statement.Name))
 		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), e.cache())
+		e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
 		if statement.Value.Type().IsReference() {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
-			e.line("%s->reference = %s;", slot, e.kept(value))
-			e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			e.line("%s->reference = %s;", slot, e.keptIn(object, value))
+			if len(e.program.GraphTypes) != 0 {
+				e.dropIn(object, old)
+			} else {
+				e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			}
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
@@ -262,6 +279,7 @@ func (e *emitter) loop(statement ir.Loop) {
 		e.line("if (%s->references) {", fresh)
 		e.line("\tadamic_retain(%s->value.reference);", fresh)
 		e.line("}")
+		e.adoptGraph(fresh, "sizeof *"+fresh, e.program.Locals[local].GraphCell)
 		e.line("adamic_release(%s);", cell)
 		e.line("%s = %s;", cell, fresh)
 	}
@@ -275,9 +293,9 @@ func (e *emitter) loop(statement ir.Loop) {
 	e.line("}")
 }
 
-// forOf emits for (const element of array). The array is held (retained) for the whole loop, as
-// JavaScript's iterator holds it even if the variable naming it is reassigned, and its length is read
-// again before each pass. Over a map, what's held is an iterator, which holds the map and keeps it
+// forOf emits for (const element of array). Unless the element borrow proof keeps the array
+// alive in its variable, the iterator holds its own count even if that variable is reassigned.
+// Its length is read again before each pass. Over a map, an iterator holds the map and keeps it
 // from compacting until every way out of the loop has let go of it.
 func (e *emitter) forOf(statement ir.ForOf) {
 	e.line("{")
@@ -290,10 +308,15 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	overRegex := statement.RegexIterator
 	if overMap {
 		e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", held, iterable)
+	} else if e.elementBorrows[e.at] {
+		// The same proof lends both the element and the array. Neither owns a count here.
+		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, iterable)
 	} else {
-		e.line("%s %s = adamic_retain(%s);", cType(statement.Iterable.Type()), held, iterable)
+		e.line("%s %s = %s;", cType(statement.Iterable.Type()), held, e.kept(iterable))
 	}
-	e.hold(held)
+	if !e.elementBorrows[e.at] {
+		e.hold(held)
+	}
 	e.end()
 	index := e.temporary()
 	size := e.temporary()
@@ -365,7 +388,11 @@ func (e *emitter) forOf(statement ir.ForOf) {
 		if statement.Element.IsReference() {
 			element = fmt.Sprintf("(%s)%s", cType(statement.Element), element)
 		}
-		e.declareLocal(statement.Local, element, false)
+		if e.elementBorrows[e.at] {
+			e.line("%s %s = %s;", cType(statement.Element), e.localName(statement.Local), element)
+		} else {
+			e.declareLocal(statement.Local, element, false)
+		}
 	}
 	for index := range statement.Body {
 		e.statementAt(&statement.Body[index])
