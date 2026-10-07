@@ -1,6 +1,6 @@
 {
   "name": "wrong-global-type-name",
-  "file": "rule.a",
+  "file": "rule.ts",
   "from": "name.kind === 'Identifier' && name.text === 'Function'",
   "to": "name.kind === 'Identifier' && name.text === 'NotFunction'"
 }
