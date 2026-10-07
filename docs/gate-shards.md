@@ -860,3 +860,29 @@ environment was generated from setup's helper. GNU time was extracted from the
 Ubuntu package because this box had no installed time binary. The evidence archive
 contains raw stdout-only JSON logs, separate stderr, summaries, commands, samples,
 verification and both key mutants.
+
+
+## Portable submodule fixtures
+
+The fixture made no chmod changes to its Git object directories and set up no
+alternates. It did inherit every Git environment variable, global/system config
+and init template. Those inputs can redirect object writes away from the writable
+temporary repository; a read-only redirected object store can therefore break a
+commit despite a writable TMPDIR. The failing Mac's environment was unavailable,
+so its exact redirect is not established. On this Linux worker an inherited
+template with an object-directory symlink reproduced fixture setup failure.
+
+Fixture Git children now discard inherited GIT_* variables, disable global and
+system config, templates, hooks and commit signing, and retain bounded process
+group deadlines. Each initialized repository owns its object directory. Production
+Git commands retain their caller environment. The regression supplies hostile
+object/index paths, an alternates path, a template symlink and global template config
+without changing process-wide environment or using Linux paths or GNU flags.
+It checks a private object directory and absence of alternates. The original
+uninitialized-submodule test first proves clean recursive provenance, then removes
+the nested gitfile and requires the name cohere/typescript-go in the refusal.
+
+The race suite passes 45 named tests; twenty repetitions of both focused proofs
+pass with a hostile inherited template. Removing fixture environment isolation is
+caught by the new test. Vet and Darwin arm64 cross-compilation pass. No actual
+Mac was available. Raw proof logs are in evidence/submodule-portability.tar.gz.

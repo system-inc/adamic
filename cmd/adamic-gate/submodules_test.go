@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+
+	"github.com/system-inc/adamic/internal/boundedrun"
 	"os"
 	"path/filepath"
 	"strings"
@@ -57,10 +60,14 @@ func TestShardRefusesStaleRecursiveSubmodules(t *testing.T) {
 func TestUninitializedSubmoduleIsNamed(t *testing.T) {
 	t.Parallel()
 	root, _, nested, _ := submoduleFixture(t)
+	initial, err := inspectSubmodules(root, "HEAD")
+	if err != nil || len(initial) != 2 || requirePinnedSubmodules(initial) != nil {
+		t.Fatalf("initialized fixture: %v %v", initial, err)
+	}
 	if err := os.Rename(filepath.Join(nested, ".git"), filepath.Join(t.TempDir(), "gitfile")); err != nil {
 		t.Fatal(err)
 	}
-	_, err := inspectSubmodules(root, "HEAD")
+	_, err = inspectSubmodules(root, "HEAD")
 	if err == nil || !strings.Contains(err.Error(), "cohere/typescript-go is not initialized") {
 		t.Fatal("uninitialized module was mistaken for the parent repository", err)
 	}
@@ -188,13 +195,71 @@ func TestMergeRejectsDifferentCohereCommits(t *testing.T) {
 	t.Log(strings.Join(m.Errors, "\n"))
 }
 
+// Fixture repositories must not inherit a caller's object store, template,
+// index, hooks or signing configuration. In particular GIT_OBJECT_DIRECTORY
+// can send commit writes to a read-only store even when t.TempDir is writable.
+func fixtureGitOutput(directory string, environment []string, args ...string) (string, error) {
+	cmd, release := boundedrun.Command(boundedrun.Probe, "git", append([]string{
+		"-c", "init.templateDir=", "-c", "core.hooksPath=", "-c", "commit.gpgSign=false", "-C", directory,
+	}, args...)...)
+	defer release()
+	cmd.Env = []string{}
+	for _, entry := range environment {
+		if !strings.HasPrefix(entry, "GIT_") {
+			cmd.Env = append(cmd.Env, entry)
+		}
+	}
+	cmd.Env = append(cmd.Env, "GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL="+os.DevNull, "GIT_TERMINAL_PROMPT=0")
+	b, err := cmd.CombinedOutput()
+	if err != nil {
+		return "", fmt.Errorf("git -C %s %v: %w\n%s", directory, args, err, b)
+	}
+	return strings.TrimSpace(string(b)), nil
+}
+
 func gitFixture(t *testing.T, directory string, args ...string) string {
 	t.Helper()
-	value, err := output("git", append([]string{"-C", directory}, args...)...)
+	value, err := fixtureGitOutput(directory, os.Environ(), args...)
 	if err != nil {
 		t.Fatal(err)
 	}
 	return value
+}
+
+func TestGitFixtureOwnsItsObjectDirectory(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	blocked := filepath.Join(t.TempDir(), "not-an-object-directory")
+	if err := os.WriteFile(blocked, []byte("outside fixture\n"), 0444); err != nil {
+		t.Fatal(err)
+	}
+	template := t.TempDir()
+	if err := os.Symlink(blocked, filepath.Join(template, "objects")); err != nil {
+		t.Fatal(err)
+	}
+	config := filepath.Join(t.TempDir(), "gitconfig")
+	if err := os.WriteFile(config, []byte("[init]\n\ttemplateDir = "+filepath.ToSlash(template)+"\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	environment := append(os.Environ(), "GIT_OBJECT_DIRECTORY="+blocked,
+		"GIT_ALTERNATE_OBJECT_DIRECTORIES="+blocked, "GIT_TEMPLATE_DIR="+template,
+		"GIT_CONFIG_GLOBAL="+config, "GIT_INDEX_FILE="+blocked)
+	for _, args := range [][]string{
+		{"init", "-q"}, {"config", "user.name", "Gate fixture"},
+		{"config", "user.email", "gate@example.invalid"},
+		{"commit", "--allow-empty", "-qm", "Isolated fixture"},
+	} {
+		if _, err := fixtureGitOutput(root, environment, args...); err != nil {
+			t.Fatal(err)
+		}
+	}
+	objects, err := os.Lstat(filepath.Join(root, ".git", "objects"))
+	if err != nil || !objects.IsDir() {
+		t.Fatalf("object store is not a private directory: %v %v", objects, err)
+	}
+	if _, err := os.Stat(filepath.Join(root, ".git", "objects", "info", "alternates")); !os.IsNotExist(err) {
+		t.Fatalf("fixture unexpectedly uses alternates: %v", err)
+	}
 }
 
 func oldNestedPin(t *testing.T, cohere, commit string) string {
