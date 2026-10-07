@@ -1,0 +1,19 @@
+Built ordered CFG fork snapshots with fresh mutable result storage and readonly frame-stack input.
+Claim 1c6b3b003 was pushed before code; branch based on current main c01907a70; pushed delivery SHA accompanies report.
+verify_snapshot.py PASS: 84 actual Go calls and 31 alias observations, 1,505 equal bytes on source Node, emitted JavaScript and sanitized native.
+Mutants caught: invert fork bit, reverse frame order, reuse snapshot buffer. All compile and finish cleanly; reused-buffer pointwise comparison stays green and only alias comparison catches sharing.
+Not covered: full CFG or rule findings/fixes integration, arbitrary frame subclasses or unbounded stacks; four dependency entries removed, zero final blockers.
+
+Pinned actual Go snapshotForks supplies expected results. Temporary overlays add instrumentation around its original implementation and add owned probes, leaving cohere and the shared lint harness untouched. All original Go consumer suites pass without skips. Original call counts are array-callback-return 3, consistent-return 2, no-unreachable-loop 0 and react-hooks/rules-of-hooks 1. The nested-try/finally probes through those same actual Go rules record 2, 4, 8 and 2 calls respectively. The zero original-suite count is not claimed as coverage. Its added consuming-rule probe executes the helper and supplies eight real observations. Probe diagnostics are logged for transparency, not asserted as Adamic rule results.
+
+The bounded Go controls enumerate every boolean frame vector of lengths zero through four. Each makes two calls (62 total) and records 31 retained-snapshot alias observations. After two snapshots, the caller flips a frame and mutates the first snapshot, or appends to its empty snapshot. The second snapshot must retain its original values and length. Both empty and nonempty storage lifetimes are tested.
+
+Source runners replay actual observed states with ForkFrame objects, preserving order. Frames are nonnil private try-stack entries in Go and nominal objects in this adapter. The helper neither walks nodes nor infers CFG state. It returns a fresh array of booleans and leaves frame values untouched. Frame changes after the call and result mutation cannot change a different retained snapshot. JavaScript runs use oracle/node.mjs only to provide the existing runtime; their code is compiler-emitted. Native uses the owned existing native.Build sanitizer adapter.
+
+Run: python3 stage1/cohere/lint/helpers/from_wave1_02/forks/verify_snapshot.py > /tmp/snapshot-tests.log 2>&1. Logs in evidence include every original suite and every live probe separately, controls, coverage JSON and snapshot-verification.log. No full repository gate is claimed. Native compilation and runtime success are prerequisites for mutant credit.
+
+The reused-buffer mutant clears and returns one global array for every call. All three pointwise comparisons still match 864 bytes; retaining snapshots exposes the alias and all three alias comparisons disagree with the 641 Go bytes. This shows the storage-lifetime oracle is necessary, not merely a repetition of value checks. Bit inversion and reverse-order mutants disagree on ordinary state output after clean builds and executions.
+
+There is no Go or JS regex in this helper. No handwritten matcher, kind-string comparison or finding-position conversion is introduced. Existing rule and shared harness files are unchanged. Setup on this current-main base passed: Go/clang/Node/submodules each 0s; build cache warm 100s; total 100s; nproc 5, cpu.max 400000 100000, 17.6 GB. Environment /workspace/adamic-tools/env.sh.
+
+Both previous branches were refreshed before this claim: existing helpers c1e716a73 passed all six mutants, and rules 702db4c9e is parked with preserved-main oracle PASS 30.010s and named missing directory registration witness FAIL 2.550s. No shared edits or main/area push. The harness commit has not been named; landing of parked rules resumes when it is.

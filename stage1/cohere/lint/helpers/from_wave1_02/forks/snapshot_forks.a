@@ -1,0 +1,16 @@
+import { panic } from 'adamic';
+
+export class ForkFrame {
+    thrownForked: boolean;
+    constructor(thrownForked: boolean) { this.thrownForked = thrownForked; }
+}
+
+// The caller supplies the already ordered try-frame stack. No graph walk occurs.
+export function snapshotForks(frames: readonly ForkFrame[]): boolean[] {
+    const snapshot: boolean[] = [];
+    for (let index = 0; index < frames.length; index++) {
+        const frame = frames[index] ?? panic('missing fork frame');
+        snapshot.push(frame.thrownForked);
+    }
+    return snapshot;
+}

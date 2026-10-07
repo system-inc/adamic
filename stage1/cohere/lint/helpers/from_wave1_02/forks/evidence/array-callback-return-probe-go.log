@@ -1,0 +1,7 @@
+=== RUN   TestWave02SnapshotArrayCallbackReturn
+WAVE02_SNAPSHOT:0|0|0
+WAVE02_SNAPSHOT:||
+    wave02_snapshot_probes_test.go:25: actual consuming rule diagnostics: []
+--- PASS: TestWave02SnapshotArrayCallbackReturn (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.007s

@@ -1,0 +1,34 @@
+package core
+
+import (
+	"github.com/system-inc/cohere/internal/lint/testing"
+	"testing"
+)
+
+const wave02ForkSource = `
+const mapped = items.map(function(value) {
+ try { try { return read(value); } catch(error) { return recover(error); } finally { cleanup(); } }
+ finally { finish(); }
+});
+function f(value) {
+ try { try { if(value) return read(); return; } finally { cleanup(); } }
+ finally { finish(); }
+}
+function loops() {
+ while(condition) { try { try { if(flag) break; action(); } finally { cleanup(); } } finally { finish(); } }
+}
+function Component() { try { try { useHook(); } finally { cleanup(); } } finally { finish(); } return null; }
+`
+
+func TestWave02SnapshotArrayCallbackReturn(t *testing.T) {
+	result := rule_testing.Run(t, ArrayCallbackReturn, "fork-probe.ts", wave02ForkSource)
+	t.Logf("actual consuming rule diagnostics: %v", result.MessageIds())
+}
+func TestWave02SnapshotConsistentReturn(t *testing.T) {
+	result := rule_testing.Run(t, ConsistentReturn, "fork-probe.ts", wave02ForkSource)
+	t.Logf("actual consuming rule diagnostics: %v", result.MessageIds())
+}
+func TestWave02SnapshotNoUnreachableLoop(t *testing.T) {
+	result := rule_testing.Run(t, NoUnreachableLoop, "fork-probe.ts", wave02ForkSource)
+	t.Logf("actual consuming rule diagnostics: %v", result.MessageIds())
+}

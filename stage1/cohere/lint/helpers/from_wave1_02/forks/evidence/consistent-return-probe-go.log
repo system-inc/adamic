@@ -1,0 +1,9 @@
+=== RUN   TestWave02SnapshotConsistentReturn
+WAVE02_SNAPSHOT:0|0|0
+WAVE02_SNAPSHOT:||
+WAVE02_SNAPSHOT:0|0|0
+WAVE02_SNAPSHOT:||
+    wave02_snapshot_probes_test.go:29: actual consuming rule diagnostics: [missingReturnValue]
+--- PASS: TestWave02SnapshotConsistentReturn (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.006s

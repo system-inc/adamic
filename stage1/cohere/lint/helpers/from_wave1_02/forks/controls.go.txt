@@ -1,0 +1,27 @@
+package control_flow_graph
+
+import (
+	"fmt"
+	"testing"
+)
+
+func TestWave02SnapshotControls(t *testing.T) {
+	for length := 0; length <= 4; length++ {
+		for mask := 0; mask < 1<<length; mask++ {
+			builder := &Builder[int]{}
+			for i := 0; i < length; i++ {
+				builder.tryStack = append(builder.tryStack, &tryFrame[int]{thrownForked: mask&(1<<i) != 0})
+			}
+			seed := wave02FrameBits(builder.tryStack)
+			first := builder.snapshotForks()
+			second := builder.snapshotForks()
+			if length > 0 {
+				builder.tryStack[0].thrownForked = !builder.tryStack[0].thrownForked
+				first[0] = !first[0]
+			} else {
+				first = append(first, true)
+			}
+			fmt.Printf("WAVE02_SNAPSHOT_ALIAS:%s|%s|%s|%s|%d|%d\n", seed, wave02BoolBits(first), wave02BoolBits(second), wave02FrameBits(builder.tryStack), len(first), len(second))
+		}
+	}
+}

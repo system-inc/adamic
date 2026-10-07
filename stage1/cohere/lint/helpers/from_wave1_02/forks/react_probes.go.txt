@@ -1,0 +1,12 @@
+package react
+
+import (
+	"github.com/system-inc/cohere/internal/lint/testing"
+	"testing"
+)
+
+func TestWave02SnapshotRulesOfHooks(t *testing.T) {
+	source := `function Component() { try { try { useHook(); } finally { cleanup(); } } finally { finish(); } return null; }`
+	result := rule_testing.Run(t, RulesOfHooks, "fork-probe.ts", source)
+	t.Logf("actual consuming rule diagnostics: %v", result.MessageIds())
+}

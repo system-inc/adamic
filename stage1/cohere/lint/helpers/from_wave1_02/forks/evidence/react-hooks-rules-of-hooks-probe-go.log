@@ -1,0 +1,7 @@
+=== RUN   TestWave02SnapshotRulesOfHooks
+WAVE02_SNAPSHOT:0|0|0
+WAVE02_SNAPSHOT:||
+    wave02_snapshot_probes_test.go:11: actual consuming rule diagnostics: [rulesOfHooksConditional]
+--- PASS: TestWave02SnapshotRulesOfHooks (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/react	0.005s
