@@ -100,3 +100,8 @@ three, each with compiler 0 and repository 0, are:
 Main is e011f8f60899586d6373a5ccb07335ad82cfbf3c; bridge is
 5afbdb83da2ed7ad9815657cd3f6ececd5294bf6. Whole stage1/cohere searches found
 only inventory/count references on those heads. This claim is pushed before code.
+
+Sixth-set status: blocked before native implementation by unavailable native
+React HIR lowering, SSA, capture mapping and graph analyses. These names remain
+claimed, not ported. See WAVE16_SIXTH_REPORT.md for exact dependencies and the
+production Go reference test results. No seventh set is claimed.

@@ -1,0 +1,526 @@
+=== RUN   TestSetStateInEffectFires
+=== PAUSE TestSetStateInEffectFires
+=== RUN   TestSetStateInEffectStaysSilent
+=== PAUSE TestSetStateInEffectStaysSilent
+=== RUN   TestSetStateInEffectPointsAtTheSetterCall
+=== PAUSE TestSetStateInEffectPointsAtTheSetterCall
+=== RUN   TestSetStateInEffectMessage
+=== PAUSE TestSetStateInEffectMessage
+=== RUN   TestSetStateInEffectRequiresTheTypedHarness
+=== PAUSE TestSetStateInEffectRequiresTheTypedHarness
+=== RUN   TestSetStateInEffectSpreadArgument
+=== PAUSE TestSetStateInEffectSpreadArgument
+=== RUN   TestSetStateInEffectDescendsIntoNestedFunctions
+=== PAUSE TestSetStateInEffectDescendsIntoNestedFunctions
+=== RUN   TestSetStateInEffectDeclinesACallbackClosingOverNoSetter
+=== PAUSE TestSetStateInEffectDeclinesACallbackClosingOverNoSetter
+=== RUN   TestSetStateInEffectSeesThroughManualMemoization
+=== PAUSE TestSetStateInEffectSeesThroughManualMemoization
+=== RUN   TestSetStateInEffectReachesThroughAMemoizedCallbackThatReturnsAFunction
+=== PAUSE TestSetStateInEffectReachesThroughAMemoizedCallbackThatReturnsAFunction
+=== RUN   TestSetStateInEffectDeclinesMemoizationItDoesNotReach
+=== PAUSE TestSetStateInEffectDeclinesMemoizationItDoesNotReach
+=== RUN   TestSetStateInEffectGatesTheSecondLoweringWithoutLosingFindings
+=== PAUSE TestSetStateInEffectGatesTheSecondLoweringWithoutLosingFindings
+=== RUN   TestSetStateInEffectRenamedMemoImportIsAKnownDivergence
+=== PAUSE TestSetStateInEffectRenamedMemoImportIsAKnownDivergence
+=== RUN   TestSetStateInEffectJudgesOnlyWhatReactCompiles
+=== PAUSE TestSetStateInEffectJudgesOnlyWhatReactCompiles
+=== RUN   TestSetStateInRenderFires
+=== PAUSE TestSetStateInRenderFires
+=== RUN   TestSetStateInRenderStaysSilentOnFixturesTheShippedRuleDoesNotReport
+=== PAUSE TestSetStateInRenderStaysSilentOnFixturesTheShippedRuleDoesNotReport
+=== RUN   TestSetStateInRenderReportsWhereTheCheckerBeatsReactsInference
+=== PAUSE TestSetStateInRenderReportsWhereTheCheckerBeatsReactsInference
+=== RUN   TestSetStateInRenderStaysSilentOnTheCorpusAsWritten
+=== PAUSE TestSetStateInRenderStaysSilentOnTheCorpusAsWritten
+=== RUN   TestSetStateInRenderStaysSilent
+=== PAUSE TestSetStateInRenderStaysSilent
+=== RUN   TestSetStateInRenderFiresInsideAHook
+=== PAUSE TestSetStateInRenderFiresInsideAHook
+=== RUN   TestSetStateInRenderFollowsAnAliasChain
+=== PAUSE TestSetStateInRenderFollowsAnAliasChain
+=== RUN   TestSetStateInRenderFollowsACustomHook
+=== PAUSE TestSetStateInRenderFollowsACustomHook
+=== RUN   TestSetStateInRenderReportsInsideUseMemo
+=== PAUSE TestSetStateInRenderReportsInsideUseMemo
+=== RUN   TestSetStateInRenderBailsOutPerFunctionRatherThanPerFile
+=== PAUSE TestSetStateInRenderBailsOutPerFunctionRatherThanPerFile
+=== RUN   TestSetStateInRenderPointsAtTheCallee
+=== PAUSE TestSetStateInRenderPointsAtTheCallee
+=== RUN   TestSetStateInRenderMessagesSayWhy
+=== PAUSE TestSetStateInRenderMessagesSayWhy
+=== RUN   TestSetStateInRenderRequiresTheTypedHarness
+=== PAUSE TestSetStateInRenderRequiresTheTypedHarness
+=== RUN   TestSetStateInRenderIsRegistered
+=== PAUSE TestSetStateInRenderIsRegistered
+=== RUN   TestSetStateInRenderFindsATransitiveSetterCapturedAfterAnother
+=== PAUSE TestSetStateInRenderFindsATransitiveSetterCapturedAfterAnother
+=== RUN   TestSetStateInRenderFindsADirectlyCapturedSetterAfterAnother
+=== PAUSE TestSetStateInRenderFindsADirectlyCapturedSetterAfterAnother
+=== RUN   TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo
+=== PAUSE TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo
+=== RUN   TestStaticComponentsFires
+=== PAUSE TestStaticComponentsFires
+=== RUN   TestStaticComponentsTreatsTheOutermostComponentAsTheUnit
+=== PAUSE TestStaticComponentsTreatsTheOutermostComponentAsTheUnit
+=== RUN   TestStaticComponentsSpanSkipsTriviaBeforeTheTag
+=== PAUSE TestStaticComponentsSpanSkipsTriviaBeforeTheTag
+=== RUN   TestStaticComponentsStaysSilent
+=== PAUSE TestStaticComponentsStaysSilent
+=== RUN   TestStaticComponentsSpan
+=== PAUSE TestStaticComponentsSpan
+=== RUN   TestStaticComponentsMessageNamesCreationSite
+=== PAUSE TestStaticComponentsMessageNamesCreationSite
+=== RUN   TestStaticComponentsRequiresTypeChecker
+=== PAUSE TestStaticComponentsRequiresTypeChecker
+=== CONT  TestSetStateInEffectFires
+=== RUN   TestSetStateInEffectFires/upstreamDirectSetStateInEffect
+=== PAUSE TestSetStateInEffectFires/upstreamDirectSetStateInEffect
+=== RUN   TestSetStateInEffectFires/upstreamTransitiveThroughTwoLocals
+=== PAUSE TestSetStateInEffectFires/upstreamTransitiveThroughTwoLocals
+=== RUN   TestSetStateInEffectFires/upstreamNamespaceImport
+=== PAUSE TestSetStateInEffectFires/upstreamNamespaceImport
+=== RUN   TestSetStateInEffectFires/upstreamViaUseEffectEvent
+=== PAUSE TestSetStateInEffectFires/upstreamViaUseEffectEvent
+=== RUN   TestSetStateInEffectFires/useLayoutEffectReports
+=== PAUSE TestSetStateInEffectFires/useLayoutEffectReports
+=== CONT  TestSetStateInRenderFiresInsideAHook
+=== RUN   TestSetStateInEffectFires/useInsertionEffectReports
+=== CONT  TestSetStateInEffectReachesThroughAMemoizedCallbackThatReturnsAFunction
+=== PAUSE TestSetStateInEffectFires/useInsertionEffectReports
+=== CONT  TestSetStateInEffectSeesThroughManualMemoization
+=== RUN   TestSetStateInEffectFires/renamedImportStillReports
+=== PAUSE TestSetStateInEffectFires/renamedImportStillReports
+=== CONT  TestSetStateInEffectDeclinesMemoizationItDoesNotReach
+=== RUN   TestSetStateInEffectSeesThroughManualMemoization/useCallbackWrappingASetter
+=== PAUSE TestSetStateInEffectSeesThroughManualMemoization/useCallbackWrappingASetter
+=== RUN   TestSetStateInEffectFires/aliasedSetterReports
+=== PAUSE TestSetStateInEffectFires/aliasedSetterReports
+=== RUN   TestSetStateInEffectFires/twoEffectsReportTwice
+=== PAUSE TestSetStateInEffectFires/twoEffectsReportTwice
+=== RUN   TestSetStateInEffectSeesThroughManualMemoization/asyncAfterAwait
+=== RUN   TestSetStateInEffectFires/effectBodyIsAHoistedFunction
+=== PAUSE TestSetStateInEffectFires/effectBodyIsAHoistedFunction
+=== RUN   TestSetStateInEffectFires/setStateBehindABranchReports
+=== PAUSE TestSetStateInEffectFires/setStateBehindABranchReports
+=== PAUSE TestSetStateInEffectSeesThroughManualMemoization/asyncAfterAwait
+=== RUN   TestSetStateInEffectSeesThroughManualMemoization/asyncBeforeAwait
+=== RUN   TestSetStateInEffectFires/setterLaunderedThroughACustomHookIsAKnownDivergence
+=== PAUSE TestSetStateInEffectSeesThroughManualMemoization/asyncBeforeAwait
+=== PAUSE TestSetStateInEffectFires/setterLaunderedThroughACustomHookIsAKnownDivergence
+=== CONT  TestSetStateInEffectDeclinesACallbackClosingOverNoSetter
+=== CONT  TestSetStateInEffectDescendsIntoNestedFunctions
+--- PASS: TestSetStateInEffectDeclinesACallbackClosingOverNoSetter (0.02s)
+=== CONT  TestSetStateInEffectSpreadArgument
+--- PASS: TestSetStateInRenderFiresInsideAHook (0.02s)
+=== CONT  TestSetStateInEffectRequiresTheTypedHarness
+--- PASS: TestSetStateInEffectRequiresTheTypedHarness (0.00s)
+=== CONT  TestSetStateInEffectMessage
+--- PASS: TestSetStateInEffectDescendsIntoNestedFunctions (0.02s)
+=== CONT  TestSetStateInEffectPointsAtTheSetterCall
+=== RUN   TestSetStateInEffectPointsAtTheSetterCall/directCall
+=== PAUSE TestSetStateInEffectPointsAtTheSetterCall/directCall
+=== RUN   TestSetStateInEffectPointsAtTheSetterCall/aliasedCall
+=== PAUSE TestSetStateInEffectPointsAtTheSetterCall/aliasedCall
+=== RUN   TestSetStateInEffectPointsAtTheSetterCall/transitiveCall
+=== PAUSE TestSetStateInEffectPointsAtTheSetterCall/transitiveCall
+=== RUN   TestSetStateInEffectPointsAtTheSetterCall/callUnderALineComment
+=== PAUSE TestSetStateInEffectPointsAtTheSetterCall/callUnderALineComment
+=== RUN   TestSetStateInEffectPointsAtTheSetterCall/callAfterABlockComment
+=== PAUSE TestSetStateInEffectPointsAtTheSetterCall/callAfterABlockComment
+=== CONT  TestSetStateInEffectStaysSilent
+=== RUN   TestSetStateInEffectStaysSilent/refControlledBranchIsAKnownDivergence
+=== PAUSE TestSetStateInEffectStaysSilent/refControlledBranchIsAKnownDivergence
+=== RUN   TestSetStateInEffectStaysSilent/upstreamListenerSetTimeout
+=== PAUSE TestSetStateInEffectStaysSilent/upstreamListenerSetTimeout
+=== RUN   TestSetStateInEffectStaysSilent/upstreamListenerTransitive
+=== PAUSE TestSetStateInEffectStaysSilent/upstreamListenerTransitive
+=== RUN   TestSetStateInEffectStaysSilent/upstreamRefDerived
+=== PAUSE TestSetStateInEffectStaysSilent/upstreamRefDerived
+=== RUN   TestSetStateInEffectStaysSilent/upstreamRefArithmetic
+=== PAUSE TestSetStateInEffectStaysSilent/upstreamRefArithmetic
+=== RUN   TestSetStateInEffectStaysSilent/upstreamRefArrayIndex
+=== PAUSE TestSetStateInEffectStaysSilent/upstreamRefArrayIndex
+=== RUN   TestSetStateInEffectStaysSilent/upstreamRefFunctionCall
+=== PAUSE TestSetStateInEffectStaysSilent/upstreamRefFunctionCall
+=== RUN   TestSetStateInEffectStaysSilent/upstreamLayoutEffectFromRef
+=== PAUSE TestSetStateInEffectStaysSilent/upstreamLayoutEffectFromRef
+=== RUN   TestSetStateInEffectStaysSilent/nestedFunctionInsideEffectIsNotFollowed
+=== PAUSE TestSetStateInEffectStaysSilent/nestedFunctionInsideEffectIsNotFollowed
+=== RUN   TestSetStateInEffectStaysSilent/setterInCleanupIsClean
+=== PAUSE TestSetStateInEffectStaysSilent/setterInCleanupIsClean
+=== RUN   TestSetStateInEffectStaysSilent/dispatchFromUseReducerIsNotASetter
+=== PAUSE TestSetStateInEffectStaysSilent/dispatchFromUseReducerIsNotASetter
+=== RUN   TestSetStateInEffectStaysSilent/customHookNamedLikeAnEffectIsNotOne
+=== PAUSE TestSetStateInEffectStaysSilent/customHookNamedLikeAnEffectIsNotOne
+=== RUN   TestSetStateInEffectStaysSilent/setterAsSecondArgumentIsClean
+=== PAUSE TestSetStateInEffectStaysSilent/setterAsSecondArgumentIsClean
+=== RUN   TestSetStateInEffectStaysSilent/effectWithNoArgumentsIsClean
+=== PAUSE TestSetStateInEffectStaysSilent/effectWithNoArgumentsIsClean
+=== CONT  TestSetStateInRenderStaysSilent
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_called_from_an_event_handler
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_called_from_an_event_handler
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_called_inside_an_if
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_called_inside_an_if
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_called_after_an_early_return
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_called_after_an_early_return
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_called_inside_a_try
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_called_inside_a_try
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_called_inside_a_loop_body
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_called_inside_a_loop_body
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_called_with_an_optional_call
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_called_with_an_optional_call
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_reached_through_a_tuple_index
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_reached_through_a_tuple_index
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_reached_through_an_object_property
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_reached_through_an_object_property
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_returned_rather_than_called
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_returned_rather_than_called
+=== RUN   TestSetStateInRenderStaysSilent/a_reducer_dispatch_called_during_render
+=== PAUSE TestSetStateInRenderStaysSilent/a_reducer_dispatch_called_during_render
+=== RUN   TestSetStateInRenderStaysSilent/a_plain_one-argument_function_called_during_render
+=== PAUSE TestSetStateInRenderStaysSilent/a_plain_one-argument_function_called_during_render
+=== RUN   TestSetStateInRenderStaysSilent/a_function_named_like_a_setter_that_is_not_one
+=== PAUSE TestSetStateInRenderStaysSilent/a_function_named_like_a_setter_that_is_not_one
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_called_in_a_lowercase_function
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_called_in_a_lowercase_function
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_called_in_a_capitalized_function_taking_three_parameters
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_called_in_a_capitalized_function_taking_three_parameters
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_called_in_a_component_whose_second_parameter_is_not_a_ref
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_called_in_a_component_whose_second_parameter_is_not_a_ref
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_called_in_a_component_with_a_rest_parameter
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_called_in_a_component_with_a_rest_parameter
+=== RUN   TestSetStateInRenderStaysSilent/a_setter_called_inside_a_useCallback_callback
+=== PAUSE TestSetStateInRenderStaysSilent/a_setter_called_inside_a_useCallback_callback
+=== CONT  TestSetStateInRenderFindsADirectlyCapturedSetterAfterAnother
+--- PASS: TestSetStateInEffectSpreadArgument (0.01s)
+=== CONT  TestSetStateInRenderStaysSilentOnTheCorpusAsWritten
+--- PASS: TestSetStateInEffectMessage (0.00s)
+=== CONT  TestStaticComponentsRequiresTypeChecker
+=== RUN   TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/unconditional_set_state
+=== PAUSE TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/unconditional_set_state
+--- PASS: TestStaticComponentsRequiresTypeChecker (0.00s)
+=== CONT  TestSetStateInRenderReportsWhereTheCheckerBeatsReactsInference
+=== RUN   TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/unbound_state
+=== PAUSE TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/unbound_state
+=== RUN   TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/after_loop
+=== PAUSE TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/after_loop
+=== RUN   TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/after_loop_break
+=== PAUSE TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/after_loop_break
+=== RUN   TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/loop_throw
+=== PAUSE TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/loop_throw
+=== RUN   TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/lambda
+=== PAUSE TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/lambda
+=== RUN   TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/nested_function_expressions
+=== PAUSE TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/nested_function_expressions
+=== RUN   TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/hook_return
+=== PAUSE TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/hook_return
+=== RUN   TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/prop_in_render
+=== PAUSE TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/prop_in_render
+=== CONT  TestStaticComponentsMessageNamesCreationSite
+--- PASS: TestStaticComponentsMessageNamesCreationSite (0.00s)
+=== CONT  TestSetStateInRenderStaysSilentOnFixturesTheShippedRuleDoesNotReport
+--- PASS: TestSetStateInRenderFindsADirectlyCapturedSetterAfterAnother (0.01s)
+=== CONT  TestSetStateInRenderFires
+=== RUN   TestSetStateInRenderFires/a_setter_and_its_alias,_both_called_unconditionally
+=== PAUSE TestSetStateInRenderFires/a_setter_and_its_alias,_both_called_unconditionally
+=== RUN   TestSetStateInRenderFires/a_setter_destructured_after_a_hole
+=== PAUSE TestSetStateInRenderFires/a_setter_destructured_after_a_hole
+=== RUN   TestSetStateInRenderFires/a_setter_called_unconditionally,_with_the_import_already_present
+=== PAUSE TestSetStateInRenderFires/a_setter_called_unconditionally,_with_the_import_already_present
+=== RUN   TestSetStateInRenderFires/a_setter_after_a_loop_that_always_terminates
+=== PAUSE TestSetStateInRenderFires/a_setter_after_a_loop_that_always_terminates
+=== RUN   TestSetStateInRenderFires/a_setter_after_a_loop_whose_arms_break_and_continue
+=== PAUSE TestSetStateInRenderFires/a_setter_after_a_loop_whose_arms_break_and_continue
+=== RUN   TestSetStateInRenderFires/a_setter_after_a_loop_whose_other_arm_throws
+=== PAUSE TestSetStateInRenderFires/a_setter_after_a_loop_whose_other_arm_throws
+=== RUN   TestSetStateInRenderFires/a_setter_called_through_a_lambda_that_is_then_called
+=== PAUSE TestSetStateInRenderFires/a_setter_called_through_a_lambda_that_is_then_called
+=== RUN   TestSetStateInRenderFires/a_setter_called_through_three_nested_function_expressions
+=== PAUSE TestSetStateInRenderFires/a_setter_called_through_three_nested_function_expressions
+=== CONT  TestSetStateInEffectJudgesOnlyWhatReactCompiles
+--- PASS: TestSetStateInEffectReachesThroughAMemoizedCallbackThatReturnsAFunction (0.03s)
+=== CONT  TestSetStateInEffectRenamedMemoImportIsAKnownDivergence
+--- PASS: TestSetStateInEffectDeclinesMemoizationItDoesNotReach (0.03s)
+=== CONT  TestStaticComponentsSpan
+--- PASS: TestStaticComponentsSpan (0.00s)
+=== CONT  TestStaticComponentsStaysSilent
+=== RUN   TestStaticComponentsStaysSilent/testerPass
+=== PAUSE TestStaticComponentsStaysSilent/testerPass
+=== RUN   TestStaticComponentsStaysSilent/renderCallbackInsideComponent
+=== PAUSE TestStaticComponentsStaysSilent/renderCallbackInsideComponent
+=== RUN   TestStaticComponentsStaysSilent/capitalizedButNotAComponent
+=== PAUSE TestStaticComponentsStaysSilent/capitalizedButNotAComponent
+=== RUN   TestStaticComponentsStaysSilent/lowercaseFunction
+=== PAUSE TestStaticComponentsStaysSilent/lowercaseFunction
+=== RUN   TestStaticComponentsStaysSilent/moduleScopeAlias
+=== PAUSE TestStaticComponentsStaysSilent/moduleScopeAlias
+=== RUN   TestStaticComponentsStaysSilent/memberTag
+=== PAUSE TestStaticComponentsStaysSilent/memberTag
+=== RUN   TestStaticComponentsStaysSilent/memberTagDeep
+=== PAUSE TestStaticComponentsStaysSilent/memberTagDeep
+=== RUN   TestStaticComponentsStaysSilent/loopBackEdge
+=== PAUSE TestStaticComponentsStaysSilent/loopBackEdge
+=== RUN   TestStaticComponentsStaysSilent/tagInsideNonUnitNestedFunction
+=== PAUSE TestStaticComponentsStaysSilent/tagInsideNonUnitNestedFunction
+=== CONT  TestStaticComponentsSpanSkipsTriviaBeforeTheTag
+--- PASS: TestSetStateInRenderStaysSilentOnFixturesTheShippedRuleDoesNotReport (0.00s)
+=== CONT  TestStaticComponentsTreatsTheOutermostComponentAsTheUnit
+--- PASS: TestSetStateInRenderReportsWhereTheCheckerBeatsReactsInference (0.01s)
+=== CONT  TestStaticComponentsFires
+=== RUN   TestStaticComponentsFires/directCall
+=== PAUSE TestStaticComponentsFires/directCall
+=== RUN   TestStaticComponentsFires/newExpression
+=== PAUSE TestStaticComponentsFires/newExpression
+=== RUN   TestStaticComponentsFires/methodCall
+=== PAUSE TestStaticComponentsFires/methodCall
+=== RUN   TestStaticComponentsFires/functionDeclaration
+=== PAUSE TestStaticComponentsFires/functionDeclaration
+=== RUN   TestStaticComponentsFires/arrowDestructured
+=== PAUSE TestStaticComponentsFires/arrowDestructured
+=== RUN   TestStaticComponentsFires/conditionalAssignment
+=== PAUSE TestStaticComponentsFires/conditionalAssignment
+=== RUN   TestStaticComponentsFires/testerFail
+=== PAUSE TestStaticComponentsFires/testerFail
+=== RUN   TestStaticComponentsFires/tagInsideFragment
+=== PAUSE TestStaticComponentsFires/tagInsideFragment
+=== RUN   TestStaticComponentsFires/tagNestedInElement
+=== PAUSE TestStaticComponentsFires/tagNestedInElement
+=== RUN   TestStaticComponentsFires/componentCreatedInsideNestedFunction
+--- PASS: TestSetStateInEffectRenamedMemoImportIsAKnownDivergence (0.00s)
+=== PAUSE TestStaticComponentsFires/componentCreatedInsideNestedFunction
+=== CONT  TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo
+=== RUN   TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/declared_and_called_inside_a_useMemo_callback
+=== PAUSE TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/declared_and_called_inside_a_useMemo_callback
+=== RUN   TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/conditional_inside_a_useMemo_callback_still_reports
+=== PAUSE TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/conditional_inside_a_useMemo_callback_still_reports
+=== RUN   TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/the_same_body_inside_a_useCallback_is_clean
+=== PAUSE TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/the_same_body_inside_a_useCallback_is_clean
+=== CONT  TestSetStateInEffectGatesTheSecondLoweringWithoutLosingFindings
+=== RUN   TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/a_plain_nested_arrow_declaring_its_own_setter_is_clean
+=== PAUSE TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/a_plain_nested_arrow_declaring_its_own_setter_is_clean
+=== CONT  TestSetStateInRenderPointsAtTheCallee
+--- PASS: TestStaticComponentsSpanSkipsTriviaBeforeTheTag (0.00s)
+=== CONT  TestSetStateInRenderFindsATransitiveSetterCapturedAfterAnother
+--- PASS: TestSetStateInEffectJudgesOnlyWhatReactCompiles (0.01s)
+=== CONT  TestSetStateInRenderIsRegistered
+--- PASS: TestSetStateInRenderIsRegistered (0.00s)
+=== CONT  TestSetStateInRenderMessagesSayWhy
+--- PASS: TestSetStateInRenderMessagesSayWhy (0.00s)
+=== CONT  TestSetStateInRenderReportsInsideUseMemo
+=== RUN   TestSetStateInRenderReportsInsideUseMemo/an_unconditional_call_inside_a_useMemo_callback
+=== PAUSE TestSetStateInRenderReportsInsideUseMemo/an_unconditional_call_inside_a_useMemo_callback
+=== RUN   TestSetStateInRenderReportsInsideUseMemo/a_conditional_call_inside_a_useMemo_callback_still_reports
+=== PAUSE TestSetStateInRenderReportsInsideUseMemo/a_conditional_call_inside_a_useMemo_callback_still_reports
+=== CONT  TestSetStateInRenderBailsOutPerFunctionRatherThanPerFile
+--- PASS: TestStaticComponentsTreatsTheOutermostComponentAsTheUnit (0.00s)
+=== CONT  TestSetStateInRenderFollowsACustomHook
+--- PASS: TestSetStateInRenderPointsAtTheCallee (0.00s)
+=== CONT  TestSetStateInRenderFollowsAnAliasChain
+--- PASS: TestSetStateInRenderFindsATransitiveSetterCapturedAfterAnother (0.00s)
+=== CONT  TestSetStateInRenderRequiresTheTypedHarness
+--- PASS: TestSetStateInRenderRequiresTheTypedHarness (0.00s)
+=== CONT  TestSetStateInEffectSeesThroughManualMemoization/useCallbackWrappingASetter
+--- PASS: TestSetStateInRenderFollowsACustomHook (0.00s)
+=== CONT  TestSetStateInEffectSeesThroughManualMemoization/asyncBeforeAwait
+--- PASS: TestSetStateInRenderBailsOutPerFunctionRatherThanPerFile (0.00s)
+=== CONT  TestSetStateInEffectSeesThroughManualMemoization/asyncAfterAwait
+--- PASS: TestSetStateInRenderFollowsAnAliasChain (0.00s)
+=== CONT  TestSetStateInEffectFires/upstreamDirectSetStateInEffect
+=== CONT  TestSetStateInEffectFires/aliasedSetterReports
+=== CONT  TestSetStateInEffectFires/setStateBehindABranchReports
+=== CONT  TestSetStateInEffectFires/setterLaunderedThroughACustomHookIsAKnownDivergence
+=== CONT  TestSetStateInEffectFires/effectBodyIsAHoistedFunction
+=== CONT  TestSetStateInEffectFires/twoEffectsReportTwice
+=== CONT  TestSetStateInEffectFires/useLayoutEffectReports
+=== CONT  TestSetStateInEffectFires/renamedImportStillReports
+--- PASS: TestSetStateInEffectSeesThroughManualMemoization (0.00s)
+    --- PASS: TestSetStateInEffectSeesThroughManualMemoization/asyncBeforeAwait (0.00s)
+    --- PASS: TestSetStateInEffectSeesThroughManualMemoization/useCallbackWrappingASetter (0.00s)
+    --- PASS: TestSetStateInEffectSeesThroughManualMemoization/asyncAfterAwait (0.01s)
+=== CONT  TestSetStateInEffectFires/useInsertionEffectReports
+=== CONT  TestSetStateInEffectFires/upstreamNamespaceImport
+=== CONT  TestSetStateInEffectFires/upstreamViaUseEffectEvent
+=== CONT  TestSetStateInEffectFires/upstreamTransitiveThroughTwoLocals
+=== CONT  TestSetStateInEffectPointsAtTheSetterCall/directCall
+=== CONT  TestSetStateInEffectStaysSilent/refControlledBranchIsAKnownDivergence
+=== CONT  TestSetStateInEffectPointsAtTheSetterCall/callAfterABlockComment
+--- PASS: TestSetStateInEffectFires (0.00s)
+    --- PASS: TestSetStateInEffectFires/upstreamDirectSetStateInEffect (0.00s)
+    --- PASS: TestSetStateInEffectFires/setStateBehindABranchReports (0.00s)
+    --- PASS: TestSetStateInEffectFires/aliasedSetterReports (0.01s)
+    --- PASS: TestSetStateInEffectFires/setterLaunderedThroughACustomHookIsAKnownDivergence (0.01s)
+    --- PASS: TestSetStateInEffectFires/effectBodyIsAHoistedFunction (0.00s)
+    --- PASS: TestSetStateInEffectFires/twoEffectsReportTwice (0.01s)
+    --- PASS: TestSetStateInEffectFires/renamedImportStillReports (0.00s)
+    --- PASS: TestSetStateInEffectFires/useLayoutEffectReports (0.00s)
+    --- PASS: TestSetStateInEffectFires/useInsertionEffectReports (0.00s)
+    --- PASS: TestSetStateInEffectFires/upstreamNamespaceImport (0.00s)
+    --- PASS: TestSetStateInEffectFires/upstreamViaUseEffectEvent (0.00s)
+    --- PASS: TestSetStateInEffectFires/upstreamTransitiveThroughTwoLocals (0.00s)
+=== CONT  TestSetStateInEffectPointsAtTheSetterCall/callUnderALineComment
+=== CONT  TestSetStateInEffectPointsAtTheSetterCall/transitiveCall
+=== CONT  TestSetStateInEffectPointsAtTheSetterCall/aliasedCall
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_called_from_an_event_handler
+=== CONT  TestSetStateInEffectStaysSilent/effectWithNoArgumentsIsClean
+--- PASS: TestSetStateInEffectGatesTheSecondLoweringWithoutLosingFindings (0.02s)
+=== CONT  TestSetStateInEffectStaysSilent/setterAsSecondArgumentIsClean
+=== CONT  TestSetStateInEffectStaysSilent/customHookNamedLikeAnEffectIsNotOne
+--- PASS: TestSetStateInEffectPointsAtTheSetterCall (0.00s)
+    --- PASS: TestSetStateInEffectPointsAtTheSetterCall/directCall (0.00s)
+    --- PASS: TestSetStateInEffectPointsAtTheSetterCall/callAfterABlockComment (0.00s)
+    --- PASS: TestSetStateInEffectPointsAtTheSetterCall/callUnderALineComment (0.00s)
+    --- PASS: TestSetStateInEffectPointsAtTheSetterCall/aliasedCall (0.00s)
+    --- PASS: TestSetStateInEffectPointsAtTheSetterCall/transitiveCall (0.00s)
+=== CONT  TestSetStateInEffectStaysSilent/dispatchFromUseReducerIsNotASetter
+=== CONT  TestSetStateInEffectStaysSilent/setterInCleanupIsClean
+=== CONT  TestSetStateInEffectStaysSilent/nestedFunctionInsideEffectIsNotFollowed
+=== CONT  TestSetStateInEffectStaysSilent/upstreamLayoutEffectFromRef
+=== CONT  TestSetStateInEffectStaysSilent/upstreamRefFunctionCall
+=== CONT  TestSetStateInEffectStaysSilent/upstreamRefArrayIndex
+=== CONT  TestSetStateInEffectStaysSilent/upstreamRefArithmetic
+=== CONT  TestSetStateInEffectStaysSilent/upstreamRefDerived
+=== CONT  TestSetStateInEffectStaysSilent/upstreamListenerTransitive
+=== CONT  TestSetStateInEffectStaysSilent/upstreamListenerSetTimeout
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_called_inside_a_useCallback_callback
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_called_in_a_component_with_a_rest_parameter
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_called_in_a_component_whose_second_parameter_is_not_a_ref
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_called_in_a_capitalized_function_taking_three_parameters
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_called_in_a_lowercase_function
+=== CONT  TestSetStateInRenderStaysSilent/a_function_named_like_a_setter_that_is_not_one
+=== CONT  TestSetStateInRenderStaysSilent/a_plain_one-argument_function_called_during_render
+--- PASS: TestSetStateInEffectStaysSilent (0.00s)
+    --- PASS: TestSetStateInEffectStaysSilent/refControlledBranchIsAKnownDivergence (0.00s)
+    --- PASS: TestSetStateInEffectStaysSilent/customHookNamedLikeAnEffectIsNotOne (0.00s)
+    --- PASS: TestSetStateInEffectStaysSilent/setterAsSecondArgumentIsClean (0.00s)
+    --- PASS: TestSetStateInEffectStaysSilent/dispatchFromUseReducerIsNotASetter (0.00s)
+    --- PASS: TestSetStateInEffectStaysSilent/setterInCleanupIsClean (0.00s)
+    --- PASS: TestSetStateInEffectStaysSilent/nestedFunctionInsideEffectIsNotFollowed (0.00s)
+    --- PASS: TestSetStateInEffectStaysSilent/effectWithNoArgumentsIsClean (0.01s)
+    --- PASS: TestSetStateInEffectStaysSilent/upstreamLayoutEffectFromRef (0.01s)
+    --- PASS: TestSetStateInEffectStaysSilent/upstreamRefFunctionCall (0.01s)
+    --- PASS: TestSetStateInEffectStaysSilent/upstreamRefArithmetic (0.00s)
+    --- PASS: TestSetStateInEffectStaysSilent/upstreamRefDerived (0.00s)
+    --- PASS: TestSetStateInEffectStaysSilent/upstreamListenerSetTimeout (0.00s)
+    --- PASS: TestSetStateInEffectStaysSilent/upstreamListenerTransitive (0.00s)
+    --- PASS: TestSetStateInEffectStaysSilent/upstreamRefArrayIndex (0.01s)
+=== CONT  TestSetStateInRenderStaysSilent/a_reducer_dispatch_called_during_render
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_returned_rather_than_called
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_reached_through_an_object_property
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_reached_through_a_tuple_index
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_called_inside_a_loop_body
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_called_inside_a_try
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_called_with_an_optional_call
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_called_after_an_early_return
+=== CONT  TestSetStateInRenderStaysSilent/a_setter_called_inside_an_if
+=== CONT  TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/unconditional_set_state
+=== CONT  TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/prop_in_render
+=== CONT  TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/hook_return
+=== CONT  TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/nested_function_expressions
+=== CONT  TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/loop_throw
+=== CONT  TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/after_loop_break
+=== CONT  TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/lambda
+--- PASS: TestSetStateInRenderStaysSilent (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_called_from_an_event_handler (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_called_inside_a_useCallback_callback (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_called_in_a_component_with_a_rest_parameter (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_called_in_a_component_whose_second_parameter_is_not_a_ref (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_function_named_like_a_setter_that_is_not_one (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_called_in_a_lowercase_function (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_called_in_a_capitalized_function_taking_three_parameters (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_plain_one-argument_function_called_during_render (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_returned_rather_than_called (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_reached_through_an_object_property (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_reducer_dispatch_called_during_render (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_reached_through_a_tuple_index (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_called_inside_a_loop_body (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_called_inside_a_try (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_called_with_an_optional_call (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_called_inside_an_if (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilent/a_setter_called_after_an_early_return (0.00s)
+=== CONT  TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/after_loop
+=== CONT  TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/unbound_state
+=== CONT  TestSetStateInRenderFires/a_setter_and_its_alias,_both_called_unconditionally
+=== CONT  TestStaticComponentsStaysSilent/testerPass
+=== CONT  TestSetStateInRenderFires/a_setter_called_through_three_nested_function_expressions
+=== CONT  TestSetStateInRenderFires/a_setter_called_through_a_lambda_that_is_then_called
+=== CONT  TestSetStateInRenderFires/a_setter_after_a_loop_whose_other_arm_throws
+=== CONT  TestSetStateInRenderFires/a_setter_after_a_loop_whose_arms_break_and_continue
+--- PASS: TestSetStateInRenderStaysSilentOnTheCorpusAsWritten (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/unconditional_set_state (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/prop_in_render (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/hook_return (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/nested_function_expressions (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/after_loop_break (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/loop_throw (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/after_loop (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/unbound_state (0.00s)
+    --- PASS: TestSetStateInRenderStaysSilentOnTheCorpusAsWritten/lambda (0.00s)
+=== CONT  TestSetStateInRenderFires/a_setter_after_a_loop_that_always_terminates
+=== CONT  TestSetStateInRenderFires/a_setter_called_unconditionally,_with_the_import_already_present
+=== CONT  TestSetStateInRenderFires/a_setter_destructured_after_a_hole
+=== CONT  TestStaticComponentsStaysSilent/memberTag
+=== CONT  TestStaticComponentsStaysSilent/tagInsideNonUnitNestedFunction
+=== CONT  TestStaticComponentsStaysSilent/loopBackEdge
+=== CONT  TestStaticComponentsStaysSilent/memberTagDeep
+=== CONT  TestStaticComponentsStaysSilent/capitalizedButNotAComponent
+=== CONT  TestStaticComponentsStaysSilent/moduleScopeAlias
+=== CONT  TestStaticComponentsStaysSilent/lowercaseFunction
+--- PASS: TestSetStateInRenderFires (0.00s)
+    --- PASS: TestSetStateInRenderFires/a_setter_and_its_alias,_both_called_unconditionally (0.00s)
+    --- PASS: TestSetStateInRenderFires/a_setter_called_through_three_nested_function_expressions (0.00s)
+    --- PASS: TestSetStateInRenderFires/a_setter_after_a_loop_whose_other_arm_throws (0.00s)
+    --- PASS: TestSetStateInRenderFires/a_setter_after_a_loop_that_always_terminates (0.00s)
+    --- PASS: TestSetStateInRenderFires/a_setter_called_through_a_lambda_that_is_then_called (0.00s)
+    --- PASS: TestSetStateInRenderFires/a_setter_after_a_loop_whose_arms_break_and_continue (0.00s)
+    --- PASS: TestSetStateInRenderFires/a_setter_destructured_after_a_hole (0.00s)
+    --- PASS: TestSetStateInRenderFires/a_setter_called_unconditionally,_with_the_import_already_present (0.00s)
+=== CONT  TestStaticComponentsStaysSilent/renderCallbackInsideComponent
+=== CONT  TestStaticComponentsFires/directCall
+=== CONT  TestStaticComponentsFires/testerFail
+=== CONT  TestStaticComponentsFires/componentCreatedInsideNestedFunction
+=== CONT  TestStaticComponentsFires/tagNestedInElement
+=== CONT  TestStaticComponentsFires/tagInsideFragment
+--- PASS: TestStaticComponentsStaysSilent (0.00s)
+    --- PASS: TestStaticComponentsStaysSilent/testerPass (0.00s)
+    --- PASS: TestStaticComponentsStaysSilent/loopBackEdge (0.00s)
+    --- PASS: TestStaticComponentsStaysSilent/memberTag (0.00s)
+    --- PASS: TestStaticComponentsStaysSilent/tagInsideNonUnitNestedFunction (0.00s)
+    --- PASS: TestStaticComponentsStaysSilent/memberTagDeep (0.00s)
+    --- PASS: TestStaticComponentsStaysSilent/moduleScopeAlias (0.00s)
+    --- PASS: TestStaticComponentsStaysSilent/capitalizedButNotAComponent (0.00s)
+    --- PASS: TestStaticComponentsStaysSilent/lowercaseFunction (0.00s)
+    --- PASS: TestStaticComponentsStaysSilent/renderCallbackInsideComponent (0.00s)
+=== CONT  TestStaticComponentsFires/functionDeclaration
+=== CONT  TestStaticComponentsFires/conditionalAssignment
+=== CONT  TestStaticComponentsFires/arrowDestructured
+=== CONT  TestStaticComponentsFires/methodCall
+=== CONT  TestStaticComponentsFires/newExpression
+=== CONT  TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/declared_and_called_inside_a_useMemo_callback
+=== CONT  TestSetStateInRenderReportsInsideUseMemo/a_conditional_call_inside_a_useMemo_callback_still_reports
+--- PASS: TestStaticComponentsFires (0.00s)
+    --- PASS: TestStaticComponentsFires/componentCreatedInsideNestedFunction (0.00s)
+    --- PASS: TestStaticComponentsFires/directCall (0.00s)
+    --- PASS: TestStaticComponentsFires/tagNestedInElement (0.00s)
+    --- PASS: TestStaticComponentsFires/tagInsideFragment (0.00s)
+    --- PASS: TestStaticComponentsFires/conditionalAssignment (0.00s)
+    --- PASS: TestStaticComponentsFires/functionDeclaration (0.00s)
+    --- PASS: TestStaticComponentsFires/arrowDestructured (0.00s)
+    --- PASS: TestStaticComponentsFires/testerFail (0.01s)
+    --- PASS: TestStaticComponentsFires/newExpression (0.00s)
+    --- PASS: TestStaticComponentsFires/methodCall (0.00s)
+=== CONT  TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/a_plain_nested_arrow_declaring_its_own_setter_is_clean
+=== CONT  TestSetStateInRenderReportsInsideUseMemo/an_unconditional_call_inside_a_useMemo_callback
+=== CONT  TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/conditional_inside_a_useMemo_callback_still_reports
+=== CONT  TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/the_same_body_inside_a_useCallback_is_clean
+--- PASS: TestSetStateInRenderReportsInsideUseMemo (0.00s)
+    --- PASS: TestSetStateInRenderReportsInsideUseMemo/a_conditional_call_inside_a_useMemo_callback_still_reports (0.00s)
+    --- PASS: TestSetStateInRenderReportsInsideUseMemo/an_unconditional_call_inside_a_useMemo_callback (0.00s)
+--- PASS: TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo (0.00s)
+    --- PASS: TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/a_plain_nested_arrow_declaring_its_own_setter_is_clean (0.00s)
+    --- PASS: TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/declared_and_called_inside_a_useMemo_callback (0.00s)
+    --- PASS: TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/the_same_body_inside_a_useCallback_is_clean (0.00s)
+    --- PASS: TestSetStateInRenderFindsASetterDeclaredInsideAUseMemo/conditional_inside_a_useMemo_callback_still_reports (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/react	0.090s
