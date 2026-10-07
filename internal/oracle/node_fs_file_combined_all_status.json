@@ -1,7 +1,7 @@
 [
   {
     "file": "01_readFile_utf8.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Checker",
@@ -27,7 +27,7 @@
   },
   {
     "file": "02_readFile_utf16le.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Checker",
@@ -53,7 +53,7 @@
   },
   {
     "file": "03_readFile_utf16be.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Checker",
@@ -79,7 +79,7 @@
   },
   {
     "file": "04_readFile_missing.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Checker",
@@ -105,7 +105,7 @@
   },
   {
     "file": "05_writeFile.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Refused",
@@ -131,7 +131,7 @@
   },
   {
     "file": "06_fileExists.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -159,7 +159,7 @@
   },
   {
     "file": "07_directoryExists.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -187,7 +187,7 @@
   },
   {
     "file": "08_getDirectories.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "NotYet",
@@ -200,18 +200,29 @@
     },
     "adapted": {
       "native": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:219:9: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]\n"
+        "stage": "Disagrees",
+        "diagnostic": "Runtime disagrees with Node: {\"exit\": 70, \"stderr\": \"adamic: panic: compiler bug: a field the checker proved is there is missing\\n\", \"stdout\": \"\"}",
+        "observed": {
+          "stdout": "",
+          "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n",
+          "exit": 70
+        },
+        "expected": {
+          "stdout": "a,link,z\na,link,z\n\na,link,z\n",
+          "stderr": "",
+          "exit": 0
+        }
       },
       "javascript": {
-        "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:219:9: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]\n"
+        "stage": "Compiles",
+        "diagnostic": "",
+        "agrees": true
       }
     }
   },
   {
     "file": "09_realpath.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -239,7 +250,7 @@
   },
   {
     "file": "10_getModifiedTime.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -267,7 +278,7 @@
   },
   {
     "file": "11_setModifiedTime.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -295,7 +306,7 @@
   },
   {
     "file": "12_deleteFile.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -323,7 +334,7 @@
   },
   {
     "file": "13_createDirectory.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Checker",
@@ -349,7 +360,7 @@
   },
   {
     "file": "14_getCurrentDirectory.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Refused",
@@ -373,7 +384,7 @@
   },
   {
     "file": "15_getExecutingFilePath.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -401,7 +412,7 @@
   },
   {
     "file": "16_getEnvironmentVariable.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -429,7 +440,7 @@
   },
   {
     "file": "17_write.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -457,7 +468,7 @@
   },
   {
     "file": "18_exit_0.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -485,7 +496,7 @@
   },
   {
     "file": "19_exit_1.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -513,7 +524,7 @@
   },
   {
     "file": "20_exit_2.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -541,7 +552,7 @@
   },
   {
     "file": "21_createHash.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -569,7 +580,7 @@
   },
   {
     "file": "22_createHash_fallback.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -597,7 +608,7 @@
   },
   {
     "file": "23_newLine.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -625,7 +636,7 @@
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -653,7 +664,7 @@
   },
   {
     "file": "25_readDirectory.a",
-    "source": "adapted 0d11046e, combined predicates a58ba402, debugger 7d2cbc89, non-null logical 63a202a3",
+    "source": "adapted 0d11046e, combined proof with string sort ce02406",
     "original": {
       "native": {
         "stage": "Checker",

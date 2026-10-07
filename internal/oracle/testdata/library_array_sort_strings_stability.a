@@ -1,0 +1,12 @@
+// Equal primitive strings have no observable identity. Tags expose stability
+// of the same sorter used by default string sort, using a string-key comparator.
+interface Item { readonly key: string; readonly tag: number; }
+function compare(left: Item, right: Item): number {
+    return left.key < right.key ? -1 : left.key > right.key ? 1 : 0;
+}
+const values: Item[] = [];
+for (let index = 0; index < 160; index++) {
+    values.push({ key: index % 3 === 0 ? "a" : index % 3 === 1 ? "b" : "c", tag: index });
+}
+values.sort(compare);
+for (const value of values) console.log(value.key + ":" + String(value.tag));

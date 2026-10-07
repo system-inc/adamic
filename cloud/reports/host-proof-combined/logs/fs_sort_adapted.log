@@ -1,0 +1,12 @@
+01_readFile_utf8.a: Node agrees; native=Compiles; javascript=Compiles
+02_readFile_utf16le.a: Node agrees; native=Compiles; javascript=Compiles
+03_readFile_utf16be.a: Node agrees; native=Compiles; javascript=Compiles
+04_readFile_missing.a: Node agrees; native=Compiles; javascript=Compiles
+05_writeFile.a: Node agrees; native=Compiles; javascript=Compiles
+06_fileExists.a: Node agrees; native=Compiles; javascript=Compiles
+07_directoryExists.a: Node agrees; native=Compiles; javascript=Compiles
+Traceback (most recent call last):
+  File "/workspace/adamic/internal/oracle/node_fs_file_host_check.py", line 89, in <module>
+    assert observed == truth, 'SILENT MISCOMPILE: ' + row['file'] + ' ' + backend
+           ^^^^^^^^^^^^^^^^^
+AssertionError: SILENT MISCOMPILE: 08_getDirectories.a native

@@ -676,6 +676,8 @@ type (
 		Comparator int
 		Callback   Expression
 		Element    Type
+		// DefaultStrings selects default string ordering, with undefined and holes last.
+		DefaultStrings bool
 	}
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.

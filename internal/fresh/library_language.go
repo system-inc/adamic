@@ -10,6 +10,8 @@ func (a *analysis) libraryLanguage(expression ir.Expression) (value, bool) {
 		return value, true
 	}
 	switch expression := expression.(type) {
+	case ir.ArrayHoles, ir.ArraySetLength, ir.ArrayRangeErrorIs:
+		return a.arrayHoles(expression), true
 	case ir.NodeBufferCall:
 		return a.nodeBufferCall(expression), true
 	case ir.ProcessCall:

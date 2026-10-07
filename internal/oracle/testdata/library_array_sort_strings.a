@@ -1,0 +1,27 @@
+function observe(values: string[]): void {
+    const returned = values.sort();
+    console.log(String(returned === values) + ":" + values.join("|"));
+}
+observe(["pear", "apple", "banana", "10", "9", "1"]);
+observe(["z", "A", "a", "Z", "aa", ""]);
+observe(["é", "e\u0301", "Ω", "中", "ß"]);
+observe(["\uE000", "\u{10000}", "\uFFFF", "\u{1F600}", "\uD800", "\uDC00", "\uD800a", "\uD800\uDC00a"]);
+// Printing UTF-16 units keeps distinct lone surrogates observable on stdout.
+const surrogates = ["\uDC01", "\uD801", "\uDC00", "\uD800", "\u{10000}", "\uE000", "\uD800a"];
+surrogates.sort();
+for (const value of surrogates) {
+    let units = "";
+    for (let index = 0; index < value.length; index++) units += String(value.charCodeAt(index)) + ":";
+    console.log(units);
+}
+observe(["b", "a", "b", "a", "a"]);
+observe([]);
+observe(["word" + String(2), "word" + String(1), "word" + String(2)]);
+const literal: ("z" | "A" | "a")[] = ["z", "a", "A", "a"];
+console.log(literal.sort().join("|"));
+const readonlyValues: readonly string[] = ["z", "a", "A"];
+console.log(readonlyValues.slice().sort().join("|"));
+console.log(readonlyValues.join("|"));
+const optional: (string | undefined)[] = [undefined, "z", "", undefined, "a"];
+console.log(optional.sort().join("|"));
+console.log(String(optional[3] === undefined) + ":" + String(optional.indexOf(undefined, 3) === 3));

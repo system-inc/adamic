@@ -8,19 +8,27 @@ import (
 
 func TestTasteRepresentationLimitsStayExplicit(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, source, reason string }{
-		{"union scalar field", `const box: {value: number | string} = {value: 1}; box.value = 3; console.log(String(box.value));`, "a narrowed scalar in a boxed union field"},
-		{"evolving different objects", `let value; value = {a: 1}; value = {b: "b"};`, "a value of type any"},
-		{"explicit any", `let value: any; value = {a: 1};`, "a value of type any"},
-		{"computed enum", `function next(): number { return 1; } enum Code {Value = next()}`, "an enum member with a computed initializer"},
-		{"enum prototype", `enum Code {__proto__ = 1}`, "an enum member that changes its prototype"},
-		{"merged enum", `enum Code {First = 1} enum Code {Second = 2}`, "a merged enum"},
+	for _, probe := range []struct {
+		name, source, reason string
+		refused              bool
+	}{
+		{"union scalar field", `const box: {value: number | string} = {value: 1}; box.value = 3; console.log(String(box.value));`, "a narrowed scalar in a boxed union field", false},
+		{"evolving different objects", `let value; value = {a: 1}; value = {b: "b"};`, "a value of type any", false},
+		{"explicit any", `let value: any; value = {a: 1};`, "a value of type any", false},
+		{"computed enum", `function next(): number { return 1; } enum Code {Value = next()}`, "a computed enum member", false},
+		{"enum prototype", `enum Code {__proto__ = 1}`, "an enum member name that changes the prototype", true},
+		{"merged enum", `enum Code {First = 1} enum Code {Second = 2}`, "merged enum declarations", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
-				t.Fatalf("want NotYet %q, got %v", probe.reason, err)
+			var refused *Refused
+			classified := errors.As(err, &notYet)
+			if probe.refused {
+				classified = errors.As(err, &refused)
+			}
+			if !classified || !strings.Contains(err.Error(), probe.reason) {
+				t.Fatalf("want explicit refusal %q, got %v", probe.reason, err)
 			}
 		})
 	}

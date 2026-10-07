@@ -213,6 +213,9 @@ func (e *emitter) borrowElement(declare ir.Declare) {
 	if element.Relative {
 		lookup = "adamic_array_at_relative"
 	}
+	if e.hasArrayHoles() {
+		lookup = "adamic_array_holes_at"
+	}
 	e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
 	name := e.localName(declare.Local)
 	e.line("%s %s = %s == NULL ? NULL : (%s)%s->reference;", cType(local.Type), name, slot, cType(local.Type), slot)

@@ -339,7 +339,9 @@ static void free_one(void *value) {
 	}
 	case adamic_kind_array: {
 		adamic_array *array = value;
-		if (array->references) {
+		if (array->sparse != NULL) {
+			let_go(array->sparse);
+		} else if (array->references) {
 			for (size_t index = 0; index < array->length; index++) {
 				let_go(array->elements[index].reference);
 			}

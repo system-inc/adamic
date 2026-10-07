@@ -101,12 +101,23 @@
     "file": "08_getDirectories.a",
     "nodeMatches": true,
     "native": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:219:9: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]\n"
+      "stage": "Disagrees",
+      "diagnostic": "Runtime disagrees with Node: {\"exit\": 70, \"stderr\": \"adamic: panic: compiler bug: a field the checker proved is there is missing\\n\", \"stdout\": \"\"}",
+      "observed": {
+        "stdout": "",
+        "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n",
+        "exit": 70
+      },
+      "expected": {
+        "stdout": "a,link,z\na,link,z\n\na,link,z\n",
+        "stderr": "",
+        "exit": 0
+      }
     },
     "javascript": {
-      "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:219:9: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]\n"
+      "stage": "Compiles",
+      "diagnostic": "",
+      "agrees": true
     }
   },
   {

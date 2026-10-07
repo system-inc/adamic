@@ -1,0 +1,1 @@
+import { statSync } from 'node:fs'; import type { Dirent, Stats } from 'node:fs'; function isDirectory(value: Dirent | Stats): boolean { return value.isDirectory(); } console.log(String(isDirectory(statSync('.'))));

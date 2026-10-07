@@ -1,6 +1,6 @@
 # Combined host proof
 
-22/25 adapted fixtures and 16/25 pristine fixtures execute and agree with fresh Node observations on both backends. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
+22/25 adapted fixtures agree on native, 23/25 on JavaScript, and 22/25 on both. The pristine controls remain 16/25 on both backends. Every fixture was rerun on each backend after the final merges. This is a proof, not a landing; no main/area push or force push.
 
 Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 0d11046e. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
 
@@ -13,7 +13,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 05_writeFile.a | Refused | Refused | Agrees | Agrees | None | None |
 | 06_fileExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 07_directoryExists.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 08_getDirectories.a | NotYet | NotYet | Refused | Refused | sort without comparator at 219:9 | Compiler / adaptation ruling |
+| 08_getDirectories.a | NotYet | NotYet | Disagrees | Agrees | Stats/Dirent method dispatch reads missing type field | Library |
 | 09_realpath.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 10_getModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 11_setModifiedTime.a | Agrees | Agrees | Agrees | Agrees | None | None |
@@ -274,3 +274,21 @@ Each diagnostic is `Adamic 0.1 refuses a non-null assertion whose operand is exa
 Final four-flow command: `go test ./internal/flow -run '^(TestEveryFunctionIsInSingleAssignment|TestEveryPathNodeTakesIsInTheGraph|TestEveryMutationIsInItsRange|TestLivenessHoldsOnEveryPath|TestDebuggerHasNoFlowInstruction)$' -count=1 -timeout 15m -v`. PASS 152.741s. All four formerly failing tests PASS; no Lower diagnostic. No refusal exclusion was added in this checkpoint.
 
 Six debugger mutants executed and restored: native trap caught by artifact test; native trap caught by Node exit; dropping JS statement caught by preservation count; dropping lowered IR caught by preservation count; restoring syntax refusal caught by compiler test; adding a flow instruction caught by TestDebuggerHasNoFlowInstruction. All fail the intended checks, no build/clang failure. Raw logs preserved.
+
+## Default string sort recount
+
+Merged ce02406 with merge commits only, preserving both sides of conflict resolutions. All 25 adapted and all 25 pristine fixtures were rerun on both backends. Adapted results: native 22/25, JavaScript 23/25, joint 22/25. Original controls remain 16/25 each. Fixture 08 now compiles and agrees on JavaScript but fails natively with exit 70:
+
+```text
+adamic: panic: compiler bug: a field the checker proved is there is missing
+```
+
+The native directory predicate reads Dirent's `type` on a Stats object (which carries `_fsFileMode`). Temporary diagnostic instrumentation confirmed the field and was restored. Verified one-line native reproducer (Node prints true and exits 0):
+
+```typescript
+import { statSync } from 'node:fs'; import type { Dirent, Stats } from 'node:fs'; function isDirectory(value: Dirent | Stats): boolean { return value.isDirectory(); } console.log(String(isDirectory(statSync('.'))));
+```
+
+Owner: library, Stats/Dirent method dispatch. Fixtures 14 and 25 retain their capture-cycle and Error-as-any refusals respectively. Since the normal measurement runner stops at a runtime mismatch, this recount used a copy that records observed/expected stdout, stderr and exit as Disagrees and continues, still returning failure. It does not change the compiler or production harness. Complete JSON records preserve the mismatch.
+
+Validation: filtered lower tests PASS (15.272s); string-sort oracle, four semantic mutants, string-sort refusals and selected WASI host tests PASS (46.855s). Mutants for code-point order, descending order, instability and undefined-as-holes were caught by Node stdout comparisons with clean execution. Focused ArrayHoles/debugger flow tests are recorded in fs_sort_flow.log. The four full flow tests were green at the previous checkpoint and were not rerun here. No full gate, counts regeneration or macOS execution is claimed. No main or area push, no force push; this remains a proof.
