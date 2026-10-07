@@ -25,7 +25,7 @@ export class Rule {
         const from = utf8Length(context.source.slice(0, start)); const to = utf8Length(context.source.slice(0, end));
         for(const comment of this.fileComments(index)) { if(comment.start < to && comment.end > from) { repair = false; } }
         const finding = new Finding('no-extra-label', 'unexpected', messages[0] ?? '', context.start(label), end, repair ? 'fix' : '', '', '');
-        finding.editStart = start; finding.editEnd = end; context.findings.push(finding);
+        finding.editStart = repair ? start : context.start(label); finding.editEnd = end; context.findings.push(finding);
     }
     visit(index: number): void {
         const context = this.context; const label = context.node(index).children[0] ?? -1;

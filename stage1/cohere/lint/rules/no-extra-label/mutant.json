@@ -1,6 +1,6 @@
 {
-  "name": "redundant_label_reporting_disabled",
+  "name": "comment_no_fix_range_leaked",
   "file": "rule.a",
-  "from": "if(target >= 0 && context.node(target).text === name)",
-  "to": "if(false)"
+  "from": "repair ? start : context.start(label)",
+  "to": "start"
 }

@@ -1,0 +1,9 @@
+# Wave 10 passing landing set
+
+Six retained ports: react/no-unsafe, sort-vars, @typescript-eslint/ban-tslint-comment, @typescript-eslint/no-invalid-this, max-lines, no-extra-label. Five parked ports and reproductions are in ../wave1-10-parked/README.md. No shared harness changes.
+
+Unfiltered TestRulesAgree PASS 51.800s: 13,695,369 identical bytes on Go, source Node, emitted JavaScript and ASan/UBSan native. Complete TestOwnedWitnesses PASS 23.55s: 106,922 identical bytes. All six owned TestMutants subtests PASS on all three runtimes; combined witness/mutant package run PASS 147.712s. Registry and focused vet pass.
+
+Commands: go test -count=1 -v -timeout 20m ./stage1/cohere/lint -run '^TestRulesAgree$'; go test -count=1 -v -timeout 20m ./stage1/cohere/lint -run '^TestOwnedWitnesses$|^TestMutants$/(unsafe_component_detection_disabled|sort_vars_comparison_disabled|tslint_directive_disabled|this_capital_constructor_disabled|max_lines_findings_suppressed|comment_no_fix_range_leaked)$'. Full inherited-mutant runs were stopped after either a superseded failure or slow inherited checks; they are retained as incomplete evidence, not counted green. No full repository gate or full unfiltered TestMutants pass is claimed.
+
+Parity exposed and fixed no-extra-label's no-fix metadata: a comment blocks the automatic edit, so editStart must fall back to the diagnostic start. Witness A: while(true) { break /**/A; } fires. Compiling comment_no_fix_range_leaked reintroduces the old range, exits successfully, and is caught only by output comparison on every runtime. Other compiling owned mutants: unsafe_component_detection_disabled, sort_vars_comparison_disabled, tslint_directive_disabled, this_capital_constructor_disabled and max_lines_findings_suppressed. The integrated harness's named recovery refusals remain visible in the raw parity log; no check or refusal was relaxed.
