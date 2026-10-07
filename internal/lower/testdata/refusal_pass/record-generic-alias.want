@@ -1,0 +1,1 @@
+main.a:1:60: Adamic 0.1 refuses Record<string, T> (an index signature without own-key record lowering); use Map<string, T> until records have own keys, T | undefined dynamic reads, and loud prototype-name checks (#p9v82wa)

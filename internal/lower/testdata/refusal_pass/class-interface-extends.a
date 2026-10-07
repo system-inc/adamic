@@ -1,0 +1,1 @@
+interface Extra { extra: number; } interface Box extends Extra {} class Box { n = 1; }

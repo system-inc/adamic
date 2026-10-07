@@ -1,0 +1,1 @@
+type Bag<K extends string, T> = Record<K, T>; const value: Bag<string, number> = {};

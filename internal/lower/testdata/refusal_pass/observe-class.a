@@ -1,0 +1,2 @@
+class Box { n = 1; } interface Box { extra: number; }
+console.log(typeof new Box().extra);

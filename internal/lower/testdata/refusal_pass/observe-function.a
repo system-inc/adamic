@@ -1,0 +1,2 @@
+function take(value: Function): void { console.log(`${value(42)}`); }
+take((value: string): string => value.toUpperCase());

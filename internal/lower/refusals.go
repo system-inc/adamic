@@ -19,6 +19,7 @@ type refusal struct {
 // refusals by syntax kind. Each is checked before lowering, so a program learns it has written
 // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
 var refusals = map[ast.Kind]refusal{
+	ast.KindAnyKeyword:        {"any", "name the proven type, or use unknown and narrow it"},
 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
@@ -70,6 +71,14 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if found != nil {
+			return true
+		}
+		if err := l.refuseClassMerge(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.refuseUnsafeDeclaration(node); err != nil {
+			found = err
 			return true
 		}
 		if refused, isRefused := refusals[node.Kind]; isRefused {
@@ -182,4 +191,97 @@ func scannedText(node *ast.Node) string {
 		return "this"
 	}
 	return node.Text()
+}
+
+// Class members need storage or an implementation. A merged type cannot supply either.
+// Use the bound symbol, so declaration order and imported augmentations do not hide a merge.
+func (l *lowering) refuseClassMerge(node *ast.Node) error {
+	if (node.Kind != ast.KindClassDeclaration && node.Kind != ast.KindInterfaceDeclaration && node.Kind != ast.KindModuleDeclaration) || node.Name() == nil {
+		return nil
+	}
+	symbol := l.checker.GetSymbolAtLocation(node.Name())
+	if symbol == nil {
+		return nil
+	}
+	var class *ast.Node
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindClassDeclaration {
+			class = declaration
+			break
+		}
+	}
+	if class == nil {
+		return nil
+	}
+	for _, declaration := range symbol.Declarations {
+		kind := ""
+		switch declaration.Kind {
+		case ast.KindModuleDeclaration:
+			kind = "namespace"
+		case ast.KindInterfaceDeclaration:
+			proven := l.checker.GetTypeAtLocation(declaration.Name())
+			if len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+				kind = "interface"
+			}
+			// A repeated description of a real member is harmless. Inherited interface
+			// members count too; looking only at the written member list would miss them.
+			for _, member := range l.checker.GetPropertiesOfType(proven) {
+				implemented := false
+				for _, site := range member.Declarations {
+					if site.Parent != nil && (site.Parent.Kind == ast.KindClassDeclaration || site.Parent.Kind == ast.KindClassExpression) {
+						implemented = true
+					}
+				}
+				if !implemented {
+					kind = "interface"
+					break
+				}
+			}
+		}
+		if kind != "" {
+			name := class.Name().Text()
+			return &Refused{Where: l.program.Where(declaration), What: "declaration merging of class " + name + " with " + kind + " " + name, Fix: "declare and initialize members in class " + name + "; use a separate interface for an object's checked shape, or a module for namespace exports"}
+		}
+	}
+	return nil
+}
+
+// These checks belong to the refusal pass even when the declaration is unused or
+// appears after syntax lowering has not learned. Never turn a permanent refusal into NotYet.
+func (l *lowering) refuseUnsafeDeclaration(node *ast.Node) error {
+	if node.Kind == ast.KindTypeReference {
+		reference := node.AsTypeReferenceNode()
+		if l.isLibraryGlobal(reference.TypeName, "Function") {
+			return &Refused{Where: l.program.Where(node), What: "the Function type", Fix: "write a function type with its parameters and result, like (value: number) => number"}
+		}
+		// Record<string, T> stays refused until #p9v82wa lowers own keys only,
+		// dynamic reads as T | undefined, and loudly stops prototype-name reads and in.
+		// A finite Record literal-key union is an ordinary checked object shape.
+		if l.checker.GetStringIndexType(l.checker.GetTypeAtLocation(node)) != nil {
+			return &Refused{Where: l.program.Where(node), What: "Record<string, T> (an index signature without own-key record lowering)", Fix: "use Map<string, T> until records have own keys, T | undefined dynamic reads, and loud prototype-name checks (#p9v82wa)"}
+		}
+	}
+	if node.Kind == ast.KindIdentifier && l.isLibraryGlobal(node, "eval") {
+		return &Refused{Where: l.program.Where(node), What: "eval", Fix: "write the code as a function; native programs have no compiler at runtime"}
+	}
+	if node.Kind == ast.KindIdentifier && l.isLibraryGlobal(node, "Function") && (node.Parent == nil || node.Parent.Kind != ast.KindTypeReference) {
+		return &Refused{Where: l.program.Where(node), What: "the Function constructor (new Function)", Fix: "write a function with explicit parameters and a checked body; native programs have no compiler at runtime"}
+	}
+	if node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
+		symbol := l.checker.GetSymbolAtLocation(node)
+		if node.Kind == ast.KindElementAccessExpression {
+			access := node.AsElementAccessExpression()
+			if access.ArgumentExpression.Kind == ast.KindStringLiteral {
+				symbol = l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(access.Expression), access.ArgumentExpression.Text())
+			}
+		}
+		if symbol != nil {
+			for _, declaration := range symbol.Declarations {
+				if ast.IsExpandoPropertyDeclaration(declaration) {
+					return &Refused{Where: l.program.Where(node), What: "properties added after creation (expando)", Fix: "declare the properties when the object is created, or use a Map for dynamic keys"}
+				}
+			}
+		}
+	}
+	return nil
 }
