@@ -202,3 +202,27 @@ adaptation; raw syntax/checker metadata is supplied by an explicit
 Go test provider. These are partial native cores, not completed source ports.
 Reservations remain retained, not released or automatically parked. See
 ../wave21_jsx/README.md and ../wave21_jsx/validation/. No new batch was claimed.
+
+## Final available rule claim
+
+All owned changes are landing-ready and pushed through
+12b844c8eeeac8dbd6ce13bba8aada590c236d78, rebased onto current
+main 39638d9e278d38bb5aeae887f46d55a70e47aaad. The seven earlier suites
+rebuild and pass in 739.445 s, and all JSX byte-oracle, native mutant, sanitizer,
+released-handle and targeted Node checks are green. The existing source gaps
+remain explicitly reported; no shared registration generator or harness changed.
+
+Fetched all 603 origin refs and inspected all 33 distinct Markdown claim blobs.
+The 197-rule combined ranking has only one remaining available entry, rather
+than three: **react/style-prop-object**, full ranking position 192, zero compiler
+and repository volume. No native port exists on main or the bridge base, and
+no origin claim mentions this name. All other entries are ported on the base or
+actively reserved. Explicit releases were checked: promises, spread and
+lost-update now have wave-22 claims; exhaustive-deps has wave-12/27 claims; the
+released core promise-rejection attempt has other active continuation claims.
+
+react/style-prop-object is reserved for this branch. It does not require
+high-level IR, single-assignment or capture analysis. JSX parsing and shared
+checker/node integration remain dependencies; the createElement and identifier
+logic will also be ported. This claim is pushed before writing its implementation.
+No additional available rule is omitted to manufacture a three-rule batch.
