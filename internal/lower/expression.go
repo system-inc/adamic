@@ -859,6 +859,11 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
 			}
 			value = ir.UnionToString{Value: value}
+		case ir.Array:
+			value, err = l.viewArrayString(span.AsTemplateSpan().Expression, value)
+			if err != nil {
+				return nil, err
+			}
 		case ir.String:
 			value = l.spelled(span.AsTemplateSpan().Expression, value)
 		default:

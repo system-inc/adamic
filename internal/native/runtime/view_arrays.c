@@ -1,4 +1,5 @@
 #include "adamic.h"
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,7 +26,12 @@ void adamic_view_array_storage_check(const adamic_array *array, unsigned char st
 }
 
 adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, unsigned char wanted, const char *expected, const char *expression, adamic_value *snapshot) {
-    adamic_value *slot = relative ? adamic_array_at_relative(array, index) : adamic_array_at(array, index);
+    if (array == NULL) array_view_failure(expression, expected, "undefined");
+    if (relative) {
+        index = isnan(index) ? 0 : trunc(index);
+        if (index < 0) index += (double)array->length;
+    }
+    adamic_value *slot = adamic_array_holes_at(array, index);
     if (slot == NULL) { return NULL; }
     unsigned char actual = array->view.storage;
     *snapshot = *slot;
@@ -49,3 +55,65 @@ adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool
 }
 
 void adamic_view_array_missing(const char *expression, const char *expected) { array_view_failure(expression, expected, "undefined"); }
+
+// Array stringification consumes every present element, checking each at its
+// read. The null array representation spells undefined without dereferencing it.
+adamic_string *adamic_view_array_string(const adamic_array *array, const adamic_string *separator, bool checked, unsigned char wanted, bool undefined_allowed, const char *expected, const char *expression, size_t allowed_count, const adamic_value *allowed) {
+    if (array == NULL) {
+        adamic_string *result = adamic_string_allocate(9);
+        memcpy((char *)result->bytes, "undefined", 9);
+        return result;
+    }
+    adamic_array *parts = adamic_array_new(array->length, true);
+    parts->length = array->length;
+    for (size_t index = 0; index < array->length; index++) {
+        adamic_value snapshot;
+        adamic_value *slot = checked ? adamic_view_array_at(array, (double)index, false, undefined_allowed, wanted, expected, expression, &snapshot) : adamic_array_holes_at(array, (double)index);
+        if (slot != NULL && checked && allowed_count != 0) {
+            bool accepted = false;
+            for (size_t literal = 0; literal < allowed_count; literal++) {
+                accepted = accepted || (wanted == 1 ? slot->number == allowed[literal].number : wanted == 2 ? slot->boolean == allowed[literal].boolean : wanted == 3 && adamic_string_equal(slot->reference, allowed[literal].reference));
+            }
+            if (!accepted) adamic_view_literal_failure(expression, expected, wanted, *slot);
+        }
+        adamic_string *text = NULL;
+        if (slot != NULL && wanted == 7) {
+            adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
+            if (number.present) text = adamic_string_from_number(number.number);
+        } else if (slot != NULL && wanted == 1) text = adamic_string_from_number(slot->number);
+        else if (slot != NULL && wanted == 3) text = adamic_retain(slot->reference);
+        else if (slot != NULL && wanted == 2) {
+            const char *word = slot->boolean ? "true" : "false";
+            size_t size = strlen(word);
+            text = adamic_string_allocate(size);
+            memcpy((char *)text->bytes, word, size);
+        }
+        parts->elements[index].reference = text;
+    }
+    adamic_string *result = adamic_array_join(parts, separator, adamic_join_strings);
+    adamic_release(parts);
+    return result;
+}
+
+static adamic_string *array_view_sort_string(adamic_value value, unsigned char element) {
+    if (element == 1) return adamic_string_from_number(value.number);
+    if (element == 7) return adamic_string_from_number(adamic_maybe_number_unpack(value.number).number);
+    if (element == 3) return adamic_retain(value.reference);
+    const char *word = value.boolean ? "true" : "false";
+    size_t length = strlen(word);
+    adamic_string *result = adamic_string_allocate(length);
+    memcpy((char *)result->bytes, word, length);
+    return result;
+}
+
+// Explicitly undefined comparers use ECMAScript's UTF-16 string ordering.
+// The existing undefined-last sort handles missing elements before this hook.
+int adamic_view_array_default_compare(adamic_value left, adamic_value right, void *context) {
+    unsigned char element = (unsigned char)(uintptr_t)context;
+    adamic_string *a = array_view_sort_string(left, element);
+    adamic_string *b = array_view_sort_string(right, element);
+    int result = adamic_string_compare(a, b);
+    adamic_release(a);
+    adamic_release(b);
+    return result;
+}

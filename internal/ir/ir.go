@@ -659,10 +659,11 @@ type (
 	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function
 	// value (Callback, when it isn't nil). It sorts in place, stably, and is the array.
 	ArraySort struct {
-		Array      Expression
-		Comparator int
-		Callback   Expression
-		Element    Type
+		OptionalComparator bool
+		Array              Expression
+		Comparator         int
+		Callback           Expression
+		Element            Type
 	}
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
@@ -760,6 +761,8 @@ type (
 
 	// ArrayJoin is Array.join(Separator), writing each element as String() would.
 	ArrayJoin struct {
+		Stringify bool
+		ViewRead  ArrayViewRead
 		Array     Expression
 		Separator Expression
 		Element   Type

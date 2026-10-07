@@ -254,6 +254,9 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				node = expression
 			case ir.ArrayIndex:
 				node = markProgramViewArrayRead(program, expression)
+			case ir.ArrayJoin:
+				expression.ViewRead = markProgramViewArrayUse(program, expression.ViewRead)
+				node = expression
 			case ir.ArrayMap:
 				expression.ViewRead = markProgramViewArrayUse(program, expression.ViewRead)
 				node = expression

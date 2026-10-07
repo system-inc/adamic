@@ -23,32 +23,6 @@ func (l *lowering) viewArrayContract(node *ast.Node, target *checker.Type, build
 	return true, buildElement(element)
 }
 
-func init() { viewArrayContractHook = buildViewArrayContract }
-
-func buildViewArrayContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (ir.ViewContractID, error) {
-	if checker.IsTupleType(target) {
-		return 0, l.notYet(node, "a checked tuple view with positional optional and rest contracts")
-	}
-	if l.result.ViewContractTypes == nil {
-		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
-	}
-	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-	contract := ir.ViewContract{Kind: ir.ViewArray, Name: l.checker.TypeToString(target), Of: ir.Array}
-	l.result.ViewContractTypes[int(target.Id())] = id
-	l.result.ViewContracts = append(l.result.ViewContracts, contract)
-	elementType := l.checker.GetElementTypeOfArrayType(target)
-	if of, known := l.representation(elementType); !known || of == ir.Union || of == ir.MaybeBoolean {
-		return 0, l.notYet(node, "an array checked view with mixed or optional boolean elements")
-	}
-	element, err := build(elementType)
-	if err != nil {
-		return 0, err
-	}
-	contract.Element = element
-	l.result.ViewContracts[int(id)-1] = contract
-	return id, nil
-}
-
 func (l *lowering) viewArrayFields(node *ast.Node, target *checker.Type, fields map[string]bool, seen map[*checker.Type]bool) error {
 	if seen[target] {
 		return nil
@@ -152,13 +126,15 @@ func markProgramViewArrayUse(program *ir.Program, read ir.ArrayViewRead) ir.Arra
 }
 
 func (l *lowering) viewArrayCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
-	if value.Type() != ir.Array || !l.checker.IsArrayType(source) || !l.checker.IsArrayType(target) {
+	if value.Type() != ir.Array || !l.checker.IsArrayType(l.withoutUndefined(source)) || !l.checker.IsArrayType(target) {
 		return nil, nil
 	}
 	// Readonly scalar elements introduce no writable slot; their type is checked
 	// lazily when read, including an unknown[] bridge into a readonly result.
 	readonlyScalar := l.isLibraryType(target, "ReadonlyArray") && interfaceScalar(l.concrete(l.checker.GetElementTypeOfArrayType(target)))
-	if !readonlyScalar {
+	consumer := l.readonlyArrayConsumer(node)
+	readonlyConsumer := consumer != nil && interfaceScalar(l.concrete(l.checker.GetElementTypeOfArrayType(target)))
+	if !readonlyScalar && !readonlyConsumer {
 		if err := l.widened(source, target, map[[2]*checker.Type]bool{}); err != nil {
 			return nil, l.notYet(node, "a writable array view requiring source contract certification")
 		}

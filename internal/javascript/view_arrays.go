@@ -80,6 +80,12 @@ const adamicViewSetIndex = (array, index, value, storage) => { adamicArrayWriteC
 `
 
 func (e *emitter) value(expression ir.Expression) string {
+	if sort, ok := expression.(ir.ArraySort); ok && sort.OptionalComparator {
+		return e.emitViewOptionalArraySort(sort)
+	}
+	if join, ok := expression.(ir.ArrayJoin); ok && join.Stringify {
+		return e.emitViewArrayString(join)
+	}
 	value := e.valueWithoutViewArrays(expression)
 	if !ir.HasArrayViews(e.program) {
 		return value
@@ -136,4 +142,17 @@ func (e *emitter) viewArrayElementCheck(read ir.ArrayViewRead, value string) str
 
 func (e *emitter) viewArrayChecker(read ir.ArrayViewRead) string {
 	return "(adamicElement) => " + e.viewArrayElementCheck(read, "adamicElement")
+}
+
+func (e *emitter) emitViewArrayString(join ir.ArrayJoin) string {
+	array := e.value(join.Array)
+	if join.ViewRead.View == "" {
+		return "String(" + array + ")"
+	}
+	checked := e.viewArrayElementCheck(join.ViewRead, "value")
+	return fmt.Sprintf("((array) => array === undefined ? 'undefined' : array.map((value) => %s).join(','))(%s)", checked, array)
+}
+
+func (e *emitter) emitViewOptionalArraySort(sort ir.ArraySort) string {
+	return fmt.Sprintf("((array, callback) => callback === undefined ? array.sort() : adamicSort(array, callback))(%s, %s)", e.value(sort.Array), e.value(sort.Callback))
 }

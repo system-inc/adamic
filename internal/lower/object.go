@@ -295,6 +295,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
+	if of, empty := viewNeverArrayElement(element); empty {
+		return of, nil
+	}
 	valueType, isKnown := l.kept(element)
 	if !isKnown || slotless(valueType) {
 		// An element is one adamic_value, and number | undefined needs two words.
@@ -1657,14 +1660,18 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 		if err != nil {
 			return nil, true, err
 		}
-		signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(comparator), checker.SignatureKindCall)
+		signatures := l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(comparator)), checker.SignatureKindCall)
 		if callback.Type() != ir.Closure || len(signatures) != 1 {
 			return nil, true, l.notYet(comparator, "a comparator that isn't a function")
 		}
 		if returns, _ := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0])); returns != ir.Number {
 			return nil, true, l.notYet(comparator, "a comparator that doesn't return a number")
 		}
-		return ir.ArraySort{Array: array, Callback: callback, Element: element}, true, nil
+		optional, err := l.viewOptionalArrayComparator(node, comparator, element)
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.ArraySort{Array: array, Callback: callback, Element: element, OptionalComparator: optional}, true, nil
 	}
 	declared := l.result.Functions[function]
 	if declared.Returns != ir.Number || len(declared.Parameters) != 2 || l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element {

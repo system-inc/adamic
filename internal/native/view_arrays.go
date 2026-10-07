@@ -9,6 +9,12 @@ import (
 // Keep metadata at allocation, not at assertion. Wrapping dispatch here also
 // covers arrays produced inside callees, irrespective of source lowering order.
 func (e *emitter) evaluate(expression ir.Expression) string {
+	if sort, ok := expression.(ir.ArraySort); ok && sort.OptionalComparator {
+		return e.emitViewOptionalArraySort(sort)
+	}
+	if join, ok := expression.(ir.ArrayJoin); ok && join.Stringify {
+		return e.emitViewArrayString(join)
+	}
 	value := e.evaluateWithoutViewArrays(expression)
 	if !ir.HasArrayViews(e.program) {
 		return value
@@ -108,4 +114,51 @@ func (e *emitter) emitViewArrayPop(pop ir.ArrayPop) string {
 	e.line("\tif (%s->references) adamic_release(%s->elements[%s->length].reference);", array, array, array)
 	e.line("}")
 	return result
+}
+
+func (e *emitter) emitViewArrayString(join ir.ArrayJoin) string {
+	array := e.value(join.Array)
+	separator := e.value(join.Separator)
+	allowed := e.viewArrayStringLiterals(join.ViewRead.ViewAllowed)
+	return e.own(ir.String, fmt.Sprintf("adamic_view_array_string(%s, %s, %t, %d, %t, %s, %s, %d, %s)", array, separator, join.ViewRead.View != "", join.Element, join.ViewRead.UndefinedAllowed, cString(join.ViewRead.ViewType), cString(join.ViewRead.View), len(join.ViewRead.ViewAllowed), allowed))
+}
+
+func (e *emitter) emitViewOptionalArraySort(sort ir.ArraySort) string {
+	array := e.value(sort.Array)
+	callback := e.value(sort.Callback)
+	sortFunction := "adamic_array_sort"
+	if sort.Element == ir.MaybeNumber {
+		sortFunction = "adamic_array_sort_undefined_last"
+	}
+	e.line("if (%s != NULL) {", callback)
+	e.indent++
+	e.line("%s(%s, adamic_compare_closure, %s);", sortFunction, array, callback)
+	e.closureThrown()
+	e.indent--
+	e.line("} else {")
+	e.indent++
+	e.line("%s(%s, adamic_view_array_default_compare, (void *)(uintptr_t)%d);", sortFunction, array, sort.Element)
+	e.indent--
+	e.line("}")
+	return array
+}
+
+func (e *emitter) viewArrayStringLiterals(literals []ir.ViewLiteral) string {
+	if len(literals) == 0 {
+		return "NULL"
+	}
+	values := []string{}
+	for _, literal := range literals {
+		switch literal.Of {
+		case ir.Number:
+			values = append(values, "{.number = "+cNumber(literal.Number)+"}")
+		case ir.Boolean:
+			values = append(values, fmt.Sprintf("{.boolean = %t}", literal.Boolean))
+		case ir.String:
+			name := e.temporary()
+			e.declarations = append(e.declarations, fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(%s);", name, cString(literal.String)))
+			values = append(values, "{.reference = &"+name+"}")
+		}
+	}
+	return "(adamic_value[]){" + strings.Join(values, ", ") + "}"
 }

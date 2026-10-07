@@ -26,7 +26,7 @@ type castLowerer struct {
 
 var deferredCastLowerers = []castLowerer{
 	{castLoweringViews, false, func(l *lowering, node *ast.Node, source, target *checker.Type) bool {
-		return l.viewCastCandidate(source, target)
+		return l.viewCastCandidate(source, target) || l.nullableReadonlyArrayCast(node, source, target)
 	}, (*lowering).deferredViewCast},
 	{castLoweringPhantom, true, func(l *lowering, node *ast.Node, source, target *checker.Type) bool {
 		return l.phantomArrayBase(source) != nil || l.phantomArrayBase(target) != nil || l.phantomCast(source, target)
@@ -104,7 +104,7 @@ func (l *lowering) deferredViewCast(node *ast.Node, value ir.Expression, source,
 // only consumer is a readonly scalar view. The outer assertion supplies the
 // lazy contract; the intermediate unknown element type is never exposed.
 func (l *lowering) readonlyArrayViewBridge(node *ast.Node, source, target *checker.Type) bool {
-	if !l.checker.IsArrayType(source) || !l.checker.IsArrayType(target) || l.checker.GetElementTypeOfArrayType(target).Flags()&checker.TypeFlagsUnknown == 0 {
+	if !l.checker.IsArrayType(l.withoutUndefined(source)) || !l.checker.IsArrayType(target) || l.checker.GetElementTypeOfArrayType(target).Flags()&checker.TypeFlagsUnknown == 0 {
 		return false
 	}
 	parent := node.Parent
@@ -112,5 +112,5 @@ func (l *lowering) readonlyArrayViewBridge(node *ast.Node, source, target *check
 		return false
 	}
 	final := l.concrete(l.checker.GetTypeAtLocation(parent))
-	return l.checker.IsArrayType(final) && l.isLibraryType(final, "ReadonlyArray") && interfaceScalar(l.checker.GetElementTypeOfArrayType(final))
+	return (l.checker.IsArrayType(final) && l.isLibraryType(final, "ReadonlyArray") && interfaceScalar(l.checker.GetElementTypeOfArrayType(final))) || l.readonlyArrayConsumer(node) != nil
 }

@@ -44,7 +44,7 @@ type widening struct {
 // written something it can't hold, or returns nil.
 func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
-	if from == to || visited[[2]*checker.Type{from, to}] {
+	if from.Flags()&checker.TypeFlagsNever != 0 || from == to || visited[[2]*checker.Type{from, to}] {
 		return nil
 	}
 	visited[[2]*checker.Type{from, to}] = true
@@ -619,6 +619,9 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 	switch parent.Kind {
 	case ast.KindConditionalExpression:
 		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == child || conditional.WhenFalse == child {
+			if target := l.readonlyArrayConsumer(parent); target != nil {
+				return target
+			}
 			return l.checker.GetTypeAtLocation(parent)
 		}
 	case ast.KindBinaryExpression:

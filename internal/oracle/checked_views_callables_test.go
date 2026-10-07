@@ -77,3 +77,21 @@ func TestCheckedViewSameMap(t *testing.T) {
 		}
 	}
 }
+
+func TestCheckedViewParserReturns(t *testing.T) {
+	for _, probe := range []struct{ name, stdout string }{{"native-same-map-return-cast", "2\nundefined\n"}, {"native-sorted-empty-conditional", "0\n1\n"}, {"optional-sort", "1,10,9\n1,9,10\nfalse,true,true\na,𝄞,\uE000\n"}} {
+		t.Run(probe.name, func(t *testing.T) {
+			program, path := interfaceFixture(t, "lane2/"+probe.name)
+			want := run{stdout: []byte(probe.stdout)}
+			if difference := disagreement(want, onNode(t, path)); difference != "" {
+				t.Fatal(difference)
+			}
+			actual, _ := nativelyUncached(t, program)
+			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s; got %#v", difference, got)
+				}
+			}
+		})
+	}
+}
