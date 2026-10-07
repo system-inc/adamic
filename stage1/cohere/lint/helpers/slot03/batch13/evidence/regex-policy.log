@@ -1,0 +1,3 @@
+Shared table inspected at 071fb012848ce0408428c61aba0857cca472236f: 107 compile sites, no data_type.go row.
+No Go regexp compile site ported. Fixed prefix and ASCII-digit checks use JS RegExp literals /^var\(/u and /^[0-9]/u, compared with actual Go.
+No finding byte offsets are constructed.

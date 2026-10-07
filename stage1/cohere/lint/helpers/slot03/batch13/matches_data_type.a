@@ -1,0 +1,23 @@
+// Predicate indices follow Go's AllDataTypes order; see README for the adapter contract.
+export function matchesDataType(value: string, dataType: string, check: (value: string, predicate: number) => boolean): boolean {
+  switch (dataType) {
+    case 'color': return check(value, 0);
+    case 'length': return check(value, 1);
+    case 'percentage': return check(value, 2);
+    case 'ratio': return check(value, 3);
+    case 'number': return check(value, 4);
+    case 'integer': return check(value, 5);
+    case 'url': return check(value, 6);
+    case 'position': return check(value, 7);
+    case 'bg-size': return check(value, 8);
+    case 'line-width': return check(value, 9);
+    case 'image': return check(value, 10);
+    case 'family-name': return check(value, 11);
+    case 'generic-name': return check(value, 12);
+    case 'absolute-size': return check(value, 13);
+    case 'relative-size': return check(value, 14);
+    case 'angle': return check(value, 15);
+    case 'vector': return check(value, 16);
+    default: return false;
+  }
+}

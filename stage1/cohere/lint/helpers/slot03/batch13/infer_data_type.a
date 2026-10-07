@@ -1,0 +1,6 @@
+// Data-type matcher is separately supplied; ordered first match wins.
+export function inferDataType(value: string, types: string[], matches: (value: string, dataType: string) => boolean): string {
+  if (/^var\(/u.test(value)) { return ''; }
+  for (const dataType of types) { if (matches(value, dataType)) { return dataType; } }
+  return '';
+}

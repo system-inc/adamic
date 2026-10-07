@@ -1,0 +1,10 @@
+// CSS segmentation remains a separately owned dependency.
+export function isFamilyName(value: string, segment: (value: string, separator: string) => string[]): boolean {
+  let count = 0;
+  for (const part of segment(value, ',')) {
+    if (/^[0-9]/u.test(part)) { return false; }
+    if (/^var\(/u.test(part)) { continue; }
+    count++;
+  }
+  return count > 0;
+}

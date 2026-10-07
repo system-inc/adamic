@@ -1,0 +1,94 @@
+=== RUN   TestBatch13Helpers
+    batch13_test.go:162: 34896 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch13Helpers (3.77s)
+=== RUN   TestBatch13Mutants
+=== RUN   TestBatch13Mutants/matches_data_type.a
+    batch13_test.go:228: compiled semantic mutant caught at line 1: got "false/check:1;" Go "false/check:0;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#01
+    batch13_test.go:228: compiled semantic mutant caught at line 2: got "false/check:2;" Go "false/check:1;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#02
+    batch13_test.go:228: compiled semantic mutant caught at line 3: got "false/check:3;" Go "false/check:2;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#03
+    batch13_test.go:228: compiled semantic mutant caught at line 4: got "false/check:4;" Go "false/check:3;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#04
+    batch13_test.go:228: compiled semantic mutant caught at line 5: got "false/check:5;" Go "false/check:4;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#05
+    batch13_test.go:228: compiled semantic mutant caught at line 6: got "false/check:6;" Go "false/check:5;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#06
+    batch13_test.go:228: compiled semantic mutant caught at line 7: got "false/check:7;" Go "false/check:6;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#07
+    batch13_test.go:228: compiled semantic mutant caught at line 8: got "false/check:8;" Go "false/check:7;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#08
+    batch13_test.go:228: compiled semantic mutant caught at line 9: got "false/check:9;" Go "false/check:8;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#09
+    batch13_test.go:228: compiled semantic mutant caught at line 10: got "false/check:10;" Go "false/check:9;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#10
+    batch13_test.go:228: compiled semantic mutant caught at line 11: got "true/check:11;" Go "false/check:10;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#11
+    batch13_test.go:228: compiled semantic mutant caught at line 12: got "false/check:12;" Go "true/check:11;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#12
+    batch13_test.go:228: compiled semantic mutant caught at line 13: got "false/check:13;" Go "false/check:12;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#13
+    batch13_test.go:228: compiled semantic mutant caught at line 14: got "false/check:14;" Go "false/check:13;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#14
+    batch13_test.go:228: compiled semantic mutant caught at line 15: got "false/check:15;" Go "false/check:14;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#15
+    batch13_test.go:228: compiled semantic mutant caught at line 16: got "false/check:16;" Go "false/check:15;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#16
+    batch13_test.go:228: compiled semantic mutant caught at line 17: got "false/check:0;" Go "false/check:16;"
+=== RUN   TestBatch13Mutants/matches_data_type.a#17
+    batch13_test.go:228: compiled semantic mutant caught at line 18: got "false/check:0;" Go "false/"
+=== RUN   TestBatch13Mutants/matches_data_type.a#18
+    batch13_test.go:228: compiled semantic mutant caught at line 1: got "false/check:0;wrong-value;" Go "false/check:0;"
+=== RUN   TestBatch13Mutants/infer_data_type.a
+    batch13_test.go:228: compiled semantic mutant caught at line 29879: got "/type:color;check:0;type:length;check:1;type:percentage;check:2;type:ratio;check:3;type:number;check:4;type:integer;check:5;type:url;check:6;type:position;check:7;type:bg-size;check:8;type:line-width;check:9;type:image;check:10;type:family-name;check:11;type:generic-name;check:12;type:absolute-size;check:13;type:relative-size;check:14;type:angle;check:15;type:vector;check:16;" Go "/"
+=== RUN   TestBatch13Mutants/infer_data_type.a#01
+    batch13_test.go:228: compiled semantic mutant caught at line 14279: got "/" Go "length/type:color;check:0;type:length;check:1;"
+=== RUN   TestBatch13Mutants/infer_data_type.a#02
+    batch13_test.go:228: compiled semantic mutant caught at line 23: got "family-name/type:vector;check:16;type:angle;check:15;type:relative-size;check:14;type:absolute-size;check:13;type:generic-name;check:12;type:family-name;check:11;" Go "family-name/type:color;check:0;type:length;check:1;type:percentage;check:2;type:ratio;check:3;type:number;check:4;type:integer;check:5;type:url;check:6;type:position;check:7;type:bg-size;check:8;type:line-width;check:9;type:image;check:10;type:family-name;check:11;"
+=== RUN   TestBatch13Mutants/infer_data_type.a#03
+    batch13_test.go:228: compiled semantic mutant caught at line 23: got "family-name/type:color;wrong-value;check:0;wrong-value;type:length;wrong-value;check:1;wrong-value;type:percentage;wrong-value;check:2;wrong-value;type:ratio;wrong-value;check:3;wrong-value;type:number;wrong-value;check:4;wrong-value;type:integer;wrong-value;check:5;wrong-value;type:url;wrong-value;check:6;wrong-value;type:position;wrong-value;check:7;wrong-value;type:bg-size;wrong-value;check:8;wrong-value;type:line-width;wrong-value;check:9;wrong-value;type:image;wrong-value;check:10;wrong-value;type:family-name;wrong-value;check:11;wrong-value;" Go "family-name/type:color;check:0;type:length;check:1;type:percentage;check:2;type:ratio;check:3;type:number;check:4;type:integer;check:5;type:url;check:6;type:position;check:7;type:bg-size;check:8;type:line-width;check:9;type:image;check:10;type:family-name;check:11;"
+=== RUN   TestBatch13Mutants/is_family_name.a
+    batch13_test.go:228: compiled semantic mutant caught at line 5328: got "true/segment:,;" Go "false/segment:,;"
+=== RUN   TestBatch13Mutants/is_family_name.a#01
+    batch13_test.go:228: compiled semantic mutant caught at line 14304: got "false/segment:,;" Go "true/segment:,;"
+=== RUN   TestBatch13Mutants/is_family_name.a#02
+    batch13_test.go:228: compiled semantic mutant caught at line 48: got "false/segment:,;" Go "true/segment:,;"
+=== RUN   TestBatch13Mutants/is_family_name.a#03
+    batch13_test.go:228: compiled semantic mutant caught at line 29904: got "true/segment:,;" Go "false/segment:,;"
+=== RUN   TestBatch13Mutants/is_family_name.a#04
+    batch13_test.go:228: compiled semantic mutant caught at line 48: got "true/segment:;;" Go "true/segment:,;"
+=== RUN   TestBatch13Mutants/is_family_name.a#05
+    batch13_test.go:228: compiled semantic mutant caught at line 48: got "true/segment:,;wrong-value;" Go "true/segment:,;"
+--- PASS: TestBatch13Mutants (44.92s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a (1.35s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#01 (1.42s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#02 (1.35s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#03 (1.24s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#04 (1.52s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#05 (1.31s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#06 (1.52s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#07 (1.28s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#08 (1.22s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#09 (1.27s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#10 (1.24s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#11 (1.54s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#12 (1.35s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#13 (1.20s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#14 (1.31s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#15 (1.39s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#16 (1.15s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#17 (1.35s)
+    --- PASS: TestBatch13Mutants/matches_data_type.a#18 (1.37s)
+    --- PASS: TestBatch13Mutants/infer_data_type.a (1.59s)
+    --- PASS: TestBatch13Mutants/infer_data_type.a#01 (1.76s)
+    --- PASS: TestBatch13Mutants/infer_data_type.a#02 (1.54s)
+    --- PASS: TestBatch13Mutants/infer_data_type.a#03 (1.59s)
+    --- PASS: TestBatch13Mutants/is_family_name.a (1.74s)
+    --- PASS: TestBatch13Mutants/is_family_name.a#01 (1.89s)
+    --- PASS: TestBatch13Mutants/is_family_name.a#02 (1.79s)
+    --- PASS: TestBatch13Mutants/is_family_name.a#03 (2.76s)
+    --- PASS: TestBatch13Mutants/is_family_name.a#04 (3.05s)
+    --- PASS: TestBatch13Mutants/is_family_name.a#05 (1.49s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	48.698s
