@@ -1,0 +1,38 @@
+import type { Context } from '../common/context.a';
+import type { Node } from '../../wave-22-sixth/common/node.a';
+import { Kind } from '../../wave-22-sixth/common/kinds.a';
+export class Rule {
+    readonly context: Context;readonly ignoreCase: boolean;
+    constructor(context: Context,ignoreCase=false){this.context=context;this.ignoreCase=ignoreCase;}
+    defaults(name: Node|undefined): boolean { return name!==undefined&&[Kind.Identifier,Kind.StringLiteral,Kind.NumericLiteral,Kind.NoSubstitutionTemplateLiteral].includes(name.kind)&&(name.text==='defaultProps'||name.text==='getDefaultProps'); }
+    key(node: Node): string { let key=this.context.key(node);if(key===undefined){return '';}
+        if(key.kind===Kind.ComputedPropertyName&&key.children.length>0){key=this.context.first(key);}
+        const text=this.context.raw(key);return this.ignoreCase?this.context.lower(text):text;
+    }
+    sorted(object: Node): void {
+        const context=this.context;if(object.children.length===0){return;}let previous=context.first(object);
+        for(let index=0;index<object.children.length;index++) {
+            const current=context.node(object.children[index]??-1);
+            if(current.kind===Kind.SpreadAssignment){const next=object.children[index+1];if(next!==undefined){previous=context.node(next);}continue;}
+            if(context.wordCompare(this.key(current),this.key(previous))<0) {
+                context.report(current,'sort-default-props','propsNotSorted','Default prop declarations should be sorted alphabetically. A sorted list is one a reader can scan for a name instead of reading end to end, and it keeps two people adding a default in the same week from colliding in the same spot.');continue;
+            }
+            previous=current;
+        }
+    }
+    check(value: Node|undefined): void {
+        if(value===undefined){return;}if(value.kind===Kind.ObjectLiteralExpression){this.sorted(value);return;}
+        if(value.kind!==Kind.Identifier){return;}
+        for(const id of this.context.declarations(value)){const declaration=this.context.node(id);
+            if(![Kind.VariableDeclaration,Kind.PropertyAssignment,Kind.PropertyDeclaration].includes(declaration.kind)){continue;}
+            const initial=this.context.init(declaration);if(initial!==undefined&&initial.kind===Kind.ObjectLiteralExpression){this.sorted(initial);return;}
+        }
+    }
+    visit(node: Node): void {
+        const context=this.context;
+        if(node.kind===Kind.PropertyDeclaration){if(this.defaults(context.key(node))){this.check(context.init(node));}return;}
+        if(context.op(node)!==Kind.EqualsToken){return;}const target=context.first(node);
+        if(target.kind===Kind.PropertyAccessExpression&&this.defaults(context.last(target))){this.check(context.last(node));}
+    }
+}
+export function create(context: Context): Rule { return new Rule(context); }

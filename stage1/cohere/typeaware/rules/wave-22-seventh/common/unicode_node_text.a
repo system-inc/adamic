@@ -1,0 +1,8 @@
+import { tsgoInspect } from 'adamic';
+import type { Node } from '../../wave-22-sixth/common/node.a';
+import { Frames, header } from '../../../frames.ts';
+export function unicodeNodeText(program: number,node: Node): number[] {
+    const f=new Frames(tsgoInspect(program,node.file,node.pos,node.end,node.kindName,'unicode-node-text'));
+    header(f,'unicode-node-text');const count=f.natural();const values:number[]=[];
+    for(let i=0;i<count;i++){values.push(f.natural());values.push(f.natural());values.push(f.natural());}f.end();return values;
+}
