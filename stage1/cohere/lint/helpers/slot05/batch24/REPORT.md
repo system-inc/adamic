@@ -56,3 +56,7 @@ Not covered: regex compilation or matching, full rule findings/positions/fixes/s
 ## Landing-first verification on current main
 
 No new claim. The complete 68-helper branch was rebased onto current main and the newer lint-area witness-options changes were taken. All 24 actual helper packages were rerun uncached against the changed compiler/runtime, and all 290 compiling semantic mutants were caught again. Main advanced during the gate with stage3-only changes; a final merge-preserving rebase took that main while all 3527 helper/compiler/runtime/oracle input objects remained identical. Final static checks, seven Node input probes and the count-preserving statement-order mutant passed again. See LANDING.md and evidence/landing-* for every command, fresh witness and final-base identity. Full repository gate and seventeen required external-input checks were not run; no skip credited. No unfinished helper or additional claim.
+
+## Current lint-area landing
+
+See LANDING25.md for the current-area merge, unchanged-input proof and 34 fresh semantic mutant witnesses. No new helper claimed.
