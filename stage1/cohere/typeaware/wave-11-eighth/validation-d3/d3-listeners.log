@@ -1,0 +1,8 @@
+=== RUN   TestWave11ListenerDeclarationsAndMutants
+    wave_11_listeners_test.go:35: manifest-missing-kinds: valid JSON, production Go comparison catches byte 120
+    wave_11_listeners_test.go:89: wrong-kind: exit 0, empty stderr, Go listener comparison catches byte 79
+    wave_11_listeners_test.go:89: missing-listener: exit 0, empty stderr, Go listener comparison catches byte 406
+    wave_11_listeners_test.go:91: 15 numeric listener sets match production Go defaults; ASAN/UBSAN/LSAN clean
+--- PASS: TestWave11ListenerDeclarationsAndMutants (29.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	29.767s

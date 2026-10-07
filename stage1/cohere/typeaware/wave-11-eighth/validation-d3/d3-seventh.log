@@ -1,0 +1,22 @@
+=== RUN   TestWave11SeventhAgreementAndMutants
+    wave_11_seventh_test.go:129: numeric manifests match live production Go listeners
+    wave_11_seventh_test.go:150: controls 230 parse-clean 230
+    wave_11_seventh_test.go:152: controls: 126207 identical finding bytes; findings 307
+    wave_11_seventh_test.go:160: controls-asan: 126207 identical finding bytes; findings 307
+    wave_11_seventh_test.go:208: fragment-attributes mutant exit 0 empty stderr, Go bytes catch byte 1456
+    wave_11_seventh_test.go:208: undefined-intrinsic mutant exit 0 empty stderr, Go bytes catch byte 1798
+    wave_11_seventh_test.go:208: index-name mutant exit 0 empty stderr, Go bytes catch byte 3065
+    wave_11_seventh_test.go:218: raw binding mutant exit 0 empty stderr, Go bytes catch byte 543
+    wave_11_seventh_test.go:239: repository: 18485 identical finding bytes; findings 0
+    wave_11_seventh_test.go:240: repository-asan: 18485 identical finding bytes; findings 0
+    wave_11_seventh_test.go:245: repository go process 153.883354ms cohere: load_ns=76700509 rule_ns=7013005 run_ns=60592044
+    wave_11_seventh_test.go:245: repository native process 692.089636ms tsgo: load_ns=67684625 query_ns=281520040 queries=287 first_query_ns=3349909 run_ns=614576606
+    wave_11_seventh_test.go:239: compiler: 5318 identical finding bytes; findings 0
+    wave_11_seventh_test.go:240: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_11_seventh_test.go:245: compiler go process 409.726648ms cohere: load_ns=271517757 rule_ns=75814106 run_ns=116412474
+    wave_11_seventh_test.go:245: compiler native process 6.06336937s tsgo: load_ns=270123044 query_ns=2990148118 queries=77 first_query_ns=36334 run_ns=5754501905
+    wave_11_seventh_test.go:255: released handle rejected with panic 70
+    wave_11_seventh_test.go:260: released registry mutant exits 0, caught by required panic 70
+--- PASS: TestWave11SeventhAgreementAndMutants (93.18s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	93.183s
