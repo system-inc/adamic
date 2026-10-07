@@ -1,0 +1,47 @@
+import { panic } from 'adamic';
+// Indices keep container trees acyclic without ownership cycles. Callers supply
+// the actual PropertyOrder table; this helper owns traversal, not table generation.
+export interface PropertySortNode {
+    readonly kind: string;
+    readonly property: string;
+    readonly value: string;
+    readonly valuePresent: boolean;
+    readonly nodes: readonly number[];
+}
+export interface PropertySortResult {
+    readonly order: number[];
+    readonly count: number;
+    readonly visited: string[];
+}
+export function propertySort(arena: readonly PropertySortNode[], roots: readonly number[], propertyOrder: ReadonlyMap<string, number>): PropertySortResult {
+    const order: number[] = [];
+    const visited: string[] = [];
+    const seen = new Set<number>();
+    let count = 0;
+    let seenTwSort = false;
+    const queue = roots.slice();
+    for(let head = 0; head < queue.length; head++) {
+        const index = queue[head] ?? panic('missing CSS queue index');
+        const node = arena[index] ?? panic('missing CSS arena node');
+        if(node.kind === 'declaration') {
+            if(!node.valuePresent) { continue; }
+            count++;
+            visited.push(node.property);
+            if(seenTwSort) { continue; }
+            if(node.property === '--tw-sort') {
+                const position = propertyOrder.get(node.value);
+                if(position !== undefined) {
+                    if(!seen.has(position)) { seen.add(position); order.push(position); }
+                    seenTwSort = true;
+                    continue;
+                }
+            }
+            const position = propertyOrder.get(node.property);
+            if(position !== undefined && !seen.has(position)) { seen.add(position); order.push(position); }
+        } else if(node.kind === 'rule' || node.kind === 'at-rule') {
+            for(const child of node.nodes) { queue.push(child); }
+        }
+    }
+    order.sort((left, right) => left - right);
+    return {order, count, visited};
+}
