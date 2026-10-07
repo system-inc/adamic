@@ -1363,3 +1363,59 @@ units are inputs to a later isolated-heavy-package unit, not new measurements
 of the backend change. Setup remains separate: the whole-group rerun used
 84.939 s of warm setup; original shard 2 recorded 601 s. Setup was not rerun
 on the other fourteen planned shards, so per-box setup there is unmeasured.
+
+### Oracle Once measurement at 33935158
+
+The provenance unit is already included in 33935158, implemented by
+be217bbddd8bf627c94263ef89c771734d9b09af. Reverification command:
+`go test -race ./cmd/adamic-gate -run '^TestCompareLocalProvenance$' -count=1`.
+It passed (1.102 s), including identical green names/verdicts from another
+commit, a different Node version, different/missing Go, missing metadata,
+matching sidecar and notes, and legacy shard toolchain records. Existing
+commit/Go/Node guard mutants and their caught tests remain in the committed
+provenance proof archive. No duplicate implementation was added.
+
+Oracle measurement is blocked at exact source
+33935158c8126e795d90c044f04b35238afcd4ed. A compile-only probe and two full
+package attempts all failed before running tests:
+`internal/oracle/gcc_lane_test.go:84:15: undefined: leakSanitizer`.
+The compile probe was `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle
+-run '^$' -count=1`; each full attempt was `ADAMIC_GATE_UNCACHED=1 go test
+-count=1 -json -timeout 60m -parallel 5 ./internal/oracle`. Output was sent
+directly to files. Therefore there are zero executed fixture/waiter samples
+and no three-run median, not zero seconds. No oracle file was changed and
+no compile workaround, omitted GCC test file, or substituted source was
+used to claim a measurement of this commit.
+
+| Step inside identity's gateOnce | Median seconds | Dependency from source inspection |
+| --- | --- | --- |
+| Cache-directory lookup | unavailable | Independent lookup |
+| Node version query | unavailable | Independent subprocess |
+| Sanitized runtime-library preparation | unavailable | Independent flag variant |
+| Release runtime-library preparation | unavailable | Independent flag variant |
+| Counted runtime-library preparation | unavailable | Independent flag variant |
+| Harness/runner discovery and reads | unavailable | Independent of runtime variants |
+| Repository path, stack limit, environment capture | unavailable | Independent of runtime variants |
+| Context digest | unavailable | Depends on harness bytes and captured context |
+| Each identity caller's wait | unavailable | All callers depend on Once completion |
+
+These are dependency inferences, not measured concurrency results. The three
+runtime preparations have distinct flag-keyed cache entries; they can be
+logically independent, but concurrent compilation's memory/CPU cost remains
+unmeasured. Context hashing depends on its captured inputs and is sequential
+with respect to collecting them. Waiters receive the combined identity only
+after all initialization finishes. The 1368.845-second historical gateOnce
+planning price is a conservative whole-package grouping of measured test
+observations; it is not an observed duration of the Once callback itself.
+The requested profile is needed before attributing that floor to setup.
+
+The available box reports nproc=5 and cpu.max="400000 100000" (four effective
+CPUs). Toolchain: Go 1.27.1 linux/amd64, Clang 20.1.8, Node v24.19.0;
+uncached oracle result mode. No fixture run completed, so no fixture load
+before/after or before/after speedup is reported. Setup and failure logs are
+preserved in the accompanying oracle measurement evidence archive.
+
+Setup completed successfully in 88.205 s: Go ready 0.199 s, submodules
+0.325 s, Clang 0.792 s, Node 1.014 s, module dependencies 27.890 s,
+Go build 87.206 s (setup cumulative marks). Full setup build flags and
+loads are in the evidence; these are setup intervals, not fixture timings.
