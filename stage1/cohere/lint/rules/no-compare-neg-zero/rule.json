@@ -1,0 +1,12 @@
+{
+  "name": "no-compare-neg-zero",
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoCompareNegZero",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoCompareNegZero"
+}

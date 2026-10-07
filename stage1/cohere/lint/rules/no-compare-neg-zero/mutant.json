@@ -1,0 +1,6 @@
+{
+  "name": "negative_zero_ignored",
+  "file": "rule.a",
+  "from": "literal.text === '0'",
+  "to": "literal.text === '1'"
+}
