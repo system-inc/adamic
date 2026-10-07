@@ -1739,21 +1739,21 @@
       },
       {
         "reason": "a value as a condition",
-        "owner": "OWNER BLANK",
+        "owner": "codex/taste-not-soundness",
         "NotYet": 0,
         "Refused": 56,
         "count": 56
       },
       {
         "reason": "a function returning T",
-        "owner": "OWNER BLANK",
+        "owner": "01a1143c",
         "NotYet": 50,
         "Refused": 0,
         "count": 50
       },
       {
         "reason": "reading CharacterCodes",
-        "owner": "OWNER BLANK",
+        "owner": "compiler/stage3-front",
         "NotYet": 37,
         "Refused": 0,
         "count": 37
@@ -2488,14 +2488,14 @@
       },
       {
         "reason": "a function returning T | T[] | undefined",
-        "owner": "OWNER BLANK",
+        "owner": "01a1143c",
         "NotYet": 3,
         "Refused": 0,
         "count": 3
       },
       {
         "reason": "a function returning T | readonly T[] | undefined",
-        "owner": "OWNER BLANK",
+        "owner": "01a1143c",
         "NotYet": 3,
         "Refused": 0,
         "count": 3
@@ -3671,56 +3671,56 @@
       },
       {
         "reason": "a function returning T | T[]",
-        "owner": "OWNER BLANK",
+        "owner": "01a1143c",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "a function returning T | readonly T[]",
-        "owner": "OWNER BLANK",
+        "owner": "01a1143c",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "a function returning T1 & T2",
-        "owner": "OWNER BLANK",
+        "owner": "01a1143c",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "a function returning TEntry | undefined",
-        "owner": "OWNER BLANK",
+        "owner": "01a1143c",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "a function returning TOut",
-        "owner": "OWNER BLANK",
+        "owner": "01a1143c",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "a function returning TOut | (TIn & undefined) | (TVisited & undefined)",
-        "owner": "OWNER BLANK",
+        "owner": "01a1143c",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "a function returning TOut | undefined",
-        "owner": "OWNER BLANK",
+        "owner": "01a1143c",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
       },
       {
         "reason": "a function returning TPrivateEntry | undefined",
-        "owner": "OWNER BLANK",
+        "owner": "01a1143c",
         "NotYet": 1,
         "Refused": 0,
         "count": 1
@@ -6234,27 +6234,6 @@
     ],
     "unowned_reasons": [
       {
-        "reason": "a value as a condition",
-        "owner": "OWNER BLANK",
-        "NotYet": 0,
-        "Refused": 56,
-        "count": 56
-      },
-      {
-        "reason": "a function returning T",
-        "owner": "OWNER BLANK",
-        "NotYet": 50,
-        "Refused": 0,
-        "count": 50
-      },
-      {
-        "reason": "reading CharacterCodes",
-        "owner": "OWNER BLANK",
-        "NotYet": 37,
-        "Refused": 0,
-        "count": 37
-      },
-      {
         "reason": "a BinaryExpression with a value and a value",
         "owner": "OWNER BLANK",
         "NotYet": 32,
@@ -6816,20 +6795,6 @@
       },
       {
         "reason": "a function returning ResolvedConfigFileName",
-        "owner": "OWNER BLANK",
-        "NotYet": 3,
-        "Refused": 0,
-        "count": 3
-      },
-      {
-        "reason": "a function returning T | T[] | undefined",
-        "owner": "OWNER BLANK",
-        "NotYet": 3,
-        "Refused": 0,
-        "count": 3
-      },
-      {
-        "reason": "a function returning T | readonly T[] | undefined",
         "owner": "OWNER BLANK",
         "NotYet": 3,
         "Refused": 0,
@@ -7558,62 +7523,6 @@
       },
       {
         "reason": "a function returning ResolvedConfigFilePath",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "a function returning T | T[]",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "a function returning T | readonly T[]",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "a function returning T1 & T2",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "a function returning TEntry | undefined",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "a function returning TOut",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "a function returning TOut | (TIn & undefined) | (TVisited & undefined)",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "a function returning TOut | undefined",
-        "owner": "OWNER BLANK",
-        "NotYet": 1,
-        "Refused": 0,
-        "count": 1
-      },
-      {
-        "reason": "a function returning TPrivateEntry | undefined",
         "owner": "OWNER BLANK",
         "NotYet": 1,
         "Refused": 0,

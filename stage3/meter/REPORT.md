@@ -252,3 +252,28 @@ a separate paired-report assertion checks Unowned precedes the latent tables.
 An independent scratch mutant claims an unmatched owner, and that test catches
 it only through the owner assertion. Prefix, variance and cross-kind grouping
 checks also pass. The ownership-aware suite passes all nineteen tests, no skips.
+
+
+Unowned refinement: the Markdown table now shows only reasons with at least
+10 unique sites on either tree, ordered by the larger per-tree total. The final
+line gives the number of lower-count reasons and their sites summed across
+both trees. JSON retains every unowned reason. This recorded run has
+26 displayed unowned rows. Existing checker fields, the checker table,
+latent totals and exact reason counts are unchanged; recorded compiler
+provenance is retained while rerendering the completed measurements.
+
+Three >=30-site families were assigned: condition handling to
+codex/taste-not-soundness (the pinned taste feature), generic returns to
+01a1143c (the return family at latent REPORT.md:537 and :542), and
+reading CharacterCodes to compiler/stage3-front (the enum family at :1141).
+BinaryExpression with value operands, values of type T and values of type any
+remain OWNER BLANK because the report does not establish their worker/branch
+ownership. The remaining large families are not assigned by guesswork.
+
+All twenty existing/new tests pass with both real census binaries enabled,
+log refinement-tests.log. The threshold test covers 9 sites on each tree
+(still omitted), 10 on either tree, a 6 NotYet plus 4 Refused total, sorting,
+and the exact tail summary; the full JSON list remains intact. A scratch
+>=9 threshold mutant fails only that test's row-exclusion assertion, with
+trace in threshold-mutant.log. No census rerun or compiler change was needed
+for this presentation and ownership refinement.

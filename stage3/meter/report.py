@@ -96,8 +96,11 @@ def unowned_table(trees):
                                                   'area_NotYet': 0, 'area_Refused': 0})
             for kind in ('NotYet', 'Refused'):
                 row[label + '_' + kind] = item[kind]
-    ordered = sorted(rows.values(), key=lambda row: (-sum(row[key] for key in
-                     ('main_NotYet', 'main_Refused', 'area_NotYet', 'area_Refused')), row['reason']))
+    def count(row):
+        return max(row['main_NotYet'] + row['main_Refused'], row['area_NotYet'] + row['area_Refused'])
+    ordered = sorted(rows.values(), key=lambda row: (-count(row), row['reason']))
+    visible = [row for row in ordered if count(row) >= 10]
+    tail = [row for row in ordered if count(row) < 10]
     lines = ['', '### Unowned', '', MEASUREMENT + '.',
              'OWNER BLANK rows go to @system_adamic. Counts are grouped by exact reason.', '']
     def table(items):
@@ -107,13 +110,13 @@ def unowned_table(trees):
             reason = escape(row['reason']).replace('|', '&#124;').replace('\n', ' ')
             result.append(f"| {reason} | OWNER BLANK | {row['main_NotYet']} | {row['main_Refused']} | {row['area_NotYet']} | {row['area_Refused']} |")
         return result
-    if ordered:
-        lines += table(ordered[:10])
-        if len(ordered) > 10:
-            lines += ['', '<details>', f'<summary>{len(ordered)-10} more unowned reasons</summary>', '']
-            lines += table(ordered[10:]) + ['', '</details>']
+    if visible:
+        lines += table(visible)
     else:
-        lines.append('No unowned reasons.')
+        lines.append('No unowned reasons with at least 10 sites on either tree.')
+    tail_sites = sum(row[key] for row in tail for key in
+                     ('main_NotYet', 'main_Refused', 'area_NotYet', 'area_Refused'))
+    lines += ['', f'{len(tail)} more unowned reasons, {tail_sites} sites in all']
     return ordered, lines
 
 

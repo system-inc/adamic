@@ -85,8 +85,9 @@ class ReportTests(unittest.TestCase):
                        for path in sorted((self.tree / 'src/compiler').glob('*.ts'))]
             if label == 'area':
                 latent[1]['findings'] = [{'measurement': MEASUREMENT, 'kind': 'NotYet',
-                                         'where': latent[1]['file'] + ':1:1',
-                                         'reason': 'area-only blocker', 'text': 'area-only blocker'}]
+                                         'where': latent[1]['file'] + f':{line}:1',
+                                         'reason': 'area-only blocker', 'text': 'area-only blocker'}
+                                        for line in range(1, 11)]
             (self.run / label / 'latent.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in latent))
         result = report_pair(self.tree, self.tree, self.run, 'stamp', 'main-sha', 'area-sha')
         self.assertEqual(result['files'], result['trees']['area']['files'])
@@ -95,7 +96,7 @@ class ReportTests(unittest.TestCase):
         self.assertIn('| area-only blocker | OWNER BLANK |', text)
         self.assertLess(text.index('### Unowned'), text.index('Latent lowering, main:'))
         self.assertEqual(result['trees']['main']['latent_lowering']['totals']['NotYet'], 0)
-        self.assertEqual(result['trees']['area']['latent_lowering']['totals']['NotYet'], 1)
+        self.assertEqual(result['trees']['area']['latent_lowering']['totals']['NotYet'], 10)
         self.assertEqual(result['trees']['main']['tree_ref'], 'origin/main')
         self.assertEqual((self.run / 'report.md').read_text().splitlines()[:2],
                          ['Whole program: main: 3/4; area: 0/4', 'Own file: main: 4/4; area: 3/4'])
@@ -166,14 +167,31 @@ class LatentReportTests(unittest.TestCase):
         self.assertEqual(after['totals']['Refused'], before['totals']['Refused'])
 
     def test_unmatched_reason_is_owner_blank_and_in_unowned_first(self):
+        self.records[1]['findings'] += [self.finding('NotYet', 'existing', line) for line in range(3, 12)]
         result = self.render()
         row = next(row for row in result['reason_rows'] if row['reason'] == 'existing')
         self.assertEqual(row['owner'], 'OWNER BLANK')
         rows, lines = unowned_table({'main': {'latent_lowering': result}, 'area': {'latent_lowering': result}})
         self.assertIn('### Unowned', lines)
         text = '\n'.join(lines)
-        self.assertIn('| existing | OWNER BLANK | 1 | 0 | 1 | 0 |', text)
+        self.assertIn('| existing | OWNER BLANK | 10 | 0 | 10 | 0 |', text)
         self.assertTrue(any(row['reason'] == 'existing' for row in rows))
+
+    def test_unowned_threshold_uses_either_tree_and_summarizes_tail(self):
+        def row(reason, notyet, refused):
+            return {'reason': reason, 'owner': 'OWNER BLANK', 'NotYet': notyet, 'Refused': refused}
+        main = [row('nine on both', 9, 0), row('main edge', 6, 4), row('large', 11, 0), row('tiny', 1, 0)]
+        area = [row('nine on both', 9, 0), row('area edge', 10, 0)]
+        all_rows, lines = unowned_table({'main': {'latent_lowering': {'unowned_reasons': main}},
+                                        'area': {'latent_lowering': {'unowned_reasons': area}}})
+        text = '\n'.join(lines)
+        self.assertIn('| main edge | OWNER BLANK | 6 | 4 | 0 | 0 |', text)
+        self.assertIn('| area edge | OWNER BLANK | 0 | 0 | 10 | 0 |', text)
+        self.assertNotIn('| nine on both |', text)
+        self.assertNotIn('| tiny |', text)
+        self.assertLess(text.index('| large |'), text.index('| main edge |'))
+        self.assertIn('2 more unowned reasons, 19 sites in all', text)
+        self.assertEqual(len(all_rows), 5)
 
     def test_exact_prefix_and_variance_owners(self):
         owners = json.loads((Path(__file__).parent / 'owners.json').read_text())

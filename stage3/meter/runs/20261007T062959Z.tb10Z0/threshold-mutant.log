@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_unowned_threshold_uses_either_tree_and_summarizes_tail (report_test.LatentReportTests.test_unowned_threshold_uses_either_tree_and_summarizes_tail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/meter-threshold-mutant-8_zr2qew/report_test.py", line 190, in test_unowned_threshold_uses_either_tree_and_summarizes_tail
+    self.assertNotIn('| nine on both |', text)
+AssertionError: '| nine on both |' unexpectedly found in '\n### Unowned\n\nmeasured on a checker-rejected program.\nOWNER BLANK rows go to @system_adamic. Counts are grouped by exact reason.\n\n| Reason | Owner | Main NotYet | Main Refused | Area NotYet | Area Refused |\n| --- | --- | ---: | ---: | ---: | ---: |\n| large | OWNER BLANK | 11 | 0 | 0 | 0 |\n| area edge | OWNER BLANK | 0 | 0 | 10 | 0 |\n| main edge | OWNER BLANK | 6 | 4 | 0 | 0 |\n| nine on both | OWNER BLANK | 9 | 0 | 9 | 0 |\n\n2 more unowned reasons, 19 sites in all'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

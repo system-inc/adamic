@@ -100,7 +100,8 @@ owner column. owners.json is a flat reason-to-owner map. Exact matches win,
 then the longest matching prefix. The explicit "seen as" entry also matches
 that phrase inside variance messages, whose source type precedes it.
 Unknown reasons get OWNER BLANK. The Unowned section appears immediately after
-the checker table and before owned reason tables. It shows the ten largest
-unowned groups first, with every remaining unowned row in a collapsible table.
+the checker table and before owned reason tables. It lists only reasons with at least 10 unique sites on either tree, sorted by
+the larger per-tree count. A final line summarizes the number of omitted reasons
+and their total sites summed across both trees.
 Each row compares both trees; JSON retains the complete unowned_reasons list,
 and each tree's reason_rows carries its owner and counts by kind.
