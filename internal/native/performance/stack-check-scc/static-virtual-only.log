@@ -1,0 +1,6 @@
+--- FAIL: TestStackCheckCallTargets (0.00s)
+    --- FAIL: TestStackCheckCallTargets/virtual_implementation (0.00s)
+        stack_checks_test.go:73: got [false false false], want [true false true]
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.011s
+FAIL

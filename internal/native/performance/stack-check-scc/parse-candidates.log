@@ -1,0 +1,6 @@
+=== RUN   TestStackCheckParseProbe
+    stack_checks_probe_test.go:13: isIdentifierStart candidate=true
+    stack_checks_probe_test.go:14: 227 candidates of 227 functions
+--- PASS: TestStackCheckParseProbe (0.36s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.368s

@@ -1,0 +1,5 @@
+--- FAIL: TestStackCheckBuiltinCallbacks (0.00s)
+    stack_checks_test.go:95: ir.ArrayMap: got [false false false]
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.004s
+FAIL

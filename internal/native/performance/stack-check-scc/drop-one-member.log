@@ -1,0 +1,5 @@
+--- FAIL: TestRecursiveStackComponentsAgainstReachability (0.00s)
+    stack_checks_test.go:35: edges=000001010 function=1: candidate=false recursive=true
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.050s
+FAIL
