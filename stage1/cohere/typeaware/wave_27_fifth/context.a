@@ -1,0 +1,125 @@
+import { panic, tsgoInspect } from 'adamic';
+import type { ParseNode } from '../../../typescript/parser/nodes.ts';
+import type { Rules } from '../rules.ts';
+import { Diagnostic } from '../diagnostic.ts';
+import { K, kindNames } from './kinds.a';
+export class Node {
+    readonly index: number;
+    readonly kind: number;
+    readonly syntax: ParseNode;
+    constructor(index: number, kind: number, syntax: ParseNode) {
+        this.index = index;
+        this.kind = kind;
+        this.syntax = syntax;
+    }
+}
+// The driver caches each parser node once. Rules receive this exact object and
+// use numeric kinds; string names are confined to the existing wire adapter.
+export class Context {
+    readonly rules: Rules;
+    readonly nodes: Node[] = [];
+    constructor(rules: Rules) {
+        this.rules = rules;
+        const kinds = new Map<string, number>();
+        for(let i = 0; i < kindNames.length; i++) {
+            kinds.set(kindNames[i] ?? panic('missing kind name'), i);
+        }
+        for(let i = 0; i < rules.parser.nodes.length; i++) {
+            const syntax = rules.parser.node(i);
+            const kind = kinds.get(syntax.kind) ?? -1;
+            if(kind < 0) {
+                panic('unmapped parser kind');
+            }
+            this.nodes.push(new Node(i, kind, syntax));
+        }
+    }
+    node(index: number): Node {
+        return this.nodes[index] ?? panic('missing cached node');
+    }
+    child(node: Node, at: number): Node {
+        return this.node(node.syntax.children[at] ?? panic('missing child'));
+    }
+    parent(node: Node): Node | undefined {
+        const at = this.rules.parents[node.index] ?? -1;
+        return at < 0 ? undefined : this.node(at);
+    }
+    skip(node: Node): Node {
+        let current = node;
+        while(current.kind === K.ParenthesizedExpression) {
+            current = this.child(current, 0);
+        }
+        return current;
+    }
+    start(node: Node): number {
+        return this.rules.start(node.syntax);
+    }
+    text(node: Node): string {
+        return this.rules.text(node.syntax);
+    }
+    ask(node: Node, question: string): string {
+        this.rules.queries++;
+        return tsgoInspect(
+            this.rules.program,
+            this.rules.path,
+            this.rules.byte(node.syntax.pos),
+            this.rules.byte(node.syntax.end),
+            node.syntax.kind,
+            question,
+        );
+    }
+    report(rule: string, id: string, message: string, node: Node): Diagnostic {
+        return this.range(rule, id, message, this.start(node), node.syntax.end);
+    }
+    range(rule: string, id: string, message: string, start: number, end: number): Diagnostic {
+        const finding = new Diagnostic(rule, id, message, this.rules.byte(start), this.rules.byte(end), '');
+        this.rules.findings.push(finding);
+        return finding;
+    }
+    args(node: Node): Node[] {
+        const result: Node[] = [];
+        if(node.syntax.list > 0) {
+            for(const at of node.syntax.children.slice(node.syntax.children.length - node.syntax.list)) {
+                result.push(this.node(at));
+            }
+        }
+        return result;
+    }
+    has(node: Node, kind: number): boolean {
+        return node.syntax.children.some((index) => this.node(index).kind === kind);
+    }
+    body(node: Node): Node | undefined {
+        const last = node.syntax.children[node.syntax.children.length - 1];
+        if(last === undefined) {
+            return undefined;
+        }
+        const child = this.node(last);
+        if(node.kind === K.ArrowFunction) {
+            return child;
+        }
+        return child.kind === K.Block ? child : undefined;
+    }
+    name(node: Node): Node | undefined {
+        if(node.kind === K.ArrowFunction || node.kind === K.Constructor) {
+            return undefined;
+        }
+        for(const index of node.syntax.children) {
+            const child = this.node(index);
+            if(
+                [
+                    K.Identifier,
+                    K.PrivateIdentifier,
+                    K.StringLiteral,
+                    K.NumericLiteral,
+                    K.NoSubstitutionTemplateLiteral,
+                    K.ComputedPropertyName,
+                ].includes(child.kind)
+            ) {
+                return child;
+            }
+            if(child.kind === K.Parameter || child.kind === K.TypeParameter || child.kind === K.Block) {
+                break;
+            }
+        }
+        return undefined;
+    }
+}

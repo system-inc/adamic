@@ -1,0 +1,1047 @@
+[
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-000.a",
+    "source": "async function foo() { doSomething() }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-001.a",
+    "source": "(async function() { doSomething() })\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-002.a",
+    "source": "async () => { doSomething() }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-003.a",
+    "source": "async () => doSomething()\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-004.a",
+    "source": "({ async foo() { doSomething() } })\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-005.a",
+    "source": "class A { async foo() { doSomething() } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-006.a",
+    "source": "(class { async foo() { doSomething() } })\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-007.a",
+    "source": "(class { async ''() { doSomething() } })\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-008.a",
+    "source": "async function foo() { async () => { await doSomething() } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-009.a",
+    "source": "async function foo() { await (async () => { doSomething() }) }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-010.a",
+    "source": "const obj = { async: async function foo() { bar(); } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-011.a",
+    "source": "async    /* test */ function foo() { doSomething() }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-012.a",
+    "source": "class A {\n                a = 0\n                async [b](){ return 0; }\n            }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-013.a",
+    "source": "class A {\n                a\n                async [b](){ return 0; }\n            }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-014.a",
+    "source": "class A {\n                a = 0\n                async in(){ return 0; }\n            }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-015.a",
+    "source": "const obj = {\n                foo,\n                async in(){ return 0; }\n            }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-016.a",
+    "source": "foo\n                async () => { return 0; }\n            \nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-017.a",
+    "source": "class A {\n                foo() {}\n                async [bar] () { baz; }\n            }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-018.a",
+    "source": "async function run() { using resource = getResource(); }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-019.a",
+    "source": "async function foo() { await doSomething() }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-020.a",
+    "source": "(async function() { await doSomething() })\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-021.a",
+    "source": "async () => { await doSomething() }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-022.a",
+    "source": "async () => await doSomething()\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-023.a",
+    "source": "({ async foo() { await doSomething() } })\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-024.a",
+    "source": "class A { async foo() { await doSomething() } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-025.a",
+    "source": "(class { async foo() { await doSomething() } })\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-026.a",
+    "source": "async function foo() { await (async () => { await doSomething() }) }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-027.a",
+    "source": "async function foo() {}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-028.a",
+    "source": "async () => {}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-029.a",
+    "source": "async function foo() { for await (x of xs); }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-030.a",
+    "source": "\n                for await (let num of asyncIterable) {\n                    console.log(num);\n                }\n            \nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-031.a",
+    "source": "async function* run() { yield * anotherAsyncGenerator() }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-032.a",
+    "source": "async function* run() {\n                await new Promise(resolve => setTimeout(resolve, 100));\n                yield 'Hello';\n                console.log('World');\n            }\n            \nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-033.a",
+    "source": "async function* run() { }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-034.a",
+    "source": "const foo = async function *(){}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-035.a",
+    "source": "const foo = async function *(){ console.log(\"bar\") }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-036.a",
+    "source": "async function* run() { console.log(\"bar\") }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-037.a",
+    "source": "await using resource = getResource();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-038.a",
+    "source": "async function run() { await using resource = getResource(); }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-039.a",
+    "source": "class A {\n a = 0\n async m(){ return 0; }\n}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-040.a",
+    "source": "class A {\n a = 0\n async foo(){ return 0; }\n}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-041.a",
+    "source": "class A {\n a = 0\n async [b](){ return 0; }\n}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-042.a",
+    "source": "class A {\n a = 0\n async in(){ return 0; }\n}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-043.a",
+    "source": "class A {\n a = 0\n async instanceof(){ return 0; }\n}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-044.a",
+    "source": "class A {\n a\n async [b](){ return 0; }\n}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-045.a",
+    "source": "class A {\n foo() {}\n async [bar] () { baz; }\n}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-046.a",
+    "source": "class A { static async foo() { return 1; } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-047.a",
+    "source": "class A { public async foo() { return 1; } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-048.a",
+    "source": "export async function foo() { return 1; }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-049.a",
+    "source": "class A { private static async foo() { return 1; } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-050.a",
+    "source": "async \nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-051.a",
+    "source": "async \nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-052.a",
+    "source": "const o = { run: async function(a) { return 1; } };\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-053.a",
+    "source": "run: async function\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-054.a",
+    "source": "class A { foo = async function(a) { return 1; } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-055.a",
+    "source": "foo = async function\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-056.a",
+    "source": "class A { static foo = async function(a) { return 1; } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-057.a",
+    "source": "static foo = async function\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-058.a",
+    "source": "const o = { run: async (a) => { return 1; } };\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-059.a",
+    "source": "run: async \nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-060.a",
+    "source": "class A { foo = async (a) => { return 1; } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-061.a",
+    "source": "foo = async \nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-062.a",
+    "source": "const f = async (a) => { return 1; };\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-063.a",
+    "source": "const o = { async run(a) { return 1; } };\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-064.a",
+    "source": "async run\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-065.a",
+    "source": "class A { static async foo(a) { return 1; } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-066.a",
+    "source": "static async foo\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-067.a",
+    "source": "async function foo(a) { return 1; }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-068.a",
+    "source": "async function foo\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-069.a",
+    "source": "const f = async function(a) { return 1; };\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-070.a",
+    "source": "async function\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-071.a",
+    "source": "const f = async function named(a) { return 1; };\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-072.a",
+    "source": "async function named\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-073.a",
+    "source": "class A { foo = [async function(a) { return 1; }] }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-074.a",
+    "source": "async function\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-075.a",
+    "source": "class A { foo = bar(async function(a) { return 1; }) }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-076.a",
+    "source": "async function\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-077.a",
+    "source": "const o = { run: [async function(a) { return 1; }] };\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-078.a",
+    "source": "async function\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-079.a",
+    "source": "const o = { run: bar(async (a) => { return 1; }) };\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-080.a",
+    "source": "export async function foo(a) { return 1; }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-081.a",
+    "source": "async function foo\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-082.a",
+    "source": "export default async function foo(a) { return 1; }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-083.a",
+    "source": "async function foo\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-084.a",
+    "source": "export default async function(a) { return 1; }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-085.a",
+    "source": "async function\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-086.a",
+    "source": "class A { public async foo(a) { return 1; } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-087.a",
+    "source": "public async foo\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-088.a",
+    "source": "class A { private static async foo(a) { return 1; } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-089.a",
+    "source": "private static async foo\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-090.a",
+    "source": "class A { async foo(a) { return 1; } }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-091.a",
+    "source": "async foo\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-092.a",
+    "source": "\ntype CollectorType = (key: string) => Promise<number>;\nconst collectors: Record<string, CollectorType> = {\n    wired: async function (key: string): Promise<number> {\n        return Promise.resolve(key.length);\n    },\n    notWiredYet: async function (key: string): Promise<number> {\n        return 0;\n    },\n};\nvoid collectors;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-093.a",
+    "source": "\nasync function notWiredYet(key: string): Promise<number> {\n    return 0;\n}\nvoid notWiredYet;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-094.a",
+    "source": "\ntype EitherType = (key: string) => number | Promise<number>;\nconst handler: EitherType = async function (key: string): Promise<number> {\n    return key.length;\n};\nvoid handler;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-095.a",
+    "source": "\nfunction sync(): number {\n    return 1;\n}\nconst values = [1, 2].map(async (n) => n + sync());\nvoid values;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-096.a",
+    "source": "\nfunction identity<T>(value: T): T {\n    return value;\n}\nconst handler = identity(async () => {\n    return 1;\n});\nvoid handler;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-097.a",
+    "source": "\nfunction useCallback<T extends Function>(callback: T, dependencies: unknown[]): T {\n    void dependencies;\n    return callback;\n}\nconst handler = useCallback(async () => {\n    return 1;\n}, []);\nvoid handler;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-098.a",
+    "source": "\nfunction useMemo<T>(factory: () => T, dependencies: unknown[]): T {\n    void dependencies;\n    return factory();\n}\nfunction exportFile(): void {}\nconst items = useMemo(function () {\n    return [\n        {\n            label: 'Export',\n            onSelected: async function () {\n                exportFile();\n            },\n        },\n    ];\n}, []);\nvoid items;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-099.a",
+    "source": "\nasync function withClient<T>(callback: (client: { name: string }) => Promise<T>): Promise<T> {\n    return await callback({ name: 'client' });\n}\nfunction runTask<T extends () => Promise<void>>(task: T): T {\n    return task;\n}\nvoid withClient(async function (client) {\n    return client.name;\n});\nvoid runTask(async function () {\n    return;\n});\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-100.a",
+    "source": "\ninterface RegistryInterface<T> {\n    register(handler: T): void;\n}\ndeclare const registry: RegistryInterface<() => Promise<number>>;\nregistry.register(async () => {\n    return 1;\n});\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-101.a",
+    "source": "\nfunction identity<T>(value: T): T {\n    return value;\n}\nconst handler = identity<() => Promise<number>>(async () => {\n    return 1;\n});\nvoid handler;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-102.a",
+    "source": "\nfunction useMemo<T>(factory: () => T, dependencies: unknown[]): T {\n    void dependencies;\n    return factory();\n}\nfunction exportFile(): void {}\n\nconst items: { label: string; onSelected: () => Promise<void> }[] = useMemo(function () {\n    return [\n        {\n            label: 'Export',\n            onSelected: async function () {\n                exportFile();\n            },\n        },\n    ];\n}, []);\nvoid items;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-103.a",
+    "source": "\nfunction useMemo<T>(factory: () => T, dependencies: unknown[]): T {\n    void dependencies;\n    return factory();\n}\nfunction exportFile(): void {}\n\nconst items = useMemo(function (): { onSelected: () => Promise<void> }[] {\n    return [\n        {\n            onSelected: async function () {\n                exportFile();\n            },\n        },\n    ];\n}, []);\nvoid items;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-104.a",
+    "source": "\nfunction useMemo<T>(factory: () => T, dependencies: unknown[]): T {\n    void dependencies;\n    return factory();\n}\nfunction exportFile(): void {}\n\nconst items: { label: string }[] = useMemo(function () {\n    return [\n        {\n            label: 'Export',\n            onSelected: async function () {\n                exportFile();\n            },\n        },\n    ];\n}, []);\nvoid items;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-105.a",
+    "source": "\ninterface AdapterInterface {\n    fetchBalances: () => Promise<number[]>;\n}\nclass ScaffoldedAdapter implements AdapterInterface {\n    async fetchBalances(): Promise<number[]> {\n        return [];\n    }\n}\nvoid ScaffoldedAdapter;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-106.a",
+    "source": "\nclass PlainAdapter {\n    async fetchBalances(): Promise<number[]> {\n        return [];\n    }\n}\nvoid PlainAdapter;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-107.a",
+    "source": "Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-108.a",
+    "source": "Symbol(); Symbol = function () {};\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-109.a",
+    "source": "Symbol(\"Foo\");\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-110.a",
+    "source": "var foo = \"foo\"; Symbol(foo);\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-111.a",
+    "source": "var Symbol = function () {}; Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-112.a",
+    "source": "Symbol(); var Symbol = function () {};\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-113.a",
+    "source": "function bar() { var Symbol = function () {}; Symbol(); }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-114.a",
+    "source": "function bar(Symbol) { Symbol(); }\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-115.a",
+    "source": "(Symbol)();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-116.a",
+    "source": "let x = Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-117.a",
+    "source": "foo(Symbol());\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-118.a",
+    "source": "Symbol(); Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-119.a",
+    "source": "{ let Symbol = 1; } Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-120.a",
+    "source": "new Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-121.a",
+    "source": "Symbol(undefined);\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-122.a",
+    "source": "Symbol(...args);\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-123.a",
+    "source": "Symbol.for();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-124.a",
+    "source": "Symbol.iterator;\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-125.a",
+    "source": "globalThis.Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-126.a",
+    "source": "Symbol.call(null);\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-127.a",
+    "source": "class Symbol {}; Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-128.a",
+    "source": "Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-129.a",
+    "source": "Symbol()\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-130.a",
+    "source": "(Symbol)();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-131.a",
+    "source": "(Symbol)()\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-132.a",
+    "source": "let x = Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-133.a",
+    "source": "Symbol()\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-134.a",
+    "source": "Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-135.a",
+    "source": "Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-136.a",
+    "source": "Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-137.a",
+    "source": "isNaN();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-138.a",
+    "source": "parseInt();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-139.a",
+    "source": "Number();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-140.a",
+    "source": "String();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-141.a",
+    "source": "Boolean();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-142.a",
+    "source": "Array();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-143.a",
+    "source": "Object();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-144.a",
+    "source": "Date();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-145.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value === 'strng';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-146.a",
+    "source": "array is not a typeof result\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-147.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value === 'array';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-148.a",
+    "source": "null is not a typeof result\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-149.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value === 'null';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-150.a",
+    "source": "typeof on the right\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-151.a",
+    "source": "declare const value: unknown;\nexport const Bad = 'array' === typeof value;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-152.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value !== 'array';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-153.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value === `array`;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-154.a",
+    "source": "declare const value: unknown;\nexport const Bad = (typeof value) === 'array';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-155.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value === null;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-156.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value == 5;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-157.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value !== false;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-158.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value !== undefined;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-159.a",
+    "source": "declare const value: unknown;\nexport const Ok = typeof value === 'undefined';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-160.a",
+    "source": "declare const value: unknown;\nexport const Ok = typeof value === 'object';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-161.a",
+    "source": "declare const value: unknown;\nexport const Ok = typeof value === 'boolean';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-162.a",
+    "source": "declare const value: unknown;\nexport const Ok = typeof value === 'number';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-163.a",
+    "source": "declare const value: unknown;\nexport const Ok = typeof value === 'string';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-164.a",
+    "source": "declare const value: unknown;\nexport const Ok = typeof value === 'function';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-165.a",
+    "source": "declare const value: unknown;\nexport const Ok = typeof value === 'symbol';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-166.a",
+    "source": "declare const value: unknown;\nexport const Ok = typeof value === 'bigint';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-167.a",
+    "source": "typeof compared to typeof\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-168.a",
+    "source": "declare const a: unknown;\ndeclare const b: unknown;\nexport const Ok = typeof a === typeof b;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-169.a",
+    "source": "typeof compared to a binding\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-170.a",
+    "source": "declare const value: unknown;\ndeclare const expected: string;\nexport const Ok = typeof value === expected;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-171.a",
+    "source": "declare const value: unknown;\ndeclare const rest: string;\nexport const Ok = typeof value === `str${rest}`;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-172.a",
+    "source": "export function check(value: unknown, undefined: string) { return typeof value === undefined; }\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-173.a",
+    "source": "declare const value: unknown;\ndeclare const expected: string;\nexport const Bad = typeof value === expected;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-174.a",
+    "source": "declare const value: unknown;\ndeclare const expected: string;\nexport const Bad = expected == typeof value;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-175.a",
+    "source": "declare const value: unknown;\ndeclare const rest: string;\nexport const Bad = typeof value === `str${rest}`;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-176.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value === undefined;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-177.a",
+    "source": "export function check(value: unknown, undefined: string) { return typeof value === undefined; }\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-178.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value == 'invalid string';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-179.a",
+    "source": "declare const value: unknown;\nexport const Ok = typeof value === 'number';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-180.a",
+    "source": "declare const value: unknown;\nexport const Ok = `object` === typeof value;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-181.a",
+    "source": "typeof compared to typeof\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-182.a",
+    "source": "declare const a: unknown;\ndeclare const b: unknown;\nexport const Ok = typeof a === typeof b;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-183.a",
+    "source": "typeof outside a comparison\nexport {};\n",
+    "go_parseable": false
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-184.a",
+    "source": "declare const value: unknown;\nexport const Ok = typeof value + 'thing';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-185.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value === undefined;\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-186.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value === \"undefined\";\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-187.a",
+    "source": "declare const value: unknown;\nexport const Bad = typeof value === 'strng';\n\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-188.a",
+    "source": "const f=async()=>async()=>await work();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-189.a",
+    "source": "const f=async()=>class C{async run(){await work();}};\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-190.a",
+    "source": "import {Symbol} from './ambient.a'; Symbol();\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-191.a",
+    "source": "import {undefined} from './ambient.a'; typeof value === undefined;\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-192.a",
+    "source": "typeof v !== (undefined); typeof v != 42n; typeof v === /a/u; typeof v == true;\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-193.a",
+    "source": "/* \ud83d\ude00 */ const caf\u00e9 = (Symbol)();\n typeof caf\u00e9 === 'nul';\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-194.a",
+    "source": "async function f(){class C{async g(){await work();}} return 1;}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-195.a",
+    "source": "async function f(){;}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-196.a",
+    "source": "type F=()=>Promise<number>; const f:F=async()=>1;\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-197.a",
+    "source": "type F=()=>number|Promise<number>; const f:F=async()=>1;\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-198.a",
+    "source": "function pick<T>(a:T,b:T):T{return a;} const f=pick(()=>Promise.resolve(1),async()=>1);\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-199.a",
+    "source": "function pick<T>(a:T,b:T):T{return a;} const f=pick(()=>1,async()=>1);\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-200.a",
+    "source": "function take<T>(...f:((n:number)=>T)[]){return f;} take(async()=>1);\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-201.a",
+    "source": "function take<T extends ()=>Promise<void>>(f:T){return f;} take(async()=>{return;});\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-202.a",
+    "source": "function take<T>(f:[()=>T]){} take([async()=>1]);\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-203.a",
+    "source": "function take<T>(f:{[key:string]:()=>T}){} take({run:async()=>1});\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-204.a",
+    "source": "function identity<T>(value:T):T{return value;} identity({async run(){return 1;}});\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-205.a",
+    "source": "interface I {run():Promise<number>;} class C implements I {async run(){return 1;}}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-206.a",
+    "source": "class B{run():Promise<number>{return Promise.resolve(1);}} class C extends B{async run(){return 1;}}\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-207.a",
+    "source": "type P={then:(cb:()=>void)=>void}; const f:(()=>P)=async()=>1;\nexport {};\n",
+    "go_parseable": true
+  },
+  {
+    "path": "/workspace/wave-27-scratch/fifth-final/control-208.a",
+    "source": "type P={then:(cb:string)=>void}; const f:(()=>P)=async()=>1;\nexport {};\n",
+    "go_parseable": true
+  }
+]

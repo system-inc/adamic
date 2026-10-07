@@ -103,3 +103,10 @@ first three eligible entries, each with combined volume zero, are:
 None is ported on main/base or named in any origin claim record. These rules
 use syntax and ordinary checker type/symbol facts rather than native HIR, SSA
 or capture analysis. This claim update is pushed before implementation.
+
+Fifth-batch implementation status: complete in wave_27_fifth. All three rules
+are native .a handed-node callbacks with numeric listener metadata. The owned
+independent Go gate passes on controls, the two pinned corpora, sanitizer builds,
+three normally exiting rule mutants and released handles. Shared registry wiring
+and emitted-JavaScript comparison remain integration limitations, named in the
+batch report. Landing onto the newly fetched main is recorded separately.

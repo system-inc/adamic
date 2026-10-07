@@ -1,0 +1,33 @@
+import type { Context, Node } from '../context.a';
+import { K } from '../kinds.a';
+import { Links } from '../wave_27_checker_links.a';
+export class Rule {
+    readonly context: Context;
+    readonly links: Links;
+    constructor(context: Context, links: Links) {
+        this.context = context;
+        this.links = links;
+    }
+    visit(node: Node): void {
+        if(node.syntax.list > 0 || node.syntax.children.length === 0) {
+            return;
+        }
+        const callee = this.context.skip(this.context.child(node, 0));
+        if(callee.kind !== K.Identifier || callee.syntax.text !== 'Symbol') {
+            return;
+        }
+        const declarations = this.links.symbol(callee);
+        if(declarations.length === 0 || declarations[0] !== true) {
+            return;
+        }
+        this.context.report(
+            'symbol-description',
+            'expected',
+            'This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one.',
+            node,
+        );
+    }
+}
+export function create(context: Context, links: Links): Rule {
+    return new Rule(context, links);
+}

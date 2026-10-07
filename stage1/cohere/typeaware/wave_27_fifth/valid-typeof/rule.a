@@ -1,0 +1,100 @@
+import type { Context, Node } from '../context.a';
+import { K } from '../kinds.a';
+import { Links } from '../wave_27_checker_links.a';
+import { Suggestion } from '../../suggestion.ts';
+import { Repair } from '../../repair.ts';
+const notString =
+    'Typeof comparisons should be to string literals. A literal is the one operand the rule can check against the eight strings typeof produces, so with requireStringLiterals on, anything else, a variable or a template with substitutions, is reported rather than trusted.';
+export class Rule {
+    readonly context: Context;
+    readonly links: Links;
+    readonly requireStringLiterals: boolean;
+    constructor(context: Context, links: Links, requireStringLiterals = false) {
+        this.context = context;
+        this.links = links;
+        this.requireStringLiterals = requireStringLiterals;
+    }
+    visit(node: Node): void {
+        if(node.syntax.children.length !== 3) {
+            return;
+        }
+        const operator = this.context.child(node, 1);
+        if(
+            ![
+                K.EqualsEqualsToken,
+                K.EqualsEqualsEqualsToken,
+                K.ExclamationEqualsToken,
+                K.ExclamationEqualsEqualsToken,
+            ].includes(operator.kind)
+        ) {
+            return;
+        }
+        const left = this.context.skip(this.context.child(node, 0));
+        const right = this.context.skip(this.context.child(node, 2));
+        if(left.kind === K.TypeOfExpression) {
+            this.judge(right);
+        }
+        else if(right.kind === K.TypeOfExpression) {
+            this.judge(left);
+        }
+    }
+    judge(operand: Node): void {
+        if(operand.kind === K.StringLiteral || operand.kind === K.NoSubstitutionTemplateLiteral) {
+            if(
+                !['undefined', 'object', 'boolean', 'number', 'string', 'function', 'symbol', 'bigint'].includes(
+                    operand.syntax.text,
+                )
+            ) {
+                this.context.report(
+                    'valid-typeof',
+                    'invalidTypeofValue',
+                    `A typeof expression can only produce one of eight strings, and "${operand.syntax.text}" is not among them, so this comparison is always false and the branch behind it is dead. The eight are undefined, object, boolean, number, string, function, symbol and bigint. Almost every finding here is a typo or a guess at a type name that the language does not report: typeof null is "object", an array is "object", and there is no "array", "null" or "date".`,
+                    operand,
+                );
+            }
+            return;
+        }
+        if(
+            [
+                K.NumericLiteral,
+                K.BigIntLiteral,
+                K.RegularExpressionLiteral,
+                K.NullKeyword,
+                K.TrueKeyword,
+                K.FalseKeyword,
+            ].includes(operand.kind)
+        ) {
+            this.nonString(operand, this.context.text(operand));
+            return;
+        }
+        if(
+            operand.kind === K.Identifier &&
+            operand.syntax.text === 'undefined' &&
+            !this.links.symbol(operand).some((declaration) => !declaration)
+        ) {
+            const finding = this.requireStringLiterals
+                ? this.context.report('valid-typeof', 'notString', notString, operand)
+                : this.nonString(operand, 'undefined');
+            finding.suggestions.push(
+                new Suggestion('suggestString', 'Use `"undefined"` instead of `undefined`.', [
+                    new Repair(finding.start, finding.end, '"undefined"'),
+                ]),
+            );
+            return;
+        }
+        if(this.requireStringLiterals && operand.kind !== K.TypeOfExpression) {
+            this.context.report('valid-typeof', 'notString', notString, operand);
+        }
+    }
+    nonString(operand: Node, found: string) {
+        return this.context.report(
+            'valid-typeof',
+            'invalidTypeofValue',
+            `A typeof expression always produces a string, and \`${found}\` is not one, so this comparison is always false (always true for != and !==) and the branch behind it is dead or unconditional. Compare against the string instead: \`typeof value === "undefined"\`, not \`typeof value === undefined\`.`,
+            operand,
+        );
+    }
+}
+export function create(context: Context, links: Links): Rule {
+    return new Rule(context, links);
+}

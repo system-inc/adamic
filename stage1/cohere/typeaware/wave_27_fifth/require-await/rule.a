@@ -1,0 +1,572 @@
+import type { Context, Node } from '../context.a';
+import { K } from '../kinds.a';
+import { Links } from '../wave_27_checker_links.a';
+import { types } from '../../facts.ts';
+import { unionFlag } from '../../flags.ts';
+import { Suggestion } from '../../suggestion.ts';
+import { Repair } from '../../repair.ts';
+export const functionKinds: readonly number[] = [
+    K.FunctionDeclaration,
+    K.FunctionExpression,
+    K.ArrowFunction,
+    K.MethodDeclaration,
+    K.GetAccessor,
+    K.SetAccessor,
+    K.Constructor,
+];
+class Step {
+    readonly kind: number;
+    readonly name: string;
+    readonly index: number;
+    constructor(kind: number, name = '', index = 0) {
+        this.kind = kind;
+        this.name = name;
+        this.index = index;
+    }
+}
+export class Rule {
+    readonly context: Context;
+    readonly links: Links;
+    constructor(context: Context, links: Links) {
+        this.context = context;
+        this.links = links;
+    }
+    visit(node: Node): void {
+        const c = this.context;
+        const keyword = node.syntax.children
+            .map((index) => c.node(index))
+            .find((child) => child.kind === K.AsyncKeyword);
+        if(keyword === undefined) {
+            return;
+        }
+        if(
+            [K.FunctionDeclaration, K.FunctionExpression, K.MethodDeclaration].includes(node.kind) &&
+            c.has(node, K.AsteriskToken)
+        ) {
+            return;
+        }
+        const body = c.body(node);
+        if(
+            body === undefined ||
+            (body.kind === K.Block && body.syntax.children.length === 0) ||
+            this.containsAwait(body) ||
+            this.contract(node)
+        ) {
+            return;
+        }
+        let holder = node;
+        const parent = c.parent(node);
+        if(parent !== undefined && (parent.kind === K.PropertyAssignment || parent.kind === K.PropertyDeclaration)) {
+            holder = parent;
+        }
+        let start = c.start(holder);
+        let end = start;
+        if(holder.index !== node.index) {
+            end = this.parametersStart(node, start);
+        }
+        else if(node.kind === K.ArrowFunction) {
+            const arrow = node.syntax.children
+                .map((index) => c.node(index))
+                .find((child) => child.kind === K.EqualsGreaterThanToken);
+            if(arrow !== undefined) {
+                start = c.start(arrow);
+                end = arrow.syntax.end;
+            }
+        }
+        else {
+            for(const index of node.syntax.children) {
+                const child = c.node(index);
+                if([K.ExportKeyword, K.DefaultKeyword, K.DeclareKeyword].includes(child.kind)) {
+                    start = child.syntax.end;
+                }
+                else {
+                    break;
+                }
+            }
+            start = this.spaces(start);
+            const name = c.name(node);
+            end = name === undefined ? this.parametersStart(node, start) : name.syntax.end;
+            if(end <= start) {
+                end = start + 5;
+            }
+        }
+        const message = `${this.describe(node)} has no \`await\` expression. The \`async\` keyword wraps the return value in a promise and obliges every caller to await it or handle a floating promise, so a function that never awaits pays that cost for nothing and tells the reader there is asynchrony here to find. Remove \`async\`, or await what this was waiting for.`;
+        const finding = c.range('require-await', 'missingAwait', message, start, end);
+        const keywordEnd = this.spaces(keyword.syntax.end);
+        finding.suggestions.push(
+            new Suggestion(
+                'removeAsync',
+                "Remove `async`. This changes the function's return type from a promise to the value itself, so every caller has to stop awaiting it, which is why it is offered rather than applied.",
+                [
+                    new Repair(
+                        c.rules.byte(c.start(keyword)),
+                        c.rules.byte(keywordEnd),
+                        this.replacement(node, keywordEnd),
+                    ),
+                ],
+            ),
+        );
+    }
+    containsAwait(body: Node): boolean {
+        // Match Go's initial child walk, even when a concise body is itself a function.
+        for(const index of body.syntax.children) {
+            if(this.awaits(this.context.node(index))) {
+                return true;
+            }
+        }
+        return body.kind !== K.Block && this.awaits(body);
+    }
+    awaits(node: Node): boolean {
+        const c = this.context;
+        if(
+            node.kind === K.AwaitExpression ||
+            (node.kind === K.ForOfStatement && c.has(node, K.AwaitKeyword)) ||
+            (node.kind === K.VariableDeclarationList && (Number(node.syntax.semantic) & 7) === 6)
+        ) {
+            return true;
+        }
+        if(functionKinds.includes(node.kind) || node.kind === K.ClassDeclaration || node.kind === K.ClassExpression) {
+            return false;
+        }
+        for(const index of node.syntax.children) {
+            if(this.awaits(c.node(index))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    spaces(at: number): number {
+        const text = this.context.rules.scanner.text;
+        let end = at;
+        while(end < text.length && [' ', '\t', '\r', '\n'].includes(text.slice(end, end + 1))) {
+            end++;
+        }
+        return end;
+    }
+    parametersStart(node: Node, start: number): number {
+        const at = this.context.rules.scanner.text.indexOf('(', start);
+        return at >= start && at < node.syntax.end ? at : start;
+    }
+    readable(node: Node): boolean {
+        return [
+            K.Identifier,
+            K.PrivateIdentifier,
+            K.StringLiteral,
+            K.NoSubstitutionTemplateLiteral,
+            K.NumericLiteral,
+        ].includes(node.kind);
+    }
+    describe(node: Node): string {
+        const c = this.context;
+        if(node.kind === K.ArrowFunction) {
+            return 'Async arrow function';
+        }
+        if(node.kind === K.Constructor) {
+            return "Async method 'constructor'";
+        }
+        let kind = [K.MethodDeclaration, K.GetAccessor, K.SetAccessor].includes(node.kind) ? 'method' : 'function';
+        let holder = node;
+        const parent = c.parent(node);
+        if(
+            parent !== undefined &&
+            parent.kind === K.PropertyAssignment &&
+            parent.syntax.children[parent.syntax.children.length - 1] === node.index
+        ) {
+            holder = parent;
+            kind = 'method';
+        }
+        const name = c.name(holder);
+        return name !== undefined && this.readable(name) ? `Async ${kind} '${name.syntax.text}'` : `Async ${kind}`;
+    }
+    replacement(node: Node, after: number): string {
+        const c = this.context;
+        const text = c.rules.scanner.text;
+        let continues = ['[', '('].includes(text.slice(after, after + 1));
+        for(const word of ['instanceof', 'in']) {
+            if(text.slice(after).startsWith(word)) {
+                const code = text.charCodeAt(after + word.length);
+                if(!(
+                    (code >= 65 && code <= 90) ||
+                    (code >= 97 && code <= 122) ||
+                    (code >= 48 && code <= 57) ||
+                    code === 95 ||
+                    code === 36
+                )) {
+                    continues = true;
+                }
+            }
+        }
+        if(!continues) {
+            return '';
+        }
+        let current = node;
+        while(true) {
+            const parent = c.parent(current);
+            if(parent === undefined) {
+                return '';
+            }
+            if([K.ClassDeclaration, K.ClassExpression, K.Block, K.SourceFile].includes(parent.kind)) {
+                let siblings = parent.syntax.children;
+                if(parent.kind === K.ClassDeclaration || parent.kind === K.ClassExpression) {
+                    siblings = siblings.filter((index) =>
+                        [
+                            K.PropertyDeclaration,
+                            K.MethodDeclaration,
+                            K.GetAccessor,
+                            K.SetAccessor,
+                            K.Constructor,
+                            K.SemicolonClassElement,
+                        ].includes(c.node(index).kind),
+                    );
+                }
+                const at = siblings.indexOf(current.index);
+                if(at <= 0) {
+                    return '';
+                }
+                const previous = c.node(siblings[at - 1] ?? -1);
+                let continuable = previous.kind === K.ExpressionStatement || previous.kind === K.VariableStatement;
+                if(previous.kind === K.PropertyDeclaration) {
+                    const last = c.child(previous, previous.syntax.children.length - 1);
+                    let offset = last.syntax.pos - 1;
+                    while(
+                        offset >= previous.syntax.pos &&
+                        [' ', '\t', '\r', '\n'].includes(text.slice(offset, offset + 1))
+                    ) {
+                        offset--;
+                    }
+                    continuable = text.slice(offset, offset + 1) === '=';
+                }
+                let end = previous.syntax.end;
+                while(end > 0 && [' ', '\t', '\r', '\n'].includes(text.slice(end - 1, end))) {
+                    end--;
+                }
+                return continuable && (end === 0 || text.slice(end - 1, end) !== ';') ? ';' : '';
+            }
+            current = parent;
+        }
+    }
+    raw(node: Node, question: string): number[] {
+        const facts = types(this.context.ask(node, question), question);
+        for(const record of facts.records) {
+            this.links.records.set(record.id, record);
+        }
+        return facts.roots.slice();
+    }
+    expand(ids: readonly number[], substitutions: Map<number, number[]>): number[] {
+        const result: number[] = [];
+        for(const id of ids) {
+            if(id === 0) {
+                continue;
+            }
+            const t = this.links.type(id);
+            const parts = (t.flags & unionFlag) !== 0 ? t.parts : [id];
+            for(const part of parts) {
+                const standIns = substitutions.get(part);
+                if(standIns === undefined) {
+                    result.push(part);
+                }
+                else {
+                    for(const value of standIns) {
+                        const type = this.links.type(value);
+                        for(const inner of (type.flags & unionFlag) !== 0 ? type.parts : [value]) {
+                            result.push(inner);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    thenable(node: Node, id: number): boolean {
+        const apparent = this.links.shape(node, id).roots[1] ?? 0;
+        if(apparent === 0) {
+            return false;
+        }
+        const none = new Map<number, number[]>();
+        for(const part of this.expand([apparent], none)) {
+            const then = this.links.shape(node, part, 'then').roots[3] ?? 0;
+            if(then === 0) {
+                continue;
+            }
+            for(const member of this.expand([then], none)) {
+                for(const sig of this.links.shape(node, member).signatures) {
+                    const first = sig.locations[0] ?? 0;
+                    if(first === 0) {
+                        continue;
+                    }
+                    let parameter = first;
+                    if(sig.rests[0] === true) {
+                        parameter = this.links.shape(node, first).roots[4] ?? 0;
+                    }
+                    if(parameter === 0) {
+                        continue;
+                    }
+                    for(const param of this.expand([parameter], none)) {
+                        if(this.links.shape(node, param).signatures.length !== 0) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    demanded(node: Node, ids: readonly number[], substitutions: Map<number, number[]>): boolean {
+        let saw = false;
+        for(const id of this.expand(ids, substitutions)) {
+            for(const sig of this.links.shape(node, id).signatures) {
+                saw = true;
+                for(const ret of this.expand([sig.result], substitutions)) {
+                    if(!this.thenable(node, ret)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return saw;
+    }
+    contract(node: Node): boolean {
+        const generic = this.generic(node);
+        if(generic >= 0) {
+            return generic === 1;
+        }
+        const none = new Map<number, number[]>();
+        const roots = this.raw(node, 'contextual-shape');
+        if(roots.length !== 0) {
+            return this.demanded(node, roots, none);
+        }
+        const c = this.context;
+        const name = c.name(node);
+        const parent = c.parent(node);
+        if(
+            node.kind !== K.MethodDeclaration ||
+            c.has(node, K.StaticKeyword) ||
+            name === undefined ||
+            name.kind !== K.Identifier ||
+            parent === undefined ||
+            ![K.ClassDeclaration, K.ClassExpression].includes(parent.kind)
+        ) {
+            return false;
+        }
+        for(const id of this.links.heritage(parent)) {
+            const member = this.links.shape(node, id, name.syntax.text).roots[3] ?? 0;
+            if(member !== 0) {
+                return this.demanded(node, [member], none);
+            }
+        }
+
+        return false;
+    }
+    returnTakesContext(node: Node): boolean {
+        const c = this.context;
+        if(node.kind !== K.FunctionExpression && node.kind !== K.ArrowFunction) {
+            return false;
+        }
+        if(c.has(node, K.AsyncKeyword) || c.has(node, K.AsteriskToken)) {
+            return false;
+        }
+        const body = c.body(node);
+        if(body === undefined) {
+            return false;
+        }
+        const lastBefore = node.syntax.children[node.syntax.children.indexOf(body.index) - 1];
+        if(lastBefore !== undefined) {
+            const kind = c.node(lastBefore).kind;
+            if(
+                kind !== K.Parameter &&
+                kind !== K.EqualsGreaterThanToken &&
+                kind !== K.Identifier &&
+                kind !== K.TypeParameter
+            ) {
+                return false;
+            }
+            if(kind === K.EqualsGreaterThanToken) {
+                const preceding = node.syntax.children[node.syntax.children.indexOf(lastBefore) - 1];
+                if(
+                    preceding !== undefined &&
+                    ![K.Parameter, K.Identifier, K.TypeParameter].includes(c.node(preceding).kind)
+                ) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    generic(node: Node): number {
+        const c = this.context;
+        const steps: Step[] = [];
+        let current = node;
+        if(node.kind === K.MethodDeclaration) {
+            const object = c.parent(node);
+            const name = c.name(node);
+            if(
+                object === undefined ||
+                object.kind !== K.ObjectLiteralExpression ||
+                name === undefined ||
+                !this.readable(name)
+            ) {
+                return -1;
+            }
+            steps.push(new Step(0, name.syntax.text));
+            current = object;
+        }
+        while(true) {
+            let parent = c.parent(current);
+            if(parent === undefined) {
+                return -1;
+            }
+            switch(parent.kind) {
+                case 218:
+                    break;
+                case 228:
+                    if(parent.syntax.children[2] !== current.index && parent.syntax.children[4] !== current.index) {
+                        return -1;
+                    }
+                    break;
+                case 227:
+                    if(![K.BarBarToken, K.QuestionQuestionToken].includes(c.child(parent, 1).kind)) {
+                        return -1;
+                    }
+                    break;
+                case 303: {
+                    const name = c.name(parent);
+                    if(
+                        parent.syntax.children[parent.syntax.children.length - 1] !== current.index ||
+                        name === undefined ||
+                        !this.readable(name)
+                    ) {
+                        return -1;
+                    }
+                    steps.push(new Step(0, name.syntax.text));
+                    parent = c.parent(parent);
+                    if(parent === undefined) {
+                        return -1;
+                    }
+                    break;
+                }
+                case 210: {
+                    const at = parent.syntax.children.indexOf(current.index);
+                    if(
+                        at < 0 ||
+                        parent.syntax.children.slice(0, at).some((index) => c.node(index).kind === K.SpreadElement)
+                    ) {
+                        return -1;
+                    }
+                    steps.push(new Step(1, '', at));
+                    break;
+                }
+                case 254: {
+                    let fn = c.parent(parent);
+                    while(fn !== undefined && !functionKinds.includes(fn.kind)) {
+                        fn = c.parent(fn);
+                    }
+                    if(fn === undefined || !this.returnTakesContext(fn)) {
+                        return -1;
+                    }
+                    steps.push(new Step(2));
+                    parent = fn;
+                    break;
+                }
+                case 220:
+                    if(c.body(parent)?.index !== current.index || !this.returnTakesContext(parent)) {
+                        return -1;
+                    }
+                    steps.push(new Step(2));
+                    break;
+                case 214:
+                case 215:
+                    return this.fromCall(node, parent, current, steps);
+                default:
+                    return -1;
+            }
+            current = parent;
+        }
+    }
+    fromCall(node: Node, call: Node, current: Node, steps: readonly Step[]): number {
+        const c = this.context;
+        const args = c.args(call);
+        const at = args.findIndex((arg) => arg.index === current.index);
+        if(at < 0 || args.slice(0, at).some((arg) => arg.kind === K.SpreadElement)) {
+            return -1;
+        }
+        // children between the callee and argument tail are explicit type arguments.
+        if(call.syntax.children.length > args.length + 1) {
+            return -1;
+        }
+        const facts = this.links.call(call);
+        if(!facts.present || facts.typeParams.length === 0) {
+            return -1;
+        }
+        let parameter = facts.parameters[at] ?? 0;
+        if(facts.rest && at >= facts.parameters.length - 1) {
+            const rest = facts.parameters[facts.parameters.length - 1] ?? 0;
+            parameter = rest === 0 ? 0 : (this.links.shape(node, rest).roots[4] ?? 0);
+        }
+        if(parameter === 0) {
+            return -1;
+        }
+        const substitutions = new Map<number, number[]>();
+        for(let i = 0; i < args.length; i++) {
+            if(
+                i === at ||
+                i >= facts.parameters.length ||
+                i >= facts.resolved.length ||
+                (facts.rest && i >= facts.parameters.length - 1)
+            ) {
+                continue;
+            }
+            const declared = facts.parameters[i] ?? 0;
+            if(facts.typeParams.includes(declared)) {
+                const empty: number[] = [];
+                const values = substitutions.get(declared) ?? empty;
+                values.push(facts.resolved[i] ?? 0);
+                substitutions.set(declared, values);
+            }
+        }
+        const declaredReturn = facts.roots[0] ?? 0;
+        const contextual = facts.roots[2] ?? 0;
+        if(facts.typeParams.includes(declaredReturn) && contextual !== 0) {
+            const empty: number[] = [];
+            const values = substitutions.get(declaredReturn) ?? empty;
+            values.push(contextual);
+            substitutions.set(declaredReturn, values);
+        }
+        let selected: number[] = [parameter];
+        for(let i = steps.length - 1; i >= 0; i--) {
+            const step = steps[i];
+            if(step === undefined) {
+                return -1;
+            }
+            const next: number[] = [];
+            for(const id of this.expand(selected, substitutions)) {
+                const shape = this.links.shape(node, id, step.name);
+                if(step.kind === 0) {
+                    const property = shape.roots[2] ?? 0;
+                    const index = shape.roots[5] ?? 0;
+                    if(property !== 0) {
+                        next.push(property);
+                    }
+                    else if(index !== 0) {
+                        next.push(index);
+                    }
+                }
+                else if(step.kind === 1) {
+                    const index = shape.tuple ? (shape.elements[step.index] ?? 0) : (shape.roots[4] ?? 0);
+                    if(index !== 0) {
+                        next.push(index);
+                    }
+                }
+                else {
+                    for(const sig of shape.signatures) {
+                        next.push(sig.result);
+                    }
+                }
+            }
+            selected = next;
+        }
+        return this.demanded(node, selected, substitutions) ? 1 : 0;
+    }
+}
+export function create(context: Context, links: Links): Rule {
+    return new Rule(context, links);
+}

@@ -1,0 +1,163 @@
+import { panic } from 'adamic';
+import { Frames, header } from '../frames.ts';
+import { TypeFact } from '../type_fact.ts';
+import type { Context, Node } from './context.a';
+export class Signature {
+    readonly result: number;
+    readonly parameters: readonly number[];
+    readonly locations: readonly number[];
+    readonly rests: readonly boolean[];
+    constructor(
+        result: number,
+        parameters: readonly number[],
+        locations: readonly number[],
+        rests: readonly boolean[],
+    ) {
+        this.result = result;
+        this.parameters = parameters;
+        this.locations = locations;
+        this.rests = rests;
+    }
+}
+export class Links {
+    readonly context: Context;
+    readonly records = new Map<number, TypeFact>();
+    constructor(context: Context) {
+        this.context = context;
+    }
+    begin(node: Node, suffix: string): Frames {
+        const f = new Frames(this.context.ask(node, `wave-27-checker-links\n${suffix}`));
+        header(f, 'wave-27-checker-links');
+        return f;
+    }
+    end(f: Frames): number[] {
+        const roots = f.ids();
+        const count = f.natural();
+        for(let i = 0; i < count; i++) {
+            const id = f.natural();
+            const flags = f.natural();
+            const name = f.field();
+            const error = f.yes();
+            const target = f.natural();
+            const array = f.yes();
+            const tuple = f.number();
+            const constraint = f.natural();
+            const element = f.natural();
+            const parts = f.ids();
+            const args = f.ids();
+            if(id === 0 || tuple < -1) {
+                panic('invalid checker link record');
+            }
+            this.records.set(
+                id,
+                new TypeFact(id, flags, name, error, target, array, tuple, constraint, element, parts, args),
+            );
+        }
+        f.end();
+        return roots;
+    }
+    symbol(node: Node): boolean[] {
+        const f = this.begin(node, 'symbol');
+        const result: boolean[] = [];
+        if(f.yes()) {
+            const count = f.natural();
+            for(let i = 0; i < count; i++) {
+                const present = f.yes();
+                const declaration = f.yes();
+                result.push(present && declaration);
+            }
+        }
+        this.end(f);
+        return result;
+    }
+    heritage(node: Node): number[] {
+        return this.end(this.begin(node, 'heritage'));
+    }
+    type(id: number): TypeFact {
+        return this.records.get(id) ?? panic('missing checker link type');
+    }
+    shape(node: Node, id: number, name = ''): Shape {
+        const f = this.begin(node, `type\n${id}\n${name}`);
+        const tuple = f.yes();
+        const elements = f.ids();
+        const signatures: Signature[] = [];
+        const count = f.natural();
+        for(let i = 0; i < count; i++) {
+            const result = f.natural();
+            const parameters: number[] = [];
+            const locations: number[] = [];
+            const rests: boolean[] = [];
+            const n = f.natural();
+            for(let p = 0; p < n; p++) {
+                parameters.push(f.natural());
+                locations.push(f.natural());
+                rests.push(f.yes());
+            }
+            signatures.push(new Signature(result, parameters, locations, rests));
+        }
+        const roots = this.end(f);
+        return new Shape(roots, tuple, elements, signatures);
+    }
+    call(node: Node): Call {
+        const f = this.begin(node, 'call');
+        let present = false;
+        let params: number[] = [];
+        let resolved: number[] = [];
+        let typeParams: number[] = [];
+        let rest = false;
+        let resolvedRest = false;
+        if(f.yes() && f.yes()) {
+            present = true;
+            typeParams = f.ids();
+            rest = f.yes();
+            params = f.ids();
+            resolvedRest = f.yes();
+            resolved = f.ids();
+        }
+        const roots = this.end(f);
+        return new Call(present, typeParams, params, resolved, rest, resolvedRest, roots);
+    }
+}
+export class Shape {
+    readonly roots: readonly number[];
+    readonly tuple: boolean;
+    readonly elements: readonly number[];
+    readonly signatures: readonly Signature[];
+    constructor(
+        roots: readonly number[],
+        tuple: boolean,
+        elements: readonly number[],
+        signatures: readonly Signature[],
+    ) {
+        this.roots = roots;
+        this.tuple = tuple;
+        this.elements = elements;
+        this.signatures = signatures;
+    }
+}
+export class Call {
+    readonly present: boolean;
+    readonly typeParams: readonly number[];
+    readonly parameters: readonly number[];
+    readonly resolved: readonly number[];
+    readonly rest: boolean;
+    readonly resolvedRest: boolean;
+    readonly roots: readonly number[];
+    constructor(
+        present: boolean,
+        typeParams: readonly number[],
+        parameters: readonly number[],
+        resolved: readonly number[],
+        rest: boolean,
+        resolvedRest: boolean,
+        roots: readonly number[],
+    ) {
+        this.present = present;
+        this.typeParams = typeParams;
+        this.parameters = parameters;
+        this.resolved = resolved;
+        this.rest = rest;
+        this.resolvedRest = resolvedRest;
+        this.roots = roots;
+    }
+}
