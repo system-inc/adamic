@@ -53,13 +53,16 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) {
-			// A nullable match result uses NULL. A type also holding undefined needs a tag.
+			// A nullable object reference uses NULL. Null and undefined together need distinct tags.
 			if l.includesUndefined(proven) {
 				return 0, false
 			}
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsNull == 0 && !l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray") {
-					return 0, false
+				if member.Flags()&checker.TypeFlagsNull == 0 {
+					of, known := l.representation(member)
+					if !known || !of.IsReference() || of == ir.String || of == ir.Union {
+						return 0, false
+					}
 				}
 			}
 		}
@@ -572,8 +575,8 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 		return ir.Unary{Operator: ir.Negate, Operand: operand}, nil
 	case prefix.Operator == ast.KindPlusToken && operand.Type() == ir.Number:
 		return ir.Unary{Operator: ir.Plus, Operand: operand}, nil
-	case prefix.Operator == ast.KindExclamationToken && operand.Type() == ir.Boolean:
-		return ir.Unary{Operator: ir.Not, Operand: operand}, nil
+	case prefix.Operator == ast.KindExclamationToken:
+		return ir.Unary{Operator: ir.Not, Operand: truthy(operand)}, nil
 	case prefix.Operator == ast.KindTildeToken && operand.Type() == ir.Number:
 		return ir.Unary{Operator: ir.BitNot, Operand: operand}, nil
 	}
@@ -691,7 +694,14 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		}
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
-	if (operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken) && both(ir.Boolean) {
+	if operator == ast.KindAmpersandAmpersandToken || operator == ast.KindBarBarToken {
+		if !both(ir.Boolean) {
+			of, err := l.typeOf(node)
+			if err != nil {
+				return nil, err
+			}
+			return ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
+		}
 		lowered := ir.And
 		if operator == ast.KindBarBarToken {
 			lowered = ir.Or

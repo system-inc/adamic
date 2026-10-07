@@ -1026,6 +1026,13 @@ func (a *analysis) value(expression ir.Expression) value {
 			return outsideValue()
 		}
 		return held.copy()
+	case ir.Truthy:
+		a.value(expression.Value)
+		return value{}
+	case ir.Logical:
+		result := a.value(expression.Left)
+		result.merge(a.value(expression.Right))
+		return result
 	case ir.Unary:
 		a.value(expression.Operand)
 		return value{}

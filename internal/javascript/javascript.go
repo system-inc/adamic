@@ -570,6 +570,14 @@ func (e *emitter) value(expression ir.Expression) string {
 			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", readyName(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
 		}
 		return e.variable(expression.Local)
+	case ir.Truthy:
+		return "!!(" + e.value(expression.Value) + ")"
+	case ir.Logical:
+		operator := "&&"
+		if expression.KeepTruthy {
+			operator = "||"
+		}
+		return "(" + e.value(expression.Left) + " " + operator + " " + e.value(expression.Right) + ")"
 	case ir.Unary:
 		operator := map[ir.Operator]string{ir.Negate: "-", ir.Plus: "+", ir.Not: "!", ir.BitNot: "~"}[expression.Operator]
 		return "(" + operator + e.value(expression.Operand) + ")"

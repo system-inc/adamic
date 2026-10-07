@@ -41,6 +41,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("&adamic_string_%d", expression.Index)
 	case ir.Read:
 		return e.read(expression)
+	case ir.Truthy:
+		return e.toBoolean(expression.Value.Type(), e.value(expression.Value))
+	case ir.Logical:
+		return e.logicalValue(expression)
 	case ir.Unary:
 		operand := e.value(expression.Operand)
 		switch expression.Operator {
