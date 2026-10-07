@@ -1,0 +1,22 @@
+== github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants
+    suite_test.go:266: assignability-direction: production cohere oracle catches byte 24252; findings 187
+    suite_test.go:266: resolved-signature: production cohere oracle catches byte 61493; findings 187
+    suite_test.go:279: released program: panic 70; retained-handle mutant exits 0 and fails the stale-query expectation
+    suite_test.go:288: facts UTF-8 length + 1: AddressSanitizer heap-buffer-overflow
+    suite_test.go:302: facts-empty: panic 70, invalid checker facts frame
+    suite_test.go:302: facts-integer: panic 70, invalid checker facts integer
+    suite_test.go:302: facts-length: panic 70, invalid checker facts length
+    suite_test.go:302: facts-version: panic 70, unsupported checker facts schema
+    suite_test.go:347: fact cost assignable round 1: native tsgo: load_ns=53438138 query_ns=53710847 queries=10000 first_query_ns=54692 run_ns=56092340; Go factcost: load_ns=15429510 query_ns=25133965 queries=10000 first_query_ns=44808; identical units=190000
+    suite_test.go:347: fact cost declarations round 1: native tsgo: load_ns=63866623 query_ns=102380161 queries=10000 first_query_ns=61673 run_ns=106051011; Go factcost: load_ns=18061374 query_ns=82980653 queries=10000 first_query_ns=32198; identical units=2820000
+    suite_test.go:347: fact cost signature round 1: native tsgo: load_ns=51900549 query_ns=303848665 queries=10000 first_query_ns=177188 run_ns=309071321; Go factcost: load_ns=25488252 query_ns=275410540 queries=10000 first_query_ns=189606; identical units=1370000
+    suite_test.go:347: fact cost raw-type round 1: native tsgo: load_ns=28360815 query_ns=102797270 queries=10000 first_query_ns=119601 run_ns=105630147; Go factcost: load_ns=26341460 query_ns=105473183 queries=10000 first_query_ns=724172; identical units=670000
+    suite_test.go:347: fact cost nullable round 1: native tsgo: load_ns=31731136 query_ns=360229487 queries=10000 first_query_ns=164328 run_ns=363429146; Go factcost: load_ns=21890168 query_ns=388347937 queries=10000 first_query_ns=128393; identical units=2200000
+    suite_test.go:347: fact cost union round 1: native tsgo: load_ns=52150236 query_ns=279407521 queries=10000 first_query_ns=165330 run_ns=286026372; Go factcost: load_ns=21037573 query_ns=278339082 queries=10000 first_query_ns=140712; identical units=1760000
+    suite_test.go:347: fact cost signature-shape round 1: native tsgo: load_ns=21656505 query_ns=89480780 queries=10000 first_query_ns=101763 run_ns=95904172; Go factcost: load_ns=41949759 query_ns=65431232 queries=10000 first_query_ns=93631; identical units=1180000
+    suite_test.go:347: fact cost raw-shape round 1: native tsgo: load_ns=56587887 query_ns=48495275 queries=10000 first_query_ns=71408 run_ns=75276647; Go factcost: load_ns=24627380 query_ns=63934119 queries=10000 first_query_ns=64237; identical units=650000
+    suite_test.go:347: fact cost type-shape round 1: native tsgo: load_ns=25807895 query_ns=103633112 queries=10000 first_query_ns=113822 run_ns=110051383; Go factcost: load_ns=46396686 query_ns=119360973 queries=10000 first_query_ns=131378; identical units=1890000
+    suite_test.go:347: fact cost options round 1: native tsgo: load_ns=53171385 query_ns=25039639 queries=10000 first_query_ns=13761 run_ns=31330603; Go factcost: load_ns=25490888 query_ns=33853875 queries=10000 first_query_ns=7091; identical units=150000
+    suite_test.go:374: want all 77 files, got 78
+--- FAIL: TestSixRuleAgreementAndMutants (1165.57s)
+
