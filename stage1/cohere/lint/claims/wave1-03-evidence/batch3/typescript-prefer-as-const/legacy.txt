@@ -1,0 +1,11 @@
+case 0
+/tmp/lint-wave1-03-batch3-published/typescript-prefer-as-const/repair-shape.ts:1:10
+  @typescript-eslint/prefer-as-const  This literal type restates a value the compiler can already read off the literal itself. `as const` infers it, so the value and its type cannot drift apart; writing the type out means every edit to the value has to be made twice, and the compiler accepts the version where only one of them was.
+
+panic: unexpected fix shape
+
+goroutine 1 [running]:
+main.run({0x2cf3b9e96180?, 0x2cf3b9ee1080?}, 0x0, 0x2cf3b9ee1080)
+	/workspace/adamic/cohere/adamic_shape_oracle.go:62 +0x90b
+main.main()
+	/workspace/adamic/cohere/adamic_shape_oracle.go:143 +0x2f7

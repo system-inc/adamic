@@ -1,0 +1,390 @@
+=== RUN   TestPreferAsConstFires
+=== PAUSE TestPreferAsConstFires
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim
+=== RUN   TestPreferAsConstReportsTheDestructuringCaseWithoutARepair
+=== PAUSE TestPreferAsConstReportsTheDestructuringCaseWithoutARepair
+=== RUN   TestPreferAsConstPointsAtTheLiteralType
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType
+=== RUN   TestPreferAsConstStaysSilent
+=== PAUSE TestPreferAsConstStaysSilent
+=== RUN   TestPreferAsConstMatchesNumericValuesNotSpellings
+=== PAUSE TestPreferAsConstMatchesNumericValuesNotSpellings
+=== RUN   TestPreferAsConstReportsOnceWhenBothArmsCouldApply
+=== PAUSE TestPreferAsConstReportsOnceWhenBothArmsCouldApply
+=== CONT  TestPreferAsConstFires
+=== RUN   TestPreferAsConstFires/upstream_fail_1
+=== CONT  TestPreferAsConstStaysSilent
+=== CONT  TestPreferAsConstPointsAtTheLiteralType
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/a_variable_annotation
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/a_variable_annotation
+=== PAUSE TestPreferAsConstFires/upstream_fail_1
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim
+=== CONT  TestPreferAsConstReportsOnceWhenBothArmsCouldApply
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_1
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_1
+--- PASS: TestPreferAsConstReportsOnceWhenBothArmsCouldApply (0.00s)
+=== CONT  TestPreferAsConstReportsTheDestructuringCaseWithoutARepair
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/a_numeric_variable_annotation
+=== RUN   TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_array_binding_pattern
+=== RUN   TestPreferAsConstFires/upstream_fail_2
+=== PAUSE TestPreferAsConstFires/upstream_fail_2
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_2
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_1
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/a_numeric_variable_annotation
+=== PAUSE TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_array_binding_pattern
+=== RUN   TestPreferAsConstFires/upstream_fail_3
+=== PAUSE TestPreferAsConstFires/upstream_fail_3
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_1
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_2
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_2
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_3
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_3
+=== RUN   TestPreferAsConstFires/upstream_fail_4
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_4
+=== PAUSE TestPreferAsConstFires/upstream_fail_4
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_2
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_3
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_3
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_4
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_4
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_5
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_5
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_6
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_6
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_7
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_7
+=== RUN   TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_object_binding_pattern
+=== PAUSE TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_object_binding_pattern
+=== RUN   TestPreferAsConstFires/upstream_fail_5
+=== PAUSE TestPreferAsConstFires/upstream_fail_5
+=== RUN   TestPreferAsConstFires/upstream_fail_6
+=== PAUSE TestPreferAsConstFires/upstream_fail_6
+=== RUN   TestPreferAsConstFires/upstream_fail_7
+=== PAUSE TestPreferAsConstFires/upstream_fail_7
+=== CONT  TestPreferAsConstMatchesNumericValuesNotSpellings
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_4
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/quote_styles_differ_between_type_and_value
+=== RUN   TestPreferAsConstMatchesNumericValuesNotSpellings/a_hexadecimal_type_against_a_decimal_value
+=== PAUSE TestPreferAsConstMatchesNumericValuesNotSpellings/a_hexadecimal_type_against_a_decimal_value
+=== RUN   TestPreferAsConstMatchesNumericValuesNotSpellings/a_trailing_zero
+=== PAUSE TestPreferAsConstMatchesNumericValuesNotSpellings/a_trailing_zero
+=== RUN   TestPreferAsConstMatchesNumericValuesNotSpellings/a_numeric_separator
+=== PAUSE TestPreferAsConstMatchesNumericValuesNotSpellings/a_numeric_separator
+=== RUN   TestPreferAsConstMatchesNumericValuesNotSpellings/exponent_notation
+=== PAUSE TestPreferAsConstMatchesNumericValuesNotSpellings/exponent_notation
+=== RUN   TestPreferAsConstFires/upstream_fail_8
+=== PAUSE TestPreferAsConstFires/upstream_fail_8
+=== CONT  TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_array_binding_pattern
+=== RUN   TestPreferAsConstFires/upstream_fail_9
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_5
+=== PAUSE TestPreferAsConstFires/upstream_fail_9
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_5
+=== RUN   TestPreferAsConstFires/upstream_fail_10
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_6
+=== PAUSE TestPreferAsConstFires/upstream_fail_10
+=== RUN   TestPreferAsConstFires/upstream_fail_11
+=== CONT  TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_object_binding_pattern
+=== PAUSE TestPreferAsConstFires/upstream_fail_11
+=== RUN   TestPreferAsConstFires/upstream_fail_12
+=== CONT  TestPreferAsConstMatchesNumericValuesNotSpellings/a_hexadecimal_type_against_a_decimal_value
+=== PAUSE TestPreferAsConstFires/upstream_fail_12
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/quote_styles_differ_between_type_and_value
+=== RUN   TestPreferAsConstFires/upstream_fail_13
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/an_as_expression
+=== PAUSE TestPreferAsConstFires/upstream_fail_13
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/an_as_expression
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/a_class_property
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/a_class_property
+=== RUN   TestPreferAsConstPointsAtTheLiteralType/a_binding_pattern
+=== PAUSE TestPreferAsConstPointsAtTheLiteralType/a_binding_pattern
+--- PASS: TestPreferAsConstReportsTheDestructuringCaseWithoutARepair (0.00s)
+    --- PASS: TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_array_binding_pattern (0.00s)
+    --- PASS: TestPreferAsConstReportsTheDestructuringCaseWithoutARepair/an_object_binding_pattern (0.00s)
+=== CONT  TestPreferAsConstMatchesNumericValuesNotSpellings/a_trailing_zero
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_6
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_7
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_7
+=== RUN   TestPreferAsConstFires/upstream_fail_14
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_8
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_8
+=== CONT  TestPreferAsConstMatchesNumericValuesNotSpellings/a_numeric_separator
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_9
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_9
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_10
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_10
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_11
+=== PAUSE TestPreferAsConstFires/upstream_fail_14
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_11
+=== CONT  TestPreferAsConstMatchesNumericValuesNotSpellings/exponent_notation
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_12
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_12
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_13
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_13
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_14
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_14
+--- PASS: TestPreferAsConstMatchesNumericValuesNotSpellings (0.00s)
+    --- PASS: TestPreferAsConstMatchesNumericValuesNotSpellings/a_hexadecimal_type_against_a_decimal_value (0.00s)
+    --- PASS: TestPreferAsConstMatchesNumericValuesNotSpellings/a_trailing_zero (0.00s)
+    --- PASS: TestPreferAsConstMatchesNumericValuesNotSpellings/a_numeric_separator (0.00s)
+    --- PASS: TestPreferAsConstMatchesNumericValuesNotSpellings/exponent_notation (0.00s)
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/a_plain_class_property_is_fixed_too
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/an_as_expression
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/a_plain_class_property_is_fixed_too
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/whitespace_before_the_colon_survives_the_delete
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/whitespace_before_the_colon_survives_the_delete
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/a_comment_after_the_type_survives_the_delete
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/a_comment_after_the_type_survives_the_delete
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/a_binding_pattern
+=== RUN   TestPreferAsConstFixesWriteWhatTheyClaim/the_insert_precedes_trailing_trivia
+=== PAUSE TestPreferAsConstFixesWriteWhatTheyClaim/the_insert_precedes_trailing_trivia
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/a_class_property
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/a_numeric_variable_annotation
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/quote_styles_differ_between_type_and_value
+=== CONT  TestPreferAsConstPointsAtTheLiteralType/a_variable_annotation
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_1
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_10
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_9
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/the_insert_precedes_trailing_trivia
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_14
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_8
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_13
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_11
+=== RUN   TestPreferAsConstFires/upstream_fail_15
+=== PAUSE TestPreferAsConstFires/upstream_fail_15
+=== RUN   TestPreferAsConstFires/upstream_fail_16
+=== PAUSE TestPreferAsConstFires/upstream_fail_16
+=== RUN   TestPreferAsConstFires/upstream_fail_17
+=== PAUSE TestPreferAsConstFires/upstream_fail_17
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_12
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_6
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/whitespace_before_the_colon_survives_the_delete
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/a_comment_after_the_type_survives_the_delete
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/a_plain_class_property_is_fixed_too
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_3
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_4
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_2
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_7
+=== CONT  TestPreferAsConstFires/upstream_fail_17
+=== CONT  TestPreferAsConstFires/upstream_fail_16
+=== CONT  TestPreferAsConstFires/upstream_fail_15
+=== CONT  TestPreferAsConstFires/upstream_fail_14
+=== CONT  TestPreferAsConstFires/upstream_fail_13
+=== CONT  TestPreferAsConstFires/upstream_fail_12
+=== CONT  TestPreferAsConstFires/upstream_fail_11
+=== CONT  TestPreferAsConstFires/upstream_fail_10
+=== CONT  TestPreferAsConstFires/upstream_fail_9
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_8
+=== CONT  TestPreferAsConstFires/upstream_fail_4
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_8
+=== CONT  TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_5
+=== CONT  TestPreferAsConstFires/upstream_fail_1
+=== CONT  TestPreferAsConstFires/upstream_fail_2
+=== CONT  TestPreferAsConstFires/upstream_fail_3
+=== CONT  TestPreferAsConstFires/upstream_fail_7
+=== CONT  TestPreferAsConstFires/upstream_fail_6
+=== CONT  TestPreferAsConstFires/upstream_fail_8
+=== CONT  TestPreferAsConstFires/upstream_fail_5
+--- PASS: TestPreferAsConstFixesWriteWhatTheyClaim (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_1 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_10 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_9 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/the_insert_precedes_trailing_trivia (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_8 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_14 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_13 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_11 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_12 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_6 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/whitespace_before_the_colon_survives_the_delete (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/a_comment_after_the_type_survives_the_delete (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/a_plain_class_property_is_fixed_too (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_3 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_4 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_2 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_7 (0.00s)
+    --- PASS: TestPreferAsConstFixesWriteWhatTheyClaim/upstream_fix_vector_5 (0.00s)
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_9
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_9
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_10
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_10
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_11
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_11
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_12
+--- PASS: TestPreferAsConstFires (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_17 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_16 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_15 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_14 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_13 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_12 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_11 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_10 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_9 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_4 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_1 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_3 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_6 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_2 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_7 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_8 (0.00s)
+    --- PASS: TestPreferAsConstFires/upstream_fail_5 (0.00s)
+--- PASS: TestPreferAsConstPointsAtTheLiteralType (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/an_as_expression (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/a_binding_pattern (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/a_numeric_variable_annotation (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/quote_styles_differ_between_type_and_value (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/a_class_property (0.00s)
+    --- PASS: TestPreferAsConstPointsAtTheLiteralType/a_variable_annotation (0.00s)
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_12
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_13
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_13
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_14
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_14
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_15
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_15
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_16
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_16
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_17
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_17
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_18
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_18
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_19
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_19
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_20
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_20
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_21
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_21
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_22
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_22
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_23
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_23
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_24
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_24
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_25
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_25
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_26
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_26
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_27
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_27
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_28
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_28
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_29
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_29
+=== RUN   TestPreferAsConstStaysSilent/upstream_pass_30
+=== PAUSE TestPreferAsConstStaysSilent/upstream_pass_30
+=== RUN   TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion
+=== PAUSE TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion
+=== RUN   TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#01
+=== PAUSE TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#01
+=== RUN   TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#02
+=== PAUSE TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#02
+=== RUN   TestPreferAsConstStaysSilent/a_parameter_default
+=== PAUSE TestPreferAsConstStaysSilent/a_parameter_default
+=== RUN   TestPreferAsConstStaysSilent/a_generic_type_argument
+=== PAUSE TestPreferAsConstStaysSilent/a_generic_type_argument
+=== RUN   TestPreferAsConstStaysSilent/a_parenthesized_literal_type
+=== PAUSE TestPreferAsConstStaysSilent/a_parenthesized_literal_type
+=== RUN   TestPreferAsConstStaysSilent/a_boolean_literal_type
+=== PAUSE TestPreferAsConstStaysSilent/a_boolean_literal_type
+=== RUN   TestPreferAsConstStaysSilent/a_bigint_literal_type
+=== PAUSE TestPreferAsConstStaysSilent/a_bigint_literal_type
+=== RUN   TestPreferAsConstStaysSilent/a_negated_numeric_literal_type
+=== PAUSE TestPreferAsConstStaysSilent/a_negated_numeric_literal_type
+=== RUN   TestPreferAsConstStaysSilent/a_definite_assignment_with_an_initializer
+=== PAUSE TestPreferAsConstStaysSilent/a_definite_assignment_with_an_initializer
+=== RUN   TestPreferAsConstStaysSilent/a_definite_assignment_property_with_an_initializer
+=== PAUSE TestPreferAsConstStaysSilent/a_definite_assignment_property_with_an_initializer
+=== RUN   TestPreferAsConstStaysSilent/a_numeric_type_against_a_string_value
+=== PAUSE TestPreferAsConstStaysSilent/a_numeric_type_against_a_string_value
+=== RUN   TestPreferAsConstStaysSilent/a_string_type_against_a_numeric_value
+=== PAUSE TestPreferAsConstStaysSilent/a_string_type_against_a_numeric_value
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_1
+=== CONT  TestPreferAsConstStaysSilent/a_bigint_literal_type
+=== CONT  TestPreferAsConstStaysSilent/a_definite_assignment_with_an_initializer
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_20
+=== CONT  TestPreferAsConstStaysSilent/a_boolean_literal_type
+=== CONT  TestPreferAsConstStaysSilent/a_parenthesized_literal_type
+=== CONT  TestPreferAsConstStaysSilent/a_generic_type_argument
+=== CONT  TestPreferAsConstStaysSilent/a_parameter_default
+=== CONT  TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#02
+=== CONT  TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#01
+=== CONT  TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_30
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_29
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_28
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_27
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_26
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_25
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_24
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_23
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_22
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_21
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_11
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_19
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_18
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_17
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_16
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_15
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_14
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_13
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_12
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_6
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_10
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_9
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_8
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_7
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_4
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_5
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_3
+=== CONT  TestPreferAsConstStaysSilent/upstream_pass_2
+=== CONT  TestPreferAsConstStaysSilent/a_negated_numeric_literal_type
+=== CONT  TestPreferAsConstStaysSilent/a_numeric_type_against_a_string_value
+=== CONT  TestPreferAsConstStaysSilent/a_definite_assignment_property_with_an_initializer
+=== CONT  TestPreferAsConstStaysSilent/a_string_type_against_a_numeric_value
+--- PASS: TestPreferAsConstStaysSilent (0.01s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_1 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_bigint_literal_type (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_definite_assignment_with_an_initializer (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_20 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_boolean_literal_type (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_parenthesized_literal_type (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_generic_type_argument (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_parameter_default (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#02 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion#01 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/an_angle_bracket_type_assertion (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_30 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_29 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_28 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_27 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_26 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_25 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_24 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_23 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_22 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_21 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_11 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_19 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_18 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_17 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_16 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_15 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_14 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_13 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_12 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_6 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_10 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_9 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_8 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_7 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_4 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_5 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_3 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/upstream_pass_2 (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_negated_numeric_literal_type (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_numeric_type_against_a_string_value (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_definite_assignment_property_with_an_initializer (0.00s)
+    --- PASS: TestPreferAsConstStaysSilent/a_string_type_against_a_numeric_value (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.013s
