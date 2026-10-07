@@ -715,14 +715,11 @@ func (l *lowering) predicateOverloadProven(implementation, overload *ast.Node) b
 func (l *lowering) predicateOverloadResult(call *ast.CallExpression, value ir.Expression, implementation, overload *ast.Node) (ir.Expression, error) {
 	// Until .a refusal mode exists, .a and .ts share the ruled call-site checks.
 	directions := l.predicateUseDirections(call)
-	if l.predicateOverloadProven(implementation, overload) {
-		l.result.PredicateChecks.Proven += l.predicateDirectionCount(call, predicateEither)
+	proven := l.predicateOverloadProven(implementation, overload)
+	l.recordPredicateChecks(call, implementation, overload, directions, proven)
+	if proven {
 		return value, nil
 	}
-	unobservable := l.predicateDirectionCount(call, predicateEither&^directions)
-	l.result.PredicateChecks.Proven += unobservable
-	l.result.PredicateChecks.Unobservable += unobservable
-	l.result.PredicateChecks.Checked += l.predicateDirectionCount(call, directions)
 	if directions == 0 {
 		return value, nil
 	}
@@ -746,15 +743,7 @@ func (l *lowering) predicateOverloadResult(call *ast.CallExpression, value ir.Ex
 	if (!assertion && invoked.Type() != ir.Boolean) || (assertion && invoked.Type() != 0) {
 		return nil, l.notYet(overload, "a checked predicate overload with a non-boolean result")
 	}
-	ordinal := 0
-	for _, declaration := range l.symbol(implementation.Name()).Declarations {
-		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil {
-			ordinal++
-			if declaration == overload {
-				break
-			}
-		}
-	}
+	ordinal := l.predicateOverloadOrdinal(implementation, overload)
 	message := fmt.Sprintf("overload %d of %s result: predicate %s is false", ordinal, implementation.Name().Text(), claim.ParameterName())
 	wrapper := len(l.result.Functions)
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("%s_overload_%d_check_%d", implementation.Name().Text(), ordinal, wrapper), Returns: invoked.Type()})
@@ -1168,4 +1157,78 @@ func (l *lowering) predicateFlowWithout(root *ast.FlowNode, call, reference *ast
 		return copy
 	}
 	return clone(root)
+}
+
+func (l *lowering) predicateOverloadOrdinal(implementation, overload *ast.Node) int {
+	ordinal := 0
+	for _, declaration := range l.symbol(implementation.Name()).Declarations {
+		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil {
+			ordinal++
+			if declaration == overload {
+				return ordinal
+			}
+		}
+	}
+	return ordinal
+}
+
+func (l *lowering) recordPredicateChecks(call *ast.CallExpression, implementation, overload *ast.Node, observed predicateTruth, proven bool) {
+	counts := &l.result.PredicateChecks
+	site := ir.PredicateCallCheck{Where: l.program.Where(call.AsNode()), Function: implementation.Name().Text(), Overload: l.predicateOverloadOrdinal(implementation, overload)}
+	for _, direction := range []predicateTruth{predicateTrue, predicateFalse} {
+		if l.predicateDirectionCount(call, direction) == 0 {
+			continue
+		}
+		name := "true"
+		if direction == predicateFalse {
+			name = "false"
+		}
+		report := ir.PredicateDirectionCheck{Direction: name}
+		switch {
+		case proven:
+			report.Status, report.Reason = "proven", "implementation body proves this direction"
+			counts.Proven++
+		case observed&direction != 0:
+			report.Status, report.Reason = "checked", "a narrowed read consumes this direction"
+			counts.Checked++
+		default:
+			report.Status, report.Reason = "unobservable", "no narrowed read in the "+name+" region"
+			counts.Proven++
+			counts.Unobservable++
+		}
+		site.Directions = append(site.Directions, report)
+	}
+	counts.Sites = append(counts.Sites, site)
+}
+
+// Inferred callback predicates are claims too. Independently prove the resolved
+// target from their own body; checker inference alone is not admission evidence.
+func (l *lowering) proveInferredPredicate(function *ast.Node, target *checker.Type) bool {
+	claim := predicateOfSignature(l.checker, l.checker.GetSignatureFromDeclaration(function))
+	if claim == nil || claim.Type() == nil || !checker.Checker_isTypeIdenticalTo(l.checker, claim.Type(), target) {
+		return false
+	}
+	index := int(claim.ParameterIndex())
+	if index < 0 || index >= len(function.Parameters()) {
+		return false
+	}
+	parameter := function.Parameters()[index]
+	if parameter.Name().Kind != ast.KindIdentifier || parameter.AsParameterDeclaration().Initializer != nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
+		return false
+	}
+	changed := false
+	var writes ast.Visitor
+	writes = func(node *ast.Node) bool {
+		if node.Kind == ast.KindIdentifier && l.symbol(node) == l.symbol(parameter.Name()) && ast.IsAssignmentTarget(node) {
+			changed = true
+		}
+		node.ForEachChild(writes)
+		return false
+	}
+	function.Body().ForEachChild(writes)
+	if changed {
+		return false
+	}
+	proof := predicateFlowProof{l: l, function: function, parameter: parameter, declared: l.checker.GetTypeAtLocation(parameter.Name()), target: target}
+	return proof.proveBody(function) == nil
 }

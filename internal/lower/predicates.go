@@ -461,7 +461,7 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 			text := file.Text()[scanner.GetTokenPosOfNode(argument, file, false):argument.End()]
 			return &Refused{Where: l.program.Where(argument), What: "an unproven predicate argument for parameter " + parameter.Name + " (argument " + fmt.Sprintf("%q", text) + ")", Fix: "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
 		}
-		if !ast.IsFunctionLike(implementation) || implementation.Body() == nil || implementation.Type() == nil || implementation.Type().Kind != ast.KindTypePredicate {
+		if !ast.IsFunctionLike(implementation) || implementation.Body() == nil || (implementation.Type() != nil && implementation.Type().Kind != ast.KindTypePredicate) {
 			return failure()
 		}
 		if argument.Kind == ast.KindIdentifier {
@@ -482,7 +482,6 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 				return failure()
 			}
 		}
-		annotation := implementation.Type().AsTypePredicateNode()
 		wanted := contract.AsTypePredicateNode()
 		calls := l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(parameter), checker.SignatureKindCall)
 		var target *checker.Type
@@ -491,11 +490,21 @@ func (l *lowering) predicateArguments(node *ast.Node) error {
 				target = predicate.Type()
 			}
 		}
-		if annotation.Type == nil || wanted.Type == nil || target == nil || !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeAtLocation(annotation.Type), target) {
+		if wanted.Type == nil || target == nil {
 			return failure()
 		}
-		if err := l.predicateRefusal(implementation.Type()); err != nil {
-			return failure()
+		if implementation.Type() == nil {
+			if !l.proveInferredPredicate(implementation, target) {
+				return failure()
+			}
+		} else {
+			annotation := implementation.Type().AsTypePredicateNode()
+			if annotation.Type == nil || !checker.Checker_isTypeIdenticalTo(l.checker, l.checker.GetTypeAtLocation(annotation.Type), target) {
+				return failure()
+			}
+			if err := l.predicateRefusal(implementation.Type()); err != nil {
+				return failure()
+			}
 		}
 	}
 	return nil
