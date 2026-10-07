@@ -1,0 +1,22 @@
+import { newTheme } from './new_theme.a';
+import { OptionsJson } from '../options_json.ts';
+import { panic, programArguments, readTextFile } from 'adamic';
+const args = programArguments();
+const file = readTextFile(args[0] ?? panic('corpus path'));
+if(file.kind === 'Error') panic(file.message);
+const json = new OptionsJson(file.text);
+const root = json.parse();
+if(root < 0 || json.node(root).kind !== 'array') panic('invalid constructor corpus');
+for(const row of json.node(root).children) {
+    const key = json.node(json.field(row, 'source')).text;
+    const first = newTheme();
+    const second = newTheme();
+    console.log(`${first.prefix.length} ${first.values.size} ${first.keyOrder.length} ${first.deadKeys}`);
+    first.values.set(key, { value: key, options: 31 });
+    first.keyOrder.push(key);
+    first.prefix = 'probe';
+    first.deadKeys = 7;
+    console.log(`${second.prefix.length} ${second.values.size} ${second.keyOrder.length} ${second.deadKeys}`);
+    const third = newTheme();
+    console.log(`${third.prefix.length} ${third.values.size} ${third.keyOrder.length} ${third.deadKeys}`);
+}
