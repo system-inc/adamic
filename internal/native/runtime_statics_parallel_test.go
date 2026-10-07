@@ -88,13 +88,19 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 			})
 		}
 	}
-	// Repeat the unsafe access to expose overlap before forwarding terminates the process.
-	// No extra synchronization is added: every iteration is the same unlocked flush.
-	t.Run("handler_buffer_mutant", func(t *testing.T) {
-		library, root := staticsRaceLibrary(t, "adamic.c", "int saved_errno = errno;", "int saved_errno = errno;\n for (size_t attempt = 0; attempt < 16384; attempt++) { flush(); }")
-		binary := staticsRaceFixture(t, root, library, "signal_output")
-		staticsSignalRun(t, binary, true, syscall.SIGTERM, true)
-	})
+	// Hold a real writer inside output_lock with bytes buffered before delivering the signal.
+	// Relaxed fixture gates provide timing without ordering the unsafe handler access.
+	for _, mutant := range []bool{false, true} {
+		name := "handler_buffer_guarded"
+		if mutant {
+			name = "handler_buffer_mutant"
+		}
+		t.Run(name, func(t *testing.T) {
+			library, root := staticsSignalRaceLibrary(t, mutant)
+			binary := staticsRaceFixture(t, root, library, "signal_race")
+			staticsSignalRun(t, binary, true, syscall.SIGTERM, mutant)
+		})
+	}
 	t.Run("exit_flush_mutant", func(t *testing.T) {
 		library, root := staticsRaceLibrary(t, "adamic.c", "adamic_parallel_shutdown();\n\tpthread_mutex_lock(&output_lock);\n\tflush();\n\tbool failed = broken[adamic_stdout] || broken[adamic_stderr];\n\tpthread_mutex_unlock(&output_lock);", "flush();\n bool failed = broken[adamic_stdout] || broken[adamic_stderr];")
 		binary := staticsRaceFixture(t, root, library, "signal_output")
@@ -145,6 +151,34 @@ func TestRuntimeStopWholeLines(t *testing.T) {
 	}
 }
 
+// Instrument only the test snapshot. The protected and mutant handlers use the same gates;
+// the mutant's sole unsafe change is one direct flush in the actual signal handler.
+func staticsSignalRaceLibrary(t *testing.T, mutant bool) (string, string) {
+	t.Helper()
+	source, err := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, "adamic.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := string(source)
+	patch := func(old, replacement string) {
+		t.Helper()
+		if strings.Count(changed, old) != 1 {
+			t.Fatalf("missing or ambiguous signal race seam: %q", old)
+		}
+		changed = strings.Replace(changed, old, replacement, 1)
+	}
+	patch("static void stopped(int signal_number) {", "extern void adamic_test_signal_release(void);\n\nstatic void stopped(int signal_number) {")
+	// Declare the writer hook before buffer(), not just before stopped().
+	patch("static void buffer(const char *bytes, size_t length) {", "extern void adamic_test_signal_writer(void);\n\nstatic void buffer(const char *bytes, size_t length) {")
+	patch("output_used += length;", "output_used += length;\n\tadamic_test_signal_writer();")
+	flush := ""
+	if mutant {
+		flush = "\n\tflush();"
+	}
+	patch("int saved_errno = errno;", "int saved_errno = errno;"+flush+"\n\tadamic_test_signal_release();")
+	return staticsRaceLibrary(t, "adamic.c", string(source), changed)
+}
+
 func staticsSignalRun(t *testing.T, binary string, worker bool, signal syscall.Signal, mutant bool) {
 	t.Helper()
 	for attempt := 0; attempt < 3; attempt++ {
@@ -160,7 +194,7 @@ func staticsSignalRun(t *testing.T, binary string, worker bool, signal syscall.S
 		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race")
 		if mutant {
 			if err == nil || timedOut || !race {
-				t.Fatalf("signal mutant not caught: %v\n%s", err, output)
+				t.Fatalf("signal mutant not caught (attempt %d): %v\n%s", attempt+1, err, output)
 			}
 			for _, line := range strings.Split(string(output), "\n") {
 				if strings.Contains(line, "SUMMARY: ThreadSanitizer:") {
