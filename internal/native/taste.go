@@ -89,6 +89,10 @@ func logicalConverted(from, to ir.Type, value string) (string, bool) {
 			return fmt.Sprintf("((%s)%s)", cType(to), value), false
 		}
 	}
+	if from.IsReference() && to.IsReference() {
+		// A differently typed left reference reaches this branch only when falsy (NULL).
+		return fmt.Sprintf("((%s)%s)", cType(to), value), false
+	}
 	return converted(from, to, value)
 }
 
