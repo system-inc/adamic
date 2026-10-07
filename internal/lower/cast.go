@@ -23,6 +23,9 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	}
 	source := l.checker.GetTypeAtLocation(as.Expression)
 	target := l.checker.GetTypeAtLocation(node)
+	if !l.sameKeeping(source, target, map[[2]*checker.Type]bool{}) {
+		return nil, l.notYet(node, "a cast that changes the runtime representation or ownership of a reference")
+	}
 	// An object literal's type is fresh, and a fresh type is held to excess properties, so { name, age }
 	// as Named would read as not assignable. Its widened type isn't fresh; its own keeps the literal
 	// fields a discriminated union needs. Either assignable makes an upcast candidate; the sound

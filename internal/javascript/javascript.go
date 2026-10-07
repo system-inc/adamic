@@ -530,6 +530,14 @@ var operators = map[ir.Operator]string{
 // as the IR means, so nesting expressions keeps every order the native backend makes explicit.
 func (e *emitter) value(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.TypedArrayNew:
+		return "new " + typedArrayName(expression.Of) + "(" + e.value(expression.Source) + ")"
+	case ir.TypedArrayFill:
+		return e.value(expression.Array) + ".fill(" + e.values(expression.Arguments) + ")"
+	case ir.TypedArraySet:
+		return e.value(expression.Array) + ".set(" + e.values(expression.Arguments) + ")"
+	case ir.TypedArraySubarray:
+		return e.value(expression.Array) + ".subarray(" + e.values(expression.Arguments) + ")"
 	case ir.RegExpNew:
 		if expression.Arguments != nil {
 			return "new RegExp(" + e.values(expression.Arguments) + ")"

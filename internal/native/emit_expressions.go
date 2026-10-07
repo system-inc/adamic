@@ -12,6 +12,8 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
+		return e.typedArrayValue(expression)
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)
@@ -360,6 +362,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("}")
 		return object
 	case ir.ArrayIndex:
+		if expression.Array.Type().IsTypedArray() {
+			array := e.value(expression.Array)
+			index := e.value(expression.Index)
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("adamic_typed_array_get(%s, %s)", array, index))
+		}
 		slot := e.arrayIndexSlot(expression)
 		if expression.Type().IsMaybe() {
 			return e.snapshot(expression.Type(), maybeSlot(expression.Element, slot))
@@ -559,6 +566,14 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return array
 	case ir.Length:
+		if expression.Array.Type().IsTypedArray() {
+			array := e.value(expression.Array)
+			length := fmt.Sprintf("adamic_typed_array_length(%s)", array)
+			if expression.Optional {
+				return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, %s})", array, zero(ir.MaybeNumber), length))
+			}
+			return e.snapshot(ir.Number, length)
+		}
 		if expression.Optional {
 			array := e.value(expression.Array)
 			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, (double)%s->length})", array, zero(ir.MaybeNumber), array))

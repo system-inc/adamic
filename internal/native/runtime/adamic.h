@@ -28,6 +28,8 @@ enum adamic_kind {
 	adamic_kind_number,
 	adamic_kind_boolean,
 	adamic_kind_weak,
+	adamic_kind_typed_array,
+	adamic_kind_typed_array_iterator,
 };
 
 typedef struct adamic_heap {
@@ -292,6 +294,44 @@ typedef struct adamic_array {
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
 } adamic_array;
+
+// Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
+// subarray return one owned reference. Arguments are borrowed; fill returns borrowed self.
+enum adamic_typed_array_kind {
+	adamic_typed_array_uint8 = 1,
+	adamic_typed_array_int32,
+	adamic_typed_array_float64,
+};
+typedef struct adamic_typed_array {
+	adamic_heap heap;
+	enum adamic_typed_array_kind kind;
+	size_t length;
+	void *data;
+	// NULL owns data; a view holds one count on the ultimate owning array.
+	struct adamic_typed_array *owner;
+} adamic_typed_array;
+
+adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length);
+adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers);
+adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index);
+// The check is also called by compiler-inserted write checks. set always checks itself.
+// Panic text is the plain-array form: index <index> is outside an array of length <length>.
+void adamic_typed_array_check_write(const adamic_typed_array *array, double index);
+void adamic_typed_array_set(adamic_typed_array *array, double index, double value);
+double adamic_typed_array_length(const adamic_typed_array *array);
+adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end);
+void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_array *source, double offset, bool has_offset);
+adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array, double start, double end, bool has_end);
+
+// A counted iterator holds the array until released, including on early loop exits.
+// next reads current storage, never a snapshot. false means exhausted.
+typedef struct adamic_typed_array_iterator {
+	adamic_heap heap;
+	adamic_typed_array *array;
+	size_t next;
+} adamic_typed_array_iterator;
+adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *array);
+bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value);
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
 size_t adamic_public_index(const adamic_shape *shape, size_t position);

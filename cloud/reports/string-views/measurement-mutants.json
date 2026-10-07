@@ -1,0 +1,12 @@
+[
+  {
+    "name": "checksum",
+    "exit": 1,
+    "log": "/tmp/string-views-measure-checksum-mutant.log"
+  },
+  {
+    "name": "response",
+    "exit": 1,
+    "log": "/tmp/string-views-measure-response-mutant.log"
+  }
+]
