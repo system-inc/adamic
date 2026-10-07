@@ -178,3 +178,7 @@ Ported fragment import/alias/destructure/variable declaration judgments and exac
 ## Native fragment and undefined-name source visitors
 
 See [SOURCE_RULES.md](SOURCE_RULES.md). Both reserved source visitors now match production Go on positive controls and both frozen corpora under sanitizers, with comparison-only mutants and released-handle refusal. Constructed-context source analysis and shared checker/factory integration remain unfinished. No new claims.
+
+## Current main and lint-area landing
+
+[LANDING_C799.md](LANDING_C799.md) records the rebase onto main c7991b900 and area b84a9d931, eight source-rule oracles, all partial validators, adopted proof/record checks and mutants. The final area rebase preserves exactly the tested Git tree. Constructed-context source analysis and shared checker/factory integration remain unfinished. No new claims.
