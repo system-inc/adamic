@@ -2,10 +2,11 @@
 package lower
 
 import (
+	"slices"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
-	"slices"
 )
 
 // variables lowers const and let declarations, each to a local of its own.
@@ -53,6 +54,9 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			// is undefined, not the backend's unobservable storage placeholder. Namespace
 			// var was initialized when hoisted; a later declaration must not reset it.
 			value = ir.Undefined{Of: ir.Object}
+		}
+		if closure, literal := value.(ir.MakeClosure); literal && list.Flags&ast.NodeFlagsConst != 0 {
+			l.result.Locals[local].ConstantClosure = closure.Function + 1
 		}
 		if l.result.Locals[local].NamespaceVar {
 			if value != nil {
