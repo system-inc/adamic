@@ -71,6 +71,9 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if text, known, err := l.dateStringConversion(node, value); known {
+		return text, err
+	}
 	switch value.Type() {
 	case ir.Number:
 		return ir.NumberToString{Value: value}, nil

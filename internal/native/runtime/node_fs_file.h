@@ -31,4 +31,5 @@ double adamic_fs_file_date_time(const adamic_object *);
 // Raw bytes seam for the Buffer unit. The caller frees bytes, closes only fds it
 // opened, and raises the saved errno after any cleanup. No fake Buffer type.
 int adamic_fs_file_read_bytes(int, unsigned char **, size_t *);
+#include "date_string.h"
 #endif

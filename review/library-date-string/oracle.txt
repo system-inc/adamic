@@ -1,0 +1,55 @@
+=== RUN   TestDateStringRuntimeZones
+=== PAUSE TestDateStringRuntimeZones
+=== RUN   TestDateStringNamedRefusal
+=== PAUSE TestDateStringNamedRefusal
+=== RUN   TestDateStringRuntimeMutants
+=== PAUSE TestDateStringRuntimeMutants
+=== RUN   TestDateStringWASIRefusal
+    library_date_string_test.go:171: set ADAMIC_ORACLE_WASI=1
+--- SKIP: TestDateStringWASIRefusal (0.00s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestDateStringRuntimeZones
+=== CONT  TestDateStringNamedRefusal
+=== CONT  TestDateStringRuntimeMutants
+=== RUN   TestDateStringRuntimeMutants/offset_sign
+=== PAUSE TestDateStringRuntimeMutants/offset_sign
+=== RUN   TestDateStringRuntimeMutants/weekday
+=== PAUSE TestDateStringRuntimeMutants/weekday
+=== RUN   TestDateStringRuntimeMutants/invalid_spelling
+=== PAUSE TestDateStringRuntimeMutants/invalid_spelling
+=== CONT  TestDateStringRuntimeMutants/offset_sign
+=== CONT  TestDateStringRuntimeMutants/invalid_spelling
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string_utc.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string_utc.a
+=== CONT  TestDateStringRuntimeMutants/weekday
+=== NAME  TestDateStringRuntimeMutants/offset_sign
+    library_date_string_test.go:164: compiled and finished without sanitizer/leak findings; caught only by Node stdout
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string.a
+=== NAME  TestDateStringNamedRefusal
+    library_date_string_test.go:89: Both backends loudly refuse where stock Node can format the zone
+--- PASS: TestDateStringNamedRefusal (0.59s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string_utc.a
+=== NAME  TestDateStringRuntimeMutants/invalid_spelling
+    library_date_string_test.go:164: compiled and finished without sanitizer/leak findings; caught only by Node stdout
+=== NAME  TestDateStringRuntimeMutants/weekday
+    library_date_string_test.go:164: compiled and finished without sanitizer/leak findings; caught only by Node stdout
+--- PASS: TestDateStringRuntimeMutants (0.00s)
+    --- PASS: TestDateStringRuntimeMutants/offset_sign (0.55s)
+    --- PASS: TestDateStringRuntimeMutants/invalid_spelling (0.61s)
+    --- PASS: TestDateStringRuntimeMutants/weekday (0.57s)
+=== NAME  TestDateStringRuntimeZones
+    library_date_string_test.go:55: UTC: native and JavaScript agree with Node
+    library_date_string_test.go:55: America/Denver: native and JavaScript agree with Node
+--- PASS: TestDateStringRuntimeZones (0.82s)
+--- PASS: TestNativeAgreesWithNode (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string_utc.a (0.44s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_string.a (0.57s)
+PASS
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.137s

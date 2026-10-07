@@ -9,6 +9,9 @@ import (
 
 // Recognize declarations, including aliased imports, rather than user spellings.
 func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.dateStringMethod(node); known {
+		return value, known, err
+	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	symbol := l.symbol(callee)
