@@ -1,0 +1,13 @@
+function run(): void {
+	const fixed = 7;
+	const readFixed = (): number => fixed;
+	let changing = 7;
+	const readChanging = (): number => changing;
+	changing = 9;
+	console.log(`${readFixed()} ${readChanging()}`);
+}
+function countdown(n: number): number {
+	return n === 0 ? 0 : 1 + countdown(n - 1);
+}
+run();
+console.log(`${countdown(3)}`);
