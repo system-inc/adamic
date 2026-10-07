@@ -1,0 +1,1 @@
+{"name": "ignore duplicate getter exemption", "file": "rule.a", "from": "entry.getters !== 1 || entry.setters !== 1", "to": "entry.getters === 0 || entry.setters !== 1"}
