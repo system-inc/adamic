@@ -17,3 +17,21 @@ All origin branches were fetched and their distinct stage1 trees searched before
 this claim. No implementation or claim for these three rules was found. Existing
 inventory entries, count registrations, configuration and skip-types evidence do
 not constitute ports. No rule was skipped.
+
+## Continuation claim
+
+The original three ports are completed and pushed in 8cfa5d02. After fetching all
+origin heads, the next three unclaimed checker-dependent rules in the combined
+VOLUME_REPORT.md full count tables are:
+
+- nexus/correctness-no-process-exit-after-output (combined volume 0)
+- nexus/correctness-no-uncleared-race-timeout (combined volume 0)
+- nexus/correctness-require-blocking-standard-streams (combined volume 0)
+
+Selection inspected production Adamic source on origin/codex/tsgo-c-library and
+origin/main, and every distinct Markdown claim blob under
+stage1/cohere/typeaware/claims on all origin branches. The ranking has 197 checker
+rules; 25 base ports occur in it, 96 remaining names are mentioned in claim files,
+and 76 candidates remain. These are the first three. No implementation precedes
+this claim commit and push. Shared harness and registration generator remain
+outside this continuation's edits.
