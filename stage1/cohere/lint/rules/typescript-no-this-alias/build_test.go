@@ -11,13 +11,13 @@ import (
 	"testing"
 )
 
-// Not parallel: writes artifacts to the explicitly selected scratch directory.
+// Compile the standalone owned profile in isolated scratch space on every gate.
 func TestCompileProfiles(t *testing.T) {
-	entry := os.Getenv("WAVE07_PROFILE")
-	directory := os.Getenv("WAVE07_ARTIFACTS")
-	if entry == "" || directory == "" {
-		t.Skip("owned profile compilation requires scratch paths")
+	entry, err := filepath.Abs("profile.a")
+	if err != nil {
+		t.Fatal(err)
 	}
+	directory := t.TempDir()
 	program, err := load.Load([]string{entry})
 	if err != nil {
 		t.Fatal(err)
@@ -35,4 +35,5 @@ func TestCompileProfiles(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(directory, "emitted.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
 		t.Fatal(err)
 	}
+	t.Log("standalone profile: sanitized native, release native and emitted JavaScript compiled")
 }
