@@ -1,0 +1,6 @@
+=== RUN   TestCompilerAndStage1
+    validation_test.go:534: whole compiler and stage1 corpus: 414 files, 828 rule/file pairs
+    validation_test.go:534: Go, Node, emitted JavaScript, ASan/UBSan native: 26599098 identical bytes
+--- PASS: TestCompilerAndStage1 (55.05s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching	55.075s

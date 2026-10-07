@@ -8,7 +8,6 @@ import { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { createRuleSet } from '../../.generated/registry.ts';
 import { Settings } from '../../settings.ts';
 import { RuleContext } from '../../context.ts';
-import { VolumeRules } from '../../volume.ts';
 import { Linter } from '../../lint.ts';
 import { diagnostics, enableCompleteSuggestions } from '../func-name-matching/diagnostic.a';
 function run(row: string, countOnly: boolean): number {
@@ -46,13 +45,10 @@ function run(row: string, countOnly: boolean): number {
         }
         const root = Number(json.node(json.field(raw,'root')).text);
         linter.ancestry(root,-1);
-        const context = new RuleContext(source.text,parser,scanner,fields[1] ?? 'all','','',false,linter.parents,settings);
+        const context = new RuleContext(source.text,parser,scanner,fields[1] ?? 'all','','',false,linter.parents,settings,root);
         const rules = createRuleSet(context);
-        linter.rules = rules;
         linter.root = root;
-        linter.volume = new VolumeRules(source.text,parser,scanner,linter.parents,linter.findings,linter.selected,settings);
-        linter.volume.prepare(root);
-        rules.prepare(root); linter.walk(root,-1); rules.finish(root);
+        rules.prepare(root); linter.walk(root,-1,rules); rules.finish(root);
         for(const finding of context.findings) { linter.findings.push(finding); }
     }
     if(countOnly) { return diagnostics.length; }

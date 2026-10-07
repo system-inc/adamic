@@ -169,3 +169,22 @@ The compiler lowerer is outside this unit. The rule branch is not green; no new
 helper claimed, no shared-file changes, no required check relaxed or removed.
 The complete repository gate and its seventeen correctness checks were not run.
 See newarea-core.log, newarea-tailwind.log and newarea-vet.log.
+
+Registry-only harness refresh onto area b46914832d70e00847d82d5d221ab7bb24040c53:
+Main remains c7991b900. The ledger is unchanged and the rebase was clean.
+The owned Tailwind projected driver drops VolumeRules and linter.rules, passes
+the projected root to RuleContext, and passes RuleSet to the three-argument
+Linter.walk. These are owned-driver adaptations; shared files are not edited.
+The retained core fixture/mutant/options/corpus gate passes in 97.190s. Both
+compiling core mutants are caught on Node, emitted JavaScript and sanitized
+native. After the driver edit, the frozen corpus rerun passes in 55.075s:
+414 files, 828 rule/file pairs, 26,599,098 identical bytes across all targets.
+Both owned rule packages pass vet. The required-input Tailwind gate matches
+52 source Node/actual-Go rows and 27,103 bytes, then fails runtime RegExp
+lowering at surface.a:41:132 (31.216s total). No new claim or full gate.
+Commands retain the pinned TypeScript and actual Tailwind input variables:
+core -run '^(TestRulesAndSuggestions|TestOwnedMutants|TestDecodedOptionCorners|TestCompilerAndStage1)$';
+final core -run '^TestCompilerAndStage1$'; Tailwind -run
+'^(TestSourceNodeParity|TestRulesAndSuggestions)$'; each uses -count=1 -v -timeout=10m.
+Evidence: b469-core.log, b469-core-final-corpus.log, b469-tailwind.log,
+b469-rule-vet.log. No required check is removed, relaxed or skipped to green.
