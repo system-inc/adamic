@@ -1,0 +1,12 @@
+export function isBackgroundSize(value: string,segment: (source: string,separator: string) => string[],isLength: (source: string) => boolean,isPercentage: (source: string) => boolean): boolean {
+ let count=0;
+ for(const size of segment(value,',')){
+  if(size === 'cover' || size === 'contain'){count++;continue;}
+  const values=segment(size,' ');
+  if(values.length !== 1 && values.length !== 2){return false;}
+  let allValid=true;
+  for(const part of values){if(part === 'auto' || isLength(part) || isPercentage(part)){continue;}allValid=false;break;}
+  if(allValid){count++;}
+ }
+ return count > 0;
+}

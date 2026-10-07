@@ -1,0 +1,5955 @@
+[
+  {
+    "Name": "",
+    "Source": "neutral-200",
+    "Helper": "isBackgroundSize",
+    "Argument": "",
+    "Candidate": "",
+    "Prefix": "",
+    "BaseKey": "",
+    "ArgKey": "",
+    "Resolved": "",
+    "Keys": null,
+    "Nested": null,
+    "ArgKeys": null,
+    "Entries": null,
+    "Groups": null,
+    "BaseOK": false,
+    "ArgOK": false,
+    "ResolvedOK": false
+  },
+  {
+    "Name": "",
+    "Source": "",
+    "Helper": "resolveThemeArgument",
+    "Argument": "--frobnicate-*",
+    "Candidate": "large",
+    "Prefix": "",
+    "BaseKey": "",
+    "ArgKey": "",
+    "Resolved": "",
+    "Keys": null,
+    "Nested": null,
+    "ArgKeys": null,
+    "Entries": [
+      {
+        "Key": "--animate-bounce",
+        "Value": "bounce 1s infinite",
+        "Reference": "var(--animate-bounce)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--animate-ping",
+        "Value": "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
+        "Reference": "var(--animate-ping)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--animate-pulse",
+        "Value": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "Reference": "var(--animate-pulse)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--animate-spin",
+        "Value": "spin 1s linear infinite",
+        "Reference": "var(--animate-spin)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--aspect-video",
+        "Value": "16 / 9",
+        "Reference": "var(--aspect-video)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur",
+        "Value": "8px",
+        "Reference": "var(--blur, 8px)",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-2xl",
+        "Value": "40px",
+        "Reference": "var(--blur-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-3xl",
+        "Value": "64px",
+        "Reference": "var(--blur-3xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-lg",
+        "Value": "16px",
+        "Reference": "var(--blur-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-md",
+        "Value": "12px",
+        "Reference": "var(--blur-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-sm",
+        "Value": "8px",
+        "Reference": "var(--blur-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-xl",
+        "Value": "24px",
+        "Reference": "var(--blur-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-xs",
+        "Value": "4px",
+        "Reference": "var(--blur-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--breakpoint-2xl",
+        "Value": "96rem",
+        "Reference": "var(--breakpoint-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--breakpoint-lg",
+        "Value": "64rem",
+        "Reference": "var(--breakpoint-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--breakpoint-md",
+        "Value": "48rem",
+        "Reference": "var(--breakpoint-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--breakpoint-sm",
+        "Value": "40rem",
+        "Reference": "var(--breakpoint-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--breakpoint-xl",
+        "Value": "80rem",
+        "Reference": "var(--breakpoint-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-100",
+        "Value": "oklch(96.2% 0.059 95.617)",
+        "Reference": "var(--color-amber-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-200",
+        "Value": "oklch(92.4% 0.12 95.746)",
+        "Reference": "var(--color-amber-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-300",
+        "Value": "oklch(87.9% 0.169 91.605)",
+        "Reference": "var(--color-amber-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-400",
+        "Value": "oklch(82.8% 0.189 84.429)",
+        "Reference": "var(--color-amber-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-50",
+        "Value": "oklch(98.7% 0.022 95.277)",
+        "Reference": "var(--color-amber-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-500",
+        "Value": "oklch(76.9% 0.188 70.08)",
+        "Reference": "var(--color-amber-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-600",
+        "Value": "oklch(66.6% 0.179 58.318)",
+        "Reference": "var(--color-amber-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-700",
+        "Value": "oklch(55.5% 0.163 48.998)",
+        "Reference": "var(--color-amber-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-800",
+        "Value": "oklch(47.3% 0.137 46.201)",
+        "Reference": "var(--color-amber-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-900",
+        "Value": "oklch(41.4% 0.112 45.904)",
+        "Reference": "var(--color-amber-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-950",
+        "Value": "oklch(27.9% 0.077 45.635)",
+        "Reference": "var(--color-amber-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-black",
+        "Value": "#000",
+        "Reference": "var(--color-black)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-100",
+        "Value": "oklch(93.2% 0.032 255.585)",
+        "Reference": "var(--color-blue-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-200",
+        "Value": "oklch(88.2% 0.059 254.128)",
+        "Reference": "var(--color-blue-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-300",
+        "Value": "oklch(80.9% 0.105 251.813)",
+        "Reference": "var(--color-blue-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-400",
+        "Value": "oklch(70.7% 0.165 254.624)",
+        "Reference": "var(--color-blue-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-50",
+        "Value": "oklch(97% 0.014 254.604)",
+        "Reference": "var(--color-blue-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-500",
+        "Value": "oklch(62.3% 0.214 259.815)",
+        "Reference": "var(--color-blue-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-600",
+        "Value": "oklch(54.6% 0.245 262.881)",
+        "Reference": "var(--color-blue-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-700",
+        "Value": "oklch(48.8% 0.243 264.376)",
+        "Reference": "var(--color-blue-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-800",
+        "Value": "oklch(42.4% 0.199 265.638)",
+        "Reference": "var(--color-blue-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-900",
+        "Value": "oklch(37.9% 0.146 265.522)",
+        "Reference": "var(--color-blue-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-950",
+        "Value": "oklch(28.2% 0.091 267.935)",
+        "Reference": "var(--color-blue-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-100",
+        "Value": "oklch(95.6% 0.045 203.388)",
+        "Reference": "var(--color-cyan-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-200",
+        "Value": "oklch(91.7% 0.08 205.041)",
+        "Reference": "var(--color-cyan-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-300",
+        "Value": "oklch(86.5% 0.127 207.078)",
+        "Reference": "var(--color-cyan-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-400",
+        "Value": "oklch(78.9% 0.154 211.53)",
+        "Reference": "var(--color-cyan-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-50",
+        "Value": "oklch(98.4% 0.019 200.873)",
+        "Reference": "var(--color-cyan-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-500",
+        "Value": "oklch(71.5% 0.143 215.221)",
+        "Reference": "var(--color-cyan-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-600",
+        "Value": "oklch(60.9% 0.126 221.723)",
+        "Reference": "var(--color-cyan-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-700",
+        "Value": "oklch(52% 0.105 223.128)",
+        "Reference": "var(--color-cyan-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-800",
+        "Value": "oklch(45% 0.085 224.283)",
+        "Reference": "var(--color-cyan-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-900",
+        "Value": "oklch(39.8% 0.07 227.392)",
+        "Reference": "var(--color-cyan-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-950",
+        "Value": "oklch(30.2% 0.056 229.695)",
+        "Reference": "var(--color-cyan-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-100",
+        "Value": "oklch(95% 0.052 163.051)",
+        "Reference": "var(--color-emerald-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-200",
+        "Value": "oklch(90.5% 0.093 164.15)",
+        "Reference": "var(--color-emerald-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-300",
+        "Value": "oklch(84.5% 0.143 164.978)",
+        "Reference": "var(--color-emerald-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-400",
+        "Value": "oklch(76.5% 0.177 163.223)",
+        "Reference": "var(--color-emerald-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-50",
+        "Value": "oklch(97.9% 0.021 166.113)",
+        "Reference": "var(--color-emerald-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-500",
+        "Value": "oklch(69.6% 0.17 162.48)",
+        "Reference": "var(--color-emerald-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-600",
+        "Value": "oklch(59.6% 0.145 163.225)",
+        "Reference": "var(--color-emerald-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-700",
+        "Value": "oklch(50.8% 0.118 165.612)",
+        "Reference": "var(--color-emerald-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-800",
+        "Value": "oklch(43.2% 0.095 166.913)",
+        "Reference": "var(--color-emerald-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-900",
+        "Value": "oklch(37.8% 0.077 168.94)",
+        "Reference": "var(--color-emerald-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-950",
+        "Value": "oklch(26.2% 0.051 172.552)",
+        "Reference": "var(--color-emerald-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-100",
+        "Value": "oklch(95.2% 0.037 318.852)",
+        "Reference": "var(--color-fuchsia-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-200",
+        "Value": "oklch(90.3% 0.076 319.62)",
+        "Reference": "var(--color-fuchsia-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-300",
+        "Value": "oklch(83.3% 0.145 321.434)",
+        "Reference": "var(--color-fuchsia-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-400",
+        "Value": "oklch(74% 0.238 322.16)",
+        "Reference": "var(--color-fuchsia-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-50",
+        "Value": "oklch(97.7% 0.017 320.058)",
+        "Reference": "var(--color-fuchsia-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-500",
+        "Value": "oklch(66.7% 0.295 322.15)",
+        "Reference": "var(--color-fuchsia-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-600",
+        "Value": "oklch(59.1% 0.293 322.896)",
+        "Reference": "var(--color-fuchsia-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-700",
+        "Value": "oklch(51.8% 0.253 323.949)",
+        "Reference": "var(--color-fuchsia-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-800",
+        "Value": "oklch(45.2% 0.211 324.591)",
+        "Reference": "var(--color-fuchsia-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-900",
+        "Value": "oklch(40.1% 0.17 325.612)",
+        "Reference": "var(--color-fuchsia-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-950",
+        "Value": "oklch(29.3% 0.136 325.661)",
+        "Reference": "var(--color-fuchsia-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-100",
+        "Value": "oklch(96.7% 0.003 264.542)",
+        "Reference": "var(--color-gray-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-200",
+        "Value": "oklch(92.8% 0.006 264.531)",
+        "Reference": "var(--color-gray-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-300",
+        "Value": "oklch(87.2% 0.01 258.338)",
+        "Reference": "var(--color-gray-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-400",
+        "Value": "oklch(70.7% 0.022 261.325)",
+        "Reference": "var(--color-gray-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-50",
+        "Value": "oklch(98.5% 0.002 247.839)",
+        "Reference": "var(--color-gray-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-500",
+        "Value": "oklch(55.1% 0.027 264.364)",
+        "Reference": "var(--color-gray-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-600",
+        "Value": "oklch(44.6% 0.03 256.802)",
+        "Reference": "var(--color-gray-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-700",
+        "Value": "oklch(37.3% 0.034 259.733)",
+        "Reference": "var(--color-gray-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-800",
+        "Value": "oklch(27.8% 0.033 256.848)",
+        "Reference": "var(--color-gray-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-900",
+        "Value": "oklch(21% 0.034 264.665)",
+        "Reference": "var(--color-gray-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-950",
+        "Value": "oklch(13% 0.028 261.692)",
+        "Reference": "var(--color-gray-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-100",
+        "Value": "oklch(96.2% 0.044 156.743)",
+        "Reference": "var(--color-green-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-200",
+        "Value": "oklch(92.5% 0.084 155.995)",
+        "Reference": "var(--color-green-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-300",
+        "Value": "oklch(87.1% 0.15 154.449)",
+        "Reference": "var(--color-green-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-400",
+        "Value": "oklch(79.2% 0.209 151.711)",
+        "Reference": "var(--color-green-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-50",
+        "Value": "oklch(98.2% 0.018 155.826)",
+        "Reference": "var(--color-green-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-500",
+        "Value": "oklch(72.3% 0.219 149.579)",
+        "Reference": "var(--color-green-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-600",
+        "Value": "oklch(62.7% 0.194 149.214)",
+        "Reference": "var(--color-green-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-700",
+        "Value": "oklch(52.7% 0.154 150.069)",
+        "Reference": "var(--color-green-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-800",
+        "Value": "oklch(44.8% 0.119 151.328)",
+        "Reference": "var(--color-green-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-900",
+        "Value": "oklch(39.3% 0.095 152.535)",
+        "Reference": "var(--color-green-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-950",
+        "Value": "oklch(26.6% 0.065 152.934)",
+        "Reference": "var(--color-green-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-100",
+        "Value": "oklch(93% 0.034 272.788)",
+        "Reference": "var(--color-indigo-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-200",
+        "Value": "oklch(87% 0.065 274.039)",
+        "Reference": "var(--color-indigo-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-300",
+        "Value": "oklch(78.5% 0.115 274.713)",
+        "Reference": "var(--color-indigo-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-400",
+        "Value": "oklch(67.3% 0.182 276.935)",
+        "Reference": "var(--color-indigo-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-50",
+        "Value": "oklch(96.2% 0.018 272.314)",
+        "Reference": "var(--color-indigo-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-500",
+        "Value": "oklch(58.5% 0.233 277.117)",
+        "Reference": "var(--color-indigo-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-600",
+        "Value": "oklch(51.1% 0.262 276.966)",
+        "Reference": "var(--color-indigo-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-700",
+        "Value": "oklch(45.7% 0.24 277.023)",
+        "Reference": "var(--color-indigo-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-800",
+        "Value": "oklch(39.8% 0.195 277.366)",
+        "Reference": "var(--color-indigo-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-900",
+        "Value": "oklch(35.9% 0.144 278.697)",
+        "Reference": "var(--color-indigo-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-950",
+        "Value": "oklch(25.7% 0.09 281.288)",
+        "Reference": "var(--color-indigo-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-100",
+        "Value": "oklch(96.7% 0.067 122.328)",
+        "Reference": "var(--color-lime-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-200",
+        "Value": "oklch(93.8% 0.127 124.321)",
+        "Reference": "var(--color-lime-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-300",
+        "Value": "oklch(89.7% 0.196 126.665)",
+        "Reference": "var(--color-lime-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-400",
+        "Value": "oklch(84.1% 0.238 128.85)",
+        "Reference": "var(--color-lime-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-50",
+        "Value": "oklch(98.6% 0.031 120.757)",
+        "Reference": "var(--color-lime-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-500",
+        "Value": "oklch(76.8% 0.233 130.85)",
+        "Reference": "var(--color-lime-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-600",
+        "Value": "oklch(64.8% 0.2 131.684)",
+        "Reference": "var(--color-lime-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-700",
+        "Value": "oklch(53.2% 0.157 131.589)",
+        "Reference": "var(--color-lime-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-800",
+        "Value": "oklch(45.3% 0.124 130.933)",
+        "Reference": "var(--color-lime-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-900",
+        "Value": "oklch(40.5% 0.101 131.063)",
+        "Reference": "var(--color-lime-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-950",
+        "Value": "oklch(27.4% 0.072 132.109)",
+        "Reference": "var(--color-lime-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-100",
+        "Value": "oklch(96% 0.003 325.6)",
+        "Reference": "var(--color-mauve-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-200",
+        "Value": "oklch(92.2% 0.005 325.62)",
+        "Reference": "var(--color-mauve-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-300",
+        "Value": "oklch(86.5% 0.012 325.68)",
+        "Reference": "var(--color-mauve-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-400",
+        "Value": "oklch(71.1% 0.019 323.02)",
+        "Reference": "var(--color-mauve-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Reference": "var(--color-mauve-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-500",
+        "Value": "oklch(54.2% 0.034 322.5)",
+        "Reference": "var(--color-mauve-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-600",
+        "Value": "oklch(43.5% 0.029 321.78)",
+        "Reference": "var(--color-mauve-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-700",
+        "Value": "oklch(36.4% 0.029 323.89)",
+        "Reference": "var(--color-mauve-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-800",
+        "Value": "oklch(26.3% 0.024 320.12)",
+        "Reference": "var(--color-mauve-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-900",
+        "Value": "oklch(21.2% 0.019 322.12)",
+        "Reference": "var(--color-mauve-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-950",
+        "Value": "oklch(14.5% 0.008 326)",
+        "Reference": "var(--color-mauve-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-100",
+        "Value": "oklch(96.3% 0.002 197.1)",
+        "Reference": "var(--color-mist-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-200",
+        "Value": "oklch(92.5% 0.005 214.3)",
+        "Reference": "var(--color-mist-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-300",
+        "Value": "oklch(87.2% 0.007 219.6)",
+        "Reference": "var(--color-mist-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-400",
+        "Value": "oklch(72.3% 0.014 214.4)",
+        "Reference": "var(--color-mist-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-50",
+        "Value": "oklch(98.7% 0.002 197.1)",
+        "Reference": "var(--color-mist-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-500",
+        "Value": "oklch(56% 0.021 213.5)",
+        "Reference": "var(--color-mist-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-600",
+        "Value": "oklch(45% 0.017 213.2)",
+        "Reference": "var(--color-mist-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-700",
+        "Value": "oklch(37.8% 0.015 216)",
+        "Reference": "var(--color-mist-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-800",
+        "Value": "oklch(27.5% 0.011 216.9)",
+        "Reference": "var(--color-mist-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-900",
+        "Value": "oklch(21.8% 0.008 223.9)",
+        "Reference": "var(--color-mist-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-950",
+        "Value": "oklch(14.8% 0.004 228.8)",
+        "Reference": "var(--color-mist-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-100",
+        "Value": "oklch(97% 0 none)",
+        "Reference": "var(--color-neutral-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-200",
+        "Value": "oklch(92.2% 0 none)",
+        "Reference": "var(--color-neutral-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-300",
+        "Value": "oklch(87% 0 none)",
+        "Reference": "var(--color-neutral-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-400",
+        "Value": "oklch(70.8% 0 none)",
+        "Reference": "var(--color-neutral-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Reference": "var(--color-neutral-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-500",
+        "Value": "oklch(55.6% 0 none)",
+        "Reference": "var(--color-neutral-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-600",
+        "Value": "oklch(43.9% 0 none)",
+        "Reference": "var(--color-neutral-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-700",
+        "Value": "oklch(37.1% 0 none)",
+        "Reference": "var(--color-neutral-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-800",
+        "Value": "oklch(26.9% 0 none)",
+        "Reference": "var(--color-neutral-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-900",
+        "Value": "oklch(20.5% 0 none)",
+        "Reference": "var(--color-neutral-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-950",
+        "Value": "oklch(14.5% 0 none)",
+        "Reference": "var(--color-neutral-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-100",
+        "Value": "oklch(96.6% 0.005 106.5)",
+        "Reference": "var(--color-olive-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-200",
+        "Value": "oklch(93% 0.007 106.5)",
+        "Reference": "var(--color-olive-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-300",
+        "Value": "oklch(88% 0.011 106.6)",
+        "Reference": "var(--color-olive-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-400",
+        "Value": "oklch(73.7% 0.021 106.9)",
+        "Reference": "var(--color-olive-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-50",
+        "Value": "oklch(98.8% 0.003 106.5)",
+        "Reference": "var(--color-olive-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-500",
+        "Value": "oklch(58% 0.031 107.3)",
+        "Reference": "var(--color-olive-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-600",
+        "Value": "oklch(46.6% 0.025 107.3)",
+        "Reference": "var(--color-olive-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-700",
+        "Value": "oklch(39.4% 0.023 107.4)",
+        "Reference": "var(--color-olive-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-800",
+        "Value": "oklch(28.6% 0.016 107.4)",
+        "Reference": "var(--color-olive-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-900",
+        "Value": "oklch(22.8% 0.013 107.4)",
+        "Reference": "var(--color-olive-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-950",
+        "Value": "oklch(15.3% 0.006 107.1)",
+        "Reference": "var(--color-olive-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-100",
+        "Value": "oklch(95.4% 0.038 75.164)",
+        "Reference": "var(--color-orange-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-200",
+        "Value": "oklch(90.1% 0.076 70.697)",
+        "Reference": "var(--color-orange-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-300",
+        "Value": "oklch(83.7% 0.128 66.29)",
+        "Reference": "var(--color-orange-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-400",
+        "Value": "oklch(75% 0.183 55.934)",
+        "Reference": "var(--color-orange-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-50",
+        "Value": "oklch(98% 0.016 73.684)",
+        "Reference": "var(--color-orange-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-500",
+        "Value": "oklch(70.5% 0.213 47.604)",
+        "Reference": "var(--color-orange-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-600",
+        "Value": "oklch(64.6% 0.222 41.116)",
+        "Reference": "var(--color-orange-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-700",
+        "Value": "oklch(55.3% 0.195 38.402)",
+        "Reference": "var(--color-orange-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-800",
+        "Value": "oklch(47% 0.157 37.304)",
+        "Reference": "var(--color-orange-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-900",
+        "Value": "oklch(40.8% 0.123 38.172)",
+        "Reference": "var(--color-orange-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-950",
+        "Value": "oklch(26.6% 0.079 36.259)",
+        "Reference": "var(--color-orange-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-100",
+        "Value": "oklch(94.8% 0.028 342.258)",
+        "Reference": "var(--color-pink-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-200",
+        "Value": "oklch(89.9% 0.061 343.231)",
+        "Reference": "var(--color-pink-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-300",
+        "Value": "oklch(82.3% 0.12 346.018)",
+        "Reference": "var(--color-pink-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-400",
+        "Value": "oklch(71.8% 0.202 349.761)",
+        "Reference": "var(--color-pink-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-50",
+        "Value": "oklch(97.1% 0.014 343.198)",
+        "Reference": "var(--color-pink-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-500",
+        "Value": "oklch(65.6% 0.241 354.308)",
+        "Reference": "var(--color-pink-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-600",
+        "Value": "oklch(59.2% 0.249 0.584)",
+        "Reference": "var(--color-pink-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-700",
+        "Value": "oklch(52.5% 0.223 3.958)",
+        "Reference": "var(--color-pink-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-800",
+        "Value": "oklch(45.9% 0.187 3.815)",
+        "Reference": "var(--color-pink-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-900",
+        "Value": "oklch(40.8% 0.153 2.432)",
+        "Reference": "var(--color-pink-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-950",
+        "Value": "oklch(28.4% 0.109 3.907)",
+        "Reference": "var(--color-pink-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-100",
+        "Value": "oklch(94.6% 0.033 307.174)",
+        "Reference": "var(--color-purple-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-200",
+        "Value": "oklch(90.2% 0.063 306.703)",
+        "Reference": "var(--color-purple-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-300",
+        "Value": "oklch(82.7% 0.119 306.383)",
+        "Reference": "var(--color-purple-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-400",
+        "Value": "oklch(71.4% 0.203 305.504)",
+        "Reference": "var(--color-purple-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-50",
+        "Value": "oklch(97.7% 0.014 308.299)",
+        "Reference": "var(--color-purple-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-500",
+        "Value": "oklch(62.7% 0.265 303.9)",
+        "Reference": "var(--color-purple-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-600",
+        "Value": "oklch(55.8% 0.288 302.321)",
+        "Reference": "var(--color-purple-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-700",
+        "Value": "oklch(49.6% 0.265 301.924)",
+        "Reference": "var(--color-purple-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-800",
+        "Value": "oklch(43.8% 0.218 303.724)",
+        "Reference": "var(--color-purple-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-900",
+        "Value": "oklch(38.1% 0.176 304.987)",
+        "Reference": "var(--color-purple-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-950",
+        "Value": "oklch(29.1% 0.149 302.717)",
+        "Reference": "var(--color-purple-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-100",
+        "Value": "oklch(93.6% 0.032 17.717)",
+        "Reference": "var(--color-red-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-200",
+        "Value": "oklch(88.5% 0.062 18.334)",
+        "Reference": "var(--color-red-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-300",
+        "Value": "oklch(80.8% 0.114 19.571)",
+        "Reference": "var(--color-red-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-400",
+        "Value": "oklch(70.4% 0.191 22.216)",
+        "Reference": "var(--color-red-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-50",
+        "Value": "oklch(97.1% 0.013 17.38)",
+        "Reference": "var(--color-red-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-500",
+        "Value": "oklch(63.7% 0.237 25.331)",
+        "Reference": "var(--color-red-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-600",
+        "Value": "oklch(57.7% 0.245 27.325)",
+        "Reference": "var(--color-red-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-700",
+        "Value": "oklch(50.5% 0.213 27.518)",
+        "Reference": "var(--color-red-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-800",
+        "Value": "oklch(44.4% 0.177 26.899)",
+        "Reference": "var(--color-red-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-900",
+        "Value": "oklch(39.6% 0.141 25.723)",
+        "Reference": "var(--color-red-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-950",
+        "Value": "oklch(25.8% 0.092 26.042)",
+        "Reference": "var(--color-red-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-100",
+        "Value": "oklch(94.1% 0.03 12.58)",
+        "Reference": "var(--color-rose-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-200",
+        "Value": "oklch(89.2% 0.058 10.001)",
+        "Reference": "var(--color-rose-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-300",
+        "Value": "oklch(81% 0.117 11.638)",
+        "Reference": "var(--color-rose-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-400",
+        "Value": "oklch(71.2% 0.194 13.428)",
+        "Reference": "var(--color-rose-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-50",
+        "Value": "oklch(96.9% 0.015 12.422)",
+        "Reference": "var(--color-rose-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-500",
+        "Value": "oklch(64.5% 0.246 16.439)",
+        "Reference": "var(--color-rose-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-600",
+        "Value": "oklch(58.6% 0.253 17.585)",
+        "Reference": "var(--color-rose-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-700",
+        "Value": "oklch(51.4% 0.222 16.935)",
+        "Reference": "var(--color-rose-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-800",
+        "Value": "oklch(45.5% 0.188 13.697)",
+        "Reference": "var(--color-rose-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-900",
+        "Value": "oklch(41% 0.159 10.272)",
+        "Reference": "var(--color-rose-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-950",
+        "Value": "oklch(27.1% 0.105 12.094)",
+        "Reference": "var(--color-rose-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-100",
+        "Value": "oklch(95.1% 0.026 236.824)",
+        "Reference": "var(--color-sky-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-200",
+        "Value": "oklch(90.1% 0.058 230.902)",
+        "Reference": "var(--color-sky-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-300",
+        "Value": "oklch(82.8% 0.111 230.318)",
+        "Reference": "var(--color-sky-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-400",
+        "Value": "oklch(74.6% 0.16 232.661)",
+        "Reference": "var(--color-sky-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-50",
+        "Value": "oklch(97.7% 0.013 236.62)",
+        "Reference": "var(--color-sky-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-500",
+        "Value": "oklch(68.5% 0.169 237.323)",
+        "Reference": "var(--color-sky-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-600",
+        "Value": "oklch(58.8% 0.158 241.966)",
+        "Reference": "var(--color-sky-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-700",
+        "Value": "oklch(50% 0.134 242.749)",
+        "Reference": "var(--color-sky-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-800",
+        "Value": "oklch(44.3% 0.11 240.79)",
+        "Reference": "var(--color-sky-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-900",
+        "Value": "oklch(39.1% 0.09 240.876)",
+        "Reference": "var(--color-sky-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-950",
+        "Value": "oklch(29.3% 0.066 243.157)",
+        "Reference": "var(--color-sky-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-100",
+        "Value": "oklch(96.8% 0.007 247.896)",
+        "Reference": "var(--color-slate-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-200",
+        "Value": "oklch(92.9% 0.013 255.508)",
+        "Reference": "var(--color-slate-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-300",
+        "Value": "oklch(86.9% 0.022 252.894)",
+        "Reference": "var(--color-slate-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-400",
+        "Value": "oklch(70.4% 0.04 256.788)",
+        "Reference": "var(--color-slate-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-50",
+        "Value": "oklch(98.4% 0.003 247.858)",
+        "Reference": "var(--color-slate-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-500",
+        "Value": "oklch(55.4% 0.046 257.417)",
+        "Reference": "var(--color-slate-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-600",
+        "Value": "oklch(44.6% 0.043 257.281)",
+        "Reference": "var(--color-slate-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-700",
+        "Value": "oklch(37.2% 0.044 257.287)",
+        "Reference": "var(--color-slate-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-800",
+        "Value": "oklch(27.9% 0.041 260.031)",
+        "Reference": "var(--color-slate-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-900",
+        "Value": "oklch(20.8% 0.042 265.755)",
+        "Reference": "var(--color-slate-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-950",
+        "Value": "oklch(12.9% 0.042 264.695)",
+        "Reference": "var(--color-slate-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-100",
+        "Value": "oklch(97% 0.001 106.424)",
+        "Reference": "var(--color-stone-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-200",
+        "Value": "oklch(92.3% 0.003 48.717)",
+        "Reference": "var(--color-stone-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-300",
+        "Value": "oklch(86.9% 0.005 56.366)",
+        "Reference": "var(--color-stone-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-400",
+        "Value": "oklch(70.9% 0.01 56.259)",
+        "Reference": "var(--color-stone-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-50",
+        "Value": "oklch(98.5% 0.001 106.423)",
+        "Reference": "var(--color-stone-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-500",
+        "Value": "oklch(55.3% 0.013 58.071)",
+        "Reference": "var(--color-stone-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-600",
+        "Value": "oklch(44.4% 0.011 73.639)",
+        "Reference": "var(--color-stone-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-700",
+        "Value": "oklch(37.4% 0.01 67.558)",
+        "Reference": "var(--color-stone-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-800",
+        "Value": "oklch(26.8% 0.007 34.298)",
+        "Reference": "var(--color-stone-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-900",
+        "Value": "oklch(21.6% 0.006 56.043)",
+        "Reference": "var(--color-stone-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-950",
+        "Value": "oklch(14.7% 0.004 49.25)",
+        "Reference": "var(--color-stone-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-100",
+        "Value": "oklch(96% 0.002 17.2)",
+        "Reference": "var(--color-taupe-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-200",
+        "Value": "oklch(92.2% 0.005 34.3)",
+        "Reference": "var(--color-taupe-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-300",
+        "Value": "oklch(86.8% 0.007 39.5)",
+        "Reference": "var(--color-taupe-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-400",
+        "Value": "oklch(71.4% 0.014 41.2)",
+        "Reference": "var(--color-taupe-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-50",
+        "Value": "oklch(98.6% 0.002 67.8)",
+        "Reference": "var(--color-taupe-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-500",
+        "Value": "oklch(54.7% 0.021 43.1)",
+        "Reference": "var(--color-taupe-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-600",
+        "Value": "oklch(43.8% 0.017 39.3)",
+        "Reference": "var(--color-taupe-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-700",
+        "Value": "oklch(36.7% 0.016 35.7)",
+        "Reference": "var(--color-taupe-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-800",
+        "Value": "oklch(26.8% 0.011 36.5)",
+        "Reference": "var(--color-taupe-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-900",
+        "Value": "oklch(21.4% 0.009 43.1)",
+        "Reference": "var(--color-taupe-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-950",
+        "Value": "oklch(14.7% 0.004 49.3)",
+        "Reference": "var(--color-taupe-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-100",
+        "Value": "oklch(95.3% 0.051 180.801)",
+        "Reference": "var(--color-teal-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-200",
+        "Value": "oklch(91% 0.096 180.426)",
+        "Reference": "var(--color-teal-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-300",
+        "Value": "oklch(85.5% 0.138 181.071)",
+        "Reference": "var(--color-teal-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-400",
+        "Value": "oklch(77.7% 0.152 181.912)",
+        "Reference": "var(--color-teal-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-50",
+        "Value": "oklch(98.4% 0.014 180.72)",
+        "Reference": "var(--color-teal-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-500",
+        "Value": "oklch(70.4% 0.14 182.503)",
+        "Reference": "var(--color-teal-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-600",
+        "Value": "oklch(60% 0.118 184.704)",
+        "Reference": "var(--color-teal-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-700",
+        "Value": "oklch(51.1% 0.096 186.391)",
+        "Reference": "var(--color-teal-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-800",
+        "Value": "oklch(43.7% 0.078 188.216)",
+        "Reference": "var(--color-teal-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-900",
+        "Value": "oklch(38.6% 0.063 188.416)",
+        "Reference": "var(--color-teal-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-950",
+        "Value": "oklch(27.7% 0.046 192.524)",
+        "Reference": "var(--color-teal-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-100",
+        "Value": "oklch(94.3% 0.029 294.588)",
+        "Reference": "var(--color-violet-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-200",
+        "Value": "oklch(89.4% 0.057 293.283)",
+        "Reference": "var(--color-violet-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-300",
+        "Value": "oklch(81.1% 0.111 293.571)",
+        "Reference": "var(--color-violet-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-400",
+        "Value": "oklch(70.2% 0.183 293.541)",
+        "Reference": "var(--color-violet-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-50",
+        "Value": "oklch(96.9% 0.016 293.756)",
+        "Reference": "var(--color-violet-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-500",
+        "Value": "oklch(60.6% 0.25 292.717)",
+        "Reference": "var(--color-violet-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-600",
+        "Value": "oklch(54.1% 0.281 293.009)",
+        "Reference": "var(--color-violet-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-700",
+        "Value": "oklch(49.1% 0.27 292.581)",
+        "Reference": "var(--color-violet-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-800",
+        "Value": "oklch(43.2% 0.232 292.759)",
+        "Reference": "var(--color-violet-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-900",
+        "Value": "oklch(38% 0.189 293.745)",
+        "Reference": "var(--color-violet-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-950",
+        "Value": "oklch(28.3% 0.141 291.089)",
+        "Reference": "var(--color-violet-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-white",
+        "Value": "#fff",
+        "Reference": "var(--color-white)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-100",
+        "Value": "oklch(97.3% 0.071 103.193)",
+        "Reference": "var(--color-yellow-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-200",
+        "Value": "oklch(94.5% 0.129 101.54)",
+        "Reference": "var(--color-yellow-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-300",
+        "Value": "oklch(90.5% 0.182 98.111)",
+        "Reference": "var(--color-yellow-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-400",
+        "Value": "oklch(85.2% 0.199 91.936)",
+        "Reference": "var(--color-yellow-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-50",
+        "Value": "oklch(98.7% 0.026 102.212)",
+        "Reference": "var(--color-yellow-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-500",
+        "Value": "oklch(79.5% 0.184 86.047)",
+        "Reference": "var(--color-yellow-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-600",
+        "Value": "oklch(68.1% 0.162 75.834)",
+        "Reference": "var(--color-yellow-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-700",
+        "Value": "oklch(55.4% 0.135 66.442)",
+        "Reference": "var(--color-yellow-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-800",
+        "Value": "oklch(47.6% 0.114 61.907)",
+        "Reference": "var(--color-yellow-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-900",
+        "Value": "oklch(42.1% 0.095 57.708)",
+        "Reference": "var(--color-yellow-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-950",
+        "Value": "oklch(28.6% 0.066 53.813)",
+        "Reference": "var(--color-yellow-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-100",
+        "Value": "oklch(96.7% 0.001 286.375)",
+        "Reference": "var(--color-zinc-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-200",
+        "Value": "oklch(92% 0.004 286.32)",
+        "Reference": "var(--color-zinc-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-300",
+        "Value": "oklch(87.1% 0.006 286.286)",
+        "Reference": "var(--color-zinc-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-400",
+        "Value": "oklch(70.5% 0.015 286.067)",
+        "Reference": "var(--color-zinc-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Reference": "var(--color-zinc-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-500",
+        "Value": "oklch(55.2% 0.016 285.938)",
+        "Reference": "var(--color-zinc-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-600",
+        "Value": "oklch(44.2% 0.017 285.786)",
+        "Reference": "var(--color-zinc-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-700",
+        "Value": "oklch(37% 0.013 285.805)",
+        "Reference": "var(--color-zinc-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-800",
+        "Value": "oklch(27.4% 0.006 286.033)",
+        "Reference": "var(--color-zinc-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-900",
+        "Value": "oklch(21% 0.006 285.885)",
+        "Reference": "var(--color-zinc-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-950",
+        "Value": "oklch(14.1% 0.005 285.823)",
+        "Reference": "var(--color-zinc-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-2xl",
+        "Value": "42rem",
+        "Reference": "var(--container-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-2xs",
+        "Value": "18rem",
+        "Reference": "var(--container-2xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-3xl",
+        "Value": "48rem",
+        "Reference": "var(--container-3xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-3xs",
+        "Value": "16rem",
+        "Reference": "var(--container-3xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-4xl",
+        "Value": "56rem",
+        "Reference": "var(--container-4xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-5xl",
+        "Value": "64rem",
+        "Reference": "var(--container-5xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-6xl",
+        "Value": "72rem",
+        "Reference": "var(--container-6xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-7xl",
+        "Value": "80rem",
+        "Reference": "var(--container-7xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-lg",
+        "Value": "32rem",
+        "Reference": "var(--container-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-md",
+        "Value": "28rem",
+        "Reference": "var(--container-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-sm",
+        "Value": "24rem",
+        "Reference": "var(--container-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-xl",
+        "Value": "36rem",
+        "Reference": "var(--container-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-xs",
+        "Value": "20rem",
+        "Reference": "var(--container-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-font-family",
+        "Value": "--theme(--font-sans, initial)",
+        "Reference": "var(--default-font-family)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-font-feature-settings",
+        "Value": "--theme(\n      --font-sans--font-feature-settings,\n      initial\n    )",
+        "Reference": "var(--default-font-feature-settings)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-font-variation-settings",
+        "Value": "--theme(\n      --font-sans--font-variation-settings,\n      initial\n    )",
+        "Reference": "var(--default-font-variation-settings)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-mono-font-family",
+        "Value": "--theme(--font-mono, initial)",
+        "Reference": "var(--default-mono-font-family)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-mono-font-feature-settings",
+        "Value": "--theme(\n      --font-mono--font-feature-settings,\n      initial\n    )",
+        "Reference": "var(--default-mono-font-feature-settings)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-mono-font-variation-settings",
+        "Value": "--theme(\n      --font-mono--font-variation-settings,\n      initial\n    )",
+        "Reference": "var(--default-mono-font-variation-settings)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-transition-duration",
+        "Value": "150ms",
+        "Reference": "var(--default-transition-duration)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-transition-timing-function",
+        "Value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "Reference": "var(--default-transition-timing-function)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow",
+        "Value": "0 1px 2px rgb(0 0 0 / 0.1), 0 1px 1px rgb(0 0 0 / 0.06)",
+        "Reference": "var(--drop-shadow, 0 1px 2px rgb(0 0 0 / 0.1), 0 1px 1px rgb(0 0 0 / 0.06))",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-2xl",
+        "Value": "0 25px 25px rgb(0 0 0 / 0.15)",
+        "Reference": "var(--drop-shadow-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-lg",
+        "Value": "0 4px 4px rgb(0 0 0 / 0.15)",
+        "Reference": "var(--drop-shadow-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-md",
+        "Value": "0 3px 3px rgb(0 0 0 / 0.12)",
+        "Reference": "var(--drop-shadow-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-sm",
+        "Value": "0 1px 2px rgb(0 0 0 / 0.15)",
+        "Reference": "var(--drop-shadow-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-xl",
+        "Value": "0 9px 7px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--drop-shadow-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-xs",
+        "Value": "0 1px 1px rgb(0 0 0 / 0.05)",
+        "Reference": "var(--drop-shadow-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--ease-in",
+        "Value": "cubic-bezier(0.4, 0, 1, 1)",
+        "Reference": "var(--ease-in)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--ease-in-out",
+        "Value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "Reference": "var(--ease-in-out)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--ease-out",
+        "Value": "cubic-bezier(0, 0, 0.2, 1)",
+        "Reference": "var(--ease-out)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-mono",
+        "Value": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\",\n      \"Courier New\", monospace",
+        "Reference": "var(--font-mono)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-sans",
+        "Value": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\",\n      \"Noto Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\",\n      \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "Reference": "var(--font-sans)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-serif",
+        "Value": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+        "Reference": "var(--font-serif)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-black",
+        "Value": "900",
+        "Reference": "var(--font-weight-black)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-bold",
+        "Value": "700",
+        "Reference": "var(--font-weight-bold)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-extrabold",
+        "Value": "800",
+        "Reference": "var(--font-weight-extrabold)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-extralight",
+        "Value": "200",
+        "Reference": "var(--font-weight-extralight)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-light",
+        "Value": "300",
+        "Reference": "var(--font-weight-light)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-medium",
+        "Value": "500",
+        "Reference": "var(--font-weight-medium)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-normal",
+        "Value": "400",
+        "Reference": "var(--font-weight-normal)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-semibold",
+        "Value": "600",
+        "Reference": "var(--font-weight-semibold)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-thin",
+        "Value": "100",
+        "Reference": "var(--font-weight-thin)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--frobnicate-large",
+        "Value": "9px",
+        "Reference": "var(--frobnicate-large)",
+        "Options": 0,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--frobnicate-small",
+        "Value": "2px",
+        "Reference": "var(--frobnicate-small)",
+        "Options": 0,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--inset-shadow-2xs",
+        "Value": "inset 0 1px rgb(0 0 0 / 0.05)",
+        "Reference": "var(--inset-shadow-2xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--inset-shadow-sm",
+        "Value": "inset 0 2px 4px rgb(0 0 0 / 0.05)",
+        "Reference": "var(--inset-shadow-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--inset-shadow-xs",
+        "Value": "inset 0 1px 1px rgb(0 0 0 / 0.05)",
+        "Reference": "var(--inset-shadow-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--leading-loose",
+        "Value": "2",
+        "Reference": "var(--leading-loose)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--leading-normal",
+        "Value": "1.5",
+        "Reference": "var(--leading-normal)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--leading-relaxed",
+        "Value": "1.625",
+        "Reference": "var(--leading-relaxed)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--leading-snug",
+        "Value": "1.375",
+        "Reference": "var(--leading-snug)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--leading-tight",
+        "Value": "1.25",
+        "Reference": "var(--leading-tight)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--max-width-prose",
+        "Value": "65ch",
+        "Reference": "var(--max-width-prose, 65ch)",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--perspective-distant",
+        "Value": "1200px",
+        "Reference": "var(--perspective-distant)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--perspective-dramatic",
+        "Value": "100px",
+        "Reference": "var(--perspective-dramatic)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--perspective-midrange",
+        "Value": "800px",
+        "Reference": "var(--perspective-midrange)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--perspective-near",
+        "Value": "300px",
+        "Reference": "var(--perspective-near)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--perspective-normal",
+        "Value": "500px",
+        "Reference": "var(--perspective-normal)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius",
+        "Value": "0.25rem",
+        "Reference": "var(--radius, 0.25rem)",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-2xl",
+        "Value": "1rem",
+        "Reference": "var(--radius-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-3xl",
+        "Value": "1.5rem",
+        "Reference": "var(--radius-3xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-4xl",
+        "Value": "2rem",
+        "Reference": "var(--radius-4xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-lg",
+        "Value": "0.5rem",
+        "Reference": "var(--radius-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-md",
+        "Value": "0.375rem",
+        "Reference": "var(--radius-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-sm",
+        "Value": "0.25rem",
+        "Reference": "var(--radius-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-xl",
+        "Value": "0.75rem",
+        "Reference": "var(--radius-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-xs",
+        "Value": "0.125rem",
+        "Reference": "var(--radius-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow",
+        "Value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--shadow, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1))",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-2xl",
+        "Value": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+        "Reference": "var(--shadow-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-2xs",
+        "Value": "0 1px rgb(0 0 0 / 0.05)",
+        "Reference": "var(--shadow-2xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-inner",
+        "Value": "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
+        "Reference": "var(--shadow-inner, inset 0 2px 4px 0 rgb(0 0 0 / 0.05))",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-lg",
+        "Value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--shadow-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-md",
+        "Value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--shadow-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-sm",
+        "Value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--shadow-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-xl",
+        "Value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--shadow-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-xs",
+        "Value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "Reference": "var(--shadow-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--spacing",
+        "Value": "0.25rem",
+        "Reference": "var(--spacing)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-2xl",
+        "Value": "1.5rem",
+        "Reference": "var(--text-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-2xl--line-height",
+        "Value": "calc(2 / 1.5)",
+        "Reference": "var(--text-2xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-3xl",
+        "Value": "1.875rem",
+        "Reference": "var(--text-3xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-3xl--line-height",
+        "Value": "calc(2.25 / 1.875)",
+        "Reference": "var(--text-3xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-4xl",
+        "Value": "2.25rem",
+        "Reference": "var(--text-4xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-4xl--line-height",
+        "Value": "calc(2.5 / 2.25)",
+        "Reference": "var(--text-4xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-5xl",
+        "Value": "3rem",
+        "Reference": "var(--text-5xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-5xl--line-height",
+        "Value": "1",
+        "Reference": "var(--text-5xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-6xl",
+        "Value": "3.75rem",
+        "Reference": "var(--text-6xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-6xl--line-height",
+        "Value": "1",
+        "Reference": "var(--text-6xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-7xl",
+        "Value": "4.5rem",
+        "Reference": "var(--text-7xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-7xl--line-height",
+        "Value": "1",
+        "Reference": "var(--text-7xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-8xl",
+        "Value": "6rem",
+        "Reference": "var(--text-8xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-8xl--line-height",
+        "Value": "1",
+        "Reference": "var(--text-8xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-9xl",
+        "Value": "8rem",
+        "Reference": "var(--text-9xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-9xl--line-height",
+        "Value": "1",
+        "Reference": "var(--text-9xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-base",
+        "Value": "1rem",
+        "Reference": "var(--text-base)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-base--line-height",
+        "Value": "calc(1.5 / 1)",
+        "Reference": "var(--text-base--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-lg",
+        "Value": "1.125rem",
+        "Reference": "var(--text-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-lg--line-height",
+        "Value": "calc(1.75 / 1.125)",
+        "Reference": "var(--text-lg--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-shadow-2xs",
+        "Value": "0px 1px 0px rgb(0 0 0 / 0.15)",
+        "Reference": "var(--text-shadow-2xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-shadow-lg",
+        "Value": "0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1),\n      0px 4px 8px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--text-shadow-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-shadow-md",
+        "Value": "0px 1px 1px rgb(0 0 0 / 0.1), 0px 1px 2px rgb(0 0 0 / 0.1),\n      0px 2px 4px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--text-shadow-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-shadow-sm",
+        "Value": "0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075),\n      0px 2px 2px rgb(0 0 0 / 0.075)",
+        "Reference": "var(--text-shadow-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-shadow-xs",
+        "Value": "0px 1px 1px rgb(0 0 0 / 0.2)",
+        "Reference": "var(--text-shadow-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-sm",
+        "Value": "0.875rem",
+        "Reference": "var(--text-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-sm--line-height",
+        "Value": "calc(1.25 / 0.875)",
+        "Reference": "var(--text-sm--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-xl",
+        "Value": "1.25rem",
+        "Reference": "var(--text-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-xl--line-height",
+        "Value": "calc(1.75 / 1.25)",
+        "Reference": "var(--text-xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-xs",
+        "Value": "0.75rem",
+        "Reference": "var(--text-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-xs--line-height",
+        "Value": "calc(1 / 0.75)",
+        "Reference": "var(--text-xs--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-normal",
+        "Value": "0em",
+        "Reference": "var(--tracking-normal)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-tight",
+        "Value": "-0.025em",
+        "Reference": "var(--tracking-tight)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-tighter",
+        "Value": "-0.05em",
+        "Reference": "var(--tracking-tighter)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-wide",
+        "Value": "0.025em",
+        "Reference": "var(--tracking-wide)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-wider",
+        "Value": "0.05em",
+        "Reference": "var(--tracking-wider)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-widest",
+        "Value": "0.1em",
+        "Reference": "var(--tracking-widest)",
+        "Options": 4,
+        "ReferenceOK": true
+      }
+    ],
+    "Groups": null,
+    "BaseOK": false,
+    "ArgOK": false,
+    "ResolvedOK": false
+  },
+  {
+    "Name": "",
+    "Source": "",
+    "Helper": "resolveThemeArgument",
+    "Argument": "--frobnicate-*",
+    "Candidate": "small",
+    "Prefix": "",
+    "BaseKey": "",
+    "ArgKey": "",
+    "Resolved": "",
+    "Keys": null,
+    "Nested": null,
+    "ArgKeys": null,
+    "Entries": [
+      {
+        "Key": "--animate-bounce",
+        "Value": "bounce 1s infinite",
+        "Reference": "var(--animate-bounce)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--animate-ping",
+        "Value": "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
+        "Reference": "var(--animate-ping)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--animate-pulse",
+        "Value": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "Reference": "var(--animate-pulse)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--animate-spin",
+        "Value": "spin 1s linear infinite",
+        "Reference": "var(--animate-spin)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--aspect-video",
+        "Value": "16 / 9",
+        "Reference": "var(--aspect-video)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur",
+        "Value": "8px",
+        "Reference": "var(--blur, 8px)",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-2xl",
+        "Value": "40px",
+        "Reference": "var(--blur-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-3xl",
+        "Value": "64px",
+        "Reference": "var(--blur-3xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-lg",
+        "Value": "16px",
+        "Reference": "var(--blur-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-md",
+        "Value": "12px",
+        "Reference": "var(--blur-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-sm",
+        "Value": "8px",
+        "Reference": "var(--blur-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-xl",
+        "Value": "24px",
+        "Reference": "var(--blur-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--blur-xs",
+        "Value": "4px",
+        "Reference": "var(--blur-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--breakpoint-2xl",
+        "Value": "96rem",
+        "Reference": "var(--breakpoint-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--breakpoint-lg",
+        "Value": "64rem",
+        "Reference": "var(--breakpoint-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--breakpoint-md",
+        "Value": "48rem",
+        "Reference": "var(--breakpoint-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--breakpoint-sm",
+        "Value": "40rem",
+        "Reference": "var(--breakpoint-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--breakpoint-xl",
+        "Value": "80rem",
+        "Reference": "var(--breakpoint-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-100",
+        "Value": "oklch(96.2% 0.059 95.617)",
+        "Reference": "var(--color-amber-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-200",
+        "Value": "oklch(92.4% 0.12 95.746)",
+        "Reference": "var(--color-amber-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-300",
+        "Value": "oklch(87.9% 0.169 91.605)",
+        "Reference": "var(--color-amber-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-400",
+        "Value": "oklch(82.8% 0.189 84.429)",
+        "Reference": "var(--color-amber-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-50",
+        "Value": "oklch(98.7% 0.022 95.277)",
+        "Reference": "var(--color-amber-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-500",
+        "Value": "oklch(76.9% 0.188 70.08)",
+        "Reference": "var(--color-amber-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-600",
+        "Value": "oklch(66.6% 0.179 58.318)",
+        "Reference": "var(--color-amber-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-700",
+        "Value": "oklch(55.5% 0.163 48.998)",
+        "Reference": "var(--color-amber-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-800",
+        "Value": "oklch(47.3% 0.137 46.201)",
+        "Reference": "var(--color-amber-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-900",
+        "Value": "oklch(41.4% 0.112 45.904)",
+        "Reference": "var(--color-amber-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-amber-950",
+        "Value": "oklch(27.9% 0.077 45.635)",
+        "Reference": "var(--color-amber-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-black",
+        "Value": "#000",
+        "Reference": "var(--color-black)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-100",
+        "Value": "oklch(93.2% 0.032 255.585)",
+        "Reference": "var(--color-blue-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-200",
+        "Value": "oklch(88.2% 0.059 254.128)",
+        "Reference": "var(--color-blue-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-300",
+        "Value": "oklch(80.9% 0.105 251.813)",
+        "Reference": "var(--color-blue-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-400",
+        "Value": "oklch(70.7% 0.165 254.624)",
+        "Reference": "var(--color-blue-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-50",
+        "Value": "oklch(97% 0.014 254.604)",
+        "Reference": "var(--color-blue-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-500",
+        "Value": "oklch(62.3% 0.214 259.815)",
+        "Reference": "var(--color-blue-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-600",
+        "Value": "oklch(54.6% 0.245 262.881)",
+        "Reference": "var(--color-blue-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-700",
+        "Value": "oklch(48.8% 0.243 264.376)",
+        "Reference": "var(--color-blue-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-800",
+        "Value": "oklch(42.4% 0.199 265.638)",
+        "Reference": "var(--color-blue-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-900",
+        "Value": "oklch(37.9% 0.146 265.522)",
+        "Reference": "var(--color-blue-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-blue-950",
+        "Value": "oklch(28.2% 0.091 267.935)",
+        "Reference": "var(--color-blue-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-100",
+        "Value": "oklch(95.6% 0.045 203.388)",
+        "Reference": "var(--color-cyan-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-200",
+        "Value": "oklch(91.7% 0.08 205.041)",
+        "Reference": "var(--color-cyan-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-300",
+        "Value": "oklch(86.5% 0.127 207.078)",
+        "Reference": "var(--color-cyan-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-400",
+        "Value": "oklch(78.9% 0.154 211.53)",
+        "Reference": "var(--color-cyan-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-50",
+        "Value": "oklch(98.4% 0.019 200.873)",
+        "Reference": "var(--color-cyan-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-500",
+        "Value": "oklch(71.5% 0.143 215.221)",
+        "Reference": "var(--color-cyan-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-600",
+        "Value": "oklch(60.9% 0.126 221.723)",
+        "Reference": "var(--color-cyan-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-700",
+        "Value": "oklch(52% 0.105 223.128)",
+        "Reference": "var(--color-cyan-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-800",
+        "Value": "oklch(45% 0.085 224.283)",
+        "Reference": "var(--color-cyan-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-900",
+        "Value": "oklch(39.8% 0.07 227.392)",
+        "Reference": "var(--color-cyan-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-cyan-950",
+        "Value": "oklch(30.2% 0.056 229.695)",
+        "Reference": "var(--color-cyan-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-100",
+        "Value": "oklch(95% 0.052 163.051)",
+        "Reference": "var(--color-emerald-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-200",
+        "Value": "oklch(90.5% 0.093 164.15)",
+        "Reference": "var(--color-emerald-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-300",
+        "Value": "oklch(84.5% 0.143 164.978)",
+        "Reference": "var(--color-emerald-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-400",
+        "Value": "oklch(76.5% 0.177 163.223)",
+        "Reference": "var(--color-emerald-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-50",
+        "Value": "oklch(97.9% 0.021 166.113)",
+        "Reference": "var(--color-emerald-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-500",
+        "Value": "oklch(69.6% 0.17 162.48)",
+        "Reference": "var(--color-emerald-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-600",
+        "Value": "oklch(59.6% 0.145 163.225)",
+        "Reference": "var(--color-emerald-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-700",
+        "Value": "oklch(50.8% 0.118 165.612)",
+        "Reference": "var(--color-emerald-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-800",
+        "Value": "oklch(43.2% 0.095 166.913)",
+        "Reference": "var(--color-emerald-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-900",
+        "Value": "oklch(37.8% 0.077 168.94)",
+        "Reference": "var(--color-emerald-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-emerald-950",
+        "Value": "oklch(26.2% 0.051 172.552)",
+        "Reference": "var(--color-emerald-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-100",
+        "Value": "oklch(95.2% 0.037 318.852)",
+        "Reference": "var(--color-fuchsia-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-200",
+        "Value": "oklch(90.3% 0.076 319.62)",
+        "Reference": "var(--color-fuchsia-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-300",
+        "Value": "oklch(83.3% 0.145 321.434)",
+        "Reference": "var(--color-fuchsia-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-400",
+        "Value": "oklch(74% 0.238 322.16)",
+        "Reference": "var(--color-fuchsia-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-50",
+        "Value": "oklch(97.7% 0.017 320.058)",
+        "Reference": "var(--color-fuchsia-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-500",
+        "Value": "oklch(66.7% 0.295 322.15)",
+        "Reference": "var(--color-fuchsia-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-600",
+        "Value": "oklch(59.1% 0.293 322.896)",
+        "Reference": "var(--color-fuchsia-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-700",
+        "Value": "oklch(51.8% 0.253 323.949)",
+        "Reference": "var(--color-fuchsia-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-800",
+        "Value": "oklch(45.2% 0.211 324.591)",
+        "Reference": "var(--color-fuchsia-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-900",
+        "Value": "oklch(40.1% 0.17 325.612)",
+        "Reference": "var(--color-fuchsia-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-fuchsia-950",
+        "Value": "oklch(29.3% 0.136 325.661)",
+        "Reference": "var(--color-fuchsia-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-100",
+        "Value": "oklch(96.7% 0.003 264.542)",
+        "Reference": "var(--color-gray-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-200",
+        "Value": "oklch(92.8% 0.006 264.531)",
+        "Reference": "var(--color-gray-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-300",
+        "Value": "oklch(87.2% 0.01 258.338)",
+        "Reference": "var(--color-gray-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-400",
+        "Value": "oklch(70.7% 0.022 261.325)",
+        "Reference": "var(--color-gray-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-50",
+        "Value": "oklch(98.5% 0.002 247.839)",
+        "Reference": "var(--color-gray-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-500",
+        "Value": "oklch(55.1% 0.027 264.364)",
+        "Reference": "var(--color-gray-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-600",
+        "Value": "oklch(44.6% 0.03 256.802)",
+        "Reference": "var(--color-gray-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-700",
+        "Value": "oklch(37.3% 0.034 259.733)",
+        "Reference": "var(--color-gray-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-800",
+        "Value": "oklch(27.8% 0.033 256.848)",
+        "Reference": "var(--color-gray-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-900",
+        "Value": "oklch(21% 0.034 264.665)",
+        "Reference": "var(--color-gray-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-gray-950",
+        "Value": "oklch(13% 0.028 261.692)",
+        "Reference": "var(--color-gray-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-100",
+        "Value": "oklch(96.2% 0.044 156.743)",
+        "Reference": "var(--color-green-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-200",
+        "Value": "oklch(92.5% 0.084 155.995)",
+        "Reference": "var(--color-green-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-300",
+        "Value": "oklch(87.1% 0.15 154.449)",
+        "Reference": "var(--color-green-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-400",
+        "Value": "oklch(79.2% 0.209 151.711)",
+        "Reference": "var(--color-green-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-50",
+        "Value": "oklch(98.2% 0.018 155.826)",
+        "Reference": "var(--color-green-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-500",
+        "Value": "oklch(72.3% 0.219 149.579)",
+        "Reference": "var(--color-green-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-600",
+        "Value": "oklch(62.7% 0.194 149.214)",
+        "Reference": "var(--color-green-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-700",
+        "Value": "oklch(52.7% 0.154 150.069)",
+        "Reference": "var(--color-green-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-800",
+        "Value": "oklch(44.8% 0.119 151.328)",
+        "Reference": "var(--color-green-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-900",
+        "Value": "oklch(39.3% 0.095 152.535)",
+        "Reference": "var(--color-green-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-green-950",
+        "Value": "oklch(26.6% 0.065 152.934)",
+        "Reference": "var(--color-green-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-100",
+        "Value": "oklch(93% 0.034 272.788)",
+        "Reference": "var(--color-indigo-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-200",
+        "Value": "oklch(87% 0.065 274.039)",
+        "Reference": "var(--color-indigo-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-300",
+        "Value": "oklch(78.5% 0.115 274.713)",
+        "Reference": "var(--color-indigo-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-400",
+        "Value": "oklch(67.3% 0.182 276.935)",
+        "Reference": "var(--color-indigo-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-50",
+        "Value": "oklch(96.2% 0.018 272.314)",
+        "Reference": "var(--color-indigo-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-500",
+        "Value": "oklch(58.5% 0.233 277.117)",
+        "Reference": "var(--color-indigo-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-600",
+        "Value": "oklch(51.1% 0.262 276.966)",
+        "Reference": "var(--color-indigo-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-700",
+        "Value": "oklch(45.7% 0.24 277.023)",
+        "Reference": "var(--color-indigo-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-800",
+        "Value": "oklch(39.8% 0.195 277.366)",
+        "Reference": "var(--color-indigo-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-900",
+        "Value": "oklch(35.9% 0.144 278.697)",
+        "Reference": "var(--color-indigo-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-indigo-950",
+        "Value": "oklch(25.7% 0.09 281.288)",
+        "Reference": "var(--color-indigo-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-100",
+        "Value": "oklch(96.7% 0.067 122.328)",
+        "Reference": "var(--color-lime-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-200",
+        "Value": "oklch(93.8% 0.127 124.321)",
+        "Reference": "var(--color-lime-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-300",
+        "Value": "oklch(89.7% 0.196 126.665)",
+        "Reference": "var(--color-lime-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-400",
+        "Value": "oklch(84.1% 0.238 128.85)",
+        "Reference": "var(--color-lime-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-50",
+        "Value": "oklch(98.6% 0.031 120.757)",
+        "Reference": "var(--color-lime-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-500",
+        "Value": "oklch(76.8% 0.233 130.85)",
+        "Reference": "var(--color-lime-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-600",
+        "Value": "oklch(64.8% 0.2 131.684)",
+        "Reference": "var(--color-lime-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-700",
+        "Value": "oklch(53.2% 0.157 131.589)",
+        "Reference": "var(--color-lime-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-800",
+        "Value": "oklch(45.3% 0.124 130.933)",
+        "Reference": "var(--color-lime-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-900",
+        "Value": "oklch(40.5% 0.101 131.063)",
+        "Reference": "var(--color-lime-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-lime-950",
+        "Value": "oklch(27.4% 0.072 132.109)",
+        "Reference": "var(--color-lime-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-100",
+        "Value": "oklch(96% 0.003 325.6)",
+        "Reference": "var(--color-mauve-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-200",
+        "Value": "oklch(92.2% 0.005 325.62)",
+        "Reference": "var(--color-mauve-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-300",
+        "Value": "oklch(86.5% 0.012 325.68)",
+        "Reference": "var(--color-mauve-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-400",
+        "Value": "oklch(71.1% 0.019 323.02)",
+        "Reference": "var(--color-mauve-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Reference": "var(--color-mauve-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-500",
+        "Value": "oklch(54.2% 0.034 322.5)",
+        "Reference": "var(--color-mauve-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-600",
+        "Value": "oklch(43.5% 0.029 321.78)",
+        "Reference": "var(--color-mauve-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-700",
+        "Value": "oklch(36.4% 0.029 323.89)",
+        "Reference": "var(--color-mauve-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-800",
+        "Value": "oklch(26.3% 0.024 320.12)",
+        "Reference": "var(--color-mauve-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-900",
+        "Value": "oklch(21.2% 0.019 322.12)",
+        "Reference": "var(--color-mauve-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mauve-950",
+        "Value": "oklch(14.5% 0.008 326)",
+        "Reference": "var(--color-mauve-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-100",
+        "Value": "oklch(96.3% 0.002 197.1)",
+        "Reference": "var(--color-mist-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-200",
+        "Value": "oklch(92.5% 0.005 214.3)",
+        "Reference": "var(--color-mist-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-300",
+        "Value": "oklch(87.2% 0.007 219.6)",
+        "Reference": "var(--color-mist-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-400",
+        "Value": "oklch(72.3% 0.014 214.4)",
+        "Reference": "var(--color-mist-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-50",
+        "Value": "oklch(98.7% 0.002 197.1)",
+        "Reference": "var(--color-mist-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-500",
+        "Value": "oklch(56% 0.021 213.5)",
+        "Reference": "var(--color-mist-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-600",
+        "Value": "oklch(45% 0.017 213.2)",
+        "Reference": "var(--color-mist-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-700",
+        "Value": "oklch(37.8% 0.015 216)",
+        "Reference": "var(--color-mist-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-800",
+        "Value": "oklch(27.5% 0.011 216.9)",
+        "Reference": "var(--color-mist-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-900",
+        "Value": "oklch(21.8% 0.008 223.9)",
+        "Reference": "var(--color-mist-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-mist-950",
+        "Value": "oklch(14.8% 0.004 228.8)",
+        "Reference": "var(--color-mist-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-100",
+        "Value": "oklch(97% 0 none)",
+        "Reference": "var(--color-neutral-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-200",
+        "Value": "oklch(92.2% 0 none)",
+        "Reference": "var(--color-neutral-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-300",
+        "Value": "oklch(87% 0 none)",
+        "Reference": "var(--color-neutral-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-400",
+        "Value": "oklch(70.8% 0 none)",
+        "Reference": "var(--color-neutral-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Reference": "var(--color-neutral-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-500",
+        "Value": "oklch(55.6% 0 none)",
+        "Reference": "var(--color-neutral-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-600",
+        "Value": "oklch(43.9% 0 none)",
+        "Reference": "var(--color-neutral-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-700",
+        "Value": "oklch(37.1% 0 none)",
+        "Reference": "var(--color-neutral-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-800",
+        "Value": "oklch(26.9% 0 none)",
+        "Reference": "var(--color-neutral-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-900",
+        "Value": "oklch(20.5% 0 none)",
+        "Reference": "var(--color-neutral-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-neutral-950",
+        "Value": "oklch(14.5% 0 none)",
+        "Reference": "var(--color-neutral-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-100",
+        "Value": "oklch(96.6% 0.005 106.5)",
+        "Reference": "var(--color-olive-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-200",
+        "Value": "oklch(93% 0.007 106.5)",
+        "Reference": "var(--color-olive-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-300",
+        "Value": "oklch(88% 0.011 106.6)",
+        "Reference": "var(--color-olive-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-400",
+        "Value": "oklch(73.7% 0.021 106.9)",
+        "Reference": "var(--color-olive-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-50",
+        "Value": "oklch(98.8% 0.003 106.5)",
+        "Reference": "var(--color-olive-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-500",
+        "Value": "oklch(58% 0.031 107.3)",
+        "Reference": "var(--color-olive-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-600",
+        "Value": "oklch(46.6% 0.025 107.3)",
+        "Reference": "var(--color-olive-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-700",
+        "Value": "oklch(39.4% 0.023 107.4)",
+        "Reference": "var(--color-olive-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-800",
+        "Value": "oklch(28.6% 0.016 107.4)",
+        "Reference": "var(--color-olive-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-900",
+        "Value": "oklch(22.8% 0.013 107.4)",
+        "Reference": "var(--color-olive-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-olive-950",
+        "Value": "oklch(15.3% 0.006 107.1)",
+        "Reference": "var(--color-olive-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-100",
+        "Value": "oklch(95.4% 0.038 75.164)",
+        "Reference": "var(--color-orange-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-200",
+        "Value": "oklch(90.1% 0.076 70.697)",
+        "Reference": "var(--color-orange-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-300",
+        "Value": "oklch(83.7% 0.128 66.29)",
+        "Reference": "var(--color-orange-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-400",
+        "Value": "oklch(75% 0.183 55.934)",
+        "Reference": "var(--color-orange-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-50",
+        "Value": "oklch(98% 0.016 73.684)",
+        "Reference": "var(--color-orange-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-500",
+        "Value": "oklch(70.5% 0.213 47.604)",
+        "Reference": "var(--color-orange-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-600",
+        "Value": "oklch(64.6% 0.222 41.116)",
+        "Reference": "var(--color-orange-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-700",
+        "Value": "oklch(55.3% 0.195 38.402)",
+        "Reference": "var(--color-orange-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-800",
+        "Value": "oklch(47% 0.157 37.304)",
+        "Reference": "var(--color-orange-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-900",
+        "Value": "oklch(40.8% 0.123 38.172)",
+        "Reference": "var(--color-orange-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-orange-950",
+        "Value": "oklch(26.6% 0.079 36.259)",
+        "Reference": "var(--color-orange-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-100",
+        "Value": "oklch(94.8% 0.028 342.258)",
+        "Reference": "var(--color-pink-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-200",
+        "Value": "oklch(89.9% 0.061 343.231)",
+        "Reference": "var(--color-pink-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-300",
+        "Value": "oklch(82.3% 0.12 346.018)",
+        "Reference": "var(--color-pink-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-400",
+        "Value": "oklch(71.8% 0.202 349.761)",
+        "Reference": "var(--color-pink-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-50",
+        "Value": "oklch(97.1% 0.014 343.198)",
+        "Reference": "var(--color-pink-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-500",
+        "Value": "oklch(65.6% 0.241 354.308)",
+        "Reference": "var(--color-pink-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-600",
+        "Value": "oklch(59.2% 0.249 0.584)",
+        "Reference": "var(--color-pink-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-700",
+        "Value": "oklch(52.5% 0.223 3.958)",
+        "Reference": "var(--color-pink-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-800",
+        "Value": "oklch(45.9% 0.187 3.815)",
+        "Reference": "var(--color-pink-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-900",
+        "Value": "oklch(40.8% 0.153 2.432)",
+        "Reference": "var(--color-pink-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-pink-950",
+        "Value": "oklch(28.4% 0.109 3.907)",
+        "Reference": "var(--color-pink-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-100",
+        "Value": "oklch(94.6% 0.033 307.174)",
+        "Reference": "var(--color-purple-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-200",
+        "Value": "oklch(90.2% 0.063 306.703)",
+        "Reference": "var(--color-purple-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-300",
+        "Value": "oklch(82.7% 0.119 306.383)",
+        "Reference": "var(--color-purple-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-400",
+        "Value": "oklch(71.4% 0.203 305.504)",
+        "Reference": "var(--color-purple-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-50",
+        "Value": "oklch(97.7% 0.014 308.299)",
+        "Reference": "var(--color-purple-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-500",
+        "Value": "oklch(62.7% 0.265 303.9)",
+        "Reference": "var(--color-purple-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-600",
+        "Value": "oklch(55.8% 0.288 302.321)",
+        "Reference": "var(--color-purple-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-700",
+        "Value": "oklch(49.6% 0.265 301.924)",
+        "Reference": "var(--color-purple-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-800",
+        "Value": "oklch(43.8% 0.218 303.724)",
+        "Reference": "var(--color-purple-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-900",
+        "Value": "oklch(38.1% 0.176 304.987)",
+        "Reference": "var(--color-purple-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-purple-950",
+        "Value": "oklch(29.1% 0.149 302.717)",
+        "Reference": "var(--color-purple-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-100",
+        "Value": "oklch(93.6% 0.032 17.717)",
+        "Reference": "var(--color-red-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-200",
+        "Value": "oklch(88.5% 0.062 18.334)",
+        "Reference": "var(--color-red-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-300",
+        "Value": "oklch(80.8% 0.114 19.571)",
+        "Reference": "var(--color-red-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-400",
+        "Value": "oklch(70.4% 0.191 22.216)",
+        "Reference": "var(--color-red-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-50",
+        "Value": "oklch(97.1% 0.013 17.38)",
+        "Reference": "var(--color-red-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-500",
+        "Value": "oklch(63.7% 0.237 25.331)",
+        "Reference": "var(--color-red-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-600",
+        "Value": "oklch(57.7% 0.245 27.325)",
+        "Reference": "var(--color-red-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-700",
+        "Value": "oklch(50.5% 0.213 27.518)",
+        "Reference": "var(--color-red-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-800",
+        "Value": "oklch(44.4% 0.177 26.899)",
+        "Reference": "var(--color-red-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-900",
+        "Value": "oklch(39.6% 0.141 25.723)",
+        "Reference": "var(--color-red-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-red-950",
+        "Value": "oklch(25.8% 0.092 26.042)",
+        "Reference": "var(--color-red-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-100",
+        "Value": "oklch(94.1% 0.03 12.58)",
+        "Reference": "var(--color-rose-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-200",
+        "Value": "oklch(89.2% 0.058 10.001)",
+        "Reference": "var(--color-rose-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-300",
+        "Value": "oklch(81% 0.117 11.638)",
+        "Reference": "var(--color-rose-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-400",
+        "Value": "oklch(71.2% 0.194 13.428)",
+        "Reference": "var(--color-rose-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-50",
+        "Value": "oklch(96.9% 0.015 12.422)",
+        "Reference": "var(--color-rose-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-500",
+        "Value": "oklch(64.5% 0.246 16.439)",
+        "Reference": "var(--color-rose-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-600",
+        "Value": "oklch(58.6% 0.253 17.585)",
+        "Reference": "var(--color-rose-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-700",
+        "Value": "oklch(51.4% 0.222 16.935)",
+        "Reference": "var(--color-rose-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-800",
+        "Value": "oklch(45.5% 0.188 13.697)",
+        "Reference": "var(--color-rose-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-900",
+        "Value": "oklch(41% 0.159 10.272)",
+        "Reference": "var(--color-rose-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-rose-950",
+        "Value": "oklch(27.1% 0.105 12.094)",
+        "Reference": "var(--color-rose-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-100",
+        "Value": "oklch(95.1% 0.026 236.824)",
+        "Reference": "var(--color-sky-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-200",
+        "Value": "oklch(90.1% 0.058 230.902)",
+        "Reference": "var(--color-sky-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-300",
+        "Value": "oklch(82.8% 0.111 230.318)",
+        "Reference": "var(--color-sky-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-400",
+        "Value": "oklch(74.6% 0.16 232.661)",
+        "Reference": "var(--color-sky-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-50",
+        "Value": "oklch(97.7% 0.013 236.62)",
+        "Reference": "var(--color-sky-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-500",
+        "Value": "oklch(68.5% 0.169 237.323)",
+        "Reference": "var(--color-sky-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-600",
+        "Value": "oklch(58.8% 0.158 241.966)",
+        "Reference": "var(--color-sky-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-700",
+        "Value": "oklch(50% 0.134 242.749)",
+        "Reference": "var(--color-sky-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-800",
+        "Value": "oklch(44.3% 0.11 240.79)",
+        "Reference": "var(--color-sky-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-900",
+        "Value": "oklch(39.1% 0.09 240.876)",
+        "Reference": "var(--color-sky-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-sky-950",
+        "Value": "oklch(29.3% 0.066 243.157)",
+        "Reference": "var(--color-sky-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-100",
+        "Value": "oklch(96.8% 0.007 247.896)",
+        "Reference": "var(--color-slate-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-200",
+        "Value": "oklch(92.9% 0.013 255.508)",
+        "Reference": "var(--color-slate-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-300",
+        "Value": "oklch(86.9% 0.022 252.894)",
+        "Reference": "var(--color-slate-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-400",
+        "Value": "oklch(70.4% 0.04 256.788)",
+        "Reference": "var(--color-slate-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-50",
+        "Value": "oklch(98.4% 0.003 247.858)",
+        "Reference": "var(--color-slate-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-500",
+        "Value": "oklch(55.4% 0.046 257.417)",
+        "Reference": "var(--color-slate-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-600",
+        "Value": "oklch(44.6% 0.043 257.281)",
+        "Reference": "var(--color-slate-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-700",
+        "Value": "oklch(37.2% 0.044 257.287)",
+        "Reference": "var(--color-slate-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-800",
+        "Value": "oklch(27.9% 0.041 260.031)",
+        "Reference": "var(--color-slate-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-900",
+        "Value": "oklch(20.8% 0.042 265.755)",
+        "Reference": "var(--color-slate-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-slate-950",
+        "Value": "oklch(12.9% 0.042 264.695)",
+        "Reference": "var(--color-slate-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-100",
+        "Value": "oklch(97% 0.001 106.424)",
+        "Reference": "var(--color-stone-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-200",
+        "Value": "oklch(92.3% 0.003 48.717)",
+        "Reference": "var(--color-stone-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-300",
+        "Value": "oklch(86.9% 0.005 56.366)",
+        "Reference": "var(--color-stone-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-400",
+        "Value": "oklch(70.9% 0.01 56.259)",
+        "Reference": "var(--color-stone-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-50",
+        "Value": "oklch(98.5% 0.001 106.423)",
+        "Reference": "var(--color-stone-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-500",
+        "Value": "oklch(55.3% 0.013 58.071)",
+        "Reference": "var(--color-stone-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-600",
+        "Value": "oklch(44.4% 0.011 73.639)",
+        "Reference": "var(--color-stone-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-700",
+        "Value": "oklch(37.4% 0.01 67.558)",
+        "Reference": "var(--color-stone-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-800",
+        "Value": "oklch(26.8% 0.007 34.298)",
+        "Reference": "var(--color-stone-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-900",
+        "Value": "oklch(21.6% 0.006 56.043)",
+        "Reference": "var(--color-stone-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-stone-950",
+        "Value": "oklch(14.7% 0.004 49.25)",
+        "Reference": "var(--color-stone-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-100",
+        "Value": "oklch(96% 0.002 17.2)",
+        "Reference": "var(--color-taupe-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-200",
+        "Value": "oklch(92.2% 0.005 34.3)",
+        "Reference": "var(--color-taupe-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-300",
+        "Value": "oklch(86.8% 0.007 39.5)",
+        "Reference": "var(--color-taupe-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-400",
+        "Value": "oklch(71.4% 0.014 41.2)",
+        "Reference": "var(--color-taupe-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-50",
+        "Value": "oklch(98.6% 0.002 67.8)",
+        "Reference": "var(--color-taupe-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-500",
+        "Value": "oklch(54.7% 0.021 43.1)",
+        "Reference": "var(--color-taupe-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-600",
+        "Value": "oklch(43.8% 0.017 39.3)",
+        "Reference": "var(--color-taupe-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-700",
+        "Value": "oklch(36.7% 0.016 35.7)",
+        "Reference": "var(--color-taupe-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-800",
+        "Value": "oklch(26.8% 0.011 36.5)",
+        "Reference": "var(--color-taupe-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-900",
+        "Value": "oklch(21.4% 0.009 43.1)",
+        "Reference": "var(--color-taupe-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-taupe-950",
+        "Value": "oklch(14.7% 0.004 49.3)",
+        "Reference": "var(--color-taupe-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-100",
+        "Value": "oklch(95.3% 0.051 180.801)",
+        "Reference": "var(--color-teal-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-200",
+        "Value": "oklch(91% 0.096 180.426)",
+        "Reference": "var(--color-teal-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-300",
+        "Value": "oklch(85.5% 0.138 181.071)",
+        "Reference": "var(--color-teal-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-400",
+        "Value": "oklch(77.7% 0.152 181.912)",
+        "Reference": "var(--color-teal-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-50",
+        "Value": "oklch(98.4% 0.014 180.72)",
+        "Reference": "var(--color-teal-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-500",
+        "Value": "oklch(70.4% 0.14 182.503)",
+        "Reference": "var(--color-teal-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-600",
+        "Value": "oklch(60% 0.118 184.704)",
+        "Reference": "var(--color-teal-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-700",
+        "Value": "oklch(51.1% 0.096 186.391)",
+        "Reference": "var(--color-teal-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-800",
+        "Value": "oklch(43.7% 0.078 188.216)",
+        "Reference": "var(--color-teal-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-900",
+        "Value": "oklch(38.6% 0.063 188.416)",
+        "Reference": "var(--color-teal-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-teal-950",
+        "Value": "oklch(27.7% 0.046 192.524)",
+        "Reference": "var(--color-teal-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-100",
+        "Value": "oklch(94.3% 0.029 294.588)",
+        "Reference": "var(--color-violet-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-200",
+        "Value": "oklch(89.4% 0.057 293.283)",
+        "Reference": "var(--color-violet-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-300",
+        "Value": "oklch(81.1% 0.111 293.571)",
+        "Reference": "var(--color-violet-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-400",
+        "Value": "oklch(70.2% 0.183 293.541)",
+        "Reference": "var(--color-violet-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-50",
+        "Value": "oklch(96.9% 0.016 293.756)",
+        "Reference": "var(--color-violet-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-500",
+        "Value": "oklch(60.6% 0.25 292.717)",
+        "Reference": "var(--color-violet-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-600",
+        "Value": "oklch(54.1% 0.281 293.009)",
+        "Reference": "var(--color-violet-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-700",
+        "Value": "oklch(49.1% 0.27 292.581)",
+        "Reference": "var(--color-violet-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-800",
+        "Value": "oklch(43.2% 0.232 292.759)",
+        "Reference": "var(--color-violet-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-900",
+        "Value": "oklch(38% 0.189 293.745)",
+        "Reference": "var(--color-violet-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-violet-950",
+        "Value": "oklch(28.3% 0.141 291.089)",
+        "Reference": "var(--color-violet-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-white",
+        "Value": "#fff",
+        "Reference": "var(--color-white)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-100",
+        "Value": "oklch(97.3% 0.071 103.193)",
+        "Reference": "var(--color-yellow-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-200",
+        "Value": "oklch(94.5% 0.129 101.54)",
+        "Reference": "var(--color-yellow-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-300",
+        "Value": "oklch(90.5% 0.182 98.111)",
+        "Reference": "var(--color-yellow-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-400",
+        "Value": "oklch(85.2% 0.199 91.936)",
+        "Reference": "var(--color-yellow-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-50",
+        "Value": "oklch(98.7% 0.026 102.212)",
+        "Reference": "var(--color-yellow-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-500",
+        "Value": "oklch(79.5% 0.184 86.047)",
+        "Reference": "var(--color-yellow-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-600",
+        "Value": "oklch(68.1% 0.162 75.834)",
+        "Reference": "var(--color-yellow-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-700",
+        "Value": "oklch(55.4% 0.135 66.442)",
+        "Reference": "var(--color-yellow-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-800",
+        "Value": "oklch(47.6% 0.114 61.907)",
+        "Reference": "var(--color-yellow-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-900",
+        "Value": "oklch(42.1% 0.095 57.708)",
+        "Reference": "var(--color-yellow-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-yellow-950",
+        "Value": "oklch(28.6% 0.066 53.813)",
+        "Reference": "var(--color-yellow-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-100",
+        "Value": "oklch(96.7% 0.001 286.375)",
+        "Reference": "var(--color-zinc-100)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-200",
+        "Value": "oklch(92% 0.004 286.32)",
+        "Reference": "var(--color-zinc-200)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-300",
+        "Value": "oklch(87.1% 0.006 286.286)",
+        "Reference": "var(--color-zinc-300)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-400",
+        "Value": "oklch(70.5% 0.015 286.067)",
+        "Reference": "var(--color-zinc-400)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-50",
+        "Value": "oklch(98.5% 0 none)",
+        "Reference": "var(--color-zinc-50)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-500",
+        "Value": "oklch(55.2% 0.016 285.938)",
+        "Reference": "var(--color-zinc-500)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-600",
+        "Value": "oklch(44.2% 0.017 285.786)",
+        "Reference": "var(--color-zinc-600)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-700",
+        "Value": "oklch(37% 0.013 285.805)",
+        "Reference": "var(--color-zinc-700)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-800",
+        "Value": "oklch(27.4% 0.006 286.033)",
+        "Reference": "var(--color-zinc-800)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-900",
+        "Value": "oklch(21% 0.006 285.885)",
+        "Reference": "var(--color-zinc-900)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--color-zinc-950",
+        "Value": "oklch(14.1% 0.005 285.823)",
+        "Reference": "var(--color-zinc-950)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-2xl",
+        "Value": "42rem",
+        "Reference": "var(--container-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-2xs",
+        "Value": "18rem",
+        "Reference": "var(--container-2xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-3xl",
+        "Value": "48rem",
+        "Reference": "var(--container-3xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-3xs",
+        "Value": "16rem",
+        "Reference": "var(--container-3xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-4xl",
+        "Value": "56rem",
+        "Reference": "var(--container-4xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-5xl",
+        "Value": "64rem",
+        "Reference": "var(--container-5xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-6xl",
+        "Value": "72rem",
+        "Reference": "var(--container-6xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-7xl",
+        "Value": "80rem",
+        "Reference": "var(--container-7xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-lg",
+        "Value": "32rem",
+        "Reference": "var(--container-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-md",
+        "Value": "28rem",
+        "Reference": "var(--container-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-sm",
+        "Value": "24rem",
+        "Reference": "var(--container-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-xl",
+        "Value": "36rem",
+        "Reference": "var(--container-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--container-xs",
+        "Value": "20rem",
+        "Reference": "var(--container-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-font-family",
+        "Value": "--theme(--font-sans, initial)",
+        "Reference": "var(--default-font-family)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-font-feature-settings",
+        "Value": "--theme(\n      --font-sans--font-feature-settings,\n      initial\n    )",
+        "Reference": "var(--default-font-feature-settings)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-font-variation-settings",
+        "Value": "--theme(\n      --font-sans--font-variation-settings,\n      initial\n    )",
+        "Reference": "var(--default-font-variation-settings)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-mono-font-family",
+        "Value": "--theme(--font-mono, initial)",
+        "Reference": "var(--default-mono-font-family)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-mono-font-feature-settings",
+        "Value": "--theme(\n      --font-mono--font-feature-settings,\n      initial\n    )",
+        "Reference": "var(--default-mono-font-feature-settings)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-mono-font-variation-settings",
+        "Value": "--theme(\n      --font-mono--font-variation-settings,\n      initial\n    )",
+        "Reference": "var(--default-mono-font-variation-settings)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-transition-duration",
+        "Value": "150ms",
+        "Reference": "var(--default-transition-duration)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--default-transition-timing-function",
+        "Value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "Reference": "var(--default-transition-timing-function)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow",
+        "Value": "0 1px 2px rgb(0 0 0 / 0.1), 0 1px 1px rgb(0 0 0 / 0.06)",
+        "Reference": "var(--drop-shadow, 0 1px 2px rgb(0 0 0 / 0.1), 0 1px 1px rgb(0 0 0 / 0.06))",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-2xl",
+        "Value": "0 25px 25px rgb(0 0 0 / 0.15)",
+        "Reference": "var(--drop-shadow-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-lg",
+        "Value": "0 4px 4px rgb(0 0 0 / 0.15)",
+        "Reference": "var(--drop-shadow-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-md",
+        "Value": "0 3px 3px rgb(0 0 0 / 0.12)",
+        "Reference": "var(--drop-shadow-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-sm",
+        "Value": "0 1px 2px rgb(0 0 0 / 0.15)",
+        "Reference": "var(--drop-shadow-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-xl",
+        "Value": "0 9px 7px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--drop-shadow-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--drop-shadow-xs",
+        "Value": "0 1px 1px rgb(0 0 0 / 0.05)",
+        "Reference": "var(--drop-shadow-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--ease-in",
+        "Value": "cubic-bezier(0.4, 0, 1, 1)",
+        "Reference": "var(--ease-in)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--ease-in-out",
+        "Value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "Reference": "var(--ease-in-out)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--ease-out",
+        "Value": "cubic-bezier(0, 0, 0.2, 1)",
+        "Reference": "var(--ease-out)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-mono",
+        "Value": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\",\n      \"Courier New\", monospace",
+        "Reference": "var(--font-mono)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-sans",
+        "Value": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\",\n      \"Noto Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\",\n      \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "Reference": "var(--font-sans)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-serif",
+        "Value": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+        "Reference": "var(--font-serif)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-black",
+        "Value": "900",
+        "Reference": "var(--font-weight-black)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-bold",
+        "Value": "700",
+        "Reference": "var(--font-weight-bold)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-extrabold",
+        "Value": "800",
+        "Reference": "var(--font-weight-extrabold)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-extralight",
+        "Value": "200",
+        "Reference": "var(--font-weight-extralight)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-light",
+        "Value": "300",
+        "Reference": "var(--font-weight-light)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-medium",
+        "Value": "500",
+        "Reference": "var(--font-weight-medium)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-normal",
+        "Value": "400",
+        "Reference": "var(--font-weight-normal)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-semibold",
+        "Value": "600",
+        "Reference": "var(--font-weight-semibold)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--font-weight-thin",
+        "Value": "100",
+        "Reference": "var(--font-weight-thin)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--frobnicate-large",
+        "Value": "9px",
+        "Reference": "var(--frobnicate-large)",
+        "Options": 0,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--frobnicate-small",
+        "Value": "2px",
+        "Reference": "var(--frobnicate-small)",
+        "Options": 0,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--inset-shadow-2xs",
+        "Value": "inset 0 1px rgb(0 0 0 / 0.05)",
+        "Reference": "var(--inset-shadow-2xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--inset-shadow-sm",
+        "Value": "inset 0 2px 4px rgb(0 0 0 / 0.05)",
+        "Reference": "var(--inset-shadow-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--inset-shadow-xs",
+        "Value": "inset 0 1px 1px rgb(0 0 0 / 0.05)",
+        "Reference": "var(--inset-shadow-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--leading-loose",
+        "Value": "2",
+        "Reference": "var(--leading-loose)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--leading-normal",
+        "Value": "1.5",
+        "Reference": "var(--leading-normal)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--leading-relaxed",
+        "Value": "1.625",
+        "Reference": "var(--leading-relaxed)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--leading-snug",
+        "Value": "1.375",
+        "Reference": "var(--leading-snug)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--leading-tight",
+        "Value": "1.25",
+        "Reference": "var(--leading-tight)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--max-width-prose",
+        "Value": "65ch",
+        "Reference": "var(--max-width-prose, 65ch)",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--perspective-distant",
+        "Value": "1200px",
+        "Reference": "var(--perspective-distant)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--perspective-dramatic",
+        "Value": "100px",
+        "Reference": "var(--perspective-dramatic)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--perspective-midrange",
+        "Value": "800px",
+        "Reference": "var(--perspective-midrange)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--perspective-near",
+        "Value": "300px",
+        "Reference": "var(--perspective-near)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--perspective-normal",
+        "Value": "500px",
+        "Reference": "var(--perspective-normal)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius",
+        "Value": "0.25rem",
+        "Reference": "var(--radius, 0.25rem)",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-2xl",
+        "Value": "1rem",
+        "Reference": "var(--radius-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-3xl",
+        "Value": "1.5rem",
+        "Reference": "var(--radius-3xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-4xl",
+        "Value": "2rem",
+        "Reference": "var(--radius-4xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-lg",
+        "Value": "0.5rem",
+        "Reference": "var(--radius-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-md",
+        "Value": "0.375rem",
+        "Reference": "var(--radius-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-sm",
+        "Value": "0.25rem",
+        "Reference": "var(--radius-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-xl",
+        "Value": "0.75rem",
+        "Reference": "var(--radius-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--radius-xs",
+        "Value": "0.125rem",
+        "Reference": "var(--radius-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow",
+        "Value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--shadow, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1))",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-2xl",
+        "Value": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+        "Reference": "var(--shadow-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-2xs",
+        "Value": "0 1px rgb(0 0 0 / 0.05)",
+        "Reference": "var(--shadow-2xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-inner",
+        "Value": "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
+        "Reference": "var(--shadow-inner, inset 0 2px 4px 0 rgb(0 0 0 / 0.05))",
+        "Options": 7,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-lg",
+        "Value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--shadow-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-md",
+        "Value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--shadow-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-sm",
+        "Value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--shadow-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-xl",
+        "Value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--shadow-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--shadow-xs",
+        "Value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "Reference": "var(--shadow-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--spacing",
+        "Value": "0.25rem",
+        "Reference": "var(--spacing)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-2xl",
+        "Value": "1.5rem",
+        "Reference": "var(--text-2xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-2xl--line-height",
+        "Value": "calc(2 / 1.5)",
+        "Reference": "var(--text-2xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-3xl",
+        "Value": "1.875rem",
+        "Reference": "var(--text-3xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-3xl--line-height",
+        "Value": "calc(2.25 / 1.875)",
+        "Reference": "var(--text-3xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-4xl",
+        "Value": "2.25rem",
+        "Reference": "var(--text-4xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-4xl--line-height",
+        "Value": "calc(2.5 / 2.25)",
+        "Reference": "var(--text-4xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-5xl",
+        "Value": "3rem",
+        "Reference": "var(--text-5xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-5xl--line-height",
+        "Value": "1",
+        "Reference": "var(--text-5xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-6xl",
+        "Value": "3.75rem",
+        "Reference": "var(--text-6xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-6xl--line-height",
+        "Value": "1",
+        "Reference": "var(--text-6xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-7xl",
+        "Value": "4.5rem",
+        "Reference": "var(--text-7xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-7xl--line-height",
+        "Value": "1",
+        "Reference": "var(--text-7xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-8xl",
+        "Value": "6rem",
+        "Reference": "var(--text-8xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-8xl--line-height",
+        "Value": "1",
+        "Reference": "var(--text-8xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-9xl",
+        "Value": "8rem",
+        "Reference": "var(--text-9xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-9xl--line-height",
+        "Value": "1",
+        "Reference": "var(--text-9xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-base",
+        "Value": "1rem",
+        "Reference": "var(--text-base)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-base--line-height",
+        "Value": "calc(1.5 / 1)",
+        "Reference": "var(--text-base--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-lg",
+        "Value": "1.125rem",
+        "Reference": "var(--text-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-lg--line-height",
+        "Value": "calc(1.75 / 1.125)",
+        "Reference": "var(--text-lg--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-shadow-2xs",
+        "Value": "0px 1px 0px rgb(0 0 0 / 0.15)",
+        "Reference": "var(--text-shadow-2xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-shadow-lg",
+        "Value": "0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1),\n      0px 4px 8px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--text-shadow-lg)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-shadow-md",
+        "Value": "0px 1px 1px rgb(0 0 0 / 0.1), 0px 1px 2px rgb(0 0 0 / 0.1),\n      0px 2px 4px rgb(0 0 0 / 0.1)",
+        "Reference": "var(--text-shadow-md)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-shadow-sm",
+        "Value": "0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075),\n      0px 2px 2px rgb(0 0 0 / 0.075)",
+        "Reference": "var(--text-shadow-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-shadow-xs",
+        "Value": "0px 1px 1px rgb(0 0 0 / 0.2)",
+        "Reference": "var(--text-shadow-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-sm",
+        "Value": "0.875rem",
+        "Reference": "var(--text-sm)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-sm--line-height",
+        "Value": "calc(1.25 / 0.875)",
+        "Reference": "var(--text-sm--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-xl",
+        "Value": "1.25rem",
+        "Reference": "var(--text-xl)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-xl--line-height",
+        "Value": "calc(1.75 / 1.25)",
+        "Reference": "var(--text-xl--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-xs",
+        "Value": "0.75rem",
+        "Reference": "var(--text-xs)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--text-xs--line-height",
+        "Value": "calc(1 / 0.75)",
+        "Reference": "var(--text-xs--line-height)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-normal",
+        "Value": "0em",
+        "Reference": "var(--tracking-normal)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-tight",
+        "Value": "-0.025em",
+        "Reference": "var(--tracking-tight)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-tighter",
+        "Value": "-0.05em",
+        "Reference": "var(--tracking-tighter)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-wide",
+        "Value": "0.025em",
+        "Reference": "var(--tracking-wide)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-wider",
+        "Value": "0.05em",
+        "Reference": "var(--tracking-wider)",
+        "Options": 4,
+        "ReferenceOK": true
+      },
+      {
+        "Key": "--tracking-widest",
+        "Value": "0.1em",
+        "Reference": "var(--tracking-widest)",
+        "Options": 4,
+        "ReferenceOK": true
+      }
+    ],
+    "Groups": null,
+    "BaseOK": false,
+    "ArgOK": false,
+    "ResolvedOK": false
+  }
+]

@@ -1,0 +1,12 @@
+import type { ThemeResolution, WithResolution } from './resolve_with.a';
+export function resolveThemeArgument(argument: string,candidate: string,resolve: (candidate: string,present: boolean,namespaces: string[],options: number) => ThemeResolution,resolveWith: (candidate: string,namespaces: string[],nested: string[]) => WithResolution): ThemeResolution {
+ if(argument.endsWith('-*')){return resolve(candidate,true,[argument.slice(0,-2)],0);}
+ const parts=argument.split('-*');
+ if(parts.length <= 1){return {value:'',ok:false};}
+ const namespace=parts[0] ?? '';const nested=parts.slice(1);
+ const result=resolveWith(candidate,[namespace],nested);
+ if(!result.ok){return {value:'',ok:false};}
+ const last=nested[nested.length-1] ?? '';
+ if(!result.extra.has(last)){return {value:'',ok:false};}
+ return {value:result.extra.get(last) ?? '',ok:true};
+}

@@ -1,0 +1,17 @@
+export interface KeyResolution { readonly key: string; readonly ok: boolean; }
+export interface ThemeEntry { readonly present: boolean; readonly value: string; readonly options: number; }
+export interface ThemeResolution { readonly value: string; readonly ok: boolean; }
+export interface WithResolution { readonly value: string; readonly extra: Map<string,string>; readonly extraPresent: boolean; readonly ok: boolean; }
+export function resolveWith(candidate: string,namespaces: string[],nestedKeys: string[],resolveKey: (candidate: string,present: boolean,namespaces: string[]) => KeyResolution,lookup: (key: string) => ThemeEntry,reference: (key: string) => ThemeResolution): WithResolution {
+ const key=resolveKey(candidate,true,namespaces);const extra=new Map<string,string>();
+ if(!key.ok){return {value:'',extra,extraPresent:false,ok:false};}
+ for(const name of nestedKeys){
+  const nestedKey=key.key+name;const nested=lookup(nestedKey);
+  if(!nested.present){continue;}
+  if((nested.options & 1) !== 0){extra.set(name,nested.value);continue;}
+  const result=reference(nestedKey);if(result.ok){extra.set(name,result.value);}
+ }
+ const base=lookup(key.key);
+ if((base.options & 1) !== 0){return {value:base.value,extra,extraPresent:true,ok:true};}
+ return {value:reference(key.key).value,extra,extraPresent:true,ok:true};
+}

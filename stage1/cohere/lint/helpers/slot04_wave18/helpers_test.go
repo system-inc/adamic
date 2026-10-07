@@ -1,0 +1,259 @@
+package stringhelpers
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
+	"testing"
+	"time"
+)
+
+// Not parallel: these comparisons compile whole profiles and hold large output streams.
+func run(t *testing.T, directory, name string, args ...string) []byte {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+	defer cancel()
+	cmd := exec.CommandContext(ctx, name, args...)
+	cmd.Dir = directory
+	log, err := os.CreateTemp(t.TempDir(), "output-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer log.Close()
+	cmd.Stdout = log
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+	if err = cmd.Run(); err != nil {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	if stderr.Len() != 0 {
+		t.Fatalf("%s stderr: %s", name, &stderr)
+	}
+	data, err := os.ReadFile(log.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	return data
+}
+func write(t *testing.T, path string, data []byte) {
+	t.Helper()
+	if err := os.WriteFile(path, data, 0644); err != nil {
+		t.Fatal(err)
+	}
+}
+func oracle(t *testing.T) string {
+	root, _ := filepath.Abs("../../../../../cohere")
+	source, _ := filepath.Abs("testdata/oracle.go")
+	exports, _ := filepath.Abs("testdata/exports.go")
+	virtual := filepath.Join(root, "adamic_slot04_wave18_oracle.go")
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source, filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_slot04_wave18_exports.go"): exports}})
+	path := filepath.Join(t.TempDir(), "overlay.json")
+	write(t, path, overlay)
+	binary := filepath.Join(t.TempDir(), "go-oracle")
+	run(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
+	return binary
+}
+func compare(t *testing.T, got, want []byte) {
+	t.Helper()
+	if bytes.Equal(got, want) {
+		return
+	}
+	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
+	for i := 0; i < len(a) && i < len(b); i++ {
+		if a[i] != b[i] {
+			t.Fatalf("line %d: got %q, Go %q", i+1, a[i], b[i])
+		}
+	}
+	t.Fatalf("output size %d != %d", len(got), len(want))
+}
+
+type artifacts struct{ native, script string }
+
+func build(t *testing.T, directory string) artifacts { return buildEntry(t, directory, "main.a") }
+func buildEntry(t *testing.T, directory, entry string) artifacts {
+	t.Helper()
+	program, err := load.Load([]string{filepath.Join(directory, entry)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	ir, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "native")
+	if err = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	script := filepath.Join(t.TempDir(), "emitted.mjs")
+	write(t, script, []byte(javascript.JavaScript(ir)))
+	return artifacts{binary, script}
+}
+func observations(t *testing.T, directory, path string) []struct {
+	name   string
+	output []byte
+} {
+	t.Helper()
+	built := build(t, directory)
+	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
+	return []struct {
+		name   string
+		output []byte
+	}{
+		{"Node source", run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.a"), path)},
+		{"sanitized native", run(t, "", built.native, path)},
+		{"emitted JavaScript", run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, built.script, path)},
+	}
+}
+
+func TestNestedThemeGoNodeNativeJavaScript(t *testing.T) {
+	goOracle := oracle(t)
+	built := build(t, ".")
+	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
+	entry, _ := filepath.Abs("main.a")
+	for _, fixture := range []string{"witnesses.json", "consumers.json", "calls.json"} {
+		t.Run(fixture, func(t *testing.T) {
+			path, adapted := fixture, fixture
+			if fixture != "--full" {
+				path, _ = filepath.Abs("testdata/" + fixture)
+				adapted = filepath.Join(t.TempDir(), "cases.json")
+				write(t, adapted, run(t, "", goOracle, "--cases", path))
+			}
+			want := run(t, "", goOracle, path)
+			compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, adapted), want)
+			compare(t, run(t, "", built.native, adapted), want)
+			compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, built.script, adapted), want)
+			t.Logf("Go, source Node, sanitized native, emitted JavaScript match %d background/theme observations", bytes.Count(want, []byte("\n")))
+		})
+	}
+}
+func TestCompilingMutants(t *testing.T) {
+	goOracle := oracle(t)
+	path, _ := filepath.Abs("testdata/witnesses.json")
+	want := run(t, "", goOracle, path)
+	adapted := filepath.Join(t.TempDir(), "cases.json")
+	write(t, adapted, run(t, "", goOracle, "--cases", path))
+	mutations := []struct{ file, old, new string }{
+		{"background_size.a", "size === 'cover'", "size === 'never'"},
+		{"background_size.a", "if(allValid)", "if(!allValid)"},
+		{"background_size.a", "count > 0", "count >= 0"},
+		{"background_size.a", "values.length !== 2", "values.length !== 3"},
+		{"resolve_with.a", "if(!key.ok)", "if(key.ok)"},
+		{"resolve_with.a", "if(!nested.present)", "if(nested.present)"},
+		{"resolve_with.a", "nested.options & 1", "nested.options & 2"},
+		{"resolve_with.a", "base.options & 1", "base.options & 2"},
+		{"theme_argument.a", "return resolve(candidate,true,[argument.slice(0,-2)],0)", "return {value:'',ok:false}"},
+		{"theme_argument.a", "nested.length-1", "0"},
+		{"theme_argument.a", "if(!result.ok)", "if(result.ok)"},
+		{"theme_argument.a", "if(!result.extra.has(last))", "if(false)"},
+	}
+	for _, m := range mutations {
+		t.Run(m.file+m.old, func(t *testing.T) {
+			root := t.TempDir()
+			directory := filepath.Join(root, "slot04_wave18")
+			if err := os.Mkdir(directory, 0755); err != nil {
+				t.Fatal(err)
+			}
+			for _, name := range []string{"main.a", "background_size.a", "resolve_with.a", "theme_argument.a"} {
+				data, err := os.ReadFile(name)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if name == m.file {
+					if strings.Count(string(data), m.old) != 1 {
+						t.Fatal("mutant anchor changed")
+					}
+					data = []byte(strings.Replace(string(data), m.old, m.new, 1))
+				}
+				write(t, filepath.Join(directory, name), data)
+			}
+			options, err := os.ReadFile("../options_json.ts")
+			if err != nil {
+				t.Fatal(err)
+			}
+			write(t, filepath.Join(root, "options_json.ts"), options)
+			for _, observation := range observations(t, directory, adapted) {
+				if bytes.Equal(observation.output, want) {
+					t.Fatalf("%s compiling mutant survived", observation.name)
+				}
+				t.Logf("%s compiling semantic mutant caught by Go output comparison", observation.name)
+			}
+		})
+	}
+}
+func missingConsumers(data []byte) ([]string, error) {
+	var rows []struct{ Name string }
+	if err := json.Unmarshal(data, &rows); err != nil {
+		return nil, err
+	}
+	present := map[string]bool{}
+	for _, row := range rows {
+		name, _, _ := strings.Cut(row.Name, ":")
+		present[name] = true
+	}
+	ledger, err := os.ReadFile("../readiness.json")
+	if err != nil {
+		return nil, err
+	}
+	var d struct {
+		Remaining []struct {
+			Rule    string
+			Helpers []string `json:"remaining_helpers"`
+		}
+	}
+	if err = json.Unmarshal(ledger, &d); err != nil {
+		return nil, err
+	}
+	missing := []string{}
+	for _, row := range d.Remaining {
+		for _, h := range row.Helpers {
+			if strings.HasSuffix(h, "collapse.isBackgroundSize") || strings.HasSuffix(h, "collapse.*Theme.ResolveWith") || strings.HasSuffix(h, "collapse.*utilityEvaluation.resolveThemeArgument") {
+				if !present[row.Rule] {
+					missing = append(missing, row.Rule)
+				}
+				break
+			}
+		}
+	}
+	return missing, nil
+}
+func TestConsumerCoverage(t *testing.T) {
+	data, err := os.ReadFile("testdata/consumers.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	missing, err := missingConsumers(data)
+	if err != nil || len(missing) > 0 {
+		t.Fatalf("missing %v: %v", missing, err)
+	}
+	var rows []struct{ Name, Source string }
+	if err = json.Unmarshal(data, &rows); err != nil {
+		t.Fatal(err)
+	}
+	names := map[string]bool{}
+	for _, row := range rows {
+		name, _, _ := strings.Cut(row.Name, ":")
+		names[name] = true
+	}
+	for name := range names {
+		filtered := []struct{ Name, Source string }{}
+		for _, row := range rows {
+			if !strings.HasPrefix(row.Name, name+":") {
+				filtered = append(filtered, row)
+			}
+		}
+		omitted, _ := json.Marshal(filtered)
+		missing, err := missingConsumers(omitted)
+		if err != nil || len(missing) == 0 {
+			t.Fatalf("consumer omission survived: %s: %v", name, err)
+		}
+		t.Logf("consumer omission caught: %s", name)
+	}
+}

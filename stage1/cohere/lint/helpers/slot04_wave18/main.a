@@ -1,0 +1,27 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { isBackgroundSize } from './background_size.a';
+import { resolveWith } from './resolve_with.a';
+import type { ThemeEntry, ThemeResolution, KeyResolution } from './resolve_with.a';
+import { resolveThemeArgument } from './theme_argument.a';
+function field(c: OptionsJson,row: number,name: string): number {const n=c.node(row);const i=n.keys.indexOf(name);if(i<0){panic('field');}return n.children[i] ?? panic('value');}
+function text(c: OptionsJson,row: number,name: string): string {return c.node(field(c,row,name)).text;}
+function list(c: OptionsJson,row: number,name: string): string[]{const result: string[]=[];for(const n of c.node(field(c,row,name)).children){result.push(c.node(n).text);}return result;}
+const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}
+const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+for(const row of c.node(root).children){
+ const source=text(c,row,'Source');const candidate=text(c,row,'Candidate');const keys=list(c,row,'Keys');const nested=list(c,row,'Nested');const argKeys=list(c,row,'ArgKeys');
+ const groupSources: string[]=[];const groupParts=new Map<string,string[]>();const lengths=new Map<string,boolean>();const percentages=new Map<string,boolean>();
+ for(const g of c.node(field(c,row,'Groups')).children){const s=text(c,g,'Source');groupSources.push(s);const parts: string[]=[];for(const p of c.node(field(c,g,'Parts')).children){const part=text(c,p,'Source');parts.push(part);lengths.set(part,text(c,p,'Length')==='true');percentages.set(part,text(c,p,'Percentage')==='true');}groupParts.set(s,parts);}
+ const segment=(value: string,separator: string): string[] => {if(separator===','){if(value!==source){panic('segment source');}return groupSources;}return groupParts.get(value) ?? panic('segment group');};
+ const background=isBackgroundSize(source,segment,(s: string): boolean => lengths.get(s) ?? false,(s: string): boolean => percentages.get(s) ?? false);
+ const entries=new Map<string,ThemeEntry>();const references=new Map<string,ThemeResolution>();
+ for(const e of c.node(field(c,row,'Entries')).children){const key=text(c,e,'Key');entries.set(key,{present:true,value:text(c,e,'Value'),options:Number(text(c,e,'Options'))});references.set(key,{value:text(c,e,'Reference'),ok:text(c,e,'ReferenceOK')==='true'});}
+ const lookup=(key: string): ThemeEntry => entries.get(key) ?? {present:false,value:'',options:0};
+ const reference=(key: string): ThemeResolution => references.get(key) ?? {value:'',ok:false};
+ const find=(value: string,present: boolean,names: string[]): KeyResolution => {if(value!==candidate || !present){panic('key input');}if(names.length===keys.length && names.join('|')===keys.join('|')){return {key:text(c,row,'BaseKey'),ok:text(c,row,'BaseOK')==='true'};}if(names.length===argKeys.length && names.join('|')===argKeys.join('|')){return {key:text(c,row,'ArgKey'),ok:text(c,row,'ArgOK')==='true'};}return panic('key namespace');};
+ const result=resolveWith(candidate,keys,nested,find,lookup,reference);
+ const argument=resolveThemeArgument(text(c,row,'Argument'),candidate,(value: string,present: boolean,names: string[],options: number): ThemeResolution => {if(value!==candidate || !present || options!==0 || names.length!==argKeys.length || names.join('|')!==argKeys.join('|')){panic('Resolve input');}return {value:text(c,row,'Resolved'),ok:text(c,row,'ResolvedOK')==='true'};},(v: string,names: string[],n: string[]) => resolveWith(v,names,n,find,lookup,reference));
+ let extras='';for(const name of nested){extras+=`${result.extra.has(name)}:${result.extra.get(name) ?? ''};`;}
+ console.log(`${background}|${result.ok}|${result.extraPresent}|${result.value}|${extras}|${argument.ok}|${argument.value}`);
+}

@@ -1,0 +1,81 @@
+=== RUN   TestNestedThemeGoNodeNativeJavaScript
+=== RUN   TestNestedThemeGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 674 background/theme observations
+=== RUN   TestNestedThemeGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 112 background/theme observations
+=== RUN   TestNestedThemeGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 3 background/theme observations
+--- PASS: TestNestedThemeGoNodeNativeJavaScript (4.16s)
+    --- PASS: TestNestedThemeGoNodeNativeJavaScript/witnesses.json (1.63s)
+    --- PASS: TestNestedThemeGoNodeNativeJavaScript/consumers.json (0.36s)
+    --- PASS: TestNestedThemeGoNodeNativeJavaScript/calls.json (0.46s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/background_size.asize_===_'cover'
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/background_size.aif(allValid)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/background_size.acount_>_0
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/background_size.avalues.length_!==_2
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_with.aif(!key.ok)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_with.aif(!nested.present)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_with.anested.options_&_1
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_with.abase.options_&_1
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/theme_argument.areturn_resolve(candidate,true,[argument.slice(0,-2)],0)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/theme_argument.anested.length-1
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/theme_argument.aif(!result.ok)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/theme_argument.aif(!result.extra.has(last))
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (36.37s)
+    --- PASS: TestCompilingMutants/background_size.asize_===_'cover' (2.90s)
+    --- PASS: TestCompilingMutants/background_size.aif(allValid) (3.33s)
+    --- PASS: TestCompilingMutants/background_size.acount_>_0 (3.39s)
+    --- PASS: TestCompilingMutants/background_size.avalues.length_!==_2 (3.00s)
+    --- PASS: TestCompilingMutants/resolve_with.aif(!key.ok) (2.73s)
+    --- PASS: TestCompilingMutants/resolve_with.aif(!nested.present) (2.94s)
+    --- PASS: TestCompilingMutants/resolve_with.anested.options_&_1 (2.75s)
+    --- PASS: TestCompilingMutants/resolve_with.abase.options_&_1 (3.43s)
+    --- PASS: TestCompilingMutants/theme_argument.areturn_resolve(candidate,true,[argument.slice(0,-2)],0) (3.19s)
+    --- PASS: TestCompilingMutants/theme_argument.anested.length-1 (2.84s)
+    --- PASS: TestCompilingMutants/theme_argument.aif(!result.ok) (2.85s)
+    --- PASS: TestCompilingMutants/theme_argument.aif(!result.extra.has(last)) (2.70s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+--- PASS: TestConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave18	40.555s
