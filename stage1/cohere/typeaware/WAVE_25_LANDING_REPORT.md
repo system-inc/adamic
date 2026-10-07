@@ -372,3 +372,38 @@ This does not establish a shared kind-indexed driver for all wave rules.
 Unsupported-syntax and boolean-prop-naming retain their earlier traversal;
 those dispatch migrations remain unfinished. Other partial boolean paths and
 the dynamic RegExp lowering blocker remain. No new claim was made.
+
+## Fifth landing, October 7, current main b8fb957a
+
+The all-heads fetch found main had advanced to
+b8fb957aa839a9e8cb0b54279dd9864fa317bd30, with inherited static field native
+emission. Rebased wave-25 cleanly and tested source tip
+1ff316f68fb7a0904f4f40ab08809b2769329031. No own source changes or new claims
+were made during this landing unit. Final fetch confirms the tested base is
+still current. The named shared harness ab70f38d4 is not yet on main.
+
+All five owned wave suites and the refusal suite passed together in 386.946s.
+The inherited ten-rule dependency passed in 534.921s. All normal and sanitizer
+controls and both corpora match Go findings, fixes and suggestions, including
+the dependency's 16,589 compiler findings and 7,120,613 serialized bytes.
+All 24 rule mutants compiled, exited 0 and were caught only by Go byte
+comparison. Exact mutant names and offsets, and released-registry negative
+checks, are recorded in validation-wave-25-landing-fifth.
+
+Bridge packages passed in 67.496s and 0.274s. The filtered uncached Node oracle
+passed in 1.173s with zero cache hits, 25 native misses and 17 Node misses.
+The newly landed inherited_static_field_read.a was additionally checked
+against uncached Node, native sanitizers and emitted JavaScript: passed in
+0.441s, zero cache hits, three native misses and two Node misses.
+go vet ./... exited 0 with empty output. These are scoped checks, not the
+complete repository gate. Exact scripts, logs and source hashes are archived.
+
+Single affected-suite whole-process samples with nil boolean options:
+compiler native 3.739496704s versus Go 0.372389764s; repository native
+0.564994124s versus Go 0.130659404s. No equivalent listener-speed or median
+claim is made. The previous use-memo handed-node visitor remains intact.
+
+Unsupported-syntax dispatch migration was deferred because this turn became
+the landing unit. Other dispatch migrations, dynamic option RegExp lowering,
+imported props, typed wrappers and the placeholder-regex migration remain
+unfinished. No React claim was marked parked under the IR/SSA/capture exception.

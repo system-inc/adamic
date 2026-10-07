@@ -130,3 +130,11 @@ uncached Node oracle and vet pass. Evidence is archived under
 validation-wave-25-landing-fourth. The shared regex option row still requires
 dynamic RegExp construction that stage 0 rejects. This claim remains partial,
 with no new claims and no IR/SSA/capture parking classification.
+
+## Fifth landing, October 7
+
+Rebased onto b8fb957aa839a9e8cb0b54279dd9864fa317bd30 and revalidated all
+wave suites, inherited dependency, bridge, sanitizers, released handles,
+filtered uncached Node, the new inherited-static-field fixture and vet.
+Evidence: validation-wave-25-landing-fifth. Existing partial paths remain
+reserved. No new claims or analysis-parking classification.
