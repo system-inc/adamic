@@ -1,0 +1,55 @@
+// TypeScript 6.0.3 factory/utilities.ts:183-185. Original body retained.
+interface ExportDeclaration { readonly text: string; }
+interface NamedExports { readonly text: string; }
+interface NodeFactory {
+ createNamedExports(elements: readonly string[]): NamedExports;
+ createExportDeclaration(modifiers: readonly string[] | undefined, isTypeOnly: boolean, exports: NamedExports, moduleSpecifier: string | undefined): ExportDeclaration;
+}
+
+function createEmptyExports(factory: NodeFactory): ExportDeclaration {
+    return factory.createExportDeclaration(/*modifiers*/ undefined, /*isTypeOnly*/ false, factory.createNamedExports([]), /*moduleSpecifier*/ undefined);
+}
+
+class Factory implements NodeFactory {
+ readonly prefix: string = 'instance'.repeat(1);
+ static readonly prefix: string = 'static'.repeat(1);
+ createNamedExports(elements: readonly string[]): NamedExports { return { text: this.prefix + elements.join(',') }; }
+ static createNamedExports(elements: readonly string[]): NamedExports { return { text: this.prefix + elements.join(',') }; }
+ createExportDeclaration(modifiers: readonly string[] | undefined, isTypeOnly: boolean, exports: NamedExports, moduleSpecifier: string | undefined): ExportDeclaration {
+  return { text: this.prefix + ':' + exports.text };
+ }
+ static createExportDeclaration(modifiers: readonly string[] | undefined, isTypeOnly: boolean, exports: NamedExports, moduleSpecifier: string | undefined): ExportDeclaration {
+  return { text: 'static-body:' + this.prefix + ':' + exports.text };
+ }
+}
+class DerivedFactory extends Factory {
+ static readonly prefix: string = 'derived'.repeat(1);
+}
+let reads = 0;
+function getFactory(): NodeFactory { reads += 1; return new Factory(); }
+const instance: NodeFactory = new Factory();
+const statics: NodeFactory = Factory;
+console.log(createEmptyExports(instance).text);
+console.log(createEmptyExports(statics).text);
+console.log(getFactory().createExportDeclaration(undefined, false, getFactory().createNamedExports([]), undefined).text);
+console.log(`${reads}`);
+
+const derived: NodeFactory = DerivedFactory;
+console.log(createEmptyExports(derived).text);
+const literal: NodeFactory = {
+ createNamedExports: (elements: readonly string[]): NamedExports => ({ text: 'literal' + elements.join(',') }),
+ createExportDeclaration: (modifiers: readonly string[] | undefined, isTypeOnly: boolean, exports: NamedExports, moduleSpecifier: string | undefined): ExportDeclaration => ({ text: exports.text }),
+};
+console.log(createEmptyExports(literal).text);
+
+const mutable = {
+ createNamedExports: (elements: readonly string[]): NamedExports => ({ text: 'mutable' }),
+ createExportDeclaration: (modifiers: readonly string[] | undefined, isTypeOnly: boolean, exports: NamedExports, moduleSpecifier: string | undefined): ExportDeclaration => ({ text: 'old:' + exports.text }),
+};
+const erased: NodeFactory = mutable;
+function replaceMethod(): NamedExports {
+ mutable.createExportDeclaration = (modifiers: readonly string[] | undefined, isTypeOnly: boolean, exports: NamedExports, moduleSpecifier: string | undefined): ExportDeclaration => ({ text: 'new:' + exports.text });
+ return { text: 'argument' };
+}
+console.log(erased.createExportDeclaration(undefined, false, replaceMethod(), undefined).text);
+console.log(createEmptyExports(erased).text);

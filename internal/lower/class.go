@@ -331,8 +331,8 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 			method = actual
 		}
 	}
-	if len(l.staticGlobals) > 0 && method != nil && len(method.Declarations) > 0 && method.Declarations[0].Kind == ast.KindMethodSignature {
-		return nil, l.notYet(node, "a method call through a structural signature in a program with statics; use typeof the declaring class")
+	if method != nil && len(method.Declarations) > 0 && method.Declarations[0].Kind == ast.KindMethodSignature {
+		return l.structuralMethodCall(node)
 	}
 	if method == nil || len(method.Declarations) == 0 || method.Declarations[0].Kind != ast.KindMethodDeclaration {
 		return l.call(node)
