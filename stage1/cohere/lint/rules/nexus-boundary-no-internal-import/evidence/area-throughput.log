@@ -1,0 +1,122 @@
+=== RUN   TestDocumentThroughput
+    wave12_document_test.go:51: @next/next/no-document-import-in-page: compiler alone 77 files findings=0
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 1 Go 0.287007s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 1 native 1.949384s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 1 Node 2.113960s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 2 Go 0.307522s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 2 native 2.092230s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 2 Node 4.820731s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 3 Go 0.801026s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 3 native 3.895511s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 3 Node 2.069006s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 4 Go 0.293480s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 4 native 2.009235s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 4 Node 1.727145s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 5 Go 0.353183s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 5 native 2.282284s findings=1000
+    wave12_document_test.go:83: @next/next/no-document-import-in-page round 5 Node 1.859101s findings=1000
+    wave12_document_test.go:91: @next/next/no-document-import-in-page best of 5 Go 0.287007s 3484.24 findings/s (78 files, 1000 findings)
+    wave12_document_test.go:91: @next/next/no-document-import-in-page best of 5 native 1.949384s 512.98 findings/s (78 files, 1000 findings)
+    wave12_document_test.go:91: @next/next/no-document-import-in-page best of 5 Node 1.727145s 578.99 findings/s (78 files, 1000 findings)
+--- PASS: TestDocumentThroughput (116.26s)
+=== RUN   TestWave12OptionsAndShapes
+    wave12_initial_test.go:29: Go, Node, emitted JavaScript, native identical: 33889 bytes
+--- PASS: TestWave12OptionsAndShapes (35.57s)
+=== RUN   TestWave12Throughput
+    wave12_initial_test.go:58: base/correctness-require-orm-column-declare: compiler alone 77 files findings=0
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 1 Go 0.326611s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 1 native 2.133004s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 1 Node 2.045560s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 2 Go 0.293256s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 2 native 2.319871s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 2 Node 1.440914s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 3 Go 0.309834s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 3 native 2.138482s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 3 Node 1.757796s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 4 Go 0.296021s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 4 native 2.259358s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 4 Node 1.954563s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 5 Go 0.374597s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 5 native 1.998734s findings=2000
+    wave12_initial_test.go:90: base/correctness-require-orm-column-declare round 5 Node 1.881881s findings=2000
+    wave12_initial_test.go:98: base/correctness-require-orm-column-declare best of 5 Go 0.293256s 6819.99 findings/s (78 files, 2000 findings)
+    wave12_initial_test.go:98: base/correctness-require-orm-column-declare best of 5 native 1.998734s 1000.63 findings/s (78 files, 2000 findings)
+    wave12_initial_test.go:98: base/correctness-require-orm-column-declare best of 5 Node 1.440914s 1388.01 findings/s (78 files, 2000 findings)
+    wave12_initial_test.go:58: nexus/consistency-no-boolean-outcome: compiler alone 77 files findings=0
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 1 Go 0.302839s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 1 native 2.089424s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 1 Node 1.591154s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 2 Go 0.286068s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 2 native 2.426794s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 2 Node 1.496172s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 3 Go 0.312193s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 3 native 1.924007s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 3 Node 1.374547s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 4 Go 0.388721s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 4 native 1.898042s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 4 Node 1.442539s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 5 Go 0.300073s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 5 native 1.931657s findings=1000
+    wave12_initial_test.go:90: nexus/consistency-no-boolean-outcome round 5 Node 1.556686s findings=1000
+    wave12_initial_test.go:98: nexus/consistency-no-boolean-outcome best of 5 Go 0.286068s 3495.67 findings/s (78 files, 1000 findings)
+    wave12_initial_test.go:98: nexus/consistency-no-boolean-outcome best of 5 native 1.898042s 526.86 findings/s (78 files, 1000 findings)
+    wave12_initial_test.go:98: nexus/consistency-no-boolean-outcome best of 5 Node 1.374547s 727.51 findings/s (78 files, 1000 findings)
+--- PASS: TestWave12Throughput (67.15s)
+=== RUN   TestNexusThroughput
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 1 Go 0.324103s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 1 native 1.900837s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 1 Node 1.809224s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 2 Go 0.319272s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 2 native 1.949469s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 2 Node 1.340000s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 3 Go 0.341502s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 3 native 1.940788s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 3 Node 1.363146s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 4 Go 0.306514s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 4 native 1.946251s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 4 Node 1.373156s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 5 Go 0.408725s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 5 native 2.620178s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-internal-import round 5 Node 1.948175s count=1000
+    wave12_nexus_test.go:296: nexus/boundary-no-internal-import native best of 5 526.08 findings/s 1.900837s (78 files 1000 findings)
+    wave12_nexus_test.go:296: nexus/boundary-no-internal-import Node best of 5 746.27 findings/s 1.340000s (78 files 1000 findings)
+    wave12_nexus_test.go:296: nexus/boundary-no-internal-import Go best of 5 3262.50 findings/s 0.306514s (78 files 1000 findings)
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 1 Go 0.349706s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 1 native 3.422713s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 1 Node 2.195465s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 2 Go 0.349397s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 2 native 2.892767s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 2 Node 1.944537s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 3 Go 0.302107s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 3 native 2.000024s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 3 Node 1.593894s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 4 Go 0.338508s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 4 native 2.091543s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 4 Node 2.008445s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 5 Go 0.283260s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 5 native 2.086608s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-nexus-outside-import round 5 Node 1.932889s count=1000
+    wave12_nexus_test.go:296: nexus/boundary-no-nexus-outside-import native best of 5 499.99 findings/s 2.000024s (78 files 1000 findings)
+    wave12_nexus_test.go:296: nexus/boundary-no-nexus-outside-import Node best of 5 627.39 findings/s 1.593894s (78 files 1000 findings)
+    wave12_nexus_test.go:296: nexus/boundary-no-nexus-outside-import Go best of 5 3530.32 findings/s 0.283260s (78 files 1000 findings)
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 1 Go 0.272609s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 1 native 2.940153s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 1 Node 1.809185s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 2 Go 0.310972s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 2 native 1.983090s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 2 Node 1.684013s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 3 Go 0.287929s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 3 native 2.459504s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 3 Node 2.502834s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 4 Go 0.378866s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 4 native 2.476181s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 4 Node 1.849941s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 5 Go 0.274117s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 5 native 2.117360s count=1000
+    wave12_nexus_test.go:288: nexus/boundary-no-project-import round 5 Node 1.908921s count=1000
+    wave12_nexus_test.go:296: nexus/boundary-no-project-import native best of 5 504.26 findings/s 1.983090s (78 files 1000 findings)
+    wave12_nexus_test.go:296: nexus/boundary-no-project-import Node best of 5 593.82 findings/s 1.684013s (78 files 1000 findings)
+    wave12_nexus_test.go:296: nexus/boundary-no-project-import Go best of 5 3668.26 findings/s 0.272609s (78 files 1000 findings)
+--- PASS: TestNexusThroughput (83.56s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	302.593s

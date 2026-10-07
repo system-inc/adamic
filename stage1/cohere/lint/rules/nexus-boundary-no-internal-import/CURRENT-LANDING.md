@@ -1,3 +1,13 @@
+Built: rebased both owned branches onto origin/area/stage1-lint d65a8f931, applied the dedup ledger, converted six remaining registered rules to supplied-node listeners, and corrected Boolean outcome options.
+Commits: rule implementation 7a445502e33c76a2d9c052fdb2067e76422999b0; helper pushed 2deedaf173b7963fdf8dbc065afff7bff3e44895; this report is the rule evidence commit.
+Checks: supported rule aggregate PASS 673.185s, 1,939 cases / 79,701,172 identical Go/Node/emitted-JavaScript/sanitized-native bytes; owned packages and vet pass; nine helpers PASS 219.304s; throughput PASS 302.593s; setup 157s, nproc 5.
+Mutants: 7 full-rule semantic controls, 23 listener/path/partial-decision controls, and 24 helper controls are caught again; 53 semantic controls compare with actual Go, one separator guard compares explicit refusal. All controls compile and run before comparison catches them.
+Uncovered: shared parser recovery/top-level-await and witness path/options prevent the full rule gate; eight decision-only rules and exact bigint counter remain incomplete; no new helper claimed and no full repository gate claim.
+
+Current detailed handoff: AREA-LANDING.md and evidence/area-*.log. All earlier reports below are historical; obsolete .a/profile/suggestion harness blockers are superseded by the landed harness. The shared parser and raw witness blockers above are current.
+
+---
+
 Rebased the owned rule branch onto current origin/main 39638d9e278d38bb5aeae887f46d55a70e47aaad, preserving all owned source bytes and existing foundation merge resolution.
 Pre-rebase pushed tip c485ad2cbeeca456afa2d11cb49888952915d2db; rebased implementation 72635a73e04dfaba2f523e0c054e180c4f7e882b; sibling helpers freshly green and pushed at 77e7f673f.
 Owned package PASS 45.425s, vet clean; aggregate PASS 520.492s: 3,016 supported cases on 314 compiler/stage1 files, 118,907,067 identical Go/source Node/emitted JS/sanitized-native finding/fix bytes.
