@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/namespaces_nested.a", "internal/oracle/testdata/namespaces_pair/main.a", "internal/oracle/testdata/namespaces_parser_enums.a", "internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a", "internal/oracle/testdata/namespaces_parser_body.a", "internal/oracle/testdata/namespaces_debug_state.a", "internal/oracle/testdata/namespaces_debug_modules/main.a", "stage3/fixtures/namespaces/08_parser_jsdoc_nested.a", "internal/oracle/testdata/namespaces_parser_factory.a"} {
+	for _, path := range []string{"internal/oracle/testdata/namespaces_nested.a", "internal/oracle/testdata/namespaces_pair/main.a", "internal/oracle/testdata/namespaces_parser_enums.a", "internal/oracle/testdata/namespaces_parser_state.a", "internal/oracle/testdata/namespaces.a", "internal/oracle/testdata/namespaces_modules/main.a", "internal/oracle/testdata/namespaces_parser_body.a", "internal/oracle/testdata/namespaces_debug_state.a", "internal/oracle/testdata/namespaces_debug_modules/main.a", "stage3/fixtures/namespaces/08_parser_jsdoc_nested.a", "internal/oracle/testdata/namespaces_parser_factory.a", "internal/oracle/testdata/namespaces_debug_probe.a", "internal/oracle/testdata/namespaces_observed_narrowing.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -33,10 +33,13 @@ func init() {
 }
 
 func TestNamespaceSemanticMutants(t *testing.T) {
-	for _, family := range []string{"wrong scoped function", "wrong scoped constant", "wrong namespace enum", "wrong body order", "wrong exported state", "drop returned assignment", "wrong factory binding"} {
+	for _, family := range []string{"wrong scoped function", "wrong scoped constant", "wrong namespace enum", "wrong body order", "wrong exported state", "wrong debug initialization", "drop returned assignment", "wrong factory binding"} {
 		t.Run(family, func(t *testing.T) {
 			t.Parallel()
 			fixture := "namespaces.a"
+			if family == "wrong debug initialization" {
+				fixture = "namespaces_debug_probe.a"
+			}
 			if family == "wrong factory binding" {
 				fixture = "namespaces_parser_factory.a"
 			}
@@ -61,7 +64,15 @@ func TestNamespaceSemanticMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			changed := false
-			if family == "wrong factory binding" {
+			if family == "wrong debug initialization" {
+				for index, statement := range program.Main {
+					if declared, ok := statement.(ir.Declare); ok && program.Locals[declared.Local].Name == "isDebugging" {
+						declared.Value = ir.BooleanConstant{Value: true}
+						program.Main[index] = declared
+						changed = true
+					}
+				}
+			} else if family == "wrong factory binding" {
 				for index, statement := range program.Main {
 					if assign, ok := statement.(ir.Assign); ok && program.Locals[assign.Local].Name == "factoryCreateNumericLiteral" {
 						if property, ok := assign.Value.(ir.Property); ok {

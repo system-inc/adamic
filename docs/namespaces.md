@@ -329,3 +329,15 @@ strict for alpha-equivalent generic binders; IncrementalParser is required by
 the current exhaustive-switch policy, though its post-switch return is sound.
 The [exact programs, diagnostics, Node outputs and narrow acceptance judgments](../stage3/namespaces/DECISIONS.md)
 are recorded for integration review. No language decision was made here.
+
+## Parser discovery Debug probe after batch 3
+
+The exact debug.ts:26 singleton probe from parser discovery row 11 now lowers
+and prints `false`, matching Node in native code and checked JavaScript. The
+current-main merge preserves namespace ready checks together with main's
+undefined-observation and union-narrowing checks. Both wrong initialization and
+restoring the old observation guard are caught by Node regressions. The twelve
+original namespace slices still have five Compiles, five NotYet and two Refused;
+this minimal Debug probe does not establish full Debug or parser execution.
+[Integration repair, exact source, mutants and fresh counts](../stage3/namespaces/DEBUG_PROBE.md)
+record the evidence.
