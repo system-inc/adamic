@@ -1,0 +1,45 @@
+{
+  "first": [
+    "wave_26_test.go:136: operation mutant: exit 0, empty stderr, byte oracle catches byte 514",
+    "wave_26_test.go:136: provider mutant: exit 0, empty stderr, byte oracle catches byte 1969",
+    "wave_26_test.go:136: relation mutant: exit 0, empty stderr, byte oracle catches byte 2716",
+    "wave_26_test.go:146: type-arguments mutant: exit 0, empty stderr, byte oracle catches byte 51",
+    "wave_26_test.go:181: released-registry mutant: exit 0, required panic 70 catches it"
+  ],
+  "next": [
+    "wave_26_next_test.go:154: listener mutant: exit 0, empty stderr, byte oracle catches byte 1330",
+    "wave_26_next_test.go:154: render mutant: exit 0, empty stderr, byte oracle catches byte 6358",
+    "wave_26_next_test.go:154: mock mutant: exit 0, empty stderr, byte oracle catches byte 13584",
+    "wave_26_next_test.go:170: syntax question mutant: exit 0, empty stderr, byte oracle catches byte 5524",
+    "wave_26_next_test.go:170: lineage question mutant: exit 0, empty stderr, byte oracle catches byte 50",
+    "wave_26_next_test.go:170: literal question mutant: exit 0, empty stderr, byte oracle catches byte 6358",
+    "wave_26_next_test.go:170: transform question mutant: exit 0, empty stderr, byte oracle catches byte 9693",
+    "wave_26_next_test.go:206: released-registry mutant: exit 0, required panic 70 catches it"
+  ],
+  "third": [
+    "wave_26_third_test.go:136: eval mutant: exit 0, empty stderr, byte oracle catches byte 3785",
+    "wave_26_third_test.go:136: extend mutant: exit 0, empty stderr, byte oracle catches byte 11171",
+    "wave_26_third_test.go:136: function mutant: exit 0, empty stderr, byte oracle catches byte 18092",
+    "wave_26_third_test.go:150: syntax question mutant: exit 0, empty stderr, byte oracle catches byte 9217",
+    "wave_26_third_test.go:150: origin question mutant: exit 0, empty stderr, byte oracle catches byte 1278",
+    "wave_26_third_test.go:186: released-registry mutant: exit 0, required panic 70 catches it"
+  ],
+  "fourth": [
+    "wave_26_fourth_test.go:142: function mutant: exit 0, empty stderr, byte oracle catches byte 2399",
+    "wave_26_fourth_test.go:142: nonconstructor mutant: exit 0, empty stderr, byte oracle catches byte 6969",
+    "wave_26_fourth_test.go:142: wrapper mutant: exit 0, empty stderr, byte oracle catches byte 9300",
+    "wave_26_fourth_test.go:156: constructor question mutant: exit 0, empty stderr, byte oracle catches byte 542",
+    "wave_26_fourth_test.go:156: origin question mutant: exit 0, empty stderr, byte oracle catches byte 52",
+    "wave_26_fourth_test.go:192: released-registry mutant: exit 0, required panic 70 catches it"
+  ],
+  "fifth": [
+    "wave_26_fifth_test.go:171: promise mutant: exit 0, empty stderr, byte oracle catches byte 3123",
+    "wave_26_fifth_test.go:171: regex mutant: exit 0, empty stderr, byte oracle catches byte 12063",
+    "wave_26_fifth_test.go:171: rest mutant: exit 0, empty stderr, byte oracle catches byte 8272",
+    "wave_26_fifth_test.go:187: syntax question mutant: exit 0, empty stderr, byte oracle catches byte 1209",
+    "wave_26_fifth_test.go:187: binding question mutant: exit 0, empty stderr, byte oracle catches byte 51",
+    "wave_26_fifth_test.go:187: pattern question mutant: exit 0, empty stderr, byte oracle catches byte 10830",
+    "wave_26_fifth_test.go:187: comments question mutant: exit 0, empty stderr, byte oracle catches byte 25358",
+    "wave_26_fifth_test.go:223: released-registry mutant: exit 0, required panic 70 catches it"
+  ]
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "name": "first",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave26AgreementAndMutants$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "exit": 0,
+    "elapsed_seconds": 444.71444457799953
+  },
+  {
+    "name": "next",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave26NextAgreementAndMutants$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "exit": 0,
+    "elapsed_seconds": 505.3874828709995
+  },
+  {
+    "name": "third",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave26ThirdAgreementAndMutants$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "exit": 0,
+    "elapsed_seconds": 468.5712956290008
+  },
+  {
+    "name": "fourth",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave26FourthAgreementAndMutants$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "exit": 0,
+    "elapsed_seconds": 443.5164761879987
+  },
+  {
+    "name": "fifth",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestWave26FifthAgreementAndMutants$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "30m"
+    ],
+    "exit": 0,
+    "elapsed_seconds": 511.10245774299983
+  }
+]
