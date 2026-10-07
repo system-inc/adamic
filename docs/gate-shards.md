@@ -1400,3 +1400,9 @@ cannot masquerade as legacy unsplit groups by dropping `Split`/`SplitCount`.
 The corresponding corruption test and an eighth overlay mutant verify this;
 the fixed focused race suite and vet pass. One historical whole layout group
 remains readable.
+
+### 13:30 MDT deadline snapshot
+
+At 2026-10-07T19:29:34.219258+00:00, half A was still running after 1827.034 seconds of test execution, with 13 of fifteen mutant checks passed and no failed events. Its fixture reached the first mutant after 587.348 seconds. Setup was 43.848 seconds separately (including container start/exit overhead; setup itself logged 41.433 seconds). Half B had not started because the workers run sequentially on the sole available machine. Neither end-of-run memory peak nor complete native process intervals is available yet. The estimated 15-shard table above stands; shard 0 actual is explicitly a running lower bound, shard 1 actual remains pending. This is an honest partial report, not a sub-20-minute certificate. Measurement continues.
+
+The snapshot JSON and split proof archive are committed in `cmd/adamic-gate/evidence/layout-split-deadline.json` and `layout-split-proof.tgz`. Compare provenance is implemented and its matching and refusal tests pass.
