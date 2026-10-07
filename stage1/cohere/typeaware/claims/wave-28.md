@@ -51,3 +51,7 @@ No matching implementation literal was found in the 34 distinct origin typeaware
 Fourth-batch status: claimed but unported. Native JSX parsing rejects all three Go-positive controls before rule execution. The required native SSA/control-flow IR is also absent on this branch. See `../wave28_fourth/REPORT.md` and its reproduction evidence. Stopped without editing shared files or claiming another batch.
 
 Resumption audit: JSX support is published on `origin/codex/stage1-jsx-lint` at `a8a62d62`, but is not integrated on this branch/main/bridge/harness. The native SSA and control-flow substrate required by all three remains unavailable in the inspected stage1 sources. The blocker reproduction passes again; all three remain claimed and unported. See the report's resumption audit.
+
+## Parked React analysis claims
+
+Per the explicit parking instruction, react-hooks/set-state-in-effect, react-hooks/set-state-in-render and react-hooks/static-components are **parked** and count as finished for the landing-first cap. They remain unported. Blockers: native high-level IR, single-assignment, translated closure captures, post-dominance and control-dominance analysis. Cohere analysis modules are being ported to Adamic on #dnv6f2c; JSX support is landing on area/stage1-lint. Existing probe/source evidence is in wave28_fourth/REPORT.md. This status does not claim native rule parity. The nine completed ports are green on current main f8013f0b and pushed at 786d33d3c.
