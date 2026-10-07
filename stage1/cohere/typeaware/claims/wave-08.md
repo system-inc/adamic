@@ -148,3 +148,9 @@ mutants, sanitizers, released handles and filtered Node checks pass again.
 Registry and option-bearing owned-witness tests pass without bypassing the
 options guard. A 720-ref audit finds no unclaimed rule. No selected check
 skipped; full gate not run. See ../wave08-core-next/LANDING_4E0_REPORT.md.
+
+Stage-3 main landing: rebased onto main 71d7e491b while retaining lint area
+bb2ece564. Compiler/bridge/profile sources are unchanged; all ten completed
+profiles, parked kernels, byte-only mutants, sanitizers, released handles and
+filtered Node checks pass again. A 755-ref audit finds no unclaimed rule.
+No selected check skipped; full gate not run. See ../wave08-core-next/LANDING_71D_REPORT.md.
