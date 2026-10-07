@@ -1,15 +1,28 @@
-Built: a local stage 1 profile pipeline for parse and lint, separate training corpus, stale checks and cold-cache determinism fix.
-Commits: branch codex/stage1-profiles starts at 455c5c2ae046847633e5adb858ef90c84242da3f; this work is not pushed.
-Commands and outputs: focused checks and the initial release oracle passed; the full stage 1 gate failed in markdownblocks.
-Mutants: a real freshness-guard bypass reached clang and was caught; benchmark-path/content training mutations and a binary-byte mutation were caught.
-Not covered: final shipping oracle after the cold-cache fix, five-build timings/instruction counts, the requested speed bar, or Apple clang execution.
+Built: committed profiles for stage 1 parse and lint, fixed separate training lists, stale fallback and cold-cache binary checks.
+Commits: base 455c5c2ae046847633e5adb858ef90c84242da3f; pushed checkpoint e486297ebd8e63fa824d31f15972b04c1f4fc1a0; final implementation 305f7457ab2589829b871be1525bb1d4da8ed4ad.
+Commands and outputs: release oracle and all stage 1 packages passed; the profile build measured 4.504G instructions and 0.5094s user on all 77 files, meeting both limits.
+Mutants: stale guards, training overlap, cold binary paths, parse output bytes and counter accounting were challenged and caught; the main.c-only path mutant survived and is recorded.
+Not covered: Apple clang execution, hardware cycles, lint throughput, or integration with the later stack-check compiler branch.
 
-# Stage 1 profiles: stopped at the required gate
+# Stage 1 profiles
 
-The full stage 1 gate failed. The instruction was to stop if something was
-wrong, so this branch is not pushed and no speed numbers are claimed.
-The local code and evidence are saved for review. This is an unfinished unit,
-not a release approval.
+The final report is published without a new raw-artifact upload. Final logs,
+measurement JSON, generated C and raw profiles remain in
+`/workspace/adamic/cloud/reports/stage1-profiles/evidence/` and
+`/workspace/scratch/stage1-profiles/`. References marked "retained locally"
+identify those files; the older linked checkpoint evidence is already committed.
+Automatic approval review rejected uploading the whole evidence directory because
+it could contain non-public artifacts. The commands, results, binary hashes and
+limitations needed to assess this change are recorded below.
+
+The earlier full stage 1 gate failed and work stopped without weakening it.
+The checkpoint is now pushed at the user's instruction. The missing Node
+dependencies have been installed by the pinned setup script from main
+71d7e491. They are emoji-regex 10.6.0, get-east-asian-width 1.6.0 and
+narrow-emojis 0.0.3, as the current main README specifies. Both revisions have now passed the complete Markdown package with the
+approved 90-minute limit; both reproduced the original 30-minute timeout.
+The final five-way measurements are below. The requested instruction and user-time
+limits are both met.
 
 The failed command was:
 
@@ -28,10 +41,12 @@ stage1/cohere/markdownblocks then timed out after 30 minutes, reported as
 1800.204s. Several layout tests and TestWholeDocumentOraclePreflight were
 still running. The remaining test process tree was stopped after the failure;
 packages still running or queued are not claimed to pass. No markdownblocks
-source was changed, and the missing dependency was not repaired in this unit.
-The complete output is [stage1-tests.log](evidence/stage1-tests.log).
+source was changed. The missing dependency has now been repaired by running
+setup-markdown-width.py and sourcing an environment file that selects its
+installation.
+The complete original output is [stage1-tests.log](evidence/stage1-tests.log).
 
-## What is implemented locally
+## What is implemented
 
 cmd/adamic-stage1 builds only the parse and lint drivers. Ordinary adamic build
 still selects ThinLTO without a profile. Native Options has Profile and
@@ -61,7 +76,8 @@ Go test reject path and content-hash overlap. Added benchmark corpora must be
 registered in that list before any new speed claim. No service-file speed
 claim is made here.
 
-The build checks the exact emitted C hash, all embedded runtime C/header bytes,
+The stage 1 build also checks the training-list hash. The native build checks
+the exact emitted C hash, all embedded runtime C/header bytes,
 text profile hash, target, compiler identity and release flags. It uses no
 timestamp. A mismatch produces one line saying it uses plain ThinLTO, before
 any -fprofile-use argument reaches clang. -Wno-profile-instr-out-of-date is
@@ -77,7 +93,40 @@ select the matching version. Apple clang was not available for execution here.
 The compiler identity currently includes its installation directory, so a
 changed tool installation can also require regeneration.
 
-## Checks run
+Profiles were regenerated with:
+
+```
+source /workspace/adamic-tools/env.sh
+python3 stage1/profiles/regenerate.py \
+  --typescript /workspace/scratch/release-lto/typescript \
+  --work /workspace/scratch/stage1-profiles/final-regeneration \
+  --llvm-profdata /workspace/adamic-tools/llvm/bin/llvm-profdata
+```
+
+The parse C hash is
+`2eb710273065b5949e662181b4d88e2e42af0ab28d49138db3bc505876f74836`;
+the lint C hash is
+`abde80047c6f1f97ee1429ba70a0f373aa156cf2ce870d3ebc09775df2a8c0ac`.
+Both use runtime snapshot
+`2556c98a78b43faf3ef49e6c3efa2a1a8777caa0bf3f6d5a28866503838b2654`
+and training list
+`5e519c9b82359dbd5e133c3d16ae994dbd70d3dbdef4cdabb77794737f4e3ea4`.
+The text profile hashes are parse
+`a530a6a7a0ca4b33f5032c3d48efc4acac5456059ca87bd26499c2655440d7f6`
+and lint
+`a40a6d2964b141583cd87c6424cb62521ffe9bdce05a089c65a54563cf8d1985`.
+The path list with each training-file hash is
+[training.json](../../../stage1/profiles/training.json); the excluded 77-file
+speed corpus is [benchmarks.json](../../../stage1/profiles/benchmarks.json).
+
+Developer tools that split generated C must keep stable translation-unit
+names, hash every emitted unit's exact bytes and file boundaries, carry the
+same semantic/profile flags through every compile and link, and regenerate
+and test profiles against that split build. This implementation hashes the
+current single emitted C unit; it does not silently treat a future split as
+the same build. A changed emitter or runtime falls back until regeneration.
+
+## Setup and earlier checks
 
 Setup completed in 36s: Go ready 0s, clang ready 1s, Node ready 1s,
 submodules ready 1s, warm cache 36s. nproc is 5; the cgroup CPU quota is four
@@ -97,10 +146,17 @@ that invocation. Source was restored. An initial mutant attempt left a Go
 variable unused and was not counted as proof; the corrected compiling mutant
 is the evidence above. See [stale-mutant-test.log](evidence/stale-mutant-test.log).
 
-The corpus test caught an actual benchmark record added to training and the
-same benchmark content hash under a renamed path. The determinism comparison
-also rejected a one-byte changed binary buffer. These checks do not rely on
-compiler warnings or errors to catch their intended mutation.
+The corpus checks caught a benchmark record added to training, a benchmark
+content hash under a renamed path, a duplicate training record, and one
+changed byte in an actual training source. A compiling mutant bypassing the
+training-list hash was caught before its profile flags could pass the test.
+A separate CLI audit changed a real training-list byte and checked all 49
+clang invocations: no profile flag reached any runtime compile or the link,
+and the command printed exactly one ThinLTO fallback line. These checks do
+not rely on compiler warnings to detect their mutations. See
+`corpus-mutants.log` (retained locally),
+`training-guard-mutant.log` (retained locally) and
+`training-cli-audit.log` (retained locally).
 
 Before the later cold-cache fix, the exact profile-built parse and lint
 artifacts passed their stage 1 Node/Go oracles and matched rebuilds byte for
@@ -114,6 +170,65 @@ The full opt-in release oracle passed in 295.062s, including all 420 registered
 fixture subtests and the additional profile-built stage 1 checks. gofmt and
 go vet ./... passed at that revision. Logs are retained. This pass predates
 the cold-cache source-identity fix, so it is not the final required gate.
+
+## Completed final gates
+
+With the repaired dependency environment, the branch's entire Markdown
+package passed with `-count=1 -timeout 90m` in 2246.071s (37m 26s). Its
+original 30-minute timeout was 1800.204s. The exact base commit also timed
+out at 30 minutes, at 1800.050s. The valid base run uses real cohere and
+TypeScript worktrees at the same submodule commits, not symlinked directories
+that WalkDir would skip. A base 90-minute attempt interrupted by the box
+restart is retained as interrupted, never counted as a pass. The complete
+rerun passed in 1973.283s (32m 53s), elapsed 1974.812s, user 3181.895s,
+system 147.636s. The branch run was elapsed 2247.720s, user 3446.663s,
+system 164.472s. The branch and first base deadline check initially overlapped
+other checks; the completed base rerun had no other workload. These are gate
+durations, not controlled speed claims. See
+`base-markdownblocks-30m.log` (retained locally) and
+`base-markdownblocks-90m.log` (retained locally).
+
+The initial missing-package failure was reproduced on the base before repair.
+The repair ran the pinned `cloud/setup-markdown-width.py` from main
+71d7e491b3c9724f7a0e2ee754592149e7f9790b; installation took 0.867s. The sourced
+environment selects `/workspace/adamic-tools/markdown-width`. No manual npm
+install replaced the pinned script. TestMarkdownUnicodeWidths then passed
+in 237.560s, covering 1,274,776 cases and its width-table mutants.
+
+All other stage 1 packages passed with `-p 2 -count=1 -timeout 30m`, taking
+2902.429s together. The exact package list is in
+`final-stage1-command.txt` (retained locally). The full native
+suite and stage 1 build package passed in 405.688s; the additional training
+hash test then passed independently. `gofmt` and `go vet ./...` passed after
+the final Go changes. No test timeout or oracle was weakened.
+
+The final release lane used the exact regenerated parse-profile and
+lint-profile files, with `ADAMIC_ORACLE_RELEASE=1 ADAMIC_GATE_UNCACHED=1`,
+`ADAMIC_TYPESCRIPT_SOURCE` selecting the pinned checkout and
+`ADAMIC_STAGE1_PARSE_BINARY` / `ADAMIC_STAGE1_LINT_BINARY` selecting those
+artifacts. It ran:
+
+```
+go test -v -count=1 -timeout 30m ./internal/oracle \
+  -run '^TestRelease(AgreesWithNode|OracleCatchesOneByte|Stage1ProfilesAgree)$'
+```
+
+It passed in 146.415s: all 420 release fixtures plus the actual profile-built
+stage 1 checks. The shipping artifact hashes are
+parse `7cbaa14f315c9d017399286d004c620115ebc1318b1e15af3b5ce3340eba9b9c`
+and lint `cf2c1dc6822bc68f9f0db664069d17cacfe191cb005068d9f19b3beecda28959`.
+Both also matched independent cold rebuilds. Logs:
+`final-release-oracle-training-guard.log` (retained locally),
+`final-stage1-except-markdown.log` (retained locally),
+`branch-markdownblocks-90m.log` (retained locally) and
+`final-native-all.log` (retained locally).
+
+The byte floor was also tested with two real compiled mutants. One changed
+the parse counter from zero to one. The other changed the emitted AST key
+`file` to `fail`; its output had the same length but differed at byte 8.
+Both exited successfully with empty stderr. The shared byte-comparison
+function used by the benchmark rejected both, independently of clang or
+exit-status checks. See `byte-mutant-floor-proof.log` (retained locally).
 
 ## Determinism finding and fix
 
@@ -133,34 +248,195 @@ Ordinary flags and archive keys stay unchanged. The native test now uses an
 independent second cold cache. It passed in 17.772s. Two independent cold
 builds of the real parse driver also matched exactly, SHA256
 cdd31ca57682c824d88724e3d497129d814cd9a1d123ed7cfb20a42000628657.
-See the cold-cache logs. The lint cold-cache case and final shipping byte
-oracles still need to be rerun against regenerated artifacts with this fix.
+See the cold-cache logs. The regenerated shipping parse and lint artifacts now both match independent
+cold-cache rebuilds and their Go/Node byte oracles. The complete release
+oracle passed in 146.415s after the training-list guard was added, with 420 registered fixture subtests and the
+shipping-artifact delegate. Parse matched 44,767,604 AST bytes including its
+fixture; lint matched 18,692,000 bytes. A compiling runtime source-path
+mutant was caught by the actual shipping binary comparison. A main.c-only
+path mutant survived and is not claimed as proof of that runtime fix.
 
-## Fair comparison prepared, not measured
+## A second environment failure, checked on the base
 
-Go cohere's release builder uses -trimpath and disables CGO. No default.pgo
-was found next to its release main package, and its build command does not
-set -pgo. The comparison script explicitly matches those build settings,
-trains Go's CPU profile on the same 38 service files, and uses a real temporary
-default.pgo beside the parse adapter's main package. It removes that temporary
-file after the build and leaves the cohere submodule unchanged.
+The first final comparison hit a full workspace filesystem. lld 20.1.8 raised
+a bus error while writing the plain ThinLTO executable. Before attributing
+that failure, a temporary Go overlay called the exact base commit's
+`native.Build` with the frozen emitted C and `Options{Release:true}`. It
+reproduced the same lld bus error. No base source file was changed.
 
-Go's automatic lookup ignored an overlay-only default.pgo in the first
-attempt. The script caught that from build metadata; no unprofiled binary was
-mislabelled as profiled in a speed table. The corrected build reported
--pgo=default.pgo. The preliminary five builds passed count preflight and all
-three native candidates passed full AST identity against the independent Go
-oracle: 44,766,682 bytes, SHA256
-8ae015600498b915cc25abab82730299451ae990b50478980d5a3bc465801bfe.
-These observations precede final cold-cache and Go-adapter changes.
+`go clean -cache` removed regenerable Go build cache data (23 GB), restoring
+22 GB free. The same base command then succeeded. The five-way comparison
+was restarted with the same flags and byte checks; the failed attempt supplies
+no timings. See `disk-repair.json` (retained locally),
+`base-link-disk-full.log` (retained locally),
+`branch-link-disk-full.log` (retained locally), and
+`base-link-reproduction.go.txt` (retained locally).
 
-The current Go adapter also has an AST mode, so all five exact timing binaries
-can be checked before measurement. It compiled, but the final five-build
-comparison has not been rerun. measure.py is prepared for pinned core 3,
-ten alternating rounds, user/wall time, instructions and simulated I1 misses.
-It was not run. There is no claim of meeting 5.0G instructions or 0.6s user.
+## Final five-way comparison
 
-Remaining work is to resolve the required gate failure, regenerate artifacts
-after the source-identity fix, rerun final determinism/oracle/vet/stage 1 checks,
-and only then measure the five named builds on a quiet box. No branch was
-pushed, no pull request was opened, and main/area branches were not changed.
+The stage 1 profile build meets the requested bar: **4,503,662,296 instructions
+and 0.509404s user**, below 5.0G and 0.6s. These are measurements on all 77
+compiler files, not the earlier 39-file experiment. No benchmark file was
+used for training.
+
+Go cohere's release builder uses `-trimpath`, strips with `-s -w`, and disables
+CGO. It has no `default.pgo` next to its main package and does not set `-pgo`.
+The comparison builds its parse adapter with those release settings. It
+shows both `-pgo=off` and a real automatic `default.pgo`, trained on the same
+38 service files for 200 repetitions so CPU sampling has enough observations.
+The temporary profile next to Go's main package is removed after building.
+Build metadata confirms `-pgo=default.pgo`, `CGO_ENABLED=0`, and `GOAMD64=v1`.
+The cohere and TypeScript submodules remain unchanged.
+
+All five exact binaries pass count and full-AST identity against the
+independent Go oracle: 44,766,682 bytes for the 77 benchmark files, SHA256
+`8ae015600498b915cc25abab82730299451ae990b50478980d5a3bc465801bfe`.
+They also match 8,362,341 AST bytes on the separate 38 training files, SHA256
+`973e3fe1e63888b3e101d337f9cf9ac34913f6af3daa0092c9b728b469bf791b`.
+The timed profile binary's hash is exactly the shipping parse binary tested
+by the release oracle and independent cold rebuild. The driver's `--count`
+is an output option; these are release binaries without `ADAMIC_COUNT`.
+
+| Build | Instructions | Best user, s | Best wall, s | Simulated I1 misses | .text bytes | Binary bytes |
+|---|---:|---:|---:|---:|---:|---:|
+| Adamic -O2 | 6,352,404,112 | 0.778801 | 0.835258 | 81,632,549 | 515,438 | 976,560 |
+| Adamic ThinLTO | 5,766,783,329 | 0.669384 | 0.716052 | 132,279,096 | 1,014,192 | 1,344,656 |
+| Adamic ThinLTO + profile | 4,503,662,296 | 0.509404 | 0.546711 | 48,335,849 | 786,497 | 1,078,744 |
+| Go without profile | 1,645,319,944 | 0.148169 | 0.177868 | 9,834,746 | 2,353,105 | 8,134,816 |
+| Go default.pgo | 1,533,727,451 | 0.131394 | 0.162088 | 11,114,900 | 2,407,569 | 8,200,352 |
+
+User and wall columns are separate minima from ten alternating runs of each
+build. Each round rotates order; the second five rounds reverse it. All
+commands use `taskset -c 3`, and Go uses `GOMAXPROCS=1`. No other gate, build
+or training workload ran during timing. One-minute load stayed between
+1.00098 and 1.00342, reflecting the single running workload; every sample's
+one/five/fifteen-minute loads and order are recorded.
+
+The box is an AMD EPYC 9V74 KVM guest, Linux x86-64. nproc reports 5; the
+cgroup permits four CPUs and 16 GiB memory. Tools: clang/LLVM and lld 20.1.8,
+Go 1.27.1, Node 24.19.0, Hyperfine 1.19.0. The full versions, CPU details and
+linkers are in `final-box.log` (retained locally) and
+`final-linkers.log` (retained locally).
+
+Perf reports hardware cycles, instructions, cache misses and branch misses
+as not supported, even with user-only counters; perf_event_paranoid is 2.
+So user time is the time measure, and instruction/cache counts are simulated.
+See `final-perf-probe.log` (retained locally).
+
+Callgrind 3.24 failed on Go with a signal-tracking assertion. The same adapter
+built against the exact base's unchanged cohere packages produced a
+byte-identical Go binary and reproduced the assertion. Callgrind 3.27.1
+also failed on that base binary. Cachegrind 3.27.1 completed it with unchanged
+output. **Every instruction/I1 count in this table uses Cachegrind 3.27.1**;
+no partial Callgrind count is mixed into it. Go's runtime settings and all
+binary bytes stayed unchanged. The completed timing samples were retained.
+See `base-go-hashes.log` (retained locally),
+`base-go-callgrind.log` (retained locally), and
+`base-go327-cachegrind.log` (retained locally).
+
+The comparison cache model is I1/D1 32 KiB, eight ways, 64-byte lines, and
+LL 256 MiB, direct mapped. This is a fixed simulation model, not a measurement
+of the guest's physical cache hierarchy. All 13 event totals equal the sum
+of their cost records. Every variant caught the +1 instruction-summary and
++1 I1-cost mutations. Separate mutations to actual raw summary and cost
+records were also rejected. One changed byte in either measured manifest
+was rejected, and the originals were restored. All five binary hashes and
+all corpus hashes were checked before and after counting.
+
+Against plain ThinLTO, profiles cut instructions **21.9%**, best user time
+**23.9%**, simulated I1 misses **63.5%**, and executable text **22.5%**.
+Simulated branch misses rose from 36,816,676 to 53,375,005. These observations
+support the code-footprint work; they do not claim that branch prediction
+improved or that simulated misses are hardware measurements.
+
+Go's own profile cuts best user time **11.3%**. With both profiled, Adamic
+still takes about **3.88 times Go's user time**. Meeting the requested bar
+is not parity with Go.
+
+## Flags and reproduction
+
+The common native flags, in order, are:
+
+```
+-std=c11 -Wall -Wextra -Werror -pedantic
+-Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function
+-Wno-unused-parameter -Wno-self-assign
+-ffp-contract=off -fno-optimize-sibling-calls -O2
+```
+
+`-O2` uses exactly that list. ThinLTO appends `-flto=thin`, on the generated
+program and every runtime file, and `-fuse-ld=lld` at link. Profiles append
+`-fprofile-use=<verified local indexed copy>` and
+`-Wno-profile-instr-out-of-date`, also on every runtime compile and the link.
+There is no machine-function-splitting flag in this shipped profile policy.
+Instrumentation for regeneration uses `-fprofile-instr-generate` in place
+of profile use. The semantic flags are `-std=c11`, `-ffp-contract=off`, and
+`-fno-optimize-sibling-calls`; conditional count/slab/CPU/WASI flags also
+continue to reach the link as documented in docs/native-builds.md.
+
+Runtime commands are `clang <compile flags> -c <runtime file> -o <object>`.
+The program/link invocation is:
+
+```
+clang <complete link flags> -I <runtime cache> -o <binary> <main.c> \
+  -Xlinker --whole-archive <runtime.a> -Xlinker --no-whole-archive -lm
+```
+
+Profile builds use stable relative main.c/runtime filenames. The exact
+commands and working directories from an independent cold profile build
+are `final-clang-commands.jsonl` (retained locally). All
+48 runtime compiles plus the link had both semantic protections, ThinLTO,
+and profile use, and reproduced the shipping hash. The runtime.a cache
+includes profile content through the verified indexed path. Ordinary
+programs and nonshipping lanes keep their existing policy.
+
+The final comparison was built with:
+
+```
+source /workspace/adamic-tools/env.sh
+python3 stage1/profiles/compare.py \
+  --typescript /workspace/scratch/release-lto/typescript \
+  --work /workspace/scratch/stage1-profiles/final-comparison
+```
+
+Timing used measure.py's ten-round default. After the reproduced Callgrind
+failure, only the counters were retried:
+
+```
+python3 stage1/profiles/measure.py \
+  --work /workspace/scratch/stage1-profiles/final-comparison \
+  --hyperfine /workspace/scratch/release-lto/tools/usr/bin/hyperfine \
+  --valgrind /workspace/scratch/stage1-profiles/valgrind327/usr/bin/valgrind \
+  --valgrind-lib /workspace/scratch/stage1-profiles/valgrind327/usr/libexec/valgrind \
+  --tool cachegrind --instructions-only
+```
+
+Omit `--instructions-only` to repeat the whole measurement with the working
+instrument. `final-commands.json` (retained locally) records all
+build, training and output-floor commands. `final-timings.json` (retained locally)
+and fifty raw Hyperfine JSON/log pairs preserve every timing.
+`final-instructions.json` (retained locally) and the five
+compressed raw Cachegrind files preserve all instruction/cache/branch counts.
+
+Every speed row identifies its binary:
+
+| Build | Binary SHA256 |
+|---|---|
+| Adamic -O2 | `1edc3e2e50051f617507a8f4cc66ef74ca3296e4f694d4de01cac9576b38a6ba` |
+| Adamic ThinLTO | `6425edc1ae8aa1348b2ba8cda5cc69e072d5a41afe872ab6935e2b338c66d8aa` |
+| Adamic ThinLTO + profile | `7cbaa14f315c9d017399286d004c620115ebc1318b1e15af3b5ce3340eba9b9c` |
+| Go without profile | `367de78931856cdc9386634ca6342142a335b20d4c806f07ccd981ff28161722` |
+| Go default.pgo | `e169cfd3aff27780539005af202733056a0f38e5fc6136a40127314c51c2e856` |
+
+The exact emitted C for all three native variants is identical, hash
+`2eb710273065b5949e662181b4d88e2e42af0ab28d49138db3bc505876f74836`.
+Compressed C copies, build metadata, Go's training profile and sample listing
+are retained. The existing [evidence.sha256](evidence/evidence.sha256) covers checkpoint evidence only; final raw artifacts remain local.
+
+The final Go formatting and `go vet ./...` checks passed again before push.
+The completed release oracle and all stage 1 package results are above.
+Profiles remain scoped to the approved parse and lint build entrypoints.
+Apple execution and the stack-check-SCC integration were not attempted on
+this fixed base. When that compiler change lands, its changed C hash will
+force plain ThinLTO until the script regenerates and the shipping oracle and
+byte checks pass again. No main/area branch or pull request was changed.
