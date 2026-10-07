@@ -14,6 +14,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('output', type=Path, help='new scratch output directory')
 parser.add_argument('--tree', type=Path, help='reuse a tree already made by stage3/apply.sh')
 parser.add_argument('--compiler', type=Path, help='existing Adamic binary, otherwise go run')
+parser.add_argument('--compiler-cwd', type=Path, help='compiler checkout containing pinned Node declarations')
 parser.add_argument('--node-only', action='store_true')
 parser.add_argument('--oracle', type=Path, help='full-tree Node stdout to compare byte for byte')
 parser.add_argument('--inputs', type=Path, help='fixed compiler corpus for comparing source adaptations')
@@ -92,7 +93,8 @@ report = {'input_tree': str(inputs), 'files': len(files), 'node_exit': node, 'co
           'native': 'not attempted' if args.node_only else 'pending'}
 if not args.node_only:
     command = [str(args.compiler.resolve())] if args.compiler else ['go', 'run', './cmd/adamic']
-    compiled = run([*command, 'build', str(out / 'main.a'), '-o', str(out / 'scanner-native')], 'build')
+    compiled = run([*command, 'build', str(out / 'main.a'), '-o', str(out / 'scanner-native')], 'build',
+                   args.compiler_cwd.resolve() if args.compiler_cwd else repository)
     report['build_exit'] = compiled
     if compiled:
         report['native'] = 'blocked at compilation'

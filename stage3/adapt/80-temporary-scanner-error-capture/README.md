@@ -14,3 +14,12 @@ then compare native tokens and collect emitted-C/build metrics if it builds.
 
 The previously retired adaptation 80 for flag return inference is archived
 under drivers/scanner/retired-adaptations; this number is reused as instructed.
+
+Implemented: both casts removed; stock TypeScript 6.0.3 emits the same 805 bytes
+(SHA256 2694db22c5088b6adb85a79a981cd282b58574334cc13a6749175663ce0d16af).
+A changed capture argument fails the JavaScript byte-identity check. Node still
+emits 509,014 identical tokens. The driver activates the pinned Node loader
+with an erased type-only node:util import; --compiler-cwd selects its checkout.
+Both native modes now stop at TS2740: adaptation 55's {} marker is not Function.
+The unmodified call arguments are retained. Full baseline rerun is pending
+after correcting a test-fixture copy error in the first attempt.

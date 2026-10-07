@@ -1,5 +1,7 @@
 // From TypeScript 6.0.3, src/compiler/parser.ts:1444
 // The runner copies this file beside the adapted tree, preserving these imports.
+// Activate the pinned Node declaration loader for ErrorConstructor.captureStackTrace.
+import type {} from 'node:util';
 import { createScanner } from './adapted/src/compiler/scanner.ts';
 import { ScriptTarget, SyntaxKind } from './adapted/src/compiler/types.ts';
 import { tokenNames } from './token-names.a';
