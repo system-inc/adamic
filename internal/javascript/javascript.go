@@ -440,7 +440,7 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 	case ir.SetIndex:
 		if ir.HasArrayViews(e.program) {
-			e.line("adamicViewSetIndex(%s, %s, %s, %d);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value), statement.Element)
+			e.line("adamicViewSetIndex(%s, %s, %s, %d, %t);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value), statement.Element, hasArrayHoles(e.program))
 		} else {
 			setter := "adamicSetIndex"
 			if hasArrayHoles(e.program) {
@@ -960,6 +960,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return e.value(expression.Array) + ".push(" + e.value(expression.Value) + ")"
 	case ir.ArrayJoin:
+		if expression.ViewRead.View != "" {
+			return "adamicViewJoin(" + e.value(expression.Array) + ", " + e.value(expression.Separator) + ", " + e.viewArrayChecker(expression.ViewRead) + ")"
+		}
 		return e.value(expression.Array) + ".join(" + e.value(expression.Separator) + ")"
 	case ir.CharCodeAt:
 		return e.value(expression.Value) + ".charCodeAt(" + e.value(expression.Index) + ")"

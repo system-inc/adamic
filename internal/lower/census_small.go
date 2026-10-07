@@ -212,8 +212,14 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
 	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
 	if !l.censusRelated(produced, promised) {
+		if l.phantomOverloadResult(overload, implementation, l.concrete(produced), l.concrete(promised)) {
+			return nil
+		}
 		if l.censusNullableOverloadResult(produced, promised) {
 			return nil // Each resolved call proves the result or checks its presence.
+		}
+		if len(declaredTypes) == 0 && len(servedTypes) == 0 {
+			return l.overloadResults(implementation)
 		}
 		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced), Fix: "make the implementation result covariant with every overload result"}
 	}
@@ -259,6 +265,20 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 	}
 	if !overloaded {
 		return value, nil
+	}
+	if direct, ok := value.(ir.Call); ok {
+		parameters := l.result.Functions[l.result.CallTargets(direct)[0]].Parameters
+		for index, argument := range direct.Arguments {
+			if index >= len(parameters) {
+				return nil, l.notYet(call.AsNode(), "an overloaded call with more arguments than its implementation")
+			}
+			takes := l.result.Locals[parameters[index]].Type
+			direct.Arguments[index] = fit(argument, takes)
+			if direct.Arguments[index].Type() != takes {
+				return nil, l.notYet(call.AsNode(), "an overload argument with a different implementation representation")
+			}
+		}
+		value = direct
 	}
 	resolved := l.checker.GetResolvedSignature(call.AsNode())
 	if resolved != nil && resolved.Declaration() != nil {

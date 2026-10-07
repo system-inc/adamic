@@ -59,7 +59,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				if name != nil && fields[name.Text()] {
 					declared := l.checker.GetTypeAtLocation(binding.Name())
 					of, known := l.representation(declared)
-					if !known || of < ir.Number || of > ir.Array || !viewDataType(declared) {
+					if !known || of < ir.Number || of > ir.Array || !l.viewDataType(declared) {
 						found = l.lazyReadRefusal(binding, name.Text(), "destructuring representation conversion")
 					}
 				}
@@ -78,7 +78,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
 					}
 
-					if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
+					if !l.viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
 						family := "representation conversion"
 						if accessorSymbol(field) {
 							family = "accessor"
@@ -291,6 +291,9 @@ func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Ty
 
 // A finite literal contract is checked as well as its primitive representation.
 func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+	if base := l.phantomBase(declared); base != nil {
+		return l.viewLiterals(base)
+	}
 	// A whole numeric enum admits numbers outside its declared members.
 	if l.openNumericEnumType(declared) {
 		return nil

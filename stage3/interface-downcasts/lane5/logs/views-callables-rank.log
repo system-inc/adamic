@@ -1,0 +1,11 @@
+308 pairs, 1503 potential reads, 185 declared shapes; 0 certified
+1: 138 reads string.charCodeAt: (index: number) => number
+2: 106 reads string.substring: (start: number, end?: number | undefined) => string
+3: 84 reads string.slice: (start?: number | undefined, end?: number | undefined) => string
+4: 61 reads SymbolTable.get: (key: __String) => Symbol | undefined
+5: 53 reads SymbolTable.set: (key: __String, value: Symbol) => SymbolTable
+6: 41 reads string.replace: { (searchValue: string | RegExp, replaceValue: string): string; (searchValue: string | RegExp, replacer: (substring: string, ...args: any[]) => string): string; (searchValue: { [Symbol.replace](string: string, replaceValue: string): string; }, replaceValue: string): string; (searchValue: { [Symbol.replace](string: string, replacer: (substring: string, ...args: any[]) => string): string; }, replacer: (substring: string, ...args: any[]) => string): string; }
+7: 32 reads string.includes: (searchString: string, position?: number | undefined) => boolean
+8: 32 reads string.indexOf: (searchString: string, position?: number | undefined) => number
+9: 28 reads Set<Path>.add: (value: Path) => Set<Path>
+10: 26 reads string.toLowerCase: () => string

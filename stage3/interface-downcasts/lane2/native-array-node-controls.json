@@ -1,0 +1,80 @@
+[
+  {
+    "probe": "native-array-join",
+    "stdout": "7:8\n7,8\n8\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-join-boolean",
+    "stdout": "true:false\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-mutation",
+    "stdout": "3\n10\n9:8\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-string-mutation",
+    "stdout": "3\nd\nc:b\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-sparse",
+    "stdout": ":7::9\n:8::10\n16\n9\n3\n7::10\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-sparse-pop-hole",
+    "stdout": "-1\n2\n-1\n7\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-join-bad",
+    "stdout": "2\nbad:bad\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-join-literal",
+    "stdout": "ok:bad\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-write-bad",
+    "stdout": "1\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-push-bad",
+    "stdout": "2\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-copy-bad",
+    "stdout": "true\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-join-evaluation",
+    "stdout": "7:8:9\n2\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "probe": "native-array-large-field",
+    "stdout": "1000000000\n",
+    "stderr": "",
+    "exit": 0
+  }
+]

@@ -300,6 +300,53 @@ Push every passing checkpoint. Any unfinished family or unmeasured census stays
 explicitly unclaimed. Compiler changes begin only after reading view() and its
 callers and the shared flow implementation.
 
+## Lane 5: callable shape checks (October 7)
+
+Lane 5 owns branch `codex/views-callables`, based on lane 2 parser tip
+`2de6d1ba` (descendant of `c898009b`). The task explicitly authorizes this
+territory entry. The lane 2 handoff below transfers its existing callable files
+to lane 5; shared read dispatch and closure producer files remain owner handoffs.
+New lane 5 files: `internal/lower/view_callables_contract.go` and its test;
+`internal/native/view_callables_contract.go` and its test;
+`internal/javascript/view_callables_contract.go` and its test;
+`internal/native/runtime/view_callables_contract.h`;
+`internal/oracle/checked_views_callable_contract_test.go`;
+`stage3/interface-downcasts/lane5/` fixtures, census ranking and reports.
+
+The October 7 ruling supersedes the earlier implementation-only admission
+policy: every reached callable read must check recorded closure signature
+against declared arity, parameter and result representations. A function tag
+alone or a same-name program scan is insufficient. Unsupported unread members
+must not refuse a cast. Missing optional members yield undefined; reserved
+uninitialized slots fail using the existing readiness machinery.
+
+Required owner handoffs, not implemented claims:
+
+- Lane 1/lane 2: have `buildViewCallableContract` delegate signature construction
+  to lane 5's builder; keep registration in its existing owner file. Fill the
+  existing `ViewContract.Parameters` and `Result` fields. Preserve deferred
+  unsupported signatures until a reached read.
+- Closure-convention owner: record the implementation's arity, parameter and
+  result representation descriptor on every created closure and method thunk.
+  Native `adamic_closure` currently has only code and capture cells. JavaScript
+  closures need the same immutable descriptor. Never derive it from the view.
+  Unknown metadata must fail at a viewed callable read.
+- Lane 1 shared read dispatch: after presence/readiness and callable-kind checks,
+  call lane 5's shape helper before storing or calling the read value, including
+  optional present callbacks. Pass evaluated operands and expression text once.
+  Native method tables need signature descriptors too; keep receiver binding.
+- Lane 1 propagation: viewed values reaching shared helpers, generics, callbacks
+  and fields must retain checks; unknown flow cannot authorize trust.
+- Call emission: use the reconciled closure convention after its supplied SHA is
+  merged. No second calling convention is introduced by lane 5.
+
+Working estimate for all 308 pairs / 1,503 potential reads: October 10 at
+18:00 UTC (12:00 MDT), conditional on lazy-read dispatch and recorded closure
+metadata handoffs. This is an estimate, not certified coverage. The ranked
+ledger will retain every pair until both-backend integration and mutants prove
+its read checks. Intrinsic string/map/set members appear in the callable census;
+method contracts require intrinsic implementation signatures, not closure tags.
+
 ## Lane 5 callable handoff after c898009b
 
 The lead moved callable work to lane 5 on codex/views-callables, starting from
@@ -410,3 +457,330 @@ were updated to expect lazy admission. The final focused lower and view oracle t
 pass. The integration branch was still absent from origin at the last check. This
 work is available on its own branch; whole-project compilation and a green integration
 gate are not claimed.
+
+## Lane 4: mixed unions and full union admission
+
+Worker on `codex/views-mixed-unions`, based on lane 1 b4cfd1aa (which descends
+from af0a0ae7), with lane 2 0b141c26 merged. The user reserves this addition to
+this plan for lane 4; earlier plan-only-lane-1 ownership does not apply here.
+Lane 1 continues to own nullish representation and optional/readiness checks.
+Lane 4 owns new `internal/lower/view_unions_mixed.go` and its tests, new
+`internal/native/view_unions_mixed.go` and its tests, new
+`internal/javascript/view_unions_mixed.go` and its tests, new runtime
+`view_unions_mixed.c/.h`, new oracle `checked_views_mixed_unions_test.go`,
+and `stage3/interface-downcasts/lane4/` fixtures, census, logs and reports.
+Existing union files and shared dispatch remain lane 1 territory.
+
+Required handoffs before compiler admission:
+
+1. In `view_contracts.go`, route unions through the lane-owned
+   `viewMixedUnionContractHook` before callable detection and representation
+   refusal. Lane 4 declares this hook in `view_unions_mixed.go` with
+   `internMixedUnionViewContract` as its implementation. The shared registry,
+   recursive builder callback and rollback
+   on failed member construction must retain their common contract semantics.
+2. In `view_unions.go`, dispatch mixed and untagged union field registration to
+   `viewMixedUnionFields(node,target,fields,seen)` before the finite tag refusal.
+   In `view_objects.go` and `interface_cast.go`, permit complete union contracts
+   in field reads/aliases rather than the current scalar/object/array range gate.
+   In `cast.go`, route union targets to the shared view entry before refusing.
+   Admission must still preserve writable-slot and nominal restrictions.
+3. Native runtime: expose a non-panicking, readiness-aware slot probe returning
+   presence, initialized state, logical runtime kind and normalized payload.
+   It must classify original storage before conversion, distinguish null from
+   undefined using lane 1 representation, respect static ownership/accessors,
+   and never call a getter while testing alternatives. Current
+   `adamic_object_view` panics on the first rejected member and cannot select
+   between two untagged object alternatives. An object heap tag alone is not
+   structural membership. Lane 4 will consume this probe; it will not duplicate
+   object.c readiness or manufacture nullish evidence.
+4. Shared backend field dispatch must hand the already evaluated operand,
+   complete ViewUnion id, expression text and declared union name to lane 4
+   selection. Keep the selected member contract on aliases and narrowed reads;
+   a successful tag test never erases its transitive payload checks. Primitive
+   conversion happens only after selection. Include lane 4 runtime helpers.
+   Array alternatives use lane 2 contracts, including later element reads.
+
+No census family is removed just because its contract builder or standalone
+selector passes. The integration checkpoint requires actual source lowering,
+source Node controls, both backend refusal pins and all three requested mutants.
+An untagged object union may overlap: accept a value satisfying any complete
+member; never commit to the first heap-kind match. Failed alternatives must not
+panic before all alternatives have been considered.
+
+### Lane 4 read-demand checkpoint and lazy-admission handoff, October 7
+
+The user superseded the transitive census with read demand. Lane 4's first
+checkpoint is ce2545e4, published before building further. The explicit read
+inventory and conservative Unknown table live in docs/checked-views-blockers.md.
+This addition does not transfer ownership of the common census/dispatch files.
+
+Additional lane 4 territory: lane4/read-demand.cjs, read-demand-*.json.gz,
+read-demand-summary.json, audit-read-demand.py, make-read-flow-overlay.py,
+map-read-flow-input.py, export-read-flow.py, read-flow artifacts and
+read-fixtures/*.a. The new oracle remains checked_views_mixed_unions_test.go.
+The scratch overlay extends lane 3's source adapter by receiver queries only;
+allocation numbering, argument/return joins and solving use its original
+assignAllocationSites/newAllocationFlowGraph/ReachingAllocations code. Neither
+cohere code nor the flow engine is copied into lane 4.
+
+Concrete lane 1 hooks needed for sound lazy contracts:
+
+1. Split view admission from descendant support. view() currently invokes
+   viewObjectFields and recursive viewContract before constructing the cast.
+   Reserve a target/tag descriptor without rejecting every descendant contract.
+   Keep an unsupported child as a deferred obligation with its declared family
+   and refusal reason, never as a successfully validated ViewUnknown value.
+2. At each read, consult the receiver's reaching-view status through lane 3's
+   shared graph. Known viewed and Unknown receivers retain a cheap tag test and
+   the field's declared contract check; a helper's interface parameter cannot
+   lose the check because its body lacks a lexical cast. Preserve this through
+   generics, callbacks, aliases and object/array-held values. Unmodeled producer
+   edges remain Unknown. Missing flow cannot certify a receiver ordinary.
+3. Remove the eager global scan keyed only by field name as an admission gate.
+   Make unsupported-member refusal a read-site result naming the receiver field,
+   declared family and reason. Compile refusal at that read is acceptable until
+   a runtime descriptor/probe is available; unread unsupported fields must not
+   reject a tag-valid cast. Read support must precede enabling lazy admission.
+4. Resolve a deferred member contract on demand; retain the selected child view
+   for transitive reads. No first-member selection, blanket object-tag proof,
+   null/undefined conflation or phantom-brand erasure is allowed. Native slot
+   probes still need lane 1's readiness and presence machinery, not a copy.
+
+Lane 4's helper oracle passes ordinary and viewed Box values to the same helper.
+The malformed boolean payload stops at value.unsupported with exit 70 in both
+backends. A mutant removing only that helper Property.View marker runs valid
+release code and is caught by the pinned refusal. The unsupported mixed-union
+helper remains a compile refusal. This proves the existing scalar helper guard,
+not completion of lazy mixed-union/nullish/optional admission.
+
+Lane 1 9b85eada was fetched; merging it into this lane conflicts in the shared
+cast.go and the plan. The merge was aborted without editing shared compiler
+files. Lane 2 remains merged at 0b141c26. Lane 3 c1f4c5a7 is used in an isolated
+measurement worktree rather than merged through those conflicts. The lane 1
+owner must reconcile cast dispatch before a landed/re-greened integration or a
+completion date for its nullish/optional families can be claimed by lane 4.
+
+### Lane 4 selector checkpoint from bc87b103
+
+The user's new work queue is frozen at 213 `(type, field)` pairs and 1,111
+explicit read sites, ranked in lane4/pair-progress.json. It does not silently
+remove branded/intersection or other-owner obligations. The first two pairs,
+Identifier.escapedText and Symbol.escapedName, account for 448 reads and require
+__String brand proof; accepting every runtime string is not that proof.
+
+Lane 4 now supplies runtime/view_unions_mixed.c/.h and
+javascript/view_unions_mixed.go. The entry points are:
+
+- C: adamic_view_mixed_union_select(snapshot,members,count,match,context,
+  expression,declared), returning the selected member index.
+- JavaScript: adamicViewMixedUnionSelect(snapshot,members,match,expression,
+  declared), included through javascript.MixedUnionRuntime().
+
+The snapshot has an explicit logical kind and borrowed normalized payload.
+Logical kinds are neither raw heap kinds nor physical field storage bytes.
+Null and undefined have distinct logical kinds; the selector never manufactures
+that distinction from a null pointer. Shared probes must establish presence,
+readiness and kind before entry. Selection transfers no ownership or readiness
+proof. Convert/retain only after it succeeds, preserving the member contract on
+later field/element/call reads and aliases.
+
+Member records carry logical kind, optional literal constraint and a nonzero
+shared contract id for reference members. The adapter match callback must be a
+complete, pure, non-panicking contract test using shared metadata/probes, never
+getters or callable bodies. Missing reference adapters/contracts and unknown
+logical values do not pass. Failed alternatives allow later members to be tried.
+An unavailable member contract must stay a named read-site NotYet/deferred
+obligation until its adapter is available; it cannot be emitted as a complete
+member that guesses conformance from a heap-kind match.
+
+Additional concrete lane 1 wiring required, alongside lazy admission:
+
+1. Include view_unions_mixed.h in native program assembly, and append
+   javascript.MixedUnionRuntime() to its helper text before field read emission.
+2. Route union-typed reads with complete member descriptors to the selector
+   after the already-evaluated receiver's shared normalized slot probe. Supply
+   expression text and the exact declared union. Apply optional/required field
+   presence and readiness through the common path, not through this selector.
+3. Supply the shared registry member-contract matcher for object/array/Map/
+   callable alternatives. No adapter may panic on a failed alternative or copy
+   readiness traversal into lane 4. Do not admit unsupported deferred bodies.
+4. Feed the selected member id into the existing propagation/read path, retaining
+   transitive checks. Lane 4's four-family component oracle is not authorization
+   to admit source casts before these paths are covered.
+
+The component oracle covers string|number|undefined, string|Identifier, two
+untagged objects with different text contracts, and false|string|undefined.
+Each has source .a Node controls for every member plus a wrong-value exit-70
+pin for both implementations. Six independent release mutations are caught:
+skip member testing, take the first untested member and skip object transitive
+matching, separately in C and JavaScript. This proves selector semantics;
+frontend/source integration remains pending and removes zero pairs.
+
+Planning target for all 213 integrated pairs: October 16, 2026, 17:00 MDT
+(23:00 UTC), conditional on lane 1 lazy admission plus normalized slot probes,
+and the required brand/schema proof support, arriving by October 9. This is a
+conditional working estimate, not an unconditional promise to erase phantom
+brands or admit incomplete dictionaries/callable signatures. Completion evidence
+and remaining pair/read totals are updated at every push.
+
+### Lane 4 scope split, October 7, 2026
+
+This ruling supersedes lane 4's earlier all-213 assignment and delivery estimate.
+Lane 4 on `codex/views-mixed-unions` now owns only these two families:
+
+| Family | Assigned pairs | Read sites | Delivery target |
+| --- | ---: | ---: | --- |
+| __String primitive phantom brands, including nullish members | 30 | 543 | October 9, 2026, 17:00 MDT (23:00 UTC) |
+| Mixed primitive unions | 63 | 690 | October 13, 2026, 17:00 MDT (23:00 UTC) |
+
+These are the user's assigned family totals, not an additive partition: branded
+strings also occur in the mixed-primitive census. Neither total denotes completed
+source integration. The old 213-pair ledger remains historical evidence until
+exact pair membership is reconciled with this split; no completed pairs are claimed.
+
+Object-plus-primitive unions belong to lane 4b, worker 01a11877-e6c0, on
+`codex/views-object-primitive-unions`. Untagged object unions belong to lane 4c,
+worker 01a11878-0860, on `codex/views-untagged-object-unions`. Non-brand
+intersections belong to lane 7, worker 01a11878-4afa. Lane 4 stops building those
+families. Its existing selector component evidence remains available to those
+owners; it does not establish their compiler integration.
+
+For __String, the latest ruling explicitly erases the primitive phantom brand
+and checks string membership at each potentially viewed read. This supersedes
+this document's earlier requirement for runtime brand proof and its prohibition
+on phantom-brand erasure. Merge `codex/phantom-brands` at d90994da, retaining its
+15:28 overload rule. A nullish alternative needs its own membership check.
+
+Lane 4's first compiler checkpoint remains the two leading pairs with 448 reads,
+then the most-read mixed primitive shapes. Wire the C and JavaScript selectors
+from 583d19b7 into the compiler for this scope, coordinating shared hooks with
+lane 1 and merging lazy admission as it lands. Presence/readiness still use the
+shared machinery; Unknown flow retains checks, including helper reads. Every
+completion needs actual source fixtures held to Node, both backend refusal pins
+and semantic mutants. Report family pairs and reads remaining after every push.
+
+Working target for both families is October 13 at 17:00 MDT. Nullish encoding,
+optional presence and shared dispatch merges remain integration risks; report an
+observed blocker immediately rather than counting a component test as completion.
+
+## Integration branch checkpoint, October 7, 2026
+
+The dated lane checkpoints above retain their original evidence and limits.
+The integrator has merged lazy owner e6aec805 first on codex/views-integration;
+its first published SHA is f1c919701ec9b42b78e104fe9cc1ce96db9d7d09.
+Lane-4 primitive phantom scalar reads are reconciled with that lazy entry point;
+standalone selector evidence does not imply production union admission.
+See stage3/interface-downcasts/integration/REPORT.md for conflict choices,
+validation, reproduced baseline failures and mutants.
+
+Lane 5 helper checkpoint: `completeViewCallableShapeContract(node,target,id,build)`
+is a reached-read hook, not an admission hook. It fills the placeholder's existing
+Parameters/Result slots for fixed, nongeneric, single signatures and propagates
+child failures. Optional/rest/generic/overload signatures remain unknown until
+implemented. Native `adamic_view_callable_shape(value,recorded,expected,expression,
+optional)` and JavaScript `adamicViewCallableShape` compare producer metadata;
+they introduce no call convention. Native NULL is confirmed undefined from the
+shared presence/nullish check, never permission to treat null as absent.
+Lane 1 wires completion only at reads and wires shape checks after readiness;
+the closure owner supplies metadata at creation. These helpers alone certify
+zero census reads. Lane 1 tip ab4d6f90 has 13 shared code/count merge conflicts;
+per the lane 2 handoff, lane 1 resolves and publishes the reconciled lazy tip.
+Both backends also provide `emitViewCallableShape(value,recorded,expected,
+expression,optional)`, inserting the helper around already evaluated operands.
+It returns the same callable identity and adds no ownership or receiver wrapper.
+The caller must preserve the field-read's existing lifetime and route subsequent
+calls through the reconciled convention.
+Producer handoff locations on this base: native closure creation is in
+`emit_expressions.go` (adamic_closure_new), and JavaScript creation is in
+`javascript.go` (new AdamicClosure). Both are shared owner files. Use the
+implementation Function.Parameters/Returns, excluding a hidden receiver from
+advertised arity. Function.Returns zero means void in existing IR; it must not
+be copied as the helper's zero/unknown signature code. A void descriptor needs
+an explicit agreed representation before enabling that family. Count-row and
+real-source read-time failure registration remain central owner handoffs.
+
+## Lane 5 read adapter handoff to views-integration
+
+Coordination supersedes the individual-lane merge instructions above: lane 5
+merges only codex/views-integration after its integrator publishes a tip. On this
+checkpoint that remote branch is not yet published. Do not merge fetched lazy or
+closure tips directly. The 11,648 explicit witnesses remain an Unknown-fallback
+upper bound; remeasure what viewed values can reach after lazy provenance lands.
+
+New lane 5 territory: internal/lower/view_callables_read.go and tests;
+internal/native/view_callables_signature.go and tests;
+internal/javascript/view_callables_signature.go and tests;
+lane5/run-read-adapter-mutants.py. JavaScript's owned viewCallablesRuntime now
+includes the shape runtime. The native certificate emitter includes its header
+in generated declarations. No shared owner file was changed.
+
+Concrete integration hooks requested:
+
+- At the shared callable read with KnownViewed or Unknown provenance, call
+  `l.prepareViewCallableRead(node, declared)` and propagate its error at that read.
+  Install the returned id on Property.ViewContract. This strips only optional
+  undefined and builds representation descriptors without walking object members
+  of argument/result types. It must not be called from cast admission or from the
+  global same-name field scan. Keep the existing refusal until all its reads
+  have equivalent runtime coverage; removing the scan alone is unsound.
+- After shared presence, readiness and storage-kind validation, snapshot the
+  callable, then use `e.emitViewCallableCertificate(property, value)` on both
+  backends before capturing or calling it. Native `value` must be an evaluated
+  C name; JS snapshots with a one-argument arrow wrapper. Check every read path,
+  including native viewField and dynamic method-call lookup. Existing owned
+  callable lookup still follows the previous proof path until these hooks land.
+- Optional absence must be returned by the shared read, not passed through the
+  old required-field helper. Native NULL may represent confirmed undefined only;
+  present null cannot be excused as optional. Pass Property.Absent appropriately.
+- The adapter selects immutable producer descriptors by generated closure code
+  identity and IR parameter/result representations. It neither guesses arity
+  from calls nor uses declared view metadata as a producer certificate. Unknown
+  code, Receiver closures and class method thunks remain uncertified. Use the
+  reconciled closure ABI for eventual receiver/method certificates; do not treat
+  the current fixed ordinary-closure adapter as coverage for them. Void remains
+  unknown. Table emission is deliberately a correctness-first prototype, with
+  per-read tables; compact it after the integration protocol is stable.
+
+All adapters are tested, but none certifies a corpus pair without the shared
+source-read hooks. Three new semantic mutants catch forged producer descriptors
+(native and JavaScript) and eager argument/result object-member traversal.
+
+## Lane 4b: object plus primitive unions, October 7, 2026
+
+Branch `codex/views-object-primitive-unions` starts from lane 4 tip 9ecdda53,
+which contains selector checkpoint 583d19b7. Assigned demand is 73 pairs and
+267 explicit reads. Own only new `internal/lower/view_unions_object_primitive.go`
+and its tests, `internal/native/view_unions_object_primitive.go` and its tests,
+`internal/javascript/view_unions_object_primitive.go` and its tests, runtime
+`view_unions_object_primitive.c/.h`, oracle
+`checked_views_object_primitive_unions_test.go`, and
+`stage3/interface-downcasts/lane4b/` fixtures, ranking, scripts and logs.
+This plan addition is explicitly authorized by the unit. Existing lane files,
+common dispatch, readiness and representation remain with their owners.
+
+Reuse lane 4's mixed-union selector and shared contract ids. Each read selects
+primitive membership by logical runtime kind or the reference member by its
+contract; preserve that contract on subsequent object/element reads. Unknown
+provenance retains checks, including helpers, generics, callbacks and fields.
+Unsupported members remain obligations at reachable reads, never cast failures.
+
+Required owner handoffs: lane 1 supplies a presence/readiness-aware normalized
+slot probe, a pure non-panicking reference-member matcher, selector dispatch
+and selected-member propagation; lazy admission resolves read contracts without
+eager descendant refusal. Lane 2 supplies array/Map/callable member adapters
+where required. Existing selectors are components, not evidence of source
+admission. No lane 4b helper may guess structural membership from a heap tag.
+
+Rank individual pairs by reads and aggregate identical declared shapes for
+fixtures. First shapes: JSDoc string|NodeArray comment (24 pairs, 63 reads),
+CommandLineOption literal-string|Map type (1 leading pair, 33 reads),
+true|Node|undefined, then string|DiagnosticMessageChain. Every completed shape
+needs source Node controls, both backend exit-70 field/type/found pins and
+independent skip-check, wrong-shape and dropped-nested-check mutants.
+
+Working whole-family target: October 14, 2026, 23:00 UTC, conditional on shared
+lazy admission, normalized probes and member adapters arriving by October 9.
+The initial October 9 estimate was revised after inspection of pending hooks.
+No integrated pair is complete at this territory checkpoint: 73 pairs and
+267 reads remain. Lazy-admission branch was not yet present on origin.

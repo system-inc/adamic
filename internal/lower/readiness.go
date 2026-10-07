@@ -387,6 +387,10 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 			for i := 0; i < value.NumField(); i++ {
 				result.Field(i).Set(transform(value.Field(i)))
 			}
+			if loop, ok := result.Interface().(ir.ForOf); ok {
+				loop.ViewRead = markProgramViewArrayUse(program, loop.ViewRead)
+				result.Set(reflect.ValueOf(loop))
+			}
 			return result
 		case reflect.Array:
 			result := reflect.New(value.Type()).Elem()

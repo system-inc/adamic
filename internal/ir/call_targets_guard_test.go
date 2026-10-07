@@ -24,17 +24,17 @@ import (
 type targetReader struct{ owner, reason string }
 
 var targetReaders = map[string]targetReader{
-	"internal/flow/build.go:CanThrow:ArraySort.Comparator":                        {"compiler", "MayThrow and library failure propagation, routed in step 2"},
-	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":            {"compiler", "MayThrow and library failure propagation, routed in step 2"},
-	"internal/lower/exceptions.go:throwsOut:ArraySort.Comparator":                 {"compiler", "MayThrow and library failure propagation, routed in step 2"},
-	"internal/native/class_inheritance.go:callCode:Call.Function":                 {"runtime", "names the function to call"},
-	"internal/native/emit_arrays.go:comparator:ArraySort.Comparator":              {"runtime", "names the function to call"},
-	"internal/native/emit_expressions.go:evaluate:Call.Function":                  {"runtime", "names the function to call"},
-	"internal/native/emit_expressions.go:evaluate:CallClosure.Closure":            {"runtime", "names the function to call"},
-	"internal/native/emit_functions.go:arguments:Call.Function":                   {"runtime", "names the function to call"},
-	"internal/native/emit_functions.go:callThrough:CallClosure.Closure":           {"runtime", "names the function to call"},
-	"internal/native/loop_borrow_test.go:TestGlobalArgumentLending:Call.Function": {"runtime", "names the function under test"},
-	"internal/native/loop_borrow_test.go:TestLoopCallCoverage:Call.Function":      {"runtime", "names the function under test"},
+	"internal/flow/build.go:CanThrow:ArraySort.Comparator":                              {"compiler", "MayThrow and library failure propagation, routed in step 2"},
+	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":                  {"compiler", "MayThrow and library failure propagation, routed in step 2"},
+	"internal/lower/exceptions.go:throwsOut:ArraySort.Comparator":                       {"compiler", "MayThrow and library failure propagation, routed in step 2"},
+	"internal/native/class_inheritance.go:callCode:Call.Function":                       {"runtime", "names the function to call"},
+	"internal/native/emit_arrays.go:comparator:ArraySort.Comparator":                    {"runtime", "names the function to call"},
+	"internal/native/emit_expressions.go:evaluateWithoutViewArrays:Call.Function":       {"runtime", "names the function to call"},
+	"internal/native/emit_expressions.go:evaluateWithoutViewArrays:CallClosure.Closure": {"runtime", "names the function to call"},
+	"internal/native/emit_functions.go:arguments:Call.Function":                         {"runtime", "names the function to call"},
+	"internal/native/emit_functions.go:callThrough:CallClosure.Closure":                 {"runtime", "names the function to call"},
+	"internal/native/loop_borrow_test.go:TestGlobalArgumentLending:Call.Function":       {"runtime", "names the function under test"},
+	"internal/native/loop_borrow_test.go:TestLoopCallCoverage:Call.Function":            {"runtime", "names the function under test"},
 }
 
 func TestCallTargetReaders(t *testing.T) {

@@ -37,6 +37,9 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 }
 
 func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
+	if base := l.phantomBase(target); base != nil && interfaceScalar(base) {
+		return ""
+	}
 	flags := target.Flags()
 	switch {
 	case flags&checker.TypeFlagsAny != 0:
