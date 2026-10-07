@@ -106,3 +106,33 @@ and retained-registry mutation did rerun. The three claimed React rules still
 lack native source-to-SSA and checker/capture integration, despite the previously
 tested static/control kernels. Full findings/fixes/suggestions, full-rule mutants
 and lint timing for them remain unfinished. No further rules were claimed.
+
+## Numeric rule.json manifests
+
+The subsequent continuation adds nine owned `rules/<name>/rule.json` files,
+with `name` and numeric `kinds`. These are potential subscription declarations
+only. No factory, callback, shared generator registration or completed React
+port is implied. The existing native declarations remain unchanged.
+`check_listeners.py` now serializes the manifests against the same independent
+live Go registration oracle and requires all kinds to be JSON integers. Each
+manifest receives a separate valid JSON wrong-kind mutant; only the numeric
+registration comparison catches it. The original nine compiling native
+subscription mutants and sanitizer comparisons also rerun.
+
+All origin heads were fetched explicitly: the configured default fetch refspec
+fetches only wave 29. Main remains e8ba3d5d. The new codex/shared-ssa branch
+adds only docs/shared-flow.md, which explicitly says design only. It is not a
+native React source pipeline. The published harness ParseNode still has only
+a string kind. No Diagnostic landing sha was provided and no shared file was
+edited. Existing six rule implementations remain as previously validated;
+per-node migration and the three claimed React full ports remain blocked.
+No additional claims are taken.
+
+Manifest validation passed: nine declarations, 315 identical bytes across
+Go/native/Node/sanitized native, nine valid JSON manifest mutants and nine
+compiling native metadata mutants caught only by registration comparison.
+Setup tools/submodules 0s, cache warm 26s, total 26s; nproc 5. Command:
+`python3 -u stage1/cohere/typeaware/wave-29-third/check_listeners.py /workspace/wave29-manifests > /tmp/wave29-manifests.log 2>&1`.
+Evidence is in `validation/manifests/`. Full lint corpora, released-handle
+suites and timing were not repeated for JSON-only declarations; the preceding
+listener commit's six-rule validations remain applicable.

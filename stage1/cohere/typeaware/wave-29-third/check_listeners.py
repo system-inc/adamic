@@ -16,6 +16,19 @@ def run(name,args,cwd=r,env=None):
 v=r/'cohere/adamic_wave29_listener_oracle.go'
 (d/'overlay.json').write_text(json.dumps({'Replace':{str(v):str(s/'testdata/listener_oracle.go')}}))
 truth=run('go',['go','run','-overlay',d/'overlay.json',v],cwd=r/'cohere');assert len(truth.splitlines())==9
+# Manifests are potential subscriptions, not factory registrations or full ports.
+def manifest_bytes(manifests):
+ return ''.join(row['name']+'\t'+''.join(str(kind)+',' for kind in row['kinds'])+'\n' for row in manifests).encode()
+manifest_names=['id-denylist','id-match','nexus/concurrency-no-check-then-write','no-restricted-globals','no-setter-return','no-shadow-restricted-names','react-hooks/set-state-in-effect','react-hooks/set-state-in-render','react-hooks/static-components']
+manifests=[json.loads((s/'rules'/name.replace('/','-')/'rule.json').read_text()) for name in manifest_names]
+for name,row in zip(manifest_names,manifests):
+ assert row['name']==name and row['kinds'] and all(type(kind) is int for kind in row['kinds'])
+assert manifest_bytes(manifests)==truth
+(d/'manifests.stdout').write_bytes(manifest_bytes(manifests))
+for index,name in enumerate(manifest_names):
+ mutated=json.loads(json.dumps(manifests));mutated[index]['kinds'][0]+=1
+ assert manifest_bytes(mutated)!=truth
+ print(name+': valid JSON wrong-kind mutant caught only by Go registration comparison',flush=True)
 run('native-build',[c,'build',s/'listener_probe.a','-o',d/'native','--tsgo',archive])
 assert run('native',[d/'native'])==truth and not(d/'native.stderr').read_bytes()
 # Metadata itself never uses checker operations, so no checker shim is needed on Node.

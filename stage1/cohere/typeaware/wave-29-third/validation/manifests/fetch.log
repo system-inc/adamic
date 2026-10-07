@@ -1,0 +1,78 @@
+From https://github.com/system-inc/adamic
+   7dcdebcb5..5192c1ff2  apple/generator-sdk     -> origin/apple/generator-sdk
+   e8ba3d5d8..6e0a55c4f  area/compiler           -> origin/area/compiler
+   5dbf4c19b..52f7ae033  area/developer-tools    -> origin/area/developer-tools
+   e8ba3d5d8..6b40f4eb1  area/platforms          -> origin/area/platforms
+   82762402f..bb48dc93c  area/runtime            -> origin/area/runtime
+   189d7256d..634ef061f  area/stage3             -> origin/area/stage3
+   d9c13221d..b802fbed1  cloud/integrate-16      -> origin/cloud/integrate-16
+   0dc7f3505..a907d281a  cloud/integrate-l-1     -> origin/cloud/integrate-l-1
+ * [new branch]          cloud/speculate-2210-1  -> origin/cloud/speculate-2210-1
+   1e8c11781..5b682673b  codex/census-small-families -> origin/codex/census-small-families
+   993a88145..fbfad1e3c  codex/cohere-bump-ca939db -> origin/codex/cohere-bump-ca939db
+   fc3075aa0..a4ca1c6bb  codex/environment-placement -> origin/codex/environment-placement
+   246ecc073..ec67b02fd  codex/flag-enums        -> origin/codex/flag-enums
+   a0121ffce..d20bcba00  codex/graph-regions     -> origin/codex/graph-regions
+ * [new branch]          codex/imported-const-case -> origin/codex/imported-const-case
+   e487592ed..73adc26df  codex/lint-helpers-01   -> origin/codex/lint-helpers-01
+   77676686f..d82cca359  codex/lint-helpers-02   -> origin/codex/lint-helpers-02
+   962fd4946..760155cdf  codex/lint-helpers-03   -> origin/codex/lint-helpers-03
+   8688f5278..2b43ded4d  codex/lint-helpers-04   -> origin/codex/lint-helpers-04
+   85c71d96a..69bdfe7db  codex/lint-helpers-05   -> origin/codex/lint-helpers-05
+   d3c88b90b..64e1fdf8f  codex/lint-wave1-01     -> origin/codex/lint-wave1-01
+ * [new branch]          codex/lint-wave1-02-land -> origin/codex/lint-wave1-02-land
+   8bba729c7..99c66e1e3  codex/lint-wave1-04     -> origin/codex/lint-wave1-04
+   8815a3f97..c7cecebbf  codex/lint-wave1-05     -> origin/codex/lint-wave1-05
+   e9066bffb..641b887ad  codex/lint-wave1-10     -> origin/codex/lint-wave1-10
+   c665dda5a..d366bab85  codex/lint-wave1-12     -> origin/codex/lint-wave1-12
+   cec59f82c..0885a258f  codex/lint-wave1-15     -> origin/codex/lint-wave1-15
+   e2ea9ab2c..bc9f5d7b8  codex/non-null-check    -> origin/codex/non-null-check
+ * [new branch]          codex/optional-chain-after-call -> origin/codex/optional-chain-after-call
+ * [new branch]          codex/parse-speed       -> origin/codex/parse-speed
+   8caa82e93..6ae8b85aa  codex/progress          -> origin/codex/progress
+ * [new branch]          codex/shared-ssa        -> origin/codex/shared-ssa
+   9e9725f5f..c5c9d5147  codex/stage3-indexed-reads-program -> origin/codex/stage3-indexed-reads-program
+   81aa88718..176a49699  codex/stage3-latent-census -> origin/codex/stage3-latent-census
+   2182cb580..77a88ace2  codex/stage3-scanner-proof -> origin/codex/stage3-scanner-proof
+   1eccc3002..49b8b15a3  codex/typeaware-wave-01 -> origin/codex/typeaware-wave-01
+ + 515607c93...b99df9314 codex/typeaware-wave-03 -> origin/codex/typeaware-wave-03  (forced update)
+   7a0635a62..bb6182e70  codex/typeaware-wave-04 -> origin/codex/typeaware-wave-04
+   403993540..985dcb246  codex/typeaware-wave-05 -> origin/codex/typeaware-wave-05
+   48c6c7e07..5a638b72c  codex/typeaware-wave-06 -> origin/codex/typeaware-wave-06
+   710874702..0dca2669f  codex/typeaware-wave-07 -> origin/codex/typeaware-wave-07
+   242946b44..45a71d4d6  codex/typeaware-wave-08 -> origin/codex/typeaware-wave-08
+   229152120..2d30e7bc8  codex/typeaware-wave-09 -> origin/codex/typeaware-wave-09
+   058945b0f..c49646918  codex/typeaware-wave-10 -> origin/codex/typeaware-wave-10
+   fab768812..86d5249f0  codex/typeaware-wave-11 -> origin/codex/typeaware-wave-11
+   927c0e13c..772eb4166  codex/typeaware-wave-12 -> origin/codex/typeaware-wave-12
+   4f64511a1..b3d94d10d  codex/typeaware-wave-13 -> origin/codex/typeaware-wave-13
+   9c59f97f1..747978289  codex/typeaware-wave-14 -> origin/codex/typeaware-wave-14
+   6dba35783..5c78c808f  codex/typeaware-wave-15 -> origin/codex/typeaware-wave-15
+   afffb2338..c5bbfee0a  codex/typeaware-wave-18 -> origin/codex/typeaware-wave-18
+   71120ddeb..2eaa56ca3  codex/typeaware-wave-19 -> origin/codex/typeaware-wave-19
+   11bac865f..02d39bae1  codex/typeaware-wave-20 -> origin/codex/typeaware-wave-20
+ + e9ec024c3...697b26e12 codex/typeaware-wave-21 -> origin/codex/typeaware-wave-21  (forced update)
+   843e9505a..4758f5c48  codex/typeaware-wave-22 -> origin/codex/typeaware-wave-22
+   e0408d593..9f0e7fe8d  codex/typeaware-wave-23 -> origin/codex/typeaware-wave-23
+   a7e0f5fae..2170b01c4  codex/typeaware-wave-24 -> origin/codex/typeaware-wave-24
+   b2c7c75fe..6b1e329aa  codex/typeaware-wave-25 -> origin/codex/typeaware-wave-25
+   de8cf26b1..3cdcfc899  codex/typeaware-wave-27 -> origin/codex/typeaware-wave-27
+   f6cb0d063..d08fb07c1  codex/typeaware-wave-28 -> origin/codex/typeaware-wave-28
+   aa42ed86d..4e16637f8  codex/typeaware-wave-29 -> origin/codex/typeaware-wave-29
+   04f2b72c3..990e54b82  codex/typeaware-wave-30 -> origin/codex/typeaware-wave-30
+ * [new branch]          codex/wasm-size         -> origin/codex/wasm-size
+ * [new branch]          codex/workers-split     -> origin/codex/workers-split
+ * [new branch]          coverage/borrow-chains  -> origin/coverage/borrow-chains
+ * [new branch]          coverage/environment-placement -> origin/coverage/environment-placement
+ * [new branch]          coverage/host-promises-typeof -> origin/coverage/host-promises-typeof
+ * [new branch]          coverage/lint-runtime-fixes -> origin/coverage/lint-runtime-fixes
+   02d276808..be2252724  coverage/nbody-speed    -> origin/coverage/nbody-speed
+   a8e27d0dc..f5e7ba3f5  coverage/string-build-speed -> origin/coverage/string-build-speed
+   0289767c9..69a1a5b59  devtools/clang-units    -> origin/devtools/clang-units
+ * [new branch]          devtools/gate-shards    -> origin/devtools/gate-shards
+   7fd20314d..7ebba4506  devtools/generators-i16 -> origin/devtools/generators-i16
+ * [new branch]          runtime/area-merge-nbody -> origin/runtime/area-merge-nbody
+ * [new branch]          wasm/integrate          -> origin/wasm/integrate
+Fetching submodule cohere
+From https://github.com/system-inc/cohere
+   ca939db5..7945d102  main       -> origin/main
