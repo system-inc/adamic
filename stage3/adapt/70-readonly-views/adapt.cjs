@@ -22,6 +22,7 @@ const checker = program.getTypeChecker();
 const selected = [
     { file: 'src/compiler/types.ts', declaration: 'EvaluatorResult', member: 'value' },
     { file: 'src/compiler/moduleNameResolver.ts', declaration: 'SearchResult', member: 'value' },
+    { file: 'src/compiler/moduleNameResolver.ts', declaration: 'nodeModuleNameResolverWorker.tryResolve', returnMember: true, member: 'isExternalLibraryImport' },
     { file: 'src/compiler/utilities.ts', declaration: 'ParsedPatterns', member: 'matchableStringSet' },
     { file: 'src/compiler/utilities.ts', declaration: 'ParsedPatterns', member: 'patterns' },
     { file: 'src/compiler/moduleNameResolver.ts', declaration: 'Resolved', member: 'originalPath' },
@@ -42,6 +43,8 @@ const parameters = require('./parameter-audit.cjs')(program, checker, tree, [
     { file: 'src/compiler/utilities.ts', function: 'emitDetachedComments', parameter: 'node' },
     { file: 'src/compiler/utilities.ts', function: 'emitNewLineBeforeLeadingComments', parameter: 'node' },
     { file: 'src/compiler/parser.ts', function: 'parseErrorAtRange', parameter: 'range' },
+    { file: 'src/compiler/factory/utilities.ts', function: 'createMemberAccessForPropertyName', parameter: 'location' },
+    { file: 'src/compiler/factory/utilitiesPublic.ts', function: 'setTextRange', parameter: 'location', public: true },
 ]);
 function location(node) {
     const file = node.getSourceFile();
@@ -52,8 +55,19 @@ function ownerOf(symbol, owner) { return symbol?.declarations?.includes(owner); 
 const owners = selected.map(spec => {
     const file = program.getSourceFile(path.join(tree, spec.file));
     if (!file) throw new Error(`missing source: ${spec.file}`);
-    const declarations = file.statements.filter(node =>
-        (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) && node.name.text === spec.declaration);
+    const declarations = [];
+    function find(node) {
+        if (spec.returnMember && ts.isFunctionDeclaration(node)) {
+            const names = [];
+            for (let current = node; current; current = current.parent) {
+                if (ts.isFunctionDeclaration(current) && current.name) names.unshift(current.name.text);
+            }
+            if (names.join('.') === spec.declaration) declarations.push(node);
+        } else if (!spec.returnMember && (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) &&
+            node.name.text === spec.declaration) declarations.push(node);
+        ts.forEachChild(node, find);
+    }
+    find(file);
     if (declarations.length !== 1) throw new Error(`expected one declaration: ${spec.declaration}`);
     const declaration = declarations[0];
     // An exported declaration must be explicitly internal. An unexported alias
@@ -62,7 +76,10 @@ const owners = selected.map(spec => {
         !ts.getJSDocTags(declaration).some(tag => tag.tagName.text === 'internal')) {
         throw new Error(`public declaration excluded: ${spec.declaration}`);
     }
-    const literals = ts.isInterfaceDeclaration(declaration) ? [declaration] :
+    const literals = spec.returnMember ?
+        (ts.isTypeReferenceNode(declaration.type) && declaration.type.typeName.getText(file) === 'SearchResult' ?
+            declaration.type.typeArguments?.filter(ts.isTypeLiteralNode) || [] : []) :
+        ts.isInterfaceDeclaration(declaration) ? [declaration] :
         (ts.isUnionTypeNode(declaration.type) ? declaration.type.types : [declaration.type]).filter(ts.isTypeLiteralNode);
     const members = literals.flatMap(node => [...node.members]).filter(node =>
         ts.isPropertySignature(node) && ts.isIdentifier(node.name) && node.name.text === spec.member);
@@ -176,14 +193,18 @@ for (const owner of owners) {
 }
 for (const parameter of parameters) {
     const type = parameter.node.type;
-    if (ts.isTypeReferenceNode(type) && ts.isIdentifier(type.typeName) && type.typeName.text === 'Readonly' &&
-        type.typeArguments?.length === 1 && ts.isTypeReferenceNode(type.typeArguments[0]) &&
-        ts.isIdentifier(type.typeArguments[0].typeName) && type.typeArguments[0].typeName.text === 'TextRange') continue;
-    if (!ts.isTypeReferenceNode(type) || !ts.isIdentifier(type.typeName) || type.typeName.text !== 'TextRange')
+    const parts = ts.isUnionTypeNode(type) ? type.types : [type];
+    const isRange = n => ts.isTypeReferenceNode(n) && ts.isIdentifier(n.typeName) && n.typeName.text === 'TextRange';
+    const readonlyRange = n => ts.isTypeReferenceNode(n) && ts.isIdentifier(n.typeName) && n.typeName.text === 'Readonly' &&
+        n.typeArguments?.length === 1 && isRange(n.typeArguments[0]);
+    if (parts.filter(n => isRange(n) || readonlyRange(n)).length !== 1 ||
+        parts.some(n => !isRange(n) && !readonlyRange(n) && n.kind !== ts.SyntaxKind.UndefinedKeyword))
         throw new Error(`unexpected parameter type: ${parameter.function}.${parameter.parameter}`);
+    if (parts.some(readonlyRange)) continue;
+    const range = parts.find(isRange);
     const file = parameter.node.getSourceFile();
     if (!edits.has(file)) edits.set(file, []);
-    edits.get(file).push({ start: type.getStart(file), end: type.end, text: `Readonly<${type.getText(file)}>` });
+    edits.get(file).push({ start: range.getStart(file), end: range.end, text: `Readonly<${range.getText(file)}>` });
 }
 for (const [file, positions] of edits) {
     let text = file.text;

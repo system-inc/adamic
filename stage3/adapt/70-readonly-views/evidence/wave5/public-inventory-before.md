@@ -1,10 +1,8 @@
 # Public wider views
 
-93 of the initial 164 inventoried sites remain after wave 5. @system_adamic has sanctioned readonly public API changes only with recorded whole-program no-write proofs and exact API-snapshot attribution. The setTextRange location input is the first edited public owner; its downstream compatibility effect is recorded in UPSTREAM_NOTE.md.
+164 remaining sites have an exactly matched target whose declaration or contract is exported and lacks `@internal`. No declaration listed here was edited. A readonly public API change needs @system_adamic's ruling. The optional `| undefined` exception gives no permission here.
 
 This is a conservative inventory, not a declaration that every other site is internal. Additional public contracts may remain among inferred and generic views. The full checker inventory is in evidence/remaining-owners.json.gz.
-
-The original inventory is preserved in evidence/wave5/public-inventory-before.md. This retained subset is filtered by measured remaining locations; it is not a new exhaustive public-owner census.
 
 - `src/compiler/builder.ts:2467:34`: `(sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]`; declaration(s): `src/compiler/builderPublic.ts:94:5`.
 - `src/compiler/commandLineParser.ts:2281:16`: `Diagnostic | undefined`; declaration(s): `src/compiler/commandLineParser.ts:2281:9`, `src/compiler/types.ts:7259:1`.
@@ -26,20 +24,68 @@ The original inventory is preserved in evidence/wave5/public-inventory-before.md
 - `src/compiler/commandLineParser.ts:3795:12`: `Diagnostic`; declaration(s): `src/compiler/types.ts:7259:1`.
 - `src/compiler/commandLineParser.ts:3796:9`: `Diagnostic`; declaration(s): `src/compiler/types.ts:7259:1`.
 - `src/compiler/commandLineParser.ts:3854:37`: `CompilerOptionsValue`; declaration(s): `src/compiler/corePublic.ts:13:1`.
+- `src/compiler/debug.ts:790:51`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/executeCommandLine.ts:109:41`: `SourceFileLike`; declaration(s): `src/compiler/types.ts:4286:1`.
 - `src/compiler/factory/emitNode.ts:133:12`: `SourceMapRange`; declaration(s): `src/compiler/factory/emitNode.ts:132:48`, `src/compiler/types.ts:8298:1`.
 - `src/compiler/factory/emitNode.ts:184:12`: `TextRange`; declaration(s): `src/compiler/factory/emitNode.ts:183:46`, `src/compiler/types.ts:28:1`.
 - `src/compiler/factory/nodeChildren.ts:20:17`: `SyntaxList`; declaration(s): `src/compiler/types.ts:10097:1`.
+- `src/compiler/factory/nodeConverters.ts:57:39`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/nodeConverters.ts:59:28`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/nodeConverters.ts:75:31`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/nodeConverters.ts:91:31`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/nodeConverters.ts:102:96`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/nodeConverters.ts:109:25`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/nodeConverters.ts:122:99`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/nodeConverters.ts:126:203`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/nodeConverters.ts:129:127`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/nodeConverters.ts:152:21`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/nodeConverters.ts:165:21`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:197:13`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:324:26`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:328:105`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:329:96`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:338:77`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:339:82`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:343:64`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:354:81`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:358:70`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:385:25`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:400:25`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:404:13`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:415:98`: `TextRange | undefined`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:418:13`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:428:98`: `TextRange | undefined`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:431:26`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:441:96`: `TextRange | undefined`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:453:38`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:458:26`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:528:30`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:533:29`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:537:33`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:541:30`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/factory/utilities.ts:545:34`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
 - `src/compiler/factory/utilities.ts:793:16`: `Identifier | undefined`; declaration(s): `src/compiler/types.ts:1701:1`.
+- `src/compiler/factory/utilities.ts:1510:78`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
 - `src/compiler/factory/utilities.ts:1522:20`: `Node`; declaration(s): `src/compiler/types.ts:942:1`.
+- `src/compiler/factory/utilities.ts:1697:30`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/moduleNameResolver.ts:821:49`: `CompilerOptions`; declaration(s): `src/compiler/moduleNameResolver.ts:479:39`, `src/compiler/types.ts:7403:1`.
 - `src/compiler/moduleNameResolver.ts:1891:43`: `CompilerOptions`; declaration(s): `src/compiler/types.ts:7403:1`.
 - `src/compiler/parser.ts:1403:6`: `Mutable<SourceFile>`; declaration(s): `src/compiler/parser.ts:1403:23`.
+- `src/compiler/parser.ts:1936:102`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
 - `src/compiler/parser.ts:2510:17`: `DiagnosticRelatedInformation`; declaration(s): `src/compiler/types.ts:7290:1`.
+- `src/compiler/parser.ts:4060:35`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/parser.ts:4446:32`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
 - `src/compiler/parser.ts:4573:25`: `DiagnosticRelatedInformation`; declaration(s): `src/compiler/types.ts:7290:1`.
+- `src/compiler/parser.ts:4813:31`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/parser.ts:6084:43`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/parser.ts:6088:43`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/parser.ts:6139:39`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/parser.ts:6422:31`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/parser.ts:8470:25`: `DiagnosticRelatedInformation`; declaration(s): `src/compiler/types.ts:7290:1`.
+- `src/compiler/parser.ts:9456:47`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/parser.ts:9575:30`: `ExpressionWithTypeArguments & { expression: Identifier | PropertyAccessEntityNameExpression; }`; declaration(s): `src/compiler/types.ts:3108:1`.
 - `src/compiler/parser.ts:9633:63`: `DiagnosticRelatedInformation`; declaration(s): `src/compiler/types.ts:7290:1`.
+- `src/compiler/parser.ts:9697:43`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/parser.ts:10032:36`: `SourceFileLike`; declaration(s): `src/compiler/types.ts:4286:1`.
 - `src/compiler/parser.ts:10032:48`: `SourceFileLike`; declaration(s): `src/compiler/types.ts:4286:1`.
 - `src/compiler/parser.ts:10089:24`: `NodeArray<Node>`; declaration(s): `src/compiler/types.ts:1589:1`.
@@ -58,6 +104,7 @@ The original inventory is preserved in evidence/wave5/public-inventory-before.md
 - `src/compiler/tracing.ts:205:67`: `SourceFileLike`; declaration(s): `src/compiler/scanner.ts:548:47`, `src/compiler/types.ts:4286:1`.
 - `src/compiler/tracing.ts:206:65`: `SourceFileLike`; declaration(s): `src/compiler/scanner.ts:548:47`, `src/compiler/types.ts:4286:1`.
 - `src/compiler/transformers/classThis.ts:122:59`: `SourceMapRange | undefined`; declaration(s): `src/compiler/factory/emitNode.ts:139:60`, `src/compiler/types.ts:8298:1`.
+- `src/compiler/transformers/classThis.ts:126:27`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
 - `src/compiler/transformers/declarations/diagnostics.ts:726:34`: `DiagnosticRelatedInformation`; declaration(s): `src/compiler/types.ts:7290:1`.
 - `src/compiler/transformers/declarations/diagnostics.ts:729:34`: `DiagnosticRelatedInformation`; declaration(s): `src/compiler/types.ts:7290:1`.
 - `src/compiler/transformers/declarations/diagnostics.ts:737:34`: `DiagnosticRelatedInformation`; declaration(s): `src/compiler/types.ts:7290:1`.
@@ -69,17 +116,32 @@ The original inventory is preserved in evidence/wave5/public-inventory-before.md
 - `src/compiler/transformers/declarations/diagnostics.ts:804:38`: `DiagnosticRelatedInformation`; declaration(s): `src/compiler/types.ts:7290:1`.
 - `src/compiler/transformers/destructuring.ts:107:31`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/transformers/destructuring.ts:113:28`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/destructuring.ts:157:36`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/transformers/destructuring.ts:164:24`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/transformers/destructuring.ts:277:180`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/transformers/destructuring.ts:282:67`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/transformers/destructuring.ts:559:214`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/es2016.ts:71:93`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/es2016.ts:72:109`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/es2016.ts:74:17`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/es2016.ts:81:17`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/es2016.ts:89:93`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/es2016.ts:92:17`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/es2016.ts:99:17`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/es2016.ts:110:93`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/es2016.ts:112:13`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/es2016.ts:120:91`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
 - `src/compiler/transformers/namedEvaluation.ts:205:68`: `SourceMapRange | undefined`; declaration(s): `src/compiler/factory/emitNode.ts:139:60`, `src/compiler/types.ts:8298:1`.
+- `src/compiler/transformers/namedEvaluation.ts:212:27`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/transformers/taggedTemplate.ts:131:60`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
 - `src/compiler/transformers/utilities.ts:426:47`: `Node`; declaration(s): `src/compiler/types.ts:942:1`, `src/compiler/utilitiesPublic.ts:1359:30`.
 - `src/compiler/transformers/utilities.ts:426:96`: `Identifier | PrivateIdentifier`; declaration(s): `src/compiler/types.ts:1701:1`, `src/compiler/types.ts:1803:1`.
 - `src/compiler/transformers/utilities.ts:426:128`: `Node`; declaration(s): `src/compiler/types.ts:942:1`.
 - `src/compiler/transformers/utilities.ts:834:47`: `Node`; declaration(s): `src/compiler/types.ts:942:1`.
 - `src/compiler/transformers/utilities.ts:846:45`: `Node`; declaration(s): `src/compiler/types.ts:942:1`.
+- `src/compiler/transformers/utilities.ts:885:129`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
 - `src/compiler/utilities.ts:1024:47`: `SourceFileLike`; declaration(s): `src/compiler/scanner.ts:548:47`, `src/compiler/types.ts:4286:1`.
+- `src/compiler/utilities.ts:2037:27`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/utilities.ts:2528:67`: `SourceFileLike`; declaration(s): `src/compiler/scanner.ts:548:47`, `src/compiler/types.ts:4286:1`.
 - `src/compiler/utilities.ts:2529:65`: `SourceFileLike`; declaration(s): `src/compiler/scanner.ts:548:47`, `src/compiler/types.ts:4286:1`.
 - `src/compiler/utilities.ts:2533:70`: `SourceFileLike`; declaration(s): `src/compiler/types.ts:4286:1`.
@@ -87,6 +149,9 @@ The original inventory is preserved in evidence/wave5/public-inventory-before.md
 - `src/compiler/utilities.ts:4763:12`: `Symbol | undefined`; declaration(s): `src/compiler/types.ts:6037:1`.
 - `src/compiler/utilities.ts:6750:38`: `SourceFileLike`; declaration(s): `src/compiler/types.ts:4286:1`.
 - `src/compiler/utilities.ts:7881:12`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/utilities.ts:7882:24`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/utilities.ts:7893:29`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
+- `src/compiler/utilities.ts:7898:24`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/utilities.ts:7946:37`: `SourceFileLike`; declaration(s): `src/compiler/types.ts:4286:1`.
 - `src/compiler/utilities.ts:7951:37`: `SourceFileLike`; declaration(s): `src/compiler/types.ts:4286:1`.
 - `src/compiler/utilities.ts:7961:37`: `SourceFileLike`; declaration(s): `src/compiler/types.ts:4286:1`.
@@ -96,6 +161,10 @@ The original inventory is preserved in evidence/wave5/public-inventory-before.md
 - `src/compiler/utilities.ts:10645:6`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/utilities.ts:10655:6`: `TextRange`; declaration(s): `src/compiler/types.ts:28:1`.
 - `src/compiler/utilities.ts:10818:21`: `TemplateLiteralTypeSpan`; declaration(s): `src/compiler/types.ts:2382:1`.
+- `src/compiler/utilities.ts:12359:36`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/utilities.ts:12377:30`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/visitorPublic.ts:489:37`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
+- `src/compiler/visitorPublic.ts:495:21`: `TextRange | undefined`; declaration(s): `src/compiler/factory/utilitiesPublic.ts:10:61`, `src/compiler/types.ts:28:1`.
 - `src/compiler/visitorPublic.ts:603:17`: `Record<SyntaxKind, VisitEachChildFunction<any> | undefined>`; declaration(s): `src/compiler/visitorPublic.ts:603:40`.
 - `src/compiler/watchPublic.ts:151:24`: `T`; declaration(s): `src/compiler/watchPublic.ts:141:42`, `src/compiler/watchPublic.ts:151:68`.
 - `src/compiler/watchUtilities.ts:629:64`: `BuilderProgram`; declaration(s): `src/compiler/builderPublic.ts:46:1`.
