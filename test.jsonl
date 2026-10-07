@@ -69086,3 +69086,11 @@
 {"Time":"2026-10-07T23:47:36.502436266Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants/erasure-precedence","Elapsed":42.08}
 {"Time":"2026-10-07T23:47:36.502446572Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants/reference-pragma"}
 {"Time":"2026-10-07T23:47:36.502450097Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants/reference-pragma","Output":"=== RUN   TestSyntaxMutants/reference-pragma\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:48:16.169302543Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants/reference-pragma","Output":"    syntax_test.go:65: Node: disabled check accepts Go-refused input; acceptance oracle catches it\n"}
+{"Time":"2026-10-07T23:48:16.169348822Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants/reference-pragma","Output":"    syntax_test.go:65: native: disabled check accepts Go-refused input; acceptance oracle catches it\n"}
+{"Time":"2026-10-07T23:48:16.172462619Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants/reference-pragma","Output":"--- PASS: TestSyntaxMutants/reference-pragma (39.67s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:48:16.172473285Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants/reference-pragma","Elapsed":39.67}
+{"Time":"2026-10-07T23:48:16.172481497Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants","Output":"--- PASS: TestSyntaxMutants (122.53s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T23:48:16.172491723Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxMutants","Elapsed":122.53}
+{"Time":"2026-10-07T23:48:16.172563992Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals"}
+{"Time":"2026-10-07T23:48:16.172573917Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Output":"=== RUN   TestSyntaxRefusals\n","OutputType":"frame"}
