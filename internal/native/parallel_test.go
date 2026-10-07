@@ -22,7 +22,11 @@ func parallelHarness(t *testing.T, file string, options Options) string {
 		t.Fatal(err)
 	}
 	source = []byte(parallelSource(string(source)))
-	binary := filepath.Join(t.TempDir(), "harness")
+	name := "harness"
+	if options.ThreadSanitize {
+		name += "-tsan"
+	}
+	binary := filepath.Join(t.TempDir(), name)
 	if err := Build(string(source), binary, options); err != nil {
 		t.Fatal(err)
 	}
@@ -31,19 +35,34 @@ func parallelHarness(t *testing.T, file string, options Options) string {
 
 func parallelRun(t *testing.T, binary string, threads string, arguments ...string) (string, string) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, binary, arguments...)
-	command.Env = parallelEnvironment(threads, true)
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := command.Run(); err != nil {
-		t.Fatalf("threads=%s: %v\n%s\n%s", threads, err, stdout.String(), stderr.String())
+	runs := 1
+	if strings.HasSuffix(binary, "-tsan") {
+		runs = 3
 	}
-	if strings.Contains(stderr.String(), "WARNING: ThreadSanitizer") || strings.Contains(stderr.String(), "ERROR:") {
-		t.Fatal(stderr.String())
+	var firstOut, firstErr string
+	started := time.Now()
+	for attempt := 0; attempt < runs; attempt++ {
+		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+		command := exec.CommandContext(ctx, binary, arguments...)
+		command.Env = parallelEnvironment(threads, true)
+		var stdout, stderr bytes.Buffer
+		command.Stdout, command.Stderr = &stdout, &stderr
+		err := command.Run()
+		cancel()
+		if err != nil {
+			t.Fatalf("threads=%s attempt=%d: %v\n%s\n%s", threads, attempt+1, err, stdout.String(), stderr.String())
+		}
+		if strings.Contains(stderr.String(), "WARNING: ThreadSanitizer") || strings.Contains(stderr.String(), "ERROR:") {
+			t.Fatal(stderr.String())
+		}
+		if attempt == 0 {
+			firstOut, firstErr = stdout.String(), stderr.String()
+		} else if firstOut != stdout.String() || firstErr != stderr.String() {
+			t.Fatal("repeated race fixture changed its output")
+		}
 	}
-	return stdout.String(), stderr.String()
+	t.Logf("harness threads=%s arguments=%v runs=%d elapsed=%s", threads, arguments, runs, time.Since(started))
+	return firstOut, firstErr
 }
 
 func parallelBuilds(t *testing.T) []struct {
@@ -129,12 +148,19 @@ func TestParallelChecksCatchMutants(t *testing.T) {
 		name, file, old, changed, harness, mode, threads, want string
 		race                                                   bool
 	}{
+		{"view_parent_units", "string_slice_impl.h", "if (slice != string) { slice->units = last - first + 1; }", "slice->units = last - first + 1;", "map.c", "strings", "4", "WARNING: ThreadSanitizer: data race", true},
+		{"view_owner_count", "string_share.c", "size_t references = adamic_reference_count(&owner->heap);", "size_t references = owner->heap.references;", "map.c", "strings", "4", "WARNING: ThreadSanitizer: data race", true},
+		{"ascii_character_write", "string_slice_impl.h", "return &characters[value];", "characters[value].units = 2; return &characters[value];", "string_views.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"skip_items_share", "parallel.c", "adamic_share(items);", "/* mutant: publication without preparation */", "map.c", "strings", "4", "WARNING: ThreadSanitizer: data race", true},
+		{"lazy_cache", "string_index.c", "if (__atomic_compare_exchange_n(&((adamic_string *)string)->index, &expected, candidate,\n\t\tfalse, __ATOMIC_RELEASE, __ATOMIC_ACQUIRE)) { return candidate; }", "((adamic_string *)string)->index = candidate; return candidate;", "cache_race.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"plain_shared_count", "heap.c", "__atomic_fetch_add(&heap->references, 1, __ATOMIC_RELAXED);", "heap->references++;", "memory.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
-		{"field_cache", "", "static _Thread_local adamic_slot_cache cache;", "static adamic_slot_cache cache;", "memory.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
+		{"field_cache", "adamic.h", "static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {\n\tuint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED)", "static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {\n\tuint64_t packed = cache->packed", "cache_pairs.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"remote_free", "heap.c", "remote_slot *node = malloc(sizeof *node);", "give_local(slot, each); return; remote_slot *node = malloc(sizeof *node);", "memory.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"result_order", "parallel.c", "scope->results->elements[index] = result;", "scope->results->elements[scope->items->length - 1 - index] = result;", "map.c", "numbers", "4", "index 0:", false},
 		{"reused_graph", "share.c", "if (visited(&pending, heap)) { continue; }", "if (shared || visited(&pending, heap)) { continue; }", "lifecycle.c", "", "4", "", false},
+		{"oversized_slot", "object.c", "uint64_t packed = index <= UINT16_MAX ? pointer | ((uint64_t)index << 48) : 0;", "uint64_t packed = pointer | ((uint64_t)index << 48);", "scaling.c", "", "4", "", false},
+		{"fixed_grain", "parallel.c", "return grain == 0 ? 1 : grain > 256 ? 256 : grain;", "return 256;", "scaling.c", "", "4", "", false},
+		{"eager_strings", "share.c", "if (!shared) {", "if (!shared && heap->kind == adamic_kind_string) { adamic_string_prepare_shared((adamic_string *)heap); } if (!shared) {", "scaling.c", "", "4", "", false},
 		{"one_worker", "parallel.c", "if (thread_count == 1) { return; }", "if (thread_count == 1) { thread_count = 2; }", "map.c", "numbers", "1", "", false},
 	}
 	for _, mutant := range mutants {
@@ -151,6 +177,9 @@ func TestParallelChecksCatchMutants(t *testing.T) {
 				contents, err := fs.ReadFile(runtime, "runtime/"+file.Name())
 				if err != nil {
 					t.Fatal(err)
+				}
+				if mutant.harness == "cache_race.c" && file.Name() == "string_index.c" {
+					contents = []byte(cacheBuilderGate(string(contents)))
 				}
 				if file.Name() == mutant.file {
 					if strings.Count(string(contents), mutant.old) != 1 {
@@ -186,35 +215,45 @@ func TestParallelChecksCatchMutants(t *testing.T) {
 			if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
 				t.Fatalf("mutant must compile: %v\n%s", err, output)
 			}
-			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-			defer cancel()
-			args := []string{}
-			if mutant.mode != "" {
-				args = append(args, mutant.mode)
-			}
-			command := exec.CommandContext(ctx, binary, args...)
-			command.Env = parallelEnvironment(mutant.threads, false)
-			output, err := command.CombinedOutput()
-			if err == nil || ctx.Err() != nil || !strings.Contains(string(output), mutant.want) {
-				t.Fatalf("mutant not caught by %q: %v\n%s", mutant.want, err, output)
-			}
-			if mutant.name == "one_worker" {
-				failure, ok := err.(*exec.ExitError)
-				if !ok || failure.ExitCode() != -1 {
-					t.Fatalf("want harness abort, got %v\n%s", err, output)
-				}
-			}
-			report := "harness failure"
+			attempts := 1
 			if mutant.race {
-				report = "TSan data race"
-				for _, line := range strings.Split(string(output), "\n") {
-					if strings.Contains(line, "SUMMARY: ThreadSanitizer:") {
-						report = line
-						break
+				attempts = 3
+			}
+			for attempt := 0; attempt < attempts; attempt++ {
+				ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+
+				args := []string{}
+				if mutant.mode != "" {
+					args = append(args, mutant.mode)
+				}
+				command := exec.CommandContext(ctx, binary, args...)
+				command.Env = parallelEnvironment(mutant.threads, false)
+				started := time.Now()
+				output, err := command.CombinedOutput()
+				timedOut := ctx.Err() != nil
+				cancel()
+				t.Logf("mutant attempt=%d elapsed=%s", attempt+1, time.Since(started))
+				if err == nil || timedOut || !strings.Contains(string(output), mutant.want) {
+					t.Fatalf("mutant not caught by %q: %v\n%s", mutant.want, err, output)
+				}
+				if mutant.name == "one_worker" {
+					failure, ok := err.(*exec.ExitError)
+					if !ok || failure.ExitCode() != -1 {
+						t.Fatalf("want harness abort, got %v\n%s", err, output)
 					}
 				}
+				report := "harness failure"
+				if mutant.race {
+					report = "TSan data race"
+					for _, line := range strings.Split(string(output), "\n") {
+						if strings.Contains(line, "SUMMARY: ThreadSanitizer:") {
+							report = line
+							break
+						}
+					}
+				}
+				t.Log(fmt.Sprintf("%s caught: %s (%v)", mutant.name, report, err))
 			}
-			t.Log(fmt.Sprintf("%s caught: %s (%v)", mutant.name, report, err))
 		})
 	}
 }
@@ -239,12 +278,12 @@ func TestParallelLifecycle(t *testing.T) {
 func parallelEnvironment(threads string, leaks bool) []string {
 	env := []string{}
 	for _, entry := range os.Environ() {
-		if strings.HasPrefix(entry, "ADAMIC_THREADS=") || strings.HasPrefix(entry, "ASAN_OPTIONS=") || strings.HasPrefix(entry, "TSAN_OPTIONS=") {
+		if strings.HasPrefix(entry, "ADAMIC_THREADS=") || strings.HasPrefix(entry, "ASAN_OPTIONS=") || strings.HasPrefix(entry, "TSAN_OPTIONS=") || strings.HasPrefix(entry, "ADAMIC_TSAN_PERTURB=") {
 			continue
 		}
 		env = append(env, entry)
 	}
-	env = append(env, "ADAMIC_THREADS="+threads, "TSAN_OPTIONS=halt_on_error=1")
+	env = append(env, "ADAMIC_THREADS="+threads, "TSAN_OPTIONS=halt_on_error=1:history_size=4:report_atomic_races=1", "ADAMIC_TSAN_PERTURB=1")
 	if goruntime.GOOS == "linux" {
 		value := "0"
 		if leaks {

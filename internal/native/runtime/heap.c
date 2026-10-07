@@ -1,8 +1,17 @@
 // heap.c: allocation, counting and freeing for every heap value (docs/memory.md).
 
+#ifdef ADAMIC_TARGET_WASI
+// Keep the inline path and also supply the request host's ownership export.
+#define adamic_release adamic_release_inline
+#endif
 #include "adamic.h"
+#ifdef ADAMIC_TARGET_WASI
+#undef adamic_release
+void adamic_release(void *value) { adamic_release_inline(value); }
+#endif
 #include "async.h"
 #include "count.h"
+#include "slab_quarantine.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -204,6 +213,7 @@ static void give(void *slot, uint32_t number) {
 		give_local(slot, each);
 		return;
 	}
+	ADAMIC_TSAN_PAUSE(adamic_tsan_remote_free);
 	remote_slot *node = malloc(sizeof *node);
 	if (node == NULL) { adamic_panic("out of memory", 13); }
 	node->slot = slot;
@@ -251,7 +261,19 @@ static void deallocate(adamic_heap *heap) {
 		free(heap);
 		return;
 	}
+#if ADAMIC_SLAB_QUARANTINE
+	// Sanitized with slabs, a freed slot waits poisoned on this thread before it can be taken again,
+	// so a stale pointer can't read the next value made in it as its own; the slot it evicts is given
+	// back, to its chunk here or to its owner's remote list.
+	void *slot = heap;
+	uint32_t number = slab - 1;
+	if (!adamic_slab_quarantine(&slot, &number, (find_chunk(number)->class + 1) * GRANULE)) {
+		return;
+	}
+	give(slot, number);
+#else
 	give(heap, slab - 1);
+#endif
 }
 
 void *adamic_retain_slow(void *value) {
@@ -264,7 +286,7 @@ void *adamic_retain_slow(void *value) {
 		// Clang's native intptr_t conversion makes shared counts negative. One test covers both
 		// sharing and zero, so the ordinary positive-count path keeps one branch and plain stores.
 		if ((intptr_t)count > 0) { heap->references = count + 1; }
-		else if (count != 0 && count != ADAMIC_SHARED) { __atomic_fetch_add(&heap->references, 1, __ATOMIC_RELAXED); }
+		else if (count != 0 && count != ADAMIC_SHARED) { ADAMIC_TSAN_PAUSE(adamic_tsan_shared_count); __atomic_fetch_add(&heap->references, 1, __ATOMIC_RELAXED); }
 	}
 	return value;
 }
@@ -393,10 +415,13 @@ static void free_one(void *value) {
 	ADAMIC_COUNT_FREE();
 }
 
-// Keep the draining frame out of the common release path.
+// Keep destruction out of the common release path: null, immortal and still-shared values need
+// no destruction registers or queue access. The list still drains iteratively, including children.
 __attribute__((noinline)) static void release_last(void *value) {
 	list(value);
-	if (draining) { return; }
+	if (draining) {
+		return;
+	}
 	draining = true;
 	while (freeing_count > 0) { free_one(freeing[--freeing_count]); }
 	draining = false;
@@ -411,6 +436,10 @@ void adamic_release_slow(void *value) {
 }
 
 void adamic_heap_thread_end(void) {
+#if ADAMIC_SLAB_QUARANTINE
+	// The slots this thread holds go back before its remote frees are drained, so its own come home.
+	adamic_slab_quarantine_drain(give);
+#endif
 	for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) { drain_remote(each); }
 	free(freeing);
 	freeing = NULL;

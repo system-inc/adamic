@@ -15,6 +15,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#ifdef ADAMIC_TARGET_WASI
+#include <sys/stat.h>
+#endif
 
 // new_string makes a string of length bytes, references 1, its bytes right after it in one block, the
 // same layout string.c makes, so the heap frees it the same way.
@@ -93,18 +96,44 @@ static size_t encoded_size(unsigned point) {
 	return point < 0x80 ? 1 : point < 0x800 ? 2 : point < 0x10000 ? 3 : 4;
 }
 
+// ascii_prefix scans only complete words inside the input. memcpy permits unaligned
+// pointers without aliasing violations; the repeated high-bit mask is endian independent.
+static size_t ascii_prefix(const unsigned char *bytes, size_t length) {
+	size_t offset = 0;
+	while (length - offset >= sizeof(uint64_t)) {
+		uint64_t word;
+		memcpy(&word, bytes + offset, sizeof word);
+		if ((word & UINT64_C(0x8080808080808080)) != 0) {
+			break;
+		}
+		offset += sizeof word;
+	}
+	while (offset < length && bytes[offset] < 0x80) {
+		offset++;
+	}
+	return offset;
+}
+
 // decode makes a string of bytes decoded as WHATWG UTF-8, which the caller owns. What it makes is
 // always valid UTF-8, so no lone surrogate can come in from outside.
 static adamic_string *decode(const unsigned char *bytes, size_t length) {
-	size_t size = 0;
+	size_t ascii = ascii_prefix(bytes, length);
+	size_t size = ascii;
 	unsigned point;
-	for (size_t offset = 0; offset < length;) {
+	for (size_t offset = ascii; offset < length;) {
 		offset += decode_step(bytes, length, offset, &point);
 		size += encoded_size(point);
 	}
 	adamic_string *string = new_string(size);
+	if (ascii == length) {
+		string->units = length + 1;
+	}
 	unsigned char *cursor = (unsigned char *)string->bytes;
-	for (size_t offset = 0; offset < length;) {
+	if (ascii != 0) {
+		memcpy(cursor, bytes, ascii);
+		cursor += ascii;
+	}
+	for (size_t offset = ascii; offset < length;) {
 		offset += decode_step(bytes, length, offset, &point);
 		switch (encoded_size(point)) {
 		case 1:
@@ -225,6 +254,10 @@ static char *file_name(const adamic_string *path) {
 // read_all reads every byte from a descriptor into a buffer the caller frees, through partial reads
 // and interrupted calls. It returns 0, or the errno that stopped it.
 static int read_all(int descriptor, unsigned char **bytes, size_t *length) {
+	// Both outputs are defined on every path, so a caller that reads them after an error reads
+	// nothing it didn't set.
+	*bytes = NULL;
+	*length = 0;
 	size_t capacity = 4096, used = 0;
 	unsigned char *buffer = malloc(capacity);
 	for (;;) {
@@ -246,7 +279,8 @@ static int read_all(int descriptor, unsigned char **bytes, size_t *length) {
 			if (errno == EINTR) {
 				continue;
 			}
-			int error = errno;
+			// read sets errno when it fails; an error with none is still an error, never success.
+			int error = errno != 0 ? errno : EIO;
 			free(buffer);
 			return error;
 		}
@@ -262,6 +296,12 @@ static int read_all(int descriptor, unsigned char **bytes, size_t *length) {
 adamic_object *adamic_read_text_file(const adamic_string *path) {
 	// What was printed comes first, as on Node: the file may be stdin, waiting on a prompt.
 	adamic_output_flush();
+#ifdef ADAMIC_TARGET_WASI
+	// WASI libc cannot resolve an empty capability path. Node treats it as ENOENT.
+	if (path->length == 0) {
+		return failure(path, ENOENT, false);
+	}
+#endif
 	char *name = file_name(path);
 	if (name == NULL) {
 		return failure(path, 0, false);
@@ -274,6 +314,14 @@ adamic_object *adamic_read_text_file(const adamic_string *path) {
 	if (descriptor < 0) {
 		return failure(path, errno, false);
 	}
+#ifdef ADAMIC_TARGET_WASI
+	// fd_read on a directory returns EBADF in WASI; Node reports EISDIR instead.
+	struct stat status;
+	if (fstat(descriptor, &status) == 0 && S_ISDIR(status.st_mode)) {
+		close(descriptor);
+		return failure(path, EISDIR, false);
+	}
+#endif
 	unsigned char *bytes;
 	size_t length;
 	int error = read_all(descriptor, &bytes, &length);
@@ -322,14 +370,36 @@ static int write_all(int descriptor, const char *bytes, size_t length) {
 adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text) {
 	// What was printed comes first, as on Node: the file may be stdout or stderr themselves.
 	adamic_output_flush();
+#ifdef ADAMIC_TARGET_WASI
+	if (path->length == 0) {
+		return failure(path, ENOENT, true);
+	}
+#endif
 	char *name = file_name(path);
 	if (name == NULL) {
 		return failure(path, 0, true);
 	}
-	int descriptor;
-	do {
-		descriptor = open(name, O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC, 0666);
-	} while (descriptor < 0 && errno == EINTR);
+	int descriptor = -1;
+	bool borrowed = false;
+#ifdef ADAMIC_TARGET_WASI
+	// Preview 1 supplies stdout/stderr as descriptors, but no /dev namespace.
+	// Node's WASI host reports a pipe as a stream socket. Reopening these stream
+	// aliases on the host fails; write the supplied capability without closing it.
+	// Regular files still go through open, preserving Node's truncation semantics.
+	int stream = strcmp(name, "/dev/stdout") == 0 ? STDOUT_FILENO :
+		strcmp(name, "/dev/stderr") == 0 ? STDERR_FILENO : -1;
+	struct stat status;
+	if (stream >= 0 && fstat(stream, &status) == 0 &&
+		(S_ISFIFO(status.st_mode) || S_ISCHR(status.st_mode) || S_ISSOCK(status.st_mode))) {
+		descriptor = stream;
+		borrowed = true;
+	}
+#endif
+	if (!borrowed) {
+		do {
+			descriptor = open(name, O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC, 0666);
+		} while (descriptor < 0 && errno == EINTR);
+	}
 	free(name);
 	if (descriptor < 0) {
 		return failure(path, errno, true);
@@ -337,7 +407,7 @@ adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_st
 	char *bytes = utf8(text);
 	int error = write_all(descriptor, bytes, text->length);
 	free(bytes);
-	if (close(descriptor) != 0 && error == 0 && errno != EINTR) {
+	if (!borrowed && close(descriptor) != 0 && error == 0 && errno != EINTR) {
 		error = errno;
 	}
 	if (error != 0) {

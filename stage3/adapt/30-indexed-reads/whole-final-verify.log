@@ -1,0 +1,20 @@
+PASS core.ts: stock emitted JavaScript bytes, site contract, idempotence
+{"decoder_node_cases":5232,"output_and_indexed_read_traces":"identical"}
+PASS utilities.ts: only independently proven narrowing restructuring, site contract, idempotence
+PASS utilitiesPublic.ts: stock emitted JavaScript bytes, site contract, idempotence
+{"parser_missing_guard_node_cases":164,"results_and_calls_and_property_read_traces":"identical"}
+PASS parser.ts: only independently proven narrowing restructuring, site contract, idempotence
+{"scanner_clamp_node_cases":2660,"stdout_value_and_indexed_read_trace":"identical"}
+PASS scanner.ts: only independently proven narrowing restructuring, site contract, idempotence
+PASS factory/baseNodeFactory.ts: stock emitted JavaScript bytes, site contract, idempotence
+PASS factory/emitHelpers.ts: stock emitted JavaScript bytes, site contract, idempotence
+PASS factory/emitNode.ts: stock emitted JavaScript bytes, site contract, idempotence
+PASS factory/nodeChildren.ts: stock emitted JavaScript bytes, site contract, idempotence
+PASS factory/nodeConverters.ts: stock emitted JavaScript bytes, site contract, idempotence
+PASS factory/nodeFactory.ts: stock emitted JavaScript bytes, site contract, idempotence
+PASS factory/nodeTests.ts: stock emitted JavaScript bytes, site contract, idempotence
+PASS factory/parenthesizerRules.ts: stock emitted JavaScript bytes, site contract, idempotence
+PASS factory/utilities.ts: stock emitted JavaScript bytes, site contract, idempotence
+PASS factory/utilitiesPublic.ts: stock emitted JavaScript bytes, site contract, idempotence
+PASS debug.ts: stock emitted JavaScript bytes, site contract, idempotence
+PASS path.ts: stock emitted JavaScript bytes, site contract, idempotence

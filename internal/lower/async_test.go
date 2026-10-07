@@ -115,3 +115,14 @@ await run();`)
 		t.Fatal("holder write was not analyzed")
 	}
 }
+
+// Ordinary function values also cover the formerly unsafe compound observations.
+func TestAsyncTypeOfCompoundFunctionValuesLower(t *testing.T) {
+	t.Parallel()
+	for _, expression := range []string{"typeof (true ? f : f)", "typeof (f === f)"} {
+		_, err := lowerSource(t, "async function f(): Promise<void> {}\nconsole.log("+expression+");\n")
+		if err != nil {
+			t.Fatalf("%s: %v", expression, err)
+		}
+	}
+}

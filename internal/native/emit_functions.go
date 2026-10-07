@@ -168,7 +168,9 @@ func (e *emitter) arguments(call ir.Call) []string {
 			continue
 		}
 		value := ""
-		if e.statementRegion != "" && !e.regions.callEscapes(call, index) {
+		if lent, ok := e.lentArgument(call, index); ok {
+			value = lent
+		} else if e.statementRegion != "" && !e.regions.callEscapes(call, index) {
 			// A parameter that flows nowhere: a fresh value handed to it lives in the statement's region.
 			value = e.handRegion(argument, "&"+e.statementRegion)
 		} else {

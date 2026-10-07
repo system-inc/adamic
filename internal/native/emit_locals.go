@@ -67,7 +67,7 @@ func (e *emitter) checkReady(local int) {
 		ready = cell + "->ready"
 	}
 	e.line("if (!%s) {", ready)
-	e.line("\tstatic const char message[] = %s;", cString(message))
+	e.line("\tstatic const char message[] = %s;", cArray(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")
 	e.line("}")
 }

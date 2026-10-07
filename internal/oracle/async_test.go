@@ -3,6 +3,7 @@ package oracle
 import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 	"path/filepath"
 	"regexp"
@@ -410,5 +411,60 @@ func TestAsyncInstanceAndArrowPayloadMutants(t *testing.T) {
 				t.Fatalf("Node did not exclusively catch instance/arrow payload mutant: %+v", result)
 			}
 		})
+	}
+}
+
+// Mutate a shared ordinary typeof result so both backends can agree with each other and still be
+// wrong. The source on Node must independently catch the mistaken async function classification.
+func TestAsyncTypeOfWrongKindMutant(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_typeof.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := onNode(t, path)
+	want := "function\nfunction\nnested: function\nstring\nnumber\nshadow after await: number\ninside: function\nfunction\n"
+	if oracle.exitCode != 0 || string(oracle.stdout) != want || len(oracle.stderr) != 0 {
+		t.Fatalf("Node witness: %+v", oracle)
+	}
+	changed := false
+	object := len(program.Strings)
+	program.Strings = append(program.Strings, "object")
+	for _, function := range program.Functions {
+		for index, statement := range function.Body {
+			declaration, ok := statement.(ir.Declare)
+			if !ok {
+				continue
+			}
+			observation, ok := declaration.Value.(ir.TypeOf)
+			if ok && observation.Value.Type() == ir.Closure {
+				declaration.Value = ir.StringConstant{Index: object}
+				function.Body[index] = declaration
+				changed = true
+			}
+		}
+	}
+	if !changed {
+		t.Fatal("mutant did not change an ordinary async typeof result")
+	}
+	binary := filepath.Join(t.TempDir(), "wrong-kind")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	if report := leakcheck.Report(t, native.C(program), binary); report != "" {
+		t.Fatal(report)
+	}
+	for name, result := range map[string]run{
+		"native":     execute(t, binary),
+		"JavaScript": onJavaScriptBackend(t, program),
+	} {
+		if disagreement(oracle, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
+			t.Fatalf("only Node stdout must catch %s's wrong-kind mutant: %+v", name, result)
+		}
+		t.Logf("Node stdout catches %s's async function classified as object", name)
 	}
 }

@@ -1,0 +1,9 @@
+try {
+ throw new Error('initial');
+} catch (error) {
+ if (error instanceof Error) {
+  error.name = `Custom${1}`;
+  error.message = `changed ${2}`;
+  throw error;
+ }
+}

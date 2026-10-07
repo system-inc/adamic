@@ -30,7 +30,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
-	ast.KindTypePredicate:     {"a type predicate", "narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"},
 	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
 
@@ -68,6 +67,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
 	}
+	if err := l.parallelPreflight(module); err != nil {
+		return err
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -77,6 +79,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if refused, isRefused := refusals[node.Kind]; isRefused {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
+		}
+		if node.Kind == ast.KindTypePredicate {
+			if err := l.provePredicate(node); err != nil {
+				found = err
+				return true
+			}
 		}
 		var assertion *ast.Node
 		if node.Kind == ast.KindPropertyDeclaration {
@@ -97,9 +105,6 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		// Covered async syntax is lowered by async.go. Unsupported lifecycle and Promise
-		// operations get specific NotYet there; permanent refusals above still apply.
-
 		generator := false
 		switch node.Kind {
 		case ast.KindFunctionDeclaration:
@@ -113,6 +118,9 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
 			return true
 		}
+		// Covered async syntax is lowered by async.go. Unsupported lifecycle and Promise
+		// operations get specific NotYet there; permanent refusals above still apply.
+
 		if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
 			// JavaScript's arguments object, not a variable the program named arguments.
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {

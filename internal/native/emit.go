@@ -20,6 +20,10 @@ import (
 // retain and a release on every assignment for that simplicity; removing them where they cancel is
 // the memory model's work, measured against this.
 func C(program *ir.Program) string {
+	return cProgram(program, -1)
+}
+
+func cProgram(program *ir.Program, handler int) string {
 	emitter := &emitter{program: program}
 	if program.HasPromises() {
 		// Suspension ownership is conservative until the shared analyses prove it.
@@ -38,7 +42,7 @@ func C(program *ir.Program) string {
 	}
 	for index, value := range program.Strings {
 		if len(value) <= longestLiteral {
-			fmt.Fprintf(&builder, "static adamic_string adamic_string_%d = ADAMIC_STRING(%s);\n", index, cString(value))
+			fmt.Fprintf(&builder, "static adamic_string adamic_string_%d = ADAMIC_STRING(%s);\n", index, cLiteral(value))
 			continue
 		}
 		// Longer than a C string literal may be under -pedantic: its bytes as an array instead.
@@ -84,16 +88,22 @@ func C(program *ir.Program) string {
 		}
 	}
 	emitter.inRegion = false
-	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n")
+	bodies.WriteString("int main(int argc, char **argv) {\n")
+	bodies.WriteString("\tadamic_start(argc, argv);\n")
 	emitter.indent = 1
 	emitter.asyncMain()
 	emitter.block(program.Main, nil)
 	if program.HasPromises() && program.AsyncEntry == 0 {
 		emitter.line("adamic_async_run();")
 	}
-	emitter.releaseGlobals()
+	if handler < 0 {
+		emitter.releaseGlobals()
+	}
 	bodies.WriteString(emitter.out.String())
 	bodies.WriteString("\treturn 0;\n}\n")
+	if handler >= 0 {
+		bodies.WriteString(emitter.requestABI(handler))
+	}
 
 	for index := range program.Functions {
 		for _, inRegion := range emitter.regionVariants(index) {

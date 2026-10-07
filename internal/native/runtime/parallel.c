@@ -4,9 +4,14 @@
 #define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include "parallel.h"
+#ifdef ADAMIC_TSAN_TEST
+#include <time.h>
+#endif
 #include <errno.h>
 #include <pthread.h>
+#ifndef ADAMIC_TARGET_WASI
 #include <signal.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,13 +20,20 @@
 #include <sched.h>
 #endif
 
-#define GRAIN 256
+// At least eight chunks per worker for coarse work; never pay a queue claim per
+// element on large cheap maps. The grain belongs to the scope, including nested maps.
+size_t adamic_parallel_grain(size_t items, size_t threads) {
+	size_t grain = items / (8 * threads);
+	return grain == 0 ? 1 : grain > 256 ? 256 : grain;
+}
 
 typedef struct scope {
 	adamic_array *items;
 	adamic_closure *work;
 	adamic_array *results;
+	bool moved;
 	size_t completed;
+	size_t grain;
 	size_t exception_index;
 	adamic_object *exception;
 } scope;
@@ -49,9 +61,33 @@ static size_t created;
 static bool stopping;
 static _Thread_local size_t worker_index;
 
+#ifdef ADAMIC_TSAN_TEST
+// Sleep changes scheduling, never happens-before. Bounded per-thread budgets
+// keep the million-element fixture cheap. There is no hook in other builds.
+void adamic_tsan_pause(enum adamic_tsan_point point) {
+	static _Thread_local bool initialized, enabled;
+	static _Thread_local unsigned visits[adamic_tsan_points];
+	if (!initialized) {
+		const char *option = getenv("ADAMIC_TSAN_PERTURB");
+		enabled = option != NULL && strcmp(option, "1") == 0;
+		initialized = true;
+	}
+	if (!enabled || visits[point] >= 64) { return; }
+	visits[point]++;
+	int saved = errno;
+	struct timespec delay = {0, 100000};
+	nanosleep(&delay, NULL);
+	errno = saved;
+}
+#endif
+
 // Linux affinity and cgroup v2/v1 quotas cap online CPUs; macOS uses online CPUs.
 // An explicit override always wins.
 static size_t available_threads(void) {
+#ifdef ADAMIC_TARGET_WASI
+	// Plain WASI has no shared memory or worker threads, including with an override.
+	return 1;
+#else
 	long online = sysconf(_SC_NPROCESSORS_ONLN);
 	size_t count = online > 0 ? (size_t)online : 1;
 #ifdef __linux__
@@ -98,6 +134,7 @@ static size_t available_threads(void) {
 		count = (size_t)requested;
 	}
 	return count;
+#endif
 }
 
 static range *new_range(scope *scope, size_t from, size_t end) {
@@ -131,7 +168,7 @@ static bool claim(scope **scope_out, size_t *from_out, size_t *end_out) {
 			range *oldest = victim->first;
 			if (oldest == NULL) { continue; }
 			size_t length = oldest->end - oldest->from;
-			if (length > GRAIN) {
+			if (length > oldest->scope->grain) {
 				size_t middle = oldest->from + length / 2;
 				task = new_range(oldest->scope, middle, oldest->end);
 				oldest->end = middle;
@@ -146,7 +183,7 @@ static bool claim(scope **scope_out, size_t *from_out, size_t *end_out) {
 	if (task == NULL) { return false; }
 	*scope_out = task->scope;
 	*from_out = task->from;
-	*end_out = task->end - task->from > GRAIN ? task->from + GRAIN : task->end;
+	*end_out = task->end - task->from > task->scope->grain ? task->from + task->scope->grain : task->end;
 	task->from = *end_out;
 	if (task->from == task->end) { remove_range(own, task); free(task); }
 	return true;
@@ -173,7 +210,7 @@ static void execute_range(scope *scope, size_t from, size_t end) {
 			pthread_mutex_unlock(&scheduler);
 			adamic_release(error);
 		} else {
-			if (scope->results->references) { adamic_share(result.reference); }
+			if (scope->results->references && !scope->moved) { adamic_share(result.reference); }
 			scope->results->elements[index] = result;
 		}
 	}
@@ -194,6 +231,7 @@ static void *worker_main(void *given) {
 		while (!stopping && !claim(&scope, &from, &end)) { pthread_cond_wait(&changed, &scheduler); }
 		if (stopping) { break; }
 		pthread_mutex_unlock(&scheduler);
+		ADAMIC_TSAN_PAUSE(adamic_tsan_claim);
 		execute_range(scope, from, end);
 		pthread_mutex_lock(&scheduler);
 	}
@@ -215,6 +253,12 @@ void adamic_parallel_shutdown(void) {
 }
 
 static void start(void) {
+#ifdef ADAMIC_TARGET_WASI
+	thread_count = available_threads();
+	// Keep the native worker entry referenced for strict unused-function checks.
+	(void)worker_main;
+	return;
+#else
 	thread_count = available_threads();
 	// This path creates no threads, not even an idle worker.
 	if (thread_count == 1) { return; }
@@ -223,7 +267,7 @@ static void start(void) {
 	pthread_attr_t attributes;
 	pthread_attr_init(&attributes);
 	if (pthread_attr_setstacksize(&attributes, (size_t)8 << 20) != 0) { adamic_panic("cannot set worker stack size", sizeof "cannot set worker stack size" - 1); }
-	// Only the caller handles termination signals; its stdout state is quiescent at every join.
+	// Workers inherit blocked stop signals. A handler on any unblocked thread forwards to the signal loop.
 	sigset_t signals, saved;
 	sigemptyset(&signals); sigaddset(&signals, SIGTERM); sigaddset(&signals, SIGINT); sigaddset(&signals, SIGHUP);
 	pthread_sigmask(SIG_BLOCK, &signals, &saved);
@@ -236,15 +280,17 @@ static void start(void) {
 	pthread_sigmask(SIG_SETMASK, &saved, NULL);
 	pthread_attr_destroy(&attributes);
 	atexit(adamic_parallel_shutdown);
+#endif
 }
 
 size_t adamic_parallel_threads(void) { pthread_once(&started, start); return thread_count; }
 size_t adamic_parallel_workers(void) { pthread_once(&started, start); return created; }
 
-adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references) {
+static adamic_array *parallel_map(adamic_array *items, adamic_closure *work, bool references, bool moved) {
 	pthread_once(&started, start);
-	adamic_share(items);
+	if (!moved) { adamic_share(items); }
 	adamic_share(work);
+	ADAMIC_TSAN_PAUSE(adamic_tsan_publication);
 	adamic_array *results = adamic_array_new(items->length, references);
 	results->length = items->length;
 	if (items->length != 0) { memset(results->elements, 0, items->length * sizeof *results->elements); }
@@ -256,12 +302,12 @@ adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, boo
 				if (results->references) { adamic_release(result.reference); }
 				adamic_release(results); return NULL;
 			}
-			if (results->references) { adamic_share(result.reference); }
+			if (results->references && !moved) { adamic_share(result.reference); }
 			results->elements[index] = result;
 		}
 		return results;
 	}
-	scope state = {.items = items, .work = work, .results = results, .exception_index = SIZE_MAX};
+	scope state = {.moved = moved, .items = items, .work = work, .results = results, .exception_index = SIZE_MAX, .grain = adamic_parallel_grain(items->length, thread_count)};
 	pthread_mutex_lock(&scheduler);
 	if (items->length != 0) {
 		append(&workers[worker_index], new_range(&state, 0, items->length));
@@ -273,6 +319,7 @@ adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, boo
 		size_t from, end;
 		if (!claim(&next, &from, &end)) { pthread_cond_wait(&changed, &scheduler); continue; }
 		pthread_mutex_unlock(&scheduler);
+		ADAMIC_TSAN_PAUSE(adamic_tsan_claim);
 		execute_range(next, from, end);
 		pthread_mutex_lock(&scheduler);
 	}
@@ -283,4 +330,14 @@ adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, boo
 		return NULL;
 	}
 	return results;
+}
+
+// Lowering alone selects this path after proving disjoint exclusive item graphs.
+// The caller cannot access them until join; callback and result counts stay plain.
+adamic_array *adamic_parallel_map_move(adamic_array *items, adamic_closure *work, bool references) {
+	return parallel_map(items, work, references, true);
+}
+
+adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references) {
+	return parallel_map(items, work, references, false);
 }

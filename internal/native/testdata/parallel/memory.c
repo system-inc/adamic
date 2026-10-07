@@ -19,6 +19,16 @@ static size_t remote_count = 300000;
 static pthread_mutex_t gate = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t ready = PTHREAD_COND_INITIALIZER;
 static int arrived;
+static int remote_arrived;
+
+// The owner and all remote releasers enter the allocator phase together.
+static void remote_ready(void) {
+	pthread_mutex_lock(&gate);
+	remote_arrived++;
+	pthread_cond_broadcast(&ready);
+	while (remote_arrived != 5) { pthread_cond_wait(&ready, &gate); }
+	pthread_mutex_unlock(&gate);
+}
 
 static void *run(void *given) {
 	size_t worker = (size_t)given;
@@ -27,6 +37,11 @@ static void *run(void *given) {
 	pthread_cond_broadcast(&ready);
 	while (arrived != 4) { pthread_cond_wait(&ready, &gate); }
 	pthread_mutex_unlock(&gate);
+	// Count contention precedes caches, iterators and Weak's mutex. Those can
+	// accidentally order the count accesses that this fixture needs to expose.
+	adamic_string *shared_text = objects[0]->slots[0].reference;
+	for (size_t i = 0; i < 256; i++) { adamic_retain(shared_text); }
+	for (size_t i = 0; i < 256; i++) { adamic_release(shared_text); }
 	for (size_t i = 0; i < 10000; i++) {
 		// One call site alternates different shapes: a torn cache can name the wrong slot.
 		static _Thread_local adamic_slot_cache cache;
@@ -51,6 +66,7 @@ static void *run(void *given) {
 		if (adamic_weak_target(weak) != NULL) { abort(); }
 		adamic_release(weak);
 	}
+	remote_ready();
 	for (size_t i = worker; i < remote_count; i += 4) { adamic_release(remote_values[i]); }
 	adamic_heap_thread_end();
 	return NULL;
@@ -80,6 +96,7 @@ int main(void) {
 	pthread_t workers[4];
 	for (size_t i = 0; i < 4; i++) { if (pthread_create(&workers[i], NULL, run, (void *)i) != 0) { abort(); } }
 	// Allocate/free while other threads return slots into this owner's chunks.
+	remote_ready();
 	for (size_t i = 0; i < remote_count; i++) {
 		adamic_heap *value = adamic_allocate(256, adamic_kind_number);
 		adamic_release(value);

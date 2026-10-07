@@ -36,9 +36,11 @@ func run() int {
 	work := flag.String("work", filepath.Join(os.TempDir(), "adamic-fuzz"), "where programs are built and run")
 	shrink := flag.Bool("shrink", true, "shrink each finding to a minimal program")
 	findings := flag.String("findings", "", "where shrunk findings are written (default: under -work)")
+	moves := flag.Bool("only-moves", false, "generate only move programs, for a targeted seed campaign")
 	print := flag.Bool("print", false, "print the program -seed makes, and stop")
 	verbose := flag.Bool("v", false, "say what each program came to")
 	without := flag.String("without", "", "features to leave out, by name, comma-separated (fuzz.Features), to stay inside what an older stage 0 lowered")
+	with := flag.String("with", "", "opt-in features to put in, by name, comma-separated (fuzz.OptIn): shapes stage 0 is known to get wrong today")
 	try := flag.String("try", "", "run one program file three ways, print what each did, and stop")
 	flag.Parse()
 
@@ -52,8 +54,25 @@ func run() int {
 			}
 		}
 	}
+	if *moves && (slices.Contains(leftOut, "moves") || slices.Contains(leftOut, "parallel")) {
+		fmt.Fprintln(os.Stderr, "adamic-fuzz: -only-moves conflicts with -without moves or parallel")
+		return 2
+	}
+	var putIn []string
+	if *with != "" {
+		putIn = strings.Split(*with, ",")
+		for _, feature := range putIn {
+			if !slices.Contains(fuzz.OptIn, feature) {
+				fmt.Fprintf(os.Stderr, "adamic-fuzz: no opt-in feature %q; they are %s\n", feature, strings.Join(fuzz.OptIn, ", "))
+				return 2
+			}
+		}
+	}
 	generate := func(seed uint64) *fuzz.Program {
-		return fuzz.GenerateWithout(seed, leftOut)
+		if *moves {
+			return fuzz.GenerateMoves(seed)
+		}
+		return fuzz.GenerateFeatures(seed, leftOut, putIn)
 	}
 	if *print {
 		fmt.Print(generate(*seed).Source())
@@ -71,6 +90,7 @@ func run() int {
 		fmt.Fprintln(os.Stderr, err)
 		return 1
 	}
+	fmt.Printf("thread sanitizer: %s\n", checkout.TSan)
 	if *try != "" {
 		source, err := os.ReadFile(*try)
 		if err != nil {
@@ -134,7 +154,7 @@ func run() int {
 					})
 					program = shrunk
 				}
-				if err := fuzz.WriteFinding(path, program, programSeed, leftOut, outcome.Key); err != nil {
+				if err := fuzz.WriteFinding(path, program, programSeed, leftOut, putIn, outcome.Key); err != nil {
 					fmt.Fprintln(os.Stderr, err)
 				}
 				mutex.Lock()
@@ -146,7 +166,7 @@ func run() int {
 	group.Wait()
 
 	fmt.Printf("\n%d programs from seed %d in %s on %s\n", *count, *seed, time.Since(started).Round(time.Second), checkout.Root)
-	for _, verdict := range []fuzz.Verdict{fuzz.Agreed, fuzz.Finding, fuzz.Checked, fuzz.NotYet, fuzz.Invalid, fuzz.Unfit} {
+	for _, verdict := range []fuzz.Verdict{fuzz.Agreed, fuzz.Refused, fuzz.Finding, fuzz.Checked, fuzz.NotYet, fuzz.Invalid, fuzz.Unfit} {
 		fmt.Printf("  %-8s %d\n", verdict, verdicts[verdict])
 	}
 	var keys []string

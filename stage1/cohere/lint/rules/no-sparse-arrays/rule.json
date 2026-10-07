@@ -1,0 +1,13 @@
+{
+  "name": "no-sparse-arrays",
+  "kinds": [
+    "ArrayLiteralExpression"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoSparseArrays",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoSparseArrays",
+  "factory": "create",
+  "class": "Rule"
+}

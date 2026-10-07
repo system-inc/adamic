@@ -439,7 +439,11 @@ type (
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
-	TypeOf struct{ Value Expression }
+	TypeOf struct {
+		Value Expression
+		// Null says a present value's NULL pointer is null. An absent lookup slot is still undefined.
+		Null bool
+	}
 
 	// MakeError is an Error with Message and an optional Name (nil means "Error").
 	MakeError struct{ Message, Name Expression }
@@ -746,6 +750,9 @@ type (
 	// ParallelMap is structured fork-join; the callback takes item then index.
 	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
 	ParallelMap struct {
+		// Moved is set by lowering only after proving exclusive, disjoint item
+		// graphs and consuming the source binding. Native skips item/result sharing.
+		Moved       bool
 		Items, Work Expression
 		// Shared includes immutable reference globals read by the task's call graph.
 		// They are marking roots, not extra evaluations in the sequential witness.

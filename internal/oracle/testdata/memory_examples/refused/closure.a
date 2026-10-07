@@ -1,0 +1,6 @@
+function run(): void {
+	let countdown: (n: number) => number = (n) => n;
+	countdown = (n) => n === 0 ? 0 : 1 + countdown(n - 1);
+	console.log(`${countdown(3)}`);
+}
+run();

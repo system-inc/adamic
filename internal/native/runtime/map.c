@@ -342,7 +342,7 @@ adamic_array *adamic_map_values(const adamic_map *map) {
 }
 
 void adamic_map_add_pairs(adamic_map *map, const adamic_array *pairs) {
-	static _Thread_local adamic_slot_cache key_cache, value_cache;
+	static adamic_slot_cache key_cache, value_cache;
 	for (size_t index = 0; index < pairs->length; index++) {
 		const adamic_object *pair = pairs->elements[index].reference;
 		adamic_value key = *adamic_object_field(pair, "0", &key_cache);
