@@ -1,9 +1,0 @@
-patching file stage1/cohere/lint/registry/registry.go
-=== RUN   TestRulesAndSuggestions
-    validation_test.go:397: @typescript-eslint/no-non-null-asserted-optional-chain upstream unique configurations=24
-    validation_test.go:397: @typescript-eslint/no-non-null-assertion upstream unique configurations=36
-    validation_test.go:397: @typescript-eslint/no-this-alias upstream unique configurations=40
-    validation_test.go:398: Go, Node, emitted JavaScript, ASan/UBSan native: 67583 identical bytes
---- PASS: TestRulesAndSuggestions (16.14s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain	16.147s

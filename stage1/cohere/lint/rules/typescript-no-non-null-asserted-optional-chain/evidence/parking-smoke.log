@@ -1,8 +1,0 @@
-=== RUN   TestRulesAndSuggestions
-    validation_test.go:403: @typescript-eslint/no-non-null-asserted-optional-chain upstream unique configurations=24
-    validation_test.go:403: @typescript-eslint/no-non-null-assertion upstream unique configurations=36
-    validation_test.go:403: @typescript-eslint/no-this-alias upstream unique configurations=40
-    validation_test.go:404: Go, Node, emitted JavaScript, ASan/UBSan native: 68287 identical bytes
---- PASS: TestRulesAndSuggestions (31.13s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain	31.140s

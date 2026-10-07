@@ -1,0 +1,10 @@
+=== RUN   TestSourceNodeParity
+    source_node_test.go:15: better-tailwindcss/enforce-consistent-important-position upstream unique configurations=16
+    source_node_test.go:15: better-tailwindcss/enforce-consistent-variable-syntax upstream unique configurations=14
+    source_node_test.go:15: better-tailwindcss/enforce-consistent-variant-order upstream unique configurations=15
+    source_node_test.go:24: exit=exit status 70 stderr=adamic: panic: SyntaxError [ERR_INVALID_TYPESCRIPT_SYNTAX]: Unexpected token `ident`. Expected * for generator, private key, identifier or async
+         stdout=
+--- FAIL: TestSourceNodeParity (34.68s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/tailwind-important-position	34.693s
+FAIL

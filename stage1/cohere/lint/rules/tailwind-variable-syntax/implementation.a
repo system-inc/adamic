@@ -1,6 +1,6 @@
 import type { RuleContext } from '../../context.ts';
 import { Surface, classes, prefix, report } from '../tailwind-important-position/surface.a';
-import { trimGo } from '../tailwind-no-physical-direction/rule.ts';
+import { trimGo } from '../tailwind-important-position/spaces.a';
 function balanced(text: string, open: string, close: string): string[] {
     const start = text.indexOf(open); if(start < 0) { return []; }
     let depth = 0;

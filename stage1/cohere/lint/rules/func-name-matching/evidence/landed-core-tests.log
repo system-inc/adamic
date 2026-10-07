@@ -1,0 +1,12 @@
+=== RUN   TestRulesAndSuggestions
+    validation_test.go:432: eqeqeq: missing rule descriptor
+--- FAIL: TestRulesAndSuggestions (0.07s)
+=== RUN   TestOwnedMutants
+    validation_test.go:450: eqeqeq: missing rule descriptor
+--- FAIL: TestOwnedMutants (0.03s)
+=== RUN   TestDecodedOptionCorners
+    validation_test.go:607: eqeqeq: missing rule descriptor
+--- FAIL: TestDecodedOptionCorners (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching	0.139s
+FAIL

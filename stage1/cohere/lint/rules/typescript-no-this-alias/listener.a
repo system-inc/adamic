@@ -1,5 +1,0 @@
-// Numeric subscription declaration for the shared kind-indexed driver.
-// Values are the pinned cohere TypeScript parser AST Kind IDs.
-// VariableDeclaration: 261.
-// BinaryExpression: 227.
-export const listenerSyntaxKinds: readonly number[] = [261, 227];

@@ -19,22 +19,12 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	registry "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/parking"
+	registry "github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
-var slugs = []string{"func-name-matching", "consistent-this", "tailwind-no-physical-direction", "eslint-comments-require-description", "next-google-font-display"}
+var slugs = []string{"func-name-matching", "consistent-this"}
 
-func ruleName(slug string) string {
-	switch slug {
-	case "tailwind-no-physical-direction":
-		return "structure/tailwind-no-physical-direction"
-	case "eslint-comments-require-description":
-		return "@eslint-community/eslint-comments/require-description"
-	case "next-google-font-display":
-		return "@next/next/google-font-display"
-	}
-	return slug
-}
+func ruleName(slug string) string { return slug }
 func projected(t *testing.T, oracle string, rows []string) []string {
 	var result []string
 	for _, row := range rows {
@@ -52,17 +42,7 @@ func projected(t *testing.T, oracle string, rows []string) []string {
 	}
 	return result
 }
-func blocked(row string) bool {
-	fields := strings.Split(row, "\t")
-	if fields[1] == "@next/next/google-font-display" {
-		return true
-	}
-	if fields[1] != "structure/tailwind-no-physical-direction" {
-		return false
-	}
-	data, _ := os.ReadFile(fields[0])
-	return bytes.Contains(data, []byte("<div className"))
-}
+func blocked(row string) bool { return false }
 
 type observation struct {
 	output   []byte
@@ -125,6 +105,15 @@ func copyPort(t *testing.T, mutationSlug, from, to string) string {
 		}
 		relative, _ := filepath.Rel(root, path)
 		if e.IsDir() {
+			if filepath.Dir(relative) == "rules" {
+				owned := false
+				for _, slug := range slugs {
+					owned = owned || e.Name() == slug
+				}
+				if !owned {
+					return filepath.SkipDir
+				}
+			}
 			if relative == "gaps" || relative == "claims" || relative == ".generated" || e.Name() == "evidence" {
 				return filepath.SkipDir
 			}
@@ -133,12 +122,21 @@ func copyPort(t *testing.T, mutationSlug, from, to string) string {
 		if !strings.HasSuffix(path, ".a") && !strings.HasSuffix(path, ".ts") && !strings.HasSuffix(path, ".json") && !strings.HasSuffix(path, "oracle.go") && !strings.HasSuffix(path, ".ts.txt") {
 			return nil
 		}
+		if e.Name() == "rule.json" {
+			owned := false
+			for _, slug := range slugs {
+				owned = owned || relative == filepath.Join("rules", slug, "rule.json")
+			}
+			if !owned {
+				return nil
+			}
+		}
 		data, err := os.ReadFile(path)
 		if err != nil {
 			return err
 		}
 		source := string(data)
-		if relative == filepath.Join("rules", mutationSlug, "rule.ts") && from != "" {
+		if relative == filepath.Join("rules", mutationSlug, "rule.a") && from != "" {
 			if strings.Count(source, from) != 1 {
 				return fmt.Errorf("mutation anchor count differs in %s", relative)
 			}
@@ -170,9 +168,6 @@ func copyPort(t *testing.T, mutationSlug, from, to string) string {
 	}
 	if from != "" && changed != 1 {
 		t.Fatal("mutation did not change exactly one owned site")
-	}
-	if err := registry.Install(destination, repo(t)); err != nil {
-		t.Fatal(err)
 	}
 	descriptors, err := registry.Generate(destination)
 	if err != nil {
@@ -225,7 +220,7 @@ func goOracle(t *testing.T, port string, sources ...string) string {
 }
 func builds(t *testing.T, port string, sanitize bool) (string, string, string) {
 	t.Helper()
-	entry := filepath.Join(port, "rules", slugs[0], "driver.ts")
+	entry := filepath.Join(port, "rules", slugs[0], "driver.a")
 	program, err := load.Load([]string{entry})
 	if err != nil {
 		t.Fatal(err)
@@ -344,7 +339,7 @@ func upstream(t *testing.T) []string {
 	}
 	capture := filepath.Join(scratch, "records")
 	t.Setenv("COHERE_DOCS_CAPTURE", capture)
-	for _, spec := range []struct{ pkg, pattern string }{{"core", "^Test(FuncNameMatching|ConsistentThis|RequireDescription)"}, {"tailwind", "^TestNoPhysicalDirection"}, {"next", "^TestGoogleFontDisplay"}} {
+	for _, spec := range []struct{ pkg, pattern string }{{"core", "^Test(FuncNameMatching|ConsistentThis)"}} {
 		clean(t, run(t, root, "go", "test", "-overlay="+overlay, "-count=1", "-timeout=10m", "./internal/lint/rules/"+spec.pkg, "-run", spec.pattern))
 	}
 	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
@@ -623,8 +618,6 @@ func TestDecodedOptionCorners(t *testing.T) {
 	entry, js, binary := builds(t, port, true)
 	cases := []struct{ name, source, options string }{
 		{"func-name-matching", `Object.defineProperty(o, '', {value: function foo(){}});`, `{"Direction":"always","considerPropertyDescriptor":true}`},
-		{"@eslint-community/eslint-comments/require-description", "/*\n * cohere-disable\u00a0x\n */\nconst x=1;", "null"},
-		{"@eslint-community/eslint-comments/require-description", "//\n", `{"additionalDirectives":[""]}`},
 	}
 	var rows []string
 	for _, c := range cases {

@@ -1,0 +1,10 @@
+=== RUN   TestPositiveThroughput
+    positive_throughput_test.go:65: func-name-matching native best-of-3 1000 findings / 0.022333s = 44776.80 findings/s
+    positive_throughput_test.go:65: func-name-matching Node best-of-3 1000 findings / 0.139944s = 7145.72 findings/s
+    positive_throughput_test.go:65: func-name-matching Go best-of-3 1000 findings / 0.013635s = 73342.59 findings/s
+    positive_throughput_test.go:65: consistent-this native best-of-3 2000 findings / 0.031582s = 63326.59 findings/s
+    positive_throughput_test.go:65: consistent-this Node best-of-3 2000 findings / 0.148287s = 13487.35 findings/s
+    positive_throughput_test.go:65: consistent-this Go best-of-3 2000 findings / 0.013076s = 152948.08 findings/s
+--- PASS: TestPositiveThroughput (9.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching	9.139s

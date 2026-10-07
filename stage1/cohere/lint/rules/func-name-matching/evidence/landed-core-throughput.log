@@ -1,0 +1,11 @@
+=== RUN   TestThroughput
+    validation_test.go:543: whole compiler and stage1 corpus: 367 files, 734 rule/file pairs
+    validation_test.go:577: func-name-matching native best-of-3 0 findings / 1.733329s = 0.00 findings/s
+    validation_test.go:577: func-name-matching Node best-of-3 0 findings / 0.985030s = 0.00 findings/s
+    validation_test.go:577: func-name-matching Go best-of-3 0 findings / 0.232961s = 0.00 findings/s
+    validation_test.go:577: consistent-this native best-of-3 0 findings / 1.816452s = 0.00 findings/s
+    validation_test.go:577: consistent-this Node best-of-3 0 findings / 1.159710s = 0.00 findings/s
+    validation_test.go:577: consistent-this Go best-of-3 0 findings / 0.251686s = 0.00 findings/s
+--- PASS: TestThroughput (28.70s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching	28.702s

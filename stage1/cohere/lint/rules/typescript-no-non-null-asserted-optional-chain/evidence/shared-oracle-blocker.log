@@ -1,5 +1,0 @@
-=== RUN   TestSharedOracleSuggestionBlocker
-    validation_test.go:585: unmodified shared Go oracle panics: unexpected suggestion shape; the real rule returns two edits outside the diagnostic-range contract
---- PASS: TestSharedOracleSuggestionBlocker (5.49s)
-PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain	5.493s

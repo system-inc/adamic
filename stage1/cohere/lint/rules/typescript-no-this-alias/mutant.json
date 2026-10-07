@@ -1,6 +1,0 @@
-{
-  "name": "this alias initializer unwraps parentheses",
-  "file": "rule.ts",
-  "from": "this.context.node(initializer).kind !== 'ThisKeyword'",
-  "to": "this.context.node(this.context.unwrap(initializer)).kind !== 'ThisKeyword'"
-}

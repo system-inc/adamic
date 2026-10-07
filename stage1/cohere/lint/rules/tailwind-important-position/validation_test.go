@@ -19,7 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	registry "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/parking"
+	registry "github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 var slugs = []string{"tailwind-important-position", "tailwind-variable-syntax", "tailwind-variant-order"}
@@ -122,7 +122,7 @@ func copyPort(t *testing.T, mutationSlug, from, to string) string {
 			}
 			return nil
 		}
-		if !strings.HasSuffix(path, ".a") && !strings.HasSuffix(path, ".ts") && !strings.HasSuffix(path, ".json") && !strings.HasSuffix(path, "oracle.go") && !strings.HasSuffix(path, ".ts.txt") {
+		if !strings.HasSuffix(path, ".a") && !strings.HasSuffix(path, ".ts") && !strings.HasSuffix(path, ".json") && !strings.HasSuffix(path, "oracle.go") && !strings.HasSuffix(path, ".txt") {
 			return nil
 		}
 		data, err := os.ReadFile(path)
@@ -130,7 +130,7 @@ func copyPort(t *testing.T, mutationSlug, from, to string) string {
 			return err
 		}
 		source := string(data)
-		if relative == filepath.Join("rules", mutationSlug, "rule.ts") && from != "" {
+		if relative == filepath.Join("rules", mutationSlug, "rule.a") && from != "" {
 			if strings.Count(source, from) != 1 {
 				return fmt.Errorf("mutation anchor count differs in %s", relative)
 			}
@@ -162,9 +162,6 @@ func copyPort(t *testing.T, mutationSlug, from, to string) string {
 	}
 	if from != "" && changed != 1 {
 		t.Fatal("mutation did not change exactly one owned site")
-	}
-	if err := registry.Install(destination, repo(t)); err != nil {
-		t.Fatal(err)
 	}
 	descriptors, err := registry.Generate(destination)
 	if err != nil {
@@ -690,21 +687,6 @@ func TestExplicitProviderRefusals(t *testing.T) {
 	port := copyPort(t, "", "", "")
 	oracle := goOracle(t, port)
 	entry, js, binary := builds(t, port, true)
-	source := filepath.Join(t.TempDir(), "custom.ts")
-	if err := os.WriteFile(source, []byte("const classes='!flex';\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	custom := manifest(t, []string{source + "\t" + ruleName(slugs[0]) + "\t\t\tfalse\t{\"variables\":[\"^classes$\"]}"})
-	want := clean(t, run(t, "", oracle, "--manifest", custom))
-	if !bytes.Contains(want, []byte("finding ")) {
-		t.Fatal("custom regexp Go control did not fire")
-	}
-	for _, side := range sides(t, entry, js, binary, custom, false) {
-		exit, ok := side.r.err.(*exec.ExitError)
-		if !ok || exit.ExitCode() != 70 || !strings.Contains(side.r.stderr, "NotYet: nonconstant Go variable-pattern regexp provider") {
-			t.Fatalf("%s custom regexp refusal changed: %v %s", side.name, side.r.err, side.r.stderr)
-		}
-	}
 	var variant []string
 	for _, row := range witnesses(t) {
 		if strings.Split(row, "\t")[1] == ruleName(slugs[2]) {
@@ -712,7 +694,7 @@ func TestExplicitProviderRefusals(t *testing.T) {
 		}
 	}
 	path := withVariantFacts(t, oracle, manifest(t, variant))
-	want = clean(t, run(t, "", oracle, "--manifest", path))
+	want := clean(t, run(t, "", oracle, "--manifest", path))
 	if !bytes.Contains(want, []byte("finding ")) {
 		t.Fatal("variant Go control did not fire")
 	}
@@ -733,7 +715,7 @@ func TestExplicitProviderRefusals(t *testing.T) {
 			t.Fatalf("%s variant refusal changed: %v %s", side.name, side.r.err, side.r.stderr)
 		}
 	}
-	t.Log("Go positive controls fire; Node, emitted JS and ASan/UBSan native refuse missing ProgramReads and nonconstant regex providers with exit 70")
+	t.Log("Go positive controls fire; Node, emitted JS and ASan/UBSan native refuse missing ProgramReads with exit 70")
 	// A compiling guard mutant removes the explicit-provider requirement. The refusal check must fail.
 	implementation := filepath.Join(port, "rules/tailwind-variant-order/implementation.a")
 	data, err := os.ReadFile(implementation)
@@ -754,41 +736,6 @@ func TestExplicitProviderRefusals(t *testing.T) {
 			t.Fatal("guard mutant must run the positive control exactly", side.name)
 		}
 		t.Logf("provider guard mutant caught by missing required refusal on %s", side.name)
-	}
-}
-
-// Not parallel: bound compiler and sanitizer memory for this independent mutant.
-func TestCustomRegexGuardMutant(t *testing.T) {
-	port := copyPort(t, "", "", "")
-	oracle := goOracle(t, port)
-	source := filepath.Join(t.TempDir(), "custom.ts")
-	if err := os.WriteFile(source, []byte("const classes='!flex';\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	path := manifest(t, []string{source + "\t" + ruleName(slugs[0]) + "\t\t\tfalse\t{\"variables\":[\"^classes$\"]}"})
-	want := clean(t, run(t, "", oracle, "--manifest", path))
-	if !bytes.Contains(want, []byte("finding ")) {
-		t.Fatal("Go regexp positive control did not fire")
-	}
-	file := filepath.Join(port, "rules/tailwind-important-position/surface.a")
-	data, err := os.ReadFile(file)
-	if err != nil {
-		t.Fatal(err)
-	}
-	anchor := "else { panic('NotYet: nonconstant Go variable-pattern regexp provider'); }"
-	if strings.Count(string(data), anchor) != 1 {
-		t.Fatal("regexp guard anchor changed")
-	}
-	if err = os.WriteFile(file, []byte(strings.Replace(string(data), anchor, "else {}", 1)), 0644); err != nil {
-		t.Fatal(err)
-	}
-	entry, js, binary := builds(t, port, true)
-	for _, side := range sides(t, entry, js, binary, path, false) {
-		got := clean(t, side.r)
-		if bytes.Equal(got, want) {
-			t.Fatal("regexp guard mutant survived", side.name)
-		}
-		t.Logf("custom regexp guard mutant caught by missing exit-70 refusal and Go comparison on %s", side.name)
 	}
 }
 

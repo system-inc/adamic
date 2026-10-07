@@ -1,0 +1,5 @@
+# github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching [github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching.test]
+stage1/cohere/lint/rules/func-name-matching/positive_throughput_test.go:13:5: undefined: os
+stage1/cohere/lint/rules/func-name-matching/positive_throughput_test.go:24:7: undefined: strings
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/rules/func-name-matching [build failed]
+FAIL

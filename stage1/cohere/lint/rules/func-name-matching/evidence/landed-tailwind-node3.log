@@ -1,0 +1,8 @@
+=== RUN   TestSourceNodeParity
+    source_node_test.go:15: better-tailwindcss/enforce-consistent-important-position upstream unique configurations=16
+    source_node_test.go:15: better-tailwindcss/enforce-consistent-variable-syntax upstream unique configurations=14
+    source_node_test.go:15: better-tailwindcss/enforce-consistent-variant-order upstream unique configurations=15
+    source_node_test.go:28: source Node and actual Go: 26626 bytes across 51 fixture/witness rows, explicit Go JSX projection and design-system facts; no native/emitted certification
+--- PASS: TestSourceNodeParity (4.85s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/tailwind-important-position	4.857s

@@ -1,0 +1,138 @@
+Built: rule branch rebased onto the landed area and deduplicated; five unique ports remain, all retained Adamic entry modules are .a and descriptors use AST kind names.
+Commits: area d65a8f931c98655936ae04c6899f38f14862b73e includes main 39638d9e278d38bb5aeae887f46d55a70e47aaad; green helper branch d51df48c36a0d6a98103dd7cab594c382b2dc4e7; rule delivery follows this report.
+Commands and outputs: registry PASS twenty descriptors, retained core fixture/mutant/options gate PASS 97.366s; Tailwind source Node/Go PASS 4.579s and 27,103 bytes across 52 rows; stable core corpus PASS 52.934s, 26,622,644 bytes across 734 pairs; seven-helper gate PASS 191.671s; setup PASS 92s, nproc 5.
+Mutants: both retained core semantic mutants compiled and were caught on Node, emitted JavaScript and ASan/UBSan native; all twenty helper mutants re-greened. Tailwind backend mutants cannot compile after the required runtime regex migration.
+Not covered: the rule branch is not green or landing-ready; runtime option RegExp lowering blocks all three Tailwind ports, and variant order also lacks shared design-system inputs. No new rule/helper claimed; stop at these unowned blockers.
+
+The DEDUP_LEDGER.md on the pinned area was read before either rebase. Six losing
+owned copies were removed entirely:
+
+| Removed rule | Winning copy |
+| --- | --- |
+| @typescript-eslint/no-non-null-asserted-optional-chain | codex/lint-wave1-05 |
+| @typescript-eslint/no-non-null-assertion | codex/lint-wave1-05 |
+| @typescript-eslint/no-this-alias | codex/lint-wave1-07 |
+| @eslint-community/eslint-comments/require-description | codex/lint-wave1-05 |
+| @next/next/google-font-display | codex/lint-wave1-01 |
+| structure/tailwind-no-physical-direction | codex/lint-wave1-05 |
+
+The retained unique ports are consistent-this, func-name-matching,
+better-tailwindcss/enforce-consistent-important-position,
+better-tailwindcss/enforce-consistent-variable-syntax and
+better-tailwindcss/enforce-consistent-variant-order. The ledger specifies source
+batch branches for batch-only ports, but assigns none to wave1-04. No new batch
+rule was reserved while the landing-first cap is blocked.
+
+Small diagnostic-recording and Go-whitespace utilities formerly imported from
+losing copies now live in the retained func-name-matching and important-position
+directories. The private historical shared-contract fixture was retired with the
+optional-chain copy. Both retained validators now invoke the actual landed
+registry and copy the real area substrate; no shared test or driver is patched.
+The core temporary graph registers only the two remaining core descriptors;
+this is a subset certificate, not the shared production driver's full gate.
+The Tailwind projected-AST test driver uses the landed RuleContext, RuleSet,
+Linter and VolumeRules initialization. It remains explicitly a Go projection.
+
+All five retained descriptors already declare typescript-go AST kind names.
+Obsolete numeric listener probes and their numeric-contract report were removed.
+Retained rule/modules were renamed to .a, imports and mutant file metadata were
+updated, and ambiguous .ts facades were removed. Generated registries stay ignored.
+No finding.ts, context.ts, main.ts, registry generator, shared oracle or lint_test
+comparison file is changed relative to the area. Inherited compiler and shared
+leak-check integrations were accepted in the rebase.
+
+Regex migration follows the actual codex/lint-regex table row
+ tailwind/class_literals.go:167, contract new RegExp(pattern, 'u').
+The old default-pattern endsWith matcher and custom-pattern refusal are gone.
+Surface compiles configured/default variable patterns once in its constructor
+and calls RegExp.test. No hand-written fallback or runtime pattern translation
+is retained. The pinned table's README and gaps.md were also inspected.
+
+Observed native/emitted blocker, from the actual production main.ts module:
+
+surface.a:41:132: stage 0 can't lower RegExp with a nonconstant pattern yet
+
+The scratch program using programArguments()[0] as a pattern reproduces the same
+lowering refusal. The shared lowerer is outside this unit's ownership. The
+source-only comparison passes actual Go for all 45 upstream configurations plus
+six witnesses, including explicit Go JSX projection and resolved variant facts.
+That result is not native or emitted-JavaScript certification, nor independent
+JSX parsing support. Arbitrary Go/JS option-pattern dialects are not certified.
+
+The real shared TestOwnedWitnesses stops before backend compilation with:
+better-tailwindcss/enforce-consistent-variant-order witness reports no findings.
+That is the observation. The owned variant oracle and source test supply program
+and resolved design-system facts explicitly; the shared default path does not
+provide the same rule inputs. The old missing-provider refusal remains, so the
+runtime pattern fix alone would not certify this rule through the shared driver.
+This is not parking on a missing harness: that harness has landed. The branch
+remains blocked and no further helpers are claimed under the work-in-progress cap.
+
+Current-area commands, with source /workspace/adamic-tools/env.sh:
+
+- go run ./cmd/lint-registry: twenty validated descriptors, including five owned.
+- go test ./stage1/cohere/lint/rules/func-name-matching -run
+  '^(TestRulesAndSuggestions|TestOwnedMutants|TestDecodedOptionCorners)$'
+  -count=1 -v -timeout=10m: PASS 97.366s, two compiling mutants caught on all targets.
+- ADAMIC_TAILWIND_PACKAGE=/tmp/wave104-tailwind/node_modules/tailwindcss
+  go test ./stage1/cohere/lint/rules/tailwind-important-position
+  -run '^TestSourceNodeParity$' -count=1 -v -timeout=10m: PASS 4.857s,
+  26,626 identical bytes, fifty-one rows, source Node and Go only.
+- go test ./stage1/cohere/lint -run '^TestOwnedWitnesses$' -count=1 -v
+  -timeout=10m: FAIL 74.557s at the Go-side variant witness zero-count guard.
+- go run ./cmd/adamic js stage1/cohere/lint/main.ts: FAIL at runtime regex lowering.
+
+Initial owned validator runs exposed newly strict complete-directory discovery
+and missing JSX witness transport; only the owned copier was fixed. A regex edit
+left a stray loop fragment, which source Node and the checker refused; it was
+fixed. The projected driver initially omitted VolumeRules initialization, which
+Node refused; the owned initialization was updated. Every failed log is retained.
+
+The first full core run passed fixture comparisons and both mutants, but its
+734-pair source corpus comparison overlapped the owned Tailwind driver edit.
+The serialized fixed source differs by the just-added VolumeRules lines; this
+is input drift, not a backend miscompile claim. The complete tree was then frozen
+and the corpus is rerun separately below. The full repository gate was not rerun. Current core corpus and positive witness throughput follow. Historical reports describe older branch snapshots and retired
+copies; this report supersedes their current landing status.
+
+Stable-tree corpus rerun: ADAMIC_TYPESCRIPT_SOURCE=/tmp/lint-wave1-04-typescript
+go test ./stage1/cohere/lint/rules/func-name-matching -run '^TestCompilerAndStage1$'
+-count=1 -v -timeout=10m PASS 52.934s. All 367 compiler/stage1 files, 734 pairs and
+26,622,644 output bytes match Go on source Node, emitted JavaScript and sanitized
+native. The core fixture/mutant/options comparisons from the final run also pass:
+197 upstream configurations plus witnesses, 36,681 bytes; both compiling mutants
+caught on all targets; decoded option corner 477 bytes. Owned vet passes.
+The old core JSX probe had zero applicable rows and adds no coverage claim.
+
+The added custom variable pattern ^classes$ on const classes='!flex' now also
+matches actual Go on Node. Final source-only Tailwind gate PASS 4.579s, 52 rows,
+27,103 bytes. Standalone runtime RegExp source Node prints true while the
+production module is refused by the lowerer. No source matcher fallback exists.
+
+Current-area throughput, best of three wall times including process startup:
+
+| Rule | Positive findings / 1,000 witness rows | Native findings/s | Node findings/s | Go findings/s |
+| --- | ---: | ---: | ---: | ---: |
+| func-name-matching | 1,000 | 44,776.80 | 7,145.72 | 73,342.59 |
+| consistent-this | 2,000 | 63,326.59 | 13,487.35 | 152,948.08 |
+
+ADAMIC_LINT_BENCH=1 go test on the owned core package -run '^TestPositiveThroughput$'
+-count=1 -v -timeout=10m PASS 9.139s. The positive fixtures are the same inputs
+whose compiled semantic mutants were caught. Count mode agrees with actual Go
+on every timing round. No emitted-JavaScript timing is requested or claimed.
+The whole compiler/stage1 corpus has zero findings for both rules: all three
+reported rates are therefore 0.00 findings/s. Native/Node/Go best times are
+1.733329/0.985030/0.232961s for func-name-matching and
+1.816452/1.159710/0.251686s for consistent-this. Those are separate workload
+observations, not a whole-project performance extrapolation from witness rates.
+The first benchmark build exposed omitted os/strings imports; those owned Go
+imports were added before the successful run. Failed build logs are preserved.
+
+Evidence: landed-core-corpus-stable.log, landed-core-final.log,
+landed-tailwind-custom-node.log, landed-main-js3.log,
+landed-shared-witnesses.log, landed-core-throughput.log,
+landed-core-positive-throughput-final.log and landed-rules-vet-final.log.
+Both branches include the pinned area's current-main merge. The helper branch
+is green; this rule branch is explicitly blocked and cannot count as landing-ready
+under the special shared-harness parking rule, because the harness has landed.
+No push to main or any area branch is made. No additional claims are made.
