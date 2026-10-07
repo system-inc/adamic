@@ -1,5 +1,0 @@
-import { panic, programArguments, readTextFile } from 'adamic';
-const read = readTextFile(programArguments()[0] ?? panic('missing pattern file'));
-if(read.kind === 'Error') { panic(read.message); }
-const matched = new RegExp(read.text).test('skip default case');
-console.log(matched ? 'true' : 'false');

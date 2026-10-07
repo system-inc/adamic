@@ -1,2 +1,0 @@
-case 0
-fixed	import { panic, programArguments, readTextFile } from 'adamic';\u000aconst read = readTextFile(programArguments()[0] ?? panic('missing pattern file'));\u000aif(read.kind === 'Error') { panic(read.message); }\u000aconst matched = new RegExp(read.text).test('skip default case');\u000aconsole.log(matched ? 'true' : 'false');\u000a
