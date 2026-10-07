@@ -97,6 +97,11 @@ while IFS= read -r file; do
 	internal/lower/* | internal/native/* | internal/ir/* | internal/flow/* | internal/javascript/* | internal/load/* | internal/oracle/*) compiler=yes ;;
 	esac
 	package=$(dirname "$file")
+	# Go never builds a testdata directory as a package; its files belong to the package above it.
+	case "$package" in
+	testdata | testdata/*) package=. ;;
+	*/testdata | */testdata/*) package=${package%%/testdata*} ;;
+	esac
 	while [ "$package" != "." ] && ! ls "$worktree/$package"/*.go >/dev/null 2>&1; do
 		package=$(dirname "$package")
 	done
