@@ -2,6 +2,7 @@ package lower
 
 import (
 	"errors"
+	"os"
 	"strings"
 	"testing"
 )
@@ -59,5 +60,17 @@ func TestNamespaceTypesErase(t *testing.T) {
 		if local.Name == "N" || local.Name == "Inner" {
 			t.Fatal("type namespace made a binding")
 		}
+	}
+}
+
+func TestTracingNamespaceEscapeStaysNotYet(t *testing.T) {
+	source, err := os.ReadFile("testdata/namespaces_notyet/tracing_escape.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowerSource(t, string(source))
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "no runtime container is emitted") {
+		t.Fatalf("got %v, want the explicit missing runtime-container reason", err)
 	}
 }

@@ -175,7 +175,7 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 	if l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {
 		parent := node.Parent
 		if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != node {
-			return l.notYet(node, "a namespace object used as a value; use qualified members or named module imports")
+			return l.notYet(node, "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports")
 		}
 	}
 	if l.isExpression(node) && l.namespaceMember(node) {
