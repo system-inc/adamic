@@ -1,0 +1,13 @@
+// Views of an append-built string prevent later appends from changing old bytes.
+for (const word of ['ab', 'éx', '🌍z']) {
+    let parent = '';
+    const kept: string[] = [];
+    for (let round = 0; round < 16; round++) {
+        parent += `${word}${round % 10}`;
+        if (round % 3 === 0) { kept.push(parent.slice(-3)); }
+    }
+    const large = parent.substring(2, parent.length - 2);
+    const nested = large.slice(2, 8);
+    parent += 'changed';
+    console.log(`${kept.join('|')} ${large.length} ${nested} ${nested.indexOf('x')} ${nested.lastIndexOf('z')}`);
+}
