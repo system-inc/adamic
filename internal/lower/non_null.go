@@ -67,6 +67,9 @@ stored:
 	if err != nil {
 		return nil, err
 	}
+	if !value.Type().IsMaybe() && !value.Type().IsReference() {
+		return value, nil
+	}
 	proven := l.checker.GetTypeAtLocation(operand)
 	if !weakOperand && !l.includesUndefined(proven) && !l.includesNull(proven) && !l.narrowedAway(ast.SkipParentheses(operand)) && !value.Type().IsMaybe() {
 		if value.Type() == ir.Union && of != ir.Union {
