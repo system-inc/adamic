@@ -1,0 +1,11 @@
+bash cloud/setup.sh > stage1/cohere/lint/helpers/slot02/batch4/evidence/setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+nproc > stage1/cohere/lint/helpers/slot02/batch4/evidence/nproc.log
+python3 stage1/cohere/lint/helpers/slot02/batch4/testdata/regenerate.py > stage1/cohere/lint/helpers/slot02/batch4/evidence/regenerate.log 2>&1
+python3 stage1/cohere/lint/helpers/slot02/batch4/testdata/regenerate.py > stage1/cohere/lint/helpers/slot02/batch4/evidence/regenerate-repeat.log 2>&1
+go test ./stage1/cohere/lint/helpers -run '^TestSlot02Batch4$' -count=1 -v > stage1/cohere/lint/helpers/slot02/batch4/evidence/helpers.log 2>&1
+go vet ./stage1/cohere/lint/helpers > stage1/cohere/lint/helpers/slot02/batch4/evidence/vet.log 2>&1
+Initial filter go test ./internal/oracle -run 'TestOracle/(string|template)' -count=1 selected no tests; oracle.log preserves this and is not counted as a gate.
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v > stage1/cohere/lint/helpers/slot02/batch4/evidence/oracle-input.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot02/batch4/evidence/helpers-full.log 2>&1
+The reproducibility check hashes both artifacts, reruns regenerate.py to regenerate-confirm.log and asserts identical SHA-256 values; reproducibility.log records the hashes.

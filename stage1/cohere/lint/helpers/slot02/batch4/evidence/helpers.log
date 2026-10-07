@@ -1,0 +1,24 @@
+=== RUN   TestSlot02Batch4
+    slot02_batch4_test.go:75: tailwind/collapse.isValidThemePrefix: 6 consumers with actual runtime capture
+    slot02_batch4_test.go:75: tailwind/collapse.namespaceForVariantRoot: 6 consumers with actual runtime capture
+    slot02_batch4_test.go:75: tailwind/collapse.convertUnderscoresToWhitespace: 6 consumers with actual runtime capture
+    slot02_batch4_test.go:101: 157 captured inputs; 1342 distinct texts; 202 parsed variants
+    slot02_batch4_test.go:130: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch4/empty_prefix
+    slot02_batch4_test.go:175: compiled semantic mutant caught at line 1: got "prefix:true"; Go "prefix:false"
+=== RUN   TestSlot02Batch4/prefix_z_boundary
+    slot02_batch4_test.go:175: compiled semantic mutant caught at line 56045: got "prefix:false"; Go "prefix:true"
+=== RUN   TestSlot02Batch4/namespace_root_position
+    slot02_batch4_test.go:175: compiled semantic mutant caught at line 28: got "namespace:--container"; Go "namespace:--breakpoint"
+=== RUN   TestSlot02Batch4/underscore_skip_flag
+    slot02_batch4_test.go:175: compiled semantic mutant caught at line 10: got " \t_"; Go "_\t_"
+=== RUN   TestSlot02Batch4/escaped_underscore
+    slot02_batch4_test.go:175: compiled semantic mutant caught at line 8: got " \t "; Go " \t_"
+--- PASS: TestSlot02Batch4 (35.25s)
+    --- PASS: TestSlot02Batch4/empty_prefix (4.97s)
+    --- PASS: TestSlot02Batch4/prefix_z_boundary (5.73s)
+    --- PASS: TestSlot02Batch4/namespace_root_position (4.49s)
+    --- PASS: TestSlot02Batch4/underscore_skip_flag (4.77s)
+    --- PASS: TestSlot02Batch4/escaped_underscore (5.33s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	35.258s
