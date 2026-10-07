@@ -1,0 +1,78 @@
+scratch=/tmp/adamic-gate/wave14-complete-yiptin61
+original upstream assertions PASS 8.492s
+fixtures-no-unnecessary-type-constraint: all four identical 15302 bytes; findings=27; files=44
+fixtures-prefer-as-const: all four identical 13934 bytes; findings=27; files=70
+fixtures-prefer-enum-initializers: all four identical 13658 bytes; findings=23; files=22
+corpus files=331 compiler=77 stage1=254
+corpus-no-unnecessary-type-constraint: all four identical 13182291 bytes; findings=0; files=331
+corpus-prefer-as-const: all four identical 13182291 bytes; findings=0; files=331
+corpus-prefer-enum-initializers: all four identical 1413265526 bytes; findings=680; files=331
+no-unnecessary-type-constraint generic arrow comma omitted: compiling exit-0 mutant caught only by comparison on Node
+no-unnecessary-type-constraint generic arrow comma omitted: compiling exit-0 mutant caught only by comparison on native
+no-unnecessary-type-constraint generic arrow comma omitted: compiling exit-0 mutant caught only by comparison on emitted JavaScript
+prefer-as-const annotation insertion changes meaning: compiling exit-0 mutant caught only by comparison on Node
+prefer-as-const annotation insertion changes meaning: compiling exit-0 mutant caught only by comparison on native
+prefer-as-const annotation insertion changes meaning: compiling exit-0 mutant caught only by comparison on emitted JavaScript
+prefer-enum-initializers one-based suggestion off by one: compiling exit-0 mutant caught only by comparison on Node
+prefer-enum-initializers one-based suggestion off by one: compiling exit-0 mutant caught only by comparison on native
+prefer-enum-initializers one-based suggestion off by one: compiling exit-0 mutant caught only by comparison on emitted JavaScript
+no-unnecessary-type-constraint natural findings=0
+timing uses 500 witness copies as a synthetic supplement
+no-unnecessary-type-constraint round=1 Go seconds=0.269154 count=500
+no-unnecessary-type-constraint round=1 native seconds=1.337182 count=500
+no-unnecessary-type-constraint round=1 Node seconds=0.921064 count=500
+no-unnecessary-type-constraint round=2 Go seconds=0.234542 count=500
+no-unnecessary-type-constraint round=2 native seconds=1.383070 count=500
+no-unnecessary-type-constraint round=2 Node seconds=0.977970 count=500
+no-unnecessary-type-constraint round=3 Go seconds=0.251601 count=500
+no-unnecessary-type-constraint round=3 native seconds=1.320436 count=500
+no-unnecessary-type-constraint round=3 Node seconds=0.970311 count=500
+no-unnecessary-type-constraint round=4 Go seconds=0.249363 count=500
+no-unnecessary-type-constraint round=4 native seconds=1.337060 count=500
+no-unnecessary-type-constraint round=4 Node seconds=1.163160 count=500
+no-unnecessary-type-constraint round=5 Go seconds=0.250790 count=500
+no-unnecessary-type-constraint round=5 native seconds=1.426031 count=500
+no-unnecessary-type-constraint round=5 Node seconds=0.959893 count=500
+no-unnecessary-type-constraint native 378.66 findings/s best=1.320436s count=500 files=332
+no-unnecessary-type-constraint Node 542.85 findings/s best=0.921064s count=500 files=332
+no-unnecessary-type-constraint Go 2131.81 findings/s best=0.234542s count=500 files=332
+prefer-as-const natural findings=0
+timing uses 500 witness copies as a synthetic supplement
+prefer-as-const round=1 Go seconds=0.233092 count=500
+prefer-as-const round=1 native seconds=1.288230 count=500
+prefer-as-const round=1 Node seconds=0.912605 count=500
+prefer-as-const round=2 Go seconds=0.224737 count=500
+prefer-as-const round=2 native seconds=1.318057 count=500
+prefer-as-const round=2 Node seconds=0.893337 count=500
+prefer-as-const round=3 Go seconds=0.237130 count=500
+prefer-as-const round=3 native seconds=1.317762 count=500
+prefer-as-const round=3 Node seconds=0.889589 count=500
+prefer-as-const round=4 Go seconds=0.247141 count=500
+prefer-as-const round=4 native seconds=1.348756 count=500
+prefer-as-const round=4 Node seconds=0.879726 count=500
+prefer-as-const round=5 Go seconds=0.241535 count=500
+prefer-as-const round=5 native seconds=1.286209 count=500
+prefer-as-const round=5 Node seconds=0.927891 count=500
+prefer-as-const native 388.74 findings/s best=1.286209s count=500 files=332
+prefer-as-const Node 568.36 findings/s best=0.879726s count=500 files=332
+prefer-as-const Go 2224.82 findings/s best=0.224737s count=500 files=332
+prefer-enum-initializers natural findings=680
+prefer-enum-initializers round=1 Go seconds=0.219120 count=680
+prefer-enum-initializers round=1 native seconds=1.330316 count=680
+prefer-enum-initializers round=1 Node seconds=0.888838 count=680
+prefer-enum-initializers round=2 Go seconds=0.228062 count=680
+prefer-enum-initializers round=2 native seconds=1.358852 count=680
+prefer-enum-initializers round=2 Node seconds=0.908596 count=680
+prefer-enum-initializers round=3 Go seconds=0.226214 count=680
+prefer-enum-initializers round=3 native seconds=1.406667 count=680
+prefer-enum-initializers round=3 Node seconds=0.873100 count=680
+prefer-enum-initializers round=4 Go seconds=0.227559 count=680
+prefer-enum-initializers round=4 native seconds=1.321858 count=680
+prefer-enum-initializers round=4 Node seconds=0.882814 count=680
+prefer-enum-initializers round=5 Go seconds=0.234817 count=680
+prefer-enum-initializers round=5 native seconds=1.338907 count=680
+prefer-enum-initializers round=5 Node seconds=0.932707 count=680
+prefer-enum-initializers native 514.43 findings/s best=1.321858s count=680 files=331
+prefer-enum-initializers Node 778.83 findings/s best=0.873100s count=680 files=331
+prefer-enum-initializers Go 3103.33 findings/s best=0.219120s count=680 files=331
+PASS complete owned four-way repair comparison, corpus, mutants and throughput

@@ -1,0 +1,5 @@
+isolated checkout=/tmp/adamic-gate/wave14-parking-_t1i5l34
+nexus-import-require-module-alias/validate.py exit=0
+typescript-eslint-no-duplicate-enum-values/validate.py exit=0
+typescript-eslint-no-misused-new/validate.py exit=0
+typescript-eslint-prefer-as-const/validate_complete.py exit=1

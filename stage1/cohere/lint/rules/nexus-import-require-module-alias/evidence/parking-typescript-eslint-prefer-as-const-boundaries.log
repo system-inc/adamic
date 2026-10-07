@@ -1,0 +1,17 @@
+scratch=/tmp/adamic-gate/wave14-boundaries-2vxeiqvq
+no-unnecessary-type-constraint: registered factory refuses unsupported shared contract on all three runtimes
+prefer-as-const: registered factory refuses unsupported shared contract on all three runtimes
+prefer-enum-initializers: registered factory refuses unsupported shared contract on all three runtimes
+no-extra-non-null-assertion: registered factory refuses unsupported shared contract on all three runtimes
+no-confusing-non-null-assertion: registered factory refuses unsupported shared contract on all three runtimes
+no-unnecessary-parameter-property-assignment: registered factory refuses unsupported shared contract on all three runtimes
+shared refusal mutant compiles and exits 0; baseline comparison catches it on Node
+shared refusal mutant compiles and exits 0; baseline comparison catches it on native
+shared refusal mutant compiles and exits 0; baseline comparison catches it on emitted JavaScript
+split UTF-8 suggestion explicitly refused on Node
+split UTF-8 suggestion explicitly refused on native
+split UTF-8 suggestion explicitly refused on emitted JavaScript
+Unicode boundary mutant compiles, exits 0 without stderr; only Go byte comparison catches it on Node
+Unicode boundary mutant compiles, exits 0 without stderr; only Go byte comparison catches it on native
+Unicode boundary mutant compiles, exits 0 without stderr; only Go byte comparison catches it on emitted JavaScript
+PASS repair-contract and UTF-8-boundary refusal checks and compiling mutants

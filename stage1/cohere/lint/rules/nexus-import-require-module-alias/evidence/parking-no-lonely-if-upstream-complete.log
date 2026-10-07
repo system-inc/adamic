@@ -1,0 +1,1126 @@
+=== RUN   TestNoLoneBlocksStaysSilent
+=== PAUSE TestNoLoneBlocksStaysSilent
+=== RUN   TestNoLoneBlocksFires
+=== PAUSE TestNoLoneBlocksFires
+=== RUN   TestNoLoneBlocksTreatsEveryFileAsStrict
+=== PAUSE TestNoLoneBlocksTreatsEveryFileAsStrict
+=== RUN   TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations
+=== PAUSE TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations
+=== RUN   TestNoLoneBlocksDoesNotReportAStaticBlockBody
+=== PAUSE TestNoLoneBlocksDoesNotReportAStaticBlockBody
+=== RUN   TestNoLoneBlocksMatchesTheInstalledBuild
+=== PAUSE TestNoLoneBlocksMatchesTheInstalledBuild
+=== RUN   TestNoLoneBlocksSpansTheBlock
+=== PAUSE TestNoLoneBlocksSpansTheBlock
+=== RUN   TestNoLoneBlocksIdentityNotJustLength
+=== PAUSE TestNoLoneBlocksIdentityNotJustLength
+=== RUN   TestNoLoneBlocksSecondArmOutranksTheBindingExemption
+=== PAUSE TestNoLoneBlocksSecondArmOutranksTheBindingExemption
+=== RUN   TestNoLonelyIfFires
+=== PAUSE TestNoLonelyIfFires
+=== RUN   TestNoLonelyIfStaysSilent
+=== PAUSE TestNoLonelyIfStaysSilent
+=== RUN   TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace
+=== PAUSE TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace
+=== RUN   TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest
+=== PAUSE TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest
+=== RUN   TestNoLonelyIfDanglingElse
+=== PAUSE TestNoLonelyIfDanglingElse
+=== RUN   TestNoLonelyIfThenBranchIsNotTheSubject
+=== PAUSE TestNoLonelyIfThenBranchIsNotTheSubject
+=== RUN   TestNoLonelyIfElseLookaheadIsATokenNotAPrefix
+=== PAUSE TestNoLonelyIfElseLookaheadIsATokenNotAPrefix
+=== RUN   TestNoLonelyIfSpansTheInnerIf
+=== PAUSE TestNoLonelyIfSpansTheInnerIf
+=== RUN   TestNoLonelyIfMessage
+=== PAUSE TestNoLonelyIfMessage
+=== RUN   TestNoLossOfPrecisionFires
+=== PAUSE TestNoLossOfPrecisionFires
+=== RUN   TestNoLossOfPrecisionStaysSilent
+=== PAUSE TestNoLossOfPrecisionStaysSilent
+=== RUN   TestNoLossOfPrecisionReadsRawSourceText
+=== PAUSE TestNoLossOfPrecisionReadsRawSourceText
+=== CONT  TestNoLoneBlocksStaysSilent
+=== RUN   TestNoLoneBlocksStaysSilent/if_(foo)_{_if_(bar)_{_baz();_}_}
+=== PAUSE TestNoLoneBlocksStaysSilent/if_(foo)_{_if_(bar)_{_baz();_}_}
+=== CONT  TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace
+=== RUN   TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace/else_directly_against_the_brace
+=== PAUSE TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace/else_directly_against_the_brace
+=== RUN   TestNoLoneBlocksStaysSilent/do_{_bar();_}_while_(foo)
+=== PAUSE TestNoLoneBlocksStaysSilent/do_{_bar();_}_while_(foo)
+=== RUN   TestNoLoneBlocksStaysSilent/function_foo()_{_while_(bar)_{_baz()_}_}
+=== PAUSE TestNoLoneBlocksStaysSilent/function_foo()_{_while_(bar)_{_baz()_}_}
+=== CONT  TestNoLonelyIfStaysSilent
+=== RUN   TestNoLoneBlocksStaysSilent/{_let_x_=_1;_}
+=== PAUSE TestNoLoneBlocksStaysSilent/{_let_x_=_1;_}
+=== RUN   TestNoLoneBlocksStaysSilent/{_const_x_=_1;_}
+=== PAUSE TestNoLoneBlocksStaysSilent/{_const_x_=_1;_}
+=== RUN   TestNoLoneBlocksStaysSilent/'use_strict';_{_function_bar()_{}_}
+=== PAUSE TestNoLoneBlocksStaysSilent/'use_strict';_{_function_bar()_{}_}
+=== RUN   TestNoLoneBlocksStaysSilent/{_function_bar()_{}_}
+=== PAUSE TestNoLoneBlocksStaysSilent/{_function_bar()_{}_}
+=== RUN   TestNoLonelyIfStaysSilent/an_else_if_chain_already_written_flat
+=== RUN   TestNoLoneBlocksStaysSilent/{_class_Bar_{}_}
+=== PAUSE TestNoLoneBlocksStaysSilent/{_class_Bar_{}_}
+=== PAUSE TestNoLonelyIfStaysSilent/an_else_if_chain_already_written_flat
+=== RUN   TestNoLonelyIfStaysSilent/an_else_block_holding_two_statements
+=== PAUSE TestNoLonelyIfStaysSilent/an_else_block_holding_two_statements
+=== RUN   TestNoLonelyIfStaysSilent/braces_that_a_dangling_else_makes_necessary
+=== PAUSE TestNoLonelyIfStaysSilent/braces_that_a_dangling_else_makes_necessary
+=== RUN   TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace/no_spaces_anywhere
+=== PAUSE TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace/no_spaces_anywhere
+=== CONT  TestNoLoneBlocksIdentityNotJustLength
+=== RUN   TestNoLoneBlocksIdentityNotJustLength/a_required_consequent_block
+=== PAUSE TestNoLoneBlocksIdentityNotJustLength/a_required_consequent_block
+=== RUN   TestNoLoneBlocksIdentityNotJustLength/a_required_loop_body
+=== PAUSE TestNoLoneBlocksIdentityNotJustLength/a_required_loop_body
+=== CONT  TestNoLonelyIfFires
+=== RUN   TestNoLoneBlocksIdentityNotJustLength/a_labeled_block
+=== RUN   TestNoLonelyIfFires/the_simplest_lonely_if
+=== PAUSE TestNoLonelyIfFires/the_simplest_lonely_if
+=== RUN   TestNoLonelyIfFires/a_lonely_if_across_lines
+=== PAUSE TestNoLoneBlocksIdentityNotJustLength/a_labeled_block
+=== PAUSE TestNoLonelyIfFires/a_lonely_if_across_lines
+=== RUN   TestNoLonelyIfFires/a_comment_between_else_and_the_brace,_which_is_outside_the_rewrite
+=== RUN   TestNoLoneBlocksIdentityNotJustLength/a_try_block
+=== PAUSE TestNoLonelyIfFires/a_comment_between_else_and_the_brace,_which_is_outside_the_rewrite
+=== PAUSE TestNoLoneBlocksIdentityNotJustLength/a_try_block
+=== RUN   TestNoLoneBlocksIdentityNotJustLength/a_bound_consequent_block
+=== PAUSE TestNoLoneBlocksIdentityNotJustLength/a_bound_consequent_block
+=== RUN   TestNoLoneBlocksIdentityNotJustLength/a_consequent_block_in_a_clause
+=== PAUSE TestNoLoneBlocksIdentityNotJustLength/a_consequent_block_in_a_clause
+=== CONT  TestNoLoneBlocksSecondArmOutranksTheBindingExemption
+=== RUN   TestNoLoneBlocksIdentityNotJustLength/a_loop_body_in_a_clause
+=== PAUSE TestNoLoneBlocksIdentityNotJustLength/a_loop_body_in_a_clause
+=== RUN   TestNoLoneBlocksIdentityNotJustLength/a_labeled_block_in_a_clause
+=== PAUSE TestNoLoneBlocksIdentityNotJustLength/a_labeled_block_in_a_clause
+=== RUN   TestNoLoneBlocksIdentityNotJustLength/a_try_block_in_a_clause
+=== PAUSE TestNoLoneBlocksIdentityNotJustLength/a_try_block_in_a_clause
+=== RUN   TestNoLoneBlocksIdentityNotJustLength/a_function_body
+=== PAUSE TestNoLoneBlocksIdentityNotJustLength/a_function_body
+=== CONT  TestNoLoneBlocksSpansTheBlock
+=== CONT  TestNoLoneBlocksMatchesTheInstalledBuild
+=== RUN   TestNoLonelyIfFires/a_comment_before_the_inner_if,_which_the_rewrite_would_drop
+=== PAUSE TestNoLonelyIfFires/a_comment_before_the_inner_if,_which_the_rewrite_would_drop
+=== RUN   TestNoLonelyIfFires/a_comment_inside_the_inner_if,_which_the_rewrite_carries_along
+=== PAUSE TestNoLonelyIfFires/a_comment_inside_the_inner_if,_which_the_rewrite_carries_along
+=== RUN   TestNoLoneBlocksStaysSilent/{_{let_y_=_1;}_let_x_=_1;_}
+=== PAUSE TestNoLoneBlocksStaysSilent/{_{let_y_=_1;}_let_x_=_1;_}
+=== RUN   TestNoLoneBlocksMatchesTheInstalledBuild/a_bound_block_as_its_parent's_only_statement
+=== PAUSE TestNoLoneBlocksMatchesTheInstalledBuild/a_bound_block_as_its_parent's_only_statement
+=== RUN   TestNoLonelyIfFires/a_comment_after_the_inner_if,_which_the_rewrite_would_drop
+=== PAUSE TestNoLonelyIfFires/a_comment_after_the_inner_if,_which_the_rewrite_would_drop
+=== RUN   TestNoLoneBlocksMatchesTheInstalledBuild/an_unbound_block_as_the_only_statement
+--- PASS: TestNoLoneBlocksSecondArmOutranksTheBindingExemption (0.00s)
+=== RUN   TestNoLonelyIfFires/an_unbraced_consequent_with_a_semicolon
+=== CONT  TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations
+=== PAUSE TestNoLonelyIfFires/an_unbraced_consequent_with_a_semicolon
+=== RUN   TestNoLonelyIfFires/an_unbraced_consequent_with_no_semicolon,_followed_on_the_same_line
+=== PAUSE TestNoLonelyIfFires/an_unbraced_consequent_with_no_semicolon,_followed_on_the_same_line
+=== RUN   TestNoLonelyIfFires/the_same_with_a_semicolon,_which_is_fixable
+=== PAUSE TestNoLonelyIfFires/the_same_with_a_semicolon,_which_is_fixable
+=== CONT  TestNoLoneBlocksDoesNotReportAStaticBlockBody
+=== RUN   TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_enum_E_{_A_}_}
+--- PASS: TestNoLoneBlocksSpansTheBlock (0.00s)
+=== RUN   TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_{_______________baz;_____________}___________}_________
+=== PAUSE TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_enum_E_{_A_}_}
+=== PAUSE TestNoLoneBlocksMatchesTheInstalledBuild/an_unbound_block_as_the_only_statement
+=== RUN   TestNoLoneBlocksMatchesTheInstalledBuild/a_block_wrapping_a_whole_default_clause
+=== PAUSE TestNoLoneBlocksMatchesTheInstalledBuild/a_block_wrapping_a_whole_default_clause
+=== RUN   TestNoLoneBlocksMatchesTheInstalledBuild/a_block_after_a_statement_in_a_default_clause
+=== PAUSE TestNoLoneBlocksMatchesTheInstalledBuild/a_block_after_a_statement_in_a_default_clause
+=== RUN   TestNoLoneBlocksMatchesTheInstalledBuild/a_labeled_block
+=== PAUSE TestNoLoneBlocksMatchesTheInstalledBuild/a_labeled_block
+=== RUN   TestNoLonelyIfFires/a_following_line_opening_with_a_bracket
+=== RUN   TestNoLoneBlocksMatchesTheInstalledBuild/two_bound_sibling_blocks
+=== PAUSE TestNoLoneBlocksMatchesTheInstalledBuild/two_bound_sibling_blocks
+=== PAUSE TestNoLonelyIfFires/a_following_line_opening_with_a_bracket
+=== RUN   TestNoLonelyIfFires/a_consequent_ending_in_an_increment
+=== PAUSE TestNoLonelyIfFires/a_consequent_ending_in_an_increment
+=== RUN   TestNoLoneBlocksMatchesTheInstalledBuild/a_binding_beside_a_bound_block
+=== RUN   TestNoLonelyIfFires/the_same_with_a_semicolon,_which_is_fixable#01
+=== PAUSE TestNoLonelyIfFires/the_same_with_a_semicolon,_which_is_fixable#01
+=== RUN   TestNoLonelyIfFires/a_following_line_opening_with_a_template_literal
+=== PAUSE TestNoLoneBlocksMatchesTheInstalledBuild/a_binding_beside_a_bound_block
+=== PAUSE TestNoLonelyIfFires/a_following_line_opening_with_a_template_literal
+=== RUN   TestNoLonelyIfFires/a_whole_else_if_chain_inside_the_block
+=== PAUSE TestNoLonelyIfFires/a_whole_else_if_chain_inside_the_block
+=== RUN   TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{}_}
+=== PAUSE TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{}_}
+=== PAUSE TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_{_______________baz;_____________}___________}_________
+=== RUN   TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_{_______________baz;_____________}_____________case_qux:_{_______________boop;_____________}___________}_________
+=== PAUSE TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_{_______________baz;_____________}_____________case_qux:_{_______________boop;_____________}___________}_________
+=== CONT  TestNoLoneBlocksTreatsEveryFileAsStrict
+=== RUN   TestNoLoneBlocksMatchesTheInstalledBuild/a_bound_block_alone_in_a_function_body
+=== RUN   TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_____________{_______________baz;_____________}___________}_________
+=== PAUSE TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_____________{_______________baz;_____________}___________}_________
+=== PAUSE TestNoLoneBlocksMatchesTheInstalledBuild/a_bound_block_alone_in_a_function_body
+=== RUN   TestNoLoneBlocksStaysSilent/function_foo()_{_{_const_x_=_4_}_const_x_=_3_}
+=== PAUSE TestNoLoneBlocksStaysSilent/function_foo()_{_{_const_x_=_4_}_const_x_=_3_}
+=== RUN   TestNoLoneBlocksStaysSilent/class_C_{_static_{}_}
+=== PAUSE TestNoLoneBlocksStaysSilent/class_C_{_static_{}_}
+=== RUN   TestNoLoneBlocksStaysSilent/class_C_{_static_{_foo;_}_}
+=== PAUSE TestNoLoneBlocksStaysSilent/class_C_{_static_{_foo;_}_}
+=== RUN   TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{_foo;_}_}
+=== RUN   TestNoLoneBlocksStaysSilent/class_C_{_static_{_if_(foo)_{_block;_}_}_}
+=== PAUSE TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{_foo;_}_}
+=== PAUSE TestNoLoneBlocksStaysSilent/class_C_{_static_{_if_(foo)_{_block;_}_}_}
+=== CONT  TestNoLoneBlocksFires
+=== RUN   TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{_if_(foo)_{_block;_}_}_}
+=== PAUSE TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{_if_(foo)_{_block;_}_}_}
+--- PASS: TestNoLoneBlocksTreatsEveryFileAsStrict (0.00s)
+=== CONT  TestNoLonelyIfSpansTheInnerIf
+--- PASS: TestNoLonelyIfSpansTheInnerIf (0.00s)
+=== CONT  TestNoLossOfPrecisionReadsRawSourceText
+=== RUN   TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_interface_I_{}_}
+=== PAUSE TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_interface_I_{}_}
+=== RUN   TestNoLossOfPrecisionReadsRawSourceText/a_literal_the_parser_has_already_rounded
+=== RUN   TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_type_T_=_number;_}
+=== PAUSE TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_type_T_=_number;_}
+=== RUN   TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_namespace_N_{}_}
+=== PAUSE TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_namespace_N_{}_}
+=== CONT  TestNoLossOfPrecisionStaysSilent
+=== RUN   TestNoLossOfPrecisionStaysSilent/12345
+=== PAUSE TestNoLossOfPrecisionStaysSilent/12345
+=== RUN   TestNoLossOfPrecisionStaysSilent/123.456
+=== PAUSE TestNoLossOfPrecisionStaysSilent/123.456
+=== RUN   TestNoLossOfPrecisionStaysSilent/-123.456
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-123.456
+=== RUN   TestNoLossOfPrecisionStaysSilent/-123456
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-123456
+=== RUN   TestNoLossOfPrecisionStaysSilent/123e34
+=== RUN   TestNoLoneBlocksStaysSilent/class_C_{_static_{_lbl:_{_block;_}_}_}
+=== PAUSE TestNoLossOfPrecisionStaysSilent/123e34
+=== RUN   TestNoLossOfPrecisionStaysSilent/123.0e34
+=== CONT  TestNoLossOfPrecisionFires
+=== PAUSE TestNoLossOfPrecisionStaysSilent/123.0e34
+=== RUN   TestNoLossOfPrecisionStaysSilent/123e-34
+=== PAUSE TestNoLossOfPrecisionStaysSilent/123e-34
+=== RUN   TestNoLossOfPrecisionStaysSilent/-123e34
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-123e34
+=== RUN   TestNoLossOfPrecisionStaysSilent/-123e-34
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-123e-34
+=== PAUSE TestNoLossOfPrecisionReadsRawSourceText/a_literal_the_parser_has_already_rounded
+=== RUN   TestNoLossOfPrecisionStaysSilent/12.3e34
+=== PAUSE TestNoLossOfPrecisionStaysSilent/12.3e34
+=== RUN   TestNoLossOfPrecisionReadsRawSourceText/hex_whose_normalized_text_is_decimal
+=== PAUSE TestNoLoneBlocksStaysSilent/class_C_{_static_{_lbl:_{_block;_}_}_}
+=== PAUSE TestNoLossOfPrecisionReadsRawSourceText/hex_whose_normalized_text_is_decimal
+=== RUN   TestNoLoneBlocksFires/{}
+=== RUN   TestNoLoneBlocksStaysSilent/class_C_{_static_{_{_let_block;_}_something;_}_}
+=== RUN   TestNoLossOfPrecisionReadsRawSourceText/a_BigInt_past_the_safe_integer_range
+=== PAUSE TestNoLoneBlocksStaysSilent/class_C_{_static_{_{_let_block;_}_something;_}_}
+=== PAUSE TestNoLossOfPrecisionReadsRawSourceText/a_BigInt_past_the_safe_integer_range
+=== RUN   TestNoLossOfPrecisionReadsRawSourceText/a_BigInt_in_hex_past_53_bits
+=== PAUSE TestNoLossOfPrecisionReadsRawSourceText/a_BigInt_in_hex_past_53_bits
+=== RUN   TestNoLoneBlocksStaysSilent/class_C_{_static_{_something;_{_const_block_=_1;_}_}_}
+=== RUN   TestNoLossOfPrecisionReadsRawSourceText/a_safe_literal_in_a_call_argument
+=== PAUSE TestNoLoneBlocksStaysSilent/class_C_{_static_{_something;_{_const_block_=_1;_}_}_}
+=== RUN   TestNoLoneBlocksStaysSilent/class_C_{_static_{_{_function_block(){}_}_something;_}_}
+=== PAUSE TestNoLoneBlocksStaysSilent/class_C_{_static_{_{_function_block(){}_}_something;_}_}
+=== RUN   TestNoLoneBlocksStaysSilent/class_C_{_static_{_something;_{_class_block_{}__}_}_}
+=== PAUSE TestNoLoneBlocksStaysSilent/class_C_{_static_{_something;_{_class_block_{}__}_}_}
+=== RUN   TestNoLoneBlocksStaysSilent/_{___using_x_=_makeDisposable();_}
+=== PAUSE TestNoLoneBlocksStaysSilent/_{___using_x_=_makeDisposable();_}
+=== RUN   TestNoLoneBlocksStaysSilent/_{___await_using_x_=_makeDisposable();_}
+=== PAUSE TestNoLoneBlocksStaysSilent/_{___await_using_x_=_makeDisposable();_}
+=== PAUSE TestNoLoneBlocksFires/{}
+=== RUN   TestNoLoneBlocksFires/{var_x_=_1;}
+=== PAUSE TestNoLoneBlocksFires/{var_x_=_1;}
+=== RUN   TestNoLoneBlocksFires/foo();_{}_bar();
+=== PAUSE TestNoLoneBlocksFires/foo();_{}_bar();
+=== CONT  TestNoLonelyIfMessage
+=== RUN   TestNoLoneBlocksFires/if_(foo)_{_bar();_{}_baz();_}
+=== PAUSE TestNoLoneBlocksFires/if_(foo)_{_bar();_{}_baz();_}
+=== RUN   TestNoLoneBlocksFires/{__{_}_}
+=== PAUSE TestNoLoneBlocksFires/{__{_}_}
+=== RUN   TestNoLoneBlocksFires/function_foo()_{_bar();_{}_baz();_}
+=== PAUSE TestNoLossOfPrecisionReadsRawSourceText/a_safe_literal_in_a_call_argument
+=== PAUSE TestNoLoneBlocksFires/function_foo()_{_bar();_{}_baz();_}
+=== RUN   TestNoLossOfPrecisionReadsRawSourceText/hex_over_53_bits_whose_low_bits_are_zero
+=== RUN   TestNoLoneBlocksFires/while_(foo)_{_{}_}
+=== PAUSE TestNoLoneBlocksFires/while_(foo)_{_{}_}
+=== RUN   TestNoLoneBlocksFires/{var_x_=_1;}#01
+=== PAUSE TestNoLoneBlocksFires/{var_x_=_1;}#01
+=== RUN   TestNoLossOfPrecisionFires/9007199254740993
+=== RUN   TestNoLoneBlocksFires/{__{var_x_=_1;}__let_y_=_2;_}_{let_z_=_1;}
+--- PASS: TestNoLonelyIfMessage (0.00s)
+=== PAUSE TestNoLoneBlocksFires/{__{var_x_=_1;}__let_y_=_2;_}_{let_z_=_1;}
+=== CONT  TestNoLonelyIfThenBranchIsNotTheSubject
+=== PAUSE TestNoLossOfPrecisionFires/9007199254740993
+=== RUN   TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_}
+=== RUN   TestNoLossOfPrecisionFires/9007199254740.993e3
+=== PAUSE TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_}
+=== PAUSE TestNoLossOfPrecisionFires/9007199254740.993e3
+=== RUN   TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_}_else_{}
+=== RUN   TestNoLossOfPrecisionFires/9.007199254740993e15
+=== PAUSE TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_}_else_{}
+=== PAUSE TestNoLossOfPrecisionFires/9.007199254740993e15
+=== RUN   TestNoLonelyIfThenBranchIsNotTheSubject/while_(a)_{_if_(b)_{}_}
+=== RUN   TestNoLossOfPrecisionFires/-9007199254740993
+=== PAUSE TestNoLonelyIfThenBranchIsNotTheSubject/while_(a)_{_if_(b)_{}_}
+=== PAUSE TestNoLossOfPrecisionFires/-9007199254740993
+=== RUN   TestNoLonelyIfThenBranchIsNotTheSubject/function_f()_{_if_(b)_{}_}
+=== RUN   TestNoLossOfPrecisionFires/900719.9254740994
+=== PAUSE TestNoLossOfPrecisionReadsRawSourceText/hex_over_53_bits_whose_low_bits_are_zero
+=== RUN   TestNoLossOfPrecisionReadsRawSourceText/octal_over_53_bits_whose_low_bits_are_zero
+=== PAUSE TestNoLossOfPrecisionReadsRawSourceText/octal_over_53_bits_whose_low_bits_are_zero
+=== RUN   TestNoLossOfPrecisionReadsRawSourceText/binary_over_53_bits_whose_low_bits_are_zero
+=== PAUSE TestNoLossOfPrecisionReadsRawSourceText/binary_over_53_bits_whose_low_bits_are_zero
+=== PAUSE TestNoLonelyIfThenBranchIsNotTheSubject/function_f()_{_if_(b)_{}_}
+=== RUN   TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_else_{}_}_else_{}
+=== PAUSE TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_else_{}_}_else_{}
+=== RUN   TestNoLoneBlocksFires/{__{let_x_=_1;}__var_y_=_2;_}_{let_z_=_1;}
+=== CONT  TestNoLonelyIfElseLookaheadIsATokenNotAPrefix
+=== PAUSE TestNoLoneBlocksFires/{__{let_x_=_1;}__var_y_=_2;_}_{let_z_=_1;}
+=== RUN   TestNoLonelyIfElseLookaheadIsATokenNotAPrefix/an_identifier_starting_with_else,_after_the_block
+=== RUN   TestNoLoneBlocksFires/{__{var_x_=_1;}__var_y_=_2;_}__{var_z_=_1;}
+=== PAUSE TestNoLoneBlocksFires/{__{var_x_=_1;}__var_y_=_2;_}__{var_z_=_1;}
+=== CONT  TestNoLonelyIfDanglingElse
+=== RUN   TestNoLossOfPrecisionStaysSilent/12.3e-34
+=== PAUSE TestNoLossOfPrecisionStaysSilent/12.3e-34
+=== PAUSE TestNoLossOfPrecisionFires/900719.9254740994
+=== RUN   TestNoLoneBlocksFires/_______________switch_(foo)_{_________________case_1:_____________________foo();_____________________{_________________________bar;_____________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________switch_(foo)_{_________________case_1:_____________________foo();_____________________{_________________________bar;_____________________}_______________}_____________
+=== RUN   TestNoLonelyIfDanglingElse/an_alternate-less_inner_if_followed_by_else
+=== RUN   TestNoLoneBlocksFires/_______________switch_(foo)_{_________________case_1:_________________{_____________________bar;_________________}_________________foo();_______________}_____________
+=== PAUSE TestNoLonelyIfDanglingElse/an_alternate-less_inner_if_followed_by_else
+=== PAUSE TestNoLonelyIfElseLookaheadIsATokenNotAPrefix/an_identifier_starting_with_else,_after_the_block
+=== RUN   TestNoLossOfPrecisionFires/-900719.9254740994
+=== PAUSE TestNoLossOfPrecisionFires/-900719.9254740994
+=== PAUSE TestNoLoneBlocksFires/_______________switch_(foo)_{_________________case_1:_________________{_____________________bar;_________________}_________________foo();_______________}_____________
+=== RUN   TestNoLonelyIfDanglingElse/the_same_with_nothing_following
+=== PAUSE TestNoLonelyIfDanglingElse/the_same_with_nothing_following
+=== RUN   TestNoLonelyIfElseLookaheadIsATokenNotAPrefix/a_plain_identifier_after_the_block
+=== PAUSE TestNoLonelyIfElseLookaheadIsATokenNotAPrefix/a_plain_identifier_after_the_block
+=== RUN   TestNoLonelyIfDanglingElse/an_inner_if_whose_chain_ends_in_an_else
+=== PAUSE TestNoLonelyIfDanglingElse/an_inner_if_whose_chain_ends_in_an_else
+=== CONT  TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest
+=== RUN   TestNoLossOfPrecisionFires/-9_00719_9254_740993
+=== PAUSE TestNoLossOfPrecisionFires/-9_00719_9254_740993
+=== RUN   TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_on_the_same_line
+=== RUN   TestNoLossOfPrecisionFires/-900_719.92_5474_0994
+=== RUN   TestNoLossOfPrecisionStaysSilent/-12.3e34
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-12.3e34
+=== PAUSE TestNoLossOfPrecisionFires/-900_719.92_5474_0994
+=== RUN   TestNoLossOfPrecisionStaysSilent/-12.3e-34
+=== RUN   TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-12.3e-34
+=== PAUSE TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15
+=== RUN   TestNoLossOfPrecisionStaysSilent/12300000000000000000000000
+=== PAUSE TestNoLossOfPrecisionStaysSilent/12300000000000000000000000
+=== RUN   TestNoLossOfPrecisionStaysSilent/-12300000000000000000000000
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-12300000000000000000000000
+=== RUN   TestNoLossOfPrecisionStaysSilent/0.00000000000000000000000123
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0.00000000000000000000000123
+=== RUN   TestNoLonelyIfDanglingElse/an_inner_if_whose_chain_ends_without_one
+=== RUN   TestNoLossOfPrecisionStaysSilent/-0.00000000000000000000000123
+=== PAUSE TestNoLonelyIfDanglingElse/an_inner_if_whose_chain_ends_without_one
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-0.00000000000000000000000123
+=== RUN   TestNoLossOfPrecisionFires/900_719.92_54740_994
+=== RUN   TestNoLossOfPrecisionStaysSilent/9007199254740991
+=== PAUSE TestNoLossOfPrecisionStaysSilent/9007199254740991
+=== RUN   TestNoLossOfPrecisionStaysSilent/0
+=== PAUSE TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_on_the_same_line
+=== RUN   TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_by_a_line_opening_with_a_bracket
+=== PAUSE TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_by_a_line_opening_with_a_bracket
+=== RUN   TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_by_a_parenthesis
+=== PAUSE TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_by_a_parenthesis
+=== CONT  TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace/else_directly_against_the_brace
+=== PAUSE TestNoLossOfPrecisionFires/900_719.92_54740_994
+=== RUN   TestNoLossOfPrecisionFires/-9_00719_9254_740993_#2
+=== PAUSE TestNoLossOfPrecisionFires/-9_00719_9254_740993_#2
+=== CONT  TestNoLonelyIfStaysSilent/an_else_if_chain_already_written_flat
+=== RUN   TestNoLossOfPrecisionFires/-900_719.92_5474_0994_#2
+=== PAUSE TestNoLossOfPrecisionFires/-900_719.92_5474_0994_#2
+=== RUN   TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15_#2
+=== PAUSE TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15_#2
+=== RUN   TestNoLossOfPrecisionFires/900_719.92_54740_994_#2
+=== PAUSE TestNoLossOfPrecisionFires/900_719.92_54740_994_#2
+=== RUN   TestNoLossOfPrecisionFires/-9_00719_9254_740993_#3
+=== PAUSE TestNoLossOfPrecisionFires/-9_00719_9254_740993_#3
+=== RUN   TestNoLossOfPrecisionFires/-900_719.92_5474_0994_#3
+=== RUN   TestNoLoneBlocksFires/_______________function_foo_()_{_________________{___________________const_x_=_4;_________________}_______________}_____________
+=== PAUSE TestNoLossOfPrecisionFires/-900_719.92_5474_0994_#3
+=== CONT  TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace/no_spaces_anywhere
+=== RUN   TestNoLossOfPrecisionFires/.9007199254740993e16
+=== PAUSE TestNoLossOfPrecisionFires/.9007199254740993e16
+=== RUN   TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15_#3
+=== PAUSE TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15_#3
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0
+=== RUN   TestNoLossOfPrecisionStaysSilent/0.0
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0.0
+=== PAUSE TestNoLoneBlocksFires/_______________function_foo_()_{_________________{___________________const_x_=_4;_________________}_______________}_____________
+=== RUN   TestNoLossOfPrecisionFires/90_0719925_4740.9_93e3
+=== RUN   TestNoLossOfPrecisionStaysSilent/0.00000000000000000000000000000000000000000...
+=== PAUSE TestNoLossOfPrecisionFires/90_0719925_4740.9_93e3
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0.00000000000000000000000000000000000000000...
+=== CONT  TestNoLonelyIfStaysSilent/braces_that_a_dangling_else_makes_necessary
+=== RUN   TestNoLoneBlocksFires/_______________function_foo_()_{_________________{___________________var_x_=_4;_________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________function_foo_()_{_________________{___________________var_x_=_4;_________________}_______________}_____________
+=== CONT  TestNoLoneBlocksIdentityNotJustLength/a_required_consequent_block
+--- PASS: TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace (0.00s)
+    --- PASS: TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace/no_spaces_anywhere (0.00s)
+    --- PASS: TestNoLonelyIfInsertsASpaceWhenElseTouchesTheBrace/else_directly_against_the_brace (0.00s)
+=== CONT  TestNoLonelyIfStaysSilent/an_else_block_holding_two_statements
+=== RUN   TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________if_(foo)_{_____________________{_________________________let_block;_____________________}___________________}_________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________if_(foo)_{_____________________{_________________________let_block;_____________________}___________________}_________________}_______________}_____________
+=== CONT  TestNoLoneBlocksIdentityNotJustLength/a_loop_body_in_a_clause
+=== RUN   TestNoLossOfPrecisionStaysSilent/-0
+--- PASS: TestNoLonelyIfStaysSilent (0.00s)
+    --- PASS: TestNoLonelyIfStaysSilent/an_else_if_chain_already_written_flat (0.00s)
+    --- PASS: TestNoLonelyIfStaysSilent/braces_that_a_dangling_else_makes_necessary (0.00s)
+    --- PASS: TestNoLonelyIfStaysSilent/an_else_block_holding_two_statements (0.00s)
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-0
+=== RUN   TestNoLossOfPrecisionFires/900_719.92_54740_994_#3
+=== PAUSE TestNoLossOfPrecisionFires/900_719.92_54740_994_#3
+=== RUN   TestNoLossOfPrecisionFires/900719925474099_3
+=== PAUSE TestNoLossOfPrecisionFires/900719925474099_3
+=== RUN   TestNoLossOfPrecisionFires/900719925474099.30e1
+=== PAUSE TestNoLossOfPrecisionFires/900719925474099.30e1
+=== CONT  TestNoLoneBlocksIdentityNotJustLength/a_function_body
+=== RUN   TestNoLossOfPrecisionStaysSilent/123.0000000000000000000000
+=== RUN   TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________if_(foo)_{_____________________{_________________________block;_____________________}_____________________something;___________________}_________________}_______________}_____________
+=== PAUSE TestNoLossOfPrecisionStaysSilent/123.0000000000000000000000
+=== RUN   TestNoLossOfPrecisionStaysSilent/9.00e2
+=== PAUSE TestNoLossOfPrecisionStaysSilent/9.00e2
+=== RUN   TestNoLossOfPrecisionStaysSilent/9.000e3
+=== PAUSE TestNoLossOfPrecisionStaysSilent/9.000e3
+=== RUN   TestNoLossOfPrecisionStaysSilent/9.0000000000e10
+=== PAUSE TestNoLossOfPrecisionStaysSilent/9.0000000000e10
+=== RUN   TestNoLossOfPrecisionStaysSilent/9.00E2
+=== PAUSE TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________if_(foo)_{_____________________{_________________________block;_____________________}_____________________something;___________________}_________________}_______________}_____________
+=== RUN   TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________block;___________________}_________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________block;___________________}_________________}_______________}_____________
+=== RUN   TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________let_block;___________________}_________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________let_block;___________________}_________________}_______________}_____________
+=== RUN   TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________const_block_=_1;___________________}_________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________const_block_=_1;___________________}_________________}_______________}_____________
+=== RUN   TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________function_block()_{}___________________}_________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________function_block()_{}___________________}_________________}_______________}_____________
+=== RUN   TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________class_block_{}___________________}_________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________class_block_{}___________________}_________________}_______________}_____________
+=== RUN   TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________var_block;___________________}___________________something;_________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________var_block;___________________}___________________something;_________________}_______________}_____________
+=== RUN   TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________something;___________________{_____________________var_block;___________________}_________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________something;___________________{_____________________var_block;___________________}_________________}_______________}_____________
+=== RUN   TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________block;___________________}___________________something;_________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________block;___________________}___________________something;_________________}_______________}_____________
+=== RUN   TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________something;___________________{_____________________block;___________________}_________________}_______________}_____________
+=== PAUSE TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________something;___________________{_____________________block;___________________}_________________}_______________}_____________
+=== RUN   TestNoLossOfPrecisionFires/90071992547409930e-1
+=== PAUSE TestNoLossOfPrecisionFires/90071992547409930e-1
+=== RUN   TestNoLossOfPrecisionFires/5123000000000000000000000000001
+=== PAUSE TestNoLossOfPrecisionFires/5123000000000000000000000000001
+=== RUN   TestNoLossOfPrecisionFires/-5123000000000000000000000000001
+=== PAUSE TestNoLossOfPrecisionFires/-5123000000000000000000000000001
+=== RUN   TestNoLossOfPrecisionFires/1230000000000000000000000.0
+=== PAUSE TestNoLossOfPrecisionFires/1230000000000000000000000.0
+=== RUN   TestNoLossOfPrecisionFires/1.0000000000000000000000123
+=== PAUSE TestNoLossOfPrecisionFires/1.0000000000000000000000123
+=== RUN   TestNoLossOfPrecisionFires/1749800579826409539498001781694097092282535...
+=== PAUSE TestNoLossOfPrecisionFires/1749800579826409539498001781694097092282535...
+=== RUN   TestNoLossOfPrecisionFires/2e999
+=== PAUSE TestNoLossOfPrecisionFires/2e999
+=== RUN   TestNoLossOfPrecisionFires/.1230000000000000000000000
+=== PAUSE TestNoLossOfPrecisionFires/.1230000000000000000000000
+=== RUN   TestNoLossOfPrecisionFires/0b10000000000000000000000000000000000000000...
+=== PAUSE TestNoLossOfPrecisionFires/0b10000000000000000000000000000000000000000...
+=== RUN   TestNoLossOfPrecisionFires/0B10000000000000000000000000000000000000000...
+=== PAUSE TestNoLossOfPrecisionFires/0B10000000000000000000000000000000000000000...
+=== RUN   TestNoLossOfPrecisionFires/0o400000000000000001
+=== PAUSE TestNoLossOfPrecisionFires/0o400000000000000001
+=== RUN   TestNoLossOfPrecisionFires/0O400000000000000001
+=== PAUSE TestNoLossOfPrecisionFires/0O400000000000000001
+=== RUN   TestNoLossOfPrecisionFires/0400000000000000001
+=== PAUSE TestNoLossOfPrecisionFires/0400000000000000001
+=== RUN   TestNoLossOfPrecisionFires/0x20000000000001
+=== PAUSE TestNoLossOfPrecisionFires/0x20000000000001
+=== RUN   TestNoLossOfPrecisionFires/0X20000000000001
+=== PAUSE TestNoLossOfPrecisionFires/0X20000000000001
+=== RUN   TestNoLossOfPrecisionFires/5123_00000000000000000000000000_1
+=== CONT  TestNoLoneBlocksIdentityNotJustLength/a_try_block_in_a_clause
+=== PAUSE TestNoLossOfPrecisionFires/5123_00000000000000000000000000_1
+=== CONT  TestNoLoneBlocksIdentityNotJustLength/a_try_block
+=== RUN   TestNoLossOfPrecisionFires/-5_12300000000000000000000_0000001
+=== PAUSE TestNoLossOfPrecisionFires/-5_12300000000000000000000_0000001
+=== CONT  TestNoLoneBlocksIdentityNotJustLength/a_consequent_block_in_a_clause
+=== RUN   TestNoLossOfPrecisionFires/123_00000000000000000000_00.0_0
+=== PAUSE TestNoLossOfPrecisionFires/123_00000000000000000000_00.0_0
+=== CONT  TestNoLoneBlocksIdentityNotJustLength/a_bound_consequent_block
+=== RUN   TestNoLossOfPrecisionFires/1.0_00000000000000000_0000123
+=== PAUSE TestNoLossOfPrecisionFires/1.0_00000000000000000_0000123
+=== PAUSE TestNoLossOfPrecisionStaysSilent/9.00E2
+=== RUN   TestNoLossOfPrecisionStaysSilent/9.000E3
+=== RUN   TestNoLossOfPrecisionFires/174_980057982_640953949800178169_4097092282...
+=== PAUSE TestNoLossOfPrecisionFires/174_980057982_640953949800178169_4097092282...
+=== CONT  TestNoLoneBlocksIdentityNotJustLength/a_required_loop_body
+=== PAUSE TestNoLossOfPrecisionStaysSilent/9.000E3
+=== RUN   TestNoLossOfPrecisionStaysSilent/9.100E3
+=== PAUSE TestNoLossOfPrecisionStaysSilent/9.100E3
+=== RUN   TestNoLossOfPrecisionStaysSilent/9.0000000000E10
+=== PAUSE TestNoLossOfPrecisionStaysSilent/9.0000000000E10
+=== CONT  TestNoLonelyIfFires/the_simplest_lonely_if
+=== CONT  TestNoLoneBlocksIdentityNotJustLength/a_labeled_block
+=== CONT  TestNoLoneBlocksIdentityNotJustLength/a_labeled_block_in_a_clause
+=== CONT  TestNoLonelyIfFires/a_whole_else_if_chain_inside_the_block
+--- PASS: TestNoLoneBlocksIdentityNotJustLength (0.00s)
+    --- PASS: TestNoLoneBlocksIdentityNotJustLength/a_required_consequent_block (0.00s)
+    --- PASS: TestNoLoneBlocksIdentityNotJustLength/a_loop_body_in_a_clause (0.00s)
+    --- PASS: TestNoLoneBlocksIdentityNotJustLength/a_function_body (0.00s)
+    --- PASS: TestNoLoneBlocksIdentityNotJustLength/a_try_block (0.00s)
+    --- PASS: TestNoLoneBlocksIdentityNotJustLength/a_consequent_block_in_a_clause (0.00s)
+    --- PASS: TestNoLoneBlocksIdentityNotJustLength/a_try_block_in_a_clause (0.00s)
+    --- PASS: TestNoLoneBlocksIdentityNotJustLength/a_bound_consequent_block (0.00s)
+    --- PASS: TestNoLoneBlocksIdentityNotJustLength/a_required_loop_body (0.00s)
+    --- PASS: TestNoLoneBlocksIdentityNotJustLength/a_labeled_block (0.00s)
+    --- PASS: TestNoLoneBlocksIdentityNotJustLength/a_labeled_block_in_a_clause (0.00s)
+=== CONT  TestNoLonelyIfFires/the_same_with_a_semicolon,_which_is_fixable
+=== RUN   TestNoLossOfPrecisionFires/2e9_99
+=== CONT  TestNoLonelyIfFires/a_following_line_opening_with_a_template_literal
+=== PAUSE TestNoLossOfPrecisionFires/2e9_99
+=== RUN   TestNoLossOfPrecisionFires/.1_23000000000000_00000_0000_0
+=== CONT  TestNoLonelyIfFires/a_consequent_ending_in_an_increment
+=== PAUSE TestNoLossOfPrecisionFires/.1_23000000000000_00000_0000_0
+=== RUN   TestNoLossOfPrecisionFires/0b1_000000000000000000000000000000000000000...
+=== CONT  TestNoLonelyIfFires/a_following_line_opening_with_a_bracket
+=== PAUSE TestNoLossOfPrecisionFires/0b1_000000000000000000000000000000000000000...
+=== RUN   TestNoLossOfPrecisionStaysSilent/019.5
+=== RUN   TestNoLossOfPrecisionFires/0B10000000000_0000000000000000000000000000_...
+=== PAUSE TestNoLossOfPrecisionFires/0B10000000000_0000000000000000000000000000_...
+=== PAUSE TestNoLossOfPrecisionStaysSilent/019.5
+=== CONT  TestNoLonelyIfFires/an_unbraced_consequent_with_no_semicolon,_followed_on_the_same_line
+=== RUN   TestNoLossOfPrecisionFires/0o4_00000000000000_001
+=== CONT  TestNoLonelyIfFires/a_comment_inside_the_inner_if,_which_the_rewrite_carries_along
+=== PAUSE TestNoLossOfPrecisionFires/0o4_00000000000000_001
+=== RUN   TestNoLossOfPrecisionFires/0O4_0000000000000000_1
+=== PAUSE TestNoLossOfPrecisionFires/0O4_0000000000000000_1
+=== CONT  TestNoLonelyIfFires/an_unbraced_consequent_with_a_semicolon
+=== RUN   TestNoLossOfPrecisionFires/0x2_0000000000001
+=== PAUSE TestNoLossOfPrecisionFires/0x2_0000000000001
+=== RUN   TestNoLossOfPrecisionFires/0X200000_0000000_1
+=== PAUSE TestNoLossOfPrecisionFires/0X200000_0000000_1
+=== RUN   TestNoLossOfPrecisionStaysSilent/0195
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0195
+=== CONT  TestNoLonelyIfFires/a_comment_after_the_inner_if,_which_the_rewrite_would_drop
+=== RUN   TestNoLossOfPrecisionStaysSilent/00195
+=== CONT  TestNoLonelyIfFires/the_same_with_a_semicolon,_which_is_fixable#01
+=== PAUSE TestNoLossOfPrecisionStaysSilent/00195
+=== RUN   TestNoLossOfPrecisionStaysSilent/0008
+=== CONT  TestNoLonelyIfFires/a_comment_between_else_and_the_brace,_which_is_outside_the_rewrite
+=== RUN   TestNoLossOfPrecisionFires/9007199254740993_#2
+=== PAUSE TestNoLossOfPrecisionFires/9007199254740993_#2
+=== RUN   TestNoLossOfPrecisionFires/9_007_199_254_740_993
+=== PAUSE TestNoLossOfPrecisionFires/9_007_199_254_740_993
+=== RUN   TestNoLossOfPrecisionFires/9_007_199_254_740.993e3
+=== CONT  TestNoLonelyIfFires/a_comment_before_the_inner_if,_which_the_rewrite_would_drop
+=== PAUSE TestNoLossOfPrecisionFires/9_007_199_254_740.993e3
+=== RUN   TestNoLossOfPrecisionFires/0b100_000_000_000_000_000_000_000_000_000_0...
+=== CONT  TestNoLonelyIfFires/a_lonely_if_across_lines
+=== PAUSE TestNoLossOfPrecisionFires/0b100_000_000_000_000_000_000_000_000_000_0...
+=== CONT  TestNoLoneBlocksMatchesTheInstalledBuild/a_bound_block_as_its_parent's_only_statement
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0008
+=== CONT  TestNoLoneBlocksMatchesTheInstalledBuild/two_bound_sibling_blocks
+=== RUN   TestNoLossOfPrecisionStaysSilent/0e5
+=== RUN   TestNoLossOfPrecisionFires/1e18_446_744_073_709_551_615
+=== CONT  TestNoLoneBlocksMatchesTheInstalledBuild/a_block_after_a_statement_in_a_default_clause
+=== CONT  TestNoLoneBlocksMatchesTheInstalledBuild/a_bound_block_alone_in_a_function_body
+--- PASS: TestNoLonelyIfFires (0.00s)
+    --- PASS: TestNoLonelyIfFires/the_simplest_lonely_if (0.00s)
+    --- PASS: TestNoLonelyIfFires/the_same_with_a_semicolon,_which_is_fixable (0.00s)
+    --- PASS: TestNoLonelyIfFires/a_whole_else_if_chain_inside_the_block (0.00s)
+    --- PASS: TestNoLonelyIfFires/a_following_line_opening_with_a_template_literal (0.00s)
+    --- PASS: TestNoLonelyIfFires/a_consequent_ending_in_an_increment (0.00s)
+    --- PASS: TestNoLonelyIfFires/a_following_line_opening_with_a_bracket (0.00s)
+    --- PASS: TestNoLonelyIfFires/an_unbraced_consequent_with_no_semicolon,_followed_on_the_same_line (0.00s)
+    --- PASS: TestNoLonelyIfFires/a_comment_inside_the_inner_if,_which_the_rewrite_carries_along (0.00s)
+    --- PASS: TestNoLonelyIfFires/a_comment_after_the_inner_if,_which_the_rewrite_would_drop (0.00s)
+    --- PASS: TestNoLonelyIfFires/a_comment_between_else_and_the_brace,_which_is_outside_the_rewrite (0.00s)
+    --- PASS: TestNoLonelyIfFires/the_same_with_a_semicolon,_which_is_fixable#01 (0.00s)
+    --- PASS: TestNoLonelyIfFires/an_unbraced_consequent_with_a_semicolon (0.00s)
+    --- PASS: TestNoLonelyIfFires/a_comment_before_the_inner_if,_which_the_rewrite_would_drop (0.00s)
+    --- PASS: TestNoLonelyIfFires/a_lonely_if_across_lines (0.00s)
+=== PAUSE TestNoLossOfPrecisionFires/1e18_446_744_073_709_551_615
+=== RUN   TestNoLossOfPrecisionFires/96215808661.52751e-84
+=== PAUSE TestNoLossOfPrecisionFires/96215808661.52751e-84
+=== CONT  TestNoLoneBlocksMatchesTheInstalledBuild/a_labeled_block
+=== CONT  TestNoLoneBlocksMatchesTheInstalledBuild/a_block_wrapping_a_whole_default_clause
+=== CONT  TestNoLoneBlocksMatchesTheInstalledBuild/an_unbound_block_as_the_only_statement
+=== CONT  TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{}_}
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0e5
+=== RUN   TestNoLossOfPrecisionStaysSilent/.42
+=== CONT  TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{_if_(foo)_{_block;_}_}_}
+=== CONT  TestNoLoneBlocksMatchesTheInstalledBuild/a_binding_beside_a_bound_block
+=== PAUSE TestNoLossOfPrecisionStaysSilent/.42
+=== RUN   TestNoLossOfPrecisionStaysSilent/42.
+=== PAUSE TestNoLossOfPrecisionStaysSilent/42.
+=== RUN   TestNoLossOfPrecisionStaysSilent/12_34_56
+=== PAUSE TestNoLossOfPrecisionStaysSilent/12_34_56
+=== RUN   TestNoLossOfPrecisionStaysSilent/12_3.4_56
+=== PAUSE TestNoLossOfPrecisionStaysSilent/12_3.4_56
+=== RUN   TestNoLossOfPrecisionStaysSilent/-12_3.4_56
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-12_3.4_56
+=== RUN   TestNoLossOfPrecisionStaysSilent/-12_34_56
+--- PASS: TestNoLoneBlocksMatchesTheInstalledBuild (0.00s)
+    --- PASS: TestNoLoneBlocksMatchesTheInstalledBuild/two_bound_sibling_blocks (0.00s)
+    --- PASS: TestNoLoneBlocksMatchesTheInstalledBuild/a_bound_block_as_its_parent's_only_statement (0.00s)
+    --- PASS: TestNoLoneBlocksMatchesTheInstalledBuild/a_block_after_a_statement_in_a_default_clause (0.00s)
+    --- PASS: TestNoLoneBlocksMatchesTheInstalledBuild/a_bound_block_alone_in_a_function_body (0.00s)
+    --- PASS: TestNoLoneBlocksMatchesTheInstalledBuild/a_labeled_block (0.00s)
+    --- PASS: TestNoLoneBlocksMatchesTheInstalledBuild/a_block_wrapping_a_whole_default_clause (0.00s)
+    --- PASS: TestNoLoneBlocksMatchesTheInstalledBuild/an_unbound_block_as_the_only_statement (0.00s)
+    --- PASS: TestNoLoneBlocksMatchesTheInstalledBuild/a_binding_beside_a_bound_block (0.00s)
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-12_34_56
+=== CONT  TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_interface_I_{}_}
+=== RUN   TestNoLossOfPrecisionStaysSilent/12_3e3_4
+=== PAUSE TestNoLossOfPrecisionStaysSilent/12_3e3_4
+=== RUN   TestNoLossOfPrecisionStaysSilent/123.0e3_4
+=== PAUSE TestNoLossOfPrecisionStaysSilent/123.0e3_4
+=== RUN   TestNoLossOfPrecisionStaysSilent/12_3e-3_4
+=== CONT  TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_type_T_=_number;_}
+=== PAUSE TestNoLossOfPrecisionStaysSilent/12_3e-3_4
+=== RUN   TestNoLossOfPrecisionStaysSilent/12_3.0e-3_4
+=== PAUSE TestNoLossOfPrecisionStaysSilent/12_3.0e-3_4
+=== CONT  TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_enum_E_{_A_}_}
+=== RUN   TestNoLossOfPrecisionStaysSilent/-1_23e-3_4
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-1_23e-3_4
+=== CONT  TestNoLoneBlocksStaysSilent/if_(foo)_{_if_(bar)_{_baz();_}_}
+=== RUN   TestNoLossOfPrecisionStaysSilent/-1_23.8e-3_4
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-1_23.8e-3_4
+=== RUN   TestNoLossOfPrecisionStaysSilent/1_230000000_00000000_00000_000
+=== PAUSE TestNoLossOfPrecisionStaysSilent/1_230000000_00000000_00000_000
+=== CONT  TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_namespace_N_{}_}
+=== RUN   TestNoLossOfPrecisionStaysSilent/-1_230000000_00000000_00000_000
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-1_230000000_00000000_00000_000
+=== RUN   TestNoLossOfPrecisionStaysSilent/0.0_00_000000000_000000000_00123
+=== CONT  TestNoLoneBlocksStaysSilent/class_C_{_static_{_something;_{_const_block_=_1;_}_}_}
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0.0_00_000000000_000000000_00123
+=== RUN   TestNoLossOfPrecisionStaysSilent/-0.0_00_000000000_000000000_00123
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-0.0_00_000000000_000000000_00123
+=== RUN   TestNoLossOfPrecisionStaysSilent/0e5_3
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0e5_3
+=== RUN   TestNoLossOfPrecisionStaysSilent/0b11111111111111111111111111111111111111111...
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0b11111111111111111111111111111111111111111...
+--- PASS: TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations (0.00s)
+    --- PASS: TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_interface_I_{}_} (0.00s)
+    --- PASS: TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_type_T_=_number;_} (0.00s)
+    --- PASS: TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_enum_E_{_A_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksExemptsTypeScriptBlockScopedDeclarations/{_namespace_N_{}_} (0.00s)
+=== CONT  TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{_foo;_}_}
+--- PASS: TestNoLoneBlocksDoesNotReportAStaticBlockBody (0.00s)
+    --- PASS: TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{}_} (0.00s)
+    --- PASS: TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{_if_(foo)_{_block;_}_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksDoesNotReportAStaticBlockBody/class_C_{_static_{_foo;_}_} (0.00s)
+=== CONT  TestNoLoneBlocksStaysSilent/_{___using_x_=_makeDisposable();_}
+=== CONT  TestNoLoneBlocksStaysSilent/class_C_{_static_{_something;_{_class_block_{}__}_}_}
+=== CONT  TestNoLoneBlocksStaysSilent/class_C_{_static_{_{_function_block(){}_}_something;_}_}
+=== CONT  TestNoLoneBlocksStaysSilent/{_function_bar()_{}_}
+=== CONT  TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_____________{_______________baz;_____________}___________}_________
+=== CONT  TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_{_______________baz;_____________}_____________case_qux:_{_______________boop;_____________}___________}_________
+=== CONT  TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_{_______________baz;_____________}___________}_________
+=== CONT  TestNoLoneBlocksStaysSilent/function_foo()_{_{_const_x_=_4_}_const_x_=_3_}
+=== CONT  TestNoLoneBlocksStaysSilent/{_{let_y_=_1;}_let_x_=_1;_}
+=== CONT  TestNoLoneBlocksStaysSilent/{_class_Bar_{}_}
+=== CONT  TestNoLoneBlocksStaysSilent/class_C_{_static_{_if_(foo)_{_block;_}_}_}
+=== CONT  TestNoLoneBlocksStaysSilent/class_C_{_static_{_lbl:_{_block;_}_}_}
+=== CONT  TestNoLoneBlocksStaysSilent/class_C_{_static_{_{_let_block;_}_something;_}_}
+=== CONT  TestNoLoneBlocksStaysSilent/class_C_{_static_{_foo;_}_}
+=== CONT  TestNoLoneBlocksStaysSilent/{_let_x_=_1;_}
+=== CONT  TestNoLoneBlocksStaysSilent/{_const_x_=_1;_}
+=== CONT  TestNoLoneBlocksStaysSilent/do_{_bar();_}_while_(foo)
+=== CONT  TestNoLoneBlocksStaysSilent/function_foo()_{_while_(bar)_{_baz()_}_}
+=== RUN   TestNoLossOfPrecisionStaysSilent/0b111_111_111_111_1111_11111_111_11111_1111...
+=== CONT  TestNoLossOfPrecisionReadsRawSourceText/a_literal_the_parser_has_already_rounded
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0b111_111_111_111_1111_11111_111_11111_1111...
+=== CONT  TestNoLoneBlocksStaysSilent/'use_strict';_{_function_bar()_{}_}
+=== RUN   TestNoLossOfPrecisionStaysSilent/0B11111111111111111111111111111111111111111...
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0B11111111111111111111111111111111111111111...
+=== CONT  TestNoLoneBlocksStaysSilent/_{___await_using_x_=_makeDisposable();_}
+=== RUN   TestNoLossOfPrecisionStaysSilent/0B111_111_111_111_1111_11111_111_11111_1111...
+=== CONT  TestNoLossOfPrecisionReadsRawSourceText/a_safe_literal_in_a_call_argument
+=== CONT  TestNoLoneBlocksStaysSilent/class_C_{_static_{}_}
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0B111_111_111_111_1111_11111_111_11111_1111...
+=== RUN   TestNoLossOfPrecisionStaysSilent/0o377777777777777777
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0o377777777777777777
+=== CONT  TestNoLossOfPrecisionReadsRawSourceText/octal_over_53_bits_whose_low_bits_are_zero
+=== RUN   TestNoLossOfPrecisionStaysSilent/0o3_77_777_777_777_777_777
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0o3_77_777_777_777_777_777
+=== CONT  TestNoLossOfPrecisionReadsRawSourceText/hex_over_53_bits_whose_low_bits_are_zero
+=== CONT  TestNoLossOfPrecisionReadsRawSourceText/a_BigInt_past_the_safe_integer_range
+=== RUN   TestNoLossOfPrecisionStaysSilent/0O377777777777777777
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0O377777777777777777
+=== RUN   TestNoLossOfPrecisionStaysSilent/0x1FFFFFFFFFFFFF
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0x1FFFFFFFFFFFFF
+=== CONT  TestNoLossOfPrecisionReadsRawSourceText/a_BigInt_in_hex_past_53_bits
+=== RUN   TestNoLossOfPrecisionStaysSilent/0X1FFFFFFFFFFFFF
+=== CONT  TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_}
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0X1FFFFFFFFFFFFF
+=== RUN   TestNoLossOfPrecisionStaysSilent/true
+=== PAUSE TestNoLossOfPrecisionStaysSilent/true
+=== CONT  TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_else_{}_}_else_{}
+=== RUN   TestNoLossOfPrecisionStaysSilent/'abc'
+=== CONT  TestNoLonelyIfThenBranchIsNotTheSubject/function_f()_{_if_(b)_{}_}
+=== PAUSE TestNoLossOfPrecisionStaysSilent/'abc'
+=== RUN   TestNoLossOfPrecisionStaysSilent/''
+=== PAUSE TestNoLossOfPrecisionStaysSilent/''
+=== RUN   TestNoLossOfPrecisionStaysSilent/null
+=== PAUSE TestNoLossOfPrecisionStaysSilent/null
+=== RUN   TestNoLossOfPrecisionStaysSilent/undefined
+=== CONT  TestNoLossOfPrecisionReadsRawSourceText/binary_over_53_bits_whose_low_bits_are_zero
+=== CONT  TestNoLossOfPrecisionReadsRawSourceText/hex_whose_normalized_text_is_decimal
+=== CONT  TestNoLonelyIfThenBranchIsNotTheSubject/while_(a)_{_if_(b)_{}_}
+=== CONT  TestNoLonelyIfElseLookaheadIsATokenNotAPrefix/an_identifier_starting_with_else,_after_the_block
+=== CONT  TestNoLonelyIfDanglingElse/an_inner_if_whose_chain_ends_without_one
+--- PASS: TestNoLoneBlocksStaysSilent (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/if_(foo)_{_if_(bar)_{_baz();_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/class_C_{_static_{_something;_{_const_block_=_1;_}_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/_{___using_x_=_makeDisposable();_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/class_C_{_static_{_something;_{_class_block_{}__}_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/{_function_bar()_{}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/class_C_{_static_{_{_function_block(){}_}_something;_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_____________{_______________baz;_____________}___________}_________ (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_{_______________baz;_____________}_____________case_qux:_{_______________boop;_____________}___________}_________ (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/___________switch_(foo)_{_____________case_bar:_{_______________baz;_____________}___________}_________ (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/{_class_Bar_{}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/{_{let_y_=_1;}_let_x_=_1;_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/class_C_{_static_{_if_(foo)_{_block;_}_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/function_foo()_{_{_const_x_=_4_}_const_x_=_3_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/class_C_{_static_{_{_let_block;_}_something;_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/class_C_{_static_{_foo;_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/class_C_{_static_{_lbl:_{_block;_}_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/{_let_x_=_1;_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/{_const_x_=_1;_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/function_foo()_{_while_(bar)_{_baz()_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/do_{_bar();_}_while_(foo) (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/_{___await_using_x_=_makeDisposable();_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/'use_strict';_{_function_bar()_{}_} (0.00s)
+    --- PASS: TestNoLoneBlocksStaysSilent/class_C_{_static_{}_} (0.00s)
+=== CONT  TestNoLonelyIfDanglingElse/an_alternate-less_inner_if_followed_by_else
+=== CONT  TestNoLonelyIfDanglingElse/an_inner_if_whose_chain_ends_in_an_else
+--- PASS: TestNoLossOfPrecisionReadsRawSourceText (0.00s)
+    --- PASS: TestNoLossOfPrecisionReadsRawSourceText/a_literal_the_parser_has_already_rounded (0.00s)
+    --- PASS: TestNoLossOfPrecisionReadsRawSourceText/a_safe_literal_in_a_call_argument (0.00s)
+    --- PASS: TestNoLossOfPrecisionReadsRawSourceText/a_BigInt_past_the_safe_integer_range (0.00s)
+    --- PASS: TestNoLossOfPrecisionReadsRawSourceText/hex_over_53_bits_whose_low_bits_are_zero (0.00s)
+    --- PASS: TestNoLossOfPrecisionReadsRawSourceText/octal_over_53_bits_whose_low_bits_are_zero (0.00s)
+    --- PASS: TestNoLossOfPrecisionReadsRawSourceText/a_BigInt_in_hex_past_53_bits (0.00s)
+    --- PASS: TestNoLossOfPrecisionReadsRawSourceText/hex_whose_normalized_text_is_decimal (0.00s)
+    --- PASS: TestNoLossOfPrecisionReadsRawSourceText/binary_over_53_bits_whose_low_bits_are_zero (0.00s)
+=== CONT  TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_}_else_{}
+=== CONT  TestNoLonelyIfDanglingElse/the_same_with_nothing_following
+--- PASS: TestNoLonelyIfThenBranchIsNotTheSubject (0.00s)
+    --- PASS: TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_} (0.00s)
+    --- PASS: TestNoLonelyIfThenBranchIsNotTheSubject/function_f()_{_if_(b)_{}_} (0.00s)
+    --- PASS: TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_else_{}_}_else_{} (0.00s)
+    --- PASS: TestNoLonelyIfThenBranchIsNotTheSubject/while_(a)_{_if_(b)_{}_} (0.00s)
+    --- PASS: TestNoLonelyIfThenBranchIsNotTheSubject/if_(a)_{_if_(b)_{}_}_else_{} (0.00s)
+=== PAUSE TestNoLossOfPrecisionStaysSilent/undefined
+=== CONT  TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_on_the_same_line
+=== RUN   TestNoLossOfPrecisionStaysSilent/{}
+=== PAUSE TestNoLossOfPrecisionStaysSilent/{}
+=== CONT  TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_by_a_parenthesis
+=== CONT  TestNoLonelyIfElseLookaheadIsATokenNotAPrefix/a_plain_identifier_after_the_block
+=== RUN   TestNoLossOfPrecisionStaysSilent/['a',_'b']
+=== PAUSE TestNoLossOfPrecisionStaysSilent/['a',_'b']
+=== RUN   TestNoLossOfPrecisionStaysSilent/new_Date()
+=== PAUSE TestNoLossOfPrecisionStaysSilent/new_Date()
+=== RUN   TestNoLossOfPrecisionStaysSilent/'9007199254740993'
+=== PAUSE TestNoLossOfPrecisionStaysSilent/'9007199254740993'
+=== RUN   TestNoLossOfPrecisionStaysSilent/0x1FFF_FFFF_FFF_FFF
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0x1FFF_FFFF_FFF_FFF
+=== CONT  TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_by_a_line_opening_with_a_bracket
+=== RUN   TestNoLossOfPrecisionStaysSilent/0X1_FFF_FFFF_FFF_FFF
+=== PAUSE TestNoLossOfPrecisionStaysSilent/0X1_FFF_FFFF_FFF_FFF
+=== RUN   TestNoLossOfPrecisionStaysSilent/12345_#2
+=== PAUSE TestNoLossOfPrecisionStaysSilent/12345_#2
+=== RUN   TestNoLossOfPrecisionStaysSilent/123.456_#2
+=== CONT  TestNoLoneBlocksFires/{}
+=== PAUSE TestNoLossOfPrecisionStaysSilent/123.456_#2
+=== RUN   TestNoLossOfPrecisionStaysSilent/-123.456_#2
+=== CONT  TestNoLoneBlocksFires/_______________function_foo_()_{_________________{___________________const_x_=_4;_________________}_______________}_____________
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-123.456_#2
+=== RUN   TestNoLossOfPrecisionStaysSilent/123_456
+=== PAUSE TestNoLossOfPrecisionStaysSilent/123_456
+=== RUN   TestNoLossOfPrecisionStaysSilent/123_00_000_000_000_000_000_000_000
+=== PAUSE TestNoLossOfPrecisionStaysSilent/123_00_000_000_000_000_000_000_000
+=== RUN   TestNoLossOfPrecisionStaysSilent/123.000_000_000_000_000_000_000_0
+=== PAUSE TestNoLossOfPrecisionStaysSilent/123.000_000_000_000_000_000_000_0
+=== RUN   TestNoLossOfPrecisionStaysSilent/Infinity
+=== PAUSE TestNoLossOfPrecisionStaysSilent/Infinity
+=== CONT  TestNoLoneBlocksFires/while_(foo)_{_{}_}
+=== RUN   TestNoLossOfPrecisionStaysSilent/480.00
+=== CONT  TestNoLoneBlocksFires/_______________switch_(foo)_{_________________case_1:_________________{_____________________bar;_________________}_________________foo();_______________}_____________
+--- PASS: TestNoLonelyIfDanglingElse (0.00s)
+    --- PASS: TestNoLonelyIfDanglingElse/an_inner_if_whose_chain_ends_without_one (0.00s)
+    --- PASS: TestNoLonelyIfDanglingElse/an_inner_if_whose_chain_ends_in_an_else (0.00s)
+    --- PASS: TestNoLonelyIfDanglingElse/the_same_with_nothing_following (0.00s)
+    --- PASS: TestNoLonelyIfDanglingElse/an_alternate-less_inner_if_followed_by_else (0.00s)
+--- PASS: TestNoLonelyIfElseLookaheadIsATokenNotAPrefix (0.00s)
+    --- PASS: TestNoLonelyIfElseLookaheadIsATokenNotAPrefix/an_identifier_starting_with_else,_after_the_block (0.00s)
+    --- PASS: TestNoLonelyIfElseLookaheadIsATokenNotAPrefix/a_plain_identifier_after_the_block (0.00s)
+--- PASS: TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest (0.00s)
+    --- PASS: TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_on_the_same_line (0.00s)
+    --- PASS: TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_by_a_parenthesis (0.00s)
+    --- PASS: TestNoLonelyIfBracedConsequentIsExemptFromTheSemicolonInsertionTest/a_braced_consequent_followed_by_a_line_opening_with_a_bracket (0.00s)
+=== CONT  TestNoLoneBlocksFires/{__{var_x_=_1;}__var_y_=_2;_}__{var_z_=_1;}
+=== CONT  TestNoLoneBlocksFires/_______________switch_(foo)_{_________________case_1:_____________________foo();_____________________{_________________________bar;_____________________}_______________}_____________
+=== PAUSE TestNoLossOfPrecisionStaysSilent/480.00
+=== CONT  TestNoLoneBlocksFires/{__{var_x_=_1;}__let_y_=_2;_}_{let_z_=_1;}
+=== CONT  TestNoLoneBlocksFires/{var_x_=_1;}#01
+=== RUN   TestNoLossOfPrecisionStaysSilent/-30.00
+=== CONT  TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________function_block()_{}___________________}_________________}_______________}_____________
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-30.00
+=== RUN   TestNoLossOfPrecisionStaysSilent/Infinity_#2
+=== PAUSE TestNoLossOfPrecisionStaysSilent/Infinity_#2
+=== CONT  TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________something;___________________{_____________________block;___________________}_________________}_______________}_____________
+=== CONT  TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________block;___________________}___________________something;_________________}_______________}_____________
+=== RUN   TestNoLossOfPrecisionStaysSilent/480.00_#2
+=== PAUSE TestNoLossOfPrecisionStaysSilent/480.00_#2
+=== RUN   TestNoLossOfPrecisionStaysSilent/-30.00_#2
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-30.00_#2
+=== RUN   TestNoLossOfPrecisionStaysSilent/Infinity_#3
+=== PAUSE TestNoLossOfPrecisionStaysSilent/Infinity_#3
+=== CONT  TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________something;___________________{_____________________var_block;___________________}_________________}_______________}_____________
+=== RUN   TestNoLossOfPrecisionStaysSilent/480.00_#3
+=== PAUSE TestNoLossOfPrecisionStaysSilent/480.00_#3
+=== RUN   TestNoLossOfPrecisionStaysSilent/-30.00_#3
+=== PAUSE TestNoLossOfPrecisionStaysSilent/-30.00_#3
+=== CONT  TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________class_block_{}___________________}_________________}_______________}_____________
+=== RUN   TestNoLossOfPrecisionStaysSilent/3e-308
+=== PAUSE TestNoLossOfPrecisionStaysSilent/3e-308
+=== RUN   TestNoLossOfPrecisionStaysSilent/(1000000000000000128).toFixed(0)
+=== PAUSE TestNoLossOfPrecisionStaysSilent/(1000000000000000128).toFixed(0)
+=== CONT  TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________if_(foo)_{_____________________{_________________________let_block;_____________________}___________________}_________________}_______________}_____________
+=== CONT  TestNoLoneBlocksFires/{__{let_x_=_1;}__var_y_=_2;_}_{let_z_=_1;}
+=== CONT  TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________if_(foo)_{_____________________{_________________________block;_____________________}_____________________something;___________________}_________________}_______________}_____________
+=== CONT  TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________var_block;___________________}___________________something;_________________}_______________}_____________
+=== CONT  TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________block;___________________}_________________}_______________}_____________
+=== CONT  TestNoLoneBlocksFires/function_foo()_{_bar();_{}_baz();_}
+=== CONT  TestNoLoneBlocksFires/foo();_{}_bar();
+=== CONT  TestNoLoneBlocksFires/{__{_}_}
+=== CONT  TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________let_block;___________________}_________________}_______________}_____________
+=== CONT  TestNoLoneBlocksFires/_______________function_foo_()_{_________________{___________________var_x_=_4;_________________}_______________}_____________
+=== CONT  TestNoLoneBlocksFires/if_(foo)_{_bar();_{}_baz();_}
+=== CONT  TestNoLoneBlocksFires/{var_x_=_1;}
+=== CONT  TestNoLossOfPrecisionFires/1.0_00000000000000000_0000123
+=== CONT  TestNoLossOfPrecisionFires/9007199254740993
+=== CONT  TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________const_block_=_1;___________________}_________________}_______________}_____________
+=== CONT  TestNoLossOfPrecisionFires/123_00000000000000000000_00.0_0
+=== CONT  TestNoLossOfPrecisionFires/5123_00000000000000000000000000_1
+=== CONT  TestNoLossOfPrecisionFires/-5_12300000000000000000000_0000001
+=== CONT  TestNoLossOfPrecisionFires/0X20000000000001
+=== CONT  TestNoLossOfPrecisionFires/0x20000000000001
+=== CONT  TestNoLossOfPrecisionFires/0400000000000000001
+=== CONT  TestNoLossOfPrecisionFires/0O400000000000000001
+=== CONT  TestNoLossOfPrecisionFires/0o400000000000000001
+=== CONT  TestNoLossOfPrecisionFires/0B10000000000000000000000000000000000000000...
+=== CONT  TestNoLossOfPrecisionFires/0b10000000000000000000000000000000000000000...
+=== CONT  TestNoLossOfPrecisionFires/.1230000000000000000000000
+=== CONT  TestNoLossOfPrecisionFires/2e999
+=== CONT  TestNoLossOfPrecisionFires/1749800579826409539498001781694097092282535...
+=== CONT  TestNoLossOfPrecisionFires/1.0000000000000000000000123
+=== CONT  TestNoLossOfPrecisionFires/1230000000000000000000000.0
+=== CONT  TestNoLossOfPrecisionFires/-5123000000000000000000000000001
+--- PASS: TestNoLoneBlocksFires (0.00s)
+    --- PASS: TestNoLoneBlocksFires/{} (0.00s)
+    --- PASS: TestNoLoneBlocksFires/while_(foo)_{_{}_} (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________function_foo_()_{_________________{___________________const_x_=_4;_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________switch_(foo)_{_________________case_1:_____________________foo();_____________________{_________________________bar;_____________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/{__{var_x_=_1;}__var_y_=_2;_}__{var_z_=_1;} (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________switch_(foo)_{_________________case_1:_________________{_____________________bar;_________________}_________________foo();_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/{var_x_=_1;}#01 (0.00s)
+    --- PASS: TestNoLoneBlocksFires/{__{var_x_=_1;}__let_y_=_2;_}_{let_z_=_1;} (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________something;___________________{_____________________block;___________________}_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________block;___________________}___________________something;_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________function_block()_{}___________________}_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________something;___________________{_____________________var_block;___________________}_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________class_block_{}___________________}_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________if_(foo)_{_____________________{_________________________let_block;_____________________}___________________}_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/{__{let_x_=_1;}__var_y_=_2;_}_{let_z_=_1;} (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________if_(foo)_{_____________________{_________________________block;_____________________}_____________________something;___________________}_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/function_foo()_{_bar();_{}_baz();_} (0.00s)
+    --- PASS: TestNoLoneBlocksFires/foo();_{}_bar(); (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________var_block;___________________}___________________something;_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________block;___________________}_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/{__{_}_} (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________let_block;___________________}_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________function_foo_()_{_________________{___________________var_x_=_4;_________________}_______________}_____________ (0.00s)
+    --- PASS: TestNoLoneBlocksFires/{var_x_=_1;} (0.00s)
+    --- PASS: TestNoLoneBlocksFires/if_(foo)_{_bar();_{}_baz();_} (0.00s)
+    --- PASS: TestNoLoneBlocksFires/_______________class_C_{_________________static_{___________________{_____________________const_block_=_1;___________________}_________________}_______________}_____________ (0.00s)
+=== CONT  TestNoLossOfPrecisionFires/5123000000000000000000000000001
+=== CONT  TestNoLossOfPrecisionFires/90071992547409930e-1
+=== CONT  TestNoLossOfPrecisionFires/900719925474099.30e1
+=== CONT  TestNoLossOfPrecisionFires/-9_00719_9254_740993_#2
+=== CONT  TestNoLossOfPrecisionFires/900719925474099_3
+=== CONT  TestNoLossOfPrecisionFires/90_0719925_4740.9_93e3
+=== CONT  TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15_#3
+=== CONT  TestNoLossOfPrecisionFires/.9007199254740993e16
+=== CONT  TestNoLossOfPrecisionFires/-900_719.92_5474_0994_#3
+=== CONT  TestNoLossOfPrecisionFires/-9_00719_9254_740993_#3
+=== CONT  TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15_#2
+=== CONT  TestNoLossOfPrecisionFires/-900_719.92_5474_0994_#2
+=== CONT  TestNoLossOfPrecisionFires/0X200000_0000000_1
+=== CONT  TestNoLossOfPrecisionFires/900_719.92_54740_994_#3
+=== CONT  TestNoLossOfPrecisionFires/900_719.92_54740_994
+=== CONT  TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15
+=== CONT  TestNoLossOfPrecisionFires/-9_00719_9254_740993
+=== CONT  TestNoLossOfPrecisionFires/-900_719.92_5474_0994
+=== CONT  TestNoLossOfPrecisionFires/-900719.9254740994
+=== CONT  TestNoLossOfPrecisionFires/900719.9254740994
+=== CONT  TestNoLossOfPrecisionFires/9.007199254740993e15
+=== CONT  TestNoLossOfPrecisionFires/9007199254740.993e3
+=== CONT  TestNoLossOfPrecisionFires/0B10000000000_0000000000000000000000000000_...
+=== CONT  TestNoLossOfPrecisionFires/0x2_0000000000001
+=== CONT  TestNoLossOfPrecisionFires/0o4_00000000000000_001
+=== CONT  TestNoLossOfPrecisionFires/900_719.92_54740_994_#2
+=== CONT  TestNoLossOfPrecisionFires/0b100_000_000_000_000_000_000_000_000_000_0...
+=== CONT  TestNoLossOfPrecisionFires/-9007199254740993
+=== CONT  TestNoLossOfPrecisionFires/9_007_199_254_740.993e3
+=== CONT  TestNoLossOfPrecisionFires/9_007_199_254_740_993
+=== CONT  TestNoLossOfPrecisionFires/0O4_0000000000000000_1
+=== CONT  TestNoLossOfPrecisionFires/.1_23000000000000_00000_0000_0
+=== CONT  TestNoLossOfPrecisionFires/9007199254740993_#2
+=== CONT  TestNoLossOfPrecisionFires/0b1_000000000000000000000000000000000000000...
+=== CONT  TestNoLossOfPrecisionFires/2e9_99
+=== CONT  TestNoLossOfPrecisionFires/96215808661.52751e-84
+=== CONT  TestNoLossOfPrecisionFires/174_980057982_640953949800178169_4097092282...
+=== CONT  TestNoLossOfPrecisionFires/1e18_446_744_073_709_551_615
+=== CONT  TestNoLossOfPrecisionStaysSilent/12345
+=== CONT  TestNoLossOfPrecisionStaysSilent/(1000000000000000128).toFixed(0)
+=== CONT  TestNoLossOfPrecisionStaysSilent/3e-308
+=== CONT  TestNoLossOfPrecisionStaysSilent/-30.00_#3
+=== CONT  TestNoLossOfPrecisionStaysSilent/480.00_#3
+=== CONT  TestNoLossOfPrecisionStaysSilent/-30.00_#2
+=== CONT  TestNoLossOfPrecisionStaysSilent/480.00_#2
+=== CONT  TestNoLossOfPrecisionStaysSilent/Infinity_#3
+=== CONT  TestNoLossOfPrecisionStaysSilent/Infinity_#2
+=== CONT  TestNoLossOfPrecisionStaysSilent/-30.00
+=== CONT  TestNoLossOfPrecisionStaysSilent/480.00
+=== CONT  TestNoLossOfPrecisionStaysSilent/123.000_000_000_000_000_000_000_0
+=== CONT  TestNoLossOfPrecisionStaysSilent/123_00_000_000_000_000_000_000_000
+=== CONT  TestNoLossOfPrecisionStaysSilent/Infinity
+=== CONT  TestNoLossOfPrecisionStaysSilent/123_456
+=== CONT  TestNoLossOfPrecisionStaysSilent/-123.456_#2
+=== CONT  TestNoLossOfPrecisionStaysSilent/123.456_#2
+=== CONT  TestNoLossOfPrecisionStaysSilent/12345_#2
+=== CONT  TestNoLossOfPrecisionStaysSilent/0X1_FFF_FFFF_FFF_FFF
+=== CONT  TestNoLossOfPrecisionStaysSilent/0x1FFF_FFFF_FFF_FFF
+=== CONT  TestNoLossOfPrecisionStaysSilent/new_Date()
+=== CONT  TestNoLossOfPrecisionStaysSilent/['a',_'b']
+--- PASS: TestNoLossOfPrecisionFires (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/1.0_00000000000000000_0000123 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/9007199254740993 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/123_00000000000000000000_00.0_0 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0400000000000000001 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0O400000000000000001 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/5123_00000000000000000000000000_1 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0B10000000000000000000000000000000000000000... (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/-5_12300000000000000000000_0000001 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0X20000000000001 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0b10000000000000000000000000000000000000000... (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0x20000000000001 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/.1230000000000000000000000 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/1749800579826409539498001781694097092282535... (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0o400000000000000001 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/2e999 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/1.0000000000000000000000123 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/90071992547409930e-1 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/900719925474099.30e1 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/-5123000000000000000000000000001 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/900719925474099_3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/5123000000000000000000000000001 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15_#3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/90_0719925_4740.9_93e3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/-9_00719_9254_740993_#2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/-900_719.92_5474_0994_#3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/.9007199254740993e16 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/-9_00719_9254_740993_#3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15_#2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/-900_719.92_5474_0994_#2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0X200000_0000000_1 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/900_719.92_54740_994 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/9.0_0719925_474099_3e15 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/1230000000000000000000000.0 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/-9_00719_9254_740993 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/-900_719.92_5474_0994 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/900_719.92_54740_994_#3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/900719.9254740994 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/-900719.9254740994 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/9.007199254740993e15 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/9007199254740.993e3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0x2_0000000000001 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0o4_00000000000000_001 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0B10000000000_0000000000000000000000000000_... (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/9_007_199_254_740.993e3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/-9007199254740993 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/900_719.92_54740_994_#2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/9_007_199_254_740_993 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/9007199254740993_#2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/.1_23000000000000_00000_0000_0 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0b100_000_000_000_000_000_000_000_000_000_0... (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/2e9_99 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/174_980057982_640953949800178169_4097092282... (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/96215808661.52751e-84 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0O4_0000000000000000_1 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/1e18_446_744_073_709_551_615 (0.00s)
+    --- PASS: TestNoLossOfPrecisionFires/0b1_000000000000000000000000000000000000000... (0.00s)
+=== CONT  TestNoLossOfPrecisionStaysSilent/{}
+=== CONT  TestNoLossOfPrecisionStaysSilent/undefined
+=== CONT  TestNoLossOfPrecisionStaysSilent/null
+=== CONT  TestNoLossOfPrecisionStaysSilent/'9007199254740993'
+=== CONT  TestNoLossOfPrecisionStaysSilent/''
+=== CONT  TestNoLossOfPrecisionStaysSilent/'abc'
+=== CONT  TestNoLossOfPrecisionStaysSilent/true
+=== CONT  TestNoLossOfPrecisionStaysSilent/0X1FFFFFFFFFFFFF
+=== CONT  TestNoLossOfPrecisionStaysSilent/0x1FFFFFFFFFFFFF
+=== CONT  TestNoLossOfPrecisionStaysSilent/0O377777777777777777
+=== CONT  TestNoLossOfPrecisionStaysSilent/0o3_77_777_777_777_777_777
+=== CONT  TestNoLossOfPrecisionStaysSilent/0o377777777777777777
+=== CONT  TestNoLossOfPrecisionStaysSilent/0B111_111_111_111_1111_11111_111_11111_1111...
+=== CONT  TestNoLossOfPrecisionStaysSilent/0B11111111111111111111111111111111111111111...
+=== CONT  TestNoLossOfPrecisionStaysSilent/0b111_111_111_111_1111_11111_111_11111_1111...
+=== CONT  TestNoLossOfPrecisionStaysSilent/0b11111111111111111111111111111111111111111...
+=== CONT  TestNoLossOfPrecisionStaysSilent/0e5_3
+=== CONT  TestNoLossOfPrecisionStaysSilent/-0.0_00_000000000_000000000_00123
+=== CONT  TestNoLossOfPrecisionStaysSilent/0.0_00_000000000_000000000_00123
+=== CONT  TestNoLossOfPrecisionStaysSilent/-1_230000000_00000000_00000_000
+=== CONT  TestNoLossOfPrecisionStaysSilent/1_230000000_00000000_00000_000
+=== CONT  TestNoLossOfPrecisionStaysSilent/-1_23.8e-3_4
+=== CONT  TestNoLossOfPrecisionStaysSilent/-1_23e-3_4
+=== CONT  TestNoLossOfPrecisionStaysSilent/12_3.0e-3_4
+=== CONT  TestNoLossOfPrecisionStaysSilent/123.0e3_4
+=== CONT  TestNoLossOfPrecisionStaysSilent/12_3e3_4
+=== CONT  TestNoLossOfPrecisionStaysSilent/-12_34_56
+=== CONT  TestNoLossOfPrecisionStaysSilent/-12_3.4_56
+=== CONT  TestNoLossOfPrecisionStaysSilent/12_3.4_56
+=== CONT  TestNoLossOfPrecisionStaysSilent/12_34_56
+=== CONT  TestNoLossOfPrecisionStaysSilent/42.
+=== CONT  TestNoLossOfPrecisionStaysSilent/.42
+=== CONT  TestNoLossOfPrecisionStaysSilent/0e5
+=== CONT  TestNoLossOfPrecisionStaysSilent/0008
+=== CONT  TestNoLossOfPrecisionStaysSilent/00195
+=== CONT  TestNoLossOfPrecisionStaysSilent/0195
+=== CONT  TestNoLossOfPrecisionStaysSilent/019.5
+=== CONT  TestNoLossOfPrecisionStaysSilent/9.0000000000E10
+=== CONT  TestNoLossOfPrecisionStaysSilent/9.100E3
+=== CONT  TestNoLossOfPrecisionStaysSilent/9.000E3
+=== CONT  TestNoLossOfPrecisionStaysSilent/9.00E2
+=== CONT  TestNoLossOfPrecisionStaysSilent/9.0000000000e10
+=== CONT  TestNoLossOfPrecisionStaysSilent/9.00e2
+=== CONT  TestNoLossOfPrecisionStaysSilent/9.000e3
+=== CONT  TestNoLossOfPrecisionStaysSilent/123.0000000000000000000000
+=== CONT  TestNoLossOfPrecisionStaysSilent/-0
+=== CONT  TestNoLossOfPrecisionStaysSilent/12_3e-3_4
+=== CONT  TestNoLossOfPrecisionStaysSilent/0.00000000000000000000000000000000000000000...
+=== CONT  TestNoLossOfPrecisionStaysSilent/0.0
+=== CONT  TestNoLossOfPrecisionStaysSilent/9007199254740991
+=== CONT  TestNoLossOfPrecisionStaysSilent/-0.00000000000000000000000123
+=== CONT  TestNoLossOfPrecisionStaysSilent/0
+=== CONT  TestNoLossOfPrecisionStaysSilent/-12300000000000000000000000
+=== CONT  TestNoLossOfPrecisionStaysSilent/0.00000000000000000000000123
+=== CONT  TestNoLossOfPrecisionStaysSilent/12300000000000000000000000
+=== CONT  TestNoLossOfPrecisionStaysSilent/-12.3e34
+=== CONT  TestNoLossOfPrecisionStaysSilent/12.3e-34
+=== CONT  TestNoLossOfPrecisionStaysSilent/12.3e34
+=== CONT  TestNoLossOfPrecisionStaysSilent/-123e34
+=== CONT  TestNoLossOfPrecisionStaysSilent/-123e-34
+=== CONT  TestNoLossOfPrecisionStaysSilent/123e-34
+=== CONT  TestNoLossOfPrecisionStaysSilent/123.0e34
+=== CONT  TestNoLossOfPrecisionStaysSilent/123e34
+=== CONT  TestNoLossOfPrecisionStaysSilent/-123.456
+=== CONT  TestNoLossOfPrecisionStaysSilent/123.456
+=== CONT  TestNoLossOfPrecisionStaysSilent/-123456
+=== CONT  TestNoLossOfPrecisionStaysSilent/-12.3e-34
+--- PASS: TestNoLossOfPrecisionStaysSilent (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/12345 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/(1000000000000000128).toFixed(0) (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-30.00_#3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/480.00_#3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/480.00_#2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-30.00_#2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/Infinity_#3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/Infinity_#2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/3e-308 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-30.00 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/480.00 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/Infinity (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/123_00_000_000_000_000_000_000_000 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/123_456 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-123.456_#2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/123.456_#2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/123.000_000_000_000_000_000_000_0 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0X1_FFF_FFFF_FFF_FFF (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/12345_#2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0x1FFF_FFFF_FFF_FFF (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/new_Date() (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/['a',_'b'] (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/{} (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/'' (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/'9007199254740993' (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/'abc' (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/true (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/undefined (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0X1FFFFFFFFFFFFF (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0x1FFFFFFFFFFFFF (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0o377777777777777777 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0O377777777777777777 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0o3_77_777_777_777_777_777 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0b11111111111111111111111111111111111111111... (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0e5_3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0B11111111111111111111111111111111111111111... (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0B111_111_111_111_1111_11111_111_11111_1111... (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-0.0_00_000000000_000000000_00123 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0b111_111_111_111_1111_11111_111_11111_1111... (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/1_230000000_00000000_00000_000 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0.0_00_000000000_000000000_00123 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-1_23.8e-3_4 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/null (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/12_3.0e-3_4 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/123.0e3_4 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/12_3e3_4 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-12_3.4_56 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-12_34_56 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/12_3.4_56 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/42. (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-1_230000000_00000000_00000_000 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/12_34_56 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0008 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/00195 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0195 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/.42 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/9.0000000000E10 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0e5 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/019.5 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/9.100E3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/9.000E3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-1_23e-3_4 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/9.0000000000e10 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/123.0000000000000000000000 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/9.00E2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/12_3e-3_4 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-0 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/9.00e2 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/9.000e3 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0.00000000000000000000000000000000000000000... (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/9007199254740991 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-12300000000000000000000000 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0.0 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-0.00000000000000000000000123 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-12.3e34 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/0.00000000000000000000000123 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/12300000000000000000000000 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/12.3e-34 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-123e34 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/12.3e34 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-123e-34 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/123e34 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/123.0e34 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/123e-34 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-12.3e-34 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-123456 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/123.456 (0.00s)
+    --- PASS: TestNoLossOfPrecisionStaysSilent/-123.456 (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/core	0.015s

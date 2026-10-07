@@ -5,7 +5,7 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[5]
 owned=Path(__file__).resolve().parent
 lint=root/'stage1/cohere/lint'
-cohere=root/'cohere'
+cohere=(root/'cohere').resolve()
 scratch=Path(tempfile.mkdtemp(prefix='wave14-complete-'))
 evidence=owned/'evidence';evidence.mkdir(exist_ok=True)
 log=(evidence/'complete.log').open('w',buffering=1)
@@ -21,7 +21,10 @@ def run(args,cwd=root,env=None,output=None):
  if p.returncode or errors.stat().st_size:
   note('FAILED '+repr([str(a) for a in args])+f' exit={p.returncode}')
   note(errors.read_text());note(target.read_text()[:6000]);raise RuntimeError('command failed')
- return target.read_bytes(),elapsed
+ data=target.read_bytes()
+ if output is None:target.unlink()
+ errors.unlink()
+ return data,elapsed
 try:
  note('scratch='+str(scratch))
  # Instrument copies of upstream test files, not the shared test harness.
@@ -85,7 +88,7 @@ func wave14CaptureRun(t *testing.T, subject rule.Rule, fileName, source string) 
  compiler=Path(os.environ.get('ADAMIC_TYPESCRIPT_SOURCE','/tmp/lint-wave1-14-typescript-pinned'))
  pin,_=run(['git','rev-parse','HEAD'],cwd=compiler)
  assert pin.decode().strip()=='050880ce59e30b356b686bd3144efe24f875ebc8'
- files=sorted((compiler/'src/compiler').rglob('*.ts'))+sorted(p for p in (root/'stage1').rglob('*') if p.suffix in ('.a','.ts'))
+ files=sorted((compiler/'src/compiler').rglob('*.ts'))+sorted(p for p in Path(os.environ.get('ADAMIC_STAGE1_CORPUS',str(root/'stage1'))).rglob('*') if p.suffix in ('.a','.ts'))
  note(f'corpus files={len(files)} compiler=77 stage1={len(files)-77}')
  corpus={name:[f'{p}\t@typescript-eslint/{name}\t{p}' for p in files] for name,_ in rules}
  for name,var in rules:compare(corpus[name],'corpus-'+name)

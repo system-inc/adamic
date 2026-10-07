@@ -1,0 +1,6 @@
+isolated checkout=/tmp/adamic-gate/wave14-parking-a5jgmbbg
+typescript-eslint-prefer-as-const/validate_complete.py exit=0
+typescript-eslint-prefer-as-const/validate_backlog.py exit=0
+no-lonely-if/validate_complete.py exit=0
+no-loss-of-precision/validate_edges.py exit=0
+typescript-eslint-prefer-as-const/validate_boundaries.py exit=1

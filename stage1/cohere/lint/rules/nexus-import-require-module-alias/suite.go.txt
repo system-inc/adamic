@@ -82,7 +82,9 @@ func wave14Corpus(t *testing.T) []string {
     pin := execute(t, source, "git", "rev-parse", "HEAD")
     if strings.TrimSpace(string(pin.output)) != compilerCommit { t.Fatal("wrong compiler pin") }
     var rows []string
-    for _, root := range []string{filepath.Join(source, "src/compiler"), filepath.Join(repository, "stage1")} {
+    stage1 := os.Getenv("ADAMIC_STAGE1_CORPUS")
+    if stage1 == "" { stage1 = filepath.Join(repository, "stage1") }
+    for _, root := range []string{filepath.Join(source, "src/compiler"), stage1} {
         before := len(rows)
         err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
             if err != nil { return err }

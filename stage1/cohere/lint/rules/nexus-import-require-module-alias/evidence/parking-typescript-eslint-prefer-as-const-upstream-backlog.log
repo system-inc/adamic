@@ -1,0 +1,626 @@
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent
+=== RUN   TestNoConfusingNonNullAssertionFires
+=== PAUSE TestNoConfusingNonNullAssertionFires
+=== RUN   TestNoExtraNonNullAssertionFires
+=== PAUSE TestNoExtraNonNullAssertionFires
+=== RUN   TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim
+=== PAUSE TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim
+=== RUN   TestNoExtraNonNullAssertionStaysSilent
+=== PAUSE TestNoExtraNonNullAssertionStaysSilent
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSurvivesADestructuredParameterProperty
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSurvivesADestructuredParameterProperty
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMessage
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMessage
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSpan
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSpan
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case0
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case0
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case1
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case1
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_override_parameter
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_override_parameter
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case2
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case2
+=== CONT  TestNoExtraNonNullAssertionFires
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case3
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case3
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case4
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case4
+=== RUN   TestNoExtraNonNullAssertionFires/an_assertion_on_an_assertion
+=== PAUSE TestNoExtraNonNullAssertionFires/an_assertion_on_an_assertion
+=== CONT  TestNoConfusingNonNullAssertionFires
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_readonly_parameter
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_readonly_parameter
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case5
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case5
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case6
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case6
+=== RUN   TestNoExtraNonNullAssertionFires/an_assertion_on_an_assertion,_then_a_member
+=== RUN   TestNoConfusingNonNullAssertionFires/case0
+=== PAUSE TestNoConfusingNonNullAssertionFires/case0
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_01
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_01
+=== RUN   TestNoConfusingNonNullAssertionFires/case1
+=== PAUSE TestNoConfusingNonNullAssertionFires/case1
+=== PAUSE TestNoExtraNonNullAssertionFires/an_assertion_on_an_assertion,_then_a_member
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_right_side
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_right_side
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case7
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parameter_reassigned_before_the_property_assignment
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_02
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parameter_reassigned_before_the_property_assignment
+=== RUN   TestNoConfusingNonNullAssertionFires/case2
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_arrow_passed_to_a_call
+=== PAUSE TestNoConfusingNonNullAssertionFires/case2
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_arrow_passed_to_a_call
+=== RUN   TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_member_access
+=== PAUSE TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_member_access
+=== RUN   TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_call
+=== PAUSE TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_call
+=== RUN   TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_element_access
+=== PAUSE TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_element_access
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_02
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_arrow_expression_statement
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_arrow_expression_statement
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_03
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_assignment_in_an_arrow_expression_body
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_03
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_assignment_in_an_arrow_expression_body
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case7
+=== RUN   TestNoExtraNonNullAssertionFires/a_parenthesized_assertion_inside_an_assertion
+=== PAUSE TestNoExtraNonNullAssertionFires/a_parenthesized_assertion_inside_an_assertion
+=== RUN   TestNoExtraNonNullAssertionFires/a_parenthesized_assertion_before_an_optional_access
+=== PAUSE TestNoExtraNonNullAssertionFires/a_parenthesized_assertion_before_an_optional_access
+=== RUN   TestNoExtraNonNullAssertionFires/three_assertions
+=== PAUSE TestNoExtraNonNullAssertionFires/three_assertions
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_assignment_in_an_arrow_block_body
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_assignment_in_an_arrow_block_body
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_sibling_method_assigning_the_same_property
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_sibling_method_assigning_the_same_property
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_this_object
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_this_object
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_01
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_assignment_in_an_arrow_expression_body
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_01
+=== RUN   TestNoConfusingNonNullAssertionFires/case3
+=== PAUSE TestNoConfusingNonNullAssertionFires/case3
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_04
+=== RUN   TestNoConfusingNonNullAssertionFires/case4
+=== PAUSE TestNoConfusingNonNullAssertionFires/case4
+=== RUN   TestNoConfusingNonNullAssertionFires/case5
+=== PAUSE TestNoConfusingNonNullAssertionFires/case5
+=== RUN   TestNoConfusingNonNullAssertionFires/case6
+=== PAUSE TestNoConfusingNonNullAssertionFires/case6
+=== RUN   TestNoConfusingNonNullAssertionFires/case7
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_assignment_in_an_arrow_expression_body
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_assignment_in_an_arrow_block_body
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_02
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_assignment_in_an_arrow_block_body
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_02
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_property_initializer_assigning_the_same_property_below_the_constructor
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_04
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_05
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_05
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case8
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_06
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_06
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case8
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_07
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_07
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_property_initializer_assigning_the_same_property_below_the_constructor
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_08
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_08
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_09
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_09
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_10
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_10
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_11
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_11
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_12
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_property_initializer_assigning_the_same_property_above_the_constructor
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_12
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_property_initializer_assigning_the_same_property_above_the_constructor
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_13
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_arrow_parameter_shadowing_the_parameter_property
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_13
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_arrow_parameter_shadowing_the_parameter_property
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_14
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_14
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_15
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_15
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_16
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_16
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_17
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_17
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_18
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_18
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_19
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_19
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_20
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_20
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_21
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case9
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_21
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case9
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMessage
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case10
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case10
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case11
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case11
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case12
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case12
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case13
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_03
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case13
+=== PAUSE TestNoConfusingNonNullAssertionFires/case7
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case14
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case14
+=== RUN   TestNoConfusingNonNullAssertionFires/case8
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case15
+=== PAUSE TestNoConfusingNonNullAssertionFires/case8
+=== RUN   TestNoConfusingNonNullAssertionFires/case9
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_object_literal_getter_inside_the_constructor
+=== PAUSE TestNoConfusingNonNullAssertionFires/case9
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_object_literal_getter_inside_the_constructor
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_decorated_parameter
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_decorated_parameter
+=== RUN   TestNoConfusingNonNullAssertionFires/case10
+=== PAUSE TestNoConfusingNonNullAssertionFires/case10
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSpan
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_03
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_04
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_04
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_05
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_05
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_06
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_06
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_07
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_07
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_08
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_08
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_09
+=== CONT  TestNoExtraNonNullAssertionStaysSilent
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case15
+=== RUN   TestNoConfusingNonNullAssertionStaysSilent/case16
+=== PAUSE TestNoConfusingNonNullAssertionStaysSilent/case16
+=== RUN   TestNoExtraNonNullAssertionStaysSilent/a_single_assertion
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSpan/a_plain_assignment
+=== PAUSE TestNoExtraNonNullAssertionStaysSilent/a_single_assertion
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSpan/a_plain_assignment
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSurvivesADestructuredParameterProperty
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSpan/a_parenthesized_target
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSpan/a_parenthesized_target
+--- PASS: TestNoUnnecessaryParameterPropertyAssignmentMessage (0.00s)
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSpan/a_non-null_assertion_on_the_right
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSpan/a_non-null_assertion_on_the_right
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_01
+=== CONT  TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_01
+=== RUN   TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_on_an_assertion
+=== PAUSE TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_on_an_assertion
+=== RUN   TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_on_an_assertion,_then_a_member
+=== PAUSE TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_on_an_assertion,_then_a_member
+--- PASS: TestNoUnnecessaryParameterPropertyAssignmentSurvivesADestructuredParameterProperty (0.00s)
+=== RUN   TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_member_access
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_02
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_09
+=== PAUSE TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_member_access
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_02
+=== RUN   TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_call
+=== RUN   TestNoExtraNonNullAssertionStaysSilent/a_single_assertion_then_a_member
+=== CONT  TestNoExtraNonNullAssertionFires/an_assertion_on_an_assertion
+=== PAUSE TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_call
+=== RUN   TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_element_access
+=== PAUSE TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_element_access
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_10
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_10
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_11
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_11
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_12
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_03
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_12
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_03
+=== RUN   TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/three_assertions
+=== PAUSE TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/three_assertions
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_13
+=== RUN   TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/multibyte_text_around_the_assertion
+=== PAUSE TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/multibyte_text_around_the_assertion
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_04
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_04
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_05
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_13
+=== CONT  TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_element_access
+=== PAUSE TestNoExtraNonNullAssertionStaysSilent/a_single_assertion_then_a_member
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_05
+=== RUN   TestNoExtraNonNullAssertionStaysSilent/a_single_assertion_then_a_call
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_06
+=== PAUSE TestNoExtraNonNullAssertionStaysSilent/a_single_assertion_then_a_call
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_14
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_14
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_15
+=== RUN   TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain_before_a_plain_access
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_15
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_16
+=== PAUSE TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain_before_a_plain_access
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_16
+=== RUN   TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain_before_a_plain_call
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_17
+=== PAUSE TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain_before_a_plain_call
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_17
+=== RUN   TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain,_longer
+=== PAUSE TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain,_longer
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_06
+=== RUN   TestNoExtraNonNullAssertionStaysSilent/an_assertion_inside_a_computed_property
+=== PAUSE TestNoExtraNonNullAssertionStaysSilent/an_assertion_inside_a_computed_property
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_07
+=== RUN   TestNoExtraNonNullAssertionStaysSilent/an_assertion_in_an_argument_of_an_optional_call
+=== PAUSE TestNoExtraNonNullAssertionStaysSilent/an_assertion_in_an_argument_of_an_optional_call
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_18
+=== RUN   TestNoExtraNonNullAssertionStaysSilent/an_optional_chain_alone
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_18
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_07
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_19
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_19
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_20
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_20
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_21
+=== CONT  TestNoExtraNonNullAssertionFires/a_parenthesized_assertion_before_an_optional_access
+=== PAUSE TestNoExtraNonNullAssertionStaysSilent/an_optional_chain_alone
+=== RUN   TestNoExtraNonNullAssertionStaysSilent/a_definite_assignment
+=== PAUSE TestNoExtraNonNullAssertionStaysSilent/a_definite_assignment
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_08
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_08
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_09
+=== CONT  TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_member_access
+=== CONT  TestNoExtraNonNullAssertionFires/a_parenthesized_assertion_inside_an_assertion
+=== CONT  TestNoExtraNonNullAssertionFires/three_assertions
+=== CONT  TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_call
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_21
+=== CONT  TestNoExtraNonNullAssertionFires/an_assertion_on_an_assertion,_then_a_member
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_22
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_22
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_23
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_23
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_09
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_24
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_24
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_10
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_25
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_10
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_25
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_11
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_11
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_01
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_12
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_12
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_12
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_13
+--- PASS: TestNoExtraNonNullAssertionFires (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFires/an_assertion_on_an_assertion (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_element_access (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFires/a_parenthesized_assertion_before_an_optional_access (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_member_access (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFires/an_assertion_before_an_optional_call (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFires/a_parenthesized_assertion_inside_an_assertion (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFires/three_assertions (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFires/an_assertion_on_an_assertion,_then_a_member (0.00s)
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_13
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_21
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_14
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_14
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_20
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_15
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_15
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_16
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_16
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_17
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_17
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_18
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_19
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_18
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_19
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_19
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_20
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_26
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_20
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_16
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_21
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_21
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_14
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_13
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_07
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_11
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_10
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_09
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_08
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_15
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_04
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_17
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_06
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_05
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_03
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_override_parameter
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_18
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_this_object
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_02
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_sibling_method_assigning_the_same_property
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_assignment_in_an_arrow_block_body
+--- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_12 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_20 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_01 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_21 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_19 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_16 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_14 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_13 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_07 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_11 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_10 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_09 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_08 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_04 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_15 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_17 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_05 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_06 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_18 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_03 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentFires/upstream_case_02 (0.00s)
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_arrow_expression_statement
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_26
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_27
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_27
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_28
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_28
+=== RUN   TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_29
+=== CONT  TestNoConfusingNonNullAssertionFires/case0
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_assignment_in_an_arrow_expression_body
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_arrow_passed_to_a_call
+=== CONT  TestNoConfusingNonNullAssertionFires/case8
+=== PAUSE TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_29
+=== CONT  TestNoConfusingNonNullAssertionFires/case6
+=== CONT  TestNoConfusingNonNullAssertionFires/case5
+=== CONT  TestNoConfusingNonNullAssertionFires/case4
+=== CONT  TestNoConfusingNonNullAssertionFires/case3
+=== CONT  TestNoConfusingNonNullAssertionFires/case2
+=== CONT  TestNoConfusingNonNullAssertionFires/case7
+=== CONT  TestNoConfusingNonNullAssertionFires/case9
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parameter_reassigned_before_the_property_assignment
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_right_side
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_readonly_parameter
+=== CONT  TestNoConfusingNonNullAssertionFires/case1
+=== CONT  TestNoConfusingNonNullAssertionFires/case10
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_property_initializer_assigning_the_same_property_above_the_constructor
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_decorated_parameter
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_arrow_parameter_shadowing_the_parameter_property
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_object_literal_getter_inside_the_constructor
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_assignment_in_an_arrow_block_body
+--- PASS: TestNoConfusingNonNullAssertionFires (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionFires/case8 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionFires/case0 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionFires/case6 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionFires/case5 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionFires/case4 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionFires/case2 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionFires/case3 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionFires/case9 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionFires/case7 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionFires/case1 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionFires/case10 (0.00s)
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_property_initializer_assigning_the_same_property_below_the_constructor
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_assignment_in_an_arrow_expression_body
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case0
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case15
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case16
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case14
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case13
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case12
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case11
+--- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_override_parameter (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_this_object (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_sibling_method_assigning_the_same_property (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_arrow_expression_statement (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_assignment_in_an_arrow_block_body (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_assignment_in_an_arrow_expression_body (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_arrow_passed_to_a_call (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_readonly_parameter (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parenthesized_right_side (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_decorated_parameter (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_parameter_reassigned_before_the_property_assignment (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_property_initializer_assigning_the_same_property_above_the_constructor (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_assignment_in_an_arrow_block_body (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_property_initializer_assigning_the_same_property_below_the_constructor (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/a_bare_assignment_in_an_arrow_expression_body (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_object_literal_getter_inside_the_constructor (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentMeasuredAgainstUpstream/an_arrow_parameter_shadowing_the_parameter_property (0.00s)
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case5
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case10
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case8
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case7
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case6
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case3
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case4
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case2
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSpan/a_plain_assignment
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSpan/a_non-null_assertion_on_the_right
+=== CONT  TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_on_an_assertion
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSpan/a_parenthesized_target
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case9
+=== CONT  TestNoConfusingNonNullAssertionStaysSilent/case1
+=== CONT  TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/three_assertions
+--- PASS: TestNoUnnecessaryParameterPropertyAssignmentSpan (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSpan/a_non-null_assertion_on_the_right (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSpan/a_plain_assignment (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSpan/a_parenthesized_target (0.00s)
+=== CONT  TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_element_access
+=== CONT  TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_call
+=== CONT  TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/multibyte_text_around_the_assertion
+--- PASS: TestNoConfusingNonNullAssertionStaysSilent (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case0 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case16 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case15 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case14 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case13 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case11 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case5 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case12 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case10 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case7 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case8 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case3 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case6 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case4 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case2 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case1 (0.00s)
+    --- PASS: TestNoConfusingNonNullAssertionStaysSilent/case9 (0.00s)
+=== CONT  TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_member_access
+=== CONT  TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_on_an_assertion,_then_a_member
+=== CONT  TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain_before_a_plain_call
+=== CONT  TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain,_longer
+=== CONT  TestNoExtraNonNullAssertionStaysSilent/a_single_assertion
+=== CONT  TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain_before_a_plain_access
+--- PASS: TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_on_an_assertion (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_element_access (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_member_access (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_on_an_assertion,_then_a_member (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/three_assertions (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/multibyte_text_around_the_assertion (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionFixesWriteWhatTheyClaim/an_assertion_before_an_optional_call (0.00s)
+=== CONT  TestNoExtraNonNullAssertionStaysSilent/a_single_assertion_then_a_call
+=== CONT  TestNoExtraNonNullAssertionStaysSilent/a_single_assertion_then_a_member
+=== CONT  TestNoExtraNonNullAssertionStaysSilent/an_optional_chain_alone
+=== CONT  TestNoExtraNonNullAssertionStaysSilent/an_assertion_in_an_argument_of_an_optional_call
+=== CONT  TestNoExtraNonNullAssertionStaysSilent/a_definite_assignment
+=== CONT  TestNoExtraNonNullAssertionStaysSilent/an_assertion_inside_a_computed_property
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_01
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_12
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_21
+--- PASS: TestNoExtraNonNullAssertionStaysSilent (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain_before_a_plain_call (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain,_longer (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionStaysSilent/a_single_assertion_then_a_call (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionStaysSilent/a_single_assertion_then_a_member (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionStaysSilent/an_optional_chain_alone (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionStaysSilent/a_single_assertion (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionStaysSilent/an_assertion_mid-chain_before_a_plain_access (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionStaysSilent/an_assertion_in_an_argument_of_an_optional_call (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionStaysSilent/an_assertion_inside_a_computed_property (0.00s)
+    --- PASS: TestNoExtraNonNullAssertionStaysSilent/a_definite_assignment (0.00s)
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_18
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_19
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_16
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_15
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_20
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_14
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_13
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_07
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_11
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_10
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_09
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_08
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_04
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_06
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_05
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_17
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_03
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_02
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_01
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_29
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_28
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_26
+--- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_01 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_12 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_18 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_19 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_16 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_14 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_15 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_20 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_13 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_07 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_10 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_11 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_09 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_08 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_21 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_04 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_05 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_02 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_03 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_17 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentSuggestsTheRepair/upstream_case_06 (0.00s)
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_24
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_27
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_23
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_25
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_22
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_21
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_20
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_19
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_18
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_17
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_16
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_15
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_14
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_13
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_12
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_10
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_09
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_08
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_05
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_04
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_11
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_03
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_06
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_07
+=== CONT  TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_02
+--- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_01 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_29 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_26 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_24 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_28 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_23 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_21 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_22 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_20 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_25 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_19 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_18 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_17 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_15 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_14 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_27 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_13 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_12 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_09 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_16 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_10 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_05 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_08 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_04 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_03 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_06 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_11 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_07 (0.00s)
+    --- PASS: TestNoUnnecessaryParameterPropertyAssignmentStaysSilent/upstream_case_02 (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.015s

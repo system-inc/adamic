@@ -1,0 +1,80 @@
+scratch=/tmp/adamic-gate/wave14-backlog-9ua9yg3j
+original upstream assertions PASS 8.476s
+EXCLUDED shared parser gap: modified destructuring parameter, exact source 'class Foo {\n  constructor(public { a }: { a: string }) {\n    this.a = a;\n  }\n}\n'
+fixtures-no-extra-non-null-assertion: all four identical 5447 bytes; findings=12; files=20
+fixtures-no-confusing-non-null-assertion: all four identical 4975 bytes; findings=12; files=29
+fixtures-no-unnecessary-parameter-property-assignment: all four identical 56815 bytes; findings=63; files=92
+corpus files=331 compiler=77 stage1=254
+corpus-no-extra-non-null-assertion: all four identical 13182291 bytes; findings=0; files=331
+corpus-no-confusing-non-null-assertion: all four identical 13182291 bytes; findings=0; files=331
+corpus-no-unnecessary-parameter-property-assignment: all four identical 13182291 bytes; findings=0; files=331
+no-extra-non-null-assertion extra bang deleted from wrong position: compiling exit-0 mutant caught only by comparison on Node
+no-extra-non-null-assertion extra bang deleted from wrong position: compiling exit-0 mutant caught only by comparison on native
+no-extra-non-null-assertion extra bang deleted from wrong position: compiling exit-0 mutant caught only by comparison on emitted JavaScript
+no-confusing-non-null-assertion wrap close parenthesis changed: compiling exit-0 mutant caught only by comparison on Node
+no-confusing-non-null-assertion wrap close parenthesis changed: compiling exit-0 mutant caught only by comparison on native
+no-confusing-non-null-assertion wrap close parenthesis changed: compiling exit-0 mutant caught only by comparison on emitted JavaScript
+no-unnecessary-parameter-property-assignment trailing semicolon retained: compiling exit-0 mutant caught only by comparison on Node
+no-unnecessary-parameter-property-assignment trailing semicolon retained: compiling exit-0 mutant caught only by comparison on native
+no-unnecessary-parameter-property-assignment trailing semicolon retained: compiling exit-0 mutant caught only by comparison on emitted JavaScript
+no-extra-non-null-assertion natural findings=0
+timing uses 500 witness copies as a synthetic supplement
+no-extra-non-null-assertion round=1 Go seconds=0.230338 count=1000
+no-extra-non-null-assertion round=1 native seconds=1.333308 count=1000
+no-extra-non-null-assertion round=1 Node seconds=0.909583 count=1000
+no-extra-non-null-assertion round=2 Go seconds=0.250797 count=1000
+no-extra-non-null-assertion round=2 native seconds=1.339656 count=1000
+no-extra-non-null-assertion round=2 Node seconds=0.916776 count=1000
+no-extra-non-null-assertion round=3 Go seconds=0.249148 count=1000
+no-extra-non-null-assertion round=3 native seconds=1.329859 count=1000
+no-extra-non-null-assertion round=3 Node seconds=0.944436 count=1000
+no-extra-non-null-assertion round=4 Go seconds=0.250623 count=1000
+no-extra-non-null-assertion round=4 native seconds=1.332831 count=1000
+no-extra-non-null-assertion round=4 Node seconds=0.989494 count=1000
+no-extra-non-null-assertion round=5 Go seconds=0.243914 count=1000
+no-extra-non-null-assertion round=5 native seconds=1.296289 count=1000
+no-extra-non-null-assertion round=5 Node seconds=1.003973 count=1000
+no-extra-non-null-assertion native 771.43 findings/s best=1.296289s count=1000 files=332
+no-extra-non-null-assertion Node 1099.40 findings/s best=0.909583s count=1000 files=332
+no-extra-non-null-assertion Go 4341.45 findings/s best=0.230338s count=1000 files=332
+no-confusing-non-null-assertion natural findings=0
+timing uses 500 witness copies as a synthetic supplement
+no-confusing-non-null-assertion round=1 Go seconds=0.236077 count=500
+no-confusing-non-null-assertion round=1 native seconds=1.344925 count=500
+no-confusing-non-null-assertion round=1 Node seconds=0.931715 count=500
+no-confusing-non-null-assertion round=2 Go seconds=0.241943 count=500
+no-confusing-non-null-assertion round=2 native seconds=1.321471 count=500
+no-confusing-non-null-assertion round=2 Node seconds=0.945657 count=500
+no-confusing-non-null-assertion round=3 Go seconds=0.226670 count=500
+no-confusing-non-null-assertion round=3 native seconds=1.353479 count=500
+no-confusing-non-null-assertion round=3 Node seconds=0.972628 count=500
+no-confusing-non-null-assertion round=4 Go seconds=0.263737 count=500
+no-confusing-non-null-assertion round=4 native seconds=1.294049 count=500
+no-confusing-non-null-assertion round=4 Node seconds=0.958952 count=500
+no-confusing-non-null-assertion round=5 Go seconds=0.254740 count=500
+no-confusing-non-null-assertion round=5 native seconds=1.308835 count=500
+no-confusing-non-null-assertion round=5 Node seconds=0.915697 count=500
+no-confusing-non-null-assertion native 386.38 findings/s best=1.294049s count=500 files=332
+no-confusing-non-null-assertion Node 546.03 findings/s best=0.915697s count=500 files=332
+no-confusing-non-null-assertion Go 2205.85 findings/s best=0.226670s count=500 files=332
+no-unnecessary-parameter-property-assignment natural findings=0
+timing uses 500 witness copies as a synthetic supplement
+no-unnecessary-parameter-property-assignment round=1 Go seconds=0.249709 count=500
+no-unnecessary-parameter-property-assignment round=1 native seconds=1.341821 count=500
+no-unnecessary-parameter-property-assignment round=1 Node seconds=1.003087 count=500
+no-unnecessary-parameter-property-assignment round=2 Go seconds=0.228829 count=500
+no-unnecessary-parameter-property-assignment round=2 native seconds=1.356230 count=500
+no-unnecessary-parameter-property-assignment round=2 Node seconds=0.927257 count=500
+no-unnecessary-parameter-property-assignment round=3 Go seconds=0.260607 count=500
+no-unnecessary-parameter-property-assignment round=3 native seconds=1.305520 count=500
+no-unnecessary-parameter-property-assignment round=3 Node seconds=0.968213 count=500
+no-unnecessary-parameter-property-assignment round=4 Go seconds=0.242550 count=500
+no-unnecessary-parameter-property-assignment round=4 native seconds=1.319400 count=500
+no-unnecessary-parameter-property-assignment round=4 Node seconds=0.923791 count=500
+no-unnecessary-parameter-property-assignment round=5 Go seconds=0.221268 count=500
+no-unnecessary-parameter-property-assignment round=5 native seconds=1.368865 count=500
+no-unnecessary-parameter-property-assignment round=5 Node seconds=0.937639 count=500
+no-unnecessary-parameter-property-assignment native 382.99 findings/s best=1.305520s count=500 files=332
+no-unnecessary-parameter-property-assignment Node 541.25 findings/s best=0.923791s count=500 files=332
+no-unnecessary-parameter-property-assignment Go 2259.70 findings/s best=0.221268s count=500 files=332
+PASS complete owned four-way repair comparison, corpus, mutants and throughput

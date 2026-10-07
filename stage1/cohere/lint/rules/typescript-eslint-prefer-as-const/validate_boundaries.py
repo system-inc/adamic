@@ -8,19 +8,20 @@ scratch=Path(tempfile.mkdtemp(prefix='wave14-boundaries-'))
 log=(owned/'evidence/boundaries.log').open('w',buffering=1)
 names=['no-unnecessary-type-constraint','prefer-as-const','prefer-enum-initializers','no-extra-non-null-assertion','no-confusing-non-null-assertion','no-unnecessary-parameter-property-assignment']
 def note(text):print(text,file=log,flush=True)
-def observe(args):
+def observe(args,cwd=root):
  out=scratch/('out-'+str(observe.count));err=scratch/('err-'+str(observe.count));observe.count+=1
  with out.open('wb') as stdout,err.open('wb') as stderr:
-  result=subprocess.run([str(a) for a in args],cwd=root,stdout=stdout,stderr=stderr)
+  result=subprocess.run([str(a) for a in args],cwd=cwd,stdout=stdout,stderr=stderr)
  return result.returncode,out.read_bytes(),err.read_bytes()
 observe.count=0
-def clean(args):
- result=observe(args)
+def clean(args,cwd=root):
+ result=observe(args,cwd=cwd)
  if result[0] or result[2]:raise RuntimeError(repr(args)+' '+repr(result))
  return result[1]
 def build_tool(source,virtual,target,cwd):
+ cwd=cwd.resolve()
  overlay=scratch/(target.name+'-overlay.json');overlay.write_text(json.dumps({'Replace':{str(cwd/virtual):str(source)}}))
- clean(['go','build','-overlay='+str(overlay),'-o',target,cwd/virtual])
+ clean(['go','build','-overlay='+str(overlay),'-o',target,cwd/virtual],cwd=cwd)
 def runner(tree,path):
  imports="import { panic, programArguments } from 'adamic';\n"
  imports+=f"import {{ Parser }} from '{tree}/stage1/typescript/parser/parser.ts';\nimport {{ Scanner }} from '{tree}/stage1/typescript/scanner/scanner.ts';\nimport {{ RuleContext }} from '{tree}/stage1/cohere/lint/context.ts';\nimport {{ Settings }} from '{tree}/stage1/cohere/lint/settings.ts';\n"
