@@ -1,0 +1,3404 @@
+[
+  {
+    "source": "/tmp/wave-06-registry-heads.log",
+    "evidence": "wave-06-registry-heads.log.gz",
+    "bytes": 202,
+    "sha256": "c806d94927d0b6c330cbfb49626dfd2c4f05eb113a8beadac53a36558e60263e"
+  },
+  {
+    "source": "/tmp/wave-06-registry-timing.log",
+    "evidence": "wave-06-registry-timing.log.gz",
+    "bytes": 193,
+    "sha256": "03d3ab07ec954030fa0fbedc79dcd292408fcfa617ccc413b96d3393096cc459"
+  },
+  {
+    "source": "/tmp/wave-06-registry-node.log",
+    "evidence": "wave-06-registry-node.log.gz",
+    "bytes": 5674,
+    "sha256": "d7e4abe60ff7abe1e3577614a9d1a5bec37bb70c040aca5104779190a251117b"
+  },
+  {
+    "source": "/tmp/wave-06-registry-prior-replay.log",
+    "evidence": "wave-06-registry-prior-replay.log.gz",
+    "bytes": 5388,
+    "sha256": "1a29f4af8c84bd6f11645c83f9f47a91b595da3d187d1b59859e2fdd2ca0da2c"
+  },
+  {
+    "source": "/tmp/wave-06-registry-source.log",
+    "evidence": "wave-06-registry-source.log.gz",
+    "bytes": 495,
+    "sha256": "9e3fa51a34cee6b9eb6828d643498093c02f7378a441dc2f8493b2ee32756a5b"
+  },
+  {
+    "source": "/tmp/wave-06-registry-packages.log",
+    "evidence": "wave-06-registry-packages.log.gz",
+    "bytes": 457,
+    "sha256": "dd5bae0423a51c6846da66cd0960ec5ee19781249c44d5295f13a59cff3ce1ce"
+  },
+  {
+    "source": "/tmp/wave-06-registry-core.log",
+    "evidence": "wave-06-registry-core.log.gz",
+    "bytes": 493,
+    "sha256": "91894b19010437ad0c877aa28ecabc58525ee1568e4ca5dd8619d0867c433d9a"
+  },
+  {
+    "source": "/tmp/wave-06-registry-setup.log",
+    "evidence": "wave-06-registry-setup.log.gz",
+    "bytes": 386,
+    "sha256": "9a2139b1ec32175f9d5e4cb6acb76a4d9a66eb84729e164ec0480d076ed44ecb"
+  },
+  {
+    "source": "/tmp/wave-06-registry-rebase.log",
+    "evidence": "wave-06-registry-rebase.log.gz",
+    "bytes": 536,
+    "sha256": "e01ab258f4558bd2d72c5bde0f40a30b1b8e301c9aad17ef398dd2ee242c8763"
+  },
+  {
+    "source": "/tmp/wave-06-live-selection.log",
+    "evidence": "wave-06-live-selection.log.gz",
+    "bytes": 217,
+    "sha256": "8f104cd81e307860d36fdf04290dc1722e29e23b76b95f1887e5f6b34d9009b2"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/prepared-emitted-node-final.stderr",
+    "evidence": "wave-06-jsx-named-kinds/prepared-emitted-node-final.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-span-mutant.stdout",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-span-mutant.stdout.gz",
+    "bytes": 17900,
+    "sha256": "42131b56fa3cbe69af70e061cbe97bb9bae43ee57bce73d87a525a1e02ecc3e3"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-source-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/compiler-source-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "4e554b475b19a26758373c85bc735ed83942f4192e86344ac44d11472c193b4b"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-source-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/repository-source-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-asan.stderr",
+    "evidence": "wave-06-jsx-named-kinds/source-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-node.stdout",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-node.stdout.gz",
+    "bytes": 17900,
+    "sha256": "3ff50865ea30e961931308ccf4358212bda49b62c767c6162c65d3c3d6107971"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-0-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-0-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-all-corpus-asan.stdout",
+    "evidence": "wave-06-jsx-named-kinds/compiler-all-corpus-asan.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-source-emitted.stderr",
+    "evidence": "wave-06-jsx-named-kinds/repository-source-emitted.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-emitted.stderr",
+    "evidence": "wave-06-jsx-named-kinds/source-emitted.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source-asan.stdout",
+    "evidence": "wave-06-jsx-named-kinds/undef-source-asan.stdout.gz",
+    "bytes": 3008,
+    "sha256": "8cf4e01e057f880e14deb19a3a01032c9396c52f5909f33a20e1b0e71abfba3d"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-source-node.stderr",
+    "evidence": "wave-06-jsx-named-kinds/repository-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-asan.stdout",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-asan.stdout.gz",
+    "bytes": 17900,
+    "sha256": "3ff50865ea30e961931308ccf4358212bda49b62c767c6162c65d3c3d6107971"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/corpus-js.stdout",
+    "evidence": "wave-06-jsx-named-kinds/corpus-js.stdout.gz",
+    "bytes": 331333,
+    "sha256": "9760b17a7a9ed27c3df3af4ecac51a7a2c9954b97534e8fd7813b98bae221c5d"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/corpus-asan-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/corpus-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/undef-source-go.stderr.gz",
+    "bytes": 54,
+    "sha256": "fcdb551cd6063b45e0eeb3dfb648b209c7959fe4622c833f02b9a592e0e3c410"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-asan.stderr",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-1-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-1-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_fragments-mutant-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/jsx_fragments-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-archive.stderr",
+    "evidence": "wave-06-jsx-named-kinds/undef-archive.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/native.stdout.gz",
+    "bytes": 22459,
+    "sha256": "59480c7e20bab830ada4825499a8c5118d30e0f80a3917ba4a1d3235abb1bfeb"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-node.stderr",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/corpus-native-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/corpus-native-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/bindings-released.stderr",
+    "evidence": "wave-06-jsx-named-kinds/bindings-released.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/bindings-released.stdout",
+    "evidence": "wave-06-jsx-named-kinds/bindings-released.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-source-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/compiler-source-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/emitted-node.stderr",
+    "evidence": "wave-06-jsx-named-kinds/emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-all-source.manifest",
+    "evidence": "wave-06-jsx-named-kinds/compiler-all-source.manifest.gz",
+    "bytes": 4922,
+    "sha256": "85fc2f05610391770cfdcad8cce9a0b79ec6550b513d9c0707aa777389245fee"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/bindings-retained.stdout",
+    "evidence": "wave-06-jsx-named-kinds/bindings-retained.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/native-asan.stderr",
+    "evidence": "wave-06-jsx-named-kinds/native-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-mutant-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/source-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-source-node.stdout",
+    "evidence": "wave-06-jsx-named-kinds/repository-source-node.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-corpus-native-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-corpus-native-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/no_adjacent_inline_elements-mutant-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/no_adjacent_inline_elements-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-corpus-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/repository-corpus-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-prepared-emitted.stdout",
+    "evidence": "wave-06-jsx-named-kinds/registry-prepared-emitted.stdout.gz",
+    "bytes": 22459,
+    "sha256": "59480c7e20bab830ada4825499a8c5118d30e0f80a3917ba4a1d3235abb1bfeb"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "74369806beb509b50f10aa454431d2af38f095f916f76ae3be58398a751f5ac6"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source-asan-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/undef-source-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-source-node.stderr",
+    "evidence": "wave-06-jsx-named-kinds/compiler-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/corpus-asan-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/corpus-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-2-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-2-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/emit-js.stdout",
+    "evidence": "wave-06-jsx-named-kinds/emit-js.stdout.gz",
+    "bytes": 85440,
+    "sha256": "f9b790fa183d6ace01aefad0c697405d2518d19d9670700cd22379f71f7d58b1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-1-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-1-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/no_adjacent_inline_elements-mutant-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/no_adjacent_inline_elements-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-2-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-2-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/quoted-import.manifest",
+    "evidence": "wave-06-jsx-named-kinds/quoted-import.manifest.gz",
+    "bytes": 53,
+    "sha256": "8c176ad76aced6d2505e0da03a4b784b8ef97e1d6c5b433d811c0c6667b6b34c"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-mutant-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/source-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-all-source-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/repository-all-source-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/corpus-native-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/corpus-native-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-release-mutant.stdout",
+    "evidence": "wave-06-jsx-named-kinds/undef-release-mutant.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-span-mutant.stderr",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-span-mutant.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/source-go.stderr.gz",
+    "bytes": 55,
+    "sha256": "e9d000007c5aceb3448230d5eb6364a75409d58a23ca9c46665bb3819f463b97"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_no_undef-mutant-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/jsx_no_undef-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-archive.stdout",
+    "evidence": "wave-06-jsx-named-kinds/undef-archive.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-prepared-node.stderr",
+    "evidence": "wave-06-jsx-named-kinds/registry-prepared-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/native-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/native-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-native-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-native-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/controls.manifest",
+    "evidence": "wave-06-jsx-named-kinds/controls.manifest.gz",
+    "bytes": 3040,
+    "sha256": "7ecb872828f806767f010f3d3c577962c966c83b0171714aa91ed57c553bc268"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/bindings-retained-archive.stdout",
+    "evidence": "wave-06-jsx-named-kinds/bindings-retained-archive.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/source-native.stdout.gz",
+    "bytes": 17900,
+    "sha256": "3ff50865ea30e961931308ccf4358212bda49b62c767c6162c65d3c3d6107971"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_fragments-refusal-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/jsx_fragments-refusal-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-go.stdout.gz",
+    "bytes": 32195,
+    "sha256": "8d58750d9e7ec654660d07fd2a84df0c58b9eb1b7dbb9ffd8395ec4dbc5094ac"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/native-asan-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/native-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-1-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-1-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-0-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-0-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-2-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-2-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/no_adjacent_inline_elements-refusal.stderr",
+    "evidence": "wave-06-jsx-named-kinds/no_adjacent_inline_elements-refusal.stderr.gz",
+    "bytes": 164,
+    "sha256": "555aa61ddd2ed75219b4591b1a3031466f73489c92f8912d7dd42d0ebb65b0b0"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_fragments-refusal.stdout",
+    "evidence": "wave-06-jsx-named-kinds/jsx_fragments-refusal.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-source-emitted.stderr",
+    "evidence": "wave-06-jsx-named-kinds/compiler-source-emitted.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-corpus-native-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-corpus-native-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-native-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-native-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/oracle-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/oracle-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-1-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-1-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-corpus-asan-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-corpus-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/bindings-retained-archive.stderr",
+    "evidence": "wave-06-jsx-named-kinds/bindings-retained-archive.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-2-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-2-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-archive.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-archive.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-0-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-0-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-0-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-0-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/runs.json",
+    "evidence": "wave-06-jsx-named-kinds/runs.json.gz",
+    "bytes": 6409,
+    "sha256": "92d30f122c4deefe6deb1a43af189d1f94044465fa7b9df922e893e0afb7cd80"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-asan.stdout",
+    "evidence": "wave-06-jsx-named-kinds/source-asan.stdout.gz",
+    "bytes": 17900,
+    "sha256": "3ff50865ea30e961931308ccf4358212bda49b62c767c6162c65d3c3d6107971"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-asan-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/source-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-js.stderr",
+    "evidence": "wave-06-jsx-named-kinds/source-js.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/corpus-js.stderr",
+    "evidence": "wave-06-jsx-named-kinds/corpus-js.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_no_undef-mutant.stdout",
+    "evidence": "wave-06-jsx-named-kinds/jsx_no_undef-mutant.stdout.gz",
+    "bytes": 22801,
+    "sha256": "d5fc921ba6dddf97944781dbcb710fe5456731beceb76ad048c9ec9617d923dc"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-1-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-1-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-question-mutant-archive.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-question-mutant-archive.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-all-corpus-asan.stderr",
+    "evidence": "wave-06-jsx-named-kinds/compiler-all-corpus-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-go.stderr.gz",
+    "bytes": 55,
+    "sha256": "bc05b5cd7891381e0f146fa1587e95f393116d667990c06944cd09f758126b71"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-emitted.stderr",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-emitted.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-all-corpus-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/repository-all-corpus-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-node.stderr",
+    "evidence": "wave-06-jsx-named-kinds/source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-emitted.stdout",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-emitted.stdout.gz",
+    "bytes": 17900,
+    "sha256": "3ff50865ea30e961931308ccf4358212bda49b62c767c6162c65d3c3d6107971"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-asan.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-native-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/source-native-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-1-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-1-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "fae52d7f949b7576cb9245b72fae936722723d90f7f36beee45d04e9e6dfc99d"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/bindings-released-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/bindings-released-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-prepared-node.stdout",
+    "evidence": "wave-06-jsx-named-kinds/registry-prepared-node.stdout.gz",
+    "bytes": 22459,
+    "sha256": "59480c7e20bab830ada4825499a8c5118d30e0f80a3917ba4a1d3235abb1bfeb"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-all-source-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/compiler-all-source-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-node.stdout",
+    "evidence": "wave-06-jsx-named-kinds/source-node.stdout.gz",
+    "bytes": 22459,
+    "sha256": "59480c7e20bab830ada4825499a8c5118d30e0f80a3917ba4a1d3235abb1bfeb"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-runs.json",
+    "evidence": "wave-06-jsx-named-kinds/source-runs.json.gz",
+    "bytes": 6831,
+    "sha256": "078599d090280c2b8931def9e40a67a23d7a2177856f957f5d986f65fac0b955"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-runs.json",
+    "evidence": "wave-06-jsx-named-kinds/all-source-runs.json.gz",
+    "bytes": 7853,
+    "sha256": "f61f38de603da6be8e04ed69364b6ab9442c8f57b480b66d83fbbfc55ccf55b5"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/prepared-source-node-final.stderr",
+    "evidence": "wave-06-jsx-named-kinds/prepared-source-node-final.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_no_undef-refusal-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/jsx_no_undef-refusal-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/oracle-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/oracle-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/bindings-retained-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/bindings-retained-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/go-controls.stdout",
+    "evidence": "wave-06-jsx-named-kinds/go-controls.stdout.gz",
+    "bytes": 22459,
+    "sha256": "59480c7e20bab830ada4825499a8c5118d30e0f80a3917ba4a1d3235abb1bfeb"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/tsconfig.json",
+    "evidence": "wave-06-jsx-named-kinds/tsconfig.json.gz",
+    "bytes": 157,
+    "sha256": "cd4974141e5d379105fa470d200aeb36f050ee99bae6e0cb9fed366ffbcfba99"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source.manifest",
+    "evidence": "wave-06-jsx-named-kinds/undef-source.manifest.gz",
+    "bytes": 548,
+    "sha256": "5e45b09e9dee904b8c295a2ddfb28fe3785949e9d6dc1502613344352e751b78"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/overlay.json",
+    "evidence": "wave-06-jsx-named-kinds/overlay.json.gz",
+    "bytes": 143,
+    "sha256": "3b8e3a4d35d3590909ce0d4a3b91d7f14b494a8fd2ec16211bf6794802791e59"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-corpus-asan.stdout",
+    "evidence": "wave-06-jsx-named-kinds/compiler-corpus-asan.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/edge-whitespace-mutant-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/edge-whitespace-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-released.stdout",
+    "evidence": "wave-06-jsx-named-kinds/undef-released.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/edge-whitespace-mutant-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/edge-whitespace-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-all-corpus-asan.stdout",
+    "evidence": "wave-06-jsx-named-kinds/repository-all-corpus-asan.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/go-controls.stderr",
+    "evidence": "wave-06-jsx-named-kinds/go-controls.stderr.gz",
+    "bytes": 55,
+    "sha256": "d196ca6bba4885ff9809c52dc7d2828401a595762652f92eef3d56d8e9d0de84"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/edge-whitespace-mutant.stderr",
+    "evidence": "wave-06-jsx-named-kinds/edge-whitespace-mutant.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-2-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-2-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/native-asan-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/native-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-source-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/repository-source-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "47038fb0affd4f110e9c1ff5a2a429858d93146be0981be8b64e4223a046d38e"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source-runs.json",
+    "evidence": "wave-06-jsx-named-kinds/undef-source-runs.json.gz",
+    "bytes": 2919,
+    "sha256": "ea3660a3c46ab36be3b5f5dd69e5d635e993d35d3464eefae5279662c29faa52"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-released.stderr",
+    "evidence": "wave-06-jsx-named-kinds/undef-released.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/no_adjacent_inline_elements-refusal-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/no_adjacent_inline_elements-refusal-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx-binding-kind-mutant.json",
+    "evidence": "wave-06-jsx-named-kinds/jsx-binding-kind-mutant.json.gz",
+    "bytes": 142,
+    "sha256": "46d16115416da7a82f12b98b710906c21ceabec48a6a629cda3b273737883a88"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_fragments-refusal.stderr",
+    "evidence": "wave-06-jsx-named-kinds/jsx_fragments-refusal.stderr.gz",
+    "bytes": 144,
+    "sha256": "f12850a0d59b6ed5dc82a858c64ea02969ae7ef5c9684533b1c12da85088e231"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source-native-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/undef-source-native-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-release-mutant-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/undef-release-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-corpus-asan.stderr",
+    "evidence": "wave-06-jsx-named-kinds/repository-corpus-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_no_undef-mutant-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/jsx_no_undef-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/no_adjacent_inline_elements-refusal-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/no_adjacent_inline_elements-refusal-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source-asan-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/undef-source-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-release-mutant-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/undef-release-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-all-source-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/repository-all-source-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "c0b2728e5b73b5ffa1377ab6385234fa41357666333b1b509d249ae9db2a7f56"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-emitted.stdout",
+    "evidence": "wave-06-jsx-named-kinds/source-emitted.stdout.gz",
+    "bytes": 17900,
+    "sha256": "3ff50865ea30e961931308ccf4358212bda49b62c767c6162c65d3c3d6107971"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_fragments-refusal-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/jsx_fragments-refusal-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-corpus-asan-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-corpus-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/bindings-released-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/bindings-released-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-source.manifest",
+    "evidence": "wave-06-jsx-named-kinds/repository-source.manifest.gz",
+    "bytes": 17039,
+    "sha256": "54821646b689b3819ba1a15e3f1e4fa130feb7590ac42ca9d2ccb621d0e96199"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-release-mutant.stderr",
+    "evidence": "wave-06-jsx-named-kinds/undef-release-mutant.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/undef-source-go.stdout.gz",
+    "bytes": 3008,
+    "sha256": "8cf4e01e057f880e14deb19a3a01032c9396c52f5909f33a20e1b0e71abfba3d"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-asan-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-corpus-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/compiler-corpus-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-question-mutant-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-question-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-all-source-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/compiler-all-source-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "1a8d7dbfcf4ff185ab97f78967aae36b8b50b06a81ca70e1528dd820e4e194b9"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/source-go.stdout.gz",
+    "bytes": 17900,
+    "sha256": "3ff50865ea30e961931308ccf4358212bda49b62c767c6162c65d3c3d6107971"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/undef-source-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-all-corpus-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/repository-all-corpus-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-mutant.stdout",
+    "evidence": "wave-06-jsx-named-kinds/source-mutant.stdout.gz",
+    "bytes": 17900,
+    "sha256": "42131b56fa3cbe69af70e061cbe97bb9bae43ee57bce73d87a525a1e02ecc3e3"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-asan-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/source-asan-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source-asan.stderr",
+    "evidence": "wave-06-jsx-named-kinds/undef-source-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-mutant.stderr",
+    "evidence": "wave-06-jsx-named-kinds/source-mutant.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-released-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/undef-released-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-native-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/source-native-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_no_undef-refusal.stdout",
+    "evidence": "wave-06-jsx-named-kinds/jsx_no_undef-refusal.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/undef-source-native.stdout.gz",
+    "bytes": 3008,
+    "sha256": "8cf4e01e057f880e14deb19a3a01032c9396c52f5909f33a20e1b0e71abfba3d"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-timing.json",
+    "evidence": "wave-06-jsx-named-kinds/source-timing.json.gz",
+    "bytes": 3787,
+    "sha256": "0953dc30db3934b1c7ca12fe5b94cbbbcd9238d281fd82895b94a25c333d3b06"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/native-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/native-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-archive.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-archive.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/no_adjacent_inline_elements-mutant.stdout",
+    "evidence": "wave-06-jsx-named-kinds/no_adjacent_inline_elements-mutant.stdout.gz",
+    "bytes": 10000,
+    "sha256": "e1432c283197a9b534dfb2760d061e42b6435aadf0cff1ee3330264d7f45cef7"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source.manifest",
+    "evidence": "wave-06-jsx-named-kinds/all-source.manifest.gz",
+    "bytes": 4680,
+    "sha256": "becf8459bbe2771c6d1b592104b52526c55fc06222219365369a69d03c8076c0"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_fragments-mutant-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/jsx_fragments-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-corpus-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/compiler-corpus-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-source-emitted.stdout",
+    "evidence": "wave-06-jsx-named-kinds/compiler-source-emitted.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-0-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-0-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-kind-mutant-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-kind-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_no_undef-refusal-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/jsx_no_undef-refusal-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-native.stdout.gz",
+    "bytes": 32195,
+    "sha256": "8d58750d9e7ec654660d07fd2a84df0c58b9eb1b7dbb9ffd8395ec4dbc5094ac"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx-bindings-mutant.json",
+    "evidence": "wave-06-jsx-named-kinds/jsx-bindings-mutant.json.gz",
+    "bytes": 138,
+    "sha256": "358c7dc2d03e72126c71440927747ec2f482fd77c5d42b3237ccfc5876d251f8"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-0-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-0-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "bd42f01d4b15663c6be72331a1e3dca8896e4738e381f5d86ca472918f770421"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-1-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-1-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_no_undef-refusal.stderr",
+    "evidence": "wave-06-jsx-named-kinds/jsx_no_undef-refusal.stderr.gz",
+    "bytes": 149,
+    "sha256": "03cbbb17a0054b79c8ba52757b67594040dcd1c2c45546aa93e28e9775ea60ba"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/source-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/stage0-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/stage0-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-question-mutant-archive.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-question-mutant-archive.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-kind-mutant-archive.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-kind-mutant-archive.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/stage0-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/stage0-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-corpus-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/repository-corpus-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-asan-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-asan-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-final-runs.json",
+    "evidence": "wave-06-jsx-named-kinds/registry-final-runs.json.gz",
+    "bytes": 1698,
+    "sha256": "f485a5d1fa8be1ab180f2e9a92cbd84205621dac2c8d61b47b0bde7234a2259a"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-source-native-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/undef-source-native-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_fragments-mutant.stderr",
+    "evidence": "wave-06-jsx-named-kinds/jsx_fragments-mutant.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-all-corpus-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/compiler-all-corpus-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-all-source.manifest",
+    "evidence": "wave-06-jsx-named-kinds/repository-all-source.manifest.gz",
+    "bytes": 17039,
+    "sha256": "54821646b689b3819ba1a15e3f1e4fa130feb7590ac42ca9d2ccb621d0e96199"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-kind-mutant.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-kind-mutant.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/prepared-final-node-runs.json",
+    "evidence": "wave-06-jsx-named-kinds/prepared-final-node-runs.json.gz",
+    "bytes": 558,
+    "sha256": "bc64d2fe82306e48eaa301f30d26167a316abb9dbf9d961bde55b8fc3ba79ff8"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-0-native.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-0-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_no_undef-mutant.stderr",
+    "evidence": "wave-06-jsx-named-kinds/jsx_no_undef-mutant.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-2-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-2-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "642386cd5343d7d5d164f640bf724f776f7b92c0a55f38845de93262772903b5"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/no_adjacent_inline_elements-mutant.stderr",
+    "evidence": "wave-06-jsx-named-kinds/no_adjacent_inline_elements-mutant.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-go.stdout",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-go.stdout.gz",
+    "bytes": 17900,
+    "sha256": "3ff50865ea30e961931308ccf4358212bda49b62c767c6162c65d3c3d6107971"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/no_adjacent_inline_elements-refusal.stdout",
+    "evidence": "wave-06-jsx-named-kinds/no_adjacent_inline_elements-refusal.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-js.stdout",
+    "evidence": "wave-06-jsx-named-kinds/source-js.stdout.gz",
+    "bytes": 420607,
+    "sha256": "eb961c12a9238650f09b16f9661a3e208413dbcb1794ea501838d10ce4f1fb29"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-corpus-asan.stdout",
+    "evidence": "wave-06-jsx-named-kinds/repository-corpus-asan.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-kind-mutant-build.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-kind-mutant-build.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-question-mutant.stderr",
+    "evidence": "wave-06-jsx-named-kinds/all-source-question-mutant.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-corpus-asan.stderr",
+    "evidence": "wave-06-jsx-named-kinds/compiler-corpus-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-all-corpus-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/compiler-all-corpus-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-repository-2-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/timing-repository-2-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/bindings-retained-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/bindings-retained-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-question-mutant.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-question-mutant.stdout.gz",
+    "bytes": 31969,
+    "sha256": "d7ce07a632d3ca5d676bbb3623c33ba76299541447fca38a49aaf3fced4db7cf"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/emit-js.stderr",
+    "evidence": "wave-06-jsx-named-kinds/emit-js.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/undef-released-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/undef-released-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-prepared-emitted.stderr",
+    "evidence": "wave-06-jsx-named-kinds/registry-prepared-emitted.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-source.manifest",
+    "evidence": "wave-06-jsx-named-kinds/compiler-source.manifest.gz",
+    "bytes": 4922,
+    "sha256": "85fc2f05610391770cfdcad8cce9a0b79ec6550b513d9c0707aa777389245fee"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/edge-whitespace-mutant.stdout",
+    "evidence": "wave-06-jsx-named-kinds/edge-whitespace-mutant.stdout.gz",
+    "bytes": 22905,
+    "sha256": "92992c30a51386a015349b029f7a068672146b2a54ae2a7ef8ea2c3f11743258"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/compiler-source-node.stdout",
+    "evidence": "wave-06-jsx-named-kinds/compiler-source-node.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-all-corpus-asan.stderr",
+    "evidence": "wave-06-jsx-named-kinds/repository-all-corpus-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/emitted-node.stdout",
+    "evidence": "wave-06-jsx-named-kinds/emitted-node.stdout.gz",
+    "bytes": 22459,
+    "sha256": "59480c7e20bab830ada4825499a8c5118d30e0f80a3917ba4a1d3235abb1bfeb"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-kind-mutant-archive.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-kind-mutant-archive.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-question-mutant-build.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-question-mutant-build.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-asan.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-asan.stdout.gz",
+    "bytes": 32195,
+    "sha256": "8d58750d9e7ec654660d07fd2a84df0c58b9eb1b7dbb9ffd8395ec4dbc5094ac"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-0-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-0-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "6190f6337c4ee03bd7afbf917f9f6a173ca09b4f09fe16d052a693929d834807"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-2-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-2-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "d33e41c50c6f972d69997f9288b798d65dec14fac80f3ecff277ec4d5ea5382b"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/registry-source-native.stdout",
+    "evidence": "wave-06-jsx-named-kinds/registry-source-native.stdout.gz",
+    "bytes": 17900,
+    "sha256": "3ff50865ea30e961931308ccf4358212bda49b62c767c6162c65d3c3d6107971"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/bindings-retained.stderr",
+    "evidence": "wave-06-jsx-named-kinds/bindings-retained.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/repository-source-emitted.stdout",
+    "evidence": "wave-06-jsx-named-kinds/repository-source-emitted.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/jsx_fragments-mutant.stdout",
+    "evidence": "wave-06-jsx-named-kinds/jsx_fragments-mutant.stdout.gz",
+    "bytes": 21781,
+    "sha256": "5cd9ba112e2d89fb227628ac0a7481831cbb515534613756e048a5e87ce8694a"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/prepared-source-node-final.stdout",
+    "evidence": "wave-06-jsx-named-kinds/prepared-source-node-final.stdout.gz",
+    "bytes": 22459,
+    "sha256": "59480c7e20bab830ada4825499a8c5118d30e0f80a3917ba4a1d3235abb1bfeb"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/prepared-emitted-node-final.stdout",
+    "evidence": "wave-06-jsx-named-kinds/prepared-emitted-node-final.stdout.gz",
+    "bytes": 22459,
+    "sha256": "59480c7e20bab830ada4825499a8c5118d30e0f80a3917ba4a1d3235abb1bfeb"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/timing-compiler-1-go.stderr",
+    "evidence": "wave-06-jsx-named-kinds/timing-compiler-1-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "c950373141061c32f4d1b27ca5ff4d198accf963ee110d2fc347e8d69661b12b"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/native-asan.stdout",
+    "evidence": "wave-06-jsx-named-kinds/native-asan.stdout.gz",
+    "bytes": 22459,
+    "sha256": "59480c7e20bab830ada4825499a8c5118d30e0f80a3917ba4a1d3235abb1bfeb"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/source-controls.manifest",
+    "evidence": "wave-06-jsx-named-kinds/source-controls.manifest.gz",
+    "bytes": 2100,
+    "sha256": "50ae08ccf35feb5504ee41ea594e8cc7e357ba82d8307cd3a434a6a4e5e962be"
+  },
+  {
+    "source": "/workspace/wave-06-jsx-named-kinds/all-source-kind-mutant.stdout",
+    "evidence": "wave-06-jsx-named-kinds/all-source-kind-mutant.stdout.gz",
+    "bytes": 32423,
+    "sha256": "0c079a25df08d38dd47d2033857fb6c7cd0c7a690fa952fb5a92fca282ed1c83"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-6-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-6-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-0-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-0-source-node.stdout.gz",
+    "bytes": 4209,
+    "sha256": "a9994fe791d7fa08fec2980f47c99393f1053e3362cf59ad968a2191ba489254"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-return-run.stdout",
+    "evidence": "wave-06-landing4-replay/original-return-run.stdout.gz",
+    "bytes": 36604,
+    "sha256": "f6ee26e4eb866ef8d4e9982e6bf26d353a27fc37b1bb348a7f68ccefa21efbdf"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-10-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-10-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-controls-native.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-controls-native.stdout.gz",
+    "bytes": 23338,
+    "sha256": "d256d24f86a703746afb6b7cd851b507f393561ca0c05a32ef1b31a8de1e8db5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-adjacency-alias-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/react-adjacency-alias-mutant-run.stdout.gz",
+    "bytes": 3110,
+    "sha256": "9d6ce2845caecbebdc5ffec6706767bde0957cfa05dd0e254f156e0f6010dec6"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-controls-go.stderr",
+    "evidence": "wave-06-landing4-replay/original-controls-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "eef61254a04f98c571fbfd84f7a38e8895dfbf21aa66406fe688d9d5159a9a9b"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-go.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-return-run.stderr",
+    "evidence": "wave-06-landing4-replay/original-return-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-9-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-9-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-question-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-question-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-asan-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-asan-run.stdout.gz",
+    "bytes": 2379,
+    "sha256": "3b4ea92875527a25200b804849500ff6e32cb6d0fa3920cfa324d3dea586b403"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-8-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-8-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-compiler-wave06-asan.stderr",
+    "evidence": "wave-06-landing4-replay/original-compiler-wave06-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-11-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-11-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-controls-go.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-controls-go.stdout.gz",
+    "bytes": 51544,
+    "sha256": "2fdb8c4097273530f96088487d18ffaf7d8ebc42f1404a7a8abd33496668c124"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-no_new_native_nonconstructor-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-no_new_native_nonconstructor-mutant-run.stdout.gz",
+    "bytes": 23338,
+    "sha256": "948d3ade89ed3d32fa08fed7cbc4d72ac6c3ceb5bb57a42dc62efaf33c76dddf"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-11-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-11-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-static_components-no-refusal-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-static_components-no-refusal-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_render-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_render-mutant-run.stdout.gz",
+    "bytes": 2385,
+    "sha256": "4f68fcb1b57cc6a2efdac9dfdde0fb21ec20460b765f46dcd90c06a414911d85"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-no_new_wrappers-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-no_new_wrappers-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-0-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-0-emitted-node.stdout.gz",
+    "bytes": 4209,
+    "sha256": "a9994fe791d7fa08fec2980f47c99393f1053e3362cf59ad968a2191ba489254"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-2-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-2-go.stdout.gz",
+    "bytes": 3038,
+    "sha256": "7abd7b3299c46d41d78babbb2f8a0a8d69a1f1dda8e5547cbfc57a8c3f4b80b6"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-6-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-6-source-node.stdout.gz",
+    "bytes": 5476,
+    "sha256": "a96ee9b3ecf74a5adf9d2031e93db7830d59b1cd253839c58e339a6071ad7b41"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-7-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-7-source-node.stdout.gz",
+    "bytes": 3319,
+    "sha256": "11ccfa718c2b757e8fe5b5b24588802359c401cc53f1742ebe4f0a28cffa20f0"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-adjacency-alias-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/react-adjacency-alias-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-timed-native.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-timed-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-static_components-refusal-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-static_components-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-go-controls.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-go-controls.stdout.gz",
+    "bytes": 2379,
+    "sha256": "3b4ea92875527a25200b804849500ff6e32cb6d0fa3920cfa324d3dea586b403"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-timed-native.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-repository-timed-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-1-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-1-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-controls-wave06.stdout",
+    "evidence": "wave-06-landing4-replay/original-controls-wave06.stdout.gz",
+    "bytes": 36604,
+    "sha256": "39ed312bc33bc89ca6c37234bf64b25d4b196b3f122b6ecb1d1ddfa84d6924e4"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-compiler-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-compiler-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/next-repository-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-repository-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-repository-emitted-node.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-2-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-2-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-timed-go.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-repository-timed-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-timed-native.stderr",
+    "evidence": "wave-06-landing4-replay/next-repository-timed-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-reporting-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-reporting-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-repository-wave06-asan.stderr",
+    "evidence": "wave-06-landing4-replay/original-repository-wave06-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/next-compiler-asan-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-controls-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-controls-asan-native.stdout.gz",
+    "bytes": 23338,
+    "sha256": "d256d24f86a703746afb6b7cd851b507f393561ca0c05a32ef1b31a8de1e8db5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-promised-question-run.stdout",
+    "evidence": "wave-06-landing4-replay/original-promised-question-run.stdout.gz",
+    "bytes": 36122,
+    "sha256": "f10c1c8374cb7f80df20ad2c7aff826b1e315701223a6505710b855d36b3a849"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-release-mutant.stdout",
+    "evidence": "wave-06-landing4-replay/original-release-mutant.stdout.gz",
+    "bytes": 73,
+    "sha256": "9dcb8ef0dfe3a25eae9dcf9015b05832db1d27c05bd82902cfc854764c13e808"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-question-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/next-question-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-5-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-5-native.stdout.gz",
+    "bytes": 1881,
+    "sha256": "2de48aea3a576676e9de6dc35d6ac1372aba6e664a5bf52105d62f562a1c4a6b"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-child_process_error_listener-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/next-child_process_error_listener-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-controls-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/next-controls-asan-native.stdout.gz",
+    "bytes": 28696,
+    "sha256": "3a85cf1a7c8bf4ca69a59d489a160699a61c5f6fc19cda87faca785d81d03933"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-repository-wave06.stdout",
+    "evidence": "wave-06-landing4-replay/original-repository-wave06.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_effect-refusal-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_effect-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-6-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-6-go.stdout.gz",
+    "bytes": 5476,
+    "sha256": "a96ee9b3ecf74a5adf9d2031e93db7830d59b1cd253839c58e339a6071ad7b41"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-0-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-0-go.stderr.gz",
+    "bytes": 55,
+    "sha256": "f93f0e69b774fdff48d5c028596526025e75196d34fc6e65c6aa085257ff6b42"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-3-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-3-source-node.stdout.gz",
+    "bytes": 4757,
+    "sha256": "e0ed4e663288c0955417b06e165c3962688d5e291d4336983aa5a273e5d1f4d5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-9-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-9-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-11-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-11-go.stderr.gz",
+    "bytes": 55,
+    "sha256": "c6d2a60d96bf80786448db0c8895ff8bc29655dfa6cf60d64e08cc9ece20b094"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-7-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-7-go.stdout.gz",
+    "bytes": 3319,
+    "sha256": "11ccfa718c2b757e8fe5b5b24588802359c401cc53f1742ebe4f0a28cffa20f0"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-repository-wave06-asan.stdout",
+    "evidence": "wave-06-landing4-replay/original-repository-wave06-asan.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-timed-go.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-timed-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "ab68fb0a4ff9ea4bca12bd4b48051f07e715596fddb38208a6545e3db8ca066c"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-8-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-8-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-controls-wave06-asan.stdout",
+    "evidence": "wave-06-landing4-replay/original-controls-wave06-asan.stdout.gz",
+    "bytes": 36604,
+    "sha256": "39ed312bc33bc89ca6c37234bf64b25d4b196b3f122b6ecb1d1ddfa84d6924e4"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-go.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "f7c8ec9a0755c2bca92c931ae30966faed268977f7e4caa1a09958c508cab960"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-timed-native.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-timed-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-compiler-go.stderr",
+    "evidence": "wave-06-landing4-replay/original-compiler-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "5f26b19055811b27736ae7fe2b0107f034c18e5365731b221df13f067d64e162"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-static-creator-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/react-static-creator-mutant-run.stdout.gz",
+    "bytes": 2074,
+    "sha256": "d81252d948479bd5d5c26e5ca3c22cc352e4ead36a4699d0b7c0777fde7477c0"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-timed-native.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-timed-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-4-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-4-emitted-node.stdout.gz",
+    "bytes": 4038,
+    "sha256": "365cd1a05bd1dcc249839df3a0154a64066f14306e6b13c2b3cc8eda2c54b6d8"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-effect-setter-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/react-effect-setter-mutant-run.stdout.gz",
+    "bytes": 1600,
+    "sha256": "f7aa3af967facc8466ce7420bf7d474c710a5548420e1420e99f3c1a5489e961"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-native.stdout",
+    "evidence": "wave-06-landing4-replay/next-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-controls-asan-go.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-controls-asan-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "3c23da4b1e7318b8ce83b6b6ae4c40d55637f37ad14f01da501d2708bd7ee427"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-5-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-5-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-compiler-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-compiler-asan-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-2-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-2-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "4b27f98850f9899f88ed29652a54290b0b6129dd980a1f6b211fce203487ab62"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-controls-go.stdout",
+    "evidence": "wave-06-landing4-replay/next-controls-go.stdout.gz",
+    "bytes": 28696,
+    "sha256": "3a85cf1a7c8bf4ca69a59d489a160699a61c5f6fc19cda87faca785d81d03933"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-question-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-question-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-release-mutant.stderr",
+    "evidence": "wave-06-landing4-replay/original-release-mutant.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-3-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-3-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "c5343ff0e60b043c3b90b8849ab6e18f7e269170ebeb0765f3ffa0655adbf7a5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-repository-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-4-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-4-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-10-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-10-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-9-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-9-asan-native.stdout.gz",
+    "bytes": 3620,
+    "sha256": "01c90a93f0e5b31eb98b2e5ad9fcc17655b1c0fbb34c7aee86c1e58f12eb7ef1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-8-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-8-native.stdout.gz",
+    "bytes": 1881,
+    "sha256": "54f2f367537f7b5dfc7adda866083a3b2fdb63b603a8b516dd9e2eb772ea9702"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-released-run.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-released-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-3-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-3-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-released-run.stderr",
+    "evidence": "wave-06-landing4-replay/next-released-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-asan-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-1-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-1-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "1758cd5b37e3ae2863d44de9600611e77dd566f7f080091fe52770c8b8b84c97"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-0-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-0-native.stdout.gz",
+    "bytes": 4209,
+    "sha256": "a9994fe791d7fa08fec2980f47c99393f1053e3362cf59ad968a2191ba489254"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-6-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-6-native.stdout.gz",
+    "bytes": 5476,
+    "sha256": "a96ee9b3ecf74a5adf9d2031e93db7830d59b1cd253839c58e339a6071ad7b41"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-1-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-1-source-node.stdout.gz",
+    "bytes": 951,
+    "sha256": "f6776c5ee07d6e031a6013e94d9ac07d1dd8d13ae15727a493ddee60f113dd27"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-render-unconditional-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/react-render-unconditional-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-no_new_func-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-no_new_func-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-11-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-11-native.stdout.gz",
+    "bytes": 1611,
+    "sha256": "40cbd0e821d919279f17c7b0554c7b16526a236bec74319e6f0ff660541334e9"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-3-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-3-native.stdout.gz",
+    "bytes": 4757,
+    "sha256": "e0ed4e663288c0955417b06e165c3962688d5e291d4336983aa5a273e5d1f4d5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-asan-go.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-asan-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "dec0f7c5b1d13f755c0885c0ff2f5698ab8ba8578c6d855a7302699e37c94199"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-child_process_error_listener-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/next-child_process_error_listener-mutant-run.stdout.gz",
+    "bytes": 28780,
+    "sha256": "eef548bc1d8c3e3fb6822a7ba2586a02faa38ade15a40c68bf6a5d5b15ed75e3"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-4-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-4-go.stdout.gz",
+    "bytes": 4038,
+    "sha256": "365cd1a05bd1dcc249839df3a0154a64066f14306e6b13c2b3cc8eda2c54b6d8"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-repository-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-controls-wave06.stderr",
+    "evidence": "wave-06-landing4-replay/original-controls-wave06.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_effect-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_effect-mutant-run.stdout.gz",
+    "bytes": 2385,
+    "sha256": "a4c50f2ff6b9276fe196e84e62bb981100d2f9ea06f5e3c1eeab229be8d47da9"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-compiler-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-compiler-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "4aaa342f349d2c6904560c00e72cc75c348a3c77e549ad3545c35f751d7b4ce7"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-6-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-6-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "0b4a736894eb3ba27c90aa46af0f6e42deed95b5e6f2af553fa92a0dd13a33c5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-controls-go.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-controls-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "3dfbc3fc201ab4749ff65c55c06482a888b2caf1fd661727efcc5acd29e3cb1b"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-compiler-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-asan-go.stderr",
+    "evidence": "wave-06-landing4-replay/next-repository-asan-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "8a7e870c3e0a4ad6183e60c3680fc972e59b862b2e975f29e23a414f229d8317"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-timed-go.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-timed-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "927aa7256087195f281215976869680a77b978692ba7ab2fcbb1feecd70b75cb"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_render-no-refusal-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_render-no-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-go.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-go.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-native.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-7-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-7-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "232cf5bdfa192affeb643a211047db16c8f5b2a5505d3ac9aa5bd2fe78e51f8f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-1-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-1-native.stdout.gz",
+    "bytes": 951,
+    "sha256": "f6776c5ee07d6e031a6013e94d9ac07d1dd8d13ae15727a493ddee60f113dd27"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-asan-go.stdout",
+    "evidence": "wave-06-landing4-replay/next-repository-asan-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-go-controls.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-go-controls.stderr.gz",
+    "bytes": 55,
+    "sha256": "7d449d5cb537cdbff1e3b6ca067fc945e93224ee4d46d586c4a0ea0ec20c1ce1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-6-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-6-asan-native.stdout.gz",
+    "bytes": 5476,
+    "sha256": "a96ee9b3ecf74a5adf9d2031e93db7830d59b1cd253839c58e339a6071ad7b41"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-promised-question-run.stderr",
+    "evidence": "wave-06-landing4-replay/original-promised-question-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/runs.json",
+    "evidence": "wave-06-landing4-replay/runs.json.gz",
+    "bytes": 56483,
+    "sha256": "925fb260a5b4acae4658db0fdbf9ae8385ca495fbe6e99639051cec5a459a882"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-released-run.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-released-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-no_new_wrappers-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-no_new_wrappers-mutant-run.stdout.gz",
+    "bytes": 21670,
+    "sha256": "eeab9130b9f96da7881d74a51f4937605c798aa4dd434c13dd67315c3cdff7e0"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-1-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-1-asan-native.stdout.gz",
+    "bytes": 951,
+    "sha256": "f6776c5ee07d6e031a6013e94d9ac07d1dd8d13ae15727a493ddee60f113dd27"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-timed-go.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-timed-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "20483d799c5d69ebed0ffbe974d1696a1f0feb0c1036b9bee543eb30850c8bc6"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-native.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-repository-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-repository-go.stderr.gz",
+    "bytes": 59,
+    "sha256": "a85194b26c02304fda4b2dfa56971880ceb707d6d64e8882126df98a211d9671"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-6-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-6-emitted-node.stdout.gz",
+    "bytes": 5476,
+    "sha256": "a96ee9b3ecf74a5adf9d2031e93db7830d59b1cd253839c58e339a6071ad7b41"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-native.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-native.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-independent_await_in_loop-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/next-independent_await_in_loop-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-0-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-0-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-10-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-10-asan-native.stdout.gz",
+    "bytes": 2074,
+    "sha256": "0ded3dda7b6fbd635bd469a60f620b3b152d8a87a2afa2e76e3b8b9c7101ea38"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-11-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-11-go.stdout.gz",
+    "bytes": 1611,
+    "sha256": "40cbd0e821d919279f17c7b0554c7b16526a236bec74319e6f0ff660541334e9"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-7-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-7-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-5-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-5-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_render-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_render-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-controls-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-controls-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-controls-go.stderr",
+    "evidence": "wave-06-landing4-replay/next-controls-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "e322dd6c471cba3343e1b9d09e776216c92135e7685418b68e99a9262854e5fd"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-0-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-0-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-no_useless_backreference-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-no_useless_backreference-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-duplicate-run.stdout",
+    "evidence": "wave-06-landing4-replay/original-duplicate-run.stdout.gz",
+    "bytes": 36604,
+    "sha256": "3d5ebecb5aa0fe174f4d5ac7c662c12e319fa418a2923441cda37e627023af90"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-timed-go.stderr",
+    "evidence": "wave-06-landing4-replay/next-repository-timed-go.stderr.gz",
+    "bytes": 61,
+    "sha256": "8266ae15ec50e9ccbada0895289ca933ada149e63340064e9a0d5548127ef407"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-repository-wave06.stderr",
+    "evidence": "wave-06-landing4-replay/original-repository-wave06.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-effect-setter-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/react-effect-setter-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-controls-asan-go.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-controls-asan-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "8c9f78d732c26668548e88d5f8bdc5a4ff8a47e3d5b92fa4c92af01e0341bf44"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-released-run.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-released-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_render-no-refusal-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_render-no-refusal-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_effect-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_effect-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-controls-go.stdout",
+    "evidence": "wave-06-landing4-replay/original-controls-go.stdout.gz",
+    "bytes": 36604,
+    "sha256": "39ed312bc33bc89ca6c37234bf64b25d4b196b3f122b6ecb1d1ddfa84d6924e4"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-4-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-4-asan-native.stdout.gz",
+    "bytes": 4038,
+    "sha256": "365cd1a05bd1dcc249839df3a0154a64066f14306e6b13c2b3cc8eda2c54b6d8"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-1-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-1-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-8-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-8-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-repository-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-repository-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-native.stderr",
+    "evidence": "wave-06-landing4-replay/next-compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-prefer_arrow_callback-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-prefer_arrow_callback-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-controls-asan-go.stderr",
+    "evidence": "wave-06-landing4-replay/next-controls-asan-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "4c06c09aaec9ea3873adc743ffe97111b10045a59564fec3906c9806319a61ad"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-independent_await_in_loop-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/next-independent_await_in_loop-mutant-run.stdout.gz",
+    "bytes": 28780,
+    "sha256": "217dc2a65019af5070ee95dee1a2ae727f7c7ada37bcd9cb8957a82b36b7668c"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-4-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-4-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-10-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-10-go.stdout.gz",
+    "bytes": 2074,
+    "sha256": "0ded3dda7b6fbd635bd469a60f620b3b152d8a87a2afa2e76e3b8b9c7101ea38"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-compiler-wave06.stderr",
+    "evidence": "wave-06-landing4-replay/original-compiler-wave06.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-compiler-go.stdout",
+    "evidence": "wave-06-landing4-replay/original-compiler-go.stdout.gz",
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-repository-go.stderr",
+    "evidence": "wave-06-landing4-replay/original-repository-go.stderr.gz",
+    "bytes": 61,
+    "sha256": "bec333f1cc39350b1442af36287c54bea266da3f46aa1becfed6736e5e506e22"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-10-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-10-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-6-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-6-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-10-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-10-native.stdout.gz",
+    "bytes": 2074,
+    "sha256": "0ded3dda7b6fbd635bd469a60f620b3b152d8a87a2afa2e76e3b8b9c7101ea38"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-parser-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-parser-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-1-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-1-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-timed-go.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-timed-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-asan-go.stderr",
+    "evidence": "wave-06-landing4-replay/next-compiler-asan-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "0fb75bd987f91388e483b7ea007219f1c62984f00d02f0e9d75d69c195cc7750"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-4-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-4-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-no_useless_backreference-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-no_useless_backreference-mutant-run.stdout.gz",
+    "bytes": 35911,
+    "sha256": "ae534b3a84ecbbb9c3b34c8782ca18c91a57ad25eb73ba2a2aa0e27593a487b0"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-controls-native.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-controls-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-response_status_check-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/next-response_status_check-mutant-run.stdout.gz",
+    "bytes": 28768,
+    "sha256": "c3bc7678254c3e89952791d39e2d07d4496ac54745a6bda8ad1771c0a2819619"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-asan-go.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-asan-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "68f631012333f6116b5e306416845082651671aa9d506d9b99d4ddd4d26b982c"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/next-repository-asan-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-render-unconditional-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/react-render-unconditional-mutant-run.stdout.gz",
+    "bytes": 441,
+    "sha256": "1cea092e123677543d593830a8440e70c435e58ea25b77c6fd176151dd7eb5c2"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-2-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-2-asan-native.stdout.gz",
+    "bytes": 3038,
+    "sha256": "7abd7b3299c46d41d78babbb2f8a0a8d69a1f1dda8e5547cbfc57a8c3f4b80b6"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-0-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-0-asan-native.stdout.gz",
+    "bytes": 4209,
+    "sha256": "a9994fe791d7fa08fec2980f47c99393f1053e3362cf59ad968a2191ba489254"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-nominal-run.stderr",
+    "evidence": "wave-06-landing4-replay/original-nominal-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-11-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-11-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-3-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-3-go.stdout.gz",
+    "bytes": 4757,
+    "sha256": "e0ed4e663288c0955417b06e165c3962688d5e291d4336983aa5a273e5d1f4d5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-asan-go.stdout",
+    "evidence": "wave-06-landing4-replay/next-compiler-asan-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-9-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-9-go.stdout.gz",
+    "bytes": 3620,
+    "sha256": "01c90a93f0e5b31eb98b2e5ad9fcc17655b1c0fbb34c7aee86c1e58f12eb7ef1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-no_throw_literal-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-no_throw_literal-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-question-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-question-mutant-run.stdout.gz",
+    "bytes": 36982,
+    "sha256": "d6fbf0f7b538cbd3e92403daaa41321e73dd4e1c3b9954c774da4cb2c95f757b"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-timed-native.stderr",
+    "evidence": "wave-06-landing4-replay/next-compiler-timed-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-9-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-9-emitted-node.stdout.gz",
+    "bytes": 3620,
+    "sha256": "01c90a93f0e5b31eb98b2e5ad9fcc17655b1c0fbb34c7aee86c1e58f12eb7ef1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-repository-go.stdout",
+    "evidence": "wave-06-landing4-replay/original-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-go.stderr",
+    "evidence": "wave-06-landing4-replay/next-compiler-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "985223ddf829f8740a1f8f3f682f486b31d6040b0b6eb2154b81b1f10ab0c4ed"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-4-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-4-native.stdout.gz",
+    "bytes": 4038,
+    "sha256": "365cd1a05bd1dcc249839df3a0154a64066f14306e6b13c2b3cc8eda2c54b6d8"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-go.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-controls-asan-go.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-controls-asan-go.stdout.gz",
+    "bytes": 23338,
+    "sha256": "d256d24f86a703746afb6b7cd851b507f393561ca0c05a32ef1b31a8de1e8db5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-2-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-2-native.stdout.gz",
+    "bytes": 3038,
+    "sha256": "7abd7b3299c46d41d78babbb2f8a0a8d69a1f1dda8e5547cbfc57a8c3f4b80b6"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-timed-native.stdout",
+    "evidence": "wave-06-landing4-replay/next-repository-timed-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-compiler-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-compiler-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-9-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-9-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "1c10a2e649e07d73d724a0535c9cc9f538d046db9dbb268a37c20eed313599ba"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-4-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-4-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-released-run.stdout",
+    "evidence": "wave-06-landing4-replay/next-released-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-compiler-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-compiler-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-1-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-1-emitted-node.stdout.gz",
+    "bytes": 951,
+    "sha256": "f6776c5ee07d6e031a6013e94d9ac07d1dd8d13ae15727a493ddee60f113dd27"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-controls-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-controls-asan-native.stdout.gz",
+    "bytes": 51544,
+    "sha256": "2fdb8c4097273530f96088487d18ffaf7d8ebc42f1404a7a8abd33496668c124"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-9-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-9-native.stdout.gz",
+    "bytes": 3620,
+    "sha256": "01c90a93f0e5b31eb98b2e5ad9fcc17655b1c0fbb34c7aee86c1e58f12eb7ef1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-repository-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-repository-source-node.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-asan-go.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-asan-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-compiler-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-compiler-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-1-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-1-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-native.stdout",
+    "evidence": "wave-06-landing4-replay/next-compiler-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-9-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-9-source-node.stdout.gz",
+    "bytes": 3620,
+    "sha256": "01c90a93f0e5b31eb98b2e5ad9fcc17655b1c0fbb34c7aee86c1e58f12eb7ef1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/next-compiler-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-native.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-asan-go.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-asan-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "aeb37e0a5b9f1603027f8a7513038291489b66d2ee5bfe231e906f9bccae4158"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-5-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-5-source-node.stdout.gz",
+    "bytes": 1881,
+    "sha256": "2de48aea3a576676e9de6dc35d6ac1372aba6e664a5bf52105d62f562a1c4a6b"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-7-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-7-asan-native.stdout.gz",
+    "bytes": 3319,
+    "sha256": "11ccfa718c2b757e8fe5b5b24588802359c401cc53f1742ebe4f0a28cffa20f0"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-4-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-4-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "daedf51aed17fe91698c7266d5efdfccd363330ce262fab4dbd79309cbf95c2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-0-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-0-go.stdout.gz",
+    "bytes": 4209,
+    "sha256": "a9994fe791d7fa08fec2980f47c99393f1053e3362cf59ad968a2191ba489254"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-1-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-1-go.stdout.gz",
+    "bytes": 951,
+    "sha256": "f6776c5ee07d6e031a6013e94d9ac07d1dd8d13ae15727a493ddee60f113dd27"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-3-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-3-emitted-node.stdout.gz",
+    "bytes": 4757,
+    "sha256": "e0ed4e663288c0955417b06e165c3962688d5e291d4336983aa5a273e5d1f4d5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_render-refusal-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_render-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-compiler-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-compiler-emitted-node.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-10-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-10-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-8-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-8-emitted-node.stdout.gz",
+    "bytes": 1881,
+    "sha256": "54f2f367537f7b5dfc7adda866083a3b2fdb63b603a8b516dd9e2eb772ea9702"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-8-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-8-source-node.stdout.gz",
+    "bytes": 1881,
+    "sha256": "54f2f367537f7b5dfc7adda866083a3b2fdb63b603a8b516dd9e2eb772ea9702"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-0-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-0-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-11-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-11-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-11-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-11-source-node.stdout.gz",
+    "bytes": 1611,
+    "sha256": "40cbd0e821d919279f17c7b0554c7b16526a236bec74319e6f0ff660541334e9"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-timed-native.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-timed-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-3-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-3-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-2-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-2-source-node.stdout.gz",
+    "bytes": 3038,
+    "sha256": "7abd7b3299c46d41d78babbb2f8a0a8d69a1f1dda8e5547cbfc57a8c3f4b80b6"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-native.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-repository-asan-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-asan-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-asan-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-timed-go.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-timed-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_effect-no-refusal-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_effect-no-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-reporting-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-reporting-run.stdout.gz",
+    "bytes": 2379,
+    "sha256": "3b4ea92875527a25200b804849500ff6e32cb6d0fa3920cfa324d3dea586b403"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-7-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-7-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-static_components-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-static_components-mutant-run.stdout.gz",
+    "bytes": 2385,
+    "sha256": "387b66a1d45e6d86ee71b876f77b6c35c8b04302dbdb54ba5da444aa41ccc20f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-static-creator-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/react-static-creator-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-go.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "9fbf489c25f8b88a1dd655c79d918803eabb58029b1d4da80b152484e67632fc"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-timed-native.stdout",
+    "evidence": "wave-06-landing4-replay/next-compiler-timed-native.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-2-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-2-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-duplicate-run.stderr",
+    "evidence": "wave-06-landing4-replay/original-duplicate-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-go.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-repository-go.stderr.gz",
+    "bytes": 57,
+    "sha256": "5ca5945fccad0c20304b214cb53d91740db74d717d2a8b6a4d04ed2993342c65"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-question-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/next-question-mutant-run.stdout.gz",
+    "bytes": 20828,
+    "sha256": "adb1c2078d71127ef92e346e2438d5bd66cce2ef8e06eb62c58e7bd30b0e2c7f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-compiler-wave06.stdout",
+    "evidence": "wave-06-landing4-replay/original-compiler-wave06.stdout.gz",
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-question-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-question-mutant-run.stdout.gz",
+    "bytes": 16739,
+    "sha256": "a2ac27ea4181b60acd779ba0c254be8e64f6c87ebbbae3181979f5439e5f4653"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-go.stderr",
+    "evidence": "wave-06-landing4-replay/next-repository-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "8930bf267020da54c8b69feb479d345575800661e4c15944bb0ee5fb7648b8b7"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-controls-asan-go.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-controls-asan-go.stdout.gz",
+    "bytes": 51544,
+    "sha256": "2fdb8c4097273530f96088487d18ffaf7d8ebc42f1404a7a8abd33496668c124"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-repository-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-controls-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/next-controls-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-timed-native.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-timed-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-repository-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-repository-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-timed-native.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-timed-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-static_components-refusal-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-static_components-refusal-run.stderr.gz",
+    "bytes": 135,
+    "sha256": "233f46e3f2e8090562d78980f4996195e114fad95dacfde5bbae6d5b2e030a6f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-7-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-7-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-3-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-3-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-prefer_arrow_callback-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-prefer_arrow_callback-mutant-run.stdout.gz",
+    "bytes": 51712,
+    "sha256": "33e2b185bc54352c947f2ed7dd71e294cbbe24236570ffc31a2fc75b02d8fd8a"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-5-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-5-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-parser-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-parser-run.stdout.gz",
+    "bytes": 2,
+    "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-8-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-8-go.stdout.gz",
+    "bytes": 1881,
+    "sha256": "54f2f367537f7b5dfc7adda866083a3b2fdb63b603a8b516dd9e2eb772ea9702"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-5-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-5-asan-native.stdout.gz",
+    "bytes": 1881,
+    "sha256": "2de48aea3a576676e9de6dc35d6ac1372aba6e664a5bf52105d62f562a1c4a6b"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-5-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-5-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-no_throw_literal-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-no_throw_literal-mutant-run.stdout.gz",
+    "bytes": 53370,
+    "sha256": "848b9b04a1d240e2fdedb2e5b4744cc8d9877c3e718daef1356f93c2a4d92431"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-timed-go.stdout",
+    "evidence": "wave-06-landing4-replay/next-repository-timed-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-8-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-8-asan-native.stdout.gz",
+    "bytes": 1881,
+    "sha256": "54f2f367537f7b5dfc7adda866083a3b2fdb63b603a8b516dd9e2eb772ea9702"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-go.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-go.stderr.gz",
+    "bytes": 60,
+    "sha256": "c0cf7b3d0e7e913034a790caa7f95f77b2ee7a81ab5c511c16f345bf5ec489b5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-11-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-11-emitted-node.stdout.gz",
+    "bytes": 1611,
+    "sha256": "40cbd0e821d919279f17c7b0554c7b16526a236bec74319e6f0ff660541334e9"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-6-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-6-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-2-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-2-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-controls-native.stdout",
+    "evidence": "wave-06-landing4-replay/next-controls-native.stdout.gz",
+    "bytes": 28696,
+    "sha256": "3a85cf1a7c8bf4ca69a59d489a160699a61c5f6fc19cda87faca785d81d03933"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-11-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-11-asan-native.stdout.gz",
+    "bytes": 1611,
+    "sha256": "40cbd0e821d919279f17c7b0554c7b16526a236bec74319e6f0ff660541334e9"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-9-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-9-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-7-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-7-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-9-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-9-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-released-run.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-released-run.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-repository-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-repository-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-static_components-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-static_components-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-0-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-0-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-released.stderr",
+    "evidence": "wave-06-landing4-replay/original-released.stderr.gz",
+    "bytes": 50,
+    "sha256": "21e5fced65028639c960378690640634e2c01fda024a18a7069ae26bf3d55fce"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-repository-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-repository-asan-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-10-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-10-source-node.stdout.gz",
+    "bytes": 2074,
+    "sha256": "0ded3dda7b6fbd635bd469a60f620b3b152d8a87a2afa2e76e3b8b9c7101ea38"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_render-refusal-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_render-refusal-run.stderr.gz",
+    "bytes": 156,
+    "sha256": "68343c844247e40b3f64dd0c6ce47be0e708a211d3eea476869e5a65596e22c6"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-asan-go.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-repository-asan-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-10-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-10-emitted-node.stdout.gz",
+    "bytes": 2074,
+    "sha256": "0ded3dda7b6fbd635bd469a60f620b3b152d8a87a2afa2e76e3b8b9c7101ea38"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-8-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-8-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "11d25a94aceb67ad0a369b64d18602e5c52932e6dff984d4d5bb2bb3cffcaaf5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-controls-asan-go.stdout",
+    "evidence": "wave-06-landing4-replay/next-controls-asan-go.stdout.gz",
+    "bytes": 28696,
+    "sha256": "3a85cf1a7c8bf4ca69a59d489a160699a61c5f6fc19cda87faca785d81d03933"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-3-asan-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-3-asan-native.stdout.gz",
+    "bytes": 4757,
+    "sha256": "e0ed4e663288c0955417b06e165c3962688d5e291d4336983aa5a273e5d1f4d5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-nominal-run.stdout",
+    "evidence": "wave-06-landing4-replay/original-nominal-run.stdout.gz",
+    "bytes": 31529,
+    "sha256": "28864caca25bec1597393548aa90b1f7febf9ad9aba8b3c18b7dd8d510aa0960"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-5-go.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-5-go.stdout.gz",
+    "bytes": 1881,
+    "sha256": "2de48aea3a576676e9de6dc35d6ac1372aba6e664a5bf52105d62f562a1c4a6b"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-repository-asan-go.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-repository-asan-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-native.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-7-native.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-7-native.stdout.gz",
+    "bytes": 3319,
+    "sha256": "11ccfa718c2b757e8fe5b5b24588802359c401cc53f1742ebe4f0a28cffa20f0"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-compiler-asan-go.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-compiler-asan-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_effect-no-refusal-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_effect-no-refusal-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-native.stderr",
+    "evidence": "wave-06-landing4-replay/next-repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-controls-go.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-controls-go.stdout.gz",
+    "bytes": 23338,
+    "sha256": "d256d24f86a703746afb6b7cd851b507f393561ca0c05a32ef1b31a8de1e8db5"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-no_new_native_nonconstructor-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-no_new_native_nonconstructor-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-response_status_check-mutant-run.stderr",
+    "evidence": "wave-06-landing4-replay/next-response_status_check-mutant-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-controls-native.stdout",
+    "evidence": "wave-06-landing4-replay/callbacks-controls-native.stdout.gz",
+    "bytes": 51544,
+    "sha256": "2fdb8c4097273530f96088487d18ffaf7d8ebc42f1404a7a8abd33496668c124"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-controls-native.stderr",
+    "evidence": "wave-06-landing4-replay/next-controls-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-compiler-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-compiler-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-controls-native.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-controls-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-5-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-5-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "2173624fba1746e5d95eeb1fd6c284fc73f48d26f82f2e9920081a323f801134"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-10-go.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-10-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "40c8190871b96bb0df052dceb70b3d7840317ba38605f6815d34f7791276f46e"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-set_state_in_effect-refusal-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-set_state_in_effect-refusal-run.stderr.gz",
+    "bytes": 150,
+    "sha256": "9f5746b18c8caed528dfb2ddfbd6cfc90cd22714d050485b7debd66dca07e3e6"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-timed-go.stdout",
+    "evidence": "wave-06-landing4-replay/next-compiler-timed-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-no_new_func-mutant-run.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-no_new_func-mutant-run.stdout.gz",
+    "bytes": 25534,
+    "sha256": "f301f7d1d4620ffae56492425b7eaac66e2a09f75fccbb5c2a42bbed2948800e"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-timed-native.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-repository-timed-native.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-asan-run.stderr",
+    "evidence": "wave-06-landing4-replay/refusals-asan-run.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-8-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-8-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-timed-go.stderr",
+    "evidence": "wave-06-landing4-replay/next-compiler-timed-go.stderr.gz",
+    "bytes": 63,
+    "sha256": "c5db1dfa476f3bc9b6364a384fed58ba5a50626f6541d469774c338158b45685"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-native.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-repository-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-6-emitted-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-6-emitted-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-controls-go.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-controls-go.stderr.gz",
+    "bytes": 56,
+    "sha256": "4ded55559c96318a8ef68c1ea333881ba883883373492fa890b2eb520440cd8f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-2-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-2-emitted-node.stdout.gz",
+    "bytes": 3038,
+    "sha256": "7abd7b3299c46d41d78babbb2f8a0a8d69a1f1dda8e5547cbfc57a8c3f4b80b6"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-compiler-timed-go.stdout",
+    "evidence": "wave-06-landing4-replay/constructors-compiler-timed-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-7-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-7-emitted-node.stdout.gz",
+    "bytes": 3319,
+    "sha256": "11ccfa718c2b757e8fe5b5b24588802359c401cc53f1742ebe4f0a28cffa20f0"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-repository-go.stdout",
+    "evidence": "wave-06-landing4-replay/next-repository-go.stdout.gz",
+    "bytes": 18485,
+    "sha256": "20dc789d505315aefcd366d819ba20b780f64bcdce0e5fbf2f26dc54ac120a2f"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-4-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-4-source-node.stdout.gz",
+    "bytes": 4038,
+    "sha256": "365cd1a05bd1dcc249839df3a0154a64066f14306e6b13c2b3cc8eda2c54b6d8"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/next-compiler-go.stdout",
+    "evidence": "wave-06-landing4-replay/next-compiler-go.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-3-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-3-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-5-emitted-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-batch-5-emitted-node.stdout.gz",
+    "bytes": 1881,
+    "sha256": "2de48aea3a576676e9de6dc35d6ac1372aba6e664a5bf52105d62f562a1c4a6b"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-compiler-wave06-asan.stdout",
+    "evidence": "wave-06-landing4-replay/original-compiler-wave06-asan.stdout.gz",
+    "bytes": 22060,
+    "sha256": "0646d5b6e64317a357db05de60ee1fbb2915b9eb2c09c5d6eac79729b712b9f2"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/callbacks-controls-asan-native.stderr",
+    "evidence": "wave-06-landing4-replay/callbacks-controls-asan-native.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-batch-2-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-batch-2-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-repository-source-node.stderr",
+    "evidence": "wave-06-landing4-replay/react-repository-source-node.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-released.stdout",
+    "evidence": "wave-06-landing4-replay/original-released.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/refusals-static_components-no-refusal-run.stdout",
+    "evidence": "wave-06-landing4-replay/refusals-static_components-no-refusal-run.stdout.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-timed-go.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-repository-timed-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "44e1705d09efe0e7682583f20525adadc77a6590d643d983e37b6e8736b54c75"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/react-compiler-source-node.stdout",
+    "evidence": "wave-06-landing4-replay/react-compiler-source-node.stdout.gz",
+    "bytes": 5318,
+    "sha256": "82f30d090f5a9fff1ce8d2632db2231b1373121fd780d8cc57f4937bce92d3e1"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/original-controls-wave06-asan.stderr",
+    "evidence": "wave-06-landing4-replay/original-controls-wave06-asan.stderr.gz",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/workspace/wave-06-landing4-replay/constructors-repository-asan-go.stderr",
+    "evidence": "wave-06-landing4-replay/constructors-repository-asan-go.stderr.gz",
+    "bytes": 58,
+    "sha256": "3ac4d18730dd6415759e3a6b9c0f8062ef55670d11395b39dce72170f6cabf9e"
+  }
+]

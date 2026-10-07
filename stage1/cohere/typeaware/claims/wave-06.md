@@ -130,3 +130,7 @@ Rebased onto origin/area/stage1-lint d65a8f931 (including 50a5f105/41eb6eab2), r
 ## Current main and lint-area re-green
 
 Rebased all 27 own commits onto area b84a9d93 containing main c7991b90. Fresh compiler builds pass 91 JSX source controls/68 findings, both frozen corpora, 73 prior native builds and 165 replays. Incoming proven predicate/cast fixtures, pinned compiler parser parity and count mutant pass with no input skip. Shared checker context/link/oracle/registry wiring remains blocked and shared files are untouched; React source-to-HIR/SSA/capture analyses remain parked. Pruned all-origin scan covers 458 live refs, 33 claim blobs and 197 ranked names: 172 claimed, remaining 25 ported, no eligible rules. No new claim. See wave_06_jsx/STAGE3_LANDING_REPORT.md.
+
+## Legacy registry landing re-green
+
+Rebased onto area b46914832 containing main c7991b90. Owned source controls/corpora and all 165 earlier comparisons pass again; bridge/registry and filtered Node oracles pass. Compiler, bridge, parser and owned modules are unchanged, so earlier native binaries are reused explicitly. Shared checker handle/filename, archive link, oracle TypeChecker and registry wiring gaps persist; React HIR/SSA/capture claims stay parked. Live scan of 463 refs finds no eligible rules. No new claim. See wave_06_jsx/REGISTRY_LANDING_REPORT.md.

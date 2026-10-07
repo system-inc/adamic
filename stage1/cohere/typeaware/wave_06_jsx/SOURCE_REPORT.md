@@ -1,3 +1,5 @@
+Current registry landing validation: [REGISTRY_LANDING_REPORT.md](REGISTRY_LANDING_REPORT.md).
+
 Current landing validation: [STAGE3_LANDING_REPORT.md](STAGE3_LANDING_REPORT.md).
 
 Latest landing validation and remaining blockers: [HARNESS_LANDING_REPORT.md](HARNESS_LANDING_REPORT.md). The historical parser blocker below is superseded.
