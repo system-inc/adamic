@@ -1,6 +1,7 @@
 # Accessor merge receipt
 
-The branch merges current main e011f8f under the standing self-landing rule.
+The branch merges current main e8ba3d5 into codex/accessors. Only the feature
+branch is pushed; main and area branches belong to integration.
 Integration 16 had not reached main at the time of this merge. Coverage commit
 d6b9675 is preserved in ancestry. Main's descriptor implementation replaces the
 branch's earlier nominal method implementation, leaving one accessorSymbol in
@@ -22,19 +23,19 @@ are adapted without changing their intended Node output: unrelated setter/getter
 names no longer collide with main's conservative same-name dispatch, and optional
 reference reads use receiver helpers before narrowing local results.
 
-Counts were regenerated from native executions. Compared with main's 305 rows,
+Counts were regenerated from native executions. Compared with main's 311 rows,
 24 rows are added, zero removed and zero changed. The two NotYet programs have no
 native execution and therefore no count row. New rows measure main's descriptor
 calls and ordinary ownership, replacing the historical branch's method counts.
 
-Validation, with test output sent to logs:
+Validation against e8ba3d5, with test output sent to logs:
 
-- Full internal/lower passed in 8.203 seconds.
-- Uncached accessor, class feature, inheritance and borrowed-element oracles
-  passed in 20.307 seconds.
-- Counts regeneration passed in 15.475 seconds.
-- Final restored checks passed: lowering in 1.948 seconds and uncached selected
-  oracles plus counts in 19.258 seconds.
+- Full internal/lower passed in 14.732 seconds and internal/native in 83.866 seconds.
+- Uncached accessor, class feature, inheritance, borrowed-element, devirtualization
+  and call-target oracles passed in 8.614 seconds.
+- Counts regeneration passed in 16.496 seconds.
+- Final uncached accessor and class feature oracles plus the complete counts
+  check passed in 16.905 seconds.
 - go vet ./... and gofmt -l cmd internal passed with no output.
 
 Mutants are restored after each run. Restoring the fresh-literal exemption makes
