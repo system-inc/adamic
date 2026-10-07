@@ -16,3 +16,21 @@ Checked all 268 fetched origin references, including claim paths and native
 rule source mentions, before implementation. No prior port or claim found.
 Config set strings and inventory/count records are not implementations.
 No rules skipped.
+
+## Continuation claim
+
+The original three rules are completed and pushed in `027adc366b9f2fbd379df517779a2dd2dfb6ee82`.
+Fetched all origin heads again, checking 327 remote refs and every distinct
+claim document plus native source names on origin/main and
+origin/codex/tsgo-c-library. The first three available entries in the combined
+volume ranking, descending count with lexical ties, are now reserved here:
+
+1. `nexus/correctness-require-child-process-error-listener` (0 compiler, 0 repository)
+2. `nexus/correctness-require-response-status-check` (0 compiler, 0 repository)
+3. `nexus/performance-no-independent-await-in-loop` (0 compiler, 0 repository)
+
+The initially available process-exit, race-timeout and blocking-stream candidates
+became claimed on other origin branches during the final fetch and were skipped.
+No continuation implementation preceded this claim commit and push.
+New implementation and validation files will stay in this unit's own rule
+directories; existing shared harness and registration generator stay untouched.
