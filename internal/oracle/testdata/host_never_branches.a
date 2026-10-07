@@ -1,0 +1,26 @@
+let effects = 0;
+function fail(label: string): never { console.log(`${label}`); throw new Error(label); }
+function read(text: string, index: number): string { return text[index] ?? fail('missing'); }
+console.log(`${read('x', 0)}`);
+try { console.log(`${read('x', 1)}`); } catch { console.log(`${'caught missing'}`); }
+function text(value: string | undefined): string | undefined { effects += 1; return value; }
+function number(value: number | undefined): number | undefined { effects += 1; return value; }
+console.log(`${text('') ?? fail('wrong coalesce')}`);
+console.log(`${number(0) ?? fail('wrong zero')}`);
+try { console.log(`${number(undefined) ?? fail('number')}`); } catch { console.log(`${'caught number'}`); }
+console.log(`${text('yes') || fail('wrong or')}`);
+try { console.log(`${text('') || fail('or')}`); } catch { console.log(`${'caught or'}`); }
+try { console.log(`${text(undefined) || fail('undefined or')}`); } catch { console.log(`${'caught undefined or'}`); }
+console.log(`${String(text('') && fail('wrong and'))}`);
+console.log(`${String(text(undefined) && fail('wrong undefined and'))}`);
+try { console.log(`${text('yes') && fail('and')}`); } catch { console.log(`${'caught and'}`); }
+console.log(`${number(2) || fail('wrong number or')}`);
+console.log(`${number(0) && fail('wrong number and')}`);
+try { console.log(`${number(NaN) || fail('nan')}`); } catch { console.log(`${'caught nan'}`); }
+function choose(flag: boolean): number { effects += 1; return flag ? 7 : fail('ternary false'); }
+function other(flag: boolean): string { effects += 1; return flag ? fail('ternary true') : 'ok'; }
+console.log(`${choose(true)}`);
+try { console.log(`${choose(false)}`); } catch { console.log(`${'caught false'}`); }
+console.log(`${other(false)}`);
+try { console.log(`${other(true)}`); } catch { console.log(`${'caught true'}`); }
+console.log(`${effects}`);

@@ -503,6 +503,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 			}
 			return l.classInstanceOf(node)
 		}
+		if (binary.OperatorToken.Kind == ast.KindBarBarToken || binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken) && l.isNever(binary.Right) {
+			return l.logicalNever(node)
+		}
 		left, err := l.expression(binary.Left)
 		if err != nil {
 			return nil, err
@@ -837,6 +840,9 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if l.isNever(conditional.WhenTrue) || l.isNever(conditional.WhenFalse) {
+		return l.conditionalNever(node, condition)
+	}
 	whenTrue, err := l.expression(conditional.WhenTrue)
 	if err != nil {
 		return nil, err
@@ -988,6 +994,13 @@ func (l *lowering) coalesce(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		return ir.Coalesce{Value: value, Panic: message, Of: of}, nil
+	}
+	if l.isNever(binary.Right) {
+		fallback, err := l.neverValue(binary.Right, of)
+		if err != nil {
+			return nil, err
+		}
+		return ir.Coalesce{Value: value, Fallback: fallback, Of: of}, nil
 	}
 	fallback, err := l.expression(binary.Right)
 	if err != nil {
