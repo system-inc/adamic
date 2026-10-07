@@ -134,3 +134,7 @@ Rebased all 27 own commits onto area b84a9d93 containing main c7991b90. Fresh co
 ## Legacy registry landing re-green
 
 Rebased onto area b46914832 containing main c7991b90. Owned source controls/corpora and all 165 earlier comparisons pass again; bridge/registry and filtered Node oracles pass. Compiler, bridge, parser and owned modules are unchanged, so earlier native binaries are reused explicitly. Shared checker handle/filename, archive link, oracle TypeChecker and registry wiring gaps persist; React HIR/SSA/capture claims stay parked. Live scan of 463 refs finds no eligible rules. No new claim. See wave_06_jsx/REGISTRY_LANDING_REPORT.md.
+
+## Native typeof landing re-green
+
+Rebased thirty own commits onto area d3a37422 containing main b6b1538b. All 73 earlier native binaries rebuild and 165 replays pass; 91 source controls/68 findings and both corpora match Go/native/sanitizers. Pinned parser parity, 23 Node fixtures and incoming typeof mutants pass. Initial disk-space failures are resolved and affected checks rerun without weakening assertions. Shared checker wiring remains blocked; React HIR/SSA/capture claims remain parked. Scan of 486 live refs finds no eligible rules. No new claim. See wave_06_jsx/TYPEOF_LANDING_REPORT.md.

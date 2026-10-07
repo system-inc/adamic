@@ -1,3 +1,5 @@
+Current typeof landing validation: [TYPEOF_LANDING_REPORT.md](TYPEOF_LANDING_REPORT.md).
+
 Current registry landing validation: [REGISTRY_LANDING_REPORT.md](REGISTRY_LANDING_REPORT.md).
 
 Current landing validation: [STAGE3_LANDING_REPORT.md](STAGE3_LANDING_REPORT.md).
