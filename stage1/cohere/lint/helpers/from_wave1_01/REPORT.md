@@ -1,8 +1,8 @@
-Built: CFG enter and returnFrame, one helper per .a file; eight prerequisite entries removed across four rules.
-Commits: enter claim d6fbc1351 and returnFrame claim 7b85efb89 pushed before their code; parked rule branch 850fcdd0f.
-Checks: touched package PASS 21.371s against actual Go on all four consumers and controls, source Node, emitted JavaScript and sanitized native; vet and filtered uncached input oracle PASS.
-Mutants: retained reachability/current-block identity, outermost finally, omitted first frame; all four compile/run and fail only comparison on all three backends.
-Not covered: complete CFG/rule integration, zero complete rules made ready, invalid nil-pointer panic bytes, full repository gate or speed claims.
+Built: enter, returnFrame, throwFrame and throwTarget, one helper per .a file; sixteen prerequisite entries across four rules.
+Commits: this continuation claims 036c836de and e9d4dc76d pushed before their code; prior helpers refreshed at 2534ca1b8; parked rules d508f5ef2.
+Checks: full touched package PASS 39.739s against actual Go on all four consumers plus controls, source Node, emitted JavaScript, ASan/UBSan native; vet and uncached compiler oracle pass.
+Mutants: eight compiling state/identity/frame/target mutations caught solely by comparison on all three backends.
+Not covered: complete CFG/rule integration, zero complete rules unblocked, invalid nil-frame panic bytes, malformed duplicate-index graphs, full repository gate or speed claims.
 
 Observed calls: array-callback-return 79 (632 bytes), consistent-return 123 (984 bytes), no-unreachable-loop 8,861 (70,936 bytes), react-hooks/rules-of-hooks 495 (4,309 bytes), controls 120 (960 bytes), identical on each backend. Four helper prerequisite edges removed across these exact four rules; zero complete rule blocker sets removed. The helper takes a handed block and reads no syntax kinds.
 
@@ -30,3 +30,22 @@ Branch created from the required helpers base then rebased onto origin/main f801
 Continuation refresh: both helpers rebased cleanly onto origin/main c01907a70 and match Go again on all three backends, all four mutants caught, package PASS 20.157s. Parked rule branch revalidated and pushed at d508f5ef2. Main leak-check/developer-tool changes retained without reversions. No new claim before both pushes.
 
 Third helper: throwFrame claim 036c836de pushed before code. Actual private Go observations from all four consumer suites match Node source, emitted JavaScript and sanitized native: array-callback-return 74/206 bytes, consistent-return 62/178 bytes, no-unreachable-loop 5,443/16,217 bytes, react-hooks/rules-of-hooks 722/2,136 bytes, controls 2,067/4,764 bytes per side. Package selection PASS 34.630s. Outermost-handler and inverted catch-finally semantic mutants compile/run and are comparison-only catches on every backend. Exhaustive bounded six-state stacks through depth four plus every uint8 position/finally combination; no nil-frame panic parity. The capture-generation naming/return-statement failure is retained and not counted as a mutant. Four more prerequisite entries removed, twelve cumulative; zero complete rules unblocked. No regex matcher or shared harness changes.
+
+## Fourth helper and second full gate
+
+throwTarget claim e9d4dc76d pushed before implementation, after throwFrame green/pushed at 50a340ca5. Wildcard fetch checked 561 origin refs and all 20 distinct claims blobs; each selected helper tied highest unclaimed fan-out at four. Both own branches are based on origin/main c01907a70; parked rules refreshed at d508f5ef2. No named batch 8 Diagnostic SHA supplied.
+
+Actual private Go throwTarget: array-callback-return 8 calls/48 bytes, consistent-return 4/24, no-unreachable-loop 56/336, react-hooks/rules-of-hooks 12/72, controls 4,096/25,597, identical per backend. Observed block-index/identity/null outputs come from Go's actual return, not a handwritten answer. Eighty real consumer calls plus 4,096 controls. Catch-outside-try and finally-instead-of-catch mutants compile/run then comparison catches both on all three backends.
+
+All four helpers together: 23,875 observations, 131,352 bytes per backend. Each helper removes one prerequisite entry from array-callback-return, consistent-return, no-unreachable-loop and react-hooks/rules-of-hooks, four entries/helper and sixteen total. Zero complete rule blocker sets removed. No full rule findings/fixes or throughput claim.
+
+Final commands, output redirected to retained batch2 logs:
+
+    source /workspace/adamic-tools/env.sh
+    go test ./stage1/cohere/lint/helpers/from_wave1_01 -count=1 -timeout 15m -v
+    go vet ./stage1/cohere/lint/helpers/from_wave1_01
+    ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -timeout 10m -v
+
+PASS full package 39.739s: enter 10.11s, returnFrame 10.00s, throwFrame 9.90s, throwTarget 9.72s. Vet silent success; filtered uncached input oracle PASS 0.880s, six probe misses. All eight semantic mutants execute and are comparison-only catches across 24 backend checks: retained reachability; retained current block; outermost finally; skipped frame zero; outermost exception handler; inverted catch/finally predicate; catch chosen outside try; finally returned instead of catch. Initial throw capture-generation naming error is retained and not credited as a mutant.
+
+Setup Go/clang/Node/submodule ready timings 0s, cache warm and total 55s, nproc 5. Current main's developer-tool/leak-check changes retained through clean rebases; no shared file changed or reverted. Helpers use no regex, so no hand-rolled matcher introduced. Shared harness, graph integration, nil-pointer panic behavior, malformed duplicate-index graphs and full repository/corpus gate remain outside this certificate. Prior rule blockers stay named on the parked branch. Only the own helper branch is pushed; no additional helper reserved after this completed continuation pair.

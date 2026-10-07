@@ -1,0 +1,15 @@
+=== RUN   TestThrowTargetMatchesGo
+    throw_target_test.go:49: array-callback-return throwTarget: 8 actual Go calls, 48 bytes per backend
+    throw_target_test.go:49: consistent-return throwTarget: 4 actual Go calls, 24 bytes per backend
+    throw_target_test.go:49: no-unreachable-loop throwTarget: 56 actual Go calls, 336 bytes per backend
+    throw_target_test.go:49: react-hooks_rules-of-hooks throwTarget: 12 actual Go calls, 72 bytes per backend
+    throw_target_test.go:49: controls throwTarget: 4096 actual Go calls, 25597 bytes per backend
+    throw_target_test.go:91: catch chosen outside try compiles and runs; comparison alone catches side 0
+    throw_target_test.go:91: catch chosen outside try compiles and runs; comparison alone catches side 1
+    throw_target_test.go:91: catch chosen outside try compiles and runs; comparison alone catches side 2
+    throw_target_test.go:91: finally chosen instead of catch compiles and runs; comparison alone catches side 0
+    throw_target_test.go:91: finally chosen instead of catch compiles and runs; comparison alone catches side 1
+    throw_target_test.go:91: finally chosen instead of catch compiles and runs; comparison alone catches side 2
+--- PASS: TestThrowTargetMatchesGo (34.81s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	34.813s

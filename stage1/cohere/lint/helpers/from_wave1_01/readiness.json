@@ -1,13 +1,17 @@
 {
-  "helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].enter",
-  "additional_helper": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].returnFrame",
+  "helpers": [
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].enter",
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].returnFrame",
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].throwFrame",
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.throwTarget"
+  ],
   "consumers": [
     "array-callback-return",
     "consistent-return",
     "no-unreachable-loop",
     "react-hooks/rules-of-hooks"
   ],
-  "prerequisite_edges_removed": 8,
+  "prerequisite_edges_removed": 16,
   "complete_rules_unblocked": 0,
   "boundary": "handed non-null block state and identity; adjacent CFG and full rule integration remain"
 }

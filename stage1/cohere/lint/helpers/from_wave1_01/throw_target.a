@@ -1,0 +1,11 @@
+import type { Block } from './enter.a';
+export class TargetFrame {
+    readonly position: number;
+    catchEntry: Block | undefined = undefined;
+    finallyEntry: Block | undefined = undefined;
+    constructor(position: number) { this.position = position; }
+}
+export function throwTarget(frame: TargetFrame): Block | undefined {
+    if(frame.position === 0 && frame.catchEntry !== undefined) { return frame.catchEntry; }
+    return frame.finallyEntry;
+}

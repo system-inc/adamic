@@ -1,0 +1,17 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Block } from './enter.a';
+import { TargetFrame, throwTarget } from './throw_target.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('missing input'));
+if(input.kind === 'Error') { panic(input.message); }
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const fields = line.split('\t');
+    const frame = new TargetFrame(Number(fields[0]));
+    const caught = Number(fields[1]);
+    const final = Number(fields[2]);
+    if(caught >= 0) { frame.catchEntry = new Block(caught, false, false); }
+    if(final >= 0) { frame.finallyEntry = final === caught ? frame.catchEntry : new Block(final, false, false); }
+    const target = throwTarget(frame);
+    console.log(`${target?.index ?? -1}\t${target !== undefined && target === frame.catchEntry ? 1 : 0}\t${target !== undefined && target === frame.finallyEntry ? 1 : 0}`);
+}
