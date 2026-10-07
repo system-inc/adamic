@@ -1,0 +1,341 @@
+>Crules: selectors, declarations, empty rules, semicolons
+>Srules: selectors, declarations, empty rules, semicolons
+>Ca{color:red;background:blue}\nb { }\nc{color:red;;}\n\n\n\nd{COLOR:Red}\ne{margin:0}
+>Sa{color:red;background:blue}\nb { }\nc{color:red;;}\n\n\n\nd{COLOR:Red}\ne{margin:0}
+>Ccolor: red;
+>Scolor: red;
+>Cb {\n}
+>Sb {\n}
+>Ccolor: Red;
+>Scolor: Red;
+>Cselectors: combinators, pseudo-classes, pseudo-elements, attributes, namespaces, lists
+>Sselectors: combinators, pseudo-classes, pseudo-elements, attributes, namespaces, lists
+>Ca>b~c+d   e{x:y}\nA:HOVER::BEFORE,.Class:not(.b,.c):nth-child(2N+1){x:y}\n[data-foo=bar],[data-foo='bar' i],[ data-x ],svg|a,*|*,|b,*{x:y}\na:is(.b , .c) > d:where(.e){x:y}\n.a.b#c::after,ul li:first-child{x:y}\n:root{x:y}\na >>> b{x:y}\n.a\n.b{x:y}
+>Sa>b~c+d   e{x:y}\nA:HOVER::BEFORE,.Class:not(.b,.c):nth-child(2N+1){x:y}\n[data-foo=bar],[data-foo='bar' i],[ data-x ],svg|a,*|*,|b,*{x:y}\na:is(.b , .c) > d:where(.e){x:y}\n.a.b#c::after,ul li:first-child{x:y}\n:root{x:y}\na >>> b{x:y}\n.a\n.b{x:y}
+>C.a-very-long-selector-name-number-one .another-long-descendant-selector > .child-selector-name ~ .sibling-selector-name-here{x:y}\n.first-selector-in-the-list,.second-selector-in-the-list,.third-selector-in-the-list{x:y}\na:not(.a-very-long-class-name-number-one,.a-very-long-class-name-number-two,.a-very-long-class-name-number-three){x:y}
+>S.a-very-long-selector-name-number-one .another-long-descendant-selector > .child-selector-name ~ .sibling-selector-name-here{x:y}\n.first-selector-in-the-list,.second-selector-in-the-list,.third-selector-in-the-list{x:y}\na:not(.a-very-long-class-name-number-one,.a-very-long-class-name-number-two,.a-very-long-class-name-number-three){x:y}
+>C@media: types, features, ranges, and, or, not, only, lists
+>S@media: types, features, ranges, and, or, not, only, lists
+>C@media screen and (min-width:100px) , print and (orientation:LANDSCAPE){a{x:y}}\n@media (min-width:640PX) and (max-width:1023.50px){a{x:y}}\n@media not all and (monochrome){a{x:y}}\n@media only screen   and (max-width : 100px){a{x:y}}\n@media (width>=600px){a{x:y}}\n@MEDIA print{a{x:y}}\n@media tv2.50,(min-resolution:2.00DPPX){a{x:y}}
+>S@media screen and (min-width:100px) , print and (orientation:LANDSCAPE){a{x:y}}\n@media (min-width:640PX) and (max-width:1023.50px){a{x:y}}\n@media not all and (monochrome){a{x:y}}\n@media only screen   and (max-width : 100px){a{x:y}}\n@media (width>=600px){a{x:y}}\n@MEDIA print{a{x:y}}\n@media tv2.50,(min-resolution:2.00DPPX){a{x:y}}
+>C@supports, @layer, @container and nesting
+>S@supports, @layer, @container and nesting
+>C@supports (display:grid) and (not (display:inline-grid)){a{x:y}}\n@supports (-webkit-touch-callout:none){a{x:y}}\n@layer base,components,utilities;\n@layer base{a{x:y}@media (min-width:1px){b{x:y}}}\n@container sidebar (min-width:400px){a{x:y}}
+>S@supports (display:grid) and (not (display:inline-grid)){a{x:y}}\n@supports (-webkit-touch-callout:none){a{x:y}}\n@layer base,components,utilities;\n@layer base{a{x:y}@media (min-width:1px){b{x:y}}}\n@container sidebar (min-width:400px){a{x:y}}
+>C@layer base,components,utilities;
+>S@layer base,components,utilities;
+>C@config '../../TailwindConfiguration.ts';\n@import 'tailwindcss' source(none);\n@source '../../app/';\n@theme{--color-primary:#FFF;--font-sans:'Inter',sans-serif;--spacing:0.25REM;--breakpoint-xs:30rem}\n@theme inline{--color-x:var(--x)}\n@utility tab-*{tab-size:--value(integer)}\n@utility typing-dots{@apply flex   gap-1;}\n@custom-variant dark (&:where(.scheme-dark,.scheme-dark *));\n@custom-variant hover{&:hover{@media (hover:hover){@slot;}}}\n.btn{@apply px-4 py-2 rounded-lg hover:bg-blue-500 focus:outline-none;}
+>S@config '../../TailwindConfiguration.ts';\n@import 'tailwindcss' source(none);\n@source '../../app/';\n@theme{--color-primary:#FFF;--font-sans:'Inter',sans-serif;--spacing:0.25REM;--breakpoint-xs:30rem}\n@theme inline{--color-x:var(--x)}\n@utility tab-*{tab-size:--value(integer)}\n@utility typing-dots{@apply flex   gap-1;}\n@custom-variant dark (&:where(.scheme-dark,.scheme-dark *));\n@custom-variant hover{&:hover{@media (hover:hover){@slot;}}}\n.btn{@apply px-4 py-2 rounded-lg hover:bg-blue-500 focus:outline-none;}
+>C--color-primary: #fff;
+>S--color-primary: #fff;
+>C@apply flex   gap-1;
+>S@apply flex   gap-1;
+>C@keyframes with from, to, percentages, and @font-face
+>C/* top */\n/* second */a{/* first */color:red;/* between */\nbackground:blue; /* trailing */\n}\na /* in selector */ b{x:y}\nb{margin:1px /* in value */ 2px}\n\n/* before at-rule */@media print{/* inside */}\nc{x:y}/* after rule */\n/* last */
+>Ctransition:\n
+>Cpadding: 0 !important;
+>C@import url('foo.css') screen and (orientation: landscape);
+>Cx: y;\n\n
+>C%s (%s): differs from the fork\n%s
+>C$a:1px;$b : 2px!default;$c:red !global;$d: 3px   !default  !global;\na{$e:1 !default;width:$a+$b;height:$a*2;margin:-$a;padding:$a/2 $b}
+>Cfamily: serif;
+>S:root{\n--x:{\n// note\ncolor:RED;\nwidth:$w * 2;\n};\n--y:{a:b};\n}
+>C@return $n * 2;
+>S%s:\n--- FormatSCSS\n%s--- PrintToDocSCSS\n%s
+>Sjson:"file,omitempty"
+>S%s: want %d elements, got %v
+>Sa { color: red; background: blue }\nb{c:d}
+>Scolor: red;\na {}
+>Sa { b { --x: { c: d } } }\n:root{--y:{}}
+>S@supports (display: grid) and (not (display: inline-grid)) { a { b: c } }\n@supports selector(a > b) { }\n@supports not selector(:is(a, b)) {}\n@Supports (x: y) {}
+>C@foo:bar;\n@baz :qux;
+>Ca { b: f(,a); c: f(a,,b); d: f(a,); e: (,) }
+>C%s: the fixture says malformed=%v and the fork says %v
+>Cwords: %v
+>Cb: c
+>Ca{_b:c;*d:e}
+>C@supports (display:grid) and (not (display:inline-grid)){a{b:c}}
+>C@foo ({ x }) { a: b }
+>Ca{b:c !important /* x */}
+>Ca{--x: y !important}
+>C/**/ /*   */ /*\n\n*/
+>Ca{b:url(foo.png)}
+>Ca{b:url x (y)}
+>Ca{--empty: ;}
+>Ca{b:c;;d:e;;}
+>Ca{}﻿b{}
+>C.\\E9 x{}
+>Ca{b:important;c:!important;d:x!imp;e:x !important!important}
+>C%q: %v is not a marked CssSyntaxError
+>Ca, // x\nb { }
+>Sa { b: c /* x */ // y */ z\n; }
+>Sa { --x: a // b\n c; }
+>Ca { b: url(#{$x}/a.png); c: url("#{$y}") }
+>C$map: (key1: value1, key2: value2, key3: value3);
+>Ca { font: bold { family: x } }
+>Ca { margin /* c */ : /* d */ 0 { left: 1px } }
+>Ca,\nb:hover {}\na\n:b {}
+>C@if $a == 1 { b: c } @else if $a == 2 { d: e } @else { f: g }\n@if not index($list, $x) {}\n.a{@if $x{b:c}@else{d:e}}
+>Ca{b:c,}
+>C@prettier-placeholder-0-id {\n  color: red;\n}
+>S/* @prettier-placeholder-0-id */\n// @prettier-placeholder-1-id\n
+>S&.active > &:hover
+>S:not(.a, .b)
+>S:is(:not(:has(> img, + a)), b) c
+>S:not(a(b))
+>S:not(())
+>S;
+>Sjson:"path,omitempty"
+>Scalc: got %d children, unbalanced %v
+>Sa{b:c}
+>S@charset "utf-8";
+>S@foo bar
+>S@media(x){}@media{}
+>Sa{b:c!important  }
+>Sa{  b  :  c  d  ;  e:f  }
+>S/* only */
+>Sa{b:url('a b.png')}
+>Sa{b:x( \n)}
+>Sa{--x: 1px  }
+>Sa{};b{}  ;  c{} ; ; d{}
+>Sa {\r\n  b: c;\r\n}\r\n@media x {\r\n  d { e: f }\r\n}\r\n
+>Sa{:b}
+>Sa{b + :c}
+>Sa{b:c// x\nd}
+>Ca { b: c /* x */ // y */ z\n; }
+>Ca { --x: a // b\n c; }
+>Sa { b: 'it\\'s #{$x}' }
+>Sa{b:url x (y)}
+>Sa { font: { family: x; size: 1px; } }
+>Sa { margin: 0 !IMPORTANT { left: 1px } }
+>Sb: 1px { c: d }
+>S@function double($n) { @return $n * 2; }
+>S.a { &-b { } &__c { } & + & {} &.d {} .e & {} &:hover {} }
+>S,a{}
+>S@prettier-placeholder-0-id;\n@prettier-placeholder-1-id\n
+>C@charset "UTF-8";\n@charset "iso-8859-15";\n@charset 'iso-8859-15'; /* Invalid, wrong quoting style used */\n@charset  "UTF-8"; /* Invalid, more than one space */\n@charset "UTF-8"; /* Invalid, there is a character (a space) before the at-rule */\n@charset UTF-8; /* Invalid, without ' or ", the charset is not a CSS <string> */\n
+>C@font-feature-values Font One {\n    @styleset {\n        nice-style: 12;\n    }\n}\n@font-feature-values Font One {\n@styleset {\nnice-style: 12;\n}\n}\n@font-feature-values Font One{\n    @styleset{\n        nice-style: 12;\n    }\n}\n@font-feature-values  Font One  {\n    @styleset  {\n        nice-style: 12;\n    }\n}\n@font-feature-values\nFont One\n{\n@styleset\n{\nnice-style\n:\n12\n;\n}\n}\n\n@font-feature-values\n\nFont One\n\n{\n\n@styleset\n{\n\nnice-style\n\n:\n\n12\n\n;\n\n}\n\n}\n
+>C@mixin clearfix {}\n@mixin clearfix{}\n@mixin  clearfix  {}\n@mixin clearfix\n  {}\n@mixin\n  clearfix\n  {}\n@mixin\nclearfix\n{\n}\n@mixin\n\nclearfix\n\n{\n\n}\n\n@mixin mix($arg, $arg1, $arg2: 10, $args...) {}\n@mixin mix($arg,$arg1,$arg2:10,$args...){}\n@mixin mix ( $arg , $arg1 , $arg2 : 10 , $args ... ) {}\n@mixin  mix  (  $arg  ,  $arg1  ,  $arg2  :  10  ,  $args  ...  )  {}\n@mixin mix(\n    $arg,\n    $arg1,\n    $arg2: 10,\n    $args...\n) {}\n@mixin\nmix(\n    $arg,\n    $arg1,\n    $arg2: 10,\n    $args...\n    ) {}\n@mixin\nmix\n(\n$arg\n,\n$arg1\n,\n$arg2\n:\n10\n,\n$args\n...\n)\n{\n}\n@mixin\n\nmix\n\n(\n\n$arg\n\n,\n\n$arg1\n\n,\n\n$arg2\n\n:\n\n10\n\n,\n\n$args\n\n...\n\n)\n\n{\n}\n@mixin mix($very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-arg, $very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-arg1, $very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-arg2: 10, $very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-args...) {}\n@mixin component($conf: ()) {}\n@mixin component($conf: ( )) {}\n@mixin button-variant($hover-background: darken($background, 7.5%)) {}\n@mixin button-variant( $hover-background : darken( $background , 7.5% ) ) {}\n@mixin button-variant($hover-background:darken($background,7.5%)) {}\n@mixin button-variant(\n    $hover-background: darken($background, 7.5%)\n) {}\n@mixin\nbutton-variant(\n$hover-background\n:\ndarken(\n$background\n,\n7.5%\n)\n)\n{}\n@mixin button-variant($foo: "...") {}\n@mixin button-variant($foo: " ... ") {}\n@mixin button-variant($foo: "  ...  ") {}\n@mixin sexy-border($color, $width, $foo: (color: red)) {}\n\n@mixin selector($param: "value") {}\n
+>Cinput[type="radio" i] {}\nimg[alt~="person" i][src*="lorem" i] {}\nsection:has(:not([type="radio" i], [type="checkbox" i])) {}\n\ninput[type="radio" I] {}\nimg[alt~="person" I][src*="lorem" I] {}\nsection:has(:not([type="radio" I], [type="checkbox" I])) {}\n\n[type=a   I] {}\n[type="a"   I] {}\n
+>C#♥ {}\n#© {}\n#“‘’” {}\n#☺☃ {}\n#⌘⌥ {}\n#𝄞♪♩♫♬ {}\n#💩 {}\n#\\? {}\n#\\@ {}\n#\\. {}\n#\\3A \\) {}\n#\\3A \\`\\( {}\n#\\31 23 {}\n#\\31 a2b3c {}\n#\\<p\\> {}\n#\\<\\>\\<\\<\\<\\>\\>\\<\\> {}\n#\\+\\+\\+\\+\\+\\+\\+\\+\\+\\+\\[\\>\\+\\+\\+\\+\\+\\+\\+\\>\\+\\+\\+\\+\\+\\+\\+\\+\\+\\+\\>\\+\\+\\+\\>\\+\\<\\<\\<\\<\\-\\]\\>\\+\\+\\.\\>\\+\\.\\+\\+\\+\\+\\+\\+\\+\\.\\.\\+\\+\\+\\.\\>\\+\\+\\.\\<\\<\\+\\+\\+\\+\\+\\+\\+\\+\\+\\+\\+\\+\\+\\+\\+\\.\\>\\.\\+\\+\\+\\.\\-\\-\\-\\-\\-\\-\\.\\-\\-\\-\\-\\-\\-\\-\\-\\.\\>\\+\\.\\>\\. {}\n#\\# {}\n#\\#\\# {}\n#\\#\\.\\#\\.\\# {}\n#\\#fake-id {} /* matches the element with id="#fake-id" */\n#\\_ {}\n#\\{\\} {}\n#\\.fake\\-class {}\n#foo\\.bar {}\n#\\3A hover {}\n#\\3A hover\\3A focus\\3A active {}\n#\\[attr\\=value\\] {}\n#f\\/o\\/o {}\n#f\\\\o\\\\o {}\n#f\\*o\\*o {}\n#f\\!o\\!o {}\n#f\\'o\\'o {}\n#f\\~o\\~o {}\n#f\\+o\\+o {}\n#-a-b-c- {}\n#a\\\\b {}\n\n@keyframes \\@mymove {\n    from {top: 0px;}\n    to {top: 200px;}\n}\n\n.foo {\n    animation-name: \\@mymove;\n    content: "\\21D3";\n}\n\n/* Ignore escape "\\" in CSS classes */\n.bar\\/baz {\n    animation-name: \\@mymove;\n    content: "\\21D3";\n}\n\n.grid {\n  grid-template-rows:\n    [row-1-00\\:00] auto;\n}\n
+>C-Option/root .public/section ~ .public/section:before {\n}\n\n.x .y {}\n.x > .y {}\n.x ~ .y {}\n.x + .y {}\n.x.y {}\n.x     .y {}\n.x\n    .y {}\n
+>C   /* comment 1 */\n       :root {\n  /* comment 2 */\n  --prop : {\n  /* comment 3 */\ncolor/* comment 4 */: /* comment 5 */#fff/* comment 6 */;/* comment 7 */\n  /* comment 8 */\nfont-size: 12px;\n  /* comment 9 */\n  };\n  /* comment 10 */\n}\n     /* comment 11 */\n
+>C.blah {\n  /* hloow <|> */\n  background-color: white;\n}\n
+>C---mycustomparser\ntitle: Title\ndescription: Description\n---\n/* comment */\n.something \n{}\n
+>C.nuclide-resize-sensitive-container-sensor,\n.nuclide-resize-sensitive-container-expand,\n.nuclide-resize-sensitive-container-shrink {\n}\n
+>C:root {\n  --empty:;\n     --one-space: ;\n  --two-space:  ;\n--many-space:       ;\n}\n
+>Cli:has(\n  path[d="M544,272H480V150.627L523.314,107.314A16,16,0,0,0,500.686,84.687L457.373,128H415a127.00381,127.00381,0,1,0-254,0H118.627L75.314,84.687A16,16,0,1,0,52.686,107.314L96,150.627V272H32a16,16,0,0,0,0,32H96v24a174.98856,174.98856,0,0,0,30.484,98.889L68.687,484.686a15.99972,15.99972,0,1,0,22.627,22.627l55.616-55.616A175.45165,175.45165,0,0,0,272,504h32a175.45165,175.45165,0,0,0,125.07-52.303l55.616,55.616a15.99972,15.99972,0,0,0,22.627-22.627l-57.797-57.797A174.98856,174.98856,0,0,0,480,328V304h64a16,16,0,0,0,0-32ZM288,32.01263A95.99568,95.99568,0,0,1,383,128H193A95.99568,95.99568,0,0,1,288,32.01263ZM448,328c0,79.401-64.598,144-144,144V236a12.00052,12.00052,0,0,0-12-12h-8a12.00052,12.00052,0,0,0-12,12V472c-79.402,0-144-64.599-144-144V160H448Z"]\n) {\n  display: none;\n}\n
+>C:not(".public/basics/positioning") {\n}\n
+>C.class\n{display: inline-block;\n/* comment */\nfloat: left;}\n\n#id {\n  font-size: 12px;\n\n  /* colors */\n\n  color: pink;\n  background: #fff;\n}\n
+>C.class {\n  font: normal normal 24px/1 "myfont";font: normal normal normal 12px/20px myfont;\n  font:normal 300 0.875em/1.3  "myfont", sans-serif;\n}\n
+>C     .foo {font-size   :12px      ;\n\n\n  >.nested-1\n \n  {\npadding: 10px;   .nested-2-1{\n      color       :      red     ;\n    }\n           +      .nested-2-2      {\n  color:blue;  }}\n\n\n\n}\n
+>Ca:after  { content:"" }\na::before  { content:"" }\n\n
+>C@value 4XLarge 28/36px;\n\n.postCssLowerCasingValueName {\n  font: 4XLarge Helvetica;\n}\n\n.cssUnits {\n  a: 5EM;\n  a: 5REM;\n  a: 5EX;\n  a: 5REX;\n  a: 5CAP;\n  a: 5RCAP;\n  a: 5CH;\n  a: 5RCH;\n  a: 5IC;\n  a: 5RIC;\n  a: 5LH;\n  a: 5RLH;\n  a: 5VH;\n  a: 5VW;\n  a: 5VI;\n  a: 5VB;\n  a: 5VMIN;\n  a: 5VMAX;\n  a: 5CM;\n  a: 5MM;\n  a: 5q;\n  a: 5IN;\n  a: 5PT;\n  a: 5PC;\n  a: 5PX;\n  a: 5DEG;\n  a: 5GRAD;\n  a: 5RAD;\n  a: 5S;\n  a: 5MS;\n  a: 5hZ;\n  a: 5KhZ;\n  a: 5DPI;\n  a: 5DPCM;\n  a: 5DPPX;\n  a: 5X;\n\n  a: 5PROTOTYPE;\n  a: 5constructoR;\n}\n
+>S@nice-blue: #5B83AD;\n@light-blue: @nice-blue + #111;\n\n// Comment 1\n/*\n * Comment 2\n */\n#header {\n  // Comment 3\n  /*\n   * Comment 4\n   */\n  color: @light-blue;\n}\n\n@media only screen and (max-width: 600px) {\n  // Comment 1\n  /*\n   * Comment 5\n   */\n  body {\n    background-color: lightblue; // Comment 6\n    color: red; /* Comment 7 */\n  }\n}\n
+>C/* custom properties set & @apply rule */\n:root {\n    /* comments 192 */ --centered /* comments 193 */ : /* comments 194 */ {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n    };\n}\n
+>C.average(@x, @y) {\n  @result: ((@x + @y) / 2);\n}\n\ndiv {\n  padding: .average(16px, 50px)   [   @result   ];\n}\n\ndiv {\n  padding: @foo   [   @bar   ];\n}\n
+>C@for $i from 1 through 8 {}\n@for $i from 1 through 8{}\n@for  $i  from  1  through  8  {}\n@for  $i\nfrom\n1\nthrough\n8\n{}\n@for\n$i\nfrom\n1\nthrough\n8\n{}\n@for\n$i\nfrom\n1\nthrough\n8\n{}\n@for\n\n$i\n\nfrom\n\n1\n\nthrough\n\n8\n\n{}\n@for $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var from 1 through 5 {}\n@for $i from $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var1 through 5 {}\n@for $i from 1 through $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var-2 {}\n@for $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var from $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var1 through $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var-2 {}\n@for $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var from $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var1 end $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var-2 {}\n@for $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var from ($var1 + $var1) through ($var-2 + $var-2) {}\n@for $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var from ($very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var1 + $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var1) through ($very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var-2 + $very-very-very-very-very-very-very-very-very-very-very-very-very-very-very-long-var-2) {}\n
+>S@at-root .foo\n// .bar\n{\n\n}\n\n@at-root\n// .bar\n.foo\n{\n\n}
+>S/* DO NOT ADD EXTRA CODE TO THIS FILE */\n\n@import "a";\n\n// '/*' <-- this breaks formatting\n\n@import 'b';\n// another comment\n//no-space before\n
+>Cdiv {\n  margin: -double(-double(1em));\n  margin: -double(- double(1em));\n  margin: - double(-double(1em));\n}\n\n@function -double($value) {\n  @return $value * 2;\n}\n
+>S.a { background-color: rgba($color: (#808080), $alpha: 0.9); }\n
+>Ca {\n  transition-timing-function: func1(\n      func2(\n          func3(\n              "veryVeryVeryVeryVeryLongValue",\n              "veryVeryVeryVeryVeryLongValue",\n              "veryVeryVeryVeryVeryLongValue",\n              "veryVeryVeryVeryVeryLongValue",\n          ),\n          "veryVeryVeryVeryVeryLongValue",\n          "veryVeryVeryVeryVeryLongValue",\n          "veryVeryVeryVeryVeryLongValue",\n      ),\n      "veryVeryVeryVeryVeryLongValue",\n      "veryVeryVeryVeryVeryLongValue",\n      func3(\n          "veryVeryVeryVeryVeryLongValue",\n          "veryVeryVeryVeryVeryLongValue",\n          "veryVeryVeryVeryVeryLongValue",\n          "veryVeryVeryVeryVeryLongValue"\n      )\n  );\n}\n\n$empty-map: ();\n$empty-nested-map: (\nnested-key: (empty-key: (color: red)),\nempty-key: (),\nempty-key: (),\nempty-key: ()\n);\n\n$o-grid-default-config: (\ncolumns: 12,\ngutter: 10px,\nmin-width: 240px,\nmax-width: 1330px,\nlayouts: (\nS:  370px,\nM:  610px,\nL:  850px,\nXL: 1090px\n),\nfluid: true,\ndebug: false,\nfixed-layout: M,\nenhanced-experience: true\n);\n\n$a: ();\n$b: unquote('');\n$c: null;\n$d: (null);\n\n$threads-properties: map-merge($threads-properties,  ($border-label: ()));\n$o-grid-default-config: (layouts: (S:  370px));\n\n$map: (\nkey: (value),\nother-key: (key: other-other-value)\n);\n
+>C.foo {\n  @include transition(min-height ($spacer/2) ease-in-out);\n}\n\n.bar {\n  @include transition(min-height, $spacer/2, ease-in-out);\n}\n
+>Sa {\n    prop1: func(1px,1px,1px,func(1px,1px,1px,func(1px,1px,1px)));\n    prop2: func( 1px ,1px ,1px ,func( 1px ,1px ,1px ,func( 1px ,1px ,1px ) ) );\n    prop3: func(1px, 1px, 1px, func(1px, 1px, 1px, func(1px, 1px, 1px)));\n    prop4: func( 1px , 1px , 1px , func( 1px , 1px , 1px , func( 1px , 1px , 1px ) ) );\n    prop5: func(  1px  ,  1px  ,  1px  ,  func(  1px  ,  1px  ,  1px  ,  func(  1px  ,  1px  ,  1px  )  )  );\n    prop6: func(\n        1px\n        ,\n        1px\n        ,\n        1px\n        ,\n        func(\n            1px\n            ,\n            1px\n            ,\n            1px\n            ,\n            func(\n                1px\n                ,\n                1px\n                ,\n                1px\n            )\n        )\n    );\n    prop7:\n        func(\n            1px\n            ,\n            1px\n            ,\n            1px\n            ,\n            func(\n                1px\n                ,\n                1px\n                ,\n                1px\n                ,\n                func(\n                    1px\n                    ,\n                    1px\n                    ,\n                    1px\n                )\n            )\n        );\n    prop8: very-very-very-very-very-very-vey-very-very-long-func(1px,1px,1px,very-very-very-very-very-very-vey-very-very-long-func(1px,1px,1px,very-very-very-very-very-very-vey-very-very-long-func(1px,1px,1px)));\n    prop9: very-very-very-very-very-very-vey-very-very-long-func(  1px  ,  1px  ,  1px  ,  very-very-very-very-very-very-vey-very-very-long-func(  1px  ,  1px  ,  1px  ,  very-very-very-very-very-very-vey-very-very-long-func(  1px  ,  1px  ,  1px  )  )  );\n    prop10:\n        very-very-very-very-very-very-vey-very-very-long-func(\n            1px\n            ,\n            1px\n            ,\n            1px\n            ,\n            very-very-very-very-very-very-vey-very-very-long-func(\n                1px\n                ,\n                1px\n                ,\n                1px,\n                very-very-very-very-very-very-vey-very-very-long-func(\n                    1px\n                    ,\n                    1px\n                    ,\n                    1px\n                )\n            )\n        );\n    prop11: very-very-very-very-very-very-vey-very-very-long-func(\n        1px\n        ,\n        1px\n        ,\n        1px\n        ,\n        very-very-very-very-very-very-vey-very-very-long-func(\n            1px\n            ,\n            1px\n            ,\n            1px,\n            very-very-very-very-very-very-vey-very-very-long-func(\n                1px\n                ,\n                1px\n                ,\n                1px\n            )\n        )\n    );\n}\n\na {\n  box-shadow: inset 0 $size $size (-$size) black;\n  width: calc(100% - (#{var(--g-spacing)} - #{$iframe-x-padding}) * 2);\n  padding-right: (100% * $info-width / (1 - $image-width));\n  padding-bottom:\n    (\n      100% *\n      $image-height / ($image-width-responsive + $image-margin-responsive * 2)\n    );\n}\n\n.foo {\n  --paddingC: calc(  var(  --widthB  )  /  2  );\n  content: attr(  data-title  );\n  color: var(  --main-bg-color  );\n  background-color: rgb(  255,  0,  0  );\n  background: element(  #css-source  );\n  width: calc(  100%  -  (  #{var(--g-spacing)}  -  #{$iframe-x-padding}  )  *  2  );\n  padding-bottom:\n      (\n          100% *\n          $image-height  /  (  $image-width-responsive  +  $image-margin-responsive  *  2  )\n      );\n  padding-top: var(  --paddingC  );\n  margin: 1*1 (1)*1 1*(1) (1)*(1);\n  prop: -1*-1 -(-1)*-1 -1*-(-1) -(-1)*-(-1);\n  prop1: #{($m)*(10)};\n  prop2: #{$m * 10};\n  prop3: #{-(-$m)*-(-10)};\n  prop4: +1;\n  prop5: -1;\n  prop6: word + 1; /* word1 */\n  prop7: word - 1; /* word-1 */\n  prop8: +1 +1 +1 +1; /* +1 +1 +1 +1 */\n  prop9: -1 -1 -1 -1; /* -1 -1 -1 -1 */\n  prop10: (-1);\n  prop11: (+1);\n  prop12: 10px/8px;\n  prop13: round(1.5)/2 round(1.5) /2 round(1.5)/ 2 round(1.5) / 2;\n  prop14: 2/round(1.5) 2 /round(1.5) 2/ round(1.5) 2 / round(1.5);\n  prop15: (round(1.5)/2) (round(1.5) /2) (round(1.5)/ 2) (round(1.5) / 2);\n  prop16: (2/round(1.5)) (2 /round(1.5)) (2/ round(1.5)) (2 / round(1.5));\n  prop17: $width/2 $width /2 $width/ 2 $width / 2;\n  prop18: 2/$width 2 /$width 2/ $width 2 / $width;\n  prop19: ($width/2) ($width /2) ($width/ 2) ($width / 2);\n  prop20: (2/$width) (2 /$width) (2/ $width) (2 / $width);\n  prop21: @width/2 @width /2 @width/ 2 @width / 2;\n  prop22: 2/@width 2 /@width 2/ @width 2 / @width;\n  prop23: (@width/2) (@width /2) (@width/ 2) (@width / 2);\n  prop24: (2/@width) (2 /@width) (2/ @width) (2 / @width);\n  prop25-1: #{$width}/#{$width} #{$width} /#{$width} #{$width}/ #{$width} #{$width} / #{$width};\n  prop25-2: #{$width}*#{$width} #{$width} *#{$width} #{$width}* #{$width} #{$width} * #{$width};\n  prop25-3: #{$width}+#{$width} #{$width} +#{$width} #{$width}+ #{$width} #{$width} + #{$width};\n  prop25-4: #{$width}-#{$width} #{$width} -#{$width} #{$width}- #{$width} #{$width} - #{$width};\n  prop26: 8px/2px 8px /1 1/ 2px 1 / 2;\n  prop27: 8px/2px 8px/1 1/2px 1/2;\n  prop28: 8px / 2px 8px / 1 1 / 2px 1 / 2;\n  prop29: (8px/2px) (8px/1) (1/2px) (1/2);\n  prop30: (8px / 2px) (8px / 1) (1 / 2px) (1 / 2);\n  prop31: (#{$width}/2px) (8px/#{$width}) (#{$width} / 2px) (8px / #{$width});\n  prop32: func(8px/2);\n  prop33: 5px + 8px/2px;\n  prop34: func(+20px, + 20px);\n  prop35: 1+1+1+1;\n  prop36: 1 + 1 + 1 + 1;\n  prop37: 1 +1 1 +1;\n  prop38: ++1;\n  prop39: ++(1);\n  prop40: --1;\n  prop41: --(1);\n  prop42: 1px+1px+1px+1px;\n  prop43: 1px + 1px + 1px + 1px;\n  prop44: -1+-1 -(-1)+-1 -1+-(-1) -(-1)+-(-1);\n  prop45: round(1.5)*2 round(1.5) *2 round(1.5)* 2 round(1.5) * 2;\n  prop46: 2*round(1.5) 2 *round(1.5) 2* round(1.5) 2 * round(1.5);\n  prop47: (round(1.5)*2) (round(1.5) *2) (round(1.5)* 2) (round(1.5) * 2);\n  prop48: (2*round(1.5)) (2 *round(1.5)) (2* round(1.5)) (2 * round(1.5));\n  prop49: $width*2 $width *2 $width* 2 $width * 2;\n  prop50: 2*$width 2 *$width 2* $width 2 * $width;\n  prop51: ($width*2) ($width *2) ($width* 2) ($width * 2);\n  prop52: (2*$width) (2 *$width) (2* $width) (2 * $width);\n  prop57: round(1.5)+2 round(1.5) +2 round(1.5)+ 2 round(1.5) + 2;\n  prop58: 2+round(1.5) 2 +round(1.5) 2+ round(1.5) 2 + round(1.5);\n  prop59: (round(1.5)+2) (round(1.5) +2) (round(1.5)+ 2) (round(1.5) + 2);\n  prop60: (2+round(1.5)) (2 +round(1.5)) (2+ round(1.5)) (2 + round(1.5));\n  prop61: $width+2 $width +2 $width+ 2 $width + 2;\n  prop62: 2+$width 2 +$width 2+ $width 2 + $width;\n  prop63: ($width+2) ($width +2) ($width+ 2) ($width + 2);\n  prop64: (2+$width) (2 +$width) (2+ $width) (2 + $width);\n  prop69: "test"+1 "test" +1 "test"+ 1 "test" + 1;\n  prop70: 1+"test" 1 +"test" 1+ "test" 1 + "test";\n  prop71: "test"-1 "test" -1 "test"- 1 "test" - 1;\n  prop72: 1-"test" 1 -"test" 1- "test" 1 - "test";\n  prop73: calc(100%*2px) calc(100% *2px) calc(100%* 2px) calc(100% * 2px);\n  prop74: calc(100%/2px) calc(100% /2px) calc(100%/ 2px) calc(100% / 2px);\n  prop75: calc(100%+2px) calc(100% +2px) calc(100%+ 2px) calc(100% + 2px);\n  prop76: calc(100%-2px) calc(100% -2px) calc(100%- 2px) calc(100% - 2px);\n  prop77: calc(-5px);\n  prop78: calc(+5px);\n  prop79: calc(-100px + 100px);\n  prop80: calc(+100px + 100px);\n  prop81: calc(100px  -  100px);\n  prop82: calc(100px  +  100px);\n}\n\n.bar {\n    prop1: attr(data-foo);\n    prop2: attr( data-foo );\n    prop3: attr(  data-foo  );\n    prop4: attr(\n        data-foo\n    );\n    prop5: attr(\n        data-foo\n    );\n    prop6:\n        attr(data-foo);\n    prop7:\n        attr(\n            data-foo\n        );\n    prop8:\n    attr(\n    data-foo\n    )\n    ;\n    prop9:"("attr(title)")";\n    prop10: "(" attr( title ) ")";\n    prop11:  "("  attr(  title  )  ")";\n    prop12: "("\n        attr(title)\n    ")";\n    prop13:\n        "("\n        attr(title)\n        ")";\n    prop14:\n        "("\n        attr(\n            title\n        )\n        ")";\n    prop15:\n    "("\n    attr(\n    title\n    )\n    ")"\n    ;\n    prop16: attr(length em);\n    prop17: attr(length  em);\n    prop18: attr(length   em);\n    prop19: attr(\n        length\n        em\n    );\n    prop20:attr(data-size em,20);\n    prop21: attr( data-size em , 20 );\n    prop22:  attr(  data-size  em  ,  20  );\n    prop23: attr(\n        data-size em,\n        20\n    );\n    prop24:\n        attr(\n            data-size em,\n            20\n        );\n    prop25:\n    attr(\n    data-size\n    em,\n    20\n    )\n    ;\n}\n\n.bar {\n    filter: progid:DXImageTransform.Microsoft.gradient(enabled='false',startColorstr='#fff',endColorstr='#000');\n    filter: progid:DXImageTransform.Microsoft.Shadow(color='#042b47', Direction=45, Strength=6) progid:DXImageTransform.Microsoft.Shadow(color='#042b47', Direction=135, Strength=6);\n    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#fad59f, endColorstr=#fa9907)";\n}\n\n.unicode-ranges\n{\n    /* <unicode-range> values */\n    unicode-range: U+26;               /* single codepoint */\n    unicode-range: U+0-7F;\n    unicode-range: U+0025-00FF;        /* codepoint range */\n    unicode-range: U+4??;              /* wildcard range */\n    unicode-range: U+0025-00FF, U+4??; /* multiple values */\n}\n
+>S@forward 'foo.scss' with ($components: red);\n
+>Sa {\n@include section-type-1(\n$header:\n(\nmargin: 0 0 $margin-base,\ntext-align: left,\n),\n$decoration:\n(\ntype: base,\nmargin: 0 auto -1px 0,\nprimary-color: $brand-primary,\nsecondary-color: $gray-light,\n),\n$title:\n(\nmargin: 0 0 $margin-small,\ncolor: false,\nfont-size: $font-size-h3,\nfont-weight: false,\nline-height: $line-height-h3,\n)\n);\n}\n\na {\n@include item-spotlight-properties-transition(\n"-title",\n(\nbox-shadow: 0 3px 10px rgba(0, 0, 0, 0.15),\n)\n);\n}\n
+>S$test: 1,;\n$margin: 0, 2em, 0, 1.5em,;\n\n
+>C/* */#a:@media screen@supports (a:b)😀,url(x)
+>S/* */
+>C@a ]
+>S@media screen!important--x[&
+>S@unknown#{$x}
+>C/*x*/@supports (a:b)!important
+>S/* */@a\téb:@supports (a:b)
+>S@a--x(\\e9 "a""a")\n
+>S@supports (a:b)'x'a\\:b// a\n[{{&@a1px
+>S\t/*x*/@a@media screen
+>S@a
+>S@media screen
+>C/* */
+>C'x'@media screen@a"a"!important"a":;@unknown/*x*/"a"@a! IMPORTANTéc&
+>C\n@supports (a:b).a--x
+>S@unknown (a]{
+>S\n'x':😀;:/*x*/@a/* */url(a(b))
+>C@a , @media screen(b😀! IMPORTANT)
+>C/* */
+>Surl(a(b)).ab:
+>S/*x*/@supports (a:b)/* */@a:é
+>S@supports (a:b)
+>C1px&@a'x'/*x*/]:\t"a"
+>C@media screenurl(x)/* */@media screen'x'!important
+>C;@media screen@media screen]\t:'x'(url(a(b))/*x*/--x:--x
+>C\t@supports (a:b)
+>C@unknown!importanta\\:burl(x)({😀'x' @supports (a:b)\n
+>S;:.a@supports (a:b)
+>C@unknown! IMPORTANT(
+>S@media screen@media screen😀a! IMPORTANTa😀\\e9 1px
+>S@supports (a:b)
+>S@supports (a:b)cb
+>S@media screen]
+>S// a\naurl(x)b\t:
+>C@a--x!important['x'\\e9 c
+>S\t@media screenurl(x);
+>S@aé😀:[)--x\\e9 c
+>Cb#a1pxab:)\té
+>C@a!important:\t😀url(x)
+>S@unknown(]\\e9 \\e9 url(x)@unknown.a
+>S/*x*/1px&url(a(b))a:url(a(b))/* */
+>C@a.a\\e9 
+>S@supports (a:b)c'x'url(a(b)).a,ac\\e9 😀
+>C@supports (a:b)@supports (a:b))/* */ (!importantc// a\nb@aurl(a(b))#{$x}#{$x}a#{$x}
+>S:"a"@media screenurl(a(b))1pxb'x'
+>S;/*x*/@unknown
+>C@unknown(@unknown:(
+>C😀.a!important:] 'x']@a
+>C@supports (a:b)
+>S/*x*/
+>C@media screen)#a]/* */.a/* */.a
+>S@media screené[1px,
+>C@unknown@media screen! IMPORTANT
+>S:url(x)a:]#{$x}#a1px --x😀[😀]\t#a@a
+>S#a:
+>C@supports (a:b)/*x*/
+>C/*x*/\t
+>S@a😀:'x'url(a(b))#{$x}
+>C@media screenb\n[@media screen! IMPORTANTurl(x) {
+>Curl(a(b))😀&:'x'--x/* */ \n@media screenc/* */ba\\:b"a"!important@media screen
+>C@media screen:é.a][{.a\n(c"a";!important
+>S@supports (a:b)
+>S@media screen#a// a\n;
+>C@supports (a:b))@media screen--x!important"a":
+>S@media screen! IMPORTANT\\e9 😀:a\\:b/* */'x'
+>S@media screen/* */é[!importanté/*x*/! IMPORTANTurl(a(b))/* */#a
+>S@supports (a:b)@a @a😀\n,// a\n! IMPORTANT#a😀\\e9 --x@a&(url(x)
+>C@media screen@aa! IMPORTANT!importanturl(a(b))]'x'a
+>S1px/*x*/:
+>C@supports (a:b)
+>C\t:c@unknown&:@supports (a:b)@a(é))
+>S@supports (a:b)// a\n"a",!important(:.a{\\e9 url(x)\t1pxé@a@supports (a:b)@a:
+>C@unknownurl(x)!default\\e9 (:/* */aé@a&
+>C@supports (a:b)@supports (a:b)#ab(url(x)😀// a\n--x)/*x*/c#a\nurl(a(b)).a
+>S// a\n@unknown,@a
+>Surl(x)#{$x}c:
+>S@unknown:burl(x)é!default/* */!defaulturl(a(b)) 
+>C;@unknown\n)é]! IMPORTANT:1px\\e9 \\e9 
+>S@a)
+>S@supports (a:b)😀a!default#{$x}"a"\\e9 /*x*/,"a"1px;
+>Surl(x)@unknown.a\\e9 :
+>S/*x*/
+>C@media screen@unknown\n!defaulté([/* */\t{// a\n1px\\e9 
+>C@a@a// a\n😀@a]
+>Surl(a(b)):\t\\e9 #aa\\:b!default!importanta\\:b@supports (a:b),!default\n// a\n.a
+>Ca{--x:url(a(b));}
+>Ca/*x*/{/*x*/--x/*x*/:/*x*/a/*x*/;/*x*/}
+>Ca/*x*/{/*x*/--x/*x*/:/*x*/#{a}/*x*/;/*x*/}
+>Ca/* */{/* */--x/* */:/* */url(a(b))/* */;/* */}
+>C
+>Ca{} b { } c {\n}
+>C@im
+>C@import url
+>C@import url(foo.css);\n@i
+>C@import url(foo.css);\n@import 'a.css' 
+>C@import url(foo.css);\n@import 'a.css' screen;\n
+>C@import url(foo.css);\n@import 'a.css' screen;\n@import "b.css"
+>C@import url(foo.css);\n@import 'a.css' screen;\n@import "b.css" layer(x
+>C@import url(foo.css);\n@import 'a.css' screen;\n@import "b.css" layer(x) suppor
+>C@import url(foo.css);\n@import 'a.css' screen;\n@import "b.css" layer(x) supports(displ
+>C@import url(foo.css);\n@import 'a.css' screen;\n@import "b.css" layer(x) supports(display: grid
+>C@charse
+>C@medi
+>C@media (min-w
+>C@media (min-width: 10
+>C@media (min-width: 100px) and
+>C@media (min-width: 100px) and (max-wi
+>C@media (min-width: 100px) and (max-width:200p
+>C@media (min-width: 100px) and (max-width:200px) { a { b: c } }\n@med
+>C@media (min-width: 100px) and (max-width:200px) { a { b: c } }\n@media scree
+>C@media (min-width: 100px) and (max-width:200px) { a { b: c } }\n@media screen{}\n@media
+>C@media (min-width: 100px) and (max-width:200px) { a { b: c } }\n@media screen{}\n@media print,s
+>C@fo
+>C
+>C@layer ba
+>C@layer base, comp
+>C@layer base, components, 
+>C@layer base, components, utilitie
+>C@layer base, components, utilities;\n@layer
+>C@layer base, components, utilities;\n@layer base { html { a: b } }\n
+>C@i
+>C@import "tailwindcss";
+>C@import "tailwindcss";\n@theme i
+>C@import "tailwindcss";\n@theme inline {\n  --color-x: red;\n  --font-*: initial;\n}\n
+>C@import "tailwindcss";\n@theme inline {\n  --color-x: red;\n  --font-*: initial;\n}\n@custom-v
+>C@import "tailwindcss";\n@theme inline {\n  --color-x: red;\n  --font-*: initial;\n}\n@custom-variant d
+>C@import "tailwindcss";\n@theme inline {\n  --color-x: red;\n  --font-*: initial;\n}\n@custom-variant dark (&:w
+>C@import "tailwindcss";\n@theme inline {\n  --color-x: red;\n  --font-*: initial;\n}\n@custom-variant dark (&:where(.da
+>C@import "tailwindcss";\n@theme inline {\n  --color-x: red;\n  --font-*: initial;\n}\n@custom-variant dark (&:where(.dark, .dar
+>C@import "tailwindcss";\n@theme inline {\n  --color-x: red;\n  --font-*: initial;\n}\n@custom-variant dark (&:where(.dark, .dark *));\n@u
+>C@import "tailwindcss";\n@theme inline {\n  --color-x: red;\n  --font-*: initial;\n}\n@custom-variant dark (&:where(.dark, .dark *));\n@utility t
+>C@import "tailwindcss";\n@theme inline {\n  --color-x: red;\n  --font-*: initial;\n}\n@custom-variant dark (&:where(.dark, .dark *));\n@utility tab-4 { tab-size: 4; }\n.a { @apply flex items-center; }
+>C@import "tailwindcss";\n@theme inline {\n  --color-x: red;\n  --font-*: initial;\n}\n@custom-variant dark (&:where(.dark, .dark *));\n@utility tab-4 { tab-size: 4; }\n.a { @apply flex items-center; }\n@source 
+>C@keyfra
+>C@keyframes spin
+>C@suppor
+>C@supports (disp
+>C@supports (display:grid
+>C@supports (display:grid) and (n
+>C@supports (display:grid) and (not (disp
+>C@supports (display:grid) and (not (display:inli
+>C@supports (display:grid) and (not (display:inline-grid)
+>C@f
+>C@fo
+>C@foo bar
+>C@foo 
+>C@foo /* c */
+>C@foo /* c */;\n@foo ba
+>C@foo /* c */;\n@foo bar /* c */ ;\n@f
+>C
+>C@foo [a;b
+>C@foo [a;b] (c{d})
+>C@foo [a;b] (c{d}) ;\n@bar (
+>C@fo
+>C@foo ({ x }
+>C
+>C@media(x)
+>C@a
+>C@a"b";@c'd';@e#f
+>C@a"b";@c'd';@e#f;@g/h;@i\\j
+>C
+>C
+>C/* a */ 
+>Ca/* x */,b{} a /* x */{}
+>C/**/ /*   */ 
+>C
+>C@media /
+>C@media /* a */ screen
+>C@media /* a */ screen /* b */ and 
+>C
+>C
+>C
+>C
+>C:root
+>C--x: 
+>Ca{};
+>Ca{};b{}  ;  c{} 
+>Ca{}  
+>C@m
+>C
+>Ca: b  
+>Ca {\r\n  b: c;\r\n}\r
+>Ca {\r\n  b: c;\r\n}\r\n@media x
+>C.é { content: "日本語 😀"; --x: 😀; }
+>Ca{b:c}\n😀{x:y}\n
+>Ca{b:c}\n😀{x:y}\n@media 😀{}
+>Ca\\:b{c:d} .\\31 0{} a{b:\\\\} 
+>C
+>C  
+>C
+>C
+>C
+>Ca{b:c}
+>C@media 

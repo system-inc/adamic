@@ -14,6 +14,9 @@ import (
 // objectLiteral lowers { name: value, ... }, and the one spread 0.1 allows: { ...source, fields },
 // where every field replaces one the source's type already has.
 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+	if literal, handled, err := l.accessorLiteral(node); handled {
+		return literal, err
+	}
 	literal := ir.ObjectLiteral{}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
@@ -28,14 +31,29 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if spread.Type() != ir.Object {
 				return nil, l.notYet(property, "spreading a "+typeName(spread.Type()))
 			}
+			literal.NoReuse = l.hasPrivateStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) || l.hasAccessorStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 			literal.Spread = spread
 			literal.SpreadMaybeUndefined = l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
+		case ast.KindMethodDeclaration:
+			name, known := l.methodName(property)
+			if !known {
+				return nil, l.notYet(property, "an unsupported computed method")
+			}
+			value, err := l.objectMethod(property)
+			if err != nil {
+				return nil, err
+			}
+			literal.Fields = append(literal.Fields, ir.Field{Name: name, Value: value})
 		case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment:
 			name := property.Name()
-			if !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral {
+			if (ast.IsIdentifier(name) || name.Kind == ast.KindStringLiteral) && name.Text() == iteratorSlot {
+				return nil, l.notYet(property, "a string field with the reserved iterator slot name")
+			}
+			fieldName, known := l.methodName(property)
+			if !known {
 				return nil, l.notYet(name, "a computed field name")
 			}
-			if property.Kind == ast.KindPropertyAssignment && name.Text() == "__proto__" {
+			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
 				return nil, &Refused{Where: l.program.Where(property), What: "__proto__ in an object literal", Fix: "JavaScript changes the prototype instead of making an own field; Adamic objects have fixed shapes and no prototype mutation"}
 			}
 			var value ir.Expression
@@ -48,17 +66,17 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if err != nil {
 				return nil, err
 			}
-			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, name.Text()) {
+			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, name.Text()); declared != 0 && !slotless(declared) {
+			if declared := l.declaredField(node, fieldName); declared != 0 && !slotless(declared) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
 			if slotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: name.Text(), Value: value})
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
@@ -168,10 +186,28 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 	}
 	literal := ir.ArrayLiteral{Element: element}
 	items := node.AsArrayLiteralExpression().Elements.Nodes
+	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+		declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual))
+		if !known || declared != element {
+			for _, item := range items {
+				if item.Kind == ast.KindSpreadElement {
+					if plan, err := l.planIteration(item.AsSpreadElement().Expression); err != nil {
+						return nil, err
+					} else if plan != nil {
+						return nil, l.notYet(node, "a custom spread whose element representation differs from its destination")
+					}
+				}
+			}
+		}
+	}
+
 	if len(items) == 1 && items[0].Kind == ast.KindSpreadElement && !l.checker.IsArrayType(l.checker.GetTypeAtLocation(items[0].AsSpreadElement().Expression)) {
 		// [...text] is the text's code points, [...set] its elements, [...map] its entries, and
 		// [...map.keys()] and the rest what they give (collections.go).
-		spread, _, err := l.iterated(items[0].AsSpreadElement().Expression)
+		spread, given, err := l.iterated(items[0].AsSpreadElement().Expression)
+		if err == nil && given != element {
+			return nil, l.notYet(node, "a spread whose element representation differs from its destination")
+		}
 		return spread, err
 	}
 	spreads := false
@@ -183,7 +219,12 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 		if spread {
 			item = item.AsSpreadElement().Expression
 		}
-		value, err := l.expression(item)
+		var value ir.Expression
+		if spread {
+			value, _, err = l.iterated(item)
+		} else {
+			value, err = l.expression(item)
+		}
 		if err != nil {
 			return nil, err
 		}
@@ -191,7 +232,7 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 			if value.Type() != ir.Array {
 				return nil, l.notYet(item, "spreading a "+typeName(value.Type())+" among other elements")
 			}
-			if other, err := l.elementType(item); err != nil || other != element {
+			if _, other, err := l.iteratedType(item); err != nil || other != element {
 				return nil, l.notYet(item, "spreading an array of other elements")
 			}
 			spreads = true
@@ -245,6 +286,12 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if err := l.staticProperty(node); err != nil {
+		return nil, err
+	}
+	if call, handled, err := l.superAccessor(node, nil); handled {
+		return call, err
+	}
 	access := node.AsPropertyAccessExpression()
 	name := l.fieldName(node.Name())
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
@@ -278,6 +325,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
 	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
 		return nil, l.prototypeRead(node, name)
+	}
+	if err := l.erasedLiteralMethod(node); err != nil {
+		return nil, err
 	}
 	if read := l.checker.GetSymbolAtLocation(node.Name()); read != nil && len(read.Declarations) > 0 && read.Declarations[0].Kind == ast.KindMethodDeclaration && !isCallee(node) {
 		// A method read off its object, not called: JavaScript loses its this (unbound-method,
@@ -337,6 +387,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return ir.RegExpCall{Value: object, Method: "iteratorDone", Returns: of}, e
 		}
 	}
+	object = l.privateStaticReceiver(node.Name(), object, false)
 	if access.QuestionDotToken != nil && (object.Type() == ir.Array || object.Type() == ir.String) && name == "length" {
 		// words?.length and text?.length: undefined where the array or string is, a number | undefined.
 		if object.Type() == ir.Array {
@@ -387,6 +438,13 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.Weak {
 				// The field keeps a handle, whatever the checker narrowed the read to.
 				return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Weak, Optional: access.QuestionDotToken != nil}), nil
+			}
+		}
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && (accessorSymbol(field) || (l.accessorNames[node.Name().Text()] && !isClassInstance(l.checker.GetTypeAtLocation(access.Expression)) && ast.SkipParentheses(access.Expression).Kind != ast.KindThisKeyword)) {
+			declared := l.checker.GetTypeOfSymbol(field)
+			observed := l.checker.GetTypeAtLocation(node)
+			if !l.classAssignable(declared, observed) {
+				return nil, &Refused{Where: l.program.Where(node), What: "a narrowed accessor reread, which can return a different value", Fix: "read the getter into a local once, then narrow and use that local"}
 			}
 		}
 		of, err := l.typeOf(node)
@@ -513,6 +571,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.userMethodCall(node); handled {
+		return value, true, err
+	}
 	if value, known, err := l.libraryMathNumberCall(node); known {
 		return value, true, err
 	}
@@ -520,6 +581,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return lowered, true, err
 	}
 	if value, matched, err := l.regexBuiltin(node); matched {
+		return value, true, err
+	}
+	if value, handled, err := l.objectKeys(node); handled {
 		return value, true, err
 	}
 	if lowered, isInput, err := l.input(node); isInput {
@@ -751,6 +815,11 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	name := declarations[0].Name()
 	if !ast.IsIdentifier(name) && name.Kind != ast.KindArrayBindingPattern {
 		return nil, l.notYet(initializer, "a for...of destructuring an object")
+	}
+	if plan, err := l.planIteration(statement.Expression); err != nil {
+		return nil, err
+	} else if plan != nil {
+		return l.forOfUser(node, plan, name)
 	}
 	// map.entries(), map.keys() and map.values() are the map itself, iterated for that part.
 	iterated, mapPart := statement.Expression, ""

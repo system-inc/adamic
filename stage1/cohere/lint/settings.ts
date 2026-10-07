@@ -5,7 +5,7 @@ import { Parser } from '../../typescript/parser/parser.ts';
 
 export class Settings {
     text = '';
-    private readonly values = new Map<string, string[]>();
+    readonly values = new Map<string, string[]>();
     load(text: string): void {
         this.text = text;
         if(text === '' || text === 'null') {

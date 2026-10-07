@@ -1,4 +1,9 @@
+import type { Suggestion } from './suggestions.a';
+
 export class Finding {
+    readonly suggestions: Suggestion[] = [];
+    editStart: number;
+    editEnd: number;
     readonly rule: string;
     readonly id: string;
     readonly message: string;
@@ -17,6 +22,8 @@ export class Finding {
         replacement: string,
         suggestion: string,
     ) {
+        this.editStart = start;
+        this.editEnd = end;
         this.rule = rule;
         this.id = id;
         this.message = message;

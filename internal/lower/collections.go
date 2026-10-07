@@ -6,6 +6,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // keyable reports whether values of a type can be a Map's keys or a Set's elements: strings, numbers
@@ -31,6 +32,12 @@ func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 			return nil, 0, err
 		}
 		return l.libraryIteratorArray(node, value, element), element, nil
+	}
+	if plan, err := l.planIteration(node); err != nil {
+		return nil, 0, err
+	} else if plan != nil {
+		value, err := l.collectIteration(node, node, nil, plan, plan.element)
+		return value, plan.element, err
 	}
 	if node.Kind == ast.KindCallExpression && len(node.AsCallExpression().Arguments.Nodes) == 0 {
 		if callee := ast.SkipParentheses(node.AsCallExpression().Expression); callee.Kind == ast.KindPropertyAccessExpression {
@@ -249,6 +256,13 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 	if initializer == nil {
 		return nil, l.notYet(pattern, "a destructuring declaration without a value")
 	}
+	if pattern.Kind == ast.KindArrayBindingPattern {
+		if plan, err := l.planIteration(initializer); err != nil {
+			return nil, err
+		} else if plan != nil {
+			return l.destructureIterator(pattern, initializer, plan)
+		}
+	}
 	value, err := l.expression(initializer)
 	if err != nil {
 		return nil, err
@@ -309,6 +323,19 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			}
 			if l.inheritedLibrarySymbol(property) {
 				return nil, l.prototypeRead(binding, field)
+			}
+			if property.Flags&ast.SymbolFlagsMethod != 0 {
+				return nil, &Refused{Where: l.program.Where(binding), What: "a method in object destructuring", Fix: "call it on its receiver or wrap that call in an arrow; destructuring would lose this"}
+			}
+			for _, root := range l.checker.GetRootSymbols(property) {
+				for _, declaration := range root.Declarations {
+					if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+						return nil, l.notYet(binding, "an inherited library member in object destructuring, which is not an own field")
+					}
+				}
+			}
+			if err := l.erasedMethodField(binding, destructured, field); err != nil {
+				return nil, err
 			}
 			fieldType = l.checker.GetTypeOfSymbol(property)
 			absent = property.Flags&ast.SymbolFlagsOptional != 0

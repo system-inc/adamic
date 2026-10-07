@@ -22,8 +22,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
-	ast.KindGetAccessor:       {"a getter", "write a method: in 0.1 reading a property is just a read"},
-	ast.KindSetAccessor:       {"a setter", "write a method: in 0.1 writing a property is just a write"},
 	ast.KindLabeledStatement:  {"a label", "move the loop into a function and return from it"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
@@ -88,6 +86,19 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
 				return true
 			}
+		}
+		generator := false
+		switch node.Kind {
+		case ast.KindFunctionDeclaration:
+			generator = node.AsFunctionDeclaration().AsteriskToken != nil
+		case ast.KindFunctionExpression:
+			generator = node.AsFunctionExpression().AsteriskToken != nil
+		case ast.KindMethodDeclaration:
+			generator = node.AsMethodDeclaration().AsteriskToken != nil
+		}
+		if generator {
+			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+			return true
 		}
 		if ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
 			found = &Refused{Where: l.program.Where(node), What: "an async function", Fix: "0.1 has no async; it arrives with the concurrency model"}

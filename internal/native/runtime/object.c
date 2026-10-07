@@ -14,10 +14,14 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 }
 
 adamic_object *adamic_object_copy(const adamic_object *source) {
-	adamic_object *object = adamic_object_new(source->shape);
-	for (size_t index = 0; index < source->shape->count; index++) {
-		object->slots[index] = source->slots[index];
-		if (source->shape->references[index]) {
+	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
+	adamic_object *object = adamic_object_new(shape);
+	for (size_t position = 0; position < shape->count; position++) {
+		size_t index = adamic_public_index(shape, position);
+		adamic_slot_cache cache = {NULL, 0};
+		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
+		object->slots[index] = accessor == NULL ? *adamic_object_field(source, shape->names[index], &cache) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
+		if (shape->references[index] && accessor == NULL) {
 			adamic_retain(object->slots[index].reference);
 		}
 	}
