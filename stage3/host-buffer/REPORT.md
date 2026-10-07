@@ -1,8 +1,47 @@
-Catchable Node crypto .code remains unsupported; full fixtures also await the shared @types/node hook and fixture 22 hits undefined-value lowering.
-Built Buffer and SHA-256 runtime/lowering plus four real-host component comparisons; merged host fixture branch 1037217 in 7545a01.
-Pushed component tests in 950cc69; both backends including native release/sanitizer match status.json for components 02, 03, 21 and 22.
-Checks: restored five runtime/component tests PASS (1.330s); four new semantic mutants caught by Node/status.json output comparison; earlier 19 mutants remain documented below.
-Full acceptance stages: 02_readFile_utf16le, 03_readFile_utf16be, 21_createHash, 22_createHash_fallback are Checker on BOTH backends; no full fixture is green yet.
+Catchable Node crypto .code remains unsupported; real BOM swaps hit indexed-read checker errors and full hash fixtures await fs.mkdtempSync.
+Built Buffer/SHA-256 lowering and runtime with shared loader 69c71d5; no private Node declarations remain.
+Landed code bcbce83 on codex/host-buffer-crypto-land, rebased onto origin/main e8ba3d5; only this new branch was pushed, without force.
+Checks: restored nine-fixture oracle PASS uncached (2.743s), focused package checks/vet/format PASS; all 15 semantic and three analysis/layout mutants caught.
+Acceptance on both backends: 02/03 Checker, 21/22 NotYet at fs.mkdtempSync; all owned components pass, full acceptance and native tsc proof remain incomplete.
+
+Landing with the shared Node types, October 7
+
+Merged 69c71d5171801bc355400452a0dff8a93533ac2e into the original host branch at 9ed6a002f61eb24ade6af1e2ba88a763251be448, created codex/host-buffer-crypto-land, and rebased onto current origin/main e8ba3d5d81de4d3773c723914fccd4c76248b965. The shared loader changes are replayed as c6fc99f, 26b5efc and efac77f. No private node_*.d.ts files are present. Per the standing rule, landing uses a separate rebased branch, an oracle gate and a normal push; only integration moves main. No force-push or PR.
+
+The shared default-refusal guard requires registration. bcbce83 registers exactly Buffer, BufferConstructor.from, Buffer.toString, crypto.createHash, Hash.update and Hash.digest. Recognition now uses load.IsNodeLibrary's canonical pinned path. Other declared members still get named NotYet; tests now expect the shared guard's declaring owner for BufferConstructor.alloc and inherited Writable.writable.
+
+The API directory is absent from the census branch in this checkout, so the official npm package was installed locally using `npm install --prefix stage3/api --no-save --package-lock=false @types/node@25.3.3`. The upstream package and its undici-types dependency are not committed or copied into internal/load. Loader and unit tests confirm canonical declaration identity and member refusals.
+
+After the loader merge, the four unmodified full fixtures have these exact stages on both backends:
+
+| Fixture | Node observation | Native | JavaScript | Owned component |
+| --- | --- | --- | --- | --- |
+| 02_readFile_utf16le.a | Matches status.json | Checker | Checker | Pass |
+| 03_readFile_utf16be.a | Matches status.json | Checker | Checker | Pass |
+| 21_createHash.a | Matches status.json | NotYet, node:fs.mkdtempSync | NotYet, node:fs.mkdtempSync | Pass |
+| 22_createHash_fallback.a | Matches status.json | NotYet, node:fs.mkdtempSync | NotYet, node:fs.mkdtempSync | Pass |
+
+The actual checker blocker for 02 and 03 is TS2322 at the upstream BE byte-swap assignments (lines 25 and 26): number | undefined cannot be assigned to number. One-line reproducer: `import {Buffer} from 'node:buffer'; const b=Buffer.from([1,2]); b[0]=b[1];`. It was reported immediately. Proving the loop's index bounds or changing the upstream patch set belongs to the checker/TypeScript seats; this unit did not weaken the types or invent a coercion. The older undefined-selector blocker for fixture 22 remains separate from its currently observed first refusal. The fs core branch was not merged because the user requested 69c71d5 specifically.
+
+Re-green commands, all after sourcing /workspace/adamic-tools/env.sh:
+
+- `go test ./internal/lower -run 'TestNodeBuffer|TestNodeLibrary' -count=1 -v`: PASS, 4.458s. All fourteen unit refusal probes and the shared member/type tests pass.
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'Test(Native|Input)AgreesWithNode/internal/oracle/testdata/node_buffer_' -count=1 -v -timeout 30m`: PASS, 2.712s; eight native fixtures plus the input fixture, both backends, native release/sanitizer, zero cache hits.
+- `go test ./internal/native -run 'TestNodeBufferHost|TestNodeBufferRuntimeWithoutDeclarations' -count=1 -v`: PASS, 1.167s.
+- `python3 stage3/host-buffer/check_host_acceptance.py --logs /tmp/host-buffer-land-acceptance`: exits 1, preserving the exact blocked stages above; Node observations all agree.
+
+Final restored gate and mutant observations:
+
+- `python3 internal/oracle/node_buffer_mutants.py`: all fifteen mutants caught by byte-for-byte Node comparison. Each mutant listed in the semantic results below was rerun after rebase. None was killed by the compiler, sanitizer or leak checker. Sources restored after each.
+- `python3 internal/oracle/node_buffer_proof_mutants.py`: hash_alias caught by TestNodeBufferHashUpdateKeepsAlias; hash_fields by TestRuntimeFieldLayoutsAreIncluded; host_cycle_dispatch by TestEveryWriteIsRecordedAndKnown. Exact sources restored.
+- `go test ./internal/load ./internal/lower ./internal/native ./internal/javascript ./internal/flow ./internal/fresh ./internal/ir -run 'NodeBuffer|NodeLibrary|RuntimeFieldLayoutsAreIncluded|EveryWriteIsRecordedAndKnown' -count=1 -timeout 30m`: PASS. Load 2.140s, lower 9.269s, native 3.719s, fresh 11.760s; JavaScript has no standalone tests and the flow/IR packages have no matching tests.
+- After restoring every mutant, the same uncached nine-fixture oracle command above: PASS, 2.743s, zero cache hits; see /tmp/host-buffer-land-oracle-restored.log.
+- `go vet ./...`, `gofmt -l cmd internal`, and `git diff --check`: exit 0, no output. Complete repository test gate was not rerun; this is the focused worker gate plus the owned uncached oracle.
+- Logs: /tmp/host-buffer-land-{focused,mutants,proof-mutants,oracle-restored,acceptance,vet,format,diff-check}.log and /tmp/host-buffer-mutants/ for each individual mutant.
+
+Full acceptance remains incomplete at the exact stages above. Catchable Node error .code, the undefined fallback selector, downstream host members, native tsc --noEmit and macOS are not proven by this gate.
+
+The following sections record earlier stages and validations chronologically. Their missing-loader observations are historical; the loader dependency is now resolved.
 
 Real host acceptance, October 7
 
