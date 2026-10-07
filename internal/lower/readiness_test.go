@@ -11,6 +11,7 @@ func TestReadinessElisionRequiresDominatingAssignment(t *testing.T) {
 		name, source string
 		checked      int
 	}{
+		{"scanner-string-initializer", `let text:string=undefined!;text="assigned before read";console.log(text);`, 0},
 		{"branch-join", `function f(flag:boolean):void { let value:number=undefined!; if(flag){value=1;}else{value=2;} console.log(value.toString()); } f(true);`, 0},
 		{"zero-iteration", `function f(flag:boolean):void { let value:number=undefined!; while(flag){value=1;flag=false;} console.log(value.toString()); } f(false);`, 1},
 		{"loop-body", `function f(flag:boolean):void { let value:number=undefined!; while(flag){value=1;console.log(value.toString());flag=false;} } f(true);`, 0},
