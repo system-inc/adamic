@@ -144,6 +144,13 @@ func compareHelper(t *testing.T, helperName, mainName, anchor, replacement, mode
 				}
 				write(t, filepath.Join(dir, "theme_new.a"), dependency)
 			}
+			if mode == "compare" {
+				data, err := os.ReadFile("breakpoint_width.a")
+				if err != nil {
+					t.Fatal(err)
+				}
+				write(t, filepath.Join(dir, "breakpoint_width.a"), data)
+			}
 			main, err := os.ReadFile(mainName)
 			if err != nil {
 				t.Fatal(err)
@@ -186,4 +193,8 @@ func compareHelper(t *testing.T, helperName, mainName, anchor, replacement, mode
 
 func TestBreakpointWidth(t *testing.T) {
 	compareHelper(t, "breakpoint_width.a", "width_main.a", "variant.value.includes('var(')", "false", "width")
+}
+
+func TestBreakpointCompare(t *testing.T) {
+	compareHelper(t, "breakpoint_compare.a", "compare_main.a", "ascending ? -1 : 1", "ascending ? 1 : -1", "compare")
 }

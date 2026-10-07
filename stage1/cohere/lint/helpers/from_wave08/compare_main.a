@@ -1,0 +1,35 @@
+import {panic, programArguments, readTextFile} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {breakpointWidth} from './breakpoint_width.a';
+import type {BreakpointVariant} from './breakpoint_width.a';
+import {compareBreakpointVariants} from './breakpoint_compare.a';
+const input = readTextFile(programArguments()[0] ?? panic('cases'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+for(const child of json.node(root).children) {
+    const sample = json.node(child).text;
+    for(let mode = 0; mode < 8; mode++) {
+        for(const themePresent of [false, true]) {
+            for(const ascending of [false, true]) {
+                let left: BreakpointVariant = {kind: 'functional', root: 'min', hasValue: true, valueKind: 'arbitrary', value: sample};
+                let right: BreakpointVariant = {kind: 'functional', root: 'min', hasValue: true, valueKind: 'arbitrary', value: sample};
+                if(mode === 1) { left = {...left, value: 'var(--x)'}; }
+                if(mode === 2) { right = {...right, value: 'var(--x)'}; }
+                if(mode === 3) { left = {...left, kind: 'static', root: sample}; right = {...right, root: '@', valueKind: 'named'}; }
+                if(mode === 4 || mode === 6) { right = {...right, kind: 'compound'}; }
+                if(mode === 5 || mode === 6) { left = {...left, kind: 'compound'}; }
+                if(mode === 7) { left = {...left, valueKind: 'named'}; right = {...right, root: '@', valueKind: 'named'}; }
+                const result = compareBreakpointVariants(left, right, ascending,
+                    variant => breakpointWidth(themePresent, variant, (value, namespace) => ({value: namespace === '--container' ? '24rem' : '40rem', found: true})),
+                    (a, b, direction) => {
+                        if(a === b) { return 0; }
+                        // These are the only distinct resolved pairs in this isolated corpus.
+                        if(a !== '40rem' || b !== '24rem') { panic('unexpected comparison pair'); }
+                        return direction ? 16 : -16;
+                    });
+                console.log(`${result}`);
+            }
+        }
+    }
+}

@@ -34,3 +34,18 @@ func Wave08Width(sample string) string {
  }}}}}
  return output.String()
 }
+
+func Wave08Compare(sample string) string {
+ var output strings.Builder
+ for mode:=0;mode<8;mode++{for _,themePresent:=range []bool{false,true}{for _,ascending:=range []bool{false,true}{
+ var theme *Theme;if themePresent{theme=NewTheme();theme.values["--breakpoint-"+sample]=themeValue{value:"40rem"};theme.values["--container-"+sample]=themeValue{value:"24rem"}}
+ left:=ParsedVariant{Kind:ParsedVariantKindFunctional,Root:"min",Value:&ParsedVariantValue{Kind:ParsedValueKindArbitrary,Value:sample}}
+ right:=ParsedVariant{Kind:ParsedVariantKindFunctional,Root:"min",Value:&ParsedVariantValue{Kind:ParsedValueKindArbitrary,Value:sample}}
+ if mode==1{left.Value.Value="var(--x)"};if mode==2{right.Value.Value="var(--x)"}
+ if mode==3{left.Kind=ParsedVariantKindStatic;left.Root=sample;right.Root="@";right.Value.Kind=ParsedValueKindNamed}
+ if mode==4||mode==6{right.Kind=ParsedVariantKindCompound};if mode==5||mode==6{left.Kind=ParsedVariantKindCompound}
+ if mode==7{left.Value.Kind=ParsedValueKindNamed;right.Root="@";right.Value.Kind=ParsedValueKindNamed}
+ fmt.Fprintln(&output,compareBreakpointVariants(theme,left,right,ascending))
+ }}}
+ return output.String()
+}

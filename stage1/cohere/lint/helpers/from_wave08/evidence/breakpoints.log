@@ -1,0 +1,78 @@
+=== RUN   TestNewTheme
+    helpers_test.go:123: better-tailwindcss/enforce-canonical-classes: 264 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-class-order: 376 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-variant-order: 112 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-shorthand-classes: 133 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-conflicting-classes: 255 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-unknown-classes: 244 fixture literals
+    helpers_test.go:123: 1395 constructor probes
+=== RUN   TestNewTheme/false
+    helpers_test.go:187: Node matched Go: 59985 bytes
+    helpers_test.go:187: JavaScript matched Go: 59985 bytes
+    helpers_test.go:187: native matched Go: 59985 bytes
+=== RUN   TestNewTheme/true
+    helpers_test.go:185: compiled semantic mutant caught on Node
+    helpers_test.go:185: compiled semantic mutant caught on JavaScript
+    helpers_test.go:185: compiled semantic mutant caught on native
+--- PASS: TestNewTheme (3.15s)
+    --- PASS: TestNewTheme/false (1.39s)
+    --- PASS: TestNewTheme/true (1.50s)
+=== RUN   TestClearNamespace
+    helpers_test.go:123: better-tailwindcss/enforce-canonical-classes: 264 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-class-order: 376 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-variant-order: 112 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-shorthand-classes: 133 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-conflicting-classes: 255 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-unknown-classes: 244 fixture literals
+    helpers_test.go:123: 1395 constructor probes
+=== RUN   TestClearNamespace/false
+    helpers_test.go:187: Node matched Go: 5292463 bytes
+    helpers_test.go:187: JavaScript matched Go: 5292463 bytes
+    helpers_test.go:187: native matched Go: 5292463 bytes
+=== RUN   TestClearNamespace/true
+    helpers_test.go:185: compiled semantic mutant caught on Node
+    helpers_test.go:185: compiled semantic mutant caught on JavaScript
+    helpers_test.go:185: compiled semantic mutant caught on native
+--- PASS: TestClearNamespace (10.01s)
+    --- PASS: TestClearNamespace/false (4.41s)
+    --- PASS: TestClearNamespace/true (4.89s)
+=== RUN   TestBreakpointWidth
+    helpers_test.go:123: better-tailwindcss/enforce-canonical-classes: 264 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-class-order: 376 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-variant-order: 112 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-shorthand-classes: 133 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-conflicting-classes: 255 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-unknown-classes: 244 fixture literals
+    helpers_test.go:123: 1395 constructor probes
+=== RUN   TestBreakpointWidth/false
+    helpers_test.go:187: Node matched Go: 1184104 bytes
+    helpers_test.go:187: JavaScript matched Go: 1184104 bytes
+    helpers_test.go:187: native matched Go: 1184104 bytes
+=== RUN   TestBreakpointWidth/true
+    helpers_test.go:185: compiled semantic mutant caught on Node
+    helpers_test.go:185: compiled semantic mutant caught on JavaScript
+    helpers_test.go:185: compiled semantic mutant caught on native
+--- PASS: TestBreakpointWidth (4.52s)
+    --- PASS: TestBreakpointWidth/false (2.10s)
+    --- PASS: TestBreakpointWidth/true (2.11s)
+=== RUN   TestBreakpointCompare
+    helpers_test.go:123: better-tailwindcss/enforce-canonical-classes: 264 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-class-order: 376 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-consistent-variant-order: 112 fixture literals
+    helpers_test.go:123: better-tailwindcss/enforce-shorthand-classes: 133 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-conflicting-classes: 255 fixture literals
+    helpers_test.go:123: better-tailwindcss/no-unknown-classes: 244 fixture literals
+    helpers_test.go:123: 1395 constructor probes
+=== RUN   TestBreakpointCompare/false
+    helpers_test.go:187: Node matched Go: 103198 bytes
+    helpers_test.go:187: JavaScript matched Go: 103198 bytes
+    helpers_test.go:187: native matched Go: 103198 bytes
+=== RUN   TestBreakpointCompare/true
+    helpers_test.go:185: compiled semantic mutant caught on Node
+    helpers_test.go:185: compiled semantic mutant caught on JavaScript
+    helpers_test.go:185: compiled semantic mutant caught on native
+--- PASS: TestBreakpointCompare (4.11s)
+    --- PASS: TestBreakpointCompare/false (1.93s)
+    --- PASS: TestBreakpointCompare/true (1.91s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave08	21.783s

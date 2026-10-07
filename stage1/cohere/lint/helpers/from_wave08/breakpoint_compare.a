@@ -1,0 +1,10 @@
+import type {Width} from './breakpoint_width.a';
+// Resolvers and the breakpoint comparator belong to their own helper files.
+export function compareBreakpointVariants<Variant>(left: Variant, right: Variant, ascending: boolean, resolve: (variant: Variant) => Width, compare: (left: string, right: string, ascending: boolean) => number): number {
+    const a = resolve(left);
+    const b = resolve(right);
+    if(!a.found && !b.found) { return 0; }
+    if(!a.found) { return ascending ? -1 : 1; }
+    if(!b.found) { return ascending ? 1 : -1; }
+    return compare(a.value, b.value, ascending);
+}
