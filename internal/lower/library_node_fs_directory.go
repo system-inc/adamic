@@ -26,7 +26,7 @@ func (l *lowering) nodeHostMember(node *ast.Node) (string, string) {
 		if source == nil {
 			continue
 		}
-		filename := strings.ReplaceAll(source.FileName(), "\\", "/")
+		filename := strings.ReplaceAll(source.FileName().AsString(), "\\", "/")
 		if !strings.HasSuffix(filename, "/node/fs.d.ts") && !strings.HasSuffix(filename, "/node/path.d.ts") {
 			continue
 		}

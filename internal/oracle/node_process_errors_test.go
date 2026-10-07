@@ -91,7 +91,7 @@ func TestNodeProcessErrorsRuntime(t *testing.T) {
 			t.Fatalf("%s\nNode %q\ngot %q %q", difference, truth.stdout, got.stdout, got.stderr)
 		}
 	}
-	if report := inputLeaks(t, how, program, binary); report != "" {
+	if report := inputLeaks(t, func() inputRun { return how }, program, binary); report != "" {
 		t.Fatal(report)
 	}
 	data, err := os.ReadFile(filepath.Join(directory, "internal/native/runtime/process.c"))

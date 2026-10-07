@@ -361,6 +361,7 @@ func TestScannerAgreesWithTypescriptGo(t *testing.T) {
 	}
 	edgeWant := execute(t, "", oracle, "--manifest", asked.edges)
 	mutants := []struct{ name, file, from, to string }{
+		{"source scanned as Identifier", "tokens.ts", `['source', 'SourceKeyword']`, `['source', 'Identifier']`},
 		{"punctuator != scanned as ==", "tokens.ts", `['!=', 'ExclamationEqualsToken']`, `['!=', 'EqualsEqualsToken']`},
 		{"invalid decimal separator accepted", "scanner.ts", "this.error(previous ? 6189 : 6188, this.pos, 1);", "if (base !== 10) { this.error(previous ? 6189 : 6188, this.pos, 1); } else { this.flags &= ~16384; }"},
 		{"regex rescan skipped", "main.ts", "scanner.rescanSlash();", "scanner.code();"},

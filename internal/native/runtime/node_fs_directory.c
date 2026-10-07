@@ -8,11 +8,14 @@
 #define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include <dirent.h>
+#include <fcntl.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <time.h>
+#include "node_fs_wasi.h"
 
 static const char *const error_names[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
@@ -244,6 +247,10 @@ adamic_array *adamic_node_fs_readdir(const adamic_string *path,
 		static adamic_slot_cache cache;
 		typed = adamic_object_field(options, "withFileTypes", &cache)->boolean;
 	}
+	#ifdef ADAMIC_TARGET_WASI
+    // wasi-libc treats an empty directory path as cwd; Node rejects it.
+    if (path->length == 0) { adamic_node_fs_raise(path, ENOENT, "scandir"); return NULL; }
+#endif
 	char *name = adamic_path_bytes(path);
 	DIR *directory = opendir(name);
 	if (directory == NULL) {

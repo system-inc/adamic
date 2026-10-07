@@ -21,7 +21,7 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-var portFiles = []string{"nodes.ts", "grammar.ts", "lookahead.ts", "statements.ts", "parser.ts", "main.ts"}
+var portFiles = []string{"nodes.ts", "grammar.ts", "lookahead.ts", "statements.ts", "jsx.ts", "parser.ts", "main.ts"}
 
 type execution struct {
 	output   []byte

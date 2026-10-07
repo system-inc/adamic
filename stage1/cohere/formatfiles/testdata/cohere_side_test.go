@@ -144,6 +144,13 @@ func adamicCohereTrees(t *testing.T) ([]adamicTree, int) {
 			"projects/listed/.git/HEAD": "", "projects/listed/b.ts": "", "projects/listed/pnpm-lock.yaml": "",
 		}), walkBelow: "projects/listed"},
 	)
+	// Fixed extension boundaries and ignore ordering, independent of the generator's draw.
+	contents := map[string]string{
+		"source.a": "export const value = 1;\n", "libfoo.a": "!<arch>\n",
+		"source.A": "x\n", ".a": "x\n", "ignored.a": "x\n",
+		".gitignore": "ignored.a\n",
+	}
+	trees = append(trees, adamicTree{name: "Adamic boundaries", root: writeTree(t, contents), paths: []string{"source.a", "libfoo.a", "source.A", ".a", "ignored.a"}})
 	return trees, leftOut
 }
 
@@ -158,7 +165,7 @@ var (
 		"l.\uff21", "m.\U0001f600", "n.\ue000", "o.", "noext", ".hidden", ".hidden.ts", "p.d.ts", "q.tsx", "r.TS ",
 		"next-env.d.ts", "pnpm-lock.yaml", "x.sqlite", "x.SQLITE", "x.sqlite3", "x.db", "x.db-wal", "x.db-shm", "x.db-wa",
 		"keep.log", "x.log", "top.ts", "built.ts", "#hash.ts", " space.ts", "\u00e9.ts", "e\u0301.ts", "Z.ts", "_.ts", "~.ts",
-		".prettierignore", "package.json",
+		".prettierignore", "package.json", "source.a", "source.A", ".a", "libfoo.a",
 		// Names the output escapes, at the edges of what it escapes: DEL, U+001F, a tab, a newline, a
 		// quote and a backslash, and U+0020 and U+007E just inside.
 		"del\u007f.ts", "unit\u001f.ts", "tab\t.ts", "line\n.ts", "quote\".ts", "back\\slash.ts", "~tilde .ts",
@@ -386,6 +393,9 @@ func TestAdamicPortCases(t *testing.T) {
 			}
 			for _, file := range enumeration.Files {
 				fmt.Fprintf(&answers, "file %s\n", adamicQuote(file))
+			}
+			for _, file := range enumeration.Adamic {
+				fmt.Fprintf(&answers, "adamic %s\n", adamicQuote(file))
 			}
 		}
 		below, err := NestedRepositoriesBelow(root)

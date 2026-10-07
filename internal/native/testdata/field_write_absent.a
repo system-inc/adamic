@@ -1,0 +1,9 @@
+// Creating a missing optional field is still unsupported by fixed object layouts.
+// The checked path must fail explicitly, rather than store outside the object.
+interface Optional { missing?: number; }
+function set(object: Optional): void {
+	object.missing = 2;
+	console.log(`${object.missing}`);
+}
+set({ missing: 1 });
+set({});
