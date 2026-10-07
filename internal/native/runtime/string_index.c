@@ -53,17 +53,18 @@ static size_t width(unsigned char lead) {
 }
 
 size_t adamic_string_units(const adamic_string *string) {
-	if (string->units == 0) {
-		size_t units = 0;
-		for (size_t offset = 0; offset < string->length;) {
-			size_t size = width((unsigned char)string->bytes[offset]);
-			units += size == 4 ? 2 : 1;
-			offset += size;
-		}
-		// A cache, not a change: the string means the same with it or without.
+	if (string->units != 0) { return string->units - 1; }
+	size_t units = 0;
+	for (size_t offset = 0; offset < string->length;) {
+		size_t size = width((unsigned char)string->bytes[offset]);
+		units += size == 4 ? 2 : 1;
+		offset += size;
+	}
+	// Immortal literals may be read by any worker without going through share. Never mutate them.
+	if (adamic_reference_count(&string->heap) != 0 && !adamic_is_shared(&string->heap)) {
 		((adamic_string *)string)->units = units + 1;
 	}
-	return string->units - 1;
+	return units;
 }
 
 static struct adamic_string_index *build(adamic_string *string, size_t units) {
@@ -125,9 +126,9 @@ static struct adamic_string_index *usable(const adamic_string *string, size_t un
 	if (index != NULL && index != ADAMIC_LITERAL_INDEX) {
 		return index;
 	}
-	bool literal = index == ADAMIC_LITERAL_INDEX;
+
 	// Offsets must fit a checkpoint, shifted: every string V8 allows does, by a factor of two.
-	if ((literal || string->heap.references != 0) && units != string->length && string->length >= MINIMUM && string->length <= UINT32_MAX >> 1) {
+	if ((adamic_reference_count(&string->heap) != 0 && !adamic_is_shared(&string->heap)) && units != string->length && string->length >= MINIMUM && string->length <= UINT32_MAX >> 1) {
 		return build((adamic_string *)string, units);
 	}
 	return NULL;
@@ -183,14 +184,14 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 	size_t start = 0, offset = 0;
 	if (index != NULL) {
 		// Sequential reads need no checkpoint load. A near forward read remains bounded by STEP.
-		if (CURSOR && unit >= index->cursor_unit && unit - index->cursor_unit < STEP) {
+		if (CURSOR && !adamic_is_shared(&string->heap) && unit >= index->cursor_unit && unit - index->cursor_unit < STEP) {
 			start = index->cursor_unit;
 			offset = index->cursor_offset;
 		} else {
 			uint32_t checkpoint = index->checkpoints[unit / STEP];
 			start = unit / STEP * STEP - (checkpoint & 1);
 			offset = checkpoint >> 1;
-			if (CURSOR && index->cursor_unit > unit && index->cursor_unit - unit <= unit - start) {
+			if (CURSOR && !adamic_is_shared(&string->heap) && index->cursor_unit > unit && index->cursor_unit - unit <= unit - start) {
 				start = index->cursor_unit;
 				offset = index->cursor_offset;
 				// The cursor names a code point's first unit. Step back over continuation bytes,
@@ -213,7 +214,7 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 		start = next;
 		offset += size;
 	}
-	if (index != NULL) {
+	if (index != NULL && !adamic_is_shared(&string->heap)) {
 		index->cursor_unit = start;
 		index->cursor_offset = offset;
 	}
@@ -234,4 +235,9 @@ void adamic_string_free_index(adamic_string *string) {
 	}
 	free(string->index->bmp);
 	free(string->index);
+}
+
+void adamic_string_prepare_shared(adamic_string *string) {
+	size_t units = adamic_string_units(string);
+	(void)usable(string, units);
 }

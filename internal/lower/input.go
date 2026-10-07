@@ -17,6 +17,9 @@ func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
 	callee := node.AsCallExpression().Expression
 	arguments := node.AsCallExpression().Arguments.Nodes
 	switch {
+	case l.isPreludeFunction(callee, "parallelMap"):
+		value, err := l.parallelMap(node)
+		return value, true, err
 	case l.isPreludeFunction(callee, "readTextFile"):
 		if len(arguments) != 1 {
 			return nil, true, errors.New("lower: " + l.program.Where(node) + ": readTextFile takes one path, and the checker let another count through")
