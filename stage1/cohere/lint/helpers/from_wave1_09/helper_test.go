@@ -106,8 +106,11 @@ func TestStaticDeclarationNodesAgree(t *testing.T) {
 	}
 }
 func build(t *testing.T, dir string) (string, string) {
+	return buildEntry(t, dir, "main.a")
+}
+func buildEntry(t *testing.T, dir, entry string) (string, string) {
 	t.Helper()
-	program, err := load.Load([]string{filepath.Join(dir, "main.a")})
+	program, err := load.Load([]string{filepath.Join(dir, entry)})
 	if err != nil {
 		t.Fatal(err)
 	}
