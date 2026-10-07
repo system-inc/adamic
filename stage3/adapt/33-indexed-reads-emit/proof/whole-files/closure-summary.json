@@ -1,0 +1,130 @@
+{
+  "meter": "176a496 run 0",
+  "integration": "634ef06",
+  "roots": 78,
+  "before_diagnostics": 382,
+  "after_diagnostics": 366,
+  "checker_clean_before": 36,
+  "checker_clean_after": 40,
+  "clean_files": [
+    "_namespaces/ts.moduleSpecifiers.ts",
+    "_namespaces/ts.performance.ts",
+    "_namespaces/ts.ts",
+    "binder.ts",
+    "builderPublic.ts",
+    "builderStatePublic.ts",
+    "corePublic.ts",
+    "emitter.ts",
+    "expressionToTypeNode.ts",
+    "factory/baseNodeFactory.ts",
+    "factory/emitHelpers.ts",
+    "factory/nodeChildren.ts",
+    "factory/nodeConverters.ts",
+    "factory/nodeTests.ts",
+    "factory/parenthesizerRules.ts",
+    "factory/utilities.ts",
+    "factory/utilitiesPublic.ts",
+    "path.ts",
+    "performance.ts",
+    "programDiagnostics.ts",
+    "semver.ts",
+    "symbolWalker.ts",
+    "transformers/classThis.ts",
+    "transformers/declarations/diagnostics.ts",
+    "transformers/destructuring.ts",
+    "transformers/es2016.ts",
+    "transformers/es2018.ts",
+    "transformers/es2019.ts",
+    "transformers/es2020.ts",
+    "transformers/es2021.ts",
+    "transformers/legacyDecorators.ts",
+    "transformers/module/impliedNodeFormatDependent.ts",
+    "transformers/namedEvaluation.ts",
+    "transformers/taggedTemplate.ts",
+    "transformers/ts.ts",
+    "transformers/typeSerializer.ts",
+    "tsbuild.ts",
+    "types.ts",
+    "utilitiesPublic.ts",
+    "visitorPublic.ts"
+  ],
+  "files": [
+    {
+      "file": "visitorPublic.ts",
+      "before": 1,
+      "after": 0
+    },
+    {
+      "file": "sourcemap.ts",
+      "before": 2,
+      "after": 1
+    },
+    {
+      "file": "transformers/declarations.ts",
+      "before": 2,
+      "after": 1
+    },
+    {
+      "file": "emitter.ts",
+      "before": 3,
+      "after": 0
+    },
+    {
+      "file": "transformers/ts.ts",
+      "before": 3,
+      "after": 0
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "before": 3,
+      "after": 3
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "before": 4,
+      "after": 0
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "before": 4,
+      "after": 2
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "before": 4,
+      "after": 3
+    }
+  ],
+  "crlf_preserved": [
+    "emitter.ts",
+    "sourcemap.ts",
+    "transformers/declarations.ts",
+    "transformers/es2015.ts",
+    "transformers/ts.ts",
+    "transformer.ts",
+    "transformers/classFields.ts",
+    "transformers/classThis.ts",
+    "transformers/declarations/diagnostics.ts",
+    "transformers/destructuring.ts",
+    "transformers/es2017.ts",
+    "transformers/es2018.ts",
+    "transformers/es2020.ts",
+    "transformers/esDecorators.ts",
+    "transformers/esnext.ts",
+    "transformers/generators.ts",
+    "transformers/jsx.ts",
+    "transformers/legacyDecorators.ts",
+    "transformers/module/esnextAnd2015.ts",
+    "transformers/module/module.ts",
+    "transformers/module/system.ts",
+    "transformers/namedEvaluation.ts",
+    "transformers/taggedTemplate.ts",
+    "transformers/typeSerializer.ts",
+    "transformers/utilities.ts",
+    "visitorPublic.ts",
+    "transformers/es2016.ts",
+    "transformers/es2019.ts",
+    "transformers/es2021.ts",
+    "transformers/module/impliedNodeFormatDependent.ts"
+  ]
+}
