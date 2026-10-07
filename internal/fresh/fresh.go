@@ -1026,6 +1026,35 @@ func (a *analysis) value(expression ir.Expression) value {
 			return outsideValue()
 		}
 		return held.copy()
+	case ir.LogicalAssignment:
+		result := a.value(expression.Read)
+		a.value(expression.Key)
+		before := a.state.copy()
+		switch write := expression.Write.(type) {
+		case ir.Assign:
+			held := a.value(write.Value)
+			result.merge(held)
+			a.define(write.Local, held)
+		case ir.SetProperty:
+			holder := a.value(write.Object)
+			held := a.value(write.Value)
+			result.merge(held)
+			if expression.Key != nil {
+				for _, name := range expression.KeyNames {
+					a.write(WriteField, write.Site, name, holder, held, name)
+				}
+			} else {
+				a.write(WriteField, write.Site, write.Name, holder, held, write.Name)
+			}
+		case ir.SetIndex:
+			holder := a.value(write.Array)
+			a.value(write.Index)
+			held := a.value(write.Value)
+			result.merge(held)
+			a.write(WriteElement, write.Site, "", holder, held, elementKey)
+		}
+		a.state.join(before)
+		return result
 	case ir.Truthy:
 		a.value(expression.Value)
 		return value{}

@@ -131,6 +131,13 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
+		if logicalAssignment(expression.AsBinaryExpression().OperatorToken.Kind) {
+			value, err := l.logicalAssignment(expression)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
 		return l.assignment(expression)
 	case ast.KindPrefixUnaryExpression, ast.KindPostfixUnaryExpression:
 		return l.increment(expression)

@@ -91,7 +91,7 @@ func markCounter(program *ir.Program, block ir.Block, known facts) {
 	}
 	counter := counterRead.Local
 	local := program.Locals[counter]
-	if local.Type != ir.Number || local.Global || local.Captured || !perIteration(loop, counter) {
+	if local.Type != ir.Number || local.Global || local.Captured || local.ExpressionAssigned || !perIteration(loop, counter) {
 		return
 	}
 	// Its start: a declaration in this block, of a whole number within 2^53, as a bound is, that

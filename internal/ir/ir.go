@@ -174,6 +174,9 @@ type Local struct {
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
 
+	// ExpressionAssigned excludes conditional expression writes from statement liveness and moves.
+	ExpressionAssigned bool
+
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
 	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.

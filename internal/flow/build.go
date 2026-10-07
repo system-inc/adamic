@@ -80,7 +80,7 @@ type jump struct {
 // tracked reports whether a local is a value the graph follows: one only its own function writes.
 func (b *builder) tracked(local int) bool {
 	declared := b.program.Locals[local]
-	return !declared.Global && !declared.Captured
+	return !declared.Global && !declared.Captured && !declared.ExpressionAssigned
 }
 
 // place is a tracked local's place: its one identifier, minted the first time it's met.

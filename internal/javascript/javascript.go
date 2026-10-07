@@ -572,6 +572,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.variable(expression.Local)
 	case ir.Truthy:
 		return "!!(" + e.value(expression.Value) + ")"
+	case ir.LogicalAssignment:
+		return e.logicalAssignment(expression)
 	case ir.Logical:
 		operator := "&&"
 		if expression.KeepTruthy {
