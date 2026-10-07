@@ -95,16 +95,28 @@ held=json.loads((art/'checker-overlay.json').read_text());held['Replace'][str(re
 run('released-mutant-archive',['go','build','-tags','adamic_wave16_seventh','-overlay',art/'registry-overlay.json','-buildmode=c-archive','-o',art/'registry.a','./bridge/tsgo/archive'])
 run('released-mutant-build',[stage,'build',art/'released.a','-o',art/'released-mutant','--tsgo',art/'registry.a'])
 run('released-mutant-run',[art/'released-mutant',config,art/'probe.a'])
-# The preserved shared compiler gap must remain an explicit compile refusal.
-run('foreign-arena-gap-build',[stage,'build',owned/'gaps/foreign_arena.a','-o',art/'foreign-gap','--tsgo',archive],code=1)
+# The standalone adapter builds. Integrating the same adapter into the full rule
+# graph is the observed compiler blocker; neither observation is generalized.
+run('foreign-arena-probe-build',[stage,'build',owned/'gaps/foreign_arena.a','-o',art/'foreign-probe','--tsgo',archive])
+directory=art/'full-arena-source';shutil.copytree(owned,directory,dirs_exist_ok=True)
+(directory/'context.a').write_text((owned/'context_foreign_gap.a').read_text())
+for f in directory.rglob('*.a'):
+    origin=owned/f.relative_to(directory)
+    def imports(match):
+        target=(origin.parent/match.group(1)).resolve()
+        try:target.relative_to(owned);return match.group(0)
+        except ValueError:return "from '"+str(target)+"'"
+    f.write_text(re.sub(r"from '([^']+)'",imports,f.read_text()))
+run('foreign-arena-gap-build',[stage,'build',directory/'suite.a','-o',art/'foreign-gap','--tsgo',archive],code=1)
 assert b'escaping a constructor' in (art/'foreign-arena-gap-build.stderr').read_bytes()
 # A foreign source body reaches the explicit boundary, with Go reporting it normally.
 (art/'foreign-helper.a').write_text('export function build(){return {a:1};}\n')
-(art/'foreign-helper.ts').symlink_to(art/'foreign-helper.a')
+if not (art/'foreign-helper.ts').exists(): (art/'foreign-helper.ts').symlink_to(art/'foreign-helper.a')
 (art/'foreign-client.tsx').write_text("import {build} from './foreign-helper.ts';function Component(){const built=build();const value=useMemo(()=>({built}),[built]);return <Ctx.Provider value={value}/>;}\nexport{};\n")
 (art/'foreign.manifest').write_text(str(art/'foreign-client.tsx')+'\n')
 run('foreign-go',[art/'oracle',config,art/'foreign.manifest','--context'])
 run('foreign-native',[art/'suite',config,art/'foreign.manifest','--context'],code=70)
-assert b'cross-file context-value callee arena' in (art/'foreign-native.stderr').read_bytes()
+assert b'integrated cross-file arena' in (art/'foreign-native.stderr').read_bytes()
+run('foreign-arena-probe-run',[art/'foreign-probe',config,art/'foreign-client.tsx',art/'foreign-helper.ts'])
 (art/'validation.json').write_text(json.dumps(results,indent=2))
 print('PASS: four profiles, three rule mutants, two corpora, sanitizer, released handle; cross-file compiler gap reproduced')

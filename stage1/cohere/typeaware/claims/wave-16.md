@@ -155,10 +155,20 @@ Seventh-set implementation status: jsx-fragments and jsx-no-undef pass the
 owned native differential suite. jsx-no-constructed-context-values has its
 construction and memo dependency/return/escape paths ported and agreeing over
 the single-file controls, but remains **blocked**, not parked or complete, on
-the cross-file native arena adapter. Building that adapter reaches a shared
-parser constructor-escape refusal. The rule explicitly refuses when a resolved
+the cross-file native arena adapter. The standalone adapter compiles and runs; integrating it into the full
+rule suite reaches a shared parser constructor-escape refusal. The rule explicitly refuses when a resolved
 callee body is in another file. The raw resolved-signature question is supplied
 in its own Go and Adamic files using an isolated build registration overlay.
 No shared parser, compiler, generator or harness edits were made. No further
 claims will be taken while this blocker remains. See wave16_seventh/REPORT.md
 for final landing baseline and validation evidence.
+
+Final seventh-set continuation: rebased onto current main c01907a70. Prior
+fifteen ports re-green in 431.670s; bridge packages pass in 65.387s. Both JSX
+name rules and the supported context-value paths match Go over 293 controls
+in four profiles, 77 compiler files and 287 repository files, including
+ASan/UBSan/LSan. Three native rule mutants and a raw signature-fact mutant
+exit 0 and are caught by Go bytes. Cross-file context remains blocked in the
+full rule graph, with a separate standalone adapter success recorded. No new
+claim was added. The detailed report and compressed evidence are in
+wave16_seventh/.

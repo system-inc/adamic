@@ -1,0 +1,89 @@
+{
+  "method": "three alternating serial process runs in count mode, including checker load and native parse",
+  "samples": [
+    {
+      "corpus": "compiler",
+      "sample": 0,
+      "role": "native",
+      "seconds": 2.467959300000075
+    },
+    {
+      "corpus": "compiler",
+      "sample": 0,
+      "role": "go",
+      "seconds": 0.2826760289972299
+    },
+    {
+      "corpus": "compiler",
+      "sample": 1,
+      "role": "go",
+      "seconds": 0.3195549320007558
+    },
+    {
+      "corpus": "compiler",
+      "sample": 1,
+      "role": "native",
+      "seconds": 2.4827419739995094
+    },
+    {
+      "corpus": "compiler",
+      "sample": 2,
+      "role": "native",
+      "seconds": 2.4648375760007184
+    },
+    {
+      "corpus": "compiler",
+      "sample": 2,
+      "role": "go",
+      "seconds": 0.28567426100198645
+    },
+    {
+      "corpus": "repository",
+      "sample": 0,
+      "role": "native",
+      "seconds": 0.33903685599943856
+    },
+    {
+      "corpus": "repository",
+      "sample": 0,
+      "role": "go",
+      "seconds": 0.12522775400066166
+    },
+    {
+      "corpus": "repository",
+      "sample": 1,
+      "role": "go",
+      "seconds": 0.11840059200039832
+    },
+    {
+      "corpus": "repository",
+      "sample": 1,
+      "role": "native",
+      "seconds": 0.3631783689997974
+    },
+    {
+      "corpus": "repository",
+      "sample": 2,
+      "role": "native",
+      "seconds": 0.35436278199995286
+    },
+    {
+      "corpus": "repository",
+      "sample": 2,
+      "role": "go",
+      "seconds": 0.12457462399834185
+    }
+  ],
+  "medians": {
+    "compiler": {
+      "native": 2.467959300000075,
+      "go": 0.28567426100198645,
+      "ratio": 8.6390677667069
+    },
+    "repository": {
+      "native": 0.35436278199995286,
+      "go": 0.12457462399834185,
+      "ratio": 2.844582392676293
+    }
+  }
+}

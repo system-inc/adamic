@@ -1,0 +1,42 @@
+{
+  "Go_enum_sha256": "32baed8b49656b0a13b363e7733c94598426b6881e1c76b3d72c8d4f8c211189",
+  "results": [
+    {
+      "rule": "react/jsx-fragments",
+      "kinds": [
+        285,
+        286,
+        289
+      ],
+      "numeric_kind_mutant_caught": [
+        286,
+        286,
+        289
+      ]
+    },
+    {
+      "rule": "react/jsx-no-undef",
+      "kinds": [
+        286,
+        287
+      ],
+      "numeric_kind_mutant_caught": [
+        287,
+        287
+      ]
+    },
+    {
+      "rule": "react/jsx-no-constructed-context-values",
+      "kinds": [
+        286,
+        287
+      ],
+      "numeric_kind_mutant_caught": [
+        287,
+        287
+      ]
+    }
+  ],
+  "native_enum_entries_verified": 352,
+  "native_enum_sha256": "4e4b4d5d3bc71ec30ba2d532fb2e80764b9ae0364d808337df4d5df98cc78430"
+}

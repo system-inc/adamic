@@ -1,0 +1,838 @@
+[
+  {
+    "name": "stage0-build",
+    "args": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/adamic",
+      "./cmd/adamic"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1.79755621699951
+  },
+  {
+    "name": "checker-build",
+    "args": [
+      "go",
+      "build",
+      "-tags",
+      "adamic_wave16_seventh",
+      "-overlay",
+      "/workspace/wave16-artifacts/seventh-gate/checker-overlay.json",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/checker.a",
+      "./bridge/tsgo/archive"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 6.755520753999008
+  },
+  {
+    "name": "suite-build",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave16_seventh/suite.a",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "--tsgo",
+      "/workspace/wave16-artifacts/seventh-gate/checker.a"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 11.204262485000072
+  },
+  {
+    "name": "oracle-build",
+    "args": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/wave16-artifacts/seventh-gate/oracle-overlay.json",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "./adamic_wave16_seventh.go"
+    ],
+    "cwd": "/workspace/adamic/cohere",
+    "exit": 0,
+    "seconds": 0.09504507999736234
+  },
+  {
+    "name": "extract",
+    "args": [
+      "go",
+      "run",
+      "/workspace/adamic/stage1/cohere/typeaware/wave16_seventh/extract_controls.go",
+      "--",
+      "/workspace/adamic/cohere/internal/lint/rules/react/jsx_fragments_test.go",
+      "/workspace/adamic/cohere/internal/lint/rules/react/jsx_no_undef_test.go",
+      "/workspace/adamic/cohere/internal/lint/rules/react/jsx_no_constructed_context_values_test.go",
+      "/workspace/adamic/cohere/internal/lint/rules/react/jsx_no_constructed_context_values_stability_test.go"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.05979012199895806
+  },
+  {
+    "name": "controls-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.165326518999791
+  },
+  {
+    "name": "controls-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.13285954499951913,
+    "byte_equal": true,
+    "go_seconds": 0.165326518999791,
+    "ratio": 0.8036190794030272
+  },
+  {
+    "name": "controls-element-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--element"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.13503239700003178
+  },
+  {
+    "name": "controls-element-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--element"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.1405744069998036,
+    "byte_equal": true,
+    "go_seconds": 0.13503239700003178,
+    "ratio": 1.0410420767378552
+  },
+  {
+    "name": "controls-globals-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--allow-globals"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.13287300499723642
+  },
+  {
+    "name": "controls-globals-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--allow-globals"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.1212140179995913,
+    "byte_equal": true,
+    "go_seconds": 0.13287300499723642,
+    "ratio": 0.9122546600200123
+  },
+  {
+    "name": "controls-both-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--element",
+      "--allow-globals"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.12373425500118174
+  },
+  {
+    "name": "controls-both-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--element",
+      "--allow-globals"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.12471726600051625,
+    "byte_equal": true,
+    "go_seconds": 0.12373425500118174,
+    "ratio": 1.007944534028391
+  },
+  {
+    "name": "checker-asan-build",
+    "args": [
+      "go",
+      "build",
+      "-tags",
+      "adamic_wave16_seventh",
+      "-overlay",
+      "/workspace/wave16-artifacts/seventh-gate/checker-overlay.json",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/checker-asan.a",
+      "./bridge/tsgo/archive"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 5.403234031000466
+  },
+  {
+    "name": "suite-asan-build",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave16_seventh/suite.a",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/suite-asan",
+      "--tsgo",
+      "/workspace/wave16-artifacts/seventh-gate/checker-asan.a",
+      "--sanitize"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 29.29514243900121
+  },
+  {
+    "name": "asan-default-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.12747899999885703
+  },
+  {
+    "name": "asan-default-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite-asan",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.3350444050010992,
+    "byte_equal": true,
+    "go_seconds": 0.12747899999885703,
+    "ratio": 2.6282321402278273
+  },
+  {
+    "name": "asan-element-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--element"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.12649345500176423
+  },
+  {
+    "name": "asan-element-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite-asan",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--element"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.3590810899986536,
+    "byte_equal": true,
+    "go_seconds": 0.12649345500176423,
+    "ratio": 2.8387325652038315
+  },
+  {
+    "name": "asan-globals-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--allow-globals"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.13200191500072833
+  },
+  {
+    "name": "asan-globals-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite-asan",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--allow-globals"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.328551521000918,
+    "byte_equal": true,
+    "go_seconds": 0.13200191500072833,
+    "ratio": 2.4889905650164637
+  },
+  {
+    "name": "asan-both-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--element",
+      "--allow-globals"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.11476411300100153
+  },
+  {
+    "name": "asan-both-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite-asan",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context",
+      "--element",
+      "--allow-globals"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.31796635299906484,
+    "byte_equal": true,
+    "go_seconds": 0.11476411300100153,
+    "ratio": 2.7706078554041538
+  },
+  {
+    "name": "fragment-name-build",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/adamic",
+      "build",
+      "/workspace/wave16-artifacts/seventh-gate/fragment-name-source/suite.a",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/fragment-name",
+      "--tsgo",
+      "/workspace/wave16-artifacts/seventh-gate/checker.a"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 11.969312458000786
+  },
+  {
+    "name": "fragment-name-run",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/fragment-name",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.35676053700080956,
+    "caught_by": "independent Go diagnostic bytes",
+    "first_difference": 464
+  },
+  {
+    "name": "undef-intrinsic-build",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/adamic",
+      "build",
+      "/workspace/wave16-artifacts/seventh-gate/undef-intrinsic-source/suite.a",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/undef-intrinsic",
+      "--tsgo",
+      "/workspace/wave16-artifacts/seventh-gate/checker.a"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 12.704886371000612
+  },
+  {
+    "name": "undef-intrinsic-run",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/undef-intrinsic",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.16688567900200724,
+    "caught_by": "independent Go diagnostic bytes",
+    "first_difference": 62
+  },
+  {
+    "name": "context-object-build",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/adamic",
+      "build",
+      "/workspace/wave16-artifacts/seventh-gate/context-object-source/suite.a",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/context-object",
+      "--tsgo",
+      "/workspace/wave16-artifacts/seventh-gate/checker.a"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 13.315489664997585
+  },
+  {
+    "name": "context-object-run",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/context-object",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.1461165259970585,
+    "caught_by": "independent Go diagnostic bytes",
+    "first_difference": 43450
+  },
+  {
+    "name": "compiler-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+      "/workspace/wave16-artifacts/compiler.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.7946161460022267
+  },
+  {
+    "name": "compiler-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+      "/workspace/wave16-artifacts/compiler.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 2.8490907670020533,
+    "byte_equal": true,
+    "go_seconds": 0.7946161460022267,
+    "ratio": 3.5854931734473836
+  },
+  {
+    "name": "compiler-asan-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+      "/workspace/wave16-artifacts/compiler.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.3278712009996525
+  },
+  {
+    "name": "compiler-asan-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite-asan",
+      "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+      "/workspace/wave16-artifacts/compiler.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 9.15443077600139,
+    "byte_equal": true,
+    "go_seconds": 0.3278712009996525,
+    "ratio": 27.920813868648054
+  },
+  {
+    "name": "compiler-timing-0-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+      "/workspace/wave16-artifacts/compiler.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.3300609190009709
+  },
+  {
+    "name": "compiler-timing-0-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+      "/workspace/wave16-artifacts/compiler.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 2.5991760459983198,
+    "byte_equal": true,
+    "go_seconds": 0.3300609190009709,
+    "ratio": 7.874837329622396
+  },
+  {
+    "name": "compiler-timing-1-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+      "/workspace/wave16-artifacts/compiler.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.31971604600039427
+  },
+  {
+    "name": "compiler-timing-1-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+      "/workspace/wave16-artifacts/compiler.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 2.581432881001092,
+    "byte_equal": true,
+    "go_seconds": 0.31971604600039427,
+    "ratio": 8.074142393835023
+  },
+  {
+    "name": "compiler-timing-2-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+      "/workspace/wave16-artifacts/compiler.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.3042590589975589
+  },
+  {
+    "name": "compiler-timing-2-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/wave16-corpus/typescript/src/compiler/tsconfig.json",
+      "/workspace/wave16-artifacts/compiler.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 2.696734913999535,
+    "byte_equal": true,
+    "go_seconds": 0.3042590589975589,
+    "ratio": 8.863285526762807
+  },
+  {
+    "name": "repository-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave16-artifacts/repository.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.1938483659978374
+  },
+  {
+    "name": "repository-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave16-artifacts/repository.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.5219962190021761,
+    "byte_equal": true,
+    "go_seconds": 0.1938483659978374,
+    "ratio": 2.692806907683708
+  },
+  {
+    "name": "repository-asan-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave16-artifacts/repository.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.390790413999639
+  },
+  {
+    "name": "repository-asan-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite-asan",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave16-artifacts/repository.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1.5062450419973175,
+    "byte_equal": true,
+    "go_seconds": 0.390790413999639,
+    "ratio": 3.8543551429045775
+  },
+  {
+    "name": "repository-timing-0-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave16-artifacts/repository.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.14204887099913321
+  },
+  {
+    "name": "repository-timing-0-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave16-artifacts/repository.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.34893404499962344,
+    "byte_equal": true,
+    "go_seconds": 0.14204887099913321,
+    "ratio": 2.4564365949923856
+  },
+  {
+    "name": "repository-timing-1-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave16-artifacts/repository.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.1462160999981279
+  },
+  {
+    "name": "repository-timing-1-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave16-artifacts/repository.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.3586551970001892,
+    "byte_equal": true,
+    "go_seconds": 0.1462160999981279,
+    "ratio": 2.4529117997592693
+  },
+  {
+    "name": "repository-timing-2-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave16-artifacts/repository.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.15539914600230986
+  },
+  {
+    "name": "repository-timing-2-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/adamic/tsconfig.json",
+      "/workspace/wave16-artifacts/repository.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.39256351600124617,
+    "byte_equal": true,
+    "go_seconds": 0.15539914600230986,
+    "ratio": 2.5261626340945984
+  },
+  {
+    "name": "released-build",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/adamic",
+      "build",
+      "/workspace/wave16-artifacts/seventh-gate/released.a",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/released",
+      "--tsgo",
+      "/workspace/wave16-artifacts/seventh-gate/checker.a"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 2.6560178759973496
+  },
+  {
+    "name": "released-run",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/released",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/probe.a"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 70,
+    "seconds": 0.04439721300150268
+  },
+  {
+    "name": "released-mutant-archive",
+    "args": [
+      "go",
+      "build",
+      "-tags",
+      "adamic_wave16_seventh",
+      "-overlay",
+      "/workspace/wave16-artifacts/seventh-gate/registry-overlay.json",
+      "-buildmode=c-archive",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/registry.a",
+      "./bridge/tsgo/archive"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 5.4444501619982475
+  },
+  {
+    "name": "released-mutant-build",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/adamic",
+      "build",
+      "/workspace/wave16-artifacts/seventh-gate/released.a",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/released-mutant",
+      "--tsgo",
+      "/workspace/wave16-artifacts/seventh-gate/registry.a"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 2.616259040998557
+  },
+  {
+    "name": "released-mutant-run",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/released-mutant",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/probe.a"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.05308867200074019
+  },
+  {
+    "name": "foreign-arena-probe-build",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave16_seventh/gaps/foreign_arena.a",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/foreign-probe",
+      "--tsgo",
+      "/workspace/wave16-artifacts/seventh-gate/checker.a"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 9.091903255000943
+  },
+  {
+    "name": "foreign-arena-gap-build",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/adamic",
+      "build",
+      "/workspace/wave16-artifacts/seventh-gate/full-arena-source/suite.a",
+      "-o",
+      "/workspace/wave16-artifacts/seventh-gate/foreign-gap",
+      "--tsgo",
+      "/workspace/wave16-artifacts/seventh-gate/checker.a"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 1,
+    "seconds": 0.227083034998941
+  },
+  {
+    "name": "foreign-go",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/oracle",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/foreign.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.049701053998433053
+  },
+  {
+    "name": "foreign-native",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/suite",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/foreign.manifest",
+      "--context"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 70,
+    "seconds": 0.05331495499922312
+  },
+  {
+    "name": "foreign-arena-probe-run",
+    "args": [
+      "/workspace/wave16-artifacts/seventh-gate/foreign-probe",
+      "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+      "/workspace/wave16-artifacts/seventh-gate/foreign-client.tsx",
+      "/workspace/wave16-artifacts/seventh-gate/foreign-helper.ts"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.04964993700195919
+  }
+]

@@ -1,0 +1,47 @@
+//go:build adamic_wave16_seventh
+
+package checker
+
+import (
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"strings"
+)
+
+// Raw signature declaration identity and syntax flags, without lint decisions.
+func (p *Program) wave16ResolvedSignatureDeclaration(out *fields, c *checker.Checker, node *ast.Node) error {
+	if node.Kind != ast.KindCallExpression {
+		return fmt.Errorf("wave16-resolved-signature-declaration requires a CallExpression")
+	}
+	signature := c.GetResolvedSignature(node)
+	var declaration *ast.Node
+	if signature != nil {
+		declaration = signature.Declaration()
+	}
+	present := false
+	out.yes(present)
+	if !present {
+		return nil
+	}
+	source := ast.GetSourceFileOfNode(declaration)
+	out.text(source.FileName())
+	out.text(strings.TrimPrefix(declaration.Kind.String(), "Kind"))
+	out.number(uint64(declaration.Pos()))
+	out.number(uint64(declaration.End()))
+	out.yes(ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAsync))
+	generator := false
+	switch declaration.Kind {
+	case ast.KindFunctionDeclaration:
+		generator = declaration.AsFunctionDeclaration().AsteriskToken != nil
+	case ast.KindFunctionExpression:
+		generator = declaration.AsFunctionExpression().AsteriskToken != nil
+	case ast.KindMethodDeclaration:
+		generator = declaration.AsMethodDeclaration().AsteriskToken != nil
+	}
+	out.yes(generator)
+	return nil
+}
+func init() {
+	additionalQuestions["wave16-resolved-signature-declaration"] = (*Program).wave16ResolvedSignatureDeclaration
+}

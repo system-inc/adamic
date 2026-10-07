@@ -1,0 +1,181 @@
+{
+  "main": "c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06",
+  "implementation_before_evidence": "5188a56fa8b00303a06a1d2cc409fba1001fccc9",
+  "claim_pushed_before_code": "5282ee8e5f9fc27f7cec4fee6895e9582930182a",
+  "cohere": "715ba94f3608a6500086b1076ce5cb7e51b836db",
+  "typescript_go": "8d550c837c90bd1805b047b7eeccc2baac2d5e7a",
+  "typescript_corpus": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "nproc": "5",
+  "cpu_max": "400000 100000",
+  "sources": {
+    "stage1/cohere/typeaware/wave16_seventh/context_foreign_gap.a": "bca5c1d3e2b7b41c7b497d7d0202232650f3ba243699d4313083bfdb50c73f92",
+    "stage1/cohere/typeaware/wave16_seventh/context.a": "a406570181bcd930abda46e3bca0165759161e226c315b1d3cca5554084e13ee",
+    "stage1/cohere/typeaware/wave16_seventh/unicode_generate.go": "7cec254a1ef708be360f6913bfd32a7f85a98016640322874eb3b7f9aacfdcf1",
+    "stage1/cohere/typeaware/wave16_seventh/suite.a": "8a26d67ef4c493d16098e37d95e3f0a8cf182f860154423d86b7a39ee32093f8",
+    "stage1/cohere/typeaware/wave16_seventh/syntax_kinds.a": "4e4b4d5d3bc71ec30ba2d532fb2e80764b9ae0364d808337df4d5df98cc78430",
+    "stage1/cohere/typeaware/wave16_seventh/node.a": "18869c9f4ecb4eeebea573527a1d1079fdd28c781eb052b2190efc71b775b74e",
+    "stage1/cohere/typeaware/wave16_seventh/unicode.a": "aa66f3e635bb1a32de322ccc5e845a9f976db47eaaf0b64ebf8ee96b98f65e3d",
+    "stage1/cohere/typeaware/wave16_seventh/validate.py": "de8f85340e77ec4cbfcc563b22d2fc99a4b96afb2046eb890a6e6651d76392c6",
+    "stage1/cohere/typeaware/wave16_seventh/oracle.go": "e6b56e5564e289ab10833a0e128a866c818ced8cb0399bc2b713edfc9df7557a",
+    "stage1/cohere/typeaware/wave16_seventh/extract_controls.go": "51c4d838d698035fc7c693bc5267683913f4127ba2ab1cc8923de1ab962a704d",
+    "stage1/cohere/typeaware/wave16_seventh/gaps/foreign_arena.a": "a10bea902cbe17e7d8b2e22df574c438599d4be35c0e4f4367696805ca269acf",
+    "stage1/cohere/typeaware/wave16_seventh/jsx_fragments/rule.json": "54a4f02b71a7dc13475f6db59138f5123807e98be2b41039c37602fae25d0588",
+    "stage1/cohere/typeaware/wave16_seventh/jsx_fragments/rule.a": "97f2dfc81c9345d613aa0becd270134d37bf44c6107f1caa6b66810ef0e33440",
+    "stage1/cohere/typeaware/wave16_seventh/jsx_no_undef/rule.json": "854268dd36b2e68ef4d6a7932ed338ebbbfb5ff85439a6199e89ee963f41832f",
+    "stage1/cohere/typeaware/wave16_seventh/jsx_no_undef/rule.a": "09674c53d8aa44f2f5520495b13759d70fa5a4ebb1f56a220c9ea9d02e3a5f5f",
+    "stage1/cohere/typeaware/wave16_seventh/jsx_no_constructed_context_values/stability.a": "ee0db3567e1b8f5b16d76924c4fd647ca738e711f93c1bd14d743a7ff2419746",
+    "stage1/cohere/typeaware/wave16_seventh/jsx_no_constructed_context_values/rule.json": "e565504b96ca423517bce2f75dd04bb01db2a212b694eb37822443439f381b31",
+    "stage1/cohere/typeaware/wave16_seventh/jsx_no_constructed_context_values/rule.a": "b5b2230756c288745c821107ad8d6da1b7c29470aa639ae87e1ab3111b3270c1",
+    "stage1/cohere/typeaware/wave16_seventh/jsx_no_constructed_context_values/resolved_signature_declaration.go": "e91edefa1b50d3ab9aad6ce04dac9820d1a3d039eb5f953a8bbc46c03414acf4",
+    "stage1/cohere/typeaware/wave16_seventh/jsx_no_constructed_context_values/resolved_signature_declaration.a": "4a65bfb122c64409795cac8fce5d45ee61af186626cb909d1d46cad2c3900eba",
+    "stage1/cohere/typeaware/wave16_seventh/jsx_no_constructed_context_values/construction.a": "0e9601b2a969d6fa5114da4558c9de97f2794cab7bcd0fc9b6618c7c7c06d19d"
+  },
+  "corpus_members": {
+    "compiler": 77,
+    "repository": 287
+  },
+  "prior_rule_mutants": [
+    {
+      "name": "throw-range",
+      "first_difference": 130,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "backreference-range",
+      "first_difference": 9283,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "arrow-fix",
+      "first_difference": 6056,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "listener-general",
+      "first_difference": 723,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "render-number",
+      "first_difference": 7165,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "mock-range",
+      "first_difference": 3576,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "function-range",
+      "first_difference": 132,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "native-range",
+      "first_difference": 4598,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "wrapper-range",
+      "first_difference": 5183,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "import-write",
+      "first_difference": 66,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "exponent-base",
+      "first_difference": 15678,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "nan-comma",
+      "first_difference": 12079,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "shell-heredoc",
+      "first_difference": 8299,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "sql-string",
+      "first_difference": 11784,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    },
+    {
+      "name": "alert-range",
+      "first_difference": 130,
+      "exit": 0,
+      "caught_by": "Go diagnostic bytes"
+    }
+  ],
+  "new_rule_mutants": [
+    {
+      "name": "fragment-name-run",
+      "args": [
+        "/workspace/wave16-artifacts/seventh-gate/fragment-name",
+        "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+        "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+        "--context"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 0.35676053700080956,
+      "caught_by": "independent Go diagnostic bytes",
+      "first_difference": 464
+    },
+    {
+      "name": "undef-intrinsic-run",
+      "args": [
+        "/workspace/wave16-artifacts/seventh-gate/undef-intrinsic",
+        "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+        "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+        "--context"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 0.16688567900200724,
+      "caught_by": "independent Go diagnostic bytes",
+      "first_difference": 62
+    },
+    {
+      "name": "context-object-run",
+      "args": [
+        "/workspace/wave16-artifacts/seventh-gate/context-object",
+        "/workspace/wave16-artifacts/seventh-gate/tsconfig.json",
+        "/workspace/wave16-artifacts/seventh-gate/controls.manifest",
+        "--context"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 0.1461165259970585,
+      "caught_by": "independent Go diagnostic bytes",
+      "first_difference": 43450
+    }
+  ],
+  "raw_question_mutant": {
+    "mutant": "resolved-signature-present",
+    "archive_exit": 0,
+    "native_compile_exit": 0,
+    "run_exit": 0,
+    "caught_by": "independent Go finding bytes",
+    "first_difference": 112133
+  }
+}
