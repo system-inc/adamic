@@ -211,6 +211,10 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			if l.objectCanFreeze() {
 				failing = "a write to a potentially frozen object"
 			}
+		case ir.NodeBufferCall:
+			if node.Function == "hash_update" || node.Function == "hash_digest" {
+				failing = "Hash finalization, whose catchable .code contract is not supported yet"
+			}
 		case ir.ObjectCall:
 			if node.Method == "assign" && l.objectCanFreeze() {
 				failing = "Object.assign into a potentially frozen object"

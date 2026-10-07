@@ -49,6 +49,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
@@ -693,6 +694,8 @@ func (e *emitter) value(expression ir.Expression) string {
 			return "String.fromCodePoint(" + codes + ")"
 		}
 		return "String.fromCharCode(" + codes + ")"
+	case ir.NodeBufferCall:
+		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
