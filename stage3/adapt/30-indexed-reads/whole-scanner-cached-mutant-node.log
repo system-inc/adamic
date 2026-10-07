@@ -1,0 +1,36 @@
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: scanner result or read trace changed: [[0,1],-2,2,null,true]
++ actual - expected
+
+  {
+    debug: [],
+    result: '1',
+    trace: [
+      '0',
+      '1',
+-     '1'
+    ]
+  }
+
+    at check (/workspace/adamic/stage3/adapt/30-indexed-reads/scanner-proof.cjs:33:38)
+    at compareClamps (/workspace/adamic/stage3/adapt/30-indexed-reads/scanner-proof.cjs:38:99)
+    at [stdin]:2:1
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [stdin]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_stdin:51:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: { result: '1', trace: [ '0', '1' ], debug: [] },
+  expected: { result: '1', trace: [ '0', '1', '1' ], debug: [] },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

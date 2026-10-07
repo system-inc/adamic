@@ -1,0 +1,20 @@
+{
+  "name": "no-underscore-dangle",
+  "kinds": [
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "ArrowFunction",
+    "VariableDeclaration",
+    "PropertyAccessExpression",
+    "MethodDeclaration",
+    "PropertyDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoUnderscoreDangle",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUnderscoreDangle",
+  "parent": false,
+  "node": true
+}
