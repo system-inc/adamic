@@ -1,0 +1,27 @@
+=== RUN   TestSlot05CallExpressionSource
+    helper_test.go:52: /tmp/adamic-gate/TestSlot05CallExpressionSource1918661332/002/oracle [/workspace/adamic /tmp/adamic-gate/TestSlot05CallExpressionSource1918661332/002 source]: exit status 2
+        panic: no consumers
+        
+        goroutine 1 [running]:
+        main.main()
+        	/workspace/adamic/cohere/adamic_slot05_batch9.go:94 +0x139a
+--- FAIL: TestSlot05CallExpressionSource (3.55s)
+=== RUN   TestSlot05ImportedNameOf
+    helper_test.go:52: /tmp/adamic-gate/TestSlot05ImportedNameOf3723772032/002/oracle [/workspace/adamic /tmp/adamic-gate/TestSlot05ImportedNameOf3723772032/002 imported]: exit status 2
+        panic: no consumers
+        
+        goroutine 1 [running]:
+        main.main()
+        	/workspace/adamic/cohere/adamic_slot05_batch9.go:94 +0x139a
+--- FAIL: TestSlot05ImportedNameOf (1.25s)
+=== RUN   TestSlot05HasAttributeNamed
+    helper_test.go:52: /tmp/adamic-gate/TestSlot05HasAttributeNamed2870925641/002/oracle [/workspace/adamic /tmp/adamic-gate/TestSlot05HasAttributeNamed2870925641/002 attribute]: exit status 2
+        panic: no consumers
+        
+        goroutine 1 [running]:
+        main.main()
+        	/workspace/adamic/cohere/adamic_slot05_batch9.go:94 +0x139a
+--- FAIL: TestSlot05HasAttributeNamed (1.37s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch9	6.174s
+FAIL

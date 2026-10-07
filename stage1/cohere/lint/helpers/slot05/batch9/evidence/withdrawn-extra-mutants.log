@@ -1,0 +1,25 @@
+=== RUN   TestSlot05ImportedNameOf
+    helper_test.go:52: 4 consumers, 287 distinct test strings and controls, 4109 Go verdicts
+    helper_test.go:62: consumer coverage: {
+          "react-hooks/config": 90,
+          "react-hooks/incompatible-library": 144,
+          "structure/network-no-forbidden-import": 51,
+          "structure/react-component-no-forward-ref": 75
+        }
+    helper_test.go:117: imported_name_of.a mutant "if(specifier.propertyName >= 0)" -> "if(false)" caught at verdict 1654: mutant "wrap", Go "forwardRef"
+    helper_test.go:117: imported_name_of.a mutant "if(specifier.propertyName >= 0)" -> "if(specifier.propertyName >= 0 && (nodes[specifier.propertyName]?.text ?? '') !== '')" caught at verdict 1720: mutant "Empty", Go ""
+--- PASS: TestSlot05ImportedNameOf (8.04s)
+=== RUN   TestSlot05HasAttributeNamed
+    helper_test.go:52: 4 consumers, 745 distinct test strings and controls, 58460 Go verdicts
+    helper_test.go:62: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@next/next/no-styled-jsx-in-document": 67,
+          "@next/next/no-sync-scripts": 26,
+          "react/no-unknown-property": 491
+        }
+    helper_test.go:117: has_attribute_named.a mutant "name.named && matches" -> "matches" caught at verdict 2105: mutant "true", Go "false"
+    helper_test.go:117: has_attribute_named.a mutant "return true;" -> "continue;" caught at verdict 735: mutant "false", Go "true"
+    helper_test.go:117: has_attribute_named.a mutant "for(const property of attributes.properties) {" -> "for(let position = attributes.properties.length - 1; position >= 0; position--) { const property = attributes.properties[position] ?? panic('missing property');" caught at verdict 2443: mutant "data-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash-crash", Go "className"
+--- PASS: TestSlot05HasAttributeNamed (36.45s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch9	44.489s

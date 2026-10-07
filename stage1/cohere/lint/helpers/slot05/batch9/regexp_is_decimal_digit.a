@@ -1,0 +1,8 @@
+import { panic, utf8At, utf8Length } from 'adamic';
+// The regexp scanner passes Go byte offsets, not UTF-16 positions.
+export function isDecimalDigit(source: string, index: number): boolean {
+    if(index < 0) { return panic('negative regexp byte offset'); }
+    if(index >= utf8Length(source)) { return false; }
+    const byte = utf8At(source, index);
+    return byte >= 48 && byte <= 57;
+}

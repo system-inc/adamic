@@ -1,6 +1,8 @@
-import { panic, readTextFile, programArguments } from 'adamic';
+import { panic, readTextFile, programArguments, utf8Length } from 'adamic';
 import { OptionsJson } from '../../options_json.ts';
 import { importedNameOf } from './imported_name_of.a';
+import { isDecimalDigit } from './regexp_is_decimal_digit.a';
+import { countGroups } from './regexp_count_groups.a';
 import type { HelperNode } from './nodes.a';
 const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
 if(input.kind === 'Error') { panic(input.message); }
@@ -9,7 +11,24 @@ if(root < 0) { panic(json.error); }
 function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
 function number(index: number, field: string): number { return Number(text(index, field)); }
 for(const row of json.node(root).children) {
-    const nodes: HelperNode[] = json.node(json.field(row, 'nodes')).children.map(n => ({kind: text(n, 'kind'), text: text(n, 'text'), expression: number(n, 'expression'), name: number(n, 'name'), propertyName: number(n, 'propertyName'), keywordToken: text(n, 'keywordToken'), argumentsPresent: text(n, 'argumentsPresent') === 'true', arguments: json.node(json.field(n, 'arguments')).children.map(a => Number(json.node(a).text)), propertiesPresent: text(n, 'propertiesPresent') === 'true', properties: json.node(json.field(n, 'properties')).children.map(a => Number(json.node(a).text))}));
+    const rowModeIndex = json.field(row, 'mode');
+    const rowMode = rowModeIndex < 0 ? '' : json.node(rowModeIndex).text; const source = rowMode === '' ? '' : text(row, 'source');
+    if(rowMode === 'decimal') {
+        for(const offset of json.node(json.field(row, 'positions')).children) { console.log(`${isDecimalDigit(source, Number(json.node(offset).text))}`); }
+        continue;
+    }
+    if(rowMode === 'groups') { const counts = countGroups(source); console.log(`${counts.count}`); console.log(`${counts.named}`); continue; }
+    if(rowMode === 'decimalSweep' || rowMode === 'groupSweep') {
+        for(let scalar = 0; scalar <= 0x10ffff; scalar++) {
+            if(scalar >= 0xd800 && scalar <= 0xdfff) { continue; }
+            const character = String.fromCodePoint(scalar);
+            if(rowMode === 'decimalSweep') { console.log(`${isDecimalDigit(character, 0)}`); console.log(`${isDecimalDigit(character, utf8Length(character))}`); }
+            else { const counts = countGroups('(' + '\\' + character + '(?<named>x)(?<=x)(?:x)'); console.log(`${counts.count}`); console.log(`${counts.named}`); }
+        }
+        continue;
+    }
+
+    const nodes: HelperNode[] = json.node(json.field(row, 'nodes')).children.map(n => ({kind: text(n, 'kind'), text: text(n, 'text'), name: number(n, 'name'), propertyName: number(n, 'propertyName')}));
     for(const query of json.node(json.field(row, 'queries')).children) {
         const mode = text(query, 'mode'); const index = number(query, 'node');
         if(mode !== 'imported') { panic('unsupported query'); }

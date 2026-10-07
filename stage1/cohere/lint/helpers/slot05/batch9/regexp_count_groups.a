@@ -1,0 +1,30 @@
+import { utf8At, utf8Length } from 'adamic';
+export interface GroupCounts { readonly count: number; readonly named: boolean; }
+// Matches Go's scan even for unfinished groups, classes and terminal escapes.
+export function countGroups(source: string): GroupCounts {
+    const length = utf8Length(source);
+    const width = (index: number): number => {
+        if(index >= length) { return 0; }
+        const byte = utf8At(source, index);
+        if(byte < 0x80) { return 1; }
+        if(byte < 0xe0) { return 2; }
+        if(byte < 0xf0) { return 3; }
+        return 4;
+    };
+    const at = (index: number): number => index < length ? utf8At(source, index) : -1;
+    let count = 0; let named = false; let inClass = false;
+    for(let index = 0; index < length;) {
+        const byte = utf8At(source, index);
+        if(byte === 92) { index += 1 + width(index + 1); continue; }
+        if(byte === 91) { inClass = true; }
+        else if(byte === 93) { inClass = false; }
+        else if(byte === 40) {
+            if(!inClass) {
+                if(at(index + 1) !== 63) { count++; }
+                else if(at(index + 2) === 60 && at(index + 3) !== 61 && at(index + 3) !== 33) { count++; named = true; }
+            }
+        }
+        index += width(index);
+    }
+    return {count, named};
+}

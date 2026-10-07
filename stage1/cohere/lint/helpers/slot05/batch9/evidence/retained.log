@@ -1,0 +1,13 @@
+=== RUN   TestSlot05ImportedNameOf
+    helper_test.go:46: 4 consumers, 287 distinct test strings and controls, 4109 Go verdicts
+    helper_test.go:56: consumer coverage: {
+          "react-hooks/config": 90,
+          "react-hooks/incompatible-library": 144,
+          "structure/network-no-forbidden-import": 51,
+          "structure/react-component-no-forward-ref": 75
+        }
+    helper_test.go:111: imported_name_of.a mutant "if(specifier.propertyName >= 0)" -> "if(false)" caught at verdict 1654: mutant "wrap", Go "forwardRef"
+    helper_test.go:111: imported_name_of.a mutant "if(specifier.propertyName >= 0)" -> "if(specifier.propertyName >= 0 && (nodes[specifier.propertyName]?.text ?? '') !== '')" caught at verdict 1720: mutant "Empty", Go ""
+--- PASS: TestSlot05ImportedNameOf (7.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch9	7.240s

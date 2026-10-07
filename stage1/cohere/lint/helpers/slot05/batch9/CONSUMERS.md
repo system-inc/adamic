@@ -11,4 +11,22 @@ Remaining consumers: 4.
 - structure/network-no-forbidden-import
 - structure/react-component-no-forward-ref
 
-Four dependency occurrences across four rules; no final listed blocker removed. Two earlier-owned overlapping claims are withdrawn and not delivered.
+## regexp.isDecimalDigit
+
+Remaining consumers: 4.
+
+- @next/next/no-html-link-for-pages
+- @typescript-eslint/no-empty-object-type
+- no-restricted-exports
+- no-restricted-imports
+
+## regexp.countGroups
+
+Remaining consumers: 4.
+
+- @next/next/no-html-link-for-pages
+- @typescript-eslint/no-empty-object-type
+- no-restricted-exports
+- no-restricted-imports
+
+Twelve dependency occurrences across eight rules; no final listed blocker removed by this batch alone. See readiness.json for every residual dependency. CallExpressionSource and HasAttributeNamed are withdrawn to slot 02 and are not delivered or counted.

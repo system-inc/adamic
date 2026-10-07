@@ -1,0 +1,23 @@
+stage1/cohere/lint/helpers/slot05/batch9/main.a:7:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/batch9/main.a:9:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/batch9/main.a:9:49: variable root: number
+stage1/cohere/lint/helpers/slot05/batch9/main.a:11:10: function text: (index: number, field: string) => string
+stage1/cohere/lint/helpers/slot05/batch9/main.a:11:15: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch9/main.a:11:30: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch9/main.a:12:10: function number: (index: number, field: string) => number
+stage1/cohere/lint/helpers/slot05/batch9/main.a:12:17: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch9/main.a:12:32: parameter field: string
+stage1/cohere/lint/helpers/slot05/batch9/main.a:13:11: variable row: number
+stage1/cohere/lint/helpers/slot05/batch9/main.a:14:11: variable rowModeIndex: number
+stage1/cohere/lint/helpers/slot05/batch9/main.a:15:11: variable rowMode: string
+stage1/cohere/lint/helpers/slot05/batch9/main.a:15:81: variable source: string
+stage1/cohere/lint/helpers/slot05/batch9/main.a:17:19: variable offset: number
+stage1/cohere/lint/helpers/slot05/batch9/main.a:20:38: variable counts: GroupCounts
+stage1/cohere/lint/helpers/slot05/batch9/main.a:22:17: variable scalar: number
+stage1/cohere/lint/helpers/slot05/batch9/main.a:24:19: variable character: string
+stage1/cohere/lint/helpers/slot05/batch9/main.a:26:26: variable counts: GroupCounts
+stage1/cohere/lint/helpers/slot05/batch9/main.a:31:11: variable nodes: HelperNode[]
+stage1/cohere/lint/helpers/slot05/batch9/main.a:31:82: parameter n: number
+stage1/cohere/lint/helpers/slot05/batch9/main.a:32:15: variable query: number
+stage1/cohere/lint/helpers/slot05/batch9/main.a:33:15: variable mode: string
+stage1/cohere/lint/helpers/slot05/batch9/main.a:33:49: variable index: number

@@ -18,40 +18,20 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/parser"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/system-inc/cohere/internal/lint/ecmascript/imports"
-	"github.com/system-inc/cohere/internal/lint/ecmascript/jsx"
 )
 
 type node struct {
-	Kind              string `json:"kind"`
-	Text              string `json:"text"`
-	Expression        int    `json:"expression"`
-	Name              int    `json:"name"`
-	PropertyName      int    `json:"propertyName"`
-	KeywordToken      string `json:"keywordToken"`
-	ArgumentsPresent  bool   `json:"argumentsPresent"`
-	Arguments         []int  `json:"arguments"`
-	PropertiesPresent bool   `json:"propertiesPresent"`
-	Properties        []int  `json:"properties"`
-}
-type named struct {
-	Text  string `json:"text"`
-	Named bool   `json:"named"`
-}
-type fold struct {
-	Candidate string `json:"candidate"`
-	Wanted    string `json:"wanted"`
-	Answer    bool   `json:"answer"`
+	Kind         string `json:"kind"`
+	Text         string `json:"text"`
+	Name         int    `json:"name"`
+	PropertyName int    `json:"propertyName"`
 }
 type query struct {
-	Node    int    `json:"node"`
-	Wanted  string `json:"wanted"`
-	Mode    string `json:"mode"`
-	Matcher string `json:"matcher"`
+	Node int    `json:"node"`
+	Mode string `json:"mode"`
 }
 type sample struct {
 	Nodes   []node  `json:"nodes"`
-	Names   []named `json:"names"`
-	Folds   []fold  `json:"folds"`
 	Queries []query `json:"queries"`
 }
 
@@ -62,7 +42,10 @@ func must(err error) {
 }
 func main() {
 	root, output, symbol := os.Args[1], os.Args[2], os.Args[3]
-	symbol = map[string]string{"source": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.CallExpressionSource", "imported": "github.com/system-inc/cohere/internal/lint/ecmascript/imports.ImportedNameOf", "attribute": "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.HasAttributeNamed"}[symbol]
+	if symbol != "imported" {
+		panic("unsupported mode")
+	}
+	symbol = "github.com/system-inc/cohere/internal/lint/ecmascript/imports.ImportedNameOf"
 	data, err := os.ReadFile(filepath.Join(root, "stage1/cohere/lint/helpers/readiness.json"))
 	must(err)
 	var readiness struct {
@@ -142,6 +125,7 @@ func main() {
 	corpus := []sample{}
 	var expected strings.Builder
 	verdicts := 0
+
 	observe := func(roots []*ast.Node) {
 		actual := []*ast.Node{}
 		indexes := map[*ast.Node]int{}
@@ -170,109 +154,27 @@ func main() {
 			}
 			return i
 		}
-		s := sample{Nodes: []node{}, Names: []named{}, Folds: []fold{}, Queries: []query{}}
-		candidates := map[string]bool{"": true}
-		wanted := []string{"", "async", "ASYNC", "href", "jsx", "global", "defer", "K", "k", "Σ", "σ", "ς", "S", "s"}
+		row := sample{Nodes: []node{}, Queries: []query{}}
 		for _, n := range actual {
-			p := node{Kind: strings.TrimPrefix(n.Kind.String(), "Kind"), Expression: -1, Name: -1, PropertyName: -1, Arguments: []int{}, Properties: []int{}}
-			if n.Kind == ast.KindIdentifier || ast.IsStringLiteralLike(n) || n.Kind == ast.KindMetaProperty {
-				p.Text = n.Text()
+			projected := node{Kind: strings.TrimPrefix(n.Kind.String(), "Kind"), Name: -1, PropertyName: -1}
+			if n.Kind == ast.KindIdentifier || ast.IsStringLiteralLike(n) {
+				projected.Text = n.Text()
 			}
-			switch n.Kind {
-			case ast.KindCallExpression:
-				c := n.AsCallExpression()
-				p.Expression = index(c.Expression)
-				p.ArgumentsPresent = c.Arguments != nil
-				if c.Arguments != nil {
-					for _, a := range c.Arguments.Nodes {
-						p.Arguments = append(p.Arguments, index(a))
-					}
-				}
-			case ast.KindMetaProperty:
-				p.KeywordToken = strings.TrimPrefix(n.AsMetaProperty().KeywordToken.String(), "Kind")
-			case ast.KindImportSpecifier:
-				p.Name = index(n.Name())
-				p.PropertyName = index(n.PropertyName())
-			case ast.KindJsxAttributes:
-				a := n.AsJsxAttributes()
-				p.PropertiesPresent = a.Properties != nil
-				if a.Properties != nil {
-					for _, a := range a.Properties.Nodes {
-						p.Properties = append(p.Properties, index(a))
-					}
-				}
+			if n.Kind == ast.KindImportSpecifier {
+				projected.Name = index(n.Name())
+				projected.PropertyName = index(n.PropertyName())
 			}
-			s.Nodes = append(s.Nodes, p)
-			name, ok := jsx.AttributeName(n)
-			s.Names = append(s.Names, named{name, ok})
-			if ok {
-				candidates[name] = true
-			}
-		}
-		extra := []string{}
-		for c := range candidates {
-			extra = append(extra, c)
-		}
-		sort.Strings(extra)
-		wanted = append(wanted, extra...)
-		// EqualFold remains a separately owned callback; these answers come from Go.
-		for _, c := range extra {
-			for _, w := range wanted {
-				s.Folds = append(s.Folds, fold{c, w, jsx.MatchIgnoringCase(c, w)})
-			}
-		}
-		answer := func(i int, n *ast.Node) {
-			if strings.HasSuffix(symbol, ".CallExpressionSource") {
-				s.Queries = append(s.Queries, query{Node: i, Mode: "source"})
-				source, found := imports.CallExpressionSource(n)
-				fmt.Fprintln(&expected, found)
-				fmt.Fprintln(&expected, source)
-				verdicts++
-				return
-			}
-			if strings.HasSuffix(symbol, ".ImportedNameOf") {
-				s.Queries = append(s.Queries, query{Node: i, Mode: "imported"})
-				fmt.Fprintln(&expected, imports.ImportedNameOf(n))
-				verdicts++
-				return
-			}
-			names := wanted
-			if n == nil || n.Kind != ast.KindJsxAttributes {
-				names = []string{"async"}
-			}
-			for _, w := range names {
-				for _, matcher := range []string{"exact", "fold", "always", "never"} {
-					trace := []string{}
-					match := func(c, w string) bool {
-						trace = append(trace, c)
-						switch matcher {
-						case "exact":
-							return jsx.MatchExactly(c, w)
-						case "fold":
-							return jsx.MatchIgnoringCase(c, w)
-						case "always":
-							return true
-						case "never":
-							return false
-						}
-						panic("bad matcher")
-					}
-					s.Queries = append(s.Queries, query{i, w, "attribute", matcher})
-					found := jsx.HasAttributeNamed(n, w, match)
-					fmt.Fprintln(&expected, found)
-					fmt.Fprintln(&expected, len(trace))
-					for _, c := range trace {
-						fmt.Fprintln(&expected, c)
-					}
-					verdicts++
-				}
-			}
+			row.Nodes = append(row.Nodes, projected)
 		}
 		for i, n := range actual {
-			answer(i, n)
+			row.Queries = append(row.Queries, query{i, "imported"})
+			fmt.Fprintln(&expected, imports.ImportedNameOf(n))
+			verdicts++
 		}
-		answer(-1, nil)
-		corpus = append(corpus, s)
+		row.Queries = append(row.Queries, query{-1, "imported"})
+		fmt.Fprintln(&expected, imports.ImportedNameOf(nil))
+		verdicts++
+		corpus = append(corpus, row)
 	}
 	for _, source := range ordered {
 		f := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: "/probe.tsx", Path: tspath.Path("/probe.tsx")}, source, core.ScriptKindTSX)
@@ -283,14 +185,9 @@ func main() {
 	empty := factory.NewIdentifier("")
 	local := factory.NewIdentifier("local")
 	name := factory.NewIdentifier("async")
-	observe([]*ast.Node{
-		factory.NewImportSpecifier(false, nil, nil), factory.NewImportSpecifier(false, empty, local), factory.NewImportSpecifier(false, nil, local),
-		factory.NewJsxAttributes(nil), factory.NewJsxAttributes(factory.NewNodeList([]*ast.Node{})),
-		factory.NewJsxAttributes(factory.NewNodeList([]*ast.Node{factory.NewJsxAttribute(nil, nil), factory.NewJsxAttribute(empty, nil), factory.NewJsxAttribute(name, nil), factory.NewJsxAttribute(factory.NewIdentifier("ASYNC"), nil)})),
-		factory.NewCallExpression(factory.NewToken(ast.KindImportKeyword), nil, nil, nil, 0),
-		factory.NewCallExpression(factory.NewMetaProperty(ast.KindImportKeyword, factory.NewIdentifier("defer")), nil, nil, factory.NewNodeList([]*ast.Node{factory.NewStringLiteral("", 0)}), 0),
-		factory.NewCallExpression(factory.NewMetaProperty(ast.KindNewKeyword, factory.NewIdentifier("defer")), nil, nil, factory.NewNodeList([]*ast.Node{factory.NewStringLiteral("m", 0)}), 0),
-	})
+
+	observe([]*ast.Node{factory.NewImportSpecifier(false, nil, nil), factory.NewImportSpecifier(false, empty, local), factory.NewImportSpecifier(false, nil, local), factory.NewImportSpecifier(false, factory.NewStringLiteral("", 0), local), name})
+
 	data, err = json.Marshal(corpus)
 	must(err)
 	must(os.WriteFile(filepath.Join(output, "cases.json"), data, 0644))

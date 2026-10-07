@@ -1,0 +1,37 @@
+=== RUN   TestSlot05ImportedNameOf
+    helper_test.go:58: 4 consumers, 287 distinct test strings and controls, 4093 Go verdicts
+    helper_test.go:68: consumer coverage: {
+          "react-hooks/config": 90,
+          "react-hooks/incompatible-library": 144,
+          "structure/network-no-forbidden-import": 51,
+          "structure/react-component-no-forward-ref": 75
+        }
+    helper_test.go:123: imported_name_of.a mutant "if(specifier.propertyName >= 0)" -> "if(false)" caught at verdict 1654: mutant "wrap", Go "forwardRef"
+    helper_test.go:123: imported_name_of.a mutant "if(specifier.propertyName >= 0)" -> "if(specifier.propertyName >= 0 && (nodes[specifier.propertyName]?.text ?? '') !== '')" caught at verdict 1720: mutant "Empty", Go ""
+--- PASS: TestSlot05ImportedNameOf (6.86s)
+=== RUN   TestSlot05DecimalDigit
+    helper_test.go:58: 4 consumers, 1165 strings and controls plus scalar sweep, 2253117 Go verdicts
+    helper_test.go:68: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:123: regexp_is_decimal_digit.a mutant "byte <= 57" -> "byte < 57" caught at verdict 2504: mutant "false", Go "true"
+    helper_test.go:123: regexp_is_decimal_digit.a mutant "index >= utf8Length(source)" -> "index >= source.length" caught at verdict 28909: mutant "false", Go "true"
+--- PASS: TestSlot05DecimalDigit (12.25s)
+=== RUN   TestSlot05CountGroups
+    helper_test.go:58: 4 consumers, 1165 strings and controls plus scalar sweep, 1113229 Go verdicts
+    helper_test.go:68: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:123: regexp_count_groups.a mutant "if(!inClass)" -> "if(true)" caught at verdict 727: mutant "2", Go "1"
+    helper_test.go:123: regexp_count_groups.a mutant " && at(index + 3) !== 61 && at(index + 3) !== 33" -> "" caught at verdict 147: mutant "1", Go "0"
+    helper_test.go:123: regexp_count_groups.a mutant "index += 1 + width(index + 1)" -> "index += 1" caught at verdict 5: mutant "1", Go "0"
+    helper_test.go:123: regexp_count_groups.a mutant "index += 1 + width(index + 1)" -> "index += 2" caught at verdict 1027: mutant "0", Go "1"
+--- PASS: TestSlot05CountGroups (35.35s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch9	54.468s

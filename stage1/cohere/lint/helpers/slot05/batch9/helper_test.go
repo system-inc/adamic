@@ -24,6 +24,13 @@ func TestSlot05ImportedNameOf(t *testing.T) {
 	verify(t, "imported", "imported_name_of.a", mutation{"if(specifier.propertyName >= 0)", "if(false)"}, mutation{"if(specifier.propertyName >= 0)", "if(specifier.propertyName >= 0 && (nodes[specifier.propertyName]?.text ?? '') !== '')"})
 }
 
+func TestSlot05DecimalDigit(t *testing.T) {
+	verify(t, "decimal", "regexp_is_decimal_digit.a", mutation{"byte <= 57", "byte < 57"}, mutation{"index >= utf8Length(source)", "index >= source.length"})
+}
+func TestSlot05CountGroups(t *testing.T) {
+	verify(t, "groups", "regexp_count_groups.a", mutation{"if(!inClass)", "if(true)"}, mutation{" && at(index + 3) !== 61 && at(index + 3) !== 33", ""}, mutation{"index += 1 + width(index + 1)", "index += 1"}, mutation{"index += 1 + width(index + 1)", "index += 2"})
+}
+
 // Not parallel: large generated corpora and multiple sanitized compiler builds share the memory budget.
 func verify(t *testing.T, mode, target string, mutations ...mutation) {
 	root, _ := filepath.Abs("../../../../../..")
@@ -36,6 +43,11 @@ func verify(t *testing.T, mode, target string, mutations ...mutation) {
 	scratch := t.TempDir()
 	virtual := filepath.Join(cohere, "adamic_slot05_batch9.go")
 	replacements := map[string]string{virtual: filepath.Join(dir, "testdata", "oracle.go")}
+	if mode == "decimal" || mode == "groups" {
+		replacements[virtual] = filepath.Join(dir, "testdata", "regexp_oracle.go")
+		replacements[filepath.Join(cohere, "internal/lint/ecmascript/regexp/adamic_slot05_batch9.go")] = filepath.Join(dir, "testdata/regexp_export.go")
+	}
+
 	overlay, _ := json.Marshal(map[string]any{"Replace": replacements})
 	overlayPath := filepath.Join(scratch, "overlay.json")
 	if e := os.WriteFile(overlayPath, overlay, 0644); e != nil {

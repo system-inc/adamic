@@ -1,0 +1,27 @@
+{
+  "main": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "main_is_ancestor": true,
+  "branches_scanned": 18,
+  "matches": [
+    {
+      "branch": "refs/remotes/origin/codex/lint-helpers-05",
+      "file": "stage1/cohere/lint/helpers/claims/05.md",
+      "matches": [
+        "imports.ImportedNameOf",
+        "regexp.isDecimalDigit",
+        "regexp.countGroups"
+      ]
+    }
+  ],
+  "race": {
+    "owner": "codex/lint-helpers-02",
+    "owner_claim": "d9b239af40dcf9632c3d55b2bbfb4b3474454ecb",
+    "owner_utc": "2026-10-07T03:54:07Z",
+    "withdrawn_claim": "f846de1f640356fda6f11d263dfe3cf4c8ec922f",
+    "withdrawn_utc": "2026-10-07T03:54:09Z",
+    "withdrawn_helpers": [
+      "imports.CallExpressionSource",
+      "jsx.HasAttributeNamed"
+    ]
+  }
+}
