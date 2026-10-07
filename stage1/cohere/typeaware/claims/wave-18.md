@@ -30,3 +30,20 @@ Ahra's correction. Only the original three rules above remain claimed.
 The original Next visitor is now complete and byte-tested against the native
 JSX slice from origin/codex/stage1-jsx-lint. WAVE_18_TITLE_REPORT.md records
 its mutant, corpus/sanitizer agreement and remaining shared parser integration.
+
+## Continuation after completing the original visitor
+
+Original completion 1b6147b0 is pushed; its JSX parser integration dependency
+is recorded in WAVE_18_TITLE_REPORT.md. The next three rules claimed here are:
+
+1. no-class-assign
+2. no-const-assign
+3. no-constant-binary-expression
+
+These are the first remaining rules in the combined by-volume ranking after
+checking all 328 fetched origin refs, all claim Markdown, and ports on
+origin/main (ef3d907e) and origin/codex/tsgo-c-library (5afbdb83). There are
+105 claimed and 25 already-ported ranked rules. Each selected rule has zero
+compiler and repository findings. The previously withdrawn Nexus candidates
+are now claimed by other workers and are skipped. This claim is pushed before
+implementation. No shared harness or registration generator will be edited.
