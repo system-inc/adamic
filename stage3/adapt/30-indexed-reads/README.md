@@ -761,7 +761,7 @@ main is reserved for @system_adamic_integration. No force-push or rebase of a
 pushed branch is allowed; bring new main work in with a merge of origin/main.
 
 
-## Whole-file closure: debug.ts, proof blocked
+## Whole-file closure: debug.ts at zero (initial proof was blocked)
 
 This unit merged origin/area/stage3 at 634ef061fc72c061e2de1606d5c8faebec4411f6
 by fast-forward on codex/stage3-indexed-reads. No rebase or force-push is used.
@@ -835,3 +835,41 @@ Evidence: `whole-debug-{before,after,mutant}.json`, `whole-debug-proof.json`,
 `whole-debug-api-blocker.log`, `whole-debug-oracle.json`, and
 `whole-debug-baseline.diff`. Toolchain setup: Go 0s, clang 0s, Node 0s,
 submodules 0s, cache 117s, total 117s; nproc 5, CPU quota 4.
+
+
+### October 7, 22:32 ruling: sanctioned adaptation 40 API edits
+
+@system_adamic sanctioned adaptation 40's 27 public brand fields changing any
+to undefined and ErrorCallback's arg0 changing any to string | number.
+`check-api-baselines.cjs` extends adaptation 20's independent parsed-owner
+reconstruction. It locates every brand in the pristine source by owner, key and
+line, projects exactly 27 public owners, and matches the single ErrorCallback
+payload owner. The sets are disjoint: **189 adaptation 20 lines plus 28
+adaptation 40 lines, exactly 217 changed API lines**. All **60,930** other
+reference files must match pristine bytes. Adaptation 70 is absent at the pinned
+integration SHA, so its allowed line set is empty here; unlisted readonly edits
+are rejected rather than inferred. Adaptation 40 remains on the integrated tree.
+
+Four real artifact mutants pass through this combined proof and fail, exit 1:
+restore __pathBrand to any in built API output; change ErrorCallback's payload
+to boolean; append an unlisted declaration to the API reference; append a byte
+to the unrelated 2dArrays.js reference. Each mutant restores exact original
+bytes in a finally block, and the restored combined proof passes again.
+`whole-api-acceptance.json` and `whole-api-mutants.json` record the line sets,
+owners and failures. The prior rejected proof above remains historical evidence.
+
+```sh
+TSC_ADAPT_TYPESCRIPT=<stock-typescript-6.0.3> node stage3/adapt/30-indexed-reads/check-api-baselines.cjs <pristine-tree> <integrated-tree> <373-owner-report> --accept-api
+TSC_ADAPT_TYPESCRIPT=<stock-typescript-6.0.3> node stage3/adapt/30-indexed-reads/api-mutants.cjs <pristine-tree> <integrated-tree> <373-owner-report>
+```
+
+
+The sanctioned default oracle rerun **passes**, with **106,367 passing, zero
+failing, zero pending**, and a **zero-byte baseline diff**. The final all-code
+file census remains **debug.ts 1 -> 0**. All 17 JavaScript byte comparisons and
+idempotence checks pass. `whole-debug-sanctioned-oracle.json` and the empty
+`whole-debug-sanctioned-baseline.diff` are the final oracle evidence. The earlier
+failed artifacts are retained as history, superseded by the ruling and this
+mechanically verified rerun. **debug.ts is now a completed whole-file closure.**
+The census provenance remains the area checker with meter loader options; no
+new global meter count or native acceptance is claimed.

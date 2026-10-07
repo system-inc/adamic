@@ -1,5 +1,5 @@
 {
-  "status": "blocked: required empty API baseline diff not established",
+  "status": "pass: debug.ts at zero",
   "integration": "634ef061fc72c061e2de1606d5c8faebec4411f6",
   "meter_report": "176a496",
   "source_before_matches_pinned_meter": {
@@ -34,7 +34,7 @@
   },
   "node_javascript": "byte-identical for all 17 owned files",
   "idempotence": "all 17 owned files pass",
-  "baseline_acceptance": "none; adaptation 40 brand changes rejected by adaptation 20 exact API check",
+  "baseline_acceptance": "mechanically reconstructed 189 adaptation 20 and 28 adaptation 40 lines; adaptation 70 absent",
   "setup_seconds": {
     "go": 0,
     "clang": 0,
@@ -45,7 +45,8 @@
   },
   "nproc": 5,
   "source_after_debug_sha256": "ce175769e8947080e91c88d991ce90e1d77225052a7e200ee925f4239d4bcc96",
-  "oracle": {
+  "baseline_diff_bytes": 0,
+  "initial_oracle_before_ruling": {
     "tree": "/tmp/stage3-close-integrated",
     "nproc": 5,
     "workers": 4,
@@ -96,5 +97,53 @@
     ],
     "wall_seconds": 375.858
   },
-  "baseline_diff_bytes": 48691
+  "oracle": {
+    "tree": "/tmp/stage3-close-integrated",
+    "nproc": 5,
+    "workers": 4,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 2.386
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 1.721
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=4",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 0,
+        "seconds": 207.954
+      }
+    },
+    "status": "pass",
+    "counts": {
+      "passing": 106367,
+      "failing": 0,
+      "pending": 0
+    },
+    "baseline_diffs": [],
+    "wall_seconds": 212.103
+  }
 }
