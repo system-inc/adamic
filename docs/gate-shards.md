@@ -1419,3 +1419,85 @@ Setup completed successfully in 88.205 s: Go ready 0.199 s, submodules
 0.325 s, Clang 0.792 s, Node 1.014 s, module dependencies 27.890 s,
 Go build 87.206 s (setup cumulative marks). Full setup build flags and
 loads are in the evidence; these are setup intervals, not fixture timings.
+
+### Completed oracle Once profile after the area repair
+
+Measured source and pushed clean merge tip: `47b8b8d56a959540008574641b17b1c925a5c2fe`,
+including area `08e0db2036acd710df716f4f6856191da3adb0be`. No oracle conflict
+or source edit was resolved. Instrumentation used a Go overlay outside the
+repository, archived with its generator, raw JSON logs and analysis.
+
+Assumption: three complete sequential package runs on the same available box,
+uncached oracle results, existing fully keyed warm native runtime archives;
+normal opt-in defaults remain unchanged. This is not a cold archive build
+benchmark or a new whole gate. All three runs passed with identical terminal
+test names/verdicts: 1467 pass events (1466 tests plus package) and nine skips.
+Each run made 3082 identity calls. All twelve callback steps have three samples.
+
+| Callback step | Run 1 s | Run 2 s | Run 3 s | Median s |
+| --- | ---: | ---: | ---: | ---: |
+| cache-directory | 0.000001825 | 0.000002325 | 0.000002104 | 0.000002104 |
+| node-version | 0.007769706 | 0.008578494 | 0.009520263 | 0.008578494 |
+| runtime-0 | 0.087610034 | 0.024628872 | 0.022576758 | 0.024628872 |
+| runtime-1 | 0.018757449 | 0.038917184 | 0.035150695 | 0.035150695 |
+| runtime-2 | 0.020123608 | 0.018144502 | 0.030602013 | 0.020123608 |
+| go-harness-glob | 0.000660947 | 0.000153187 | 0.000149978 | 0.000153187 |
+| runner-glob | 0.000029483 | 0.000071184 | 0.000061326 | 0.000061326 |
+| repository-context | 0.000006987 | 0.000008971 | 0.000008026 | 0.000008026 |
+| stack-limit | 0.000001343 | 0.000001767 | 0.000001582 | 0.000001582 |
+| environment-capture | 0.000012906 | 0.000032827 | 0.000011538 | 0.000012906 |
+| harness-reads | 0.001079789 | 0.000630551 | 0.000818452 | 0.000818452 |
+| context-digest | 0.000314435 | 0.000756495 | 0.000348848 | 0.000348848 |
+| callback | 0.136552088 | 0.092104684 | 0.099624676 | 0.099624676 |
+
+| Loop | Historical before s | Measured after median s | Instrument |
+| --- | ---: | ---: | --- |
+| Whole oracle group/package | 1368.845 planning price | 328.577567 command wall | `ADAMIC_GATE_UNCACHED=1 go test -overlay /workspace/gate-affinity-evidence/oracle-once-47b8b8d5/overlay.json -count=1 -json -timeout 60m -parallel 5 ./internal/oracle` |
+| Once callback only | Not measured in historical logs | 0.099624676 | `time.Now` / `time.Since` around the original callback |
+
+This before column is a different-source historical planning price, not a
+controlled speedup. Package command walls include Go build and TestMain.
+Callback medians do not add exactly to the sum of per-step medians. Logging
+is excluded from individual step intervals but included in callback wall.
+The callback median is about 0.0073% of the historical group price. It does
+not explain a 1369-second package floor under these warm-build conditions.
+
+| Longest completed top-level tests | Median recorded elapsed s |
+| --- | ---: |
+| TestCountsAreRecorded | 311.240 |
+| TestLoopCountersAgreeWithNode | 79.310 |
+| TestGCCLaneComparisonCatchesMutants | 9.550 |
+| TestLibraryMapSetIteratorCopiesRefused | 2.510 |
+| TestOct6InheritanceMutants | 2.290 |
+
+Top-level elapsed values can overlap and include subtest scheduling; they
+are not additive CPU time. Every identity caller has its individual per-run
+call count, total/maximum interval, callback ownership and medians in
+`identity-callers.csv` in the evidence archive. The maximum non-owner call
+intervals were 0.000473279 s, 0.034029889 s, 0.000380643 s.
+These measure time through sync.Once including scheduling, not a separately
+instrumented mutex wait. Only one non-owner interval exceeded 1 ms across
+all three runs.
+
+The node query, cache-directory lookup and three flag-distinct runtime
+preparations are logically independent. File globs precede their reads;
+context digest depends on captured harness/environment/path/stack inputs.
+All users wait for the combined identity. Concurrent cold-build CPU/memory
+cost was not measured. No concurrency or cache change was made. The longest
+observed parent was TestCountsAreRecorded; profiling its fixture work is a
+separate decision from parallelizing this sub-second callback.
+
+Build flags for every run: commit above, nproc=5, cpu.max="400000 100000",
+Go="go version go1.27.1 linux/amd64", Clang="clang version 20.1.8
+(https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+Node="v24.19.0", oracle results uncached, native runtime build cache warm.
+
+| Run | Command wall s | Load before | Load after |
+| --- | ---: | --- | --- |
+| 1 | 328.577567 | 0.02 0.54 0.77 1/422 51457 | 5.97 3.86 2.16 1/440 71372 |
+| 2 | 327.125017 | 5.97 3.86 2.16 1/440 71381 | 4.88 4.73 3.05 1/443 91244 |
+| 3 | 361.592167 | 4.88 4.73 3.05 1/443 91252 | 5.29 5.11 3.77 1/448 111080 |
+
+Raw evidence: `cmd/adamic-gate/evidence/oracle-once-47b8b8d5.tgz`. The prior
+compile blocker section remains as historical evidence and is now resolved
+by the area repair. No new cache or production check was introduced.
