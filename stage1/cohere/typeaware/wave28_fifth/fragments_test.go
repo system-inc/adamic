@@ -17,9 +17,6 @@ import (
 
 func TestFragmentsAgreement(t *testing.T) {
 	stage0 := os.Getenv("ADAMIC_WAVE28_STAGE0")
-	if stage0 == "" {
-		t.Skip("set ADAMIC_WAVE28_STAGE0 for native rule comparison")
-	}
 	repository, err := filepath.Abs("../../../..")
 	if err != nil {
 		t.Fatal(err)
@@ -32,6 +29,10 @@ func TestFragmentsAgreement(t *testing.T) {
 		t.Fatal(err)
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
+	if stage0 == "" {
+		stage0 = filepath.Join(directory, "adamic")
+		h.must("stage0-build", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	}
 	archive := os.Getenv("ADAMIC_WAVE28_ARCHIVE")
 	if archive == "" {
 		archive = h.archive("checker", "", false)

@@ -75,3 +75,7 @@ Explicitly rebased onto origin/area/stage1-lint at 7481e0324e34a2537aafa9db7eeac
 ## Fifth-batch native progress
 
 react/jsx-no-undef and react/jsx-fragments are now implemented and green in the owned native type-aware harness: Go byte parity on findings/fixes/suggestions for positive controls and both frozen corpora, normally executing comparison mutants, sanitizers and released handles. Both take supplied nodes through named-kind dispatch. The third claim, react/jsx-no-constructed-context-values, remains unported; no next batch is claimed. Shared syntax-driver checker integration remains outside this worker's territory. See wave28_fifth/REPORT.md for the precise private-harness scope.
+
+## Fifth-batch completion
+
+All three fifth-batch rules, including react/jsx-no-constructed-context-values, are implemented and green in the owned native type-aware harness. Positive controls and both frozen corpus streams match Go byte for byte on findings/fixes/suggestions; each rule has a normally executing comparison mutant; sanitizer and released-handle checks pass. Named kinds and supplied-node dispatch are retained. All fifth-batch correctness/readiness tests build missing tools instead of skipping. The fourth-batch analysis claims remain parked; no sixth batch is claimed yet.

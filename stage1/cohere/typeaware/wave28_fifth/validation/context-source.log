@@ -1,0 +1,15 @@
+=== RUN   TestContextAgreement
+    context_test.go:84: captured 135 JSX-containing literals, retained 131 Go syntax-valid controls
+    context_test.go:103: controls: 33745 bytes, findings 63, native 490.239104ms Go 284.364375ms
+    context_test.go:110: 135 control inputs
+    context_test.go:143: component-relevance mutant exits zero, empty stderr; Go bytes catch byte 15271
+    context_test.go:103: controls-asan: 33745 bytes, findings 63, native 367.00972ms Go 233.463459ms
+    context_test.go:170: released: required panic 70, no sanitizer findings
+    context_test.go:170: released-asan: required panic 70, no sanitizer findings
+    context_test.go:103: repository: 18485 bytes, findings 0, native 666.483323ms Go 254.456153ms
+    context_test.go:103: repository-asan: 18485 bytes, findings 0, native 1.525788009s Go 340.387004ms
+    context_test.go:103: compiler: 5010 bytes, findings 0, native 2.604043808s Go 825.051239ms
+    context_test.go:103: compiler-asan: 5010 bytes, findings 0, native 10.350866004s Go 556.504866ms
+--- PASS: TestContextAgreement (93.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fifth	93.226s

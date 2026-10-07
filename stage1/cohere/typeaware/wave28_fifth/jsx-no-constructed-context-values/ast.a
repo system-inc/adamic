@@ -1,0 +1,47 @@
+import { panic } from 'adamic';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Tree, World } from '../../wave28_next/tree.a';
+import { Signature } from '../../wave28_next/stream_signature.a';
+import { ReferenceSymbol } from '../../wave28_third/reference_symbol.a';
+import { types } from '../../facts.ts';
+
+export class Entry {
+ readonly tree: Tree;readonly index: number;readonly node: ParseNode;
+ constructor(tree: Tree,index: number,node: ParseNode){this.tree=tree;this.index=index;this.node=node;}
+}
+export class Symbol {
+ readonly id: number;readonly declarations: number[];
+ constructor(id: number,declarations: number[]){this.id=id;this.declarations=declarations;}
+}
+// A program-local index for raw checker declaration locations, shared by this rule's analyses.
+export class Ast {
+ readonly world: World;readonly entries: Entry[]=[];readonly bases=new Map<string,number>();readonly symbols=new Map<number,Symbol>();
+ constructor(tree: Tree){this.world=new World(tree);this.add(tree);}
+ add(tree: Tree): number {const path=tree.rules.path;if(!this.bases.has(path)){const base=this.entries.length;this.bases.set(path,base);for(let index=0;index<tree.rules.parser.nodes.length;index++){this.entries.push(new Entry(tree,index,tree.rules.parser.nodes[index]??panic('missing node')));}}return this.bases.get(path)??panic('missing file base');}
+ entry(id: number): Entry{return this.entries[id]??panic('missing analysis node');}
+ node(id: number): ParseNode{return this.entry(id).node;}
+ kind(id: number): string{return id<0?'':this.node(id).kind;}
+ child(id: number,at: number): number{if(id<0){return -1;}const entry=this.entry(id);const child=entry.node.children[at]??-1;return child<0?-1:this.add(entry.tree)+child;}
+ children(id: number): number[]{const result: number[]=[];if(id>=0){const entry=this.entry(id);const base=this.add(entry.tree);for(const child of entry.node.children){result.push(base+child);}}return result;}
+ parent(id: number): number{if(id<0){return -1;}const entry=this.entry(id);const parent=entry.tree.parent(entry.index);return parent<0?-1:this.add(entry.tree)+parent;}
+ text(id: number): string{return id<0?'':this.node(id).text;}
+ raw(id: number): string{const entry=this.entry(id);return entry.tree.rules.text(entry.node);}
+ last(id: number): number{const children=this.children(id);return children[children.length-1]??-1;}
+ initializer(id: number): number{if(id<0){return -1;}const entry=this.entry(id);const index=entry.tree.initializer(entry.index);return index<0?-1:this.add(entry.tree)+index;}
+ name(id: number): number{if(id<0){return -1;}const entry=this.entry(id);const index=entry.tree.name(entry.index);return index<0?-1:this.add(entry.tree)+index;}
+ body(id: number): number{if(id<0){return -1;}const entry=this.entry(id);const index=entry.tree.body(entry.index);return index<0?-1:this.add(entry.tree)+index;}
+ function(id: number): boolean{return id>=0 && this.entry(id).tree.function(this.entry(id).index);}
+ nearest(id: number): number{for(let at=this.parent(id);at>=0;at=this.parent(at)){if(this.function(at)){return at;}}return -1;}
+ unwrap(id: number): number{let at=id;while(['ParenthesizedExpression','AsExpression','SatisfiesExpression','NonNullExpression'].includes(this.kind(at))){at=this.child(at,0);}return at;}
+ parentheses(id: number): number{let at=id;while(this.kind(at)==='ParenthesizedExpression'){at=this.child(at,0);}return at;}
+ args(id: number): number[]{if(id<0){const empty: number[]=[];return empty;}const entry=this.entry(id);return entry.tree.args(entry.index).map((child)=>this.add(entry.tree)+child);}
+ operator(id: number): string{return id<0?'':this.entry(id).tree.operator(this.entry(id).index);}
+ locate(path: string,kind: string,pos: number,end: number): number{const tree=this.world.get(path);return this.add(tree)+tree.at(kind,pos,end);}
+ symbol(id: number): Symbol{if(!this.symbols.has(id)){const entry=this.entry(id);const fact=new ReferenceSymbol(entry.tree,entry.index);const declarations: number[]=[];for(const declaration of fact.declarations){// Declaration files have no executable render owner; preserve their position as an unavailable declaration.
+ declarations.push(declaration.declaration?-1:this.locate(declaration.path,declaration.kind,declaration.pos,declaration.end));}this.symbols.set(id,new Symbol(fact.id,declarations));}return this.symbols.get(id)??panic('missing symbol');}
+ signature(id: number): number{const entry=this.entry(id);const fact=new Signature(entry.tree.rules,entry.index);return !fact.present || !fact.body?-1:this.locate(fact.path,fact.kind,fact.pos,fact.end);}
+ primitive(id: number): boolean{const entry=this.entry(id);const facts=types(entry.tree.rules.ask(entry.index,'base-type'),'base-type');if(!facts.present){return false;}const mask=4|128|134217728|268435456|8|256|64|2048|16|512|32|1024|4096|8192|65536|32768|16384;return facts.parts(facts.root()).every((part)=>(facts.type(part).flags & mask)!==0);}
+ constant(id: number): boolean{let parent=this.parent(id);while(parent>=0 && this.kind(parent)!=='VariableDeclarationList'){parent=this.parent(parent);}return parent>=0 && (Number(this.node(parent).semantic) & 2)!==0;}
+ line(id: number): number{const entry=this.entry(id);const text=entry.tree.rules.scanner.text;const end=entry.tree.rules.start(entry.node);let line=1;for(let at=0;at<end;at++){const code=text.charCodeAt(at);if(code===13){if(text.charCodeAt(at+1)===10){at++;}line++;}else if(code===10||code===8232||code===8233){line++;}}return line;}
+ hook(id: number): string{if(this.kind(id)!=='CallExpression'){return '';}const callee=this.parentheses(this.child(id,0));let name='';if(this.kind(callee)==='Identifier'){name=this.text(callee);}else if(this.kind(callee)==='PropertyAccessExpression'){const receiver=this.parentheses(this.child(callee,0));if(this.kind(receiver)!=='Identifier'||this.text(receiver)!=='React'){return '';}name=this.text(this.last(callee));}return name==='useMemo'||name==='useCallback'?name:'';}
+}

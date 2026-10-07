@@ -1,0 +1,48 @@
+import { quote } from './quote.a';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Ast } from './ast.a';
+import { Stability, constructionKind } from './stability.a';
+import { Tree } from '../../wave28_next/tree.a';
+import { Diagnostic } from '../../diagnostic.ts';
+
+class Construction {
+ readonly kind: string;readonly node: number;readonly usage: number;
+ constructor(kind: string,node: number,usage=-1){this.kind=kind;this.node=node;this.usage=usage;}
+}
+export class Rule {
+ readonly context: Tree;readonly ast: Ast;
+ constructor(context: Tree){this.context=context;this.ast=new Ast(context);}
+ likely(id: number): boolean{return /^\p{Lu}/u.test(this.ast.text(id));}
+ classComponent(id: number): boolean{const ast=this.ast;for(let at=ast.parent(id);at>=0;at=ast.parent(at)){if(['ClassDeclaration','ClassExpression'].includes(ast.kind(at))){for(const heritage of ast.children(at)){if(ast.kind(heritage)!=='HeritageClause'){continue;}for(const type of ast.children(heritage)){if(ast.kind(type)!=='ExpressionWithTypeArguments'){continue;}const expression=ast.child(type,0);if(ast.kind(expression)==='Identifier'&&['Component','PureComponent'].includes(ast.text(expression))){return true;}if(ast.kind(expression)==='PropertyAccessExpression'&&ast.kind(ast.child(expression,0))==='Identifier'&&ast.text(ast.child(expression,0))==='React'&&ast.kind(ast.last(expression))==='Identifier'&&['Component','PureComponent'].includes(ast.text(ast.last(expression)))){return true;}}}return false;}}return false;}
+ binding(id: number): boolean{const ast=this.ast;const parent=ast.parent(id);if(ast.kind(parent)==='VariableDeclaration'){const name=ast.name(parent);return ast.kind(name)==='Identifier'&&this.likely(name);}return ast.kind(parent)==='CallExpression'&&this.binding(parent);}
+ component(id: number): boolean{const ast=this.ast;for(let at=ast.parent(id);at>=0;at=ast.parent(at)){switch(ast.kind(at)){case 'FunctionDeclaration':return this.likely(ast.name(at));case 'FunctionExpression':case 'ArrowFunction':return ast.kind(ast.parent(at))==='PropertyDeclaration'?this.classComponent(ast.parent(at)):this.binding(at);case 'MethodDeclaration':case 'GetAccessor':case 'SetAccessor':case 'Constructor':case 'PropertyDeclaration':return this.classComponent(at);default:break;}}return false;}
+ createContext(id: number): boolean{const ast=this.ast;const callee=ast.parentheses(id);if(ast.kind(callee)==='Identifier'){return ast.text(callee)==='createContext';}if(ast.kind(callee)!=='PropertyAccessExpression'){return false;}const receiver=ast.parentheses(ast.child(callee,0));const name=ast.last(callee);return ast.kind(receiver)==='Identifier'&&ast.text(receiver)==='React'&&ast.kind(name)==='Identifier'&&ast.text(name)==='createContext';}
+ provider(id: number): boolean{const ast=this.ast;if(ast.kind(id)==='PropertyAccessExpression'){const name=ast.last(id);return ast.kind(name)==='Identifier'&&ast.text(name)==='Provider';}if(ast.kind(id)!=='Identifier'){return false;}for(const declaration of ast.symbol(id).declarations){if(ast.kind(declaration)==='VariableDeclaration'){const initializer=ast.parentheses(ast.initializer(declaration));if(ast.kind(initializer)==='CallExpression'&&this.createContext(ast.child(initializer,0))){return true;}}}return false;}
+ construction(id: number,depth: number): Construction | undefined {
+  const ast=this.ast;if(id<0||depth>16){return undefined;}const kind=constructionKind(ast.kind(id));if(kind!==''){return new Construction(kind,id);}
+  switch(ast.kind(id)) {
+   case 'ParenthesizedExpression':case 'AsExpression':case 'SatisfiesExpression':return this.construction(ast.child(id,0),depth+1);
+   case 'ConditionalExpression':return this.construction(ast.child(id,2),depth+1)??this.construction(ast.child(id,4),depth+1);
+   case 'BinaryExpression':{const operator=ast.operator(id);if(operator==='EqualsToken'||operator.endsWith('EqualsToken')&&!['EqualsEqualsToken','EqualsEqualsEqualsToken','ExclamationEqualsToken','ExclamationEqualsEqualsToken','LessThanEqualsToken','GreaterThanEqualsToken'].includes(operator)){const found=this.construction(ast.child(id,2),depth+1);return found===undefined?undefined:new Construction('assignment expression',found.node,id);}if(!['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(operator)){return undefined;}return this.construction(ast.child(id,0),depth+1)??this.construction(ast.child(id,2),depth+1);}
+   case 'PropertyAccessExpression':{const receiver=ast.child(id,0);const found=this.construction(receiver,depth+1);return found===undefined?undefined:new Construction(found.kind,found.node,receiver);}
+   case 'Identifier':{const declarations=ast.symbol(id).declarations;const declaration=declarations[declarations.length-1]??-1;if(declaration<0||ast.nearest(declaration)!==ast.nearest(id)){return undefined;}if(ast.kind(declaration)==='FunctionDeclaration'){return new Construction('function declaration',declaration,id);}if(ast.kind(declaration)!=='VariableDeclaration'){return undefined;}const found=this.construction(ast.initializer(declaration),depth+1);return found===undefined?undefined:new Construction(found.kind,found.node,id);}
+   default:return undefined;
+  }
+ }
+ report(id: number,messageId: string,message: string): void{const ast=this.ast;const entry=ast.entry(id);const rules=entry.tree.rules;this.context.rules.findings.push(new Diagnostic('react/jsx-no-constructed-context-values',messageId,message,rules.byte(rules.start(entry.node)),rules.byte(entry.node.end),''));}
+ memo(value: number,provider: number): void{
+  const ast=this.ast;const scope=ast.nearest(provider);const walk=new Stability(ast,scope);const memo=walk.memoOf(value,scope);if(memo<0){return;}const found=walk.memo(memo,scope,0).fresh;if(found===undefined){return;}const hook=ast.hook(memo);const line=ast.line(memo);
+  if(found.dependency<0){this.report(ast.child(memo,0),'memoWithoutDependenciesMsg',`The ${hook} that builds the Context provider's value (at line ${line}) has no dependency list, so it recomputes on every render and every consumer of this context re-renders on every render of this component, exactly as if it were not memoized. Pass the dependency list.`);return;}
+  const text=quote(ast.raw(found.dependency));const location=ast.entry(found.origin).tree.rules.path===this.context.rules.path?` (at line ${ast.line(found.origin)})`:'';
+  this.report(found.dependency,'unstableDependencyMsg',`The ${text} dependency of the ${hook} that builds the Context provider's value (at line ${line}) ${found.reason}${location}, so the ${hook} recomputes on every render and every consumer of this context re-renders on every render of this component, exactly as if it were not memoized. A memoized value is only stable when every input is: make ${text} stable too, by memoizing it or by building it outside the component.`);
+ }
+ visit(node: ParseNode,index: number): void {
+  const ast=this.ast;const base=ast.add(this.context);const tag=node.children[0]??-1;if(tag<0||!this.provider(base+tag)){return;}let value=-1;
+  for(const child of node.children){const attributes=this.context.rules.parser.node(child);if(attributes.kind!=='JsxAttributes'){continue;}for(const property of attributes.children){const attribute=this.context.rules.parser.node(property);if(attribute.kind!=='JsxAttribute'){continue;}const name=attribute.children[0]??-1;if(name<0||ast.kind(base+name)!=='Identifier'||ast.text(base+name)!=='value'){continue;}const initializer=attribute.children[1]??-1;if(initializer<0||ast.kind(base+initializer)!=='JsxExpression'){return;}value=ast.child(base+initializer,0);break;}}
+  if(value<0){return;}const found=this.construction(value,0);const provider=base+index;if(found===undefined){if(this.component(provider)){this.memo(value,provider);}return;}if(!this.component(provider)){return;}
+  const functional=found.kind==='function expression'||found.kind==='function declaration';const remedy=functional?'useCallback':'useMemo';let id=found.usage<0?'defaultMsg':'withIdentifierMsg';if(functional){id+='Func';}const line=ast.line(found.node);
+  const message=found.usage<0?`The ${found.kind} passed as the value prop to the Context provider (at line ${line}) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`:`The ${quote(ast.kind(found.usage)==='Identifier'?ast.text(found.usage):'')} ${found.kind} (at line ${line}) passed as the value prop to the Context provider (at line ${ast.line(found.usage)}) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a ${remedy} hook so the identity is stable between renders.`;
+  this.report(found.node,id,message);
+ }
+}
+export function create(context: Tree): Rule{return new Rule(context);}

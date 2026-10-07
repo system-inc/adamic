@@ -1,0 +1,107 @@
+=== RUN   TestContextAgreement
+    context_test.go:84: captured 135 JSX-containing literals, retained 131 Go syntax-valid controls
+    context_test.go:95: controls-native: exit status 70
+        file	/tmp/wave28-context-gate/control-000.tsx
+        46	48	react/jsx-no-constructed-context-values	withIdentifierMsg	The "foo" object (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-001.tsx
+        46	48	react/jsx-no-constructed-context-values	withIdentifierMsg	The "foo" array (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-002.tsx
+        46	54	react/jsx-no-constructed-context-values	withIdentifierMsgFunc	The "foo" function expression (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useCallback hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-003.tsx
+        46	62	react/jsx-no-constructed-context-values	withIdentifierMsgFunc	The "foo" function expression (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useCallback hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-004.tsx
+        46	63	react/jsx-no-constructed-context-values	withIdentifierMsg	The "foo" class expression (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-005.tsx
+        46	61	react/jsx-no-constructed-context-values	withIdentifierMsg	The "foo" new expression (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-006.tsx
+        34	51	react/jsx-no-constructed-context-values	withIdentifierMsgFunc	The "foo" function declaration (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useCallback hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-007.tsx
+        53	55	react/jsx-no-constructed-context-values	withIdentifierMsg	The "foo" object (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-008.tsx
+        53	55	react/jsx-no-constructed-context-values	withIdentifierMsg	The "foo" object (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-009.tsx
+        53	55	react/jsx-no-constructed-context-values	withIdentifierMsg	The "foo" object (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-010.tsx
+        58	60	react/jsx-no-constructed-context-values	withIdentifierMsg	The "foo" object (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-011.tsx
+        44	46	react/jsx-no-constructed-context-values	withIdentifierMsg	The "foo" object (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-012.tsx
+        44	46	react/jsx-no-constructed-context-values	withIdentifierMsg	The "foo" object (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-013.tsx
+        61	63	react/jsx-no-constructed-context-values	withIdentifierMsg	The "a" object (at line 4) passed as the value prop to the Context provider (at line 6) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-014.tsx
+        65	67	react/jsx-no-constructed-context-values	withIdentifierMsg	The "bar" object (at line 4) passed as the value prop to the Context provider (at line 6) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-015.tsx
+        79	81	react/jsx-no-constructed-context-values	withIdentifierMsg	The "bar" object (at line 4) passed as the value prop to the Context provider (at line 5) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-016.tsx
+        67	79	react/jsx-no-constructed-context-values	defaultMsg	The object passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-017.tsx
+        51	63	react/jsx-no-constructed-context-values	withIdentifierMsg	The "Wrapper" JSX element (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-018.tsx
+        52	64	react/jsx-no-constructed-context-values	withIdentifierMsg	The "someRegex" regular expression (at line 2) passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-019.tsx
+        93	101	react/jsx-no-constructed-context-values	withIdentifierMsg	The "bar" assignment expression (at line 5) passed as the value prop to the Context provider (at line 6) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-020.tsx
+        136	153	react/jsx-no-constructed-context-values	withIdentifierMsgFunc	The "foo" function declaration (at line 7) passed as the value prop to the Context provider (at line 8) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useCallback hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-021.tsx
+        98	100	react/jsx-no-constructed-context-values	withIdentifierMsg	The "foo" object (at line 4) passed as the value prop to the Context provider (at line 4) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-022.tsx
+        112	124	react/jsx-no-constructed-context-values	defaultMsg	The object passed as the value prop to the Context provider (at line 4) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-023.tsx
+        file	/tmp/wave28-context-gate/control-024.tsx
+        file	/tmp/wave28-context-gate/control-025.tsx
+        file	/tmp/wave28-context-gate/control-026.tsx
+        file	/tmp/wave28-context-gate/control-027.tsx
+        file	/tmp/wave28-context-gate/control-028.tsx
+        file	/tmp/wave28-context-gate/control-029.tsx
+        file	/tmp/wave28-context-gate/control-030.tsx
+        file	/tmp/wave28-context-gate/control-031.tsx
+        file	/tmp/wave28-context-gate/control-032.tsx
+        file	/tmp/wave28-context-gate/control-033.tsx
+        file	/tmp/wave28-context-gate/control-034.tsx
+        file	/tmp/wave28-context-gate/control-035.tsx
+        file	/tmp/wave28-context-gate/control-036.tsx
+        file	/tmp/wave28-context-gate/control-037.tsx
+        file	/tmp/wave28-context-gate/control-038.tsx
+        file	/tmp/wave28-context-gate/control-039.tsx
+        file	/tmp/wave28-context-gate/control-040.tsx
+        file	/tmp/wave28-context-gate/control-041.tsx
+        file	/tmp/wave28-context-gate/control-042.tsx
+        62	68	react/jsx-no-constructed-context-values	defaultMsg	The object passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-043.tsx
+        67	73	react/jsx-no-constructed-context-values	defaultMsg	The object passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-044.tsx
+        file	/tmp/wave28-context-gate/control-045.tsx
+        file	/tmp/wave28-context-gate/control-046.tsx
+        file	/tmp/wave28-context-gate/control-047.tsx
+        file	/tmp/wave28-context-gate/control-048.tsx
+        file	/tmp/wave28-context-gate/control-049.tsx
+        file	/tmp/wave28-context-gate/control-050.tsx
+        file	/tmp/wave28-context-gate/control-051.tsx
+        file	/tmp/wave28-context-gate/control-052.tsx
+        file	/tmp/wave28-context-gate/control-053.tsx
+        file	/tmp/wave28-context-gate/control-056.tsx
+        file	/tmp/wave28-context-gate/control-057.tsx
+        file	/tmp/wave28-context-gate/control-058.tsx
+        62	70	react/jsx-no-constructed-context-values	defaultMsgFunc	The function expression passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useCallback hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-059.tsx
+        46	52	react/jsx-no-constructed-context-values	withIdentifierMsg	The "v" object (at line 3) passed as the value prop to the Context provider (at line 4) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-060.tsx
+        36	51	react/jsx-no-constructed-context-values	withIdentifierMsgFunc	The "v" function declaration (at line 3) passed as the value prop to the Context provider (at line 4) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useCallback hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-062.tsx
+        70	76	react/jsx-no-constructed-context-values	defaultMsg	The object passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-063.tsx
+        66	72	react/jsx-no-constructed-context-values	defaultMsg	The object passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-064.tsx
+        62	68	react/jsx-no-constructed-context-values	defaultMsg	The object passed as the value prop to the Context provider (at line 2) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-065.tsx
+        64	70	react/jsx-no-constructed-context-values	defaultMsg	The object passed as the value prop to the Context provider (at line 3) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useMemo hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-066.tsx
+        64	72	react/jsx-no-constructed-context-values	defaultMsgFunc	The function expression passed as the value prop to the Context provider (at line 3) changes every render, so every consumer of this context re-renders on every render of this component even when nothing it reads has changed. Wrap it in a useCallback hook so the identity is stable between renders.	0	0
+        file	/tmp/wave28-context-gate/control-067.tsx
+        
+        adamic: panic: cannot read bundled:///libs/lib.es5.d.ts: no such file
+--- FAIL: TestContextAgreement (26.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware/wave28_fifth	26.181s
+FAIL

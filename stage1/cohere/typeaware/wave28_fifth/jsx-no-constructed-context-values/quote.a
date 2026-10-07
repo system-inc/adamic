@@ -1,0 +1,25 @@
+// strconv's quoted-string vocabulary, including non-printable Unicode and Go's control escapes.
+export function quote(text: string): string {
+ let result='"';
+ for(let at=0;at<text.length;at++) {
+  const code=text.codePointAt(at)??0;const character=String.fromCodePoint(code);if(code>65535){at++;}
+  switch(code) {
+   case 34:result+='\\"';break;
+   case 92:result+='\\\\';break;
+   case 7:result+='\\a';break;
+   case 8:result+='\\b';break;
+   case 12:result+='\\f';break;
+   case 10:result+='\\n';break;
+   case 13:result+='\\r';break;
+   case 9:result+='\\t';break;
+   case 11:result+='\\v';break;
+   default: {
+    if(/^[\p{L}\p{M}\p{N}\p{P}\p{S} ]$/u.test(character)){result+=character;}
+    else if(code<256){result+=`\\x${code.toString(16).padStart(2,'0')}`;}
+    else if(code<=65535){result+=`\\u${code.toString(16).padStart(4,'0')}`;}
+    else{result+=`\\U${code.toString(16).padStart(8,'0')}`;}
+   }
+  }
+ }
+ return result+'"';
+}

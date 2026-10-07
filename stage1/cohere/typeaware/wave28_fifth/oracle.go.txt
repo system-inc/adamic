@@ -104,6 +104,9 @@ func main() {
 		return
 	}
 	countOnly := len(args) > 2 && args[2] == "--count"
+	if slices.Contains(args, "--context") {
+		coverageNames = map[string]bool{"react/jsx-no-constructed-context-values": true}
+	}
 	if slices.Contains(args, "--only-undef") {
 		coverageNames = map[string]bool{"react/jsx-no-undef": true}
 	}

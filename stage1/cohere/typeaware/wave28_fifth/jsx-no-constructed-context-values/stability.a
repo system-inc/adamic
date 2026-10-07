@@ -1,0 +1,71 @@
+import { quote } from './quote.a';
+import { Ast } from './ast.a';
+
+export class Fresh {
+ readonly origin: number;readonly reason: string;dependency: number;
+ constructor(origin: number,reason='',dependency=-1){this.origin=origin;this.reason=reason;this.dependency=dependency;}
+}
+export class Evaluation {
+ fresh: Fresh | undefined;other: boolean;holders: number[];
+ constructor(fresh: Fresh | undefined=undefined,other=false,holders: number[]=[]){this.fresh=fresh;this.other=other;this.holders=holders;}
+ combine(other: Evaluation): Evaluation{return new Evaluation(this.fresh??other.fresh,this.other||other.other,this.holders.concat(other.holders));}
+}
+export function constructionKind(kind: string): string {
+ switch(kind){case 'ObjectLiteralExpression':return 'object';case 'ArrayLiteralExpression':return 'array';case 'ArrowFunction':case 'FunctionExpression':return 'function expression';case 'ClassExpression':return 'class expression';case 'NewExpression':return 'new expression';case 'RegularExpressionLiteral':return 'regular expression';case 'JsxElement':case 'JsxSelfClosingElement':return 'JSX element';case 'JsxFragment':return 'JSX fragment';default:return '';}
+}
+export class Stability {
+ readonly ast: Ast;readonly render: number;readonly active=new Set<number>();
+ constructor(ast: Ast,render: number){this.ast=ast;this.render=render;}
+ unknown(): Evaluation{return new Evaluation(undefined,true);}
+ runs(owner: number,scope: number): boolean{if(owner<0){return false;}if(owner===scope){return true;}const chain: number[]=[];for(let at=scope;at>=0;at=this.ast.nearest(at)){chain.push(at);if(at===this.render){break;}}return chain[chain.length-1]===this.render && chain.includes(owner);}
+ renderConst(id: number,scope: number): number {const ast=this.ast;const declaration=ast.symbol(id).declarations[0]??-1;if(declaration<0||!this.runs(ast.nearest(declaration),scope)){return -1;}if(ast.kind(declaration)==='FunctionDeclaration'){return declaration;}return ast.kind(declaration)==='VariableDeclaration'&&ast.constant(declaration)?declaration:-1;}
+ memoOf(id: number,scope: number): number{const ast=this.ast;const value=ast.unwrap(id);if(value<0){return -1;}if(ast.hook(value)!==''){return value;}if(ast.kind(value)!=='Identifier'){return -1;}const declaration=this.renderConst(value,scope);if(ast.kind(declaration)!=='VariableDeclaration'){return -1;}const initialized=ast.unwrap(ast.initializer(declaration));return ast.hook(initialized)===''?-1:initialized;}
+ memo(id: number,scope: number,depth: number): Evaluation {
+  const ast=this.ast;if(depth>8||this.active.has(id)){return this.unknown();}this.active.add(id);const args=ast.args(id);let finding: Fresh | undefined=undefined;
+  if(args.length===1){finding=new Fresh(id);}else if(args.length>1){const list=ast.unwrap(args[1]??-1);if(ast.kind(list)==='ArrayLiteralExpression'){for(const child of ast.children(list)){const candidate=this.dependency(child,scope,depth+1);if(candidate!==undefined){finding=candidate;break;}}}}
+  if(finding===undefined){this.active.delete(id);return this.unknown();}
+  if(ast.hook(id)==='useCallback'){this.active.delete(id);return new Evaluation(finding);}
+  const factory=ast.unwrap(args[0]??-1);if(!['ArrowFunction','FunctionExpression'].includes(ast.kind(factory))){this.active.delete(id);return this.unknown();}
+  const value=this.functionEvaluation(factory,depth+1);this.active.delete(id);return value.fresh===undefined?this.unknown():new Evaluation(finding,value.other);
+ }
+ dependency(id: number,scope: number,depth: number): Fresh | undefined{const result=this.evaluate(id,scope,depth);if(result.fresh===undefined||result.other&&this.escapes(result.holders,true)){return undefined;}return new Fresh(result.fresh.origin,result.fresh.reason,id);}
+ evaluate(id: number,scope: number,depth: number): Evaluation {
+  const ast=this.ast;const node=ast.unwrap(id);if(node<0){return new Evaluation();}if(depth>8){return this.unknown();}if(ast.primitive(node)){return new Evaluation();}const kind=constructionKind(ast.kind(node));if(kind!==''){return new Evaluation(new Fresh(node,`is a new ${kind} built during render`));}
+  switch(ast.kind(node)) {
+   case 'ConditionalExpression':return this.evaluate(ast.child(node,2),scope,depth+1).combine(this.evaluate(ast.child(node,4),scope,depth+1));
+   case 'BinaryExpression':{
+    const operator=ast.operator(node);if(['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(operator)){return this.evaluate(ast.child(node,0),scope,depth+1).combine(this.evaluate(ast.child(node,2),scope,depth+1));}
+    if(operator==='CommaToken'){return this.evaluate(ast.child(node,2),scope,depth+1);}if(operator==='EqualsToken'){const target=ast.unwrap(ast.child(node,0));const local=this.local(target,scope);if(local<0){return this.unknown();}const result=this.evaluate(ast.child(node,2),scope,depth+1);if(result.fresh!==undefined){result.holders.push(local);}return result;}return this.unknown();
+   }
+   case 'CallExpression':{
+    const hook=ast.hook(node);if(hook===''){return this.call(node,depth+1);}const inner=this.memo(node,scope,depth+1);if(inner.fresh===undefined){return this.unknown();}const fresh=inner.fresh;const reason=fresh.dependency<0?`comes from a ${hook} with no dependency list`:`comes from a ${hook} whose own dependency ${quote(ast.raw(fresh.dependency))} ${fresh.reason}`;return new Evaluation(new Fresh(fresh.origin,reason),inner.other);
+   }
+   case 'Identifier':{
+    const declaration=this.renderConst(node,scope);if(declaration<0||this.active.has(declaration)){return this.unknown();}if(ast.kind(declaration)==='FunctionDeclaration'){return new Evaluation(new Fresh(declaration,'is a function declared during render'),false,[declaration]);}this.active.add(declaration);const result=this.evaluate(ast.initializer(declaration),scope,depth+1);this.active.delete(declaration);if(result.fresh!==undefined){result.holders.push(declaration);}return result;
+   }
+   default:return this.unknown();
+  }
+ }
+ local(id: number,scope: number): number{const ast=this.ast;if(ast.kind(id)!=='Identifier'){return -1;}const declaration=ast.symbol(id).declarations[0]??-1;return ast.kind(declaration)==='VariableDeclaration'&&ast.nearest(declaration)===scope?declaration:-1;}
+ call(id: number,depth: number): Evaluation {
+  const ast=this.ast;const callee=ast.signature(id);if(callee<0){return this.unknown();}const expression=ast.unwrap(ast.child(id,0));const name=ast.kind(expression)==='Identifier'?ast.text(expression):ast.kind(expression)==='PropertyAccessExpression'?ast.text(ast.last(expression)):'the call';const children=ast.children(callee);
+  if(children.some((child)=>ast.kind(child)==='AsyncKeyword')){return new Evaluation(new Fresh(callee,`is the result of \`${name}(...)\`, an async function, which returns a new promise on every call`));}
+  if(['FunctionDeclaration','FunctionExpression','MethodDeclaration'].includes(ast.kind(callee))&&children.some((child)=>ast.kind(child)==='AsteriskToken')){return new Evaluation(new Fresh(callee,`is the result of \`${name}(...)\`, a generator, which returns a new iterator on every call`));}
+  const result=this.functionEvaluation(callee,depth+1);if(result.fresh!==undefined){result.fresh=new Fresh(result.fresh.origin,`is the result of \`${name}(...)\`, which can return a new value on every call`);}return result;
+ }
+ returns(id: number,scope: number,depth: number): Evaluation {
+  const ast=this.ast;if(ast.kind(id)==='ReturnStatement'){return this.evaluate(ast.child(id,0),scope,depth+1);}if(ast.function(id)||['ClassDeclaration','ClassExpression'].includes(ast.kind(id))){return new Evaluation();}let result=new Evaluation();for(const child of ast.children(id)){result=result.combine(this.returns(child,scope,depth));}return result;
+ }
+ functionEvaluation(id: number,depth: number): Evaluation {
+  const ast=this.ast;const body=ast.body(id);if(depth>8||this.active.has(id)||body<0){return this.unknown();}this.active.add(id);let result=new Evaluation();if(ast.kind(body)!=='Block'){result=this.evaluate(body,id,depth+1);}else{for(const child of ast.children(body)){result=result.combine(this.returns(child,id,depth));}}
+  const own: number[]=[];const enclosing: number[]=[];for(const holder of result.holders){if(ast.nearest(holder)===id){own.push(holder);}else{enclosing.push(holder);}}if(result.fresh!==undefined&&result.other&&this.escapes(own,false)){result.fresh=undefined;}result.holders=enclosing;this.active.delete(id);return result;
+ }
+ escapedReference(id: number,name: number,symbol: number,scope: number,render: boolean): boolean{const ast=this.ast;if(ast.kind(id)==='Identifier'&&id!==name&&ast.symbol(id).id===symbol&&!this.home(id,scope,render)){return true;}for(const child of ast.children(id)){if(this.escapedReference(child,name,symbol,scope,render)){return true;}}return false;}
+ escapes(holders: number[],render: boolean): boolean{const ast=this.ast;for(const holder of holders){const scope=ast.nearest(holder);const body=ast.body(scope);const name=ast.name(holder);if(scope<0||body<0||name<0){return true;}const symbol=ast.symbol(name).id;if(symbol===0||this.escapedReference(body,name,symbol,scope,render)){return true;}}return false;}
+ factory(id: number): boolean{const parent=this.ast.parent(id);return this.ast.hook(parent)!==''&&this.ast.args(parent)[0]===id;}
+ memoResult(id: number): boolean{const ast=this.ast;let expression=id;while(ast.kind(ast.parent(expression))==='ParenthesizedExpression'){expression=ast.parent(expression);}const parent=ast.parent(expression);return ast.kind(parent)==='ArrowFunction'&&ast.body(parent)===expression&&this.factory(parent)||ast.kind(parent)==='ReturnStatement'&&this.factory(ast.nearest(parent));}
+ home(id: number,scope: number,render: boolean): boolean {
+  const ast=this.ast;let expression=id;while(['ParenthesizedExpression','AsExpression','SatisfiesExpression','NonNullExpression'].includes(ast.kind(ast.parent(expression)))){expression=ast.parent(expression);}const parent=ast.parent(expression);const kind=ast.kind(parent);const owner=ast.nearest(expression);const own=owner===scope||render&&this.factory(owner);
+  switch(kind){case 'ReturnStatement':return own;case 'ArrowFunction':return ast.body(parent)===expression&&(parent===scope||render&&this.factory(parent));case 'PropertyAccessExpression':case 'ElementAccessExpression':return ast.child(parent,0)===expression&&!(ast.kind(ast.parent(parent))==='CallExpression'&&ast.child(ast.parent(parent),0)===parent);case 'BinaryExpression':{const operator=ast.operator(parent);return operator==='EqualsToken'?ast.child(parent,0)===expression:['EqualsEqualsEqualsToken','ExclamationEqualsEqualsToken','EqualsEqualsToken','ExclamationEqualsToken','InstanceOfKeyword'].includes(operator);}case 'PrefixUnaryExpression':return ast.operator(parent)==='ExclamationToken';case 'TypeOfExpression':return true;case 'IfStatement':return ast.child(parent,0)===expression;case 'ArrayLiteralExpression':return render&&ast.hook(ast.parent(parent))!==''&&ast.args(ast.parent(parent))[1]===parent;case 'ShorthandPropertyAssignment':return render&&this.memoResult(ast.parent(parent));case 'PropertyAssignment':return render&&ast.last(parent)===expression&&this.memoResult(ast.parent(parent));default:return false;}
+ }
+}

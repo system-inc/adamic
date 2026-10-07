@@ -24,9 +24,6 @@ func TestSharedParserReadiness(t *testing.T) {
 		t.Fatal(err)
 	}
 	stage0 := os.Getenv("ADAMIC_WAVE28_STAGE0")
-	if stage0 == "" {
-		t.Skip("set ADAMIC_WAVE28_STAGE0 to run native parser readiness reproduction")
-	}
 	write := func(name, text string) string {
 		path := filepath.Join(directory, name)
 		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
@@ -59,6 +56,12 @@ func TestSharedParserReadiness(t *testing.T) {
 			t.Fatal(err)
 		}
 		return stdout, stderr, failure
+	}
+	if stage0 == "" {
+		stage0 = filepath.Join(directory, "adamic")
+		if _, stderr, err := run("stage0-build", exec.Command("go", "build", "-o", stage0, "./cmd/adamic")); err != nil {
+			t.Fatalf("stage0 build: %v %s", err, stderr)
+		}
 	}
 	binary := filepath.Join(directory, "parser-probe")
 	if _, stderr, err := run("native-build", exec.Command(stage0, "build", filepath.Join(repository, "stage1/cohere/typeaware/wave28_fifth/parser_probe.a"), "-o", binary)); err != nil {
