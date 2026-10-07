@@ -216,3 +216,5 @@ mutation tests pass. Owned rule/checker sources are unchanged. Existing dynamic
 RegExp and checker-context/JavaScript gaps remain; the three analysis claims are
 parked. No available ranked rule remains and no new claim is made. Fresh evidence
 is in rules/wave-22-seventh/LANDING_REGISTRY_B46914832.md.
+
+Landing refresh: rebased onto area d3a37422c including main b6b1538b0. All eighteen existing ports re-green; full evidence in rules/wave-22-seventh/LANDING_TYPEOF_B6B1538B0.md. No new reservation: all 197 ranked rules accounted for across 653 origin refs. Existing dynamic RegExp, shared checker/JavaScript and parked React analysis gaps remain.
