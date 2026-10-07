@@ -1,0 +1,22 @@
+import type { State } from './enter.a';
+
+// The AST adapter hands the inspected list and its original node identities to this walker.
+export class ArgumentNode {
+    readonly index: number;
+    readonly kind: number;
+    readonly pos: number;
+    readonly end: number;
+    constructor(index: number, kind: number, pos: number, end: number) {
+        this.index = index;
+        this.kind = kind;
+        this.pos = pos;
+        this.end = end;
+    }
+}
+export type ExpressionHandoff = (state: State, node: ArgumentNode | undefined) => void;
+
+export function typeArguments(nodes: readonly (ArgumentNode | undefined)[], state: State, expression: ExpressionHandoff): void {
+    for(let index = 0; index < nodes.length; index++) {
+        expression(state, nodes[index]);
+    }
+}

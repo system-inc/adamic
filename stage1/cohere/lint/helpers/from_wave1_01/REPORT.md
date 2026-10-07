@@ -1,8 +1,8 @@
-Built: enterDisconnected and isThrowableIdentifier; six helpers total, twenty-four prerequisites across four rules.
-Commits: claims 0fb1cc406 and 7fb957e4d pushed before code; disconnected entry 7f103900a; parked rules 092de10ce; final implementation and evidence follow.
-Checks: full touched package PASS 58.437s, 30,746 actual Go observations and 151,542 bytes per backend; vet and uncached compiler input oracle PASS.
-Mutants: thirteen compiling semantic mutants caught solely by output comparison on source Node, emitted JavaScript and ASan/UBSan native.
-Not covered: complete CFG/AST/rule integration, zero complete rules unblocked, invalid nil-pointer panic bytes, exhaustive contexts, full repository/corpus gate or throughput.
+Built: reachedStatement and typeArguments; eight .a helpers total, thirty-two prerequisite entries across four rules.
+Commits: both branches rebased onto main b8fb957aa and re-green; parked rules 0a642ff72; claims 7c973d706 and a3e8d8b9e pushed before code; statement helper f70eb4dfc.
+Checks: full touched helper package PASS 101.194s, 40,498 actual Go observations and 316,464 bytes per backend; vet and uncached input oracle PASS.
+Mutants: seventeen helper semantic mutants compile/run then comparison alone kills them on source Node, emitted JavaScript and ASan/UBSan native; fourteen parked-rule mutants re-green.
+Not covered: complete CFG/AST/rule integration or opaque callback bodies, zero complete rules unblocked, invalid panic bytes, full repository/corpus gate or throughput.
 
 Observed calls: array-callback-return 79 (632 bytes), consistent-return 123 (984 bytes), no-unreachable-loop 8,861 (70,936 bytes), react-hooks/rules-of-hooks 495 (4,309 bytes), controls 120 (960 bytes), identical on each backend. Four helper prerequisite edges removed across these exact four rules; zero complete rule blocker sets removed. The helper takes a handed block and reads no syntax kinds.
 
@@ -92,3 +92,20 @@ Rebased cleanly onto current origin/main b8fb957aa, preserving inherited-static-
 ## Seventh helper
 
 Claim 7c973d706 pushed before code after both own branches rebased, re-green and pushed on main b8fb957aa. Audited 587 origin refs and 20 distinct helper claim blobs plus HELPERS.md; reachedStatement ties maximum available four-consumer fan-out. TestStatementHandoffMatchesGo PASS 35.620s. Actual Go invocation arguments, callback count and builder/node identity match on source Node, emitted JavaScript and sanitized native for all four consumer suites plus 72 independent controls. The actual hook body runs unchanged in Go; Adamic uses an observation hook because opaque consumer callback semantics are outside this helper. Invoking twice and discarding the handed node mutants compile/run successfully, then only byte comparison catches them on every backend. Four additional prerequisite entries removed, twenty-eight cumulative; zero complete rules unblocked. No syntax dispatch, shared harness or regex changes.
+
+## Eighth helper and fourth full gate
+
+Claim a3e8d8b9e pushed before code after statement helper green/pushed at f70eb4dfc. Audit checked 592 origin refs, all 20 distinct helper claim blobs and HELPERS.md reservations. popJump was already claimed, so no claim or implementation was made for it. typeArguments ties highest available fan-out at four, with the same four consumers. Both own branches retain current-main b8fb957aa ancestry and pushed fresh green scoped evidence; rule branch 0a642ff72 stays parked with the ten named unowned ab70f38d4 harness conflicts. No shared file modified or developer-tool change reverted.
+
+Actual Go typeArguments observations/output bytes per backend: array-callback-return 24/148, consistent-return 12/136, no-unreachable-loop 602/726, react-hooks/rules-of-hooks 189/313, controls 122/6,818. Total 949 observations and 8,141 bytes. Existing consumer fixtures only exercised empty lists; the retained initial log records that limit. Four explicitly supplementary generic forms per rule now exercise non-empty lists, and a capture assertion refuses a consumer with no non-empty observations. Controls cover ordered nullable/repeated type-reference identities. Expression callees run unchanged in Go; the Adamic observation callback holds the handoff contract only. Skipped-first and reversed-order mutants compile/run then only comparison kills them on every backend.
+
+Exact final commands, output redirected to retained batch4 logs:
+
+    source /workspace/adamic-tools/env.sh
+    go test ./stage1/cohere/lint/helpers/from_wave1_01 -count=1 -timeout 15m -v
+    go vet ./stage1/cohere/lint/helpers/from_wave1_01
+    ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -timeout 10m -v
+
+Full eight-helper package PASS 101.194s; vet silent success; uncached input oracle PASS 0.976s, six probe misses. Eight helpers hold 40,498 Go observations and 316,464 bytes per backend. All seventeen semantic mutants compile and execute successfully before comparison catches them across 51 backend checks: retained reachability; retained current block; outermost finally; skipped frame zero; outermost exception handler; inverted catch/finally predicate; catch selected outside try; finally instead of catch; ignored current reachability; discarded incoming edges; reversed declaration-name polarity; removed rest-binding exemption; inverted JSX tag identity; duplicated statement hook; discarded handed statement node; skipped first type argument; reversed type-argument order.
+
+Both new helpers remove four prerequisite entries each from array-callback-return, consistent-return, no-unreachable-loop and react-hooks/rules-of-hooks. Eight new entries, thirty-two cumulative; zero complete rules unblocked. Opaque callback bodies, AST projection and graph adapters remain caller-owned. No regex or node-kind string relevance dispatch introduced. All new Adamic source files are .a. No speed, whole-rule finding/fix or complete repository/corpus claim. Setup ready lines all 0s, cache warm and total 79s, nproc 5. Pinned cohere 715ba94f3608a6500086b1076ce5cb7e51b836db. Regenerating captures and test logs use temporary directories; untracked .generated registry output is not committed. No further helper reserved after this completed pair.

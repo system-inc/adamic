@@ -1,0 +1,15 @@
+=== RUN   TestTypeArgumentsMatchesGo
+    type_arguments_test.go:49: array-callback-return: 20 actual Go calls, 20 bytes per backend
+    type_arguments_test.go:49: consistent-return: 8 actual Go calls, 8 bytes per backend
+    type_arguments_test.go:49: no-unreachable-loop: 598 actual Go calls, 598 bytes per backend
+    type_arguments_test.go:49: react-hooks_rules-of-hooks: 181 actual Go calls, 181 bytes per backend
+    type_arguments_test.go:49: controls: 122 actual Go calls, 6534 bytes per backend
+    type_arguments_test.go:91: first type argument skipped compiles and runs; comparison alone catches side 0
+    type_arguments_test.go:91: first type argument skipped compiles and runs; comparison alone catches side 1
+    type_arguments_test.go:91: first type argument skipped compiles and runs; comparison alone catches side 2
+    type_arguments_test.go:91: type argument order reversed compiles and runs; comparison alone catches side 0
+    type_arguments_test.go:91: type argument order reversed compiles and runs; comparison alone catches side 1
+    type_arguments_test.go:91: type argument order reversed compiles and runs; comparison alone catches side 2
+--- PASS: TestTypeArgumentsMatchesGo (34.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_01	34.643s

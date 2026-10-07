@@ -1,0 +1,43 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { State } from './enter.a';
+import { ArgumentNode, typeArguments } from './type_arguments.a';
+
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('missing input'));
+if(input.kind === 'Error') { panic(input.message); }
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const nodes: (ArgumentNode | undefined)[] = [];
+    const pool: ArgumentNode[] = [];
+    if(line !== '.') {
+        for(const item of line.split(',')) {
+            const fields = item.split(':');
+            const index = Number(fields[0]);
+            let node: ArgumentNode | undefined = undefined;
+            if(index >= 0) {
+                for(const existing of pool) { if(existing.index === index) { node = existing; } }
+                if(node === undefined) {
+                    node = new ArgumentNode(index, Number(fields[1]), Number(fields[2]), Number(fields[3]));
+                    pool.push(node);
+                }
+            }
+            nodes.push(node);
+        }
+    }
+    const state = new State();
+    const trace: string[] = [];
+    typeArguments(nodes, state, (actualState: State, node: ArgumentNode | undefined): void => {
+        let index = -1;
+        let kind = -1;
+        let pos = -1;
+        let end = -1;
+        if(node !== undefined) {
+            index = node.index;
+            kind = node.kind;
+            pos = node.pos;
+            end = node.end;
+        }
+        trace.push(`${index}:${kind}:${pos}:${end}:${actualState === state ? 1 : 0}:${nodes.includes(node) ? 1 : 0}`);
+    });
+    console.log(trace.join(','));
+}
