@@ -1,0 +1,21 @@
+// Numeric AST snapshot links supplied once by the parser/driver, not lint verdicts.
+export class NumericTag {
+    readonly identity: number;
+    readonly kind: number;
+    readonly text: string;
+    readonly receiver: number;
+    readonly name: number;
+    readonly arguments_: readonly number[];
+    readonly start: number;
+    readonly end: number;
+    constructor(identity: number, kind: number, text: string, receiver: number, name: number, start = 0, end = 1, arguments_: readonly number[] = []) {
+        this.identity = identity;
+        this.kind = kind;
+        this.text = text;
+        this.receiver = receiver;
+        this.name = name;
+        this.arguments_ = arguments_;
+        this.start = start;
+        this.end = end;
+    }
+}

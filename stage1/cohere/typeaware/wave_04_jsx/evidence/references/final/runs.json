@@ -1,0 +1,110 @@
+[
+  {
+    "label": "go",
+    "exit": 0,
+    "stdout_bytes": 148,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "build-normal",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "run-normal",
+    "exit": 0,
+    "stdout_bytes": 2045,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "build-asan",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "run-asan",
+    "exit": 0,
+    "stdout_bytes": 2045,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "source-node",
+    "exit": 0,
+    "stdout_bytes": 2045,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "emit",
+    "exit": 0,
+    "stdout_bytes": 68271,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "emitted-js",
+    "exit": 0,
+    "stdout_bytes": 2045,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_fragments-0-mutant-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_fragments-0-mutant-run",
+    "exit": 0,
+    "stdout_bytes": 2047,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_fragments-1-mutant-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_fragments-1-mutant-run",
+    "exit": 0,
+    "stdout_bytes": 2047,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_fragments-2-mutant-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_fragments-2-mutant-run",
+    "exit": 0,
+    "stdout_bytes": 2046,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_undef-3-mutant-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_undef-3-mutant-run",
+    "exit": 0,
+    "stdout_bytes": 2049,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_constructed_context_values-4-mutant-build",
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0
+  },
+  {
+    "label": "jsx_no_constructed_context_values-4-mutant-run",
+    "exit": 0,
+    "stdout_bytes": 2047,
+    "stderr_bytes": 0
+  }
+]

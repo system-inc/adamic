@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_04_jsx/validate_references.py", line 34, in <module>
+    run(folder+'-mutant-build',[a.adamic,'build',probe,'-o',out/(folder+'-mutant'),'--sanitize']);actual,error=run(folder+'-mutant-run',[out/(folder+'-mutant')]);assert actual!=truth and not error,'mutant survived or failed outside comparison'
+                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/typeaware/wave_04_jsx/validate_references.py", line 10, in run
+    if result.returncode:raise RuntimeError(str(runs[-1]))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: {'label': 'jsx_no_constructed_context_values-mutant-run', 'exit': 70, 'stdout_bytes': 713, 'stderr_bytes': 48}

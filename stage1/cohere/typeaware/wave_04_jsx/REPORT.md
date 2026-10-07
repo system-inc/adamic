@@ -85,3 +85,64 @@ Go 0.127645 s; concurrent validation means these are single-run observations.
 The new claims remain unfinished and reserved to wave-04. No fourth rule was
 claimed. The parked HIR claims remain reserved, with #dnv6f2c and JSX prerequisites
 named in claims/wave-04.md.
+
+## Numeric JSX tag-reference and factory helpers
+
+The three existing claims now include additional production-Go-held helpers.
+`NumericTag` holds numeric SyntaxKind, identity, child links, text and generic
+call argument links. Helpers act on the root they receive and descend only into
+its children; they do not refetch that root from a parser or compare kind strings.
+
+- No-undef reference selection accepts a bare component name, or the leftmost
+  identifier of a member chain at any case. Namespaced and `this`-rooted tags
+  decline. Identity is preserved rather than replaced with the property's span.
+- Qualified fragment recognition requires exactly `React.Fragment`, with both
+  identifier kinds checked. A deeper qualifier declines. Fragment initializer
+  recognition accepts bare React, that qualified name and a bare require call
+  whose first string-like argument is exactly react (including a no-substitution
+  template); preact, missing arguments and unrelated callees decline.
+- Context factory recognition accepts bare createContext and React.createContext,
+  unwrapping parentheses around the callee and receiver, matching Go's helper.
+
+The owned Go overlay constructs real pinned AST nodes using NodeFactory and
+calls production `resolvableJsxReference`, `jsxFragmentsNameIsFragment` (qualified
+routes only), `jsxFragmentsInitializerIsFragmentSource` and
+`jsxNoConstructedContextValuesIsCreateContextCallee`. It does not copy predicates.
+Forty-two numeric AST nodes produce 152 records / 2,045 identical bytes across
+native, ASan/UBSan/leaks, source Node and emitted JavaScript, all with empty
+backend stderr. `validate_references.py` prints PASS. The earlier partial
+reporting validator was rerun and PASS: 56 / 4,941 bytes, its three comparison
+mutants and three removed-refusal mutants.
+
+Five sanitized reference mutants compile, exit zero and have empty stderr; only
+Go bytes catch them: qualified React receiver changed to Other; require module
+react changed to preact; template literal numeric kind 14 changed to 8;
+member-root reference incorrectly subjected to the bare-name case predicate;
+receiver-parentheses unwrapping disabled by changing kind 218 to 8. The initial
+unwrapping mutant used kind 109 and panicked on a this receiver. That failure
+was not counted and is retained; the replacement mutant fails only comparison.
+The first generated empty-array call arguments hit stage 0's array-of-never
+refusal. Explicitly typed numeric argument arrays resolved it without compiler
+edits.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_04_jsx/validate_references.py /workspace/typeaware-wave-04-jsx/references/final > /workspace/typeaware-wave-04-jsx/references/final.log 2>&1
+python3 stage1/cohere/typeaware/wave_04_jsx/validate_partial.py /workspace/typeaware-wave-04-jsx/references/reporting > /workspace/typeaware-wave-04-jsx/references/reporting.log 2>&1
+```
+
+Exact controls, hashes, backend and mutant streams are under
+`evidence/references`. No Go regular expression occurs in these ported helpers;
+no hand-rolled regex matcher was introduced. Character classification follows
+Go's explicit non-regex component-name predicate. No position conversion was
+added: source span placement remains outside these partial kernels.
+
+Remaining blockers are unchanged shared numeric JSX integration (the current
+parser probe still exits 70) and own rule work: symbol/declaration binding,
+attribute judgment, final source spans and constructed-context component,
+recursive construction and stability/escape decisions. Numeric tag selection
+and the structural/initializer helpers listed above are now covered, superseding
+those entries in the earlier unported list. Source `run(node)` still explicitly
+refuses execution. No full corpus parity, full-rule mutants, checker-handle
+integration, fresh throughput or full repository gate is claimed. No new claims.
+Main remains f8013f0b, with the earlier six completed-rule landing oracles green.

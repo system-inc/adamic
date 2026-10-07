@@ -1,5 +1,6 @@
 import { panic } from 'adamic';
 import { Diagnostic } from '../../diagnostic.ts';
+import type { NumericTag } from '../numeric_tag.a';
 export const listenerKinds: readonly number[] = [285,286,289];
 // The shared driver hands this rule one numeric-kind node; no parser lookup.
 export class FragmentNode {
@@ -9,6 +10,21 @@ export class FragmentNode {
     constructor(kind: number, start: number, end: number) { this.kind = kind; this.start = start; this.end = end; }
 }
 export class JsxFragments {
+    qualifiedFragment(node: NumericTag, tree: readonly NumericTag[]): boolean {
+        if(node.kind !== 212) { return false; }
+        const receiver = tree[node.receiver] ?? panic('missing fragment receiver');
+        const name = tree[node.name] ?? panic('missing fragment name');
+        return receiver.kind === 79 && receiver.text === 'React' && name.kind === 79 && name.text === 'Fragment';
+    }
+    fragmentSource(node: NumericTag, tree: readonly NumericTag[]): boolean {
+        if(node.kind === 79) { return node.text === 'React'; }
+        if(node.kind === 212) { return this.qualifiedFragment(node,tree); }
+        if(node.kind !== 214) { return false; }
+        const callee = tree[node.receiver] ?? panic('missing fragment source callee');
+        if(callee.kind !== 79 || callee.text !== 'require' || node.arguments_.length === 0) { return false; }
+        const argument = tree[node.arguments_[0] ?? -1] ?? panic('missing fragment source argument');
+        return (argument.kind === 10 || argument.kind === 14) && argument.text === 'react';
+    }
     report(node: FragmentNode, preferElement: boolean): Diagnostic {
         const id = preferElement ? 'preferPragma' : 'preferFragment';
         const message = preferElement ? "Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`." : "Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.";

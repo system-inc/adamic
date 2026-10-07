@@ -1,12 +1,26 @@
 import { panic } from 'adamic';
 import { Diagnostic } from '../../diagnostic.ts';
 import type { SyntaxNodeInterface } from '../syntax_node.a';
+import type { NumericTag } from '../numeric_tag.a';
 export const listenerKinds: readonly number[] = [286,287];
 export class JsxNoUndef {
     componentName(name: string): boolean {
         if(name.length === 0 || name.includes('-')) { return false; }
         const first = name.charCodeAt(0);
         return first < 97 || first > 122;
+    }
+    reference(node: NumericTag, tree: readonly NumericTag[]): number {
+        if(node.kind === 79) {
+            return this.componentName(node.text) ? node.identity : -1;
+        }
+        if(node.kind === 212) {
+            let root = node;
+            while(root.kind === 212) {
+                root = tree[root.receiver] ?? panic('missing JSX reference receiver');
+            }
+            return root.kind === 79 ? root.identity : -1;
+        }
+        return -1;
     }
     report(node: SyntaxNodeInterface): Diagnostic {
         return new Diagnostic('react/jsx-no-undef', 'jsxIdentifierNotDefined', "This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.", node.start, node.end, '');
