@@ -1,0 +1,20 @@
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+export function handle(request: HttpRequest): HttpResponse {
+    const counts = new Map<string, number>();
+    const values: number[] = [];
+    let sum = 0;
+    for(let index = 0; index < 2000; index += 1) {
+        const key = `${index % 17}`;
+        counts.set(key, (counts.get(key) ?? 0) + 1);
+        values.push((index * index) % 97);
+    }
+    for(const value of values) {
+        sum += value;
+    }
+    const pieces: string[] = [];
+    for(const [key, value] of counts) {
+        pieces.push(`${key}:${value}`);
+    }
+    return { status: 200, headers: [], body: `${request.path}:${sum}:${pieces.join(',')}` };
+}

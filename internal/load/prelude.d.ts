@@ -39,6 +39,23 @@ declare module 'adamic' {
 	export type Weak<Target extends object> = (Target & WeakBrand) | undefined;
 }
 
+declare module 'adamic/http' {
+	export interface HttpField { readonly name: string; readonly value: string }
+	export interface HttpRequest {
+		readonly method: string;
+		readonly url: string;
+		readonly path: string;
+		readonly query: readonly HttpField[];
+		readonly headers: readonly HttpField[];
+		readonly body: string;
+	}
+	export interface HttpResponse {
+		readonly status: number;
+		readonly headers: readonly HttpField[];
+		readonly body: string;
+	}
+}
+
 // ES2025 Set operations. Stage 0 accepts concrete library Sets with matching representations.
 interface Set<T> {
 	union<U>(other: ReadonlySetLike<U>): Set<T | U>;

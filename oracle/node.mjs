@@ -14,6 +14,9 @@ const runtimeUrl = new URL('./adamic.mjs', import.meta.url).href;
 
 registerHooks({
 	resolve(specifier, context, nextResolve) {
+		if (specifier === 'adamic/http') {
+			return { url: 'data:text/javascript,export{}', shortCircuit: true };
+		}
 		if (specifier === 'adamic') {
 			return { url: runtimeUrl, shortCircuit: true };
 		}
