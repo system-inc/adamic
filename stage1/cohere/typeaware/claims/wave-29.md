@@ -171,3 +171,11 @@ Shared decoded-options mutant test also passes with the guard unchanged.
 All origin heads fetched explicitly; no unclaimed candidate remains among 197
 ranked rules. Existing source/checker, analysis and regex gaps remain.
 See [landing report](../wave-29-fourth/B469_LANDING_REPORT.md).
+
+## Typeof integration landing
+
+Rebased onto area d3a37422c with main b6b1538b0. Original and next profiles,
+partial kernels, mutants, sanitizer streams and checker tests re-green.
+Inherited typeof mutant oracle also passes. Existing blockers persist; no
+unclaimed ranked rule remains after all-heads fetch, so no new claim.
+See [landing report](../wave-29-fourth/D3_LANDING_REPORT.md).
