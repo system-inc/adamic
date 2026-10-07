@@ -1,0 +1,42 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/path_alias_longest_directory_reversed
+    lint_test.go:755: path_alias_longest_directory_reversed caught on Node: case 145 line 2739: port "  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/adamic-gate/foundation/Thing', which reads the same from any file and survives this one moving.", Go "  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@gate/foundation/Thing', which reads the same from any file and survives this one moving."
+        Go context:
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantspath_alias_longest_directory_reversed3981882665/016/nexus-import-require-path-alias-0.ts:1:23
+          nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@gate/foundation/Thing', which reads the same from any file and survives this one moving.
+        
+        range 22 46 useAlias fix	'@gate/foundation/Thing'		22 46
+        fixed	import { Thing } from '@gate/foundation/Thing';\u000a
+    lint_test.go:755: path_alias_longest_directory_reversed caught on emitted JavaScript: case 145 line 2739: port "  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/adamic-gate/foundation/Thing', which reads the same from any file and survives this one moving.", Go "  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@gate/foundation/Thing', which reads the same from any file and survives this one moving."
+        Go context:
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantspath_alias_longest_directory_reversed3981882665/016/nexus-import-require-path-alias-0.ts:1:23
+          nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@gate/foundation/Thing', which reads the same from any file and survives this one moving.
+        
+        range 22 46 useAlias fix	'@gate/foundation/Thing'		22 46
+        fixed	import { Thing } from '@gate/foundation/Thing';\u000a
+    lint_test.go:755: path_alias_longest_directory_reversed caught on native: case 145 line 2739: port "  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@project/adamic-gate/foundation/Thing', which reads the same from any file and survives this one moving.", Go "  nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@gate/foundation/Thing', which reads the same from any file and survives this one moving."
+        Go context:
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 145
+        /tmp/adamic-gate/TestMutantspath_alias_longest_directory_reversed3981882665/016/nexus-import-require-path-alias-0.ts:1:23
+          nexus/import-require-path-alias  '../../foundation/Thing' climbs 2 levels, which says how far up to walk rather than where it lands. A reader has to count directories to learn what it means. Import it as '@gate/foundation/Thing', which reads the same from any file and survives this one moving.
+        
+        range 22 46 useAlias fix	'@gate/foundation/Thing'		22 46
+        fixed	import { Thing } from '@gate/foundation/Thing';\u000a
+--- PASS: TestMutants (26.61s)
+    --- PASS: TestMutants/path_alias_longest_directory_reversed (23.68s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 96507 bytes
+--- PASS: TestOwnedWitnesses (25.11s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	51.761s
