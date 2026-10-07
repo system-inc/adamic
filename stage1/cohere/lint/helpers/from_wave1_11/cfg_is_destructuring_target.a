@@ -1,0 +1,10 @@
+import { panic } from 'adamic';
+// Numeric kinds from the pinned Go parser: parentheses 218, object 211, array 210.
+// The adapter supplies the node-to-expression chain, ending at a non-parenthesized leaf.
+export function isDestructuringTarget(chain: readonly number[]): boolean {
+    for (const kind of chain) {
+        if (kind === 218) { continue; }
+        return kind === 211 || kind === 210;
+    }
+    return panic('destructuring target requires a non-nil node');
+}

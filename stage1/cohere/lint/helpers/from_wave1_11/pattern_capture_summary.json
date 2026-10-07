@@ -1,0 +1,19 @@
+{
+  "actualCalls": 185,
+  "consumers": {
+    "array-callback-return": 5,
+    "consistent-return": 5,
+    "no-unreachable-loop": 173,
+    "react-hooks/rules-of-hooks": 2
+  },
+  "cases": 4508,
+  "bytes": 102550,
+  "stdoutSha256": "6bfe528b1f7d1b474badf891dfc210a5b1f7fea68823b0719f890a34086b2ab2",
+  "mutant": "object_pattern_recognition_lost",
+  "backends": [
+    "Node",
+    "emitted",
+    "native"
+  ],
+  "onlyByteComparison": true
+}

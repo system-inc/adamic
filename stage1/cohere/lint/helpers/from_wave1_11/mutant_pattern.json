@@ -1,0 +1,6 @@
+{
+  "name": "object_pattern_recognition_lost",
+  "file": "cfg_is_destructuring_target.a",
+  "from": "return kind === 211 || kind === 210;",
+  "to": "return kind === 210;"
+}

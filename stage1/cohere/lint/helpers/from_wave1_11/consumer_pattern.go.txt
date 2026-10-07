@@ -1,0 +1,19 @@
+package core
+
+import (
+	rule_testing "github.com/system-inc/cohere/internal/lint/testing"
+	"testing"
+)
+
+func TestArrayCallbackReturnWave11DestructuringProbe(t *testing.T) {
+	for _, target := range []string{"[x]", "{x}", "(([x]))", "(({x}))", "x"} {
+		source := "items.map(function() { (" + target + " = rhs); });"
+		rule_testing.ExpectFindings(t, rule_testing.Run(t, ArrayCallbackReturn, "probe.ts", source), "expectedInside")
+	}
+}
+func TestConsistentReturnWave11DestructuringProbe(t *testing.T) {
+	for _, target := range []string{"[x]", "{x}", "(([x]))", "(({x}))", "x"} {
+		source := "function f() { (" + target + " = rhs); if (flag) return 1; }"
+		rule_testing.ExpectFindings(t, rule_testing.Run(t, ConsistentReturn, "probe.ts", source), "missingReturn")
+	}
+}

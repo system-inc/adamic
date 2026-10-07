@@ -1,0 +1,37 @@
+package control_flow_graph
+
+import (
+	"encoding/json"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"os"
+	"sync"
+)
+
+var wave11PatternCaptureLock sync.Mutex
+
+func isDestructuringTarget(node *ast.Node) bool {
+	chain := []int{}
+	for current := node; current != nil; {
+		chain = append(chain, int(current.Kind))
+		if current.Kind != ast.KindParenthesizedExpression {
+			break
+		}
+		current = current.AsParenthesizedExpression().Expression
+	}
+	result := wave11OriginalIsDestructuringTarget(node)
+	row := struct {
+		Chain  []int `json:"chain"`
+		Result bool  `json:"result"`
+	}{chain, result}
+	wave11PatternCaptureLock.Lock()
+	defer wave11PatternCaptureLock.Unlock()
+	file, err := os.OpenFile(os.Getenv("WAVE11_PATTERN_CAPTURE"), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	if err = json.NewEncoder(file).Encode(row); err != nil {
+		panic(err)
+	}
+	return result
+}

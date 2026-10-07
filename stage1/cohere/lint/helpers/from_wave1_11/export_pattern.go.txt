@@ -1,0 +1,5 @@
+package control_flow_graph
+
+import "github.com/microsoft/TypeScript/tsc/shim/ast"
+
+func Wave11DestructuringTarget(node *ast.Node) bool { return isDestructuringTarget(node) }
