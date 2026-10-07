@@ -1,0 +1,9 @@
+controls findings 6 2812 identical bytes
+compiler findings 0 5318 identical bytes
+repository findings 0 18485 identical bytes
+controls sanitizers PASS
+compiler sanitizers PASS
+repository sanitizers PASS
+symbol mutant exits 0; empty stderr; byte comparison catches
+released question panic 70 PASS
+PASS symbol listener only; native parser/driver integration remains blocked

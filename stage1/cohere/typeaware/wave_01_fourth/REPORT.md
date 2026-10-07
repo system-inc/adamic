@@ -98,3 +98,24 @@ kernel .a entries and Go overlay helpers document the smaller comparisons.
 All new Adamic source files use .a. The preceding six-port oracle gate was not
 repeated for this additive partial batch; only the new checker package and the
 new listener/kernel checks were run.
+
+## Landing refresh onto c01907a7036a
+
+Rebased onto origin/main c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06 without
+conflicts. Tested rebased code at 52df32d42123d8471019ccd5726aafd2667f798d.
+No shared leak-helper changes were reverted.
+
+The original TestWave01AgreementAndMutants gate passed in 162.650 seconds.
+The continuation verify.py gate passed all three completed continuation rules,
+including compiler and repository comparison, sanitizers, logic mutants,
+released handles and retention mutants. The symbol verify_symbol.py gate
+passed controls, compiler and repository comparison through captured syntax,
+sanitizers, its argument mutant and released-handle check. Atomic and await
+kernels again matched unchanged production Go; their refresh-deletion and
+await-using-mask mutants exited cleanly under sanitizers and failed byte
+comparison. Exact logs and records are in validation/landing-c019.
+
+This refresh does not complete the three latest claims: symbol native frontend
+integration and full atomic/await rules remain unfinished as described above.
+No additional rules were claimed. The production Go sources of these three
+rules contain no regex usage, so this batch requires no regex translation.
