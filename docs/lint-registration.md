@@ -139,3 +139,66 @@ Raw witnesses keep their script extension, including `.tsx.txt` and `.jsx.txt`.
 The harness preserves captured corpus filenames and Go script kinds as well.
 This transports script kinds; it does not add JSX syntax to the shared stage 1 parser.
 Unsupported syntax still fails the comparison instead of earning certification.
+
+## Checking one rule
+
+From the repository root, run:
+
+```sh
+go run ./cmd/adamic-lint-check no-var
+```
+
+Replace `no-var` with your directory slug. The command runs
+`go test ./stage1/cohere/lint -run '^TestRule$' -count=1 -timeout 30m -v -args -rule <slug>`.
+Keep the anchors when invoking the test directly: `-run TestRule` also matches
+`TestRulesAgree`, which intentionally runs the full corpus.
+
+The check validates the entire discovered registry, snapshots the selected rule
+and shared scanner, and retains the five migrated baseline registrations. Other
+registered rules do not enter the native or emitted JavaScript module graph.
+It checks every owned witness for a Go finding, the selected rule's captured
+upstream tests, and the inherited corner-case sources and relevant options.
+Go cohere, source Node, emitted JavaScript and ASan/UBSan native must agree byte
+for byte. The owned mutant runs on witnesses and inherited cases, and must
+disagree with Go on each port runtime. Unsupported recovery cases keep the
+ordinary harness's explicit refusal check. A phase timing table prints at exit,
+including on failure. Existing all-rule tests remain available and unchanged in
+scope. `TestSelectedRuleParity` compares restricted and full registration builds
+on the same selected-rule corpus for three directories.
+
+Artifacts and observations live below `os.UserCacheDir()/adamic/lint/`:
+
+| Cache | Inputs that invalidate it |
+|---|---|
+| Go oracle binary | Cohere HEAD, binary working-tree diff, nested submodule identities/diffs, untracked bytes, oracle overlay, generated Go registry, every adapter, Go version, GOOS/GOARCH |
+| Upstream capture | Same cohere identity, capture overlay and harness, upstream package, test filter and exact public rule name |
+| Go observations | Oracle key, complete manifest fields and every referenced source byte |
+| Sanitized native port | Actual imported module names/bytes, generated registry, all `internal/**` bytes, `go.mod`, `go.sum` or its absence, executing compiler identity, native flags and runtime library key |
+| Emitted JavaScript build | Module graph, compiler source and executable identity |
+| Source Node / emitted JavaScript observations | Module bytes, Node version, manifest fields and referenced source bytes |
+
+Harness and Node runtime bytes, execution environment, uid and stack limit also
+participate where relevant. Temporary capture destinations and cache location
+are transport, and are excluded from the execution identity. Imports come from
+the checker's parsed declarations; comments and strings cannot hide dependencies.
+Files are published by temporary file and rename. Artifacts publish an entire
+completed directory with an integrity digest. Corrupt or partial entries are
+misses. Successful observations are compared again on hits, and native still
+executes under sanitizers on every check. Builds reject inputs that change while
+they are compiling. Content-addressed corpus filenames retain the exact output
+protocol across invocations; source snapshots are always written afresh.
+
+`ADAMIC_GATE_UNCACHED=1` bypasses all lint artifact and observation caches, for
+both selected and full tests, and calls the original implementations directly.
+The existing native runtime library cache retains its own flag-set behavior.
+Integration still runs the ordinary uncached all-rule gate before main moves.
+
+`TestLintCacheInvalidation` changes real inputs behind populated caches and
+compares their answers to uncached implementations. `TestLintCacheMutants`
+removes one key component per cache in an isolated subprocess and requires the
+invalidation test to fail with the old answer, including the emitted-build cache.
+`TestLintCacheBypassAndIntegrity` checks bypass, byte preservation and corruption.
+The optional test flag `-rule-byte-change` appends exactly one space to `rule.a`
+or `rule.ts` in the private snapshot for measurement, preserving owned files.
+See [the check evidence](../stage1/cohere/lint/check-evidence/REPORT.md) for commands,
+measurements, build flags, mutant failures and coverage limits.
