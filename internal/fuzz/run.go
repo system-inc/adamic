@@ -92,6 +92,8 @@ type Outcome struct {
 	Verdict Verdict
 	Key     string
 	Detail  string
+	// Clang is what clang said when it refused the C, whole.
+	Clang   string
 	Node    Run
 	Native  Run
 	Backend Run
@@ -111,20 +113,39 @@ func (c *Checkout) Try(source string, directory string) Outcome {
 
 // TryFile runs a program file three ways, building in directory.
 func (c *Checkout) TryFile(path string, directory string) Outcome {
+	binary, failed := c.build(path, directory, true)
+	if failed != nil {
+		return *failed
+	}
+	oracle := filepath.Join(c.Root, "oracle", "node.mjs")
+	outcome := Outcome{
+		Node:    execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, path),
+		Native:  execute(directory, []string{"ASAN_OPTIONS=detect_leaks=0"}, 20*time.Second, binary),
+		Backend: execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, filepath.Join(directory, "program.mjs")),
+	}
+	return c.judge(outcome, binary, directory)
+}
+
+// build makes a program file's C and compiles it with clang, and with javascript makes its
+// JavaScript too. It returns the binary, or the outcome a failure comes to.
+func (c *Checkout) build(path string, directory string, javascript bool) (string, *Outcome) {
+	fail := func(outcome Outcome) (string, *Outcome) { return "", &outcome }
 	// The C first: the checker's and stage 0's refusals come from here.
 	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
 	if lowered.ExitCode != 0 || lowered.TimedOut {
-		return compilerRefusal(lowered)
+		return fail(compilerRefusal(lowered))
 	}
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), lowered.Stdout, 0o644); err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+		return fail(Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()})
 	}
-	javascript := execute(directory, nil, 30*time.Second, c.adamic, "js", path)
-	if javascript.ExitCode != 0 || javascript.TimedOut {
-		return Outcome{Verdict: Finding, Key: "javascript backend failed", Detail: string(javascript.Stderr)}
-	}
-	if err := os.WriteFile(filepath.Join(directory, "program.mjs"), javascript.Stdout, 0o644); err != nil {
-		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	if javascript {
+		emitted := execute(directory, nil, 30*time.Second, c.adamic, "js", path)
+		if emitted.ExitCode != 0 || emitted.TimedOut {
+			return fail(Outcome{Verdict: Finding, Key: "javascript backend failed", Detail: string(emitted.Stderr)})
+		}
+		if err := os.WriteFile(filepath.Join(directory, "program.mjs"), emitted.Stdout, 0o644); err != nil {
+			return fail(Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()})
+		}
 	}
 	binary := filepath.Join(directory, "program")
 	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(c.runtime), "-o", binary, filepath.Join(directory, "main.c"))
@@ -137,16 +158,9 @@ func (c *Checkout) TryFile(path string, directory string) Outcome {
 		if warning := clangWarning.FindSubmatch(output); warning != nil {
 			key += ": " + string(warning[1])
 		}
-		return Outcome{Verdict: Finding, Key: key, Detail: firstLines(string(output), 12)}
+		return fail(Outcome{Verdict: Finding, Key: key, Detail: firstLines(string(output), 12), Clang: string(output)})
 	}
-
-	oracle := filepath.Join(c.Root, "oracle", "node.mjs")
-	outcome := Outcome{
-		Node:    execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, path),
-		Native:  execute(directory, []string{"ASAN_OPTIONS=detect_leaks=0"}, 20*time.Second, binary),
-		Backend: execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, filepath.Join(directory, "program.mjs")),
-	}
-	return c.judge(outcome, binary, directory)
+	return binary, nil
 }
 
 // sanitizerReport finds the kind of report a sanitizer wrote, if any: ASan's error name, or UBSan's

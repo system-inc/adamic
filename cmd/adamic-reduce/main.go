@@ -75,7 +75,7 @@ func run() int {
 			return 1
 		}
 	}
-	// A refusal or a crash needs only the compiler; anything else runs three ways.
+	// A refusal or a crash needs only the compiler, cc the compiler and clang; anything else runs three ways.
 	observe := func(candidate string, slot int) fuzz.Observation {
 		return checkout.Observe(candidate, name, filepath.Join(*work, "candidates", fmt.Sprintf("slot%d", slot)), signature.Kind)
 	}
