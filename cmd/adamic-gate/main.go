@@ -42,6 +42,8 @@ type plan struct {
 	Source  string
 	Count   int
 	Units   []unit
+	Digest  string
+	Shards  []prediction
 }
 type event struct {
 	Action, Package, Test, Output string
@@ -116,11 +118,12 @@ func run(args []string) error {
 		count := flags.Int("count", 8, "number of shards")
 		index := flags.Int("index", -1, "zero-based shard")
 		out := flags.String("out", "", "evidence directory")
+		resume := flags.Bool("resume", false, "reuse complete package evidence for identical execution inputs")
 		scratch := flags.String("scratch", "/workspace/adamic-gate-scratch", "disk-backed scratch root outside the repository")
 		if err := flags.Parse(args[1:]); err != nil {
 			return err
 		}
-		return shard(*index, *count, *out, *scratch)
+		return shard(*index, *count, *out, *scratch, *resume)
 	case "merge":
 		flags := flag.NewFlagSet("merge", flag.ContinueOnError)
 		out := flags.String("out", "merged", "merged evidence directory")
@@ -238,7 +241,7 @@ func fixtureRows(file, variable string) ([]string, error) {
 
 // Literal first fields of the anonymous slice iterated directly by a test. This is deliberately
 // restricted to audited independent parents; arbitrary AST inference cannot prove selectability.
-func literalChildren(file, parent string) ([]string, error) {
+func literalChildren(file, parent string, table ...string) ([]string, error) {
 	tree, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
 	if err != nil {
 		return nil, err
@@ -255,6 +258,23 @@ func literalChildren(file, parent string) ([]string, error) {
 				return true
 			}
 			literal, ok := r.X.(*ast.CompositeLit)
+			if !ok && len(table) == 1 {
+				if id, yes := r.X.(*ast.Ident); yes && id.Name == table[0] {
+					ast.Inspect(f.Body, func(node ast.Node) bool {
+						assignment, yes := node.(*ast.AssignStmt)
+						if !yes {
+							return true
+						}
+						for i, lhs := range assignment.Lhs {
+							id, yes := lhs.(*ast.Ident)
+							if yes && id.Name == table[0] && i < len(assignment.Rhs) {
+								literal, ok = assignment.Rhs[i].(*ast.CompositeLit)
+							}
+						}
+						return true
+					})
+				}
+			}
 			if !ok {
 				return true
 			}
@@ -291,6 +311,9 @@ func literalChildren(file, parent string) ([]string, error) {
 	return names, nil
 }
 func children(pkg, parent string) ([]string, error) {
+	if strings.HasSuffix(pkg, "/stage1/cohere/typeaware") && parent == "TestVolumeAgreementAndMutants" {
+		return literalChildren("stage1/cohere/typeaware/volume_test.go", parent, "changes")
+	}
 	if strings.HasSuffix(pkg, "/internal/oracle") {
 		switch parent {
 		case "TestNativeAgreesWithNode":
@@ -470,6 +493,8 @@ func makePlan(count int) (plan, error) {
 		loads[best] += p.Units[i].Seconds
 	}
 	sort.Slice(p.Units, func(i, j int) bool { return p.Units[i].key() < p.Units[j].key() })
+	p.Shards = predictions(p, weights)
+	p.Digest = planDigest(p)
 	return p, nil
 }
 
@@ -620,7 +645,7 @@ func buildFlags(commit, before, after string) string {
 	quota, _ := os.ReadFile("/sys/fs/cgroup/cpu.max")
 	return fmt.Sprintf("commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q", commit, get("nproc"), strings.TrimSpace(string(quota)), get("go", "version"), get("clang", "--version"), get("node", "--version"), before, after, os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), os.Getenv("GOMAXPROCS"), os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"))
 }
-func shard(index, count int, out, scratch string) error {
+func shard(index, count int, out, scratch string, resume bool) error {
 	started := time.Now()
 	beforeLoad := loadAverage()
 	if out == "" || index < 0 || index >= count {
@@ -662,10 +687,37 @@ func shard(index, count int, out, scratch string) error {
 		return err
 	}
 
+	context, err := executionIdentity()
+	if err != nil {
+		return err
+	}
+	state := resumeState{PlanDigest: p.Digest, Context: context, Index: index}
 	if _, err := os.Stat(out); err == nil {
-		return errors.New("output directory already exists; refusing stale evidence")
+		if !resume {
+			return errors.New("output directory already exists; use -resume for identical inputs")
+		}
+		var saved resumeState
+		if err := loadJSON(filepath.Join(out, "run.json"), &saved); err != nil {
+			return err
+		}
+		if saved != state {
+			return errors.New("resume inputs differ: plan, shard, environment, tools, or external inputs changed")
+		}
+	} else if !os.IsNotExist(err) {
+		return err
 	}
 	if err := os.MkdirAll(out, 0755); err != nil {
+		return err
+	}
+	lock, err := os.OpenFile(filepath.Join(out, ".lock"), os.O_CREATE|os.O_RDWR, 0600)
+	if err != nil {
+		return err
+	}
+	defer lock.Close()
+	if err := syscall.Flock(int(lock.Fd()), syscall.LOCK_EX|syscall.LOCK_NB); err != nil {
+		return errors.New("another runner owns this output directory")
+	}
+	if err := atomicJSON(filepath.Join(out, "run.json"), state); err != nil {
 		return err
 	}
 	s := summary{Version: 1, Plan: p, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk}
@@ -678,11 +730,12 @@ func shard(index, count int, out, scratch string) error {
 		raw.Close()
 		return err
 	}
+	var commandStderr io.Writer = stderr
 	runCommand := func(name string, args []string, tmp string, w io.Writer) int {
 		cmd := exec.Command(name, args...)
 		cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
 		cmd.Stdout = w
-		cmd.Stderr = stderr
+		cmd.Stderr = commandStderr
 		t := time.Now()
 		err := cmd.Run()
 		code := 0
@@ -691,7 +744,7 @@ func shard(index, count int, out, scratch string) error {
 			if exit, ok := err.(*exec.ExitError); ok {
 				code = exit.ExitCode()
 			}
-			fmt.Fprintf(stderr, "%s %v: %v\n", name, args, err)
+			fmt.Fprintf(commandStderr, "%s %v: %v\n", name, args, err)
 		}
 		if name == "go" && len(args) > 0 && args[0] == "test" {
 			uncached := false
@@ -750,6 +803,40 @@ func shard(index, count int, out, scratch string) error {
 	sort.Strings(pkgs)
 	fmt.Printf("shard %d disk before=%d bytes scratch=%s /tmp_free=%d bytes /tmp_tmpfs=%t\n", index, beforeDisk, root, free("/tmp"), tmpfs("/tmp"))
 	for _, pkg := range pkgs {
+		packageDir := filepath.Join(out, "packages", shortHash(pkg))
+		key := checkpointKey(state, pkg, patterns(byPackage[pkg]))
+		if err := cleanupPackageScratch(packageDir, key, root); err != nil {
+			return err
+		}
+		if resume {
+			saved, found, err := loadPackage(packageDir, key, p, index, pkg)
+			if err != nil {
+				return err
+			}
+			if found {
+				if err := appendFile(raw, filepath.Join(packageDir, "test.jsonl")); err != nil {
+					return err
+				}
+				if err := appendFile(stderr, filepath.Join(packageDir, "test.stderr")); err != nil {
+					return err
+				}
+				s.Invocations = append(s.Invocations, saved.Invocations...)
+				fmt.Printf("resumed %s from complete log\n", pkg)
+				continue
+			}
+		}
+		if err := os.MkdirAll(packageDir, 0755); err != nil {
+			return err
+		}
+		packageLog, err := os.Create(filepath.Join(packageDir, "test.jsonl.partial"))
+		if err != nil {
+			return err
+		}
+		packageStderr, err := os.Create(filepath.Join(packageDir, "test.stderr.partial"))
+		if err != nil {
+			packageLog.Close()
+			return err
+		}
 		tmp, err := os.MkdirTemp(root, "package-")
 		if err != nil {
 			return err
@@ -757,10 +844,42 @@ func shard(index, count int, out, scratch string) error {
 		if err := os.Chmod(tmp, 0755); err != nil {
 			return err
 		}
-		for _, pattern := range patterns(byPackage[pkg]) {
-			runCommand("go", []string{"test", "-count=1", "-json", "-timeout", "60m", "-run", pattern, pkg}, tmp, raw)
+		if err := atomicJSON(filepath.Join(packageDir, "scratch.json"), scratchRecord{Key: key, Path: tmp}); err != nil {
+			return err
 		}
-		if err := os.RemoveAll(tmp); err != nil {
+		first := len(s.Invocations)
+		commandStderr = io.MultiWriter(stderr, packageStderr)
+		for _, pattern := range patterns(byPackage[pkg]) {
+			runCommand("go", testArgs(pkg, pattern), tmp, io.MultiWriter(raw, packageLog))
+		}
+		commandStderr = stderr
+		err = errors.Join(packageLog.Sync(), packageStderr.Sync(), packageLog.Close(), packageStderr.Close())
+		if err != nil {
+			return err
+		}
+		if err := os.Rename(filepath.Join(packageDir, "test.jsonl.partial"), filepath.Join(packageDir, "test.jsonl")); err != nil {
+			return err
+		}
+		if err := os.Rename(filepath.Join(packageDir, "test.stderr.partial"), filepath.Join(packageDir, "test.stderr")); err != nil {
+			return err
+		}
+		checkpoint := packageEvidence{Key: key, Package: pkg, Invocations: s.Invocations[first:]}
+		if err := completePackage(packageDir, checkpoint, p, index, pkg); err != nil {
+			s.Errors = append(s.Errors, err.Error())
+		} else {
+			checkpoint.LogDigest, err = fileDigest(filepath.Join(packageDir, "test.jsonl"))
+			if err != nil {
+				return err
+			}
+			checkpoint.StderrDigest, err = fileDigest(filepath.Join(packageDir, "test.stderr"))
+			if err != nil {
+				return err
+			}
+			if err := atomicJSON(filepath.Join(packageDir, "complete.json"), checkpoint); err != nil {
+				return err
+			}
+		}
+		if err := cleanupPackageScratch(packageDir, key, root); err != nil {
 			s.Errors = append(s.Errors, err.Error())
 		}
 		fmt.Printf("finished %s free=%d bytes\n", pkg, free(root))
@@ -960,11 +1079,17 @@ func merge(dirs []string, out string) error {
 			m.Errors = append(m.Errors, fmt.Sprintf("shard %d has no invocation evidence", s.Index))
 		}
 		m.Errors = append(m.Errors, s.Errors...)
+		m.Errors = append(m.Errors, validatePackageFiles(dirs[i], expected, s)...)
 		results, lines, raw, err := readLog(filepath.Join(dirs[i], "test.jsonl"))
 		if err != nil {
 			return err
 		}
 		m.RawTerminalEvents += raw
+		for _, r := range results {
+			if r.Test != "" && r.Action == "fail" {
+				m.Errors = append(m.Errors, fmt.Sprintf("shard %d test %s failed\n%s", s.Index, r.key(), r.Output))
+			}
+		}
 
 		declared := map[string]int{}
 		observed := map[string]int{}
