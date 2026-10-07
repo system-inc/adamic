@@ -30,7 +30,7 @@ int main(void) {
 		window.releasedWhenClosed = NO;
 		print([NSString stringWithFormat:@"untitled: [%@]", window.title]);
 		window.title = @"Adamic";
-		print([NSString stringWithFormat:@"title: %@", window.title]);
+		print([NSString stringWithFormat:@"title: %@ (%lu units, %u last)", window.title, (unsigned long)window.title.length, (unsigned)[window.title characterAtIndex:5]]);
 
 		window.title = @"Ken ✓ \U0001D538";
 		print([NSString stringWithFormat:@"title: %@ (%lu units)", window.title, (unsigned long)window.title.length]);
