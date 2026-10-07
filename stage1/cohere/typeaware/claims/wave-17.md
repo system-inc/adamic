@@ -216,7 +216,7 @@ fifth-batch oracle passes in 171.661s and a literal mutant is caught at byte
 1134. No new claim; parked scopes remain explicit.
 Evidence: [third landing report](../WAVE_17_LANDING3_REPORT.md).
 
-## Sixth batch claim
+## Sixth batch claim (withdrawn)
 
 The existing work and parked scopes are pushed at fdbab035, on current main
 c01907a7. A fresh origin fetch confirms both tips unchanged. The remaining
@@ -231,10 +231,35 @@ The next three unported/unclaimed entries are:
 - `react/no-multi-comp` (global rank 186, 0 findings)
 - `react/no-namespace` (global rank 187, 0 findings)
 
-The refreshed all-origin Markdown claim scan and source scan on main and
-codex/tsgo-c-library have no claim or source hit for these three. This claim is
-pushed before implementation. New handlers take their handed numeric-kind node
+The initial fetched snapshot reported no competing claim or source hit for
+these three. Claim 14713630 was pushed before implementation. A later explicit
+all-heads refresh revealed wave 11 already reserving the same three; this
+reservation is withdrawn as described below. New handlers take their handed numeric-kind node
 and declare numeric kinds in rule.json. Shared harness ab70f38d4 is visible on
 origin/lint-rules/harness but is not yet on main; any production-integration gap
 will be named separately from native decision validation. No shared registration,
 parser, harness or compiler file will be edited for this batch.
+
+
+### Sixth batch withdrawal after refreshed origin audit
+
+The explicit all-heads fetch now has 583 origin refs and 33 distinct Markdown
+claim blobs. Wave 11 reserves all three in 667e6a47a4dcc9047044b0316eb1525ba2a5a48d
+(commit time 05:34:09 UTC), earlier than our 14713630 claim (05:43:56 UTC).
+Commit times do not establish push visibility order, but this is a duplicate
+reservation, so all three are skipped here in favor of wave 11. No duplicate
+implementation is committed or offered as a production port. The experimental
+code is preserved in /workspace/wave-17-sixth/withdrawn-implementation.patch.
+
+The native experiments passed on 309 controls and both frozen corpora, including
+sanitizers, each comparison-only mutant and released-handle checks. Their input
+is an independent projected numeric AST, not the production native parser;
+full production integration was not established. Detailed evidence and timing
+limits are in ../WAVE_17_SIXTH_WITHDRAWAL_REPORT.md.
+
+After excluding main/library ports and every origin Markdown reservation,
+including the competing wave-11 claim, no unclaimed rule remains among the
+197 checker-dependent entries. No further claim is made. Existing wave-17 work
+remains based on current main c01907a7 and has its previously reported green
+landing checks. Shared model ab70f38d4 is still not on main. No main, area,
+shared harness, parser or generator file was changed or pushed.

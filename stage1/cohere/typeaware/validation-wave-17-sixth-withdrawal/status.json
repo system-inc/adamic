@@ -1,0 +1,23 @@
+{
+  "main": "c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06",
+  "claim": "14713630a0a8384ba9f7c27014d97ea78d38e51e",
+  "competing_claim": "667e6a47a4dcc9047044b0316eb1525ba2a5a48d",
+  "implementation_patch": "/workspace/wave-17-sixth/withdrawn-implementation.patch",
+  "patch_sha256": "0cc1484ea4c63f3bb823b6be117b74c525bb1dc6c4d503eaa88c264eb431be63",
+  "files": [
+    "stage1/cohere/typeaware/wave_17_sixth/kinds.a",
+    "stage1/cohere/typeaware/wave_17_sixth/no_danger_with_children/rule.a",
+    "stage1/cohere/typeaware/wave_17_sixth/no_danger_with_children/rule.json",
+    "stage1/cohere/typeaware/wave_17_sixth/no_multi_comp/capitalization.a",
+    "stage1/cohere/typeaware/wave_17_sixth/no_multi_comp/rule.a",
+    "stage1/cohere/typeaware/wave_17_sixth/no_multi_comp/rule.json",
+    "stage1/cohere/typeaware/wave_17_sixth/no_namespace/rule.a",
+    "stage1/cohere/typeaware/wave_17_sixth/no_namespace/rule.json",
+    "stage1/cohere/typeaware/wave_17_sixth/suite.a",
+    "stage1/cohere/typeaware/wave_17_sixth/testdata/oracle.go",
+    "stage1/cohere/typeaware/wave_17_sixth/tree.a",
+    "stage1/cohere/typeaware/wave_17_sixth_test.go"
+  ],
+  "experiment_only": true,
+  "unclaimed_remaining": 0
+}
