@@ -35,21 +35,39 @@ type engine struct {
 	cache            *resultCache
 	nodeVersion      string
 	context          string
+	nodeContext      string
 	compiler         *compilerWorker
 	inProcess        bool
 	compilerIdentity string
+	profile          *runProfile
+	worker           int
+	root             string
+	fallback         *compilerFallback
 }
 
 func prepare(root string, test262 string, work string) (*engine, error) {
+	return prepareMode(root, test262, work, nil, false)
+}
+
+func prepareProfile(root string, test262 string, work string, profile *runProfile) (*engine, error) {
+	return prepareMode(root, test262, work, profile, false)
+}
+
+func prepareMode(root string, test262 string, work string, profile *runProfile, inProcess bool) (*engine, error) {
+	done := profile.preparing("go-build")
 	if err := os.MkdirAll(work, 0o755); err != nil {
 		return nil, err
 	}
 	adamic := filepath.Join(work, "adamic")
-	build := exec.Command("go", "build", "-o", adamic, "./cmd/adamic")
-	build.Dir = root
-	if output, err := build.CombinedOutput(); err != nil {
-		return nil, fmt.Errorf("building adamic: %w\n%s", err, output)
+	if !inProcess {
+		build := exec.Command("go", "build", "-o", adamic, "./cmd/adamic")
+		build.Dir = root
+		if output, err := build.CombinedOutput(); err != nil {
+			return nil, fmt.Errorf("building adamic: %w\n%s", err, output)
+		}
 	}
+	done()
+	done = profile.preparing("runtime-library")
 	include := filepath.Join(root, "internal", "native", "runtime")
 	// Sanitizers, as the oracle compiles: a native memory bug is a crash, not a pass. Leaks are not
 	// compared to Node (the process exits either way), so leak detection stays off at run time.
@@ -58,7 +76,16 @@ func prepare(root string, test262 string, work string) (*engine, error) {
 	if err != nil {
 		return nil, err
 	}
-	compilerBytes, err := os.ReadFile(adamic)
+	done()
+	done = profile.preparing("cache-context")
+	identityPath := adamic
+	if inProcess {
+		identityPath, err = os.Executable()
+		if err != nil {
+			return nil, err
+		}
+	}
+	compilerBytes, err := os.ReadFile(identityPath)
 	if err != nil {
 		return nil, err
 	}
@@ -66,14 +93,22 @@ func prepare(root string, test262 string, work string) (*engine, error) {
 	if err != nil {
 		return nil, err
 	}
+	sourceIdentity, err := loweringSourceIdentity(root)
+	if err != nil {
+		return nil, err
+	}
+	context = cacheKey(context, sourceIdentity)
+	done()
 	return &engine{
+		profile: profile,
+		root:    root, fallback: &compilerFallback{}, inProcess: inProcess,
 		test262:          test262,
 		work:             work,
 		adamic:           adamic,
 		runtime:          native.RuntimeLinkFlags(library),
 		runtimeKey:       filepath.Base(filepath.Dir(library)),
 		compilerIdentity: cacheKey(string(compilerBytes)),
-		cache:            cache, nodeVersion: version, context: context,
+		cache:            cache, nodeVersion: version, context: context, nodeContext: cache.nodeContext,
 		include: filepath.Dir(library),
 		flags:   flags,
 		log:     os.Stderr,
@@ -131,11 +166,15 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 	if jobs > len(indices) {
 		jobs = len(indices)
 	}
+	if jobs > 1 {
+		sort.SliceStable(indices, func(i, j int) bool { return len(tests[indices[i]].Program) > len(tests[indices[j]].Program) })
+	}
 	queue := make(chan int)
 	var workers sync.WaitGroup
 	locals := make([]engine, jobs)
 	for worker := 0; worker < jobs; worker++ {
 		local := *e
+		local.worker = worker
 		// Preserve the serial artifact path when there is just one worker.
 		if jobs > 1 {
 			local.work = filepath.Join(e.work, fmt.Sprintf("worker-%d", worker))
@@ -187,10 +226,12 @@ func (e *engine) programDirectory(test classified) string {
 	if e.cache == nil {
 		return e.work
 	}
-	return filepath.Join(e.cache.directory, "programs", cacheKey(test.Program, e.context, e.runtimeKey))
+	return filepath.Join(e.cache.directory, "programs", cacheKey(test.Program, e.nodeContext))
 }
 
 func (e *engine) attempt(test classified) result {
+	profile := e.profile.begin(test.Path, e.worker)
+	defer profile.finish()
 	base := result{Path: test.Path, Directory: test.Directory, Adaptations: test.Adaptations}
 	directory := e.programDirectory(test)
 	if err := os.MkdirAll(directory, 0700); err != nil {
@@ -238,12 +279,12 @@ func (e *engine) attempt(test classified) result {
 		compilerCommand = cacheKey("runner --compiler-worker", typescript, "2m", "16MiB")
 	}
 	compilerKey := compilerResultKey(test.Program, e.compilerIdentity, compilerCommand, e.context)
-	lowered := cache.observe(compilerKey, func() (execution, bool) {
+	lowered := profile.observation("compile", cache, compilerKey, func() (execution, bool) {
 		var result execution
 		if e.compiler != nil {
 			result = e.compiler.compile(typescript)
 			if result.Exit == -1 && !result.TimedOut {
-				result = runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", typescript)
+				result = e.fallbackCompile(typescript)
 			}
 		} else {
 			result = runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", typescript)
@@ -277,14 +318,14 @@ func (e *engine) attempt(test classified) result {
 	linkFailed := false
 	// Imported modules can read files or have mutable dependencies. Until their whole input
 	// graph is keyed, all their observations run fresh.
-	nativeRun := cache.observe(key, func() (execution, bool) {
-		linked := runCommand(2*time.Minute, nil, "clang", arguments...)
+	nativeRun := profile.observation("native-observation", cache, key, func() (execution, bool) {
+		linked := profile.command("clang", func() execution { return runCommand(2*time.Minute, nil, "clang", arguments...) })
 		if linked.Exit != 0 || linked.TimedOut {
 			linkFailed = true
 			return linked, false
 		}
 		defer os.Remove(binary)
-		return runCommand(15*time.Second, nativeEnvironment, binary), true
+		return profile.command("native", func() execution { return runCommand(15*time.Second, nativeEnvironment, binary) }), true
 	})
 	// A link failure is a compiler crash rather than a native execution verdict.
 	// Only successful links publish observations, so a hit always holds a real execution.
@@ -295,8 +336,8 @@ func (e *engine) attempt(test classified) result {
 		return base
 	}
 	nodeCommand := cacheKey("node", "--disable-warning=ExperimentalWarning", module, "15s", fmt.Sprint(outputLimit))
-	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.context)
-	nodeRun := cache.observe(nodeKey, func() (execution, bool) {
+	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.nodeContext)
+	nodeRun := profile.observation("node", cache, nodeKey, func() (execution, bool) {
 		return runCommand(15*time.Second, nil, "node", "--disable-warning=ExperimentalWarning", module), true
 	})
 	decided := decide(verdictInput{
@@ -591,4 +632,27 @@ func writeJSON(writer io.Writer, document reportDocument) error {
 	}
 	_, err = writer.Write(append(encoded, '\n'))
 	return err
+}
+
+// The normal worker does not execute the backup compiler. Build it only if worker transport
+// fails, once across all workers, so isolation still has the original diagnostic fallback.
+type compilerFallback struct {
+	once sync.Once
+	err  error
+}
+
+func (e *engine) fallbackCompile(path string) execution {
+	if e.fallback != nil && e.inProcess {
+		e.fallback.once.Do(func() {
+			build := exec.Command("go", "build", "-o", e.adamic, "./cmd/adamic")
+			build.Dir = e.root
+			if output, err := build.CombinedOutput(); err != nil {
+				e.fallback.err = fmt.Errorf("building adamic: %w\n%s", err, output)
+			}
+		})
+		if e.fallback.err != nil {
+			return execution{Exit: -1, Stderr: e.fallback.err.Error()}
+		}
+	}
+	return runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", path)
 }

@@ -1,0 +1,28 @@
+{
+  "implementation": "3caa76777952f67ceff1f0c2b8c45c420a47a998",
+  "checks": [
+    {
+      "command": "TMPDIR=/workspace/scratch/test262-tmp ADAMIC_GATE_UNCACHED=1 go test ./cmd/adamic-test262 -count=1 -timeout 10m",
+      "output": "ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t28.109s\n",
+      "log": "/tmp/test262-followup-final-package.log"
+    },
+    {
+      "command": "TMPDIR=/workspace/scratch/test262-tmp go test -race ./cmd/adamic-test262 -run 'TestRunnerLocationIdentity|TestLoweringSourceEdit|TestEditCacheSeparation|TestNodeHarnessIdentity|TestWorkerLazyFallback|TestParallelCachedMatchesSerial' -count=1 -timeout 10m",
+      "output": "ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t16.939s\n",
+      "log": "/tmp/test262-followup-race.log"
+    },
+    {
+      "command": "go vet ./cmd/adamic-test262",
+      "output": "",
+      "log": "/tmp/test262-followup-vet.log"
+    },
+    {
+      "command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(library_math_number.*|strings[.]a|pad_too_long[.]a)' -count=1 -timeout 10m -v",
+      "output": "PASS; seven fixtures; native hits=0 misses=20; node hits=0 misses=14",
+      "log": "/tmp/test262-followup-oracle.log"
+    }
+  ],
+  "raw_logs": "/workspace/scratch/test262-followup-measured",
+  "setup_log": "/tmp/test262-followup-setup.log",
+  "space_failure": "An earlier race run reported no space left on device under the 8.8 GB /tmp mount; moved TMPDIR and private Go caches to /workspace/scratch and reran successfully."
+}
