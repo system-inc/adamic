@@ -1,0 +1,1516 @@
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:101: 22412 oracle output lines matched Go, Node and sanitized native
+--- PASS: TestHelpersMatchCohere (38.52s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/options_json.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/option_schema.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/policy_message.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare `{{constructor}}`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare `sentinel é😀`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+=== RUN   TestHelperMutants/strict_options.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+--- PASS: TestHelperMutants (90.43s)
+    --- PASS: TestHelperMutants/options_json.ts (17.76s)
+    --- PASS: TestHelperMutants/option_schema.ts (13.68s)
+    --- PASS: TestHelperMutants/policy_message.ts (17.27s)
+    --- PASS: TestHelperMutants/strict_options.ts (11.85s)
+=== RUN   TestMessageRefusalsMatchGo
+    helpers_test.go:237: 10 message refusal cases match Go on Node and sanitized native
+--- PASS: TestMessageRefusalsMatchGo (12.44s)
+=== RUN   TestKnownGapsAreExplicit
+--- PASS: TestKnownGapsAreExplicit (4.28s)
+=== RUN   TestSlot04ElementParts
+    slot04_test.go:67: Go, Node source and sanitized native match 20331 output lines
+--- PASS: TestSlot04ElementParts (12.36s)
+=== RUN   TestSlot04ElementPartsMutant
+    slot04_test.go:91: sanitized native compiling mutant caught at line 6: got "parts -1 -1", Go "parts 6 7"
+    slot04_test.go:91: Node source compiling mutant caught at line 6: got "parts -1 -1", Go "parts 6 7"
+--- PASS: TestSlot04ElementPartsMutant (4.77s)
+=== RUN   TestSlot04ElementShapes
+    slot04_test.go:100: Go, Node and sanitized native match 130 shape output lines
+--- PASS: TestSlot04ElementShapes (6.05s)
+=== RUN   TestSlot04SettingsKey
+    slot04_test.go:128: settings-consumers.json: Go, Node source and sanitized native match 5 settings keys
+    slot04_test.go:128: settings-witnesses.json: Go, Node source and sanitized native match 467 settings keys
+--- PASS: TestSlot04SettingsKey (10.17s)
+=== RUN   TestSlot04SettingsKeyMutant
+    slot04_test.go:154: sanitized native compiling mutant caught at line 1: got "1,", Go "1,1,"
+    slot04_test.go:154: Node source compiling mutant caught at line 1: got "1,", Go "1,1,"
+--- PASS: TestSlot04SettingsKeyMutant (8.99s)
+=== RUN   TestSlot04CompiledReader
+    slot04_test.go:196: reader-consumers.json: Go, Node source and sanitized native match 323 cache calls
+    slot04_test.go:196: reader-witnesses.json: Go, Node source and sanitized native match 364 cache calls
+--- PASS: TestSlot04CompiledReader (6.10s)
+=== RUN   TestSlot04CompiledReaderMutant
+    slot04_test.go:222: sanitized native compiling mutant caught at line 2: got "reader 2 2 1,1,", Go "reader 1 1 1,1,"
+    slot04_test.go:222: Node source compiling mutant caught at line 2: got "reader 2 2 1,1,", Go "reader 1 1 1,1,"
+--- PASS: TestSlot04CompiledReaderMutant (7.06s)
+=== RUN   TestSlot04ConsumerCoverage
+    slot04_test.go:321: consumers.json covers all 24 consumers; removing @next/next/google-font-display is caught
+    slot04_test.go:321: tailwind-consumers.json covers all 12 consumers; removing better-tailwindcss/enforce-canonical-classes is caught
+--- PASS: TestSlot04ConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	201.228s
+=== RUN   TestCommentsMatchCohere
+    comments_test.go:96: Go, Node and sanitized native match 390 output lines
+--- PASS: TestCommentsMatchCohere (42.58s)
+=== RUN   TestCommentMutants
+=== RUN   TestCommentMutants/can_begin_at.ts
+    comments_test.go:139: compiled semantic mutant caught at line 251: got "cached 0 0"; Go "cached 1 1"
+=== RUN   TestCommentMutants/collect_list_interiors.ts
+    comments_test.go:139: compiled semantic mutant caught at line 3: got "cached 0 0"; Go "cached 1 1"
+=== RUN   TestCommentMutants/sort_by_position.ts
+    comments_test.go:139: compiled semantic mutant caught at line 60: got "47 54 1 0 47 0\t/* f */"; Go "6 13 1 0 6 0\t/* t */"
+=== RUN   TestCommentMutants/all.ts
+    comments_test.go:139: compiled semantic mutant caught at line 201: got "cached 0 0"; Go "cached 1 1"
+=== RUN   TestCommentMutants/for_file.ts
+    comments_test.go:139: compiled semantic mutant caught at line 2: got "cache 0 0 0"; Go "cache 1 0 0"
+--- PASS: TestCommentMutants (84.41s)
+    --- PASS: TestCommentMutants/can_begin_at.ts (17.30s)
+    --- PASS: TestCommentMutants/collect_list_interiors.ts (19.50s)
+    --- PASS: TestCommentMutants/sort_by_position.ts (10.86s)
+    --- PASS: TestCommentMutants/all.ts (12.63s)
+    --- PASS: TestCommentMutants/for_file.ts (16.41s)
+=== RUN   TestConsumerCommentHelpers
+    comments_test.go:162: Go, Node and sanitized native agree on 32770 consumer output lines with the stated AST adapter
+--- PASS: TestConsumerCommentHelpers (83.61s)
+=== RUN   TestJsxParserGapIsExplicit
+    comments_test.go:204: 4 valid Go JSX inputs explicitly refuse in the independent-parser adapter; AST-adapter helper comparisons cover them separately
+--- PASS: TestJsxParserGapIsExplicit (24.59s)
+=== RUN   TestJsxAdapterGuardMutant
+    comments_test.go:255: compiled adapter-guard mutant finishes the unsupported JSX input with exit 0; the explicit-refusal check requires exit 70 and catches it
+--- PASS: TestJsxAdapterGuardMutant (17.16s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	252.363s
+=== RUN   TestExportsGoNodeNativeJavaScript
+=== RUN   TestExportsGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:129: Go, source Node, sanitized native, emitted JavaScript match 2319 AST/list observations
+=== RUN   TestExportsGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:129: Go, source Node, sanitized native, emitted JavaScript match 8827 AST/list observations
+--- PASS: TestExportsGoNodeNativeJavaScript (5.89s)
+    --- PASS: TestExportsGoNodeNativeJavaScript/witnesses.json (1.06s)
+    --- PASS: TestExportsGoNodeNativeJavaScript/consumers.json (2.13s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/is_exported_by_name.ahasExport_&&_!hasDefault
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/is_exported_by_name.ahasDefault_=_true;
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/has_export_modifier.aif(!modifiers.present)_{_return_false;_}
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/has_export_modifier.atag_===_'export-keyword'
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/is_exported.aif(!node.present)_{_return_false;_}
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/is_exported.areturn_HasExportModifier(node.modifiers);
+    helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (16.05s)
+    --- PASS: TestCompilingMutants/is_exported_by_name.ahasExport_&&_!hasDefault (2.21s)
+    --- PASS: TestCompilingMutants/is_exported_by_name.ahasDefault_=_true; (2.85s)
+    --- PASS: TestCompilingMutants/has_export_modifier.aif(!modifiers.present)_{_return_false;_} (2.82s)
+    --- PASS: TestCompilingMutants/has_export_modifier.atag_===_'export-keyword' (2.59s)
+    --- PASS: TestCompilingMutants/is_exported.aif(!node.present)_{_return_false;_} (2.17s)
+    --- PASS: TestCompilingMutants/is_exported.areturn_HasExportModifier(node.modifiers); (2.52s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:247: consumer omission caught: structure/next-no-near-miss-route-export
+    helpers_test.go:247: consumer omission caught: structure/react-component-no-const-assignment
+    helpers_test.go:247: consumer omission caught: structure/react-component-require-named-export
+    helpers_test.go:247: consumer omission caught: @next/next/no-typos
+    helpers_test.go:247: consumer omission caught: nexus/consistency-no-screaming-snake-case
+    helpers_test.go:247: consumer omission caught: structure/boundary-no-project-theme-value
+    helpers_test.go:247: consumer omission caught: structure/network-require-hook-options-parameter
+    helpers_test.go:247: consumer omission caught: @typescript-eslint/no-useless-empty-export
+    helpers_test.go:247: consumer omission caught: structure/network-require-hook-request-suffix
+    helpers_test.go:247: consumer omission caught: structure/network-require-hook-variables-type
+--- PASS: TestConsumerCoverage (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave10	22.038s
+=== RUN   TestBytesGoNodeNativeJavaScript
+=== RUN   TestBytesGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 14 byte predicate observations
+=== RUN   TestBytesGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 476 byte predicate observations
+=== RUN   TestBytesGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 3 byte predicate observations
+=== RUN   TestBytesGoNodeNativeJavaScript/--full
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 328965 byte predicate observations
+--- PASS: TestBytesGoNodeNativeJavaScript (6.61s)
+    --- PASS: TestBytesGoNodeNativeJavaScript/witnesses.json (0.31s)
+    --- PASS: TestBytesGoNodeNativeJavaScript/consumers.json (0.91s)
+    --- PASS: TestBytesGoNodeNativeJavaScript/calls.json (0.27s)
+    --- PASS: TestBytesGoNodeNativeJavaScript/--full (2.67s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/digit.acharacter_>=_48
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/digit.acharacter_<=_57
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bracketed.aword.length_>=_2
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bracketed.aword[0]_===_91
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/any_prefix.aprefix.length_>_value.length
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/any_prefix.aif(matches)_{_return_true;_}
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (10.01s)
+    --- PASS: TestCompilingMutants/digit.acharacter_>=_48 (1.28s)
+    --- PASS: TestCompilingMutants/digit.acharacter_<=_57 (1.53s)
+    --- PASS: TestCompilingMutants/bracketed.aword.length_>=_2 (1.68s)
+    --- PASS: TestCompilingMutants/bracketed.aword[0]_===_91 (1.65s)
+    --- PASS: TestCompilingMutants/any_prefix.aprefix.length_>_value.length (1.29s)
+    --- PASS: TestCompilingMutants/any_prefix.aif(matches)_{_return_true;_} (1.54s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave11	16.651s
+=== RUN   TestSurgeryGoNodeNativeJavaScript
+=== RUN   TestSurgeryGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 154 helper observations
+=== RUN   TestSurgeryGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 224 helper observations
+=== RUN   TestSurgeryGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 6 helper observations
+=== RUN   TestSurgeryGoNodeNativeJavaScript/--full
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 65793 helper observations
+--- PASS: TestSurgeryGoNodeNativeJavaScript (5.14s)
+    --- PASS: TestSurgeryGoNodeNativeJavaScript/witnesses.json (0.61s)
+    --- PASS: TestSurgeryGoNodeNativeJavaScript/consumers.json (1.31s)
+    --- PASS: TestSurgeryGoNodeNativeJavaScript/calls.json (0.29s)
+    --- PASS: TestSurgeryGoNodeNativeJavaScript/--full (1.56s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/quoted_literal.aword.length_<_2
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/quoted_literal.aquote_!==_39_&&_quote_!==_34
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/replace_value_node.anode.tag_=_'word';
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/replace_value_node.anode.edges_=_empty;
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/union_node_sets.aif(left.entries.size_===_0)_{_return_right;_}
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/union_node_sets.aentries.set(id,true);
+    helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (22.22s)
+    --- PASS: TestCompilingMutants/quoted_literal.aword.length_<_2 (2.85s)
+    --- PASS: TestCompilingMutants/quoted_literal.aquote_!==_39_&&_quote_!==_34 (3.96s)
+    --- PASS: TestCompilingMutants/replace_value_node.anode.tag_=_'word'; (2.82s)
+    --- PASS: TestCompilingMutants/replace_value_node.anode.edges_=_empty; (5.29s)
+    --- PASS: TestCompilingMutants/union_node_sets.aif(left.entries.size_===_0)_{_return_right;_} (2.87s)
+    --- PASS: TestCompilingMutants/union_node_sets.aentries.set(id,true); (3.30s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:262: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:262: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:262: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:262: consumer omission caught: better-tailwindcss/no-unknown-classes
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave12	27.415s
+=== RUN   TestAssertionsGoNodeNativeJavaScript
+=== RUN   TestAssertionsGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 13536 assertion observations
+=== RUN   TestAssertionsGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 112032 assertion observations
+=== RUN   TestAssertionsGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 27936 assertion observations
+--- PASS: TestAssertionsGoNodeNativeJavaScript (104.33s)
+    --- PASS: TestAssertionsGoNodeNativeJavaScript/witnesses.json (3.04s)
+    --- PASS: TestAssertionsGoNodeNativeJavaScript/consumers.json (88.80s)
+    --- PASS: TestAssertionsGoNodeNativeJavaScript/calls.json (11.11s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/nothing_to_repeat.aconst_end_=_width(quantifier);
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/nothing_to_repeat.a_repeats_an_assertion
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/group_quantifier.akind_===_1_&&_!unicode
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/group_quantifier.akind_===_0_||_width(rest)_===_0
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/group_construct.afirst_===_58_||
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/group_construct.areturn_4;
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (27.82s)
+    --- PASS: TestCompilingMutants/nothing_to_repeat.aconst_end_=_width(quantifier); (3.78s)
+    --- PASS: TestCompilingMutants/nothing_to_repeat.a_repeats_an_assertion (4.01s)
+    --- PASS: TestCompilingMutants/group_quantifier.akind_===_1_&&_!unicode (6.10s)
+    --- PASS: TestCompilingMutants/group_quantifier.akind_===_0_||_width(rest)_===_0 (5.81s)
+    --- PASS: TestCompilingMutants/group_construct.afirst_===_58_|| (2.98s)
+    --- PASS: TestCompilingMutants/group_construct.areturn_4; (4.34s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:251: consumer omission caught: @next/next/no-html-link-for-pages
+    helpers_test.go:251: consumer omission caught: @typescript-eslint/no-empty-object-type
+    helpers_test.go:251: consumer omission caught: no-restricted-exports
+    helpers_test.go:251: consumer omission caught: no-restricted-imports
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave13	132.183s
+=== RUN   TestNumericGoNodeNativeJavaScript
+=== RUN   TestNumericGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 8952 numeric observations
+=== RUN   TestNumericGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 2688 numeric observations
+=== RUN   TestNumericGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 123 numeric observations
+--- PASS: TestNumericGoNodeNativeJavaScript (9.24s)
+    --- PASS: TestNumericGoNodeNativeJavaScript/witnesses.json (3.82s)
+    --- PASS: TestNumericGoNodeNativeJavaScript/consumers.json (2.14s)
+    --- PASS: TestNumericGoNodeNativeJavaScript/calls.json (0.46s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/mod_float.avalue_%_divisor
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/format_number.avalue_>=_1e21
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/format_number.areturn_'-0';
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/multiple_of.aif(!parsed.ok)
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/multiple_of.aif(parsed.value_<_0)
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/multiple_of.aformatJavaScriptNumber(parsed.value)_===_value
+    helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (29.36s)
+    --- PASS: TestCompilingMutants/mod_float.avalue_%_divisor (5.65s)
+    --- PASS: TestCompilingMutants/format_number.avalue_>=_1e21 (6.40s)
+    --- PASS: TestCompilingMutants/format_number.areturn_'-0'; (5.69s)
+    --- PASS: TestCompilingMutants/multiple_of.aif(!parsed.ok) (4.57s)
+    --- PASS: TestCompilingMutants/multiple_of.aif(parsed.value_<_0) (2.86s)
+    --- PASS: TestCompilingMutants/multiple_of.aformatJavaScriptNumber(parsed.value)_===_value (3.38s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:251: consumer omission caught: better-tailwindcss/no-unknown-classes
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave14	38.644s
+=== RUN   TestIntegerGoNodeNativeJavaScript
+=== RUN   TestIntegerGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 638 integer predicate observations
+=== RUN   TestIntegerGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 112 integer predicate observations
+=== RUN   TestIntegerGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 6 integer predicate observations
+--- PASS: TestIntegerGoNodeNativeJavaScript (3.13s)
+    --- PASS: TestIntegerGoNodeNativeJavaScript/witnesses.json (0.64s)
+    --- PASS: TestIntegerGoNodeNativeJavaScript/consumers.json (0.37s)
+    --- PASS: TestIntegerGoNodeNativeJavaScript/calls.json (0.26s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/positive_integer.a/[^0-9]/u
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/positive_integer.avalue_===_''_||
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/positive_integer.avalue.length_>_15
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/positive_integer.avalue.startsWith('0')
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/round_trip.aif(!parsed.ok)
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/round_trip.aif(parsed.value_>=_1e21)
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/round_trip.aformatJavaScriptNumber(parsed.value)_===_value
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/spacing_multiplier.avalue,0.25,parse
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/spacing_multiplier.areturn_isMultipleOf(
+    helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (17.97s)
+    --- PASS: TestCompilingMutants/positive_integer.a/[^0-9]/u (2.23s)
+    --- PASS: TestCompilingMutants/positive_integer.avalue_===_''_|| (3.15s)
+    --- PASS: TestCompilingMutants/positive_integer.avalue.length_>_15 (2.00s)
+    --- PASS: TestCompilingMutants/positive_integer.avalue.startsWith('0') (1.51s)
+    --- PASS: TestCompilingMutants/round_trip.aif(!parsed.ok) (2.04s)
+    --- PASS: TestCompilingMutants/round_trip.aif(parsed.value_>=_1e21) (1.46s)
+    --- PASS: TestCompilingMutants/round_trip.aformatJavaScriptNumber(parsed.value)_===_value (1.54s)
+    --- PASS: TestCompilingMutants/spacing_multiplier.avalue,0.25,parse (1.56s)
+    --- PASS: TestCompilingMutants/spacing_multiplier.areturn_isMultipleOf( (2.09s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:265: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:265: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:265: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:265: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+--- PASS: TestConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave15	21.116s
+=== RUN   TestUtilityResolutionGoNodeNativeJavaScript
+=== RUN   TestUtilityResolutionGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:135: Go, source Node, sanitized native, emitted JavaScript match 47880 utility resolution observations
+=== RUN   TestUtilityResolutionGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:135: Go, source Node, sanitized native, emitted JavaScript match 209 utility resolution observations
+=== RUN   TestUtilityResolutionGoNodeNativeJavaScript/calls.json
+    helpers_test.go:135: Go, source Node, sanitized native, emitted JavaScript match 4 utility resolution observations
+--- PASS: TestUtilityResolutionGoNodeNativeJavaScript (40.60s)
+    --- PASS: TestUtilityResolutionGoNodeNativeJavaScript/witnesses.json (38.28s)
+    --- PASS: TestUtilityResolutionGoNodeNativeJavaScript/consumers.json (0.53s)
+    --- PASS: TestUtilityResolutionGoNodeNativeJavaScript/calls.json (0.57s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/modifier_value.a!modifier.present
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/modifier_value.amodifier.kind_===_'arbitrary'
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/modifier_value.avalue:modifier.value
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/arbitrary_argument.adataType_===_'*'
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/arbitrary_argument.avalue.dataType_!==_dataType
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/arbitrary_argument.ainfer(value.value,dataType)_!==_''
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/variable_reference.a!entry.present
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/variable_reference.aentry.options_&_2
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/variable_reference.aentry.value_!==_''
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/variable_reference.aescape(prefixKey(themeKey))
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (25.01s)
+    --- PASS: TestCompilingMutants/modifier_value.a!modifier.present (3.04s)
+    --- PASS: TestCompilingMutants/modifier_value.amodifier.kind_===_'arbitrary' (2.32s)
+    --- PASS: TestCompilingMutants/modifier_value.avalue:modifier.value (1.93s)
+    --- PASS: TestCompilingMutants/arbitrary_argument.adataType_===_'*' (1.62s)
+    --- PASS: TestCompilingMutants/arbitrary_argument.avalue.dataType_!==_dataType (3.11s)
+    --- PASS: TestCompilingMutants/arbitrary_argument.ainfer(value.value,dataType)_!==_'' (2.78s)
+    --- PASS: TestCompilingMutants/variable_reference.a!entry.present (2.50s)
+    --- PASS: TestCompilingMutants/variable_reference.aentry.options_&_2 (2.42s)
+    --- PASS: TestCompilingMutants/variable_reference.aentry.value_!==_'' (2.39s)
+    --- PASS: TestCompilingMutants/variable_reference.aescape(prefixKey(themeKey)) (2.23s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave16	65.642s
+=== RUN   TestColorLengthGoNodeNativeJavaScript
+=== RUN   TestColorLengthGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 2416 color/length predicate observations
+=== RUN   TestColorLengthGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 112 color/length predicate observations
+=== RUN   TestColorLengthGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 5 color/length predicate observations
+--- PASS: TestColorLengthGoNodeNativeJavaScript (5.13s)
+    --- PASS: TestColorLengthGoNodeNativeJavaScript/witnesses.json (1.61s)
+    --- PASS: TestColorLengthGoNodeNativeJavaScript/consumers.json (0.42s)
+    --- PASS: TestColorLengthGoNodeNativeJavaScript/calls.json (0.48s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/named_color.alower(value)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/named_color.a"black"
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/named_color.alower(value)#01
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/color.a/^#/
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/color.a/^(rgba?
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/color.a\(/i
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/color.argba?
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/length.aif(numberWithSuffix(value,lengthUnits)){return_true;}
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/length.a'Q'
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/length.a/^--spacing
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/length.a\(/i
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/length.areturn_hasMathFunction(value)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (40.72s)
+    --- PASS: TestCompilingMutants/named_color.alower(value) (2.97s)
+    --- PASS: TestCompilingMutants/named_color.a"black" (2.55s)
+    --- PASS: TestCompilingMutants/named_color.alower(value)#01 (2.86s)
+    --- PASS: TestCompilingMutants/color.a/^#/ (3.31s)
+    --- PASS: TestCompilingMutants/color.a/^(rgba? (4.11s)
+    --- PASS: TestCompilingMutants/color.a\(/i (4.01s)
+    --- PASS: TestCompilingMutants/color.argba? (2.70s)
+    --- PASS: TestCompilingMutants/length.aif(numberWithSuffix(value,lengthUnits)){return_true;} (3.24s)
+    --- PASS: TestCompilingMutants/length.a'Q' (2.66s)
+    --- PASS: TestCompilingMutants/length.a/^--spacing (5.93s)
+    --- PASS: TestCompilingMutants/length.a\(/i (3.22s)
+    --- PASS: TestCompilingMutants/length.areturn_hasMathFunction(value) (2.65s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+--- PASS: TestConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave17	45.870s
+=== RUN   TestNestedThemeGoNodeNativeJavaScript
+=== RUN   TestNestedThemeGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 674 background/theme observations
+=== RUN   TestNestedThemeGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 112 background/theme observations
+=== RUN   TestNestedThemeGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 3 background/theme observations
+--- PASS: TestNestedThemeGoNodeNativeJavaScript (5.72s)
+    --- PASS: TestNestedThemeGoNodeNativeJavaScript/witnesses.json (2.47s)
+    --- PASS: TestNestedThemeGoNodeNativeJavaScript/consumers.json (0.46s)
+    --- PASS: TestNestedThemeGoNodeNativeJavaScript/calls.json (0.86s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/background_size.asize_===_'cover'
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/background_size.aif(allValid)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/background_size.acount_>_0
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/background_size.avalues.length_!==_2
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_with.aif(!key.ok)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_with.aif(!nested.present)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_with.anested.options_&_1
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_with.abase.options_&_1
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/theme_argument.areturn_resolve(candidate,true,[argument.slice(0,-2)],0)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/theme_argument.anested.length-1
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/theme_argument.aif(!result.ok)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/theme_argument.aif(!result.extra.has(last))
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (48.75s)
+    --- PASS: TestCompilingMutants/background_size.asize_===_'cover' (4.83s)
+    --- PASS: TestCompilingMutants/background_size.aif(allValid) (3.59s)
+    --- PASS: TestCompilingMutants/background_size.acount_>_0 (3.35s)
+    --- PASS: TestCompilingMutants/background_size.avalues.length_!==_2 (4.25s)
+    --- PASS: TestCompilingMutants/resolve_with.aif(!key.ok) (7.12s)
+    --- PASS: TestCompilingMutants/resolve_with.aif(!nested.present) (4.36s)
+    --- PASS: TestCompilingMutants/resolve_with.anested.options_&_1 (3.27s)
+    --- PASS: TestCompilingMutants/resolve_with.abase.options_&_1 (3.23s)
+    --- PASS: TestCompilingMutants/theme_argument.areturn_resolve(candidate,true,[argument.slice(0,-2)],0) (2.99s)
+    --- PASS: TestCompilingMutants/theme_argument.anested.length-1 (3.60s)
+    --- PASS: TestCompilingMutants/theme_argument.aif(!result.ok) (3.46s)
+    --- PASS: TestCompilingMutants/theme_argument.aif(!result.extra.has(last)) (3.61s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave18	54.509s
+=== RUN   TestUtilityTraversalGoNodeNativeJavaScript
+=== RUN   TestUtilityTraversalGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 37440 utility traversal observations
+=== RUN   TestUtilityTraversalGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 963 utility traversal observations
+=== RUN   TestUtilityTraversalGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 36 utility traversal observations
+--- PASS: TestUtilityTraversalGoNodeNativeJavaScript (20.33s)
+    --- PASS: TestUtilityTraversalGoNodeNativeJavaScript/witnesses.json (16.82s)
+    --- PASS: TestUtilityTraversalGoNodeNativeJavaScript/consumers.json (0.87s)
+    --- PASS: TestUtilityTraversalGoNodeNativeJavaScript/calls.json (0.64s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/walk.atag==='declaration'
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/walk.atag==='context'
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/walk.atag==='at-rule'
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_declaration.a!present_||_value===''
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_declaration.amarkDropped(id)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_declaration.areplace(id,print(nodes))
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_value_functions.astate.usedValue=true
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_value_functions.astate.resolvedRatio=true
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_value_functions.astate.nonRatio.set(declaration,true)
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_value_functions.astate.usedModifier=true
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_value_functions.areplace(id,result.text);___}_else_if
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/resolve_value_functions.aif(!result.ok)_{_return_true;_}____state.resolvedValue
+    helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (159.38s)
+    --- PASS: TestCompilingMutants/walk.atag==='declaration' (11.80s)
+    --- PASS: TestCompilingMutants/walk.atag==='context' (13.89s)
+    --- PASS: TestCompilingMutants/walk.atag==='at-rule' (12.08s)
+    --- PASS: TestCompilingMutants/resolve_declaration.a!present_||_value==='' (13.61s)
+    --- PASS: TestCompilingMutants/resolve_declaration.amarkDropped(id) (9.11s)
+    --- PASS: TestCompilingMutants/resolve_declaration.areplace(id,print(nodes)) (15.89s)
+    --- PASS: TestCompilingMutants/resolve_value_functions.astate.usedValue=true (11.12s)
+    --- PASS: TestCompilingMutants/resolve_value_functions.astate.resolvedRatio=true (13.36s)
+    --- PASS: TestCompilingMutants/resolve_value_functions.astate.nonRatio.set(declaration,true) (13.49s)
+    --- PASS: TestCompilingMutants/resolve_value_functions.astate.usedModifier=true (16.01s)
+    --- PASS: TestCompilingMutants/resolve_value_functions.areplace(id,result.text);___}_else_if (15.83s)
+    --- PASS: TestCompilingMutants/resolve_value_functions.aif(!result.ok)_{_return_true;_}____state.resolvedValue (12.43s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+--- PASS: TestConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave19	179.730s
+=== RUN   TestWave2GoNodeNative
+=== RUN   TestWave2GoNodeNative/witnesses.json
+    wave2_test.go:105: Go, Node source and sanitized native match 1386 output lines
+=== RUN   TestWave2GoNodeNative/consumers.json
+    wave2_test.go:105: Go, Node source and sanitized native match 22374 output lines
+--- PASS: TestWave2GoNodeNative (7.61s)
+    --- PASS: TestWave2GoNodeNative/witnesses.json (0.38s)
+    --- PASS: TestWave2GoNodeNative/consumers.json (2.66s)
+=== RUN   TestWave2CompilingMutants
+=== RUN   TestWave2CompilingMutants/class_values_under.aleading:_false,_trailing:_false
+    wave2_test.go:158: sanitized native compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+    wave2_test.go:158: Node source compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+=== RUN   TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.whenFalse,_origin,_edges,_values,_dependencies);
+    wave2_test.go:158: sanitized native compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+    wave2_test.go:158: Node source compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+=== RUN   TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.right,_origin,_edges,_values,_dependencies);
+    wave2_test.go:158: sanitized native compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+    wave2_test.go:158: Node source compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+--- PASS: TestWave2CompilingMutants (7.44s)
+    --- PASS: TestWave2CompilingMutants/class_values_under.aleading:_false,_trailing:_false (1.68s)
+    --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.whenFalse,_origin,_edges,_values,_dependencies); (1.42s)
+    --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.right,_origin,_edges,_values,_dependencies); (1.75s)
+=== RUN   TestWave2ConsumerCoverage
+    wave2_test.go:225: all 11 consumers covered; canonical-class consumer omission caught
+--- PASS: TestWave2ConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave2	15.085s
+=== RUN   TestJsxSearchGoNodeNativeJavaScript
+=== RUN   TestJsxSearchGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 533 JSX/hook AST observations
+=== RUN   TestJsxSearchGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 4986 JSX/hook AST observations
+--- PASS: TestJsxSearchGoNodeNativeJavaScript (7.09s)
+    --- PASS: TestJsxSearchGoNodeNativeJavaScript/witnesses.json (1.04s)
+    --- PASS: TestJsxSearchGoNodeNativeJavaScript/consumers.json (1.76s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/descends_for_jsx_search.aif(!present)
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/descends_for_jsx_search.areturn_!isSwitchStatement
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.adepth>20
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.aif(node.jsx)
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.anode.call_&&_isHookCall(id)
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.aif(!descendsForJsxSearch(next.present,next.isSwitchStatement))
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.adepth+1
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/search_for_jsx_or_hook.aif(searchForJsxOrHook(child,depth+1,nodeAt,isHookCall))_{_return_true;_}
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/has_jsx_or_react_hook_calls.asearchForJsxOrHook(id,0,
+    helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (25.24s)
+    --- PASS: TestCompilingMutants/descends_for_jsx_search.aif(!present) (2.60s)
+    --- PASS: TestCompilingMutants/descends_for_jsx_search.areturn_!isSwitchStatement (3.44s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.adepth>20 (3.00s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(node.jsx) (2.30s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.anode.call_&&_isHookCall(id) (2.40s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(!descendsForJsxSearch(next.present,next.isSwitchStatement)) (1.88s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.adepth+1 (2.54s)
+    --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(searchForJsxOrHook(child,depth+1,nodeAt,isHookCall))_{_return_true;_} (1.92s)
+    --- PASS: TestCompilingMutants/has_jsx_or_react_hook_calls.asearchForJsxOrHook(id,0, (2.18s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:254: consumer omission caught: structure/consistency-require-matching-file-name
+    helpers_test.go:254: consumer omission caught: structure/react-component-no-destructuring
+    helpers_test.go:254: consumer omission caught: structure/react-component-no-separate-named-export
+    helpers_test.go:254: consumer omission caught: structure/react-component-require-properties-parameter
+--- PASS: TestConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave20	32.362s
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 7232 token/bare observations
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 5879 token/bare observations
+=== RUN   TestClassTokenBareGoNodeNativeJavaScript/calls.json
+    helpers_test.go:133: Go, source Node, sanitized native, emitted JavaScript match 1586 token/bare observations
+--- PASS: TestClassTokenBareGoNodeNativeJavaScript (8.45s)
+    --- PASS: TestClassTokenBareGoNodeNativeJavaScript/witnesses.json (2.34s)
+    --- PASS: TestClassTokenBareGoNodeNativeJavaScript/consumers.json (1.52s)
+    --- PASS: TestClassTokenBareGoNodeNativeJavaScript/calls.json (1.04s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/class_tokens_of.astart:start+begin
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_of.aend:start+index
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_of.aseparator:separator
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_of.awhile(index<value.length_&&_isSpace(value[index]_??_0)===separator){index++;}
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_in.aend>source.length
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_in.astart>end
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/class_tokens_in.asource[start+index]!==value[index]
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.aargument!=='integer'
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.aif(inferred==='')
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.aparts.length!==2
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.aratio:true,ok:true
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.ainferred==='number'_&&_!spacing(resolved)
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/bare_argument.ainferred==='percentage'_&&_!positive
+    helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (70.49s)
+    --- PASS: TestCompilingMutants/class_tokens_of.astart:start+begin (5.87s)
+    --- PASS: TestCompilingMutants/class_tokens_of.aend:start+index (8.12s)
+    --- PASS: TestCompilingMutants/class_tokens_of.aseparator:separator (5.71s)
+    --- PASS: TestCompilingMutants/class_tokens_of.awhile(index<value.length_&&_isSpace(value[index]_??_0)===separator){index++;} (4.97s)
+    --- PASS: TestCompilingMutants/class_tokens_in.aend>source.length (5.34s)
+    --- PASS: TestCompilingMutants/class_tokens_in.astart>end (5.52s)
+    --- PASS: TestCompilingMutants/class_tokens_in.asource[start+index]!==value[index] (5.91s)
+    --- PASS: TestCompilingMutants/bare_argument.aargument!=='integer' (4.03s)
+    --- PASS: TestCompilingMutants/bare_argument.aif(inferred==='') (4.36s)
+    --- PASS: TestCompilingMutants/bare_argument.aparts.length!==2 (4.08s)
+    --- PASS: TestCompilingMutants/bare_argument.aratio:true,ok:true (5.75s)
+    --- PASS: TestCompilingMutants/bare_argument.ainferred==='number'_&&_!spacing(resolved) (4.01s)
+    --- PASS: TestCompilingMutants/bare_argument.ainferred==='percentage'_&&_!positive (4.52s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-unnecessary-whitespace
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-deprecated-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-duplicate-classes
+    helpers_test.go:258: consumer omission caught: better-tailwindcss/no-unknown-classes
+--- PASS: TestConsumerCoverage (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave21	78.992s
+=== RUN   TestActualGoComparisons
+=== RUN   TestActualGoComparisons/witnesses.json
+    helpers_test.go:127: Node source matches Go: 1186 output lines
+    helpers_test.go:127: sanitized native matches Go: 1186 output lines
+    helpers_test.go:127: emitted JavaScript matches Go: 1186 output lines
+=== RUN   TestActualGoComparisons/calls.json
+    helpers_test.go:127: Node source matches Go: 10 output lines
+    helpers_test.go:127: sanitized native matches Go: 10 output lines
+    helpers_test.go:127: emitted JavaScript matches Go: 10 output lines
+=== RUN   TestActualGoComparisons/consumers.json
+    helpers_test.go:127: Node source matches Go: 1485 output lines
+    helpers_test.go:127: sanitized native matches Go: 1485 output lines
+    helpers_test.go:127: emitted JavaScript matches Go: 1485 output lines
+--- PASS: TestActualGoComparisons (9.68s)
+    --- PASS: TestActualGoComparisons/witnesses.json (2.37s)
+    --- PASS: TestActualGoComparisons/calls.json (1.60s)
+    --- PASS: TestActualGoComparisons/consumers.json (2.08s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/compile_candidate.aif(!candidate.present_||_!candidate.functional){return_{nodes:[],ok:false};}
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(!definition.found){return_{nodes:[],ok:false};}
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compiler_rule_options.aif(raw.length===0){return_{options:{},error:''};}
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile.acompileCandidate(candidate,0,
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(!state.usedValue_||_!state.resolvedValue)
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(state.usedModifier_&&_!state.resolvedModifier_&&_candidate.modifierPresent)
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_state.resolvedModifier)
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(candidate.modifierPresent_&&_!state.resolvedRatio_&&_!state.resolvedModifier)
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(removals!==1)
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_removals!==2)
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compiler_rule_options.aif(!object.valid_||_!object.objectPresent)
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compiler_rule_options.aif(object.keys.length===0)
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/compiler_rule_options.aconst_keys=sortedKeys(object.keys);
+    helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+--- PASS: TestCompilingMutants (40.68s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(!candidate.present_||_!candidate.functional){return_{nodes:[],ok:false};} (2.53s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(!definition.found){return_{nodes:[],ok:false};} (2.46s)
+    --- PASS: TestCompilingMutants/compiler_rule_options.aif(raw.length===0){return_{options:{},error:''};} (2.53s)
+    --- PASS: TestCompilingMutants/compile.acompileCandidate(candidate,0, (2.60s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(!state.usedValue_||_!state.resolvedValue) (3.02s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(state.usedModifier_&&_!state.resolvedModifier_&&_candidate.modifierPresent) (3.49s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_state.resolvedModifier) (2.65s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(candidate.modifierPresent_&&_!state.resolvedRatio_&&_!state.resolvedModifier) (2.35s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(removals!==1) (2.35s)
+    --- PASS: TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_removals!==2) (2.11s)
+    --- PASS: TestCompilingMutants/compiler_rule_options.aif(!object.valid_||_!object.objectPresent) (2.82s)
+    --- PASS: TestCompilingMutants/compiler_rule_options.aif(object.keys.length===0) (2.18s)
+    --- PASS: TestCompilingMutants/compiler_rule_options.aconst_keys=sortedKeys(object.keys); (2.91s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:259: consumer omission caught: react-hooks/error-boundaries
+    helpers_test.go:259: consumer omission caught: react-hooks/incompatible-library
+    helpers_test.go:259: consumer omission caught: react-hooks/void-use-memo
+    helpers_test.go:259: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:259: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:259: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:259: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:259: consumer omission caught: react-hooks/config
+--- PASS: TestConsumerCoverage (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave22	50.393s
+=== RUN   TestActualGoComparisons
+    helpers_test.go:145: witnesses.json rows 0:11: Go, source Node, sanitized native, emitted JavaScript match 64 observations
+    helpers_test.go:145: consumers.json rows 0:20: Go, source Node, sanitized native, emitted JavaScript match 172 observations
+    helpers_test.go:145: consumers.json rows 20:40: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 40:60: Go, source Node, sanitized native, emitted JavaScript match 168 observations
+    helpers_test.go:145: consumers.json rows 60:80: Go, source Node, sanitized native, emitted JavaScript match 168 observations
+    helpers_test.go:145: consumers.json rows 80:100: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 100:120: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 120:140: Go, source Node, sanitized native, emitted JavaScript match 168 observations
+    helpers_test.go:145: consumers.json rows 140:160: Go, source Node, sanitized native, emitted JavaScript match 168 observations
+    helpers_test.go:145: consumers.json rows 160:180: Go, source Node, sanitized native, emitted JavaScript match 168 observations
+    helpers_test.go:145: consumers.json rows 180:200: Go, source Node, sanitized native, emitted JavaScript match 164 observations
+    helpers_test.go:145: consumers.json rows 200:220: Go, source Node, sanitized native, emitted JavaScript match 164 observations
+    helpers_test.go:145: consumers.json rows 220:240: Go, source Node, sanitized native, emitted JavaScript match 172 observations
+    helpers_test.go:145: consumers.json rows 240:260: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 260:280: Go, source Node, sanitized native, emitted JavaScript match 164 observations
+    helpers_test.go:145: consumers.json rows 280:300: Go, source Node, sanitized native, emitted JavaScript match 168 observations
+    helpers_test.go:145: consumers.json rows 300:320: Go, source Node, sanitized native, emitted JavaScript match 148 observations
+    helpers_test.go:145: consumers.json rows 320:340: Go, source Node, sanitized native, emitted JavaScript match 168 observations
+    helpers_test.go:145: consumers.json rows 340:360: Go, source Node, sanitized native, emitted JavaScript match 176 observations
+    helpers_test.go:145: consumers.json rows 360:380: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 380:400: Go, source Node, sanitized native, emitted JavaScript match 120 observations
+    helpers_test.go:145: consumers.json rows 400:420: Go, source Node, sanitized native, emitted JavaScript match 80 observations
+    helpers_test.go:145: consumers.json rows 420:440: Go, source Node, sanitized native, emitted JavaScript match 112 observations
+    helpers_test.go:145: consumers.json rows 440:460: Go, source Node, sanitized native, emitted JavaScript match 80 observations
+    helpers_test.go:145: consumers.json rows 460:480: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 480:500: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 500:520: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 520:540: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 540:560: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 560:580: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 580:600: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 600:620: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 620:640: Go, source Node, sanitized native, emitted JavaScript match 80 observations
+    helpers_test.go:145: consumers.json rows 640:660: Go, source Node, sanitized native, emitted JavaScript match 100 observations
+    helpers_test.go:145: consumers.json rows 660:680: Go, source Node, sanitized native, emitted JavaScript match 84 observations
+    helpers_test.go:145: consumers.json rows 680:700: Go, source Node, sanitized native, emitted JavaScript match 92 observations
+    helpers_test.go:145: consumers.json rows 700:720: Go, source Node, sanitized native, emitted JavaScript match 92 observations
+    helpers_test.go:145: consumers.json rows 720:740: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 740:760: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 760:780: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 780:800: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 800:820: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 820:840: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 840:860: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 860:880: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 880:900: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 900:920: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 920:940: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 940:960: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 960:980: Go, source Node, sanitized native, emitted JavaScript match 80 observations
+    helpers_test.go:145: consumers.json rows 980:1000: Go, source Node, sanitized native, emitted JavaScript match 100 observations
+    helpers_test.go:145: consumers.json rows 1000:1020: Go, source Node, sanitized native, emitted JavaScript match 84 observations
+    helpers_test.go:145: consumers.json rows 1020:1040: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 1040:1060: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 1060:1080: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 1080:1100: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 1100:1120: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 1120:1140: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 1140:1160: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 1160:1180: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 1180:1200: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 1200:1220: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 1220:1240: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 1240:1260: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 1260:1280: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 1280:1300: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 1300:1320: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 1320:1340: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 1340:1360: Go, source Node, sanitized native, emitted JavaScript match 84 observations
+    helpers_test.go:145: consumers.json rows 1360:1380: Go, source Node, sanitized native, emitted JavaScript match 100 observations
+    helpers_test.go:145: consumers.json rows 1380:1400: Go, source Node, sanitized native, emitted JavaScript match 80 observations
+    helpers_test.go:145: consumers.json rows 1400:1420: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 1420:1440: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 1440:1460: Go, source Node, sanitized native, emitted JavaScript match 136 observations
+    helpers_test.go:145: consumers.json rows 1460:1480: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1480:1500: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1500:1520: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1520:1540: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1540:1560: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1560:1580: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1580:1600: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1600:1620: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1620:1640: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1640:1660: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1660:1680: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1680:1700: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1700:1720: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1720:1740: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1740:1760: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1760:1780: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1780:1800: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1800:1820: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1820:1840: Go, source Node, sanitized native, emitted JavaScript match 160 observations
+    helpers_test.go:145: consumers.json rows 1840:1860: Go, source Node, sanitized native, emitted JavaScript match 148 observations
+    helpers_test.go:145: consumers.json rows 1860:1880: Go, source Node, sanitized native, emitted JavaScript match 100 observations
+    helpers_test.go:145: consumers.json rows 1880:1900: Go, source Node, sanitized native, emitted JavaScript match 84 observations
+    helpers_test.go:145: consumers.json rows 1900:1920: Go, source Node, sanitized native, emitted JavaScript match 88 observations
+    helpers_test.go:145: consumers.json rows 1920:1940: Go, source Node, sanitized native, emitted JavaScript match 96 observations
+    helpers_test.go:145: consumers.json rows 1940:1960: Go, source Node, sanitized native, emitted JavaScript match 140 observations
+    helpers_test.go:145: consumers.json rows 1960:1980: Go, source Node, sanitized native, emitted JavaScript match 204 observations
+    helpers_test.go:145: consumers.json rows 1980:2000: Go, source Node, sanitized native, emitted JavaScript match 156 observations
+    helpers_test.go:145: consumers.json rows 2000:2020: Go, source Node, sanitized native, emitted JavaScript match 168 observations
+    helpers_test.go:145: consumers.json rows 2020:2040: Go, source Node, sanitized native, emitted JavaScript match 188 observations
+    helpers_test.go:145: consumers.json rows 2040:2060: Go, source Node, sanitized native, emitted JavaScript match 388 observations
+    helpers_test.go:145: consumers.json rows 2060:2080: Go, source Node, sanitized native, emitted JavaScript match 208 observations
+    helpers_test.go:145: consumers.json rows 2080:2100: Go, source Node, sanitized native, emitted JavaScript match 168 observations
+    helpers_test.go:145: consumers.json rows 2100:2119: Go, source Node, sanitized native, emitted JavaScript match 176 observations
+--- PASS: TestActualGoComparisons (76.71s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/build.aentry.incoming=true;
+    helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aentry.reachable=true;
+    helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aif(endReachable){ops.markFinal(builder,current);}
+    helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aops.expression(builder,root.type);
+    helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aif(root.bodyBlock)
+    helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aif(root.sourceFile)
+    helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aelse_if(root.staticBlock)
+    helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+=== RUN   TestCompilingMutants/build.aelse_if(root.property)
+    helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+    helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+--- PASS: TestCompilingMutants (17.40s)
+    --- PASS: TestCompilingMutants/build.aentry.incoming=true; (1.68s)
+    --- PASS: TestCompilingMutants/build.aentry.reachable=true; (2.28s)
+    --- PASS: TestCompilingMutants/build.aif(endReachable){ops.markFinal(builder,current);} (2.45s)
+    --- PASS: TestCompilingMutants/build.aops.expression(builder,root.type); (1.78s)
+    --- PASS: TestCompilingMutants/build.aif(root.bodyBlock) (1.62s)
+    --- PASS: TestCompilingMutants/build.aif(root.sourceFile) (1.74s)
+    --- PASS: TestCompilingMutants/build.aelse_if(root.staticBlock) (2.28s)
+    --- PASS: TestCompilingMutants/build.aelse_if(root.property) (2.33s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:271: consumer omission caught: array-callback-return
+    helpers_test.go:271: consumer omission caught: consistent-return
+    helpers_test.go:271: consumer omission caught: no-unreachable-loop
+    helpers_test.go:271: consumer omission caught: react-hooks/rules-of-hooks
+--- PASS: TestConsumerCoverage (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave23	94.156s
+=== RUN   TestSpaceGoNodeNativeJavaScript
+=== RUN   TestSpaceGoNodeNativeJavaScript/witnesses.json
+    space_test.go:135: Go, source Node, sanitized native and emitted JavaScript match 22597 output lines
+=== RUN   TestSpaceGoNodeNativeJavaScript/consumers.json
+    space_test.go:135: Go, source Node, sanitized native and emitted JavaScript match 21863 output lines
+=== RUN   TestSpaceGoNodeNativeJavaScript/--full
+    space_test.go:135: Go, source Node, sanitized native and emitted JavaScript match 1114372 output lines
+--- PASS: TestSpaceGoNodeNativeJavaScript (12.99s)
+    --- PASS: TestSpaceGoNodeNativeJavaScript/witnesses.json (0.60s)
+    --- PASS: TestSpaceGoNodeNativeJavaScript/consumers.json (0.52s)
+    --- PASS: TestSpaceGoNodeNativeJavaScript/--full (9.78s)
+=== RUN   TestSpaceCompilingMutants
+=== RUN   TestSpaceCompilingMutants/javascript_space.acase_0xfeff:
+    space_test.go:184: Node source compiling mutant caught at line 109: got "blank false", Go "blank true"
+    space_test.go:184: sanitized native compiling mutant caught at line 109: got "blank false", Go "blank true"
+    space_test.go:184: emitted JavaScript compiling mutant caught at line 109: got "blank false", Go "blank true"
+=== RUN   TestSpaceCompilingMutants/blank.areturn_true;
+    space_test.go:184: Node source compiling mutant caught at line 1: got "blank false", Go "blank true"
+    space_test.go:184: sanitized native compiling mutant caught at line 1: got "blank false", Go "blank true"
+    space_test.go:184: emitted JavaScript compiling mutant caught at line 1: got "blank false", Go "blank true"
+=== RUN   TestSpaceCompilingMutants/blank.aindex++
+    space_test.go:184: Node source compiling mutant caught at line 268: got "blank true", Go "blank false"
+    space_test.go:184: sanitized native compiling mutant caught at line 268: got "blank true", Go "blank false"
+    space_test.go:184: emitted JavaScript compiling mutant caught at line 268: got "blank true", Go "blank false"
+=== RUN   TestSpaceCompilingMutants/value_separator.acase_58:_
+    space_test.go:184: Node source compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+    space_test.go:184: sanitized native compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+    space_test.go:184: emitted JavaScript compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+=== RUN   TestSpaceCompilingMutants/value_separator.acase_60:_case_10:
+    space_test.go:184: Node source compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+    space_test.go:184: sanitized native compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+    space_test.go:184: emitted JavaScript compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+--- PASS: TestSpaceCompilingMutants (8.40s)
+    --- PASS: TestSpaceCompilingMutants/javascript_space.acase_0xfeff: (1.43s)
+    --- PASS: TestSpaceCompilingMutants/blank.areturn_true; (1.17s)
+    --- PASS: TestSpaceCompilingMutants/blank.aindex++ (1.52s)
+    --- PASS: TestSpaceCompilingMutants/value_separator.acase_58:_ (1.55s)
+    --- PASS: TestSpaceCompilingMutants/value_separator.acase_60:_case_10: (1.50s)
+=== RUN   TestSpaceConsumerCoverage
+    space_test.go:252: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestSpaceConsumerCoverage (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave3_space	21.413s
+=== RUN   TestBytesGoNodeNativeJavaScript
+=== RUN   TestBytesGoNodeNativeJavaScript/witnesses.json
+    bytes_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 12116 output lines
+=== RUN   TestBytesGoNodeNativeJavaScript/consumers.json
+    bytes_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 23608 output lines
+=== RUN   TestBytesGoNodeNativeJavaScript/--full
+    bytes_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 723206 output lines
+--- PASS: TestBytesGoNodeNativeJavaScript (8.09s)
+    --- PASS: TestBytesGoNodeNativeJavaScript/witnesses.json (0.34s)
+    --- PASS: TestBytesGoNodeNativeJavaScript/consumers.json (0.83s)
+    --- PASS: TestBytesGoNodeNativeJavaScript/--full (4.88s)
+=== RUN   TestBytesCompilingMutants
+=== RUN   TestBytesCompilingMutants/top_of_stack.astack[stack.length_-_1]
+    bytes_test.go:183: Node source compiling mutant caught at line 16: got "top 0", Go "top 1"
+    bytes_test.go:183: sanitized native compiling mutant caught at line 16: got "top 0", Go "top 1"
+    bytes_test.go:183: emitted JavaScript compiling mutant caught at line 16: got "top 0", Go "top 1"
+=== RUN   TestBytesCompilingMutants/peek_byte.areturn_input[index]
+    bytes_test.go:183: Node source compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+    bytes_test.go:183: sanitized native compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+    bytes_test.go:183: emitted JavaScript compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+=== RUN   TestBytesCompilingMutants/peek_byte.areturn_0;
+    bytes_test.go:183: Node source compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+    bytes_test.go:183: sanitized native compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+    bytes_test.go:183: emitted JavaScript compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+--- PASS: TestBytesCompilingMutants (5.75s)
+    --- PASS: TestBytesCompilingMutants/top_of_stack.astack[stack.length_-_1] (1.40s)
+    --- PASS: TestBytesCompilingMutants/peek_byte.areturn_input[index] (1.80s)
+    --- PASS: TestBytesCompilingMutants/peek_byte.areturn_0; (1.33s)
+=== RUN   TestBytesConsumerCoverage
+    bytes_test.go:251: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestBytesConsumerCoverage (0.01s)
+=== RUN   TestSortedKeys
+=== RUN   TestSortedKeys/sort-witnesses.json
+    bytes_test.go:291: Go, source Node, sanitized native and emitted JavaScript match 759 map-state lines
+=== RUN   TestSortedKeys/sort-consumers.json
+    bytes_test.go:291: Go, source Node, sanitized native and emitted JavaScript match 3 map-state lines
+--- PASS: TestSortedKeys (3.03s)
+    --- PASS: TestSortedKeys/sort-witnesses.json (1.66s)
+    --- PASS: TestSortedKeys/sort-consumers.json (1.00s)
+=== RUN   TestSortedKeysCompilingMutants
+=== RUN   TestSortedKeysCompilingMutants/omit_false_values
+    bytes_test.go:341: Node source compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+    bytes_test.go:341: sanitized native compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+    bytes_test.go:341: emitted JavaScript compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+=== RUN   TestSortedKeysCompilingMutants/reverse_UTF8
+    bytes_test.go:341: Node source compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+    bytes_test.go:341: sanitized native compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+    bytes_test.go:341: emitted JavaScript compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+=== RUN   TestSortedKeysCompilingMutants/UTF16_comparator
+    bytes_test.go:341: Node source compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+    bytes_test.go:341: sanitized native compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+    bytes_test.go:341: emitted JavaScript compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+--- PASS: TestSortedKeysCompilingMutants (6.18s)
+    --- PASS: TestSortedKeysCompilingMutants/omit_false_values (1.85s)
+    --- PASS: TestSortedKeysCompilingMutants/reverse_UTF8 (2.32s)
+    --- PASS: TestSortedKeysCompilingMutants/UTF16_comparator (1.66s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave4	23.098s
+=== RUN   TestStringsGoNodeNativeJavaScript
+=== RUN   TestStringsGoNodeNativeJavaScript/witnesses.json
+    strings_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 3156 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/consumers.json
+    strings_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 1746 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/calls.json
+    strings_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 5610 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/--full
+    strings_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 394758 output lines
+--- PASS: TestStringsGoNodeNativeJavaScript (12.87s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (2.42s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (0.78s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.81s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/--full (6.72s)
+=== RUN   TestStringsCompilingMutants
+=== RUN   TestStringsCompilingMutants/comment.akind:_'comment'
+    strings_test.go:187: Node source compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+    strings_test.go:187: sanitized native compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+=== RUN   TestStringsCompilingMutants/comment.avaluePresent:_false
+    strings_test.go:187: Node source compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+    strings_test.go:187: sanitized native compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+=== RUN   TestStringsCompilingMutants/declaration.avaluePresent:_true
+    strings_test.go:187: Node source compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+    strings_test.go:187: sanitized native compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+=== RUN   TestStringsCompilingMutants/declaration.aparams:_[],_property,
+    strings_test.go:187: Node source compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+    strings_test.go:187: sanitized native compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+=== RUN   TestStringsCompilingMutants/breakpoint_bucket.abyte_===_46
+    strings_test.go:187: Node source compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+    strings_test.go:187: sanitized native compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+=== RUN   TestStringsCompilingMutants/breakpoint_bucket.abefore_<_index
+    strings_test.go:187: Node source compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+    strings_test.go:187: sanitized native compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+    strings_test.go:187: emitted JavaScript compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+--- PASS: TestStringsCompilingMutants (11.63s)
+    --- PASS: TestStringsCompilingMutants/comment.akind:_'comment' (1.69s)
+    --- PASS: TestStringsCompilingMutants/comment.avaluePresent:_false (1.44s)
+    --- PASS: TestStringsCompilingMutants/declaration.avaluePresent:_true (1.73s)
+    --- PASS: TestStringsCompilingMutants/declaration.aparams:_[],_property, (1.81s)
+    --- PASS: TestStringsCompilingMutants/breakpoint_bucket.abyte_===_46 (1.98s)
+    --- PASS: TestStringsCompilingMutants/breakpoint_bucket.abefore_<_index (1.96s)
+=== RUN   TestStringsConsumerCoverage
+    strings_test.go:255: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestStringsConsumerCoverage (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave5	24.519s
+=== RUN   TestStringsGoNodeNativeJavaScript
+=== RUN   TestStringsGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 3186 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 1746 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/calls.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 2652 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/--full
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 394758 output lines
+--- PASS: TestStringsGoNodeNativeJavaScript (8.81s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (2.33s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (1.05s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.73s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/--full (2.85s)
+=== RUN   TestStringsCompilingMutants
+=== RUN   TestStringsCompilingMutants/theme_prefix_key.alet_index_=_2
+    helpers_test.go:185: Node source compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+    helpers_test.go:185: sanitized native compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+    helpers_test.go:185: emitted JavaScript compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+=== RUN   TestStringsCompilingMutants/theme_prefix_key.aresult.push(45);
+    helpers_test.go:185: Node source compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+    helpers_test.go:185: sanitized native compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+    helpers_test.go:185: emitted JavaScript compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+=== RUN   TestStringsCompilingMutants/variant_registry_has.aregistrations.has(root)
+    helpers_test.go:185: Node source compiling mutant caught at line 6: got "added false", Go "added true"
+    helpers_test.go:185: sanitized native compiling mutant caught at line 6: got "added false", Go "added true"
+    helpers_test.go:185: emitted JavaScript compiling mutant caught at line 6: got "added false", Go "added true"
+=== RUN   TestStringsCompilingMutants/design_system_prefix.areturn_system.theme.prefix;
+    helpers_test.go:185: Node source compiling mutant caught at line 3: got "changed ", Go "changed 137"
+    helpers_test.go:185: sanitized native compiling mutant caught at line 3: got "changed ", Go "changed 137"
+    helpers_test.go:185: emitted JavaScript compiling mutant caught at line 3: got "changed ", Go "changed 137"
+--- PASS: TestStringsCompilingMutants (12.92s)
+    --- PASS: TestStringsCompilingMutants/theme_prefix_key.alet_index_=_2 (2.65s)
+    --- PASS: TestStringsCompilingMutants/theme_prefix_key.aresult.push(45); (2.76s)
+    --- PASS: TestStringsCompilingMutants/variant_registry_has.aregistrations.has(root) (3.37s)
+    --- PASS: TestStringsCompilingMutants/design_system_prefix.areturn_system.theme.prefix; (3.09s)
+=== RUN   TestStringsConsumerCoverage
+    helpers_test.go:253: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestStringsConsumerCoverage (0.01s)
+=== RUN   TestPrefixKeyShortKeyRefusalAndMutant
+    helpers_test.go:303: Go, Node source, sanitized native and emitted JavaScript reject --bad0
+    helpers_test.go:303: Go, Node source, sanitized native and emitted JavaScript reject --bad1
+    helpers_test.go:333: Node source compiling guard mutant caught: fabricated short-key result for --bad0
+    helpers_test.go:333: sanitized native compiling guard mutant caught: fabricated short-key result for --bad0
+    helpers_test.go:333: emitted JavaScript compiling guard mutant caught: fabricated short-key result for --bad0
+    helpers_test.go:333: Node source compiling guard mutant caught: fabricated short-key result for --bad1
+    helpers_test.go:333: sanitized native compiling guard mutant caught: fabricated short-key result for --bad1
+    helpers_test.go:333: emitted JavaScript compiling guard mutant caught: fabricated short-key result for --bad1
+--- PASS: TestPrefixKeyShortKeyRefusalAndMutant (4.66s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave6	26.411s
+=== RUN   TestStringsGoNodeNativeJavaScript
+=== RUN   TestStringsGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 6828 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 3492 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/calls.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 372 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/--full
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 789516 output lines
+--- PASS: TestStringsGoNodeNativeJavaScript (11.81s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (1.15s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (0.72s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.79s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/--full (6.86s)
+=== RUN   TestStringsCompilingMutants
+=== RUN   TestStringsCompilingMutants/has_variant.asystem.variants.has(root)
+    helpers_test.go:186: Node source compiling mutant caught at line 1: got "has false", Go "has true"
+    helpers_test.go:186: sanitized native compiling mutant caught at line 1: got "has false", Go "has true"
+    helpers_test.go:186: emitted JavaScript compiling mutant caught at line 1: got "has false", Go "has true"
+=== RUN   TestStringsCompilingMutants/variant_kind.a??_'static'
+    helpers_test.go:186: Node source compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+    helpers_test.go:186: sanitized native compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+    helpers_test.go:186: emitted JavaScript compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+=== RUN   TestStringsCompilingMutants/variant_kind.areturn_system.variants.get(root)_??_'static';
+    helpers_test.go:186: Node source compiling mutant caught at line 2: got "kind static", Go "kind "
+    helpers_test.go:186: sanitized native compiling mutant caught at line 2: got "kind static", Go "kind "
+    helpers_test.go:186: emitted JavaScript compiling mutant caught at line 2: got "kind static", Go "kind "
+=== RUN   TestStringsCompilingMutants/variant_compounds_with.a===_'compound'
+    helpers_test.go:186: Node source compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+    helpers_test.go:186: sanitized native compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+    helpers_test.go:186: emitted JavaScript compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+=== RUN   TestStringsCompilingMutants/variant_compounds_with.areturn_system.variants.get(parent)
+    helpers_test.go:186: Node source compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+    helpers_test.go:186: sanitized native compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+    helpers_test.go:186: emitted JavaScript compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+--- PASS: TestStringsCompilingMutants (11.87s)
+    --- PASS: TestStringsCompilingMutants/has_variant.asystem.variants.has(root) (2.08s)
+    --- PASS: TestStringsCompilingMutants/variant_kind.a??_'static' (2.19s)
+    --- PASS: TestStringsCompilingMutants/variant_kind.areturn_system.variants.get(root)_??_'static'; (2.24s)
+    --- PASS: TestStringsCompilingMutants/variant_compounds_with.a===_'compound' (2.00s)
+    --- PASS: TestStringsCompilingMutants/variant_compounds_with.areturn_system.variants.get(parent) (2.39s)
+=== RUN   TestStringsConsumerCoverage
+    helpers_test.go:254: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestStringsConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave7	23.690s
+=== RUN   TestStringsGoNodeNativeJavaScript
+=== RUN   TestStringsGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 7518 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 4074 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/calls.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 294 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/--full
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 921102 output lines
+--- PASS: TestStringsGoNodeNativeJavaScript (20.89s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (1.17s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (1.07s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.43s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/--full (16.43s)
+=== RUN   TestStringsCompilingMutants
+=== RUN   TestStringsCompilingMutants/walk.awalkNodes(arena,roots,visit)
+    helpers_test.go:187: Node source compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+=== RUN   TestStringsCompilingMutants/walk_nodes.aif(action_===_2)_{_return_false;_}
+    helpers_test.go:187: Node source compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+=== RUN   TestStringsCompilingMutants/walk_nodes.aif(action_===_0)
+    helpers_test.go:187: Node source compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+=== RUN   TestStringsCompilingMutants/walk_nodes.aif(action_===_0)#01
+    helpers_test.go:187: Node source compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+=== RUN   TestStringsCompilingMutants/write_value_css.anode.tag_===_'word'_||_node.tag_===_'separator'
+    helpers_test.go:187: Node source compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+=== RUN   TestStringsCompilingMutants/write_value_css.abuilder.push(41)
+    helpers_test.go:187: Node source compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+    helpers_test.go:187: sanitized native compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+    helpers_test.go:187: emitted JavaScript compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+--- PASS: TestStringsCompilingMutants (15.90s)
+    --- PASS: TestStringsCompilingMutants/walk.awalkNodes(arena,roots,visit) (2.44s)
+    --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_2)_{_return_false;_} (2.14s)
+    --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_0) (2.08s)
+    --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_0)#01 (2.66s)
+    --- PASS: TestStringsCompilingMutants/write_value_css.anode.tag_===_'word'_||_node.tag_===_'separator' (2.99s)
+    --- PASS: TestStringsCompilingMutants/write_value_css.abuilder.push(41) (2.51s)
+=== RUN   TestStringsConsumerCoverage
+    helpers_test.go:255: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestStringsConsumerCoverage (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave8	36.814s
+=== RUN   TestHelpersGoNodeNativeJavaScript
+=== RUN   TestHelpersGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:132: Go, source Node, sanitized native, emitted JavaScript match 51 lines
+=== RUN   TestHelpersGoNodeNativeJavaScript/calls.json
+    helpers_test.go:132: Go, source Node, sanitized native, emitted JavaScript match 234 lines
+--- PASS: TestHelpersGoNodeNativeJavaScript (3.29s)
+    --- PASS: TestHelpersGoNodeNativeJavaScript/witnesses.json (0.46s)
+    --- PASS: TestHelpersGoNodeNativeJavaScript/calls.json (0.92s)
+=== RUN   TestCompilingMutants
+=== RUN   TestCompilingMutants/load_design_system_through.adependencies.stat(path)
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/load_design_system_through.aif(loaded.failed)
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/ingest_utility_block.aprevious_+_2
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/ingest_utility_block.acollector.definitions.push({root,body});
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/normalize_value_function_nodes.anormalizeValueFunctionNodes(arena,node.edges,dependencies);
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+=== RUN   TestCompilingMutants/normalize_value_function_nodes.anode.edges_=_dependencies.parse(args.join(','));
+    helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+    helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+--- PASS: TestCompilingMutants (13.75s)
+    --- PASS: TestCompilingMutants/load_design_system_through.adependencies.stat(path) (1.97s)
+    --- PASS: TestCompilingMutants/load_design_system_through.aif(loaded.failed) (1.95s)
+    --- PASS: TestCompilingMutants/ingest_utility_block.aprevious_+_2 (2.28s)
+    --- PASS: TestCompilingMutants/ingest_utility_block.acollector.definitions.push({root,body}); (2.53s)
+    --- PASS: TestCompilingMutants/normalize_value_function_nodes.anormalizeValueFunctionNodes(arena,node.edges,dependencies); (2.38s)
+    --- PASS: TestCompilingMutants/normalize_value_function_nodes.anode.edges_=_dependencies.parse(args.join(',')); (2.33s)
+=== RUN   TestLoaderBodyMatchesPinnedGo
+    helpers_test.go:211: loader-body drift mutant caught
+--- PASS: TestLoaderBodyMatchesPinnedGo (0.00s)
+=== RUN   TestConsumerCoverage
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/no-conflicting-classes
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/no-unknown-classes
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-canonical-classes
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+    helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-consistent-variant-order
+--- PASS: TestConsumerCoverage (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave9	17.065s

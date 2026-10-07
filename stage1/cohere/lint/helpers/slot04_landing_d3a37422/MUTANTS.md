@@ -1,0 +1,856 @@
+# Fresh retained mutant evidence
+
+Named subtests and omission catches below reference helpers.log. Temporary semantic mutants must run successfully and differ from Go; historical implementation reports document each contract.
+
+- helpers.log:6: helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+- helpers.log:8: helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+- helpers.log:10: helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare `{{constructor}}`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare `sentinel é😀`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+- helpers.log:12: helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+- helpers.log:14: --- PASS: TestHelperMutants/options_json.ts (17.76s)
+- helpers.log:15: --- PASS: TestHelperMutants/option_schema.ts (13.68s)
+- helpers.log:16: --- PASS: TestHelperMutants/policy_message.ts (17.27s)
+- helpers.log:17: --- PASS: TestHelperMutants/strict_options.ts (11.85s)
+- helpers.log:27: slot04_test.go:91: sanitized native compiling mutant caught at line 6: got "parts -1 -1", Go "parts 6 7"
+- helpers.log:28: slot04_test.go:91: Node source compiling mutant caught at line 6: got "parts -1 -1", Go "parts 6 7"
+- helpers.log:38: slot04_test.go:154: sanitized native compiling mutant caught at line 1: got "1,", Go "1,1,"
+- helpers.log:39: slot04_test.go:154: Node source compiling mutant caught at line 1: got "1,", Go "1,1,"
+- helpers.log:46: slot04_test.go:222: sanitized native compiling mutant caught at line 2: got "reader 2 2 1,1,", Go "reader 1 1 1,1,"
+- helpers.log:47: slot04_test.go:222: Node source compiling mutant caught at line 2: got "reader 2 2 1,1,", Go "reader 1 1 1,1,"
+- helpers.log:60: comments_test.go:139: compiled semantic mutant caught at line 251: got "cached 0 0"; Go "cached 1 1"
+- helpers.log:62: comments_test.go:139: compiled semantic mutant caught at line 3: got "cached 0 0"; Go "cached 1 1"
+- helpers.log:64: comments_test.go:139: compiled semantic mutant caught at line 60: got "47 54 1 0 47 0\t/* f */"; Go "6 13 1 0 6 0\t/* t */"
+- helpers.log:66: comments_test.go:139: compiled semantic mutant caught at line 201: got "cached 0 0"; Go "cached 1 1"
+- helpers.log:68: comments_test.go:139: compiled semantic mutant caught at line 2: got "cache 0 0 0"; Go "cache 1 0 0"
+- helpers.log:70: --- PASS: TestCommentMutants/can_begin_at.ts (17.30s)
+- helpers.log:71: --- PASS: TestCommentMutants/collect_list_interiors.ts (19.50s)
+- helpers.log:72: --- PASS: TestCommentMutants/sort_by_position.ts (10.86s)
+- helpers.log:73: --- PASS: TestCommentMutants/all.ts (12.63s)
+- helpers.log:74: --- PASS: TestCommentMutants/for_file.ts (16.41s)
+- helpers.log:92: --- PASS: TestExportsGoNodeNativeJavaScript/witnesses.json (1.06s)
+- helpers.log:93: --- PASS: TestExportsGoNodeNativeJavaScript/consumers.json (2.13s)
+- helpers.log:96: helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:97: helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:98: helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:100: helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:101: helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:102: helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:104: helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:105: helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:106: helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:108: helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:109: helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:110: helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:112: helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:113: helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:114: helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:116: helpers_test.go:176: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:117: helpers_test.go:176: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:118: helpers_test.go:176: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:120: --- PASS: TestCompilingMutants/is_exported_by_name.ahasExport_&&_!hasDefault (2.21s)
+- helpers.log:121: --- PASS: TestCompilingMutants/is_exported_by_name.ahasDefault_=_true; (2.85s)
+- helpers.log:122: --- PASS: TestCompilingMutants/has_export_modifier.aif(!modifiers.present)_{_return_false;_} (2.82s)
+- helpers.log:123: --- PASS: TestCompilingMutants/has_export_modifier.atag_===_'export-keyword' (2.59s)
+- helpers.log:124: --- PASS: TestCompilingMutants/is_exported.aif(!node.present)_{_return_false;_} (2.17s)
+- helpers.log:125: --- PASS: TestCompilingMutants/is_exported.areturn_HasExportModifier(node.modifiers); (2.52s)
+- helpers.log:127: helpers_test.go:247: consumer omission caught: structure/next-no-near-miss-route-export
+- helpers.log:128: helpers_test.go:247: consumer omission caught: structure/react-component-no-const-assignment
+- helpers.log:129: helpers_test.go:247: consumer omission caught: structure/react-component-require-named-export
+- helpers.log:130: helpers_test.go:247: consumer omission caught: @next/next/no-typos
+- helpers.log:131: helpers_test.go:247: consumer omission caught: nexus/consistency-no-screaming-snake-case
+- helpers.log:132: helpers_test.go:247: consumer omission caught: structure/boundary-no-project-theme-value
+- helpers.log:133: helpers_test.go:247: consumer omission caught: structure/network-require-hook-options-parameter
+- helpers.log:134: helpers_test.go:247: consumer omission caught: @typescript-eslint/no-useless-empty-export
+- helpers.log:135: helpers_test.go:247: consumer omission caught: structure/network-require-hook-request-suffix
+- helpers.log:136: helpers_test.go:247: consumer omission caught: structure/network-require-hook-variables-type
+- helpers.log:150: --- PASS: TestBytesGoNodeNativeJavaScript/witnesses.json (0.31s)
+- helpers.log:151: --- PASS: TestBytesGoNodeNativeJavaScript/consumers.json (0.91s)
+- helpers.log:152: --- PASS: TestBytesGoNodeNativeJavaScript/calls.json (0.27s)
+- helpers.log:153: --- PASS: TestBytesGoNodeNativeJavaScript/--full (2.67s)
+- helpers.log:156: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:157: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:158: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:160: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:161: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:162: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:164: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:165: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:166: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:168: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:169: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:170: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:172: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:173: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:174: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:176: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:177: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:178: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:180: --- PASS: TestCompilingMutants/digit.acharacter_>=_48 (1.28s)
+- helpers.log:181: --- PASS: TestCompilingMutants/digit.acharacter_<=_57 (1.53s)
+- helpers.log:182: --- PASS: TestCompilingMutants/bracketed.aword.length_>=_2 (1.68s)
+- helpers.log:183: --- PASS: TestCompilingMutants/bracketed.aword[0]_===_91 (1.65s)
+- helpers.log:184: --- PASS: TestCompilingMutants/any_prefix.aprefix.length_>_value.length (1.29s)
+- helpers.log:185: --- PASS: TestCompilingMutants/any_prefix.aif(matches)_{_return_true;_} (1.54s)
+- helpers.log:187: helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- helpers.log:188: helpers_test.go:251: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- helpers.log:189: helpers_test.go:251: consumer omission caught: better-tailwindcss/no-unknown-classes
+- helpers.log:190: helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- helpers.log:204: --- PASS: TestSurgeryGoNodeNativeJavaScript/witnesses.json (0.61s)
+- helpers.log:205: --- PASS: TestSurgeryGoNodeNativeJavaScript/consumers.json (1.31s)
+- helpers.log:206: --- PASS: TestSurgeryGoNodeNativeJavaScript/calls.json (0.29s)
+- helpers.log:207: --- PASS: TestSurgeryGoNodeNativeJavaScript/--full (1.56s)
+- helpers.log:210: helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:211: helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:212: helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:214: helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:215: helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:216: helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:218: helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:219: helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:220: helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:222: helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:223: helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:224: helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:226: helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:227: helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:228: helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:230: helpers_test.go:191: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:231: helpers_test.go:191: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:232: helpers_test.go:191: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:234: --- PASS: TestCompilingMutants/quoted_literal.aword.length_<_2 (2.85s)
+- helpers.log:235: --- PASS: TestCompilingMutants/quoted_literal.aquote_!==_39_&&_quote_!==_34 (3.96s)
+- helpers.log:236: --- PASS: TestCompilingMutants/replace_value_node.anode.tag_=_'word'; (2.82s)
+- helpers.log:237: --- PASS: TestCompilingMutants/replace_value_node.anode.edges_=_empty; (5.29s)
+- helpers.log:238: --- PASS: TestCompilingMutants/union_node_sets.aif(left.entries.size_===_0)_{_return_right;_} (2.87s)
+- helpers.log:239: --- PASS: TestCompilingMutants/union_node_sets.aentries.set(id,true); (3.30s)
+- helpers.log:241: helpers_test.go:262: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- helpers.log:242: helpers_test.go:262: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- helpers.log:243: helpers_test.go:262: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- helpers.log:244: helpers_test.go:262: consumer omission caught: better-tailwindcss/no-unknown-classes
+- helpers.log:256: --- PASS: TestAssertionsGoNodeNativeJavaScript/witnesses.json (3.04s)
+- helpers.log:257: --- PASS: TestAssertionsGoNodeNativeJavaScript/consumers.json (88.80s)
+- helpers.log:258: --- PASS: TestAssertionsGoNodeNativeJavaScript/calls.json (11.11s)
+- helpers.log:261: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:262: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:263: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:265: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:266: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:267: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:269: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:270: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:271: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:273: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:274: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:275: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:277: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:278: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:279: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:281: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:282: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:283: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:285: --- PASS: TestCompilingMutants/nothing_to_repeat.aconst_end_=_width(quantifier); (3.78s)
+- helpers.log:286: --- PASS: TestCompilingMutants/nothing_to_repeat.a_repeats_an_assertion (4.01s)
+- helpers.log:287: --- PASS: TestCompilingMutants/group_quantifier.akind_===_1_&&_!unicode (6.10s)
+- helpers.log:288: --- PASS: TestCompilingMutants/group_quantifier.akind_===_0_||_width(rest)_===_0 (5.81s)
+- helpers.log:289: --- PASS: TestCompilingMutants/group_construct.afirst_===_58_|| (2.98s)
+- helpers.log:290: --- PASS: TestCompilingMutants/group_construct.areturn_4; (4.34s)
+- helpers.log:292: helpers_test.go:251: consumer omission caught: @next/next/no-html-link-for-pages
+- helpers.log:293: helpers_test.go:251: consumer omission caught: @typescript-eslint/no-empty-object-type
+- helpers.log:294: helpers_test.go:251: consumer omission caught: no-restricted-exports
+- helpers.log:295: helpers_test.go:251: consumer omission caught: no-restricted-imports
+- helpers.log:307: --- PASS: TestNumericGoNodeNativeJavaScript/witnesses.json (3.82s)
+- helpers.log:308: --- PASS: TestNumericGoNodeNativeJavaScript/consumers.json (2.14s)
+- helpers.log:309: --- PASS: TestNumericGoNodeNativeJavaScript/calls.json (0.46s)
+- helpers.log:312: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:313: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:314: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:316: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:317: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:318: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:320: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:321: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:322: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:324: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:325: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:326: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:328: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:329: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:330: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:332: helpers_test.go:180: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:333: helpers_test.go:180: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:334: helpers_test.go:180: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:336: --- PASS: TestCompilingMutants/mod_float.avalue_%_divisor (5.65s)
+- helpers.log:337: --- PASS: TestCompilingMutants/format_number.avalue_>=_1e21 (6.40s)
+- helpers.log:338: --- PASS: TestCompilingMutants/format_number.areturn_'-0'; (5.69s)
+- helpers.log:339: --- PASS: TestCompilingMutants/multiple_of.aif(!parsed.ok) (4.57s)
+- helpers.log:340: --- PASS: TestCompilingMutants/multiple_of.aif(parsed.value_<_0) (2.86s)
+- helpers.log:341: --- PASS: TestCompilingMutants/multiple_of.aformatJavaScriptNumber(parsed.value)_===_value (3.38s)
+- helpers.log:343: helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- helpers.log:344: helpers_test.go:251: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- helpers.log:345: helpers_test.go:251: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- helpers.log:346: helpers_test.go:251: consumer omission caught: better-tailwindcss/no-unknown-classes
+- helpers.log:358: --- PASS: TestIntegerGoNodeNativeJavaScript/witnesses.json (0.64s)
+- helpers.log:359: --- PASS: TestIntegerGoNodeNativeJavaScript/consumers.json (0.37s)
+- helpers.log:360: --- PASS: TestIntegerGoNodeNativeJavaScript/calls.json (0.26s)
+- helpers.log:363: helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:364: helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:365: helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:367: helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:368: helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:369: helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:371: helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:372: helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:373: helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:375: helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:376: helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:377: helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:379: helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:380: helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:381: helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:383: helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:384: helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:385: helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:387: helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:388: helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:389: helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:391: helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:392: helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:393: helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:395: helpers_test.go:194: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:396: helpers_test.go:194: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:397: helpers_test.go:194: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:399: --- PASS: TestCompilingMutants/positive_integer.a/[^0-9]/u (2.23s)
+- helpers.log:400: --- PASS: TestCompilingMutants/positive_integer.avalue_===_''_|| (3.15s)
+- helpers.log:401: --- PASS: TestCompilingMutants/positive_integer.avalue.length_>_15 (2.00s)
+- helpers.log:402: --- PASS: TestCompilingMutants/positive_integer.avalue.startsWith('0') (1.51s)
+- helpers.log:403: --- PASS: TestCompilingMutants/round_trip.aif(!parsed.ok) (2.04s)
+- helpers.log:404: --- PASS: TestCompilingMutants/round_trip.aif(parsed.value_>=_1e21) (1.46s)
+- helpers.log:405: --- PASS: TestCompilingMutants/round_trip.aformatJavaScriptNumber(parsed.value)_===_value (1.54s)
+- helpers.log:406: --- PASS: TestCompilingMutants/spacing_multiplier.avalue,0.25,parse (1.56s)
+- helpers.log:407: --- PASS: TestCompilingMutants/spacing_multiplier.areturn_isMultipleOf( (2.09s)
+- helpers.log:409: helpers_test.go:265: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- helpers.log:410: helpers_test.go:265: consumer omission caught: better-tailwindcss/no-unknown-classes
+- helpers.log:411: helpers_test.go:265: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- helpers.log:412: helpers_test.go:265: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- helpers.log:424: --- PASS: TestUtilityResolutionGoNodeNativeJavaScript/witnesses.json (38.28s)
+- helpers.log:425: --- PASS: TestUtilityResolutionGoNodeNativeJavaScript/consumers.json (0.53s)
+- helpers.log:426: --- PASS: TestUtilityResolutionGoNodeNativeJavaScript/calls.json (0.57s)
+- helpers.log:429: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:430: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:431: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:433: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:434: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:435: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:437: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:438: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:439: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:441: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:442: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:443: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:445: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:446: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:447: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:449: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:450: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:451: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:453: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:454: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:455: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:457: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:458: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:459: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:461: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:462: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:463: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:465: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:466: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:467: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:469: --- PASS: TestCompilingMutants/modifier_value.a!modifier.present (3.04s)
+- helpers.log:470: --- PASS: TestCompilingMutants/modifier_value.amodifier.kind_===_'arbitrary' (2.32s)
+- helpers.log:471: --- PASS: TestCompilingMutants/modifier_value.avalue:modifier.value (1.93s)
+- helpers.log:472: --- PASS: TestCompilingMutants/arbitrary_argument.adataType_===_'*' (1.62s)
+- helpers.log:473: --- PASS: TestCompilingMutants/arbitrary_argument.avalue.dataType_!==_dataType (3.11s)
+- helpers.log:474: --- PASS: TestCompilingMutants/arbitrary_argument.ainfer(value.value,dataType)_!==_'' (2.78s)
+- helpers.log:475: --- PASS: TestCompilingMutants/variable_reference.a!entry.present (2.50s)
+- helpers.log:476: --- PASS: TestCompilingMutants/variable_reference.aentry.options_&_2 (2.42s)
+- helpers.log:477: --- PASS: TestCompilingMutants/variable_reference.aentry.value_!==_'' (2.39s)
+- helpers.log:478: --- PASS: TestCompilingMutants/variable_reference.aescape(prefixKey(themeKey)) (2.23s)
+- helpers.log:480: helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- helpers.log:481: helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- helpers.log:482: helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- helpers.log:483: helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+- helpers.log:495: --- PASS: TestColorLengthGoNodeNativeJavaScript/witnesses.json (1.61s)
+- helpers.log:496: --- PASS: TestColorLengthGoNodeNativeJavaScript/consumers.json (0.42s)
+- helpers.log:497: --- PASS: TestColorLengthGoNodeNativeJavaScript/calls.json (0.48s)
+- helpers.log:500: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:501: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:502: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:504: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:505: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:506: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:508: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:509: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:510: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:512: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:513: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:514: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:516: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:517: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:518: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:520: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:521: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:522: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:524: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:525: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:526: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:528: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:529: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:530: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:532: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:533: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:534: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:536: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:537: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:538: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:540: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:541: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:542: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:544: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:545: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:546: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:548: --- PASS: TestCompilingMutants/named_color.alower(value) (2.97s)
+- helpers.log:549: --- PASS: TestCompilingMutants/named_color.a"black" (2.55s)
+- helpers.log:550: --- PASS: TestCompilingMutants/named_color.alower(value)#01 (2.86s)
+- helpers.log:551: --- PASS: TestCompilingMutants/color.a/^#/ (3.31s)
+- helpers.log:552: --- PASS: TestCompilingMutants/color.a/^(rgba? (4.11s)
+- helpers.log:553: --- PASS: TestCompilingMutants/color.a\(/i (4.01s)
+- helpers.log:554: --- PASS: TestCompilingMutants/color.argba? (2.70s)
+- helpers.log:555: --- PASS: TestCompilingMutants/length.aif(numberWithSuffix(value,lengthUnits)){return_true;} (3.24s)
+- helpers.log:556: --- PASS: TestCompilingMutants/length.a'Q' (2.66s)
+- helpers.log:557: --- PASS: TestCompilingMutants/length.a/^--spacing (5.93s)
+- helpers.log:558: --- PASS: TestCompilingMutants/length.a\(/i (3.22s)
+- helpers.log:559: --- PASS: TestCompilingMutants/length.areturn_hasMathFunction(value) (2.65s)
+- helpers.log:561: helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- helpers.log:562: helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- helpers.log:563: helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- helpers.log:564: helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+- helpers.log:576: --- PASS: TestNestedThemeGoNodeNativeJavaScript/witnesses.json (2.47s)
+- helpers.log:577: --- PASS: TestNestedThemeGoNodeNativeJavaScript/consumers.json (0.46s)
+- helpers.log:578: --- PASS: TestNestedThemeGoNodeNativeJavaScript/calls.json (0.86s)
+- helpers.log:581: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:582: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:583: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:585: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:586: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:587: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:589: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:590: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:591: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:593: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:594: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:595: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:597: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:598: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:599: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:601: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:602: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:603: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:605: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:606: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:607: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:609: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:610: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:611: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:613: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:614: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:615: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:617: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:618: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:619: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:621: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:622: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:623: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:625: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:626: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:627: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:629: --- PASS: TestCompilingMutants/background_size.asize_===_'cover' (4.83s)
+- helpers.log:630: --- PASS: TestCompilingMutants/background_size.aif(allValid) (3.59s)
+- helpers.log:631: --- PASS: TestCompilingMutants/background_size.acount_>_0 (3.35s)
+- helpers.log:632: --- PASS: TestCompilingMutants/background_size.avalues.length_!==_2 (4.25s)
+- helpers.log:633: --- PASS: TestCompilingMutants/resolve_with.aif(!key.ok) (7.12s)
+- helpers.log:634: --- PASS: TestCompilingMutants/resolve_with.aif(!nested.present) (4.36s)
+- helpers.log:635: --- PASS: TestCompilingMutants/resolve_with.anested.options_&_1 (3.27s)
+- helpers.log:636: --- PASS: TestCompilingMutants/resolve_with.abase.options_&_1 (3.23s)
+- helpers.log:637: --- PASS: TestCompilingMutants/theme_argument.areturn_resolve(candidate,true,[argument.slice(0,-2)],0) (2.99s)
+- helpers.log:638: --- PASS: TestCompilingMutants/theme_argument.anested.length-1 (3.60s)
+- helpers.log:639: --- PASS: TestCompilingMutants/theme_argument.aif(!result.ok) (3.46s)
+- helpers.log:640: --- PASS: TestCompilingMutants/theme_argument.aif(!result.extra.has(last)) (3.61s)
+- helpers.log:642: helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- helpers.log:643: helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+- helpers.log:644: helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- helpers.log:645: helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- helpers.log:657: --- PASS: TestUtilityTraversalGoNodeNativeJavaScript/witnesses.json (16.82s)
+- helpers.log:658: --- PASS: TestUtilityTraversalGoNodeNativeJavaScript/consumers.json (0.87s)
+- helpers.log:659: --- PASS: TestUtilityTraversalGoNodeNativeJavaScript/calls.json (0.64s)
+- helpers.log:662: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:663: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:664: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:666: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:667: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:668: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:670: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:671: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:672: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:674: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:675: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:676: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:678: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:679: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:680: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:682: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:683: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:684: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:686: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:687: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:688: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:690: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:691: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:692: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:694: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:695: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:696: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:698: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:699: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:700: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:702: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:703: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:704: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:706: helpers_test.go:186: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:707: helpers_test.go:186: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:708: helpers_test.go:186: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:710: --- PASS: TestCompilingMutants/walk.atag==='declaration' (11.80s)
+- helpers.log:711: --- PASS: TestCompilingMutants/walk.atag==='context' (13.89s)
+- helpers.log:712: --- PASS: TestCompilingMutants/walk.atag==='at-rule' (12.08s)
+- helpers.log:713: --- PASS: TestCompilingMutants/resolve_declaration.a!present_||_value==='' (13.61s)
+- helpers.log:714: --- PASS: TestCompilingMutants/resolve_declaration.amarkDropped(id) (9.11s)
+- helpers.log:715: --- PASS: TestCompilingMutants/resolve_declaration.areplace(id,print(nodes)) (15.89s)
+- helpers.log:716: --- PASS: TestCompilingMutants/resolve_value_functions.astate.usedValue=true (11.12s)
+- helpers.log:717: --- PASS: TestCompilingMutants/resolve_value_functions.astate.resolvedRatio=true (13.36s)
+- helpers.log:718: --- PASS: TestCompilingMutants/resolve_value_functions.astate.nonRatio.set(declaration,true) (13.49s)
+- helpers.log:719: --- PASS: TestCompilingMutants/resolve_value_functions.astate.usedModifier=true (16.01s)
+- helpers.log:720: --- PASS: TestCompilingMutants/resolve_value_functions.areplace(id,result.text);___}_else_if (15.83s)
+- helpers.log:721: --- PASS: TestCompilingMutants/resolve_value_functions.aif(!result.ok)_{_return_true;_}____state.resolvedValue (12.43s)
+- helpers.log:723: helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- helpers.log:724: helpers_test.go:257: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- helpers.log:725: helpers_test.go:257: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- helpers.log:726: helpers_test.go:257: consumer omission caught: better-tailwindcss/no-unknown-classes
+- helpers.log:736: --- PASS: TestWave2GoNodeNative/witnesses.json (0.38s)
+- helpers.log:737: --- PASS: TestWave2GoNodeNative/consumers.json (2.66s)
+- helpers.log:740: wave2_test.go:158: sanitized native compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+- helpers.log:741: wave2_test.go:158: Node source compiling mutant caught at line 71: got "under L10:Variable:true:false:24:27:112,45,50,", Go "under L10:Variable:false:false:24:27:112,45,50,"
+- helpers.log:743: wave2_test.go:158: sanitized native compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+- helpers.log:744: wave2_test.go:158: Node source compiling mutant caught at line 229: got "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32,", Go "collect L-2:seed:false:true:-1:-1: L14:Variable:false:false:32:37:32,112,45,50,32, L16:Variable:false:false:42:45:109,45,52,"
+- helpers.log:746: wave2_test.go:158: sanitized native compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+- helpers.log:747: wave2_test.go:158: Node source compiling mutant caught at line 403: got "collect L-2:seed:false:true:-1:-1: L7:Attribute:false:false:10:11:97, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,", Go "collect L-2:seed:false:true:-1:-1: L9:Attribute:false:false:17:18:98, L11:Attribute:false:false:22:23:99, L13:Attribute:false:false:29:30:100, L15:Attribute:false:false:34:35:101, L17:Attribute:false:false:41:42:102,"
+- helpers.log:749: --- PASS: TestWave2CompilingMutants/class_values_under.aleading:_false,_trailing:_false (1.68s)
+- helpers.log:750: --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.whenFalse,_origin,_edges,_values,_dependencies); (1.42s)
+- helpers.log:751: --- PASS: TestWave2CompilingMutants/collect_class_values.acollectClassValues(arena,_item.right,_origin,_edges,_values,_dependencies); (1.75s)
+- helpers.log:763: --- PASS: TestJsxSearchGoNodeNativeJavaScript/witnesses.json (1.04s)
+- helpers.log:764: --- PASS: TestJsxSearchGoNodeNativeJavaScript/consumers.json (1.76s)
+- helpers.log:767: helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:768: helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:769: helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:771: helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:772: helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:773: helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:775: helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:776: helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:777: helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:779: helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:780: helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:781: helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:783: helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:784: helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:785: helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:787: helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:788: helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:789: helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:791: helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:792: helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:793: helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:795: helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:796: helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:797: helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:799: helpers_test.go:183: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:800: helpers_test.go:183: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:801: helpers_test.go:183: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:803: --- PASS: TestCompilingMutants/descends_for_jsx_search.aif(!present) (2.60s)
+- helpers.log:804: --- PASS: TestCompilingMutants/descends_for_jsx_search.areturn_!isSwitchStatement (3.44s)
+- helpers.log:805: --- PASS: TestCompilingMutants/search_for_jsx_or_hook.adepth>20 (3.00s)
+- helpers.log:806: --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(node.jsx) (2.30s)
+- helpers.log:807: --- PASS: TestCompilingMutants/search_for_jsx_or_hook.anode.call_&&_isHookCall(id) (2.40s)
+- helpers.log:808: --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(!descendsForJsxSearch(next.present,next.isSwitchStatement)) (1.88s)
+- helpers.log:809: --- PASS: TestCompilingMutants/search_for_jsx_or_hook.adepth+1 (2.54s)
+- helpers.log:810: --- PASS: TestCompilingMutants/search_for_jsx_or_hook.aif(searchForJsxOrHook(child,depth+1,nodeAt,isHookCall))_{_return_true;_} (1.92s)
+- helpers.log:811: --- PASS: TestCompilingMutants/has_jsx_or_react_hook_calls.asearchForJsxOrHook(id,0, (2.18s)
+- helpers.log:813: helpers_test.go:254: consumer omission caught: structure/consistency-require-matching-file-name
+- helpers.log:814: helpers_test.go:254: consumer omission caught: structure/react-component-no-destructuring
+- helpers.log:815: helpers_test.go:254: consumer omission caught: structure/react-component-no-separate-named-export
+- helpers.log:816: helpers_test.go:254: consumer omission caught: structure/react-component-require-properties-parameter
+- helpers.log:828: --- PASS: TestClassTokenBareGoNodeNativeJavaScript/witnesses.json (2.34s)
+- helpers.log:829: --- PASS: TestClassTokenBareGoNodeNativeJavaScript/consumers.json (1.52s)
+- helpers.log:830: --- PASS: TestClassTokenBareGoNodeNativeJavaScript/calls.json (1.04s)
+- helpers.log:833: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:834: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:835: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:837: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:838: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:839: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:841: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:842: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:843: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:845: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:846: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:847: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:849: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:850: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:851: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:853: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:854: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:855: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:857: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:858: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:859: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:861: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:862: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:863: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:865: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:866: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:867: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:869: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:870: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:871: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:873: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:874: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:875: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:877: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:878: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:879: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:881: helpers_test.go:187: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:882: helpers_test.go:187: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:883: helpers_test.go:187: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:885: --- PASS: TestCompilingMutants/class_tokens_of.astart:start+begin (5.87s)
+- helpers.log:886: --- PASS: TestCompilingMutants/class_tokens_of.aend:start+index (8.12s)
+- helpers.log:887: --- PASS: TestCompilingMutants/class_tokens_of.aseparator:separator (5.71s)
+- helpers.log:888: --- PASS: TestCompilingMutants/class_tokens_of.awhile(index<value.length_&&_isSpace(value[index]_??_0)===separator){index++;} (4.97s)
+- helpers.log:889: --- PASS: TestCompilingMutants/class_tokens_in.aend>source.length (5.34s)
+- helpers.log:890: --- PASS: TestCompilingMutants/class_tokens_in.astart>end (5.52s)
+- helpers.log:891: --- PASS: TestCompilingMutants/class_tokens_in.asource[start+index]!==value[index] (5.91s)
+- helpers.log:892: --- PASS: TestCompilingMutants/bare_argument.aargument!=='integer' (4.03s)
+- helpers.log:893: --- PASS: TestCompilingMutants/bare_argument.aif(inferred==='') (4.36s)
+- helpers.log:894: --- PASS: TestCompilingMutants/bare_argument.aparts.length!==2 (4.08s)
+- helpers.log:895: --- PASS: TestCompilingMutants/bare_argument.aratio:true,ok:true (5.75s)
+- helpers.log:896: --- PASS: TestCompilingMutants/bare_argument.ainferred==='number'_&&_!spacing(resolved) (4.01s)
+- helpers.log:897: --- PASS: TestCompilingMutants/bare_argument.ainferred==='percentage'_&&_!positive (4.52s)
+- helpers.log:899: helpers_test.go:258: consumer omission caught: better-tailwindcss/no-unnecessary-whitespace
+- helpers.log:900: helpers_test.go:258: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- helpers.log:901: helpers_test.go:258: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- helpers.log:902: helpers_test.go:258: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- helpers.log:903: helpers_test.go:258: consumer omission caught: better-tailwindcss/no-deprecated-classes
+- helpers.log:904: helpers_test.go:258: consumer omission caught: better-tailwindcss/no-duplicate-classes
+- helpers.log:905: helpers_test.go:258: consumer omission caught: better-tailwindcss/no-unknown-classes
+- helpers.log:923: --- PASS: TestActualGoComparisons/witnesses.json (2.37s)
+- helpers.log:924: --- PASS: TestActualGoComparisons/calls.json (1.60s)
+- helpers.log:925: --- PASS: TestActualGoComparisons/consumers.json (2.08s)
+- helpers.log:928: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:929: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:930: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:932: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:933: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:934: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:936: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:937: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:938: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:940: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:941: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:942: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:944: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:945: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:946: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:948: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:949: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:950: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:952: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:953: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:954: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:956: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:957: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:958: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:960: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:961: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:962: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:964: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:965: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:966: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:968: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:969: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:970: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:972: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:973: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:974: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:976: helpers_test.go:188: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:977: helpers_test.go:188: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:978: helpers_test.go:188: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:980: --- PASS: TestCompilingMutants/compile_candidate.aif(!candidate.present_||_!candidate.functional){return_{nodes:[],ok:false};} (2.53s)
+- helpers.log:981: --- PASS: TestCompilingMutants/compile_candidate.aif(!definition.found){return_{nodes:[],ok:false};} (2.46s)
+- helpers.log:982: --- PASS: TestCompilingMutants/compiler_rule_options.aif(raw.length===0){return_{options:{},error:''};} (2.53s)
+- helpers.log:983: --- PASS: TestCompilingMutants/compile.acompileCandidate(candidate,0, (2.60s)
+- helpers.log:984: --- PASS: TestCompilingMutants/compile_candidate.aif(!state.usedValue_||_!state.resolvedValue) (3.02s)
+- helpers.log:985: --- PASS: TestCompilingMutants/compile_candidate.aif(state.usedModifier_&&_!state.resolvedModifier_&&_candidate.modifierPresent) (3.49s)
+- helpers.log:986: --- PASS: TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_state.resolvedModifier) (2.65s)
+- helpers.log:987: --- PASS: TestCompilingMutants/compile_candidate.aif(candidate.modifierPresent_&&_!state.resolvedRatio_&&_!state.resolvedModifier) (2.35s)
+- helpers.log:988: --- PASS: TestCompilingMutants/compile_candidate.aif(removals!==1) (2.35s)
+- helpers.log:989: --- PASS: TestCompilingMutants/compile_candidate.aif(state.resolvedRatio_&&_removals!==2) (2.11s)
+- helpers.log:990: --- PASS: TestCompilingMutants/compiler_rule_options.aif(!object.valid_||_!object.objectPresent) (2.82s)
+- helpers.log:991: --- PASS: TestCompilingMutants/compiler_rule_options.aif(object.keys.length===0) (2.18s)
+- helpers.log:992: --- PASS: TestCompilingMutants/compiler_rule_options.aconst_keys=sortedKeys(object.keys); (2.91s)
+- helpers.log:994: helpers_test.go:259: consumer omission caught: react-hooks/error-boundaries
+- helpers.log:995: helpers_test.go:259: consumer omission caught: react-hooks/incompatible-library
+- helpers.log:996: helpers_test.go:259: consumer omission caught: react-hooks/void-use-memo
+- helpers.log:997: helpers_test.go:259: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- helpers.log:998: helpers_test.go:259: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- helpers.log:999: helpers_test.go:259: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- helpers.log:1000: helpers_test.go:259: consumer omission caught: better-tailwindcss/no-unknown-classes
+- helpers.log:1001: helpers_test.go:259: consumer omission caught: react-hooks/config
+- helpers.log:1116: helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1117: helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1118: helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1120: helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1121: helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1122: helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1124: helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1125: helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1126: helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1128: helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1129: helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1130: helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1132: helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1133: helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1134: helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1136: helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1137: helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1138: helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1140: helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1141: helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1142: helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1144: helpers_test.go:200: Node source compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1145: helpers_test.go:200: sanitized native compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1146: helpers_test.go:200: emitted JavaScript compiling semantic mutant caught by actual-Go comparison
+- helpers.log:1148: --- PASS: TestCompilingMutants/build.aentry.incoming=true; (1.68s)
+- helpers.log:1149: --- PASS: TestCompilingMutants/build.aentry.reachable=true; (2.28s)
+- helpers.log:1150: --- PASS: TestCompilingMutants/build.aif(endReachable){ops.markFinal(builder,current);} (2.45s)
+- helpers.log:1151: --- PASS: TestCompilingMutants/build.aops.expression(builder,root.type); (1.78s)
+- helpers.log:1152: --- PASS: TestCompilingMutants/build.aif(root.bodyBlock) (1.62s)
+- helpers.log:1153: --- PASS: TestCompilingMutants/build.aif(root.sourceFile) (1.74s)
+- helpers.log:1154: --- PASS: TestCompilingMutants/build.aelse_if(root.staticBlock) (2.28s)
+- helpers.log:1155: --- PASS: TestCompilingMutants/build.aelse_if(root.property) (2.33s)
+- helpers.log:1157: helpers_test.go:271: consumer omission caught: array-callback-return
+- helpers.log:1158: helpers_test.go:271: consumer omission caught: consistent-return
+- helpers.log:1159: helpers_test.go:271: consumer omission caught: no-unreachable-loop
+- helpers.log:1160: helpers_test.go:271: consumer omission caught: react-hooks/rules-of-hooks
+- helpers.log:1172: --- PASS: TestSpaceGoNodeNativeJavaScript/witnesses.json (0.60s)
+- helpers.log:1173: --- PASS: TestSpaceGoNodeNativeJavaScript/consumers.json (0.52s)
+- helpers.log:1174: --- PASS: TestSpaceGoNodeNativeJavaScript/--full (9.78s)
+- helpers.log:1177: space_test.go:184: Node source compiling mutant caught at line 109: got "blank false", Go "blank true"
+- helpers.log:1178: space_test.go:184: sanitized native compiling mutant caught at line 109: got "blank false", Go "blank true"
+- helpers.log:1179: space_test.go:184: emitted JavaScript compiling mutant caught at line 109: got "blank false", Go "blank true"
+- helpers.log:1181: space_test.go:184: Node source compiling mutant caught at line 1: got "blank false", Go "blank true"
+- helpers.log:1182: space_test.go:184: sanitized native compiling mutant caught at line 1: got "blank false", Go "blank true"
+- helpers.log:1183: space_test.go:184: emitted JavaScript compiling mutant caught at line 1: got "blank false", Go "blank true"
+- helpers.log:1185: space_test.go:184: Node source compiling mutant caught at line 268: got "blank true", Go "blank false"
+- helpers.log:1186: space_test.go:184: sanitized native compiling mutant caught at line 268: got "blank true", Go "blank false"
+- helpers.log:1187: space_test.go:184: emitted JavaScript compiling mutant caught at line 268: got "blank true", Go "blank false"
+- helpers.log:1189: space_test.go:184: Node source compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+- helpers.log:1190: space_test.go:184: sanitized native compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+- helpers.log:1191: space_test.go:184: emitted JavaScript compiling mutant caught at line 150: got "byte 58 false", Go "byte 58 true"
+- helpers.log:1193: space_test.go:184: Node source compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+- helpers.log:1194: space_test.go:184: sanitized native compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+- helpers.log:1195: space_test.go:184: emitted JavaScript compiling mutant caught at line 16: got "byte 13 true", Go "byte 13 false"
+- helpers.log:1197: --- PASS: TestSpaceCompilingMutants/javascript_space.acase_0xfeff: (1.43s)
+- helpers.log:1198: --- PASS: TestSpaceCompilingMutants/blank.areturn_true; (1.17s)
+- helpers.log:1199: --- PASS: TestSpaceCompilingMutants/blank.aindex++ (1.52s)
+- helpers.log:1200: --- PASS: TestSpaceCompilingMutants/value_separator.acase_58:_ (1.55s)
+- helpers.log:1201: --- PASS: TestSpaceCompilingMutants/value_separator.acase_60:_case_10: (1.50s)
+- helpers.log:1203: space_test.go:252: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+- helpers.log:1215: --- PASS: TestBytesGoNodeNativeJavaScript/witnesses.json (0.34s)
+- helpers.log:1216: --- PASS: TestBytesGoNodeNativeJavaScript/consumers.json (0.83s)
+- helpers.log:1217: --- PASS: TestBytesGoNodeNativeJavaScript/--full (4.88s)
+- helpers.log:1220: bytes_test.go:183: Node source compiling mutant caught at line 16: got "top 0", Go "top 1"
+- helpers.log:1221: bytes_test.go:183: sanitized native compiling mutant caught at line 16: got "top 0", Go "top 1"
+- helpers.log:1222: bytes_test.go:183: emitted JavaScript compiling mutant caught at line 16: got "top 0", Go "top 1"
+- helpers.log:1224: bytes_test.go:183: Node source compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+- helpers.log:1225: bytes_test.go:183: sanitized native compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+- helpers.log:1226: bytes_test.go:183: emitted JavaScript compiling mutant caught at line 15: got "peek 1 0", Go "peek 1 1"
+- helpers.log:1228: bytes_test.go:183: Node source compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+- helpers.log:1229: bytes_test.go:183: sanitized native compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+- helpers.log:1230: bytes_test.go:183: emitted JavaScript compiling mutant caught at line 2: got "peek -2147483648 1", Go "peek -2147483648 0"
+- helpers.log:1232: --- PASS: TestBytesCompilingMutants/top_of_stack.astack[stack.length_-_1] (1.40s)
+- helpers.log:1233: --- PASS: TestBytesCompilingMutants/peek_byte.areturn_input[index] (1.80s)
+- helpers.log:1234: --- PASS: TestBytesCompilingMutants/peek_byte.areturn_0; (1.33s)
+- helpers.log:1236: bytes_test.go:251: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+- helpers.log:1244: --- PASS: TestSortedKeys/sort-witnesses.json (1.66s)
+- helpers.log:1245: --- PASS: TestSortedKeys/sort-consumers.json (1.00s)
+- helpers.log:1248: bytes_test.go:341: Node source compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+- helpers.log:1249: bytes_test.go:341: sanitized native compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+- helpers.log:1250: bytes_test.go:341: emitted JavaScript compiling mutant caught at line 3: got "updated", Go "updated [109,117,116,97,116,105,111,110,32,97,102,116,101,114,32,102,105,114,115,116,32,99,97,108,108,]"
+- helpers.log:1252: bytes_test.go:341: Node source compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- helpers.log:1253: bytes_test.go:341: sanitized native compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- helpers.log:1254: bytes_test.go:341: emitted JavaScript compiling mutant caught at line 7: got "keys [] [240,159,152,128,] [240,144,128,128,] [239,191,191,] [238,128,128,] [195,169,] [101,204,129,] [97,] [65,] [0,] [0,97,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- helpers.log:1256: bytes_test.go:341: Node source compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- helpers.log:1257: bytes_test.go:341: sanitized native compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- helpers.log:1258: bytes_test.go:341: emitted JavaScript compiling mutant caught at line 7: got "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [240,144,128,128,] [240,159,152,128,] [238,128,128,] [239,191,191,]", Go "keys [] [0,] [0,97,] [65,] [97,] [101,204,129,] [195,169,] [238,128,128,] [239,191,191,] [240,144,128,128,] [240,159,152,128,]"
+- helpers.log:1260: --- PASS: TestSortedKeysCompilingMutants/omit_false_values (1.85s)
+- helpers.log:1261: --- PASS: TestSortedKeysCompilingMutants/reverse_UTF8 (2.32s)
+- helpers.log:1262: --- PASS: TestSortedKeysCompilingMutants/UTF16_comparator (1.66s)
+- helpers.log:1275: --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (2.42s)
+- helpers.log:1276: --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (0.78s)
+- helpers.log:1277: --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.81s)
+- helpers.log:1278: --- PASS: TestStringsGoNodeNativeJavaScript/--full (6.72s)
+- helpers.log:1281: strings_test.go:187: Node source compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+- helpers.log:1282: strings_test.go:187: sanitized native compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+- helpers.log:1283: strings_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "node declaration||||||false|false|true|true", Go "node comment||||||false|false|true|true"
+- helpers.log:1285: strings_test.go:187: Node source compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+- helpers.log:1286: strings_test.go:187: sanitized native compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+- helpers.log:1287: strings_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "node comment||||||true|false|true|true", Go "node comment||||||false|false|true|true"
+- helpers.log:1289: strings_test.go:187: Node source compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+- helpers.log:1290: strings_test.go:187: sanitized native compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+- helpers.log:1291: strings_test.go:187: emitted JavaScript compiling mutant caught at line 4: got "node declaration||||||false|false|true|true", Go "node declaration||||||true|false|true|true"
+- helpers.log:1293: strings_test.go:187: Node source compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+- helpers.log:1294: strings_test.go:187: sanitized native compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+- helpers.log:1295: strings_test.go:187: emitted JavaScript compiling mutant caught at line 10: got "node declaration|||||97|true|false|true|true", Go "node declaration||||97|97|true|false|true|true"
+- helpers.log:1297: strings_test.go:187: Node source compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+- helpers.log:1298: strings_test.go:187: sanitized native compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+- helpers.log:1299: strings_test.go:187: emitted JavaScript compiling mutant caught at line 79: got "bucket 46,112,120", Go "bucket 112,120"
+- helpers.log:1301: strings_test.go:187: Node source compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+- helpers.log:1302: strings_test.go:187: sanitized native compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+- helpers.log:1303: strings_test.go:187: emitted JavaScript compiling mutant caught at line 85: got "bucket ", Go "bucket 99,97,108,99"
+- helpers.log:1305: --- PASS: TestStringsCompilingMutants/comment.akind:_'comment' (1.69s)
+- helpers.log:1306: --- PASS: TestStringsCompilingMutants/comment.avaluePresent:_false (1.44s)
+- helpers.log:1307: --- PASS: TestStringsCompilingMutants/declaration.avaluePresent:_true (1.73s)
+- helpers.log:1308: --- PASS: TestStringsCompilingMutants/declaration.aparams:_[],_property, (1.81s)
+- helpers.log:1309: --- PASS: TestStringsCompilingMutants/breakpoint_bucket.abyte_===_46 (1.98s)
+- helpers.log:1310: --- PASS: TestStringsCompilingMutants/breakpoint_bucket.abefore_<_index (1.96s)
+- helpers.log:1312: strings_test.go:255: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+- helpers.log:1326: --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (2.33s)
+- helpers.log:1327: --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (1.05s)
+- helpers.log:1328: --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.73s)
+- helpers.log:1329: --- PASS: TestStringsGoNodeNativeJavaScript/--full (2.85s)
+- helpers.log:1332: helpers_test.go:185: Node source compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+- helpers.log:1333: helpers_test.go:185: sanitized native compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+- helpers.log:1334: helpers_test.go:185: emitted JavaScript compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+- helpers.log:1336: helpers_test.go:185: Node source compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+- helpers.log:1337: helpers_test.go:185: sanitized native compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+- helpers.log:1338: helpers_test.go:185: emitted JavaScript compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+- helpers.log:1340: helpers_test.go:185: Node source compiling mutant caught at line 6: got "added false", Go "added true"
+- helpers.log:1341: helpers_test.go:185: sanitized native compiling mutant caught at line 6: got "added false", Go "added true"
+- helpers.log:1342: helpers_test.go:185: emitted JavaScript compiling mutant caught at line 6: got "added false", Go "added true"
+- helpers.log:1344: helpers_test.go:185: Node source compiling mutant caught at line 3: got "changed ", Go "changed 137"
+- helpers.log:1345: helpers_test.go:185: sanitized native compiling mutant caught at line 3: got "changed ", Go "changed 137"
+- helpers.log:1346: helpers_test.go:185: emitted JavaScript compiling mutant caught at line 3: got "changed ", Go "changed 137"
+- helpers.log:1348: --- PASS: TestStringsCompilingMutants/theme_prefix_key.alet_index_=_2 (2.65s)
+- helpers.log:1349: --- PASS: TestStringsCompilingMutants/theme_prefix_key.aresult.push(45); (2.76s)
+- helpers.log:1350: --- PASS: TestStringsCompilingMutants/variant_registry_has.aregistrations.has(root) (3.37s)
+- helpers.log:1351: --- PASS: TestStringsCompilingMutants/design_system_prefix.areturn_system.theme.prefix; (3.09s)
+- helpers.log:1353: helpers_test.go:253: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+- helpers.log:1358: helpers_test.go:333: Node source compiling guard mutant caught: fabricated short-key result for --bad0
+- helpers.log:1359: helpers_test.go:333: sanitized native compiling guard mutant caught: fabricated short-key result for --bad0
+- helpers.log:1360: helpers_test.go:333: emitted JavaScript compiling guard mutant caught: fabricated short-key result for --bad0
+- helpers.log:1361: helpers_test.go:333: Node source compiling guard mutant caught: fabricated short-key result for --bad1
+- helpers.log:1362: helpers_test.go:333: sanitized native compiling guard mutant caught: fabricated short-key result for --bad1
+- helpers.log:1363: helpers_test.go:333: emitted JavaScript compiling guard mutant caught: fabricated short-key result for --bad1
+- helpers.log:1377: --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (1.15s)
+- helpers.log:1378: --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (0.72s)
+- helpers.log:1379: --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.79s)
+- helpers.log:1380: --- PASS: TestStringsGoNodeNativeJavaScript/--full (6.86s)
+- helpers.log:1383: helpers_test.go:186: Node source compiling mutant caught at line 1: got "has false", Go "has true"
+- helpers.log:1384: helpers_test.go:186: sanitized native compiling mutant caught at line 1: got "has false", Go "has true"
+- helpers.log:1385: helpers_test.go:186: emitted JavaScript compiling mutant caught at line 1: got "has false", Go "has true"
+- helpers.log:1387: helpers_test.go:186: Node source compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+- helpers.log:1388: helpers_test.go:186: sanitized native compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+- helpers.log:1389: helpers_test.go:186: emitted JavaScript compiling mutant caught at line 9: got "deleted false|functional|false", Go "deleted false|static|false"
+- helpers.log:1391: helpers_test.go:186: Node source compiling mutant caught at line 2: got "kind static", Go "kind "
+- helpers.log:1392: helpers_test.go:186: sanitized native compiling mutant caught at line 2: got "kind static", Go "kind "
+- helpers.log:1393: helpers_test.go:186: emitted JavaScript compiling mutant caught at line 2: got "kind static", Go "kind "
+- helpers.log:1395: helpers_test.go:186: Node source compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- helpers.log:1396: helpers_test.go:186: sanitized native compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- helpers.log:1397: helpers_test.go:186: emitted JavaScript compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- helpers.log:1399: helpers_test.go:186: Node source compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- helpers.log:1400: helpers_test.go:186: sanitized native compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- helpers.log:1401: helpers_test.go:186: emitted JavaScript compiling mutant caught at line 11: got "added true|compound|false", Go "added true|compound|true"
+- helpers.log:1403: --- PASS: TestStringsCompilingMutants/has_variant.asystem.variants.has(root) (2.08s)
+- helpers.log:1404: --- PASS: TestStringsCompilingMutants/variant_kind.a??_'static' (2.19s)
+- helpers.log:1405: --- PASS: TestStringsCompilingMutants/variant_kind.areturn_system.variants.get(root)_??_'static'; (2.24s)
+- helpers.log:1406: --- PASS: TestStringsCompilingMutants/variant_compounds_with.a===_'compound' (2.00s)
+- helpers.log:1407: --- PASS: TestStringsCompilingMutants/variant_compounds_with.areturn_system.variants.get(parent) (2.39s)
+- helpers.log:1409: helpers_test.go:254: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+- helpers.log:1423: --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (1.17s)
+- helpers.log:1424: --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (1.07s)
+- helpers.log:1425: --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.43s)
+- helpers.log:1426: --- PASS: TestStringsGoNodeNativeJavaScript/--full (16.43s)
+- helpers.log:1429: helpers_test.go:187: Node source compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+- helpers.log:1430: helpers_test.go:187: sanitized native compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+- helpers.log:1431: helpers_test.go:187: emitted JavaScript compiling mutant caught at line 2: got "walk 0 2,0,1,3,4,5,2", Go "walk 0 0,1,3,4,5,2,2,0,1,3,4,5,2"
+- helpers.log:1433: helpers_test.go:187: Node source compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+- helpers.log:1434: helpers_test.go:187: sanitized native compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+- helpers.log:1435: helpers_test.go:187: emitted JavaScript compiling mutant caught at line 5: got "nodes 2 true|0,1,2,0,1", Go "nodes 2 false|0,1"
+- helpers.log:1437: helpers_test.go:187: Node source compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+- helpers.log:1438: helpers_test.go:187: sanitized native compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+- helpers.log:1439: helpers_test.go:187: emitted JavaScript compiling mutant caught at line 3: got "nodes 1 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 1 true|0,2,0"
+- helpers.log:1441: helpers_test.go:187: Node source compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+- helpers.log:1442: helpers_test.go:187: sanitized native compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+- helpers.log:1443: helpers_test.go:187: emitted JavaScript compiling mutant caught at line 7: got "nodes 3 true|0,1,3,4,5,2,2,0,1,3,4,5,2", Go "nodes 3 true|0,2,0"
+- helpers.log:1445: helpers_test.go:187: Node source compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- helpers.log:1446: helpers_test.go:187: sanitized native compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- helpers.log:1447: helpers_test.go:187: emitted JavaScript compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,41", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- helpers.log:1449: helpers_test.go:187: Node source compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- helpers.log:1450: helpers_test.go:187: sanitized native compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- helpers.log:1451: helpers_test.go:187: emitted JavaScript compiling mutant caught at line 13: got "css 137,0,255,102,40,97,255,32,32,44,93", Go "css 137,0,255,102,40,97,255,32,32,44,41"
+- helpers.log:1453: --- PASS: TestStringsCompilingMutants/walk.awalkNodes(arena,roots,visit) (2.44s)
+- helpers.log:1454: --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_2)_{_return_false;_} (2.14s)
+- helpers.log:1455: --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_0) (2.08s)
+- helpers.log:1456: --- PASS: TestStringsCompilingMutants/walk_nodes.aif(action_===_0)#01 (2.66s)
+- helpers.log:1457: --- PASS: TestStringsCompilingMutants/write_value_css.anode.tag_===_'word'_||_node.tag_===_'separator' (2.99s)
+- helpers.log:1458: --- PASS: TestStringsCompilingMutants/write_value_css.abuilder.push(41) (2.51s)
+- helpers.log:1460: helpers_test.go:255: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+- helpers.log:1470: --- PASS: TestHelpersGoNodeNativeJavaScript/witnesses.json (0.46s)
+- helpers.log:1471: --- PASS: TestHelpersGoNodeNativeJavaScript/calls.json (0.92s)
+- helpers.log:1474: helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:1475: helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:1476: helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:1478: helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:1479: helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:1480: helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:1482: helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:1483: helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:1484: helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:1486: helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:1487: helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:1488: helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:1490: helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:1491: helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:1492: helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:1494: helpers_test.go:179: Node source compiling semantic mutant caught by Go output comparison
+- helpers.log:1495: helpers_test.go:179: sanitized native compiling semantic mutant caught by Go output comparison
+- helpers.log:1496: helpers_test.go:179: emitted JavaScript compiling semantic mutant caught by Go output comparison
+- helpers.log:1498: --- PASS: TestCompilingMutants/load_design_system_through.adependencies.stat(path) (1.97s)
+- helpers.log:1499: --- PASS: TestCompilingMutants/load_design_system_through.aif(loaded.failed) (1.95s)
+- helpers.log:1500: --- PASS: TestCompilingMutants/ingest_utility_block.aprevious_+_2 (2.28s)
+- helpers.log:1501: --- PASS: TestCompilingMutants/ingest_utility_block.acollector.definitions.push({root,body}); (2.53s)
+- helpers.log:1502: --- PASS: TestCompilingMutants/normalize_value_function_nodes.anormalizeValueFunctionNodes(arena,node.edges,dependencies); (2.38s)
+- helpers.log:1503: --- PASS: TestCompilingMutants/normalize_value_function_nodes.anode.edges_=_dependencies.parse(args.join(',')); (2.33s)
+- helpers.log:1505: helpers_test.go:211: loader-body drift mutant caught
+- helpers.log:1508: helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-shorthand-classes
+- helpers.log:1509: helpers_test.go:281: consumer omission caught: better-tailwindcss/no-conflicting-classes
+- helpers.log:1510: helpers_test.go:281: consumer omission caught: better-tailwindcss/no-unknown-classes
+- helpers.log:1511: helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-canonical-classes
+- helpers.log:1512: helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-consistent-class-order
+- helpers.log:1513: helpers_test.go:281: consumer omission caught: better-tailwindcss/enforce-consistent-variant-order

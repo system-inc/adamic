@@ -1,0 +1,10 @@
+=== RUN   TestRuntimeReleasePaths
+=== PAUSE TestRuntimeReleasePaths
+=== RUN   TestRuntimeStringEquality
+=== PAUSE TestRuntimeStringEquality
+=== CONT  TestRuntimeReleasePaths
+=== CONT  TestRuntimeStringEquality
+--- PASS: TestRuntimeStringEquality (0.76s)
+--- PASS: TestRuntimeReleasePaths (17.07s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	17.094s
