@@ -95,7 +95,7 @@ brief() {
 Unit: run one part of Adamic's test gate at a fixed commit and return the raw logs. Branch for the logs: $prefix/$name. This is a measured run; do not change any code.
 
 1. In the repository: \`git fetch origin && git checkout --detach $sha\` and confirm \`git rev-parse HEAD\` prints $sha.
-2. Set up with every gate input this tree's setup offers: \`flags=""; grep -q -- --wasi-sdk cloud/setup.sh && flags="\$flags --wasi-sdk"; grep -q -- --gate-inputs cloud/setup.sh && flags="\$flags --gate-inputs"; bash cloud/setup.sh \$flags\`. Source the env file it prints, then \`export ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1\`. Record setup's timing lines, the flags it ran with, and \`nproc\`. A test that skips for a missing input is a gate failure, not a pass.
+2. Set up with every gate input this tree's setup offers: \`flags=""; grep -q -- --wasi-sdk cloud/setup.sh && flags="\$flags --wasi-sdk"; grep -q -- --gate-inputs cloud/setup.sh && flags="\$flags --gate-inputs"; bash cloud/setup.sh \$flags\`. Source the env file it prints, then \`export ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_COHERE=1\`. Record setup's timing lines, the flags it ran with, and \`nproc\`. A test that skips for a missing input is a gate failure, not a pass.
 3. \`go build -o /workspace/adamic-gate ./cmd/adamic-gate\`, read docs/gate-shards.md, then run, with output to a log file (never piped):
    \`date -u; $command > /workspace/gate-run.log 2>&1; echo exit=\$?; date -u\`
    If the box restarts or the command is interrupted, rerun the same command with \`-resume\` added (same output directory) until it completes. Record each start, end and interruption.
