@@ -1,10 +1,10 @@
 Built nine delivered helpers, including new decorator and type-parameter delegation, rebased onto current origin/main 39638d9e278d38bb5aeae887f46d55a70e47aaad.
-Before rebase: helper branch ce35afe4f, rule sibling c485ad2cb; rebased rule package green and aggregate is running before its own push.
+Before rebase: helper branch ce35afe4f, rule sibling c485ad2cb; rule branch freshly re-greened and pushed at 0fcae8191.
 Complete nine-helper suite PASS 125.005s, vet clean, all 24 controls pass; new helpers match 30,954 observations / 62,024 bytes on actual Go, source Node, emitted JS and sanitized native.
 All four new semantic mutants compile/run and fail only Go comparison; prior 20 controls also pass, preserving the separate unsupported-separator refusal comparison.
 Uncovered: full expression/CFG builder and rule findings, malformed internal ASTs; original fixture delegation counts zero. Exact counter bigint-return lowering and shared harness blockers remain; other unclaimed helpers remain.
 
-Main advanced at the final fetch from b8fb957aa to 39638d9e2. No lint, compiler, oracle or doctrine file changed. Both owned branches were rebased; this helper package was freshly re-greened. Git initially refused rebase with No space left on device. Removing 4,305,172,040 bytes from regenerable Go cache artifacts recovered 2.6 GB without deleting source or evidence. Setup remains 122s, nproc 5. Fresh evidence: evidence/39638-helpers.log and evidence/39638-helper-vet.log. Harness 41eb6eab2 is still not on main; DEDUP_LEDGER decisions are recorded for the future harness rebase. No main or area branch was pushed.
+Main advanced at the final fetch from b8fb957aa to 39638d9e2. No lint, compiler, oracle or doctrine file changed. Both owned branches were rebased; this helper package was freshly re-greened. Git initially refused rebase with No space left on device. Removing 4,305,172,040 bytes from regenerable Go cache artifacts recovered 2.6 GB without deleting source or evidence. Setup remains 122s, nproc 5. Rule aggregate PASS 520.492s, owned package PASS 45.425s, rule vet clean; 3,016 supported cases / 118,907,067 identical findings/fix bytes, ten compiling mutants caught on all three backends. Fresh evidence: evidence/39638-helpers.log and evidence/39638-helper-vet.log. Harness 41eb6eab2 is still not on main; DEDUP_LEDGER decisions are recorded for the future harness rebase. No main or area branch was pushed.
 
 ---
 
