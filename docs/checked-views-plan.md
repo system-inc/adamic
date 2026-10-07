@@ -194,3 +194,21 @@ an operand twice. Valid release C and semantic assertions catch them, not clang 
 a sanitizer. Capture test output in logs, regenerate counts, push own branches only.
 Complete admission before benchmarking erased reads; report retained read-site and
 dynamic-read counts separately. Unknown proofs never reduce checks.
+
+## First shared API checkpoint
+
+`internal/ir/views.go` defines one-based `ViewContractID`, logical `ViewContract`
+(kind/name/representation, scalar values, object fields, union members, array
+members and callable signature slots), and `ViewFieldContract` (name, child id,
+optional, readonly). `Program.ViewContracts` owns the interned graph;
+`Program.ViewContractTypes` maps checker type ids to contract ids. A field read
+can carry `Property.ViewContract`. Zero/Unknown never authorizes erasure.
+
+The concrete lane 2 registration points are `viewArrayContractHook` and
+`viewCallableContractHook` in `internal/lower/view_contracts.go`, with signature
+`func(*lowering, *ast.Node, *checker.Type, viewContractBuilder) (ir.ViewContractID, error)`.
+Register from the lane-owned files' init functions, and use the builder callback
+for element/argument/result contracts. Hook implementations intern their returned
+contract in the same program registry. Lane 1 owns dispatch and broader read-path
+wiring; registering a handler alone does not claim array/callable reads are implemented.
+Current union roots have Unknown descriptors until the union family is complete.

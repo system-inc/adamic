@@ -1,8 +1,8 @@
-Built so far: merged current main; default tagged scalar checks with shared readiness, literal contracts, boxed reads/stores and a reusable view entry point.
-Commits: prerequisite main merge 6b50efe; previous readiness integration 21558749; this partial checkpoint follows. Only codex/interface-downcasts is pushed.
-Commands and outputs: touched packages PASS (lower 28.351s, IR 27.948s, native 173.520s); uncached full ordinary Node oracle plus focused tests/counts PASS 167.771s; scoped vet PASS.
-Mutants: dropped read, initialization, runtime type and single evaluation caught by independent semantic assertions with valid C; no-proof erasure also caught on an ordinary source fixture.
-Not covered: complete tagged tsc targets, untagged/transitive views, erasure, opaque producer/generated-read audit, post-(c) latent refusals, checked-read share or release benchmark.
+Built so far: lane 1 object-family transitive reads, tagged/untagged structural admission, shared readiness, and reusable semantic contract descriptors/hooks.
+Commits: plan 4dbf3b6a; re-greened main merge 00d6006a; object-family checkpoint follows on codex/interface-downcasts only.
+Commands and outputs: touched lower/IR packages PASS 22.358s/23.310s; restored oracle/count check PASS 36.161s; scoped vet PASS; six new source count rows, no changed existing row.
+Mutants: dropped read/readiness/type, no-proof erasure, skipped transitive object view, and double evaluation all caught by independent semantic assertions with valid C.
+Not covered: named-interface descendants, optional/mixed/nullish union contracts, array/callable integration, proof erasure, tsc timings; complete tsc sites remain 0/1,758 and 0/1,178.
 
 No main or area branch was pushed or merged into. Both dependency merges were into
 `codex/interface-downcasts`; only that feature branch was pushed. The unit is still
@@ -330,3 +330,51 @@ changed count row are preserved in lane1-main-*.log. Main's borrowing changes ac
 for the retain/release reductions, including visitor 33/41 to 32/40 and staged
 identifier 5/6 to 4/5; no allocation count change is introduced by the write merge.
 This merge is the prerequisite for lane 1, not a new unlocked tsc site family.
+
+
+## Lane 1 objects family
+
+Anonymous structural object fields now propagate checked reads to every descendant
+field through aliases and function boundaries. Existing native/JS helpers verify the
+object heap kind before interpreting its payload. Nested presence, readiness and
+primitive/literal checks stay active; no construction or initialization fact is
+inferred from an asserted type. Untagged object-source downcasts use view() without
+a cast-time tag test. Nominal identity and existing writable-slot constraints stay
+in force; dictionaries and unsupported source representations remain NotYet.
+
+Six ordinary .a source fixtures cover tagged/untagged successes, identity and one
+operand evaluation, malformed/missing nested boolean fields, and shared uninitialized
+state. The skipped-transitive mutant leaves the root object check but drops the child
+read check: valid release C prints false instead of the pinned exit-70 failure.
+The production-source skip-transitive mutation was also run and caught. All six
+production mutants restore sources in finally. Direct/destructuring object writes
+without actual source-slot type certificates are NotYet: a physical object tag alone
+cannot protect another alias's stronger structural contract. Lane 3 supplies that
+certificate; this is an implementation gap, not a permanent language refusal.
+
+Shared API: internal/ir/views.go defines one-based logical contract ids, full field
+links and literal constraints independent of layout ids/readiness. Contracts carry
+raw literal metadata so an unread field cannot add unused emitted C strings.
+Program.ViewContracts/ViewContractTypes and Property.ViewContract expose them to
+other lanes; a lowering test pins the nested Boolean/object descriptor link.
+viewArrayContractHook/viewCallableContractHook register lane 2's builders from its
+own files. docs/checked-views-plan.md records the exact signatures. Common dispatch
+still needs the corresponding read-path integration when those implementations arrive.
+
+objects-contract-audit.cjs reruns the exact 2,936 pinned sites with zero diagnostics
+and zero unmatched source spans. Required anonymous-object contract eligibility is
+still zero; therefore zero complete tsc sites are unlocked at this family. This is
+a rejection upper bound, not a claim to have compiled all tsc source. First blockers:
+tagged 879 named-interface descendants, 544 union/nullish/intersection/generic fields,
+313 optional fields, 19 callable targets, 3 array fields; untagged 570 named-interface
+descendants, 212 union/nullish/intersection/generic fields, 226 optional fields,
+71 callable targets, 97 array fields, 2 dictionary views. Full locations/reasons are
+objects-contract-sites.json; summary is objects-contract-summary.json. The next
+family removes the named-interface descendant gap, then unions/optional/readiness.
+
+Exact additional verification: lower/IR -count=1; uncached oracle filters
+TestCheckedViewObjects|TestDefaultTagged|TestInterfaceCast|TestRequiredViewField
+plus TestCountsAreRecorded; metadata/write-certificate lower tests; scoped vet;
+primitive-mutants.py. Test output goes to lane1-objects-*.log. The six new count rows
+are the only changes after the main merge; successes balance allocations/frees.
+The full repository adapter gate and performance benchmarks were not run.

@@ -44,6 +44,9 @@ func interfaceCastCounts(t *testing.T) []string {
 	for _, name := range []string{"default-staged", "default-wrong-type", "default-wrong-boolean", "default-literal", "default-boxed-string", "default-boxed-write", "default-destructure", "default-read-before-set"} {
 		rows = append(rows, counted(t, "stage3/interface-downcasts/"+name+".a", false, nil, false, false))
 	}
+	for _, name := range []string{"objects-good", "objects-untagged-good", "objects-untagged-wrong", "objects-wrong-nested", "objects-missing-nested", "objects-uninitialized-nested"} {
+		rows = append(rows, counted(t, "stage3/interface-downcasts/lane1/"+name+".a", false, nil, false, false))
+	}
 	// These rows count the source lowering and shared readiness helpers. The checked
 	// view substitution in TestNarrowedFieldUsesSharedReadiness is a separate IR probe.
 	for _, name := range []string{"identifier", "identifier-uninitialized", "number", "number-uninitialized"} {

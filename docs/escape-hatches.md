@@ -1140,6 +1140,15 @@ boxed scalar reads and supported boxed stores have source fixtures on both backe
 The non-null tip `e2ea9ab2`, including `c680ecf4`, supplies the shared readiness helper
 and state; no second initialization representation was added.
 
+The lane 1 objects checkpoint adds anonymous structural object fields, with nested
+reads checked through aliases/parameters/returns, plus untagged object-source
+admission without a tag test. Named-interface descendants and optional/mixed/nullish
+fields remain the next families. The six source fixtures match Node on success and
+pin failure on both backends. Contract metadata and hook signatures are documented
+in [checked-views-plan.md](checked-views-plan.md). Actual source-slot type certificates
+are required before writes of checked object fields; current unsupported writes are
+NotYet. The renewed complete-target audit is still 0/1,758 tagged and 0/1,178 untagged.
+
 The reusable lowering entry point is `(*lowering).view(node, value, target)` in
 `internal/lower/interface_cast.go`. It returns the original operand, preserving
 identity, and registers fields for conservative program-wide checks across aliases.
