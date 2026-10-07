@@ -16,6 +16,7 @@ func init() {
 		"internal/oracle/testdata/phantom_brands.a",
 		"internal/oracle/testdata/phantom_undefined.a",
 		"internal/oracle/testdata/phantom_catch.a",
+		"internal/oracle/testdata/phantom_array_brands.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path            string

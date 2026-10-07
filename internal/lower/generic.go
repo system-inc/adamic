@@ -140,6 +140,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 // and deeper arrays reach a fixed point once T itself is an array. Class layouts keep their full
 // concrete type because Box<number> and Box<Box<number>> have different fields.
 func (l *lowering) genericTypeKey(proven *checker.Type) string {
+	proven = l.phantomArrayView(proven)
 	held, known := l.representation(proven)
 	if !known {
 		return "unread"

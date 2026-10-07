@@ -23,6 +23,9 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	}
 	source := l.checker.GetTypeAtLocation(as.Expression)
 	target := l.checker.GetTypeAtLocation(node)
+	if handled, err := l.phantomArrayCast(node, as.Expression, source, target); handled {
+		return value, err
+	}
 	if l.phantomCast(source, target) {
 		return value, nil
 	}
