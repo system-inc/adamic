@@ -13,11 +13,59 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
+// Keep the language-level NotYet classification while adding this decoder's concrete fix.
+type jsonDecodeNullableNotYet struct{ NotYet }
+
+func (n *jsonDecodeNullableNotYet) Error() string {
+	return n.NotYet.Error() + "\nfix: nullable JSON fields come with the representation of T | null; decode the field as a discriminated union or leave it out"
+}
+func (n *jsonDecodeNullableNotYet) Unwrap() error { return &n.NotYet }
+
+// Check the complete data graph before representation selection can reject a nullable union.
+func (l *lowering) jsonDecodeContainsNull(t *checker.Type, seen map[*checker.Type]bool) bool {
+	if seen[t] {
+		return false
+	}
+	seen[t] = true
+	if t.Flags()&checker.TypeFlagsNull != 0 {
+		return true
+	}
+	if t.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range t.Types() {
+			if l.jsonDecodeContainsNull(member, seen) {
+				return true
+			}
+		}
+	} else if t.Flags()&checker.TypeFlagsObject != 0 {
+		if l.checker.IsArrayType(t) {
+			return l.jsonDecodeContainsNull(l.checker.GetElementTypeOfArrayType(t), seen)
+		}
+		if checker.IsTupleType(t) {
+			for _, element := range l.checker.GetTypeArguments(t) {
+				if l.jsonDecodeContainsNull(element, seen) {
+					return true
+				}
+			}
+		} else {
+			for _, field := range l.checker.GetPropertiesOfType(t) {
+				if l.jsonDecodeContainsNull(l.checker.GetTypeOfSymbol(field), seen) {
+					return true
+				}
+			}
+		}
+	}
+	return false
+}
+
 func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 	schema := ir.JSONDecodeSchema{}
 	call := node.AsCallExpression()
 	if call.TypeArguments == nil || len(call.TypeArguments.Nodes) != 1 {
 		return schema, &Refused{Where: l.program.Where(node), What: "decodeJson requires a type argument", Fix: "name the type: decodeJson<YourType>(text)"}
+	}
+	rootType := l.checker.GetTypeFromTypeNode(call.TypeArguments.Nodes[0])
+	if l.jsonDecodeContainsNull(rootType, map[*checker.Type]bool{}) {
+		return schema, &jsonDecodeNullableNotYet{NotYet{Where: l.program.Where(node), What: "decodeJson<" + l.checker.TypeToString(rootType) + "> containing null"}}
 	}
 	seen := map[*checker.Type]int{}
 	var visit func(*checker.Type) (int, error)
@@ -56,8 +104,6 @@ func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 			case ir.BooleanConstant:
 				n.Boolean = v.Value
 			}
-		} else if flags&checker.TypeFlagsNull != 0 {
-			return 0, &Refused{Where: l.program.Where(node), What: "decodeJson null needs a general nullable value representation", Fix: "use an explicit data discriminant for absence until nullable value representations are implemented"}
 		} else if flags&checker.TypeFlagsNumber != 0 {
 			n.Kind = "number"
 			n.Of = ir.Number
@@ -178,7 +224,7 @@ func (l *lowering) decodeJsonType(node *ast.Node) (ir.JSONDecodeSchema, error) {
 		schema.Nodes[index] = n
 		return index, nil
 	}
-	root, err := visit(l.checker.GetTypeFromTypeNode(call.TypeArguments.Nodes[0]))
+	root, err := visit(rootType)
 	schema.Root = root
 	return schema, err
 }
