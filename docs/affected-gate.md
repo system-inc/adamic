@@ -1,6 +1,7 @@
 # Affected gate input records
 
-Status: implementation and small real-process proofs, not a proven integration gate.
+Status: implementation, small real-process proofs and 43 durable successful package
+records, not a proven integration gate.
 The five full-repository branch proofs and the affected-versus-whole timing comparison
 remain uncompleted: there is no certified green full-main record. Do not use this
 prototype to omit integration packages until those proofs have been completed.
@@ -70,8 +71,30 @@ failed its width oracle because those dependencies were absent, then timed out;
 typeaware also hit its 30-minute deadline. Both failures remain in the log directory.
 After installing the pinned dependencies, a small original-library width control
 passed. The explicit retry uses `-jobs 1` to reduce contention, preserving and
-revalidating the 42 completed records. None of these partial results is certified
-until all 44 packages pass.
+revalidating the 42 completed records. Typeaware passed that retry, yielding 43
+successful records. Markdownblocks passed its width test and all three width
+mutants, then hit the 30-minute deadline again during parallel layout tests.
+None of these partial results is certified until all 44 packages pass.
+
+The completed evidence is `/tmp/affected-proof/green-main.json.partial` and
+`/tmp/affected-proof/green-main.json.reference.jsonl`; the record also preserves
+the first failed attempt in `Retries`. The failed retry logs are under
+`/tmp/affected-proof/green-main.json.logs/retry-984539610/`. There is deliberately
+no published `/tmp/affected-proof/green-main.json`. An extracted incomplete record,
+`/tmp/affected-proof/unfinished-reference.json`, was passed to `select`: it selected
+all 44 current packages, independently checked against `go list ./...`.
+
+The queued five-shape runner stopped with `reference_failed` and ran no branches.
+The current blocker is the explicit instruction in `CLAUDE.md:49`: “Keep
+`-timeout 30m` for the complete gate.” A proposed 60-minute observed-run override
+requires the user's decision. Changing the invocation and observer implementation
+identity requires a fresh record; old logs remain evidence, not a silently
+compatible cache. The integration gate and `cmd/adamic-gate` were not changed.
+
+Finished traces were losslessly compressed where disk space was tight. Each
+compressed stream was independently decompressed and SHA256-checked before the
+original trace was removed; `/tmp/affected-proof/compressed-traces.json` lists
+those hashes. Original package JSON event logs were not compressed or changed.
 
 On a branch:
 
