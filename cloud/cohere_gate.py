@@ -51,7 +51,7 @@ def make_mirror(directory):
         if destination.exists():
             raise ValueError(f'.a alias collides with an existing source: {name}')
         destination.parent.mkdir(parents=True, exist_ok=True)
-        if source.suffix in ('.a', '.ts'):
+        if source.suffix in ('.a', '.ts', '.tsx'):
             text = re.sub(
                 r"(\bfrom\s+|\bimport\s*(?:\(\s*)?)([\"'])([^\"'\n]+\.a)\2",
                 lambda match: match[1] + match[2] + match[3] + '.ts' + match[2],
@@ -62,7 +62,7 @@ def make_mirror(directory):
             shutil.copyfile(source, destination)
     config = json.loads((ROOT / 'tsconfig.json').read_text())
     config.pop('sourceExtensions', None)
-    config['include'] = ['**/*.ts']
+    config['include'] = ['**/*.ts', '**/*.tsx']
     (directory / 'tsconfig.json').write_text(json.dumps(config, indent=4) + '\n')
     settings = json.loads((ROOT / 'CohereSettings.json').read_text())
     # These are syntactically invalid Test262 parser controls, not Adamic programs.
