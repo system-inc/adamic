@@ -1,8 +1,8 @@
 Built ABI v1 typed per-function WASI exports, signature JSON, reference host and differential fixtures.
 Commits: claim 6b87570; implementation 5926f5e; origin/main f8013f0 merged as 4658552.
-Checks: 37 boundary cases and 100,000 mixed calls pass; zero live values, flat 1,507,328-byte memory.
-Mutants: string length, f64 padding, leaked result, record order and unsupported selection all caught.
-Limits: prefix flag order needs an unowned main.go hook; duplicate lowered function names are refused.
+Checks: prefix/suffix oracle passes 37 cases and 100,000 calls; full uncached gate exits 1 in markdownblocks.
+Mutants: string length, f64 padding, leaked result, record order, unsupported selection and missing prefix hook all caught.
+Limits: duplicate lowered function names are refused; broad gate results are recorded below.
 
 The branch is codex/wasm-exports, based on origin/wasm/integrate at
 6f7dce3dc1eace606fe081c8f4ab12034ae11bb4. The first pushed commit added only
@@ -92,23 +92,49 @@ on memory growth. The strengthened normal sweep passes. An initial test expected
 11 exports when the source had 10; that test expectation was corrected before
 using its result. The final source now has 14 crossing exports.
 
-The unit's exact prefix command is not supported by the pre-existing main.go
-parser. Its run function dispatches before tsgo.go parses options; supporting
---reactor before entry.a requires a main.go hook outside the listed ownership.
-Approval for that narrow hook was requested, with no response received. The concrete
-main.go switch case to insert before its existing wasm build case is:
+The user authorized the minimal main.go hook in the follow-up. The hook is at
+cmd/adamic/main.go lines 71-72; the usage text is line 30. It recognizes the
+requested --target wasm32-wasi --reactor prefix and forwards those options into
+the existing build parser. The existing suffix flag cases remain in place.
+The file claim now names this authorized hook, and docs/wasm-abi.md documents both
+reactor flag positions.
 
-```go
-case len(arguments) >= 7 && arguments[0] == "build" && arguments[1] == "--target" && arguments[3] == "--reactor" && arguments[5] == "-o":
-    return build(arguments[4], arguments[6], append([]string{"--target", arguments[2], "--reactor"}, arguments[7:]...))
-```
+TestWASIExports now builds the full fixture with the prefix form, then tests
+unsupported selection and narrowing with --reactor after -o. It passed in
+4.101s with the existing 37-case/100,000-call assertions. Removing the two-line
+hook made the same test fail with build exit 2 (test process exit 1), proving the
+prefix regression check can fail. The hook was restored before the full gate.
+Logs: /tmp/wasm-exports-prefix-test.log and /tmp/wasm-exports-prefix-mutant.log.
+Format and repository-wide vet checks exited 0, with empty logs at
+/tmp/wasm-exports-prefix-format.log and /tmp/wasm-exports-prefix-vet.log.
 
-This edit has not been applied or tested because main.go is unowned. The usable
-invocation is:
+Both invocations are supported:
 
 ```sh
+adamic build --target wasm32-wasi --reactor entry.a -o out.wasm --abi-json out.json
 adamic build --target wasm32-wasi entry.a -o out.wasm --reactor --abi-json out.json
 ```
+
+The full gate ran to completion with the restored parser, without being stopped:
+
+```sh
+ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > /tmp/wasm-exports-complete-gate.log 2>&1
+```
+
+Result: FAIL, exit 1, recorded in /tmp/wasm-exports-complete-gate.exit.
+The failing package is stage1/cohere/markdownblocks (1800.073s). Its
+TestMarkdownUnicodeWidths failed because Node could not import
+/tmp/adamic-markdown-width/node_modules/emoji-regex/index.js. The package also
+panicked on its 30-minute timeout while HTML block, quote, leaf composition,
+root and structure layout tests remained active. This follow-up does not change
+that package or its dependencies; no causal conclusion about the timeout is
+claimed. The full log is /tmp/wasm-exports-complete-gate.log.
+
+All other package summaries report success or no test files. In particular,
+cmd/adamic passed in 24.179s, internal/native in 227.476s, internal/oracle in
+799.570s, Unicode properties in 1279.049s, CSS in 1100.074s, JSON in 1017.595s,
+lint in 1367.073s, typeaware in 1521.530s, TypeScript parser in 342.027s and
+scanner in 127.599s. The gate is completed but is not green.
 
 Ambiguous function declaration names across modules remain explicitly refused
 because the IR lacks source identity. Deliberately retained dynamic module globals

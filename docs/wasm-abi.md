@@ -6,14 +6,13 @@ This contract describes the compiler-generated boundary, independent of Node.
 ## Build and discovery
 
 ```sh
-adamic build --target wasm32-wasi entry.a -o out.wasm --reactor --abi-json out.json
+adamic build --target wasm32-wasi --reactor entry.a -o out.wasm --abi-json out.json
 adamic build --target wasm32-wasi entry.a -o out.wasm --reactor \
   --export first --export second --abi-json out.json
 ```
 
-The current command parser requires reactor and export options after the output
-path. A small parser hook in cmd/adamic/main.go is needed to accept those options
-before entry.a; that file is outside W1's claimed ownership.
+`--reactor` is accepted immediately after `--target wasm32-wasi` or after the
+output path. Export selection and ABI JSON options follow the output path.
 
 The reactor exports every entry-module `export function` in the crossing set.
 Repeatable `--export` selects only those names and refuses missing names or an

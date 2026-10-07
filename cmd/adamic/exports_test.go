@@ -54,7 +54,7 @@ func TestWASIExports(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if code := run([]string{"build", "--target", "wasm32-wasi", source, "-o", binary, "--reactor", "--count", "--abi-json", table}); code != 0 {
+	if code := run([]string{"build", "--target", "wasm32-wasi", "--reactor", source, "-o", binary, "--count", "--abi-json", table}); code != 0 {
 		t.Fatalf("build: %d", code)
 	}
 	bytes, err := os.ReadFile(table)
