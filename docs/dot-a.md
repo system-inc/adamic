@@ -88,6 +88,20 @@ independently of Adamic lowering. Node execution does not certify the types.
 Branches adding new `.ts` Adamic files must rename them at merge with
 `go run ./cmd/adamic-rename-dot-a --apply .` and commit the generated reference edits.
 
+## Stage 3 stack landing refresh
+
+Main advanced during verification to `71d7e49`, the pinned stage 3 stack merge.
+This branch merges it with `b06f366`. The current committed
+[dry run](../cloud/dot-a-dry-run.txt) contains **337 files, 1,876 reference rewrites
+in 346 files**. The additional 88 renamed files are stage 1 lint registry code.
+The exact integration command remains `go run ./cmd/adamic-rename-dot-a --apply .`.
+The merge was conflict-free and retains the shared loader's transform mode.
+
+The fresh current-main scratch checkout is `/tmp/dot-a-stack-main`. Its apply,
+idempotence, build, vet, whole uncached oracle, stage 3 and stage 1 tests are being
+run; results below for `b6b1538` are earlier evidence, not a claim that this new
+main revision has completed its gate.
+
 ## October 7 refresh
 
 The branch merges current main `b6b1538` with merge commit `877621e`.
