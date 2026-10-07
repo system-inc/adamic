@@ -140,3 +140,7 @@ Rebased onto fetched origin/main b8fb957aa and reran all owned suites. Twelve ru
 ### Requested lint area rebase
 
 Rebased onto origin/area/stage1-lint 7481e0324, which includes main 39638d9e2 and harness 41eb6eab2. Twelve rules pass all four full owned suites, mutants, sanitizers and released-handle checks in a 570.413s run. The combined three-rule React suite explicitly skips for unchanged native runtime RegExp construction; the literal interpolation helper passes all 15 Go/native/JavaScript/sanitizer controls and its compiled comparison mutant. No new claims; no pushes to main or area. See wave_03_react/LANDING_AREA.md.
+
+### Runtime integration landing refresh
+
+Rebased onto lint area d65a8f931 after its runtime optimizations landed. Twelve rules pass all four full owned suites in a 631.669s run, with comparisons, mutants, sanitizers and released-handle checks repeated. The three-rule React suite explicitly skips for unchanged native runtime RegExp construction; interpolation separately passes all 15 controls and a compiled comparison mutant. No new claims. See wave_03_react/LANDING_RUNTIME_AREA.md.
