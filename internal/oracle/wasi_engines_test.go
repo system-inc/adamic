@@ -46,7 +46,7 @@ func compareWasmtime(t *testing.T, expected, actual run, how inputRun, binary st
 	t.Helper()
 	if difference := disagreement(expected, actual); difference != "" {
 		v8 := onV8Input(t, how, binary)
-		t.Errorf("%s\nnode source: exit %d, stdout %q, stderr %q\nwasmtime: exit %d, stdout %q, stderr %q\nv8 wasm: exit %d, stdout %q, stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr, v8.exitCode, v8.stdout, v8.stderr)
+		t.Errorf("%s\nexpected witness/known behavior: exit %d, stdout %q, stderr %q\nwasmtime: exit %d, stdout %q, stderr %q\nv8 wasm: exit %d, stdout %q, stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr, v8.exitCode, v8.stdout, v8.stderr)
 	}
 }
 
