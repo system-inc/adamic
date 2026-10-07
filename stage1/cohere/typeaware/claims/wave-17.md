@@ -326,3 +326,17 @@ Existing parked scopes remain incomplete; the full gate and 17 required
 external correctness checks were not run. The refreshed audit of 644 refs and
 33 claim blobs finds no unclaimed rule. No new claim is made. Detailed evidence
 and timings are in WAVE_17_LANDING6_REPORT.md. Only the owned branch is pushed.
+
+
+## Landing after native typeof integration
+
+All 36 own commits rebased cleanly onto area
+d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898, containing current main
+b6b1538b0cebc4ba6741ac34f1aedb60293c1d06. Validated source
+6e40966e7a2d2010d9c078bd931516c0cf584796 passes all eight selected lint
+suites in 900.057s with complete Go bytes, sanitizers, mutants and handles.
+The filtered uncached Node run also covers the new typeof witnesses and mutants.
+Existing parked scopes remain incomplete; no full gate or 17 required external
+checks were run. The fresh audit of 658 refs and 33 claim blobs finds zero
+unclaimed rules. No new reservation is made. WAVE_17_LANDING7_REPORT.md holds
+evidence and timing. Only codex/typeaware-wave-17 is pushed.

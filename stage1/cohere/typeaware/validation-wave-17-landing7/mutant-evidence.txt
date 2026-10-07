@@ -1,0 +1,59 @@
+    coverage_test.go:153: before: exit 0, Go byte oracle catches byte 57; findings 52
+    coverage_test.go:153: cast: exit 0, Go byte oracle catches byte 1560; findings 53
+    coverage_test.go:153: methods: exit 0, Go byte oracle catches byte 2210; findings 46
+    coverage_test.go:153: coercion: exit 0, Go byte oracle catches byte 1165; findings 53
+    coverage_test.go:153: caller: exit 0, Go byte oracle catches byte 10262; findings 54
+    coverage_test.go:153: parameter: exit 0, Go byte oracle catches byte 369; findings 50
+    coverage_test.go:153: invariant: exit 0, Go byte oracle catches byte 12778; findings 48
+    coverage_test.go:153: optional: exit 0, Go byte oracle catches byte 15545; findings 53
+    coverage_test.go:153: alias: exit 0, Go byte oracle catches byte 16023; findings 53
+    coverage_test.go:153: unused: exit 0, Go byte oracle catches byte 16843; findings 56
+    coverage_test.go:187: released-registry mutant exits 0, caught by the required panic 70
+    wave_17_fifth_test.go:151: syntax mutant exits 0, empty stderr; Go byte oracle catches byte 56
+    wave_17_fifth_test.go:151: memo mutant exits 0, empty stderr; Go byte oracle catches byte 9309
+    wave_17_fifth_test.go:151: boolean mutant exits 0, empty stderr; Go byte oracle catches byte 1205
+    wave_17_fifth_test.go:169: binding question rejects released program: panic 70
+    wave_17_fifth_test.go:177: released registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_fifth_test.go:190: symbol identity question rejects released handle; retained registry mutant finishes cleanly, required panic catches it
+    wave_17_fourth_test.go:147: throw mutant exits 0, empty stderr; Go byte oracle catches byte 17572
+    wave_17_fourth_test.go:147: regex mutant exits 0, empty stderr; Go byte oracle catches byte 1241
+    wave_17_fourth_test.go:147: arrow mutant exits 0, empty stderr; Go byte oracle catches byte 335
+    wave_17_fourth_test.go:147: tracker mutant exits 0, empty stderr; Go byte oracle catches byte 15080
+    wave_17_fourth_test.go:165: binding question rejects released program: panic 70
+    wave_17_fourth_test.go:173: released registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_fourth_test.go:186: symbol identity question rejects released handle; retained registry mutant finishes cleanly, required panic catches it
+    wave_17_heads_test.go:132: duplicate mutant exits 0, empty stderr; Go bytes catch byte 55
+    wave_17_heads_test.go:132: script mutant exits 0, empty stderr; Go bytes catch byte 474
+    wave_17_next_test.go:238: collection mutant exits 0, empty stderr; Go byte oracle catches byte 3690
+    wave_17_next_test.go:238: outcome mutant exits 0, empty stderr; Go byte oracle catches byte 16816
+    wave_17_next_test.go:238: pure mutant exits 0, empty stderr; Go byte oracle catches byte 8432
+    wave_17_next_test.go:248: ancestry await mutant exits 0, empty stderr; Go byte oracle catches byte 15745
+    wave_17_next_test.go:256: new ancestry question rejects released program: panic 70
+    wave_17_next_test.go:264: released registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_test.go:115: async end+1 mutant: exit 0, empty stderr; Go byte oracle catches byte 60
+    wave_17_test.go:152: released handle: panic 70; registry mutant exits 0, caught by required panic
+    wave_17_third_test.go:162: global mutant exits 0, empty stderr; Go byte oracle catches byte 13306
+    wave_17_third_test.go:162: implicit mutant exits 0, empty stderr; Go byte oracle catches byte 53
+    wave_17_third_test.go:162: eval mutant exits 0, empty stderr; Go byte oracle catches byte 53
+    wave_17_third_test.go:175: source-js fact mutant exits 0, empty stderr; Go bytes catch byte 55459
+    wave_17_third_test.go:175: shorthand fact mutant exits 0, empty stderr; Go bytes catch byte 4747
+    wave_17_third_test.go:193: new binding question rejects released program: panic 70
+    wave_17_third_test.go:201: released registry mutant exits 0, empty stderr; required panic 70 catches it
+    wave_17_third_test.go:214: source metadata question rejects released handle; retained registry mutant finishes cleanly, required panic catches it
+    wave_17_unicode_test.go:62: uppercase boundary mutant: exit 0, empty stderr, direct Go byte oracle catches byte 1
+    typeof_dispatch_test.go:58: caught: Node "direct: function object\nunion: function true\nconstructor\nunion: string false\nstring\nunion: undefined false\nundefined\nscalars: number boolean\nscalars: undefined undefined\nidentities: object function\n"; mutant "direct: object object\nunion: object false\nwrong\nunion: string false\nstring\nunion: undefined false\nundefined\nscalars: number boolean\nscalars: undefined undefined\nidentities: object function\n"
+    typeof_null_test.go:139: caught: Node "index: object true\nobject slot\nindex: undefined false\nmissing slot\nrelative: object undefined\nmap: object object undefined\npop: object undefined\ngeneric: object\n"; mutant "index: object true\nobject slot\nindex: undefined true\nobject slot\nrelative: object object\nmap: object object object\npop: object object\ngeneric: object\n"
+    typeof_null_test.go:61: caught 3 restored observations: Node "literal: object\nvariable: object\nfunction: object\nvalues: number boolean string undefined\n"; mutant "literal: undefined\nvariable: undefined\nfunction: undefined\nvalues: number boolean string undefined\n"
+    typeof_dispatch_test.go:95: caught: Node "string\n"; mutant "undefined\n"
+    typeof_null_test.go:61: caught 9 restored observations: Node "literal: true true\nslot: object true true true\nobject branch\nslot: object true true true\nobject branch\nfield: object true\ncontrols: undefined object object function\nabsent: undefined false\nabsent: object true\n"; mutant "literal: false false\nslot: undefined false false false\nwrong branch\nslot: object true true true\nobject branch\nfield: undefined false\ncontrols: undefined object object function\nabsent: undefined false\nabsent: object true\n"
+    typeof_null_test.go:61: caught 1 restored observations: Node "opsRoll null object null\n"; mutant "opsRoll null undefined null\n"
+    typeof_null_test.go:61: caught 11 restored observations: Node "index: object true\nobject slot\nindex: undefined false\nmissing slot\nrelative: object undefined\nmap: object object undefined\npop: object undefined\ngeneric: object\n"; mutant "index: undefined false\nmissing slot\nindex: undefined false\nmissing slot\nrelative: undefined undefined\nmap: undefined object undefined\npop: undefined undefined\ngeneric: undefined\n"
+    typeof_null_test.go:61: caught 3 restored observations: Node "literal object\ncalled once\ncall object\nslot object\nslot object\nstring\nnumber\nundefined\n"; mutant "literal wrong\ncalled once\ncall wrong\nslot wrong\nslot object\nstring\nnumber\nundefined\n"
+PASS: 15 manifests match production listener keys and pinned ast.Kind names
+CAUGHT named-listener mutant: Listener mismatch for @next/next/no-async-client-component: ['Unknown'] != ['SourceFile']
+{
+  "exit": 0,
+  "stderr_bytes": 0,
+  "first_difference": 1134,
+  "caught_by": "Go complete bytes"
+}
