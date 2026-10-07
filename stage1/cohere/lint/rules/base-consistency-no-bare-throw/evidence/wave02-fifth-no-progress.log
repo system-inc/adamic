@@ -1,0 +1,7 @@
+=== RUN   TestRestrictedTypesParity
+    lint_test.go:326: cohere cases: 1030 unique source/rule/options combinations
+    lint_test.go:765: restricted type upstream cases: 52
+    lint_test.go:774: Go, Node, emitted JavaScript, native identical: 16565 bytes
+--- PASS: TestRestrictedTypesParity (26.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	26.971s

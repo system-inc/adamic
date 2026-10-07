@@ -1,0 +1,14 @@
+=== RUN   TestFourthUpstream
+    lint_test.go:326: cohere cases: 1030 unique source/rule/options combinations
+    lint_test.go:885: fourth upstream cases: 447, per rule map[array-callback-return:288 arrow-body-style:111 base/consistency-no-bare-throw:48]
+    lint_test.go:894: explicit invalid-Go-source exclusion: arrow-body-style source="var foo = () => { return bar } /* c */ + 1;"
+    lint_test.go:894: explicit invalid-Go-source exclusion: base/consistency-no-bare-throw source="export function f(): void { throw new Error( }"
+    lint_test.go:894: explicit invalid-Go-source exclusion: base/consistency-no-bare-throw source="export function f(): void { throw }"
+    lint_test.go:894: explicit invalid-Go-source exclusion: base/consistency-no-bare-throw source="export function f(): void { throw; }"
+    lint_test.go:895: accepted 443 upstream cases, excluded 4 invalid Go sources
+    lint_test.go:896: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-assertion/driver.a --manifest /tmp/adamic-gate/TestFourthUpstream1528413860/013/flow-manifest.tsv]: exit status 70
+        adamic: panic: parser slice expected semicolon at 29 in /tmp/adamic-gate/TestFourthUpstream1528413860/001/case-665/repository/source/ArrowBodyStyle.ts
+--- FAIL: TestFourthUpstream (25.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	25.148s
+FAIL

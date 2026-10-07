@@ -1,0 +1,106 @@
+=== RUN   TestFourthUpstream
+    lint_test.go:326: cohere cases: 931 unique source/rule/options combinations
+    lint_test.go:885: fourth upstream cases: 355, per rule map[array-callback-return:244 arrow-body-style:111]
+    lint_test.go:888: /tmp/adamic-gate/TestFourthUpstream3734559507/006/oracle [--manifest /tmp/adamic-gate/TestFourthUpstream3734559507/011/flow-manifest.tsv]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/TestFourthUpstream3734559507/001/case-590/repository/source/ArrowBodyStyle.ts: [',' expected.]
+        
+        goroutine 1 [running]:
+        main.collect({0x38e973a47ca0, 0x5e}, {0x38e97380de60?, 0x1?}, {0x38e973810600, 0x8, 0x8})
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:92 +0x705
+        main.run({0x38e973a47ca0?, 0x38e973a160c0?}, 0x0, 0x38e973a160c0)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:46 +0x12f
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:160 +0x3cd
+--- FAIL: TestFourthUpstream (29.20s)
+=== RUN   TestFourthMutants
+=== RUN   TestFourthMutants/array-callback-return
+    lint_test.go:919: void callback exemption omitted caught only by output comparison on Node: case 0 line 25: port "/tmp/adamic-gate/TestFourthMutantsarray-callback-return330807493/001/array-callback-return-0.ts:4:15", Go "fixed\tfoo.every(() => {});\\u000afoo.forEach(x => x);\\u000afoo.filter(function cb(){ if(x) return; });\\u000afoo.forEach(x => void x);\\u000a"
+        Go context:
+        range 53 66 expectedAtEnd
+        /tmp/adamic-gate/TestFourthMutantsarray-callback-return330807493/001/array-callback-return-0.ts:3:33
+          array-callback-return  This `return` leaves the callback without a value, and the array method it is passed to needs one from every call. A bare return here reads as an early exit and behaves as returning undefined, which the method then treats as a real answer. Here Array.prototype.filter() is being passed function 'cb'.
+        
+        range 74 81 expectedReturnValue
+        fixed	foo.every(() => {});\u000afoo.forEach(x => x);\u000afoo.filter(function cb(){ if(x) return; });\u000afoo.forEach(x => void x);\u000a
+    lint_test.go:919: void callback exemption omitted caught only by output comparison on emitted JavaScript: case 0 line 25: port "/tmp/adamic-gate/TestFourthMutantsarray-callback-return330807493/001/array-callback-return-0.ts:4:15", Go "fixed\tfoo.every(() => {});\\u000afoo.forEach(x => x);\\u000afoo.filter(function cb(){ if(x) return; });\\u000afoo.forEach(x => void x);\\u000a"
+        Go context:
+        range 53 66 expectedAtEnd
+        /tmp/adamic-gate/TestFourthMutantsarray-callback-return330807493/001/array-callback-return-0.ts:3:33
+          array-callback-return  This `return` leaves the callback without a value, and the array method it is passed to needs one from every call. A bare return here reads as an early exit and behaves as returning undefined, which the method then treats as a real answer. Here Array.prototype.filter() is being passed function 'cb'.
+        
+        range 74 81 expectedReturnValue
+        fixed	foo.every(() => {});\u000afoo.forEach(x => x);\u000afoo.filter(function cb(){ if(x) return; });\u000afoo.forEach(x => void x);\u000a
+    lint_test.go:919: void callback exemption omitted caught only by output comparison on sanitized native: case 0 line 25: port "/tmp/adamic-gate/TestFourthMutantsarray-callback-return330807493/001/array-callback-return-0.ts:4:15", Go "fixed\tfoo.every(() => {});\\u000afoo.forEach(x => x);\\u000afoo.filter(function cb(){ if(x) return; });\\u000afoo.forEach(x => void x);\\u000a"
+        Go context:
+        range 53 66 expectedAtEnd
+        /tmp/adamic-gate/TestFourthMutantsarray-callback-return330807493/001/array-callback-return-0.ts:3:33
+          array-callback-return  This `return` leaves the callback without a value, and the array method it is passed to needs one from every call. A bare return here reads as an early exit and behaves as returning undefined, which the method then treats as a real answer. Here Array.prototype.filter() is being passed function 'cb'.
+        
+        range 74 81 expectedReturnValue
+        fixed	foo.every(() => {});\u000afoo.forEach(x => x);\u000afoo.filter(function cb(){ if(x) return; });\u000afoo.forEach(x => void x);\u000a
+=== RUN   TestFourthMutants/arrow-body-style
+    lint_test.go:919: object return parentheses omitted caught only by output comparison on Node: case 0 line 6: port "fix 17 26\t", Go "fix 17 26\t("
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsarrow-body-style3035684519/001/arrow-body-style-0.ts:1:18
+          arrow-body-style  This arrow function uses a braced body only to return an object literal. Parenthesize the object and put it straight after the arrow: the parentheses are what stop the leading brace being read as a block.
+        
+        range 17 43 unexpectedObjectBlock
+        fix 17 26	(
+        fix 40 43	)
+        /tmp/adamic-gate/TestFourthMutantsarrow-body-style3035684519/001/arrow-body-style-0.ts:2:20
+          arrow-body-style  This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+    lint_test.go:919: object return parentheses omitted caught only by output comparison on emitted JavaScript: case 0 line 6: port "fix 17 26\t", Go "fix 17 26\t("
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsarrow-body-style3035684519/001/arrow-body-style-0.ts:1:18
+          arrow-body-style  This arrow function uses a braced body only to return an object literal. Parenthesize the object and put it straight after the arrow: the parentheses are what stop the leading brace being read as a block.
+        
+        range 17 43 unexpectedObjectBlock
+        fix 17 26	(
+        fix 40 43	)
+        /tmp/adamic-gate/TestFourthMutantsarrow-body-style3035684519/001/arrow-body-style-0.ts:2:20
+          arrow-body-style  This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+    lint_test.go:919: object return parentheses omitted caught only by output comparison on sanitized native: case 0 line 6: port "fix 17 26\t", Go "fix 17 26\t("
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestFourthMutantsarrow-body-style3035684519/001/arrow-body-style-0.ts:1:18
+          arrow-body-style  This arrow function uses a braced body only to return an object literal. Parenthesize the object and put it straight after the arrow: the parentheses are what stop the leading brace being read as a block.
+        
+        range 17 43 unexpectedObjectBlock
+        fix 17 26	(
+        fix 40 43	)
+        /tmp/adamic-gate/TestFourthMutantsarrow-body-style3035684519/001/arrow-body-style-0.ts:2:20
+          arrow-body-style  This arrow function uses a braced body only to return a value. Put the value straight after the arrow, so the braces and the return keyword stop standing between the reader and what the function produces.
+=== RUN   TestFourthMutants/base-consistency-no-bare-throw
+    lint_test.go:919: AggregateError container reported caught only by output comparison on Node: case 0 line 10: port "/tmp/adamic-gate/TestFourthMutantsbase-consistency-no-bare-throw2185508720/001/base-consistency-no-bare-throw-0.ts:3:7", Go "fixed\tthrow new Error('x');\\u000athrow new TypeError('x');\\u000athrow new AggregateError([], 'container');\\u000athrow new Errors.Validation('x');\\u000a"
+        Go context:
+        range 6 20 bareThrow
+        /tmp/adamic-gate/TestFourthMutantsbase-consistency-no-bare-throw2185508720/001/base-consistency-no-bare-throw-0.ts:2:7
+          base/consistency-no-bare-throw  This throws a bare `TypeError`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+        
+        range 28 46 bareThrow
+        fixed	throw new Error('x');\u000athrow new TypeError('x');\u000athrow new AggregateError([], 'container');\u000athrow new Errors.Validation('x');\u000a
+    lint_test.go:919: AggregateError container reported caught only by output comparison on emitted JavaScript: case 0 line 10: port "/tmp/adamic-gate/TestFourthMutantsbase-consistency-no-bare-throw2185508720/001/base-consistency-no-bare-throw-0.ts:3:7", Go "fixed\tthrow new Error('x');\\u000athrow new TypeError('x');\\u000athrow new AggregateError([], 'container');\\u000athrow new Errors.Validation('x');\\u000a"
+        Go context:
+        range 6 20 bareThrow
+        /tmp/adamic-gate/TestFourthMutantsbase-consistency-no-bare-throw2185508720/001/base-consistency-no-bare-throw-0.ts:2:7
+          base/consistency-no-bare-throw  This throws a bare `TypeError`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+        
+        range 28 46 bareThrow
+        fixed	throw new Error('x');\u000athrow new TypeError('x');\u000athrow new AggregateError([], 'container');\u000athrow new Errors.Validation('x');\u000a
+    lint_test.go:919: AggregateError container reported caught only by output comparison on sanitized native: case 0 line 10: port "/tmp/adamic-gate/TestFourthMutantsbase-consistency-no-bare-throw2185508720/001/base-consistency-no-bare-throw-0.ts:3:7", Go "fixed\tthrow new Error('x');\\u000athrow new TypeError('x');\\u000athrow new AggregateError([], 'container');\\u000athrow new Errors.Validation('x');\\u000a"
+        Go context:
+        range 6 20 bareThrow
+        /tmp/adamic-gate/TestFourthMutantsbase-consistency-no-bare-throw2185508720/001/base-consistency-no-bare-throw-0.ts:2:7
+          base/consistency-no-bare-throw  This throws a bare `TypeError`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+        
+        range 28 46 bareThrow
+        fixed	throw new Error('x');\u000athrow new TypeError('x');\u000athrow new AggregateError([], 'container');\u000athrow new Errors.Validation('x');\u000a
+--- PASS: TestFourthMutants (51.88s)
+    --- PASS: TestFourthMutants/array-callback-return (17.32s)
+    --- PASS: TestFourthMutants/arrow-body-style (15.84s)
+    --- PASS: TestFourthMutants/base-consistency-no-bare-throw (16.36s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	81.098s
+FAIL

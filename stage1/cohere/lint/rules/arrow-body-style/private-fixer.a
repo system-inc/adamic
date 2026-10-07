@@ -29,7 +29,7 @@ export function fixed(initial: Linter): string {
             if(fix.start > lastEnd || (fix.start >= lastEnd && fix.start !== fix.end)) {
                 lastEnd = fix.end; winner = proposal.rule;
                 if(current.slice(fix.start, fix.end) !== fix.text) applied.push(proposal);
-                else console.log(`rejected ${proposal.rule} ${utf8Length(current.slice(0, fix.start))} ${utf8Length(current.slice(0, fix.end))}  fix would not change the text`);
+                else console.log(`rejected ${proposal.rule} ${utf8Length(current.slice(0, fix.start))} ${utf8Length(current.slice(0, fix.end))}  the fix replaces text with itself`);
             }
             else console.log(`rejected ${proposal.rule} ${utf8Length(current.slice(0, fix.start))} ${utf8Length(current.slice(0, fix.end))} ${winner} overlaps another fix`);
         }
