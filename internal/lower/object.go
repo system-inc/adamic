@@ -1450,6 +1450,9 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	}
 	local, isLocal := l.locals[symbol]
 	if !isLocal {
+		if target, isFunction := l.functions[symbol]; isFunction {
+			return l.functionValue(property, target)
+		}
 		return nil, l.notYet(property, "reading "+property.Name().Text())
 	}
 	l.touch(local)

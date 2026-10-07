@@ -1,0 +1,44 @@
+function f(s: string, a?: number): void { console.log(String(a === undefined)); }
+f('x');
+({ f }).f('x');
+f('x', undefined);
+({ f }).f('x', 0);
+function text(s: string, a?: string): void { console.log(`${a === undefined}:${a ?? 'missing'}`); }
+function flag(s: string, a?: boolean): void { console.log(`${a === undefined}:${a}`); }
+interface Item { readonly value: number; }
+function object(s: string, a?: Item): void { console.log(`${a === undefined}:${a?.value ?? -1}`); }
+text('x');
+({ text }).text('x');
+text('x', '');
+flag('x');
+({ flag }).flag('x');
+flag('x', false);
+flag('x', true);
+object('x');
+({ object }).object('x');
+object('x', { value: 0 });
+interface Methods {
+    f(s: string, a?: number): void;
+    text(s: string, a?: string): void;
+    flag(s: string, a?: boolean): void;
+    object(s: string, a?: Item): void;
+}
+const methods: Methods = { f, text, flag, object };
+methods.f('x');
+methods.f('x', 0);
+methods.text('x');
+methods.text('x', '');
+methods.flag('x');
+methods.flag('x', false);
+methods.object('x');
+methods.object('x', { value: 0 });
+const literals: Methods = {
+    f(s: string, a?: number): void { console.log(String(a === undefined)); },
+    text(s: string, a?: string): void { console.log(`${a === undefined}:${a ?? 'missing'}`); },
+    flag(s: string, a?: boolean): void { console.log(`${a === undefined}:${a}`); },
+    object(s: string, a?: Item): void { console.log(`${a === undefined}:${a?.value ?? -1}`); }
+};
+literals.f('x');
+literals.text('x');
+literals.flag('x');
+literals.object('x');

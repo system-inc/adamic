@@ -943,7 +943,15 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 // program runs. Its closure receives omitted arguments as undefined before forwarding them;
 // the declared function retains its ordinary default-parameter prologue.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
-	if symbol := l.symbol(node); symbol != nil {
+	symbol := l.symbol(node)
+	if node.Kind == ast.KindShorthandPropertyAssignment {
+		symbol = l.checker.GetShorthandAssignmentValueSymbol(node)
+		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+			symbol = l.checker.GetAliasedSymbol(symbol)
+		}
+		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
+	}
+	if symbol != nil {
 		for _, declaration := range symbol.Declarations {
 			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
 				return nil, l.notYet(node, "an overloaded function as a value")
@@ -953,7 +961,6 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil
 	}
-	symbol := l.symbol(node)
 	for _, parameter := range symbol.Declarations[0].Parameters() {
 		declared := parameter.AsParameterDeclaration()
 		if declared.DotDotDotToken != nil {
