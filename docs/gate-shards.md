@@ -1388,3 +1388,9 @@ remain the fallback. `TestTimingsUseMeasuredHalfSpan` verifies both cases, and
 an overlay removing joint-span observation fails that test. This sixth split
 mutant prevents overlapping parent elapsed times from inflating the measured
 half cost. The updated focused race tests and vet pass.
+
+Standalone worker `measurement.json` metadata supplies each new timing source's
+commit and complete build-flags line when no runner `summary.json` is present.
+`TestTimingsCarryWorkerMetadata` verifies that provenance survives calibration;
+an overlay discarding it is caught by that test. This seventh split mutant and
+the final timing race suite pass their expected outcomes; vet passes.

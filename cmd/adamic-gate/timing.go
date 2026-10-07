@@ -56,6 +56,13 @@ func calibrateTimings(paths []string) (map[string]float64, timingCalibration, er
 			source.BuildFlags = recorded.BuildFlags
 		} else if !os.IsNotExist(err) {
 			return nil, audit, err
+		} else {
+			var measured struct{ SourceCommit, BuildFlags string }
+			if err := loadJSON(filepath.Join(filepath.Dir(path), "measurement.json"), &measured); err == nil {
+				source.Commit, source.BuildFlags = measured.SourceCommit, measured.BuildFlags
+			} else if !os.IsNotExist(err) {
+				return nil, audit, err
+			}
 		}
 		audit.Sources = append(audit.Sources, source)
 		f, err := os.Open(path)
