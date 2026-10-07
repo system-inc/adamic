@@ -74,6 +74,11 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 			evaluated = append(evaluated, value)
 		}
 	}
+	return l.regexCompiled(node, pattern, flags, evaluated)
+}
+
+// Shared by intrinsic RegExp construction and String's RegExpCreate fallback.
+func (l *lowering) regexCompiled(node *ast.Node, pattern, flags string, evaluated []ir.Expression) (ir.Expression, error) {
 	program, err := regex.Compile(pattern, flags)
 	if err != nil {
 		var syntax *regex.SyntaxError
@@ -176,18 +181,11 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 		if of != ir.String || len(args) == 0 || !l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(args[0])), "RegExp") {
 			return nil, false, nil
 		}
-		switch name {
-		case "match", "split":
-			result = ir.Array
-		case "matchAll":
-			result = ir.Object
-		case "search":
-			result = ir.Number
-		case "replace", "replaceAll":
-			result = ir.String
-		default:
-			return nil, true, l.notYet(node, "String."+name+" with a RegExp")
+		value, err := l.expression(receiver)
+		if err != nil {
+			return nil, true, err
 		}
+		return l.stringRegExpMethod(node, value, name, args, nil)
 	}
 	value, err := l.expression(receiver)
 	if err != nil {
@@ -203,32 +201,6 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if (name == "exec" || name == "test") && arguments[0].Type() != ir.String {
 		return nil, true, l.notYet(node, "RegExp input other than a string")
-	}
-	if name == "replace" || name == "replaceAll" {
-		if len(arguments) != 2 {
-			return nil, true, l.notYet(node, "regex replacement arity")
-		}
-		if arguments[1].Type() == ir.Closure && l.regexReplacementCallback(args[1]) {
-			method += "Callback"
-		} else if arguments[1].Type() != ir.String {
-			return nil, true, l.notYet(node, "regex replacement callback with unproved capture/index/input/group parameters or result type")
-		}
-	}
-	if name == "split" {
-		if len(arguments) == 1 {
-			arguments = append(arguments, ir.NumberConstant{Value: 4294967295})
-		}
-		if len(arguments) == 2 {
-			if _, undefined := arguments[1].(ir.Undefined); undefined {
-				arguments[1] = ir.NumberConstant{Value: 4294967295}
-			}
-			if arguments[1].Type() == ir.MaybeNumber {
-				arguments[1] = ir.Coalesce{Value: arguments[1], Fallback: ir.NumberConstant{Value: 4294967295}, Of: ir.Number}
-			}
-		}
-		if len(arguments) != 2 || arguments[1].Type() != ir.Number {
-			return nil, true, l.notYet(node, "regex split limit other than a number")
-		}
 	}
 	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
 		return nil, true, l.notYet(node, "an optional RegExp call")

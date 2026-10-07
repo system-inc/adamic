@@ -13,6 +13,8 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 - Source: https://github.com/v8/v8
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
+  - catchable String range validation (`internal/lower/library_string_ranges.go`, after
+    src/builtins/builtins-string.cc StringFromCodePoint and src/builtins/string-repeat.tq);
   - positioned String affixes (`internal/lower/library_string.go`, after
     src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
   - String well-formed Unicode (`runtime/string_wellformed.c`, after

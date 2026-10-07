@@ -1,0 +1,29 @@
+for (const point of [-Infinity, -1, -0, 0, 0xd800, 0xffff, 0x10000, 0x10ffff, 0x110000, 0.5, NaN, Infinity]) {
+ try { console.log(`${point} ${String.fromCodePoint(point).length}`); } catch (error) {
+  if (error instanceof Error) { console.log(`${error.constructor === RangeError}:${error.message}`); }
+ }
+}
+for (const count of [-Infinity, -1.5, -1, -0.5, -0, 0, 0.5, 1, 2, NaN, Infinity, 536870889]) {
+ try { console.log(`${count} ${'x'.repeat(count)}`); } catch (error) {
+  if (error instanceof Error) { console.log(`${error.constructor === RangeError}:${error.message}`); }
+ }
+}
+try { console.log(String.prototype.repeat.call('', -1)); } catch (error) {
+ if (error instanceof Error) { console.log(`${error.constructor === RangeError}:${error.message}`); }
+}
+function invalid(): string { return String.fromCodePoint(-1); }
+try { invalid(); } catch (error) { if (error instanceof RangeError) { console.log('transitive'); } } finally { console.log('finally'); }
+let order = '';
+function first(): number { order = order + 'a'; return -1; }
+function second(): number { order = order + 'b'; return 65; }
+try { String.fromCodePoint(first(), second()); } catch (error) { if (error instanceof RangeError) { console.log(order); } }
+try { String.prototype.slice.call(null); } catch (error) { if (error instanceof TypeError) { console.log('null identity'); } }
+
+function line(count: number): string {
+ try { return '-'.repeat(count); } catch (error) {
+  if (error instanceof RangeError) return 'caught';
+  return 'wrong';
+ } finally { console.log('line finally'); }
+}
+console.log(line(-1.5));
+console.log(line(3));
