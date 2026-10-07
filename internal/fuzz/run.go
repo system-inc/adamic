@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"sync/atomic"
 	"syscall"
 	"time"
 
@@ -367,6 +368,9 @@ func execute(directory string, environment []string, limit time.Duration, name s
 	command := boundedrun.CommandContext(ctx, name, arguments...)
 	defer boundedrun.Kill(command.Cmd)
 	command.Dir = directory
+	if profile := coverageProfile(); profile != "" {
+		environment = append(append([]string{}, environment...), "LLVM_PROFILE_FILE="+profile)
+	}
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -390,6 +394,21 @@ func execute(directory string, environment []string, limit time.Duration, name s
 		run.Stderr = append(run.Stderr, []byte(err.Error())...)
 	}
 	return run
+}
+
+// profiles numbers the runs of a coverage measurement, so each one writes its own .profraw.
+var profiles atomic.Uint64
+
+// coverageProfile is where the next run writes its clang coverage profile, when
+// verify/coverage/measure.sh asks for one (native.Options.Coverage): a path no other run of this
+// process or another uses, under ADAMIC_C_COVERAGE_DIRECTORY. Only a binary built with coverage
+// writes it; Node and the compiler ignore it. Empty when nothing is being measured.
+func coverageProfile() string {
+	directory := os.Getenv("ADAMIC_C_COVERAGE_DIRECTORY")
+	if directory == "" || !native.CoverageRequested() {
+		return ""
+	}
+	return filepath.Join(directory, fmt.Sprintf("fuzz-%d-%d-%%p.profraw", os.Getpid(), profiles.Add(1)))
 }
 
 func firstLines(text string, count int) string {
