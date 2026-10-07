@@ -13,15 +13,9 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
-	"sort"
 	"strings"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 const repository = "../../.."
@@ -95,59 +89,43 @@ func goOracle(t *testing.T) string {
 }
 func goOracleFrom(t *testing.T, sourceRoot string) string {
 	t.Helper()
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs("testdata/oracle.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	descriptors := prepareRegistry(t, sourceRoot)
-	directory := t.TempDir()
-	replacements := map[string]string{}
-	var virtualFiles []string
-	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
-		absolute, err := filepath.Abs(source)
-		if err != nil {
-			t.Fatal(err)
+	if isPackage(sourceRoot) {
+		value := shared("oracle", func(value *sharedValue) {
+			directory, err := os.MkdirTemp(sharedDirectory, "oracle-")
+			if err != nil {
+				value.err = err
+				return
+			}
+			value.path, value.err = goOracleIn(sourceRoot, directory)
+		})
+		if value.err != nil {
+			t.Fatal(value.err)
 		}
-		replacements[virtual] = absolute
-		virtualFiles = append(virtualFiles, virtual)
+		return value.path
 	}
-	add("oracle", side)
-	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
+	binary, err := goOracleIn(sourceRoot, t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	execute(t, root, "go", args...)
 	return binary
 }
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
-	prepareRegistry(t, directory)
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
+	if isPackage(directory) {
+		value := shared(fmt.Sprintf("port sanitize=%t", sanitize), func(value *sharedValue) {
+			value.path, value.err = sharedPath("scanner")
+			if value.err == nil {
+				value.err = buildPortTo(directory, sanitize, value.path)
+			}
+		})
+		if value.err != nil {
+			t.Fatal(value.err)
+		}
+		return value.path
 	}
 	binary := filepath.Join(t.TempDir(), "scanner")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+	if err := buildPortTo(directory, sanitize, binary); err != nil {
 		t.Fatal(err)
 	}
 	return binary
@@ -283,125 +261,30 @@ func generated(t *testing.T) []string {
 	)
 }
 
-// Capture every Run, including tests that assert repair fields directly. The overlay changes no rule.
+// upstream is the run's capture of every asserted upstream case for this package's rules (captureUpstream).
 func upstream(t *testing.T) []string {
 	return upstreamFrom(t, ".")
 }
 func upstreamFrom(t *testing.T, sourceRoot string) []string {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
+	t.Helper()
+	if isPackage(sourceRoot) {
+		value := shared("upstream", func(value *sharedValue) {
+			directory, err := os.MkdirTemp(sharedDirectory, "upstream-")
+			if err != nil {
+				value.err = err
+				return
+			}
+			value.rows, value.err = captureUpstream(sourceRoot, directory)
+		})
+		if value.err != nil {
+			t.Fatal(value.err)
+		}
+		t.Logf("cohere cases: %d unique source/rule/options combinations", len(value.rows))
+		return append([]string(nil), value.rows...)
+	}
+	rows, err := captureUpstream(sourceRoot, t.TempDir())
 	if err != nil {
 		t.Fatal(err)
-	}
-	harness := filepath.Join(root, "internal/lint/testing/rule_testing.go")
-	data, err := os.ReadFile(harness)
-	if err != nil {
-		t.Fatal(err)
-	}
-	original := "return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
-	replacement := "result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result"
-	if strings.Count(string(data), original) != 1 {
-		t.Fatal("capture overlay anchor changed")
-	}
-	directory := t.TempDir()
-	side := filepath.Join(directory, "rule_testing.go")
-	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
-		t.Fatal(err)
-	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	capture := filepath.Join(directory, "capture")
-	t.Setenv("COHERE_DOCS_CAPTURE", capture)
-	discovered := map[string]bool{}
-	packages := map[string][]string{}
-	for _, d := range prepareRegistry(t, sourceRoot) {
-		discovered[d.Name] = true
-		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
-	}
-	for name, tests := range packages {
-		execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(tests, "|")+")", "-count=1", "-timeout=10m")
-	}
-	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	type record struct {
-		Rule, File, Source, Outcome, FixedSource string
-		Options                                  json.RawMessage
-	}
-	unique := map[string]record{}
-	for _, path := range files {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		for _, line := range bytes.Split(data, []byte("\n")) {
-			if len(line) == 0 {
-				continue
-			}
-			var row record
-			if err := json.Unmarshal(line, &row); err != nil {
-				t.Fatal(err)
-			}
-			if !discovered[row.Rule] {
-				continue
-			}
-			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
-			unique[key] = row
-		}
-	}
-	var keys []string
-	for key := range unique {
-		keys = append(keys, key)
-	}
-	sort.Strings(keys)
-	var rows []string
-	for i, key := range keys {
-		row := unique[key]
-		// The case keeps its file name's directories, not only its base name: a rule that judges a
-		// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
-		name := filepath.Clean(strings.TrimLeft(strings.ReplaceAll(row.File, "\\", "/"), "/"))
-		if name == "." || name == "" || strings.HasPrefix(name, "..") {
-			name = filepath.Base(name)
-		}
-		if name == "." || name == "" || name == ".." {
-			name = "source.ts"
-		}
-		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
-		path := filepath.Join(caseDirectory, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
-			t.Fatal(err)
-		}
-		var legacy struct {
-			Mode, Null      string
-			AllowEmptyCatch bool
-		}
-		if len(row.Options) > 0 && row.Options[0] == '{' {
-			if err := json.Unmarshal(row.Options, &legacy); err != nil {
-				t.Fatal(err)
-			}
-		}
-		mode := ""
-		if row.Rule == "@typescript-eslint/method-signature-style" {
-			switch row.Source {
-			case "type T = { m: => void };":
-				mode = "recovery"
-			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
-				mode = "unsupported-recovery"
-			}
-		}
-		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
-			mode = "recovery"
-		}
-		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, string(row.Options), mode))
-	}
-	if len(rows) < 150 {
-		t.Fatalf("capture unexpectedly small: %d cases", len(rows))
 	}
 	t.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
 	return rows
@@ -899,17 +782,20 @@ func rewritePortImports(t *testing.T, file, source string) string {
 
 func emittedJavaScript(t *testing.T, directory string) string {
 	t.Helper()
-	prepareRegistry(t, directory)
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
+	if isPackage(directory) {
+		value := shared("emitted JavaScript", func(value *sharedValue) {
+			value.path, value.err = sharedPath("lint.mjs")
+			if value.err == nil {
+				value.err = emitJavaScriptTo(directory, value.path)
+			}
+		})
+		if value.err != nil {
+			t.Fatal(value.err)
+		}
+		return value.path
 	}
 	path := filepath.Join(t.TempDir(), "lint.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+	if err := emitJavaScriptTo(directory, path); err != nil {
 		t.Fatal(err)
 	}
 	return path

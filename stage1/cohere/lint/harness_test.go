@@ -25,6 +25,8 @@ func TestEmittedJavaScriptMismatch(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
+		// The emitted module is the run's shared one, so the planted mismatch goes into a copy of it.
+		module = filepath.Join(t.TempDir(), "lint.mjs")
 		data = append(data, []byte("\nconsole.log('planted emitted JavaScript mismatch');\n")...)
 		if err := os.WriteFile(module, data, 0644); err != nil {
 			t.Fatal(err)

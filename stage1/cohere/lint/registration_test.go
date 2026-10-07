@@ -20,7 +20,17 @@ func TestMain(m *testing.M) {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	os.Exit(m.Run())
+	directory, err := os.MkdirTemp("", "lint-shared-")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	sharedDirectory = directory
+	code := m.Run()
+	if err := os.RemoveAll(directory); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+	os.Exit(code)
 }
 
 func TestOwnedWitnesses(t *testing.T) {
