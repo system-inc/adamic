@@ -29,7 +29,7 @@ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, e
 			return nil, true, err
 		}
 	}
-	if result.Schema.Kind == "parsed" && len(args) > 1 {
+	if result.Schema.ContainsParsed() && len(args) > 1 {
 		return nil, true, l.notYet(node, "JSON.stringify parsed values with replacer or space without full runtime metadata")
 	}
 	if len(args) > 1 {

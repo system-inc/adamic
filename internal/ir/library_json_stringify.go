@@ -46,3 +46,18 @@ func (schema *JSONSchema) CallsUserCode() bool {
 	}
 	return false
 }
+
+func (schema *JSONSchema) ContainsParsed() bool {
+	if schema == nil {
+		return false
+	}
+	if schema.Kind == "parsed" || schema.Element.ContainsParsed() {
+		return true
+	}
+	for _, field := range schema.Fields {
+		if field.Schema.ContainsParsed() {
+			return true
+		}
+	}
+	return false
+}
