@@ -23,7 +23,12 @@ func TestBorrowChainDeclarations(t *testing.T) {
 		plan, _ := planElementBorrows(program)
 		found := map[string]bool{}
 		for statement := range plan {
-			local := program.Locals[(*statement).(ir.Declare).Local]
+			// The plan also holds borrowing loop bindings (ir.ForOf); this test is about declarations.
+			declare, ok := (*statement).(ir.Declare)
+			if !ok {
+				continue
+			}
+			local := program.Locals[declare.Local]
 			if program.Functions[local.Function].Name == "inspect" || program.Functions[local.Function].Name == "visit" {
 				found[local.Name] = true
 			}
