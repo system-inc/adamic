@@ -20,7 +20,12 @@ func TestMeasureClangUnits(t *testing.T) {
 	t.Setenv("XDG_CACHE_HOME", cache)
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
 	t.Setenv("ADAMIC_NATIVE_SPLIT", "0")
-	output, err := os.Create(filepath.Join(directory, "timings.jsonl"))
+	selected := os.Getenv("ADAMIC_CLANG_PROGRAM")
+	filename := "timings.jsonl"
+	if selected != "" {
+		filename = "timings-" + selected + ".jsonl"
+	}
+	output, err := os.Create(filepath.Join(directory, filename))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -100,6 +105,9 @@ func TestMeasureClangUnits(t *testing.T) {
 	}
 
 	for _, program := range []string{"lint-harness", "typescript-parser", "cohere-typeaware"} {
+		if selected != "" && selected != program {
+			continue
+		}
 		data, err := os.ReadFile(filepath.Join(directory, program+".c"))
 		if err != nil {
 			t.Fatal(err)
