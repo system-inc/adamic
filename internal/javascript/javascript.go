@@ -171,7 +171,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	}
 	emitter.statements(program.Main)
 	builder.WriteString(emitter.out.String())
-	return builder.String()
+	code := builder.String()
+	if strings.Contains(code, "adamicNodeFSFile.") {
+		code = "import * as adamicNodeFSFile from 'node:fs';\n" + code
+	}
+	return code
 }
 
 type emitter struct {
@@ -530,6 +534,8 @@ var operators = map[ir.Operator]string{
 // as the IR means, so nesting expressions keeps every order the native backend makes explicit.
 func (e *emitter) value(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.NodeFSFile:
+		return e.nodeFSFile(expression)
 	case ir.RegExpNew:
 		if expression.Arguments != nil {
 			return "new RegExp(" + e.values(expression.Arguments) + ")"
