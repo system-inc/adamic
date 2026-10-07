@@ -1,0 +1,27 @@
+{
+  "branches_scanned": 20,
+  "main": "c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06",
+  "main_is_ancestor": true,
+  "matches": [
+    {
+      "branch": "refs/remotes/origin/codex/lint-helpers-05",
+      "file": "stage1/cohere/lint/helpers/claims/05.md",
+      "helpers": [
+        "regexp.Canonicalize",
+        "regexp.CaseClass",
+        "regexp.writeClass"
+      ]
+    }
+  ],
+  "initial_claim": "d05d4f2542da61ac1b8620fc23f9fa99f14ef35e",
+  "replacement_claim": "7eccd64a95197c29fad725bf77fb494dfe8b238f",
+  "named_harness_on_main": false,
+  "withdrawn_before_code": {
+    "helper": "regexp.simpleFold",
+    "owner": "codex/lint-helpers-from-codex/lint-wave1-10",
+    "owner_claim": "005c910cb3535e1c129f65990be2825971d5f49b",
+    "owner_utc": "2026-10-07T05:33:46Z",
+    "our_utc": "2026-10-07T05:40:07Z",
+    "reason": "existing claim overlooked in truncated shortlist"
+  }
+}

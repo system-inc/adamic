@@ -1,0 +1,62 @@
+[
+  {
+    "test": "TestSlot05Canonicalize",
+    "log_line": 9,
+    "witness": "helper_test.go:158: canonicalize.a mutant \"if(unicodeMode)\" -> \"if(!unicodeMode)\" caught at output line 1 byte 12: mutant \"-2147483648:fold:-2147483648;\", Go \"-2147483648:expand:-2147483648;upper:-2147483648;\""
+  },
+  {
+    "test": "TestSlot05Canonicalize",
+    "log_line": 10,
+    "witness": "helper_test.go:158: canonicalize.a mutant \"rune > 0xffff || \" -> \"\" caught at output line 107 byte 6: mutant \"66560:expand:66560;upper:66560;\", Go \"66560:\""
+  },
+  {
+    "test": "TestSlot05Canonicalize",
+    "log_line": 11,
+    "witness": "helper_test.go:158: canonicalize.a mutant \" || expandsOnUppercase(rune)\" -> \"\" caught at output line 1 byte 12: mutant \"-2147483648:upper:-2147483648;\", Go \"-2147483648:expand:-2147483648;upper:-2147483648;\""
+  },
+  {
+    "test": "TestSlot05Canonicalize",
+    "log_line": 12,
+    "witness": "helper_test.go:158: canonicalize.a mutant \"upper < 0x80\" -> \"upper < 0\" caught at output line 96 byte 0: mutant \"83:expand:383;upper:383;\", Go \"383:expand:383;upper:383;\""
+  },
+  {
+    "test": "TestSlot05CaseClass",
+    "log_line": 22,
+    "witness": "helper_test.go:158: case_class.a mutant \"widened: false\" -> \"widened: true\" caught at output line 1 byte 0: mutant \"true::equivalents:-2147483648:false;\", Go \"false::equivalents:-2147483648:false;\""
+  },
+  {
+    "test": "TestSlot05CaseClass",
+    "log_line": 23,
+    "witness": "helper_test.go:158: case_class.a mutant \"let text = '['\" -> \"let text = ''\" caught at output line 38 byte 5: mutant \"true:Aa]:equivalents:65:false;escape:65;escape:97;\", Go \"true:[Aa]:equivalents:65:false;escape:65;escape:97;\""
+  },
+  {
+    "test": "TestSlot05CaseClass",
+    "log_line": 24,
+    "witness": "helper_test.go:158: case_class.a mutant \"for(const member of members)\" -> \"for(const member of members.slice(1))\" caught at output line 38 byte 6: mutant \"true:[a]:equivalents:65:false;escape:97;\", Go \"true:[Aa]:equivalents:65:false;escape:65;escape:97;\""
+  },
+  {
+    "test": "TestSlot05WriteClass",
+    "log_line": 34,
+    "witness": "helper_test.go:158: write_class.a mutant \"'[\\\\\\\\s\\\\\\\\S]'\" -> \"'[]'\" caught at output line 3 byte 1: mutant \"[]\", Go \"[\\\\s\\\\S]\""
+  },
+  {
+    "test": "TestSlot05WriteClass",
+    "log_line": 35,
+    "witness": "helper_test.go:158: write_class.a mutant \"'(?!)'\" -> \"'[]'\" caught at output line 1 byte 0: mutant \"[]\", Go \"(?!)\""
+  },
+  {
+    "test": "TestSlot05WriteClass",
+    "log_line": 36,
+    "witness": "helper_test.go:158: write_class.a mutant \"if(options.ignoreCase)\" -> \"if(false)\" caught at output line 73 byte 2: mutant \"[A]\", Go \"[Aa]\""
+  },
+  {
+    "test": "TestSlot05WriteClass",
+    "log_line": 37,
+    "witness": "helper_test.go:158: write_class.a mutant \"negated ? '[^' : '['\" -> \"negated ? '[' : '['\" caught at output line 67 byte 1: mutant \"[A]\", Go \"[^A]\""
+  },
+  {
+    "test": "TestSlot05WriteClass",
+    "log_line": 38,
+    "witness": "helper_test.go:158: write_class.a mutant \"for(const atom of atoms)\" -> \"for(const atom of atoms.slice(1))\" caught at output line 65 byte 1: mutant \"[]\", Go \"[A]\""
+  }
+]

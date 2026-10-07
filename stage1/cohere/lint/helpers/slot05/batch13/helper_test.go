@@ -27,6 +27,10 @@ func TestSlot05CaseClass(t *testing.T) {
 	verify(t, "class", "case_class.a", mutation{"widened: false", "widened: true"}, mutation{"let text = '['", "let text = ''"}, mutation{"for(const member of members)", "for(const member of members.slice(1))"})
 }
 
+func TestSlot05WriteClass(t *testing.T) {
+	verify(t, "write", "write_class.a", mutation{"'[\\\\s\\\\S]'", "'[]'"}, mutation{"'(?!)'", "'[]'"}, mutation{"if(options.ignoreCase)", "if(false)"}, mutation{"negated ? '[^' : '['", "negated ? '[' : '['"}, mutation{"for(const atom of atoms)", "for(const atom of atoms.slice(1))"})
+}
+
 // Not parallel: large generated corpora and multiple sanitized compiler builds share the memory budget.
 func verify(t *testing.T, mode, target string, mutations ...mutation) {
 	root, _ := filepath.Abs("../../../../../..")
@@ -49,6 +53,7 @@ func verify(t *testing.T, mode, target string, mutations ...mutation) {
 	}{
 		{"canonicalize.go", "func Canonicalize(", [][2]string{{"simpleFold(r)", "adamicCanonicalFold(r)"}, {"expandsOnUppercase(r)", "adamicCanonicalExpand(r)"}, {"unicode.ToUpper(r)", "adamicCanonicalUpper(r)"}}},
 		{"casefold.go", "func CaseClass(", [][2]string{{"CaseEquivalents(r, unicode)", "adamicClassEquivalents(r, unicode)"}, {"EscapeClassRune(member)", "adamicClassEscape(member)"}}},
+		{"class.go", "func writeClass(", [][2]string{{"atom.write()", "adamicAtomWrite(atom)"}, {"caseExtras(atoms, options.unicode)", "adamicWriteExtras(atoms, options.unicode)"}}},
 	} {
 		original := filepath.Join(cohere, "internal/lint/ecmascript/regexp", item.file)
 		source, err := os.ReadFile(original)

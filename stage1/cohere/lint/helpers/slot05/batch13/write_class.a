@@ -1,0 +1,9 @@
+export interface ClassAtom { readonly kind: number; readonly lo: number; readonly hi: number; readonly text: string; }
+export interface RewriteOptions { readonly ignoreCase: boolean; readonly unicode: boolean; readonly multiline: boolean; readonly dotAll: boolean; }
+export function writeClass(atoms: readonly ClassAtom[], negated: boolean, options: RewriteOptions, writeAtom: (atom: ClassAtom) => string, caseExtras: (atoms: readonly ClassAtom[], unicodeMode: boolean) => string): string {
+    if(atoms.length === 0) { return negated ? '[\\s\\S]' : '(?!)'; }
+    let body = '';
+    for(const atom of atoms) { body += writeAtom(atom); }
+    if(options.ignoreCase) { body += caseExtras(atoms, options.unicode); }
+    return (negated ? '[^' : '[') + body + ']';
+}

@@ -18,11 +18,12 @@ import (
 )
 
 type corpus struct {
-	Mode         string               `json:"mode"`
-	Upper        esregexp.AdamicTable `json:"upper"`
-	Fold         esregexp.AdamicTable `json:"fold"`
-	Runes        []int                `json:"runes"`
-	Dependencies esregexp.AdamicData  `json:"dependencies"`
+	Mode         string                       `json:"mode"`
+	Upper        esregexp.AdamicTable         `json:"upper"`
+	Fold         esregexp.AdamicTable         `json:"fold"`
+	Runes        []int                        `json:"runes"`
+	Dependencies esregexp.AdamicData          `json:"dependencies"`
+	Classes      []esregexp.AdamicWriteSample `json:"classes"`
 }
 
 func must(err error) {
@@ -33,7 +34,7 @@ func must(err error) {
 func main() {
 	root, output, symbol := os.Args[1], os.Args[2], os.Args[3]
 	mode := symbol
-	symbol = "github.com/system-inc/cohere/internal/lint/ecmascript/regexp." + map[string]string{"canonical": "Canonicalize", "class": "CaseClass"}[mode]
+	symbol = "github.com/system-inc/cohere/internal/lint/ecmascript/regexp." + map[string]string{"canonical": "Canonicalize", "class": "CaseClass", "write": "writeClass"}[mode]
 
 	data, err := os.ReadFile(filepath.Join(root, "stage1/cohere/lint/helpers/readiness.json"))
 	must(err)
@@ -111,19 +112,57 @@ func main() {
 		values = append(values, r)
 	}
 	sort.Ints(values)
-	upper, fold := esregexp.AdamicTables(false), esregexp.AdamicTables(true)
-	dependencies := esregexp.AdamicDependencies()
-	c := corpus{mode, upper, fold, values, dependencies}
+	var c corpus
 	var expected strings.Builder
 	queries := 0
-	for _, u := range []bool{false, true} {
-		for _, r := range values {
-			fmt.Fprintln(&expected, esregexp.AdamicObserve(mode, rune(r), u))
-			queries++
+	if mode == "write" {
+		rows := []esregexp.AdamicWriteSample{}
+		observe := func(atoms []esregexp.AdamicAtom, full bool) {
+			flags := 4
+			if full {
+				flags = 16
+			}
+			for bits := 0; bits < flags; bits++ {
+				for _, neg := range []bool{false, true} {
+					row, want := esregexp.AdamicWrite(atoms, neg, bits&1 != 0, bits&2 != 0, bits&4 != 0, bits&8 != 0)
+					rows = append(rows, row)
+					expected.WriteString(want)
+					queries++
+				}
+			}
 		}
-		for r := rune(0); r <= 0x10ffff; r++ {
-			fmt.Fprintln(&expected, esregexp.AdamicObserve(mode, r, u))
-			queries++
+		observe([]esregexp.AdamicAtom{}, true)
+		for kind := 0; kind < 256; kind++ {
+			observe([]esregexp.AdamicAtom{{Kind: kind, Lo: 65, Hi: 90, Text: "\\d"}}, true)
+		}
+		for j, r := range values {
+			for _, kind := range []int{0, 1, 2, 3, 255} {
+				observe([]esregexp.AdamicAtom{{Kind: kind, Lo: r, Hi: values[(j+1)%len(values)], Text: "é😀"}}, false)
+			}
+		}
+		ordered := []string{}
+		for source := range sources {
+			ordered = append(ordered, source)
+		}
+		sort.Strings(ordered)
+		for _, source := range ordered {
+			observe([]esregexp.AdamicAtom{{Kind: 2, Lo: 0, Hi: 0, Text: source}}, false)
+		}
+		observe([]esregexp.AdamicAtom{{Kind: 0, Lo: 65}, {Kind: 1, Lo: 97, Hi: 122}, {Kind: 2, Text: "\\d"}, {Kind: 3, Lo: 45}, {Kind: 255, Lo: 0x10ffff}}, true)
+		c = corpus{Mode: mode, Classes: rows}
+	} else {
+		upper, fold := esregexp.AdamicTables(false), esregexp.AdamicTables(true)
+		dependencies := esregexp.AdamicDependencies()
+		c = corpus{Mode: mode, Upper: upper, Fold: fold, Runes: values, Dependencies: dependencies}
+		for _, u := range []bool{false, true} {
+			for _, r := range values {
+				fmt.Fprintln(&expected, esregexp.AdamicObserve(mode, rune(r), u))
+				queries++
+			}
+			for r := rune(0); r <= 0x10ffff; r++ {
+				fmt.Fprintln(&expected, esregexp.AdamicObserve(mode, r, u))
+				queries++
+			}
 		}
 	}
 	data, err = json.Marshal(c)

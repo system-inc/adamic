@@ -1,0 +1,69 @@
+stage1/cohere/lint/helpers/slot05/batch13/main.a:6:11: interface Tables: Tables
+stage1/cohere/lint/helpers/slot05/batch13/main.a:6:28: property byMember: ReadonlyMap<number, readonly number[]>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:6:85: property groups: readonly (readonly number[])[]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:7:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/batch13/main.a:9:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/batch13/main.a:9:46: variable root: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:10:10: function field: (index: number, name: string) => number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:10:16: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:10:30: parameter name: string
+stage1/cohere/lint/helpers/slot05/batch13/main.a:11:10: function number: (index: number) => number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:11:17: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:12:10: function table: (index: number) => Tables
+stage1/cohere/lint/helpers/slot05/batch13/main.a:12:16: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:13:8: variable groups: number[][]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:14:12: variable g: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:14:67: variable group: number[]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:14:96: variable r: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:15:8: variable byMember: Map<number, readonly number[]>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:16:12: variable m: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:16:68: variable values: readonly number[]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:16:103: variable rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:16:157: variable group: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:20:7: variable upper: Tables
+stage1/cohere/lint/helpers/slot05/batch13/main.a:20:46: variable fold: Tables
+stage1/cohere/lint/helpers/slot05/batch13/main.a:20:81: variable trace: string
+stage1/cohere/lint/helpers/slot05/batch13/main.a:21:10: function mapping: (index: number) => Map<number, number>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:21:18: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:21:59: variable result: Map<number, number>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:21:101: variable pair: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:21:142: variable values: readonly number[]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:22:7: variable dependencies: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:22:53: variable uppercase: Map<number, number>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:22:106: variable folded: Map<number, number>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:22:155: variable expanded: Map<number, boolean>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:23:11: variable r: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:24:7: variable escapes: Map<number, string>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:24:50: variable e: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:25:10: function simple: (rune: number) => number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:25:17: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:26:10: function expansion: (rune: number) => boolean
+stage1/cohere/lint/helpers/slot05/batch13/main.a:26:20: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:27:10: function toUpper: (rune: number) => number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:27:18: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:28:10: function equivalents: (rune: number, u: boolean) => readonly number[] | undefined
+stage1/cohere/lint/helpers/slot05/batch13/main.a:28:22: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:28:35: parameter u: boolean
+stage1/cohere/lint/helpers/slot05/batch13/main.a:29:10: function escape: (rune: number) => string
+stage1/cohere/lint/helpers/slot05/batch13/main.a:29:17: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:30:7: variable mode: string
+stage1/cohere/lint/helpers/slot05/batch13/main.a:31:10: function observe: (rune: number, u: boolean) => void
+stage1/cohere/lint/helpers/slot05/batch13/main.a:31:18: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:31:31: parameter u: boolean
+stage1/cohere/lint/helpers/slot05/batch13/main.a:33:33: variable value: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:34:8: variable value: CaseClass
+stage1/cohere/lint/helpers/slot05/batch13/main.a:37:12: variable row: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:38:9: variable atoms: ClassAtom[]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:38:41: variable a: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:39:9: variable texts: string[]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:39:38: variable text: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:40:7: variable index: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:41:9: variable options: { unicode: boolean; ignoreCase: boolean; multiline: boolean; dotAll: boolean; }
+stage1/cohere/lint/helpers/slot05/batch13/main.a:42:9: variable result: string
+stage1/cohere/lint/helpers/slot05/batch13/main.a:42:90: parameter atom: ClassAtom
+stage1/cohere/lint/helpers/slot05/batch13/main.a:42:188: variable text: string
+stage1/cohere/lint/helpers/slot05/batch13/main.a:42:266: parameter list: readonly ClassAtom[]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:42:293: parameter u: boolean
+stage1/cohere/lint/helpers/slot05/batch13/main.a:46:11: variable u: boolean
+stage1/cohere/lint/helpers/slot05/batch13/main.a:46:40: variable r: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:46:116: variable r: number

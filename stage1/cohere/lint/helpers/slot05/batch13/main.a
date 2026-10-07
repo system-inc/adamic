@@ -2,6 +2,7 @@ import { panic, readTextFile, programArguments } from 'adamic';
 import { OptionsJson } from '../../options_json.ts';
 import { canonicalize } from './canonicalize.a';
 import { caseClass } from './case_class.a';
+import { writeClass, type ClassAtom } from './write_class.a';
 interface Tables {readonly byMember: ReadonlyMap<number,readonly number[]>;readonly groups:readonly(readonly number[])[];}
 const input=readTextFile(programArguments()[0] ?? panic('missing corpus'));
 if(input.kind === 'Error') { panic(input.message); }
@@ -32,4 +33,16 @@ function observe(rune: number,u: boolean): void{
  if(mode === 'canonical'){const value=canonicalize(rune,u,simple,expansion,toUpper);console.log(`${value}:${trace}`);return;}
  const value=caseClass(rune,u,equivalents,escape);console.log(`${value.widened}:${value.text}:${trace}`);
 }
+if(mode === 'write') {
+ for(const row of json.node(field(root,'classes')).children) {
+  const atoms: ClassAtom[]=[];for(const a of json.node(field(row,'atoms')).children){atoms.push({kind:number(field(a,'kind')),lo:number(field(a,'lo')),hi:number(field(a,'hi')),text:json.node(field(a,'text')).text});}
+  const texts: string[]=[];for(const text of json.node(field(row,'texts')).children){texts.push(json.node(text).text);}
+  let index=0;trace='';
+  const options={unicode:json.node(field(row,'unicode')).text === 'true',ignoreCase:json.node(field(row,'ignoreCase')).text === 'true',multiline:json.node(field(row,'multiline')).text === 'true',dotAll:json.node(field(row,'dotAll')).text === 'true'};
+  const result=writeClass(atoms,json.node(field(row,'negated')).text === 'true',options,(atom: ClassAtom): string => {trace+=`atom:${atom.kind}:${atom.lo}:${atom.hi}:${atom.text};`;const text = texts[index] ?? panic('missing atom text'); index += 1; return text;},(list: readonly ClassAtom[],u: boolean): string => {trace+=`extras:${u}:${list === atoms};`;return json.node(field(row,'extras')).text;});
+  console.log(result);console.log(trace);
+ }
+} else {
 for(const u of [false,true]){for(const r of json.node(field(root,'runes')).children){observe(number(r),u);}for(let r=0;r<=0x10ffff;r++){observe(r,u);}}
+
+}

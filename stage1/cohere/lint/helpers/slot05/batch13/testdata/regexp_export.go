@@ -91,3 +91,47 @@ func AdamicObserve(mode string, r rune, u bool) string {
 	text, widened := CaseClass(r, u)
 	return fmt.Sprintf("%t:%s:%s", widened, text, adamicTrace)
 }
+
+var adamicObservedAtoms []classAtom
+
+func adamicAtomWrite(a classAtom) string {
+	adamicTrace += fmt.Sprintf("atom:%d:%d:%d:%s;", a.kind, a.lo, a.hi, a.text)
+	return a.write()
+}
+func adamicWriteExtras(atoms []classAtom, u bool) string {
+	same := len(atoms) > 0 && len(adamicObservedAtoms) > 0 && len(atoms) == len(adamicObservedAtoms) && &atoms[0] == &adamicObservedAtoms[0]
+	adamicTrace += fmt.Sprintf("extras:%t:%t;", u, same)
+	return caseExtras(atoms, u)
+}
+
+type AdamicAtom struct {
+	Kind int    `json:"kind"`
+	Lo   int    `json:"lo"`
+	Hi   int    `json:"hi"`
+	Text string `json:"text"`
+}
+type AdamicWriteSample struct {
+	Atoms      []AdamicAtom `json:"atoms"`
+	Texts      []string     `json:"texts"`
+	Extras     string       `json:"extras"`
+	Negated    bool         `json:"negated"`
+	Unicode    bool         `json:"unicode"`
+	IgnoreCase bool         `json:"ignoreCase"`
+	Multiline  bool         `json:"multiline"`
+	DotAll     bool         `json:"dotAll"`
+}
+
+func AdamicWrite(atoms []AdamicAtom, neg, u, ignore, m, d bool) (AdamicWriteSample, string) {
+	originals := []classAtom{}
+	texts := []string{}
+	for _, a := range atoms {
+		atom := classAtom{kind: classAtomKind(a.Kind), lo: rune(a.Lo), hi: rune(a.Hi), text: a.Text}
+		originals = append(originals, atom)
+		texts = append(texts, atom.write())
+	}
+	extras := caseExtras(originals, u)
+	adamicTrace = ""
+	adamicObservedAtoms = originals
+	result := writeClass(originals, neg, rewriteOptions{unicode: u, ignoreCase: ignore, multiline: m, dotAll: d})
+	return AdamicWriteSample{atoms, texts, extras, neg, u, ignore, m, d}, result + "\n" + adamicTrace + "\n"
+}

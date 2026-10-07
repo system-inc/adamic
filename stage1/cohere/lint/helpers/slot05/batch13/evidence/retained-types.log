@@ -1,0 +1,57 @@
+stage1/cohere/lint/helpers/slot05/batch13/main.a:5:11: interface Tables: Tables
+stage1/cohere/lint/helpers/slot05/batch13/main.a:5:28: property byMember: ReadonlyMap<number, readonly number[]>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:5:85: property groups: readonly (readonly number[])[]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:6:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/slot05/batch13/main.a:8:7: variable json: OptionsJson
+stage1/cohere/lint/helpers/slot05/batch13/main.a:8:46: variable root: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:9:10: function field: (index: number, name: string) => number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:9:16: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:9:30: parameter name: string
+stage1/cohere/lint/helpers/slot05/batch13/main.a:10:10: function number: (index: number) => number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:10:17: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:11:10: function table: (index: number) => Tables
+stage1/cohere/lint/helpers/slot05/batch13/main.a:11:16: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:12:8: variable groups: number[][]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:13:12: variable g: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:13:67: variable group: number[]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:13:96: variable r: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:14:8: variable byMember: Map<number, readonly number[]>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:15:12: variable m: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:15:68: variable values: readonly number[]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:15:103: variable rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:15:157: variable group: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:19:7: variable upper: Tables
+stage1/cohere/lint/helpers/slot05/batch13/main.a:19:46: variable fold: Tables
+stage1/cohere/lint/helpers/slot05/batch13/main.a:19:81: variable trace: string
+stage1/cohere/lint/helpers/slot05/batch13/main.a:20:10: function mapping: (index: number) => Map<number, number>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:20:18: parameter index: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:20:59: variable result: Map<number, number>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:20:101: variable pair: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:20:142: variable values: readonly number[]
+stage1/cohere/lint/helpers/slot05/batch13/main.a:21:7: variable dependencies: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:21:53: variable uppercase: Map<number, number>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:21:106: variable folded: Map<number, number>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:21:155: variable expanded: Map<number, boolean>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:22:11: variable r: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:23:7: variable escapes: Map<number, string>
+stage1/cohere/lint/helpers/slot05/batch13/main.a:23:50: variable e: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:24:10: function simple: (rune: number) => number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:24:17: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:25:10: function expansion: (rune: number) => boolean
+stage1/cohere/lint/helpers/slot05/batch13/main.a:25:20: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:26:10: function toUpper: (rune: number) => number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:26:18: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:27:10: function equivalents: (rune: number, u: boolean) => readonly number[] | undefined
+stage1/cohere/lint/helpers/slot05/batch13/main.a:27:22: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:27:35: parameter u: boolean
+stage1/cohere/lint/helpers/slot05/batch13/main.a:28:10: function escape: (rune: number) => string
+stage1/cohere/lint/helpers/slot05/batch13/main.a:28:17: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:29:7: variable mode: string
+stage1/cohere/lint/helpers/slot05/batch13/main.a:30:10: function observe: (rune: number, u: boolean) => void
+stage1/cohere/lint/helpers/slot05/batch13/main.a:30:18: parameter rune: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:30:31: parameter u: boolean
+stage1/cohere/lint/helpers/slot05/batch13/main.a:32:33: variable value: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:33:8: variable value: CaseClass
+stage1/cohere/lint/helpers/slot05/batch13/main.a:35:11: variable u: boolean
+stage1/cohere/lint/helpers/slot05/batch13/main.a:35:40: variable r: number
+stage1/cohere/lint/helpers/slot05/batch13/main.a:35:116: variable r: number
