@@ -152,10 +152,11 @@ func TestJudgeCallsACrashACrash(t *testing.T) {
 	}
 }
 
-// The leak run, the same binary again with leak detection on, is held the same way: LeakSanitizer's
-// report is a Crash, while a failure with no report is still the finding it was, never a crash. That
-// is how macOS's ASan fails there, aborting because it can't detect leaks: a whole run of agreed
-// programs must not turn into crashes on a Mac.
+// The leak run, the same binary again with leak detection on: LeakSanitizer's report is a leak, a
+// finding, never a crash, since a leak isn't memory corruption. A failure with no report is a leak
+// too; that is how macOS's ASan fails there, aborting because it can't detect leaks, and a whole run
+// of agreed programs must not turn into crashes on a Mac. A bad access the leak run reports is still
+// a crash.
 func TestJudgeReadsTheLeakRun(t *testing.T) {
 	t.Parallel()
 	checkout := &Checkout{}
@@ -165,7 +166,8 @@ func TestJudgeReadsTheLeakRun(t *testing.T) {
 		want   Verdict
 		key    string
 	}{
-		{"a LeakSanitizer report", "echo '==7==ERROR: LeakSanitizer: detected memory leaks' >&2\necho 'Direct leak of 16 byte(s) in 1 object(s) allocated from:' >&2\nexit 23\n", Crash, "native LeakSanitizer: detected memory leaks"},
+		{"a LeakSanitizer report", "echo '==7==ERROR: LeakSanitizer: detected memory leaks' >&2\necho 'Direct leak of 16 byte(s) in 1 object(s) allocated from:' >&2\nexit 23\n", Finding, "leak"},
+		{"a bad access only the leak run reports", "echo '==7==ERROR: AddressSanitizer: heap-use-after-free on address 0x602000000950 at pc 0x000102668744' >&2\nexit 1\n", Crash, "native AddressSanitizer: heap-use-after-free"},
 		{"an abort with no report", "kill -ABRT $$\n", Finding, "leak"},
 		{"nothing leaked", "exit 0\n", Agreed, ""},
 	} {

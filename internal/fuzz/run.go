@@ -72,8 +72,8 @@ type Run struct {
 type Verdict string
 
 const (
-	// Crash: native died by a signal or a sanitizer reported (AddressSanitizer,
-	// UndefinedBehaviorSanitizer, LeakSanitizer, ThreadSanitizer), or the JavaScript backend died by
+	// Crash: native died by a signal or a sanitizer reported a bad access or undefined behavior
+	// (AddressSanitizer, UndefinedBehaviorSanitizer, ThreadSanitizer), or the JavaScript backend died by
 	// a signal, whatever Node did short of misbehaving itself. It's the most dangerous verdict there
 	// is: a type the checker believed that the program's values didn't hold, reaching memory. Node
 	// ending cleanly, or throwing an ordinary JavaScript exception at another point or even at the
@@ -95,7 +95,7 @@ const (
 	// Unfit: the program misbehaved on Node itself (it never ended, or printed megabytes), which is
 	// the generator's fault.
 	Unfit Verdict = "unfit"
-	// Finding: a disagreement, a leak run that failed without a sanitizer report, the compiler
+	// Finding: a disagreement, a leak (LeakSanitizer's report, or a leak run that failed), the compiler
 	// crashing (its own Go panic, not the program's), or C that clang refused.
 	Finding Verdict = "finding"
 )
@@ -180,10 +180,12 @@ func (c *Checkout) build(path string, directory string, javascript bool) (string
 	return binary, nil
 }
 
-// sanitizerReport finds the first report a sanitizer wrote, if any: AddressSanitizer's, LeakSanitizer's
-// or ThreadSanitizer's headline (ERROR: AddressSanitizer: SEGV on unknown address ..., WARNING:
-// ThreadSanitizer: data race ...), or UndefinedBehaviorSanitizer's "runtime error" with its words.
-var sanitizerReport = regexp.MustCompile(`(?:ERROR|WARNING): ((?:Address|Leak|Thread|UndefinedBehavior)Sanitizer): ([^\n]*)|runtime error: ([^\n]*)`)
+// sanitizerReport finds the first report of a bad access or undefined behavior a sanitizer wrote, if
+// any: AddressSanitizer's or ThreadSanitizer's headline (ERROR: AddressSanitizer: SEGV on unknown
+// address ..., WARNING: ThreadSanitizer: data race ...), or UndefinedBehaviorSanitizer's "runtime
+// error" with its words. LeakSanitizer's isn't one: a leak is a leak, not memory corruption, and the
+// leak run below makes it a finding.
+var sanitizerReport = regexp.MustCompile(`(?:ERROR|WARNING): ((?:Address|Thread|UndefinedBehavior)Sanitizer): ([^\n]*)|runtime error: ([^\n]*)`)
 
 // clangWarning is the warning -Werror made an error, by its flag, so two kinds of bad C stay apart.
 var clangWarning = regexp.MustCompile(`\[-Werror,(-W[a-z-]+)\]`)
@@ -293,8 +295,8 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 		return outcome
 	}
 	// Every program that finishes must let go of everything: the same binary again, leak detection on.
-	// A sanitizer's report here (LeakSanitizer's, on Linux) is a Crash like any other. A failure
-	// without one, macOS's ASan aborting because it has no leak detection, stays a finding.
+	// LeakSanitizer's report here (on Linux), or any other failure (macOS's ASan aborting because it
+	// has no leak detection), is a leak, a finding. A report of a bad access is a Crash like any other.
 	if outcome.Node.ExitCode == 0 {
 		leaked := execute(directory, []string{"ASAN_OPTIONS=detect_leaks=1"}, 20*time.Second, binary)
 		if report := sanitized(leaked, outcome.Node); report != "" {
