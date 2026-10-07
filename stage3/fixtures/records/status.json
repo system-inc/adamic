@@ -272,5 +272,53 @@
       "outcome": "Refused",
       "what": "adamic: /workspace/adamic/stage3/fixtures/records/16_built_strings.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\nexit status 1\n"
     }
+  },
+  {
+    "file": "17_compare_missing_object.a",
+    "tsc": [
+      "src/compiler/utilities.ts:8147-8165"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "constructor\nfalse\ntrue\ntoString\nfalse\ntrue\nhasOwnProperty\nfalse\ntrue\n__proto__\nfalse\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/17_compare_missing_object.a:27:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.\nstage3/fixtures/records/17_compare_missing_object.a:28:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.\nexit status 1\n"
+    }
+  },
+  {
+    "file": "18_compare_missing_scalar.a",
+    "tsc": [
+      "src/compiler/utilities.ts:8147-8165"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "constructor\nfalse\ntrue\ntoString\nfalse\ntrue\nhasOwnProperty\nfalse\ntrue\n__proto__\nfalse\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/18_compare_missing_scalar.a:27:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.\nstage3/fixtures/records/18_compare_missing_scalar.a:28:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.\nexit status 1\n"
+    }
+  },
+  {
+    "file": "19_compare_empty_objects.a",
+    "tsc": [
+      "src/compiler/utilities.ts:8147-8165"
+    ],
+    "reason": "an index signature",
+    "node": {
+      "stdout": "constructor\ntrue\ntrue\ntoString\ntrue\ntrue\nhasOwnProperty\ntrue\ntrue\n__proto__\ntrue\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/records/19_compare_empty_objects.a:27:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.\nstage3/fixtures/records/19_compare_empty_objects.a:28:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.\nexit status 1\n"
+    }
   }
 ]

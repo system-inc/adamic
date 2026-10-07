@@ -137,14 +137,42 @@ Logs are committed in logs/global-*.log.
 
 ## Limits
 
-No JSON.parse/fromEntries, null-prototype construction, __proto__ writes,
+The standalone native fixtures do not cover JSON.parse/fromEntries, null-prototype construction, __proto__ writes,
 prototype mutation, record spread/freeze, number index signatures, or cycle
 ownership probes. JSON/unknown and runtime mutation need their feature owners;
 this bucket prioritizes the requested original compiler operations. No compiler
 runtime, adaptation, other bucket or fixtures_test.go was changed. The full
-uncached integration gate was not run for fixture-only changes; all 16 individual
-build attempts and both fixture mutants were run.
+uncached integration gate was not run for fixture-only changes; all 19 individual
+build attempts and five fixture mutants were run.
 
 Setup: Go go1.27.1, clang 20.1.8 with its sanitizer probe, Node v24.19.0.
 Go/clang/Node/submodules ready at 0s; build cache warm and total at 168s.
 nproc 5; cgroup cpu.max 400000 100000. Logs are in logs/.
+
+## Missing inherited keys: ownership review
+
+INHERITED_KEYS.md now gives a per-operation verdict for all 36 user-input and
+43 unknown sites. own-guard-verdicts.json is the machine-readable review, kept
+separate from the original key-provenance count. The report generator preserves
+the ownership section through render-guards.py.
+
+Fixtures 17 and 18 retain compareDataObjects and exercise the two read-first
+src[e] sites with missing prototype-named keys and matching own-key controls.
+Fixture 19 catches its incorrect equality result on distinct empty records.
+The helper/API candidate is separate from the demonstrated tsc CLI candidate.
+
+input-fixtures contains 30 complete JSON/CLI cases run on unmodified stock tsc
+6.0.3, with per-case exact stdout, stderr, exit, expected diagnostic and behavior.
+probe-inputs.py copies authored .a source to temporary .ts filenames, then invokes
+the installed stock tsc.js. Set STOCK_TYPESCRIPT to the typescript@6.0.3 package
+directory; --observe refreshes observations.json. probe-guards.cjs uses that same
+stock package to check the helper/API result, config own-key loss, host-object
+limitation and all 79 ownership-row IDs.
+
+Run both probes and verify.py with output redirected to logs. The new mutants
+replace each missing key with an own key, add the missing equality ownership
+check, replace __proto__ in a real path mapping with constructor, and omit one
+ownership-review row. The compiler/runtime was not changed. Three unknown reads
+have no established real CLI/config counterexample, and no full watch-mode
+wrong result from compareDataObjects is claimed. UPSTREAM_CANDIDATES.md gives
+both scopes and drafted issues; the shared upstream ledger was not edited.

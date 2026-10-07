@@ -16,12 +16,15 @@ for row in rows:
     assert row['stage0']['outcome'] in {'NotYet', 'Refused', 'Checker', 'Compiles'}
     run = subprocess.run(['node', '--disable-warning=ExperimentalWarning', 'oracle/node.mjs', str(ROOT / row['file'])], cwd=REPO, capture_output=True, text=True)
     assert (run.stdout, run.stderr, run.returncode) == (row['node']['stdout'], row['node']['stderr'], row['node']['exit']), row['file']
-print('PASS: 16 fixture observations and exact status schema')
+print('PASS:', len(rows), 'fixture observations and exact status schema')
 
 by_name = {row['file']: row for row in rows}
 mutants = [
     ('02_get_property.a', 'hasOwnProperty.call(map, key) ? map[key] : undefined', 'map[key]', 'remove own-property guard'),
     ('05_integer_order.a', 'return keys;', 'return keys.reverse();', 'reverse key enumeration'),
+    ('17_compare_missing_object.a', 'const src = { other: { value: 1 } };', 'const src = { [key]: { value: 1 } };', 'replace missing object key with own key'),
+    ('18_compare_missing_scalar.a', 'const src = { other: 1 };', 'const src = { [key]: 1 };', 'replace missing scalar key with own key'),
+    ('19_compare_empty_objects.a', 'for (const e in dst) {', 'for (const e in dst) {\n        if (!Object.prototype.hasOwnProperty.call(src, e)) return false;', 'check ownership before the empty-object comparison'),
 ]
 with tempfile.TemporaryDirectory(prefix='records-mutants-') as scratch:
     for name, before, after, label in mutants:

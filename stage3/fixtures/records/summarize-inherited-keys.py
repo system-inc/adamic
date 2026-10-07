@@ -86,5 +86,9 @@ lines += ['', '## Scope and assumptions', '',
           'This enumerates executable AST in every original src/compiler TypeScript file, including any/generic/finite mapped receivers and nested accesses. It excludes literal element reads, write/delete-only accesses, generated diagnostic code, static dot-property reads, Map.get calls, comments, and JavaScript stored in emit-helper template strings. Emitted JavaScript belongs to compiled programs, not to dynamic reads performed by tsc itself. The lower grep count of for-in text also includes such strings and comments; the AST finds 27 actual loops.', '',
           'Unknown is a complete classification, not a missing census row: generic core helpers, clone helpers, arbitrary caller-supplied diagnostic keys, environment-name callers, and any-valued object comparisons have no proven closed key origin. Fixed-table review describes the pinned internal tables without external mutation. Key classification does not imply that an inherited miss is reachable: own guards, enumeration, and record construction can make the lookup safe.', '',
           'Reproduce using count-inherited-keys.cjs and summarize-inherited-keys.py as documented in README.md. inherited-key-provenance.json records explicit source-review overrides; inherited-key-global.json includes hashes, excluded sites, all 68 census links, loop contexts, zero stock diagnostics, and global totals.']
-(ROOT / 'INHERITED_KEYS.md').write_text('\n'.join(lines) + '\n')
+report = '\n'.join(lines) + '\n'
+if (ROOT / 'own-guard-verdicts.json').exists():
+    import runpy
+    report += runpy.run_path(str(ROOT / 'render-guards.py'))['render']()
+(ROOT / 'INHERITED_KEYS.md').write_text(report)
 print(json.dumps(raw['totals'], indent=2))
