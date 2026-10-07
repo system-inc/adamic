@@ -1,0 +1,14 @@
+--- FAIL: TestMixedUnionContractGraph (0.20s)
+    --- FAIL: TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier; (0.04s)
+        view_unions_mixed_test.go:49: union lost a member contract
+    --- FAIL: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node; (0.03s)
+        view_unions_mixed_test.go:49: union lost a member contract
+    --- FAIL: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[]; (0.04s)
+        view_unions_mixed_test.go:49: union lost a member contract
+    --- FAIL: TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression; (0.04s)
+        view_unions_mixed_test.go:49: union lost a member contract
+    --- FAIL: TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right; (0.04s)
+        view_unions_mixed_test.go:49: union lost a member contract
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.206s
+FAIL
