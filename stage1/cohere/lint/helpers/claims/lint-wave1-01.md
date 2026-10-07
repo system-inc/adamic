@@ -22,3 +22,11 @@ Claim before implementation:
 Fresh wildcard fetch audited 538 origin refs and all 19 distinct claims blobs plus HELPERS.md reservations. Four consumers ties the highest remaining count: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks. Territory: from_wave1_01/return_frame.a and owned oracle/driver/evidence files. Preserve the innermost enclosing finally index, or -1, independent of try/catch position. Compare actual private Go on every consumer test suite plus exhaustive bounded frame stacks; source Node, emitted JavaScript, sanitized native, compiling semantic mutant. One helper per .a file; no shared harness changes. Claim pushed before code.
 
 Completed pair: enter and returnFrame match real Go on all four consumer suites plus controls on source Node, emitted JavaScript and sanitized native. Four compiling semantic mutants caught only by comparison; touched package PASS 21.371s, vet and filtered uncached oracle pass. Eight prerequisite entries removed, zero complete rules unblocked. See ../from_wave1_01/REPORT.md. No additional helper reserved.
+
+## Third helper
+
+Prior helpers green again on current main c01907a70 and pushed at 2534ca1b8; parked rules re-green and pushed at d508f5ef2. Refreshed all 560 origin refs and read all 20 distinct helper claim blobs before selection. Claim before code:
+
+- github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].throwFrame
+
+Four consumers tie the highest remaining fan-out: array-callback-return, consistent-return, no-unreachable-loop, react-hooks/rules-of-hooks. Territory: from_wave1_01/throw_frame.a plus owned model/driver/Go capture/test/evidence. Preserve the innermost try frame or catch frame with finally; other tryPosition values do not match. Actual private Go on every consumer's fixture suite, bounded exhaustive frames and all uint8 positions; compiling mutants, source Node, emitted JavaScript, sanitized native. No regex required; no shared harness files touched. Push claim before implementation.
