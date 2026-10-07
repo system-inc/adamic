@@ -1,7 +1,7 @@
-Built: non-JSX `@next/next/no-async-client-component`; both Head rules remain unimplemented.  
-Commits: claim `808be7f8`, implementation `dd5481bcb611867890b937f32a15f57b9949b2a7`.  
-Commands/output: final wave tests PASS 56.306s; checker PASS 0.152s; filtered Node oracle PASS 13.139s.  
-Mutants: async range +1 and uppercase boundary caught only by byte comparisons; retained released handle caught by required panic.  
+Built: non-JSX `@next/next/no-async-client-component`; both Head rules remain unimplemented.<br>
+Commits: claim `808be7f8`, implementation `dd5481bcb611867890b937f32a15f57b9949b2a7`.<br>
+Commands/output: final wave tests PASS 56.306s; checker PASS 0.152s; filtered Node oracle PASS 13.139s.<br>
+Mutants: async range +1 and uppercase boundary caught only by byte comparisons; retained released handle caught by required panic.<br>
 Not covered: JSX rule ports, full repository gate, full pinned cohere CLI lint on `.a`.
 
 # Type-aware wave 17: partial implementation

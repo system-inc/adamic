@@ -1,0 +1,24 @@
+=== RUN   TestWave17AgreementMutantAndJSXBoundary
+    wave_17_test.go:83: controls: 9588 identical finding bytes; findings 19
+    wave_17_test.go:87: 38 non-JSX upstream and edge controls
+    wave_17_test.go:90: controls-asan: 9588 identical finding bytes; findings 19
+    wave_17_test.go:115: async end+1 mutant: exit 0, empty stderr; Go byte oracle catches byte 52
+    wave_17_test.go:134: duplicate-head: Go findings 1; native explicitly refuses JSX with exit 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 58 in /workspace/wave-17-artifacts/duplicate-head.tsx
+    wave_17_test.go:134: script-in-head: Go findings 1; native explicitly refuses JSX with exit 70: adamic: panic: parser slice expected GreaterThanToken, got SlashToken at 61 in /workspace/wave-17-artifacts/script-in-head.tsx
+    wave_17_test.go:134: async-jsx: Go findings 1; native explicitly refuses JSX with exit 70: adamic: panic: parser slice expected GreaterThanToken, got CloseBraceToken at 69 in /workspace/wave-17-artifacts/async-jsx.tsx
+    wave_17_test.go:153: released handle: panic 70; registry mutant exits 0, caught by required panic
+    wave_17_test.go:178: repository: 18485 identical finding bytes; findings 0
+    wave_17_test.go:179: repository-asan: 18485 identical finding bytes; findings 0
+    wave_17_test.go:184: repository wave17-oracle: whole process 0.107591s; findings 0; cohere: load_ns=56359828 rule_ns=28201 run_ns=39990938
+    wave_17_test.go:184: repository wave17: whole process 0.230216s; findings 0; tsgo: load_ns=65217713 query_ns=0 queries=0 first_query_ns=0 run_ns=159410438
+    wave_17_test.go:178: compiler: 5318 identical finding bytes; findings 0
+    wave_17_test.go:179: compiler-asan: 5318 identical finding bytes; findings 0
+    wave_17_test.go:184: compiler wave17-oracle: whole process 0.418762s; findings 0; cohere: load_ns=236285971 rule_ns=16541 run_ns=163770733
+    wave_17_test.go:184: compiler wave17: whole process 1.620252s; findings 0; tsgo: load_ns=245990495 query_ns=0 queries=0 first_query_ns=0 run_ns=1353712264
+--- PASS: TestWave17AgreementMutantAndJSXBoundary (49.68s)
+=== RUN   TestWave17UnicodeUpper
+    wave_17_unicode_test.go:45: all 1,114,112 code points agree with Go unicode.IsUpper, 10634 output bytes, sanitizers clean
+    wave_17_unicode_test.go:62: uppercase boundary mutant: exit 0, empty stderr, direct Go byte oracle catches byte 1
+--- PASS: TestWave17UnicodeUpper (6.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	56.306s
