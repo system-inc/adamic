@@ -1,3 +1,135 @@
+# Parser slice blockers, October 7
+
+The requested raw createSourceFile slice was generated from area/stage3
+7ad8666 with the shared namespace-member slicer at faae0e9. Step 1 was pushed
+at ed0fa58. Its exact inventory is 79 files, 5,103 declarations, 190,844
+copied-span lines and 5,125 byte-identical spans. Dump helpers add no records.
+
+## Gate order actually observed
+
+1. Node initialization stops before parsing or printing. semver.ts Version.zero
+   calls Debug.assert while Debug is undefined. A namespace-facade driver
+   control has the same failure; a semver-first driver control instead fails
+   at binder.createFlowNode's Debug.attachFlowNodeDebugInfo load. This is a
+   real value read at module load time in the gathered import graph. It is
+   not an Adamic Refused/NotYet observation. No closing feature was tested.
+2. Unmodified stage0 at the integration source rejects the slice at checking:
+   **830 diagnostics, all in slice files**. No checker options were changed,
+   no loader overlay or diagnostic suppression was used, and the caller only
+   invokes lower.Lower after load.Load accepts. The first returned diagnostic is:
+
+```text
+src/compiler/binder.ts:1672:18: error TS7030: Not all code paths return a value.
+```
+
+3. Lowering was not reached. There is no observed lowering/ownership/native
+   blocker order for this raw parser slice. The list below is the complete
+   checker gate, not a conjectured Refused/NotYet sequence behind it.
+
+The fully adapted parser, outside the slice, still produces the original
+35,456,964-byte dump SHA256 2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5
+on the original 81-file input corpus. The raw slice produces zero bytes.
+Deleting the exported createSourceFile declaration is caught by the passing
+byte audit and the missing-export loader check; runtime dump-equivalence
+mutant coverage is still unmet because the slice control cannot load.
+
+## Exact ordered checker list
+
+[evidence/slice-ordered-checker.json](evidence/slice-ordered-checker.json)
+contains all 830 exact diagnostics, including message chains, one-based
+returned order, file/line/column, code and ownership eligibility. Only the
+absolute scratch-root prefix is removed. Ordering is stage0's lexicographic
+sort of complete formatted diagnostics, not source execution order.
+
+The following code groups are listed in first returned occurrence order;
+this table does not replace or reorder the individual diagnostic artifact.
+
+| Code | Count | First slice location | Candidate closing work |
+| --- | ---: | --- | --- |
+| TS7030 | 252 | src/compiler/binder.ts:1672:18 | codex/fallthrough-and-implicit-returns; not merged into this measured compiler |
+| TS1294 | 180 | src/compiler/binder.ts:171:19 | codex/flag-enums and codex/namespaces-tsc; feature compilers not measured here |
+| TS7029 | 83 | src/compiler/binder.ts:2148:13 | codex/fallthrough-and-implicit-returns; not merged into this measured compiler |
+| TS2345 | 88 | src/compiler/builder.ts:1171:69 | No closing feature demonstrated in this raw-slice probe |
+| TS2488 | 6 | src/compiler/builder.ts:1183:65 | No closing feature demonstrated in this raw-slice probe |
+| TS2375 | 14 | src/compiler/builder.ts:2198:9 | exact-optional declarations; no demonstrated closure |
+| TS2769 | 6 | src/compiler/builder.ts:2302:13 | No closing feature demonstrated in this raw-slice probe |
+| TS18048 | 49 | src/compiler/checker.ts:10914:30 | optional/indexed-read contracts; no demonstrated closure |
+| TS2322 | 30 | src/compiler/checker.ts:14025:9 | No closing feature demonstrated in this raw-slice probe |
+| TS2412 | 23 | src/compiler/checker.ts:16770:21 | exact-optional write contracts; no demonstrated closure |
+| TS2722 | 1 | src/compiler/checker.ts:19475:32 | No closing feature demonstrated in this raw-slice probe |
+| TS2379 | 10 | src/compiler/checker.ts:20314:98 | exact-optional arguments; no demonstrated closure |
+| TS2556 | 1 | src/compiler/checker.ts:21378:29 | No closing feature demonstrated in this raw-slice probe |
+| TS2532 | 15 | src/compiler/checker.ts:49033:121 | indexed-read adaptations; remaining sites need individual proof |
+| TS2420 | 1 | src/compiler/checker.ts:53209:7 | No closing feature demonstrated in this raw-slice probe |
+| TS18046 | 6 | src/compiler/commandLineParser.ts:2193:91 | No closing feature demonstrated in this raw-slice probe |
+| TS2740 | 1 | src/compiler/core.ts:1631:11 | No closing feature demonstrated in this raw-slice probe |
+| TS2591 | 50 | src/compiler/performanceCore.ts:36:37 | codex/host-node-types-land; not measured here |
+| TS2304 | 6 | src/compiler/sys.ts:1415:121 | No closing feature demonstrated in this raw-slice probe |
+| TS2307 | 1 | src/compiler/sys.ts:1514:69 | host declarations/resolution; no demonstrated closure |
+| TS7006 | 1 | src/compiler/sys.ts:1613:54 | No closing feature demonstrated in this raw-slice probe |
+| TS7031 | 1 | src/compiler/sys.ts:1613:61 | No closing feature demonstrated in this raw-slice probe |
+| TS2538 | 2 | src/compiler/transformers/classFields.ts:2043:45 | No closing feature demonstrated in this raw-slice probe |
+| TS2339 | 3 | src/compiler/transformers/generators.ts:1798:50 | No closing feature demonstrated in this raw-slice probe |
+
+NoImplicitReturns and NoFallthroughCasesInSwitch remain true: 252 TS7030
+and 83 TS7029 findings count as blockers. The feature branch is a candidate
+closure, not justification to suppress these diagnostics in the measured
+compiler. The existing permanent adaptations have already run; they do not
+close all remaining checker findings. No new baseline-suite result is claimed.
+
+## Temporary adaptation ownership and stopping point
+
+The scanner slice reproduced from this same adapted tree has eight files,
+89 declarations and 7,126 copied-span lines. The parser slice has **71 files
+outside those eight**. evidence/slice-file-ownership.json saves all three file
+sets and the exact eligible diagnostic count. Shared files are:
+
+- src/compiler/commandLineParser.ts
+- src/compiler/core.ts
+- src/compiler/corePublic.ts
+- src/compiler/debug.ts
+- src/compiler/diagnosticInformationMap.generated.ts
+- src/compiler/scanner.ts
+- src/compiler/types.ts
+- src/compiler/utilities.ts
+
+Temporary 60-69 edits may touch only the 71 parser-exclusive files, never
+these shared files. No 60-69 edit is planned or implemented in this commit.
+This observed list is pushed before any temporary source edit. Before such
+an edit, its exact file/site/feature plan must be pushed; its README must
+start "Temporary: comes out when <feature> lands"; its baseline must pass.
+
+The expansion includes reached Debug.formatSyntaxKind using
+(ts as Record<"SyntaxKind", Record<string, string | number>>).SyntaxKind.
+The slicer's immediate-parent qualification test sees ts below AsExpression
+and conservatively gathers the module namespace's exports. This inspected
+path explains one source of the large gather, without proving it is the only
+path. debug.ts is scanner-shared, so a parser-owned temporary Debug rewrite
+is outside the authorized adaptation territory. I did not build a second
+slice tool or alter gathered declarations/imports to bypass initialization.
+
+The next proof step needs a faithful shared-tool/import-graph repair that
+loads on Node, followed by a new byte audit and dump comparison, then checker
+repairs or landed compiler features. Lowering cannot be honestly ordered
+until checking accepts the real slice. No checker-rejected source was lowered,
+no native parser binary was built, and no native agreement is claimed.
+
+## Commands and validation
+
+```sh
+source /workspace/adamic-tools/env.sh
+go build -buildvcs=false -o /tmp/parser-area-probe ./stage3/drivers/parser/probe > /tmp/parser-area-probe-build.log 2>&1
+/tmp/parser-area-probe /tmp/parser-driver-slice/src/compiler/parser.ts /tmp/parser-slice-parser-entry.json > /tmp/parser-slice-parser-entry.log 2>&1
+```
+
+The probe exits zero after serializing the Checker outcome; that is not an
+accepted build. SLICE.md records the gather, byte audits, full-tree equality,
+load-time failures and actual declaration omission. Bash syntax checks and
+git diff --check were run on the driver/report changes. The complete Adamic
+gate and native stage3 baseline were not run for this blocked raw slice.
+
+# Historical reports below, superseded for the current slice
+
 # Parser proof: slice blockers pending
 
 The proof now targets the declaration slice of createSourceFile, using the
