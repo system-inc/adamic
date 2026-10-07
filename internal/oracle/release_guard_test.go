@@ -29,7 +29,7 @@ func TestReleaseBuildConfigurationAgrees(t *testing.T) {
 	}
 	requireReleaseCall(t, "cmd/adamic", "main", "run", 0, "os.Args[1:]")
 	requireReleaseCall(t, "cmd/adamic", "run", "build", 2, "arguments[4:]")
-	requireReleaseCall(t, "internal/oracle", "released", "cachedNative", 2, "true")
+	requireReleaseCall(t, "internal/oracle", "released", "cachedNative", 2, "releaseBuild")
 	requireReleaseCall(t, "internal/oracle", "released", "releasedUncached", 1, "program")
 	requireReleaseCall(t, "internal/oracle", "cachedNative", "releasedUncached", 1, "program")
 	shipping := traceReleaseOptions(t, releaseFunction(t, "cmd/adamic", "build"))

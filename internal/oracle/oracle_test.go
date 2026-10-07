@@ -687,7 +687,8 @@ func leaks(t *testing.T, program *ir.Program, sanitized string) string {
 func releasedUncached(t *testing.T, program *ir.Program) run {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "release")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+	// What ships: adamic build's options (ThinLTO), as TestReleaseBuildConfigurationAgrees holds.
+	if err := native.Build(native.C(program), binary, native.Options{Release: true}); err != nil {
 		t.Fatal(err)
 	}
 	return execute(t, binary)
