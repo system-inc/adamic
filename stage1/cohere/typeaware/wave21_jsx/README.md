@@ -2,7 +2,7 @@
 
 Three native Adamic cores are implemented in their own directories:
 `react/jsx-fragments`, `react/jsx-no-constructed-context-values`, and
-`react/jsx-no-undef`. Each exports numeric `syntaxKinds`, has numeric `rule.json`
+`react/jsx-no-undef`. Each exports numeric `syntaxKinds`, has named `rule.json`
 listeners, and takes the node already handed to it. The private driver dispatches
 by numeric kind and fetches no root node again for another rule. No shared parser,
 registration generator, harness, diagnostic model or compiler implementation was
@@ -10,7 +10,7 @@ edited by this batch. New Adamic files use `.a`.
 
 These are **prepared-syntax cores, not completed native source ports**. The shared
 parser still interprets `<` as a type assertion and cannot construct JSX nodes.
-The production shared driver also lacks the numeric handed-node layout this
+The production shared driver also lacks the prepared-syntax node roles this
 batch needs. Source parsing and live checker-fact population are not connected.
 `parser_prerequisites_test.go` holds three real Go positives against exact native
 parser refusals, under normal and sanitizer builds. It does not count a refusal
@@ -123,7 +123,7 @@ existing patches are unchanged; `validation/range-diff.log` records the mapping.
 Fresh rebase gates and final source/artifact hashes are recorded in validation.
 The source parser blockers remain: fragments and undefined tags expect
 `GreaterThanToken` and encounter `SlashToken`; the context provider encounters
-`Identifier` instead. Shared JSX and numeric node integration must land before
+`Identifier` instead. Shared JSX and node-role integration must land before
 these reservations can be called completed native source ports. The prior three
 high-level React analysis reservations remain parked, not released.
 
@@ -140,3 +140,38 @@ all 22 default batches successfully. `validation/landing.json` records final
 execution sums; `validation/mutants.md` records every fresh mutant catch,
 including inherited rules and prerequisite guards. This is a targeted gate,
 not the complete repository gate.
+
+## Named listener correction and current-main landing
+
+Rebased onto main `b8fb957aa` without conflicts, accepting its inherited static
+field fix. The three rule.json descriptors now use the AST names validated by
+`origin/lint-rules/harness` (`41eb6eab2`): `JsxFragment`, `JsxElement`,
+`JsxSelfClosingElement` and `JsxOpeningElement`. Private prepared-syntax tags
+remain internal to the test provider and cores. These descriptors are listener
+declarations, not completed shared-registry adapters. No shared file changed.
+
+`TestNamedListenerMetadata` compares the descriptor names with the pinned Go AST
+constants after exactly the registry's `Kind` prefix normalization. A temporary
+valid-but-wrong `CallExpression` listener is rejected by that independent check;
+the restored descriptors pass. The existing native listener and real rule
+mutants remain separate checks.
+
+Setup: Go ready 0 s, clang/Node/submodules ready 1 s, cache warm 91 s, total 92 s;
+`nproc` 5 and cgroup quota 4 cores. The initial checker command used a nonexistent
+`internal/checker` package; it was corrected to `bridge/tsgo/checker`, PASS 0.136 s.
+Filtered Node oracle PASS 4.846 s; main's inherited-static-field fixture PASS
+0.429 s. Vet exits 0. All seven prior wave-21 suites PASS 803.836 s. External Node
+source and emitted-JavaScript comparisons pass all 22 default JSX batches.
+
+Fresh evidence is under `validation/landing-b8fb/`. Source parsing still refuses
+all three JSX positives under normal and sanitizer builds; skipping the parse is
+caught by the prerequisite oracle. Raw node-role and live checker adaptation
+remain integration gaps even with the named-listener shared driver. The old
+prepared-input timing observations above do not establish source throughput.
+
+Fresh JSX suite PASS **1091.267 s**, including 66 batches (216 controls in three
+profiles), both frozen corpora, three normally exiting native rule mutants,
+ASan/UBSan/LSan, named metadata, Unicode and released-handle contracts. Execution
+sums: prepared-input native **0.137763 s**, full Go **1.702417 s**, raw Go fixture
+preparation **1.890935 s**. These are distinct pipelines. The full repository
+test gate and native JSX source throughput remain uncovered.

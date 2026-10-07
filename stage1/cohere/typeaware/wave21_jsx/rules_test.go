@@ -190,7 +190,7 @@ declare function useMemo<T>(f:()=>T,deps?:unknown[]):T;declare function useCallb
 	}
 }
 
-func TestNumericListenerMetadata(t *testing.T) {
+func TestNamedListenerMetadata(t *testing.T) {
 	for _, r := range []struct {
 		name  string
 		kinds []ast.Kind
@@ -201,7 +201,7 @@ func TestNumericListenerMetadata(t *testing.T) {
 		}
 		var v struct {
 			Name  string
-			Kinds []int
+			Kinds []string
 		}
 		if e = json.Unmarshal(data, &v); e != nil {
 			t.Fatal(e)
@@ -210,8 +210,8 @@ func TestNumericListenerMetadata(t *testing.T) {
 			t.Fatal("listener metadata", r.name)
 		}
 		for i, k := range r.kinds {
-			if v.Kinds[i] != int(k) {
-				t.Fatal("numeric kind", r.name)
+			if v.Kinds[i] != strings.TrimPrefix(k.String(), "Kind") {
+				t.Fatal("named kind", r.name)
 			}
 		}
 	}
