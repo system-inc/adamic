@@ -291,6 +291,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/gaps.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_quick.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_repeat.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_stream.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_long.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_cache.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_limit.a", true, false},
 	// String() of the powers of two where the closest digits of the shortest length aren't the ones that
 	// read back (reviewer R, from the first night's number.c).
 	{"internal/oracle/testdata/power_of_two_string.a", true, false},
