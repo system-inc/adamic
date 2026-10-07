@@ -61,8 +61,8 @@ Target `f8013f0b` unless the row says otherwise. "Not found" means no finding wi
 | 07 borrowed-element-reads | ownership | not found, 2,000 seeds, 552 s | seed 10 (lowest 10), 9.1 s | not run (found) | yes: ASan heap-use-after-free, from the overrides scene |
 | 08 narrowed-number-field | representation | needs refresh on `f8013f0b`. On `e8ba3d5d`: not found, 2,000 seeds, 568 s | `e8ba3d5d`: not found, 2,000 seeds, 885 s | `e8ba3d5d`: not found, 2,000 seeds, 891 s | |
 | 09 literal-undefined-field | representation | not found, 2,000 seeds, 521 s | not found, 2,000 seeds, 802 s | not found, cap at 1,702 seeds, 900 s | |
-| 11 refuse-definite-assignment | refusal | not found, 2,000 seeds, 351 s | not found, 2,000 seeds, 894 s | not found, 2,000 seeds, 880 s | |
-| 12 refuse-suppression-directives | refusal | needs refresh on `f8013f0b`. On `e8ba3d5d`: not found, 2,000 seeds, 568 s | `e8ba3d5d`: not found, 2,000 seeds, 890 s | not run | |
+| 11 refuse-definite-assignment | refusal | not found, 2,000 seeds, 351 s | not found, 2,000 seeds, 894 s | not found, 2,000 seeds, 880 s; refusal writer on `39638d9e`: program 1, 0.056407 s (best of 3); clean 200-program targeted controls; [report](../../internal/refusalprobe/REPORT.md) | |
+| 12 refuse-suppression-directives | refusal | needs refresh on `f8013f0b`. On `e8ba3d5d`: not found, 2,000 seeds, 568 s | `e8ba3d5d`: not found, 2,000 seeds, 890 s | not run; refusal writer on `39638d9e`: program 1, 0.049749 s (best of 3); clean 200-program targeted controls; [report](../../internal/refusalprobe/REPORT.md) | |
 
 On `e8ba3d5d` the patched 08 and 12 runs reported findings, but every one is a seed the same
 generator's unpatched `e8ba3d5d` control also reports, all of them the #ht2nwj5 panic (below). No run
