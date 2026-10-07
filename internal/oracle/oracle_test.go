@@ -69,6 +69,13 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/class_oct6_release.a", true, false},
 	{"internal/oracle/testdata/class_oct6_subclass_holder.a", true, false},
 
+	{"internal/oracle/testdata/library_array_coverage_arrays.a", true, false},
+	{"internal/oracle/testdata/library_array_coverage_conversions.a", true, false},
+	{"internal/oracle/testdata/library_array_coverage_identity.a", true, false},
+	{"internal/oracle/testdata/library_array_coverage_copy_types.a", true, false},
+	{"internal/oracle/testdata/library_array_coverage_effects.a", true, false},
+	{"internal/oracle/testdata/library_array_coverage_walk_chains.a", true, false},
+	{"internal/oracle/testdata/library_array_coverage_shapes.a", true, false},
 	{"internal/oracle/testdata/library_array_join.a", true, false},
 	{"internal/oracle/testdata/library_array_iterators.a", true, false},
 	{"internal/oracle/testdata/library_array_metadata.a", true, false},

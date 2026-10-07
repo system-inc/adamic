@@ -1,0 +1,7 @@
+diff --git a/internal/lower/library_array_is_array.go b/internal/lower/library_array_is_array.go
+index f729a9b..b8a644e 100644
+--- a/internal/lower/library_array_is_array.go
++++ b/internal/lower/library_array_is_array.go
+@@ -50 +50 @@
+-	return b.finish("array_is_array", ir.BooleanConstant{Value: isArray}), true, nil
++	return b.finish("array_is_array", ir.BooleanConstant{Value: !isArray}), true, nil

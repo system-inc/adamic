@@ -1,0 +1,37 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_arrays.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_arrays.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_conversions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_conversions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_identity.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_identity.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_copy_types.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_copy_types.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_effects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_effects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_walk_chains.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_walk_chains.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_shapes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_shapes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_arrays.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_effects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_walk_chains.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_copy_types.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_shapes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_identity.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_conversions.a
+--- PASS: TestNativeAgreesWithNode (0.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_arrays.a (3.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_effects.a (3.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_shapes.a (4.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_copy_types.a (4.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_walk_chains.a (5.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_identity.a (3.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_coverage_conversions.a (4.45s)
+PASS
+gate cache: native hits=0 misses=21
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	8.024s

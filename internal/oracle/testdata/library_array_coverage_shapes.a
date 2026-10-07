@@ -1,0 +1,14 @@
+const values = {0: 7, '01': 7, '1.0': 7, '-1': 7, '9007199254740991': 7, 9007199254740990: 8, length: Infinity};
+console.log(`${Array.prototype.indexOf.call(values, 7, Infinity)} ${Array.prototype.lastIndexOf.call(values, 7, 0)} ${Array.prototype.lastIndexOf.call(values, 8)}`);
+console.log(`${Array.prototype.indexOf.call({0: 7, length: -1.9}, 7)} ${Array.prototype.lastIndexOf.call({0: 7, length: ''}, 7)}`);
+console.log(`${Array.prototype.indexOf.call({0: true, 1: false, length: 2}, true)} ${Array.prototype.lastIndexOf.call({0: true, 1: false, length: 2}, false)}`);
+const nested = [1, 2];
+console.log(`${Array.prototype.indexOf.call({0: nested, 1: [1, 2], length: 2}, nested)} ${Array.prototype.lastIndexOf.call({0: nested, 1: nested, length: 2}, nested)}`);
+const present = {0: undefined, 1: null, length: 2};
+console.log(`${Array.prototype.indexOf.call(present, null)} ${Array.prototype.lastIndexOf.call(present, undefined)}`);
+console.log(`${Array.isArray({0x2: 4, 1e1: 5, length: 11})}`);
+function shadowed(): boolean {
+ const Array = {isArray: (value: number[]): boolean => value.length === 0};
+ return Array.isArray([1]);
+}
+console.log(`${shadowed()}`);

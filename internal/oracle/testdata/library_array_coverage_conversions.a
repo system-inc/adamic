@@ -1,0 +1,11 @@
+const values = {0: 'x', 1: 'x', 2: 'x', length: 3};
+function optionalStart(start: number | undefined): void {
+ console.log(`${Array.prototype.indexOf.call(values, 'x', start)} ${Array.prototype.lastIndexOf.call(values, 'x', start)}`);
+ console.log(`${Array.prototype.indexOf.call([1, 2, 1], 1, start)} ${Array.prototype.lastIndexOf.call([1, 2, 1], 1, start)}`);
+}
+optionalStart(undefined); optionalStart(-1.9);
+console.log(`${Array.prototype.indexOf.call({0: 'x'}, 'x')} ${Array.prototype.lastIndexOf.call({0: 'x', length: null}, 'x')}`);
+console.log(`${Array.prototype.indexOf.call({0: 'x', length: undefined}, 'x')} ${Array.prototype.lastIndexOf.call({0: 'x', length: false}, 'x')}`);
+console.log(`${Array.prototype.indexOf.call({0: 'x', 1: 'x', length: 1.9}, 'x', 1)} ${Array.prototype.lastIndexOf.call({0: 'x', 1: 'x', length: 1.9}, 'x')}`);
+console.log(`${Array.prototype.indexOf.call({0: undefined, length: 1}, undefined)} ${Array.prototype.lastIndexOf.call({0: undefined, length: 1}, undefined)}`);
+console.log(`${Array.prototype.indexOf.call('', '')} ${Array.prototype.lastIndexOf.call('aba', 'a', Infinity)} ${Array.prototype.indexOf.call('aba', 1)}`);
