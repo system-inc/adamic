@@ -74,3 +74,29 @@ The broader prerequisite-merge gate runs the whole uncached Node oracle and all
 native tests, plus the JavaScript package, in /tmp/scanner-landing-gate.log.
 The whole repository stage1 gate is not claimed. This unit does not run a native
 createScanner or claim that its remaining scanner blockers are cleared.
+
+The broader gate passed internal/native in 194.607s and reached one failure in
+the whole oracle: the imported old TestRealNestedBlockers still expected fixture
+08's truthiness to be refused. Current main accepts it. Fixture 08 now belongs
+to the positive Node oracle instead; its exact source is unchanged and passes
+both backends, sanitizers and the leak check in the focused 0.415s run. Its new
+count row is allocations 6, frees 6, retains 26, releases 31, peak 6, regions 0.
+Final count regeneration passes in 19.685s. The real nested fixture count is
+therefore 9/11 on this branch, because of main's established truthiness policy.
+01 and 09 still have their pinned non-null-policy refusals. This test update
+implements no part of the separate nested-reference unit.
+
+Vet and gofmt pass with empty /tmp/scanner-vet.log and /tmp/scanner-format.log;
+git diff --check passes. A final --no-recurse-submodules main fetch still resolves
+to 48c05d091f0a43c31cbe051b1d6578d99eeedf19, already a parent of this feature.
+The whole uncached oracle rerun is in /tmp/scanner-oracle-final.log.
+
+Final landing result: the whole uncached oracle passes in 123.135s after the
+stale fixture expectation is corrected. The command is
+`ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout 30m`, with
+output saved in /tmp/scanner-oracle-final.log. The complete native package
+already passed in 194.607s; lower passed in 39.004s; JavaScript has no standalone
+tests and is covered by the whole oracle. Counts, vet, gofmt and whitespace are
+green. The table now adds 47 rows relative to the requested main tip: the
+previously published nested/omission fixtures, this overload probe, and fixture
+08 newly held to Node. Existing main rows remain unchanged.
