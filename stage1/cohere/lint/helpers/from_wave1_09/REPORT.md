@@ -1,8 +1,8 @@
-Built: nodesFromStaticDeclarations, private propertySort and ParseValue, one .a file each, removing eighteen listed prerequisites across six Tailwind rules.
+Built: three .a helper candidates, nodesFromStaticDeclarations/private propertySort/ParseValue; eighteen potential prerequisite removals across six Tailwind rules, pending live validation.
 Commits: first claim 4d352341, first delivery f1c61f9e and logs 24416e8e; second claim 87bcfd7e, second delivery f2636e0c; third claim 0441b40c pushed before parser code.
 Checks: three-helper package PASS 61.792s; 17,154 cases match actual Go/source Node/emitted JavaScript/ASan+UBSan native; vet/types/format pass; filtered uncached input oracle PASS 7.056s.
 Mutants: nineteen compiling semantic mutations, five declaration-node, seven property-sort and seven parser, all exit 0 without stderr and fail only comparison on all three execution paths.
-Not covered: whole-rule findings/fixes/suggestions, production integration, arbitrary invalid UTF-8 or full gate; next loader blocked by proven lossy file input and its reservation withdrawn.
+Not covered: live consumer parity (missing Tailwind/Kirk corpus), whole-rule repairs or full gate; next loader blocked by lossy file input and its reservation withdrawn.
 
 ## Observed behavior
 
@@ -119,3 +119,27 @@ Production CSS parser/rule integration and full findings/fixes remain outside th
 All three retained helpers and evidence were pushed at 7fab8c58 before the fourth selection. Fresh wildcard fetch checked 432 origin references and 17 distinct helper claim blobs. The private stylesheetCollector.loadFile tied the largest unclaimed count, six, and was reserved at 2365c934 before probe code. Its actual Go behavior proves a shared input gap: os.ReadFile preserves invalid CSS bytes through theme ingestion, but readTextFile irreversibly replaces them. Go-loaded theme values 80, 81 and ff all become the same ef bf bd input on source Node, emitted JavaScript and sanitized native. Valid ASCII/Unicode controls match. All probes compile and exit 0 without stderr, so this is semantic input disagreement rather than a compiler or sanitizer failure.
 
 See file_loader_gap/BLOCKER.md and evidence/file-loader-gap.log for the exact witness, independent actual Go call and command. Gap detection PASS 2.198s means the mismatch was reproduced, not that the loader is ported. The fourth reservation is explicitly withdrawn from the current claim file, and no loader code or readiness credit is retained. Stopping under Ahra's shared-file ownership instruction; a lossless file-input API is outside this unit's territory. Unclaimed helpers remain. No shared runtime, prelude, parser, harness or registration files were edited.
+
+## Final live-consumer gate: blocked, not a parity pass
+
+After bounded delivery, the original six consumers were run with an oracle-only overlay. Only the three Go function declarations are renamed; wrappers record inputs and delegate to those unchanged bodies. No original test or Go worktree file is edited. Each consumer selects every Test function in its inventory-listed files, including shared reader and live walk tests. Commands, statuses, skip counts and exact function-call counts are in evidence/live-consumers/coverage.json; original test logs and capture output are retained alongside it.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/lint/helpers/from_wave1_09/testdata/capture_consumers.py /tmp/lint-helpers-wave109-live > /tmp/lint-helpers-wave109-live-capture.log 2>&1
+```
+
+| Original consumer | Exit | Skipped subtests | Actual calls to each of the three helpers |
+|---|---:|---:|---:|
+| enforce-canonical-classes | 1 | 38 | 0 |
+| enforce-consistent-class-order | 1 | 58 | 0 |
+| enforce-consistent-variant-order | 0 | 18 | 0 |
+| enforce-shorthand-classes | 0 | 3 | 0 |
+| no-conflicting-classes | 1 | 29 | 0 |
+| no-unknown-classes | 1 | 31 | 0 |
+
+The original coverage guards fail because no installed tailwindcss was found and /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css is absent. Corpus-dependent tests also name that missing project. The two zero exits are skips, not live helper coverage. These missing external inputs cannot be replaced by invented sources and called the original six-consumer gate. Therefore the requested live-consumer bar remains unfinished; the three retained sources are bounded four-way-tested candidates. Eighteen prerequisite removals are potential, conditional on original consumer validation and integration. No rule is marked ready or ported.
+
+The final ownership scan saw 442 origin refs and 17 distinct claim blobs. Its raw string matching also found slot14's historical static-node reservation; that file explicitly withdraws it to our earlier 4d352341 claim and states no executable helper is delivered. There is no active competing claim for any retained helper. The loader feasibility reservation remains withdrawn. Shared runtime, registry, test harness and corpus files are unchanged; the existing untracked shared .generated cache is excluded from commits.
+
+Stopping with both proven blockers recorded: missing original consumer inputs, and the next loader's lossy shared file boundary. No further helper is claimed. Retained helper ownership is kept to avoid duplicate implementation while their original-consumer validation awaits the missing fixtures.
