@@ -1,0 +1,44 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	rules "github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse"
+	"os"
+	"strings"
+	"unicode/utf16"
+)
+
+type Row struct {
+	Root    string
+	Present []string
+}
+
+func written(s string) string {
+	var out strings.Builder
+	for _, r := range s {
+		if r >= 32 && r <= 126 && r != '\\' {
+			out.WriteRune(r)
+		} else if r <= 65535 {
+			fmt.Fprintf(&out, `\u%04x`, r)
+		} else {
+			h, l := utf16.EncodeRune(r)
+			fmt.Fprintf(&out, `\u%04x\u%04x`, h, l)
+		}
+	}
+	return out.String()
+}
+func main() {
+	raw, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var rows []string
+	if err = json.Unmarshal(raw, &rows); err != nil {
+		panic(err)
+	}
+	for i, row := range rows {
+		fmt.Printf("case %d\n", i)
+		fmt.Println("result\t" + written(rules.Wave11EscapeCSSIdentifier(row)))
+	}
+}

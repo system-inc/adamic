@@ -1,0 +1,31 @@
+// Port of cohere collapse/theme.go's CSS identifier serializer.
+// Numeric ASCII tests are serialization rules; the Go helper contains no regex.
+function hexByte(code: number): string {
+    const digits = '0123456789abcdef';
+    const low = code % 16;
+    if (code < 16) { return digits.slice(low, low + 1); }
+    const high = Math.floor(code / 16);
+    return digits.slice(high, high + 1) + digits.slice(low, low + 1);
+}
+export function escapeCssIdentifier(value: string): string {
+    if (value === '-') { return '\\-'; }
+    let result = '';
+    for (let index = 0; index < value.length; index++) {
+        const code = value.charCodeAt(index);
+        if (code === 0) { result += '\ufffd'; continue; }
+        const digit = code >= 48 && code <= 57;
+        if ((code >= 1 && code <= 31) || code === 127 ||
+            (index === 0 && digit) || (index === 1 && digit && value.charCodeAt(0) === 45)) {
+            result += `\\${hexByte(code)} `;
+            continue;
+        }
+        const character = value.slice(index, index + 1);
+        if (code >= 128 || code === 45 || code === 95 || digit ||
+            (code >= 65 && code <= 90) || (code >= 97 && code <= 122)) {
+            result += character;
+        } else {
+            result += '\\' + character;
+        }
+    }
+    return result;
+}

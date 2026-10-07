@@ -1,0 +1,6 @@
+{
+  "name": "leading_hyphen_digit_escape_lost",
+  "file": "tailwind_escape_css_identifier.a",
+  "from": "(index === 1 && digit && value.charCodeAt(0) === 45)",
+  "to": "(index === 1 && digit && value.charCodeAt(0) === 0)"
+}

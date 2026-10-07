@@ -1,0 +1,13 @@
+=== RUN   TestEscapeCssIdentifierMatchesGoWithMutant
+    escape_test.go:33: replaying 8 actual consumer calls and 17050 controls
+        baseline Node equal
+        baseline emitted equal
+        baseline native equal
+        leading_hyphen_digit_escape_lost Node byte-only catch
+        leading_hyphen_digit_escape_lost emitted byte-only catch
+        leading_hyphen_digit_escape_lost native byte-only catch
+        PASS 17058 cases 518507 bytes
+        
+--- PASS: TestEscapeCssIdentifierMatchesGoWithMutant (2.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_11	2.645s

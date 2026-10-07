@@ -1,0 +1,3 @@
+package tailwind
+
+func Wave11EscapeCSSIdentifier(value string) string { return escapeCSSIdentifier(value) }

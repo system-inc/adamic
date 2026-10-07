@@ -1,0 +1,28 @@
+package tailwind
+
+import (
+	rule_testing "github.com/system-inc/cohere/internal/lint/testing"
+	"os"
+	"path/filepath"
+	"testing"
+)
+
+func TestWave11ShorthandCssEscapeProbe(t *testing.T) {
+	packageRoot := classOrderFixturePackageRoot()
+	if packageRoot == "" {
+		t.Fatal("missing installed Tailwind package")
+	}
+	result := rule_testing.RunTypedFilesWithSetup(t, EnforceShorthandClasses, map[string]string{
+		"Component.tsx":                 `const element = <div className="w-wave11 h-wave11" />;`,
+		classOrderFixtureStylesheetPath: `@import "tailwindcss"; @theme { --spacing-wave11: 2px; }`,
+	}, "Component.tsx", func(root string) {
+		modules := filepath.Join(root, "node_modules")
+		if err := os.MkdirAll(modules, 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.Symlink(packageRoot, filepath.Join(modules, "tailwindcss")); err != nil {
+			t.Fatal(err)
+		}
+	})
+	rule_testing.ExpectFindings(t, result, "shorthandClasses")
+}

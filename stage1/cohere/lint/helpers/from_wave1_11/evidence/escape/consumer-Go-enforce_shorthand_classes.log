@@ -1,0 +1,96 @@
+=== RUN   TestEnforceShorthandClassesReports
+=== PAUSE TestEnforceShorthandClassesReports
+=== RUN   TestEnforceShorthandClassesStaysSilent
+=== PAUSE TestEnforceShorthandClassesStaysSilent
+=== RUN   TestEnforceShorthandClassesReportsOncePerFamily
+=== PAUSE TestEnforceShorthandClassesReportsOncePerFamily
+=== RUN   TestEnforceShorthandClassesReportsEachFamilySeparately
+=== PAUSE TestEnforceShorthandClassesReportsEachFamilySeparately
+=== RUN   TestEnforceShorthandClassesSuggestsOnlyClassesThatExist
+=== PAUSE TestEnforceShorthandClassesSuggestsOnlyClassesThatExist
+=== RUN   TestWave11ShorthandCssEscapeProbe
+--- PASS: TestWave11ShorthandCssEscapeProbe (0.02s)
+=== CONT  TestEnforceShorthandClassesReports
+=== RUN   TestEnforceShorthandClassesReports/logical_inline_pair
+=== CONT  TestEnforceShorthandClassesReportsEachFamilySeparately
+=== PAUSE TestEnforceShorthandClassesReports/logical_inline_pair
+=== RUN   TestEnforceShorthandClassesReports/physical_block_pair
+=== PAUSE TestEnforceShorthandClassesReports/physical_block_pair
+=== CONT  TestEnforceShorthandClassesReportsOncePerFamily
+=== CONT  TestEnforceShorthandClassesSuggestsOnlyClassesThatExist
+--- PASS: TestEnforceShorthandClassesReportsEachFamilySeparately (0.00s)
+=== RUN   TestEnforceShorthandClassesReports/all_four_margin_sides
+=== PAUSE TestEnforceShorthandClassesReports/all_four_margin_sides
+=== CONT  TestEnforceShorthandClassesStaysSilent
+=== RUN   TestEnforceShorthandClassesReports/width_and_height
+=== PAUSE TestEnforceShorthandClassesReports/width_and_height
+=== RUN   TestEnforceShorthandClassesReports/all_four_inset_sides
+=== PAUSE TestEnforceShorthandClassesReports/all_four_inset_sides
+=== RUN   TestEnforceShorthandClassesReports/pair_behind_the_same_variant
+=== PAUSE TestEnforceShorthandClassesReports/pair_behind_the_same_variant
+=== RUN   TestEnforceShorthandClassesStaysSilent/values_disagree
+=== RUN   TestEnforceShorthandClassesReports/negative_pair
+=== PAUSE TestEnforceShorthandClassesReports/negative_pair
+=== PAUSE TestEnforceShorthandClassesStaysSilent/values_disagree
+=== RUN   TestEnforceShorthandClassesStaysSilent/variants_disagree
+=== RUN   TestEnforceShorthandClassesReports/pair_with_a_leading_marker
+=== PAUSE TestEnforceShorthandClassesStaysSilent/variants_disagree
+=== RUN   TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees
+=== PAUSE TestEnforceShorthandClassesReports/pair_with_a_leading_marker
+--- PASS: TestEnforceShorthandClassesReportsOncePerFamily (0.00s)
+=== PAUSE TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees
+=== RUN   TestEnforceShorthandClassesReports/pair_with_a_trailing_marker
+=== PAUSE TestEnforceShorthandClassesReports/pair_with_a_trailing_marker
+=== RUN   TestEnforceShorthandClassesReports/pair_with_arbitrary_values
+=== PAUSE TestEnforceShorthandClassesReports/pair_with_arbitrary_values
+=== RUN   TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
+=== PAUSE TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
+=== RUN   TestEnforceShorthandClassesStaysSilent/important_marker_disagrees
+=== CONT  TestEnforceShorthandClassesReports/logical_inline_pair
+=== PAUSE TestEnforceShorthandClassesStaysSilent/important_marker_disagrees
+=== RUN   TestEnforceShorthandClassesStaysSilent/only_one_side_present
+=== CONT  TestEnforceShorthandClassesReports/pair_with_arbitrary_values
+=== CONT  TestEnforceShorthandClassesReports/pair_with_a_trailing_marker
+=== CONT  TestEnforceShorthandClassesReports/pair_with_a_leading_marker
+=== CONT  TestEnforceShorthandClassesReports/width_and_height
+=== CONT  TestEnforceShorthandClassesReports/pair_behind_the_same_variant
+=== CONT  TestEnforceShorthandClassesReports/all_four_inset_sides
+=== CONT  TestEnforceShorthandClassesReports/all_four_margin_sides
+=== CONT  TestEnforceShorthandClassesReports/physical_block_pair
+=== PAUSE TestEnforceShorthandClassesStaysSilent/only_one_side_present
+=== RUN   TestEnforceShorthandClassesStaysSilent/shorthand_already_present
+=== PAUSE TestEnforceShorthandClassesStaysSilent/shorthand_already_present
+=== RUN   TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all
+=== PAUSE TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all
+=== CONT  TestEnforceShorthandClassesStaysSilent/values_disagree
+=== CONT  TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
+=== CONT  TestEnforceShorthandClassesReports/negative_pair
+--- PASS: TestEnforceShorthandClassesReports (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/logical_inline_pair (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_with_arbitrary_values (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_with_a_trailing_marker (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_with_a_leading_marker (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/width_and_height (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_behind_the_same_variant (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/all_four_inset_sides (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/all_four_margin_sides (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/physical_block_pair (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/negative_pair (0.00s)
+=== CONT  TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all
+=== CONT  TestEnforceShorthandClassesStaysSilent/shorthand_already_present
+=== CONT  TestEnforceShorthandClassesStaysSilent/only_one_side_present
+=== CONT  TestEnforceShorthandClassesStaysSilent/important_marker_disagrees
+=== CONT  TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees
+=== CONT  TestEnforceShorthandClassesStaysSilent/variants_disagree
+--- PASS: TestEnforceShorthandClassesStaysSilent (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/values_disagree (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/shorthand_already_present (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/only_one_side_present (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/important_marker_disagrees (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/variants_disagree (0.00s)
+--- PASS: TestEnforceShorthandClassesSuggestsOnlyClassesThatExist (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.031s

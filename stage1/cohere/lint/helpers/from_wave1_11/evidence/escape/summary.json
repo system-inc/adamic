@@ -1,0 +1,20 @@
+{
+  "actualCalls": 8,
+  "distinctInputs": 4,
+  "consumers": {
+    "enforce_consistent_class_order": 1,
+    "enforce_shorthand_classes": 1,
+    "no_conflicting_classes": 4,
+    "no_unknown_classes": 2
+  },
+  "cases": 17058,
+  "bytes": 518507,
+  "stdoutSha256": "2707f43d8564af7191db0b2f82eb103ffb36d441ea1587a690e959bfebfe5589",
+  "mutant": "leading_hyphen_digit_escape_lost",
+  "backends": [
+    "Node",
+    "emitted",
+    "native"
+  ],
+  "onlyByteComparison": true
+}

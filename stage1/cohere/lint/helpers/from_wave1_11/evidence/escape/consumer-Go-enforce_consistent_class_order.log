@@ -1,0 +1,222 @@
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering
+=== RUN   TestEnforceConsistentClassOrderStaysSilent
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent
+=== RUN   TestClassOrderMessageNamesTheOrder
+=== PAUSE TestClassOrderMessageNamesTheOrder
+=== RUN   TestClassOrderFixMatchesThePlugin
+=== PAUSE TestClassOrderFixMatchesThePlugin
+=== RUN   TestClassOrderReportsWithoutAFixItCannotPlace
+=== PAUSE TestClassOrderReportsWithoutAFixItCannotPlace
+=== RUN   TestClassOrderDimensionsAreAllUsed
+=== PAUSE TestClassOrderDimensionsAreAllUsed
+=== RUN   TestClassOrderVariantDimensions
+=== PAUSE TestClassOrderVariantDimensions
+=== RUN   TestClassOrderDepthIsNotADimension
+=== PAUSE TestClassOrderDepthIsNotADimension
+=== RUN   TestClassOrderReadingsKeepCustomProperties
+=== PAUSE TestClassOrderReadingsKeepCustomProperties
+=== RUN   TestClassOrderRootsResolveAgainstTheDesignSystem
+=== PAUSE TestClassOrderRootsResolveAgainstTheDesignSystem
+=== RUN   TestClassOrderMarkersLeadRegardlessOfVariant
+=== PAUSE TestClassOrderMarkersLeadRegardlessOfVariant
+=== RUN   TestClassOrderMarkersKeepSourceOrder
+=== PAUSE TestClassOrderMarkersKeepSourceOrder
+=== RUN   TestClassOrderFixturesActuallyRan
+=== PAUSE TestClassOrderFixturesActuallyRan
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
+=== CONT  TestClassOrderReadingsKeepCustomProperties
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class
+=== CONT  TestClassOrderFixturesActuallyRan
+=== NAME  TestClassOrderReadingsKeepCustomProperties
+    enforce_consistent_class_order_test.go:604: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== CONT  TestClassOrderMarkersLeadRegardlessOfVariant
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class
+--- SKIP: TestClassOrderReadingsKeepCustomProperties (0.00s)
+=== NAME  TestClassOrderMarkersLeadRegardlessOfVariant
+    enforce_consistent_class_order_test.go:672: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
+--- SKIP: TestClassOrderMarkersLeadRegardlessOfVariant (0.00s)
+=== CONT  TestClassOrderMarkersKeepSourceOrder
+    enforce_consistent_class_order_test.go:688: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+--- SKIP: TestClassOrderMarkersKeepSourceOrder (0.00s)
+=== CONT  TestClassOrderDepthIsNotADimension
+    enforce_consistent_class_order_test.go:554: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class
+--- SKIP: TestClassOrderDepthIsNotADimension (0.00s)
+=== CONT  TestClassOrderFixMatchesThePlugin
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first
+=== RUN   TestClassOrderFixMatchesThePlugin/two_classes_reversed
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
+=== PAUSE TestClassOrderFixMatchesThePlugin/two_classes_reversed
+=== CONT  TestClassOrderReportsWithoutAFixItCannotPlace
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch
+=== CONT  TestClassOrderMessageNamesTheOrder
+=== RUN   TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten
+=== RUN   TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal
+=== PAUSE TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole
+=== CONT  TestEnforceConsistentClassOrderStaysSilent
+=== PAUSE TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal
+=== RUN   TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves
+=== PAUSE TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves
+=== RUN   TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order
+=== PAUSE TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order
+=== RUN   TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped
+=== CONT  TestClassOrderVariantDimensions
+=== PAUSE TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/already_ordered
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/already_ordered
+=== NAME  TestClassOrderVariantDimensions
+    enforce_consistent_class_order_test.go:483: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== RUN   TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule
+=== PAUSE TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule
+=== CONT  TestClassOrderDimensionsAreAllUsed
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/base_before_variant
+--- SKIP: TestClassOrderVariantDimensions (0.00s)
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/base_before_variant
+=== NAME  TestClassOrderDimensionsAreAllUsed
+    enforce_consistent_class_order_test.go:426: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+--- SKIP: TestClassOrderDimensionsAreAllUsed (0.00s)
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
+=== CONT  TestClassOrderRootsResolveAgainstTheDesignSystem
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
+=== NAME  TestClassOrderRootsResolveAgainstTheDesignSystem
+    enforce_consistent_class_order_test.go:646: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/single_class
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/single_class
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
+--- SKIP: TestClassOrderRootsResolveAgainstTheDesignSystem (0.00s)
+--- PASS: TestClassOrderFixturesActuallyRan (0.02s)
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
+--- PASS: TestClassOrderMessageNamesTheOrder (0.02s)
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class
+--- PASS: TestEnforceConsistentClassOrderReportsMisordering (0.00s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed (0.02s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface (0.03s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface (0.03s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/variant_before_base (0.01s)
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first
+--- PASS: TestClassOrderLeavesTemplateRunsThePluginLeaves (0.00s)
+    --- PASS: TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class (0.01s)
+    --- PASS: TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat (0.01s)
+    --- PASS: TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole (0.01s)
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class
+=== CONT  TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal
+=== CONT  TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves
+=== CONT  TestClassOrderFixMatchesThePlugin/two_classes_reversed
+=== CONT  TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule
+--- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin (0.00s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class (0.01s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole (0.01s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched (0.01s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first (0.01s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch (0.01s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class (0.01s)
+=== CONT  TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped
+=== CONT  TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order
+--- PASS: TestClassOrderReportsWithoutAFixItCannotPlace (0.00s)
+    --- PASS: TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal (0.01s)
+    --- PASS: TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves (0.01s)
+=== CONT  TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/already_ordered
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+--- PASS: TestClassOrderFixMatchesThePlugin (0.00s)
+    --- PASS: TestClassOrderFixMatchesThePlugin/two_classes_reversed (0.01s)
+    --- PASS: TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule (0.01s)
+    --- PASS: TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped (0.01s)
+    --- PASS: TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order (0.01s)
+    --- PASS: TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten (0.01s)
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/single_class
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/base_before_variant
+--- PASS: TestEnforceConsistentClassOrderStaysSilent (0.00s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/already_ordered (0.00s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/unrelated_callee (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/single_class (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/unranked_class_first (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/base_before_variant (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.109s

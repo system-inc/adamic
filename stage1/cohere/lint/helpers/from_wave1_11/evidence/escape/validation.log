@@ -1,0 +1,8 @@
+actual helper calls 8 coverage {'enforce_consistent_class_order': 1, 'enforce_shorthand_classes': 1, 'no_conflicting_classes': 4, 'no_unknown_classes': 2} total cases 17058
+baseline Node equal
+baseline emitted equal
+baseline native equal
+leading_hyphen_digit_escape_lost Node byte-only catch
+leading_hyphen_digit_escape_lost emitted byte-only catch
+leading_hyphen_digit_escape_lost native byte-only catch
+PASS 17058 cases 518507 bytes

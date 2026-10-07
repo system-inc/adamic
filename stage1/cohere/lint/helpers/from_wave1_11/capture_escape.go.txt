@@ -1,0 +1,28 @@
+package tailwind
+
+import (
+	"encoding/json"
+	"os"
+	"sync"
+)
+
+var wave11EscapeCaptureLock sync.Mutex
+
+func escapeCSSIdentifier(value string) string {
+	result := wave11OriginalEscapeCSSIdentifier(value)
+	row := struct {
+		Value  string `json:"value"`
+		Result string `json:"result"`
+	}{value, result}
+	wave11EscapeCaptureLock.Lock()
+	defer wave11EscapeCaptureLock.Unlock()
+	file, err := os.OpenFile(os.Getenv("WAVE11_ESCAPE_CAPTURE"), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	if err = json.NewEncoder(file).Encode(row); err != nil {
+		panic(err)
+	}
+	return result
+}
