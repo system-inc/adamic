@@ -152,3 +152,7 @@ The owned React oracle now FAILS with Go exit 1 on the native new RegExp(pattern
 ### Strict landing on b84a9d931
 
 Rebased onto lint area b84a9d931, including main c7991b900. All five owned suites ran: twelve rules pass four full suites, while React FAILS on the native runtime RegExp constructor; overall Go exit 1 after 641.942s. No skip and no new claims. The literal helper repeats all 15 comparison/sanitizer controls and its compiled mutant. Exact failed gate and reproducer: wave_03_react/STRICT_LANDING_B84.md and REQUIRED_FAILURE.md. The branch is not described as oracle-green.
+
+### Strict landing after registry migration
+
+Rebased onto lint area b46914832 with all 287 required repository roots retained. Twelve rules pass four full suites, mutants, sanitizers and released-handle checks. React FAILS for native runtime RegExp construction; overall Go exit 1 after 615.691s. No skip and no new claims. See wave_03_react/STRICT_LANDING_B469.md for exact commands, output and the constructor reproducer.
