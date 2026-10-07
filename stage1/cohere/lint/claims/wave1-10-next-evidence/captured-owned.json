@@ -1,0 +1,1870 @@
+{
+  "@typescript-eslint/ban-tslint-comment\tnull\t\t// tslint:disable-line": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "\t// tslint:disable-line",
+    "Outcome": "Fixed",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t\nconst woah = doSomeStuff();\n// tslint:disable-line\nconsole.log(woah);\n      ": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "\nconst woah = doSomeStuff();\n// tslint:disable-line\nconsole.log(woah);\n      ",
+    "Outcome": "Fixed",
+    "FixedSource": "\nconst woah = doSomeStuff();\nconsole.log(woah);\n      ",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/*": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/*",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/*\n tslint:disable\n*/": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/*\n tslint:disable\n*/",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/*   tslint:enable   */": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/*   tslint:enable   */",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/* another comment that mentions tslint */": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/* another comment that mentions tslint */",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/* tslint:disable": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/* tslint:disable",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/* tslint:disable */": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/* tslint:disable */",
+    "Outcome": "Fixed",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/* tslint:disable */let x = 1;": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/* tslint:disable */let x = 1;",
+    "Outcome": "Fixed",
+    "FixedSource": "let x = 1;",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/* tslint:disable:rule1 rule2 rule3... */": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/* tslint:disable:rule1 rule2 rule3... */",
+    "Outcome": "Fixed",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/* tslint:enable */": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/* tslint:enable */",
+    "Outcome": "Fixed",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/* tslint:enable:rule1 rule2 rule3... */": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/* tslint:enable:rule1 rule2 rule3... */",
+    "Outcome": "Fixed",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/**": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/**",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/** tslint:disable */": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/** tslint:disable */",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t/*/": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "/*/",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t//   tslint:disable": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "//   tslint:disable",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t//   tslint:disable-line   ": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "//   tslint:disable-line   ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// TODO: this is a comment that mentions tslint": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// TODO: this is a comment that mentions tslint",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// TSLINT:disable": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// TSLINT:disable",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// some other comment": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// some other comment",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// tslint disable": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// tslint disable",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// tslint:disable": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.tsx",
+    "Source": "// tslint:disable",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// tslint:disable extra": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// tslint:disable extra",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// tslint:disable-foo": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// tslint:disable-foo",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// tslint:disable-line\n// tslint:enable-line\n": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// tslint:disable-line\n// tslint:enable-line\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// tslint:disable-next-line": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// tslint:disable-next-line",
+    "Outcome": "Fixed",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// tslint:disable-next-line:rule1 rule2 rule3...": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// tslint:disable-next-line:rule1 rule2 rule3...",
+    "Outcome": "Fixed",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// tslint:disable:": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// tslint:disable:",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// tslint:disableX": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// tslint:disableX",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// tslint:disabled": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// tslint:disabled",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// tslint:enable-next-line": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// tslint:enable-next-line",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\t// x tslint:disable": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "// x tslint:disable",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\tlet a = new Array();": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "let a = new Array();",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\tlet a: readonly any[] = [];": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "let a: readonly any[] = [];",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\tsomeCode(); // tslint:disable-line": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "someCode(); // tslint:disable-line",
+    "Outcome": "Fixed",
+    "FixedSource": "someCode();",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\tx;  // tslint:disable": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "x;  // tslint:disable",
+    "Outcome": "Fixed",
+    "FixedSource": "x; ",
+    "Options": null
+  },
+  "@typescript-eslint/ban-tslint-comment\tnull\tx;// tslint:disable": {
+    "Rule": "@typescript-eslint/ban-tslint-comment",
+    "File": "/repository/source/Thing.ts",
+    "Source": "x;// tslint:disable",
+    "Outcome": "Fixed",
+    "FixedSource": "x;",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\n(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n})();\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\n(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n})();\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\n(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}).apply(obj);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\n(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}).apply(obj);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\n(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}).apply(void 0);\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\n(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}).apply(void 0);\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\n(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}).call(obj);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\n(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}).call(obj);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\n(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}).call(undefined);\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\n(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}).call(undefined);\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\n/**\n * @returns {void}\n * @this Obj\n */\nfunction foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\n/**\n * @returns {void}\n * @this Obj\n */\nfunction foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\n/** @returns {void} */ function foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\n/** @returns {void} */ function foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\n/** @this Obj */ foo(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\n/** @this Obj */ foo(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\n/** @this Obj */ function foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\n/** @this Obj */ function foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nArray.from(\n  [],\n  function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n  obj,\n);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nArray.from(\n  [],\n  function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n  obj,\n);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nArray.from([], function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nArray.from([], function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nCtor = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nCtor = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nObject.defineProperties(obj, {\n  foo: {\n    value: function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    },\n  },\n});\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nObject.defineProperties(obj, {\n  foo: {\n    value: function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    },\n  },\n});\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nObject.defineProperty(obj, 'foo', {\n  value: function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n});\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nObject.defineProperty(obj, 'foo', {\n  value: function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n});\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nReflect.apply(\n  function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n  obj,\n  [],\n);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nReflect.apply(\n  function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n  obj,\n  [],\n);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\n[\n  func = function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n] = a;\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\n[\n  func = function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n] = a;\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\n[\n  obj.method = function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n] = a;\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\n[\n  obj.method = function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n] = a;\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nclass A {\n  a = 5;\n  b = this.a;\n  accessor c = this.a;\n}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nclass A {\n  a = 5;\n  b = this.a;\n  accessor c = this.a;\n}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nclass A {\n  b = () => {\n    console.log(this);\n  };\n}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nclass A {\n  b = () => {\n    console.log(this);\n  };\n}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nclass A {\n  b = () => {\n    function c() {\n      console.log(this);\n      z(x => console.log(x, this));\n    }\n  };\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nclass A {\n  b = () => {\n    function c() {\n      console.log(this);\n      z(x => console.log(x, this));\n    }\n  };\n}\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nclass A {\n  b = 0;\n  c = this.b;\n}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nclass A {\n  b = 0;\n  c = this.b;\n}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nclass A {\n  b = new Array(1, 2, function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  });\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nclass A {\n  b = new Array(1, 2, function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  });\n}\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nclass A {\n  b = new Array(this, 1, 2, 3);\n}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nclass A {\n  b = new Array(this, 1, 2, 3);\n}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nclass A {\n  constructor() {\n    console.log(this);\n    z(x => console.log(x, this));\n  }\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nclass A {\n  constructor() {\n    console.log(this);\n    z(x => console.log(x, this));\n  }\n}\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nclass A {\n  foo() {\n    console.log(this);\n    z(x => console.log(x, this));\n  }\n}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nclass A {\n  foo() {\n    console.log(this);\n    z(x => console.log(x, this));\n  }\n}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nclass A {\n  foo() {\n    return function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    };\n  }\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nclass A {\n  foo() {\n    return function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    };\n  }\n}\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nclass A {\n  static foo() {\n    console.log(this);\n    z(x => console.log(x, this));\n  }\n}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nclass A {\n  static foo() {\n    console.log(this);\n    z(x => console.log(x, this));\n  }\n}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nconsole.log(this);\nz(x => console.log(x, this));\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nconsole.log(this);\nz(x => console.log(x, this));\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\ndescribe('foo', () => {\n  it('does something', function (this: Mocha.Context) {\n    this.timeout(100);\n    // done\n  });\n});\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\ndescribe('foo', () => {\n  it('does something', function (this: Mocha.Context) {\n    this.timeout(100);\n    // done\n  });\n});\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo(\n  /* @this Obj */ function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo(\n  /* @this Obj */ function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.every(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.every(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.every(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.every(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.filter(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.filter(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.filter(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.filter(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.find(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.find(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.find(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.find(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.findIndex(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.findIndex(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.findIndex(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.findIndex(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.forEach(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.forEach(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.forEach(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, null);\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.forEach(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, null);\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.forEach(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.forEach(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.map(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.map(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.map(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.map(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.some(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.some(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n});\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfoo.some(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfoo.some(function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}, obj);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfunc = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunc = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfunction Foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunction Foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfunction foo(\n  Ctor = function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n) {}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunction foo(\n  Ctor = function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n) {}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfunction foo(\n  func = function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n) {}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunction foo(\n  func = function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n) {}\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfunction foo() {\n  'use strict';\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunction foo() {\n  'use strict';\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfunction foo() {\n  /** @this Obj*/ return function bar() {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunction foo() {\n  /** @this Obj*/ return function bar() {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfunction foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunction foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nfunction foo(this: prop) {\n  this.propMethod();\n}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunction foo(this: prop) {\n  this.propMethod();\n}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\ninterface SomeType {\n  prop: string;\n}\nfunction foo() {\n  this.prop;\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\ninterface SomeType {\n  prop: string;\n}\nfunction foo() {\n  this.prop;\n}\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\ninterface SomeType {\n  prop: string;\n}\nfunction foo(this: SomeType) {\n  this.prop;\n}\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\ninterface SomeType {\n  prop: string;\n}\nfunction foo(this: SomeType) {\n  this.prop;\n}\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nobj.foo =\n  foo ||\n  function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nobj.foo =\n  foo ||\n  function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nobj.foo = (() =>\n  function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  })();\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nobj.foo = (() =>\n  function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  })();\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nobj.foo = (() => () => {\n  console.log(this);\n  z(x => console.log(x, this));\n})();\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nobj.foo = (() => () => {\n  console.log(this);\n  z(x => console.log(x, this));\n})();\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nobj.foo = (function () {\n  return () => {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n})();\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nobj.foo = (function () {\n  return () => {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n})();\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nobj.foo = (function () {\n  return function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n})();\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nobj.foo = (function () {\n  return function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n})();\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nobj.foo = foo\n  ? bar\n  : function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    };\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nobj.foo = foo\n  ? bar\n  : function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    };\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nobj.foo = function () {\n  'use strict';\n  return function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nobj.foo = function () {\n  'use strict';\n  return function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nobj.foo = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nobj.foo = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nobj.foo = function () {\n  return function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nobj.foo = function () {\n  return function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  };\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nreturn function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nreturn function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar Ctor = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar Ctor = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar Foo = function Foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar Foo = function Foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar foo = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}.bar(obj);\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar foo = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}.bar(obj);\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar foo = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}.bind(null);\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar foo = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}.bind(null);\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar foo = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}.bind(obj);\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar foo = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n}.bind(obj);\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar func = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar func = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar obj = {\n  foo() {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar obj = {\n  foo() {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n};\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar obj = {\n  foo() {\n    function foo() {\n      console.log(this);\n      z(x => console.log(x, this));\n    }\n    foo();\n  },\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar obj = {\n  foo() {\n    function foo() {\n      console.log(this);\n      z(x => console.log(x, this));\n    }\n    foo();\n  },\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar obj = {\n  foo:\n    foo ||\n    function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    },\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar obj = {\n  foo:\n    foo ||\n    function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    },\n};\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar obj = {\n  foo: (function () {\n    return function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    };\n  })(),\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar obj = {\n  foo: (function () {\n    return function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    };\n  })(),\n};\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar obj = {\n  foo: function () {\n    'use strict';\n    return function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    };\n  },\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar obj = {\n  foo: function () {\n    'use strict';\n    return function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    };\n  },\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar obj = {\n  foo: function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar obj = {\n  foo: function () {\n    console.log(this);\n    z(x => console.log(x, this));\n  },\n};\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar obj = {\n  foo: function () {\n    function foo() {\n      console.log(this);\n      z(x => console.log(x, this));\n    }\n    foo();\n  },\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar obj = {\n  foo: function () {\n    function foo() {\n      console.log(this);\n      z(x => console.log(x, this));\n    }\n    foo();\n  },\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar obj = {\n  foo: function () {\n    return function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    };\n  },\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar obj = {\n  foo: function () {\n    return function () {\n      console.log(this);\n      z(x => console.log(x, this));\n    };\n  },\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nvar obj = {\n  foo: hasNative\n    ? foo\n    : function () {\n        console.log(this);\n        z(x => console.log(x, this));\n      },\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar obj = {\n  foo: hasNative\n    ? foo\n    : function () {\n        console.log(this);\n        z(x => console.log(x, this));\n      },\n};\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\tnull\t\nz(function (x, this: context) {\n  console.log(x, this);\n});\n    ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nz(function (x, this: context) {\n  console.log(x, this);\n});\n    ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":false}\t\nCtor = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nCtor = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": false
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":false}\t\nfunc = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunc = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": false
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":false}\t\nfunction Foo() {\n  'use strict';\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunction Foo() {\n  'use strict';\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": false
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":false}\t\nfunction Foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunction Foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": false
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":false}\t\nfunction foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunction foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": false
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":false}\t\nvar Ctor = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar Ctor = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": false
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":false}\t\nvar func = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nvar func = function () {\n  console.log(this);\n  z(x => console.log(x, this));\n};\n      ",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": false
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\t\nfunction Foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "\nfunction Foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}\n      ",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\t(function () {\n  this.x;\n}).apply(obj);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "(function () {\n  this.x;\n}).apply(obj);",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\t(function () {\n  this.x;\n}).call(obj);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "(function () {\n  this.x;\n}).call(obj);",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\t/* @this Obj */ /* second */ function bar() {\n  this.x;\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "/* @this Obj */ /* second */ function bar() {\n  this.x;\n}",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\t/* second */ /* @this Obj */ function bar() {\n  this.x;\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "/* second */ /* @this Obj */ function bar() {\n  this.x;\n}",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\t// @this Obj\nfunction bar() {\n  this.x;\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "// @this Obj\nfunction bar() {\n  this.x;\n}",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tArray.from([], function () {\n  this.x;\n}, null);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "Array.from([], function () {\n  this.x;\n}, null);",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tArray.from([], function () {\n  this.x;\n}, obj);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "Array.from([], function () {\n  this.x;\n}, obj);",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tArray.from([], function () {\n  this.x;\n}, undefined);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "Array.from([], function () {\n  this.x;\n}, undefined);",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tArray.fromAsync([], function () {\n  this.x;\n}, null);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "Array.fromAsync([], function () {\n  this.x;\n}, null);",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tArray.fromAsync([], function () {\n  this.x;\n}, obj);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "Array.fromAsync([], function () {\n  this.x;\n}, obj);",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tReflect.apply(function () {\n  this.x;\n}, null, []);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "Reflect.apply(function () {\n  this.x;\n}, null, []);",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tReflect.apply(function () {\n  this.x;\n}, obj, []);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "Reflect.apply(function () {\n  this.x;\n}, obj, []);",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tReflect.apply(function () {\n  this.x;\n}, undefined, []);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "Reflect.apply(function () {\n  this.x;\n}, undefined, []);",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tclass A {\n  [function () {\n    this.x;\n  }]: number = 1;\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "class A {\n  [function () {\n    this.x;\n  }]: number = 1;\n}",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tclass A {\n  foo = function () {\n    this.x;\n  };\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "class A {\n  foo = function () {\n    this.x;\n  };\n}",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tclass A {\n  foo() {\n    console.log(this);\n    z(x => console.log(x, this));\n  }\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "class A {\n  foo() {\n    console.log(this);\n    z(x => console.log(x, this));\n  }\n}",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfoo.forEach(function () {\n  this.x;\n}, null);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "foo.forEach(function () {\n  this.x;\n}, null);",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction foo() {\n  /**\n   * @this Obj\n   */ return function bar() {\n    this.x;\n  };\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function foo() {\n  /**\n   * @this Obj\n   */ return function bar() {\n    this.x;\n  };\n}",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction foo() {\n  /** @nothis Obj*/ return function bar() {\n    this.x;\n  };\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function foo() {\n  /** @nothis Obj*/ return function bar() {\n    this.x;\n  };\n}",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction foo() {\n  /** @this Obj*/ const q = 1;\n  return function bar() {\n    this.x;\n  };\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function foo() {\n  /** @this Obj*/ const q = 1;\n  return function bar() {\n    this.x;\n  };\n}",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction foo() {\n  /** @this Obj*/ if (a) {\n    return function bar() {\n      this.x;\n    };\n  }\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function foo() {\n  /** @this Obj*/ if (a) {\n    return function bar() {\n      this.x;\n    };\n  }\n}",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction foo() {\n  /** @this Obj*/ return (function bar() {\n    this.x;\n  });\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function foo() {\n  /** @this Obj*/ return (function bar() {\n    this.x;\n  });\n}",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction foo() {\n  /** @this Obj*/ var q = function bar() {\n    this.x;\n  };\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function foo() {\n  /** @this Obj*/ var q = function bar() {\n    this.x;\n  };\n}",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction foo() {\n  /** @thisx Obj*/ return function bar() {\n    this.x;\n  };\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function foo() {\n  /** @thisx Obj*/ return function bar() {\n    this.x;\n  };\n}",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function foo() {\n  console.log(this);\n  z(x => console.log(x, this));\n}",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction foo() {\n  console.log(this);\n}\n": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function foo() {\n  console.log(this);\n}\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction foo() {\n  return function bar() {\n    this.x;\n  };\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function foo() {\n  return function bar() {\n    this.x;\n  };\n}",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction foo() {\n  this.x;\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function foo() {\n  this.x;\n}",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tfunction \u01c5oo() {\n  this.x;\n}": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "function \u01c5oo() {\n  this.x;\n}",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tobj.foo = (() =>\n  function () {\n    this.x;\n  })();": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "obj.foo = (() =>\n  function () {\n    this.x;\n  })();",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tobj.foo = (function () {\n  return function () {\n    this.x;\n  };\n})();": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "obj.foo = (function () {\n  return function () {\n    this.x;\n  };\n})();",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tobj.foo = (function () {\n  this.x;\n});": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "obj.foo = (function () {\n  this.x;\n});",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tobj['foo'] = function () {\n  this.x;\n};": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "obj['foo'] = function () {\n  this.x;\n};",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tobj[0] = function () {\n  this.x;\n};": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "obj[0] = function () {\n  this.x;\n};",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tvar foo = (function () {\n  this.x;\n}).bind(obj);": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "var foo = (function () {\n  this.x;\n}).bind(obj);",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tvar foo = function () {\n  this.x;\n};": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "var foo = function () {\n  this.x;\n};",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tvar obj = {\n  [function () {\n    this.x;\n  }]: 1,\n};": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "var obj = {\n  [function () {\n    this.x;\n  }]: 1,\n};",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tvar obj = {\n  foo: function () {\n    this.x;\n  },\n};": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "var obj = {\n  foo: function () {\n    this.x;\n  },\n};",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tvar q = {\n  bind: function () {\n    this.x;\n  },\n};": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "var q = {\n  bind: function () {\n    this.x;\n  },\n};",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tvar \u01c5oo = function () {\n  this.x;\n};": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "var \u01c5oo = function () {\n  this.x;\n};",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tz(/* @this Obj */ 1, function () {\n  this.x;\n});": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "z(/* @this Obj */ 1, function () {\n  this.x;\n});",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "@typescript-eslint/no-invalid-this\t{\"CapIsConstructor\":true}\tz(/* @this Obj */ function () {\n  this.x;\n});": {
+    "Rule": "@typescript-eslint/no-invalid-this",
+    "File": "/repository/source/InvalidThis.ts",
+    "Source": "z(/* @this Obj */ function () {\n  this.x;\n});",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": {
+      "CapIsConstructor": true
+    }
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = '';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = '';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'before:absolute before:top-1/2 before:left-1/2 before:size-full';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'before:absolute before:top-1/2 before:left-1/2 before:size-full';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'border-s-2 rounded-e-md';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'border-s-2 rounded-e-md';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'fixed top-[50%] left-[50%] z-50 outline-none';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'fixed top-[50%] left-[50%] z-50 outline-none';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex -ml-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex -ml-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex -text-left';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex -text-left';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex border-l';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex border-l';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex border-l-2';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex border-l-2';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex border-r';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex border-r';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex border-r-2';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex border-r-2';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex left-0';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex left-0';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex ltr:mr-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex ltr:mr-4';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex md:hover:ml-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex md:hover:ml-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex md:ml-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex md:ml-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex md:rtl:ml-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex md:rtl:ml-4';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex ml-';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex ml-';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex ml-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex ml-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex mlauto';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex mlauto';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex mr-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex mr-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex ms-4 me-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex ms-4 me-4';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex overflow-hidden';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex overflow-hidden';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex pl-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex pl-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex pr-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex pr-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex ps-4 pe-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex ps-4 pe-4';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex right-0';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex right-0';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex rounded-l';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex rounded-l';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex rounded-l-md';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex rounded-l-md';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex rounded-r';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex rounded-r';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex rounded-r-md';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex rounded-r-md';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex rtl:ml-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex rtl:ml-4';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex scroll-ml-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex scroll-ml-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex scroll-mr-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex scroll-mr-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex scroll-pl-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex scroll-pl-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex scroll-pr-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex scroll-pr-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex start-0 end-0';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex start-0 end-0';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex text-left';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex text-left';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex text-right';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex text-right';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'flex text-start text-end';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'flex text-start text-end';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = 'ml-4 mr-4';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = 'ml-4 mr-4';\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = <div className=\"flex ml-4\" />;\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = <div className=\"flex ml-4\" />;\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = `flex ${other} ml-4`;\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = `flex ${other} ml-4`;\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = `flex ml-4 ${other}`;\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = `flex ml-4 ${other}`;\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = `flex ml-4`;\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = `flex ml-4`;\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const c = mergeClassNames('flex ml-4');\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const c = mergeClassNames('flex ml-4');\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const key = 'someIdentifierName';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const key = 'someIdentifierName';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const link = 'See docs/text-left.md';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const link = 'See docs/text-left.md';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const message = 'Align the text to the left side';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const message = 'Align the text to the left side';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const message = 'You have items left in your cart';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const message = 'You have items left in your cart';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const note = 'ml-4;';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const note = 'ml-4;';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const path = '/repository/source/Thing.ts';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const path = '/repository/source/Thing.ts';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const theme = [\n    'flex items-center',\n    'fixed left-[50%]',\n];\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const theme = [\n    'flex items-center',\n    'fixed left-[50%]',\n];\n",
+    "Outcome": "Findings",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const token = '{{ml-4}}';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const token = '{{ml-4}}';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  },
+  "structure/tailwind-no-physical-direction\tnull\texport const url = 'https://example.com/left/right';\n": {
+    "Rule": "structure/tailwind-no-physical-direction",
+    "File": "/repository/source/components/Thing.tsx",
+    "Source": "export const url = 'https://example.com/left/right';\n",
+    "Outcome": "Clean",
+    "FixedSource": "",
+    "Options": null
+  }
+}
