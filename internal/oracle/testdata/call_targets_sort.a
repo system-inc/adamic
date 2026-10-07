@@ -1,0 +1,14 @@
+interface Item {
+    readonly label: string;
+}
+function compare(left: Item, right: Item): number {
+    const copy = { ...left, label: `${left.label}!` };
+    return copy.label.length - right.label.length;
+}
+function run(): void {
+    const items: Item[] = [{ label: `item${1}` }, { label: `longer${22}` }];
+    items.sort(compare);
+    console.log(`${items[0]?.label}`);
+    console.log(`${items[1]?.label}`);
+}
+run();
