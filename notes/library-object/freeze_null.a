@@ -1,1 +1,0 @@
-console.log(`${Object.is(Object.freeze(null), null)}`);

@@ -1,8 +1,0 @@
-const empty = {};
-console.log(`${Object.isSealed(empty)} ${Object.isFrozen(empty)} ${Object.isExtensible(empty)}`);
-Object.seal(empty);
-console.log(`${Object.isSealed(empty)} ${Object.isFrozen(empty)} ${Object.isExtensible(empty)}`);
-console.log(`${Object.keys(empty).length} ${Object.getOwnPropertyNames(empty).length}`);
-const frozen = {};
-Object.freeze(frozen);
-console.log(`${Object.isSealed(frozen)} ${Object.isFrozen(frozen)} ${Object.isExtensible(frozen)}`);

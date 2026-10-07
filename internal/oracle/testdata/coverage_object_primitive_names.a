@@ -1,6 +1,0 @@
-for (const text of ['', 'x', '🌍', '\ud800', 'e\u0301']) {
- console.log(Object.keys(text).join('|'));
- console.log(Object.getOwnPropertyNames(text).join('|'));
-}
-for (const number of [0, -0, NaN, Infinity, -Infinity, 3]) console.log(`${Object.keys(number).length} ${Object.getOwnPropertyNames(number).length}`);
-for (const flag of [true, false]) console.log(`${Object.keys(flag).length} ${Object.getOwnPropertyNames(flag).length}`);

@@ -1,2 +1,0 @@
-const value = { plain: 1, '2': 2 };
-console.log(`${value.isPrototypeOf({})}`);

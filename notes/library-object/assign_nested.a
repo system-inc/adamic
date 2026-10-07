@@ -1,3 +1,0 @@
-const target = { plain: { n: 1 } };
-Object.assign(target, { plain: { n: 2 } });
-console.log(`${target.plain.n}`);

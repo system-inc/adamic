@@ -1,2 +1,0 @@
-const value = { '2': { n: 2 }, plain: { n: 1 } };
-for (const entry of Object.values(value)) console.log(`${entry.n}`);
