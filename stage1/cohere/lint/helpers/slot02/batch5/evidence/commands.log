@@ -1,0 +1,13 @@
+bash cloud/setup.sh > stage1/cohere/lint/helpers/slot02/batch5/evidence/setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+nproc > stage1/cohere/lint/helpers/slot02/batch5/evidence/nproc.log
+python3 stage1/cohere/lint/helpers/slot02/batch5/testdata/regenerate.py > stage1/cohere/lint/helpers/slot02/batch5/evidence/regenerate.log 2>&1
+go test ./stage1/cohere/lint/helpers -run '^TestSlot02Batch5$' -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot02/batch5/evidence/helpers-initial.log 2>&1
+Initial driver compilation failed because OptionValue has no bool field. Changed the driver to read the existing boolean node text; no shared file was edited.
+go test ./stage1/cohere/lint/helpers -run '^TestSlot02Batch5$' -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot02/batch5/evidence/helpers.log 2>&1
+The first full-package run was interrupted for a new slice-header concern and renamed helpers-full-interrupted.log; it is not counted as passing validation.
+go test ./stage1/cohere/lint/helpers -run '^TestSlot02Batch5$' -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot02/batch5/evidence/helpers-header.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot02/batch5/evidence/helpers-full.log 2>&1
+go vet ./stage1/cohere/lint/helpers > stage1/cohere/lint/helpers/slot02/batch5/evidence/vet.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v > stage1/cohere/lint/helpers/slot02/batch5/evidence/oracle.log 2>&1
+The reproducibility script hashes both artifacts, reruns regenerate.py to regenerate-repeat.log and asserts identical SHA-256 hashes in reproducibility.log.

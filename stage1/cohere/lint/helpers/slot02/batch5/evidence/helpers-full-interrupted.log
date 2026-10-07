@@ -1,0 +1,48 @@
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:101: 22412 oracle output lines matched Go, Node and sanitized native
+--- PASS: TestHelpersMatchCohere (19.27s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/options_json.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/option_schema.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/policy_message.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare `{{constructor}}`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare `sentinel é😀`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+=== RUN   TestHelperMutants/strict_options.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+--- PASS: TestHelperMutants (40.92s)
+    --- PASS: TestHelperMutants/options_json.ts (8.14s)
+    --- PASS: TestHelperMutants/option_schema.ts (8.04s)
+    --- PASS: TestHelperMutants/policy_message.ts (7.98s)
+    --- PASS: TestHelperMutants/strict_options.ts (8.17s)
+=== RUN   TestMessageRefusalsMatchGo
+    helpers_test.go:237: 10 message refusal cases match Go on Node and sanitized native
+--- PASS: TestMessageRefusalsMatchGo (7.68s)
+=== RUN   TestKnownGapsAreExplicit
+--- PASS: TestKnownGapsAreExplicit (2.47s)
+=== RUN   TestSlot02Batch2
+    slot02_batch2_test.go:75: tailwind.*ClassLiteralReader.ClassLiteralsIn: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:75: tailwind.SplitClasses: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:75: react.IsNamespacedMember: 10 consumers with actual runtime capture
+    slot02_batch2_test.go:100: 813 captured inputs; 559 distinct parsed sources; 10303 node projections; 232 split texts; 10304 literal projections; 1114112 separator candidates
+    slot02_batch2_test.go:129: Actual Go, Node source, emitted JavaScript and ASan/UBSan native agree
+=== RUN   TestSlot02Batch2/namespace_guard
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 433: got "true:1:useState"; Go "false:0:"
+=== RUN   TestSlot02Batch2/drop_partial_fields
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 30915: got "split:2"; Go "split:1"
+=== RUN   TestSlot02Batch2/Unicode_whitespace
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 30927: got "split:1"; Go "split:2"
+=== RUN   TestSlot02Batch2/shared_slice
+    slot02_batch2_test.go:173: compiled semantic mutant caught at line 31591: got "literals:1:false:0"; Go "literals:1:true:0"
+--- PASS: TestSlot02Batch2 (39.62s)
+    --- PASS: TestSlot02Batch2/namespace_guard (6.97s)
+    --- PASS: TestSlot02Batch2/drop_partial_fields (7.30s)
+    --- PASS: TestSlot02Batch2/Unicode_whitespace (8.71s)
+    --- PASS: TestSlot02Batch2/shared_slice (7.61s)
+=== RUN   TestSlot02Batch3
+    slot02_batch3_test.go:75: react.IsEs5ComponentCall: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:75: react.isCreateClassName: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:75: tailwind/collapse.isMathFunctionName: 6 consumers with actual runtime capture
+    slot02_batch3_test.go:126: 583 captured inputs; 580 distinct parsed sources; 11627 nodes; 371 factory names; 1247 math names
+signal: interrupt
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	113.219s

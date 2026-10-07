@@ -1,0 +1,10 @@
+=== RUN   TestSlot02Batch5
+    slot02_batch5_test.go:75: tailwind/collapse.DesignSystem.HasUtility: 6 consumers with actual runtime capture
+    slot02_batch5_test.go:75: tailwind/collapse.findRoots: 6 consumers with actual runtime capture
+    slot02_batch5_test.go:75: tailwind/collapse.PropertySort: 6 consumers with actual runtime capture
+    slot02_batch5_test.go:118: 157 captured inputs; 2633 distinct texts; 2186 parsed candidates; 5 stores; 1410 sort trees
+    slot02_batch5_test.go:146: /workspace/adamic/stage1/cohere/lint/helpers/slot02/batch5/main.a:20:96: error TS2339: Property 'bool' does not exist on type 'OptionValue'.
+--- FAIL: TestSlot02Batch5 (6.84s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers	6.849s
+FAIL

@@ -1,0 +1,42 @@
+=== RUN   TestSlot02Batch5
+    slot02_batch5_test.go:75: tailwind/collapse.DesignSystem.HasUtility: 6 consumers with actual runtime capture
+    slot02_batch5_test.go:75: tailwind/collapse.findRoots: 6 consumers with actual runtime capture
+    slot02_batch5_test.go:75: tailwind/collapse.PropertySort: 6 consumers with actual runtime capture
+    slot02_batch5_test.go:118: 157 captured inputs; 2633 distinct texts; 2186 parsed candidates; 5 stores; 1410 sort trees
+    slot02_batch5_test.go:147: Actual Go, Node source, emitted JavaScript and sanitized native agree
+=== RUN   TestSlot02Batch5/repository_precedence
+    slot02_batch5_test.go:198: compiled semantic mutant caught at line 13168: got "utility:false"; Go "utility:true"
+=== RUN   TestSlot02Batch5/static_presence
+    slot02_batch5_test.go:198: compiled semantic mutant caught at line 11656: got "utility:false"; Go "utility:true"
+=== RUN   TestSlot02Batch5/functional_truth
+    slot02_batch5_test.go:198: compiled semantic mutant caught at line 11662: got "utility:true"; Go "utility:false"
+=== RUN   TestSlot02Batch5/exact_root_first
+    slot02_batch5_test.go:198: compiled semantic mutant caught at line 65827: got "calls:0"; Go "calls:1"
+=== RUN   TestSlot02Batch5/empty_value_stop
+    slot02_batch5_test.go:198: compiled semantic mutant caught at line 75978: got "roots:2"; Go "roots:0"
+=== RUN   TestSlot02Batch5/at_fallback_after_dash_stop
+    slot02_batch5_test.go:198: compiled semantic mutant caught at line 72358: got "roots:1"; Go "roots:2"
+=== RUN   TestSlot02Batch5/at_callback_short_circuit
+    slot02_batch5_test.go:198: compiled semantic mutant caught at line 65847: got "calls:3"; Go "calls:2"
+=== RUN   TestSlot02Batch5/sort_count
+    slot02_batch5_test.go:198: compiled semantic mutant caught at line 120863: got "sort:1:[]"; Go "sort:0:[]"
+=== RUN   TestSlot02Batch5/sort_order_alias
+    slot02_batch5_test.go:198: compiled semantic mutant caught at line 120871: got "alias:2:[39]"; Go "alias:2:[1039]"
+=== RUN   TestSlot02Batch5/sort_count_value_semantics
+    slot02_batch5_test.go:198: compiled semantic mutant caught at line 120865: got "alias:1000:[]"; Go "alias:0:[]"
+=== RUN   TestSlot02Batch5/sort_node_identity
+    slot02_batch5_test.go:198: compiled semantic mutant caught at line 120870: got "trace:1:false"; Go "trace:1:true"
+--- PASS: TestSlot02Batch5 (49.01s)
+    --- PASS: TestSlot02Batch5/repository_precedence (4.12s)
+    --- PASS: TestSlot02Batch5/static_presence (4.92s)
+    --- PASS: TestSlot02Batch5/functional_truth (3.81s)
+    --- PASS: TestSlot02Batch5/exact_root_first (3.99s)
+    --- PASS: TestSlot02Batch5/empty_value_stop (4.14s)
+    --- PASS: TestSlot02Batch5/at_fallback_after_dash_stop (4.46s)
+    --- PASS: TestSlot02Batch5/at_callback_short_circuit (3.96s)
+    --- PASS: TestSlot02Batch5/sort_count (3.78s)
+    --- PASS: TestSlot02Batch5/sort_order_alias (3.98s)
+    --- PASS: TestSlot02Batch5/sort_count_value_semantics (3.84s)
+    --- PASS: TestSlot02Batch5/sort_node_identity (3.52s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	49.017s
