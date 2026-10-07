@@ -1,4 +1,0 @@
-# github.com/system-inc/adamic/stage1/cohere/lint [github.com/system-inc/adamic/stage1/cohere/lint.test]
-stage1/cohere/lint/profile_test.go:32:23: cannot range over portFiles (value of type func(t *testing.T) []string): func must be func(yield func(...) bool): unexpected results
-FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
-FAIL

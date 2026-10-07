@@ -1,6 +1,0 @@
-{
-  "name": "tailwind-direction-aware-exemption-removed",
-  "file": "rule.a",
-  "from": "if(prefixes.includes('rtl') || prefixes.includes('ltr')) continue;",
-  "to": "if(prefixes.includes('never')) continue;"
-}

@@ -1,0 +1,69 @@
+=== RUN   TestWave13Mutants
+=== RUN   TestWave13Mutants/delay-resolve-name-ignored
+    lint_test.go:734: delay-resolve-name-ignored caught only by comparison on Node: case 0 line 2: port "fixed\tasync function poll(milliseconds: number) {\\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\\u000a}\\u000a", Go "/tmp/adamic-gate/TestWave13Mutantsdelay-resolve-name-ignored611741677/001/nexus-consistency-no-hand-rolled-delay-0.ts:2:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13Mutantsdelay-resolve-name-ignored611741677/001/nexus-consistency-no-hand-rolled-delay-0.ts:2:11
+          nexus/consistency-no-hand-rolled-delay  This `new Promise` around a `setTimeout` is a hand-rolled `delay`. Write `await delay(milliseconds);` with `import { delay } from '@nexus/source/coordination/Delay';`. The promise does nothing but resolve after a timer, which is exactly what `delay` does, and spelling it out at every call site makes the reader check each one for the variant it might be (a value passed to `resolve`, a timer kept for cancelling, a reject path) before they can read past it. One named wait says it is a plain wait.
+        
+        range 54 113 handRolledDelay 		
+        fixed	async function poll(milliseconds: number) {\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\u000a}\u000a
+    lint_test.go:734: delay-resolve-name-ignored caught only by comparison on native: case 0 line 2: port "fixed\tasync function poll(milliseconds: number) {\\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\\u000a}\\u000a", Go "/tmp/adamic-gate/TestWave13Mutantsdelay-resolve-name-ignored611741677/001/nexus-consistency-no-hand-rolled-delay-0.ts:2:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13Mutantsdelay-resolve-name-ignored611741677/001/nexus-consistency-no-hand-rolled-delay-0.ts:2:11
+          nexus/consistency-no-hand-rolled-delay  This `new Promise` around a `setTimeout` is a hand-rolled `delay`. Write `await delay(milliseconds);` with `import { delay } from '@nexus/source/coordination/Delay';`. The promise does nothing but resolve after a timer, which is exactly what `delay` does, and spelling it out at every call site makes the reader check each one for the variant it might be (a value passed to `resolve`, a timer kept for cancelling, a reject path) before they can read past it. One named wait says it is a plain wait.
+        
+        range 54 113 handRolledDelay 		
+        fixed	async function poll(milliseconds: number) {\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\u000a}\u000a
+    lint_test.go:734: delay-resolve-name-ignored caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tasync function poll(milliseconds: number) {\\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\\u000a}\\u000a", Go "/tmp/adamic-gate/TestWave13Mutantsdelay-resolve-name-ignored611741677/001/nexus-consistency-no-hand-rolled-delay-0.ts:2:11"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13Mutantsdelay-resolve-name-ignored611741677/001/nexus-consistency-no-hand-rolled-delay-0.ts:2:11
+          nexus/consistency-no-hand-rolled-delay  This `new Promise` around a `setTimeout` is a hand-rolled `delay`. Write `await delay(milliseconds);` with `import { delay } from '@nexus/source/coordination/Delay';`. The promise does nothing but resolve after a timer, which is exactly what `delay` does, and spelling it out at every call site makes the reader check each one for the variant it might be (a value passed to `resolve`, a timer kept for cancelling, a reject path) before they can read past it. One named wait says it is a plain wait.
+        
+        range 54 113 handRolledDelay 		
+        fixed	async function poll(milliseconds: number) {\u000a    await new Promise((resolve) => setTimeout(resolve, milliseconds));\u000a}\u000a
+=== RUN   TestWave13Mutants/return-void-braces-omitted
+    lint_test.go:734: return-void-braces-omitted caught only by comparison on Node: case 0 line 5: port "range 46 65 returnVoid fix\tstop(); return;\t", Go "range 46 65 returnVoid fix\t{ stop(); return; }\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13Mutantsreturn-void-braces-omitted2685577669/001/nexus-consistency-no-return-void-0.ts:2:16
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 46 65 returnVoid fix	{ stop(); return; }	
+        /tmp/adamic-gate/TestWave13Mutantsreturn-void-braces-omitted2685577669/001/nexus-consistency-no-return-void-0.ts:3:5
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 70 89 returnVoid fix	save();\u000a    return;	
+    lint_test.go:734: return-void-braces-omitted caught only by comparison on native: case 0 line 5: port "range 46 65 returnVoid fix\tstop(); return;\t", Go "range 46 65 returnVoid fix\t{ stop(); return; }\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13Mutantsreturn-void-braces-omitted2685577669/001/nexus-consistency-no-return-void-0.ts:2:16
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 46 65 returnVoid fix	{ stop(); return; }	
+        /tmp/adamic-gate/TestWave13Mutantsreturn-void-braces-omitted2685577669/001/nexus-consistency-no-return-void-0.ts:3:5
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 70 89 returnVoid fix	save();\u000a    return;	
+    lint_test.go:734: return-void-braces-omitted caught only by comparison on emitted JavaScript: case 0 line 5: port "range 46 65 returnVoid fix\tstop(); return;\t", Go "range 46 65 returnVoid fix\t{ stop(); return; }\t"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13Mutantsreturn-void-braces-omitted2685577669/001/nexus-consistency-no-return-void-0.ts:2:16
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 46 65 returnVoid fix	{ stop(); return; }	
+        /tmp/adamic-gate/TestWave13Mutantsreturn-void-braces-omitted2685577669/001/nexus-consistency-no-return-void-0.ts:3:5
+          nexus/consistency-no-return-void  `return void <expression>;` folds two statements into one: it runs the expression, throws its value away, and exits. Write the expression as its own statement, then `return;`. The `void` operator is how this codebase marks a promise dropped on purpose, so spending it to squeeze a `console.log` into a return makes the reader stop and work out which of the two is meant, and it hides a second statement inside a line that looks like an exit.
+        
+        range 70 89 returnVoid fix	save();\u000a    return;	
+--- PASS: TestWave13Mutants (30.77s)
+    --- PASS: TestWave13Mutants/delay-resolve-name-ignored (11.64s)
+    --- PASS: TestWave13Mutants/return-void-braces-omitted (11.28s)
+=== RUN   TestParkingWitnesses
+    lint_test.go:864: Go, Node, native identical: 2200 bytes
+    lint_test.go:873: fresh current-main Go witness comparison: 2 rows
+--- PASS: TestParkingWitnesses (14.32s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	45.093s

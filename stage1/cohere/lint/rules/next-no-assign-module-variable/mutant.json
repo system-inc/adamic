@@ -1,6 +1,0 @@
-{
-  "name": "next-no-assign-module-variable-wrong-answer",
-  "file": "rule.a",
-  "from": "text !== 'module'",
-  "to": "text !== 'moduleName'"
-}

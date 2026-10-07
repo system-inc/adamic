@@ -1,0 +1,86 @@
+=== RUN   TestWave13LoopsMutants
+=== RUN   TestWave13LoopsMutants/default-case-last-semantic-mutant
+    lint_test.go:762: default-case-last-semantic-mutant caught only by comparison on Node: case 0 line 2: port "fixed\tswitch (value) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestWave13LoopsMutantsdefault-case-last-semantic-mutant2731443261/001/default-case-last-0.ts:1:18"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13LoopsMutantsdefault-case-last-semantic-mutant2731443261/001/default-case-last-0.ts:1:18
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 17 32 notLast 		
+        fixed	switch (value) { default: break; case 1: break; }\u000a
+    lint_test.go:762: default-case-last-semantic-mutant caught only by comparison on native: case 0 line 2: port "fixed\tswitch (value) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestWave13LoopsMutantsdefault-case-last-semantic-mutant2731443261/001/default-case-last-0.ts:1:18"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13LoopsMutantsdefault-case-last-semantic-mutant2731443261/001/default-case-last-0.ts:1:18
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 17 32 notLast 		
+        fixed	switch (value) { default: break; case 1: break; }\u000a
+    lint_test.go:762: default-case-last-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tswitch (value) { default: break; case 1: break; }\\u000a", Go "/tmp/adamic-gate/TestWave13LoopsMutantsdefault-case-last-semantic-mutant2731443261/001/default-case-last-0.ts:1:18"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13LoopsMutantsdefault-case-last-semantic-mutant2731443261/001/default-case-last-0.ts:1:18
+          default-case-last  This `default` clause is not the last one in its `switch`. A reader scanning the clauses in order expects the fallback at the bottom, and a `default` sitting in the middle also falls through into whatever case follows it when its body has no `break`, which is a control flow almost nobody writes on purpose. Move it to the end.
+        
+        range 17 32 notLast 		
+        fixed	switch (value) { default: break; case 1: break; }\u000a
+=== RUN   TestWave13LoopsMutants/for-direction-semantic-mutant
+    lint_test.go:762: for-direction-semantic-mutant caught only by comparison on Node: case 0 line 2: port "fixed\tfor(let i = 0; i < 10; i--) {}\\u000a", Go "/tmp/adamic-gate/TestWave13LoopsMutantsfor-direction-semantic-mutant1755937586/001/for-direction-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13LoopsMutantsfor-direction-semantic-mutant1755937586/001/for-direction-0.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 30 incorrectDirection 		
+        fixed	for(let i = 0; i < 10; i--) {}\u000a
+    lint_test.go:762: for-direction-semantic-mutant caught only by comparison on native: case 0 line 2: port "fixed\tfor(let i = 0; i < 10; i--) {}\\u000a", Go "/tmp/adamic-gate/TestWave13LoopsMutantsfor-direction-semantic-mutant1755937586/001/for-direction-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13LoopsMutantsfor-direction-semantic-mutant1755937586/001/for-direction-0.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 30 incorrectDirection 		
+        fixed	for(let i = 0; i < 10; i--) {}\u000a
+    lint_test.go:762: for-direction-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tfor(let i = 0; i < 10; i--) {}\\u000a", Go "/tmp/adamic-gate/TestWave13LoopsMutantsfor-direction-semantic-mutant1755937586/001/for-direction-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13LoopsMutantsfor-direction-semantic-mutant1755937586/001/for-direction-0.ts:1:1
+          for-direction  The update clause of this loop moves the counter away from the condition, so the condition can never become false and the loop runs forever. Nothing about this fails to compile and nothing throws: the program simply stops making progress, which is why it is usually found by a hung process rather than by reading the loop.
+        
+        range 0 30 incorrectDirection 		
+        fixed	for(let i = 0; i < 10; i--) {}\u000a
+=== RUN   TestWave13LoopsMutants/guard-for-in-semantic-mutant
+    lint_test.go:762: guard-for-in-semantic-mutant caught only by comparison on Node: case 0 line 2: port "fixed\tfor(const key in object) { use(key); }\\u000a", Go "/tmp/adamic-gate/TestWave13LoopsMutantsguard-for-in-semantic-mutant2555376295/001/guard-for-in-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13LoopsMutantsguard-for-in-semantic-mutant2555376295/001/guard-for-in-0.ts:1:1
+          guard-for-in  This `for-in` loop visits inherited properties as well as the object's own. `for-in` walks the whole prototype chain, so anything added to `Object.prototype` by a library, a polyfill, or older code shows up as another iteration, and the body runs on a key the object never declared. The usual symptom is a serializer emitting a phantom field or a counter that is one too high, on a machine where some other package loaded first. Guard the body with `if (Object.prototype.hasOwnProperty.call(o, key))`, or use `Object.keys(o)`, which returns own enumerable keys and needs no guard.
+        
+        range 0 38 wrap 		
+        fixed	for(const key in object) { use(key); }\u000a
+    lint_test.go:762: guard-for-in-semantic-mutant caught only by comparison on native: case 0 line 2: port "fixed\tfor(const key in object) { use(key); }\\u000a", Go "/tmp/adamic-gate/TestWave13LoopsMutantsguard-for-in-semantic-mutant2555376295/001/guard-for-in-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13LoopsMutantsguard-for-in-semantic-mutant2555376295/001/guard-for-in-0.ts:1:1
+          guard-for-in  This `for-in` loop visits inherited properties as well as the object's own. `for-in` walks the whole prototype chain, so anything added to `Object.prototype` by a library, a polyfill, or older code shows up as another iteration, and the body runs on a key the object never declared. The usual symptom is a serializer emitting a phantom field or a counter that is one too high, on a machine where some other package loaded first. Guard the body with `if (Object.prototype.hasOwnProperty.call(o, key))`, or use `Object.keys(o)`, which returns own enumerable keys and needs no guard.
+        
+        range 0 38 wrap 		
+        fixed	for(const key in object) { use(key); }\u000a
+    lint_test.go:762: guard-for-in-semantic-mutant caught only by comparison on emitted JavaScript: case 0 line 2: port "fixed\tfor(const key in object) { use(key); }\\u000a", Go "/tmp/adamic-gate/TestWave13LoopsMutantsguard-for-in-semantic-mutant2555376295/001/guard-for-in-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestWave13LoopsMutantsguard-for-in-semantic-mutant2555376295/001/guard-for-in-0.ts:1:1
+          guard-for-in  This `for-in` loop visits inherited properties as well as the object's own. `for-in` walks the whole prototype chain, so anything added to `Object.prototype` by a library, a polyfill, or older code shows up as another iteration, and the body runs on a key the object never declared. The usual symptom is a serializer emitting a phantom field or a counter that is one too high, on a machine where some other package loaded first. Guard the body with `if (Object.prototype.hasOwnProperty.call(o, key))`, or use `Object.keys(o)`, which returns own enumerable keys and needs no guard.
+        
+        range 0 38 wrap 		
+        fixed	for(const key in object) { use(key); }\u000a
+--- PASS: TestWave13LoopsMutants (42.67s)
+    --- PASS: TestWave13LoopsMutants/default-case-last-semantic-mutant (10.79s)
+    --- PASS: TestWave13LoopsMutants/for-direction-semantic-mutant (12.23s)
+    --- PASS: TestWave13LoopsMutants/guard-for-in-semantic-mutant (11.86s)
+=== RUN   TestParkingWitnesses
+    lint_test.go:947: Go, Node, native identical: 1770 bytes
+    lint_test.go:956: fresh current-main Go witness comparison: 3 rows
+--- PASS: TestParkingWitnesses (14.28s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	56.967s

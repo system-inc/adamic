@@ -91,3 +91,7 @@ This update is committed and pushed before implementation.
 ## Current-main rebase and parking assessment
 
 Replayed owned commits onto c01907a7 while retaining main shared files. All 17 rule witness comparisons and compiling mutants pass with the scratch compatibility harness; the broader supported corpus also passes. Shared registration remains blocked on #zmh9v36. Eleven parser/adapter exclusions remain beyond that harness gap, so no claim that the only-harness parking condition is met. No additional helper is claimed. See rules/nexus-consistency-no-return-void/PARKING_REPORT.md for commands, fresh logs, throughput and exclusions.
+
+## Dedup withdrawals under harness 41eb6eab2
+
+The complete shared DEDUP_LEDGER.md supersedes the historical continuation selections above. Withdrawn and removed here: @next/next/no-assign-module-variable and @typescript-eslint/default-param-last to wave1-15; @typescript-eslint/no-unnecessary-type-constraint, @typescript-eslint/prefer-as-const and @typescript-eslint/prefer-enum-initializers to wave1-08; no-multi-str, no-nonoctal-decimal-escape and no-octal to wave1-15; structure/tailwind-no-physical-direction to wave1-05. Keep only the eight retained rules listed in rules/nexus-consistency-no-return-void/DEDUP_REPORT.md. No new rule or helper is claimed. Two retained Nexus exclusions remain beyond missing shared registration. The older seventeen-rule and eleven-exclusion assessments are historical.

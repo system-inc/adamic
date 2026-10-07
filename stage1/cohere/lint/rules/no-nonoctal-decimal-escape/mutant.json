@@ -1,6 +1,0 @@
-{
-  "name": "no-nonoctal-decimal-escape-semantic-mutant",
-  "file": "rule.a",
-  "from": "'\\\\' + escapeText",
-  "to": "'/' + escapeText"
-}

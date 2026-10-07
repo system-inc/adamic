@@ -1,2 +1,0 @@
-function f<T extends unknown>() {}
-type M = { [K in any]: number };
