@@ -17,3 +17,11 @@ The nextjs syntax claim on origin/codex/stage1-nextjs-lint names other rules.
 
 The shared parser's JSX boundary affects the two Head rules. Any unsupported
 input must be reported explicitly rather than counted as silent agreement.
+
+## Validated status
+
+The non-JSX async rule is implemented in dd5481bc. Both Head rules remain
+unimplemented, and async components containing JSX are also unsupported by the
+shared native parser. Positive Go witnesses and explicit native parser failures
+are recorded in [the wave report](../WAVE_17_REPORT.md). This is a partial unit,
+not three completed ports. No rule was skipped for an existing claim or port.
