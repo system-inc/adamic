@@ -59,6 +59,16 @@ raw input boundary before this port can represent those files faithfully.
 
 ## Parser recovery and unsupported grammar
 
+Current follow-up: the ESTree-local parser explicitly stops after more than 32
+repeated scan positions. All 13 recorded stalls and three minimal EOF cases
+refuse before 2s on Node, sanitized native and emitted JS; disabling that guard
+hits a 500ms deadline on Node/native. The audit no longer injects a guard.
+`gaps/portParserRecovery.ts` uses the local parser. Seven of the recorded stalls
+still yield Go trees the port cannot recover; acceptance parity remains a gap.
+The following shared-parser observations describe the original dependency,
+which is intentionally unchanged, rather than the current local driver.
+
+
 `gaps/parserRecovery.ts` parses `type X = {`. `TestParserRecoveryGap` externally
 kills the unchanged dependency after one second on source Node and sanitized
 native. That is a reproducible recovery stall, not a port mutant. The initial

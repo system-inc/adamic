@@ -1,0 +1,12 @@
+=== RUN   TestGeneratedAgreement
+    estree_test.go:193: 78 generated files: 120355 identical bytes on Go, source Node, sanitized native, emitted JS
+--- PASS: TestGeneratedAgreement (19.92s)
+=== RUN   TestBoundedPortParser
+    stalls_test.go:43: three EOF recovery stalls explicitly refuse before 2s on Node, sanitized native and emitted JS
+--- PASS: TestBoundedPortParser (19.14s)
+=== RUN   TestPortStallControl
+    stalls_test.go:63: node guard-disabled control caught by 500ms deadline
+    stalls_test.go:63: /tmp/adamic-gate/TestPortStallControl4092983673/002/port guard-disabled control caught by 500ms deadline
+--- PASS: TestPortStallControl (20.06s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	59.127s

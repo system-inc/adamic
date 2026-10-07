@@ -7,18 +7,6 @@ registerHooks({
   load(url, context, next) {
     if(!url.endsWith('.ts')) return next(url,context);
     let source=stripTypeScriptTypes(fs.readFileSync(fileURLToPath(url),'utf8'));
-    // Audit instrumentation only. The actual driver imports the unchanged parser.
-    // A stalled scanner throws instead of letting recovery exhaust the Node heap.
-    if((url.endsWith('/stage1/typescript/parser/parser.ts') || url.endsWith('/estree/sourceParser.ts'))) {
-      const matches=source.match(/next\(\)\s*\{/g) ?? [];
-      if(matches.length!==1) throw new Error('audit parser guard anchor changed');
-      source=source.replace(/next\(\)\s*\{/, `next() {
-        if(this.__auditPos===this.scanner.pos) {
-          this.__auditStalled=(this.__auditStalled??0)+1;
-          if(this.__auditStalled>32) throw new Error('audit guard: parser stopped advancing');
-        } else { this.__auditPos=this.scanner.pos;this.__auditStalled=0; }
-      `);
-    }
     return {format:'module',source,shortCircuit:true};
   },
 });

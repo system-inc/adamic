@@ -15,6 +15,8 @@ export class Parser {
     readonly nodes: ParseNode[] = [];
     readonly roots: number[] = [];
     jsx = false;
+    lastScanPosition = -1;
+    stalledScans = 0;
     constructor(text: string, path = 'source') {
         this.path = path;
         this.scanner = new Scanner(text);
@@ -24,6 +26,16 @@ export class Parser {
         return this.scanner.kind;
     }
     next(): void {
+        if(this.lastScanPosition === this.scanner.pos) {
+            this.stalledScans++;
+            if(this.stalledScans > 32) {
+                panic('ESTree parser stopped advancing');
+            }
+        }
+        else {
+            this.lastScanPosition = this.scanner.pos;
+            this.stalledScans = 0;
+        }
         this.scanner.scan();
     }
     node(index: number): ParseNode {

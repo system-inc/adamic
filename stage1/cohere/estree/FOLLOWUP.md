@@ -71,3 +71,27 @@ ADAMIC_ESTREE_CORPUS=/tmp/estree-exports-rescued go test -count=1 -v
 bytes on all three port builds, six raw and postprocessed library agreements.
 The source audit command is the JSX command with exports output paths.
 Cohere reports 21/21, 100 percent ready. Logs and full dispositions are retained.
+
+### Parser stall checkpoint
+
+Export checkpoint 068218be92c9caa19e9ce981f178abf599371632 was pushed.
+The local Parser.next now bounds repeated identical scanner positions at 32.
+The audit injection has been removed entirely, so source census protection is
+now the same parser used by the real driver and native build. The census stays
+15,268 identical / 338 refused Go answers / 123 accepted Go refusals / 46
+mismatches / 11,594 both refused. Exactly 13 real progress refusals remain:
+seven Go-accepted and six Go-refused files. This fixes termination, not Go's
+recovered AST or diagnostic equivalence for the seven accepted files.
+
+`go test -count=1 -v ./stage1/cohere/estree -run
+'^TestBoundedPortParser$|^TestPortStallControl$|^TestGeneratedAgreement$' >
+/tmp/estree-stalls-gate.log 2>&1`: PASS 59.127s; 78 generated matches, three
+minimal EOF stalls, and a disabled-guard control caught by the 500ms deadline
+on source Node and sanitized native. That control is a liveness mutant, not
+a successful wrong-output mutant. `go test -count=1 -v ./stage1/cohere/estree
+-run '^TestBoundedPortParser$' > /tmp/estree-stalls-recorded.log 2>&1`: PASS
+21.871s, all 13 original recorded stalls plus the three minimal cases explicitly
+refuse with empty stdout before 2s on source Node, sanitized native and emitted
+JS. All 13 inputs are retained under validation/followup/stalls/ as .input files.
+`gaps/portParserRecovery.ts` is the smallest local-parser proving program.
+The older shared-parser timeout test remains a dependency-gap observation.
