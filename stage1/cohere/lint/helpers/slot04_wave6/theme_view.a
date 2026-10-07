@@ -1,0 +1,3 @@
+// Raw immutable byte strings preserve Go string slicing, including malformed UTF-8.
+export type ThemeView = { prefix: readonly number[] };
+export type DesignSystemView = { theme: ThemeView };

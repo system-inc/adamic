@@ -1,0 +1,57 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { PrefixKey } from './theme_prefix_key.a';
+import { Has } from './variant_registry_has.a';
+import { Prefix } from './design_system_prefix.a';
+function observe(prefix: readonly number[], key: readonly number[], keys: readonly (readonly number[])[], root: readonly number[]): void {
+    const theme = {prefix};
+    const system = {theme};
+    console.log(`prefix ${Prefix(system).join(',')}`);
+    if(prefix.length === 0 || key.length >= 2) { console.log(`key ${PrefixKey(theme,key).join(',')}`); }
+    else { console.log('key rejected'); }
+    theme.prefix = [137];
+    console.log(`changed ${Prefix(system).join(',')}`);
+    const registrations = new Map<string,boolean>();
+    for(const name of keys) { registrations.set(name.join(','),false); }
+    const name = root.join(',');
+    console.log(`has ${Has(registrations,name)}`);
+    registrations.delete(name);
+    console.log(`deleted ${Has(registrations,name)}`);
+    registrations.set(name,false);
+    console.log(`added ${Has(registrations,name)}`);
+}
+function raw(input: readonly number[]): void { observe(input,input,[input],input); }
+function bytes(corpus: OptionsJson, index: number): number[] {
+    const result: number[] = [];
+    for(const value of corpus.node(index).children) { result.push(Number(corpus.node(value).text)); }
+    return result;
+}
+function field(corpus: OptionsJson, row: number, name: string): number {
+    const value = corpus.node(row);
+    const index = value.keys.indexOf(name);
+    if(index < 0) { panic('missing field'); }
+    return value.children[index] ?? panic('field');
+}
+const argument = programArguments()[0] ?? panic('path');
+if(argument === '--bad0' || argument === '--bad1') {
+    const key: number[] = [];
+    if(argument === '--bad1') { key.push(97); }
+    console.log(PrefixKey({prefix:[116,119]},key).join(','));
+} else if(argument === '--full') {
+    raw([]);
+    for(let first = 0; first <= 255; first++) {
+        raw([first]);
+        for(let last = 0; last <= 255; last++) { raw([first,last]); }
+    }
+} else {
+    const input = readTextFile(argument);
+    if(input.kind === 'Error') { panic(input.message); }
+    const corpus = new OptionsJson(input.text);
+    const root = corpus.parse();
+    if(root < 0) { panic(corpus.error); }
+    for(const row of corpus.node(root).children) {
+        const keys: number[][] = [];
+        for(const key of corpus.node(field(corpus,row,'Keys')).children) { keys.push(bytes(corpus,key)); }
+        observe(bytes(corpus,field(corpus,row,'Prefix')),bytes(corpus,field(corpus,row,'Key')),keys,bytes(corpus,field(corpus,row,'Root')));
+    }
+}

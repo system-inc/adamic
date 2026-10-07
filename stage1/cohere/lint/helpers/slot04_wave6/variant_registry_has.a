@@ -1,0 +1,4 @@
+// Registration payloads do not affect membership, including false marker values.
+export function Has(registrations: ReadonlyMap<string, boolean>, root: string): boolean {
+    return registrations.has(root);
+}

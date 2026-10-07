@@ -1,0 +1,11 @@
+import { panic } from 'adamic';
+import type { ThemeView } from './theme_view.a';
+export function PrefixKey(theme: ThemeView, key: readonly number[]): readonly number[] {
+    if(theme.prefix.length === 0) { return key; }
+    if(key.length < 2) { panic('prefix key needs at least two bytes'); }
+    const result: number[] = [45,45];
+    for(const byte of theme.prefix) { result.push(byte); }
+    result.push(45);
+    for(let index = 2; index < key.length; index++) { result.push(key[index] ?? panic('byte')); }
+    return result;
+}

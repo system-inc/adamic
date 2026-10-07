@@ -1,0 +1,4 @@
+import type { DesignSystemView } from './theme_view.a';
+export function Prefix(system: DesignSystemView): readonly number[] {
+    return system.theme.prefix;
+}

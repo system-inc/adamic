@@ -1,0 +1,51 @@
+=== RUN   TestStringsGoNodeNativeJavaScript
+=== RUN   TestStringsGoNodeNativeJavaScript/witnesses.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 3186 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/consumers.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 1746 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/calls.json
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 2652 output lines
+=== RUN   TestStringsGoNodeNativeJavaScript/--full
+    helpers_test.go:136: Go, source Node, sanitized native and emitted JavaScript match 394758 output lines
+--- PASS: TestStringsGoNodeNativeJavaScript (7.93s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/witnesses.json (1.35s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/consumers.json (0.90s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/calls.json (0.60s)
+    --- PASS: TestStringsGoNodeNativeJavaScript/--full (3.20s)
+=== RUN   TestStringsCompilingMutants
+=== RUN   TestStringsCompilingMutants/theme_prefix_key.alet_index_=_2
+    helpers_test.go:185: Node source compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+    helpers_test.go:185: sanitized native compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+    helpers_test.go:185: emitted JavaScript compiling mutant caught at line 14: got "key 45,45,116,119,45,45,99", Go "key 45,45,116,119,45,99"
+=== RUN   TestStringsCompilingMutants/theme_prefix_key.aresult.push(45);
+    helpers_test.go:185: Node source compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+    helpers_test.go:185: sanitized native compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+    helpers_test.go:185: emitted JavaScript compiling mutant caught at line 14: got "key 45,45,116,119,95,99", Go "key 45,45,116,119,45,99"
+=== RUN   TestStringsCompilingMutants/variant_registry_has.aregistrations.has(root)
+    helpers_test.go:185: Node source compiling mutant caught at line 6: got "added false", Go "added true"
+    helpers_test.go:185: sanitized native compiling mutant caught at line 6: got "added false", Go "added true"
+    helpers_test.go:185: emitted JavaScript compiling mutant caught at line 6: got "added false", Go "added true"
+=== RUN   TestStringsCompilingMutants/design_system_prefix.areturn_system.theme.prefix;
+    helpers_test.go:185: Node source compiling mutant caught at line 3: got "changed ", Go "changed 137"
+    helpers_test.go:185: sanitized native compiling mutant caught at line 3: got "changed ", Go "changed 137"
+    helpers_test.go:185: emitted JavaScript compiling mutant caught at line 3: got "changed ", Go "changed 137"
+--- PASS: TestStringsCompilingMutants (11.23s)
+    --- PASS: TestStringsCompilingMutants/theme_prefix_key.alet_index_=_2 (2.28s)
+    --- PASS: TestStringsCompilingMutants/theme_prefix_key.aresult.push(45); (2.72s)
+    --- PASS: TestStringsCompilingMutants/variant_registry_has.aregistrations.has(root) (3.17s)
+    --- PASS: TestStringsCompilingMutants/design_system_prefix.areturn_system.theme.prefix; (2.32s)
+=== RUN   TestStringsConsumerCoverage
+    helpers_test.go:253: all six consumers covered; omission caught: better-tailwindcss/enforce-canonical-classes
+--- PASS: TestStringsConsumerCoverage (0.01s)
+=== RUN   TestPrefixKeyShortKeyRefusalAndMutant
+    helpers_test.go:303: Go, Node source, sanitized native and emitted JavaScript reject --bad0
+    helpers_test.go:303: Go, Node source, sanitized native and emitted JavaScript reject --bad1
+    helpers_test.go:333: Node source compiling guard mutant caught: fabricated short-key result for --bad0
+    helpers_test.go:333: sanitized native compiling guard mutant caught: fabricated short-key result for --bad0
+    helpers_test.go:333: emitted JavaScript compiling guard mutant caught: fabricated short-key result for --bad0
+    helpers_test.go:333: Node source compiling guard mutant caught: fabricated short-key result for --bad1
+    helpers_test.go:333: sanitized native compiling guard mutant caught: fabricated short-key result for --bad1
+    helpers_test.go:333: emitted JavaScript compiling guard mutant caught: fabricated short-key result for --bad1
+--- PASS: TestPrefixKeyShortKeyRefusalAndMutant (4.40s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot04_wave6	23.572s
