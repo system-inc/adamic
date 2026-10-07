@@ -1,0 +1,45 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import type { PropertySortNode } from './property_sort.a';
+import { propertySort } from './property_sort.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if(root < 0) { panic(json.error); }
+const properties = new Map<string, number>();
+const propertyIndex = json.field(root, 'propertyOrder');
+const propertyObject = json.node(propertyIndex);
+for(let i = 0; i < propertyObject.keys.length; i++) {
+    const key = propertyObject.keys[i] ?? panic('missing property key');
+    properties.set(key, json.node(propertyObject.children[i] ?? panic('missing property position')).number);
+}
+for(const row of json.node(json.field(root, 'cases')).children) {
+    const arena: PropertySortNode[] = [];
+    const roots: number[] = [];
+    for(const index of json.node(json.field(row, 'arena')).children) {
+        const children: number[] = [];
+        for(const child of json.node(json.field(index, 'nodes')).children) { children.push(json.node(child).number); }
+        arena.push({
+            kind: json.node(json.field(index, 'kind')).text,
+            property: json.node(json.field(index, 'property')).text,
+            value: json.node(json.field(index, 'value')).text,
+            valuePresent: json.node(json.field(index, 'valuePresent')).text === 'true',
+            nodes: children,
+        });
+    }
+    for(const index of json.node(json.field(row, 'roots')).children) { roots.push(json.node(index).number); }
+    const result = propertySort(arena, roots, properties);
+    console.log(`${result.count}`); console.log(`${result.order.length}`);
+    for(const position of result.order) { console.log(`${position}`); }
+    console.log(`${result.visited.length}`);
+    for(const property of result.visited) { console.log(property); }
+    // Reuse must neither mutate roots/child arrays nor retain traversal state.
+    const again = propertySort(arena, roots, properties);
+    console.log(`${again.count}`); console.log(`${again.order.length}`);
+    for(const position of again.order) { console.log(`${position}`); }
+    console.log(`${again.visited.length}`);
+    for(const property of again.visited) { console.log(property); }
+    console.log(`${roots.length}`); for(const index of roots) { console.log(`${index}`); }
+    for(const node of arena) { console.log(`${node.nodes.length}`); for(const index of node.nodes) { console.log(`${index}`); } }
+}

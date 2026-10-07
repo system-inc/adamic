@@ -1,7 +1,7 @@
-Built: nodesFromStaticDeclarations, one .a helper, removing a listed prerequisite from six Tailwind rules.
-Commits: claim 4d352341 pushed before code; source, comparator and evidence in this report commit.
-Checks: owned package PASS 15.276s, 3,461 cases match actual Go/source Node/emitted JavaScript/ASan+UBSan native; vet/types/format pass; filtered uncached input oracle PASS 7.056s.
-Mutants: value presence, important, kind, order and fresh allocation all compile, exit 0 without stderr, and fail only output comparison on all three Adamic execution paths.
+Built: nodesFromStaticDeclarations and private propertySort, one .a file each, removing twelve listed prerequisites across six Tailwind rules.
+Commits: first claim 4d352341, first delivery f1c61f9e and logs 24416e8e; second claim 87bcfd7e pushed before second-helper code.
+Checks: two-helper package PASS 49.224s; 6,924 cases match actual Go/source Node/emitted JavaScript/ASan+UBSan native; vet/types/format pass; filtered uncached input oracle PASS 7.056s.
+Mutants: twelve compiling semantic mutations, five declaration-node and seven property-sort, all exit 0 without stderr and fail only comparison on all three execution paths.
 Not covered: whole-rule findings/fixes/suggestions, production integration, raw invalid UTF-8, dynamic/external fixture execution or the full repository gate.
 
 ## Observed behavior
@@ -53,3 +53,33 @@ Setup: Go 0s, clang 0s, Node 0s, submodules 1s, cache warm 77s, total 77s; nproc
 Base origin/codex/lint-helpers at 95100eb440b47f3f18e960c6f5b49cadf0dc1d9d. The claim audit examined 403 origin references and 16 distinct helper claim blobs, excluding already delivered comments and the generic per-rule strict-options label. This symbol tied the highest unclaimed concrete count, six. All new Adamic source is .a; all changes stay inside the owned helper directory and claim. Shared harness, registry and compiler files are untouched. Prior rule candidates/evidence remain pushed at a7ff8948 on codex/lint-wave1-09, with the documented dynamic-RegExp native and shared repair integration gaps.
 
 This bounded derivative corpus is not an exhaustive proof over arbitrary strings or full rule findings. It does not reconstruct dynamic concatenations or external fixtures. Raw invalid UTF-8 is outside the valid-text boundary, and no Go allocation capacity is claimed. Production consumers must adapt their shared declaration-node representation explicitly; this leaf supplies no general CSS tree or registered rule.
+
+## Second delivery: private propertySort
+
+The second claim was pushed at 87bcfd7e after the first helper and its evidence were pushed. The fresh all-origin audit saw 417 references and 17 distinct claim blobs; this helper again tied the largest unclaimed concrete consumer count, six. The same six rules listed above each lose one further dependency occurrence. Zero lose their last blocker. The shared public PropertySort wrapper remains another worker's territory.
+
+property_sort.a preserves the actual private Go function's sort result and declaration visit sequence. Container references are arena indices, so the usable CSS tree has no ownership cycles. The actual Go PropertyOrder map is an explicit input, exported by the independent oracle rather than guessed or copied from a generated answer table. Go pointer trees are independently restored from the arena for oracle execution. A repeat call observes clean state and untouched roots/child indices. No shared parser, AST adapter, property-order generator or other worker's helper is changed.
+
+The corpus has 3,463 cases, including all 639 distinct consumer test-file strings and all 890 framework static declaration bodies. Additional cases contain nested rule/at-rule containers, context/at-root/comment wrappers, unknown and competing known --tw-sort values, absent versus present empty declarations, repeated roots and duplicate property positions. Unicode/NUL source text is retained. 486,278 output bytes agree on all four execution paths. Consumer literal contribution counts match the first helper. These are derivative helper inputs; full consuming rules are not executed.
+
+| Property-sort mutation | First differing line | Mutant / actual Go |
+|---|---:|---|
+| Skip by empty text instead of presence | 9 | 2 / 1 |
+| Stop counting after latch | 8 | 1 / 3 |
+| Latch unknown --tw-sort | 38 | 0 / 1 |
+| Descend into context | 100 | 5 / 4 |
+| Change queue to depth-first insertion | 10 | 341 / 340 |
+| Admit duplicate positions | 101 | 3 / 2 |
+| Sort positions descending | 69 | 341 / 340 |
+
+All seven independently compile and exit 0 with empty stderr on source Node, emitted JavaScript and sanitized native, before the comparator kills them. The visit trace is held as well as the final reading, so traversal disagreement cannot be hidden by deduplicating and sorting positions.
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_WAVE109_HELPER_EVIDENCE=/workspace/adamic/stage1/cohere/lint/helpers/from_wave1_09/evidence ADAMIC_GATE_UNCACHED=1 go test ./stage1/cohere/lint/helpers/from_wave1_09 -count=1 -v -timeout=15m > /tmp/lint-helpers-wave109-two-final.log 2>&1
+go vet ./stage1/cohere/lint/helpers/from_wave1_09 > /tmp/lint-helpers-wave109-two-vet.log 2>&1
+go run ./cmd/adamic types stage1/cohere/lint/helpers/from_wave1_09/sort_main.a > /tmp/lint-helpers-wave109-sort-types.log 2>&1
+gofmt -l stage1/cohere/lint/helpers/from_wave1_09 > /tmp/lint-helpers-wave109-two-format.log
+```
+
+The complete two-helper package passes in 49.224s, after a focused sort run passed in 34.040s. Vet and formatting output are empty; types prints checked declarations. Prior filtered uncached input oracle remains PASS 7.056s; unchanged compiler/input behavior was not retested. Evidence includes complete two-helper gate output, coverage and input/output hashes. The representation covers finite valid-text acyclic trees and actual integer property positions; raw invalid UTF-8, nil Go node pointers, cyclic graphs, native slice capacity and nil-versus-empty sort-list allocation are outside this consumer boundary.
