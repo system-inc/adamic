@@ -1,0 +1,82 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:408: compiler and stage1: 240 files
+    lint_test.go:409: Go, Node, emitted JavaScript, native identical: 13082686 bytes
+--- PASS: TestCompilerAndStage1Agree (75.63s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 24906 bytes
+--- PASS: TestOwnedWitnesses (37.04s)
+=== RUN   TestFifthUpstream
+    lint_test.go:324: cohere cases: 1047 unique source/rule/options combinations
+    wave08_fifth_test.go:26: assigned upstream selected=map[no-constructor-return:53 no-delete-var:9 no-eq-null:14]; no omitted cases
+    wave08_fifth_test.go:37: Node: case 5 line 20: port "fixed\tclass C { \"constructor\"() { return 1 } }", Go "/tmp/adamic-gate/TestFifthUpstream848843120/001/case-572.ts:1:29"
+        Go context:
+        range 45 53 noConstructorReturn 		
+        fixed	class C extends B { constructor() { super(); return 1 } }
+        case 4
+        fixed	class C {  }
+        case 5
+        /tmp/adamic-gate/TestFifthUpstream848843120/001/case-572.ts:1:29
+          no-constructor-return  This returns a value from a constructor, where it is either discarded or worse. `new C()` evaluates to the new instance and throws the returned value away, unless that value is an object, in which case the language substitutes it for the instance and every field this constructor assigned is lost. Neither outcome is one a reader expects from a `new`, so return nothing and assign to `this` instead.
+        
+        range 28 36 noConstructorReturn 		
+        fixed	class C { "constructor"() { return 1 } }
+--- FAIL: TestFifthUpstream (44.70s)
+=== RUN   TestFifthThroughput
+    wave08_fifth_test.go:103: no-constructor-return round=1 native seconds=1.899566 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=1 Node seconds=1.039344 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=1 Go seconds=0.294293 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=2 Node seconds=1.239417 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=2 Go seconds=0.260391 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=2 native seconds=1.723650 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=3 Go seconds=0.269410 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=3 native seconds=1.866487 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=3 Node seconds=1.198479 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=4 native seconds=2.333693 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=4 Node seconds=1.627134 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=4 Go seconds=0.498563 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=5 Node seconds=2.147504 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=5 Go seconds=0.304379 findings=1000
+    wave08_fifth_test.go:103: no-constructor-return round=5 native seconds=1.835069 findings=1000
+    wave08_fifth_test.go:111: no-constructor-return native: 580.16 findings/s seconds=1.723650 files=78 findings=1000
+    wave08_fifth_test.go:111: no-constructor-return Node: 962.15 findings/s seconds=1.039344 files=78 findings=1000
+    wave08_fifth_test.go:111: no-constructor-return Go: 3840.37 findings/s seconds=0.260391 files=78 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=1 native seconds=2.022719 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=1 Node seconds=1.608856 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=1 Go seconds=0.513733 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=2 Node seconds=1.361435 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=2 Go seconds=0.266577 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=2 native seconds=1.743520 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=3 Go seconds=0.363098 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=3 native seconds=1.756045 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=3 Node seconds=1.329760 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=4 native seconds=1.778977 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=4 Node seconds=1.226805 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=4 Go seconds=0.458425 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=5 Node seconds=1.795230 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=5 Go seconds=0.392520 findings=1000
+    wave08_fifth_test.go:103: no-delete-var round=5 native seconds=3.587013 findings=1000
+    wave08_fifth_test.go:111: no-delete-var native: 573.55 findings/s seconds=1.743520 files=78 findings=1000
+    wave08_fifth_test.go:111: no-delete-var Node: 815.13 findings/s seconds=1.226805 files=78 findings=1000
+    wave08_fifth_test.go:111: no-delete-var Go: 3751.25 findings/s seconds=0.266577 files=78 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=1 native seconds=1.704283 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=1 Node seconds=1.599434 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=1 Go seconds=0.441245 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=2 Node seconds=1.608178 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=2 Go seconds=0.342541 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=2 native seconds=1.683670 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=3 Go seconds=0.299701 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=3 native seconds=2.150728 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=3 Node seconds=1.580311 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=4 native seconds=2.130813 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=4 Node seconds=1.933770 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=4 Go seconds=0.437566 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=5 Node seconds=4.199181 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=5 Go seconds=0.518860 findings=1000
+    wave08_fifth_test.go:103: no-eq-null round=5 native seconds=2.142506 findings=1000
+    wave08_fifth_test.go:111: no-eq-null native: 593.94 findings/s seconds=1.683670 files=78 findings=1000
+    wave08_fifth_test.go:111: no-eq-null Node: 632.79 findings/s seconds=1.580311 files=78 findings=1000
+    wave08_fifth_test.go:111: no-eq-null Go: 3336.66 findings/s seconds=0.299701 files=78 findings=1000
+--- PASS: TestFifthThroughput (71.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	228.403s
+FAIL
