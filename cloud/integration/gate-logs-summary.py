@@ -4,6 +4,7 @@ usage: gate-logs-summary.py <sha> <running|finished> <test.jsonl> <failures.txt>
 """
 import collections
 import json
+import os
 import sys
 
 sha, state, log, failuresPath, statusPath = sys.argv[1:6]
@@ -59,3 +60,4 @@ with open(statusPath, "w") as status:
         f"{len(failedBuilds)} packages failed to build; {len(finishedPackages)} packages finished\n"
     )
     status.write(f"sha {sha}\n")
+    status.write(os.environ.get("GATE_LOGS_SIGNALS", "inherited ignored signals: not recorded") + "\n")

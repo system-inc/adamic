@@ -30,7 +30,19 @@ git init -q "$work"
 git -C "$work" remote add origin "$(git remote get-url origin)"
 git -C "$work" config user.name "Adamic gate"
 git -C "$work" config user.email "gate@adamic.invalid"
-echo "gate-logs: publishing to ${ref#refs/heads/}"
+# A launcher's ignored signals pass to every child: a gate run under nohup gave its programs an ignored
+# hangup, and the signal tests failed for the launcher's reason, not the code's. Started beside go test
+# by the same shell, this inherits what the run inherited, so record it in every status.
+signals="inherited ignored signals: unknown (no /proc)"
+if [ -r /proc/self/status ]; then
+	mask=$(awk '/^SigIgn:/ { print $2 }' /proc/self/status)
+	names=$(python3 -c 'import signal, sys
+mask = int(sys.argv[1], 16)
+print(" ".join(signal.Signals(n).name for n in range(1, 65) if mask >> (n - 1) & 1 and n in signal.valid_signals()) or "none")' "$mask" 2>/dev/null || echo "?")
+	signals="inherited ignored signals: SigIgn=$mask ($names)"
+fi
+export GATE_LOGS_SIGNALS=$signals
+echo "gate-logs: publishing to ${ref#refs/heads/}; $signals"
 
 publish() {
 	local state=$1
