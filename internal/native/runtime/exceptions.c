@@ -24,7 +24,7 @@ adamic_object *adamic_error_new(adamic_string *message) {
 _Noreturn void adamic_uncaught(void) {
 	// String(error), as Node's runner reports an error nothing caught: name, and ": " and the message
 	// when there is one.
-	static _Thread_local adamic_slot_cache name_cache, message_cache;
+	static adamic_slot_cache name_cache, message_cache;
 	const adamic_string *name = adamic_object_field(adamic_thrown, "name", &name_cache)->reference;
 	const adamic_string *message = adamic_object_field(adamic_thrown, "message", &message_cache)->reference;
 	size_t length = name->length + (message->length > 0 ? 2 + message->length : 0);

@@ -15,13 +15,19 @@
 #include <sched.h>
 #endif
 
-#define GRAIN 256
+// At least eight chunks per worker for coarse work; never pay a queue claim per
+// element on large cheap maps. The grain belongs to the scope, including nested maps.
+size_t adamic_parallel_grain(size_t items, size_t threads) {
+	size_t grain = items / (8 * threads);
+	return grain == 0 ? 1 : grain > 256 ? 256 : grain;
+}
 
 typedef struct scope {
 	adamic_array *items;
 	adamic_closure *work;
 	adamic_array *results;
 	size_t completed;
+	size_t grain;
 	size_t exception_index;
 	adamic_object *exception;
 } scope;
@@ -131,7 +137,7 @@ static bool claim(scope **scope_out, size_t *from_out, size_t *end_out) {
 			range *oldest = victim->first;
 			if (oldest == NULL) { continue; }
 			size_t length = oldest->end - oldest->from;
-			if (length > GRAIN) {
+			if (length > oldest->scope->grain) {
 				size_t middle = oldest->from + length / 2;
 				task = new_range(oldest->scope, middle, oldest->end);
 				oldest->end = middle;
@@ -146,7 +152,7 @@ static bool claim(scope **scope_out, size_t *from_out, size_t *end_out) {
 	if (task == NULL) { return false; }
 	*scope_out = task->scope;
 	*from_out = task->from;
-	*end_out = task->end - task->from > GRAIN ? task->from + GRAIN : task->end;
+	*end_out = task->end - task->from > task->scope->grain ? task->from + task->scope->grain : task->end;
 	task->from = *end_out;
 	if (task->from == task->end) { remove_range(own, task); free(task); }
 	return true;
@@ -261,7 +267,7 @@ adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, boo
 		}
 		return results;
 	}
-	scope state = {.items = items, .work = work, .results = results, .exception_index = SIZE_MAX};
+	scope state = {.items = items, .work = work, .results = results, .exception_index = SIZE_MAX, .grain = adamic_parallel_grain(items->length, thread_count)};
 	pthread_mutex_lock(&scheduler);
 	if (items->length != 0) {
 		append(&workers[worker_index], new_range(&state, 0, items->length));
