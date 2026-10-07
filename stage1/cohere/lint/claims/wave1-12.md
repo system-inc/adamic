@@ -271,3 +271,16 @@ oracle forces TS on JSX and capture drops filenames; the stage1 parser also
 refuses JSX. The other two new rules remain blocked on JSX. No full-parity port
 is claimed. Exact commands, rates and independent proofs are in
 [the third-batch report](wave1-12-batch3-evidence/REPORT.md).
+
+## Fourth batch, October 7
+
+Previous work pushed through e50c08c4. Fetched main remains ef3d907e.
+320 origin refs, 39 unique claim Markdown blobs and main .a/.ts lint sources
+were inspected. All helper-ready names occur in claims. The first three
+remaining inventory entries with needs_type_information=false are claimed:
+
+1. @typescript-eslint/no-non-null-asserted-optional-chain
+2. @typescript-eslint/no-this-alias
+3. @typescript-eslint/no-unnecessary-type-constraint
+
+This claim is pushed before new code.
