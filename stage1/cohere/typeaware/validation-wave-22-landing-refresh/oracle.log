@@ -1,0 +1,77 @@
+=== RUN   TestWave22FourthAgreement
+    wave_22_fourth_test.go:193: controls: 641 accepted, 3 rejected by independent parser
+    wave_22_fourth_test.go:195: controls: 182963 identical finding bytes; findings 425
+    wave_22_fourth_test.go:206: controls-asan: 182963 identical finding bytes; findings 425
+    wave_22_fourth_test.go:218: numeric-prefix: exit 0, empty stderr, byte oracle catches byte 14733
+    wave_22_fourth_test.go:218: has-own-fix-span: exit 0, empty stderr, byte oracle catches byte 18706
+    wave_22_fourth_test.go:218: spread-parens: exit 0, empty stderr, byte oracle catches byte 313
+    wave_22_fourth_test.go:239: "global-binding\nnode" released handle: panic 70; registry retention checked separately
+    wave_22_fourth_test.go:239: "resolved-name\nObject" released handle: panic 70; registry retention checked separately
+    wave_22_fourth_test.go:239: "symbol-identities" released handle: panic 70; registry retention checked separately
+    wave_22_fourth_test.go:262: repository: 18485 identical finding bytes; findings 0
+    wave_22_fourth_test.go:263: repository-asan: 18485 identical finding bytes; findings 0
+    wave_22_fourth_test.go:262: compiler: 5857 identical finding bytes; findings 0
+    wave_22_fourth_test.go:263: compiler-asan: 5857 identical finding bytes; findings 0
+--- PASS: TestWave22FourthAgreement (193.18s)
+=== RUN   TestWave22NextAgreement
+    wave_22_next_test.go:224: controls: 546 accepted, 16 rejected by independent parser (including JSX under .a)
+    wave_22_next_test.go:226: controls: 115200 identical finding bytes; findings 346
+    wave_22_next_test.go:237: controls-asan: 115200 identical finding bytes; findings 346
+    wave_22_next_test.go:248: promise-condition: exit 0, empty stderr, byte oracle catches byte 16849
+    wave_22_next_test.go:248: spread-await-edit: exit 0, empty stderr, byte oracle catches byte 22057
+    wave_22_next_test.go:248: lost-write-span: exit 0, empty stderr, byte oracle catches byte 65053
+    wave_22_next_test.go:264: "binding-state" released handle: panic 70; registry retention checked separately
+    wave_22_next_test.go:264: "type-operations\nraw\n0" released handle: panic 70; registry retention checked separately
+    wave_22_next_test.go:287: repository: 18485 identical finding bytes; findings 0
+    wave_22_next_test.go:288: repository-asan: 18485 identical finding bytes; findings 0
+    wave_22_next_test.go:287: compiler: 5857 identical finding bytes; findings 0
+    wave_22_next_test.go:288: compiler-asan: 5857 identical finding bytes; findings 0
+--- PASS: TestWave22NextAgreement (204.05s)
+=== RUN   TestWave22AgreementAndMutants
+    wave_22_test.go:163: controls: 34698 identical finding bytes; findings 104
+    wave_22_test.go:170: 206 independent control sources
+    wave_22_test.go:176: controls-asan: 34698 identical finding bytes; findings 104
+    wave_22_test.go:187: nullish-suggestion: exit 0, empty stderr, byte oracle catches byte 360
+    wave_22_test.go:187: qualifier-fix: exit 0, empty stderr, byte oracle catches byte 22321
+    wave_22_test.go:187: private-read: exit 0, empty stderr, byte oracle catches byte 4132
+    wave_22_test.go:200: scope-export-mutant: exit 0, empty stderr, byte oracle catches byte 29787
+    wave_22_test.go:226: repository: 18485 identical finding bytes; findings 0
+    wave_22_test.go:227: repository-asan: 18485 identical finding bytes; findings 0
+    wave_22_test.go:236: repository time: native 0.400286s Go 0.177394s; native tsgo: load_ns=106844094 query_ns=1191901 queries=6 first_query_ns=217027 run_ns=285628533; Go cohere: load_ns=92669832 rule_ns=1236343 run_ns=63988270
+    wave_22_test.go:226: compiler: 5857 identical finding bytes; findings 0
+    wave_22_test.go:227: compiler-asan: 5857 identical finding bytes; findings 0
+    wave_22_test.go:236: compiler time: native 2.832997s Go 0.500128s; native tsgo: load_ns=337012317 query_ns=283106456 queries=6486 first_query_ns=3705995 run_ns=2464395727; Go cohere: load_ns=397141799 rule_ns=19357377 run_ns=73117869
+    wave_22_test.go:252: released handle: panic 70; registry mutant exits 0, caught by required refusal
+--- PASS: TestWave22AgreementAndMutants (143.63s)
+=== RUN   TestWave22ThirdAgreement
+    wave_22_third_test.go:187: controls: 620 accepted, 0 rejected by independent parser
+    wave_22_third_test.go:189: controls: 106497 identical finding bytes; findings 183
+    wave_22_third_test.go:200: controls-asan: 106497 identical finding bytes; findings 183
+    wave_22_third_test.go:210: isolated-0-js: 1858 identical finding bytes; findings 5
+    wave_22_third_test.go:211: isolated-0-js-asan: 1858 identical finding bytes; findings 5
+    wave_22_third_test.go:210: isolated-0-a: 1857 identical finding bytes; findings 5
+    wave_22_third_test.go:211: isolated-0-a-asan: 1857 identical finding bytes; findings 5
+    wave_22_third_test.go:210: isolated-1-js: 1060 identical finding bytes; findings 4
+    wave_22_third_test.go:211: isolated-1-js-asan: 1060 identical finding bytes; findings 4
+    wave_22_third_test.go:210: isolated-1-a: 1059 identical finding bytes; findings 4
+    wave_22_third_test.go:211: isolated-1-a-asan: 1059 identical finding bytes; findings 4
+    wave_22_third_test.go:210: isolated-2-js: 1306 identical finding bytes; findings 4
+    wave_22_third_test.go:211: isolated-2-js-asan: 1306 identical finding bytes; findings 4
+    wave_22_third_test.go:210: isolated-2-a: 1017 identical finding bytes; findings 3
+    wave_22_third_test.go:211: isolated-2-a-asan: 1017 identical finding bytes; findings 3
+    wave_22_third_test.go:210: isolated-3-js: 707 identical finding bytes; findings 2
+    wave_22_third_test.go:211: isolated-3-js-asan: 707 identical finding bytes; findings 2
+    wave_22_third_test.go:210: isolated-3-a: 706 identical finding bytes; findings 2
+    wave_22_third_test.go:211: isolated-3-a-asan: 706 identical finding bytes; findings 2
+    wave_22_third_test.go:225: global-provenance: exit 0, empty stderr, byte oracle catches byte 5940
+    wave_22_third_test.go:225: global-declaration-span: exit 0, empty stderr, byte oracle catches byte 85544
+    wave_22_third_test.go:225: timer-string: exit 0, empty stderr, byte oracle catches byte 63292
+    wave_22_third_test.go:245: "global-binding\nnode" released handle: panic 70; registry retention checked separately
+    wave_22_third_test.go:245: "global-source" released handle: panic 70; registry retention checked separately
+    wave_22_third_test.go:268: repository: 18485 identical finding bytes; findings 0
+    wave_22_third_test.go:269: repository-asan: 18485 identical finding bytes; findings 0
+    wave_22_third_test.go:268: compiler: 5857 identical finding bytes; findings 0
+    wave_22_third_test.go:269: compiler-asan: 5857 identical finding bytes; findings 0
+--- PASS: TestWave22ThirdAgreement (132.85s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	673.723s
