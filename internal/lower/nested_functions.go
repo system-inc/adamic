@@ -24,6 +24,21 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 		if node.Name() == nil {
 			return nil, l.notYet(node, "a generic or unnamed nested function declaration")
 		}
+		if node.Body() == nil {
+			// Overloads describe the implementation, not additional runtime functions.
+			// Only skip a signature when this body contains its implementation.
+			implemented := false
+			for _, candidate := range nodes {
+				if candidate.Kind == ast.KindFunctionDeclaration && candidate.Body() != nil && candidate.Name() != nil && l.symbol(candidate.Name()) == l.symbol(node.Name()) {
+					implemented = true
+					break
+				}
+			}
+			if !implemented {
+				return nil, l.notYet(node, "a nested function declaration without an implementation")
+			}
+			continue
+		}
 		for _, parameter := range node.Parameters() {
 			if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
 				return nil, l.notYet(parameter, "dynamic this in a nested function declaration")

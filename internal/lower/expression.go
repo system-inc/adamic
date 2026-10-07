@@ -22,11 +22,13 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 		return ir.Number, nil
 	}
 
+
 	// A narrowed field still has its declared storage representation.
 	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 			return l.typeOfSymbol(node, field)
 		}
+
 
 	}
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
