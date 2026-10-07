@@ -31,5 +31,16 @@
     },
     "live_calls": 929,
     "total_calls": 948
-  }
+  },
+  "landing_implementation": "a30ffd8e0f441fc56b98ee2b000b996ce99d9dbe",
+  "landing_main": "c7991b900362796aefd111474e65eb5398e91953",
+  "landing_area": "b84a9d9314b65d3d0261ee017e233287b4f071da",
+  "landing_shared_helpers_seconds": 92.769,
+  "landing_harness_seconds": 245.331,
+  "landing_uncached_input_seconds": 19.319,
+  "landing_owned_helpers_seconds": 832.766,
+  "landing_owned_comparison_lines": 3045173,
+  "landing_owned_mutants": 182,
+  "landing_inherited_mutants": 4,
+  "landing_new_helpers_seconds": 5.54
 }
