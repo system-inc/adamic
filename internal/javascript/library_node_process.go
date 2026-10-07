@@ -3,6 +3,9 @@ package javascript
 import "github.com/system-inc/adamic/internal/ir"
 
 func (e *emitter) nodeProcessCall(call ir.ProcessCall) (string, bool) {
+	if call.Operation == "tmpdir" {
+		return "adamicNodeTmpdir()", true
+	}
 	if call.Operation == "envSet" {
 		return "(process.env[" + e.value(call.Arguments[0]) + "] = " + e.value(call.Arguments[1]) + ")", true
 	}

@@ -6,6 +6,8 @@ adamic_string *adamic_node_cwd(void);
 void adamic_node_chdir(const adamic_string *directory);
 adamic_string *adamic_node_platform(void);
 adamic_string *adamic_node_eol(void);
+adamic_string *adamic_node_tmpdir(void);
+void adamic_node_error(adamic_string *name, adamic_string *message, adamic_string *code);
 bool adamic_node_next_tick_feature(void);
 double adamic_node_pid(void);
 adamic_array *adamic_node_argv(void);

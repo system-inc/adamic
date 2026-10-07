@@ -8,9 +8,12 @@ import (
 
 func (l *lowering) processPath(node *ast.Node) string {
 	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindAsExpression {
+		return l.processPath(node.AsAsExpression().Expression)
+	}
 	if ast.IsIdentifier(node) {
 		symbol := l.symbol(node)
-		if symbol != nil && symbol.Name == "process" && len(symbol.Declarations) > 0 && load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+		if symbol != nil && symbol.Name == "process" && len(symbol.Declarations) > 0 && (load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) || load.IsNodeLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))) {
 			return "process"
 		}
 		return ""

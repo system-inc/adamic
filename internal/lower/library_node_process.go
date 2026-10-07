@@ -8,6 +8,11 @@ import (
 )
 
 func init() {
+	RegisterNodeLibraryMembers("node:os.tmpdir", "node:os.platform", "node:os.EOL", "node:process.process", "node:globals.process")
+	for _, name := range []string{"cwd", "chdir", "argv", "execArgv", "env", "platform", "pid", "stdout", "stderr", "exitCode", "exit", "memoryUsage", "nextTick"} {
+		RegisterNodeLibraryMembers("node:process.Process."+name, "node:process."+name)
+	}
+	RegisterNodeLibraryMembers("node:process.MemoryUsage.heapUsed", "node:tty.WriteStream.columns", "node:tty.WriteStream.isTTY", "node:tty.ReadStream.isTTY", "node:stream.Writable.write", "node:net.Socket.write")
 	RegisterNodeLibraryMembers("node:perf_hooks.performance", "node:performance.performance")
 	for _, name := range []string{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"} {
 		RegisterNodeLibraryMembers("node:perf_hooks.Performance." + name)
@@ -124,6 +129,28 @@ func (l *lowering) nodeProcessEnvironmentMutation(node *ast.Node) (ir.Expression
 }
 
 func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error) {
+	// Node types call stdout a TTY WriteStream even when a pipe lacks these fields.
+	// Preserve the runtime absence in guarded reads instead of unwrapping the declared number.
+	if node.Kind == ast.KindBinaryExpression && node.AsBinaryExpression().OperatorToken.Kind == ast.KindQuestionQuestionToken {
+		binary := node.AsBinaryExpression()
+		operation, of := "", ir.Type(0)
+		switch l.processPath(binary.Left) {
+		case "process.stdout.columns":
+			operation, of = "columns", ir.MaybeNumber
+		case "process.stdout.isTTY":
+			operation, of = "stdoutTTY", ir.MaybeBoolean
+		case "process.stderr.isTTY":
+			operation, of = "stderrTTY", ir.MaybeBoolean
+		}
+		if operation != "" {
+			fallback, err := l.expression(binary.Right)
+			if err != nil {
+				return nil, true, err
+			}
+			return ir.Coalesce{Value: ir.ProcessCall{Operation: operation, Of: of}, Fallback: fallback, Of: fallback.Type()}, true, nil
+		}
+	}
+
 	if value, known, err := l.nodeProcessEnvironmentMutation(node); known {
 		return value, known, err
 	}
@@ -162,10 +189,12 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		}
 		count, minimum := 0, 0
 		switch path {
-		case "process.cwd", "os.platform":
+		case "process.cwd", "os.platform", "os.tmpdir":
 			call.Operation, call.Of = "cwd", ir.String
 			if path == "os.platform" {
 				call.Operation = "platform"
+			} else if path == "os.tmpdir" {
+				call.Operation = "tmpdir"
 			}
 		case "process.chdir":
 			call.Operation, call.Of, count, minimum = "chdir", ir.Object, 1, 1
@@ -243,8 +272,13 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		call.Operation, call.Of = "execArgv", ir.Array
 	case "process.stdout._handle":
 		call.Operation, call.Of = "handle", ir.Object
+	case "process.stdout.isTTY", "process.stderr.isTTY":
+		if of, known := l.representation(l.checker.GetTypeAtLocation(node)); known && of == ir.Boolean {
+			return nil, true, l.notYet(node, path+" without a missing-value guard on the Node TTY declaration")
+		}
+		return nil, false, nil
 	case "process.stdout.columns":
-		call.Operation, call.Of = "columns", ir.MaybeNumber
+		return nil, true, l.notYet(node, path+" without a missing-value guard on the Node TTY declaration")
 	case "os.EOL":
 		call.Operation, call.Of = "eol", ir.String
 	case "performance.timeOrigin":
@@ -262,6 +296,14 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 }
 
 func (l *lowering) nodeProcessMethodObservation(node *ast.Node) bool {
+	path := l.processPath(node)
+	if path == "process.nextTick" && node.Parent != nil && node.Parent.Kind == ast.KindPrefixUnaryExpression {
+		inner := node.Parent.AsPrefixUnaryExpression()
+		outer := node.Parent.Parent
+		if inner.Operator == ast.KindExclamationToken && outer != nil && outer.Kind == ast.KindPrefixUnaryExpression && outer.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
+			return true
+		}
+	}
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
@@ -269,12 +311,28 @@ func (l *lowering) nodeProcessMethodObservation(node *ast.Node) bool {
 	if outer.Parent == nil || outer.Parent.Kind != ast.KindTypeOfExpression {
 		return false
 	}
-	path := l.nodeProcessPath(node)
+	if node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "setBlocking" {
+		receiver := ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)
+		if ast.IsIdentifier(receiver) {
+			symbol := l.symbol(receiver)
+			if symbol != nil {
+				for _, declaration := range symbol.Declarations {
+					if declaration.Kind == ast.KindVariableDeclaration && declaration.AsVariableDeclaration().Initializer != nil && l.processPath(declaration.AsVariableDeclaration().Initializer) == "process.stdout._handle" {
+						return true
+					}
+				}
+			}
+		}
+	}
+	path = l.nodeProcessPath(node)
+	if path == "" {
+		path = l.processPath(node)
+	}
 	if name := l.nodeLibraryMember(node); strings.HasPrefix(name, "node:perf_hooks.Performance.") {
 		path = "performance." + node.Name().Text()
 	}
 	switch path {
-	case "performance.now", "performance.mark", "performance.measure", "performance.clearMarks", "performance.clearMeasures":
+	case "process.nextTick", "process.cwd", "process.memoryUsage", "performance.now", "performance.mark", "performance.measure", "performance.clearMarks", "performance.clearMeasures":
 		return true
 	}
 	return false

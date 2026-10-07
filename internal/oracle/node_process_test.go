@@ -247,8 +247,8 @@ func TestNodeProcessUnsupportedOperationsStayLoud(t *testing.T) {
 	for name, source := range map[string]string{
 		"performance entries": "import { performance } from 'node:perf_hooks'; performance.getEntries();",
 		"measure options":     "import { performance } from 'node:perf_hooks'; performance.measure('x', {start: 0});",
-		"write backpressure":  "const accepted = process.stdout.write('x'); console.log(String(accepted));",
-		"nextTick callback":   "process.nextTick(() => { console.log('tick'); });",
+		"write backpressure":  "import 'node:process'; const accepted = process.stdout.write('x'); console.log(String(accepted));",
+		"nextTick callback":   "import 'node:process'; process.nextTick(() => { console.log('tick'); });",
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

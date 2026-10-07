@@ -116,9 +116,9 @@ static void host_directory_error(int error, const char *operation, const adamic_
         case EIO: code = "EIO"; description = "i/o error"; break;
         default: { static const char message[] = "unsupported host directory errno"; adamic_panic(message, sizeof message - 1); }
     }
-    static const char *const names[] = {"name", "message", "code"};
+    static const char *const directory_error_names[] = {"name", "message", "code"};
     static const bool references[] = {true, true, true};
-    static const adamic_shape shape = {3, names, references, NULL};
+    static const adamic_shape shape = {3, directory_error_names, references, NULL};
     static adamic_string error_name = ADAMIC_STRING("Error");
     adamic_string *prefix = adamic_decode_utf8((const unsigned char *)code, strlen(code));
     adamic_string *reason = adamic_decode_utf8((const unsigned char *)description, strlen(description));
@@ -230,9 +230,9 @@ bool adamic_node_stdout_write(const adamic_string *text) {
 }
 
 adamic_object *adamic_node_memory_usage(void) {
-    static const char *const names[] = {"heapUsed"};
+    static const char *const memory_names[] = {"heapUsed"};
     static const bool references[] = {false};
-    static const adamic_shape shape = {1, names, references, NULL};
+    static const adamic_shape shape = {1, memory_names, references, NULL};
     adamic_object *result = adamic_object_new(&shape);
     double used = 0;
 #if ADAMIC_HOST_SANITIZED
@@ -250,9 +250,9 @@ adamic_object *adamic_node_memory_usage(void) {
 }
 
 static adamic_object *entry(const adamic_string *name, bool measure, double start, double duration) {
-    static const char *const names[] = {"name", "entryType", "startTime", "duration"};
+    static const char *const entry_names[] = {"name", "entryType", "startTime", "duration"};
     static const bool references[] = {true, true, false, false};
-    static const adamic_shape shape = {4, names, references, NULL};
+    static const adamic_shape shape = {4, entry_names, references, NULL};
     static adamic_string mark_type = ADAMIC_STRING("mark"), measure_type = ADAMIC_STRING("measure");
     adamic_object *result = adamic_object_new(&shape);
     result->slots[0].reference = adamic_retain((adamic_string *)name);
@@ -315,9 +315,9 @@ static adamic_value set_blocking(adamic_closure *self, adamic_value *values) {
 adamic_object *adamic_node_stdout_handle(void) {
     struct stat info;
     if (fstat(STDOUT_FILENO, &info) != 0 || S_ISREG(info.st_mode)) { return NULL; }
-    static const char *const names[] = {"setBlocking"};
+    static const char *const handle_names[] = {"setBlocking"};
     static const bool references[] = {true};
-    static const adamic_shape shape = {1, names, references, NULL};
+    static const adamic_shape shape = {1, handle_names, references, NULL};
     static adamic_closure method = {{0, adamic_kind_closure, 0}, set_blocking, 0};
     adamic_object *handle = adamic_object_new(&shape);
     handle->slots[0].reference = &method;
@@ -383,9 +383,9 @@ static adamic_closure *const performance_methods[] = {&performance_now_closure, 
 
 adamic_object *adamic_node_performance(void) {
     if (performance_object == NULL) {
-        static const char *const names[] = {"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"};
+        static const char *const performance_names[] = {"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"};
         static const bool references[] = {false, true, true, true, true, true};
-        static const adamic_shape shape = {6, names, references, NULL};
+        static const adamic_shape shape = {6, performance_names, references, NULL};
         performance_object = adamic_object_new(&shape);
         performance_object->slots[0].number = epoch_origin;
         for (size_t index = 0; index < 5; index++) { performance_object->slots[index+1].reference = performance_methods[index]; }
@@ -406,4 +406,25 @@ adamic_value adamic_node_performance_invoke(adamic_closure *closure, adamic_valu
         }
     }
     return closure->code(closure, args);
+}
+
+// libuv/Node use the first nonempty POSIX temp variable and remove one trailing slash.
+adamic_string *adamic_node_tmpdir(void) {
+    const char *value = getenv("TMPDIR");
+    if (value == NULL || value[0] == 0) { value = getenv("TMP"); }
+    if (value == NULL || value[0] == 0) { value = getenv("TEMP"); }
+    if (value == NULL || value[0] == 0) { value = "/tmp"; }
+    size_t length = strlen(value);
+    if (length > 1 && value[length - 1] == '/') { length--; }
+    return adamic_decode_utf8((const unsigned char *)value, length);
+}
+
+void adamic_node_error(adamic_string *name, adamic_string *message, adamic_string *code) {
+    static const char *const process_error_names[] = {"name", "message", "code"};
+    static const bool references[] = {true, true, true};
+    static const adamic_shape shape = {3, process_error_names, references, NULL};
+    adamic_thrown = adamic_object_new(&shape);
+    adamic_thrown->slots[0].reference = adamic_retain(name);
+    adamic_thrown->slots[1].reference = adamic_retain(message);
+    adamic_thrown->slots[2].reference = adamic_retain(code);
 }

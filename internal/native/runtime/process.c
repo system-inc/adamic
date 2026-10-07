@@ -18,8 +18,8 @@ static bool valid_code(adamic_maybe_number code) {
 	static adamic_string range_name = ADAMIC_STRING("RangeError");
 	adamic_string *number = adamic_string_from_number(code.number);
 	adamic_string *message = adamic_string_concat(2, (adamic_string *const[]){&prefix, number});
-	adamic_thrown = adamic_error_new(message);
-	adamic_thrown->slots[0].reference = &range_name;
+	static adamic_string range_code = ADAMIC_STRING("ERR_OUT_OF_RANGE");
+	adamic_node_error(&range_name, message, &range_code);
 	adamic_release(number);
 	adamic_release(message);
 	return false;

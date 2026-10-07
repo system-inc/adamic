@@ -1,3 +1,25 @@
+Process unknown-error narrowing remains blocked by the compiler's explicit refusal of `in`; runtime own string code/message and Node messages are implemented.
+Built os.tmpdir and official Node process integration; performance checkpoint d06ed47 was pushed first, with shared loader 69c71d5 merged.
+Commands: every process unit test plus all four registered process fixtures PASS 8.706s; layouts/uniform-field check PASS 7.352s; tmpdir matrix PASS 6.202s.
+Mutants: 19 general host mutants, setBlocking/cwd-cache, environment set/delete, directory cache/code, ERR_OUT_OF_RANGE, tmpdir, and five existing exit-output mutants all caught by Node comparisons.
+Not covered: all eight unchanged System fixtures are NotYet at fs.mkdtempSync; timers, nextTick scheduling, Date-valued System.now and native tsc remain incomplete.
+
+## Process, temp directory and error checkpoint
+
+node_process_host.a, node_process_system.a, node_process_performance.a and node_process_performance_core.a now pass on native and JavaScript. The terminal fixture compares regular file, pipe and a 93-column TTY. Local optional _handle annotations represent sys.ts's private feature probe without modifying official declarations. Blocking and memoized-cwd drivers pass; no private node_*.d.ts copies exist.
+
+Official WriteStream declarations advertise nonoptional columns/isTTY even on a pipe where Node returns undefined. Guarded reads preserve that absence; unguarded uses that assume the advertised number/boolean receive named NotYet rather than a runtime narrowing panic. Generic Dict indexing is enabled only for process.env. Writable/Socket.write is enabled only for the supported stdout receiver. All runtime object layouts participate in the field-offset proof.
+
+os.tmpdir is a fresh string from the first nonempty TMPDIR, TMP, TEMP, or /tmp. It removes one final slash when length exceeds one. Nine Node comparisons cover precedence, emptiness, root/multiple slashes, relative paths, Unicode and malformed UTF-8. macOS follows the same POSIX logic but was not executed.
+
+Native directory errors already use own name/message/code slots. Numeric exit/exitCode validation now also uses own string ERR_OUT_OF_RANGE and Node's exact RangeError message. The independent typed-IR runtime oracle invokes actual ENOENT, ENOTDIR, ELOOP, ENAMETOOLONG and EACCES under uid 65534, plus NaN, both infinities and fractional exit/exitCode. Both backends agree and own-property checks are true. It proves the runtime, not source lowering. ENOMEM and EIO mappings are implemented but not induced; missing-cwd error narrowing is not yet source-proven. The .a source test catches unknown and uses typeof, non-null and in narrowing; it currently records the explicit in-language refusal. TestNodeProcessErrorNarrowingBlocker is a blocker assertion, not an acceptance pass.
+
+The unchanged assigned acceptance fixtures 14, 15, 16, 17, 18, 19, 20 and 23 are all Node Agrees / native NotYet / JavaScript NotYet, first stopped at node:fs.mkdtempSync in their shared scratch setup. All eight Node mutants are caught. No shared fs implementation was fabricated in this unit. Prior undefined! and optional-function-value blockers remain downstream of this dependency.
+
+Latest requested adaptation cf976e8 will be merged before the final error contract test and landing rebase. Standing rule: only codex/host-process-land is landed after rebase/re-green; never push main or force-push.
+
+Earlier reports below are historical; newer evidence supersedes the stages and missing integrations they describe.
+
 Built pinned-Node performance objects and tsc hook discovery; process error narrowing with `in` remains a language blocker.
 Commits: shared loader merged as 6bc30e2; performance checkpoint follows this report.
 Commands: performance Node/native/JavaScript oracle PASS 2.768s; eight clean native semantic mutants caught; count run 14 allocations/14 frees.

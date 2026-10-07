@@ -44,6 +44,10 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},
+		// Process host layouts are part of the same whole-program proof.
+		{"name", "message", "code"}, {"heapUsed"},
+		{"name", "entryType", "startTime", "duration"}, {"setBlocking"},
+		{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
 	} {
 		for index, name := range names {
 			if before, found := offsets[name]; found && before != index {
