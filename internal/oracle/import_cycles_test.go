@@ -1,14 +1,12 @@
 package oracle
 
 import (
-	"errors"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/lower"
 )
 
 func init() {
@@ -24,7 +22,7 @@ func init() {
 }
 
 func TestImportCycleRuntimeCalls(t *testing.T) {
-	// Not parallel: the forthcoming cohere runner caches one program process-wide.
+	// Not parallel: the cohere runner caches one program process-wide.
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/import_cycles/runtime/even.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -80,13 +78,12 @@ func quoteJS(value string) string {
 	return "'" + strings.ReplaceAll(strings.ReplaceAll(value, "\\", "\\\\"), "'", "\\'") + "'"
 }
 
-func TestImportCycleLoadTimeRefusals(t *testing.T) {
-	// Not parallel: the forthcoming cohere runner caches one program process-wide.
+func TestImportCycleLoadTimeReads(t *testing.T) {
+	// Not parallel: the cohere runner caches one program process-wide.
 	for _, probe := range []struct{ path, output, nodeError string }{
 		{"read/a.a", "", "ReferenceError: Cannot access 'value' before initialization"},
 		{"classes/c.a", "", "ReferenceError: Cannot access 'Base' before initialization"},
-		// Entering at Leaf evaluates Base then Middle, so ESM succeeds. The interim
-		// intentionally refuses this already-initialized imported class read as well.
+		// Entering at Leaf evaluates Base then Middle, so ESM succeeds.
 		{"classes/a.a", "base\nmiddle\nleaf\n", ""},
 		{"indirect/b.a", "", "ReferenceError: Cannot access 'value' before initialization"},
 		{"hoisted/a.a", "1\n", ""},
@@ -107,12 +104,18 @@ func TestImportCycleLoadTimeRefusals(t *testing.T) {
 			} else if truth.exitCode != 0 {
 				t.Fatalf("Node: %+v", truth)
 			}
-			_, err = lowered(t, path)
-			var refused *lower.Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "correctness-no-import-cycle-load-time-read") {
-				t.Fatalf("expected load-time-read refusal, got %v", err)
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
 			}
-			t.Logf("Node stdout=%q exit=%d; %s; Adamic: %v", truth.stdout, truth.exitCode, probe.nodeError, err)
+			generated := onJavaScriptBackend(t, program)
+			compiled, _ := natively(t, program)
+			for _, result := range []run{generated, compiled} {
+				if difference := disagreement(truth, result); difference != "" {
+					t.Fatal(difference)
+				}
+			}
+			t.Logf("Node stdout=%q exit=%d; native and JavaScript agree", truth.stdout, truth.exitCode)
 		})
 	}
 }

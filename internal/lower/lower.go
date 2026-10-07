@@ -84,7 +84,9 @@ type lowering struct {
 	result  *ir.Program
 
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
-	cyclicModules bool
+	cyclicModules     bool
+	provenModuleReads map[*ast.Node]bool
+	cycleReadFindings []Finding
 
 	// strings indexes result.Strings, so a constant used twice is stored once.
 	strings map[string]int
