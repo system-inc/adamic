@@ -1,0 +1,30 @@
+{
+  "roots": 78,
+  "codes": [
+    2345,
+    18048,
+    2532,
+    2322,
+    2538
+  ],
+  "counts": {
+    "debug.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 1,
+      "TS2538": 0
+    },
+    "path.ts": {
+      "TS2345": 0,
+      "TS18048": 0,
+      "TS2532": 0,
+      "TS2322": 0,
+      "TS2538": 0
+    }
+  },
+  "total": 1,
+  "diagnostics": [
+    "src/compiler/debug.ts:171:21: error TS2322: Type 'undefined' is not assignable to type '{ level: AssertionLevel; assertion: AnyFunction; }'."
+  ]
+}

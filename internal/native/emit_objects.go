@@ -16,6 +16,19 @@ import (
 // an object literal can be seen through a class's type, since tsc lets one through and only cohere's
 // adamic/nominal-class refuses it, so the shape is checked unless fields.go proves a uniform slot.
 func (e *emitter) fieldSlot(object string, name string, class int) string {
+	// Constructor objects can inherit live data from their parent. Even a uniform offset
+	// names only their own storage, not necessarily the field JavaScript reads. The IR
+	// enumerates every static layout; keep lookup for names any such layout contains.
+	for _, layout := range e.program.Classes {
+		if !layout.Static {
+			continue
+		}
+		for _, field := range layout.Fields {
+			if field.Name == name {
+				return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
+			}
+		}
+	}
 	if slot := e.uniformFieldSlot(object, name); slot != "" {
 		return slot
 	}
@@ -69,7 +82,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		for index, field := range literal.Fields {
 			slot := e.temporary()
-			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+			cache := e.cache()
+			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
 				e.line("%s->reference = %s;", slot, e.kept(values[index]))
@@ -104,6 +120,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
 	}
 	for index, field := range literal.Fields {
+		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, field.Value.Type())
+		if field.Uninitialized {
+			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
+		}
 		value := values[index]
 		if e.regionValues[value] {
 			// A value in the region is immortal while the region lives: held without a count.

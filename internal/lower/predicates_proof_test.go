@@ -2,13 +2,13 @@ package lower
 
 import (
 	"context"
-	"errors"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -73,11 +73,14 @@ func TestPredicateBodyProof(t *testing.T) {
 				t.Fatalf("want proof tagged=%v, got %+v, %v", probe.tagged, proof, err)
 			}
 			if probe.failure == "" && probe.tagged {
-				var gap *NotYet
-				admission := l.predicateRefusal(predicate)
-				if !errors.As(admission, &gap) || !strings.Contains(admission.Error(), "checked-view handoff") {
-					t.Fatalf("want checked-view dependency gap, got %v", admission)
+				l.result = &ir.Program{}
+				if admission := l.predicateRefusal(predicate); admission != nil {
+					t.Fatalf("want checked-view admission, got %v", admission)
 				}
+				if !l.result.CheckedFields["kind"] {
+					t.Fatal("kind admission lost checked fields")
+				}
+
 			}
 		})
 	}
@@ -103,5 +106,53 @@ function assert(expression: unknown, message?: string): asserts expression {
 	lowering := &lowering{program: program, checker: checked}
 	if err := lowering.refuse(file); err != nil {
 		t.Fatalf("condition assertion must pass the production admission seam: %v", err)
+	}
+}
+
+func TestPredicateCallbackContracts(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name, source string
+		refused      bool
+	}{
+		{"arrow", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } apply((value: number): value is number => typeof value === "number");`, false},
+		{"named", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } function isNumber(value: number): value is number { return typeof value === "number"; } apply(isNumber);`, false},
+		{"unproven", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } apply((value: number): value is number => true);`, true},
+		{"lying", `function apply(callback: (value: number | string) => value is number): boolean { return callback(1); } apply((value: number | string): value is number => typeof value === "number" && value > 0);`, true},
+		{"reassigned", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } let guard = (value: number): value is number => typeof value === "number"; guard = (value: number): value is number => true; apply(guard);`, true},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			_, err := lowerSource(t, probe.source)
+			if probe.refused {
+				if err == nil || !strings.Contains(err.Error(), "unproven predicate argument for parameter callback") {
+					t.Fatalf("want pinned callback argument refusal, got %v", err)
+				}
+			} else if err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}
+
+func TestEveryNeedsCallbackEffects(t *testing.T) {
+	source, err := os.ReadFile("testdata/predicates/every_alias.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "every.a")
+	if err = os.WriteFile(path, source, 0644); err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	file := program.Files()[0]
+	checked, release := program.Checker(context.Background(), file)
+	defer release()
+	l := &lowering{program: program, checker: checked, result: &ir.Program{}}
+	err = l.refuse(file)
+	if err == nil || !strings.Contains(err.Error(), "return is not proven") {
+		t.Fatalf("want array proof refusal without callback effects, got %v", err)
 	}
 }

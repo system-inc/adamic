@@ -1,0 +1,5 @@
+{
+  "stdout": "",
+  "stderr": "file:///workspace/adamic/stage3/fixtures/cycles/06_import_order_mutant/utilities.a:6\n    files: emptyArray,\n           ^\n\nReferenceError: Cannot access 'emptyArray' before initialization\n    at file:///workspace/adamic/stage3/fixtures/cycles/06_import_order_mutant/utilities.a:6:12\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async file:///tmp/cycles-raw-node.mjs:36:1\n\nNode.js v24.19.0\n",
+  "exit": 1
+}

@@ -3,30 +3,40 @@
 #include "adamic.h"
 
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 adamic_object *adamic_object_new(const adamic_shape *shape) {
-	adamic_object *object = adamic_allocate(sizeof *object + shape->count * sizeof object->slots[0], adamic_kind_object);
+	adamic_object *object = adamic_allocate(sizeof *object + shape->count * (sizeof object->slots[0] + 2), adamic_kind_object);
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
+	memset(adamic_object_initialized(object), 1, shape->count);
+	memset(adamic_object_field_types(object), 0, shape->count);
 	return object;
 }
 
-adamic_object *adamic_object_copy(const adamic_object *source) {
+adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression) {
 	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
 	adamic_object *object = adamic_object_new(shape);
 	for (size_t position = 0; position < shape->count; position++) {
 		size_t index = adamic_public_index(shape, position);
 		adamic_slot_cache cache = {NULL, 0};
 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
-		object->slots[index] = accessor == NULL ? *adamic_object_field(source, shape->names[index], &cache) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
+		object->slots[index] = accessor == NULL ? *(expression == NULL ? adamic_object_field(source, shape->names[index], &cache) : adamic_object_read(source, shape->names[index], &cache, expression)) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
+		if (accessor == NULL) {
+			adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];
+			adamic_object_field_types(object)[index] = adamic_object_field_types(source)[cache.index];
+		}
 		if (shape->references[index] && accessor == NULL) {
 			adamic_retain(object->slots[index].reference);
 		}
 	}
 	return object;
 }
+
+adamic_object *adamic_object_copy(const adamic_object *source) { return adamic_object_copy_checked(source, NULL); }
 
 // adamic_object_has is object.hasOwnProperty(name): one of the shape's own names, not a method on a
 // prototype. A shape's names are C strings, so the lengths have to agree before the bytes do.
@@ -114,4 +124,102 @@ adamic_value *adamic_object_optional_field(const adamic_object *object, const ch
 		return NULL;
 	}
 	return &((adamic_object *)object)->slots[cache->index];
+}
+
+// Both public reads use the worker's readiness check; only their diagnostics differ.
+static adamic_value *adamic_object_read_mode(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *expected, const adamic_object **owner) {
+	adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+	if (slot != NULL && object->class != NULL && object->class->is_static) {
+		size_t flag = object->class->static_flags[cache->index];
+		if (flag != 0 && object->slots[flag - 1].number == 0 && object->class->static_parent != 0) {
+			return adamic_object_read_mode(object->slots[object->class->static_parent - 1].reference, name, cache, expression, expected, owner);
+		}
+	}
+	if (slot == NULL || !adamic_object_initialized(object)[cache->index]) {
+		size_t capacity = strlen(name) + strlen(expression) + (expected == NULL ? 0 : strlen(expected)) + 100;
+		char *message = malloc(capacity);
+		if (message == NULL) {
+			static const char failure[] = "out of memory";
+			adamic_panic(failure, sizeof failure - 1);
+		}
+		int length = expected != NULL ? snprintf(message, capacity, "field read failed: %s is not initialized; expected %s, found %s", expression, expected, slot == NULL ? "missing" : "uninitialized") : snprintf(message, capacity, "read before assignment: field '%s' in %s", name, expression);
+		adamic_panic(message, (size_t)length);
+	}
+	if (owner != NULL) { *owner = object; }
+	return slot;
+}
+
+adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression) {
+	return adamic_object_read_mode(object, name, cache, expression, NULL, NULL);
+}
+
+void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized) {
+	adamic_slot_cache cache = {NULL, 0};
+	(void)adamic_object_field(object, name, &cache);
+	adamic_object_initialized(object)[cache.index] = initialized;
+}
+
+// Required-field contract checks use the shared readiness bitmap. Representation evidence is
+// checked before reading any union member, including before following a possible reference.
+adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
+	const adamic_object *owner = NULL;
+	adamic_value *slot = adamic_object_read_mode(object, name, cache, expression, type, &owner);
+	unsigned char actual = adamic_object_field_types(owner)[cache->index];
+	// Boxed unions and packed maybe-numbers have a real runtime tag. Convert only
+	// after that tag proves which payload is live; never interpret a pointer as a number.
+	if (actual == 10 && slot->reference != NULL) {
+		const adamic_heap *boxed = slot->reference;
+		if (wanted == 1 && boxed->kind == adamic_kind_number) { return (adamic_value){.number = ((const adamic_number_box *)boxed)->number}; }
+		if (wanted == 2 && boxed->kind == adamic_kind_boolean) { return (adamic_value){.boolean = ((const adamic_boolean_box *)boxed)->boolean}; }
+		if (wanted >= 3 && wanted <= 6) {
+			enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : adamic_kind_map;
+			if (boxed->kind == kind) { return *slot; }
+		}
+	}
+	if (actual == 7 && wanted == 1) {
+		adamic_maybe_number unpacked = adamic_maybe_number_unpack(slot->number);
+		if (unpacked.present) { return (adamic_value){.number = unpacked.number}; }
+	}
+	if (actual == wanted && wanted >= 1 && wanted <= 6) {
+		if (wanted <= 2) { return *slot; }
+		const adamic_heap *reference = slot->reference;
+		enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : adamic_kind_map;
+		if (reference != NULL && reference->kind == kind) { return *slot; }
+	}
+	const char *found = actual == 1 ? "number" : actual == 2 ? "boolean" : actual == 3 ? "string" : actual == 4 ? "object" : actual == 5 ? "array" : actual == 6 ? "Map" : actual == 7 ? "number" : actual == 8 ? "function" : actual == 11 ? "object" : "unsupported representation";
+	if (actual >= 3 && actual <= 6 && slot->reference == NULL) { found = "nullish"; }
+	if (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) { found = "nullish"; }
+	if (actual == 10) {
+		const adamic_heap *boxed = slot->reference;
+		found = boxed == NULL ? "nullish" : boxed->kind == adamic_kind_number ? "number" : boxed->kind == adamic_kind_boolean ? "boolean" : boxed->kind == adamic_kind_string ? "string" : boxed->kind == adamic_kind_object ? "object" : boxed->kind == adamic_kind_array ? "array" : boxed->kind == adamic_kind_map ? "Map" : "function";
+	}
+	size_t capacity = strlen(expression) + strlen(type) + strlen(found) + 100;
+	char *message = malloc(capacity);
+	if (message == NULL) {
+		static const char oom[] = "out of memory";
+		adamic_panic(oom, sizeof oom - 1);
+	}
+	int length = snprintf(message, capacity, "field read failed: %s is not a %s; expected %s, found %s", expression, type, type, found);
+	adamic_panic(message, (size_t)length);
+}
+
+void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value) {
+	const adamic_string *text = type == 3 ? value.reference : type == 1 ? adamic_string_from_number(value.number) : value.boolean ? &adamic_string_true : &adamic_string_false;
+	const char *kind = type == 3 ? "string" : type == 1 ? "number" : "boolean";
+	size_t capacity = strlen(expression) + strlen(expected) + text->length + 100;
+	char *message = malloc(capacity);
+	if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
+	int prefix = snprintf(message, capacity, "field read failed: %s expected %s, found %s ", expression, expected, kind);
+	memcpy(message + prefix, text->bytes, text->length);
+	adamic_panic(message, (size_t)prefix + text->length);
+}
+
+// Writes through an asserted view must not reinterpret or release a differently typed slot.
+void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
+	adamic_value *slot = adamic_object_optional_field(object, name, cache);
+	if (slot != NULL) {
+		unsigned char actual = adamic_object_field_types(object)[cache->index];
+		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
+	}
+	(void)adamic_object_view(object, name, cache, wanted, type, expression);
 }

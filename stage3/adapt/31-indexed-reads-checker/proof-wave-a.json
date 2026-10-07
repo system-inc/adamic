@@ -1,0 +1,29 @@
+{
+  "assertions": 102,
+  "zeros": 0,
+  "declinedReads": 6,
+  "findingsReviewed": 200,
+  "findingsRemoved": 164,
+  "findingsDeclined": 36,
+  "stockEmittedJavaScript": "byte-identical",
+  "idempotence": "second CLI run: zero edits",
+  "CRLF": {
+    "before": 54434,
+    "after": 54434,
+    "bareLFBefore": 0,
+    "bareLFAfter": 0
+  },
+  "sourceSHA256": {
+    "before": "732fc54edf63e781bcf4e68b78a7a146c5da811d0a8a31a80088c4e82f4601f6",
+    "after": "77798af74f3e80ef441a58c6b7a12eec920e573984596b0ece0fb14901f1d409"
+  },
+  "mutant": {
+    "site": "checker.ts:2446:75",
+    "original": "jsxFragmentPragma[0]!",
+    "replacement": "(jsxFragmentPragma[0] ?? 0)",
+    "emittedJavaScriptExit": 1,
+    "siteContractExit": 1,
+    "census": "not run",
+    "oracle": "not run"
+  }
+}

@@ -70,6 +70,7 @@ typedef struct adamic_maybe_boolean {
 typedef struct adamic_cell {
 	adamic_heap heap;
 	bool references;
+	bool ready;
 	adamic_value value;
 } adamic_cell;
 
@@ -165,6 +166,17 @@ typedef struct adamic_object {
 	adamic_value slots[];
 } adamic_object;
 
+// Initialized bits follow slots in the same allocation, indexed by the actual shape.
+static inline unsigned char *adamic_object_initialized(const adamic_object *object) {
+	return (unsigned char *)(void *)(object->slots + object->shape->count);
+}
+void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized);
+// Physical representation bytes are separate from the shared initialization bitmap.
+// Zero means no representation evidence, never permission to interpret a slot.
+static inline unsigned char *adamic_object_field_types(const adamic_object *object) {
+	return adamic_object_initialized(object) + object->shape->count;
+}
+
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot);
 void adamic_object_free_children(adamic_object *object, void (*release)(void *));
@@ -175,6 +187,11 @@ typedef struct adamic_slot_cache {
 	const adamic_shape *shape;
 	size_t index;
 } adamic_slot_cache;
+
+adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
+adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
+void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value);
+void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
 
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
@@ -209,6 +226,7 @@ void adamic_region_end(adamic_region *region);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.
 adamic_object *adamic_object_copy(const adamic_object *source);
+adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression);
 
 // adamic_object_has is object.hasOwnProperty(name).
 bool adamic_object_has(const adamic_object *object, const adamic_string *name);
@@ -217,8 +235,6 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name);
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
-adamic_string *adamic_static_union_typeof(const adamic_heap *value);
-adamic_string *adamic_object_typeof(const adamic_object *object);
 adamic_value *adamic_static_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
 // A readonly numeric view may see a field made with the undefined-only reference representation.
@@ -297,7 +313,7 @@ typedef struct adamic_map {
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
 // to them are visited, and entries deleted before it gets to them aren't, as ECMA-262 requires. It
-// holds the map, and letting go of it ends the iteration.
+// holds the map; exhaustion or letting go ends the iteration exactly once.
 typedef struct adamic_map_iterator {
 	adamic_heap heap;
 	adamic_map *map;
@@ -321,6 +337,7 @@ adamic_map *adamic_map_new_identity(bool reference_values);
 adamic_map *adamic_map_new_booleans(bool reference_values);
 bool adamic_map_maybe_key_equal(double left, double right);
 uint64_t adamic_map_maybe_key_hash(double key);
+uint64_t adamic_map_number_hash(double number);
 
 // adamic_map_new_maybe_numbers makes a map whose keys are packed number | undefined values.
 adamic_map *adamic_map_new_maybe_numbers(bool reference_values);
@@ -345,6 +362,33 @@ adamic_value *adamic_map_get(const adamic_map *map, adamic_value key);
 void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value);
 
 bool adamic_map_delete(adamic_map *map, adamic_value key);
+
+// Records own a string-keyed Map through a fixed-shape wrapper (record.c). These aliases
+// use ordinary object cleanup; the compiler must use record operations for record views.
+typedef adamic_object adamic_record;
+typedef adamic_object adamic_record_iterator;
+
+adamic_record *adamic_record_new(bool reference_values);
+// Own lookup returns a borrowed slot, NULL for absence (including an inherited name).
+adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key);
+bool adamic_record_has_own(const adamic_record *record, const adamic_string *key);
+// Dynamic get and in hold own keys only: on a miss naming an Object.prototype member,
+// both panic with the member name and "records hold own keys only". Other misses return
+// NULL/false. The member-name check runs only on a miss; an own value is always borrowed.
+adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key);
+bool adamic_record_has(const adamic_record *record, const adamic_string *key);
+// Both writes consume key and value references, as Map.set does. define creates an own data
+// property even for __proto__; set refuses __proto__ assignment with an explicit NotYet panic.
+void adamic_record_define(adamic_record *record, adamic_string *key, adamic_value value);
+void adamic_record_set(adamic_record *record, adamic_string *key, adamic_value value);
+bool adamic_record_delete(adamic_record *record, const adamic_string *key);
+size_t adamic_record_size(const adamic_record *record);
+// keys returns an owned array in own-key order: array indices ascending, then insertion order.
+adamic_array *adamic_record_keys(const adamic_record *record);
+// Iteration snapshots keys, holds record and keys, skips deleted keys, and reads current values.
+// New keys are not visited. next returns borrowed key/value pairs; release ends iteration.
+adamic_record_iterator *adamic_record_iterate(adamic_record *record);
+bool adamic_record_iterator_next(adamic_record_iterator *iterator, adamic_string **key, adamic_value *value);
 
 // A Set is a map whose values aren't used (set.c). adamic_set_add_all adds an array's elements in
 // order, new Set(array), each reference retained; adamic_set_values is [...set], a new array the caller
@@ -628,8 +672,9 @@ bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right);
 // string the caller owns.
 adamic_string *adamic_union_to_string(adamic_heap *value);
 
-// adamic_union_typeof is typeof value, a constant; the names typeof gives are these.
-adamic_string *adamic_union_typeof(const adamic_heap *value);
+// adamic_union_typeof classifies every reference, including static constructors. null says what
+// a missing pointer represents; null and undefined share NULL but have different typeof results.
+adamic_string *adamic_union_typeof(const adamic_heap *value, bool null);
 extern adamic_string adamic_typeof_number;
 extern adamic_string adamic_typeof_string;
 extern adamic_string adamic_typeof_boolean;

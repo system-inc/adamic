@@ -1,0 +1,3026 @@
+[
+  {
+    "file": "binder.ts",
+    "line": 1109,
+    "column": 17,
+    "code": 2412,
+    "diagnostic": "src/compiler/binder.ts:1109:17: error TS2412: Type 'undefined' is not assignable to type 'FlowNode' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 1229,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:1229:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 1252,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:1252:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 1966,
+    "column": 18,
+    "code": 7030,
+    "diagnostic": "src/compiler/binder.ts:1966:18: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 1982,
+    "column": 18,
+    "code": 7030,
+    "diagnostic": "src/compiler/binder.ts:1982:18: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 2017,
+    "column": 18,
+    "code": 7030,
+    "diagnostic": "src/compiler/binder.ts:2017:18: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 2264,
+    "column": 122,
+    "code": 7030,
+    "diagnostic": "src/compiler/binder.ts:2264:122: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 2372,
+    "column": 17,
+    "code": 2412,
+    "diagnostic": "src/compiler/binder.ts:2372:17: error TS2412: Type 'PatternAmbientModule[] | undefined' is not assignable to type 'PatternAmbientModule[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'PatternAmbientModule[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 2442,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:2442:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 2849,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:2849:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 3064,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:3064:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 3072,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:3072:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 315,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/binder.ts:315:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Enum syntax rejected by erasableSyntaxOnly; not a required indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 3840,
+    "column": 9,
+    "code": 7029,
+    "diagnostic": "src/compiler/binder.ts:3840:9: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 3905,
+    "column": 64,
+    "code": 7030,
+    "diagnostic": "src/compiler/binder.ts:3905:64: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 465,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/binder.ts:465:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Enum syntax rejected by erasableSyntaxOnly; not a required indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 881,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/binder.ts:881:13: error TS2412: Type 'Symbol | undefined' is not assignable to type 'Symbol' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "binder.ts",
+    "line": 993,
+    "column": 17,
+    "code": 2412,
+    "diagnostic": "src/compiler/binder.ts:993:17: error TS2412: Type 'undefined' is not assignable to type 'SymbolTable' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1258,
+    "column": 65,
+    "code": 2488,
+    "diagnostic": "src/compiler/builder.ts:1258:65: error TS2488: Type '[Path, FileInfo] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+    "reason": "Iterator callback overload includes undefined for a destructured tuple; no element-access expression exists."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1292,
+    "column": 61,
+    "code": 2488,
+    "diagnostic": "src/compiler/builder.ts:1292:61: error TS2488: Type '[Path, FileInfo] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+    "reason": "Iterator callback overload includes undefined for a destructured tuple; no element-access expression exists."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1506,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:1506:13: error TS2412: Type '{} | undefined' is not assignable to type '{}' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '{}'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1507,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:1507:13: error TS2412: Type '{} | undefined' is not assignable to type '{}' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '{}'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1508,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:1508:13: error TS2412: Type 'string | undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1509,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:1509:13: error TS2412: Type 'keyof CompilerOptions | undefined' is not assignable to type 'keyof CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'keyof CompilerOptions'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1511,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:1511:13: error TS2412: Type 'ReusableDiagnosticRelatedInformation[] | undefined' is not assignable to type 'ReusableDiagnosticRelatedInformation[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'ReusableDiagnosticRelatedInformation[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1535,
+    "column": 13,
+    "code": 2375,
+    "diagnostic": "src/compiler/builder.ts:1535:13: error TS2375: Type '{ info: RepopulateDiagnosticChainInfo; next: ReusableDiagnosticMessageChain[] | undefined; }' is not assignable to type 'ReusableDiagnosticMessageChain' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ info: RepopulateDiagnosticChainInfo; next: ReusableDiagnosticMessageChain[] | undefined; }' is not assignable to type 'ReusableRepopulateInfoChain' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'next' are incompatible.\n      Type 'ReusableDiagnosticMessageChain[] | undefined' is not assignable to type 'ReusableDiagnosticMessageChain[]'.\n        Type 'undefined' is not assignable to type 'ReusableDiagnosticMessageChain[]'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1541,
+    "column": 46,
+    "code": 2375,
+    "diagnostic": "src/compiler/builder.ts:1541:46: error TS2375: Type '{ messageText: string; category: DiagnosticCategory; code: number; repopulateInfo?: () => RepopulateDiagnosticChainInfo; canonicalHead?: CanonicalDiagnostic; next: ReusableDiagnosticMessageChain[] | undefined; }' is not assignable to type 'ReusableDiagnosticMessageChain' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ messageText: string; category: DiagnosticCategory; code: number; repopulateInfo?: () => RepopulateDiagnosticChainInfo; canonicalHead?: CanonicalDiagnostic; next: ReusableDiagnosticMessageChain[] | undefined; }' is not assignable to type 'SerializedDiagnosticMessageChain' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Type '{ messageText: string; category: DiagnosticCategory; code: number; repopulateInfo?: () => RepopulateDiagnosticChainInfo; canonicalHead?: CanonicalDiagnostic; next: ReusableDiagnosticMessageChain[] | undefined; }' is not assignable to type '{ next?: ReusableDiagnosticMessageChain[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'next' are incompatible.\n        Type 'ReusableDiagnosticMessageChain[] | undefined' is not assignable to type 'ReusableDiagnosticMessageChain[]'.\n          Type 'undefined' is not assignable to type 'ReusableDiagnosticMessageChain[]'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1570,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/builder.ts:1570:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1597,
+    "column": 36,
+    "code": 2379,
+    "diagnostic": "src/compiler/builder.ts:1597:36: error TS2379: Argument of type '{ rootNames: readonly string[]; options: CompilerOptions; host: CompilerHost; oldProgram: Program | undefined; configFileParsingDiagnostics: readonly Diagnostic[] | undefined; projectReferences: ... | undefined; }' is not assignable to parameter of type 'CreateProgramOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'projectReferences' are incompatible.\n    Type 'readonly ProjectReference[] | undefined' is not assignable to type 'readonly ProjectReference[]'.\n      Type 'undefined' is not assignable to type 'readonly ProjectReference[]'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1864,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:1864:13: error TS2412: Type 'BuilderFileEmit | undefined' is not assignable to type 'BuilderFileEmit' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'BuilderFileEmit'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 187,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/builder.ts:187:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 1915,
+    "column": 16,
+    "code": 7030,
+    "diagnostic": "src/compiler/builder.ts:1915:16: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 2136,
+    "column": 21,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:2136:21: error TS2412: Type 'undefined' is not assignable to type 'true' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 2172,
+    "column": 53,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:2172:53: error TS2412: Type 'undefined' is not assignable to type 'true' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 2211,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:2211:13: error TS2412: Type 'undefined' is not assignable to type 'true' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 2273,
+    "column": 9,
+    "code": 2375,
+    "diagnostic": "src/compiler/builder.ts:2273:9: error TS2375: Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; semanticDiagnosticsPerFile: Map<Path, readonly ReusableDiagnostic[]>; ... 7 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'programEmitPending' are incompatible.\n    Type 'BuilderFileEmit | undefined' is not assignable to type 'BuilderFileEmit'.\n      Type 'undefined' is not assignable to type 'BuilderFileEmit'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 2310,
+    "column": 9,
+    "code": 2375,
+    "diagnostic": "src/compiler/builder.ts:2310:9: error TS2375: Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; referencedMap: BuilderState.ManyToManyPathMap | undefined; ... 8 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'affectedFilesPendingEmit' are incompatible.\n    Type 'Map<Path, BuilderFileEmit> | undefined' is not assignable to type 'ReadonlyMap<Path, BuilderFileEmit>'.\n      Type 'undefined' is not assignable to type 'ReadonlyMap<Path, BuilderFileEmit>'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 2377,
+    "column": 13,
+    "code": 2769,
+    "diagnostic": "src/compiler/builder.ts:2377:13: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Type 'Generator<[Path | undefined, never[]], void, unknown>' is missing the following properties from type 'readonly (readonly [Path, readonly ReusableDiagnostic[]])[]': length, concat, join, slice, and 25 more.",
+    "reason": "Map construction overload receives an iterator callback key inferred as possibly undefined; no element-access expression exists."
+  },
+  {
+    "file": "builder.ts",
+    "line": 336,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:336:5: error TS2412: Type 'true | undefined' is not assignable to type 'true' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'true'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 360,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:360:9: error TS2412: Type 'BuilderFileEmit | undefined' is not assignable to type 'BuilderFileEmit' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'BuilderFileEmit'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 367,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:367:9: error TS2412: Type 'boolean | undefined' is not assignable to type 'boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'boolean'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 495,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:495:13: error TS2412: Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 501,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:501:9: error TS2412: Type 'undefined' is not assignable to type 'BuilderFileEmit' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 543,
+    "column": 9,
+    "code": 2375,
+    "diagnostic": "src/compiler/builder.ts:543:9: error TS2375: Type '{ messageText: string; category: DiagnosticCategory; code: number; repopulateInfo?: () => RepopulateDiagnosticChainInfo; canonicalHead?: CanonicalDiagnostic; next: DiagnosticMessageChain[] | undefined; }' is not assignable to type 'DiagnosticMessageChain' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'next' are incompatible.\n    Type 'DiagnosticMessageChain[] | undefined' is not assignable to type 'DiagnosticMessageChain[]'.\n      Type 'undefined' is not assignable to type 'DiagnosticMessageChain[]'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 549,
+    "column": 9,
+    "code": 2375,
+    "diagnostic": "src/compiler/builder.ts:549:9: error TS2375: Type '{ messageText: string; category: DiagnosticCategory; code: number; repopulateInfo?: () => RepopulateDiagnosticChainInfo; canonicalHead?: CanonicalDiagnostic; next: DiagnosticMessageChain[] | undefined; }' is not assignable to type 'DiagnosticMessageChain' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'next' are incompatible.\n    Type 'DiagnosticMessageChain[] | undefined' is not assignable to type 'DiagnosticMessageChain[]'.\n      Type 'undefined' is not assignable to type 'DiagnosticMessageChain[]'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 555,
+    "column": 68,
+    "code": 2375,
+    "diagnostic": "src/compiler/builder.ts:555:68: error TS2375: Type '{ messageText: string; category: DiagnosticCategory; code: number; repopulateInfo?: () => RepopulateDiagnosticChainInfo; canonicalHead?: CanonicalDiagnostic; next: DiagnosticMessageChain[] | undefined; }' is not assignable to type 'DiagnosticMessageChain' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'next' are incompatible.\n    Type 'DiagnosticMessageChain[] | undefined' is not assignable to type 'DiagnosticMessageChain[]'.\n      Type 'undefined' is not assignable to type 'DiagnosticMessageChain[]'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 576,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:576:9: error TS2412: Type '{} | undefined' is not assignable to type '{}' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '{}'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 577,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:577:9: error TS2412: Type '{} | undefined' is not assignable to type '{}' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '{}'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 578,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:578:9: error TS2412: Type 'string | undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 579,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:579:9: error TS2412: Type 'keyof CompilerOptions | undefined' is not assignable to type 'keyof CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'keyof CompilerOptions'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 581,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:581:9: error TS2412: Type 'DiagnosticRelatedInformation[] | undefined' is not assignable to type 'DiagnosticRelatedInformation[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'DiagnosticRelatedInformation[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 707,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:707:9: error TS2412: Type 'undefined' is not assignable to type 'Map<Path, BuilderFileEmit>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 708,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:708:9: error TS2412: Type 'undefined' is not assignable to type 'BuilderFileEmit' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 723,
+    "column": 23,
+    "code": 2412,
+    "diagnostic": "src/compiler/builder.ts:723:23: error TS2412: Type 'undefined' is not assignable to type 'BuilderFileEmit' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 757,
+    "column": 57,
+    "code": 7030,
+    "diagnostic": "src/compiler/builder.ts:757:57: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "builder.ts",
+    "line": 779,
+    "column": 55,
+    "code": 7030,
+    "diagnostic": "src/compiler/builder.ts:779:55: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "builderState.ts",
+    "line": 100,
+    "column": 18,
+    "code": 1294,
+    "diagnostic": "src/compiler/builderState.ts:100:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "builderState.ts",
+    "line": 350,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builderState.ts:350:9: error TS2412: Type 'undefined' is not assignable to type 'readonly SourceFile[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builderState.ts",
+    "line": 351,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/builderState.ts:351:9: error TS2412: Type 'undefined' is not assignable to type 'readonly string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "builderState.ts",
+    "line": 56,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/builderState.ts:56:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 2128,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/commandLineParser.ts:2128:5: error TS2375: Type 'BaseParsedCommandLine' is not assignable to type 'ParsedCommandLine' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'watchOptions' are incompatible.\n    Type 'WatchOptions | undefined' is not assignable to type 'WatchOptions'.\n      Type 'undefined' is not assignable to type 'WatchOptions'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 2279,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/commandLineParser.ts:2279:5: error TS2375: Type '{ config: any; error: DiagnosticWithLocation | undefined; }' is not assignable to type '{ config?: any; error?: Diagnostic; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'error' are incompatible.\n    Type 'DiagnosticWithLocation | undefined' is not assignable to type 'Diagnostic'.\n      Type 'undefined' is not assignable to type 'Diagnostic'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 2301,
+    "column": 91,
+    "code": 18046,
+    "diagnostic": "src/compiler/commandLineParser.ts:2301:91: error TS18046: 'e' is of type 'unknown'.",
+    "reason": "Catch value remains unknown; not an indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 2663,
+    "column": 9,
+    "code": 2375,
+    "diagnostic": "src/compiler/commandLineParser.ts:2663:9: error TS2375: Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'build' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 2761,
+    "column": 40,
+    "code": 7030,
+    "diagnostic": "src/compiler/commandLineParser.ts:2761:40: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 3087,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/commandLineParser.ts:3087:5: error TS2412: Type 'string | undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'string'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 3093,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/commandLineParser.ts:3093:5: error TS2375: Type '{ options: CompilerOptions; watchOptions: WatchOptions | undefined; fileNames: string[]; projectReferences: readonly ProjectReference[] | undefined; ... 4 more ...; compileOnSave: boolean; }' is not assignable to type 'ParsedCommandLine' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'projectReferences' are incompatible.\n    Type 'readonly ProjectReference[] | undefined' is not assignable to type 'readonly ProjectReference[]'.\n      Type 'undefined' is not assignable to type 'readonly ProjectReference[]'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 3207,
+    "column": 74,
+    "code": 2379,
+    "diagnostic": "src/compiler/commandLineParser.ts:3207:74: error TS2379: Argument of type '{ path: string; originalPath: string; prepend: boolean | undefined; circular: boolean | undefined; }' is not assignable to parameter of type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'prepend' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 3452,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/commandLineParser.ts:3452:9: error TS2412: Type 'WatchOptions | undefined' is not assignable to type 'WatchOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'WatchOptions'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 3482,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/commandLineParser.ts:3482:13: error TS2412: Type 'WatchOptions | undefined' is not assignable to type 'WatchOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'WatchOptions'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 3514,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/commandLineParser.ts:3514:5: error TS2375: Type '{ raw: any; options: CompilerOptions; watchOptions: WatchOptions | undefined; typeAcquisition: TypeAcquisition; extendedConfigPath: string | ... 1 more ... | undefined; }' is not assignable to type 'ParsedTsconfig' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'watchOptions' are incompatible.\n    Type 'WatchOptions | undefined' is not assignable to type 'WatchOptions'.\n      Type 'undefined' is not assignable to type 'WatchOptions'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 3595,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/commandLineParser.ts:3595:5: error TS2375: Type '{ raw: any; options: CompilerOptions; watchOptions: WatchOptions | undefined; typeAcquisition: TypeAcquisition; extendedConfigPath: string | ... 1 more ... | undefined; }' is not assignable to type 'ParsedTsconfig' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'watchOptions' are incompatible.\n    Type 'WatchOptions | undefined' is not assignable to type 'WatchOptions'.\n      Type 'undefined' is not assignable to type 'WatchOptions'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 3809,
+    "column": 4,
+    "code": 7030,
+    "diagnostic": "src/compiler/commandLineParser.ts:3809:4: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 3860,
+    "column": 10,
+    "code": 7030,
+    "diagnostic": "src/compiler/commandLineParser.ts:3860:10: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 4100,
+    "column": 93,
+    "code": 7030,
+    "diagnostic": "src/compiler/commandLineParser.ts:4100:93: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 4287,
+    "column": 9,
+    "code": 7029,
+    "diagnostic": "src/compiler/commandLineParser.ts:4287:9: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "commandLineParser.ts",
+    "line": 4294,
+    "column": 46,
+    "code": 7030,
+    "diagnostic": "src/compiler/commandLineParser.ts:4294:46: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "corePublic.ts",
+    "line": 43,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/corePublic.ts:43:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "line": 1020,
+    "column": 67,
+    "code": 2379,
+    "diagnostic": "src/compiler/executeCommandLine.ts:1020:67: error TS2379: Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions; watchOptionsToExtend: WatchOptions | undefined; system: System; reportDiagnostic: DiagnosticReporter; reportWatchStatus: WatchStatusReporter; }' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<EmitAndSemanticDiagnosticsBuilderProgram>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'watchOptionsToExtend' are incompatible.\n    Type 'WatchOptions | undefined' is not assignable to type 'WatchOptions'.\n      Type 'undefined' is not assignable to type 'WatchOptions'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "line": 1060,
+    "column": 10,
+    "code": 7030,
+    "diagnostic": "src/compiler/executeCommandLine.ts:1060:10: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "line": 314,
+    "column": 26,
+    "code": 2488,
+    "diagnostic": "src/compiler/executeCommandLine.ts:314:26: error TS2488: Type '[string, string | number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+    "reason": "Iterator callback overload includes undefined for a destructured tuple; no element-access expression exists."
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "line": 315,
+    "column": 23,
+    "code": 2488,
+    "diagnostic": "src/compiler/executeCommandLine.ts:315:23: error TS2488: Type '[string, string | number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+    "reason": "Iterator callback overload includes undefined for a destructured tuple; no element-access expression exists."
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "line": 922,
+    "column": 11,
+    "code": 2375,
+    "diagnostic": "src/compiler/executeCommandLine.ts:922:11: error TS2375: Type '{ rootNames: string[]; options: CompilerOptions; projectReferences: readonly ProjectReference[] | undefined; host: CompilerHost; configFileParsingDiagnostics: ...; }' is not assignable to type 'CreateProgramOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'projectReferences' are incompatible.\n    Type 'readonly ProjectReference[] | undefined' is not assignable to type 'readonly ProjectReference[]'.\n      Type 'undefined' is not assignable to type 'readonly ProjectReference[]'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "line": 951,
+    "column": 57,
+    "code": 2379,
+    "diagnostic": "src/compiler/executeCommandLine.ts:951:57: error TS2379: Argument of type '{ host: CompilerHost; system: System; rootNames: string[]; options: CompilerOptions; configFileParsingDiagnostics: readonly Diagnostic[]; projectReferences: ... | undefined; reportDiagnostic: DiagnosticReporter; reportErrorSummary: ReportEmitErrorSummary | undefined; afterProgramEmitAndDiagnostics: ...; }' is not assignable to parameter of type 'IncrementalCompilationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'projectReferences' are incompatible.\n    Type 'readonly ProjectReference[] | undefined' is not assignable to type 'readonly ProjectReference[]'.\n      Type 'undefined' is not assignable to type 'readonly ProjectReference[]'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "executeCommandLine.ts",
+    "line": 99,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/executeCommandLine.ts:99:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "expressionToTypeNode.ts",
+    "line": 1021,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/expressionToTypeNode.ts:1021:9: error TS2412: Type 'boolean | undefined' is not assignable to type 'boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'boolean'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "expressionToTypeNode.ts",
+    "line": 1094,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/expressionToTypeNode.ts:1094:9: error TS2412: Type 'boolean | undefined' is not assignable to type 'boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'boolean'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "expressionToTypeNode.ts",
+    "line": 1167,
+    "column": 14,
+    "code": 7030,
+    "diagnostic": "src/compiler/expressionToTypeNode.ts:1167:14: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "expressionToTypeNode.ts",
+    "line": 1290,
+    "column": 46,
+    "code": 7030,
+    "diagnostic": "src/compiler/expressionToTypeNode.ts:1290:46: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "expressionToTypeNode.ts",
+    "line": 268,
+    "column": 58,
+    "code": 7030,
+    "diagnostic": "src/compiler/expressionToTypeNode.ts:268:58: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "expressionToTypeNode.ts",
+    "line": 284,
+    "column": 66,
+    "code": 7030,
+    "diagnostic": "src/compiler/expressionToTypeNode.ts:284:66: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "expressionToTypeNode.ts",
+    "line": 469,
+    "column": 21,
+    "code": 2412,
+    "diagnostic": "src/compiler/expressionToTypeNode.ts:469:21: error TS2412: Type 'undefined' is not assignable to type 'NodeArray<ModifierLike>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "expressionToTypeNode.ts",
+    "line": 741,
+    "column": 76,
+    "code": 7030,
+    "diagnostic": "src/compiler/expressionToTypeNode.ts:741:76: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 132,
+    "column": 13,
+    "code": 2375,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:132:13: error TS2375: Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'peerDependencies' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 1393,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:1393:5: error TS2375: Type '{ moduleResolution: ModuleResolutionKind.NodeJs; traceResolution: boolean | undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'traceResolution' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 147,
+    "column": 59,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:147:59: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 1567,
+    "column": 10,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:1567:10: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 1687,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:1687:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax is rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 184,
+    "column": 12,
+    "code": 1294,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:184:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax is rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 2072,
+    "column": 132,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:2072:132: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 2303,
+    "column": 65,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:2303:65: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 2349,
+    "column": 68,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:2349:68: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 2445,
+    "column": 115,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:2445:115: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 2489,
+    "column": 189,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:2489:189: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 2708,
+    "column": 282,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:2708:282: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 271,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:271:13: error TS2412: Type 'string[] | undefined' is not assignable to type 'string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'string[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 272,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:272:13: error TS2412: Type 'string[] | undefined' is not assignable to type 'string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'string[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 273,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:273:13: error TS2412: Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'Diagnostic[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 277,
+    "column": 13,
+    "code": 2375,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:277:13: error TS2375: Type '{ resolvedModule: ResolvedModuleFull | undefined; alternateResult?: string; failedLookupLocations: string[] | undefined; affectingLocations: string[] | undefined; resolutionDiagnostics: ... | undefined; }' is not assignable to type 'ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'failedLookupLocations' are incompatible.\n    Type 'string[] | undefined' is not assignable to type 'string[]'.\n      Type 'undefined' is not assignable to type 'string[]'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 3006,
+    "column": 278,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:3006:278: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 3032,
+    "column": 13,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:3032:13: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 3057,
+    "column": 48,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:3057:48: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 3064,
+    "column": 274,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:3064:274: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 3169,
+    "column": 255,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:3169:255: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 3242,
+    "column": 264,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:3242:264: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 3297,
+    "column": 50,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:3297:50: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 3332,
+    "column": 10,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:3332:10: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 461,
+    "column": 94,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:461:94: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 479,
+    "column": 99,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:479:99: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 627,
+    "column": 9,
+    "code": 2375,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:627:9: error TS2375: Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'originalPath' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 635,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:635:5: error TS2375: Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: ... | undefined; resolutionDiagnostics: ... | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'failedLookupLocations' are incompatible.\n    Type 'string[] | undefined' is not assignable to type 'string[]'.\n      Type 'undefined' is not assignable to type 'string[]'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 662,
+    "column": 31,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:662:31: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 695,
+    "column": 33,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:695:33: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleNameResolver.ts",
+    "line": 796,
+    "column": 85,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleNameResolver.ts:796:85: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleSpecifiers.ts",
+    "line": 1014,
+    "column": 12,
+    "code": 1294,
+    "diagnostic": "src/compiler/moduleSpecifiers.ts:1014:12: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax is rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "moduleSpecifiers.ts",
+    "line": 1345,
+    "column": 10,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleSpecifiers.ts:1345:10: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleSpecifiers.ts",
+    "line": 164,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/moduleSpecifiers.ts:164:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax is rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "moduleSpecifiers.ts",
+    "line": 190,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/moduleSpecifiers.ts:190:5: error TS2375: Type '{ excludeRegexes: string[] | undefined; relativePreference: RelativePreference; getAllowedEndingsInPreferredOrder: (syntaxImpliedNodeFormat: ResolutionMode) => ...; }' is not assignable to type 'ModuleSpecifierPreferences' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'excludeRegexes' are incompatible.\n    Type 'string[] | undefined' is not assignable to type 'readonly string[]'.\n      Type 'undefined' is not assignable to type 'readonly string[]'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "moduleSpecifiers.ts",
+    "line": 750,
+    "column": 37,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleSpecifiers.ts:750:37: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleSpecifiers.ts",
+    "line": 870,
+    "column": 14,
+    "code": 2488,
+    "diagnostic": "src/compiler/moduleSpecifiers.ts:870:14: error TS2488: Type '[string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+    "reason": "Iterator callback overload includes undefined for a required tuple; not an element-access expression."
+  },
+  {
+    "file": "moduleSpecifiers.ts",
+    "line": 879,
+    "column": 89,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleSpecifiers.ts:879:89: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleSpecifiers.ts",
+    "line": 897,
+    "column": 82,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleSpecifiers.ts:897:82: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "moduleSpecifiers.ts",
+    "line": 926,
+    "column": 278,
+    "code": 7030,
+    "diagnostic": "src/compiler/moduleSpecifiers.ts:926:278: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "performanceCore.ts",
+    "line": 35,
+    "column": 37,
+    "code": 2591,
+    "diagnostic": "src/compiler/performanceCore.ts:35:37: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Existing Node require/perf_hooks host type binding is unavailable to the census; no indexed read exists."
+  },
+  {
+    "file": "performanceCore.ts",
+    "line": 35,
+    "column": 84,
+    "code": 2591,
+    "diagnostic": "src/compiler/performanceCore.ts:35:84: error TS2591: Cannot find name 'perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Existing Node require/perf_hooks host type binding is unavailable to the census; no indexed read exists."
+  },
+  {
+    "file": "performanceCore.ts",
+    "line": 66,
+    "column": 11,
+    "code": 2375,
+    "diagnostic": "src/compiler/performanceCore.ts:66:11: error TS2375: Type '{ shouldWriteNativeEvents: boolean; performance: undefined; performanceTime: undefined; }' is not assignable to type 'PerformanceHooks' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'performance' are incompatible.\n    Type 'undefined' is not assignable to type 'Performance'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 1366,
+    "column": 9,
+    "code": 2375,
+    "diagnostic": "src/compiler/program.ts:1366:9: error TS2375: Type '{ impliedNodeFormat: ModuleKind.CommonJS | ModuleKind.ESNext; packageJsonLocations: string[]; packageJsonScope: PackageJsonInfo | undefined; }' is not assignable to type 'Partial<CreateSourceFileOptions>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageJsonScope' are incompatible.\n    Type 'PackageJsonInfo | undefined' is not assignable to type 'PackageJsonInfo'.\n      Type 'undefined' is not assignable to type 'PackageJsonInfo'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 1479,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/program.ts:1479:5: error TS2375: Type '{ rootNames: readonly string[]; options: CompilerOptions; host: CompilerHost | undefined; oldProgram: Program | undefined; configFileParsingDiagnostics: ... | undefined; typeScriptVersion: string | undefined; }' is not assignable to type 'CreateProgramOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'host' are incompatible.\n    Type 'CompilerHost | undefined' is not assignable to type 'CompilerHost'.\n      Type 'undefined' is not assignable to type 'CompilerHost'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 1876,
+    "column": 11,
+    "code": 2375,
+    "diagnostic": "src/compiler/program.ts:1876:11: error TS2375: Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'directoryExists' are incompatible.\n    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.\n      Type 'undefined' is not assignable to type '(path: string) => boolean'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 2384,
+    "column": 20,
+    "code": 1294,
+    "diagnostic": "src/compiler/program.ts:2384:20: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Enum syntax rejected by erasableSyntaxOnly; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 2399,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/program.ts:2399:13: error TS2412: Type 'readonly string[] | undefined' is not assignable to type 'readonly string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'readonly string[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 2400,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/program.ts:2400:13: error TS2412: Type 'PackageJsonInfo | undefined' is not assignable to type 'PackageJsonInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'PackageJsonInfo'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 2599,
+    "column": 9,
+    "code": 2375,
+    "diagnostic": "src/compiler/program.ts:2599:9: error TS2375: Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 3000,
+    "column": 22,
+    "code": 7030,
+    "diagnostic": "src/compiler/program.ts:3000:22: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 3007,
+    "column": 21,
+    "code": 7029,
+    "diagnostic": "src/compiler/program.ts:3007:21: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 3103,
+    "column": 22,
+    "code": 7030,
+    "diagnostic": "src/compiler/program.ts:3103:22: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 3149,
+    "column": 21,
+    "code": 7029,
+    "diagnostic": "src/compiler/program.ts:3149:21: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 3204,
+    "column": 25,
+    "code": 7029,
+    "diagnostic": "src/compiler/program.ts:3204:25: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough rejected by noFallthroughCasesInSwitch; not an indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 344,
+    "column": 39,
+    "code": 7030,
+    "diagnostic": "src/compiler/program.ts:344:39: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 3515,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/program.ts:3515:9: error TS2412: Type 'readonly string[] | undefined' is not assignable to type 'readonly string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'readonly string[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 3516,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/program.ts:3516:9: error TS2412: Type 'PackageJsonInfo | undefined' is not assignable to type 'PackageJsonInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'PackageJsonInfo'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 3541,
+    "column": 13,
+    "code": 2375,
+    "diagnostic": "src/compiler/program.ts:3541:13: error TS2375: Type '{ impliedNodeFormat?: ResolutionMode; packageJsonLocations?: readonly string[]; packageJsonScope?: PackageJsonInfo; languageVersion: ScriptTarget; setExternalModuleIndicator: ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CreateSourceFileOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'jsDocParsingMode' are incompatible.\n    Type 'JSDocParsingMode | undefined' is not assignable to type 'JSDocParsingMode'.\n      Type 'undefined' is not assignable to type 'JSDocParsingMode'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 3542,
+    "column": 13,
+    "code": 2375,
+    "diagnostic": "src/compiler/program.ts:3542:13: error TS2375: Type '{ languageVersion: ScriptTarget; impliedNodeFormat: ResolutionMode; setExternalModuleIndicator: (file: SourceFile) => void; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CreateSourceFileOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'jsDocParsingMode' are incompatible.\n    Type 'JSDocParsingMode | undefined' is not assignable to type 'JSDocParsingMode'.\n      Type 'undefined' is not assignable to type 'JSDocParsingMode'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 3670,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/program.ts:3670:13: error TS2412: Type 'readonly string[] | undefined' is not assignable to type 'readonly string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'readonly string[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 3671,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/program.ts:3671:13: error TS2412: Type 'PackageJsonInfo | undefined' is not assignable to type 'PackageJsonInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'PackageJsonInfo'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 4064,
+    "column": 55,
+    "code": 2379,
+    "diagnostic": "src/compiler/program.ts:4064:55: error TS2379: Argument of type '{ resolvedRef: ResolvedProjectReference; outputDts: string | undefined; }' is not assignable to parameter of type 'ResolvedRefAndOutputDts' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'outputDts' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 406,
+    "column": 25,
+    "code": 18046,
+    "diagnostic": "src/compiler/program.ts:406:25: error TS18046: 'e' is of type 'unknown'.",
+    "reason": "Catch value remains unknown; not an indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 441,
+    "column": 25,
+    "code": 18046,
+    "diagnostic": "src/compiler/program.ts:441:25: error TS18046: 'e' is of type 'unknown'.",
+    "reason": "Catch value remains unknown; not an indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 472,
+    "column": 11,
+    "code": 2375,
+    "diagnostic": "src/compiler/program.ts:472:11: error TS2375: Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 16 more ...; createHash: ... | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 4956,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/program.ts:4956:9: error TS2412: Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 4957,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/program.ts:4957:9: error TS2412: Type '((path: string) => string[]) | undefined' is not assignable to type '(path: string) => string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => string[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 5038,
+    "column": 14,
+    "code": 2488,
+    "diagnostic": "src/compiler/program.ts:5038:14: error TS2488: Type '[Path, false | SymlinkedDirectory] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.",
+    "reason": "Iterator callback tuple inference includes undefined; not an element-access expression."
+  },
+  {
+    "file": "program.ts",
+    "line": 5056,
+    "column": 14,
+    "code": 2375,
+    "diagnostic": "src/compiler/program.ts:5056:14: error TS2375: Type '{ diagnostics: never[]; sourceMaps: undefined; emittedFiles: undefined; emitSkipped: true; }' is not assignable to type 'EmitResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'emittedFiles' are incompatible.\n    Type 'undefined' is not assignable to type 'string[]'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 5094,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/program.ts:5094:5: error TS2375: Type '{ diagnostics: readonly Diagnostic[]; sourceMaps: undefined; emittedFiles: string[] | undefined; emitSkipped: true; }' is not assignable to type 'EmitResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'emittedFiles' are incompatible.\n    Type 'string[] | undefined' is not assignable to type 'string[]'.\n      Type 'undefined' is not assignable to type 'string[]'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 5107,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/program.ts:5107:5: error TS2375: Type '{ fileExists: (f: string) => boolean; readDirectory(root: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth: number | undefined): string[]; readFile: ...; ... 6 more ...; trace: ... | undefined; }' is not assignable to type 'ParseConfigFileHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'trace' are incompatible.\n    Type '((s: string) => void) | undefined' is not assignable to type '(s: string) => void'.\n      Type 'undefined' is not assignable to type '(s: string) => void'.",
+    "reason": "Exact optional-property object or return contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 680,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/program.ts:680:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Enum syntax rejected by erasableSyntaxOnly; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 880,
+    "column": 42,
+    "code": 2379,
+    "diagnostic": "src/compiler/program.ts:880:42: error TS2379: Argument of type 'SourceFileImportsList' is not assignable to parameter of type 'Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\">' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageJsonScope' are incompatible.\n    Type 'PackageJsonInfo | undefined' is not assignable to type 'PackageJsonInfo'.\n      Type 'undefined' is not assignable to type 'PackageJsonInfo'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "program.ts",
+    "line": 936,
+    "column": 10,
+    "code": 7030,
+    "diagnostic": "src/compiler/program.ts:936:10: error TS7030: Not all code paths return a value.",
+    "reason": "Existing callback return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "programDiagnostics.ts",
+    "line": 292,
+    "column": 64,
+    "code": 2412,
+    "diagnostic": "src/compiler/programDiagnostics.ts:292:64: error TS2412: Type 'DiagnosticMessageChain[] | undefined' is not assignable to type 'DiagnosticMessageChain[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'DiagnosticMessageChain[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 1019,
+    "column": 43,
+    "code": 2379,
+    "diagnostic": "src/compiler/resolutionCache.ts:1019:43: error TS2379: Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly StringLiteralLike[] | undefined' is not assignable to type 'readonly StringLiteralLike[]'.\n      Type 'undefined' is not assignable to type 'readonly StringLiteralLike[]'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 1332,
+    "column": 58,
+    "code": 2375,
+    "diagnostic": "src/compiler/resolutionCache.ts:1332:58: error TS2375: Type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 1332,
+    "column": 58,
+    "code": 2379,
+    "diagnostic": "src/compiler/resolutionCache.ts:1332:58: error TS2379: Argument of type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to parameter of type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 1386,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/resolutionCache.ts:1386:9: error TS2412: Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 1508,
+    "column": 14,
+    "code": 7030,
+    "diagnostic": "src/compiler/resolutionCache.ts:1508:14: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 458,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/resolutionCache.ts:458:5: error TS2375: Type '{ dir: string; dirPath: Path; nonRecursive: boolean | undefined; packageDir: string | undefined; packageDirPath: Path | undefined; }' is not assignable to type 'DirectoryOfFailedLookupWatch' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 564,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/resolutionCache.ts:564:13: error TS2412: Type 'string[] | undefined' is not assignable to type 'string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'string[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 565,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/resolutionCache.ts:565:13: error TS2412: Type 'string[] | undefined' is not assignable to type 'string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'string[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 566,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/resolutionCache.ts:566:13: error TS2412: Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'Diagnostic[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 758,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/resolutionCache.ts:758:9: error TS2412: Type 'undefined' is not assignable to type 'boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 759,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/resolutionCache.ts:759:9: error TS2412: Type 'undefined' is not assignable to type 'boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 760,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/resolutionCache.ts:760:9: error TS2412: Type 'undefined' is not assignable to type 'boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 761,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/resolutionCache.ts:761:9: error TS2412: Type 'undefined' is not assignable to type 'boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "resolutionCache.ts",
+    "line": 990,
+    "column": 43,
+    "code": 2379,
+    "diagnostic": "src/compiler/resolutionCache.ts:990:43: error TS2379: Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly T[] | undefined' is not assignable to type 'readonly (string | FileReference)[]'.\n      Type 'undefined' is not assignable to type 'readonly (string | FileReference)[]'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1076,
+    "column": 13,
+    "code": 7029,
+    "diagnostic": "src/compiler/sys.ts:1076:13: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough; not an indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1180,
+    "column": 17,
+    "code": 2375,
+    "diagnostic": "src/compiler/sys.ts:1180:17: error TS2375: Type '{ watchDirectory: WatchDirectoryKind.UseFsEvents; fallbackPolling: PollingWatchKind | undefined; }' is not assignable to type 'WatchOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'fallbackPolling' are incompatible.\n    Type 'PollingWatchKind | undefined' is not assignable to type 'PollingWatchKind'.\n      Type 'undefined' is not assignable to type 'PollingWatchKind'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1280,
+    "column": 43,
+    "code": 18046,
+    "diagnostic": "src/compiler/sys.ts:1280:43: error TS18046: 'e' is of type 'unknown'.",
+    "reason": "The caught exception is unknown under strict checking; not an indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1470,
+    "column": 34,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1470:34: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1470,
+    "column": 42,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1470:42: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1471,
+    "column": 36,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1471:36: error TS2591: Cannot find name 'path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1471,
+    "column": 46,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1471:46: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1472,
+    "column": 21,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1472:21: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1474,
+    "column": 36,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1474:36: error TS2591: Cannot find name 'crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1476,
+    "column": 23,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1476:23: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1481,
+    "column": 35,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1481:35: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1484,
+    "column": 25,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1484:25: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1485,
+    "column": 32,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1485:32: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1491,
+    "column": 56,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1491:56: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1498,
+    "column": 121,
+    "code": 2304,
+    "diagnostic": "src/compiler/sys.ts:1498:121: error TS2304: Cannot find name '__filename'.",
+    "reason": "Node host globals are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1498,
+    "column": 35,
+    "code": 2304,
+    "diagnostic": "src/compiler/sys.ts:1498:35: error TS2304: Cannot find name '__filename'.",
+    "reason": "Node host globals are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1498,
+    "column": 92,
+    "code": 2304,
+    "diagnostic": "src/compiler/sys.ts:1498:92: error TS2304: Cannot find name '__dirname'.",
+    "reason": "Node host globals are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1500,
+    "column": 44,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1500:44: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1501,
+    "column": 51,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1501:51: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1516,
+    "column": 27,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1516:27: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1517,
+    "column": 38,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1517:38: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1518,
+    "column": 32,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1518:32: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1524,
+    "column": 19,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1524:19: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1528,
+    "column": 17,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1528:17: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1531,
+    "column": 24,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1531:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1534,
+    "column": 24,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1534:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1553,
+    "column": 29,
+    "code": 18046,
+    "diagnostic": "src/compiler/sys.ts:1553:29: error TS18046: 'e' is of type 'unknown'.",
+    "reason": "The caught exception is unknown under strict checking; not an indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1566,
+    "column": 24,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1566:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1575,
+    "column": 21,
+    "code": 2304,
+    "diagnostic": "src/compiler/sys.ts:1575:21: error TS2304: Cannot find name 'global'.",
+    "reason": "Node host globals are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1576,
+    "column": 21,
+    "code": 2304,
+    "diagnostic": "src/compiler/sys.ts:1576:21: error TS2304: Cannot find name 'global'.",
+    "reason": "Node host globals are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1578,
+    "column": 24,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1578:24: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1588,
+    "column": 42,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1588:42: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1592,
+    "column": 112,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1592:112: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1592,
+    "column": 68,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1592:68: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1594,
+    "column": 107,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1594:107: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Missing Node typings leave process.execArgv callback inference as unknown; this is not an indexed expression."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1594,
+    "column": 192,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1594:192: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Missing Node typings leave process.execArgv callback inference as unknown; this is not an indexed expression."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1594,
+    "column": 26,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1594:26: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Missing Node typings leave process.execArgv callback inference as unknown; this is not an indexed expression."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1594,
+    "column": 62,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1594:62: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Missing Node typings leave process.execArgv callback inference as unknown; this is not an indexed expression."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1597,
+    "column": 22,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1597:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1606,
+    "column": 17,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1606:17: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1609,
+    "column": 33,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1609:33: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1614,
+    "column": 36,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1614:36: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1615,
+    "column": 36,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1615:36: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1619,
+    "column": 38,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1619:38: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1629,
+    "column": 49,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1629:49: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1650,
+    "column": 44,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1650:44: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1650,
+    "column": 59,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1650:59: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1672,
+    "column": 47,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1672:47: error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1696,
+    "column": 54,
+    "code": 7006,
+    "diagnostic": "src/compiler/sys.ts:1696:54: error TS7006: Parameter 'err' implicitly has an 'any' type.",
+    "reason": "Absent Node inspector typings leave this callback parameter implicitly any; not an indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1696,
+    "column": 61,
+    "code": 7031,
+    "diagnostic": "src/compiler/sys.ts:1696:61: error TS7031: Binding element 'profile' implicitly has an 'any' type.",
+    "reason": "Absent Node inspector typings leave this callback binding implicitly any; not an indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1699,
+    "column": 120,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1699:120: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1728,
+    "column": 41,
+    "code": 2304,
+    "diagnostic": "src/compiler/sys.ts:1728:41: error TS2304: Cannot find name '__filename'.",
+    "reason": "Node host globals are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1746,
+    "column": 47,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1746:47: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1746,
+    "column": 73,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1746:73: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1788,
+    "column": 25,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1788:25: error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 1883,
+    "column": 96,
+    "code": 2591,
+    "diagnostic": "src/compiler/sys.ts:1883:96: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node host module/global types are absent in this census; not a required indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 80,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/sys.ts:80:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax is rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 901,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/sys.ts:901:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax is rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "sys.ts",
+    "line": 95,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/sys.ts:95:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax is rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 122,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/tracing.ts:122:13: error TS2412: Type 'undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 132,
+    "column": 23,
+    "code": 1294,
+    "diagnostic": "src/compiler/tracing.ts:132:23: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Enum syntax rejected by erasableSyntaxOnly; not a required indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 158,
+    "column": 25,
+    "code": 2379,
+    "diagnostic": "src/compiler/tracing.ts:158:25: error TS2379: Argument of type '{ phase: Phase; name: string; args: Args | undefined; time: number; separateBeginAndEnd: boolean; }' is not assignable to parameter of type '{ phase: Phase; name: string; args?: Args; time: number; separateBeginAndEnd: boolean; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'args' are incompatible.\n    Type 'Args | undefined' is not assignable to type 'Args'.\n      Type 'undefined' is not assignable to type 'Args'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 37,
+    "column": 18,
+    "code": 1294,
+    "diagnostic": "src/compiler/tracing.ts:37:18: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Enum syntax rejected by erasableSyntaxOnly; not a required indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 40,
+    "column": 27,
+    "code": 2591,
+    "diagnostic": "src/compiler/tracing.ts:40:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node global typings are unavailable under the prepared checker environment; not an indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 63,
+    "column": 22,
+    "code": 2591,
+    "diagnostic": "src/compiler/tracing.ts:63:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node global typings are unavailable under the prepared checker environment; not an indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 66,
+    "column": 81,
+    "code": 18046,
+    "diagnostic": "src/compiler/tracing.ts:66:81: error TS18046: 'e' is of type 'unknown'.",
+    "reason": "Catch value remains unknown; not an indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 82,
+    "column": 50,
+    "code": 2591,
+    "diagnostic": "src/compiler/tracing.ts:82:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node global typings are unavailable under the prepared checker environment; not an indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 83,
+    "column": 39,
+    "code": 2591,
+    "diagnostic": "src/compiler/tracing.ts:83:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+    "reason": "Node global typings are unavailable under the prepared checker environment; not an indexed read."
+  },
+  {
+    "file": "tracing.ts",
+    "line": 88,
+    "column": 21,
+    "code": 2379,
+    "diagnostic": "src/compiler/tracing.ts:88:21: error TS2379: Argument of type '{ configFilePath: string | undefined; tracePath: string; typesPath: string; }' is not assignable to parameter of type 'TraceRecord' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'configFilePath' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuild.ts",
+    "line": 10,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/tsbuild.ts:10:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 1108,
+    "column": 63,
+    "code": 2379,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:1108:63: error TS2379: Argument of type '{ path: Path; buildInfo: BuildInfo; modifiedTime: Date; latestChangedDtsTime: Date | undefined; }' is not assignable to parameter of type 'BuildInfoCacheEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'latestChangedDtsTime' are incompatible.\n    Type 'Date | undefined' is not assignable to type 'false | Date'.\n      Type 'undefined' is not assignable to type 'false | Date'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 1457,
+    "column": 177,
+    "code": 7030,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:1457:177: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 169,
+    "column": 6,
+    "code": 1294,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:169:6: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 1919,
+    "column": 21,
+    "code": 7029,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:1919:21: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough; not an indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 302,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:302:5: error TS2412: Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => Date'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 314,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:314:5: error TS2412: Type 'ReportEmitErrorSummary | undefined' is not assignable to type 'ReportEmitErrorSummary' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'ReportEmitErrorSummary'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 438,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:438:5: error TS2412: Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 439,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:439:5: error TS2412: Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 440,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:440:5: error TS2412: Type '((libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations) | undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 441,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:441:5: error TS2412: Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 442,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:442:5: error TS2412: Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 443,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:443:5: error TS2412: Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 785,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:785:5: error TS2412: Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => boolean'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 786,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:786:5: error TS2412: Type '((directory: string) => void) | undefined' is not assignable to type '(path: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => void'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 787,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:787:5: error TS2412: Type 'WriteFileCallback | undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 831,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:831:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "tsbuildPublic.ts",
+    "line": 925,
+    "column": 6,
+    "code": 1294,
+    "diagnostic": "src/compiler/tsbuildPublic.ts:925:6: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 10108,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:10108:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 10196,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:10196:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 10284,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:10284:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 1685,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:1685:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 2794,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:2794:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 2815,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:2815:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 40,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:40:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 4150,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:4150:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 4489,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:4489:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 4596,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:4596:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 4661,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:4661:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 4692,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:4692:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 4964,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:4964:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5014,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5014:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5495,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5495:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5502,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5502:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5509,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5509:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5517,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5517:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5527,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5527:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5571,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5571:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5581,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5581:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5623,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5623:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5676,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5676:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5683,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5683:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5838,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5838:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 5942,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:5942:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6105,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6105:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6166,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6166:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6219,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6219:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6330,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6330:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6512,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6512:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6670,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6670:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6691,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6691:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6884,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6884:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6913,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6913:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6982,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6982:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6988,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6988:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 6995,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:6995:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7060,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7060:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7076,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7076:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7094,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7094:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7128,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7128:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7145,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7145:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7186,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7186:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7313,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7313:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7325,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7325:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7348,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7348:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7378,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7378:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7387,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7387:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7394,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7394:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7593,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7593:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7622,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7622:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7632,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7632:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7638,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7638:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7652,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7652:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7671,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7671:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7693,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7693:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7711,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7711:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 782,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:782:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 7841,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:7841:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 8068,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:8068:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 8212,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:8212:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 8353,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:8353:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 8361,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:8361:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 8395,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:8395:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 851,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:851:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 8532,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:8532:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 8581,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:8581:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 8633,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:8633:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 905,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:905:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 917,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:917:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 932,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:932:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "types.ts",
+    "line": 9552,
+    "column": 19,
+    "code": 1294,
+    "diagnostic": "src/compiler/types.ts:9552:19: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "watch.ts",
+    "line": 242,
+    "column": 29,
+    "code": 7030,
+    "diagnostic": "src/compiler/watch.ts:242:29: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "watch.ts",
+    "line": 675,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/watch.ts:675:5: error TS2375: Type '{ onWatchStatusChange: WatchStatusReporter; watchFile: (path: string, callback: FileWatcherCallback, pollingInterval?: number | undefined, options?: WatchOptions | undefined) => FileWatcher; watchDirectory: ...; setTimeout: ...; clearTimeout: ...; preferNonRecursiveWatch: boolean | undefined; }' is not assignable to type 'WatchHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'preferNonRecursiveWatch' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "watch.ts",
+    "line": 756,
+    "column": 11,
+    "code": 2375,
+    "diagnostic": "src/compiler/watch.ts:756:11: error TS2375: Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 17 more ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'getDefaultLibLocation' are incompatible.\n    Type '(() => string) | undefined' is not assignable to type '() => string'.\n      Type 'undefined' is not assignable to type '() => string'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "watch.ts",
+    "line": 796,
+    "column": 17,
+    "code": 7029,
+    "diagnostic": "src/compiler/watch.ts:796:17: error TS7029: Fallthrough case in switch.",
+    "reason": "Existing intentional switch fallthrough; not an indexed read."
+  },
+  {
+    "file": "watch.ts",
+    "line": 845,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/watch.ts:845:5: error TS2375: Type '{ useCaseSensitiveFileNames: () => boolean; getNewLine: () => string; getCurrentDirectory: () => string; getDefaultLibLocation: () => string; getDefaultLibFileName: (options: CompilerOptions) => string; ... 13 more ...; now: ... | undefined; }' is not assignable to type 'ProgramHost<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "watch.ts",
+    "line": 937,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watch.ts:937:5: error TS2412: Type 'CompilerOptions | undefined' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'CompilerOptions'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watch.ts",
+    "line": 938,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watch.ts:938:5: error TS2412: Type 'WatchOptions | undefined' is not assignable to type 'WatchOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'WatchOptions'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watch.ts",
+    "line": 939,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watch.ts:939:5: error TS2412: Type 'readonly FileExtensionInfo[] | undefined' is not assignable to type 'readonly FileExtensionInfo[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'readonly FileExtensionInfo[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watch.ts",
+    "line": 968,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watch.ts:968:5: error TS2412: Type 'WatchOptions | undefined' is not assignable to type 'WatchOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'WatchOptions'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watch.ts",
+    "line": 969,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watch.ts:969:5: error TS2412: Type 'readonly ProjectReference[] | undefined' is not assignable to type 'readonly ProjectReference[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'readonly ProjectReference[]'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 1010,
+    "column": 13,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:1010:13: error TS2412: Type 'undefined' is not assignable to type 'ProgramUpdateLevel.RootNamesAndUpdate | ProgramUpdateLevel.Full' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 1128,
+    "column": 55,
+    "code": 2379,
+    "diagnostic": "src/compiler/watchPublic.ts:1128:55: error TS2379: Argument of type '{ watchedDirPath: Path; fileOrDirectory: string; fileOrDirectoryPath: Path; configFileName: string; extraFileExtensions: readonly FileExtensionInfo[] | undefined; ... 5 more ...; toPath: ...; }' is not assignable to parameter of type 'IsIgnoredFileFromWildCardWatchingInput' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'extraFileExtensions' are incompatible.\n    Type 'readonly FileExtensionInfo[] | undefined' is not assignable to type 'readonly FileExtensionInfo[]'.\n      Type 'undefined' is not assignable to type 'readonly FileExtensionInfo[]'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 125,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:125:5: error TS2412: Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(data: string) => string'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 126,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:126:5: error TS2412: Type 'boolean | undefined' is not assignable to type 'boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'boolean'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 371,
+    "column": 65,
+    "code": 2379,
+    "diagnostic": "src/compiler/watchPublic.ts:371:65: error TS2379: Argument of type '{ rootFiles: string[]; options: CompilerOptions; watchOptions: WatchOptions; projectReferences: readonly ProjectReference[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | undefined; }' is not assignable to parameter of type 'CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 383,
+    "column": 52,
+    "code": 2379,
+    "diagnostic": "src/compiler/watchPublic.ts:383:52: error TS2379: Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'optionsToExtend' are incompatible.\n    Type 'CompilerOptions | undefined' is not assignable to type 'CompilerOptions'.\n      Type 'undefined' is not assignable to type 'CompilerOptions'.",
+    "reason": "Exact optional-property argument contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 506,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:506:5: error TS2412: Type '(() => boolean) | undefined' is not assignable to type '() => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => boolean'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 529,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:529:5: error TS2412: Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 530,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:530:5: error TS2412: Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 534,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:534:5: error TS2412: Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 535,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:535:5: error TS2412: Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 542,
+    "column": 5,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:542:5: error TS2412: Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 568,
+    "column": 17,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:568:17: error TS2412: Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 592,
+    "column": 17,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:592:17: error TS2412: Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 594,
+    "column": 17,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:594:17: error TS2412: Type 'undefined' is not assignable to type 'Map<string, WildcardDirectoryWatcher<FileWatcher>>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 661,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:661:9: error TS2412: Type '((directory: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 662,
+    "column": 9,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:662:9: error TS2412: Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directory: string) => void'.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 862,
+    "column": 14,
+    "code": 7030,
+    "diagnostic": "src/compiler/watchPublic.ts:862:14: error TS7030: Not all code paths return a value.",
+    "reason": "Existing return-path contract rejected by noImplicitReturns; not an indexed read."
+  },
+  {
+    "file": "watchPublic.ts",
+    "line": 999,
+    "column": 17,
+    "code": 2412,
+    "diagnostic": "src/compiler/watchPublic.ts:999:17: error TS2412: Type 'undefined' is not assignable to type 'ProgramUpdateLevel.RootNamesAndUpdate | ProgramUpdateLevel.Full' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "reason": "Exact optional-property write contract; not a required indexed read."
+  },
+  {
+    "file": "watchUtilities.ts",
+    "line": 125,
+    "column": 5,
+    "code": 2375,
+    "diagnostic": "src/compiler/watchUtilities.ts:125:5: error TS2375: Type '{ useCaseSensitiveFileNames: boolean; fileExists: (fileName: string) => boolean; readFile: (path: string, encoding: string | undefined) => string | undefined; directoryExists: ... | undefined; ... 7 more ...; realpath: ... | undefined; }' is not assignable to type 'CachedDirectoryStructureHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'directoryExists' are incompatible.\n    Type '((dirPath: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.\n      Type 'undefined' is not assignable to type '(path: string) => boolean'.",
+    "reason": "Exact optional-property object contract; not a required indexed read."
+  },
+  {
+    "file": "watchUtilities.ts",
+    "line": 381,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/watchUtilities.ts:381:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "watchUtilities.ts",
+    "line": 677,
+    "column": 13,
+    "code": 1294,
+    "diagnostic": "src/compiler/watchUtilities.ts:677:13: error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
+    "reason": "Existing enum or namespace syntax rejected by erasableSyntaxOnly; not an indexed read."
+  },
+  {
+    "file": "watchUtilities.ts",
+    "line": 736,
+    "column": 13,
+    "code": 2684,
+    "diagnostic": "src/compiler/watchUtilities.ts:736:13: error TS2684: The 'this' context of type '((file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher) | ...' is not assignable to method's 'this' of type '(this: undefined, file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher'.\n  Type '(directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher' is not assignable to type '(this: undefined, file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher'.\n    Types of parameters 'callback' and 'callback' are incompatible.\n      Type 'FileWatcherCallback' is not assignable to type 'DirectoryWatcherCallback'.\n        Target signature provides too few arguments. Expected 2 or more, but got 1.",
+    "reason": "Watch factory methods form incompatible call signatures; keyof selects required properties and an assertion cannot repair the overload."
+  },
+  {
+    "file": "watchUtilities.ts",
+    "line": 811,
+    "column": 14,
+    "code": 2684,
+    "diagnostic": "src/compiler/watchUtilities.ts:811:14: error TS2684: The 'this' context of type '((file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher) | ...' is not assignable to method's 'this' of type '(this: undefined, file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher'.\n  Type '(directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher' is not assignable to type '(this: undefined, file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher'.\n    Types of parameters 'callback' and 'callback' are incompatible.\n      Type 'FileWatcherCallback' is not assignable to type 'DirectoryWatcherCallback'.\n        Target signature provides too few arguments. Expected 2 or more, but got 1.",
+    "reason": "Watch factory methods form incompatible call signatures; keyof selects required properties and an assertion cannot repair the overload."
+  },
+  {
+    "file": "watchUtilities.ts",
+    "line": 818,
+    "column": 48,
+    "code": 2556,
+    "diagnostic": "src/compiler/watchUtilities.ts:818:48: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.",
+    "reason": "The watcher callback spreads an any[] into incompatible fixed callback signatures; not an indexed read."
+  }
+]

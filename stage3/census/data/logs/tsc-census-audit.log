@@ -1,0 +1,5 @@
+PASS: source hashes, every entry and whole program, source lines, all ranking counts, 30 reproducers, System contract and exact host diagnostics
+CAUGHT: inflate highest file rank by rank file count
+CAUGHT: omit one index-signature site by source site count
+CAUGHT: alter one pinned source byte by source hash
+CAUGHT: drop the incompatible-argument diagnostic by host exact diagnostics

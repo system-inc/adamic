@@ -25,11 +25,20 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	target := l.checker.GetTypeAtLocation(node)
 	// An object literal's type is fresh, and a fresh type is held to excess properties, so { name, age }
 	// as Named would read as not assignable. Its widened type isn't fresh; its own keeps the literal
-	// fields a discriminated union needs. Either one assignable makes the cast an upcast.
+	// fields a discriminated union needs. Either assignable makes an upcast candidate; the sound
+	// relation below still has to prove its writable slots, function views and nominal ancestry.
 	if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+		if err := l.provenRelation(node, as.Expression, target); err != nil {
+			return nil, err
+		}
 		return value, nil
 	}
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: "narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"}
+	if source.Flags()&checker.TypeFlagsUnion == 0 {
+		if checked, err := l.interfaceCast(node, value, source, target); checked != nil || err != nil {
+			return checked, err
+		}
+	}
 	if value.Type() != ir.Object || source.Flags()&checker.TypeFlagsUnion == 0 {
 		return nil, refused
 	}
@@ -65,6 +74,10 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		if len(cast.Allowed) == 0 {
 			return nil, refused
 		}
+		if _, err := l.view(node, value, target); err != nil {
+			return nil, err
+		}
+		cast.CheckedFields = true
 		return cast, nil
 	}
 	return nil, refused

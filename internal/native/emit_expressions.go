@@ -112,13 +112,28 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
-		if taken, ok := e.take(expression); ok {
-			return taken
+		if expression.View != "" {
+			return e.viewField(expression)
+		}
+		if expression.Readiness == "" {
+			if taken, ok := e.take(expression); ok {
+				return taken
+			}
 		}
 		lent := e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
-		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", e.fieldSlot(object, expression.Name, expression.Class), member(expression.Of)))
+		slot := e.fieldSlot(object, expression.Name, expression.Class)
+		if expression.Readiness != "" {
+			slot = fmt.Sprintf("adamic_object_read(%s, %s, &%s, %s)", object, cString(expression.Name), e.cache(), cString(expression.Readiness))
+			if expression.Optional {
+				slot = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, slot)
+			}
+		}
+		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", slot, member(expression.Of)))
 		if expression.Of == ir.MaybeNumber {
+			if expression.Readiness != "" && !expression.Absent {
+				e.line("(void)%s;", slot)
+			}
 			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())
 		}
 		if expression.Absent {
@@ -128,6 +143,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				lookup = fmt.Sprintf("(%s == NULL ? NULL : %s)", object, lookup)
 			}
 			e.line("adamic_value *%s = %s;", slot, lookup)
+			if expression.Readiness != "" {
+				e.line("if (%s != NULL) {", slot)
+				e.line("\t(void)adamic_object_read(%s, %s, &%s, %s);", object, cString(expression.Name), e.cache(), cString(expression.Readiness))
+				e.line("}")
+			}
 			undefined := "NULL"
 			if expression.Of.IsMaybe() {
 				undefined = zero(expression.Of)
@@ -205,17 +225,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Narrow:
 		return e.narrow(expression)
 	case ir.TypeOf:
-		// Built-in identities are opaque heap headers, not class objects with slots.
-		if _, intrinsic := expression.Value.(ir.LibraryGlobal); intrinsic {
-			return e.typeOf(expression.Value)
-		}
-		if expression.Value.Type() == ir.Object {
-			return fmt.Sprintf("adamic_object_typeof(%s)", e.value(expression.Value))
-		}
-		if expression.Value.Type() == ir.Union {
-			return fmt.Sprintf("adamic_static_union_typeof(%s)", e.value(expression.Value))
-		}
-		return e.typeOf(expression.Value)
+		return e.typeOf(expression)
 	case ir.UnionToString:
 		return e.own(ir.String, fmt.Sprintf("adamic_union_to_string(%s)", e.value(expression.Value)))
 	case ir.Coalesce:
@@ -351,6 +361,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		object := e.temporary()
 		e.line("adamic_object *%s = %s;", object, e.value(expression.Value))
 		field := fmt.Sprintf("adamic_object_field(%s, %s, &%s)->%s", object, cString(expression.Field), e.cache(), member(expression.FieldType))
+		if expression.CheckedFields {
+			slot := e.temporary()
+			e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(expression.Field), e.cache(), expression.FieldType, cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[expression.FieldType]), cString(expression.Field))
+			field = fmt.Sprintf("%s.%s", slot, member(expression.FieldType))
+		}
 		if expression.FieldType.IsReference() {
 			field = fmt.Sprintf("((%s)%s)", cType(expression.FieldType), field)
 		}
@@ -364,17 +379,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("}")
 		return object
 	case ir.ArrayIndex:
-		array := e.value(expression.Array)
-		index := e.value(expression.Index)
-		slot := e.temporary()
-		lookup := "adamic_array_at"
-		if expression.Relative {
-			lookup = "adamic_array_at_relative"
-		} else if read, isRead := expression.Index.(ir.Read); isRead && e.program.Locals[read.Local].Counter {
-			// A counter is a whole number already: only the bounds are left to check.
-			lookup, index = "adamic_array_at_integer", e.localName(read.Local)
-		}
-		e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)
+		slot := e.arrayIndexSlot(expression)
 		if expression.Type().IsMaybe() {
 			return e.snapshot(expression.Type(), maybeSlot(expression.Element, slot))
 		}
@@ -478,10 +483,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.SetValues:
 		return e.own(ir.Array, fmt.Sprintf("adamic_set_values(%s)", e.value(expression.Set)))
 	case ir.MapGet:
-		object := e.value(expression.Map)
-		key := e.value(expression.Key)
-		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_map_get(%s, %s);", slot, object, borrowed(expression.KeyType, key))
+		slot := e.mapGetSlot(expression)
 		if expression.Type().IsMaybe() {
 			return e.snapshot(expression.Type(), maybeSlot(expression.ValueType, slot))
 		}
