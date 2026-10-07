@@ -1,5 +1,27 @@
 # Scanner blockers
 
+## October 7: string destructuring and nested overload probes fixed
+
+Integrated scanner-string-destructuring cf9fa276 and nested-functions-scanner
+8b7b8db9 into unpushed scratch b810a559, retaining scanner-expressions 998fb3eb.
+The unchanged string-length-destructuring probe prints `10`; the unchanged
+nested-overload-declaration probe prints `x`. Both build natively and match
+source Node stdout, empty stderr and exit 0. Each one-byte native-output mutant
+is caught by diff exit 1. The bodyless nested declaration guard test passes.
+Commands, observations and merge limitations:
+`evidence/destructuring-overload-fixes.json`.
+
+String destructuring's lowering auto-merged. The nested tip's divergent
+prerequisites conflicted in lowering and native/runtime code; scratch resolution
+isolated its overload fix commit 433b2abe (skip signatures only when implemented,
+and loudly guard a missing body) while preserving current prerequisites.
+This is not validation of every additional prerequisite in that branch.
+No compiler changes or scratch merge were pushed.
+
+Validated slice audit passes. Full scanner builds were deliberately held,
+as instructed: its last real first stop remains assigning to NonNullExpression.
+No source adaptation, scanner native comparison or new metrics are claimed.
+
 ## October 7: numeric concatenation fixed; narrow bigint bypass reaches overload panic
 
 Merged scanner-expressions 998fb3eb into unpushed scratch 934af3c1.

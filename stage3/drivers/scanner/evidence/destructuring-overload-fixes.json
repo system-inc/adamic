@@ -1,0 +1,53 @@
+{
+  "result": "Both unchanged probes green; real scanner still blocked at non-null write",
+  "scratch_commit": "b810a5592105fbcf31c516374cb188be5f004ee9",
+  "compiler_pins": {
+    "scanner-string-destructuring": "cf9fa276",
+    "nested-functions-scanner": "8b7b8db9af2a2c6a0458974e8e9618221d764d27",
+    "scanner-expressions": "998fb3eb"
+  },
+  "compiler_build_exit": 0,
+  "probes": {
+    "string-length-destructuring": {
+      "Node": {
+        "exit": 0,
+        "stdout": "10\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "10\n",
+        "stderr": ""
+      },
+      "build_exit": 0,
+      "byte_mutant_diff_exit": 1
+    },
+    "nested-overload-declaration": {
+      "Node": {
+        "exit": 0,
+        "stdout": "x\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "x\n",
+        "stderr": ""
+      },
+      "build_exit": 0,
+      "byte_mutant_diff_exit": 1
+    }
+  },
+  "commands": [
+    "go build -o /workspace/scratch/scanner-case-fix-adamic ./cmd/adamic",
+    "/workspace/scratch/scanner-case-fix-adamic build /workspace/adamic/stage3/drivers/scanner/probes/string-length-destructuring.a -o /workspace/scratch/scanner-two-fixes-string-length-destructuring",
+    "/workspace/scratch/scanner-case-fix-adamic build /workspace/adamic/stage3/drivers/scanner/probes/nested-overload-declaration.a -o /workspace/scratch/scanner-two-fixes-nested-overload-declaration",
+    "node --disable-warning=ExperimentalWarning oracle/node.mjs <unchanged-probe>",
+    "go test ./internal/lower -run TestNestedBodylessDeclarationsAreLoud -count=1"
+  ],
+  "guard_test": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.047s\n",
+  "slice_audit": "PASS: 168 byte-identical source spans; 79 ordered module import lists\n",
+  "merge_resolution": "String destructuring merged normally, generated counts conflict retained scratch version. Nested tip direct merge conflicts involved lowering and native/runtime prerequisites. Aborted, merged tip with ours strategy and applied its fix commit 433b2abe (bodyless signature skip and lowerBody guard), keeping current prerequisites. Incoming guard test combined with existing tests; generated counts retained. This validates the overload fix, not all additional nested-branch prerequisite changes. No compiler edits pushed.",
+  "resource_note": "Disk exhaustion interrupted recording second mutant. Removed named obsolete scratch probe binaries and duplicate comparison-control/node-end-mutant dumps, preserving canonical Node golden. Reran both comparisons/mutants successfully.",
+  "full_slice": "Not rerun per instruction; last actual first stop is assigning to NonNullExpression. Validated source unchanged.",
+  "scanner_native_tokens": "Unavailable; no scanner binary."
+}
