@@ -89,6 +89,9 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 }
 
 func goOracle(t *testing.T) string {
+	return goOracleFrom(t, ".")
+}
+func goOracleFrom(t *testing.T, sourceRoot string) string {
 	t.Helper()
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
@@ -98,7 +101,7 @@ func goOracle(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	descriptors := prepareRegistry(t, ".")
+	descriptors := prepareRegistry(t, sourceRoot)
 	directory := t.TempDir()
 	replacements := map[string]string{}
 	var virtualFiles []string
@@ -112,9 +115,9 @@ func goOracle(t *testing.T) string {
 		virtualFiles = append(virtualFiles, virtual)
 	}
 	add("oracle", side)
-	add("registry", ".generated/registry.go")
+	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
 	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join("rules", d.Slug, "oracle.go"))
+		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
 	}
 	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
 	if err != nil {
@@ -237,6 +240,9 @@ func generated(t *testing.T) []string {
 
 // Capture every Run, including tests that assert repair fields directly. The overlay changes no rule.
 func upstream(t *testing.T) []string {
+	return upstreamFrom(t, ".")
+}
+func upstreamFrom(t *testing.T, sourceRoot string) []string {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		t.Fatal(err)
@@ -268,7 +274,7 @@ func upstream(t *testing.T) []string {
 	execute(t, root, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/typescript", "-run", "Test(MethodSignatureStyle|NoWrapperObjectTypes|PreferLiteralEnumMember)", "-count=1", "-timeout=10m")
 	discovered := map[string]bool{}
 	packages := map[string][]string{}
-	for _, d := range prepareRegistry(t, ".") {
+	for _, d := range prepareRegistry(t, sourceRoot) {
 		discovered[d.Name] = true
 		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
 	}
@@ -280,8 +286,8 @@ func upstream(t *testing.T) []string {
 		t.Fatal(err)
 	}
 	type record struct {
-		Rule, Source, Outcome, FixedSource string
-		Options                            json.RawMessage
+		Rule, File, Source, Outcome, FixedSource string
+		Options                                  json.RawMessage
 	}
 	unique := map[string]record{}
 	for _, path := range files {
@@ -300,7 +306,7 @@ func upstream(t *testing.T) []string {
 			if !discovered[row.Rule] && !strings.Contains("|no-debugger|no-empty|eqeqeq|no-var|no-duplicate-case|no-continue|no-with|no-new|no-sparse-arrays|require-yield|no-await-in-loop|vars-on-top|no-template-curly-in-string|no-div-regex|no-bitwise|no-labels|no-sequences|unicode-bom|no-unneeded-ternary|no-warning-comments|no-plusplus|base/consistency-no-console|nexus/consistency-require-type-suffix|adamic/no-type-predicate|@typescript-eslint/method-signature-style|@typescript-eslint/no-wrapper-object-types|@typescript-eslint/prefer-literal-enum-member|nexus/consistency-no-enum|no-negated-condition|no-return-assign|", "|"+row.Rule+"|") {
 				continue
 			}
-			key := fmt.Sprintf("%s\t%+v\t%s", row.Rule, row.Options, row.Source)
+			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
 			unique[key] = row
 		}
 	}
@@ -312,7 +318,15 @@ func upstream(t *testing.T) []string {
 	var rows []string
 	for i, key := range keys {
 		row := unique[key]
-		path := filepath.Join(directory, fmt.Sprintf("case-%03d.ts", i))
+		name := filepath.Base(strings.ReplaceAll(row.File, "\\", "/"))
+		if name == "." || name == "" {
+			name = "source.ts"
+		}
+		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
+		if err := os.MkdirAll(caseDirectory, 0755); err != nil {
+			t.Fatal(err)
+		}
+		path := filepath.Join(caseDirectory, name)
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			t.Fatal(err)
 		}

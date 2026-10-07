@@ -138,7 +138,16 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 	return len(diagnostics)
 }
 func collect(path, source string, fields []string) []rule.Diagnostic {
-	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, core.ScriptKindTS)
+	kind := core.ScriptKindTS
+	switch {
+	case strings.HasSuffix(path, ".tsx"):
+		kind = core.ScriptKindTSX
+	case strings.HasSuffix(path, ".jsx"):
+		kind = core.ScriptKindJSX
+	case strings.HasSuffix(path, ".js"):
+		kind = core.ScriptKindJS
+	}
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{FileName: path, Path: tspath.Path(path)}, source, kind)
 	if len(file.Diagnostics()) != 0 && fields[6] != "recovery" {
 		panic(fmt.Sprintf("invalid corpus %s: %v; source=%q", path, file.Diagnostics(), source))
 	}
@@ -146,8 +155,9 @@ func collect(path, source string, fields []string) []rule.Diagnostic {
 	registered := registeredRules()
 	for _, item := range registered {
 		found := false
-		for _, subject := range selected {
+		for index, subject := range selected {
 			if subject.Name == item.subject.Name {
+				selected[index] = item.subject
 				found = true
 			}
 		}

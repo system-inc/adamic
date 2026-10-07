@@ -84,3 +84,53 @@ func TestDotARename(t *testing.T) {
 	}
 	t.Logf("rename only: .ts and .a identical on all three runtimes against Go (%d bytes)", len(want))
 }
+
+func TestCompleteSuggestionSerialization(t *testing.T) {
+	directory := mutant(t, "", "")
+	for _, name := range []string{"rule.a", "oracle.go"} {
+		data, err := os.ReadFile(filepath.Join("testdata/serialization", name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(directory, "rules/no-debugger", name), data, 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); err != nil {
+		t.Fatal(err)
+	}
+	source := filepath.Join(t.TempDir(), "suggestions.ts")
+	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	path := manifest(t, []string{source + "\tno-debugger"})
+	oracle := goOracleFrom(t, directory)
+	want := compare(t, oracle, buildPort(t, directory, true), directory, path)
+	for _, field := range []string{"suggestion\tfirst", "suggestion\tsecond", "suggestion\tempty", "suggestion-edit\t8 9", "fixed\t/*"} {
+		if !bytes.Contains(want, []byte(field)) {
+			t.Fatalf("missing field %q: %s", field, want)
+		}
+	}
+	changed := filepath.Join(directory, "rules/no-debugger/rule.a")
+	data, err := os.ReadFile(changed)
+	if err != nil {
+		t.Fatal(err)
+	}
+	data = bytes.Replace(data, []byte("start + 1, start + 2, ''"), []byte("start + 1, start + 3, ''"), 1)
+	if err := os.WriteFile(changed, data, 0644); err != nil {
+		t.Fatal(err)
+	}
+	for _, side := range []struct {
+		name string
+		run  execution
+	}{
+		{"Node", node(t, directory, path, false)},
+		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+		{"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)},
+	} {
+		if bytes.Equal(side.run.output, want) {
+			t.Fatalf("second suggestion edit mutant survived on %s", side.name)
+		}
+		t.Logf("second suggestion edit mutant caught on %s: %s", side.name, difference(side.run.output, want))
+	}
+}
