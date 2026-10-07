@@ -15,7 +15,10 @@ Use a new output path for apply and for each oracle run. Apply refuses an existi
 output, verifies source.json's tag and commit, and caches upstream under
 `~/.cache/adamic-stage3` (`STAGE3_CACHE` overrides that location).
 It generates upstream diagnostics, runs `adapt/*/adapt.cjs` in numeric order,
-and writes patch-set.md. No changes to apply are needed for a new adaptation.
+and writes `<out>/patch-set.md`, leaving the source checkout unchanged.
+To deliberately regenerate the checked-in table, run
+`stage3/apply.sh --write-table NEW_OUTPUT_DIRECTORY`; that also writes
+`stage3/patch-set.md`. No changes to apply are needed for a new adaptation.
 Rows measure successive edits; the total compares final against pristine plus
 upstream generation. Setup has zero source changes.
 
@@ -33,3 +36,9 @@ transpile and unit tests. Lint, browser integration and ESLint rule tests are
 separate tasks. --runners=compiler selects compiler and conformance;
 --tests=<regex> narrows a mutant probe. Default test limit is 2400 seconds.
 See oracle/REPORT.md for measured runs and throwaway mutants.
+
+Run `stage3/lane/run.sh` without arguments for a fresh temporary results
+directory, or pass a new results path explicitly. It prints the path first
+and the verdict last. The landing lane copies the adapted tree's patch-set.md
+beside its report.json,
+so each verdict carries the table for the exact tree it tested.

@@ -1,3 +1,243 @@
+# Extended dump acceptance checks: fourth checkpoint
+
+The full adapted compiler and unchanged validated slice were compared again:
+cmp exits 0, empty stderr, 36,429,231 bytes, SHA256
+686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+The same real slice-omission mutant removes Parser.initializeState as a complete
+function declaration in a scratch copy. With PARSER_TRACE_ERRORS=1, Node exits 1
+with ReferenceError: initializeState is not defined; the partial dump also fails
+cmp (exit 1). This is a caught omission, not a completed mutant parse.
+The successful control's planted Identifier.end +1 changes exactly one record
+at line 166, end 3145 to 3146, and cmp exits 1. The permanent dropped-tags and
+JSDoc-only diagnostic mutants were rerun and both fail comparison too.
+Evidence: evidence/jsdoc-final/report.json and logs. No mutated compiler source
+is committed. Native-proof.py now requires this extended reference, not the old
+35,456,964-byte dump. Native comparison awaits compiler's module-init-order fix.
+Until then: **syntax tree and parse diagnostics identical on Node, JSDoc unverified**.
+
+---
+
+# Permanent JSDoc mutants: third checkpoint
+
+The permanent jsdoc-mutants.py runs from run.sh. Dropping tags at the parser's
+return site still completes on all 81 inputs and retains all 4,149 JSDoc nodes,
+but loses all 3,846 tags; cmp exits 1 against the extended reference. This is
+the same source mutation that left the legacy SHA unchanged. A separate actual
+JSDoc diagnostic code mutation on directed JavaScript input changes exactly
+one row (1110 to 1111); trees and parse diagnostics stay identical, cmp exits 1.
+Reports and logs: evidence/jsdoc-mutants. Full/slice reference remains
+36,429,231 bytes, SHA256 686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+Native status: syntax tree and parse diagnostics identical on Node, JSDoc unverified.
+
+---
+
+# Extended JSDoc dump: second checkpoint
+
+Status until native proof: **syntax tree and parse diagnostics identical on
+Node, JSDoc unverified**. Full adapted compiler and slice extended Node dumps
+are byte-identical (cmp 0, empty stderr): **36,429,231 bytes**, SHA256
+686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615.
+The old 35,456,964-byte SHA 2014ef06... is no longer the native acceptance target.
+reference.json and native-proof.py enforce the v2 reference.
+
+The driver visits attached node.jsDoc before ordinary children. On each JSDoc
+and tag it prints kind/pos/end/flags, tagName where applicable, string or
+structured comment text, and recursively visits tags/type expressions, link
+names and all their children with forEachChild. It prints both parseDiagnostics
+and jsDocDiagnostics per file. Full corpus: 4,149 JSDoc nodes, 3,846 tags, five
+JSDocTypeExpressions, 56 links. No new slice declarations are needed.
+
+The fixed TS/JSON compiler corpus has zero jsDocDiagnostics. Directed .js
+inputs use range-cases' JS mode and produce a nonempty jsDocDiagnostics list:
+code 1110, start 13, length 1, Type expected. They also exercise type expressions,
+tag comments and a link/structured comment. Same driver, no synthetic diagnostic.
+Strict integrated checker accepts the extended driver. Exact full/slice reports,
+coverage and directed output are in evidence/jsdoc-extended. The permanent
+no-tags mutant and rerun omission/end checks are the next separate checkpoints.
+
+---
+
+# JSDoc blind spot proved: first checkpoint
+
+Status: **syntax tree and parse diagnostics identical on Node, JSDoc unverified**.
+The legacy 35,456,964-byte SHA256 2014ef06... dump does not establish JSDoc
+correctness: forEachChild does not visit node.jsDoc, and the driver prints only
+parseDiagnostics. It emits zero attached JSDoc/tag nodes and no jsDocDiagnostics.
+
+In a scratch slice, parseJSDocCommentWorker.doJSDocScan still consumes all tags
+but returns undefined tagsArray to createJSDocComment. A positive TS @param
+control changes from one comment/one tag to one comment/zero tags. The full
+81-file corpus legacy dump nevertheless remains byte-identical (cmp 0),
+35,456,964 bytes, SHA256
+2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5.
+This is an effective mutant that the old oracle fails to detect. Exact evidence
+is in evidence/jsdoc-blind-spot/report.json. No native JSDoc proof is claimed.
+
+Next checkpoint extends the driver before regenerating full-tree and slice
+references; the old SHA remains historical, not the native acceptance target.
+
+---
+
+# Found behind a stub: follow-on Map initialization stops
+
+This is exploratory evidence, not a source adaptation and not a native proof.
+The validated slice and committed compiler remain unchanged. Reordered sources
+stay untracked under /tmp and are never committed or pushed.
+
+**Actual first blocker remains core.ts:11:52**, emptyMap's new Map call before
+enum initialization. To investigate only that declaration, copied the validated
+slice into /tmp/parser-after-runtime-enum-stub-slice, removed emptyMap with its
+attached @internal comment from core.ts, and inserted the exact declaration
+immediately after the final non-const top-level enum, ModuleKind, in types.ts.
+The existing compiler barrel exports both modules, so no import, export-facade
+or other declaration was rewritten. Only those two source files differ.
+This deliberately changes evaluation order and is a diagnostic stub, not an
+accepted semantics-preserving repair.
+
+| Measurement | Result |
+| --- | --- |
+| Full slice, **found behind a stub** | debug.ts:333:29: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet |
+| Minimal probe, **found behind a stub**, moving emptyMap after Pending | /tmp/parser-enum-map-after.a:4:52: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet |
+
+The exact statement is `const enumMemberCache = new Map<Record<string, string | number>, SortedReadonlyArray<[number, string]>>();`.
+
+The full-slice result is still the global enum-initialization guard, now at
+Debug's enumMemberCache initializer. No further initializer was reordered and
+no compiler check was disabled. The minimal reordered probe exposes unsupported
+never-key Map storage after the enum guard clears; that is a separate probe
+finding, not a claimed second result on the complete slice.
+
+A first local move after core's existing AssertionLevel const enum merely
+relocates the same core failure to line 693. The guard tracks pending ordinary
+enums across all modules; a const enum does not decrement that count. This
+explains why the one declaration was moved to the runtime enum's module in
+the actual exploratory attempt. Evidence/report.json records exact diagnostics,
+paths and original source hashes. These findings belong to compiler fixes;
+no temporary adaptation 65 or other adaptation is added.
+
+---
+
+# Final six-input retry: same enum-initialization NotYet, both compile modes
+
+Unpushed fresh scratch starts at front-2 860a0d5 (779ff9d ancestor verified),
+then area/stage3 4ad53a4, library 8280fd0, records-lowering 70fb62b, runtime-records
+754e666 (already included), and developer-tools 2adf65c. Compiler builds.
+
+**First failure:** core.ts:11:52, new Map<never, never>():
+`stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet`.
+C emission and actual unsplit, split and repeated-split CLI builds all fail
+there, before generating C. C bytes/lines, clang wall times, parser binary
+size, native parser runtime/diff/mutant are **unreached**, not zero. Split cache
+contains zero files; the second split attempt is not a warm-cache measurement.
+Attempt wall times 0.767176 / 0.770804 / 0.846200 seconds are not clang timings.
+nproc=5; split jobs=5. No source workaround or compiler check suppression.
+
+Type-only MapLike<T> *is admitted on this merge's record integration*: the
+minimal native-type-only-map-like.a builds, native and Node print type-only,
+exit 0, empty stderr; cmp 0. One-byte change to that actual native output gives
+cmp 1. This is not a parser-output mutant and not a claim about all runtime
+record forms. native-enum-map.a reproduces the parser's first NotYet.
+
+Final same-input Node comparison: all three dumps match 35,456,964 bytes,
+SHA256 2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5;
+best user time 5.465565 seconds. perf is absent. Entry remains 1,990 code
+declarations, with one extra diagnostic-driver declaration. Import gathering
+and five validated temporary adaptations are unchanged.
+
+Lowering conflicts: library cast.go keeps checked tag/class casts and carries
+the qualified-const guard into cast_proof.go. Records expression.go keeps enum
+and record dispatch; refusals.go keeps Node/enum/predicate/cast checks plus
+all record checks. Record filename predicates need typed-path string conversion.
+Developer-tools merge is source-conflict-free; only restoring scratch go.mod
+paths conflicts afterward. Detailed resolutions and exact pins in front5/front6
+README and compressed patches. Focused loader/lower Node/Cast/ImportCycle/Record
+tests and native split literal/shared-state/header provenance tests pass.
+Oracle counts keep front rows; no full count gate or full compiler gate claimed.
+
+Evidence and scripts are committed only on codex/stage3-parser-proof. Scratch
+merges and compiler resolutions are never pushed. Earlier measured stopping
+points below are historical and superseded by this section.
+
+---
+
+# Four-input native retry: checker clean, lowering NotYet at emptyMap
+
+Newest fetched area/stage3 4ad53a4, front-2 80fb9b7, explicit cycles 779ff9d,
+and library Node loader 8280fd0 are merged only in detached scratch. Compiler
+build succeeds against the cycle worker's exact SDK. The driver's erased
+node:fs import activates the real pinned Node type seat; TS2591 is cleared.
+Five validated parser temporaries remain applied.
+
+**First measured lowering failure:** core.ts:11:52, at
+`new Map<never, never>()` in emptyMap:
+`stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet`.
+Minimal native-enum-map.a has the same NotYet; Node (merged enum-capable runner)
+prints 0 and exits 0. No new source workaround is introduced.
+
+Lowering conflict in library merge: cast.go. Retain front castProof and checked
+class/tag casts; carry library's qualified-const IsIdentifier guard into
+cast_proof.go. Additional library_node.go typed-filename conversion resolves
+an SDK compile error, not a textual conflict. Loader conflicts preserve typed
+paths, Node globals and exact original-root accounting. Details and compiled
+scratch patch are in evidence/front3. Focused load/lower Node, Cast and
+ImportCycle tests pass. Oracle-count conflicts keep front's counts; no full
+count gate or full compiler integration gate is claimed.
+
+Parser entry remains 1,990 declarations / 26 files. Node dump unchanged,
+35,456,964 bytes, SHA256 2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5.
+All three Node comparisons exit 0, best user CPU time 5.727305 seconds.
+perf is absent. No native parser binary means no native timing, size, actual
+parser diff or parser-output mutant. Separate integrated native comparator
+control self-cmp exits 0; one-byte mutant cmp exits 1. Node node-end mutant is
+caught. This red supersedes front2's checker-stage stopping point below.
+
+---
+
+# Native attempt on compiler/stage3-front-2: red
+
+October 7 run: area/stage3 4ad53a4 plus compiler/stage3-front-2 80fb9b7,
+merged without conflicts as e224e66 in a detached scratch worktree, never
+pushed. Compiler source unchanged; only scratch Go module replacement paths
+were adjusted to the exact cohere 715ba94f / TypeScript 8d550c83 SDK pins.
+Compiler build succeeds.
+
+**First parser build failure:** src/compiler/performanceCore.ts:37:37,
+TS2591: Cannot find name 'require'. Six checker diagnostics total: require and
+perf_hooks in performanceCore, fs, require and two process references in tracing.
+Validated temporaries 60-64 are applied. No fake Node declarations were added.
+Minimal native-node-binding.a (`console.log(typeof require)`) produces TS2591.
+The actual build diagnostic order and full text are in evidence/front2.
+
+Lowering, native parser execution, native-vs-Node diff, parser binary size,
+native user time and the parser-output byte mutant are **unreached** in this
+run. The earlier zero-checker result used the six-feature scratch compiler with
+its official host-node bindings and import control; this published compiler is
+a different integration input. Do not mistake its binding diagnostics for a
+regression of temporary 64.
+
+The published front also does not contain import-cycles 779ff9d in ancestry:
+its modules.go still refuses all import cycles. That is a source/ancestry
+observation, not a newly measured second failure; checking stopped first.
+
+Fresh createSourceFile gather: 26 code files / 1,990 code declarations; driver
+roots add one declaration in program.ts, 27 files / 1,991 declarations. Raw
+span and evaluation-prefix audit passes, before applying five validated temps.
+Node full dump: 35,456,964 bytes, SHA256 2014ef06f9db928b50d001787c44e490bbdbd8ecd9e912d3f676d58148ffefc5.
+All three timing runs compare equal. Best Node user CPU time: 5.179120 seconds
+(others 5.531493, 5.444617), same 81-file fixed corpus and manifest as prior proof.
+This includes Node source loading/transpilation and printing. perf is absent.
+Setup: go/clang/node/submodules ready 0 seconds each, build cache 95 seconds,
+total 95 seconds, nproc 5.
+
+A separate real native native-output-control.a prints parser comparison control.
+Its output self-cmp exits 0; flipping only the first byte makes cmp exit 1.
+This proves the comparator on real native output, not a native parser result.
+The existing Node Identifier end mutant also changes exactly one line and is
+caught. No green native proof is claimed. Scripts, minimal programs, pins,
+counts, exact diagnostics and compressed logs are committed in parser territory.
+
+---
+
 # Current result after temporary 64: zero checker diagnostics, lowering reached
 
 Push of 8411276 succeeded. The adaptation 64 list was separately pushed as
