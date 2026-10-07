@@ -1,0 +1,47 @@
+=== RUN   TestStylesheetLoaderByteInputGap
+=== RUN   TestStylesheetLoaderByteInputGap/ASCII
+    file_gap_test.go:71: valid-text control matches Go on node
+    file_gap_test.go:71: valid-text control matches Go on node
+    file_gap_test.go:71: valid-text control matches Go on /tmp/adamic-gate/TestStylesheetLoaderByteInputGap1237983616/004/native
+=== RUN   TestStylesheetLoaderByteInputGap/Unicode
+    file_gap_test.go:71: valid-text control matches Go on node
+    file_gap_test.go:71: valid-text control matches Go on node
+    file_gap_test.go:71: valid-text control matches Go on /tmp/adamic-gate/TestStylesheetLoaderByteInputGap1237983616/004/native
+=== RUN   TestStylesheetLoaderByteInputGap/invalid80
+    file_gap_test.go:68: BLOCKED invalid80: actual Go loadFile theme bytes [128], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalid80: actual Go loadFile theme bytes [128], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalid80: actual Go loadFile theme bytes [128], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+=== RUN   TestStylesheetLoaderByteInputGap/invalid81
+    file_gap_test.go:68: BLOCKED invalid81: actual Go loadFile theme bytes [129], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalid81: actual Go loadFile theme bytes [129], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalid81: actual Go loadFile theme bytes [129], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+=== RUN   TestStylesheetLoaderByteInputGap/invalidFF
+    file_gap_test.go:68: BLOCKED invalidFF: actual Go loadFile theme bytes [255], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalidFF: actual Go loadFile theme bytes [255], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+    file_gap_test.go:68: BLOCKED invalidFF: actual Go loadFile theme bytes [255], decoded file-input bytes [239
+        191
+        189]; compiled exit 0, no stderr
+--- PASS: TestStylesheetLoaderByteInputGap (2.19s)
+    --- PASS: TestStylesheetLoaderByteInputGap/ASCII (0.11s)
+    --- PASS: TestStylesheetLoaderByteInputGap/Unicode (0.11s)
+    --- PASS: TestStylesheetLoaderByteInputGap/invalid80 (0.11s)
+    --- PASS: TestStylesheetLoaderByteInputGap/invalid81 (0.11s)
+    --- PASS: TestStylesheetLoaderByteInputGap/invalidFF (0.11s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/from_wave1_09	2.198s

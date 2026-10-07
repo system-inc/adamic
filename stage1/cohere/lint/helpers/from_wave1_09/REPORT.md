@@ -2,7 +2,7 @@ Built: nodesFromStaticDeclarations, private propertySort and ParseValue, one .a 
 Commits: first claim 4d352341, first delivery f1c61f9e and logs 24416e8e; second claim 87bcfd7e, second delivery f2636e0c; third claim 0441b40c pushed before parser code.
 Checks: three-helper package PASS 61.792s; 17,154 cases match actual Go/source Node/emitted JavaScript/ASan+UBSan native; vet/types/format pass; filtered uncached input oracle PASS 7.056s.
 Mutants: nineteen compiling semantic mutations, five declaration-node, seven property-sort and seven parser, all exit 0 without stderr and fail only comparison on all three execution paths.
-Not covered: whole-rule findings/fixes/suggestions, production integration, raw invalid UTF-8, dynamic/external fixture execution or the full repository gate.
+Not covered: whole-rule findings/fixes/suggestions, production integration, arbitrary invalid UTF-8 or full gate; next loader blocked by proven lossy file input and its reservation withdrawn.
 
 ## Observed behavior
 
@@ -113,3 +113,9 @@ gofmt -l stage1/cohere/lint/helpers/from_wave1_09 > /tmp/lint-helpers-wave109-th
 ```
 
 Production CSS parser/rule integration and full findings/fixes remain outside this helper delivery. ParseValue covers valid-text strings, not arbitrary invalid Go UTF-8 byte strings. The corpus is bounded rather than an exhaustive unbounded proof. Native is sanitizer/leak checked; repeated parse calls do not retain previous arenas.
+
+## Stop: next stylesheet loader blocked and released
+
+All three retained helpers and evidence were pushed at 7fab8c58 before the fourth selection. Fresh wildcard fetch checked 432 origin references and 17 distinct helper claim blobs. The private stylesheetCollector.loadFile tied the largest unclaimed count, six, and was reserved at 2365c934 before probe code. Its actual Go behavior proves a shared input gap: os.ReadFile preserves invalid CSS bytes through theme ingestion, but readTextFile irreversibly replaces them. Go-loaded theme values 80, 81 and ff all become the same ef bf bd input on source Node, emitted JavaScript and sanitized native. Valid ASCII/Unicode controls match. All probes compile and exit 0 without stderr, so this is semantic input disagreement rather than a compiler or sanitizer failure.
+
+See file_loader_gap/BLOCKER.md and evidence/file-loader-gap.log for the exact witness, independent actual Go call and command. Gap detection PASS 2.198s means the mismatch was reproduced, not that the loader is ported. The fourth reservation is explicitly withdrawn from the current claim file, and no loader code or readiness credit is retained. Stopping under Ahra's shared-file ownership instruction; a lossless file-input API is outside this unit's territory. Unclaimed helpers remain. No shared runtime, prelude, parser, harness or registration files were edited.
