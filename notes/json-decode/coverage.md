@@ -260,3 +260,36 @@ concurrent compiler/test load is the likely cause; that is an inference, not a
 confirmed context.Err observation. This coverage branch changes no Unicode code.
 At this recording point, the broad gate's remaining stage-1 tests were still
 running. The final JSON suite and counts gate have completed successfully.
+
+## Twelfth program
+
+arrays covers arrays of discriminated objects, optional member fields, partial
+construction cleanup and mixed scalar arrays validated through kind/error. It
+also holds an ordinary object sharing the value field name with decoder results.
+The targeted three-way oracle passed in 4.188s with sanitizers and leak checks.
+Explicit CLI build/run and Node comparison passed. Twelve-program counts passed
+in 78.828s. Mixed array reads remain unsupported, but validation is supported.
+
+Exact additional commands (after sourcing /workspace/adamic-tools/env.sh):
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestJSONDecode$/json_decode_coverage_arrays.a$' -count=1 -timeout 15m -v > /tmp/json-decode-arrays.log 2>&1
+go run ./cmd/adamic build internal/oracle/testdata/json_decode_coverage_arrays.a -o /tmp/json-decode-builds/json_decode_coverage_arrays > /tmp/json-decode-builds/json_decode_coverage_arrays.build 2>&1
+/tmp/json-decode-builds/json_decode_coverage_arrays > /tmp/json-decode-builds/json_decode_coverage_arrays.native 2> /tmp/json-decode-builds/json_decode_coverage_arrays.native.err
+node --disable-warning=ExperimentalWarning oracle/node.mjs internal/oracle/testdata/json_decode_coverage_arrays.a > /tmp/json-decode-builds/json_decode_coverage_arrays.node 2> /tmp/json-decode-builds/json_decode_coverage_arrays.node.err
+cmp /tmp/json-decode-builds/json_decode_coverage_arrays.native /tmp/json-decode-builds/json_decode_coverage_arrays.node
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts > /tmp/json-decode-counts-twelve.log 2>&1
+```
+
+An exploratory second mutation removed `|| hasJsonDecode(program)` from
+internal/native/fields.go in the isolated worktree. Built arrays with
+`go run ./cmd/adamic build internal/oracle/testdata/json_decode_coverage_arrays.a -o /tmp/json-decode-builds/arrays-offset-mutant --sanitize`
+and ran with `ASAN_OPTIONS=detect_leaks=1`. It survived with matching output,
+exit 0 and empty stderr. The trap restored fields.go. This probe does not
+establish mutation coverage of that guard; the numeric literal mutation above
+is the successful branch-dependence witness.
+
+The broad gate also reported 30-minute timeouts in stage1/cohere/css and
+stage1/cohere/lint. It is failed, not green; remaining broad-suite completion
+is not part of the successful targeted JSON validation. No production changes
+were made to address those unrelated failures.
