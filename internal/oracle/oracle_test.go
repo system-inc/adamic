@@ -37,7 +37,60 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/typeof_null.a", true, false},
+	{"internal/oracle/testdata/call_targets_element.a", true, false},
+	{"internal/oracle/testdata/call_targets_region.a", true, false},
+	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
+	{"internal/oracle/testdata/call_targets_closure.a", true, false},
+	{"internal/oracle/testdata/call_targets_sort.a", true, false},
+	{"internal/oracle/testdata/library_object_keys.a", true, false},
+	{"internal/oracle/testdata/library_object_is.a", true, false},
+	{"internal/oracle/testdata/library_object_has_own.a", true, false},
+	{"internal/oracle/testdata/library_object_assign.a", true, false},
+	{"internal/oracle/testdata/library_object_freeze.a", true, false},
+	{"internal/oracle/testdata/library_object_freeze_write.a", true, false},
+	{"internal/oracle/testdata/library_object_order.a", true, false},
+	{"internal/oracle/testdata/library_object_assign_fields.a", true, false},
+	{"internal/oracle/testdata/library_object_freeze_alias.a", true, false},
+	{"internal/oracle/testdata/library_object_freeze_assign.a", true, false},
+	{"internal/oracle/testdata/library_object_same.a", true, false},
+	{"internal/oracle/testdata/library_object_own.a", true, false},
 	{"dedication/dedication.a", true, false},
+	// October 6 coverage: deeper dispatch, field order, ownership and subclass holders.
+	{"internal/oracle/testdata/class_oct6_deep.a", true, false},
+	{"internal/oracle/testdata/class_oct6_parameters.a", true, false},
+	{"internal/oracle/testdata/class_oct6_release.a", true, false},
+	{"internal/oracle/testdata/class_oct6_subclass_holder.a", true, false},
+
+	{"internal/oracle/testdata/library_array_join.a", true, false},
+	{"internal/oracle/testdata/library_array_iterators.a", true, false},
+	{"internal/oracle/testdata/library_array_metadata.a", true, false},
+	{"internal/oracle/testdata/library_array_with.a", true, false},
+	{"internal/oracle/testdata/library_array_flat_map.a", true, false},
+	{"internal/oracle/testdata/library_array_flat.a", true, false},
+	{"internal/oracle/testdata/library_array_spliced.a", true, false},
+	{"internal/oracle/testdata/library_array_copy_within.a", true, false},
+	{"internal/oracle/testdata/library_array_search.a", true, false},
+	{"internal/oracle/testdata/library_array_copy.a", true, false},
+	{"internal/oracle/testdata/library_array_find_last.a", true, false},
+	{"internal/oracle/testdata/json_stringify_scalars.a", true, false},
+	{"internal/oracle/testdata/json_stringify_values.a", true, false},
+	{"internal/oracle/testdata/json_stringify_options.a", true, false},
+	{"internal/oracle/testdata/json_stringify_escapes.a", true, false},
+	{"internal/oracle/testdata/json_stringify_numbers.a", true, false},
+	{"internal/oracle/testdata/json_stringify_undefined.a", true, false},
+	{"internal/oracle/testdata/json_stringify_indent.a", true, false},
+	{"internal/oracle/testdata/json_stringify_keys.a", true, false},
+	{"internal/oracle/testdata/json_stringify_replacer.a", true, false},
+	{"internal/oracle/testdata/library_function_expressions.a", true, false},
+	{"internal/oracle/testdata/library_fnexpr_recurse.a", true, false},
+	{"internal/oracle/testdata/library_fnexpr_store.a", true, false},
+	{"internal/oracle/testdata/library_fnexpr_loops.a", true, false},
+	{"internal/oracle/testdata/library_for_in.a", true, false},
+	{"internal/oracle/testdata/library_for_in_keys.a", true, false},
+	{"internal/oracle/testdata/library_for_in_live.a", true, false},
+	{"internal/oracle/testdata/library_globals.a", true, false},
+	{"internal/oracle/testdata/library_globals_typeof.a", true, false},
 	{"internal/load/testdata/0.1/compile/01_hello.ts", true, false},
 	{"internal/load/testdata/0.1/compile/02_fizzbuzz.ts", true, false},
 	{"internal/load/testdata/0.1/compile/03_shapes.ts", true, false},
@@ -50,6 +103,7 @@ var fixtures = []struct {
 	{"internal/load/testdata/0.1/compile/10_unicode.ts", true, false},
 	{"internal/oracle/testdata/strings.a", true, false},
 	{"internal/oracle/testdata/numbers.a", true, false},
+	{"internal/oracle/testdata/bitwise_sweep.a", true, false},
 	{"internal/oracle/testdata/loops.a", true, false},
 	{"internal/oracle/testdata/booleans.a", true, false},
 	{"internal/oracle/testdata/shadowing.a", true, false},
@@ -83,6 +137,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/search_halves.a", true, false},
 	{"internal/oracle/testdata/strings_more.a", true, false},
 	{"internal/oracle/testdata/number_parsing.a", true, false},
+	{"internal/oracle/testdata/library_math_number_math.a", true, false},
+	{"internal/oracle/testdata/library_math_number_convert.a", true, false},
+	{"internal/oracle/testdata/library_math_number_prototype.a", true, false},
 	// Every Math function ported from V8, printed in full, so a last bit that differs from Node shows.
 	{"internal/oracle/testdata/navigation.a", true, false},
 	{"internal/oracle/testdata/number_formats.a", true, false},
@@ -131,6 +188,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/closures_throw.a", true, false},
 	{"internal/oracle/testdata/closures_throw_uncaught.a", true, false},
 	{"internal/oracle/testdata/finally_leaves.a", true, false},
+	{"internal/oracle/testdata/reuse_foreach_global.a", true, false},
+	{"internal/oracle/testdata/param_assigned_in_try.a", true, false},
+	{"internal/oracle/testdata/named_function_values.a", true, false},
 	{"internal/oracle/testdata/panic_in_try.a", true, false},
 	{"internal/oracle/testdata/invariance_readonly.a", true, false},
 	{"internal/oracle/testdata/tuples_kept.a", true, false},
@@ -158,12 +218,20 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_positions.a", true, false},
 	{"internal/oracle/testdata/long_literals.a", true, false},
 	{"internal/oracle/testdata/class_layouts.a", true, false},
+	{"internal/oracle/testdata/inherited_static_field_read.a", true, false},
 	{"internal/oracle/testdata/ascii_scan.a", true, false},
 	{"internal/oracle/testdata/size_class_churn.a", true, false},
 	// Borrowed parameters: a reassigned one has to stay owned, and so does a closure's, which map hands
 	// an element it may overwrite. Each breaks under ASan if it's borrowed.
 	{"internal/oracle/testdata/borrow_reassigned.a", true, false},
+	// A narrowed read (ir.Defined) of a global, a field and a captured variable, lent to a call whose
+	// later argument writes the place it was read from (integration's reading of aa17d3c).
+	{"internal/oracle/testdata/borrow_defined_lent.a", true, false},
+	{"internal/oracle/testdata/borrow_defined_lent_field.a", true, false},
 	{"internal/oracle/testdata/writes_in_try.a", true, false},
+	{"internal/oracle/testdata/class_as_interface.a", true, false},
+	{"internal/oracle/testdata/optional_class_method.a", true, false},
+	{"internal/oracle/testdata/set_undefined.a", true, false},
 	{"internal/oracle/testdata/borrow_map_overwrite.a", true, false},
 	// A spread is read before its fields' values, as JavaScript reads it.
 	{"internal/oracle/testdata/spread_snapshot.a", true, false},
@@ -182,9 +250,28 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regions.a", true, false},
 	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
 	{"internal/oracle/testdata/regions_throw.a", true, false},
+	// A constructor whose object a closure captures, kept in a global (integration's reading of
+	// fa49e43): the object outlives its statement, so no region.
+	{"internal/oracle/testdata/regions_constructor_capture.a", true, false},
+	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
+	{"internal/oracle/testdata/borrow_element.a", true, false},
+	{"internal/oracle/testdata/borrow_element_throw.a", true, false},
+	{"internal/oracle/testdata/borrow_element_virtual_store.a", true, false},
+	// A variable borrowed from an array, then the array moved into a consumed parameter of a
+	// function that only reads it, through a virtual call and through super (integration's reading
+	// of aa17d3c): the array is never moved while something borrows from it.
+	{"internal/oracle/testdata/borrow_element_virtual_move.a", true, false},
+	{"internal/oracle/testdata/borrow_element_super_move.a", true, false},
 	// Reviewer R's round 7: a throw between a move or an in-place spread and a catch that reads what
 	// was moved or spread.
 	{"internal/oracle/testdata/move_throw.a", true, false},
+	// An assignment that throws never gives its variable a value, so the statement before it can't
+	// take that variable's old value while a catch, a finally or the code after a swallowing catch
+	// reads it; and a field or element write whose value throws.
+	{"internal/oracle/testdata/throw_keeps_old_value.a", true, false},
+	{"internal/oracle/testdata/throw_keeps_old_value_variants.a", true, false},
+	{"internal/oracle/testdata/throw_in_writes.a", true, false},
+	{"internal/oracle/testdata/throw_global_move.a", true, false},
 	// Reviewer R's round 8b: a spread of a value that may be undefined is {} with the literal's fields.
 	{"internal/oracle/testdata/spread_undefined.a", true, false},
 	// A read lent without a count, beside a call that reassigns what was read.
@@ -196,6 +283,12 @@ var fixtures = []struct {
 	// sin, cos and tan where reducing by pi / 2 cancels the most bits, as no sweep input does.
 	{"internal/oracle/testdata/trig_reduction.a", true, false},
 	{"internal/oracle/testdata/sets.a", true, false},
+	{"internal/oracle/testdata/set_maybe_numbers.a", true, false},
+	{"internal/oracle/testdata/library_map_set.a", true, false},
+	{"internal/oracle/testdata/library_map_set_keys.a", true, false},
+	{"internal/oracle/testdata/library_map_set_iterators.a", true, false},
+	{"internal/oracle/testdata/library_map_set_construct.a", true, false},
+	{"internal/oracle/testdata/library_map_set_group_by.a", true, false},
 	{"internal/oracle/testdata/maybe_collections.a", true, false},
 	// Tail calls keep their frames, so recursion runs out of stack as on Node (native.go).
 	{"internal/oracle/testdata/stack_tail_call.a", true, false},
@@ -234,6 +327,8 @@ var fixtures = []struct {
 	// Generic functions per instantiation, undefined where a reference goes, ?.length, and spread
 	// arguments.
 	{"internal/oracle/testdata/generic_functions.a", true, false},
+	{"internal/oracle/testdata/generic_method_return.a", true, false},
+	{"internal/oracle/testdata/generic_values.a", true, false},
 	{"internal/oracle/testdata/undefined_references.a", true, false},
 	{"internal/oracle/testdata/spread_calls.a", true, false},
 	// A string's UTF-8 read in place, and past its end.
@@ -243,15 +338,48 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/search_from.a", true, false},
 	{"internal/oracle/testdata/shared_slices.a", true, false},
 	{"internal/oracle/testdata/string_append.a", true, false},
+	{"internal/oracle/testdata/shared_slice_append.a", true, false},
 	{"internal/oracle/testdata/search_from_sweep.a", true, false},
+	// Numbers as text around the integer fast path: every power of two and of ten, their neighbors
+	// and negatives, -0, and the safe range's edges.
+	{"internal/oracle/testdata/integer_format.a", true, false},
 	// Reuse meeting exceptions, narrowing and lending (integration 7): a throw after a move, a narrowed
 	// field emptied in place, and a lent global moved under its borrower.
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
+	// A method called on a spread's source inside the literal runs code with the source as this
+	// (integration's reading of aa17d3c): the source is not only read there, so it isn't reused.
+	{"internal/oracle/testdata/reuse_spread_method.a", true, false},
+	{"internal/oracle/testdata/reuse_spread_method_alias.a", true, false},
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
+	{"internal/oracle/testdata/library_string_conversion.a", true, false},
+	{"internal/oracle/testdata/library_string_prototype.a", true, false},
+	{"internal/oracle/testdata/library_string_indices.a", true, false},
+	{"internal/oracle/testdata/library_string_raw.a", true, false},
+	{"internal/oracle/testdata/library_string_existing.a", true, false},
+	// Map and Set visits, SameValueZero keys, ES2025 set arguments, groupBy collisions, and next() after done.
+	{"internal/oracle/testdata/library_map_set_visit.a", true, false},
+	{"internal/oracle/testdata/library_map_set_setops.a", true, false},
+	{"internal/oracle/testdata/library_map_set_zeros.a", true, false},
+	{"internal/oracle/testdata/library_map_set_groupby_keys.a", true, false},
+	{"internal/oracle/testdata/library_map_set_next.a", true, false},
+	// Object.prototype.hasOwnProperty is on every object's type and not in its shape.
+	{"internal/oracle/testdata/has_own.a", true, false},
+	{"internal/oracle/testdata/regexp.a", true, false},
+	{"internal/oracle/testdata/sweeps/regexp_methods.a", true, false},
+	{"internal/oracle/testdata/regexp_matchall_nonglobal.a", true, false},
+	{"internal/oracle/testdata/regexp_replaceall_nonglobal.a", true, false},
+	{"internal/oracle/testdata/regexp_null_narrowed.a", true, false},
+	{"internal/oracle/testdata/regexp_replace.a", true, false},
+	{"internal/oracle/testdata/regexp_split.a", true, false},
+	{"internal/oracle/testdata/regexp_exec.a", true, false},
+	{"internal/oracle/testdata/regexp_match.a", true, false},
+	{"internal/oracle/testdata/regexp_search.a", true, false},
+	{"internal/oracle/testdata/regexp_unicode.a", true, false},
+	{"internal/oracle/testdata/regexp_split_pair_pattern.a", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
@@ -282,7 +410,9 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	rememberRun(t, result)
+	return result
 }
 
 // bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
@@ -304,7 +434,9 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 // onNode runs a program's source on Node: the oracle.
 func onNode(t *testing.T, path string) run {
 	t.Helper()
-	return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), path)
+	return cachedNode(t, path, func() run {
+		return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), path)
+	})
 }
 
 // onJavaScriptBackend runs a lowered program through the JavaScript backend, on Node.
@@ -324,6 +456,13 @@ func lowered(t *testing.T, path string) (*ir.Program, error) {
 	if err != nil {
 		t.Fatalf("Load: %v", err)
 	}
+	absolute, err := filepath.Abs(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range program.Files() {
+		rememberImports(absolute, file.Text(), program)
+	}
 	return lower.Lower(context.Background(), program)
 }
 
@@ -335,6 +474,28 @@ func lowered(t *testing.T, path string) (*ir.Program, error) {
 // here and the leak check is a run of its own. macOS's ASan has no leak detection to turn off.
 // released builds a lowered program as a user's build is made, without sanitizers, and runs it.
 func released(t *testing.T, program *ir.Program) run {
+	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+		identity(t).cache.misses[nativeResults].Add(1)
+		return releasedUncached(t, program)
+	}
+	return cachedNative(t, program, true).Run.run()
+}
+func natively(t *testing.T, program *ir.Program) (run, string) {
+	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+		identity(t).cache.misses[nativeResults].Add(1)
+		return nativelyUncached(t, program)
+	}
+	return cachedNative(t, program, false).Run.run(), ""
+}
+func leaks(t *testing.T, program *ir.Program, sanitized string) string {
+	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
+		identity(t).cache.misses[nativeResults].Add(1)
+		return leaksUncached(t, program, sanitized)
+	}
+	return string(cachedNative(t, program, false).LeakReport)
+}
+
+func releasedUncached(t *testing.T, program *ir.Program) run {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "release")
 	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
@@ -343,7 +504,7 @@ func released(t *testing.T, program *ir.Program) run {
 	return execute(t, binary)
 }
 
-func natively(t *testing.T, program *ir.Program) (run, string) {
+func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
@@ -362,7 +523,7 @@ func natively(t *testing.T, program *ir.Program) (run, string) {
 //
 // macOS has the leaks tool; Linux has LeakSanitizer, part of ASan there, run on the sanitized binary
 // the comparison already built.
-func leaks(t *testing.T, program *ir.Program, sanitized string) string {
+func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":

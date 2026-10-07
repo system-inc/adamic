@@ -81,8 +81,6 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a union a function value takes", "const show = (value: string | number): string => `${value}`;\n", "main.a:1:15: stage 0 can't lower a function value taking string | number yet"},
 		{"a map of a union", "const values = new Map<string, string | number>();\n", "main.a:1:16: stage 0 can't lower a Map of string | number yet"},
 		{"a template of a union with an object", "function pick(flag: boolean): number | { size: number } {\n\treturn flag ? 1 : { size: 2 };\n}\nconsole.log(`${pick(true)}`);\n", "main.a:4:16: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet"},
-		{"a set of number | undefined", "const maybes = new Set<number | undefined>();\n", "main.a:1:16: stage 0 can't lower a Set of number | undefined (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet"},
-		{"a set's entries spread", "const seen = new Set(['a']);\nconst pairs = [...seen.entries()];\n", "main.a:2:19: stage 0 can't lower a Set's entries ([element, element] pairs) outside a for...of yet"},
 		{"?.[] on a string", "function first(word: string | undefined): string {\n\treturn word?.[0] ?? 'none';\n}\n", "main.a:2:9: stage 0 can't lower ?.[] on a string yet"},
 		{"a destructured parameter beside a default", "function sum([a, b]: readonly [number, number], scale = 1): number {\n\treturn (a + b) * scale;\n}\nconsole.log(`${sum([1, 2])}`);\n", "main.a:1:1: stage 0 can't lower a destructured parameter beside a parameter with a default yet"},
 		{"an array of targets seen as an array of Weak", "import type { Weak } from 'adamic';\ninterface Item {\n\treadonly name: string;\n}\nconst items: readonly Item[] = [{ name: 'a' }];\nconst seen: readonly Weak<Item>[] = items;\n", "main.a:6:37: stage 0 can't lower a readonly Item[] seen as a readonly Weak<Item>[] (one keeps something weakly that the other keeps strongly) yet"},
@@ -97,11 +95,11 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"a try around repeat", "function line(count: number): string {\n\ttry {\n\t\treturn '-'.repeat(count);\n\t} catch {\n\t\treturn '';\n\t}\n}\nconsole.log(line(3));\n", "main.a:2:2: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"},
 		{"a try around a call that reaches toFixed", "function shown(value: number, digits: number): string {\n\treturn value.toFixed(digits);\n}\nfunction safe(value: number): string {\n\ttry {\n\t\treturn shown(value, 2);\n\t} finally {\n\t\tconsole.log('done');\n\t}\n}\nconsole.log(safe(1));\n", "main.a:5:2: stage 0 can't lower a try around toFixed, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"},
 		{"rethrowing a stored Error", "const failure = new Error('stored');\nfunction stop(): void {\n\tthrow failure;\n}\nstop();\n", "main.a:3:8: stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet"},
-		{"instanceof a class", "class Box {}\nconst box = new Box();\nconsole.log(`${box instanceof Box}`);\n", "main.a:3:16: stage 0 can't lower instanceof, but on what a catch caught, against Error yet"},
 		{"an object seen with a field weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\ninterface Strong {\n\treadonly v: Box;\n}\ninterface Weakly {\n\treadonly v: Weak<Box>;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst s: Strong = { v: box };\n\tconst w: Weakly = s;\n\tconsole.log(`${s.v === box} ${w.v === box}`);\n}\nrun(1);\n", "main.a:14:20: stage 0 can't lower a Strong seen as a Weakly (one keeps something weakly that the other keeps strongly) yet"},
 		{"a function seen with a parameter weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst f: (x: Box) => boolean = (x: Weak<Box>): boolean => x === box;\n\tconsole.log(`${f(box)}`);\n}\nrun(1);\n", "main.a:7:33: stage 0 can't lower a (x: Weak<Box>) => boolean seen as a (x: Box) => boolean (one keeps something weakly that the other keeps strongly) yet"},
 		{"a function seen with a result weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst f: () => Weak<Box> = (): Box => box;\n\tconst got = f();\n\tconsole.log(`${got === box}`);\n}\nrun(1);\n", "main.a:7:29: stage 0 can't lower a () => Box seen as a () => Weak<Box> (one keeps something weakly that the other keeps strongly) yet"},
 		{"a spread seen with a field weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\ninterface Strong {\n\treadonly tag: string;\n\tv: Box;\n}\ninterface Weakly {\n\treadonly tag: string;\n\tv: Weak<Box>;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst s: Strong = { tag: 't', v: box };\n\tconst w: Weakly = { ...s, tag: 'w' };\n\tconsole.log(`${w.v === box}`);\n}\nrun(1);\n", "main.a:16:25: stage 0 can't lower a Strong seen as a Weakly (one keeps something weakly that the other keeps strongly) yet"},
+		{"a function with an optional parameter read as a value", "function greet(name: string, greeting?: string): string {\n\treturn `${greeting ?? 'hi'} ${name}`;\n}\nconst run: (name: string) => string = greet;\nconsole.log(run('a'));\n", "main.a:4:39: stage 0 can't lower a function with an optional or rest parameter, as a value yet"},
 		{"a template interpolating an object", "const point = { x: 1 };\nconsole.log(`${point}`);\n", "main.a:2:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -130,9 +128,7 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 		{"throwing a string", "function stop(): void {\n\tthrow 'stopped';\n}\nstop();\n", "main.a:2:8: Adamic 0.1 refuses throwing a \"stopped\"; throw an Error: throw new Error(String(value))"},
 		{"throwing a number", "function stop(code: number): void {\n\tthrow code;\n}\nstop(1);\n", "main.a:2:8: Adamic 0.1 refuses throwing a number; throw an Error"},
 		{"==", "const same = 1 == 1;\n", "main.a:1:16: Adamic 0.1 refuses ==;"},
-		{"for...in", "for (const key in { a: 1 }) {\n\tconsole.log(key);\n}\n", "main.a:1:1: Adamic 0.1 refuses for...in;"},
 		{"delete", "const box: { a?: number } = { a: 1 };\ndelete box.a;\n", "main.a:2:1: Adamic 0.1 refuses delete;"},
-		{"a getter", "class Box {\n\tget size(): number {\n\t\treturn 1;\n\t}\n}\n", "main.a:2:2: Adamic 0.1 refuses a getter;"},
 		{"a constructor calling a method before its fields are set (R2's, and R's half_built)", "class Scaled {\n\treadonly doubled: number;\n\treadonly base: number;\n\tconstructor(base: number) {\n\t\tthis.doubled = this.twice();\n\t\tthis.base = base;\n\t}\n\ttwice(): number {\n\t\treturn this.base * 2;\n\t}\n}\nconsole.log(`${new Scaled(21).doubled}`);\n", "main.a:5:18: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this"},
 		{"a constructor handing this out before its fields are set (R's early_this)", "function describe(box: Box): string {\n\treturn box.label;\n}\nclass Box {\n\treadonly shown: string;\n\treadonly label: string;\n\tconstructor(label: string) {\n\t\tthis.shown = describe(this);\n\t\tthis.label = label;\n\t}\n}\nconsole.log(new Box('a').shown);\n", "main.a:8:25: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this"},
 		{"a constructor storing this before its fields are set", "const registry: Pair[] = [];\nclass Pair {\n\tleft: string;\n\tright: string;\n\tconstructor() {\n\t\tthis.left = `left${1}`;\n\t\tregistry.push(this);\n\t\tthis.right = `right${2}`;\n\t}\n}\nconsole.log(new Pair().left);\n", "main.a:7:17: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this"},
@@ -213,8 +209,9 @@ function swap(kennel: Kennel): void {
 		{"a map's values seen wider, passed", `function add(animals: Map<string, Animal>): void {
 	animals.set('Tom', { name: 'Tom' });
 }
-add(new Map<string, Dog>());
-`, "main.a:14:5: Adamic 0.1 refuses a value of type Map<string, Dog> seen as Map<string, Animal>"},
+const dogsByName = new Map<string, Dog>();
+add(dogsByName);
+`, "main.a:15:5: Adamic 0.1 refuses a value of type Map<string, Dog> seen as Map<string, Animal>"},
 		{"a function seen as taking a narrower array", `const count: (dogs: Dog[]) => number = (animals: Animal[]): number => animals.push({ name: 'Tom' });
 `, "main.a:11:40: Adamic 0.1 refuses a value of type (animals: Animal[]) => number seen as (dogs: Dog[]) => number, which can write Animal where Dog is read"},
 		{"an array of arrays seen wider behind readonly", `function widen(packs: readonly Dog[][]): readonly Animal[][] {
@@ -227,6 +224,20 @@ add(new Map<string, Dog>());
 	return pack.length;
 }
 `, "main.a:12:21: Adamic 0.1 refuses a value of type Narrow seen as Pack, a type parameter whose constraint Animal[] can be written, so it can write what Narrow can't hold; take it as Narrow, or constrain Pack to something readonly"},
+		{"an explicit type argument widens a mutable parameter", `function adopt<Pack extends Animal[]>(pack: Pack): number {
+	pack.push({ name: 'Tom' });
+	return pack.length;
+}
+const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+adopt<Animal[]>(dogs);
+`, "main.a:16:17: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read; make the wider type readonly"},
+		{"an inferred type argument makes a generic write unsafe", `function adopt<Pack extends Animal[]>(pack: Pack): number {
+	pack.push({ name: 'Tom' });
+	return pack.length;
+}
+const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+adopt(dogs);
+`, "main.a:12:12: Adamic 0.1 refuses instantiating a generic function makes a value of type { name: string; } written where Dog is read; make the collection readonly, or use a type parameter for the value being written"},
 		{"a type parameter's constraint behind a readonly property", `interface Held<Pack> {
 	readonly pack: Pack;
 }
@@ -258,6 +269,123 @@ const strong: Strong = { v: { name: 'Rex' } };
 const weakly: Weakly = strong;
 weakly.v = undefined;
 `, "main.a:18:24: Adamic 0.1 refuses a value of type Strong seen as Weakly, which can write Weak<Animal> where Animal is read"},
+		{"a readonly field turned back into a writable one", `const kennel: { pet: Dog } = { pet: { name: 'Rex', bark: 'woof' } };
+const view: { readonly pet: Animal } = kennel;
+const pen: { pet: Animal } = view;
+pen.pet = { name: 'Tom' };
+`, "main.a:13:30: Adamic 0.1 refuses a value of type { readonly pet: Animal; } seen as { pet: Animal; }, whose readonly field pet becomes writable: a readonly field may hold something narrower than Animal, which a write of Animal would replace; keep pet readonly in the type it's seen as"},
+		{"a readonly field made writable by a mapped type", `type Writable<T> = { -readonly [K in keyof T]: T[K] };
+interface View {
+	readonly pet: Animal;
+}
+function open(view: View): Writable<View> {
+	return view;
+}
+`, "main.a:16:9: Adamic 0.1 refuses a value of type View seen as Writable<View>, whose readonly field pet becomes writable"},
+		{"a readonly array field turned writable", `function open(view: { readonly pets: readonly Animal[] }): { pets: readonly Animal[] } {
+	return view;
+}
+`, "main.a:12:9: Adamic 0.1 refuses a value of type { readonly pets: readonly Animal[]; } seen as { pets: readonly Animal[]; }, whose readonly field pets becomes writable"},
+		{"a readonly field turned writable inside a readonly array", `interface Held {
+	readonly pet: Animal;
+}
+interface Open {
+	pet: Animal;
+}
+function open(held: readonly Held[]): readonly Open[] {
+	return held;
+}
+`, "main.a:18:9: Adamic 0.1 refuses a value of type readonly Held[] seen as readonly Open[], whose readonly field pet becomes writable"},
+		{"a readonly field of a primitive turned writable", `function open(view: { readonly name: string }): { name: string } {
+	return view;
+}
+`, "main.a:12:9: Adamic 0.1 refuses a value of type { readonly name: string; } seen as { name: string; }, whose readonly field name becomes writable"},
+		{"a shorthand property", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const list = dogs;
+const pen: { list: Animal[] } = { list };
+`, "main.a:13:35: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a parameter's default", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+function adopt(animals: Animal[] = dogs): number {
+	return animals.push({ name: 'Tom' });
+}
+`, "main.a:12:36: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a class field's initializer", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+class Pen {
+	animals: Animal[] = dogs;
+}
+`, "main.a:13:22: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"an object spread", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const kennel = { pets: dogs };
+const pen: { pets: Animal[] } = { ...kennel };
+`, "main.a:13:35: Adamic 0.1 refuses a value of type { pets: Dog[]"},
+		{"an as", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals = dogs as Animal[];
+`, "main.a:12:17: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a union target", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const slot: Animal[] | string = dogs;
+`, "main.a:12:33: Adamic 0.1 refuses a value of type Dog[] seen as string | Animal[], which can write Animal where Dog is read"},
+		{"a union source", `interface Cat extends Animal {
+	readonly lives: number;
+}
+function pick(either: Dog[] | Cat[]): Animal[] {
+	return either;
+}
+`, "main.a:15:9: Adamic 0.1 refuses a value of type Cat[] | Dog[] seen as Animal[], which can write Animal where Cat is read"},
+		{"a conditional tsc reduced to the wider branch", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = [{ name: 'Tom' }];
+const either = dogs.length > 0 ? dogs : animals;
+`, "main.a:13:34: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a literal's element tsc reduced to the wider", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = [{ name: 'Tom' }];
+const lists = [dogs, animals];
+`, "main.a:13:16: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a return tsc reduced to the wider", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = [{ name: 'Tom' }];
+function either(flag: boolean) {
+	if (flag) {
+		return dogs;
+	}
+	return animals;
+}
+`, "main.a:15:10: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+		{"a method's return", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const source = { list: (): Dog[] => dogs };
+const shelter: { list(): Animal[] } = source;
+`, "main.a:13:39: Adamic 0.1 refuses a value of type { list: () => Dog[]"},
+		{"a method's parameter, bivariant in tsc", `interface Handler {
+	handle(animal: Animal): void;
+}
+const dogHandler = { handle: (dog: Dog): void => console.log(dog.bark) };
+const handler: Handler = dogHandler;
+`, "main.a:15:26: Adamic 0.1 refuses a function taking Dog seen as one taking Animal (tsc relates a method's parameters both ways), so it can be handed what it can't take"},
+		{"a tuple's later element", `const pair: [Animal, Dog] = [{ name: 'Tom' }, { name: 'Rex', bark: 'woof' }];
+const list: Animal[] = pair;
+`, "main.a:12:24: Adamic 0.1 refuses a value of type [Animal, Dog] seen as Animal[], which can write Animal where Dog is read"},
+		{"a class target", `class Box<T> {
+	item: T;
+	constructor(item: T) {
+		this.item = item;
+	}
+}
+const dogBox = new Box<Dog>({ name: 'Rex', bark: 'woof' });
+const animalBox: Box<Animal> = dogBox;
+`, "main.a:18:32: Adamic 0.1 refuses a value of type Box<Dog> seen as Box<Animal>, which can write Animal where Dog is read"},
+		{"a plain object seen as a class", `class Pen {
+	pet: Animal = { name: 'Tom' };
+}
+const kennel = { pet: { name: 'Rex', bark: 'woof' } };
+const pen: Pen = kennel;
+`, "main.a:15:18: Adamic 0.1 refuses a value of type { pet: { name: string"},
+		{"a fresh copy's elements seen wider", `interface Kennel {
+	pet: Dog;
+}
+const kennels: Kennel[] = [{ pet: { name: 'Rex', bark: 'woof' } }];
+const pens: { pet: Animal }[] = kennels.slice();
+`, "main.a:15:33: Adamic 0.1 refuses a value of type Kennel[] seen as { pet: Animal"},
+		{"an annotated destructuring", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const kennel = { pets: dogs };
+const { pets }: { pets: Animal[] } = kennel;
+`, "main.a:13:38: Adamic 0.1 refuses a value of type { pets: Dog[]"},
 		{"an intersection's array seen as a plain array", `function tagged(dogs: Dog[] & Tag): number {
 	const animals: Animal[] = dogs;
 	return animals.push({ name: 'Tom' });
@@ -298,6 +426,14 @@ func TestAViewThatCantWriteIsNotRefused(t *testing.T) {
 		name   string
 		source string
 	}{
+		{"a destructuring declaration of a readonly field", `interface Badge {
+	readonly label: string;
+	readonly count: number;
+}
+const badge: Badge = { label: 'gold', count: 3 };
+const { label, count: total } = badge;
+console.log(` + "`${label} ${total}`" + `);
+`},
 		{"a destructuring assignment's elements going into wider names", `function swap(pair: readonly [string, number]): readonly [number, string] {
 	return [pair[1], pair[0]];
 }
@@ -342,6 +478,82 @@ console.log(pen.pet.name);
 	const animals: readonly Animal[] & Tag = dogs;
 	return animals.length;
 }
+`},
+		{"a readonly field seen as a readonly field", `const view: { readonly pet: Animal } = { pet: { name: 'Rex' } };
+const same: { readonly pet: Animal } = view;
+console.log(same.pet.name);
+`},
+		{"a writable field seen as a readonly one", `const pen: { pet: Animal } = { pet: { name: 'Rex' } };
+const view: { readonly pet: Animal } = pen;
+console.log(view.pet.name);
+`},
+		{"a readonly field seen as its own type", `interface View {
+	readonly pet: Animal;
+}
+function keep(view: View): View {
+	const same: View = view;
+	return same;
+}
+`},
+		{"a readonly field copied into a writable one", `const view: { readonly pet: Animal } = { pet: { name: 'Rex' } };
+const pen: { pet: Animal } = { pet: view.pet };
+pen.pet = { name: 'Tom' };
+console.log(view.pet.name);
+`},
+		{"a copy made by slice", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs.slice();
+animals.push({ name: 'Tom' });
+`},
+		{"a copy made by map", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs.map((dog) => dog);
+`},
+		{"a copy made by filter", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs.filter((dog) => dog.bark.length > 0);
+`},
+		{"a conditional of fresh arrays", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs.length > 5 ? [{ name: 'Tom' }] : [];
+`},
+		{"a Map made from pairs", `const pairs: [string, Dog][] = [['Rex', { name: 'Rex', bark: 'woof' }]];
+const byName = new Map<string, Dog>(pairs);
+console.log(` + "`${byName.size}`" + `);
+`},
+		{"a conditional of fresh copies", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const animals: Animal[] = dogs.length > 5 ? dogs.slice() : [];
+animals.push({ name: 'Tom' });
+`},
+		{"a new Map passed", `function add(animals: Map<string, Animal>): void {
+	animals.set('Tom', { name: 'Tom' });
+}
+add(new Map<string, Dog>());
+`},
+		{"a new Map", `const byName: Map<string, Animal> = new Map<string, Dog>();
+`},
+		{"a union target that can't write", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const slot: readonly Animal[] | string = dogs;
+`},
+		{"a shorthand property that can't write", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
+const list = dogs;
+const view: { list: readonly Animal[] } = { list };
+`},
+		{"a destructuring with no type", `interface View {
+	readonly pet: Animal;
+}
+const view: View = { pet: { name: 'Rex' } };
+const { pet } = view;
+console.log(pet.name);
+`},
+		{"a method returning the same type", `const source = { list: (): readonly Animal[] => [] };
+const shelter: { list(): readonly Animal[] } = source;
+`},
+		{"a class seen as itself", `class Box<T> {
+	item: T;
+	constructor(item: T) {
+		this.item = item;
+	}
+}
+const dogBox = new Box<Dog>({ name: 'Rex', bark: 'woof' });
+const again: Box<Dog> = dogBox;
+console.log(again.item.bark);
 `},
 		{"an intersection seen as itself", `function tagged(dogs: Dog[] & Tag): number {
 	const same: Dog[] & Tag = dogs;

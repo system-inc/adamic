@@ -1,8 +1,8 @@
 // Every way a value can be mutated through another, each in a function whose own values nothing
 // else reaches, so the only thing that can make a range cover the mutation is the alias graph
 // getting it right: through a field read out of it, an element read out of it, a for...of's element,
-// a map's value, a conditional's either side, a container holding it, and a callee handed it. Each
-// function's last line reads the value, so the mutation is observable on Node too.
+// a map's value, a conditional's either side, a container holding it, a callee handed it, and a
+// callback. Each function's last line reads the value, so the mutation is observable on Node too.
 interface Counter {
 	count: number;
 }
@@ -97,5 +97,20 @@ function sharedOwner(): number {
 	return throughAnotherParameter(counter, { counter });
 }
 
+// The callback a Map's forEach calls reaches the array only through the map it's handed, so only
+// forEach counting as a call can put the write in the array's range.
+function throughForEach(): number {
+	const counters: Counter[] = [{ count: 1 }];
+	const byName = new Map<string, Counter[]>();
+	byName.set('all', counters);
+	byName.forEach((list) => {
+		const first = list[0];
+		if (first !== undefined) {
+			first.count += 4;
+		}
+	});
+	return (counters[0] ?? { count: 0 }).count;
+}
+
 console.log(`${throughField()} ${throughElement()} ${throughLoop()} ${throughMap()}`);
-console.log(`${throughConditional(true)} ${throughConditional(false)} ${throughHolder()} ${throughCall()} ${throughPush()} ${sharedOwner()}`);
+console.log(`${throughConditional(true)} ${throughConditional(false)} ${throughHolder()} ${throughCall()} ${throughPush()} ${sharedOwner()} ${throughForEach()}`);

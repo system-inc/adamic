@@ -120,7 +120,15 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 	if asked == "" {
 		t.Skip("set ADAMIC_LINT_PROFILE_SNAPSHOTS")
 	}
-	rows := append(generated(t), upstream(t)...)
+	rows := append(generated(t), volumeGenerated(t)...)
+	var recovery []string
+	for _, row := range upstream(t) {
+		if strings.HasSuffix(row, "\tunsupported-recovery") {
+			recovery = append(recovery, row)
+		} else {
+			rows = append(rows, row)
+		}
+	}
 	for _, root := range []string{filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler"), filepath.Join(repository, "stage1")} {
 		err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
 			if err != nil {
@@ -140,8 +148,14 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 		}
 	}
 	path := manifest(t, rows)
-	want := execute(t, "", goOracle(t), "--manifest", path).output
+	oracle := goOracle(t)
+	want := execute(t, "", oracle, "--manifest", path).output
 	for _, directory := range filepath.SplitList(asked) {
+		// Match the ordinary suite's explicit recovery boundary in both snapshots.
+		for _, row := range recovery {
+			checkRecoveryRefusal(t, oracle, filepath.Join(directory, "scanner"), directory, row)
+			checkRecoveryRefusal(t, oracle, filepath.Join(directory, "profiled"), directory, row)
+		}
 		for _, side := range []struct {
 			name string
 			run  execution

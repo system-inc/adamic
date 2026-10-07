@@ -49,7 +49,13 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+	builder.WriteString(collectionIteratorRuntime)
+	builder.WriteString(jsonStringifyRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
+	// object.name(...) through an interface: the object's own function value, or else its class's
+	// method (on the prototype its constructor gave it), called with the object as this.
+	builder.WriteString("const adamicCallee = (object, name) => Object.hasOwn(object, name) ? object[name] : { code: (closure, values) => object[name](object, ...values) };\n")
+	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
 	// map reads the length once, as JavaScript's does; an array the callback shrinks would leave a hole,
@@ -57,16 +63,61 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicMap = (array, callback) => {\n\tconst count = array.length;\n\tconst mapped = [];\n\tfor (let index = 0; index < count; index++) {\n\t\tif (index >= array.length) panic('map: the array shrank while it was being mapped');\n\t\tmapped.push(adamicCall(callback, [array[index], index, array]));\n\t}\n\treturn mapped;\n};\n")
 	// find and findIndex call the callback even at an index the callback took away, with undefined,
 	// which the element's type can't hold: a panic there, the same one native has.
-	builder.WriteString("const adamicFind = (array, method, callback) => {\n\tconst count = array.length;\n\tfor (let index = 0; index < count; index++) {\n\t\tif (index >= array.length) panic(`${method}: the array shrank while it was being searched`);\n\t\tconst element = array[index];\n\t\tif (adamicCall(callback, [element, index, array])) return method === 'find' ? element : index;\n\t}\n\treturn method === 'find' ? undefined : -1;\n};\n")
+	builder.WriteString("const adamicFind = (array, method, callback) => {\n\tconst count = array.length;\n\tconst last = method === 'findLast' || method === 'findLastIndex';\n\tconst valueResult = method === 'find' || method === 'findLast';\n\tfor (let step = 0; step < count; step++) {\n\t\tconst index = last ? count - 1 - step : step;\n\t\tif (index >= array.length) panic(`${method}: the array shrank while it was being searched`);\n\t\tconst element = array[index];\n\t\tif (adamicCall(callback, [element, index, array])) return valueResult ? element : index;\n\t}\n\treturn valueResult ? undefined : -1;\n};\n")
 	// A Map's forEach gives value, key and the map; a Set's gives its element twice and the set.
 	builder.WriteString("const adamicCollectionVisit = (collection, callback) => collection.forEach((value, key, all) => adamicCall(callback, [value, key, all]));\n")
 	builder.WriteString("const adamicFrom = (length, callback) => Array.from({ length }, (element, index) => adamicCall(callback, [element, index]));\n")
+	builder.WriteString("const adamicDefinedNull = (value, message) => value === null ? panic(message) : value;\n")
 	builder.WriteString("const adamicDefined = (value, message) => value === undefined ? panic(message) : value;\n")
 	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
 	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
 	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
 	builder.WriteString("const adamicUnready = (name) => { throw new ReferenceError(`Cannot access '${name}' before initialization`); };\n\n")
+	if len(program.Classes) > 0 {
+		builder.WriteString("const adamicClassIdentities = new WeakMap();\nconst adamicClass = (value, id) => { const metadata = adamicClasses[id - 1]; if (metadata.literal) { const result = {}; for (const name of metadata.publicKeys) { const descriptor = metadata.accessors[name]; if (descriptor) Object.defineProperty(result, name, {enumerable: true, get: descriptor.get === undefined ? undefined : () => adamicGetAccessor(result, name), set: descriptor.set === undefined ? undefined : (next) => adamicSetAccessor(result, name, next)}); else result[name] = value[name]; } for (const name of metadata.privateFields) Object.defineProperty(result, name, {value: value[name], enumerable: false}); value = result; } else for (const name of metadata.privateFields) Object.defineProperty(value, name, {enumerable: false}); if (metadata.static) { const storage = value; value = function () {}; if (metadata.parent) Object.setPrototypeOf(value, storage[metadata.parent]); for (const name of metadata.privateFields) Object.defineProperty(value, name, {value: storage[name], writable: true, configurable: true}); } adamicClassIdentities.set(value, id); return value; };\nconst adamicInstanceOf = (value, wanted) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { if (id === wanted || (adamicClasses[wanted - 1].definition && adamicClasses[id - 1].definition === adamicClasses[wanted - 1].definition)) return true; } return false; };\nconst adamicVirtual = (value, slot, ...args) => adamicClasses[adamicClassIdentities.get(value) - 1].methods[slot](value, ...args);\n")
+		builder.WriteString("const adamicFindAccessor = (value, name) => { for (let id = adamicClassIdentities.get(value); id; id = adamicClasses[id - 1].base) { const found = adamicClasses[id - 1].accessors[name]; if (found) return found; } };\nconst adamicGetAccessor = (value, name) => { const get = adamicFindAccessor(value, name).get; return typeof get === 'string' ? adamicCall(value[get], [value]) : get(value); };\nconst adamicSetAccessor = (value, name, next) => { const set = adamicFindAccessor(value, name).set; return typeof set === 'string' ? adamicCall(value[set], [value, next]) : set(value, next); };\n")
+		classes := []string{}
+		for _, class := range program.Classes {
+			methods := []string{}
+			for _, method := range class.Methods {
+				methods = append(methods, functionName(program, method))
+			}
+			hidden := []string{}
+			for _, field := range class.Fields {
+				if field.Private {
+					hidden = append(hidden, quote(field.Name))
+				}
+			}
+			publicKeys := []string{}
+			for _, field := range class.PublicFields {
+				publicKeys = append(publicKeys, quote(field.Name))
+			}
+			accessors := []string{}
+			for _, accessor := range class.Accessors {
+				getter, setter := "undefined", "undefined"
+				if accessor.Getter >= 0 {
+					getter = functionName(program, accessor.Getter)
+					if program.Functions[accessor.Getter].Closure {
+						getter = quote(fmt.Sprintf("#accessor:%d", accessor.Getter))
+					}
+				}
+				if accessor.Setter >= 0 {
+					setter = functionName(program, accessor.Setter)
+					if program.Functions[accessor.Setter].Closure {
+						setter = quote(fmt.Sprintf("#accessor:%d", accessor.Setter))
+					}
+				}
+				accessors = append(accessors, fmt.Sprintf("[%s]: {get: %s, set: %s}", quote(accessor.Name), getter, setter))
+			}
+			parent := ""
+			if class.StaticParent != 0 {
+				parent = class.Fields[class.StaticParent-1].Name
+			}
+			classes = append(classes, fmt.Sprintf("{static: %t, parent: %s, base: %d, methods: [%s], definition: %d, privateFields: [%s], literal: %t, publicKeys: [%s], accessors: {%s}}", class.Static, quote(parent), class.Base, strings.Join(methods, ", "), class.Definition, strings.Join(hidden, ", "), class.Literal, strings.Join(publicKeys, ", "), strings.Join(accessors, ", ")))
+		}
+		fmt.Fprintf(&builder, "const adamicClasses = [%s];\n", strings.Join(classes, ", "))
+	}
 	for index, local := range program.Locals {
 		if local.Global {
 			fmt.Fprintf(&builder, "let %s;\nlet %s = false;\n", emitter.name(index), readyName(index))
@@ -113,6 +164,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	emitter.function = nil
 	emitter.indent = 0
 	builder.WriteString("\n")
+	// Each class's methods, the prototype of the objects its constructor makes, declared before the
+	// program runs; a class's methods are functions, hoisted, so each is there to name.
+	for _, prototype := range emitter.prototypes {
+		builder.WriteString(prototype)
+	}
 	emitter.statements(program.Main)
 	builder.WriteString(emitter.out.String())
 	return builder.String()
@@ -125,6 +181,11 @@ type emitter struct {
 	out      strings.Builder
 	indent   int
 	labels   int
+
+	// prototypes declares each class's methods, in the order the constructors that make them are
+	// emitted, and prototypeNames names each by its constructor's literal.
+	prototypes     []string
+	prototypeNames map[string]string
 
 	// continues holds, innermost last, each open loop's continue label.
 	continues []string
@@ -158,6 +219,26 @@ func readyName(local int) string {
 
 func functionName(program *ir.Program, function int) string {
 	return fmt.Sprintf("function_%d_%s", function, identifier.ReplaceAllString(program.Functions[function].Name, ""))
+}
+
+// prototype names the object holding a class's methods by name, declaring it the first time.
+func (e *emitter) prototype(methods []ir.Method) string {
+	entries := []string{}
+	for _, method := range methods {
+		entries = append(entries, quote(method.Name)+": "+functionName(e.program, method.Function))
+	}
+	key := strings.Join(entries, ", ")
+	if name, isDeclared := e.prototypeNames[key]; isDeclared {
+		return name
+	}
+	if e.prototypeNames == nil {
+		e.prototypeNames = map[string]string{}
+	}
+	name := fmt.Sprintf("methods_%d", len(e.prototypes))
+	e.prototypeNames[key] = name
+	// Class prototypes inherit Object methods, just as the source classes do.
+	e.prototypes = append(e.prototypes, fmt.Sprintf("const %s = { __proto__: Object.prototype, %s };\n", name, key))
+	return name
 }
 
 // variable is where a local's value is, from the current function: a cell of its environment, a cell
@@ -276,7 +357,11 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.Panic:
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
-		e.line("%s[%s] = %s;", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+		if statement.Define {
+			e.line("Object.defineProperty(%s, %s, {value: %s, writable: true, enumerable: %t, configurable: true});", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"))
+		} else {
+			e.line("%s[%s] = %s;", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+		}
 	case ir.SetIndex:
 		e.line("adamicSetIndex(%s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value))
 	case ir.Return:
@@ -405,7 +490,7 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 	switch {
 	case statement.MapPart == "keys" || statement.MapPart == "values":
 		e.line("for (const %s of %s.%s()) {", index, held, statement.MapPart)
-	case statement.Iterable.Type() == ir.String || statement.MapPart != "":
+	case statement.Iterable.Type() == ir.String || statement.MapPart != "" || statement.RegexIterator:
 		// A string's code points, or a map's [key, value] entries.
 		e.line("for (const %s of %s) {", index, held)
 	default:
@@ -445,6 +530,35 @@ var operators = map[ir.Operator]string{
 // as the IR means, so nesting expressions keeps every order the native backend makes explicit.
 func (e *emitter) value(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.RegExpNew:
+		if expression.Arguments != nil {
+			return "new RegExp(" + e.values(expression.Arguments) + ")"
+		}
+		r := e.program.Regexps[expression.Index]
+		return "new RegExp(" + quote(r.Pattern) + ", " + quote(r.Flags) + ")"
+	case ir.RegExpCall:
+		if expression.Method == "iteratorDone" {
+			return e.value(expression.Value) + ".done"
+		}
+		return e.value(expression.Value) + "." + expression.Method + "(" + e.values(expression.Arguments) + ")"
+	case ir.RegExpGroup:
+		operator := "["
+		if expression.Optional {
+			operator = "?.["
+		}
+		return e.value(expression.Object) + operator + quote(expression.Name) + "]"
+	case ir.RegExpProperty:
+		if expression.Optional {
+			return e.value(expression.Array) + "?.[" + quote(expression.Name) + "]"
+		}
+		return e.value(expression.Array) + "[" + quote(expression.Name) + "]"
+	case ir.Null:
+		return "null"
+	case ir.IsNull:
+		if expression.AlwaysFalse {
+			return "(" + e.value(expression.Value) + ", false)"
+		}
+		return "(" + e.value(expression.Value) + " === null)"
 	case ir.NumberConstant:
 		return number(expression.Value)
 	case ir.BooleanConstant:
@@ -461,7 +575,28 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "(" + operator + e.value(expression.Operand) + ")"
 	case ir.Binary:
 		return "(" + e.value(expression.Left) + " " + operators[expression.Operator] + " " + e.value(expression.Right) + ")"
+	case ir.HasAccessor:
+		return "adamicFindAccessor(" + e.value(expression.Object) + ", " + quote(expression.Name) + ") !== undefined"
+	case ir.InstanceOf:
+		if expression.Exact {
+			return fmt.Sprintf("adamicClassIdentities.get(%s) === %d", e.value(expression.Value), expression.Class)
+		}
+		return fmt.Sprintf("adamicInstanceOf(%s, %d)", e.value(expression.Value), expression.Class)
 	case ir.Call:
+		if expression.Accessor != "" {
+			object := e.value(expression.Arguments[0])
+			if expression.Setter {
+				return "adamicSetAccessor(" + object + ", " + quote(expression.Accessor) + ", " + e.value(expression.Arguments[1]) + ")"
+			}
+			return "adamicGetAccessor(" + object + ", " + quote(expression.Accessor) + ")"
+		}
+		if expression.Virtual != 0 {
+			arguments := []string{e.value(expression.Arguments[0]), strconv.Itoa(expression.Virtual - 1)}
+			for _, argument := range expression.Arguments[1:] {
+				arguments = append(arguments, e.value(argument))
+			}
+			return "adamicVirtual(" + strings.Join(arguments, ", ") + ")"
+		}
 		return functionName(e.program, expression.Function) + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberToString:
 		return "String(" + e.value(expression.Value) + ")"
@@ -487,13 +622,20 @@ func (e *emitter) value(expression ir.Expression) string {
 			return "[" + strings.Join(elements, ", ") + "]"
 		}
 		fields := []string{}
+		if len(expression.Methods) > 0 {
+			fields = append(fields, "__proto__: "+e.prototype(expression.Methods))
+		}
 		if expression.Spread != nil {
 			fields = append(fields, "..."+e.value(expression.Spread))
 		}
 		for _, field := range expression.Fields {
 			fields = append(fields, quote(field.Name)+": "+e.value(field.Value))
 		}
-		return "({" + strings.Join(fields, ", ") + "})"
+		object := "({" + strings.Join(fields, ", ") + "})"
+		if expression.Class != 0 {
+			return fmt.Sprintf("adamicClass(%s, %d)", object, expression.Class)
+		}
+		return object
 	case ir.Property:
 		if expression.Optional {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
@@ -519,6 +661,18 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Value) + "?.length"
 		}
 		return e.value(expression.Value) + ".length"
+	case ir.JSONStringify:
+		value := e.value(expression.Value)
+		replacer, space := "undefined", "undefined"
+		if expression.Replacer != nil {
+			replacer = e.value(expression.Replacer)
+		}
+		if expression.Space != nil {
+			space = e.value(expression.Space)
+		}
+		return "adamicJSONStringify(" + value + ", " + replacer + ", " + space + ")"
+	case ir.JSONNull:
+		return "null"
 	case ir.MathCall:
 		if expression.Spread != nil {
 			return "Math." + expression.Function + "(..." + e.value(expression.Spread) + ")"
@@ -533,7 +687,15 @@ func (e *emitter) value(expression ir.Expression) string {
 			return "String.fromCodePoint(" + codes + ")"
 		}
 		return "String.fromCharCode(" + codes + ")"
+	case ir.ObjectCall:
+		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
+		if expression.Function == "prototypeHasOwnProperty" {
+			return "Number.prototype.hasOwnProperty(" + e.values(expression.Arguments) + ")"
+		}
+		if expression.Function == "convert" {
+			return "Number(" + e.values(expression.Arguments) + ")"
+		}
 		return "Number." + expression.Function + "(" + e.values(expression.Arguments) + ")"
 	case ir.ToFixed:
 		return e.value(expression.Value) + ".toFixed(" + e.value(expression.Digits) + ")"
@@ -551,6 +713,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
 	case ir.Defined:
+		if expression.Null {
+			return "adamicDefinedNull(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
+		}
 		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
 	case ir.MaybeOf:
 		if expression.Value == nil {
@@ -560,6 +725,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Box:
 		return e.value(expression.Value)
 	case ir.MakeError:
+		if expression.Name != nil {
+			return "Object.assign(new Error(" + e.value(expression.Message) + "), {name: " + e.value(expression.Name) + "})"
+		}
 		return "new Error(" + e.value(expression.Message) + ")"
 	case ir.WeakOf:
 		// A plain reference: Node keeps what it points to as long as anything does, which is what the
@@ -602,7 +770,14 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.Includes {
 			method = ".includes("
 		}
-		return e.value(expression.Array) + method + e.value(expression.Value) + ")"
+		if expression.Last {
+			method = ".lastIndexOf("
+		}
+		arguments := []ir.Expression{expression.Value}
+		if expression.From != nil {
+			arguments = append(arguments, expression.From)
+		}
+		return e.value(expression.Array) + method + e.values(arguments) + ")"
 	case ir.ArrayFrom:
 		return "adamicFrom(" + e.value(expression.Length) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayReverse:
@@ -636,6 +811,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "adamicCast(" + e.value(expression.Value) + ", " + quote(expression.Field) + ", [" + e.values(expression.Allowed) + "], " + quote(expression.Message) + ")"
 	case ir.ArrayPop:
 		return e.value(expression.Array) + ".pop()"
+	case ir.ObjectKeys:
+		return "Object.keys(" + e.value(expression.Object) + ")"
+	case ir.ClosureSelf:
+		return "self"
+	case ir.LibraryGlobal:
+		return expression.Name
 	case ir.MakeClosure:
 		cells := []string{}
 		for _, local := range e.program.Functions[expression.Function].Environment {
@@ -643,14 +824,23 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s])", functionName(e.program, expression.Function), strings.Join(cells, ", "))
 	case ir.CallClosure:
+		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
+			if property.Optional {
+				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.
+				return "adamicOptionalCall(" + e.value(property.Object) + ", " + quote(property.Name) + ", () => [" + e.values(expression.Arguments) + "])"
+			}
+			return "adamicCall(adamicCallee(" + e.value(property.Object) + ", " + quote(property.Name) + "), [" + e.values(expression.Arguments) + "])"
+		}
 		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.values(expression.Arguments) + "])"
 	case ir.ArrayMap:
 		return "adamicMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayVisit:
-		if expression.Method == "find" || expression.Method == "findIndex" {
+		if expression.Method == "find" || expression.Method == "findIndex" || expression.Method == "findLast" || expression.Method == "findLastIndex" {
 			return "adamicFind(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ")"
 		}
 		return "adamicVisit(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ")"
+	case ir.CollectionIterator:
+		return "adamicCollectionIterator(" + e.value(expression.Collection) + ", " + quote(expression.Part) + ")"
 	case ir.MapNew:
 		entries := []string{}
 		for _, entry := range expression.Entries {
@@ -687,6 +877,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Map) + ".delete(" + e.value(expression.Key) + ")"
 	case ir.MapSize:
 		return e.value(expression.Map) + ".size"
+	case ir.HasOwn:
+		return e.value(expression.Object) + ".hasOwnProperty(" + e.value(expression.Key) + ")"
 	case ir.ReadTextFile:
 		return "readTextFile(" + e.value(expression.Path) + ")"
 	case ir.ProgramArguments:

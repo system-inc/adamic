@@ -80,33 +80,38 @@ func TestOneFileHoldsNodesOrder(t *testing.T) {
 	} {
 		t.Run(fixture.path, func(t *testing.T) {
 			t.Parallel()
-			path, binary, script := sanitized(t, fixture.path)
-			runner := filepath.Join(repository, "oracle", "node.mjs")
-			landed := func(name string, arguments ...string) (int, []byte) {
-				file, err := os.Create(filepath.Join(t.TempDir(), "both"))
-				if err != nil {
-					t.Fatal(err)
+			cacheProbe(t, fixture.path, nil, "", func() {
+
+				path, binary, script := sanitized(t, fixture.path)
+				runner := filepath.Join(repository, "oracle", "node.mjs")
+				landed := func(name string, arguments ...string) (int, []byte) {
+					file, err := os.Create(filepath.Join(t.TempDir(), "both"))
+					if err != nil {
+						t.Fatal(err)
+					}
+					defer file.Close()
+					exitCode := withStreams(t, file, file, name, arguments...)
+					contents, err := os.ReadFile(file.Name())
+					if err != nil {
+						t.Fatal(err)
+					}
+					rememberRun(t, run{stdout: contents, exitCode: exitCode})
+					return exitCode, contents
 				}
-				defer file.Close()
-				exitCode := withStreams(t, file, file, name, arguments...)
-				contents, err := os.ReadFile(file.Name())
-				if err != nil {
-					t.Fatal(err)
+				nodeExit, node := landed("node", "--disable-warning=ExperimentalWarning", runner, path)
+				nativeExit, natively := landed(binary)
+				backendExit, backend := landed("node", "--disable-warning=ExperimentalWarning", runner, script)
+				if !bytes.Contains(node, []byte(fixture.written)) {
+					t.Fatalf("want Node's file to hold %q, got %.200q", fixture.written, node)
 				}
-				return exitCode, contents
-			}
-			nodeExit, node := landed("node", "--disable-warning=ExperimentalWarning", runner, path)
-			nativeExit, natively := landed(binary)
-			backendExit, backend := landed("node", "--disable-warning=ExperimentalWarning", runner, script)
-			if !bytes.Contains(node, []byte(fixture.written)) {
-				t.Fatalf("want Node's file to hold %q, got %.200q", fixture.written, node)
-			}
-			if nativeExit != nodeExit || !bytes.Equal(natively, node) {
-				t.Errorf("native: exit %d, %q; Node: exit %d, %q; first difference at %d", nativeExit, natively, nodeExit, node, firstDifference(natively, node))
-			}
-			if backendExit != nodeExit || !bytes.Equal(backend, node) {
-				t.Errorf("JavaScript backend: exit %d, %d bytes; Node: exit %d, %d bytes", backendExit, len(backend), nodeExit, len(node))
-			}
+				if nativeExit != nodeExit || !bytes.Equal(natively, node) {
+					t.Errorf("native: exit %d, %q; Node: exit %d, %q; first difference at %d", nativeExit, natively, nodeExit, node, firstDifference(natively, node))
+				}
+				if backendExit != nodeExit || !bytes.Equal(backend, node) {
+					t.Errorf("JavaScript backend: exit %d, %d bytes; Node: exit %d, %d bytes", backendExit, len(backend), nodeExit, len(node))
+				}
+
+			})
 		})
 	}
 }
@@ -123,35 +128,40 @@ func TestClosedStdoutEndsAsOnNode(t *testing.T) {
 	} {
 		t.Run(fixture, func(t *testing.T) {
 			t.Parallel()
-			path, binary, _ := sanitized(t, fixture)
-			runner := filepath.Join(repository, "oracle", "node.mjs")
-			ended := func(name string, arguments ...string) (int, []byte) {
-				reader, writer, err := os.Pipe()
-				if err != nil {
-					t.Fatal(err)
+			cacheProbe(t, fixture, nil, "", func() {
+
+				path, binary, _ := sanitized(t, fixture)
+				runner := filepath.Join(repository, "oracle", "node.mjs")
+				ended := func(name string, arguments ...string) (int, []byte) {
+					reader, writer, err := os.Pipe()
+					if err != nil {
+						t.Fatal(err)
+					}
+					reader.Close()
+					defer writer.Close()
+					stderr, err := os.Create(filepath.Join(t.TempDir(), "stderr"))
+					if err != nil {
+						t.Fatal(err)
+					}
+					defer stderr.Close()
+					exitCode := withStreams(t, writer, stderr, name, arguments...)
+					said, err := os.ReadFile(stderr.Name())
+					if err != nil {
+						t.Fatal(err)
+					}
+					rememberRun(t, run{stderr: said, exitCode: exitCode})
+					return exitCode, said
 				}
-				reader.Close()
-				defer writer.Close()
-				stderr, err := os.Create(filepath.Join(t.TempDir(), "stderr"))
-				if err != nil {
-					t.Fatal(err)
+				nodeExit, nodeSaid := ended("node", "--disable-warning=ExperimentalWarning", runner, path)
+				nativeExit, nativeSaid := ended(binary)
+				if nodeExit != 70 {
+					t.Fatalf("want Node to end with exit 70 when stdout's reader is gone, got %d, stderr %q", nodeExit, nodeSaid)
 				}
-				defer stderr.Close()
-				exitCode := withStreams(t, writer, stderr, name, arguments...)
-				said, err := os.ReadFile(stderr.Name())
-				if err != nil {
-					t.Fatal(err)
+				if nativeExit != nodeExit || !bytes.Equal(nativeSaid, nodeSaid) {
+					t.Errorf("native: exit %d, stderr %.300q; Node: exit %d, stderr %.300q", nativeExit, nativeSaid, nodeExit, nodeSaid)
 				}
-				return exitCode, said
-			}
-			nodeExit, nodeSaid := ended("node", "--disable-warning=ExperimentalWarning", runner, path)
-			nativeExit, nativeSaid := ended(binary)
-			if nodeExit != 70 {
-				t.Fatalf("want Node to end with exit 70 when stdout's reader is gone, got %d, stderr %q", nodeExit, nodeSaid)
-			}
-			if nativeExit != nodeExit || !bytes.Equal(nativeSaid, nodeSaid) {
-				t.Errorf("native: exit %d, stderr %.300q; Node: exit %d, stderr %.300q", nativeExit, nativeSaid, nodeExit, nodeSaid)
-			}
+
+			})
 		})
 	}
 }
@@ -181,6 +191,7 @@ func onePipe(t *testing.T, name string, arguments ...string) (int, []byte) {
 	if err := command.Run(); err != nil && command.ProcessState == nil {
 		t.Fatal(err)
 	}
+	rememberRun(t, run{stdout: both.Bytes(), exitCode: command.ProcessState.ExitCode()})
 	return command.ProcessState.ExitCode(), both.Bytes()
 }
 
@@ -194,18 +205,22 @@ func TestFileWritesLandInNodesOrder(t *testing.T) {
 	} {
 		t.Run(fixture, func(t *testing.T) {
 			t.Parallel()
-			path, binary, script := sanitized(t, fixture)
-			runner := filepath.Join(repository, "oracle", "node.mjs")
-			nodeExit, node := onePipe(t, "node", "--disable-warning=ExperimentalWarning", runner, path)
-			if nodeExit != 0 || !bytes.Equal(node, []byte("first\nsecond\nthird\n")) {
-				t.Fatalf("want Node's lines in the order written, got exit %d, %q", nodeExit, node)
-			}
-			for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
-				exitCode, landed := onePipe(t, other[0], other[1:]...)
-				if exitCode != nodeExit || !bytes.Equal(landed, node) {
-					t.Errorf("%s: exit %d, %q; Node: exit %d, %q", filepath.Base(other[len(other)-1]), exitCode, landed, nodeExit, node)
+			cacheProbe(t, fixture, nil, "", func() {
+
+				path, binary, script := sanitized(t, fixture)
+				runner := filepath.Join(repository, "oracle", "node.mjs")
+				nodeExit, node := onePipe(t, "node", "--disable-warning=ExperimentalWarning", runner, path)
+				if nodeExit != 0 || !bytes.Equal(node, []byte("first\nsecond\nthird\n")) {
+					t.Fatalf("want Node's lines in the order written, got exit %d, %q", nodeExit, node)
 				}
-			}
+				for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
+					exitCode, landed := onePipe(t, other[0], other[1:]...)
+					if exitCode != nodeExit || !bytes.Equal(landed, node) {
+						t.Errorf("%s: exit %d, %q; Node: exit %d, %q", filepath.Base(other[len(other)-1]), exitCode, landed, nodeExit, node)
+					}
+				}
+
+			})
 		})
 	}
 }
@@ -215,56 +230,61 @@ func TestFileWritesLandInNodesOrder(t *testing.T) {
 // after ten seconds without it, which is the failure.
 func TestAPromptComesBeforeTheRead(t *testing.T) {
 	t.Parallel()
-	path, binary, script := sanitized(t, "internal/oracle/testdata/prompt_then_read.a")
-	runner := filepath.Join(repository, "oracle", "node.mjs")
-	converse := func(name string, arguments ...string) (bool, string) {
-		command := bounded(t, name, arguments...)
-		if runtime.GOOS == "linux" {
-			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
+	cacheProbe(t, "internal/oracle/testdata/prompt_then_read.a", nil, "", func() {
+
+		path, binary, script := sanitized(t, "internal/oracle/testdata/prompt_then_read.a")
+		runner := filepath.Join(repository, "oracle", "node.mjs")
+		converse := func(name string, arguments ...string) (bool, string) {
+			command := bounded(t, name, arguments...)
+			if runtime.GOOS == "linux" {
+				command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
+			}
+			stdin, err := command.StdinPipe()
+			if err != nil {
+				t.Fatal(err)
+			}
+			stdout, err := command.StdoutPipe()
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err := command.Start(); err != nil {
+				t.Fatal(err)
+			}
+			reader := bufio.NewReader(stdout)
+			first := make(chan string, 1)
+			go func() {
+				line, _ := reader.ReadString('\n')
+				first <- line
+			}()
+			prompted := false
+			var prompt string
+			select {
+			case prompt = <-first:
+				prompted = true
+			case <-time.After(10 * time.Second):
+			}
+			stdin.Write([]byte("yes\n"))
+			stdin.Close()
+			if !prompted {
+				prompt = <-first
+			}
+			rest, _ := io.ReadAll(reader)
+			command.Wait()
+			rememberRun(t, run{stdout: []byte(prompt + string(rest)), exitCode: command.ProcessState.ExitCode()})
+			return prompted, prompt + string(rest)
 		}
-		stdin, err := command.StdinPipe()
-		if err != nil {
-			t.Fatal(err)
+		nodePrompted, node := converse("node", "--disable-warning=ExperimentalWarning", runner, path)
+		if !nodePrompted || node != "ready\ngot yes\n" {
+			t.Fatalf("want Node to prompt before reading, then answer: prompted %t, %q", nodePrompted, node)
 		}
-		stdout, err := command.StdoutPipe()
-		if err != nil {
-			t.Fatal(err)
+		for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
+			prompted, said := converse(other[0], other[1:]...)
+			if !prompted || said != node {
+				t.Errorf("%s: prompted before the read %t, said %q; Node said %q", filepath.Base(other[len(other)-1]), prompted, said, node)
+			}
 		}
-		if err := command.Start(); err != nil {
-			t.Fatal(err)
-		}
-		reader := bufio.NewReader(stdout)
-		first := make(chan string, 1)
-		go func() {
-			line, _ := reader.ReadString('\n')
-			first <- line
-		}()
-		prompted := false
-		var prompt string
-		select {
-		case prompt = <-first:
-			prompted = true
-		case <-time.After(10 * time.Second):
-		}
-		stdin.Write([]byte("yes\n"))
-		stdin.Close()
-		if !prompted {
-			prompt = <-first
-		}
-		rest, _ := io.ReadAll(reader)
-		command.Wait()
-		return prompted, prompt + string(rest)
-	}
-	nodePrompted, node := converse("node", "--disable-warning=ExperimentalWarning", runner, path)
-	if !nodePrompted || node != "ready\ngot yes\n" {
-		t.Fatalf("want Node to prompt before reading, then answer: prompted %t, %q", nodePrompted, node)
-	}
-	for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
-		prompted, said := converse(other[0], other[1:]...)
-		if !prompted || said != node {
-			t.Errorf("%s: prompted before the read %t, said %q; Node said %q", filepath.Base(other[len(other)-1]), prompted, said, node)
-		}
-	}
+
+	})
 }
 
 // A program stopped from outside by SIGTERM, SIGINT or SIGHUP: Node has written every line, and is
@@ -276,38 +296,43 @@ func TestASignalLeavesWhatWasPrinted(t *testing.T) {
 	for _, stop := range []syscall.Signal{syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP} {
 		t.Run(stop.String(), func(t *testing.T) {
 			t.Parallel()
-			path, binary, script := sanitized(t, "internal/oracle/testdata/killed_after_output.a")
-			runner := filepath.Join(repository, "oracle", "node.mjs")
-			stopped := func(name string, arguments ...string) (string, []byte) {
-				command := bounded(t, name, arguments...)
-				if runtime.GOOS == "linux" {
-					command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
+			cacheProbe(t, "internal/oracle/testdata/killed_after_output.a", nil, "", func() {
+
+				path, binary, script := sanitized(t, "internal/oracle/testdata/killed_after_output.a")
+				runner := filepath.Join(repository, "oracle", "node.mjs")
+				stopped := func(name string, arguments ...string) (string, []byte) {
+					command := bounded(t, name, arguments...)
+					if runtime.GOOS == "linux" {
+						command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
+					}
+					var stdout, stderr bytes.Buffer
+					command.Stdout, command.Stderr = &stdout, &stderr
+					if err := command.Start(); err != nil {
+						t.Fatal(err)
+					}
+					time.Sleep(2 * time.Second)
+					command.Process.Signal(stop)
+					command.Wait()
+					status := command.ProcessState.Sys().(syscall.WaitStatus)
+					ended := fmt.Sprintf("exit %d", status.ExitStatus())
+					if status.Signaled() {
+						ended = "killed by " + status.Signal().String()
+					}
+					rememberRun(t, run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()})
+					return ended + ", stderr " + strconv.Quote(stderr.String()), stdout.Bytes()
 				}
-				var stdout, stderr bytes.Buffer
-				command.Stdout, command.Stderr = &stdout, &stderr
-				if err := command.Start(); err != nil {
-					t.Fatal(err)
+				nodeEnded, node := stopped("node", "--disable-warning=ExperimentalWarning", runner, path)
+				if nodeEnded != "killed by "+stop.String()+`, stderr ""` || len(node) == 0 {
+					t.Fatalf("want Node killed by %s after its line, got %s, stdout %q", stop, nodeEnded, node)
 				}
-				time.Sleep(2 * time.Second)
-				command.Process.Signal(stop)
-				command.Wait()
-				status := command.ProcessState.Sys().(syscall.WaitStatus)
-				ended := fmt.Sprintf("exit %d", status.ExitStatus())
-				if status.Signaled() {
-					ended = "killed by " + status.Signal().String()
+				for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
+					ended, printed := stopped(other[0], other[1:]...)
+					if ended != nodeEnded || !bytes.Equal(printed, node) {
+						t.Errorf("%s: %s, stdout %q; Node: %s, stdout %q", filepath.Base(other[len(other)-1]), ended, printed, nodeEnded, node)
+					}
 				}
-				return ended + ", stderr " + strconv.Quote(stderr.String()), stdout.Bytes()
-			}
-			nodeEnded, node := stopped("node", "--disable-warning=ExperimentalWarning", runner, path)
-			if nodeEnded != "killed by "+stop.String()+`, stderr ""` || len(node) == 0 {
-				t.Fatalf("want Node killed by %s after its line, got %s, stdout %q", stop, nodeEnded, node)
-			}
-			for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
-				ended, printed := stopped(other[0], other[1:]...)
-				if ended != nodeEnded || !bytes.Equal(printed, node) {
-					t.Errorf("%s: %s, stdout %q; Node: %s, stdout %q", filepath.Base(other[len(other)-1]), ended, printed, nodeEnded, node)
-				}
-			}
+
+			})
 		})
 	}
 }

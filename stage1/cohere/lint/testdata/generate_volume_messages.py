@@ -17,6 +17,9 @@ for path in sorted((root / 'cohere/policy/messages').glob('*.json')):
         text = message['text']
         for key, terms in message.get('terms', {}).items():
             text = text.replace('[[' + key + ']]', terms['TypeScript'])
+        for key, phrase in data.get('phrases', {}).items():
+            if isinstance(phrase, str):
+                text = text.replace('<<' + key + '>>', phrase)
         entries.append((rule + '/' + message_id, text))
 static = []
 for _, source, _, _, _ in selected:

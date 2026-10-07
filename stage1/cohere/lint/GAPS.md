@@ -70,7 +70,8 @@ bytes and retain Go quoting, including non-ASCII printable characters.
 
 ## Limits rather than language gaps
 
-Twenty syntax-only rules. Cohere's `no-shadow` and `no-redeclare` declare
+Twenty baseline syntax-only rules plus ten implemented continuation rules;
+method-signature-style is not fully covered. Cohere's `no-shadow` and `no-redeclare` declare
 `NeedsTypeChecker` and use the binder, so they are excluded. Scope-sensitive
 syntax work here is generator ownership, loop repetition boundaries, label
 resolution and declaration prefixes. General binding/symbol lookup, config
@@ -82,7 +83,8 @@ Five malformed `no-div-regex` fixtures are explicitly marked findings-only.
 They compare recovered rule findings and proposed edits. Go's actual
 `edit.FixText` rejects invalid input before it runs rules, so converged fixed
 output is deliberately not requested for these five cases. No general error
-recovery or diagnostic parity is claimed, and no own-rule case is omitted.
+recovery or diagnostic parity is claimed. Baseline own-rule cases are all held;
+the continuation has the explicit parser limits below.
 The main valid-source corpus still rejects every Go parse diagnostic.
 
 Cohere's comment collector has an ASCII leading-trivia guard, which can miss
@@ -90,3 +92,35 @@ an opening comment behind a BOM. The port retains that behavior. Cohere's
 live osvfs path strips a leading BOM, while rule fixtures and this raw-file
 oracle retain it; `unicode-bom` covers the raw-source rule API and edit engine,
 not live cohere filesystem integration.
+
+## 4. Positioned string lastIndexOf
+
+The method-signature fixer needs the last opening delimiter before the first
+parameter. `gaps/4_last_index_position.ts` prints `1` on Node; stage 0 refuses
+the two-argument `lastIndexOf` form. `TestOptionAndComparatorGaps` holds both
+observations. The port searches `source.slice(0, firstParameterStart)` using
+the supported one-argument form. The three-way fixtures hold the resulting
+fixes to Go, including generic and commented signatures.
+
+## Parser recovery dependency exposed by method-signature-style
+
+This is a port coverage defect, not an Adamic language restriction. Cohere's
+own tests include four malformed shapes, each in both styles: an interface
+without a body, an interface missing its closing brace, a stray opening angle,
+and a half-written generic. Go recovers these; for property style it even
+reports and proposes fixes on three of them. Native and Node panic on three
+shapes, and fail to terminate on the missing closing brace. The test records
+Go's actual recovered output and bounds each port run at two seconds. All eight
+combinations remain visible in the upstream inventory and log, with explicit
+`unsupported-recovery` markers. They are NOT counted as identical bytes.
+
+`gaps/5_parser_recovery.ts` is the standalone EOF-loop reduction. The existing
+parser's `typeLiteral()` loops until `CloseBraceToken` with no EOF exit. Its
+missing-token recovery is also incomplete in the other shapes. No parser or
+internal compiler/runtime source is changed here. The malformed bare-arrow
+fixture is handled and compared normally as findings-only. Go's edit engine
+refuses malformed input, so fixed-source parity is unavailable even there.
+
+The continuation therefore does not deliver the requested twenty completely
+verified rules. Nine new rules have full own-fixture coverage, one has the
+valid-source coverage above, and ten selected rules are still unimplemented.

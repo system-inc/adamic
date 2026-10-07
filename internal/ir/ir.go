@@ -16,20 +16,51 @@ type Program struct {
 	// Strings are the program's string constants, as UTF-8, in first-use order.
 	Strings []string
 
+	// Regexps contain immutable C bytecode compiled during lowering.
+	Regexps []RegExpProgram
+
 	// Locals are every variable the program declares, each its own, so shadowing is already resolved.
 	Locals []Local
 
 	// Functions are the module's function declarations, callable from anywhere in it.
 	Functions []Function
 
+	// Classes carry nominal identity, prefix field layouts and method slots. IDs are one-based.
+	Classes       []Class
+	MethodTargets map[int][]int
+
 	// Main is what the program does, in order.
 	Main []Statement
 
-	// ClosuresMayThrow says a function value somewhere in the program can throw. Which one a call
+	// ClosuresMayThrow says a function value somewhere in the program can throw, or a class's method,
+	// which a call through an interface reaches where it would a function value. Which one a call
 	// through a function value reaches isn't known, so every such call can then throw: one written
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+}
+
+// Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
+type Class struct {
+	// Definition is the erased source identity, shared by distinct native layouts.
+	Definition   int
+	Name         string
+	Base         int
+	Constructor  int
+	Fields       []Field
+	OwnStart     int
+	Methods      []int
+	Accessors    []Accessor
+	Literal      bool
+	PublicFields []Field
+	Static       bool
+	StaticParent int   // one-based hidden parent slot, zero for a root
+	StaticFlags  []int // one-based presence slot for each data slot, zero for internal storage
+}
+
+type Accessor struct {
+	Name           string
+	Getter, Setter int
 }
 
 // Function is a function declaration.
@@ -148,6 +179,10 @@ type Local struct {
 	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
 	Borrowed bool
 
+	// ConstantClosure is the function index plus one for a const initialized directly
+	// with a closure literal. Zero means no such proof.
+	ConstantClosure int
+
 	// Counter is a for loop's counter proven to hold only whole numbers no larger than 2^53, each a
 	// double exactly, so the native backend keeps it in an integer and reads it as the same double
 	// (internal/lower/counters.go). Only the loop's update ever writes it, by a whole constant step.
@@ -179,9 +214,26 @@ type (
 		Function  int
 		Arguments []Expression
 		Returns   Type
+
+		// Virtual is a one-based method slot. Function supplies its static signature.
+		Virtual  int
+		Accessor string
+		Setter   bool
 	}
 
-	// Unary is -, + and ! on its operand.
+	HasAccessor struct {
+		Object Expression
+		Name   string
+	}
+
+	// InstanceOf tests nominal identity along a class ancestry chain.
+	InstanceOf struct {
+		Value Expression
+		Class int
+		Exact bool
+	}
+
+	// Unary is -, +, ! and ~ on its operand.
 	Unary struct {
 		Operator Operator
 		Operand  Expression
@@ -189,7 +241,7 @@ type (
 
 	// Binary is an operator whose operands are already of the types it takes (the checker and
 	// lowering saw to that): arithmetic on numbers, comparison of numbers, equality of like types,
-	// and && and || on booleans, which short-circuit.
+	// bitwise operations on numbers, and && and || on booleans, which short-circuit.
 	Binary struct {
 		Operator    Operator
 		Left, Right Expression
@@ -221,8 +273,11 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		// Class is the nominal class ID, or zero for a plain object.
+		Class                int
 		Spread               Expression
 		Fields               []Field
+		NoReuse              bool
 		SpreadMaybeUndefined bool
 		Empty                []Field
 
@@ -231,6 +286,10 @@ type (
 		// lowers reads a tuple only by its fields, which an object answers the same way, new Map's
 		// pairs included: ECMA-262 reads each by "0" and "1".)
 		Tuple bool
+
+		// Methods are, for the object a class's constructor makes, the class's methods, which a call
+		// through an interface the class implements finds by name (Property.Method).
+		Methods []Method
 	}
 
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
@@ -240,10 +299,18 @@ type (
 		Name     string
 		Of       Type
 		Optional bool
+		// Absent is an optional own field: a shape without it reads as undefined.
+		Absent bool
 		// Class is, when the field is one of a class's, that class's constructor plus one, and 0
 		// otherwise: the constructor's object has the class's layout, so the field's place in it is
 		// known, for an object that has that layout.
 		Class int
+		// Method says the read is a call's callee, object.name(...), through a type that isn't a
+		// class: an interface or an object type. The object may be a class's, whose methods aren't
+		// fields, so the call takes the object's own function value if it has one and otherwise its
+		// class's method, called with the object as this. A method can't be read any other way
+		// (docs/0.1.md), so only a callee is one.
+		Method bool
 	}
 
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
@@ -327,6 +394,7 @@ type (
 	// Unwrap: undefined there panics with Message. Where the value is about to be read through a
 	// property, Message is the TypeError JavaScript throws there, so the check is what Node does.
 	Defined struct {
+		Null    bool
 		Value   Expression
 		Message string
 	}
@@ -354,10 +422,14 @@ type (
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
-	TypeOf struct{ Value Expression }
+	TypeOf struct {
+		Value Expression
+		// Null says a present value's NULL pointer is null. An absent lookup slot is still undefined.
+		Null bool
+	}
 
-	// MakeError is new Error(Message): an object with fields name ("Error") and message.
-	MakeError struct{ Message Expression }
+	// MakeError is an Error with Message and an optional Name (nil means "Error").
+	MakeError struct{ Message, Name Expression }
 
 	// WeakOf is Value, a reference, kept weakly: the handle to it, made if it has none yet, or
 	// undefined when Value is.
@@ -436,8 +508,10 @@ type (
 	// which finds NaN.
 	ArraySearch struct {
 		Array, Value Expression
+		From         Expression
 		Element      Type
 		Includes     bool
+		Last         bool
 	}
 
 	// ArraySplice is array.splice(Start, Count, ...Items): Count perhaps left out (everything after
@@ -638,11 +712,20 @@ type (
 	// MapSize is map.size.
 	MapSize struct{ Map Expression }
 
+	// HasOwn is object.hasOwnProperty(Key): whether one of the object's own fields has that name.
+	// The method lives on Object's prototype, which a shape does not store, so it is not a read of a
+	// field named hasOwnProperty.
+	HasOwn struct {
+		Object Expression
+		Key    Expression
+	}
+
 	// ArrayJoin is Array.join(Separator), writing each element as String() would.
 	ArrayJoin struct {
 		Array     Expression
 		Separator Expression
 		Element   Type
+		Depth     int
 	}
 
 	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
@@ -677,9 +760,20 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
-	Name  string
-	Value Expression
+	Name    string
+	Value   Expression
+	Private bool
 }
+
+// Method is one of a class's methods: its name, and the function that is it, whose first parameter
+// is this.
+type Method struct {
+	Name     string
+	Function int
+}
+
+func (InstanceOf) Type() Type  { return Boolean }
+func (HasAccessor) Type() Type { return Boolean }
 
 func (NumberConstant) Type() Type  { return Number }
 func (BooleanConstant) Type() Type { return Boolean }
@@ -711,7 +805,7 @@ func (MathCall) Type() Type        { return Number }
 func (StringFromCodes) Type() Type { return String }
 
 func (c NumberCall) Type() Type {
-	if c.Function == "parseInt" || c.Function == "parseFloat" {
+	if c.Function == "parseInt" || c.Function == "parseFloat" || c.Function == "convert" {
 		return Number
 	}
 	return Boolean
@@ -761,9 +855,9 @@ func (v ArrayVisit) Type() Type {
 		return Array
 	case "some", "every":
 		return Boolean
-	case "findIndex":
+	case "findIndex", "findLastIndex":
 		return Number
-	case "find":
+	case "find", "findLast":
 		return Maybe(v.Element)
 	}
 	return 0
@@ -820,6 +914,7 @@ func (MapSet) Type() Type     { return Map }
 func (MapHas) Type() Type     { return Boolean }
 func (MapDelete) Type() Type  { return Boolean }
 func (MapSize) Type() Type    { return Number }
+func (HasOwn) Type() Type     { return Boolean }
 
 func (g MapGet) Type() Type { return Maybe(g.ValueType) }
 
@@ -936,7 +1031,8 @@ type (
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
-		Site int
+		Site   int
+		Define bool // class field initialization defines an own data property
 	}
 
 	// Return leaves the function, with Value unless it returns void.
@@ -977,6 +1073,9 @@ type (
 		// Pattern, when set, destructures each element, a tuple, into locals: for (const [a, b] of
 		// pairs). Local is unused then.
 		Pattern []Binding
+
+		// RegexIterator consumes lazy RegExp matchAll results.
+		RegexIterator bool
 
 		// Over a Map, MapPart is what each step gives: "entries" ([key, value], destructured by
 		// Pattern), "keys" or "values" (in Local), with Key and Value the map's types.
@@ -1039,3 +1138,12 @@ func (Break) statement()       {}
 func (Continue) statement()    {}
 func (Throw) statement()       {}
 func (Try) statement()         {}
+
+func (p *Program) HasInheritance() bool {
+	for _, class := range p.Classes {
+		if class.Base != 0 {
+			return true
+		}
+	}
+	return false
+}

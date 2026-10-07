@@ -3,6 +3,7 @@ package lower
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // Mutable locations are invariant in 0.1 (docs/0.1.md, adamic/invariant-mutable): tsc relates an
@@ -30,16 +31,44 @@ import (
 // write what the source can't read.
 type widening struct {
 	source, target *checker.Type
+
+	// readonlyField names a readonly field seen as a writable one, when that's the slot.
+	readonlyField string
+
+	// parameter is a function's parameter of type source seen as taking target, which it can't.
+	parameter bool
 }
 
 // widened finds the first mutable slot at which a value of type from, seen as type to, could be
 // written something it can't hold, or returns nil.
 func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
-	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
+	if from == to || visited[[2]*checker.Type{from, to}] {
 		return nil
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if members := l.definedMembers(from); len(members) > 1 {
+		// A union is any one of its members, each seen as the target.
+		for _, member := range members {
+			if found := l.widened(member, to, visited); found != nil {
+				return found
+			}
+		}
+		return nil
+	}
+	if members := l.definedMembers(to); len(members) > 1 {
+		// Seen as a union, a value is seen as each member it can be, and narrowing picks any of them
+		// to write through.
+		for _, member := range members {
+			if !l.checker.IsTypeAssignableTo(from, member) {
+				continue
+			}
+			if found := l.widened(from, member, visited); found != nil {
+				return found
+			}
+		}
+		return nil
+	}
 	if to.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		if l.narrowedFrom(from, to) {
 			return nil
@@ -57,10 +86,9 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		}
 		return l.widened(constraint, to, visited)
 	}
-	if !l.structured(from) || !l.structured(to) || isClassInstance(to) {
-		// A class instance is nominal in 0.1, the same class with the same type arguments, which
-		// leaves nothing inside it to widen. That's cohere's nominal-class rule, which stage 0 doesn't
-		// check yet: Box<Dog> seen as Box<Animal> isn't refused here.
+	if !l.structured(from) || !l.structured(to) {
+		// A class instance target is walked as any object is: its fields are slots as a literal's
+		// are, so Box<Dog> seen as Box<Animal>, or a plain object seen as a class, is judged by them.
 		return nil
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
@@ -70,7 +98,13 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		// the other's: each a view of its own.
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			if found := l.widened(l.checker.GetTypeOfSymbol(toParameters[index]), l.checker.GetTypeOfSymbol(fromParameters[index]), visited); found != nil {
+			takes, given := l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])
+			if !l.checker.IsTypeAssignableTo(given, takes) {
+				// tsc relates a method's parameters both ways (method bivariance), so a method taking
+				// a Dog can be seen as one taking any Animal, and handed a Cat.
+				return &widening{source: takes, target: given, parameter: true}
+			}
+			if found := l.widened(given, takes, visited); found != nil {
 				return found
 			}
 		}
@@ -93,16 +127,39 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		// size) are numbers on both sides.
 		return nil
 	}
+	return l.widenedProperties(from, to, nil, false, visited)
+}
+
+// widenedProperties walks to's properties against from's, but those skip names: each field a slot
+// to can write unless it's readonly, and each method a function view of its own. A copy's fields
+// (fresh) are slots of their own, which nothing else writes, so only what they hold is walked.
+func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip map[string]bool, fresh bool, visited map[[2]*checker.Type]bool) *widening {
 	for _, viewed := range l.checker.GetPropertiesOfType(to) {
-		if viewed.Flags&ast.SymbolFlagsMethod != 0 {
-			continue
-		}
 		inside := l.checker.GetPropertyOfType(from, viewed.Name)
-		if inside == nil {
+		if inside == nil || skip[viewed.Name] {
 			continue
 		}
 		source, target := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)
-		if !l.checker.IsReadonlySymbol(viewed) && !l.checker.IsTypeAssignableTo(target, source) {
+		if viewed.Flags&ast.SymbolFlagsMethod != 0 || inside.Flags&ast.SymbolFlagsMethod != 0 {
+			// A method isn't a slot anything writes, but what it returns and takes are views: the
+			// program's own methods. The library's (an Iterable's, an array's own) are left to the
+			// rules for the library's types, and a generic one has no one type to compare.
+			if len(viewed.Declarations) == 0 || load.IsLibrary(ast.GetSourceFileOfNode(viewed.Declarations[0])) || l.generic(target) || l.generic(source) {
+				continue
+			}
+			if found := l.widened(source, target, visited); found != nil {
+				return found
+			}
+			continue
+		}
+		if !fresh && !l.checker.IsReadonlySymbol(viewed) && l.checker.IsReadonlySymbol(inside) {
+			// tsc ignores readonly when it relates properties, so a readonly field, which may hold
+			// something narrower than its type says (it's covariant), can be seen as a writable one,
+			// and the wider type written into it. Only the identical type, which this walk never
+			// enters, is the same field.
+			return &widening{source: source, target: target, readonlyField: viewed.Name}
+		}
+		if !fresh && !l.checker.IsReadonlySymbol(viewed) && !l.checker.IsTypeAssignableTo(target, source) {
 			return &widening{source: source, target: target}
 		}
 		if found := l.widened(source, target, visited); found != nil {
@@ -112,11 +169,35 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 	return nil
 }
 
+// generic reports whether a function type has a type parameter of its own.
+func (l *lowering) generic(proven *checker.Type) bool {
+	for _, signature := range l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall) {
+		if len(signature.TypeParameters()) > 0 {
+			return true
+		}
+	}
+	return false
+}
+
 // widenedElements walks an array's, a tuple's, a map's or a set's type arguments in from against
 // to's, each a slot to can write unless it's read only.
 func (l *lowering) widenedElements(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
 	mutable := !l.isLibraryType(to, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(to) && to.TargetTupleType().IsReadonly())
+	return l.widenedArguments(from, to, mutable, visited)
+}
+
+// widenedArguments is widenedElements with whether to's own slots can be written given: a fresh
+// container's can't be written through anything else (freshValue).
+func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutable bool, visited map[[2]*checker.Type]bool) *widening {
 	fromArguments, toArguments := l.checker.GetTypeArguments(from), l.checker.GetTypeArguments(to)
+	if checker.IsTupleType(from) && !checker.IsTupleType(to) && len(toArguments) == 1 {
+		// A tuple seen as an array: every element of it is seen as the array's element.
+		widenedTo := make([]*checker.Type, len(fromArguments))
+		for index := range widenedTo {
+			widenedTo[index] = toArguments[0]
+		}
+		toArguments = widenedTo
+	}
 	for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
 		source, target := fromArguments[index], toArguments[index]
 		if mutable && !l.checker.IsTypeAssignableTo(target, source) {
@@ -214,23 +295,30 @@ func (l *lowering) structured(proven *checker.Type) bool {
 	return proven.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) != 0
 }
 
-// withoutUndefined is a type with undefined taken out of it, the one type left, or nil when a union of
-// several is left: a view of one of several isn't walked.
+// withoutUndefined is a type with undefined taken out of it: the one type left, or the union itself
+// when several are, whose members widened walks one by one (definedMembers).
 func (l *lowering) withoutUndefined(proven *checker.Type) *checker.Type {
-	if proven == nil || proven.Flags()&checker.TypeFlagsUnion == 0 {
-		return proven
+	if members := l.definedMembers(proven); len(members) == 1 {
+		return members[0]
 	}
-	var only *checker.Type
+	return proven
+}
+
+// definedMembers is a union's members but undefined, or the type itself when it isn't a union.
+func (l *lowering) definedMembers(proven *checker.Type) []*checker.Type {
+	if proven == nil {
+		return nil
+	}
+	if proven.Flags()&checker.TypeFlagsUnion == 0 {
+		return []*checker.Type{proven}
+	}
+	var members []*checker.Type
 	for _, member := range proven.Types() {
-		if member.Flags()&checker.TypeFlagsUndefined != 0 {
-			continue
+		if member.Flags()&checker.TypeFlagsUndefined == 0 {
+			members = append(members, member)
 		}
-		if only != nil {
-			return nil
-		}
-		only = member
 	}
-	return only
+	return members
 }
 
 // isClassInstance is the instance side of a class, generic or not.
@@ -244,9 +332,10 @@ func isClassInstance(proven *checker.Type) bool {
 	return proven.ObjectFlags()&checker.ObjectFlagsReference != 0 && proven.Target() != nil && proven.Target().ObjectFlags()&checker.ObjectFlagsClass != 0
 }
 
-// viewSite reports whether an expression is a value going into a typed slot: an initializer, the
-// right of an assignment, an argument, a returned value, a literal's property or element, or an
-// arrow's expression body. Parentheses around it are the same site.
+// viewSite reports whether an expression is a value going into a typed slot: an initializer (a
+// variable's, a parameter's default, a class field's), the right of an assignment, an argument, a
+// returned value, a literal's property (shorthand too) or element, or an arrow's expression body.
+// Parentheses around it are the same site.
 func viewSite(node *ast.Node) bool {
 	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
 		node = node.Parent
@@ -257,7 +346,13 @@ func viewSite(node *ast.Node) bool {
 	}
 	switch parent.Kind {
 	case ast.KindVariableDeclaration:
-		return parent.AsVariableDeclaration().Initializer == node
+		// A destructuring declaration without a type keeps nothing of the value: its names take the
+		// types of its parts, and the pattern's own type (its fields any) is no view of it.
+		declaration := parent.AsVariableDeclaration()
+		if ast.IsBindingPattern(declaration.Name()) && declaration.Type == nil {
+			return false
+		}
+		return declaration.Initializer == node
 	case ast.KindBinaryExpression:
 		binary := parent.AsBinaryExpression()
 		return binary.OperatorToken.Kind == ast.KindEqualsToken && binary.Right == node
@@ -269,6 +364,10 @@ func viewSite(node *ast.Node) bool {
 		return true
 	case ast.KindPropertyAssignment:
 		return parent.AsPropertyAssignment().Initializer == node
+	case ast.KindParameter:
+		return parent.AsParameterDeclaration().Initializer == node
+	case ast.KindPropertyDeclaration:
+		return parent.AsPropertyDeclaration().Initializer == node
 	case ast.KindArrowFunction:
 		return parent.AsArrowFunction().Body == node
 	}
@@ -277,35 +376,215 @@ func viewSite(node *ast.Node) bool {
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (l *lowering) refuseWidening(node *ast.Node) error {
-	if node.Kind == ast.KindParenthesizedExpression || !viewSite(node) {
-		return nil
+	var own, contextual *checker.Type
+	var found *widening
+	switch {
+	case node.Kind == ast.KindAsExpression:
+		as := node.AsAsExpression()
+		if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+			return nil
+		}
+		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
+		if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+			return l.provenRelation(node, as.Expression, target)
+		}
+		// Preserve the existing checks on downcasts; their lowering belongs to cast.go.
+		own, contextual = source, target
+		found = l.freshOrWidened(as.Expression, own, contextual)
+	case node.Kind == ast.KindSatisfiesExpression:
+		satisfies := node.AsSatisfiesExpression()
+		return l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type))
+	case node.Kind == ast.KindShorthandPropertyAssignment:
+		// { pets } is { pets: pets }: the variable seen as the literal's property.
+		literal := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
+		if literal == nil {
+			return nil
+		}
+		property := l.checker.GetPropertyOfType(literal, node.Name().Text())
+		if property == nil {
+			return nil
+		}
+		own, contextual = l.checker.GetTypeAtLocation(node.Name()), l.checker.GetTypeOfSymbol(property)
+		found = l.widened(own, contextual, map[[2]*checker.Type]bool{})
+	case node.Kind == ast.KindSpreadAssignment:
+		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
+		// it is kennel's value seen as the literal's field.
+		literal := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
+		if literal == nil {
+			return nil
+		}
+		skip := map[string]bool{}
+		after := false
+		for _, property := range node.Parent.AsObjectLiteralExpression().Properties.Nodes {
+			if property == node {
+				after = true
+			} else if after && property.Name() != nil {
+				skip[property.Name().Text()] = true
+			}
+		}
+		own, contextual = l.checker.GetTypeAtLocation(node.AsSpreadAssignment().Expression), literal
+		found = l.widenedProperties(own, literal, skip, true, map[[2]*checker.Type]bool{})
+	default:
+		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
+			return nil
+		}
+		if l.genericFunction(node) {
+			// same<Item> written where a (value: number) => number goes is instantiated to exactly
+			// that type, Item = number, so there's no wider view of it to judge.
+			return nil
+		}
+		if pattern := destructuringTarget(node); pattern != nil {
+			// [a, b] = tuple keeps nothing of the pattern: each element is read out and stored into
+			// its name, so each element is the view, seen as its name's type, and the pattern isn't one.
+			return l.refuseElementWidening(node, pattern)
+		}
+		if viewSite(node) {
+			contextual = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		}
+		if contextual == nil {
+			// With no type written for it, a value can still be taken into a wider one tsc made: the
+			// union of a conditional's branches reduced to the wider (flag ? dogs : animals is an
+			// Animal[]), a literal's elements likewise, a function's returns likewise.
+			contextual = l.impliedTarget(node)
+		}
+		if contextual == nil {
+			return nil
+		}
+		own = l.checker.GetTypeAtLocation(node)
+		found = l.freshOrWidened(node, own, contextual)
 	}
-	switch node.Kind {
-	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
-		// Made as the type it's written into, held by nothing else: its own parts are sites.
-		return nil
-	}
-	if pattern := destructuringTarget(node); pattern != nil {
-		// [a, b] = tuple keeps nothing of the pattern: each element is read out and stored into its
-		// name, so each element is the view, seen as its name's type, and the pattern isn't one.
-		return l.refuseElementWidening(node, pattern)
-	}
-	contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone)
-	if contextual == nil {
-		return nil
-	}
-	own := l.checker.GetTypeAtLocation(node)
-	found := l.widened(own, contextual, map[[2]*checker.Type]bool{})
 	if found == nil {
 		return nil
 	}
+	return l.wideningRefusal(node, own, contextual, found)
+}
+
+func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
 	what := "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " where " + l.checker.TypeToString(found.source) + " is read"
 	fix := "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+	if found.parameter {
+		what = "a function taking " + l.checker.TypeToString(found.source) + " seen as one taking " + l.checker.TypeToString(found.target) + " (tsc relates a method's parameters both ways), so it can be handed what it can't take"
+		fix = "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+	}
+	if found.readonlyField != "" {
+		what = "a value of type " + l.checker.TypeToString(own) + " seen as " + l.checker.TypeToString(contextual) + ", whose readonly field " + found.readonlyField + " becomes writable: a readonly field may hold something narrower than " + l.checker.TypeToString(found.source) + ", which a write of " + l.checker.TypeToString(found.target) + " would replace"
+		fix = "keep " + found.readonlyField + " readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+	}
 	if found.target.Flags()&checker.TypeFlagsTypeParameter != 0 {
 		what = "a value of type " + l.checker.TypeToString(found.source) + " seen as " + l.checker.TypeToString(found.target) + ", a type parameter whose constraint " + l.checker.TypeToString(l.checker.GetBaseConstraintOfType(found.target)) + " can be written, so it can write what " + l.checker.TypeToString(found.source) + " can't hold"
 		fix = "take it as " + l.checker.TypeToString(found.source) + ", or constrain " + l.checker.TypeToString(found.target) + " to something readonly, which can't write (adamic/invariant-mutable)"
 	}
 	return &Refused{Where: l.program.Where(node), What: what, Fix: fix}
+}
+
+// freshOrWidened is widened for a value at a site, but a fresh one: a container made right there and
+// held by nothing else (freshValue) can't be written through another name, so its own slots are
+// covariant, and only what's inside it, held elsewhere too, is walked as a view.
+func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
+	node = ast.SkipParentheses(node)
+	switch node.Kind {
+	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
+		// Made as the type it's written into, held by nothing else: its own parts are sites.
+		return nil
+	case ast.KindConditionalExpression:
+		// Either branch is the value: each judged as it is.
+		conditional := node.AsConditionalExpression()
+		for _, branch := range []*ast.Node{conditional.WhenTrue, conditional.WhenFalse} {
+			if found := l.freshOrWidened(branch, l.checker.GetTypeAtLocation(branch), contextual); found != nil {
+				return found
+			}
+		}
+		return nil
+	}
+	visited := map[[2]*checker.Type]bool{}
+	if !l.freshValue(node) {
+		return l.widened(own, contextual, visited)
+	}
+	own, contextual = l.withoutUndefined(own), l.withoutUndefined(contextual)
+	for _, viewed := range l.containers(contextual) {
+		for _, inside := range l.containers(own) {
+			if l.sameContainer(inside, viewed) {
+				return l.widenedArguments(inside, viewed, false, visited)
+			}
+		}
+	}
+	return l.widened(own, contextual, visited)
+}
+
+// freshValue reports whether an expression makes a container nothing else holds: a copy (slice,
+// filter, map, concat, Array.from) or a new Map, Set or Array.
+func (l *lowering) freshValue(node *ast.Node) bool {
+	switch node.Kind {
+	case ast.KindNewExpression:
+		callee := node.AsNewExpression().Expression
+		return l.isLibraryGlobal(callee, "Map") || l.isLibraryGlobal(callee, "Set") || l.isLibraryGlobal(callee, "Array")
+	case ast.KindCallExpression:
+		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+		if callee.Kind != ast.KindPropertyAccessExpression {
+			return false
+		}
+		access := callee.AsPropertyAccessExpression()
+		method := access.Name().Text()
+		if method == "from" {
+			return l.isLibraryGlobal(access.Expression, "Array")
+		}
+		switch method {
+		case "slice", "filter", "map", "concat":
+			return l.checker.IsArrayType(l.checker.GetTypeAtLocation(access.Expression)) || l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "ReadonlyArray")
+		}
+	}
+	return false
+}
+
+// isExpression reports whether a node is one a value can be: anything but a statement, a declaration,
+// a name being declared or a type.
+func (l *lowering) isExpression(node *ast.Node) bool {
+	return ast.IsExpression(node) && !ast.IsPartOfTypeNode(node)
+}
+
+// impliedTarget is the type tsc gave what a value with no type written for it goes into, or nil: a
+// conditional's (or ??'s, ||'s, &&'s) own type for its branches, an array literal's element type for
+// its elements, and a function's inferred result for what it returns.
+func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
+	child := node
+	for child.Parent != nil && child.Parent.Kind == ast.KindParenthesizedExpression {
+		child = child.Parent
+	}
+	parent := child.Parent
+	if parent == nil {
+		return nil
+	}
+	switch parent.Kind {
+	case ast.KindConditionalExpression:
+		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == child || conditional.WhenFalse == child {
+			return l.checker.GetTypeAtLocation(parent)
+		}
+	case ast.KindBinaryExpression:
+		switch parent.AsBinaryExpression().OperatorToken.Kind {
+		case ast.KindQuestionQuestionToken, ast.KindBarBarToken, ast.KindAmpersandAmpersandToken:
+			return l.checker.GetTypeAtLocation(parent)
+		}
+	case ast.KindArrayLiteralExpression:
+		literal := l.checker.GetTypeAtLocation(parent)
+		if l.checker.IsArrayType(literal) {
+			if arguments := l.checker.GetTypeArguments(literal); len(arguments) == 1 {
+				return arguments[0]
+			}
+		}
+	case ast.KindReturnStatement, ast.KindArrowFunction:
+		if parent.Kind == ast.KindArrowFunction && parent.AsArrowFunction().Body != child {
+			return nil
+		}
+		function := parent
+		for function != nil && !ast.IsFunctionLike(function) {
+			function = function.Parent
+		}
+		if function == nil {
+			return nil
+		}
+		return l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(function))
+	}
+	return nil
 }
 
 // destructuringTarget is the array pattern a value is assigned into, [a, b] = value, or nil.
@@ -348,4 +627,15 @@ func (l *lowering) refuseElementWidening(node *ast.Node, pattern *ast.Node) erro
 		}
 	}
 	return nil
+}
+
+// genericFunction reports whether an expression is a function with type parameters of its own,
+// which tsc instantiates to the type it's written into rather than viewing it through that type.
+func (l *lowering) genericFunction(node *ast.Node) bool {
+	for _, signature := range l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall) {
+		if len(signature.TypeParameters()) > 0 {
+			return true
+		}
+	}
+	return false
 }

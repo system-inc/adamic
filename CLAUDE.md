@@ -16,6 +16,14 @@ You're working on Adamic: TypeScript whose types are true, compiled to native co
 - `internal/oracle`: the differential test. Every fixture runs three ways: its source on Node (the truth), native under ASan and UBSan, and the JavaScript backend on Node. stdout, stderr and the exit code must match byte for byte, and every program that finishes must leak nothing.
 - `cohere/`: a submodule (cohere, which carries typescript-go). Over HTTPS: `git config submodule.cohere.url https://github.com/system-inc/cohere.git && git submodule update --init --recursive --depth 1`.
 
+## Compiler file ownership
+
+Whole functions are kept together; trace extracted files with `git log --follow -C1% -- <file>`.
+
+- Native emission: `emit.go` owns program assembly and emitter state; `emit_functions.go` signatures, calls and returns; `emit_statements.go` statements and loops; `emit_expressions.go` expression dispatch and operators; `emit_branches.go` short-circuit branches; `emit_ownership.go` retain/release and temporaries; `emit_values.go` C value representations; `emit_locals.go` globals, locals and capture cells; `emit_objects.go` shapes, fields and method thunks; `emit_arrays.go`, `emit_maps.go`, `emit_numbers.go` and `emit_strings.go` own their named areas. Existing `library_*.go`, `regexp.go`, `class_inheritance.go`, `reuse.go` and `region.go` retain their specialized work.
+- Lowering: `lower.go` owns entry orchestration and state; `diagnostics.go` diagnostic types and descriptions; `modules.go` module order and registration; `functions.go` signatures, parameters and bodies; `statements.go` statement dispatch; `locals.go` bindings, captures and constants; `assignments.go` writes and compound updates; `control.go` conditions and loops; `prelude.go` console and panic recognition. Existing expression, class, collection and library files retain their areas.
+- String runtime: `string.c` remains the sole translation unit, including private `string_{build,decode,trim,walk,builder,slice,repeat,search,replace,split}_impl.h` implementations in their original order. These headers own allocation/concatenation, decoding, trimming, unit walking, buffers, slicing, repetition/padding, searching, replacement and splitting respectively. Relative-index and affix entry points stay in `string.c`; existing string cache, sharing, append, case and normalization `.c` files retain their areas. Include implementation headers only from `string.c`, preserving static linkage.
+
 ## The doctrine
 
 - **Never a silent miscompile.** Wrong output that looks right is the worst thing a compiler can do. Every change is held by the oracle against Node.
@@ -30,10 +38,17 @@ You're working on Adamic: TypeScript whose types are true, compiled to native co
 ```
 gofmt -l cmd internal
 go vet ./...
-go test -count=1 -timeout 30m ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
 ```
 
-On a 4-core cloud machine the oracle alone takes four to six minutes, close to Go's default ten-minute timeout, hence `-timeout 30m`. The input tests drop to uid 65534 when run as root, so TMPDIR must be world-traversable (for example /tmp/adamic-gate, mode 1777) and Node must not live under /root. A new fixture needs its row in internal/oracle/counts.md: `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`.
+The oracle caches fixture observations under the user cache directory. It still regenerates C and
+JavaScript and rechecks ordinary comparisons and recorded counts. Timed stream and permission probes
+reuse successful checks only with the same full harness and inputs. Changing a fixture, compiler output,
+runtime library, Node version or test harness invalidates the affected observations.
+`ADAMIC_GATE_UNCACHED=1` bypasses all oracle result caches. **Integration always runs uncached before
+main moves.** Ordinary worker gates may use the cache. Keep `-timeout 30m` for the complete gate.
+
+The input tests drop to uid 65534 when run as root, so TMPDIR must be world-traversable (for example /tmp/adamic-gate, mode 1777) and Node must not live under /root. A new fixture needs its row in internal/oracle/counts.md: `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`.
 
 Send test output to a log and read the log. Never pipe a test run into `head` or `tail`: it kills the run mid-way and can orphan the fixtures' processes. Tests are parallel by default; a test that can't be says why in a "Not parallel:" comment.
 

@@ -11,6 +11,9 @@ import (
 // programArguments() from 'adamic', the door out, writeTextFile(path, text), and what a walk of the
 // file system needs, readDirectory(path) and fileStatus(path). isInput is false for any other call.
 func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error) {
+	if value, found, err := l.tsgo(node); found {
+		return value, true, err
+	}
 	callee := node.AsCallExpression().Expression
 	arguments := node.AsCallExpression().Arguments.Nodes
 	switch {

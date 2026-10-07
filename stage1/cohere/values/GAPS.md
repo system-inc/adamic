@@ -66,9 +66,9 @@ A `const` string is refused the same way. A literal lowers.
 
 **Around it:** the tokenizer's big switch writes each case as its character code with the constant's name beside it, `case 0x0a: // newline`. The constants are still declared and used in the `if`s, as upstream's are.
 
-## 4. A `#private` method
+## 4. A `#private` method (closed by class features)
 
-docs/0.1.md has `#private` among a class's members. A `#private` field lowers; a `#private` method is refused, and the message calls it a computed name, which it isn't.
+Closed: private methods now lower, and the gap program agrees with Node under the sanitizers and leak check. The parser now uses `#private` methods and fields. The following records the original refusal.
 
 ```ts
 class Counter {
@@ -91,7 +91,7 @@ stage 0 can't lower a method with a computed name yet        (Node prints 2)
 
 A `private step()` lowers.
 
-**Around it:** the parser's fields are `#private`, as the gitignore port's are, and its methods are `private`.
+**Original workaround, removed:** the parser used TypeScript `private` methods with `#private` fields.
 
 ## 5. An empty array literal as a default
 
@@ -119,7 +119,7 @@ So a container has an `id`, the parser keeps each container's children in `#chil
 ## The other slices' gaps, met again
 
 - **gitignore gap 3, a call to a function or method declared later**: the parser's methods are ordered callee first, so `parseTokens` and `loop` come last. The Go's order is the library's, which is the other way round.
-- **gitignore gap 4, a declared function as a value**: the Go passes `regexLastIndex` the regex as a function (`wordEnd`, `wordEndNum`, `atEnd`); the port passes its name and switches on it.
+- **gitignore gap 4, a declared function as a value** (closed since): the Go passes `regexLastIndex` the regex as a function (`wordEnd`, `wordEndNum`, `atEnd`); the port passed its name and switched on it until the gap closed, and passes the function now.
 - **gitignore gap 9, `return panic(...)`**: the driver's `field` (main.ts) ends with `panic(...)` as a statement.
 - **mediaquery gap 2, `return undefined` from a `string | undefined` function is bad C**: the driver's `escapeOf` (main.ts) returns `''` for no escape, as the media query driver does.
 

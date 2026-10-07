@@ -52,15 +52,26 @@ type reusePlan struct {
 	// by a map that writes its results in place, or by a literal that spreads it first and appends
 	// the rest to it.
 	arrays map[*ir.Statement]map[int]bool
+
+	// lending are the arrays a variable borrows an element from (planElementBorrows), never moved.
+	lending map[int]bool
 }
 
 // planReuse makes the plan for a program.
-func planReuse(program *ir.Program) *reusePlan {
-	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}}
+func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
+	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending}
 	comparators := map[int]bool{}
 	walkExpressions(program, func(expression ir.Expression) {
 		if sort, ok := expression.(ir.ArraySort); ok {
-			comparators[sort.Comparator] = true
+			targets := program.ClosureTargets(sort)
+			if targets.Unknown {
+				for target := range program.Functions {
+					comparators[target] = true
+				}
+			}
+			for _, target := range targets.Functions {
+				comparators[target] = true
+			}
 		}
 	})
 	type function struct {
@@ -104,6 +115,29 @@ func planReuse(program *ir.Program) *reusePlan {
 			}
 		})
 	}
+	// Virtual implementations share an ownership convention. If one consumes a position,
+	// every implementation takes a count, including those that only read and then release it.
+	for changed := true; changed; {
+		changed = false
+		for signature, targets := range program.MethodTargets {
+			for position, parameter := range program.Functions[signature].Parameters {
+				consumed := plan.consumed[parameter]
+				for _, target := range targets {
+					consumed = consumed || plan.consumed[program.Functions[target].Parameters[position]]
+				}
+				if !consumed {
+					continue
+				}
+				for _, target := range append([]int{signature}, targets...) {
+					local := program.Functions[target].Parameters[position]
+					if !plan.consumed[local] {
+						plan.consumed[local] = true
+						changed = true
+					}
+				}
+			}
+		}
+	}
 	for _, each := range functions {
 		forEachInstruction(each.graph, func(instruction *flow.Instruction) {
 			walk(evaluated(instruction), func(expression ir.Expression) {
@@ -111,10 +145,9 @@ func planReuse(program *ir.Program) *reusePlan {
 				if !ok {
 					return
 				}
-				parameters := program.Functions[call.Function].Parameters
 				for index, argument := range call.Arguments {
 					read, isRead := variableRead(argument)
-					if !isRead || index >= len(parameters) || !plan.consumed[parameters[index]] {
+					if !isRead || !plan.callConsumes(program, call, index) {
 						continue
 					}
 					if plan.movable(program, instruction, each.live[instruction.Id], read) {
@@ -156,6 +189,9 @@ func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[
 		if !local.Borrowed || program.Functions[function].Closure || comparators[function] {
 			return false
 		}
+	} else if local.Borrowed {
+		// A variable borrowed from an array (element_borrow.go): its count is the array's.
+		return false
 	}
 	return !live[flow.DeclarationId(source+1)] || overwrites(program, instruction, source)
 }
@@ -192,7 +228,10 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 	fieldReads := map[string]int{}
 	for _, field := range literal.Fields {
 		walk(field.Value, func(expression ir.Expression) {
-			if property, ok := expression.(ir.Property); ok {
+			// A field read only reads. A method's callee (Property.Method) calls code with the source
+			// as this, which can keep it or read a field take has moved out, so it stays a read of its
+			// own and the source isn't reused (reuse_spread_method.a, reuse_spread_method_alias.a).
+			if property, ok := expression.(ir.Property); ok && !property.Method {
 				if read, ok := variableRead(property.Object); ok && read.Local == source {
 					inside++
 					fieldReads[property.Name]++
@@ -214,6 +253,11 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instruction, live map[flow.DeclarationId]bool, read ir.Read) bool {
 	local := program.Locals[read.Local]
 	if local.Captured || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
+		return false
+	}
+	if plan.lending[read.Local] {
+		// A variable borrows an element of this array, with no count of its own: moving the array
+		// to a callee that lets go of it would free the element under the borrower.
 		return false
 	}
 	if local.Borrowed && !plan.consumed[read.Local] {
@@ -241,10 +285,14 @@ func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instructio
 	walk(evaluated(instruction), func(expression ir.Expression) {
 		switch expression := expression.(type) {
 		case ir.Call:
-			if touches(program, expression.Function, read.Local, map[int]bool{}) {
-				reached = true
+			for _, target := range program.CallTargets(expression) {
+				if touches(program, target, read.Local, map[int]bool{}) {
+					reached = true
+				}
 			}
 		case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
+			// A Map's or Set's forEach is void, so it's never in the value an assignment evaluates;
+			// in a function this calls, touches finds it.
 			reached = true
 		}
 	})
@@ -275,10 +323,12 @@ func touches(program *ir.Program, function int, global int, seen map[int]bool) b
 						found = true
 					}
 				case ir.Call:
-					if touches(program, expression.Function, global, seen) {
-						found = true
+					for _, target := range program.CallTargets(expression) {
+						if touches(program, target, global, seen) {
+							found = true
+						}
 					}
-				case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
+				case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
 					found = true
 				}
 			}, statement)
@@ -368,7 +418,7 @@ func spreadsOf(node any) []ir.ObjectLiteral {
 	var literals []ir.ObjectLiteral
 	walk(node, func(expression ir.Expression) {
 		if literal, ok := expression.(ir.ObjectLiteral); ok {
-			if _, isRead := variableRead(literal.Spread); isRead {
+			if _, isRead := variableRead(literal.Spread); isRead && !literal.NoReuse {
 				literals = append(literals, literal)
 			}
 		}
@@ -471,7 +521,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 	unique := e.temporary()
 	// Checked before any field's value is evaluated, which can't make anything else hold it: the plan
 	// saw that nothing in this instruction but the literal reads the source, and only its fields.
-	held := uniquelyHeld(source)
+	held := fmt.Sprintf("(%s && !%s->frozen)", uniquelyHeld(source), source)
 	if literal.SpreadMaybeUndefined {
 		// Undefined is nothing to take over: the object is made as JavaScript's {} is (spreadCopy).
 		held = fmt.Sprintf("(%s != NULL && %s)", source, held)
@@ -501,6 +551,8 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 			e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 		}
 	}
+	// A spread produces a plain object, even when its source allocation is reused.
+	e.line("%s->class = NULL;", object)
 	return object, true
 }
 
@@ -697,4 +749,16 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 // the value while it's being taken over, and to find the new value at the old one's place after.
 func uniquelyHeld(value string) string {
 	return fmt.Sprintf("(%s->heap.references == 1 && !adamic_weak_held(%s))", value, value)
+}
+
+// callConsumes requires a count to be handed over at this position for every
+// implementation. MethodTargets joins conventions before moves are planned.
+func (plan *reusePlan) callConsumes(program *ir.Program, call ir.Call, position int) bool {
+	for _, target := range program.CallTargets(call) {
+		parameters := program.Functions[target].Parameters
+		if position >= len(parameters) || !plan.consumed[parameters[position]] {
+			return false
+		}
+	}
+	return true
 }

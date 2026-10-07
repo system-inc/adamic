@@ -33,6 +33,9 @@ var errReadOnly = errors.New("load: the source file system is read-only")
 
 // Program is a loaded Adamic program that the checker accepted.
 type Program struct {
+	// tsgo opts this compilation into the external native checker library.
+	tsgo bool
+
 	compiler *compiler.Program
 	fs       *sourceFS
 
@@ -77,6 +80,17 @@ func compilerOptions() *core.CompilerOptions {
 //
 // Each path is an Adamic source: a .ts file or a .a file.
 func Load(paths []string) (*Program, error) {
+	return load(paths, nil)
+}
+
+// LoadOverlay checks paths while replacing the named files with source held by the caller. The
+// overlay is read-only and never written to disk; names are absolute or relative to the current
+// directory. This is for tools which test semantics-preserving source adaptations.
+func LoadOverlay(paths []string, overlay map[string]string) (*Program, error) {
+	return load(paths, overlay)
+}
+
+func load(paths []string, overlay map[string]string) (*Program, error) {
 	if len(paths) == 0 {
 		return nil, errors.New("load: no files given")
 	}
@@ -86,7 +100,15 @@ func Load(paths []string) (*Program, error) {
 	}
 	currentDirectory := tspath.NormalizePath(workingDirectory)
 
-	fs := &sourceFS{FS: osvfs.FS()}
+	normalizedOverlay := make(map[string]string, len(overlay))
+	for name, source := range overlay {
+		name = tspath.NormalizePath(name)
+		if !tspath.IsRootedDiskPath(name) {
+			name = tspath.CombinePaths(currentDirectory, name)
+		}
+		normalizedOverlay[name] = source
+	}
+	fs := &sourceFS{FS: osvfs.FS(), overlay: normalizedOverlay}
 	roots := make([]string, 0, len(paths)+1)
 	for _, path := range paths {
 		root, err := rootFileName(fs, currentDirectory, path)
@@ -99,7 +121,7 @@ func Load(paths []string) (*Program, error) {
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
-	fileSystem := cachedvfs.From(bundled.WrapFS(fs))
+	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
 	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, tspath.ComparePathsOptions{
 		UseCaseSensitiveFileNames: fileSystem.UseCaseSensitiveFileNames(),
 		CurrentDirectory:          currentDirectory,

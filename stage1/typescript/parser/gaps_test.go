@@ -1,12 +1,8 @@
 package parser
 
 import (
-	"bytes"
 	"context"
 	"errors"
-	"github.com/system-inc/adamic/internal/native"
-	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -104,28 +100,12 @@ func TestClassMethodInterfaceGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
+	_, err = lower.Lower(context.Background(), program)
+	var notYet *lower.NotYet
+	if !errors.As(err, &notYet) || notYet.What != "a class method through a view that erases its prototype origin" {
+		t.Fatalf("GAPS.md records an erased class-method origin NotYet, got %v", err)
 	}
-	binary := filepath.Join(t.TempDir(), "method-gap")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	output, err := os.CreateTemp(t.TempDir(), "stdout-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer output.Close()
-	var stderr bytes.Buffer
-	command := exec.Command(binary)
-	command.Stdout = output
-	command.Stderr = &stderr
-	err = command.Run()
-	var status *exec.ExitError
-	if !errors.As(err, &status) || status.ExitCode() != 70 || !strings.Contains(stderr.String(), "compiler bug: a field the checker proved is there is missing") {
-		t.Fatalf("GAPS.md records native structural method dispatch panic, got %v %q", err, stderr.String())
-	}
+	t.Logf("Node prints 1; Adamic reports: %v", notYet)
 }
 
 func TestOptionalFunctionValueGap(t *testing.T) {

@@ -277,7 +277,9 @@ func compareStreams(t *testing.T, want int, native []string, node []string) {
 
 func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	// The normalization sweep streams every code point through Node and native. Alone it
+	// finishes well inside five minutes, but in a full parallel gate it does not.
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	t.Cleanup(cancel)
 	command := exec.CommandContext(ctx, arguments[0], arguments[1:]...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}

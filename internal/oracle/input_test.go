@@ -72,7 +72,9 @@ func executeInput(t *testing.T, how inputRun, environment []string, name string,
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	rememberRun(t, result)
+	return result
 }
 
 // onNodeWith runs a program on Node through the oracle's runner, with the fixture's arguments.
@@ -105,80 +107,84 @@ func TestInputAgreesWithNode(t *testing.T) {
 	for _, fixture := range inputFixtures {
 		t.Run(fixture.path, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-			if err != nil {
-				t.Fatal(err)
-			}
-			program, err := lowered(t, path)
-			if err != nil {
-				t.Fatalf("Lower: %v", err)
-			}
-			shared := sharedDirectory(t)
-			how := inputRun{directory: filepath.Dir(path), arguments: fixture.arguments}
-			if os.Geteuid() == 0 {
-				how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
-			}
-			if fixture.unreadable {
-				unreadable := filepath.Join(shared, "unreadable.txt")
-				if err := os.WriteFile(unreadable, []byte("secret\n"), 0o000); err != nil {
+			cacheProbe(t, fixture.path, nil, inputIdentity(t), func() {
+
+				path, err := filepath.Abs(filepath.Join(repository, fixture.path))
+				if err != nil {
 					t.Fatal(err)
 				}
-				how.arguments = append(append([]string{}, how.arguments...), unreadable)
-			}
-			// Each run gets its own directory to write in, when the fixture writes, so what each leaves
-			// there can be compared.
-			runs := 0
-			prepared := func() inputRun {
-				if !fixture.writes {
-					return how
+				program, err := lowered(t, path)
+				if err != nil {
+					t.Fatalf("Lower: %v", err)
 				}
-				runs++
-				written := writable(t, shared, fmt.Sprintf("run%d", runs))
-				return inputRun{directory: how.directory, arguments: append([]string{written}, how.arguments...), credential: how.credential}
-			}
-			collect := func(given inputRun) map[string]string {
-				if !fixture.writes {
-					return nil
+				shared := sharedDirectory(t)
+				how := inputRun{directory: filepath.Dir(path), arguments: fixture.arguments}
+				if os.Geteuid() == 0 {
+					how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
 				}
-				return snapshot(t, given.arguments[0])
-			}
-			nodeRun := prepared()
-			oracle := onNodeWith(t, nodeRun, path)
-			backendRun := prepared()
-			backend := inputBackend(t, backendRun, program, shared)
-			nativeRun := prepared()
-			native, binary := inputNatively(t, nativeRun, program, shared)
-			if fixture.writes {
-				nodeLeft, backendLeft, nativeLeft := collect(nodeRun), collect(backendRun), collect(nativeRun)
-				if difference := filesDiffer(nodeLeft, nativeLeft); difference != "" {
-					t.Errorf("the files native wrote differ from Node's: %s", difference)
+				if fixture.unreadable {
+					unreadable := filepath.Join(shared, "unreadable.txt")
+					if err := os.WriteFile(unreadable, []byte("secret\n"), 0o000); err != nil {
+						t.Fatal(err)
+					}
+					how.arguments = append(append([]string{}, how.arguments...), unreadable)
 				}
-				if difference := filesDiffer(nodeLeft, backendLeft); difference != "" {
-					t.Errorf("the files the JavaScript backend wrote differ from Node's: %s", difference)
+				// Each run gets its own directory to write in, when the fixture writes, so what each leaves
+				// there can be compared.
+				runs := 0
+				prepared := func() inputRun {
+					if !fixture.writes {
+						return how
+					}
+					runs++
+					written := writable(t, shared, fmt.Sprintf("run%d", runs))
+					return inputRun{directory: how.directory, arguments: append([]string{written}, how.arguments...), credential: how.credential}
 				}
-				if !bytes.Contains(oracle.stdout, []byte(": permission denied\n")) {
-					t.Errorf("want Node refused to write into the locked directory, got stdout %q", oracle.stdout)
+				collect := func(given inputRun) map[string]string {
+					if !fixture.writes {
+						return nil
+					}
+					return snapshot(t, given.arguments[0])
 				}
-			}
-			if difference := disagreement(oracle, native); difference != "" {
-				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
-					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
-			}
-			if difference := disagreement(oracle, backend); difference != "" {
-				t.Errorf("JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
-					difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
-			}
-			if fixture.unreadable && !bytes.Contains(oracle.stdout, []byte(": permission denied\n")) {
-				// Otherwise the file was read after all, and nothing here held the refusal to Node.
-				t.Errorf("want Node refused the unreadable file, got stdout %q", oracle.stdout)
-			}
-			if oracle.exitCode != 0 {
-				t.Errorf("want every input fixture to finish on Node, got exit %d, stderr %q", oracle.exitCode, oracle.stderr)
-				return
-			}
-			if leaked := inputLeaks(t, prepared(), program, binary); leaked != "" {
-				t.Errorf("leaks:\n%s", leaked)
-			}
+				nodeRun := prepared()
+				oracle := onNodeWith(t, nodeRun, path)
+				backendRun := prepared()
+				backend := inputBackend(t, backendRun, program, shared)
+				nativeRun := prepared()
+				native, binary := inputNatively(t, nativeRun, program, shared)
+				if fixture.writes {
+					nodeLeft, backendLeft, nativeLeft := collect(nodeRun), collect(backendRun), collect(nativeRun)
+					if difference := filesDiffer(nodeLeft, nativeLeft); difference != "" {
+						t.Errorf("the files native wrote differ from Node's: %s", difference)
+					}
+					if difference := filesDiffer(nodeLeft, backendLeft); difference != "" {
+						t.Errorf("the files the JavaScript backend wrote differ from Node's: %s", difference)
+					}
+					if !bytes.Contains(oracle.stdout, []byte(": permission denied\n")) {
+						t.Errorf("want Node refused to write into the locked directory, got stdout %q", oracle.stdout)
+					}
+				}
+				if difference := disagreement(oracle, native); difference != "" {
+					t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
+						difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
+				}
+				if difference := disagreement(oracle, backend); difference != "" {
+					t.Errorf("JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
+						difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
+				}
+				if fixture.unreadable && !bytes.Contains(oracle.stdout, []byte(": permission denied\n")) {
+					// Otherwise the file was read after all, and nothing here held the refusal to Node.
+					t.Errorf("want Node refused the unreadable file, got stdout %q", oracle.stdout)
+				}
+				if oracle.exitCode != 0 {
+					t.Errorf("want every input fixture to finish on Node, got exit %d, stderr %q", oracle.exitCode, oracle.stderr)
+					return
+				}
+				if leaked := inputLeaks(t, prepared(), program, binary); leaked != "" {
+					t.Errorf("leaks:\n%s", leaked)
+				}
+
+			})
 		})
 	}
 }
@@ -258,6 +264,13 @@ func snapshot(t *testing.T, directory string) map[string]string {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if value, ok := probeRuns.Load(t.Name()); ok {
+		var files []recordedFile
+		for path, contents := range found {
+			files = append(files, recordedFile{[]byte(path), []byte(contents)})
+		}
+		value.(*probeEvidence).Files = append(value.(*probeEvidence).Files, files)
+	}
 	return found
 }
 
@@ -302,6 +315,11 @@ func inputNatively(t *testing.T, how inputRun, program *ir.Program, shared strin
 
 // inputLeaks is leaks for an input fixture: the same check, run where and as whom the fixture runs.
 func inputLeaks(t *testing.T, how inputRun, program *ir.Program, sanitized string) string {
+	leak := inputLeaksUncached(t, how, program, sanitized)
+	rememberLeak(t, leak)
+	return leak
+}
+func inputLeaksUncached(t *testing.T, how inputRun, program *ir.Program, sanitized string) string {
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":

@@ -47,6 +47,10 @@ var Features = []string{
 	"optional-chains",  // ?. and ?? through a linked list that may end anywhere
 	"number-formats",   // toExponential and toPrecision
 	"array-from",       // Array.from({ length }, callback)
+	"inheritance",      // a subclass, an override, a super call, and a base-typed virtual call
+	"map-keys",         // a number Map and a number Set, including NaN and -0
+	"regex",            // regular expression literals: exec, replace, replaceAll and split
+	"bitwise",          // &, |, ^, ~, <<, >> and >>>
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -160,37 +164,32 @@ func (g *generator) program() *Program {
 	g.declare("holder.list", NumberArray, false)
 
 	// The class's method writes to its own fields, read and written through this.
-	g.push()
-	g.returns = Number
-	g.declare("this.count", Number, true)
-	g.declare("this.label", String, true)
-	g.declare("amount", Number, false)
-	method := &Block{}
-	for range 1 + g.random.IntN(3) {
-		method.Statements = append(method.Statements, g.mutation())
+	// With inheritance, a child overrides bump and describe and calls super, and a base-typed
+	// binding calls them virtually.
+	for _, classStatement := range g.classStatements() {
+		add(classStatement)
 	}
-	method.Statements = append(method.Statements, statement("return @e;", g.expression(Number, 2)))
-	g.returns = ""
-	g.pop()
-	add(statement("class Counter @b", &Block{Statements: []*Statement{
-		statement("count = 0;"),
-		statement("label = 'c';"),
-		statement("bump(amount: number): number @b", method),
-	}}))
 
 	// Globals, each initialized without calls: a function may read a global, so none runs before
 	// every global exists.
 	add(statement("const holder: Holder = { value: @e, name: @e, list: [@e, @e] };",
 		g.literal(Number), g.literal(String), g.literal(Number), g.literal(Number)))
-	add(statement("const counter = new Counter();"))
-	g.declare("counter.count", Number, true)
-	g.declare("counter.label", String, true)
+	g.addCounters(add)
 	for range 2 + g.random.IntN(3) {
 		t := []Type{Number, Number, String, String, Boolean, NumberArray, StringArray}[g.random.IntN(7)]
 		add(g.declaration(t, true))
 	}
 	add(statement("const table = new Map<string, number>();"))
 	g.declare("table", NumberMap, false)
+	if g.allowed("map-keys") {
+		add(statement("const numbers = new Map<number, number>();"))
+		add(statement("const flags = new Set<number>();"))
+		g.declare("numbers", NumberKeyMap, false)
+		g.declare("flags", NumberSet, false)
+	}
+	if g.allowed("regex") {
+		add(statement("const finder = /a/g;"))
+	}
 	if g.allowed("closures-deep") {
 		add(statement("const " + pendingClosures + ": (() => number)[] = [];"))
 	}
@@ -218,7 +217,6 @@ func (g *generator) program() *Program {
 	tally := g.name("tally")
 	add(statement("const "+tally+" = makeTally(@e);", g.literal(Number)))
 	g.functions = append(g.functions, function{name: tally, parameters: []Type{Number}, returns: Number, required: 1})
-	g.functions = append(g.functions, function{name: "counter.bump", parameters: []Type{Number}, returns: Number, required: 1})
 
 	for range 2 + g.random.IntN(4) {
 		add(g.function())
@@ -252,6 +250,18 @@ func (g *generator) program() *Program {
 			}}),
 		}}))
 	}
+	if g.allowed("inheritance") {
+		add(statement("console.log(`${asBase.bump(1)} ${counter.bump(1)} ${plainCounter.bump(1)} ${counter.describe()} ${asBase.describe()} ${counter instanceof BaseCounter} ${counter instanceof ChildCounter} ${plainCounter instanceof ChildCounter}`);"))
+	}
+	if g.allowed("map-keys") {
+		add(statement("for (const [key, value] of numbers) @b", &Block{Statements: []*Statement{
+			statement("console.log(`${key !== key} ${1 / key}=${value}`);"),
+		}}))
+		add(statement("for (const key of flags) @b", &Block{Statements: []*Statement{
+			statement("console.log(`${key !== key} ${1 / key}`);"),
+		}}))
+		add(statement("console.log(`${numbers.has(NaN)} ${numbers.get(NaN) ?? -1} ${numbers.get(-0) ?? -1} ${numbers.get(0) ?? -1} ${flags.has(NaN)} ${flags.has(-0)} ${flags.has(0)} ${flags.size}`);"))
+	}
 	if g.allowed("map-iteration") {
 		add(statement("for (const [key, value] of table) @b", &Block{Statements: []*Statement{
 			statement("console.log(`${key}=${value}`);"),
@@ -272,7 +282,7 @@ func (g *generator) show(value *Expression) *Expression {
 		return value
 	case NumberArray, StringArray:
 		return compose(String, "@e.join(',')", value)
-	case NumberMap:
+	case NumberMap, NumberKeyMap, NumberSet:
 		return compose(String, "`${@e.size}`", value)
 	}
 	return compose(String, "`${@e}`", value)
@@ -357,6 +367,9 @@ func (g *generator) statement() *Statement {
 		if widened := g.widenedStatement(nested); widened != nil {
 			return widened
 		}
+	}
+	if g.allowed("regex") && g.chance(1, 8) {
+		return g.regexStatement()
 	}
 	switch roll := g.random.IntN(20); {
 	case roll < 6:
@@ -521,6 +534,9 @@ func (g *generator) mutation() *Statement {
 				}})
 			}
 		case 7:
+			if g.allowed("map-keys") && g.chance(1, 2) {
+				return g.numberKeyMutation()
+			}
 			if g.allowed("optional-chains") && g.chance(1, 3) {
 				return g.chainWrite()
 			}
@@ -668,7 +684,7 @@ func (g *generator) leaf(t Type) *Expression {
 
 func (g *generator) number(depth int) *Expression {
 	next := depth - 1
-	switch g.random.IntN(26) {
+	switch g.random.IntN(30) {
 	case 0, 1, 2, 3:
 		operator := g.pick("+", "-", "*", "/", "%")
 		return compose(Number, "(@e "+operator+" @e)", g.expression(Number, next), g.expression(Number, next))
@@ -754,6 +770,26 @@ func (g *generator) number(depth int) *Expression {
 			return g.leaf(Number)
 		}
 		return compose(Number, "@e.lastIndexOf(@e)", g.expression(String, next), g.expression(String, next))
+	case 25, 26:
+		if !g.allowed("bitwise") {
+			return g.leaf(Number)
+		}
+		return compose(Number, "(@e "+g.pick("&", "|", "^", "<<", ">>", ">>>")+" @e)", g.expression(Number, next), g.expression(Number, next))
+	case 27:
+		if !g.allowed("bitwise") {
+			return g.leaf(Number)
+		}
+		return compose(Number, "(~(@e))", g.expression(Number, next))
+	case 28:
+		if !g.allowed("map-keys") {
+			return g.leaf(Number)
+		}
+		return compose(Number, "(numbers.get(@e) ?? @e)", g.numberKey(), g.literal(Number))
+	case 29:
+		if !g.allowed("regex") {
+			return g.leaf(Number)
+		}
+		return compose(Number, "@e.search("+g.pick("/a/", "/a/i", "/\\d/")+")", g.expression(String, next))
 	}
 	return g.leaf(Number)
 }
@@ -825,7 +861,7 @@ func (g *generator) parenthesized(value *Expression) *Expression {
 
 func (g *generator) boolean(depth int) *Expression {
 	next := depth - 1
-	switch g.random.IntN(14) {
+	switch g.random.IntN(16) {
 	case 0, 1, 2:
 		left, right := g.expression(Number, next), g.expression(Number, next)
 		if isLiteral(left) && isLiteral(right) {
@@ -865,7 +901,17 @@ func (g *generator) boolean(depth int) *Expression {
 		g.declare(item, Number, false)
 		test := g.expression(Boolean, next)
 		g.pop()
-		return compose(Boolean, "@e."+g.pick("some", "every")+"(("+item+") => @e)", g.expression(NumberArray, next), test)
+		return compose(Boolean, "@e."+g.pick("some", "every")+"(("+item+"): boolean => @e)", g.expression(NumberArray, next), test)
+	case 12:
+		if !g.allowed("map-keys") {
+			return g.leaf(Boolean)
+		}
+		return compose(Boolean, g.pick("numbers.has(@e)", "flags.has(@e)"), g.numberKey())
+	case 13:
+		if !g.allowed("regex") {
+			return g.leaf(Boolean)
+		}
+		return compose(Boolean, g.pick("/a/i", "/a/", "/\\d/")+".test(@e)", g.expression(String, next))
 	}
 	return g.leaf(Boolean)
 }
@@ -940,4 +986,137 @@ func (g *generator) stringArray(depth int) *Expression {
 		return compose(StringArray, "[@e, @e]", g.short(), g.short())
 	}
 	return g.leaf(StringArray)
+}
+
+// classStatements is the program's class: one class, or a child that overrides and calls super.
+func (g *generator) classStatements() []*Statement {
+	if !g.allowed("inheritance") {
+		return []*Statement{statement("class Counter @b", &Block{Statements: []*Statement{
+			statement("count = 0;"),
+			statement("label = 'c';"),
+			statement("bump(amount: number): number @b", g.counterMethod(false)),
+		}})}
+	}
+	return []*Statement{
+		statement("class BaseCounter @b", &Block{Statements: []*Statement{
+			statement("count = 0;"),
+			statement("label = 'b';"),
+			statement("bump(amount: number): number @b", g.counterMethod(false)),
+			statement("describe(): string @b", &Block{Statements: []*Statement{statement("return this.label;")}}),
+		}}),
+		statement("class ChildCounter extends BaseCounter @b", &Block{Statements: []*Statement{
+			statement("extra = 1;"),
+			statement("override bump(amount: number): number @b", g.counterMethod(true)),
+			statement("override describe(): string @b", &Block{Statements: []*Statement{statement("return super.describe() + '!';")}}),
+		}}),
+	}
+}
+
+// counterMethod writes the fields a counter's bump can see, then returns. A child calls super first.
+func (g *generator) counterMethod(child bool) *Block {
+	g.push()
+	g.returns = Number
+	g.declare("this.count", Number, true)
+	g.declare("this.label", String, true)
+	g.declare("amount", Number, false)
+	if child {
+		g.declare("this.extra", Number, true)
+		g.declare("carried", Number, false)
+	}
+	method := &Block{}
+	if child {
+		method.Statements = append(method.Statements, statement("const carried = super.bump(amount);"))
+	}
+	for range 1 + g.random.IntN(3) {
+		method.Statements = append(method.Statements, g.mutation())
+	}
+	if child {
+		method.Statements = append(method.Statements, statement("return carried + this.extra;"))
+	} else {
+		method.Statements = append(method.Statements, statement("return this.count + amount;"))
+	}
+	g.returns = ""
+	g.pop()
+	return method
+}
+
+// addCounters constructs the instance the rest of the program writes, and the functions that call it.
+func (g *generator) addCounters(add func(*Statement)) {
+	if !g.allowed("inheritance") {
+		add(statement("const counter = new Counter();"))
+		g.declare("counter.count", Number, true)
+		g.declare("counter.label", String, true)
+		g.functions = append(g.functions, function{name: "counter.bump", parameters: []Type{Number}, returns: Number, required: 1})
+		return
+	}
+	add(statement("const counter = new ChildCounter();"))
+	add(statement("const plainCounter = new BaseCounter();"))
+	add(statement("const asBase: BaseCounter = counter;"))
+	g.declare("counter.count", Number, true)
+	g.declare("counter.label", String, true)
+	g.declare("counter.extra", Number, true)
+	g.declare("plainCounter.count", Number, true)
+	g.declare("plainCounter.label", String, true)
+	g.functions = append(g.functions,
+		function{name: "counter.bump", parameters: []Type{Number}, returns: Number, required: 1},
+		function{name: "plainCounter.bump", parameters: []Type{Number}, returns: Number, required: 1},
+		function{name: "asBase.bump", parameters: []Type{Number}, returns: Number, required: 1},
+		function{name: "counter.describe", parameters: nil, returns: String, required: 0},
+		function{name: "asBase.describe", parameters: nil, returns: String, required: 0},
+	)
+}
+
+// numberKey is a Map or Set key, biased toward NaN and the two zeros SameValueZero collapses.
+func (g *generator) numberKey() *Expression {
+	if g.chance(2, 3) {
+		return text(Number, g.pick("NaN", "-0", "0", "1"))
+	}
+	return g.expression(Number, 1)
+}
+
+// numberKeyMutation writes the number Map and the number Set. NaN and -0 replace 0 rather than grow.
+func (g *generator) numberKeyMutation() *Statement {
+	switch g.random.IntN(6) {
+	case 0:
+		return statement("numbers.set(NaN, @e);", g.expression(Number, 1))
+	case 1:
+		return statement("numbers.set(-0, @e);", g.expression(Number, 1))
+	case 2:
+		return statement("numbers.set(0, @e);", g.expression(Number, 1))
+	case 3:
+		return statement("if (numbers.size < 8) @b", &Block{Statements: []*Statement{
+			statement("numbers.set(@e, @e);", g.numberKey(), g.expression(Number, 1)),
+		}})
+	case 4:
+		return statement("numbers.delete(@e);", g.numberKey())
+	}
+	if g.chance(1, 2) {
+		return statement("flags.add(@e);", g.numberKey())
+	}
+	return statement("flags.delete(@e);", g.numberKey())
+}
+
+// regexStatement runs a literal regular expression: replace, replaceAll, split, or exec.
+func (g *generator) regexStatement() *Statement {
+	switch g.random.IntN(5) {
+	case 0:
+		return statement("console.log(@e);", compose(String, "@e.replace("+g.pick("/a/g", "/(a)/g", "/a/i")+", "+g.pick("'[$&]'", "'$1'", "'$$'", "'-'")+")", g.bounded(g.expression(String, 2))))
+	case 1:
+		return statement("console.log(@e);", compose(String, "@e.replaceAll(/a/g, '$&$`')", g.bounded(g.expression(String, 2))))
+	case 2:
+		return statement("console.log(@e);", compose(String, "@e.split("+g.pick("/a/", "/(?:)/", "/,/")+").join('|')", g.bounded(g.expression(String, 2))))
+	case 3:
+		return statement("@b", &Block{Statements: []*Statement{
+			statement("const found = /a/g.exec(@e);", g.bounded(g.expression(String, 2))),
+			statement("if (found !== null) @b else @b",
+				&Block{Statements: []*Statement{statement("console.log(`${found.index}:${found[0] ?? ''}`);")}},
+				&Block{Statements: []*Statement{statement("console.log('none');")}},
+			),
+		}})
+	}
+	return statement("@b", &Block{Statements: []*Statement{
+		statement("finder.lastIndex = Math.abs(Math.trunc(@e)) % 4;", g.expression(Number, 1)),
+		statement("const found = finder.exec(@e);", g.bounded(g.expression(String, 1))),
+		statement("console.log(`${finder.lastIndex} ${found === null ? -1 : found.index}`);"),
+	}})
 }
