@@ -1,0 +1,24 @@
+// From TypeScript 6.0.3, src/compiler/parser.ts:2194
+// From TypeScript 6.0.3, src/compiler/parser.ts:2198
+// Census reason: a function inside a function (a closure)
+
+type SyntaxKind = number;
+function parser(scanner: { scan: () => SyntaxKind }) {
+    let currentToken = 0;
+    return { token, nextTokenWithoutCheck };
+    function token(): SyntaxKind {
+        return currentToken;
+    }
+    function nextTokenWithoutCheck() {
+        return currentToken = scanner.scan();
+    }
+}
+let index = 0;
+const tokens = [87, 80, 64, 9, 27, 1];
+const state = parser({ scan: () => {
+    const value = tokens[index] ?? 1;
+    index += 1;
+    return value;
+} });
+console.log(`initial ${state.token()}`);
+for (let i = 0; i < 6; i++) { state.nextTokenWithoutCheck(); console.log(`token ${state.token()}`); }

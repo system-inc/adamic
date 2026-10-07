@@ -1,0 +1,14 @@
+// From TypeScript 6.0.3, src/compiler/corePublic.ts:13
+// From TypeScript 6.0.3, src/compiler/core.ts:1278
+// Census reason: an index signature
+export interface MapLike<T> {
+    [index: string]: T;
+}
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+export function getProperty<T>(map: MapLike<T>, key: string): T | undefined {
+    return hasOwnProperty.call(map, key) ? map[key] : undefined;
+}
+
+// Driver.
+const map: MapLike<string> = { paths: "src", toString: "own" };
+for (const key of ["paths", "missing", "toString", "constructor"]) console.log(`${key} ${getProperty(map, key)}`);

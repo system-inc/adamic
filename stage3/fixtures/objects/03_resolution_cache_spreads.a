@@ -1,0 +1,22 @@
+// From TypeScript 6.0.3, src/compiler/moduleNameResolver.ts:1300
+// Census reason: a spread after the first field
+function createModuleOrTypeReferenceResolutionCache() {
+    const packageJsonInfoCache = { packageCount: 1 };
+    const perDirectoryResolutionCache = { directoryCount: 2 };
+    const nonRelativeNameResolutionCache = { nameCount: 3 };
+    const optionsToRedirectsKey = new Map<string, string>();
+    const clear = () => 0;
+    const update = () => 1;
+    const clearAllExceptPackageJsonInfoCache = () => 2;
+    return {
+        ...packageJsonInfoCache,
+        ...perDirectoryResolutionCache,
+        ...nonRelativeNameResolutionCache,
+        clear,
+        update,
+        clearAllExceptPackageJsonInfoCache,
+        optionsToRedirectsKey,
+    };
+}
+const cache = createModuleOrTypeReferenceResolutionCache();
+console.log(`${cache.packageCount}:${cache.directoryCount}:${cache.nameCount}:${cache.update()}`);

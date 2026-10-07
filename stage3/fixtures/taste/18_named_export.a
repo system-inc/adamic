@@ -1,0 +1,5 @@
+// From TypeScript 6.0.3, src/compiler/_namespaces/ts.ts:79
+// Census reason: an ExportDeclaration
+// The dependency is an opaque stand-in for the performance namespace.
+import {performance} from "./support/performance.a";
+console.log(String(performance.timeOrigin));

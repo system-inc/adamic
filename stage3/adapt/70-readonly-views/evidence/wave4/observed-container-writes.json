@@ -1,0 +1,34 @@
+[
+  {
+    "where": "src/compiler/debug.ts:1033:13",
+    "expression": "source.edges.push(edge)",
+    "receiverType": "FlowGraphEdge[]",
+    "calleeDeclarations": [
+      "lib.es5.d.ts"
+    ]
+  },
+  {
+    "where": "src/compiler/debug.ts:1034:13",
+    "expression": "target.edges.push(edge)",
+    "receiverType": "FlowGraphEdge[]",
+    "calleeDeclarations": [
+      "lib.es5.d.ts"
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:8220:13",
+    "expression": "map.delete(key)",
+    "receiverType": "Map<K, T>",
+    "calleeDeclarations": [
+      "lib.es2015.collection.d.ts"
+    ]
+  },
+  {
+    "where": "src/compiler/transformers/utilities.ts:380:9",
+    "expression": "values.push(value)",
+    "receiverType": "V[]",
+    "calleeDeclarations": [
+      "lib.es5.d.ts"
+    ]
+  }
+]
