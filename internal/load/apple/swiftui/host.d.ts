@@ -41,6 +41,13 @@ declare module 'apple/swiftui/host' {
 		readonly fittingHeight: number;
 
 		/**
+		 * the rows SwiftUI's lists show, laid out now, section headers included (a List on macOS is an
+		 * NSTableView): what a test reads where a list's fitting size can't tell what was rendered
+		 * @objc get listRows -> integer
+		 */
+		readonly listRows: number;
+
+		/**
 		 * runs the action of the last button made with this title, the block its Button holds, as a
 		 * press would; true when there was one. For tests: SwiftUI's own accessibility tree is empty
 		 * until an assistive client connects.

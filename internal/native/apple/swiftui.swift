@@ -61,6 +61,76 @@ import SwiftUI
 		let styles: [Font] = [.largeTitle, .title, .headline, .body, .caption, .caption2]
 		return AdamicSwiftUIView(AnyView(view.font(styles[max(0, min(style, styles.count - 1))])))
 	}
+
+	@objc public static func list(_ children: [AdamicSwiftUIView]) -> AdamicSwiftUIView {
+		AdamicSwiftUIView(AnyView(List {
+			ForEach(children.indices, id: \.self) { index in children[index].view }
+		}))
+	}
+
+	@objc public static func section(_ title: String, children: [AdamicSwiftUIView]) -> AdamicSwiftUIView {
+		AdamicSwiftUIView(AnyView(Section(title) {
+			ForEach(children.indices, id: \.self) { index in children[index].view }
+		}))
+	}
+
+	@objc public static func navigationStack(_ root: AdamicSwiftUIView) -> AdamicSwiftUIView {
+		AdamicSwiftUIView(AnyView(NavigationStack { root.view }))
+	}
+
+	@objc public static func image(_ systemName: String) -> AdamicSwiftUIView {
+		AdamicSwiftUIView(AnyView(Image(systemName: systemName)))
+	}
+
+	@objc public static func progressView() -> AdamicSwiftUIView {
+		AdamicSwiftUIView(AnyView(ProgressView()))
+	}
+
+	@objc public func navigationTitle(_ title: String) -> AdamicSwiftUIView {
+		AdamicSwiftUIView(AnyView(view.navigationTitle(title)))
+	}
+
+	// A color is one of SwiftUI's system colors, as the binding's enumeration spells them.
+	static let colors: [Color] = [.primary, .secondary, .accentColor, .red, .orange, .yellow, .green, .blue, .purple, .pink, .gray]
+
+	static func color(_ index: Int) -> Color {
+		colors[max(0, min(index, colors.count - 1))]
+	}
+
+	@objc public func foregroundColor(_ color: Int) -> AdamicSwiftUIView {
+		AdamicSwiftUIView(AnyView(view.foregroundStyle(AdamicSwiftUIView.color(color))))
+	}
+
+	@objc public func background(_ color: Int) -> AdamicSwiftUIView {
+		AdamicSwiftUIView(AnyView(view.background(AdamicSwiftUIView.color(color))))
+	}
+
+	@objc public func opacity(_ amount: Double) -> AdamicSwiftUIView {
+		AdamicSwiftUIView(AnyView(view.opacity(amount)))
+	}
+
+	@objc public func multilineTextAlignment(_ alignment: Int) -> AdamicSwiftUIView {
+		let alignments: [TextAlignment] = [.leading, .center, .trailing]
+		return AdamicSwiftUIView(AnyView(view.multilineTextAlignment(alignments[max(0, min(alignment, alignments.count - 1))])))
+	}
+
+	// List and button styles are generic over their style types, so each is its own branch.
+	@objc public func listStyle(_ style: Int) -> AdamicSwiftUIView {
+		switch style {
+		case 1: AdamicSwiftUIView(AnyView(view.listStyle(.inset)))
+		case 2: AdamicSwiftUIView(AnyView(view.listStyle(.sidebar)))
+		default: AdamicSwiftUIView(AnyView(view.listStyle(.plain)))
+		}
+	}
+
+	@objc public func buttonStyle(_ style: Int) -> AdamicSwiftUIView {
+		switch style {
+		case 1: AdamicSwiftUIView(AnyView(view.buttonStyle(.borderedProminent)))
+		case 2: AdamicSwiftUIView(AnyView(view.buttonStyle(.borderless)))
+		case 3: AdamicSwiftUIView(AnyView(view.buttonStyle(.plain)))
+		default: AdamicSwiftUIView(AnyView(view.buttonStyle(.bordered)))
+		}
+	}
 }
 
 @objc(AdamicSwiftUIHost) public final class AdamicSwiftUIHost: NSObject {
@@ -87,6 +157,16 @@ import SwiftUI
 	@objc public var fittingHeight: Double {
 		hosting.layoutSubtreeIfNeeded()
 		return Double(hosting.fittingSize.height)
+	}
+
+	// The rows SwiftUI's lists show, laid out now, section headers included: on macOS a List is an
+	// NSTableView, so this counts what was rendered where a list's fitting size can't tell.
+	@objc public var listRows: Int {
+		hosting.layoutSubtreeIfNeeded()
+		func tables(_ view: NSView) -> [NSTableView] {
+			(view as? NSTableView).map { [$0] } ?? view.subviews.flatMap(tables)
+		}
+		return tables(hosting).reduce(0) { $0 + $1.numberOfRows }
 	}
 
 	// Runs the action of the last button made with this title, the block its Button holds, as a press

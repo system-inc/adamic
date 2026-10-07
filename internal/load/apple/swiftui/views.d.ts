@@ -23,7 +23,91 @@ declare module 'apple/swiftui/views' {
 		 * @objc method font: 0:enum(LargeTitle=0,Title=1,Headline=2,Body=3,Caption=4,Caption2=5) -> object
 		 */
 		font(style: FontStyle): View;
+
+		/**
+		 * .navigationTitle(_:)
+		 * @objc method navigationTitle: 0:string -> object
+		 */
+		navigationTitle(title: string): View;
+
+		/**
+		 * .foregroundStyle(_:), a system color
+		 * @objc method foregroundColor: 0:enum(Primary=0,Secondary=1,Accent=2,Red=3,Orange=4,Yellow=5,Green=6,Blue=7,Purple=8,Pink=9,Gray=10) -> object
+		 */
+		foregroundColor(color: SystemColor): View;
+
+		/**
+		 * .background(_:), a system color
+		 * @objc method background: 0:enum(Primary=0,Secondary=1,Accent=2,Red=3,Orange=4,Yellow=5,Green=6,Blue=7,Purple=8,Pink=9,Gray=10) -> object
+		 */
+		background(color: SystemColor): View;
+
+		/**
+		 * .opacity(_:)
+		 * @objc method opacity: 0:double -> object
+		 */
+		opacity(amount: number): View;
+
+		/**
+		 * .multilineTextAlignment(_:)
+		 * @objc method multilineTextAlignment: 0:enum(Leading=0,Center=1,Trailing=2) -> object
+		 */
+		multilineTextAlignment(alignment: TextAlignment): View;
+
+		/**
+		 * .listStyle(_:)
+		 * @objc method listStyle: 0:enum(Plain=0,Inset=1,Sidebar=2) -> object
+		 */
+		listStyle(style: ListStyle): View;
+
+		/**
+		 * .buttonStyle(_:)
+		 * @objc method buttonStyle: 0:enum(Bordered=0,BorderedProminent=1,Borderless=2,Plain=3) -> object
+		 */
+		buttonStyle(style: ButtonStyle): View;
 	}
+
+	/** Color's system colors */
+	export type SystemColor = 'Primary' | 'Secondary' | 'Accent' | 'Red' | 'Orange' | 'Yellow' | 'Green' | 'Blue' | 'Purple' | 'Pink' | 'Gray';
+
+	/** TextAlignment */
+	export type TextAlignment = 'Leading' | 'Center' | 'Trailing';
+
+	/** ListStyle */
+	export type ListStyle = 'Plain' | 'Inset' | 'Sidebar';
+
+	/** ButtonStyle */
+	export type ButtonStyle = 'Bordered' | 'BorderedProminent' | 'Borderless' | 'Plain';
+
+	/**
+	 * List { ForEach }
+	 * @objc send AdamicSwiftUIView list: 0:objects -> object
+	 */
+	export function list(children: readonly View[]): View;
+
+	/**
+	 * Section(_:content:)
+	 * @objc send AdamicSwiftUIView section:children: 0:string 1:objects -> object
+	 */
+	export function section(title: string, children: readonly View[]): View;
+
+	/**
+	 * NavigationStack { root }
+	 * @objc send AdamicSwiftUIView navigationStack: 0:object -> object
+	 */
+	export function navigationStack(root: View): View;
+
+	/**
+	 * Image(systemName:), an SF Symbol
+	 * @objc send AdamicSwiftUIView image: 0:string -> object
+	 */
+	export function image(systemName: string): View;
+
+	/**
+	 * ProgressView()
+	 * @objc send AdamicSwiftUIView progressView -> object
+	 */
+	export function progressView(): View;
 
 	/**
 	 * Text(verbatim:)
