@@ -1,0 +1,28 @@
+=== RUN   TestBatch11Helpers
+    batch11_test.go:49: 1118 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch11Helpers (3.31s)
+=== RUN   TestBatch11Mutants
+=== RUN   TestBatch11Mutants/is_generic_name.a
+    batch11_test.go:93: compiled semantic mutant caught at line 549: got "false" Go "true"
+=== RUN   TestBatch11Mutants/is_generic_name.a#01
+    batch11_test.go:93: compiled semantic mutant caught at line 101: got "true" Go "false"
+=== RUN   TestBatch11Mutants/has_math_function.a
+    batch11_test.go:93: compiled semantic mutant caught at line 38: got "false" Go "true"
+=== RUN   TestBatch11Mutants/has_math_function.a#01
+    batch11_test.go:93: compiled semantic mutant caught at line 60: got "false" Go "true"
+=== RUN   TestBatch11Mutants/has_math_function.a#02
+    batch11_test.go:93: compiled semantic mutant caught at line 88: got "true" Go "false"
+=== RUN   TestBatch11Mutants/loaded_utilities.a
+    batch11_test.go:93: compiled semantic mutant caught at line 1115: got "-1/false/true" Go "0/true/true"
+=== RUN   TestBatch11Mutants/loaded_utilities.a#01
+    batch11_test.go:93: compiled semantic mutant caught at line 1115: got "0/true/false" Go "0/true/true"
+--- PASS: TestBatch11Mutants (5.97s)
+    --- PASS: TestBatch11Mutants/is_generic_name.a (0.64s)
+    --- PASS: TestBatch11Mutants/is_generic_name.a#01 (0.60s)
+    --- PASS: TestBatch11Mutants/has_math_function.a (1.00s)
+    --- PASS: TestBatch11Mutants/has_math_function.a#01 (0.68s)
+    --- PASS: TestBatch11Mutants/has_math_function.a#02 (0.57s)
+    --- PASS: TestBatch11Mutants/loaded_utilities.a (0.58s)
+    --- PASS: TestBatch11Mutants/loaded_utilities.a#01 (1.11s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	9.291s

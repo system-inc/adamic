@@ -1,0 +1,3 @@
+// Initialized system prerequisite. -1 is nil; other handles preserve pointer identity.
+export type LoadedUtilitySystem = {utility: number};
+export function loadedUtilities(system: LoadedUtilitySystem): number { return system.utility; }

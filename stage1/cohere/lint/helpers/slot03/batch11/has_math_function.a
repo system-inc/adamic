@@ -1,0 +1,4 @@
+// Go tests substrings anywhere, including inside quoted or malformed values.
+export function hasMathFunction(value: string): boolean {
+  return value.includes('calc(') || value.includes('min(') || value.includes('max(') || value.includes('clamp(') || value.includes('mod(') || value.includes('rem(') || value.includes('sin(') || value.includes('cos(') || value.includes('tan(') || value.includes('asin(') || value.includes('acos(') || value.includes('atan(') || value.includes('atan2(') || value.includes('pow(') || value.includes('sqrt(') || value.includes('hypot(') || value.includes('log(') || value.includes('exp(') || value.includes('round(');
+}

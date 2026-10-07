@@ -1,0 +1,4 @@
+// Exact Go generic-family keyword set; no trimming or case folding.
+export function isGenericName(value: string): boolean {
+  return value === 'serif' || value === 'sans-serif' || value === 'monospace' || value === 'cursive' || value === 'fantasy' || value === 'system-ui' || value === 'ui-serif' || value === 'ui-sans-serif' || value === 'ui-monospace' || value === 'ui-rounded' || value === 'math' || value === 'emoji' || value === 'fangsong';
+}

@@ -1,0 +1,15 @@
+import {panic, readTextFile, programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {isGenericName} from './is_generic_name.a';
+import {hasMathFunction} from './has_math_function.a';
+import {loadedUtilities, type LoadedUtilitySystem} from './loaded_utilities.a';
+const file=readTextFile(programArguments()[0] ?? panic('missing cases'));if(file.kind==='Error') {panic(file.message);}
+const json=new OptionsJson(file.text);const root=json.parse();if(root<0) {panic(json.error);}
+for(const row of json.node(json.field(root,'texts')).children) {const value=json.node(row).text;console.log(`${isGenericName(value)}`);console.log(`${hasMathFunction(value)}`);}
+for(const handle of [-1,0,1]) {
+ const arena=[{marker:''},{marker:''}];const system:LoadedUtilitySystem={utility:handle};
+ const got=loadedUtilities(system);let alias=got===handle;const unchanged=system.utility===handle;
+ if(got>=0) {const value=arena[got] ?? panic('invalid handle');value.marker='mutated';const original=arena[handle] ?? panic('invalid original');alias=alias && original.marker==='mutated';}
+ console.log(`${got}/${alias}/${unchanged}`);
+ const repeated=loadedUtilities(system);console.log(`${repeated}/${system.utility===handle}`);
+}

@@ -1,0 +1,19 @@
+=== RUN   TestBatch11Helpers
+    batch11_test.go:41: go [build -overlay=/tmp/adamic-gate/TestBatch11Helpers100158085/003/overlay.json -o /tmp/adamic-gate/TestBatch11Helpers100158085/003/oracle /workspace/adamic/cohere/adamic_slot03_batch11.go]: exit status 1
+        
+        # github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse
+        ../stage1/cohere/lint/helpers/slot03/batch11/testdata/collapse_export.go:22:7: got.theme undefined (type *UtilityEvaluator has no field or method theme, but does have field Theme)
+        ../stage1/cohere/lint/helpers/slot03/batch11/testdata/collapse_export.go:23:7: got.theme undefined (type *UtilityEvaluator has no field or method theme, but does have field Theme)
+        ../stage1/cohere/lint/helpers/slot03/batch11/testdata/collapse_export.go:24:28: utility.theme undefined (type *UtilityEvaluator has no field or method theme, but does have field Theme)
+--- FAIL: TestBatch11Helpers (0.15s)
+=== RUN   TestBatch11Mutants
+    batch11_test.go:54: go [build -overlay=/tmp/adamic-gate/TestBatch11Mutants1919880331/003/overlay.json -o /tmp/adamic-gate/TestBatch11Mutants1919880331/003/oracle /workspace/adamic/cohere/adamic_slot03_batch11.go]: exit status 1
+        
+        # github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse
+        ../stage1/cohere/lint/helpers/slot03/batch11/testdata/collapse_export.go:22:7: got.theme undefined (type *UtilityEvaluator has no field or method theme, but does have field Theme)
+        ../stage1/cohere/lint/helpers/slot03/batch11/testdata/collapse_export.go:23:7: got.theme undefined (type *UtilityEvaluator has no field or method theme, but does have field Theme)
+        ../stage1/cohere/lint/helpers/slot03/batch11/testdata/collapse_export.go:24:28: utility.theme undefined (type *UtilityEvaluator has no field or method theme, but does have field Theme)
+--- FAIL: TestBatch11Mutants (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	0.304s
+FAIL
