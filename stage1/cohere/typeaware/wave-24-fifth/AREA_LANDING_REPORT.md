@@ -1,6 +1,6 @@
 Rebased all twelve owned checker-rule ports onto the integrated lint area without changing rule bodies or shared sources.
-Current validated base is origin/area/stage1-lint b84a9d9314b65d3d0261ee017e233287b4f071da, containing main c7991b900362796aefd111474e65eb5398e91953 and harness 41eb6eab2; push only the worker branch.
-All four owned byte-oracle suites, named listeners, sanitizer and released-handle checks PASS again; bridge PASS 162.084s/1.060s; Node lowering fixtures and one-byte mutant PASS 22.191s.
+Current validated base is origin/area/stage1-lint b46914832d70e00847d82d5d221ab7bb24040c53, containing main c7991b900362796aefd111474e65eb5398e91953 and harness 41eb6eab2; push only the worker branch.
+All four owned byte-oracle suites, named listeners, sanitizer and released-handle checks PASS again; original suite 151.436s; registry validates 40 entries; vet clean.
 Caught 12 rule and 11 raw-question byte mutants, released-registry mutation, native listener mutation and two JSON listener mutations.
 Default options only, full repository gate and older node-only migration uncovered; React analysis claims remain parked.
 
@@ -53,3 +53,13 @@ Ran the exact Node oracle filter TestNativeAgreesWithNode/internal/oracle/testda
 After all builds stopped, three alternating whole-process timing medians: repository native 283.297ms versus Go 99.580ms (2.845x slower); compiler native 1493.848ms versus Go 307.696ms (4.855x slower). These newest-three-suite measurements supersede earlier timing figures for this base. Full gate and the seventeen newly mandatory external-input correctness checks were not run; no coverage of them is claimed. Default-option and older node-only migration limitations still apply. React analysis claims remain parked.
 
 Fresh all-origin audit: 636 refs, 33 distinct claim blobs, 172 claimed rule mentions, no unclaimed rule. Verified main, area and own remote worker tips before publication. Logs and timing samples are in evidence/area-landing/refresh/. No new claim is made.
+
+## Registry-only area update
+
+Rebased cleanly onto b46914832d70e00847d82d5d221ab7bb24040c53. Main remains c7991b90. The area delta migrates legacy lint rules to the shared registry; compiler, bridge and owned type-aware source files are unchanged. Preserved shared edits without changing them. Regenerated 40 descriptors and built /tmp/wave24-registry-adamic. Reused the already validated toolchain from the preceding 135s setup, nproc=5.
+
+Repeated all four complete owned byte-oracle suites with the preceding commands and new compiler path, writing /tmp/wave24-registry-{original,next,third,fifth}.log. All normal and sanitized controls and both corpus byte streams agree with Go on findings, fixes and ordered suggestions. All 23 compiled byte mutants are caught only by comparison, released-handle checks require panic 70, and registry/native/JSON listener mutants are caught. Original Go suite passes in 151.436s. Named-listener validator and vet pass. The unchanged bridge packages and Node lowering checks were green on the prior base; they were not repeated for this shared-lint-only delta. No shared-driver certification of these standalone ports is claimed.
+
+After builds stopped, three alternating whole-process medians for the newest-three suite: repository native 273.497ms versus Go 101.286ms (2.700x slower), compiler native 1417.679ms versus Go 279.134ms (5.079x slower). Samples and logs are in evidence/area-landing/registry/. Removed only obsolete large worker scratch binaries to maintain disk space; retained source and logs.
+
+Fresh audit of 644 origin refs, 33 distinct claim blobs and 172 rule mentions leaves no unclaimed rule. Verified remote area, main and own branch before publication. React analysis claims remain parked. Default-option, older node-only migration, full-gate and seventeen mandatory-input check limitations remain unchanged; none of those unrun checks is represented as passing.
