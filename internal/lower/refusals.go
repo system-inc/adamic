@@ -26,7 +26,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
 	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
-	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
 	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
@@ -34,12 +33,9 @@ var refusals = map[ast.Kind]refusal{
 
 // refusedOperators are binary operators 0.1 refuses.
 var refusedOperators = map[ast.Kind]refusal{
-	ast.KindEqualsEqualsToken:             {"==", "use ===, which doesn't coerce"},
-	ast.KindExclamationEqualsToken:        {"!=", "use !==, which doesn't coerce"},
-	ast.KindInKeyword:                     {"in", "an object's shape is known; use a discriminant, or a Map"},
-	ast.KindCommaToken:                    {"the comma operator", "write each expression as its own statement"},
-	ast.KindAmpersandAmpersandEqualsToken: {"&&=", "write the if"},
-	ast.KindBarBarEqualsToken:             {"||=", "write the if"},
+	ast.KindEqualsEqualsToken:      {"==", "use ===, which doesn't coerce"},
+	ast.KindExclamationEqualsToken: {"!=", "use !==, which doesn't coerce"},
+	ast.KindInKeyword:              {"in", "an object's shape is known; use a discriminant, or a Map"},
 }
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.

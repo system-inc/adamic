@@ -333,7 +333,8 @@ adamic_object *adamic_node_measure(const adamic_string *name, const adamic_strin
 void adamic_node_clear_marks(const adamic_string *name) { clear_marks(name); }
 void adamic_node_clear_measures(const adamic_string *name) { (void)name; }
 
-static adamic_value set_blocking(adamic_closure *self, adamic_value *values) {
+static adamic_value set_blocking(adamic_closure *self, adamic_value *values, size_t count) {
+    (void)count;
     (void)self;
     adamic_output_flush();
     int flags = fcntl(STDOUT_FILENO, F_GETFL);
@@ -351,7 +352,7 @@ adamic_object *adamic_node_stdout_handle(void) {
     static const char *const handle_names[] = {"setBlocking"};
     static const bool references[] = {true};
     static const adamic_shape shape = {1, handle_names, references, NULL};
-    static adamic_closure method = {{0, adamic_kind_closure, 0}, set_blocking, 0};
+    static adamic_closure method = {{0, adamic_kind_closure, 0}, set_blocking, false, 0};
     adamic_object *handle = adamic_object_new(&shape);
     handle->slots[0].reference = &method;
     return handle;
@@ -402,16 +403,16 @@ void adamic_node_chdir(const adamic_string *directory) {
     adamic_release(from);
 }
 
-static adamic_value performance_now_method(adamic_closure *self, adamic_value *args) { (void)self; (void)args; return (adamic_value){.number = adamic_node_performance_now()}; }
-static adamic_value performance_mark_method(adamic_closure *self, adamic_value *args) { (void)self; return (adamic_value){.reference = adamic_node_mark(args[0].reference)}; }
-static adamic_value performance_measure_method(adamic_closure *self, adamic_value *args) { (void)self; return (adamic_value){.reference = adamic_node_measure(args[0].reference, args[1].reference, args[2].reference)}; }
-static adamic_value performance_clear_marks_method(adamic_closure *self, adamic_value *args) { (void)self; adamic_node_clear_marks(args[0].reference); return (adamic_value){.reference = NULL}; }
-static adamic_value performance_clear_measures_method(adamic_closure *self, adamic_value *args) { (void)self; adamic_node_clear_measures(args[0].reference); return (adamic_value){.reference = NULL}; }
-static adamic_closure performance_now_closure = {{0, adamic_kind_closure, 0}, performance_now_method, 0};
-static adamic_closure performance_mark_closure = {{0, adamic_kind_closure, 0}, performance_mark_method, 0};
-static adamic_closure performance_measure_closure = {{0, adamic_kind_closure, 0}, performance_measure_method, 0};
-static adamic_closure performance_clear_marks_closure = {{0, adamic_kind_closure, 0}, performance_clear_marks_method, 0};
-static adamic_closure performance_clear_measures_closure = {{0, adamic_kind_closure, 0}, performance_clear_measures_method, 0};
+static adamic_value performance_now_method(adamic_closure *self, adamic_value *args, size_t count) { (void)count; (void)self; (void)args; return (adamic_value){.number = adamic_node_performance_now()}; }
+static adamic_value performance_mark_method(adamic_closure *self, adamic_value *args, size_t count) { (void)count; (void)self; return (adamic_value){.reference = adamic_node_mark(args[0].reference)}; }
+static adamic_value performance_measure_method(adamic_closure *self, adamic_value *args, size_t count) { (void)count; (void)self; return (adamic_value){.reference = adamic_node_measure(args[0].reference, args[1].reference, args[2].reference)}; }
+static adamic_value performance_clear_marks_method(adamic_closure *self, adamic_value *args, size_t count) { (void)count; (void)self; adamic_node_clear_marks(args[0].reference); return (adamic_value){.reference = NULL}; }
+static adamic_value performance_clear_measures_method(adamic_closure *self, adamic_value *args, size_t count) { (void)count; (void)self; adamic_node_clear_measures(args[0].reference); return (adamic_value){.reference = NULL}; }
+static adamic_closure performance_now_closure = {{0, adamic_kind_closure, 0}, performance_now_method, false, 0};
+static adamic_closure performance_mark_closure = {{0, adamic_kind_closure, 0}, performance_mark_method, false, 0};
+static adamic_closure performance_measure_closure = {{0, adamic_kind_closure, 0}, performance_measure_method, false, 0};
+static adamic_closure performance_clear_marks_closure = {{0, adamic_kind_closure, 0}, performance_clear_marks_method, false, 0};
+static adamic_closure performance_clear_measures_closure = {{0, adamic_kind_closure, 0}, performance_clear_measures_method, false, 0};
 static adamic_closure *const performance_methods[] = {&performance_now_closure, &performance_mark_closure, &performance_measure_closure, &performance_clear_marks_closure, &performance_clear_measures_closure};
 
 adamic_object *adamic_node_performance(void) {
@@ -433,12 +434,12 @@ adamic_value adamic_node_performance_invoke(adamic_closure *closure, adamic_valu
         if (closure == performance_methods[index]) {
             adamic_value padded[3] = {{.reference = NULL}, {.reference = NULL}, {.reference = NULL}};
             for (size_t at = 0; at < count && at < 3; at++) { padded[at] = args[at]; }
-            adamic_value result = closure->code(closure, padded);
+            adamic_value result = closure->code(closure, padded, 3);
             if (discard && (index == 1 || index == 2)) { adamic_release(result.reference); result.reference = NULL; }
             return result;
         }
     }
-    return closure->code(closure, args);
+    return closure->code(closure, args, count);
 }
 
 // libuv/Node use the first nonempty POSIX temp variable and remove one trailing slash.

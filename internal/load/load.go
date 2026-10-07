@@ -250,7 +250,11 @@ func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {
 		line, column := p.lineAndColumn(diagnostic.File(), diagnostic.Pos())
 		fmt.Fprintf(&builder, "%s:%d:%d: ", p.fs.displayName(diagnostic.File().FileName()), line, column)
 	}
-	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code(), diagnostic.Localize(english))
+	message := starCollision(diagnostic)
+	if message == "" {
+		message = diagnostic.Localize(english)
+	}
+	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code(), message)
 	writeChain(&builder, diagnostic.MessageChain(), 1)
 	return builder.String()
 }

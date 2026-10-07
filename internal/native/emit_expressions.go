@@ -49,6 +49,23 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("&adamic_string_%d", expression.Index)
 	case ir.Read:
 		return e.read(expression)
+	case ir.Truthy:
+		return e.toBoolean(expression.Value.Type(), e.value(expression.Value))
+	case ir.Void:
+		e.line("(void)%s;", e.value(expression.Value))
+		if expression.Type().IsMaybe() {
+			return zero(expression.Type())
+		}
+		return "NULL"
+	case ir.Comma:
+		e.line("(void)%s;", e.value(expression.Left))
+		return e.value(expression.Right)
+	case ir.Effects:
+		return e.effects(expression)
+	case ir.LogicalAssignment:
+		return e.logicalAssignment(expression)
+	case ir.Logical:
+		return e.logicalValue(expression)
 	case ir.Unary:
 		operand := e.value(expression.Operand)
 		switch expression.Operator {
@@ -126,8 +143,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		lent := e.lendable && lendable(expression.Of) && !expression.Optional
 		object := e.value(expression.Object)
 		field := unslotted(expression.Of, fmt.Sprintf("%s->%s", e.fieldSlot(object, expression.Name, expression.Class), member(expression.Of)))
-		if expression.Of == ir.MaybeNumber {
+		if expression.Of.IsMaybe() {
 			field = fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+			if expression.Of == ir.MaybeBoolean {
+				field = fmt.Sprintf("adamic_object_maybe_boolean(%s, %s, &%s)", object, cString(expression.Name), e.cache())
+			}
 		}
 		if expression.Absent {
 			slot := e.temporary()
@@ -141,13 +161,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				undefined = zero(expression.Of)
 			}
 			present := unslotted(expression.Of, fmt.Sprintf("%s->%s", slot, member(expression.Of)))
-			if expression.Of == ir.MaybeNumber {
+			if expression.Of.IsMaybe() {
 				present = field
 			}
 			field = fmt.Sprintf("(%s == NULL ? %s : %s)", slot, undefined, present)
 		}
-		if expression.Of == ir.MaybeNumber && expression.Optional {
-			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : %s)", object, zero(ir.MaybeNumber), field))
+		if expression.Of.IsMaybe() && expression.Optional {
+			return e.snapshot(expression.Of, fmt.Sprintf("(%s == NULL ? %s : %s)", object, zero(expression.Of), field))
 		}
 		if expression.Of.IsReference() {
 			// A field holds a reference as void *; read through the type the checker proved.
@@ -212,6 +232,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.own(expression.To, fmt.Sprintf("(%s)adamic_retain(%s(%s))", cType(expression.To), target, e.value(expression.Value)))
 	case ir.Narrow:
 		return e.narrow(expression)
+	case ir.ArrayIsArray:
+		value := e.snapshot(ir.Union, e.value(expression.Value))
+		return fmt.Sprintf("(%s != NULL && %s->kind == adamic_kind_array)", value, value)
 	case ir.TypeOf:
 		return e.typeOf(expression)
 	case ir.UnionToString:
@@ -233,6 +256,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.MakeClosure:
 		environment := e.program.Functions[expression.Function].Environment
 		closure := e.own(ir.Closure, fmt.Sprintf("adamic_closure_new(%s, %d)", e.functionName(expression.Function), len(environment)))
+		if e.program.Functions[expression.Function].Receiver {
+			e.line("%s->receiver = true;", closure)
+		}
 		for index, local := range environment {
 			e.line("%s->cells[%d] = adamic_retain(%s);", closure, index, e.cellReference(local))
 		}
@@ -304,7 +330,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("\t}")
 		e.indent++
 		element := e.temporary()
-		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}});", element, callback, callback, source, index, index, source)
+		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s->elements[%s], {.number = (double)%s}, {.reference = %s}}, 3);", element, callback, callback, source, index, index, source)
 		// What's mapped so far is the statement's, let go with its temporaries.
 		e.closureThrown()
 		e.line("adamic_array_push(%s, %s);", mapped, element)

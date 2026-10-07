@@ -48,7 +48,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("import { tmpdir as adamicNodeTmpdir } from 'node:os';\n")
 	// A closure is its code and its cells, an instance of its own class so typeof can tell it from an
 	// object that happens to have fields of those names.
-	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t}\n}\n")
+	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	builder.WriteString(collectionIteratorRuntime)
@@ -56,7 +56,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
-	builder.WriteString("const adamicCallee = (object, name) => (object === performance || object === process.stdout._handle) ? { code: (closure, values) => object[name](...values) } : Object.hasOwn(object, name) ? object[name] : { code: (closure, values) => object[name](object, ...values) };\n")
+	builder.WriteString("const adamicCallee = (object, name) => { if (object === performance || object === process.stdout._handle) return { code: (closure, values) => object[name](...values) }; if (!Object.hasOwn(object, name)) return { code: (closure, values) => object[name](object, ...values) }; const callee = object[name]; return callee.receiver ? { code: (closure, values) => adamicCall(callee, [object, ...values]) } : callee; };\n")
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
@@ -324,7 +324,7 @@ func (e *emitter) declare(local int, value string) {
 
 func (e *emitter) statement(at *ir.Statement) {
 	switch (*at).(type) {
-	case ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue, ir.Try:
+	case ir.Labeled, ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue, ir.Try:
 		// Marked inside, where their parts run, or not at all: a block, a break and a continue run
 		// nothing of their own.
 	default:
@@ -390,6 +390,10 @@ func (e *emitter) statement(at *ir.Statement) {
 			e.nested(statement.Else)
 		}
 		e.line("}")
+	case ir.Labeled:
+		e.line("source_%s: {", statement.Name)
+		e.nested(statement.Body)
+		e.line("}")
 	case ir.Block:
 		e.line("{")
 		e.nested(statement.Body)
@@ -431,9 +435,17 @@ func (e *emitter) statement(at *ir.Statement) {
 		e.line("} while (false);")
 		e.breakables = e.breakables[:len(e.breakables)-1]
 	case ir.Break:
-		e.line("break %s;", e.breakables[len(e.breakables)-1-statement.Depth])
+		if statement.Label != "" {
+			e.line("break source_%s;", statement.Label)
+		} else {
+			e.line("break %s;", e.breakables[len(e.breakables)-1-statement.Depth])
+		}
 	case ir.Continue:
-		e.line("break %s;", e.continues[len(e.continues)-1])
+		if statement.Label != "" {
+			e.line("break source_continue_%s;", statement.Label)
+		} else {
+			e.line("break %s;", e.continues[len(e.continues)-1])
+		}
 	case ir.Throw:
 		e.line("throw %s;", e.value(statement.Value))
 	case ir.Try:
@@ -484,11 +496,19 @@ func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
 	if !statement.CheckAfter {
 		e.line("if (!%s) break;", e.marked(at, 0, "("+e.value(statement.Condition)+")"))
 	}
+	for _, name := range statement.Labels {
+		e.line("source_continue_%s: {", name)
+		e.indent++
+	}
 	e.continues = append(e.continues, label)
 	e.line("%s: {", label)
 	e.nested(statement.Body)
 	e.line("}")
 	e.continues = e.continues[:len(e.continues)-1]
+	for range statement.Labels {
+		e.indent--
+		e.line("}")
+	}
 	for _, local := range statement.PerIteration {
 		if e.program.Locals[local].Captured {
 			e.line("%s = { value: %s.value };", e.cellName(local), e.cellName(local))
@@ -525,6 +545,10 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 		e.line("\tconst %s = %s[%s_index];", index, held, index)
 	}
 	e.indent++
+	for _, name := range statement.Labels {
+		e.line("source_continue_%s: {", name)
+		e.indent++
+	}
 	e.continues = append(e.continues, label)
 	e.line("%s: {", label)
 	e.indent++
@@ -540,6 +564,10 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 	e.indent--
 	e.line("}")
 	e.continues = e.continues[:len(e.continues)-1]
+	for range statement.Labels {
+		e.indent--
+		e.line("}")
+	}
 	e.indent--
 	e.line("}")
 	e.indent--
@@ -620,6 +648,22 @@ func (e *emitter) value(expression ir.Expression) string {
 			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", readyName(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
 		}
 		return e.variable(expression.Local)
+	case ir.Truthy:
+		return "!!(" + e.value(expression.Value) + ")"
+	case ir.Void:
+		return "(void " + e.value(expression.Value) + ")"
+	case ir.Comma:
+		return "(" + e.value(expression.Left) + ", " + e.value(expression.Right) + ")"
+	case ir.Effects:
+		return e.effects(expression)
+	case ir.LogicalAssignment:
+		return e.logicalAssignment(expression)
+	case ir.Logical:
+		operator := "&&"
+		if expression.KeepTruthy {
+			operator = "||"
+		}
+		return "(" + e.value(expression.Left) + " " + operator + " " + e.value(expression.Right) + ")"
 	case ir.Unary:
 		operator := map[ir.Operator]string{ir.Negate: "-", ir.Plus: "+", ir.Not: "!", ir.BitNot: "~"}[expression.Operator]
 		return "(" + operator + e.value(expression.Operand) + ")"
@@ -742,6 +786,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ObjectCall:
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
+		if expression.Function == "toBoolean" {
+			return "Boolean(" + e.values(expression.Arguments) + ")"
+		}
 		if expression.Function == "prototypeHasOwnProperty" {
 			return "Number.prototype.hasOwnProperty(" + e.values(expression.Arguments) + ")"
 		}
@@ -789,6 +836,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.Narrow:
 		return e.value(expression.Value)
+	case ir.ArrayIsArray:
+		return "Array.isArray(" + e.value(expression.Value) + ")"
 	case ir.TypeOf:
 		return "adamicTypeOf(" + e.value(expression.Value) + ")"
 	case ir.UnionToString:
@@ -880,7 +929,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		for _, local := range e.program.Functions[expression.Function].Environment {
 			cells = append(cells, e.cell(local))
 		}
-		return fmt.Sprintf("new AdamicClosure(%s, [%s])", functionName(e.program, expression.Function), strings.Join(cells, ", "))
+		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t)", functionName(e.program, expression.Function), strings.Join(cells, ", "), e.program.Functions[expression.Function].Receiver)
 	case ir.CallClosure:
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
 			if property.Optional {

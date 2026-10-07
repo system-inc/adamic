@@ -80,6 +80,9 @@ type Function struct {
 	Closure     bool
 	Environment []int
 
+	// Receiver marks a literal method closure whose first parameter receives the calling object.
+	Receiver bool
+
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool
@@ -174,6 +177,9 @@ type Local struct {
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
 
+	// ExpressionAssigned excludes conditional expression writes from statement liveness and moves.
+	ExpressionAssigned bool
+
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
 	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
@@ -242,7 +248,7 @@ type (
 
 	// Binary is an operator whose operands are already of the types it takes (the checker and
 	// lowering saw to that): arithmetic on numbers, comparison of numbers, equality of like types,
-	// bitwise operations on numbers, and && and || on booleans, which short-circuit.
+	// bitwise operations on numbers, and && and || on booleans or maybe booleans, which short-circuit.
 	Binary struct {
 		Operator    Operator
 		Left, Right Expression
@@ -934,6 +940,9 @@ func (u Unary) Type() Type {
 }
 
 func (b Binary) Type() Type {
+	if (b.Operator == And || b.Operator == Or) && b.Left.Type() == MaybeBoolean && b.Right.Type() == MaybeBoolean {
+		return MaybeBoolean
+	}
 	switch b.Operator {
 	case Add, Subtract, Multiply, Divide, Remainder, Power, BitAnd, BitOr, BitXor, ShiftLeft, ShiftRight, ShiftRightUnsigned:
 		return Number
@@ -1053,6 +1062,7 @@ type (
 	// the body, or after it when CheckAfter is set), and Update runs after each pass, continue
 	// included.
 	Loop struct {
+		Labels     []string
 		Condition  Expression
 		Body       []Statement
 		Update     []Statement
@@ -1070,6 +1080,7 @@ type (
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
 	// elements are its code points, each a string.
 	ForOf struct {
+		Labels   []string
 		Iterable Expression
 		Element  Type
 		Local    int
@@ -1097,10 +1108,12 @@ type (
 		Default []Statement
 	}
 
-	// Depth counts the enclosing loops and switches skipped by a labeled break.
-	// Zero is the innermost breakable, as for an unlabeled break.
-	Break    struct{ Depth int }
-	Continue struct{}
+	// Depth supports existing lowered break destinations; Label preserves source labels.
+	Break struct {
+		Depth int
+		Label string
+	}
+	Continue struct{ Label string }
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
