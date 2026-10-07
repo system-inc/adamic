@@ -1,5 +1,54 @@
 # Scanner blockers
 
+## October 7: 55 and 80 reconciled; upstream callable marker exposes function widening
+
+Adaptation 55's opaque `{}` rewrite is withdrawn. New slices retain the exact
+upstream `stackCrawlMark?: AnyFunction`; old opaque slices can be restored by
+55's adapter. Adaptation 80 still removes only the two erased Error casts.
+Stock TypeScript 6.0.3 and pinned @types/node 25.3.3 accept the call. Restoring
+`{}` fails the stock checker with TS2345 and the integrated checker with TS2740.
+The combined 55/80 edit emits the same 1,302 JavaScript bytes as the untouched
+gathered Debug source; a changed capture argument fails that identity check.
+
+Both ADAMIC_NATIVE_SPLIT=0 and ADAMIC_NATIVE_SPLIT=1/ADAMIC_NATIVE_JOBS=5 now
+stop at debug.ts:15:58 with the same exact diagnostic:
+
+```text
+Adamic 0.1 refuses a function taking string | undefined seen as one taking never[] (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)
+```
+
+Census reason: method-signature-style. Required compiler feature: sound function
+widening to AnyFunction. No function-widening branch was found. The named
+optional-widening branches concern optional properties. The library-function
+tip afd87f6b records existing Function gaps; it still refuses optional/rest
+functions as values. Minimal reproduction: probes/debug-fail-callable-marker.a
+(Node prints `ok`; integrated native build refuses at line 7:54). The smaller
+probes/capture-stack-marker-callable.a isolates the marker independently.
+
+An erased Function cast on the fallback gets past widening in a control but
+then reports `stage 0 can't lower a function with an optional or rest parameter,
+as a value yet`. That control is tracked as
+probes/capture-stack-marker-function-view.a. No runtime rewrite, stub or
+unchecked cast was committed to bypass either compiler gap. The capture call
+without a marker still builds and prints `ok` natively.
+
+Both Node runs match the extended full-tree reference: 1,369,432 tokens,
+466 errors, 108,019,935 bytes, SHA-256
+41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc.
+Each token-end mutant is caught. No native scanner comparison is possible yet.
+C emission exits 1 before any C is written; clang is not reached, so C size,
+clang times (unsplit, split cold/warm), native binary size and native user time
+are unavailable. Node best-of-three user time: 4.270926 seconds; all three
+outputs match the reference. nproc: 5. perf is not installed.
+
+Scratch compiler 34accc5c includes area abdcf3db, front-2 860a0d5e, library
+8280fd08, records a2572f0b/runtime 754e6667, developer tools 5794c876 and prior
+non-null/Error features. The octopus attempt conflicted in lowering expression
+and refusal files and rolled back. Sequential records conflicted only in the
+refusal pass and counts: retained its recordStorageView check and the existing
+predicateRefusal wiring. This scratch merge and its compiler changes are never
+pushed. Full evidence and replayable probes: evidence/marker-reconciliation.json.
+
 ## October 7: developer-tools split compile on and off
 
 Merged area/developer-tools 2adf65c2 without conflicts into scratch 64d47034,

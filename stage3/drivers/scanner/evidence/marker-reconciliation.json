@@ -1,0 +1,106 @@
+{
+  "area": "abdcf3db",
+  "scratch_compiler": "34accc5c8000f320ff6a2682fcab15c3986af735",
+  "compiler_branches": {
+    "compiler/stage3-front-2": "860a0d5e7c7c44fd50328e0af6d4333cb2190d55",
+    "library/qualified-as-const": "8280fd0873a3d5c425f8a1a342b44af20cf883d9",
+    "codex/records-lowering": "a2572f0b99d76d7d1aef6ec9f20d0a91a623c996",
+    "codex/runtime-records": "754e6667941a52b5a35ca79ef303f6c012f7bf4b",
+    "area/developer-tools": "5794c87661b030d24cee457bbec4900f260e025d"
+  },
+  "adaptation55": "upstream AnyFunction retained; obsolete opaque rewrite withdrawn",
+  "adaptation80": "casts removed; runtime statements and arguments unchanged",
+  "stock_typescript": {
+    "typescript": "6.0.3",
+    "callable_diagnostics": [],
+    "opaque_marker_mutant": [
+      {
+        "code": 2345,
+        "message": "Argument of type '{}' is not assignable to parameter of type 'Function'.\n  Type '{}' is missing the following properties from type 'Function': apply, call, bind, prototype, and 6 more."
+      }
+    ]
+  },
+  "node_types": "25.3.3",
+  "javascript": {
+    "typescript": "6.0.3",
+    "identical": true,
+    "bytes": 1302,
+    "sha256": "05cd00d973810e90cc54509ed7396d7577daa237ff60171ac235b73ae0e25e8c",
+    "captureCallMutantCaught": true
+  },
+  "runs": {
+    "off": {
+      "tokens": 1369432,
+      "errors": 466,
+      "sha256": "41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc",
+      "bytes": 108019935,
+      "input_tree": "/workspace/scratch/scanner-fixed-inputs",
+      "files": 81,
+      "node_exit": 0,
+      "comparison_control_exit": 0,
+      "end_mutant_diff_exit": 1,
+      "native": "blocked at compilation",
+      "build_exit": 1
+    },
+    "on": {
+      "tokens": 1369432,
+      "errors": 466,
+      "sha256": "41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc",
+      "bytes": 108019935,
+      "input_tree": "/workspace/scratch/scanner-fixed-inputs",
+      "files": 81,
+      "node_exit": 0,
+      "comparison_control_exit": 0,
+      "end_mutant_diff_exit": 1,
+      "native": "blocked at compilation",
+      "build_exit": 1
+    }
+  },
+  "metrics": {
+    "trials": [
+      {
+        "user_seconds": 4.270926,
+        "wall_seconds": 3.8893169119983213,
+        "exit": 0,
+        "sha256": "41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc"
+      },
+      {
+        "user_seconds": 4.627294,
+        "wall_seconds": 4.136909540997294,
+        "exit": 0,
+        "sha256": "41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc"
+      },
+      {
+        "user_seconds": 4.369175,
+        "wall_seconds": 3.901673517000745,
+        "exit": 0,
+        "sha256": "41672da9bab56f9d10ad7d45b5938f96e3f969c6a299e5be1b260cba189893cc"
+      }
+    ],
+    "best_user_seconds": 4.270926,
+    "native": "no binary; compilation refused",
+    "perf": "not installed",
+    "nproc": 5
+  },
+  "c_emission": {
+    "exit": 1,
+    "failed_stdout_bytes": 0,
+    "generated_c_bytes": null,
+    "generated_c_lines": null
+  },
+  "clang_unsplit_seconds": null,
+  "clang_split_cold_seconds": null,
+  "clang_split_warm_seconds": null,
+  "scanner_binary_bytes": null,
+  "scratch_conflicts": [
+    "octopus attempt: expression.go, refusals.go, counts.md; rolled back automatically",
+    "sequential records: refusals.go retained recordStorageView and predicateRefusal; counts.md retained both rows"
+  ],
+  "native_comparison": "not reached: function widening refusal",
+  "secondary_probe": "erased Function fallback reaches NotYet optional/rest function value",
+  "mutants": [
+    "opaque marker rejected by stock checker (TS2345) and integrated checker (TS2740)",
+    "capture argument mutation changes emitted JavaScript",
+    "token-end mutation caught by diff in both expanded Node runs"
+  ]
+}

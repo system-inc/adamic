@@ -20,6 +20,16 @@ Implemented: both casts removed; stock TypeScript 6.0.3 emits the same 805 bytes
 A changed capture argument fails the JavaScript byte-identity check. Node still
 emits 509,014 identical tokens. The driver activates the pinned Node loader
 with an erased type-only node:util import; --compiler-cwd selects its checkout.
-Both native modes now stop at TS2740: adaptation 55's {} marker is not Function.
+Before reconciliation, both native modes stopped at TS2740: adaptation 55's
+withdrawn {} marker was not Function.
 The unmodified call arguments are retained. Full baseline rerun is pending
 after correcting a test-fixture copy error in the first attempt.
+
+
+Reconciled 55 retains the exact upstream AnyFunction parameter type. Stock
+TypeScript 6.0.3 with @types/node 25.3.3 accepts the capture call; changing that
+parameter back to {} fails TS2740. The combined 55/80 emitted-JavaScript proof
+uses the untouched gathered Debug source (including assert): 1,302 bytes,
+SHA-256 05cd00d973810e90cc54509ed7396d7577daa237ff60171ac235b73ae0e25e8c.
+A changed capture argument is caught. Both expanded Node dumps still match.
+Native now refuses function widening at debug.ts:15:58 before C generation.

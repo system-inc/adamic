@@ -1,0 +1,8 @@
+// Preserve TypeScript's real Debug.fail marker type; capture is Node metadata.
+import type {} from 'node:util';
+type AnyFunction = (...args: never[]) => void;
+function capture(stackCrawlMark?: AnyFunction): void {
+    Error.captureStackTrace(new Error(), stackCrawlMark || capture);
+}
+capture();
+console.log('ok');

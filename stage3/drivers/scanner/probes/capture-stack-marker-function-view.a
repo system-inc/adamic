@@ -1,0 +1,8 @@
+// Erased Function metadata view clears widening, exposing optional function values.
+import type {} from 'node:util';
+type AnyFunction = (...args: never[]) => void;
+function capture(stackCrawlMark?: AnyFunction): void {
+    Error.captureStackTrace(new Error(), stackCrawlMark || (capture as Function));
+}
+capture();
+console.log('ok');

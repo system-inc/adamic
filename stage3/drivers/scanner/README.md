@@ -137,5 +137,12 @@ files in each pass, 108,019,935 bytes. SHA-256:
 The skipped-trivia pass has 509,014 tokens; the retained-trivia pass has 860,418.
 All three source mutants exit zero on Node and produce unequal dumps. The
 error mutant removes exactly one row. Native execution remains blocked by the
-previously recorded typed captureStackTrace marker refusal; this expanded
+function-widening refusal after restoring the upstream AnyFunction marker; this expanded
 coverage result is a Node reference proof, not a native proof.
+
+
+55/80 reconciliation preserves the exact callable marker and emitted JavaScript.
+Both native split modes now stop at Debug.fail's function widening,
+`debug.ts:15:58`, before C emission. The minimal probe and Function-view control
+are tracked under probes/. See BLOCKERS.md and evidence/marker-reconciliation.json
+for exact diagnostics, compiler pins, byte-identity mutants and available timing.

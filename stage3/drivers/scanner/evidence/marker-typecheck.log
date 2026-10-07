@@ -1,0 +1,10 @@
+{
+  "typescript": "6.0.3",
+  "callable_diagnostics": [],
+  "opaque_marker_mutant": [
+    {
+      "code": 2345,
+      "message": "Argument of type '{}' is not assignable to parameter of type 'Function'.\n  Type '{}' is missing the following properties from type 'Function': apply, call, bind, prototype, and 6 more."
+    }
+  ]
+}
