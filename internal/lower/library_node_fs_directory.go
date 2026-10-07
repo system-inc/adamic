@@ -168,8 +168,12 @@ func (l *lowering) nodeFSDirectoryValue(node *ast.Node) (ir.Expression, bool, er
 	if module == "node:fs" && member == "name" {
 		return nil, false, nil
 	}
-	if module != "node:fs" || (member != "realpathSync" && member != "native") {
+	if module != "node:fs" {
 		return nil, true, l.notYet(node, module+"."+member+" as a value")
+	}
+	if member != "realpathSync" && member != "native" {
+		// The file host owns Stats values. The shared refusal pass judges unknown members.
+		return nil, false, nil
 	}
 	index := len(l.result.Functions)
 	parameter := len(l.result.Locals)
@@ -178,4 +182,8 @@ func (l *lowering) nodeFSDirectoryValue(node *ast.Node) (ir.Expression, bool, er
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "node_realpath", Parameters: []int{parameter}, Returns: ir.String, Closure: true, MayThrow: true, Body: []ir.Statement{ir.Return{Value: value}}})
 	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
 	return ir.MakeClosure{Function: index}, true, nil
+}
+
+func init() {
+	RegisterNodeLibraryMembers("node:fs.readdirSync", "node:fs.realpathSync", "node:fs.realpathSync.native", "node:fs.Dirent.name", "node:fs.Dirent.isFile", "node:fs.Dirent.isDirectory", "node:fs.Dirent.isSymbolicLink")
 }

@@ -2,3 +2,7 @@ package lower
 
 // resolve and relative can throw while reading cwd; join and dirname are lexical for proven strings.
 func nodePathThrows(member string) bool { return member == "resolve" || member == "relative" }
+
+func init() {
+	RegisterNodeLibraryMembers("node:path.join", "node:path.dirname", "node:path.resolve", "node:path.relative")
+}

@@ -146,7 +146,7 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
 	fixtures := append(slices.Clone(fixtures), slowRegExpFixtures...)
-	rows := make([]string, len(fixtures)+len(inputFixtures)+len(fsFileFixtures))
+	rows := make([]string, len(fixtures)+len(inputFixtures)+len(fsFileFixtures)+len(requireFixtures)+len(requirePerformanceFixtures))
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
 		for index, fixture := range fixtures {
@@ -180,6 +180,16 @@ func TestCountsAreRecorded(t *testing.T) {
 				lock.Unlock()
 			})
 		}
+		for index, path := range append(append([]string{}, requireFixtures...), requirePerformanceFixtures...) {
+			t.Run(path, func(t *testing.T) {
+				t.Parallel()
+				row := counted(t, path, true, nil, false, false)
+				lock.Lock()
+				rows[len(fixtures)+len(inputFixtures)+len(fsFileFixtures)+index] = row
+				lock.Unlock()
+			})
+		}
+
 	})
 	if t.Failed() {
 		return

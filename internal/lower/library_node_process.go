@@ -26,6 +26,12 @@ func init() {
 // Ambient declarations are recognized by their module and declaration, never by a user's spelling.
 func (l *lowering) nodeProcessPath(node *ast.Node) string {
 	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindAsExpression {
+		return l.nodeProcessPath(node.AsAsExpression().Expression)
+	}
+	if module, call := l.nodeRequireCall(node); call && module == "node:perf_hooks" {
+		return "performanceModule"
+	}
 	if ast.IsIdentifier(node) {
 		symbol := l.symbol(node)
 		if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
@@ -35,8 +41,20 @@ func (l *lowering) nodeProcessPath(node *ast.Node) string {
 			return ""
 		}
 		for _, declaration := range symbol.Declarations {
-			if load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) && declaration.Kind == ast.KindModuleDeclaration && declaration.Name().Text() == "node:perf_hooks" {
-				return "performanceModule"
+			if l.nodeRequireBinding(declaration) {
+				if module, _ := l.nodeRequireCall(declaration.AsVariableDeclaration().Initializer); module == "node:perf_hooks" {
+					return "performanceModule"
+				}
+			}
+			if load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) && declaration.Kind == ast.KindModuleDeclaration {
+				switch declaration.Name().Text() {
+				case "node:perf_hooks":
+					return "performanceModule"
+				case "node:os":
+					return "os"
+				case "node:process":
+					return "process"
+				}
 			}
 		}
 		declaration := symbol.Declarations[0]
@@ -47,6 +65,9 @@ func (l *lowering) nodeProcessPath(node *ast.Node) string {
 			if parent.Kind == ast.KindModuleDeclaration {
 				switch parent.Name().Text() {
 				case "node:process", "process":
+					if symbol.Name == "process" {
+						return "process"
+					}
 					return "process." + symbol.Name
 				case "node:os", "os":
 					return "os." + symbol.Name
@@ -181,7 +202,7 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		path = l.nodeProcessPath(node)
 	}
 	call := ir.ProcessCall{}
-	if node.Kind == ast.KindCallExpression {
+	if node.Kind == ast.KindCallExpression && path != "performanceModule" {
 		written := node.AsCallExpression()
 		path = l.processPath(written.Expression)
 		if path == "" {
@@ -243,8 +264,14 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		return call, true, nil
 	}
 	switch path {
+	case "os":
+		return nil, true, l.notYet(node, "node:os namespace as a first-class value")
 	case "performanceModule":
-		parent := node.Parent
+		outer := node
+		for outer.Parent != nil && (outer.Parent.Kind == ast.KindParenthesizedExpression || outer.Parent.Kind == ast.KindAsExpression) {
+			outer = outer.Parent
+		}
+		parent := outer.Parent
 		if parent == nil || parent.Kind != ast.KindVariableDeclaration || parent.Name().Kind != ast.KindObjectBindingPattern {
 			return nil, true, l.notYet(node, "node:perf_hooks namespace as a value outside performance destructuring")
 		}
