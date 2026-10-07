@@ -1,0 +1,16 @@
+{
+  "originMain": "c01907a7036a22c2ea7ee686ed5fe4c6cd4bbc06",
+  "refs": 567,
+  "distinctClaimContents": 20,
+  "unclaimedHelpers": 466,
+  "next": [
+    4,
+    "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].accessOrCall",
+    [
+      "array-callback-return",
+      "consistent-return",
+      "no-unreachable-loop",
+      "react-hooks/rules-of-hooks"
+    ]
+  ]
+}
