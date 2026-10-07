@@ -1,0 +1,13 @@
+{
+  "name": "react/no-unescaped-entities",
+  "kinds": [
+    "JsxText"
+  ],
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "visit": "visit",
+  "oracle": "oracleNoUnescapedEntities",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoUnescapedEntities"
+}
