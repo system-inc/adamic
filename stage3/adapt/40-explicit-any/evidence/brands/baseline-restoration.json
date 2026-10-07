@@ -1,0 +1,10 @@
+{
+  "mutant": "Append an unrelated type declaration to the real public API reference",
+  "oracleExit": 1,
+  "failing": 1,
+  "baselineDiffs": [
+    "api/typescript.d.ts"
+  ],
+  "referenceRestoredSha256": "4676886eb744113623a7c45f5403c054da3d45d97bf1ac69dd1fb8b13ee9a9c3",
+  "remainingBaselineDiffs": []
+}

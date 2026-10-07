@@ -1,0 +1,551 @@
+[
+  {
+    "file": "01_readFile_utf8.a",
+    "tsc": [
+      "src/compiler/sys.ts:1787"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "\"\"\n\"a\"\n\"a\"\n\"�\"\n\"�(\"\n\"a\\u0000b\"\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/01_readFile_utf8.a:47:21: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/01_readFile_utf8.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/01_readFile_utf8.a:5:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/01_readFile_utf8.a:6:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/01_readFile_utf8.a:7:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/01_readFile_utf8.a:9:24: error TS2591: Cannot find name 'node:buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "02_readFile_utf16le.a",
+    "tsc": [
+      "src/compiler/sys.ts:1787"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "\"\"\n\"a\"\n\"😀\"\n\"a\"\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/02_readFile_utf16le.a:47:21: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/02_readFile_utf16le.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/02_readFile_utf16le.a:5:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/02_readFile_utf16le.a:6:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/02_readFile_utf16le.a:7:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/02_readFile_utf16le.a:9:24: error TS2591: Cannot find name 'node:buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "03_readFile_utf16be.a",
+    "tsc": [
+      "src/compiler/sys.ts:1787"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "\"\"\n\"a\"\n\"😀\"\n\"a\"\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/03_readFile_utf16be.a:47:21: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/03_readFile_utf16be.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/03_readFile_utf16be.a:5:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/03_readFile_utf16be.a:6:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/03_readFile_utf16be.a:7:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/03_readFile_utf16be.a:9:24: error TS2591: Cannot find name 'node:buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "04_readFile_missing.a",
+    "tsc": [
+      "src/compiler/sys.ts:1787"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "undefined\nundefined\n\"\"\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/04_readFile_missing.a:46:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/04_readFile_missing.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/04_readFile_missing.a:5:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/04_readFile_missing.a:6:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/04_readFile_missing.a:7:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/04_readFile_missing.a:9:24: error TS2591: Cannot find name 'node:buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "05_writeFile.a",
+    "tsc": [
+      "src/compiler/sys.ts:1819",
+      "src/compiler/sys.ts:1466"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "efbbbf68c3a96c6c6f20f09f8c8d0a\n78\nENOENT\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/05_writeFile.a:37:35: error TS2503: Cannot find namespace 'NodeJS'.\nstage3/fixtures/host/05_writeFile.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/05_writeFile.a:6:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/05_writeFile.a:7:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/05_writeFile.a:8:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "06_fileExists.a",
+    "tsc": [
+      "src/compiler/sys.ts:1629",
+      "src/compiler/sys.ts:1886",
+      "src/compiler/sys.ts:1901",
+      "src/compiler/sys.ts:901",
+      "src/compiler/sys.ts:1487"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "file true\ndir false\nmissing false\nfileLink true\ndirLink false\nbroken false\nfile/child false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/06_fileExists.a:10:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/06_fileExists.a:11:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/06_fileExists.a:14:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/06_fileExists.a:8:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/06_fileExists.a:9:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "07_directoryExists.a",
+    "tsc": [
+      "src/compiler/sys.ts:1629",
+      "src/compiler/sys.ts:1886",
+      "src/compiler/sys.ts:1905",
+      "src/compiler/sys.ts:901",
+      "src/compiler/sys.ts:1487"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "file false\ndir true\nmissing false\nfileLink false\ndirLink true\nbroken false\nfile/child false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/07_directoryExists.a:10:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/07_directoryExists.a:11:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/07_directoryExists.a:14:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/07_directoryExists.a:8:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/07_directoryExists.a:9:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "08_getDirectories.a",
+    "tsc": [
+      "src/compiler/sys.ts:1629",
+      "src/compiler/path.ts:526",
+      "src/compiler/path.ts:146",
+      "src/compiler/path.ts:151",
+      "src/compiler/path.ts:165",
+      "src/compiler/path.ts:250",
+      "src/compiler/path.ts:41",
+      "src/compiler/path.ts:140",
+      "src/compiler/path.ts:807",
+      "src/compiler/path.ts:579",
+      "src/compiler/sys.ts:1838",
+      "src/compiler/sys.ts:1909",
+      "src/compiler/sys.ts:1487",
+      "src/compiler/path.ts:28",
+      "src/compiler/utilities.ts:10312"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "a,link,z\na,link,z\n\na,link,z\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/08_getDirectories.a:18:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/08_getDirectories.a:19:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/08_getDirectories.a:20:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/08_getDirectories.a:21:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/08_getDirectories.a:24:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "09_realpath.a",
+    "platform": "linux",
+    "tsc": [
+      "src/compiler/sys.ts:1913",
+      "src/compiler/sys.ts:1917",
+      "src/compiler/sys.ts:1491"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "true\ntrue\n./adamic-host-missing/../absent\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/09_realpath.a:6:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/09_realpath.a:7:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/09_realpath.a:8:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/09_realpath.a:9:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "10_getModifiedTime.a",
+    "tsc": [
+      "src/compiler/sys.ts:1629",
+      "src/compiler/sys.ts:1926",
+      "src/compiler/sys.ts:1487"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "946684800000\nundefined\n946684800000\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/10_getModifiedTime.a:12:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/10_getModifiedTime.a:6:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/10_getModifiedTime.a:7:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/10_getModifiedTime.a:8:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/10_getModifiedTime.a:9:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "11_setModifiedTime.a",
+    "tsc": [
+      "src/compiler/sys.ts:1930"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "946684800000\n946684800000\nmissing ignored\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/11_setModifiedTime.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/11_setModifiedTime.a:5:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/11_setModifiedTime.a:6:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/11_setModifiedTime.a:7:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "12_deleteFile.a",
+    "tsc": [
+      "src/compiler/sys.ts:1939"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "true\nfalse\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/12_deleteFile.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/12_deleteFile.a:5:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/12_deleteFile.a:6:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/12_deleteFile.a:7:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "13_createDirectory.a",
+    "tsc": [
+      "src/compiler/sys.ts:1629",
+      "src/compiler/sys.ts:1886",
+      "src/compiler/sys.ts:1905",
+      "src/compiler/sys.ts:1545",
+      "src/compiler/sys.ts:901",
+      "src/compiler/sys.ts:1487"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "true\ntrue\nENOENT\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/13_createDirectory.a:10:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/13_createDirectory.a:11:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/13_createDirectory.a:12:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/13_createDirectory.a:15:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/13_createDirectory.a:54:17: error TS18046: 'e' is of type 'unknown'.\nstage3/fixtures/host/13_createDirectory.a:73:35: error TS2503: Cannot find namespace 'NodeJS'.\nstage3/fixtures/host/13_createDirectory.a:9:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "14_getCurrentDirectory.a",
+    "platform": "linux",
+    "tsc": [
+      "src/compiler/core.ts:1891",
+      "src/compiler/sys.ts:1501"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "true\ntrue\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/14_getCurrentDirectory.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/14_getCurrentDirectory.a:6:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/14_getCurrentDirectory.a:7:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/14_getCurrentDirectory.a:8:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "15_getExecutingFilePath.a",
+    "tsc": [
+      "src/compiler/sys.ts:1498",
+      "src/compiler/sys.ts:1560"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "__fake__.js\n_tsc.js\nsys.cjs\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/15_getExecutingFilePath.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/15_getExecutingFilePath.a:6:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/15_getExecutingFilePath.a:7:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/15_getExecutingFilePath.a:8:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "16_getEnvironmentVariable.a",
+    "tsc": [
+      "src/compiler/sys.ts:1565"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "\"\"\n\"0\"\n\"héllo\"\n\"\"\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:18:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/16_getEnvironmentVariable.a:20:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/16_getEnvironmentVariable.a:22:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/16_getEnvironmentVariable.a:24:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/16_getEnvironmentVariable.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/16_getEnvironmentVariable.a:5:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/16_getEnvironmentVariable.a:6:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/16_getEnvironmentVariable.a:7:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "17_write.a",
+    "tsc": [
+      "src/compiler/sys.ts:1527"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "first|héllo 🌍\nlast!\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/17_write.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/17_write.a:5:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/17_write.a:6:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/17_write.a:7:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "18_exit_0.a",
+    "tsc": [
+      "src/compiler/sys.ts:1587",
+      "src/compiler/sys.ts:1715"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "exit 0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/18_exit_0.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/18_exit_0.a:6:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/18_exit_0.a:7:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/18_exit_0.a:8:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "19_exit_1.a",
+    "tsc": [
+      "src/compiler/sys.ts:1587",
+      "src/compiler/sys.ts:1715"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "exit 1\n",
+      "stderr": "",
+      "exit": 1
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/19_exit_1.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/19_exit_1.a:6:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/19_exit_1.a:7:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/19_exit_1.a:8:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "20_exit_2.a",
+    "tsc": [
+      "src/compiler/sys.ts:1587",
+      "src/compiler/sys.ts:1715"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "exit 2\n",
+      "stderr": "",
+      "exit": 2
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/20_exit_2.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/20_exit_2.a:6:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/20_exit_2.a:7:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/20_exit_2.a:8:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "21_createHash.a",
+    "tsc": [
+      "src/compiler/sys.ts:1948",
+      "src/compiler/sys.ts:59",
+      "src/compiler/sys.ts:1572"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\nba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\ncbbcee01a3fc5f1c0db23e02be25316adf28ede876031fdbabe5f4fabe47ed7f\n59b271ae1bbcb1d31d41929817f4b16fb439eb4f31520b5ad1d5ce98920a7138\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/21_createHash.a:11:26: error TS2591: Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/21_createHash.a:6:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/21_createHash.a:7:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/21_createHash.a:8:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/21_createHash.a:9:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "22_createHash_fallback.a",
+    "tsc": [
+      "src/compiler/sys.ts:59",
+      "src/compiler/sys.ts:1572"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "5381\n193485963\n2317135974\n-997923643\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/22_createHash_fallback.a:5:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/22_createHash_fallback.a:6:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/22_createHash_fallback.a:7:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/22_createHash_fallback.a:8:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "23_newLine.a",
+    "tsc": [
+      "src/compiler/sys.ts:1525"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "\"\\n\"\nVersion 6.0.3\ndiagnostic\n\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/23_newLine.a:13:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/23_newLine.a:4:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/23_newLine.a:5:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/23_newLine.a:6:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/23_newLine.a:7:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/23_newLine.a:9:22: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "24_useCaseSensitiveFileNames.a",
+    "platform": "linux",
+    "tsc": [
+      "src/compiler/sys.ts:1629",
+      "src/compiler/sys.ts:1886",
+      "src/compiler/sys.ts:1901",
+      "src/compiler/sys.ts:1732",
+      "src/compiler/sys.ts:1722",
+      "src/compiler/sys.ts:901",
+      "src/compiler/sys.ts:1487",
+      "src/compiler/sys.ts:1489"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "false\nfalse\ntrue\nfalse\naBc_09.TS\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/24_useCaseSensitiveFileNames.a:11:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/24_useCaseSensitiveFileNames.a:12:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/24_useCaseSensitiveFileNames.a:13:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/24_useCaseSensitiveFileNames.a:14:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/24_useCaseSensitiveFileNames.a:17:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    }
+  },
+  {
+    "file": "25_readDirectory.a",
+    "tsc": [
+      "src/compiler/types.ts:7841",
+      "src/compiler/corePublic.ts:43",
+      "src/compiler/utilities.ts:9781",
+      "src/compiler/utilities.ts:9787",
+      "src/compiler/utilities.ts:9612",
+      "src/compiler/core.ts:1934",
+      "src/compiler/corePublic.ts:37",
+      "src/compiler/core.ts:2375",
+      "src/compiler/corePublic.ts:40",
+      "src/compiler/corePublic.ts:17",
+      "src/compiler/path.ts:32",
+      "src/compiler/path.ts:28",
+      "src/compiler/path.ts:526",
+      "src/compiler/path.ts:882",
+      "src/compiler/path.ts:732",
+      "src/compiler/path.ts:30",
+      "src/compiler/path.ts:146",
+      "src/compiler/path.ts:31",
+      "src/compiler/path.ts:151",
+      "src/compiler/path.ts:165",
+      "src/compiler/path.ts:250",
+      "src/compiler/path.ts:41",
+      "src/compiler/path.ts:140",
+      "src/compiler/path.ts:807",
+      "src/compiler/path.ts:579",
+      "src/compiler/path.ts:785",
+      "src/compiler/path.ts:627",
+      "src/compiler/path.ts:722",
+      "src/compiler/core.ts:320",
+      "src/compiler/core.ts:1750",
+      "src/compiler/core.ts:965",
+      "src/compiler/core.ts:985",
+      "src/compiler/core.ts:926",
+      "src/compiler/core.ts:17",
+      "src/compiler/core.ts:399",
+      "src/compiler/utilities.ts:9607",
+      "src/compiler/utilities.ts:9609",
+      "src/compiler/utilities.ts:9776",
+      "src/compiler/utilities.ts:9618",
+      "src/compiler/utilities.ts:9634",
+      "src/compiler/utilities.ts:9644",
+      "src/compiler/utilities.ts:9650",
+      "src/compiler/core.ts:618",
+      "src/compiler/path.ts:538",
+      "src/compiler/core.ts:1116",
+      "src/compiler/path.ts:449",
+      "src/compiler/path.ts:495",
+      "src/compiler/path.ts:622",
+      "src/compiler/debug.ts:196",
+      "src/compiler/debug.ts:213",
+      "src/compiler/core.ts:1121",
+      "src/compiler/utilities.ts:9684",
+      "src/compiler/utilities.ts:9594",
+      "src/compiler/utilities.ts:9695",
+      "src/compiler/utilities.ts:9670",
+      "src/compiler/utilities.ts:9657",
+      "src/compiler/path.ts:60",
+      "src/compiler/core.ts:1937",
+      "src/compiler/core.ts:220",
+      "src/compiler/core.ts:232",
+      "src/compiler/utilities.ts:9605",
+      "src/compiler/core.ts:1951",
+      "src/compiler/core.ts:2430",
+      "src/compiler/path.ts:388",
+      "src/compiler/path.ts:398",
+      "src/compiler/core.ts:1966",
+      "src/compiler/path.ts:435",
+      "src/compiler/path.ts:373",
+      "src/compiler/path.ts:115",
+      "src/compiler/path.ts:312",
+      "src/compiler/utilities.ts:9922",
+      "src/compiler/core.ts:2032",
+      "src/compiler/core.ts:1974",
+      "src/compiler/core.ts:2074",
+      "src/compiler/core.ts:2079",
+      "src/compiler/core.ts:145",
+      "src/compiler/path.ts:967",
+      "src/compiler/utilities.ts:9892",
+      "src/compiler/utilities.ts:9802",
+      "src/compiler/utilities.ts:9817",
+      "src/compiler/core.ts:1828",
+      "src/compiler/core.ts:1861",
+      "src/compiler/core.ts:1835",
+      "src/compiler/core.ts:1875",
+      "src/compiler/core.ts:2377",
+      "src/compiler/core.ts:375",
+      "src/compiler/core.ts:1038",
+      "src/compiler/core.ts:2247",
+      "src/compiler/path.ts:120",
+      "src/compiler/path.ts:125",
+      "src/compiler/core.ts:198",
+      "src/compiler/utilities.ts:9826",
+      "src/compiler/sys.ts:1629",
+      "src/compiler/sys.ts:1838",
+      "src/compiler/sys.ts:1882",
+      "src/compiler/sys.ts:1913",
+      "src/compiler/sys.ts:1917",
+      "src/compiler/sys.ts:1487",
+      "src/compiler/sys.ts:1491",
+      "src/compiler/utilities.ts:10312"
+    ],
+    "reason": "TS2591",
+    "node": {
+      "stdout": "a.ts,z.ts,alias/b.ts,alias/deep/c.ts\na.ts,z.ts\nsrc/b.ts,src/deep/c.ts,a.ts\nplain.js\n\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Checker",
+      "what": "stage3/fixtures/host/25_readDirectory.a:1001:23: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:103:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1041:17: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:1046:21: error TS2532: Object is possibly 'undefined'.\nstage3/fixtures/host/25_readDirectory.a:104:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:105:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:106:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:1074:41: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/25_readDirectory.a:408:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:430:21: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.\nstage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\nstage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:741:10: error TS7030: Not all code paths return a value.\nstage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.\nstage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    }
+  }
+]
