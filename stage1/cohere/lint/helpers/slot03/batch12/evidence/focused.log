@@ -1,0 +1,32 @@
+=== RUN   TestBatch12Helpers
+    batch12_test.go:70: /workspace/adamic/stage1/cohere/lint/helpers/slot03/batch12/main.a:12:8: Adamic 0.1 refuses 'suffix', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function suffix() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestBatch12Helpers (2.46s)
+=== RUN   TestBatch12Mutants
+=== RUN   TestBatch12Mutants/is_angle.a
+    batch12_test.go:113: /tmp/adamic-gate/TestBatch12Mutantsis_angle.a1669896175/001/main.a:12:8: Adamic 0.1 refuses 'suffix', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function suffix() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch12Mutants/is_angle.a#01
+    batch12_test.go:113: /tmp/adamic-gate/TestBatch12Mutantsis_angle.a#011925310880/001/main.a:12:8: Adamic 0.1 refuses 'suffix', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function suffix() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch12Mutants/is_number.a
+    batch12_test.go:113: /tmp/adamic-gate/TestBatch12Mutantsis_number.a3230744275/001/main.a:12:8: Adamic 0.1 refuses 'suffix', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function suffix() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch12Mutants/is_number.a#01
+    batch12_test.go:113: /tmp/adamic-gate/TestBatch12Mutantsis_number.a#01565860053/001/main.a:12:8: Adamic 0.1 refuses 'suffix', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function suffix() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch12Mutants/is_number.a#02
+    batch12_test.go:113: /tmp/adamic-gate/TestBatch12Mutantsis_number.a#022772171749/001/main.a:12:8: Adamic 0.1 refuses 'suffix', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function suffix() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch12Mutants/is_percentage.a
+    batch12_test.go:113: /tmp/adamic-gate/TestBatch12Mutantsis_percentage.a2211619939/001/main.a:12:8: Adamic 0.1 refuses 'suffix', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function suffix() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch12Mutants/is_percentage.a#01
+    batch12_test.go:113: /tmp/adamic-gate/TestBatch12Mutantsis_percentage.a#01245111631/001/main.a:12:8: Adamic 0.1 refuses 'suffix', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function suffix() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+=== RUN   TestBatch12Mutants/is_percentage.a#02
+    batch12_test.go:113: /tmp/adamic-gate/TestBatch12Mutantsis_percentage.a#02718173959/001/main.a:12:8: Adamic 0.1 refuses 'suffix', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function suffix() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestBatch12Mutants (0.66s)
+    --- FAIL: TestBatch12Mutants/is_angle.a (0.05s)
+    --- FAIL: TestBatch12Mutants/is_angle.a#01 (0.05s)
+    --- FAIL: TestBatch12Mutants/is_number.a (0.04s)
+    --- FAIL: TestBatch12Mutants/is_number.a#01 (0.04s)
+    --- FAIL: TestBatch12Mutants/is_number.a#02 (0.04s)
+    --- FAIL: TestBatch12Mutants/is_percentage.a (0.04s)
+    --- FAIL: TestBatch12Mutants/is_percentage.a#01 (0.05s)
+    --- FAIL: TestBatch12Mutants/is_percentage.a#02 (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	3.125s
+FAIL

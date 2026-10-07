@@ -1,0 +1,326 @@
+=== RUN   TestHelpersMatchCohere
+    helpers_test.go:101: 22412 oracle output lines matched Go, Node and sanitized native
+--- PASS: TestHelpersMatchCohere (22.35s)
+=== RUN   TestHelperMutants
+=== RUN   TestHelperMutants/options_json.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15157: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/option_schema.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15166: got "valid", Go "invalid"
+=== RUN   TestHelperMutants/policy_message.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 22166: got "This throws a bare `{{constructor}}`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.", Go "This throws a bare `sentinel é😀`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault."
+=== RUN   TestHelperMutants/strict_options.ts
+    helpers_test.go:145: compiled semantic mutant caught at output line 15178: got "valid", Go "invalid"
+--- PASS: TestHelperMutants (45.22s)
+    --- PASS: TestHelperMutants/options_json.ts (8.23s)
+    --- PASS: TestHelperMutants/option_schema.ts (8.52s)
+    --- PASS: TestHelperMutants/policy_message.ts (8.72s)
+    --- PASS: TestHelperMutants/strict_options.ts (9.06s)
+=== RUN   TestMessageRefusalsMatchGo
+    helpers_test.go:237: 10 message refusal cases match Go on Node and sanitized native
+--- PASS: TestMessageRefusalsMatchGo (10.87s)
+=== RUN   TestKnownGapsAreExplicit
+--- PASS: TestKnownGapsAreExplicit (2.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	80.484s
+=== RUN   TestBatch10Helpers
+    batch10_test.go:49: 1071 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch10Helpers (1.61s)
+=== RUN   TestBatch10Mutants
+=== RUN   TestBatch10Mutants/is_url.a
+    batch10_test.go:91: compiled semantic mutant caught at line 79: got "true" Go "false"
+=== RUN   TestBatch10Mutants/is_url.a#01
+    batch10_test.go:91: compiled semantic mutant caught at line 916: got "true" Go "false"
+=== RUN   TestBatch10Mutants/is_absolute_size.a
+    batch10_test.go:91: compiled semantic mutant caught at line 1046: got "false" Go "true"
+=== RUN   TestBatch10Mutants/is_absolute_size.a#01
+    batch10_test.go:91: compiled semantic mutant caught at line 65: got "true" Go "false"
+=== RUN   TestBatch10Mutants/is_relative_size.a
+    batch10_test.go:91: compiled semantic mutant caught at line 783: got "false" Go "true"
+--- PASS: TestBatch10Mutants (4.96s)
+    --- PASS: TestBatch10Mutants/is_url.a (0.89s)
+    --- PASS: TestBatch10Mutants/is_url.a#01 (1.04s)
+    --- PASS: TestBatch10Mutants/is_absolute_size.a (1.01s)
+    --- PASS: TestBatch10Mutants/is_absolute_size.a#01 (0.79s)
+    --- PASS: TestBatch10Mutants/is_relative_size.a (0.87s)
+=== RUN   TestBatch11Helpers
+    batch11_test.go:49: 1118 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch11Helpers (1.67s)
+=== RUN   TestBatch11Mutants
+=== RUN   TestBatch11Mutants/is_generic_name.a
+    batch11_test.go:93: compiled semantic mutant caught at line 549: got "false" Go "true"
+=== RUN   TestBatch11Mutants/is_generic_name.a#01
+    batch11_test.go:93: compiled semantic mutant caught at line 101: got "true" Go "false"
+=== RUN   TestBatch11Mutants/has_math_function.a
+    batch11_test.go:93: compiled semantic mutant caught at line 38: got "false" Go "true"
+=== RUN   TestBatch11Mutants/has_math_function.a#01
+    batch11_test.go:93: compiled semantic mutant caught at line 60: got "false" Go "true"
+=== RUN   TestBatch11Mutants/has_math_function.a#02
+    batch11_test.go:93: compiled semantic mutant caught at line 88: got "true" Go "false"
+=== RUN   TestBatch11Mutants/loaded_utilities.a
+    batch11_test.go:93: compiled semantic mutant caught at line 1115: got "-1/false/true" Go "0/true/true"
+=== RUN   TestBatch11Mutants/loaded_utilities.a#01
+    batch11_test.go:93: compiled semantic mutant caught at line 1115: got "0/true/false" Go "0/true/true"
+--- PASS: TestBatch11Mutants (5.55s)
+    --- PASS: TestBatch11Mutants/is_generic_name.a (0.66s)
+    --- PASS: TestBatch11Mutants/is_generic_name.a#01 (0.65s)
+    --- PASS: TestBatch11Mutants/has_math_function.a (0.85s)
+    --- PASS: TestBatch11Mutants/has_math_function.a#01 (0.67s)
+    --- PASS: TestBatch11Mutants/has_math_function.a#02 (0.65s)
+    --- PASS: TestBatch11Mutants/loaded_utilities.a (0.96s)
+    --- PASS: TestBatch11Mutants/loaded_utilities.a#01 (0.69s)
+=== RUN   TestBatch12Helpers
+    batch12_test.go:75: 2070 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch12Helpers (1.59s)
+=== RUN   TestBatch12Mutants
+=== RUN   TestBatch12Mutants/is_angle.a
+    batch12_test.go:120: compiled semantic mutant caught at line 1: got "false/suffix:deg,rad,grad;" Go "false/suffix:deg,rad,grad,turn;"
+=== RUN   TestBatch12Mutants/is_angle.a#01
+    batch12_test.go:120: compiled semantic mutant caught at line 1: got "true/suffix:deg,rad,grad,turn;" Go "false/suffix:deg,rad,grad,turn;"
+=== RUN   TestBatch12Mutants/is_number.a
+    batch12_test.go:120: compiled semantic mutant caught at line 2: got "true/scan;" Go "false/scan;math;"
+=== RUN   TestBatch12Mutants/is_number.a#01
+    batch12_test.go:120: compiled semantic mutant caught at line 92: got "true/scan;" Go "false/scan;math;"
+=== RUN   TestBatch12Mutants/is_number.a#02
+    batch12_test.go:120: compiled semantic mutant caught at line 2: got "false/math;scan;math;" Go "false/scan;math;"
+=== RUN   TestBatch12Mutants/is_percentage.a
+    batch12_test.go:120: compiled semantic mutant caught at line 3: got "false/suffix:percent;math;" Go "false/suffix:%;math;"
+=== RUN   TestBatch12Mutants/is_percentage.a#01
+    batch12_test.go:120: compiled semantic mutant caught at line 3: got "false/suffix:%;" Go "false/suffix:%;math;"
+=== RUN   TestBatch12Mutants/is_percentage.a#02
+    batch12_test.go:120: compiled semantic mutant caught at line 3: got "false/math;suffix:%;math;" Go "false/suffix:%;math;"
+--- PASS: TestBatch12Mutants (8.84s)
+    --- PASS: TestBatch12Mutants/is_angle.a (1.07s)
+    --- PASS: TestBatch12Mutants/is_angle.a#01 (1.27s)
+    --- PASS: TestBatch12Mutants/is_number.a (0.89s)
+    --- PASS: TestBatch12Mutants/is_number.a#01 (0.93s)
+    --- PASS: TestBatch12Mutants/is_number.a#02 (1.14s)
+    --- PASS: TestBatch12Mutants/is_percentage.a (1.07s)
+    --- PASS: TestBatch12Mutants/is_percentage.a#01 (1.19s)
+    --- PASS: TestBatch12Mutants/is_percentage.a#02 (0.92s)
+=== RUN   TestBatch2Helpers
+    batch2_test.go:61: 208636 lines match real Go, Node source and sanitized native
+--- PASS: TestBatch2Helpers (37.96s)
+=== RUN   TestBatch2Mutants
+=== RUN   TestBatch2Mutants/intrinsic_element_named.a
+    batch2_test.go:101: compiled semantic mutant caught at line 24: got "true" Go "false"
+=== RUN   TestBatch2Mutants/hole_edges.a
+    batch2_test.go:101: compiled semantic mutant caught at line 179230: got "false,false" Go "true,false"
+=== RUN   TestBatch2Mutants/read_class_values.a
+    batch2_test.go:101: compiled semantic mutant caught at line 185959: got "Attribute::" Go "Callee::"
+--- PASS: TestBatch2Mutants (85.13s)
+    --- PASS: TestBatch2Mutants/intrinsic_element_named.a (29.52s)
+    --- PASS: TestBatch2Mutants/hole_edges.a (26.57s)
+    --- PASS: TestBatch2Mutants/read_class_values.a (25.11s)
+=== RUN   TestBatch3Helpers
+    batch3_test.go:63: 1117150 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch3Helpers (9.93s)
+=== RUN   TestBatch3Mutants
+=== RUN   TestBatch3Mutants/hex_value.a
+    batch3_test.go:99: compiled semantic mutant caught at line 43: got "-1" Go "15"
+=== RUN   TestBatch3Mutants/unescape_string_literal_text.a
+    batch3_test.go:99: compiled semantic mutant caught at line 1114212: got "0,99,111,112,121,10,:99,111,112,121," Go "0,169,10,:99,111,112,121,"
+=== RUN   TestBatch3Mutants/parameter_nodes.a
+    batch3_test.go:99: compiled semantic mutant caught at line 1115385: got "2,-1,3,2" Go "-1,-1,3,2"
+=== RUN   TestBatch3Mutants/parameter_nodes.a#01
+    batch3_test.go:99: compiled semantic mutant caught at line 1115375: got "0,1" Go ""
+--- PASS: TestBatch3Mutants (11.80s)
+    --- PASS: TestBatch3Mutants/hex_value.a (2.41s)
+    --- PASS: TestBatch3Mutants/unescape_string_literal_text.a (1.95s)
+    --- PASS: TestBatch3Mutants/parameter_nodes.a (2.23s)
+    --- PASS: TestBatch3Mutants/parameter_nodes.a#01 (1.60s)
+=== RUN   TestBatch4Helpers
+    batch4_test.go:49: 77616 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch4Helpers (2.15s)
+=== RUN   TestBatch4Mutants
+=== RUN   TestBatch4Mutants/escape_terminator.a
+    batch4_test.go:85: compiled semantic mutant caught at line 13: got "false" Go "true"
+=== RUN   TestBatch4Mutants/followed_by_whitespace.a
+    batch4_test.go:85: compiled semantic mutant caught at line 3585: got "true:10" Go "false:10,11"
+=== RUN   TestBatch4Mutants/ignored_theme_key.a
+    batch4_test.go:85: compiled semantic mutant caught at line 75243: got "true" Go "false"
+--- PASS: TestBatch4Mutants (4.55s)
+    --- PASS: TestBatch4Mutants/escape_terminator.a (1.23s)
+    --- PASS: TestBatch4Mutants/followed_by_whitespace.a (1.36s)
+    --- PASS: TestBatch4Mutants/ignored_theme_key.a (1.72s)
+=== RUN   TestBatch5Helpers
+    batch5_test.go:49: 11571 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch5Helpers (1.77s)
+=== RUN   TestBatch5Mutants
+=== RUN   TestBatch5Mutants/split_theme_key.a
+    batch5_test.go:92: compiled semantic mutant caught at line 283: got "1:" Go "0:"
+=== RUN   TestBatch5Mutants/split_theme_key.a#01
+    batch5_test.go:92: compiled semantic mutant caught at line 286: got "0:" Go "1:"
+=== RUN   TestBatch5Mutants/split_theme_key.a#02
+    batch5_test.go:92: compiled semantic mutant caught at line 288: got "1:99,104,97,110,103,101,100," Go "1:"
+=== RUN   TestBatch5Mutants/join_segments.a
+    batch5_test.go:92: compiled semantic mutant caught at line 290: got "0," Go "0,45,"
+=== RUN   TestBatch5Mutants/breakpoint_group_order.a
+    batch5_test.go:92: compiled semantic mutant caught at line 9639: got "2:true" Go "0:false"
+=== RUN   TestBatch5Mutants/breakpoint_group_order.a#01
+    batch5_test.go:92: compiled semantic mutant caught at line 9641: got "23:true" Go "-17:true"
+--- PASS: TestBatch5Mutants (7.26s)
+    --- PASS: TestBatch5Mutants/split_theme_key.a (0.97s)
+    --- PASS: TestBatch5Mutants/split_theme_key.a#01 (1.22s)
+    --- PASS: TestBatch5Mutants/split_theme_key.a#02 (1.00s)
+    --- PASS: TestBatch5Mutants/join_segments.a (1.32s)
+    --- PASS: TestBatch5Mutants/breakpoint_group_order.a (1.05s)
+    --- PASS: TestBatch5Mutants/breakpoint_group_order.a#01 (1.39s)
+=== RUN   TestBatch6Helpers
+    batch6_test.go:49: 34566 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch6Helpers (2.77s)
+=== RUN   TestBatch6Mutants
+=== RUN   TestBatch6Mutants/at_rule.a
+    batch6_test.go:85: compiled semantic mutant caught at line 1: got "rule|||112,97,114,97,109,115,58,|||false|false|false|false|0|0|" Go "at-rule|||112,97,114,97,109,115,58,|||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/at_rule.a#01
+    batch6_test.go:85: compiled semantic mutant caught at line 14: got "1:1:true:0" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/at_rule.a#02
+    batch6_test.go:85: compiled semantic mutant caught at line 14: got "0:0:true:" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/at_rule.a#03
+    batch6_test.go:85: compiled semantic mutant caught at line 3: got "at-rule|99,104,97,110,103,101,100,|99,104,97,110,103,101,100,|112,97,114,97,109,115,58,|||false|false|false|false|0|0|" Go "at-rule|||112,97,114,97,109,115,58,|||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/style_rule.a
+    batch6_test.go:85: compiled semantic mutant caught at line 4: got "at-rule||||||false|false|false|false|0|0|" Go "rule||||||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/style_rule.a#01
+    batch6_test.go:85: compiled semantic mutant caught at line 17: got "1:1:true:0" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/style_rule.a#02
+    batch6_test.go:85: compiled semantic mutant caught at line 17: got "0:0:true:" Go "1:1:true:-1"
+=== RUN   TestBatch6Mutants/style_rule.a#03
+    batch6_test.go:85: compiled semantic mutant caught at line 6: got "rule|99,104,97,110,103,101,100,|99,104,97,110,103,101,100,||||false|false|false|false|0|0|" Go "rule||||||false|false|false|false|0|0|"
+=== RUN   TestBatch6Mutants/variant_next_order.a
+    batch6_test.go:85: compiled semantic mutant caught at line 29488: got "-9007199254740989" Go "-9007199254740991"
+=== RUN   TestBatch6Mutants/variant_next_order.a#01
+    batch6_test.go:85: compiled semantic mutant caught at line 29485: got "-9007199254740988" Go "-9007199254740989"
+=== RUN   TestBatch6Mutants/variant_next_order.a#02
+    batch6_test.go:85: compiled semantic mutant caught at line 29486: got "false:0:-9007199254740989" Go "false:0:-9007199254740990"
+--- PASS: TestBatch6Mutants (21.08s)
+    --- PASS: TestBatch6Mutants/at_rule.a (1.84s)
+    --- PASS: TestBatch6Mutants/at_rule.a#01 (2.06s)
+    --- PASS: TestBatch6Mutants/at_rule.a#02 (1.73s)
+    --- PASS: TestBatch6Mutants/at_rule.a#03 (2.20s)
+    --- PASS: TestBatch6Mutants/style_rule.a (1.70s)
+    --- PASS: TestBatch6Mutants/style_rule.a#01 (1.92s)
+    --- PASS: TestBatch6Mutants/style_rule.a#02 (1.84s)
+    --- PASS: TestBatch6Mutants/style_rule.a#03 (1.64s)
+    --- PASS: TestBatch6Mutants/variant_next_order.a (2.11s)
+    --- PASS: TestBatch6Mutants/variant_next_order.a#01 (1.97s)
+    --- PASS: TestBatch6Mutants/variant_next_order.a#02 (1.70s)
+=== RUN   TestBatch7Helpers
+    batch7_test.go:49: 415800 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch7Helpers (10.66s)
+=== RUN   TestBatch7Mutants
+=== RUN   TestBatch7Mutants/new_variant_registry.a
+    batch7_test.go:85: compiled semantic mutant caught at line 1: got "1:false:0:0:0" Go "0:false:0:0:0"
+=== RUN   TestBatch7Mutants/new_variant_registry.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 25: got "84:false:0:2:2" Go "0:false:0:0:0"
+=== RUN   TestBatch7Mutants/register.a
+    batch7_test.go:85: compiled semantic mutant caught at line 8: got ":84:replacement" Go ":83:replacement"
+=== RUN   TestBatch7Mutants/register.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 680: got ":83:static" Go ":-17:static"
+=== RUN   TestBatch7Mutants/register.a#02
+    batch7_test.go:85: compiled semantic mutant caught at line 679: got "-17:true:-17:1:0" Go "82:true:-17:1:0"
+=== RUN   TestBatch7Mutants/attach_comparison.a
+    batch7_test.go:85: compiled semantic mutant caught at line 16: got "84:false:0:2:0" Go "84:false:0:2:1"
+=== RUN   TestBatch7Mutants/attach_comparison.a#01
+    batch7_test.go:85: compiled semantic mutant caught at line 21: got "-8" Go "15"
+=== RUN   TestBatch7Mutants/attach_comparison.a#02
+    batch7_test.go:85: compiled semantic mutant caught at line 15: got "missing" Go "-8"
+--- PASS: TestBatch7Mutants (55.56s)
+    --- PASS: TestBatch7Mutants/new_variant_registry.a (6.29s)
+    --- PASS: TestBatch7Mutants/new_variant_registry.a#01 (7.48s)
+    --- PASS: TestBatch7Mutants/register.a (6.59s)
+    --- PASS: TestBatch7Mutants/register.a#01 (6.63s)
+    --- PASS: TestBatch7Mutants/register.a#02 (6.71s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a (6.66s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a#01 (6.65s)
+    --- PASS: TestBatch7Mutants/attach_comparison.a#02 (6.81s)
+=== RUN   TestBatch8Helpers
+    batch8_test.go:49: 5838 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch8Helpers (4.80s)
+=== RUN   TestBatch8Mutants
+=== RUN   TestBatch8Mutants/recursively_decode_arbitrary_values.a
+    batch8_test.go:85: compiled semantic mutant caught at line 413: got "function:102,110,|function:118,97,114,|word:45,45,97,95,98,|separator:44,|word:32,99,32,100,|separator:44,|function:117,114,108,|word:97,32,98,|" Go "function:102,110,|function:118,97,114,|word:45,45,97,95,98,|separator:44,|word:32,99,32,100,|separator:44,|function:117,114,108,|word:97,95,98,|"
+=== RUN   TestBatch8Mutants/recursively_decode_arbitrary_values.a#01
+    batch8_test.go:85: compiled semantic mutant caught at line 71: got "function:99,97,108,99,|function:118,97,114,|word:45,45,97,32,98,|word:43,49,112,120,|" Go "function:99,97,108,99,|function:118,97,114,|word:45,45,97,95,98,|word:43,49,112,120,|"
+=== RUN   TestBatch8Mutants/recursively_decode_arbitrary_values.a#02
+    batch8_test.go:85: compiled semantic mutant caught at line 714: got "unknown:97,32,117,114,108,|word:45,45,97,95,98,|word:99,92,95,100,95,101,|word:95,102,95,103,|function:102,111,111,95,98,97,114,|word:104,95,105,|" Go "unknown:97,95,117,114,108,|word:45,45,97,95,98,|word:99,92,95,100,95,101,|word:95,102,95,103,|function:102,111,111,95,98,97,114,|word:104,95,105,|"
+=== RUN   TestBatch8Mutants/decode_arbitrary_value.a
+    batch8_test.go:85: compiled semantic mutant caught at line 70: got "99,97,108,99,40,49,112,120,43,50,112,120,41," Go "99,97,108,99,40,49,112,120,32,43,32,50,112,120,41,"
+=== RUN   TestBatch8Mutants/decode_arbitrary_value.a#01
+    batch8_test.go:85: compiled semantic mutant caught at line 70: got "99,97,108,99,40,49,112,120,43,50,112,120,41," Go "99,97,108,99,40,49,112,120,32,43,32,50,112,120,41,"
+=== RUN   TestBatch8Mutants/decode_arbitrary_value.a#02
+    batch8_test.go:85: compiled semantic mutant caught at line 30: got "117,110,101,120,112,101,99,116,101,100,32,109,97,116,104,32,105,110,112,117,116,58,117,110,101,120,112,101,99,116,101,100,32,112,97,114,115,101,32,105,110,112,117,116,58,85,82,76,40,97,32,98,41,32," Go "85,82,76,40,97,32,98,41,"
+=== RUN   TestBatch8Mutants/register_theme_breakpoint_variants.a
+    batch8_test.go:85: compiled semantic mutant caught at line 851: got "49,48,48,:-17:static|101,120,105,115,116,105,110,103,:1:functional|115,109,:2:compound|" Go "101,120,105,115,116,105,110,103,:1:functional|115,109,:2:compound|"
+=== RUN   TestBatch8Mutants/register_theme_breakpoint_variants.a#01
+    batch8_test.go:85: compiled semantic mutant caught at line 855: got "49,48,48,:-17:static|101,120,105,115,116,105,110,103,:1:functional|115,109,:2:compound|" Go "101,120,105,115,116,105,110,103,:1:functional|115,109,:2:compound|"
+=== RUN   TestBatch8Mutants/register_theme_breakpoint_variants.a#02
+    batch8_test.go:85: compiled semantic mutant caught at line 747: got "101,120,105,115,116,105,110,103,:1:static|115,109,:2:compound|" Go "101,120,105,115,116,105,110,103,:1:functional|115,109,:2:compound|"
+=== RUN   TestBatch8Mutants/register_theme_breakpoint_variants.a#03
+    batch8_test.go:85: compiled semantic mutant caught at line 859: got "49,48,48,:-16:static|101,120,105,115,116,105,110,103,:1:functional|115,109,:2:compound|" Go "49,48,48,:-17:static|101,120,105,115,116,105,110,103,:1:functional|115,109,:2:compound|"
+--- PASS: TestBatch8Mutants (32.04s)
+    --- PASS: TestBatch8Mutants/recursively_decode_arbitrary_values.a (3.06s)
+    --- PASS: TestBatch8Mutants/recursively_decode_arbitrary_values.a#01 (3.06s)
+    --- PASS: TestBatch8Mutants/recursively_decode_arbitrary_values.a#02 (3.75s)
+    --- PASS: TestBatch8Mutants/decode_arbitrary_value.a (2.61s)
+    --- PASS: TestBatch8Mutants/decode_arbitrary_value.a#01 (3.03s)
+    --- PASS: TestBatch8Mutants/decode_arbitrary_value.a#02 (3.11s)
+    --- PASS: TestBatch8Mutants/register_theme_breakpoint_variants.a (3.74s)
+    --- PASS: TestBatch8Mutants/register_theme_breakpoint_variants.a#01 (3.13s)
+    --- PASS: TestBatch8Mutants/register_theme_breakpoint_variants.a#02 (2.92s)
+    --- PASS: TestBatch8Mutants/register_theme_breakpoint_variants.a#03 (3.04s)
+=== RUN   TestBatch9Helpers
+    batch9_test.go:66: 735 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch9Helpers (6.00s)
+=== RUN   TestBatch9Mutants
+=== RUN   TestBatch9Mutants/parse_css.a
+    batch9_test.go:115: compiled semantic mutant caught at line 31: got "ok:[rule:46,97,:::::false:false:true:[declaration::::99,111,108,111,114,:114,101,100,:false:true:false:[]|]|]" Go "ok:[comment:::::33,32,108,105,99,101,110,115,101,32,:false:false:false:[]|rule:46,97,:::::false:false:true:[declaration::::99,111,108,111,114,:114,101,100,:false:true:false:[]|]|]"
+=== RUN   TestBatch9Mutants/parse_css.a#01
+    batch9_test.go:115: compiled semantic mutant caught at line 418: got "ok:[rule:117,110,101,120,112,101,99,116,101,100,32,116,114,105,109,58,65279,46,97,32,:::::false:false:true:[declaration::::99,111,108,111,114,:114,101,100,:false:true:false:[]|]|]" Go "ok:[rule:46,97,:::::false:false:true:[declaration::::99,111,108,111,114,:114,101,100,:false:true:false:[]|]|]"
+=== RUN   TestBatch9Mutants/parse_css.a#02
+    batch9_test.go:115: compiled semantic mutant caught at line 7: got "ok:[]" Go "ok:[declaration::::45,45,120,::false:true:false:[]|]"
+=== RUN   TestBatch9Mutants/parse_css.a#03
+    batch9_test.go:115: compiled semantic mutant caught at line 21: got "ok:[rule:46,97,:::::false:false:true:[unexpected declaration:::::98,97,99,107,103,114,111,117,110,100,58,32,117,114,108,40,97,:false:false:false:[]|unexpected declaration:::::98,46,112,110,103,41,:false:false:false:[]|]|]" Go "ok:[rule:46,97,:::::false:false:true:[declaration::::98,97,99,107,103,114,111,117,110,100,:117,114,108,40,97,59,98,46,112,110,103,41,:false:true:false:[]|]|]"
+=== RUN   TestBatch9Mutants/parse_css.a#04
+    batch9_test.go:115: compiled semantic mutant caught at line 27: got "ok:[]" Go "error:5:77,105,115,115,105,110,103,32,99,108,111,115,105,110,103,32,125,32,97,116,32,46,97,"
+=== RUN   TestBatch9Mutants/parse_css.a#05
+    batch9_test.go:115: compiled semantic mutant caught at line 5: got "error:1:77,105,115,115,105,110,103,32,111,112,101,110,105,110,103,32,40," Go "error:0:77,105,115,115,105,110,103,32,111,112,101,110,105,110,103,32,40,"
+=== RUN   TestBatch9Mutants/design_system_decline_message.a
+    batch9_test.go:115: compiled semantic mutant caught at line 433: got "32,99,111,117,108,100,32,110,111,116,32,98,117,105,108,100,32,116,104,105,115,32,112,114,111,106,101,99,116,39,115,32,84,97,105,108,119,105,110,100,32,100,101,115,105,103,110,32,115,121,115,116,101,109,44,32,115,111,32,105,116,32,105,115,32,114,101,112,111,114,116,105,110,103,32,110,111,116,104,105,110,103,32,114,97,116,104,101,114,32,116,104,97,110,32,114,101,112,111,114,116,105,110,103,32,97,32,99,108,101,97,110,32,116,114,101,101,58,32,60,110,105,108,62," Go "32,99,111,117,108,100,32,110,111,116,32,98,117,105,108,100,32,116,104,105,115,32,112,114,111,106,101,99,116,39,115,32,84,97,105,108,119,105,110,100,32,100,101,115,105,103,110,32,115,121,115,116,101,109,32,102,114,111,109,32,116,104,101,109,101,46,99,115,115,44,32,115,111,32,105,116,32,105,115,32,114,101,112,111,114,116,105,110,103,32,110,111,116,104,105,110,103,32,114,97,116,104,101,114,32,116,104,97,110,32,114,101,112,111,114,116,105,110,103,32,97,32,99,108,101,97,110,32,116,114,101,101,58,32,60,110,105,108,62,"
+=== RUN   TestBatch9Mutants/design_system_decline_message.a#01
+    batch9_test.go:115: compiled semantic mutant caught at line 421: got "32,99,111,117,108,100,32,110,111,116,32,98,117,105,108,100,32,116,104,105,115,32,112,114,111,106,101,99,116,39,115,32,84,97,105,108,119,105,110,100,32,100,101,115,105,103,110,32,115,121,115,116,101,109,44,32,115,111,32,105,116,32,105,115,32,114,101,112,111,114,116,105,110,103,32,110,111,116,104,105,110,103,32,114,97,116,104,101,114,32,116,104,97,110,32,114,101,112,111,114,116,105,110,103,32,97,32,99,108,101,97,110,32,116,114,101,101,58,32," Go "32,99,111,117,108,100,32,110,111,116,32,98,117,105,108,100,32,116,104,105,115,32,112,114,111,106,101,99,116,39,115,32,84,97,105,108,119,105,110,100,32,100,101,115,105,103,110,32,115,121,115,116,101,109,44,32,115,111,32,105,116,32,105,115,32,114,101,112,111,114,116,105,110,103,32,110,111,116,104,105,110,103,32,114,97,116,104,101,114,32,116,104,97,110,32,114,101,112,111,114,116,105,110,103,32,97,32,99,108,101,97,110,32,116,114,101,101,58,32,60,110,105,108,62,"
+=== RUN   TestBatch9Mutants/loaded_theme.a
+    batch9_test.go:115: compiled semantic mutant caught at line 734: got "-1:false:true" Go "0:true:true"
+=== RUN   TestBatch9Mutants/loaded_theme.a#01
+    batch9_test.go:115: compiled semantic mutant caught at line 734: got "0:true:false" Go "0:true:true"
+--- PASS: TestBatch9Mutants (35.02s)
+    --- PASS: TestBatch9Mutants/parse_css.a (2.77s)
+    --- PASS: TestBatch9Mutants/parse_css.a#01 (3.45s)
+    --- PASS: TestBatch9Mutants/parse_css.a#02 (3.10s)
+    --- PASS: TestBatch9Mutants/parse_css.a#03 (2.96s)
+    --- PASS: TestBatch9Mutants/parse_css.a#04 (3.29s)
+    --- PASS: TestBatch9Mutants/parse_css.a#05 (3.39s)
+    --- PASS: TestBatch9Mutants/design_system_decline_message.a (3.46s)
+    --- PASS: TestBatch9Mutants/design_system_decline_message.a#01 (3.51s)
+    --- PASS: TestBatch9Mutants/loaded_theme.a (3.74s)
+    --- PASS: TestBatch9Mutants/loaded_theme.a#01 (3.48s)
+=== RUN   TestSlot03HelpersMatchCohere
+    slot03_test.go:105: 1115085 helper output lines match Go, Node source and sanitized native
+--- PASS: TestSlot03HelpersMatchCohere (5.31s)
+=== RUN   TestSlot03HelperMutants
+=== RUN   TestSlot03HelperMutants/component_base_name.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 159: got "false" Go "true"
+=== RUN   TestSlot03HelperMutants/tailwind_space.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 847: got "false" Go "true"
+=== RUN   TestSlot03HelperMutants/listener_kinds.a/value
+    slot03_test.go:160: compiled semantic mutant caught at line 1114948: got "JsxAttribute,CallExpression,StringLiteral" Go "JsxAttribute,CallExpression,VariableDeclaration"
+=== RUN   TestSlot03HelperMutants/listener_kinds.a/shared-list
+    slot03_test.go:160: compiled semantic mutant caught at line 1114949: got "StringLiteral,CallExpression,VariableDeclaration" Go "JsxAttribute,CallExpression,VariableDeclaration"
+--- PASS: TestSlot03HelperMutants (7.28s)
+    --- PASS: TestSlot03HelperMutants/component_base_name.a/value (1.07s)
+    --- PASS: TestSlot03HelperMutants/tailwind_space.a/value (1.27s)
+    --- PASS: TestSlot03HelperMutants/listener_kinds.a/value (0.96s)
+    --- PASS: TestSlot03HelperMutants/listener_kinds.a/shared-list (1.20s)
+=== RUN   TestConsumerCoverageRejectsMutant
+    slot03_test.go:277: missing-consumer mutant caught: consumer capture mismatch: missing [better-tailwindcss/no-unknown-classes] extra []
+--- PASS: TestConsumerCoverageRejectsMutant (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	365.301s

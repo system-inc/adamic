@@ -1,0 +1,5 @@
+// Preserve lazy math fallback after the separately owned percent-suffix matcher.
+export type PercentageDependencies = {numberWithSuffix: (value: string, suffixes: string[]) => boolean; hasMathFunction: (value: string) => boolean};
+export function isPercentage(value: string, dependencies: PercentageDependencies): boolean {
+  return dependencies.numberWithSuffix(value, ['%']) || dependencies.hasMathFunction(value);
+}

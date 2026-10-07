@@ -1,0 +1,4 @@
+// The number-with-suffix implementation belongs to its separately owned dependency.
+export function isAngle(value: string, numberWithSuffix: (value: string, suffixes: string[]) => boolean): boolean {
+  return numberWithSuffix(value, ['deg', 'rad', 'grad', 'turn']);
+}

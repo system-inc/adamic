@@ -1,0 +1,7 @@
+// The scanner consumes ASCII numeric spelling; its count is unchanged by UTF-16 adaptation.
+export type NumberDependencies = {scanNumber: (value: string) => number; hasMathFunction: (value: string) => boolean};
+export function isNumber(value: string, dependencies: NumberDependencies): boolean {
+  const consumed = dependencies.scanNumber(value);
+  if (consumed === value.length && consumed > 0) { return true; }
+  return dependencies.hasMathFunction(value);
+}

@@ -1,0 +1,22 @@
+import {panic, readTextFile, programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {isAngle} from './is_angle.a';
+import {isNumber} from './is_number.a';
+import {isPercentage} from './is_percentage.a';
+const file=readTextFile(programArguments()[0] ?? panic('missing cases'));if(file.kind==='Error') {panic(file.message);}
+const json=new OptionsJson(file.text);const root=json.parse();if(root<0) {panic(json.error);}
+const adapter={value:'',consumed:0,angle:false,percentage:false,math:false,trace:''};
+function suffix(input:string,suffixes:string[]):boolean {
+ adapter.trace+=`suffix:${suffixes.join(',')};`;if(input!==adapter.value) {adapter.trace+='wrong-value;';}
+ if(suffixes.join(',')==='deg,rad,grad,turn') {return adapter.angle;}
+ if(suffixes.join(',')==='%') {return adapter.percentage;}return false;
+}
+function scan(input:string):number {adapter.trace+='scan;';if(input!==adapter.value) {adapter.trace+='wrong-value;';}return adapter.consumed;}
+function hasMath(input:string):boolean {adapter.trace+='math;';if(input!==adapter.value) {adapter.trace+='wrong-value;';}return adapter.math;}
+for(const row of json.node(root).children) {
+ adapter.value=json.node(json.field(row,'value')).text;adapter.consumed=json.node(json.field(row,'consumed')).number;
+ adapter.angle=json.node(json.field(row,'angle')).text==='true';adapter.percentage=json.node(json.field(row,'percentage')).text==='true';adapter.math=json.node(json.field(row,'math')).text==='true';
+ adapter.trace='';const a=isAngle(adapter.value,(input,suffixes)=>suffix(input,suffixes));console.log(`${a}/${adapter.trace}`);
+ adapter.trace='';const n=isNumber(adapter.value,{scanNumber:(input)=>scan(input),hasMathFunction:(input)=>hasMath(input)});console.log(`${n}/${adapter.trace}`);
+ adapter.trace='';const percent=isPercentage(adapter.value,{numberWithSuffix:(input,suffixes)=>suffix(input,suffixes),hasMathFunction:(input)=>hasMath(input)});console.log(`${percent}/${adapter.trace}`);
+}

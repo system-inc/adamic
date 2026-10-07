@@ -1,0 +1,31 @@
+=== RUN   TestBatch12Helpers
+    batch12_test.go:75: 2070 lines match real Go, Node source, emitted JavaScript and sanitized native
+--- PASS: TestBatch12Helpers (1.84s)
+=== RUN   TestBatch12Mutants
+=== RUN   TestBatch12Mutants/is_angle.a
+    batch12_test.go:120: compiled semantic mutant caught at line 1: got "false/suffix:deg,rad,grad;" Go "false/suffix:deg,rad,grad,turn;"
+=== RUN   TestBatch12Mutants/is_angle.a#01
+    batch12_test.go:120: compiled semantic mutant caught at line 1: got "true/suffix:deg,rad,grad,turn;" Go "false/suffix:deg,rad,grad,turn;"
+=== RUN   TestBatch12Mutants/is_number.a
+    batch12_test.go:120: compiled semantic mutant caught at line 2: got "true/scan;" Go "false/scan;math;"
+=== RUN   TestBatch12Mutants/is_number.a#01
+    batch12_test.go:120: compiled semantic mutant caught at line 92: got "true/scan;" Go "false/scan;math;"
+=== RUN   TestBatch12Mutants/is_number.a#02
+    batch12_test.go:120: compiled semantic mutant caught at line 2: got "false/math;scan;math;" Go "false/scan;math;"
+=== RUN   TestBatch12Mutants/is_percentage.a
+    batch12_test.go:120: compiled semantic mutant caught at line 3: got "false/suffix:percent;math;" Go "false/suffix:%;math;"
+=== RUN   TestBatch12Mutants/is_percentage.a#01
+    batch12_test.go:120: compiled semantic mutant caught at line 3: got "false/suffix:%;" Go "false/suffix:%;math;"
+=== RUN   TestBatch12Mutants/is_percentage.a#02
+    batch12_test.go:120: compiled semantic mutant caught at line 3: got "false/math;suffix:%;math;" Go "false/suffix:%;math;"
+--- PASS: TestBatch12Mutants (9.39s)
+    --- PASS: TestBatch12Mutants/is_angle.a (1.39s)
+    --- PASS: TestBatch12Mutants/is_angle.a#01 (1.52s)
+    --- PASS: TestBatch12Mutants/is_number.a (1.07s)
+    --- PASS: TestBatch12Mutants/is_number.a#01 (1.25s)
+    --- PASS: TestBatch12Mutants/is_number.a#02 (1.03s)
+    --- PASS: TestBatch12Mutants/is_percentage.a (0.97s)
+    --- PASS: TestBatch12Mutants/is_percentage.a#01 (0.88s)
+    --- PASS: TestBatch12Mutants/is_percentage.a#02 (0.91s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	11.231s
