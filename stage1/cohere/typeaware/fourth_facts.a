@@ -1,0 +1,42 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+export class FourthFacts {
+    readonly fourthFactsTag = true;
+    readonly rules: Rules;
+    readonly ids = new Map<number, number>();
+    readonly reads = new Map<number, number>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    identity(index: number, read = false): number {
+        if(!this.ids.has(index)) {
+            const f = new Frames(this.rules.ask(index, 'symbol-identities'));
+            header(f, 'symbol-identities');
+            const ordinary = f.natural();
+            f.natural();
+            f.yes();
+            const local = f.natural();
+            const shorthand = f.natural();
+            f.end();
+            this.ids.set(index, ordinary);
+            const parent = this.rules.parents[index] ?? -1;
+            const p = parent >= 0 ? this.rules.parser.node(parent).kind : '';
+            this.reads.set(
+                index,
+                p === 'ShorthandPropertyAssignment' ? shorthand : p === 'ExportSpecifier' ? local : ordinary,
+            );
+        }
+        return (read ? this.reads : this.ids).get(index) ?? 0;
+    }
+    args(index: number): number[] {
+        const empty: number[] = [];
+        const node = this.rules.parser.node(index);
+        return node.list <= 0 ? empty : node.children.slice(node.children.length - node.list);
+    }
+    unwrap(index: number): number {
+        while(index >= 0 && this.rules.parser.node(index).kind === 'ParenthesizedExpression') {
+            index = this.rules.parser.node(index).children[0] ?? -1;
+        }
+        return index;
+    }
+}

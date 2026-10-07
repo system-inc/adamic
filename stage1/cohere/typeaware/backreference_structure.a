@@ -1,0 +1,346 @@
+export class RegexEnclosure {
+    readonly kind: number;
+    readonly negative: boolean;
+    constructor(kind: number, negative: boolean) {
+        this.kind = kind;
+        this.negative = negative;
+    }
+}
+export class RegexCapture {
+    readonly name: string;
+    readonly start: number;
+    end = 0;
+    readonly path: readonly number[];
+    constructor(name: string, start: number, path: readonly number[]) {
+        this.name = name;
+        this.start = start;
+        this.path = path;
+    }
+}
+export class RegexReference {
+    readonly index: number;
+    readonly name: string;
+    readonly start: number;
+    readonly end: number;
+    readonly path: readonly number[];
+    constructor(index: number, name: string, start: number, end: number, path: readonly number[]) {
+        this.index = index;
+        this.name = name;
+        this.start = start;
+        this.end = end;
+        this.path = path;
+    }
+}
+export class BackreferenceStructure {
+    readonly pattern: string;
+    readonly unicode: boolean;
+    readonly sets: boolean;
+    readonly nodes: RegexEnclosure[] = [];
+    readonly groups: RegexCapture[] = [];
+    readonly references: RegexReference[] = [];
+    readonly stack: number[] = [];
+    readonly opened: number[] = [];
+    constructor(pattern: string, flags: string) {
+        this.pattern = pattern;
+        this.unicode = flags.includes('u') || flags.includes('v');
+        this.sets = flags.includes('v');
+    }
+    push(kind: number, negative = false): void {
+        this.nodes.push(new RegexEnclosure(kind, negative));
+        this.stack.push(this.nodes.length - 1);
+    }
+    digit(index: number): boolean {
+        const c = this.pattern.charCodeAt(index);
+        return c >= 48 && c <= 57;
+    }
+    hex(first: number, last: number): boolean {
+        if(last > this.pattern.length) {
+            return false;
+        }
+        for(let i = first; i < last; i++) {
+            const c = this.pattern.charCodeAt(i);
+            if(!((c >= 48 && c <= 57) || (c >= 65 && c <= 70) || (c >= 97 && c <= 102))) {
+                return false;
+            }
+        }
+        return true;
+    }
+    escape(index: number): number {
+        const p = this.pattern;
+        if(index + 1 >= p.length) {
+            return -1;
+        }
+        const c = p.slice(index + 1, index + 2);
+        if(c === 'x') {
+            return this.hex(index + 2, index + 4) ? index + 4 : index + 2;
+        }
+        if(c === 'u') {
+            if(p.slice(index + 2, index + 3) === '{') {
+                const close = p.indexOf('}', index + 3);
+                return this.unicode && close >= 0 ? close + 1 : index + 2;
+            }
+            return this.hex(index + 2, index + 6) ? index + 6 : index + 2;
+        }
+        if(c === 'c') {
+            return index + 2 < p.length ? index + 3 : index + 2;
+        }
+        if(['p', 'P', 'q'].includes(c) && this.unicode && p.slice(index + 2, index + 3) === '{') {
+            const close = p.indexOf('}', index + 3);
+            if(close >= 0) {
+                return close + 1;
+            }
+        }
+        const code = p.charCodeAt(index + 1);
+        return (
+            index +
+            2 +
+            (code >= 55296 && code <= 56319 && p.charCodeAt(index + 2) >= 56320 && p.charCodeAt(index + 2) <= 57343
+                ? 1
+                : 0)
+        );
+    }
+    classEnd(index: number): number {
+        let depth = 1;
+        index++;
+        const p = this.pattern;
+        while(index < p.length) {
+            const c = p.slice(index, index + 1);
+            if(c === '\\') {
+                index = this.escape(index);
+                if(index < 0) {
+                    return -1;
+                }
+                continue;
+            }
+            if(c === '[' && this.sets) {
+                depth++;
+            }
+            if(c === ']') {
+                depth--;
+                if(depth === 0) {
+                    return index + 1;
+                }
+            }
+            index++;
+        }
+        return -1;
+    }
+    group(index: number): number {
+        const p = this.pattern;
+        let next = index + 1;
+        let kind = 1;
+        let negative = false;
+        let name = '';
+        if(p.slice(next, next + 1) === '?') {
+            const prefix = p.slice(next + 1, next + 3);
+            if(prefix.startsWith(':')) {
+                kind = 2;
+                next += 2;
+            }
+            else if(prefix.startsWith('=')) {
+                kind = 3;
+                next += 2;
+            }
+            else if(prefix.startsWith('!')) {
+                kind = 3;
+                negative = true;
+                next += 2;
+            }
+            else if(prefix === '<=' || prefix === '<!') {
+                kind = 4;
+                negative = prefix === '<!';
+                next += 3;
+            }
+            else if(prefix.startsWith('<')) {
+                const close = p.indexOf('>', next + 2);
+                if(close >= 0) {
+                    name = p.slice(next + 2, close);
+                    next = close + 1;
+                }
+                else {
+                    kind = 2;
+                    next += 2;
+                }
+            }
+            else {
+                kind = 2;
+                next += 2;
+            }
+        }
+        this.push(kind, negative);
+        if(kind === 1) {
+            this.groups.push(new RegexCapture(name, index, this.stack.slice()));
+            this.opened.push(this.groups.length - 1);
+        }
+        else {
+            this.opened.push(-1);
+        }
+        this.push(0);
+        return next;
+    }
+    read(index: number): number {
+        const p = this.pattern;
+        if(index + 1 >= p.length) {
+            return -1;
+        }
+        const first = p.charCodeAt(index + 1);
+        if(first >= 49 && first <= 57) {
+            let end = index + 1;
+            let low = 0;
+            let high = 0;
+            while(this.digit(end)) {
+                const next = low * 10 + p.charCodeAt(end) - 48;
+                high = (high * 10 + Math.floor(next / 4294967296)) % 4294967296;
+                low = next % 4294967296;
+                end++;
+            }
+            const value = high >= 2147483648 ? -1 : high > 0 ? 4294967296 : low;
+            this.references.push(new RegexReference(value, '', index, end, this.stack.slice()));
+            return end;
+        }
+        if(p.slice(index + 1, index + 3) === 'k<') {
+            const close = p.indexOf('>', index + 3);
+            if(close >= 0) {
+                this.references.push(
+                    new RegexReference(0, p.slice(index + 3, close), index, close + 1, this.stack.slice()),
+                );
+                return close + 1;
+            }
+        }
+        return this.escape(index);
+    }
+    run(): boolean {
+        this.push(2);
+        this.push(0);
+        let at = 0;
+        while(at < this.pattern.length) {
+            const c = this.pattern.slice(at, at + 1);
+            if(c === '\\') {
+                at = this.read(at);
+                if(at < 0) {
+                    return false;
+                }
+            }
+            else if(c === '[') {
+                at = this.classEnd(at);
+                if(at < 0) {
+                    return false;
+                }
+            }
+            else if(c === '(') {
+                at = this.group(at);
+            }
+            else if(c === ')') {
+                if(this.opened.length === 0) {
+                    return false;
+                }
+                this.stack.pop();
+                const group = this.opened.pop() ?? -1;
+                if(group >= 0) {
+                    const capture = this.groups[group];
+                    if(capture !== undefined) {
+                        capture.end = at + 1;
+                    }
+                }
+                this.stack.pop();
+                at++;
+            }
+            else if(c === '|') {
+                this.stack.pop();
+                this.push(0);
+                at++;
+            }
+            else {
+                at++;
+            }
+        }
+        return this.opened.length === 0;
+    }
+    quantifier(index: number): boolean {
+        let at = index + 1;
+        const first = at;
+        while(this.digit(at)) {
+            at++;
+        }
+        if(at === first) {
+            return false;
+        }
+        if(this.pattern.slice(at, at + 1) === ',') {
+            at++;
+            while(this.digit(at)) {
+                at++;
+            }
+        }
+        return this.pattern.slice(at, at + 1) === '}';
+    }
+    wellFormed(): boolean {
+        const named = this.groups.some((g) => g.name !== '');
+        for(const ref of this.references) {
+            if(ref.name !== '') {
+                if(!this.groups.some((g) => g.name === ref.name) && (named || this.unicode)) {
+                    return false;
+                }
+            }
+            else if(this.unicode && ref.index > this.groups.length) {
+                return false;
+            }
+        }
+        if(this.unicode) {
+            let at = 0;
+            while(at < this.pattern.length) {
+                const c = this.pattern.slice(at, at + 1);
+                if(c === '\\') {
+                    at = this.escape(at);
+                }
+                else if(c === '[') {
+                    at = this.classEnd(at);
+                }
+                else {
+                    if(c === '{' && !this.quantifier(at)) {
+                        return false;
+                    }
+                    at++;
+                }
+                if(at < 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    classify(ref: RegexReference, group: RegexCapture): string {
+        if(group.start <= ref.start && ref.end <= group.end) {
+            return 'nested';
+        }
+        let common = 1;
+        while(common < ref.path.length && common < group.path.length && ref.path[common] === group.path[common]) {
+            common++;
+        }
+        let backwards = false;
+        for(let at = common - 1; at >= 0; at--) {
+            const node = this.nodes[ref.path[at] ?? -1];
+            if(node !== undefined && [3, 4].includes(node.kind)) {
+                backwards = node.kind === 4;
+                break;
+            }
+        }
+        const cut = group.path.slice(common);
+        const branch = this.nodes[cut[0] ?? -1];
+        if(branch !== undefined && branch.kind === 0) {
+            return 'disjunctive';
+        }
+        if(!backwards && ref.end <= group.start) {
+            return 'forward';
+        }
+        if(backwards && group.end <= ref.start) {
+            return 'backward';
+        }
+        for(const index of cut) {
+            const node = this.nodes[index];
+            if(node !== undefined && node.negative && [3, 4].includes(node.kind)) {
+                return 'intoNegativeLookaround';
+            }
+        }
+        return '';
+    }
+}

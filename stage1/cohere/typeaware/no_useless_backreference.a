@@ -1,0 +1,108 @@
+import type { Rules } from './rules.ts';
+import { NexusFacts } from './nexus_facts.a';
+import { BackreferenceStructure, RegexCapture } from './backreference_structure.a';
+import { RegexpReferences } from './regexp_references.a';
+import type { FourthFacts } from './fourth_facts.a';
+export class NoUselessBackreference {
+    readonly rules: Rules;
+    readonly reports: NexusFacts;
+    readonly tracker: RegexpReferences;
+    readonly facts: FourthFacts;
+    constructor(rules: Rules, reports: NexusFacts, tracker: RegexpReferences, facts: FourthFacts) {
+        this.rules = rules;
+        this.reports = reports;
+        this.tracker = tracker;
+        this.facts = facts;
+    }
+    check(index: number, pattern: string, flags: string): void {
+        const s = new BackreferenceStructure(pattern, flags);
+        if(!s.run() || !s.wellFormed()) {
+            return;
+        }
+        for(const ref of s.references) {
+            const empty: RegexCapture[] = [];
+            const groups =
+                ref.name !== ''
+                    ? s.groups.filter((g) => g.name === ref.name)
+                    : ref.index >= 1 && ref.index <= s.groups.length
+                      ? s.groups.slice(ref.index - 1, ref.index)
+                      : empty;
+            let reachable = false;
+            const ids: string[] = [];
+            const texts: string[] = [];
+            const sameIds: string[] = [];
+            const sameTexts: string[] = [];
+            for(const group of groups) {
+                const id = s.classify(ref, group);
+                if(id === '') {
+                    reachable = true;
+                    break;
+                }
+                const text = pattern.slice(group.start, group.end);
+                ids.push(id);
+                texts.push(text);
+                if(id !== 'disjunctive') {
+                    sameIds.push(id);
+                    sameTexts.push(text);
+                }
+            }
+            if(reachable || ids.length === 0) {
+                continue;
+            }
+            const chosen = sameIds.length > 0 ? sameIds : ids;
+            const text = (sameIds.length > 0 ? sameTexts : texts)[0] ?? '';
+            const id = chosen[0] ?? '';
+            const reason =
+                id === 'nested'
+                    ? 'encloses the reference and so has captured nothing yet when it is reached'
+                    : id === 'disjunctive'
+                      ? 'sits in a different branch of the same disjunction, and only one branch ever runs'
+                      : id === 'forward'
+                        ? 'appears later in the pattern, and matching runs left to right'
+                        : id === 'backward'
+                          ? 'appears earlier in a lookbehind, which matches right to left'
+                          : 'sits in a negative lookaround, so it only runs on a path that then fails';
+            const others = chosen.length - 1;
+            const also =
+                others === 1
+                    ? ' (and so does one other group of that name)'
+                    : others > 1
+                      ? ` (and so do ${others} other groups of that name)`
+                      : '';
+            this.reports.report(
+                'no-useless-backreference',
+                id,
+                `The backreference ${pattern.slice(ref.start, ref.end)} can never match, because ${text} ${reason}${also}. It matches the empty string instead of failing, so the pattern quietly matches more than it looks like it does.`,
+                index,
+            );
+        }
+    }
+    run(): void {
+        for(let i = 0; i < this.rules.parser.nodes.length; i++) {
+            const n = this.rules.parser.node(i);
+            if(n.kind === 'RegularExpressionLiteral') {
+                const text = n.text;
+                const last = text.lastIndexOf('/');
+                const pattern = text.startsWith('/') && last > 0 ? text.slice(1, last) : '';
+                if(pattern !== '') {
+                    this.check(i, pattern, text.slice(last + 1));
+                }
+            }
+        }
+        if(!this.rules.scanner.text.includes('RegExp')) {
+            return;
+        }
+        for(const call of this.tracker.run()) {
+            const args = this.facts.args(call);
+            if(args.length === 0) {
+                continue;
+            }
+            const pattern = this.tracker.constant(args[0] ?? -1);
+            if(!pattern.valid) {
+                continue;
+            }
+            const flags = this.tracker.constant(args[1] ?? -1);
+            this.check(call, pattern.text, flags.valid ? flags.text : '');
+        }
+    }
+}
