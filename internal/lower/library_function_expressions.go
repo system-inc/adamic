@@ -8,7 +8,7 @@ import (
 // functionExpression uses the same calling convention and counted captures as arrows. Ordinary
 // functions have their own dynamic this; until that convention exists, every use of it is refused.
 func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
-	if node.AsFunctionExpression().AsteriskToken != nil {
+	if node.Kind == ast.KindFunctionExpression && node.AsFunctionExpression().AsteriskToken != nil || node.Kind == ast.KindFunctionDeclaration && node.AsFunctionDeclaration().AsteriskToken != nil {
 		return nil, l.notYet(node, "a generator function expression")
 	}
 	if len(node.TypeParameters()) != 0 {
@@ -41,7 +41,7 @@ func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 	}
 	index := len(l.result.Functions)
 	function := ir.Function{Name: "function_expression", Closure: true}
-	if name := node.Name(); name != nil {
+	if name := node.Name(); node.Kind == ast.KindFunctionExpression && name != nil {
 		function.Name = name.Text()
 		if l.locals == nil {
 			l.locals = map[*ast.Symbol]int{}

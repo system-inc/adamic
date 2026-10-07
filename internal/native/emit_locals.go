@@ -62,7 +62,11 @@ func (e *emitter) store(local int, value string, owned bool) {
 // checkReady panics as JavaScript throws when a global is touched before its declaration has run.
 func (e *emitter) checkReady(local int) {
 	message := fmt.Sprintf("ReferenceError: Cannot access '%s' before initialization", e.program.Locals[local].Name)
-	e.line("if (!%s) {", readyName(local))
+	ready := readyName(local)
+	if binding := e.program.Locals[local].Ready; binding != 0 {
+		ready = e.read(ir.Read{Local: binding - 1, Of: ir.Boolean})
+	}
+	e.line("if (!%s) {", ready)
 	e.line("\tstatic const char message[] = %s;", cString(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")
 	e.line("}")
@@ -73,6 +77,9 @@ func (e *emitter) checkReady(local int) {
 // checked against the temporal dead zone first.
 func (e *emitter) read(read ir.Read) string {
 	name := e.localName(read.Local)
+	if read.Checked {
+		e.checkReady(read.Local)
+	}
 	if e.program.Locals[read.Local].Counter {
 		// Read as the double it stands for, which every value it can hold is exactly.
 		return "((double)" + name + ")"
@@ -96,9 +103,6 @@ func (e *emitter) read(read ir.Read) string {
 	}
 	if !e.program.Locals[read.Local].Global {
 		return name
-	}
-	if read.Checked {
-		e.checkReady(read.Local)
 	}
 	if lent {
 		e.self = true

@@ -174,6 +174,10 @@ type Local struct {
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
 
+	// Ready is the readiness local index plus one for a switch lexical binding.
+	// Its storage exists at switch entry, but its declaration initializes it later.
+	Ready int
+
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
 	// (docs/memory.md, "Borrowed parameters"). Nothing ever assigns a borrowed parameter.
@@ -201,8 +205,8 @@ type (
 	StringConstant  struct{ Index int }
 
 	// Read reads a local. Of is the local's type, so a Read is typed without the program in hand.
-	// Checked is a read of a global from inside a function, which may run before the global's
-	// declaration has: JavaScript throws there (the temporal dead zone), and so does Adamic, out loud.
+	// Checked guards a switch lexical binding or a global read from a function before its
+	// declaration has run: JavaScript throws there (the temporal dead zone), and so does Adamic, out loud.
 	Read struct {
 		Local   int
 		Of      Type

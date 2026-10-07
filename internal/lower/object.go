@@ -973,16 +973,13 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
+	storage, err := l.switchBindings(statement.CaseBlock)
+	if err != nil {
+		return nil, err
+	}
 	lowered := ir.Switch{Value: value}
 	tests := []ir.Expression{}
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
-		for _, inner := range clause.AsCaseOrDefaultClause().Statements.Nodes {
-			if inner.Kind == ast.KindVariableStatement {
-				// A declaration directly in a case is scoped to the whole switch in JavaScript, where
-				// another case can see it (and hit its dead zone).
-				return nil, l.notYet(inner, "a declaration directly in a case (wrap the case in a block)")
-			}
-		}
 		isDefault := clause.Kind == ast.KindDefaultClause
 		if !isDefault {
 			test, err := l.caseLabel(clause.AsCaseOrDefaultClause().Expression)
@@ -1015,7 +1012,18 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		tests = []ir.Expression{}
 	}
-	return []ir.Statement{lowered}, nil
+	if len(storage) == 0 {
+		return []ir.Statement{lowered}, nil
+	}
+	// Evaluate the discriminant outside the switch's lexical environment, before its functions
+	// and storage are created. The generated block owns all bindings until the switch exits.
+	held := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "switch_value", Type: value.Type(), Function: l.functionIndex})
+	lowered.Value = ir.Read{Local: held, Of: value.Type()}
+	body := []ir.Statement{ir.Declare{Local: held, Value: value}}
+	body = append(body, storage...)
+	body = append(body, lowered)
+	return []ir.Statement{ir.Block{Body: body}}, nil
 }
 
 // arrayMethod lowers array.push(value) and array.join(separator).

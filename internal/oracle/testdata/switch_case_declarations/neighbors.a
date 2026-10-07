@@ -1,0 +1,21 @@
+function describe(input: number): string {
+	let value = input;
+	switch (value) {
+		case 1:
+			const [value, amount]: [string, number] = [`v${input}`, 2];
+			switch (amount) {
+				case 2:
+					let detail = `${value}: nested`;
+					return detail;
+				default: return 'inner';
+			}
+		case 2: {
+			const value = `wrapped${input}`;
+			return value;
+		}
+		default:
+			const { label } = { label: `default${input}` };
+			return label;
+	}
+}
+for (const input of [1, 2, 3, 1]) console.log(describe(input));

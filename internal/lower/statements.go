@@ -41,6 +41,10 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		}
 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export where you declare: export function, export const (one name for one thing)"}
 	case ast.KindFunctionDeclaration:
+		if node.Parent != nil && (node.Parent.Kind == ast.KindCaseClause || node.Parent.Kind == ast.KindDefaultClause) {
+			// Switch functions are initialized at entry, before dispatch.
+			return nil, nil
+		}
 		if l.function != nil {
 			return nil, l.notYet(node, "a function inside a function (a closure)")
 		}
