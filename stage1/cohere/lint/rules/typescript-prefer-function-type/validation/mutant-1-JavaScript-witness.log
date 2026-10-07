@@ -1,0 +1,20 @@
+case 131
+/tmp/w05-third-validation/witness-0-0.ts:1:19
+  @typescript-eslint/prefer-function-type  Type literal only has a call signature, you should use a function type instead.
+
+range 18 26 functionTypeOverCallableType fix	(() => void)	
+edit 16 28
+fixed	type Callable = (() => void)[];\u000a
+case 132
+/tmp/w05-third-validation/witness-1-0.ts:1:1
+  @typescript-eslint/prefer-namespace-keyword  This declares a namespace with the `module` keyword, which TypeScript has deprecated and plans to make a parse error. It means the same thing as `namespace` and reads as an ECMAScript module, which it is not. Write `namespace` instead.
+
+range 0 20 preferNamespaceKeyword fix	namespace	
+edit 7 13
+fixed	export namespace Foo {}\u000a
+case 133
+/tmp/w05-third-validation/witness-2-0.ts:2:1
+  @typescript-eslint/triple-slash-reference  This file pulls in `foo` with a triple-slash reference directive. A directive is a global instruction to the compiler with no binding and no local name, so nothing in the file records that the dependency is used here and no tool can follow it the way it follows an import. Write an `import` instead, which names what it brings in and participates in module resolution.
+
+range 30 59 tripleSlashReference 		
+fixed	/// <reference types="foo" />\u000a/// <reference types="foo" />\u000aimport * as foo from "foo";\u000a

@@ -1,0 +1,88 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Finding } from '../../finding.ts';
+import { comments } from './comments.ts';
+import { description, thisDescription } from './messages.ts';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    thisType(index: number): number {
+        const node = this.context.node(index);
+        if(node.kind === 'TypeLiteral') { return -1; }
+        if(node.kind === 'ThisType') { return index; }
+        for(const child of node.children) { const found = this.thisType(child); if(found >= 0) { return found; } }
+        return -1;
+    }
+    visit(index: number, parent: number): void {
+        const node = this.context.node(index);
+        const isInterface = node.kind === 'InterfaceDeclaration';
+        let name = -1;
+        const members: number[] = [];
+        const bases: number[] = [];
+        const parameters: number[] = [];
+        let exported = false;
+        let default_ = false;
+        for(const child of node.children) {
+            const item = this.context.node(child);
+            if(isInterface && item.kind === 'Identifier' && name < 0) { name = child; }
+            else if(isInterface && item.kind === 'TypeParameter') { parameters.push(child); }
+            else if(isInterface && item.kind === 'HeritageClause') { for(const base of item.children) { bases.push(base); } }
+            else if(isInterface && item.kind.endsWith('Keyword')) { exported = exported || item.kind === 'ExportKeyword'; default_ = default_ || item.kind === 'DefaultKeyword'; }
+            else { members.push(child); }
+        }
+        if(members.length !== 1) { return; }
+        if(isInterface && bases.length > 0) {
+            if(bases.length !== 1) { return; }
+            const base = this.context.node(bases[0] ?? panic('missing base'));
+            const target = base.children[0] ?? -1;
+            if(!['TypeReference', 'ExpressionWithTypeArguments'].includes(base.kind) || target < 0 || this.context.node(target).kind !== 'Identifier' || this.context.node(target).text !== 'Function') { return; }
+        }
+        const member = members[0] ?? panic('missing member');
+        const signature = this.context.node(member);
+        if(!['CallSignature', 'ConstructSignature'].includes(signature.kind)) { return; }
+        const type = signature.children[signature.children.length - 1] ?? -1;
+        if(type < 0 || ['TypeParameter', 'Parameter'].includes(this.context.node(type).kind)) { return; }
+        const firstThis = isInterface ? this.thisType(member) : -1;
+        if(firstThis >= 0) {
+            this.context.report(firstThis, '@typescript-eslint/prefer-function-type', 'unexpectedThisOnFunctionOnlyInterface', thisDescription(this.context.node(name).text), '', '', ''); return;
+        }
+        const start = this.context.start(member);
+        const text = this.context.source.slice(start, signature.end);
+        let colon = this.context.start(type) - start - 1;
+        while(colon > 0 && colon < text.length && text[colon] !== ':') { colon--; }
+        let repair = !default_ && colon > 0 && colon < text.length && text[colon] === ':' && !text.endsWith(',');
+        let replacement = '';
+        if(repair) {
+            replacement = text.slice(0, colon) + ' =>' + text.slice(colon + 1);
+            const semicolon = replacement.endsWith(';');
+            if(semicolon) { replacement = replacement.slice(0, -1); }
+            if(parent >= 0 && ['UnionType', 'IntersectionType', 'ArrayType'].includes(this.context.node(parent).kind)) { replacement = '(' + replacement + ')'; }
+            if(isInterface) {
+                const identifier = this.context.node(name);
+                let nameText = identifier.text;
+                if(parameters.length > 0) {
+                    this.context.scanner.pos = this.context.node(parameters[parameters.length - 1] ?? panic('missing type parameter')).end;
+                    this.context.scanner.scan();
+                    if(this.context.scanner.kind === 'CommaToken') { this.context.scanner.scan(); }
+                    if(this.context.scanner.kind !== 'GreaterThanToken') { repair = false; }
+                    else { const tail = this.context.scanner.pos; nameText = this.context.source.slice(this.context.start(name), tail); }
+                }
+                replacement = 'type ' + nameText + ' = ' + replacement + (semicolon ? ';' : '');
+            }
+            const memberLine = this.context.source.slice(0, start).split(/\r\n|[\n\r\u2028\u2029]/).length;
+            const moved = comments(this.context).filter(comment => comment.start >= this.context.start(index) && comment.end <= node.end && !(comment.start >= start && comment.end <= signature.end));
+            if(isInterface && exported) { replacement = moved.map(comment => comment.text + '\n').join('') + 'export ' + replacement; }
+            else {
+                for(const comment of moved) {
+                    const line = this.context.source.slice(0, comment.start).split(/\r\n|[\n\r\u2028\u2029]/).length;
+                    replacement = comment.text + (line === memberLine ? ' ' : '\n') + replacement;
+                }
+            }
+        }
+        const finding = new Finding('@typescript-eslint/prefer-function-type', 'functionTypeOverCallableType', description(isInterface ? 'Interface' : 'Type literal'), start, signature.end, repair ? 'range-fix' : '', repair ? replacement : '', '');
+        finding.editStart = this.context.start(index); finding.editEnd = node.end;
+        this.context.findings.push(finding);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

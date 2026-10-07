@@ -1,0 +1,642 @@
+=== RUN   TestPreferFunctionTypeStaysSilent
+=== PAUSE TestPreferFunctionTypeStaysSilent
+=== RUN   TestPreferFunctionTypeFires
+=== PAUSE TestPreferFunctionTypeFires
+=== RUN   TestPreferFunctionTypeKeepsTheExport
+=== PAUSE TestPreferFunctionTypeKeepsTheExport
+=== RUN   TestPreferFunctionTypeKeepsATypeParameterListWrittenOnePerLine
+=== PAUSE TestPreferFunctionTypeKeepsATypeParameterListWrittenOnePerLine
+=== RUN   TestPreferNamespaceKeywordFires
+=== PAUSE TestPreferNamespaceKeywordFires
+=== RUN   TestPreferNamespaceKeywordStaysSilent
+=== PAUSE TestPreferNamespaceKeywordStaysSilent
+=== RUN   TestPreferNamespaceKeywordFixesWriteWhatTheyClaim
+=== PAUSE TestPreferNamespaceKeywordFixesWriteWhatTheyClaim
+=== RUN   TestPreferNamespaceKeywordReportsTheRightSpanAndText
+=== PAUSE TestPreferNamespaceKeywordReportsTheRightSpanAndText
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases
+=== RUN   TestTripleSlashReferenceFiresOnUpstreamFailCases
+=== PAUSE TestTripleSlashReferenceFiresOnUpstreamFailCases
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover
+=== RUN   TestTripleSlashReferencePointsAtTheDirective
+=== PAUSE TestTripleSlashReferencePointsAtTheDirective
+=== RUN   TestTripleSlashReferenceNamesTheModuleInItsMessage
+=== PAUSE TestTripleSlashReferenceNamesTheModuleInItsMessage
+=== RUN   TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives
+=== PAUSE TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives
+=== RUN   TestTripleSlashReferenceReportsTwoDirectivesInSourceOrder
+=== PAUSE TestTripleSlashReferenceReportsTwoDirectivesInSourceOrder
+=== RUN   TestTripleSlashReferenceDeclinesJavaScript
+=== PAUSE TestTripleSlashReferenceDeclinesJavaScript
+=== RUN   TestDecodeTripleSlashReferenceOptions
+=== PAUSE TestDecodeTripleSlashReferenceOptions
+=== RUN   TestTripleSlashReferenceUsesDefaultsWhenTheConfigNamesNoOptions
+=== PAUSE TestTripleSlashReferenceUsesDefaultsWhenTheConfigNamesNoOptions
+=== RUN   TestTripleSlashReferenceScansEveryDirectiveBeforeTheCutoff
+=== PAUSE TestTripleSlashReferenceScansEveryDirectiveBeforeTheCutoff
+=== RUN   TestTripleSlashReferenceRefusesOptionsOfTheWrongType
+=== PAUSE TestTripleSlashReferenceRefusesOptionsOfTheWrongType
+=== CONT  TestPreferFunctionTypeStaysSilent
+=== RUN   TestPreferFunctionTypeStaysSilent/case0
+=== PAUSE TestPreferFunctionTypeStaysSilent/case0
+=== RUN   TestPreferFunctionTypeStaysSilent/case1
+=== PAUSE TestPreferFunctionTypeStaysSilent/case1
+=== RUN   TestPreferFunctionTypeStaysSilent/case2
+=== PAUSE TestPreferFunctionTypeStaysSilent/case2
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_after_the_first_statement_is_not_a_directive
+=== CONT  TestTripleSlashReferenceRefusesOptionsOfTheWrongType
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_after_the_first_statement_is_not_a_directive
+=== CONT  TestTripleSlashReferenceUsesDefaultsWhenTheConfigNamesNoOptions
+=== RUN   TestTripleSlashReferenceUsesDefaultsWhenTheConfigNamesNoOptions/nil,_which_is_what_a_bare_severity_in_the_config_produces
+=== PAUSE TestTripleSlashReferenceUsesDefaultsWhenTheConfigNamesNoOptions/nil,_which_is_what_a_bare_severity_in_the_config_produces
+=== RUN   TestPreferFunctionTypeStaysSilent/case3
+=== CONT  TestDecodeTripleSlashReferenceOptions
+=== RUN   TestDecodeTripleSlashReferenceOptions/an_empty_object_is_upstream's_documented_default
+=== PAUSE TestDecodeTripleSlashReferenceOptions/an_empty_object_is_upstream's_documented_default
+=== PAUSE TestPreferFunctionTypeStaysSilent/case3
+=== RUN   TestDecodeTripleSlashReferenceOptions/each_key_set_explicitly
+=== PAUSE TestDecodeTripleSlashReferenceOptions/each_key_set_explicitly
+=== RUN   TestPreferFunctionTypeStaysSilent/case4
+=== RUN   TestDecodeTripleSlashReferenceOptions/one_key_set_leaves_the_other_two_at_their_defaults
+=== PAUSE TestPreferFunctionTypeStaysSilent/case4
+=== PAUSE TestDecodeTripleSlashReferenceOptions/one_key_set_leaves_the_other_two_at_their_defaults
+=== RUN   TestDecodeTripleSlashReferenceOptions/prefer-import_is_not_accepted_for_path
+=== PAUSE TestDecodeTripleSlashReferenceOptions/prefer-import_is_not_accepted_for_path
+=== RUN   TestDecodeTripleSlashReferenceOptions/prefer-import_is_not_accepted_for_lib
+=== PAUSE TestDecodeTripleSlashReferenceOptions/prefer-import_is_not_accepted_for_lib
+=== RUN   TestDecodeTripleSlashReferenceOptions/a_wrongly-cased_value_keeps_the_default
+=== PAUSE TestDecodeTripleSlashReferenceOptions/a_wrongly-cased_value_keeps_the_default
+=== CONT  TestTripleSlashReferenceReportsTwoDirectivesInSourceOrder
+=== RUN   TestTripleSlashReferenceRefusesOptionsOfTheWrongType/a_value_of_some_other_type
+=== CONT  TestTripleSlashReferenceScansEveryDirectiveBeforeTheCutoff
+=== PAUSE TestTripleSlashReferenceRefusesOptionsOfTheWrongType/a_value_of_some_other_type
+=== RUN   TestTripleSlashReferenceRefusesOptionsOfTheWrongType/a_pointer_rather_than_the_value
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_between_two_statements
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_between_two_statements
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_trailing_code_on_the_same_line
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_trailing_code_on_the_same_line
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_double_slash_is_not_a_directive
+=== CONT  TestTripleSlashReferenceDeclinesJavaScript
+--- PASS: TestTripleSlashReferenceReportsTwoDirectivesInSourceOrder (0.00s)
+=== CONT  TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives
+--- PASS: TestTripleSlashReferenceScansEveryDirectiveBeforeTheCutoff (0.00s)
+=== RUN   TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives/two_identical_directives_report_against_the_second
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_double_slash_is_not_a_directive
+=== PAUSE TestTripleSlashReferenceRefusesOptionsOfTheWrongType/a_pointer_rather_than_the_value
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_block_comment_whose_content_opens_with_a_space
+=== PAUSE TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives/two_identical_directives_report_against_the_second
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_block_comment_whose_content_opens_with_a_space
+=== RUN   TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives/three_identical_directives_report_against_the_third
+=== PAUSE TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives/three_identical_directives_report_against_the_third
+=== CONT  TestTripleSlashReferencePointsAtTheDirective
+=== RUN   TestTripleSlashReferencePointsAtTheDirective/the_whole_comment_including_the_leading_slashes
+=== PAUSE TestTripleSlashReferencePointsAtTheDirective/the_whole_comment_including_the_leading_slashes
+=== RUN   TestTripleSlashReferencePointsAtTheDirective/four_slashes_are_all_inside_the_span
+=== PAUSE TestTripleSlashReferencePointsAtTheDirective/four_slashes_are_all_inside_the_span
+=== CONT  TestTripleSlashReferenceFiresOnUpstreamFailCases
+=== RUN   TestTripleSlashReferencePointsAtTheDirective/a_block_comment_reports_its_closing_delimiter_too
+=== RUN   TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"prefer-import"_}
+=== PAUSE TestTripleSlashReferencePointsAtTheDirective/a_block_comment_reports_its_closing_delimiter_too
+=== PAUSE TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"prefer-import"_}
+=== RUN   TestTripleSlashReferencePointsAtTheDirective/indentation_is_not_part_of_the_span
+=== PAUSE TestTripleSlashReferencePointsAtTheDirective/indentation_is_not_part_of_the_span
+=== CONT  TestTripleSlashReferenceNamesTheModuleInItsMessage
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_jsdoc_block,_whose_content_opens_with_a_star
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_jsdoc_block,_whose_content_opens_with_a_star
+--- PASS: TestTripleSlashReferenceDeclinesJavaScript (0.00s)
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover
+=== RUN   TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"prefer-import"_}#01
+=== RUN   TestTripleSlashReferencePointsAtTheDirective/a_prefer-import_finding_points_at_the_directive,_not_at_the_import
+=== PAUSE TestTripleSlashReferencePointsAtTheDirective/a_prefer-import_finding_points_at_the_directive,_not_at_the_import
+=== CONT  TestPreferFunctionTypeKeepsATypeParameterListWrittenOnePerLine
+=== RUN   TestTripleSlashReferenceNamesTheModuleInItsMessage/the_module_name_is_the_trimmed_attribute_value
+=== PAUSE TestTripleSlashReferenceNamesTheModuleInItsMessage/the_module_name_is_the_trimmed_attribute_value
+=== RUN   TestTripleSlashReferenceNamesTheModuleInItsMessage/single_quotes_survive,_because_only_the_double_quote_is_trimmed
+=== PAUSE TestTripleSlashReferenceNamesTheModuleInItsMessage/single_quotes_survive,_because_only_the_double_quote_is_trimmed
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/attributes_read_in_whitespace_order,_lib_first_and_lib_defaults_to_always
+=== PAUSE TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"prefer-import"_}#01
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_directive_above_the_first_statement_is_still_a_directive
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_directive_above_the_first_statement_is_still_a_directive
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/attributes_read_in_whitespace_order,_lib_first_and_lib_defaults_to_always
+=== RUN   TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"path":_"never"_}
+=== PAUSE TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"path":_"never"_}
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/four_slashes,_because_the_test_is_on_the_third_character
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/four_slashes,_because_the_test_is_on_the_third_character
+=== RUN   TestTripleSlashReferenceNamesTheModuleInItsMessage/an_empty_value_renders_an_empty_name
+=== PAUSE TestTripleSlashReferenceNamesTheModuleInItsMessage/an_empty_value_renders_an_empty_name
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_block_comment_whose_content_opens_with_a_slash
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_block_comment_whose_content_opens_with_a_slash
+=== RUN   TestTripleSlashReferenceNamesTheModuleInItsMessage/trailing_slashes_are_stripped_from_inside_the_value
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/attributes_read_in_whitespace_order,_path_first
+=== PAUSE TestTripleSlashReferenceNamesTheModuleInItsMessage/trailing_slashes_are_stripped_from_inside_the_value
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_value_containing_an_equals_sign_declines_the_whole_comment
+=== RUN   TestTripleSlashReferenceNamesTheModuleInItsMessage/the_second_attribute_is_the_one_read_when_it_is_the_first_match
+=== RUN   TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"never"_}
+=== PAUSE TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"never"_}
+=== RUN   TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"lib":_"never"_}
+=== PAUSE TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"lib":_"never"_}
+=== CONT  TestPreferNamespaceKeywordStaysSilent
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/attributes_read_in_whitespace_order,_path_first
+=== RUN   TestPreferNamespaceKeywordStaysSilent/an_ambient_module_declared_with_a_quoted_name_and_no_body
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/an_unquoted_value
+=== PAUSE TestPreferNamespaceKeywordStaysSilent/an_ambient_module_declared_with_a_quoted_name_and_no_body
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/an_unquoted_value
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_value_containing_an_equals_sign_declines_the_whole_comment
+=== RUN   TestPreferNamespaceKeywordStaysSilent/an_ambient_module_declared_with_a_quoted_name
+=== PAUSE TestPreferNamespaceKeywordStaysSilent/an_ambient_module_declared_with_a_quoted_name
+=== CONT  TestPreferNamespaceKeywordFires
+--- PASS: TestPreferFunctionTypeKeepsATypeParameterListWrittenOnePerLine (0.00s)
+=== PAUSE TestTripleSlashReferenceNamesTheModuleInItsMessage/the_second_attribute_is_the_one_read_when_it_is_the_first_match
+=== RUN   TestPreferNamespaceKeywordStaysSilent/the_namespace_keyword
+=== PAUSE TestPreferNamespaceKeywordStaysSilent/the_namespace_keyword
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_}
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/no-default-lib_is_not_an_attribute_this_rule_reads
+=== RUN   TestPreferNamespaceKeywordStaysSilent/an_ambient_namespace
+=== PAUSE TestPreferNamespaceKeywordStaysSilent/an_ambient_namespace
+=== RUN   TestPreferNamespaceKeywordStaysSilent/a_global_augmentation
+=== PAUSE TestPreferNamespaceKeywordStaysSilent/a_global_augmentation
+=== RUN   TestPreferNamespaceKeywordStaysSilent/a_dotted_namespace_declaration
+=== PAUSE TestPreferNamespaceKeywordStaysSilent/a_dotted_namespace_declaration
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/no_space_before_the_closing_slash
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/no_space_before_the_closing_slash
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/text_around_the_reference
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/no-default-lib_is_not_an_attribute_this_rule_reads
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/text_around_the_reference
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_malformed_first_attribute_declines_the_comment_rather_than_falling_through
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_malformed_first_attribute_declines_the_comment_rather_than_falling_through
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/two_imports_of_one_module_report_the_one_directive_twice
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/two_imports_of_one_module_report_the_one_directive_twice
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_type-only_import_counts
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_type-only_import_counts
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_bare_side-effect_import_counts
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_bare_side-effect_import_counts
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/types_never_reports_without_any_import
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/types_never_reports_without_any_import
+=== RUN   TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/lib_never
+=== RUN   TestPreferNamespaceKeywordStaysSilent/a_deeply_dotted_namespace_declaration
+=== PAUSE TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/lib_never
+=== PAUSE TestPreferNamespaceKeywordStaysSilent/a_deeply_dotted_namespace_declaration
+=== RUN   TestPreferNamespaceKeywordFires/a_bare_module_declaration
+=== PAUSE TestPreferNamespaceKeywordFires/a_bare_module_declaration
+=== RUN   TestPreferNamespaceKeywordStaysSilent/a_module_with_a_quoted_name_and_no_declare_modifier
+=== PAUSE TestPreferNamespaceKeywordStaysSilent/a_module_with_a_quoted_name_and_no_declare_modifier
+=== RUN   TestPreferNamespaceKeywordFires/a_dotted_module_declaration_reports_once_for_the_whole_chain
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_}
+=== RUN   TestPreferNamespaceKeywordStaysSilent/a_global_augmentation_with_statements_inside
+=== PAUSE TestPreferNamespaceKeywordFires/a_dotted_module_declaration_reports_once_for_the_whole_chain
+=== PAUSE TestPreferNamespaceKeywordStaysSilent/a_global_augmentation_with_statements_inside
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_malformed_lib_attribute_declines_a_following_path_attribute
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_}#01
+=== RUN   TestPreferNamespaceKeywordFires/an_ambient_module_declaration_with_an_identifier_name
+=== CONT  TestPreferFunctionTypeFires
+=== PAUSE TestPreferNamespaceKeywordFires/an_ambient_module_declaration_with_an_identifier_name
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_}#01
+=== RUN   TestPreferFunctionTypeFires/case0
+=== PAUSE TestPreferFunctionTypeFires/case0
+=== RUN   TestPreferFunctionTypeFires/case1
+=== PAUSE TestPreferFunctionTypeFires/case1
+=== RUN   TestPreferFunctionTypeFires/case2
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_malformed_lib_attribute_declines_a_following_path_attribute
+=== RUN   TestPreferNamespaceKeywordFires/a_module_nested_in_a_module_block_reports_for_each
+=== PAUSE TestPreferNamespaceKeywordFires/a_module_nested_in_a_module_block_reports_for_each
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/lib_defaults_to_always
+=== RUN   TestPreferNamespaceKeywordFires/a_module_inside_a_global_augmentation
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/lib_defaults_to_always
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/types_defaults_to_prefer-import,_so_no_import_means_no_finding
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/types_defaults_to_prefer-import,_so_no_import_means_no_finding
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_dynamic_import_is_not_one_of_the_two_shapes
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_dynamic_import_is_not_one_of_the_two_shapes
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_require_call_is_not_an_import-equals_declaration
+=== CONT  TestPreferNamespaceKeywordReportsTheRightSpanAndText
+=== RUN   TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_bare_declaration_spans_the_whole_statement
+=== PAUSE TestPreferNamespaceKeywordFires/a_module_inside_a_global_augmentation
+=== PAUSE TestPreferFunctionTypeFires/case2
+=== RUN   TestPreferFunctionTypeFires/case3
+=== PAUSE TestPreferFunctionTypeFires/case3
+=== CONT  TestPreferFunctionTypeKeepsTheExport
+=== RUN   TestPreferFunctionTypeFires/case4
+=== PAUSE TestPreferFunctionTypeFires/case4
+=== RUN   TestPreferFunctionTypeFires/case5
+=== PAUSE TestPreferFunctionTypeFires/case5
+=== RUN   TestPreferFunctionTypeFires/case6
+=== PAUSE TestPreferFunctionTypeFires/case6
+=== RUN   TestPreferFunctionTypeFires/case7
+=== PAUSE TestPreferFunctionTypeFires/case7
+=== RUN   TestPreferFunctionTypeFires/case8
+=== PAUSE TestPreferFunctionTypeFires/case8
+=== RUN   TestPreferFunctionTypeFires/case9
+=== PAUSE TestPreferFunctionTypeFires/case9
+=== RUN   TestPreferFunctionTypeFires/case10
+=== PAUSE TestPreferFunctionTypeFires/case10
+=== RUN   TestPreferFunctionTypeFires/case11
+=== PAUSE TestPreferFunctionTypeFires/case11
+=== RUN   TestPreferFunctionTypeFires/case12
+=== PAUSE TestPreferFunctionTypeFires/case12
+=== RUN   TestPreferFunctionTypeFires/case13
+=== PAUSE TestPreferFunctionTypeFires/case13
+=== RUN   TestPreferFunctionTypeFires/case14
+=== PAUSE TestPreferFunctionTypeFires/case14
+=== RUN   TestPreferFunctionTypeFires/case15
+=== PAUSE TestPreferFunctionTypeFires/case15
+=== RUN   TestPreferFunctionTypeFires/case16
+=== PAUSE TestPreferFunctionTypeFires/case16
+=== RUN   TestPreferFunctionTypeFires/case17
+=== PAUSE TestPreferFunctionTypeFires/case17
+=== RUN   TestPreferFunctionTypeFires/case18
+=== PAUSE TestPreferFunctionTypeFires/case18
+=== RUN   TestPreferFunctionTypeFires/case19
+=== PAUSE TestPreferFunctionTypeFires/case19
+=== RUN   TestPreferFunctionTypeFires/case20
+=== PAUSE TestPreferFunctionTypeFires/case20
+=== RUN   TestPreferFunctionTypeFires/case21
+=== PAUSE TestPreferFunctionTypeFires/case21
+=== RUN   TestPreferFunctionTypeFires/case22
+=== PAUSE TestPreferFunctionTypeFires/case22
+=== RUN   TestPreferFunctionTypeFires/case23
+=== PAUSE TestPreferFunctionTypeFires/case23
+=== RUN   TestPreferFunctionTypeFires/case24
+=== PAUSE TestPreferFunctionTypeFires/case24
+=== RUN   TestPreferFunctionTypeFires/case25
+=== PAUSE TestPreferFunctionTypeFires/case25
+=== RUN   TestPreferFunctionTypeFires/case26
+=== PAUSE TestPreferFunctionTypeFires/case26
+=== RUN   TestPreferFunctionTypeFires/case27
+=== PAUSE TestPreferFunctionTypeFires/case27
+=== RUN   TestPreferFunctionTypeFires/case28
+=== PAUSE TestPreferFunctionTypeFires/case28
+=== RUN   TestPreferFunctionTypeFires/case29
+=== PAUSE TestPreferFunctionTypeFires/case29
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#01
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#01
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#02
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#02
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#03
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#03
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"path":_"never"_}
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"path":_"never"_}
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"path":_"never"_}#01
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"path":_"never"_}#01
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"never"_}
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"never"_}
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"never"_}#01
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"never"_}#01
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never"_}
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never"_}
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never"_}#01
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never"_}#01
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_}
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_}
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_}#01
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_}#01
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_}#02
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_}#02
+=== RUN   TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_}#02
+=== PAUSE TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_}#02
+=== CONT  TestTripleSlashReferenceUsesDefaultsWhenTheConfigNamesNoOptions/nil,_which_is_what_a_bare_severity_in_the_config_produces
+=== CONT  TestPreferFunctionTypeStaysSilent/case4
+=== CONT  TestPreferFunctionTypeStaysSilent/case3
+=== CONT  TestPreferFunctionTypeStaysSilent/case2
+=== CONT  TestPreferFunctionTypeStaysSilent/case1
+=== CONT  TestDecodeTripleSlashReferenceOptions/an_empty_object_is_upstream's_documented_default
+=== CONT  TestDecodeTripleSlashReferenceOptions/prefer-import_is_not_accepted_for_lib
+=== CONT  TestDecodeTripleSlashReferenceOptions/prefer-import_is_not_accepted_for_path
+=== CONT  TestDecodeTripleSlashReferenceOptions/one_key_set_leaves_the_other_two_at_their_defaults
+=== CONT  TestDecodeTripleSlashReferenceOptions/each_key_set_explicitly
+=== CONT  TestDecodeTripleSlashReferenceOptions/a_wrongly-cased_value_keeps_the_default
+=== CONT  TestTripleSlashReferenceRefusesOptionsOfTheWrongType/a_value_of_some_other_type
+=== CONT  TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives/two_identical_directives_report_against_the_second
+=== CONT  TestTripleSlashReferenceRefusesOptionsOfTheWrongType/a_pointer_rather_than_the_value
+=== CONT  TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives/three_identical_directives_report_against_the_third
+=== CONT  TestTripleSlashReferencePointsAtTheDirective/the_whole_comment_including_the_leading_slashes
+=== CONT  TestTripleSlashReferencePointsAtTheDirective/indentation_is_not_part_of_the_span
+=== CONT  TestTripleSlashReferencePointsAtTheDirective/a_prefer-import_finding_points_at_the_directive,_not_at_the_import
+=== CONT  TestTripleSlashReferencePointsAtTheDirective/a_block_comment_reports_its_closing_delimiter_too
+=== CONT  TestTripleSlashReferencePointsAtTheDirective/four_slashes_are_all_inside_the_span
+--- PASS: TestPreferFunctionTypeKeepsTheExport (0.00s)
+=== CONT  TestPreferFunctionTypeStaysSilent/case0
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_require_call_is_not_an_import-equals_declaration
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_export-from_is_not_an_import
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_export-from_is_not_an_import
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_import_nested_in_a_namespace_is_not_a_top-level_statement
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_import_nested_in_a_namespace_is_not_a_top-level_statement
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_import-equals_naming_a_qualified_name_rather_than_a_module
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_import-equals_naming_a_qualified_name_rather_than_a_module
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/path_always
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/path_always
+=== CONT  TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"never"_}
+=== PAUSE TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_bare_declaration_spans_the_whole_statement
+=== RUN   TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/prefer-import_is_refused_for_path,_so_the_default_of_never_is_kept_and_this_reports_elsewhere
+=== PAUSE TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/prefer-import_is_refused_for_path,_so_the_default_of_never_is_kept_and_this_reports_elsewhere
+=== RUN   TestPreferNamespaceKeywordReportsTheRightSpanAndText/the_declare_modifier_is_inside_the_span
+=== CONT  TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"lib":_"never"_}
+=== PAUSE TestPreferNamespaceKeywordReportsTheRightSpanAndText/the_declare_modifier_is_inside_the_span
+=== RUN   TestPreferNamespaceKeywordReportsTheRightSpanAndText/the_export_modifier_is_outside_the_span
+=== PAUSE TestPreferNamespaceKeywordReportsTheRightSpanAndText/the_export_modifier_is_outside_the_span
+=== RUN   TestPreferNamespaceKeywordReportsTheRightSpanAndText/export_is_skipped_and_declare_is_kept
+=== PAUSE TestPreferNamespaceKeywordReportsTheRightSpanAndText/export_is_skipped_and_declare_is_kept
+=== CONT  TestPreferNamespaceKeywordFixesWriteWhatTheyClaim
+=== CONT  TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"prefer-import"_}
+=== RUN   TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_dotted_declaration_spans_the_whole_chain_once
+=== CONT  TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"path":_"never"_}
+=== PAUSE TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_dotted_declaration_spans_the_whole_chain_once
+=== RUN   TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_nested_declaration_points_at_the_inner_module
+=== PAUSE TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_nested_declaration_points_at_the_inner_module
+=== CONT  TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"prefer-import"_}#01
+=== CONT  TestTripleSlashReferenceNamesTheModuleInItsMessage/the_module_name_is_the_trimmed_attribute_value
+=== CONT  TestTripleSlashReferenceNamesTheModuleInItsMessage/the_second_attribute_is_the_one_read_when_it_is_the_first_match
+=== CONT  TestTripleSlashReferenceNamesTheModuleInItsMessage/trailing_slashes_are_stripped_from_inside_the_value
+=== CONT  TestTripleSlashReferenceNamesTheModuleInItsMessage/an_empty_value_renders_an_empty_name
+=== CONT  TestTripleSlashReferenceNamesTheModuleInItsMessage/single_quotes_survive,_because_only_the_double_quote_is_trimmed
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_directive_above_the_first_statement_is_still_a_directive
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/lib_never
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_bare_side-effect_import_counts
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/types_never_reports_without_any_import
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_type-only_import_counts
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/two_imports_of_one_module_report_the_one_directive_twice
+=== RUN   TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_bare_module_declaration
+--- PASS: TestDecodeTripleSlashReferenceOptions (0.00s)
+    --- PASS: TestDecodeTripleSlashReferenceOptions/an_empty_object_is_upstream's_documented_default (0.00s)
+    --- PASS: TestDecodeTripleSlashReferenceOptions/prefer-import_is_not_accepted_for_lib (0.00s)
+    --- PASS: TestDecodeTripleSlashReferenceOptions/prefer-import_is_not_accepted_for_path (0.00s)
+    --- PASS: TestDecodeTripleSlashReferenceOptions/one_key_set_leaves_the_other_two_at_their_defaults (0.00s)
+    --- PASS: TestDecodeTripleSlashReferenceOptions/each_key_set_explicitly (0.00s)
+    --- PASS: TestDecodeTripleSlashReferenceOptions/a_wrongly-cased_value_keeps_the_default (0.00s)
+=== PAUSE TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_bare_module_declaration
+--- PASS: TestTripleSlashReferenceRefusesOptionsOfTheWrongType (0.00s)
+    --- PASS: TestTripleSlashReferenceRefusesOptionsOfTheWrongType/a_value_of_some_other_type (0.00s)
+    --- PASS: TestTripleSlashReferenceRefusesOptionsOfTheWrongType/a_pointer_rather_than_the_value (0.00s)
+=== RUN   TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_dotted_module_declaration_rewrites_only_the_leading_keyword
+--- PASS: TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives (0.00s)
+    --- PASS: TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives/two_identical_directives_report_against_the_second (0.00s)
+    --- PASS: TestTripleSlashReferenceKeepsTheLastOfTwoIdenticalDirectives/three_identical_directives_report_against_the_third (0.00s)
+=== PAUSE TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_dotted_module_declaration_rewrites_only_the_leading_keyword
+=== RUN   TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/nested_module_blocks_each_get_their_own_keyword_rewritten
+--- PASS: TestTripleSlashReferencePointsAtTheDirective (0.00s)
+    --- PASS: TestTripleSlashReferencePointsAtTheDirective/the_whole_comment_including_the_leading_slashes (0.00s)
+    --- PASS: TestTripleSlashReferencePointsAtTheDirective/indentation_is_not_part_of_the_span (0.00s)
+    --- PASS: TestTripleSlashReferencePointsAtTheDirective/a_prefer-import_finding_points_at_the_directive,_not_at_the_import (0.00s)
+    --- PASS: TestTripleSlashReferencePointsAtTheDirective/a_block_comment_reports_its_closing_delimiter_too (0.00s)
+    --- PASS: TestTripleSlashReferencePointsAtTheDirective/four_slashes_are_all_inside_the_span (0.00s)
+=== PAUSE TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/nested_module_blocks_each_get_their_own_keyword_rewritten
+--- PASS: TestPreferFunctionTypeStaysSilent (0.00s)
+    --- PASS: TestPreferFunctionTypeStaysSilent/case4 (0.00s)
+    --- PASS: TestPreferFunctionTypeStaysSilent/case3 (0.00s)
+    --- PASS: TestPreferFunctionTypeStaysSilent/case2 (0.00s)
+    --- PASS: TestPreferFunctionTypeStaysSilent/case1 (0.00s)
+    --- PASS: TestPreferFunctionTypeStaysSilent/case0 (0.00s)
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/no_space_before_the_closing_slash
+=== RUN   TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_ambient_module_declaration_keeps_its_declare_modifier
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/text_around_the_reference
+=== PAUSE TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_ambient_module_declaration_keeps_its_declare_modifier
+=== RUN   TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_ambient_module_with_a_nested_module
+=== PAUSE TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_ambient_module_with_a_nested_module
+=== RUN   TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_comment_holding_the_word_module_ahead_of_the_keyword
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/an_unquoted_value
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/attributes_read_in_whitespace_order,_path_first
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_block_comment_whose_content_opens_with_a_slash
+=== PAUSE TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_comment_holding_the_word_module_ahead_of_the_keyword
+=== CONT  TestPreferNamespaceKeywordStaysSilent/an_ambient_module_declared_with_a_quoted_name_and_no_body
+=== CONT  TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/four_slashes,_because_the_test_is_on_the_third_character
+=== RUN   TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_name_segment_and_a_string_both_holding_the_word_module
+=== PAUSE TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_name_segment_and_a_string_both_holding_the_word_module
+=== CONT  TestPreferNamespaceKeywordStaysSilent/a_global_augmentation_with_statements_inside
+=== RUN   TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_exported_module_declaration
+=== PAUSE TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_exported_module_declaration
+=== CONT  TestPreferNamespaceKeywordStaysSilent/a_module_with_a_quoted_name_and_no_declare_modifier
+=== RUN   TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_exported_ambient_module_declaration
+=== PAUSE TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_exported_ambient_module_declaration
+--- PASS: TestTripleSlashReferenceUsesDefaultsWhenTheConfigNamesNoOptions (0.00s)
+    --- PASS: TestTripleSlashReferenceUsesDefaultsWhenTheConfigNamesNoOptions/nil,_which_is_what_a_bare_severity_in_the_config_produces (0.00s)
+=== CONT  TestPreferNamespaceKeywordStaysSilent/a_deeply_dotted_namespace_declaration
+=== RUN   TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_three-segment_dotted_module_declaration
+--- PASS: TestTripleSlashReferenceFiresOnUpstreamFailCases (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"never"_} (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"path":_"never"_} (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"lib":_"never"_} (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"prefer-import"_} (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnUpstreamFailCases/{_"types":_"prefer-import"_}#01 (0.00s)
+=== CONT  TestPreferNamespaceKeywordStaysSilent/a_dotted_namespace_declaration
+--- PASS: TestTripleSlashReferenceNamesTheModuleInItsMessage (0.00s)
+    --- PASS: TestTripleSlashReferenceNamesTheModuleInItsMessage/the_module_name_is_the_trimmed_attribute_value (0.00s)
+    --- PASS: TestTripleSlashReferenceNamesTheModuleInItsMessage/trailing_slashes_are_stripped_from_inside_the_value (0.00s)
+    --- PASS: TestTripleSlashReferenceNamesTheModuleInItsMessage/an_empty_value_renders_an_empty_name (0.00s)
+    --- PASS: TestTripleSlashReferenceNamesTheModuleInItsMessage/the_second_attribute_is_the_one_read_when_it_is_the_first_match (0.00s)
+    --- PASS: TestTripleSlashReferenceNamesTheModuleInItsMessage/single_quotes_survive,_because_only_the_double_quote_is_trimmed (0.00s)
+=== CONT  TestPreferNamespaceKeywordStaysSilent/an_ambient_namespace
+=== CONT  TestPreferNamespaceKeywordStaysSilent/a_global_augmentation
+=== CONT  TestPreferNamespaceKeywordStaysSilent/the_namespace_keyword
+--- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_bare_side-effect_import_counts (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/types_never_reports_without_any_import (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_directive_above_the_first_statement_is_still_a_directive (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/lib_never (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/two_imports_of_one_module_report_the_one_directive_twice (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/text_around_the_reference (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_type-only_import_counts (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/no_space_before_the_closing_slash (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/attributes_read_in_whitespace_order,_path_first (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/a_block_comment_whose_content_opens_with_a_slash (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/an_unquoted_value (0.00s)
+    --- PASS: TestTripleSlashReferenceFiresOnCasesUpstreamDoesNotCover/four_slashes,_because_the_test_is_on_the_third_character (0.00s)
+=== PAUSE TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_three-segment_dotted_module_declaration
+=== CONT  TestPreferNamespaceKeywordFires/a_bare_module_declaration
+=== CONT  TestPreferNamespaceKeywordFires/a_module_nested_in_a_module_block_reports_for_each
+=== CONT  TestPreferNamespaceKeywordFires/a_module_inside_a_global_augmentation
+=== CONT  TestPreferNamespaceKeywordStaysSilent/an_ambient_module_declared_with_a_quoted_name
+=== CONT  TestPreferNamespaceKeywordFires/a_dotted_module_declaration_reports_once_for_the_whole_chain
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_}
+=== CONT  TestPreferFunctionTypeFires/case0
+--- PASS: TestPreferNamespaceKeywordStaysSilent (0.00s)
+    --- PASS: TestPreferNamespaceKeywordStaysSilent/an_ambient_module_declared_with_a_quoted_name_and_no_body (0.00s)
+    --- PASS: TestPreferNamespaceKeywordStaysSilent/a_module_with_a_quoted_name_and_no_declare_modifier (0.00s)
+    --- PASS: TestPreferNamespaceKeywordStaysSilent/a_global_augmentation_with_statements_inside (0.00s)
+    --- PASS: TestPreferNamespaceKeywordStaysSilent/a_deeply_dotted_namespace_declaration (0.00s)
+    --- PASS: TestPreferNamespaceKeywordStaysSilent/a_dotted_namespace_declaration (0.00s)
+    --- PASS: TestPreferNamespaceKeywordStaysSilent/an_ambient_namespace (0.00s)
+    --- PASS: TestPreferNamespaceKeywordStaysSilent/an_ambient_module_declared_with_a_quoted_name (0.00s)
+    --- PASS: TestPreferNamespaceKeywordStaysSilent/the_namespace_keyword (0.00s)
+    --- PASS: TestPreferNamespaceKeywordStaysSilent/a_global_augmentation (0.00s)
+=== CONT  TestPreferFunctionTypeFires/case29
+=== CONT  TestPreferFunctionTypeFires/case28
+=== CONT  TestPreferFunctionTypeFires/case27
+=== CONT  TestPreferNamespaceKeywordFires/an_ambient_module_declaration_with_an_identifier_name
+--- PASS: TestPreferNamespaceKeywordFires (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFires/a_bare_module_declaration (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFires/a_module_nested_in_a_module_block_reports_for_each (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFires/a_module_inside_a_global_augmentation (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFires/a_dotted_module_declaration_reports_once_for_the_whole_chain (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFires/an_ambient_module_declaration_with_an_identifier_name (0.00s)
+=== CONT  TestPreferFunctionTypeFires/case26
+=== CONT  TestPreferFunctionTypeFires/case24
+=== CONT  TestPreferFunctionTypeFires/case23
+=== CONT  TestPreferFunctionTypeFires/case14
+=== CONT  TestPreferFunctionTypeFires/case13
+=== CONT  TestPreferFunctionTypeFires/case12
+=== CONT  TestPreferFunctionTypeFires/case11
+=== CONT  TestPreferFunctionTypeFires/case10
+=== CONT  TestPreferFunctionTypeFires/case9
+=== CONT  TestPreferFunctionTypeFires/case8
+=== CONT  TestPreferFunctionTypeFires/case7
+=== CONT  TestPreferFunctionTypeFires/case19
+=== CONT  TestPreferFunctionTypeFires/case22
+=== CONT  TestPreferFunctionTypeFires/case20
+=== CONT  TestPreferFunctionTypeFires/case17
+=== CONT  TestPreferFunctionTypeFires/case18
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_}
+=== CONT  TestPreferFunctionTypeFires/case15
+=== CONT  TestPreferFunctionTypeFires/case16
+=== CONT  TestPreferFunctionTypeFires/case6
+=== CONT  TestPreferFunctionTypeFires/case1
+=== CONT  TestPreferFunctionTypeFires/case5
+=== CONT  TestPreferFunctionTypeFires/case4
+=== CONT  TestPreferFunctionTypeFires/case3
+=== CONT  TestPreferFunctionTypeFires/case2
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never"_}#01
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_}#02
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never"_}
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"never"_}#01
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"never"_}
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"path":_"never"_}#01
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"path":_"never"_}
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#03
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#02
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#01
+=== CONT  TestPreferFunctionTypeFires/case21
+=== CONT  TestPreferFunctionTypeFires/case25
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_}#01
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_}#01
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_after_the_first_statement_is_not_a_directive
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_malformed_lib_attribute_declines_a_following_path_attribute
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/prefer-import_is_refused_for_path,_so_the_default_of_never_is_kept_and_this_reports_elsewhere
+--- PASS: TestPreferFunctionTypeFires (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case0 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case29 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case28 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case27 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case24 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case14 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case26 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case23 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case13 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case12 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case10 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case11 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case8 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case9 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case19 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case7 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case22 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case20 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case18 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case17 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case16 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case6 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case15 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case1 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case4 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case3 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case5 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case2 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case21 (0.00s)
+    --- PASS: TestPreferFunctionTypeFires/case25 (0.00s)
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/path_always
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_import-equals_naming_a_qualified_name_rather_than_a_module
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_import_nested_in_a_namespace_is_not_a_top-level_statement
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_dynamic_import_is_not_one_of_the_two_shapes
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_require_call_is_not_an_import-equals_declaration
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/types_defaults_to_prefer-import,_so_no_import_means_no_finding
+=== CONT  TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_}#02
+--- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_} (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_} (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never"_}#01 (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_}#02 (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never"_} (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"never"_}#01 (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"path":_"never"_} (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"path":_"never"_}#01 (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"never"_} (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#03 (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_} (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"never",_"path":_"never",_"types":_"never"_}#01 (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_}#01 (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#02 (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"types":_"prefer-import"_}#02 (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnUpstreamPassCases/{_"lib":_"always",_"path":_"always",_"types":_"always"_}#01 (0.00s)
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/lib_defaults_to_always
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_value_containing_an_equals_sign_declines_the_whole_comment
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_jsdoc_block,_whose_content_opens_with_a_star
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/attributes_read_in_whitespace_order,_lib_first_and_lib_defaults_to_always
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_malformed_first_attribute_declines_the_comment_rather_than_falling_through
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_double_slash_is_not_a_directive
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_block_comment_whose_content_opens_with_a_space
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_trailing_code_on_the_same_line
+=== CONT  TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_bare_declaration_spans_the_whole_statement
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_between_two_statements
+=== CONT  TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_nested_declaration_points_at_the_inner_module
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_export-from_is_not_an_import
+=== CONT  TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_dotted_declaration_spans_the_whole_chain_once
+=== CONT  TestPreferNamespaceKeywordReportsTheRightSpanAndText/export_is_skipped_and_declare_is_kept
+=== CONT  TestPreferNamespaceKeywordReportsTheRightSpanAndText/the_export_modifier_is_outside_the_span
+=== CONT  TestPreferNamespaceKeywordReportsTheRightSpanAndText/the_declare_modifier_is_inside_the_span
+=== CONT  TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_bare_module_declaration
+=== CONT  TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_three-segment_dotted_module_declaration
+=== CONT  TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/no-default-lib_is_not_an_attribute_this_rule_reads
+--- PASS: TestPreferNamespaceKeywordReportsTheRightSpanAndText (0.00s)
+    --- PASS: TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_bare_declaration_spans_the_whole_statement (0.00s)
+    --- PASS: TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_dotted_declaration_spans_the_whole_chain_once (0.00s)
+    --- PASS: TestPreferNamespaceKeywordReportsTheRightSpanAndText/a_nested_declaration_points_at_the_inner_module (0.00s)
+    --- PASS: TestPreferNamespaceKeywordReportsTheRightSpanAndText/export_is_skipped_and_declare_is_kept (0.00s)
+    --- PASS: TestPreferNamespaceKeywordReportsTheRightSpanAndText/the_export_modifier_is_outside_the_span (0.00s)
+    --- PASS: TestPreferNamespaceKeywordReportsTheRightSpanAndText/the_declare_modifier_is_inside_the_span (0.00s)
+=== CONT  TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_exported_ambient_module_declaration
+=== CONT  TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_ambient_module_declaration_keeps_its_declare_modifier
+=== CONT  TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/nested_module_blocks_each_get_their_own_keyword_rewritten
+=== CONT  TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_dotted_module_declaration_rewrites_only_the_leading_keyword
+=== CONT  TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_name_segment_and_a_string_both_holding_the_word_module
+=== CONT  TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_exported_module_declaration
+=== CONT  TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_comment_holding_the_word_module_ahead_of_the_keyword
+=== CONT  TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_ambient_module_with_a_nested_module
+--- PASS: TestPreferNamespaceKeywordFixesWriteWhatTheyClaim (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_three-segment_dotted_module_declaration (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_bare_module_declaration (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_exported_ambient_module_declaration (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_ambient_module_declaration_keeps_its_declare_modifier (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/nested_module_blocks_each_get_their_own_keyword_rewritten (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_dotted_module_declaration_rewrites_only_the_leading_keyword (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_exported_module_declaration (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_comment_holding_the_word_module_ahead_of_the_keyword (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/a_name_segment_and_a_string_both_holding_the_word_module (0.00s)
+    --- PASS: TestPreferNamespaceKeywordFixesWriteWhatTheyClaim/an_ambient_module_with_a_nested_module (0.00s)
+--- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover (0.01s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_after_the_first_statement_is_not_a_directive (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_malformed_lib_attribute_declines_a_following_path_attribute (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/path_always (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_import-equals_naming_a_qualified_name_rather_than_a_module (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_import_nested_in_a_namespace_is_not_a_top-level_statement (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_dynamic_import_is_not_one_of_the_two_shapes (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_require_call_is_not_an_import-equals_declaration (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/types_defaults_to_prefer-import,_so_no_import_means_no_finding (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/prefer-import_is_refused_for_path,_so_the_default_of_never_is_kept_and_this_reports_elsewhere (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/lib_defaults_to_always (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_jsdoc_block,_whose_content_opens_with_a_star (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/attributes_read_in_whitespace_order,_lib_first_and_lib_defaults_to_always (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_double_slash_is_not_a_directive (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_block_comment_whose_content_opens_with_a_space (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_malformed_first_attribute_declines_the_comment_rather_than_falling_through (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_trailing_code_on_the_same_line (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_directive_between_two_statements (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/an_export-from_is_not_an_import (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/no-default-lib_is_not_an_attribute_this_rule_reads (0.00s)
+    --- PASS: TestTripleSlashReferenceStaysSilentOnCasesUpstreamDoesNotCover/a_value_containing_an_equals_sign_declines_the_whole_comment (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/typescript	0.020s

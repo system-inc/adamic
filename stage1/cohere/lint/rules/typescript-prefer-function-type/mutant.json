@@ -1,0 +1,6 @@
+{
+  "name": "array function type unwrapped",
+  "file": "rule.ts",
+  "from": "['UnionType', 'IntersectionType', 'ArrayType']",
+  "to": "['UnionType', 'IntersectionType']"
+}

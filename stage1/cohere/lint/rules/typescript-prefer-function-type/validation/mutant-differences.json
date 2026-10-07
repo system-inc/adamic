@@ -1,0 +1,74 @@
+[
+  {
+    "runtime": "mutant-0-Node",
+    "line": 226,
+    "Go": "range 11 19 functionTypeOverCallableType fix\t(() => void)\t",
+    "mutant": "range 11 19 functionTypeOverCallableType fix\t() => void\t",
+    "exitCode": 0,
+    "stderrBytes": 0
+  },
+  {
+    "runtime": "mutant-0-JavaScript",
+    "line": 226,
+    "Go": "range 11 19 functionTypeOverCallableType fix\t(() => void)\t",
+    "mutant": "range 11 19 functionTypeOverCallableType fix\t() => void\t",
+    "exitCode": 0,
+    "stderrBytes": 0
+  },
+  {
+    "runtime": "mutant-0-native",
+    "line": 226,
+    "Go": "range 11 19 functionTypeOverCallableType fix\t(() => void)\t",
+    "mutant": "range 11 19 functionTypeOverCallableType fix\t() => void\t",
+    "exitCode": 0,
+    "stderrBytes": 0
+  },
+  {
+    "runtime": "mutant-1-Node",
+    "line": 244,
+    "Go": "/tmp/w05-third-validation/case-39.ts:2:13",
+    "mutant": "/tmp/w05-third-validation/case-39.ts:2:21",
+    "exitCode": 0,
+    "stderrBytes": 0
+  },
+  {
+    "runtime": "mutant-1-JavaScript",
+    "line": 244,
+    "Go": "/tmp/w05-third-validation/case-39.ts:2:13",
+    "mutant": "/tmp/w05-third-validation/case-39.ts:2:21",
+    "exitCode": 0,
+    "stderrBytes": 0
+  },
+  {
+    "runtime": "mutant-1-native",
+    "line": 244,
+    "Go": "/tmp/w05-third-validation/case-39.ts:2:13",
+    "mutant": "/tmp/w05-third-validation/case-39.ts:2:21",
+    "exitCode": 0,
+    "stderrBytes": 0
+  },
+  {
+    "runtime": "mutant-2-Node",
+    "line": 541,
+    "Go": "/tmp/w05-third-validation/case-101.ts:3:1",
+    "mutant": "/tmp/w05-third-validation/case-101.ts:1:1",
+    "exitCode": 0,
+    "stderrBytes": 0
+  },
+  {
+    "runtime": "mutant-2-JavaScript",
+    "line": 541,
+    "Go": "/tmp/w05-third-validation/case-101.ts:3:1",
+    "mutant": "/tmp/w05-third-validation/case-101.ts:1:1",
+    "exitCode": 0,
+    "stderrBytes": 0
+  },
+  {
+    "runtime": "mutant-2-native",
+    "line": 541,
+    "Go": "/tmp/w05-third-validation/case-101.ts:3:1",
+    "mutant": "/tmp/w05-third-validation/case-101.ts:1:1",
+    "exitCode": 0,
+    "stderrBytes": 0
+  }
+]

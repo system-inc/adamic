@@ -1,0 +1,67 @@
+{
+  "Go": {
+    "bytes": 37198852,
+    "sha256": "a97245091223ab7fa375c921445c4de072dc3035bbb22bc1abfe7fe2e811d413",
+    "stderrBytes": 0
+  },
+  "baseline-Node": {
+    "bytes": 37198852,
+    "sha256": "a97245091223ab7fa375c921445c4de072dc3035bbb22bc1abfe7fe2e811d413",
+    "stderrBytes": 0
+  },
+  "baseline-JavaScript": {
+    "bytes": 37198852,
+    "sha256": "a97245091223ab7fa375c921445c4de072dc3035bbb22bc1abfe7fe2e811d413",
+    "stderrBytes": 0
+  },
+  "baseline-native": {
+    "bytes": 37198852,
+    "sha256": "a97245091223ab7fa375c921445c4de072dc3035bbb22bc1abfe7fe2e811d413",
+    "stderrBytes": 0
+  },
+  "mutant-0-Node": {
+    "bytes": 37198844,
+    "sha256": "77f14371bc46b466ee905463a51a8d4ac3cd7a1b6585f64cf33d8c76260b1388",
+    "stderrBytes": 0
+  },
+  "mutant-0-JavaScript": {
+    "bytes": 37198844,
+    "sha256": "77f14371bc46b466ee905463a51a8d4ac3cd7a1b6585f64cf33d8c76260b1388",
+    "stderrBytes": 0
+  },
+  "mutant-0-native": {
+    "bytes": 37198844,
+    "sha256": "77f14371bc46b466ee905463a51a8d4ac3cd7a1b6585f64cf33d8c76260b1388",
+    "stderrBytes": 0
+  },
+  "mutant-1-Node": {
+    "bytes": 37198858,
+    "sha256": "76dcd0b5a4d733da27bf3a97e0b91322b8c9d3336bd6cc5b3ceef4e9dd1a1984",
+    "stderrBytes": 0
+  },
+  "mutant-1-JavaScript": {
+    "bytes": 37198858,
+    "sha256": "76dcd0b5a4d733da27bf3a97e0b91322b8c9d3336bd6cc5b3ceef4e9dd1a1984",
+    "stderrBytes": 0
+  },
+  "mutant-1-native": {
+    "bytes": 37198858,
+    "sha256": "76dcd0b5a4d733da27bf3a97e0b91322b8c9d3336bd6cc5b3ceef4e9dd1a1984",
+    "stderrBytes": 0
+  },
+  "mutant-2-Node": {
+    "bytes": 37198849,
+    "sha256": "0c46744da4281c00024e921c168a673643ed66e2c44612a497700b2647659acc",
+    "stderrBytes": 0
+  },
+  "mutant-2-JavaScript": {
+    "bytes": 37198849,
+    "sha256": "0c46744da4281c00024e921c168a673643ed66e2c44612a497700b2647659acc",
+    "stderrBytes": 0
+  },
+  "mutant-2-native": {
+    "bytes": 37198849,
+    "sha256": "0c46744da4281c00024e921c168a673643ed66e2c44612a497700b2647659acc",
+    "stderrBytes": 0
+  }
+}
