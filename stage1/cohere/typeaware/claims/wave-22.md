@@ -68,3 +68,10 @@ by-volume ranking are:
 All have zero recorded findings on both frozen corpora. These three are now
 reserved for this branch. The claim is pushed before implementation; fetched
 ref SHAs and the full selection are in validation-wave-22-fourth/selection.json.
+
+## Fourth batch completion
+
+All three fourth-batch rules are ported as .a, compared byte for byte with Go
+on positive controls and both frozen corpora, tested with per-rule repair
+mutants and sanitizers, and committed with WAVE_22_FOURTH_REPORT.md. All twelve
+claims on this branch are complete. No additional rules were claimed.
