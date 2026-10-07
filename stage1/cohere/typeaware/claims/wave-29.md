@@ -154,3 +154,11 @@ still prevents a full source port; no new claim is taken. See
 The undef follow-up is also rebased onto main 39638d9e2, retaining harness
 41eb6eab2. A rebuilt compiler re-green the 148-case resolution comparison and
 79-case JSX kernels, including all compiling mutants, after rebase. No new claim.
+
+## Area landing rebase
+
+Rebased onto area d65a8f931 (contains 50a5f105 and harness 41eb6eab2),
+with main 39638d9e2 an ancestor. All available owned profiles, kernels,
+mutants, sanitizers, bridge and focused inherited runtime checks re-green.
+Remaining checker/source, React analysis and configured regex blockers persist.
+No new claim. See [area report](../wave-29-fourth/AREA_LANDING_REPORT.md).
