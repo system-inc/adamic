@@ -1,0 +1,63 @@
+import type { RuleContext } from '../../context.ts';
+import { Finding } from '../../finding.ts';
+const message = 'A declaration block in a fixed order is one a reader can scan instead of search. Sort the names, or split the block so each declaration stands where it is used.';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    name(index: number): string {
+        const child = this.context.node(index).children[0] ?? -1;
+        const text = child < 0 ? '' : this.context.node(child).text;
+        // Go strings.ToLower maps one rune at a time, including U+0130 to plain i.
+        return this.context.settings.read('ignorecase', 'false') === 'true' ? [...text].map(character => character === '\u0130' ? 'i' : character.toLowerCase()).join('') : text;
+    }
+    compare(left: number, right: number): number {
+        const a = [...this.name(left)]; const b = [...this.name(right)];
+        for(let at = 0; at < Math.min(a.length, b.length); at++) {
+            const x = (a[at] ?? '').codePointAt(0) ?? 0;
+            const y = (b[at] ?? '').codePointAt(0) ?? 0;
+            if(x !== y) { return x < y ? -1 : 1; }
+        }
+        return a.length - b.length;
+    }
+    literal(index: number): boolean {
+        return ['StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'RegularExpressionLiteral', 'TrueKeyword', 'FalseKeyword', 'NullKeyword'].includes(this.context.node(index).kind);
+    }
+    visit(index: number): void {
+        const declarations = this.context.node(index).children.filter(child => {
+            const name = this.context.node(child).children[0] ?? -1;
+            return this.context.node(child).kind === 'VariableDeclaration' && name >= 0 && this.context.node(name).kind === 'Identifier';
+        });
+        if(declarations.length < 2) { return; }
+        let unfixable = false;
+        for(const declaration of declarations) {
+            const children = this.context.node(declaration).children;
+            const last = children[children.length - 1] ?? -1;
+            const previous = children[children.length - 2] ?? -1;
+            if(previous >= 0 && last >= 0) {
+                const separator = this.context.tokens(this.context.node(previous).end, this.context.start(last));
+                if(separator.includes('= ') && !this.literal(last)) { unfixable = true; }
+            }
+        }
+        const sorted = declarations.slice().sort((left, right) => this.compare(left, right));
+        let replacement = '';
+        for(let at = 0; at < sorted.length; at++) {
+            const declaration = sorted[at] ?? -1;
+            replacement += this.context.source.slice(this.context.start(declaration), this.context.node(declaration).end);
+            const original = declarations[at] ?? -1;
+            const next = declarations[at + 1];
+            if(next !== undefined) { replacement += this.context.source.slice(this.context.node(original).end, this.context.start(next)); }
+        }
+        const first = declarations[0] ?? -1;
+        const last = declarations[declarations.length - 1] ?? -1;
+        let previous = first;
+        let fixed = false;
+        for(const current of declarations.slice(1)) {
+            if(this.compare(current, previous) >= 0) { previous = current; continue; }
+            const repair = !unfixable && !fixed ? 'fix' : '';
+            const finding = new Finding('sort-vars', 'sortVars', message, this.context.start(current), this.context.node(current).end, repair, repair === '' ? '' : replacement, '');
+            if(repair !== '') { finding.editStart = this.context.start(first); finding.editEnd = this.context.node(last).end; }
+            this.context.findings.push(finding); fixed = true;
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

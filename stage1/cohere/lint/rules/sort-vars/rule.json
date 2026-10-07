@@ -1,0 +1,12 @@
+{
+  "name": "sort-vars",
+  "kinds": [
+    "VariableDeclarationList"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleSortVars",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestSortVars"
+}

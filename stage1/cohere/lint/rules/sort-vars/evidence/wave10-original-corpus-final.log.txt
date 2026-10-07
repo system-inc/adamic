@@ -1,0 +1,6 @@
+=== RUN   TestOriginalCorpus
+    owned_original_test.go:47: original corpus: 224 files / 672 cases
+    owned_original_test.go:48: Go, Node, emitted JavaScript, native identical: 37782851 bytes
+--- PASS: TestOriginalCorpus (72.33s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	72.342s

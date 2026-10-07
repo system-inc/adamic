@@ -1,0 +1,46 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/unsafe_component_check_removed
+    lint_test.go:494: unsafe_component_check_removed mutant survived on Node
+=== RUN   TestMutants/sort_vars_comparison_disabled
+    lint_test.go:496: sort_vars_comparison_disabled caught on Node: case 24 line 558: port "fixed\tvar b, a;\\u000a", Go "/tmp/adamic-gate/TestMutantssort_vars_comparison_disabled240368786/007/sort-vars-0.ts:1:8"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantssort_vars_comparison_disabled240368786/007/sort-vars-0.ts:1:8
+          sort-vars  A declaration block in a fixed order is one a reader can scan instead of search. Sort the names, or split the block so each declaration stands where it is used.
+        
+        range 7 8 sortVars fix	a, b	
+        edit 4 8
+    lint_test.go:496: sort_vars_comparison_disabled caught on emitted JavaScript: case 24 line 558: port "fixed\tvar b, a;\\u000a", Go "/tmp/adamic-gate/TestMutantssort_vars_comparison_disabled240368786/007/sort-vars-0.ts:1:8"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantssort_vars_comparison_disabled240368786/007/sort-vars-0.ts:1:8
+          sort-vars  A declaration block in a fixed order is one a reader can scan instead of search. Sort the names, or split the block so each declaration stands where it is used.
+        
+        range 7 8 sortVars fix	a, b	
+        edit 4 8
+    lint_test.go:496: sort_vars_comparison_disabled caught on native: case 24 line 558: port "fixed\tvar b, a;\\u000a", Go "/tmp/adamic-gate/TestMutantssort_vars_comparison_disabled240368786/007/sort-vars-0.ts:1:8"
+        Go context:
+        
+        range 52 54 unexpectedBlock 		
+        edit 34 43
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantssort_vars_comparison_disabled240368786/007/sort-vars-0.ts:1:8
+          sort-vars  A declaration block in a fixed order is one a reader can scan instead of search. Sort the names, or split the block so each declaration stands where it is used.
+        
+        range 7 8 sortVars fix	a, b	
+        edit 4 8
+--- FAIL: TestMutants (42.13s)
+    --- FAIL: TestMutants/unsafe_component_check_removed (17.48s)
+    --- PASS: TestMutants/sort_vars_comparison_disabled (16.57s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	42.141s
+FAIL

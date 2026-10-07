@@ -1,0 +1,6 @@
+{
+  "name": "sort_vars_comparison_disabled",
+  "file": "rule.a",
+  "from": "this.compare(current, previous) >= 0",
+  "to": "true"
+}

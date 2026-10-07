@@ -1,0 +1,7 @@
+=== RUN   TestOriginalUpstream
+    lint_test.go:327: cohere cases: 639 unique source/rule/options combinations
+    owned_original_test.go:34: original upstream: 122 compared, 0 JSX parser exclusions
+    owned_original_test.go:35: Go, Node, emitted JavaScript, native identical: 36855 bytes
+--- PASS: TestOriginalUpstream (26.38s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	26.385s
