@@ -2,10 +2,10 @@ package regexp
 
 import (
 	"fmt"
+	"github.com/system-inc/adamic/internal/unicodeproperties"
 	"math/big"
 	"strconv"
 	"strings"
-	"unicode"
 	"unicode/utf8"
 )
 
@@ -823,11 +823,13 @@ func (p *parser) groupNameRune() (rune, error) {
 }
 
 func isRegExpIdentifierStart(r rune) bool {
-	return r == '$' || r == '_' || unicode.IsLetter(r) || unicode.In(r, unicode.Nl, unicode.Other_ID_Start)
+	property, _ := unicodeproperties.Lookup("ID_Start", false)
+	return r == '$' || r == '_' || property.Contains(r)
 }
 
 func isRegExpIdentifierPart(r rune) bool {
-	return isRegExpIdentifierStart(r) || r == 0x200C || r == 0x200D || unicode.In(r, unicode.Mn, unicode.Mc, unicode.Nd, unicode.Pc, unicode.Other_ID_Continue)
+	property, _ := unicodeproperties.Lookup("ID_Continue", false)
+	return isRegExpIdentifierStart(r) || r == 0x200C || r == 0x200D || property.Contains(r)
 }
 func (p *parser) decimal() (*big.Int, bool) {
 	start := p.pos

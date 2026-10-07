@@ -202,3 +202,9 @@ Corrected Go/C and added two counted NUL probes. Restoring the sentinel is caugh
 by the Node test. All six reference mutants pass in 4.20s. Raw bytecode identity
 now compares 7,432 programs and 3,195 rejections. V8 compatibility checks precede
 native counter-width refusal, matching Go even when both refusals apply.
+
+Identifier followup: Node rejects U+2E2F (a Pattern_Syntax letter), which Go's
+category-based approximation accepted. Capture names now use the generated
+ID_Start/ID_Continue properties shared with C, including current Unicode letters
+such as U+1C89. Node comparisons and seven reference mutants pass in 4.465s;
+accepting U+2E2F is caught explicitly. C parser identity includes these two probes.

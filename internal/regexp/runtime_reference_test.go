@@ -17,7 +17,7 @@ func TestRuntimeReferenceNode(t *testing.T) {
 		Pattern, Flags string
 		Valid          bool
 	}{
-		{"a\x00b", "u", true}, {"\x00", "", true}, {"(?<℘>a)", "u", true}, {"(?<a·>a)", "u", true},
+		{"(?<ⸯ>a)", "u", false}, {"(?<Ᲊ>a)", "u", true}, {"a\x00b", "u", true}, {"\x00", "", true}, {"(?<℘>a)", "u", true}, {"(?<a·>a)", "u", true},
 		{`(?<\u2118>a)`, "u", true}, {`(?<a\u00b7>a)`, "u", true},
 		{`\u{10000000000000000000000}`, "u", false},
 		{`\u{ffffffffffffffffffffffff}`, "u", false},
@@ -78,8 +78,9 @@ func TestRuntimeReferenceMutants(t *testing.T) {
 	}
 	mutants := []struct{ name, old, new string }{
 		{"stop on embedded NUL", "(stop == 0 || p.peek() != stop)", "p.peek() != stop"},
-		{"drop Other_ID_Start", ", unicode.Other_ID_Start", ""},
-		{"drop Other_ID_Continue", ", unicode.Other_ID_Continue", ""},
+		{"drop Other_ID_Start", "return r == '$' || r == '_' || property.Contains(r)", "return r == '$' || r == '_' || (r != 0x2118 && property.Contains(r))"},
+		{"drop Other_ID_Continue", "r == 0x200D || property.Contains(r)", "r == 0x200D || (r != 0x00b7 && property.Contains(r))"},
+		{"accept Pattern_Syntax letter", "return r == '$' || r == '_' || property.Contains(r)", "return r == '$' || r == '_' || r == 0x2e2f || property.Contains(r)"},
 		{"wrap oversized Unicode escape", "d < 0 || n > (utf8.MaxRune-d)/16", "d < 0"},
 		{"silently accept clamped reversed bounds", divergenceReturn, "return &Quantifier{Atom: atom, Min: min, Max: max, Greedy: true}, nil"},
 		{"classify divergence as SyntaxError", divergenceReturn, `return nil, p.failAt(start, "quantifier range out of order")`},
