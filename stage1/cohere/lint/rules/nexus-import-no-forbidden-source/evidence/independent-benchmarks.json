@@ -1,0 +1,40 @@
+[
+  {
+    "rule": "nexus/import-no-forbidden-source",
+    "cases": 200,
+    "source": "// Dependencies - Frameworks\n// This is the only place this import is valid\n// eslint-disable-next-line nexus/import-no-forbidden-source\nimport NextImage from 'next/image';\n",
+    "scope": "startup-inclusive, raw-source input and own parsing; sanitized native",
+    "samples": [
+      {
+        "backend": "Go",
+        "findings": 200,
+        "seconds": [
+          0.007589759001348284,
+          0.007984764999491745,
+          0.00729044400031853
+        ],
+        "findingsPerSecond": 26351.297842852582
+      },
+      {
+        "backend": "Node",
+        "findings": 200,
+        "seconds": [
+          0.11801801399997203,
+          0.11660432299868262,
+          0.11609795999902417
+        ],
+        "findingsPerSecond": 1715.202274295264
+      },
+      {
+        "backend": "native",
+        "findings": 200,
+        "seconds": [
+          0.08071789400128182,
+          0.08059104399944772,
+          0.07310518600024807
+        ],
+        "findingsPerSecond": 2481.6653324576682
+      }
+    ]
+  }
+]

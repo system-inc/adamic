@@ -1,0 +1,11 @@
+compiler files 77
+compiler processed 4
+compiler processed 44
+stage1 files 160
+stage1 processed 4
+stage1 processed 44
+stage1 processed 84
+stage1 processed 124
+mutant forbidden_owner_exemption_lost caught by all three comparisons
+benchmark {'rule': 'nexus/import-no-forbidden-source', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.011265235998507706, 0.010547492000114289, 0.007559778001450468], 'findingsPerSecond': 18961.85368027137}, {'backend': 'Node', 'findings': 200, 'seconds': [0.12446449199887866, 0.12741918999927293, 0.16428900699975202], 'findingsPerSecond': 1569.6222837481641}, {'backend': 'native', 'findings': 200, 'seconds': [0.36116428900095343, 0.20407798000087496, 0.3330407040011778], 'findingsPerSecond': 600.5271956165835}]}
+post validation complete

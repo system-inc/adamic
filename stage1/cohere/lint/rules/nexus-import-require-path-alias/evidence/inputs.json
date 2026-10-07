@@ -1,0 +1,1668 @@
+[
+  {
+    "name": "/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "2c110604ee9c845cf8d61cc81f5bd00243e451c36a182fc7ca5fd41088d86358",
+    "sourceBytes": 108
+  },
+  {
+    "name": "/src/compiler/_namespaces/ts.performance.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "8a81b3414eceb42d02b85dc749f5ddb706b1de019354b4f2e32ede30513c2d9d",
+    "sourceBytes": 98
+  },
+  {
+    "name": "/src/compiler/_namespaces/ts.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "5b3f8d857abec0754265baa15bd02e1b274dd011da63acbedc445b34027ca5c6",
+    "sourceBytes": 3209
+  },
+  {
+    "name": "/src/compiler/binder.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "fc014f3c3061c80759b7c56b393fafebb59e6a3f070a3c776b60bc070bb40f22",
+    "sourceBytes": 190547
+  },
+  {
+    "name": "/src/compiler/builder.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "a99046121e86875344b1a4f3b6e17068062b0f268af2d4780ce0ed0f1e022886",
+    "sourceBytes": 114504
+  },
+  {
+    "name": "/src/compiler/builderPublic.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "3ae879367e1269dd06706123ba458331439807e24ceabcd9ea8f459cb7581e68",
+    "sourceBytes": 11250
+  },
+  {
+    "name": "/src/compiler/builderState.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "93e6e91eefc55cb059068eb7f4211cde0458a42807c675b25a8a357ce6e9b1e3",
+    "sourceBytes": 25464
+  },
+  {
+    "name": "/src/compiler/builderStatePublic.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "25ba6c1f98695b747b6433c43ca75e6780e3f8399ce7698058254ae5898c9f01",
+    "sourceBytes": 365
+  },
+  {
+    "name": "/src/compiler/checker.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "3a25293194aa6d6150738405acdc45876173927881e1ea1464de4463a2833fe5",
+    "sourceBytes": 3097340
+  },
+  {
+    "name": "/src/compiler/commandLineParser.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "9b86708a7de0e1872e28319cf8d606761e59b0b2db5c67fd3efa28fa20728b2b",
+    "sourceBytes": 179161
+  },
+  {
+    "name": "/src/compiler/core.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "a3312b0dceadc682805debabaab39903a539ea5283b36d12c1ea7039e11908ac",
+    "sourceBytes": 89824
+  },
+  {
+    "name": "/src/compiler/corePublic.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "3755d380f78f1036743498e6454ae9e1a52233e652533aee50f5b56f7ef7f52f",
+    "sourceBytes": 1271
+  },
+  {
+    "name": "/src/compiler/debug.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "015f97d8b18f6549921954d13671dc7399d9d917dc83cb97a601e9476153aa72",
+    "sourceBytes": 55339
+  },
+  {
+    "name": "/src/compiler/emitter.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "99a97533713b36bc35295b519cc18dc3cfbb057a228708afaf015fa35522ddf0",
+    "sourceBytes": 266960
+  },
+  {
+    "name": "/src/compiler/executeCommandLine.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "925686c4c5fa6094e25a8e5561f9d6336940c919fd9558dfd1a95bbd07532437",
+    "sourceBytes": 52717
+  },
+  {
+    "name": "/src/compiler/expressionToTypeNode.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "f9d4c17b0048a1cd279a3254227184c75a5e6e1ac6d74a036d9cd5f6bf004dc3",
+    "sourceBytes": 68723
+  },
+  {
+    "name": "/src/compiler/factory/baseNodeFactory.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "42732dee3124553a92795a90604111059f4f20cb8b6eefcca22d5907b95d3de5",
+    "sourceBytes": 2617
+  },
+  {
+    "name": "/src/compiler/factory/emitHelpers.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "65426fec9e132109396706c29bfbdb80e4d450a67df0055bca1b2bacc0000424",
+    "sourceBytes": 67603
+  },
+  {
+    "name": "/src/compiler/factory/emitNode.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "7f9b2f628093f8cde0c9bf94e14976298e8ef028fd65446d6256471350475204",
+    "sourceBytes": 12338
+  },
+  {
+    "name": "/src/compiler/factory/nodeChildren.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "641b1d8da2a48f81ff34b7dc0aa44bedbd1f2461ecc30c9a64cdc75fedd2c538",
+    "sourceBytes": 2176
+  },
+  {
+    "name": "/src/compiler/factory/nodeConverters.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "1430995c0424245a3c78c9b1e4429183ae161fe0ceee884a88b23bbe763f2efc",
+    "sourceBytes": 7012
+  },
+  {
+    "name": "/src/compiler/factory/nodeFactory.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "3d80aa607480747f27f22f2424cdbd182d5dcc5d762f9778ce8ef76bb8dfc4f4",
+    "sourceBytes": 327388
+  },
+  {
+    "name": "/src/compiler/factory/nodeTests.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "b149ee42d641fc1298d2a86ba1a17fed6225ab536c8d669859c1a69135c3e634",
+    "sourceBytes": 35595
+  },
+  {
+    "name": "/src/compiler/factory/parenthesizerRules.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "852aed19f6bcf881b8c9b3b30f43ad37919164611da49bbd624f0dab97a9517e",
+    "sourceBytes": 33306
+  },
+  {
+    "name": "/src/compiler/factory/utilities.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "eee24619040fe83e9a909cc7c0a5c1f338be5485b2c80a610d69819b6d36b330",
+    "sourceBytes": 74357
+  },
+  {
+    "name": "/src/compiler/factory/utilitiesPublic.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "1fd812015bf66a571c71fc540778db293c38c1ccd3903c132df7e2e8df803c5f",
+    "sourceBytes": 2049
+  },
+  {
+    "name": "/src/compiler/moduleNameResolver.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "699f1eea8d28ab87007449452833cf7e249bd4d098c8b640ddaafd3f8ca5f4eb",
+    "sourceBytes": 178181
+  },
+  {
+    "name": "/src/compiler/moduleSpecifiers.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "bae3f0f4d5a3429bd9d77b44d3793adf4b820038ff3362a630689a73fdbff145",
+    "sourceBytes": 78149
+  },
+  {
+    "name": "/src/compiler/parser.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "3b9a786edf5ee46a75b23b385fe7d1e4e8fc9061296bafe0ba4edd515f35a808",
+    "sourceBytes": 528862
+  },
+  {
+    "name": "/src/compiler/path.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "3f81660c364f08e2e4546073a4f942027fbd3a56e34c981942d9d8fa127f9a4e",
+    "sourceBytes": 43047
+  },
+  {
+    "name": "/src/compiler/performance.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "35656d5c7756e35b1fbc5edd95dc3fad3a567384e0959758a629d4f507a445b8",
+    "sourceBytes": 5936
+  },
+  {
+    "name": "/src/compiler/performanceCore.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "6648dc2a7f0f6b6b030810a8cd287d690f43ce5852ecaa45dd7d303290fb7b01",
+    "sourceBytes": 3153
+  },
+  {
+    "name": "/src/compiler/program.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e733e4a127a99ad005efe409b34141a61058f8fe26257409b045954b24611060",
+    "sourceBytes": 265496
+  },
+  {
+    "name": "/src/compiler/programDiagnostics.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "c83a708713f324c5623b1012f3dc48a1e641a2f441cb7fbc8ba3808f71dfdbc6",
+    "sourceBytes": 20871
+  },
+  {
+    "name": "/src/compiler/resolutionCache.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "38bf43e240561858d5e2dffe9e1114576e1f9abb41372262848d515ecc1a6adc",
+    "sourceBytes": 80320
+  },
+  {
+    "name": "/src/compiler/scanner.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "5bbf62f7e3bc53279a896835fcb11107de1cf58fe3c14647e40cfcf37347d004",
+    "sourceBytes": 215061
+  },
+  {
+    "name": "/src/compiler/semver.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "b537ae06243af97b9d80cdd08f034bf596feb6345e02bbc4f55f3b8a2d468226",
+    "sourceBytes": 17482
+  },
+  {
+    "name": "/src/compiler/sourcemap.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "773837892c632a53fa4c42c9756980bdbe586d20ac0047e243c74236673cb459",
+    "sourceBytes": 31281
+  },
+  {
+    "name": "/src/compiler/symbolWalker.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "f468759c595c804f5c1ac171814ee43de0b030fa6d08c527525d6e3a24493306",
+    "sourceBytes": 7961
+  },
+  {
+    "name": "/src/compiler/sys.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "021a08c4a8a0aa7a9c68cd0b7d5bc6f00a388ee7358884b3493c7a5ca487cce6",
+    "sourceBytes": 84161
+  },
+  {
+    "name": "/src/compiler/tracing.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "3638eb15ddc470fe9d4c3fee6c6bc4b8a6eac5606bd89a67538eda970387302f",
+    "sourceBytes": 14653
+  },
+  {
+    "name": "/src/compiler/transformer.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "d7ba3ce659c956c373e480f9b6115f07f9ac7c7997ae812f533a87320be9aa6b",
+    "sourceBytes": 29059
+  },
+  {
+    "name": "/src/compiler/transformers/classFields.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "30ab176198ed731f70ceff4a2b7eea1795165b814ab73d52a1a058a473bdd604",
+    "sourceBytes": 152966
+  },
+  {
+    "name": "/src/compiler/transformers/classThis.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "c279944882ca9aa21b628f732f47135d3924b9e281eacb842c4c61f323c62574",
+    "sourceBytes": 5356
+  },
+  {
+    "name": "/src/compiler/transformers/declarations/diagnostics.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "2f37d1d42300800092c72f747cc2120365f93a6d6287fa6f50054c0ebb55735b",
+    "sourceBytes": 45350
+  },
+  {
+    "name": "/src/compiler/transformers/declarations.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e3d45962d454bcdf3813061287689707aa713c6f53e0a7f2e990bf410d2b56f1",
+    "sourceBytes": 97460
+  },
+  {
+    "name": "/src/compiler/transformers/destructuring.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "0843ed517bdde05d088a51fb24bba84436c984f5e98b0591fe1b75a69c813bb0",
+    "sourceBytes": 30129
+  },
+  {
+    "name": "/src/compiler/transformers/es2015.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "b08cd9753e57a66e36e508c0bd9c3ae8d60623c8d6aacfc9e8d6d21a730750e1",
+    "sourceBytes": 226300
+  },
+  {
+    "name": "/src/compiler/transformers/es2016.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "dfb6f0ccca6c4eae80fcdcb03e50981936d84a782507dfcda577b40159865a05",
+    "sourceBytes": 4362
+  },
+  {
+    "name": "/src/compiler/transformers/es2017.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "34cda7863c8d3fb913b505f43224230fbd73a945acac793c9013bef2f07d269c",
+    "sourceBytes": 48812
+  },
+  {
+    "name": "/src/compiler/transformers/es2018.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e15aa441a19254c98c104108a43fd2ff07370fe521260794d72822f072fad8bc",
+    "sourceBytes": 68265
+  },
+  {
+    "name": "/src/compiler/transformers/es2019.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "d8d588024082b281a8718866b36e3bfe40272e3053df243b640200edf7814544",
+    "sourceBytes": 1482
+  },
+  {
+    "name": "/src/compiler/transformers/es2020.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "00e17b1fd294fc47e7dbd23e1954177b47d53fa06318f4c58c12d1e5288320b8",
+    "sourceBytes": 12799
+  },
+  {
+    "name": "/src/compiler/transformers/es2021.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "c05bedc0b986e2855b071242091c5cae17e288903d0c979621651522059d7a2d",
+    "sourceBytes": 3998
+  },
+  {
+    "name": "/src/compiler/transformers/esDecorators.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "9cf9430a63dfc924eabd482ce4d8b6744c22579b9a9f7143b8b5f13904b7e6c4",
+    "sourceBytes": 124462
+  },
+  {
+    "name": "/src/compiler/transformers/esnext.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "40625523c108f17176ab44590831afc138904c40eb7b9ad01ff4aa58de96c9fa",
+    "sourceBytes": 31754
+  },
+  {
+    "name": "/src/compiler/transformers/generators.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "db1fb6b016a8e976fcff1dbbb5aa9a07f9c935023e05b8f8afd6bc624494f47b",
+    "sourceBytes": 120512
+  },
+  {
+    "name": "/src/compiler/transformers/jsx.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "110c486632aa28dca7adad7110e42cf1ed58f99255c4aace34ce209520909af1",
+    "sourceBytes": 35128
+  },
+  {
+    "name": "/src/compiler/transformers/legacyDecorators.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "06dc21e22501316bdd06f6052bff3c672dd1435a40278ccd96194b115ab3fb36",
+    "sourceBytes": 35779
+  },
+  {
+    "name": "/src/compiler/transformers/module/esnextAnd2015.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "77914dc16fd8b23cafa457d3dd5a7de1ea0062ad95b0504e7d2c0a2511b2629a",
+    "sourceBytes": 18167
+  },
+  {
+    "name": "/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "02da1267eaa50e0cdfd09a6792cf0d203a3e79c3c7ea47e313a7d50e56ed25d0",
+    "sourceBytes": 3626
+  },
+  {
+    "name": "/src/compiler/transformers/module/module.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "1e47e64290957c9172e3878c9c36a8c472c8624e802f243a12aa8207ef1183f0",
+    "sourceBytes": 108956
+  },
+  {
+    "name": "/src/compiler/transformers/module/system.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e5881ba0166bb1f4d56efa19f5d8b3d8ed40749cd67fba2ddf1b58bad2bae94c",
+    "sourceBytes": 83109
+  },
+  {
+    "name": "/src/compiler/transformers/namedEvaluation.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "6cc537a8a6b5d261175e9a5a393a9432c3f37fb5f7d5ef659c09ad36f097dbbe",
+    "sourceBytes": 21697
+  },
+  {
+    "name": "/src/compiler/transformers/taggedTemplate.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "3bff96d572d470f4b476a85e51ea9a2902e9a004adcda7f72e4f6aaffb645a2a",
+    "sourceBytes": 5292
+  },
+  {
+    "name": "/src/compiler/transformers/ts.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "1aa1b4b4cdfb51e984a9d5756198bf30d8ea2f114b129b89f6ebb8c5ccab8caa",
+    "sourceBytes": 113644
+  },
+  {
+    "name": "/src/compiler/transformers/typeSerializer.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "fde6df152cc5a532c99805ac7c31a59e2378712538d2bbe067f86341d13a322a",
+    "sourceBytes": 28163
+  },
+  {
+    "name": "/src/compiler/transformers/utilities.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "c696b3cbf527f46837e82b0fe3cf856159ba1a61ba66de3ab30cf553f62b905c",
+    "sourceBytes": 34732
+  },
+  {
+    "name": "/src/compiler/tsbuild.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "8e04fe3e4ecd137f0fded6d034882b9631de2cf0eef2048dd67e62308d83c414",
+    "sourceBytes": 5139
+  },
+  {
+    "name": "/src/compiler/tsbuildPublic.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "064396b94166af6740cc7f18e7d3805a001646b153638e3e72031258c14427ed",
+    "sourceBytes": 111916
+  },
+  {
+    "name": "/src/compiler/types.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "b0e620a032ad12903a2066b79f46600ff17e19a4e5057cc3fd5c4b9b153169bd",
+    "sourceBytes": 477176
+  },
+  {
+    "name": "/src/compiler/utilities.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "856ac6c31ef02a5f859bed61c14d27ac841a611f45953e948961e0b28d14efcb",
+    "sourceBytes": 500504
+  },
+  {
+    "name": "/src/compiler/utilitiesPublic.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "b487632be7c3cfb0e2b33bc0967938f128f5c3d6181213d18794ccf77da4803f",
+    "sourceBytes": 101099
+  },
+  {
+    "name": "/src/compiler/visitorPublic.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "9fab0bd906bd889af46c62f5f71a86b644a3a42d405bd46e83b7e20b76bd62ca",
+    "sourceBytes": 86240
+  },
+  {
+    "name": "/src/compiler/watch.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "b436cc267e0c2df29734aad4dae07f22aaf06b5947507751d203540d1da0d6d0",
+    "sourceBytes": 44655
+  },
+  {
+    "name": "/src/compiler/watchPublic.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "712a10eee99520dd6b97f54b8409c736c383a5bfbe9df6901844e7023ae961cc",
+    "sourceBytes": 59582
+  },
+  {
+    "name": "/src/compiler/watchUtilities.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "9a691e3fb1ae524126e2248c9f38f2d1ecf85f69a4c15bc1cfbda7a816292ca4",
+    "sourceBytes": 33911
+  },
+  {
+    "name": "/stage1/cohere/cssnumbers/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "d09f35df690c663a959c43e8ca90e3787b83492baabaf41e7e221ef423c89c75",
+    "sourceBytes": 2024
+  },
+  {
+    "name": "/stage1/cohere/cssnumbers/numbers.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "fabd209f1ce0913167f82b83efa145489233dad8c39d7fe45c37da0c10b63558",
+    "sourceBytes": 6870
+  },
+  {
+    "name": "/stage1/cohere/cssstrings/gaps/1_multi_push.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "4682a1e3522ed3984c11b34d02afaf5f89dd0e6bdcd7f56d6dd9141acc977398",
+    "sourceBytes": 79
+  },
+  {
+    "name": "/stage1/cohere/cssstrings/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "1e0c22e4c01b528c2260d4de9cbb36178a0f76b4cf70326d1b812295587f5de5",
+    "sourceBytes": 2017
+  },
+  {
+    "name": "/stage1/cohere/cssstrings/strings.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "488f11b34facfd5ada17d9171f5ddb9c3f6e4dc2f513b180c87a24a50dd96209",
+    "sourceBytes": 2463
+  },
+  {
+    "name": "/stage1/cohere/formatfiles/disk.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "c7a485006dad1618cfe6f9e224b96853d532d31360f645ed7972b3c2e2fa647d",
+    "sourceBytes": 4975
+  },
+  {
+    "name": "/stage1/cohere/formatfiles/enumerate.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "6a71bcf1c8cc8aadb7cd83378355cfd7d25aae5ca1df53efd32747faa3cb7842",
+    "sourceBytes": 15793
+  },
+  {
+    "name": "/stage1/cohere/formatfiles/golang.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "51ba0f600f2355d6e37111cf7c68c3c489c6921cbfbf85f83a4c017d491f1c9a",
+    "sourceBytes": 3476
+  },
+  {
+    "name": "/stage1/cohere/formatfiles/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "3cf5925d4805d049ccee19cad6e4c57fb0d79b7dcaa44d9f2aa5993b3f59ce01",
+    "sourceBytes": 8034
+  },
+  {
+    "name": "/stage1/cohere/gitignore/case.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "f55e09c369cb97a3796b052218a1eba26ccfd5fb51116932279267d0c14a3140",
+    "sourceBytes": 6667
+  },
+  {
+    "name": "/stage1/cohere/gitignore/gaps/1_from_char_code.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e95ea3cb4fe46f51e627cb7ede242de580dad9ac4a6dd8a18813a5867231627b",
+    "sourceBytes": 158
+  },
+  {
+    "name": "/stage1/cohere/gitignore/gaps/2_bitwise.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "8f6dc32dbc3d78fe6c1428de391cebe18b9a8ed8c83ea3b755efb0a5f732823d",
+    "sourceBytes": 224
+  },
+  {
+    "name": "/stage1/cohere/gitignore/gaps/3_later_function.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "c8b323a060a14e9cdc0510f7953e96afab23f1d45d438a18fed326c026632129",
+    "sourceBytes": 246
+  },
+  {
+    "name": "/stage1/cohere/gitignore/gaps/3_later_method.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "3770f4f68399efb6d39d2380d4b29e1fef02d1ccdaedfd9ebe817bf1df09bb2a",
+    "sourceBytes": 300
+  },
+  {
+    "name": "/stage1/cohere/gitignore/gaps/4_function_value.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "9e92056fb12ed70cc4def147757bb0885f0cc81577b21c439b8a02d1765ed1b3",
+    "sourceBytes": 208
+  },
+  {
+    "name": "/stage1/cohere/gitignore/gaps/5_array_from.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "a602c9e073f61ecf71fa332e17e1ad0bf46cb0278dac93a21b0c8c30f9e844ce",
+    "sourceBytes": 131
+  },
+  {
+    "name": "/stage1/cohere/gitignore/gaps/6_boolean_element.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e6b14f700c19af917c1d3e1754f22bf2f26e43d9512bf4cce2f8f599d50a392f",
+    "sourceBytes": 231
+  },
+  {
+    "name": "/stage1/cohere/gitignore/gaps/7_maybe_number_compared.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "c16ed322d1dbc33acf5eefa6a2e19e04d87b54dd5a6afbc1cb35fbad5b1a0520",
+    "sourceBytes": 145
+  },
+  {
+    "name": "/stage1/cohere/gitignore/gaps/8_tuple_value.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e3e825534ac8b30e7304764ee4afd4bf1a22dd25f25206d85292bc6309f6442d",
+    "sourceBytes": 239
+  },
+  {
+    "name": "/stage1/cohere/gitignore/gaps/9_return_panic.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "b65b27344706c8ee43e0162714a0dfffaaf82003b44d8379da0840167bc0e1ad",
+    "sourceBytes": 247
+  },
+  {
+    "name": "/stage1/cohere/gitignore/gitignore.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "ee1eccd544031b265c1fc29b911bcd18fb11082a1f90471233dedbaa4cbb4342",
+    "sourceBytes": 26676
+  },
+  {
+    "name": "/stage1/cohere/gitignore/glob.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "b5717b970339f30a048e3694fd3385ecab80b24d433bf5b9bd69d54a410249b9",
+    "sourceBytes": 15401
+  },
+  {
+    "name": "/stage1/cohere/gitignore/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e4095fdd1ad2b535ebce40094373ab2794a15994e6e6d317d1576ce008030206",
+    "sourceBytes": 4043
+  },
+  {
+    "name": "/stage1/cohere/gitignore/path.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "87f83c01c6618de5ad075634ed02927848f7f0e7af22197122368e8dc7623f3c",
+    "sourceBytes": 3821
+  },
+  {
+    "name": "/stage1/cohere/gitignore/pathsweep.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "ae705d72125da914c5027e1d61108a29806e1f751cb071a50137b133195190e0",
+    "sourceBytes": 1222
+  },
+  {
+    "name": "/stage1/cohere/graphql/blockString.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "10de820c654a4da95f381c764c7d2a600ee009f3e349b23a2bcc1827533b0b87",
+    "sourceBytes": 1760
+  },
+  {
+    "name": "/stage1/cohere/graphql/characterClasses.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "a1df9ea6547b00621d5c23dd7535f3ca7b987e367750872468bd85580a5dcaa0",
+    "sourceBytes": 1622
+  },
+  {
+    "name": "/stage1/cohere/graphql/gaps/1_throwing_function_value.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "820579606e86e3074d2923a9285bbd0b029ec17006eed6c30feac6fb527a9050",
+    "sourceBytes": 556
+  },
+  {
+    "name": "/stage1/cohere/graphql/gaps/2_error_made_elsewhere.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "005ff59e4d8beacaff0625684119f5cc99820afb62c480fb98e2ac60c5be1668",
+    "sourceBytes": 332
+  },
+  {
+    "name": "/stage1/cohere/graphql/lexer.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "8c1f5f68bc2431fcef1b991a3a4b6201374e8ccaa944c1b1006adad7dc18a516",
+    "sourceBytes": 27330
+  },
+  {
+    "name": "/stage1/cohere/graphql/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "bc66aa20d712f1b681f510aef33c6f23a26eb5885428867d60703fc1b3a864d9",
+    "sourceBytes": 4442
+  },
+  {
+    "name": "/stage1/cohere/graphql/parser.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "5dc6669c1581933a6e941c9f35a35e5d9b5e00af86f0818ac2915ce37a483ebe",
+    "sourceBytes": 44871
+  },
+  {
+    "name": "/stage1/cohere/graphql/token.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "38e3c00dca971f922b472999dcdc0e9c7c2bf9f1950eca8c01d8196f75f14980",
+    "sourceBytes": 2315
+  },
+  {
+    "name": "/stage1/cohere/json/doc.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "771c153c4fe51f73c72575df32012333ed00fe52390824d804c0a370d9e120c4",
+    "sourceBytes": 7920
+  },
+  {
+    "name": "/stage1/cohere/json/formatter.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "f064511bd2815f86908c1a5a11d2309e168691f9b0de4ed02a42ca31883f5c6c",
+    "sourceBytes": 19388
+  },
+  {
+    "name": "/stage1/cohere/json/gaps/emptyFallback.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "401239ceb4ebb1fbffcfecb9501bf01abddb1c55b0888132bec39867902110f7",
+    "sourceBytes": 73
+  },
+  {
+    "name": "/stage1/cohere/json/gaps/multiplePush.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "228f2c771e9490386a1a2f7b6a4c42885b3e5d2d2fada4473739aa7a82c6cf07",
+    "sourceBytes": 80
+  },
+  {
+    "name": "/stage1/cohere/json/gaps/repeatInTry.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "ad8d85f4a85d277204ab979e0fb8703f5e14f4c3c8812aba3212860051367b51",
+    "sourceBytes": 203
+  },
+  {
+    "name": "/stage1/cohere/json/identifierTables.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "085cd402fe7371fb3f9465821b3435f96346e814374337a9b2c9ffa2d061f619",
+    "sourceBytes": 27825
+  },
+  {
+    "name": "/stage1/cohere/json/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "8ebd9ebf088206cdef0f014eb4caffb48e0578386ae6bde9ebfb605fc39122d4",
+    "sourceBytes": 2170
+  },
+  {
+    "name": "/stage1/cohere/json/parser.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "ef9a2b2f98f393bc02cb603ada8d933494e425ea838534b9b866ed8a0acac1fc",
+    "sourceBytes": 15642
+  },
+  {
+    "name": "/stage1/cohere/json/width.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "1df62a41aff3e7b5e8c04be8b5173ccc81808b10166f49d5c7ba7b6ed14d8df5",
+    "sourceBytes": 3626
+  },
+  {
+    "name": "/stage1/cohere/json/widthTables.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "bdb4ad9379bf7af903643edbc5346ae7cdc9d81872ccc8bddc1215b763ca5bd7",
+    "sourceBytes": 54345
+  },
+  {
+    "name": "/stage1/cohere/lint/context.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "cf177b5ae665f78d165f51bd557fa17c176c219298e1346ab400836ec7678199",
+    "sourceBytes": 4358
+  },
+  {
+    "name": "/stage1/cohere/lint/finding.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "0852fb656720aa9d45573afbccbb5e0d543b1a09e6502d7dca6b183a1863ecc6",
+    "sourceBytes": 720
+  },
+  {
+    "name": "/stage1/cohere/lint/gaps/1_nested_constructor.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "965e077fc7f7090e120f76f8ed61c601f522c74f7561ab5b9569d365134d9271",
+    "sourceBytes": 382
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/comments/all.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "eaa4208453e56caf283273af8f59a0cde65b35760460534e824e67a4c95f2095",
+    "sourceBytes": 4225
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/comments/can_begin_at.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "934d48985690eab92485958324b43622905af1f187ff8b74a3013c142e7630f3",
+    "sourceBytes": 585
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/comments/collect_list_interiors.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "cf25aed63b4b4a7a18b3f6678fdcce2651491f3333c1768179cd62826a0bc1f0",
+    "sourceBytes": 4368
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/comments/comment.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "c969ef6c8969ea00496265c689caaa722a1147745c5c890905f185c9f7fb3961",
+    "sourceBytes": 719
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/comments/for_file.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "747e6ffde2ff1828da7ca32f0b1c6a291f13a9eabd72606f5b134cd5cd0d19a1",
+    "sourceBytes": 973
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/comments/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "87ba7b447a9a64e2a3777221c7a8335be1fc4a59334a144f0510337320dd06d8",
+    "sourceBytes": 3590
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/comments/sort_by_position.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "1effc5ab9ec9fda68cfdcb5f5078cfd52202e0422ac2e83b1acbf082eec7d6cc",
+    "sourceBytes": 912
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "a16e6da431d51c819fc3a0b8d467b7c0772f5a51f17c4738aa87122ba8f2a7dd",
+    "sourceBytes": 2590
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/option_schema.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "13e12add47d981dec69b819292ecc8fbb1147197fdbddb502d09774295c47bd4",
+    "sourceBytes": 7784
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/options_json.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "c3e7e54d45145ff761d61e89229d86aaadb67a68163b2061ba903436bff1b232",
+    "sourceBytes": 7727
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/policy_message.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "785259ad9abd7cfca4b6d8f28fa39137502fd5e7000c82d9067d6c1e6bd4f8b2",
+    "sourceBytes": 3568
+  },
+  {
+    "name": "/stage1/cohere/lint/helpers/strict_options.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "b4bfad07d222dc68766466247c6460bf9406de59c3c61cf712a060ea738005a4",
+    "sourceBytes": 3990
+  },
+  {
+    "name": "/stage1/cohere/lint/lint.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "19c6f2422c05c6558803924bae377dd741de9ac443c7480532a62a14f30f4cab",
+    "sourceBytes": 2828
+  },
+  {
+    "name": "/stage1/cohere/lint/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "507f4bd35fcc66fcb8c020dde3185b0fbbdff42f613a9c17637aa4c120ab0ea5",
+    "sourceBytes": 3079
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/adamic-no-definite-assignment/messages.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "518aedc284a569db0f2b829dde91734278858e2e195fe5c1943fa81ca39bd099",
+    "sourceBytes": 643
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/adamic-no-definite-assignment/rule.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "95c6330c51b6db2d2800a158cdcdfc2ba162052dc3106572199f5879d3f39b10",
+    "sourceBytes": 791
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/base-security-require-context-access/messages.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "9f88d19871f52dbd92c376f5728105390530198bd069d6901cd53addf90ccf2a",
+    "sourceBytes": 850
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/base-security-require-context-access/options.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "70864352a0c3b09382fae6f379a66f5a4da37857c8d11fec60d82ab51acc9e9a",
+    "sourceBytes": 1955
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/base-security-require-context-access/options_validation.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "5d0628699fde2fe0336bf07a62e98eeceb2e922fd429082b560624d3f3d5f787",
+    "sourceBytes": 1312
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/base-security-require-context-access/pending/tailwind-enforce-canonical-classes/collapse.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "35b2b313493ac839741e5b9265cae59e0d30a782a05f012e98ec8309c2ab1403",
+    "sourceBytes": 2577
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/base-security-require-context-access/pending/tailwind-enforce-canonical-classes/components.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "2d74f4e9355f7621cc3d245726c7086bd3e6f6d3b03d4d8e434dbcff2c767b03",
+    "sourceBytes": 2764
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/base-security-require-context-access/pending/tailwind-enforce-canonical-classes/families.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "80d3f57a0f352b3dffb8424517bc5f46b4c1a37cedff01efba0881ab08d0f5b0",
+    "sourceBytes": 2962
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/base-security-require-context-access/pending/tailwind-enforce-consistent-class-order/ordering.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "bd42e16a473b7f3bdb23818246659abad1d1ccb7b291489f923c7b1ce84dcb52",
+    "sourceBytes": 2145
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/base-security-require-context-access/pending/tailwind-enforce-consistent-class-order/tokens.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "04df1a9354df56303e383e1c89bf43f761d606ccf8d0c9555ba44c81595640bb",
+    "sourceBytes": 2062
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/base-security-require-context-access/rule.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e313bf687d4e1d53cf3a1f23bb2bf981efcc84ad072083ff65b17cd8fdad79a2",
+    "sourceBytes": 7833
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/base-security-require-context-access/validation.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "1af773dcfc002fdced80775e6f856b38420ce913b93152a6c7d855e4be46171a",
+    "sourceBytes": 3980
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/eqeqeq/messages.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e87637aa00dde17400a271a40093ac489671f16231182d1a9b960fae8d635ca0",
+    "sourceBytes": 680
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/eqeqeq/rule.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "de212cdda9b931136d7a76a34af7d6665462c056c27a55ad496746272ae38f1a",
+    "sourceBytes": 2391
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/eslint-comments-require-description/messages.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "d48ce9abf6f44e0f400eb267a05a8e97eb3aaef94c9bc75384bd54cefb63ecbd",
+    "sourceBytes": 372
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/eslint-comments-require-description/options.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "7dbb5b6cbd32b9b927dd423520c8522bb944edde450441f6e16153b39be56c52",
+    "sourceBytes": 2071
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/eslint-comments-require-description/options_validation.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "cf957bcbb07fe68ee9e12c82d10d13169a0f1dbacbb732a20386ad9c9e6ea543",
+    "sourceBytes": 791
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/eslint-comments-require-description/rule.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "4e73541d0a00ec4050e13b849fe4d8a0be0c5361764a34a39469b878bf2b3313",
+    "sourceBytes": 5231
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/next-google-font-display/entities.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e946b0ea2fb367e888851d1b44217887461815656c1ccf021a93210c165bb311",
+    "sourceBytes": 5426
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/next-google-font-display/messages.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "bd77d3994de9fadba6ab94cbc4b5b405fb84aede5a0e2171124391de6b072f4a",
+    "sourceBytes": 649
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/next-google-font-display/rule.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "b69cfd62e6953a403f708366442c67c0c34dd95d5e7534efd057ac590168e0cd",
+    "sourceBytes": 3406
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/messages.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "d5dfc388101409fdb8e6752e503ce10e1e7fee35ca4b2981b46a04678c5e8b9f",
+    "sourceBytes": 1701
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/pending/nexus-import-no-forbidden-source/messages.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "0a43bbffabe61bae0f22d26c7083ece82b8501a5261ba48e9a51e6aeac010a82",
+    "sourceBytes": 1694
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/pending/nexus-import-no-forbidden-source/rule.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "f17faa866ca7e737b146e1bbd342236ac31a3b102133babbf9b6f614e2ad1d28",
+    "sourceBytes": 2012
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/pending/nexus-import-no-forbidden-source/validation.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "5b5b9716b3b1048c9de4cc5f339ef934880a824e69a84f907a1aa9afe4342f1a",
+    "sourceBytes": 4346
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/pending/nexus-import-require-path-alias/components.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "4089050faaa4b19f46da6edad83dfb0a9bfd7cbe1961fb945a4533cb2e45b6b4",
+    "sourceBytes": 2042
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/pending/nexus-import-require-path-alias/messages.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "7e2311a69ee24177c2f7b2da13732706bce5c8eb7a4a49eb07af5b804253d834",
+    "sourceBytes": 1099
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/pending/nexus-import-require-path-alias/paths.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "9b5e42c83ae35d8957dc10eacd863a990893c181261756601e38952da68a5a48",
+    "sourceBytes": 3408
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/pending/nexus-import-require-path-alias/rule.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "6b02f06a0b991eac763a6b3c19cd1b315f48e19aec066d0e13578ac99167e7a1",
+    "sourceBytes": 3505
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/pending/nexus-import-require-path-alias/validation.a",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "659cdc75ee583b799bf51fe212b1f527250e9cca905dde5c1dcb3f8d1f5f8f4a",
+    "sourceBytes": 4357
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/rule.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "5e7964b27a638652d83f8c05d81f68316a74ecd225779c0e6e64f91ec1d3406c",
+    "sourceBytes": 3649
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/nexus-consistency-no-screaming-snake-case/validation.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "dd8be91a94c3342d000b00134b736b848d58a0a905bf7849cdb12b5d475d411b",
+    "sourceBytes": 4011
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/no-debugger/messages.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "b11d670d6a0ac317abf99f3049cbddecc0990a759fe051b7cf431aeb8c71a1ea",
+    "sourceBytes": 374
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/no-debugger/rule.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "310463664082636208c900b4071605d2a226bc5a0b38b0957b6d5611527addce",
+    "sourceBytes": 967
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/no-duplicate-case/messages.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "ef5450422ac316b4163820d3db141c9906e8dac7d5eb5ed514aa1e4686ce7d2c",
+    "sourceBytes": 379
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "f069fa0a73ea8019483c108bc12342d7b0e8c92eceb2ce28c74809914f168145",
+    "sourceBytes": 1192
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/no-empty/messages.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "0c3e67318f0dba632efb204ae164a9de01d7d919e95eb25ed772613be8510fea",
+    "sourceBytes": 695
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/no-empty/rule.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "ef4cde04efc0ac79da558a9a3d26c86e21718b820221e7e50e63e5ccd8b85979",
+    "sourceBytes": 1676
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/no-var/messages.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "1cb4bc3c676aad070d5e4b34e38df7687d9416455d31b4f7f45554b53315c38c",
+    "sourceBytes": 549
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/no-var/rule.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "4778983a533ab9f0cc53e1f40b00089c07fe01dc7e82ad5837a1ff8982162e84",
+    "sourceBytes": 1273
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/messages.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "a1847c844d02392f6e1d8342bf10d957ac44592b17fb2046e48c755ae6b1756c",
+    "sourceBytes": 397
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/rule.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "0130be979da2db4c59d0f9a8a074a6074c6b69d51ffd714a362d157797b9cd48",
+    "sourceBytes": 2789
+  },
+  {
+    "name": "/stage1/cohere/lint/rules/structure-tailwind-no-physical-direction/validation.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "6d8dc7b420b9079d9890660e4d2e3694001adaa2dd583dd49cdb2d23aaca9a94",
+    "sourceBytes": 4887
+  },
+  {
+    "name": "/stage1/cohere/lint/settings.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "1ab6859164b7e68e1ae0cd5b9ae7760b83467e73a27927e858a19d7578987f18",
+    "sourceBytes": 3192
+  },
+  {
+    "name": "/stage1/cohere/mediaquery/gaps/1_generic_parameter.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "9f13ed96e3e887fd54ad4a69e4a4ae8ccf3ff43d59484f29afbe9faa539ec7d7",
+    "sourceBytes": 240
+  },
+  {
+    "name": "/stage1/cohere/mediaquery/gaps/1_generic_return.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "f4bcefd74bc9fe7e82053da28450bfde88f8dc89a167a153bbf67b5eb97147de",
+    "sourceBytes": 162
+  },
+  {
+    "name": "/stage1/cohere/mediaquery/gaps/2_return_undefined.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "34912897fb06deb4b98c36f740359d37dc08aa7dad00c7e690af791b94e0effb",
+    "sourceBytes": 302
+  },
+  {
+    "name": "/stage1/cohere/mediaquery/gaps/3_optional_chaining_array.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "260f2157797ea9c10943bb35ab26a1c4f25cb4144b620854332e5e0c0dfd540f",
+    "sourceBytes": 215
+  },
+  {
+    "name": "/stage1/cohere/mediaquery/gaps/4_mutable_child_array.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "812f7c10d580d51579bb3aefdb44609089465c4f728bd569e9bad07c55c4bb70",
+    "sourceBytes": 463
+  },
+  {
+    "name": "/stage1/cohere/mediaquery/gaps/5_local_children_array.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "5f9c0e168bcbdf48af97ead6df3a81f0dfb08a6c9a00df61fcc645deb67a96e4",
+    "sourceBytes": 676
+  },
+  {
+    "name": "/stage1/cohere/mediaquery/index.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "16d57675d2ec24ac5e73929247eb55cc1c80fab9a6ba13b7b9b760090420ca4b",
+    "sourceBytes": 2061
+  },
+  {
+    "name": "/stage1/cohere/mediaquery/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "3a5db8bf3f1394bfefc8df24d016b8c59303bf915876b47a66b2436452ea7a73",
+    "sourceBytes": 4919
+  },
+  {
+    "name": "/stage1/cohere/mediaquery/nodes.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "7ef112165a3722bf38a18a7e034a52cb8476acd4346cc5758c89ffe75a3c7e25",
+    "sourceBytes": 2843
+  },
+  {
+    "name": "/stage1/cohere/mediaquery/parsers.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "8b32dfed9cdeb7cea08f71815655d702a99e0f9f75dad90c5ce2ba6639ebc511",
+    "sourceBytes": 16484
+  },
+  {
+    "name": "/stage1/cohere/mediaquery/whitespace.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "6acac820b4eb5a53f8c7f6b41f65f5f15c164b9df72a5ffb89c590be8331cf9e",
+    "sourceBytes": 2361
+  },
+  {
+    "name": "/stage1/cohere/selector/gaps/1_multiple_push.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "01c4249f66e2df11da2254313e8677fe489f6bcb17f77d2215adadf11f1bed65",
+    "sourceBytes": 82
+  },
+  {
+    "name": "/stage1/cohere/selector/gaps/2_mixed_field.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "d6baf8b5e76b40ca75535aee57d3ab05c518bcbb0e21b8c7884f4d39f51fcdd3",
+    "sourceBytes": 243
+  },
+  {
+    "name": "/stage1/cohere/selector/gaps/3_optional_boolean.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "4fbadba73a7219ef1a4d360b98e3b65c61745401e00a6b0c959baf6fa57f610d",
+    "sourceBytes": 210
+  },
+  {
+    "name": "/stage1/cohere/selector/gaps/4_array_from_iterator.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "2cfce949170a30c9f55b6332a2766b11376f2c282841a7d2bcef8b110c0ca58d",
+    "sourceBytes": 113
+  },
+  {
+    "name": "/stage1/cohere/selector/gaps/5_conditional_panic.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "687240a2b3ec04917cd0f04122b80089d1551547c9ecbe0a1c20a3400deb7d65",
+    "sourceBytes": 146
+  },
+  {
+    "name": "/stage1/cohere/selector/gaps/6_undefined_case.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "532ae632e3e13e14b500b529cd04531622175fa32a60df9bc4ac705bee36005e",
+    "sourceBytes": 198
+  },
+  {
+    "name": "/stage1/cohere/selector/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "844aeff6e3c55c18dc11bf389efa29c0d1c644a57c079d990914d5740ebf8d25",
+    "sourceBytes": 2238
+  },
+  {
+    "name": "/stage1/cohere/selector/nodes.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "7525942057080f382bb28681bd6fdbdeff637ee1ae0d650238b243f7952fbae9",
+    "sourceBytes": 6322
+  },
+  {
+    "name": "/stage1/cohere/selector/parser.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "de95fbd777c0d7dbdd0b64ace4885ab26b03ea1953fa11b5eb844c72eff48082",
+    "sourceBytes": 16509
+  },
+  {
+    "name": "/stage1/cohere/selector/source.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "70c25c1c8c7152ed0fdb89bd539c2461beddc50660bd1d614e2478eaa354fef2",
+    "sourceBytes": 495
+  },
+  {
+    "name": "/stage1/cohere/selector/tokenize.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "9d66216f19132cf2f4b2af005b3837de0dab95574b57d6ad356ccf7651a4c585",
+    "sourceBytes": 5650
+  },
+  {
+    "name": "/stage1/cohere/suppression/directives.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "fd568f5ace7804234db8091f29ff7ba2841e32cb4dcd56fab9f0f9ef7d3523ab",
+    "sourceBytes": 11113
+  },
+  {
+    "name": "/stage1/cohere/suppression/gaps/1_mutual_recursion.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "6591f0bed9736da6adb2146513b88f8e8c9f31eb13f3f222500f92ea4b0e6e95",
+    "sourceBytes": 519
+  },
+  {
+    "name": "/stage1/cohere/suppression/gaps/2_return_undefined_array.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "fa482d664240148134eca9f544030709055605a6948f9d1aa4ba6321638f4c64",
+    "sourceBytes": 472
+  },
+  {
+    "name": "/stage1/cohere/suppression/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "76e0a562603e5620bffec2d5f445fdb5901ae61c678e73ab43494b56754eb717",
+    "sourceBytes": 7440
+  },
+  {
+    "name": "/stage1/cohere/suppression/scan.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "9153d51681302424f314ea081a640b2fda4d71180dca2624428b8c62c48116d5",
+    "sourceBytes": 7160
+  },
+  {
+    "name": "/stage1/cohere/suppression/suppression.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e7c0aa9598d466873ef49c34a1b1c8cf82edd3ab701679b0b8f4c91f9e1d67e8",
+    "sourceBytes": 10118
+  },
+  {
+    "name": "/stage1/cohere/values/gaps/1_index_of_position.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "6b038018af73390ca1886fd2767117faec91cfc56c8a679ea3724111485baa6a",
+    "sourceBytes": 146
+  },
+  {
+    "name": "/stage1/cohere/values/gaps/2_boolean_or_undefined_field.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "1b8754615dd504e73d67dbace20fa0a7628889feaa888fe370e3a1dcf9570d87",
+    "sourceBytes": 298
+  },
+  {
+    "name": "/stage1/cohere/values/gaps/3_case_constant.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "33a29226017bc7d4c465609940eaf39cc709d751d4a422d1a07c2ab7b4fdc43b",
+    "sourceBytes": 283
+  },
+  {
+    "name": "/stage1/cohere/values/gaps/4_private_method.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "a5519735cccc8ae990ce96ca69bcfc06d3f8ab073287a51cdc25d05e208e72d8",
+    "sourceBytes": 311
+  },
+  {
+    "name": "/stage1/cohere/values/gaps/5_empty_array_default.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "717093a85c3f470a153b6352003e1b9d4c93c9fb64168e11753a955383445083",
+    "sourceBytes": 234
+  },
+  {
+    "name": "/stage1/cohere/values/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "92fe9e374bf74a9186ef17f34a38fe32865d6b2e89fe529b84a7242e40ad5df1",
+    "sourceBytes": 6351
+  },
+  {
+    "name": "/stage1/cohere/values/nodes.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "9f0e8df2b09f1380cfb6d5930a93db5fbe0d4a82bb075157e0a6186146810999",
+    "sourceBytes": 7820
+  },
+  {
+    "name": "/stage1/cohere/values/parser.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "865e40c0b50d6bce8eb8bdddd02ff5450b5598a1ef07fdf56bdba38c51221698",
+    "sourceBytes": 20560
+  },
+  {
+    "name": "/stage1/cohere/values/tokenize.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "57a1c8606f6bd4060fc37432a19736a81dae832a12f482e338ff5236af04fef1",
+    "sourceBytes": 13099
+  },
+  {
+    "name": "/stage1/cohere/values/values.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "49a4e215f14c8c047c8151b6a462bcaceb70266b9db63fd48e03ac9c25d8122f",
+    "sourceBytes": 1532
+  },
+  {
+    "name": "/stage1/typescript/parser/gaps/1_strong_ast_parent.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "8949a0cf454ea0c315e217a0724b55a0501da6c9d91a604f5f557882fcba5948",
+    "sourceBytes": 326
+  },
+  {
+    "name": "/stage1/typescript/parser/gaps/2_push_spread.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "7835ea68d2b130453df1638aa5f18b2adaef2217466fc332e5f06822e61e8b6f",
+    "sourceBytes": 132
+  },
+  {
+    "name": "/stage1/typescript/parser/gaps/3_import_cycle.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "ec388f56964a9bfe4c2cb4a6e6e328897ac631e053b47c82b1e66f610e1e6e57",
+    "sourceBytes": 136
+  },
+  {
+    "name": "/stage1/typescript/parser/gaps/3_import_cycle_peer.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "bee644b61bc06c30146898f048d1a64f290e200fd46139b44b437cefd237b0f5",
+    "sourceBytes": 123
+  },
+  {
+    "name": "/stage1/typescript/parser/gaps/4_class_interface_method.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "27b5162798999d37730305ded6bd25b500bb92e03ef0cce9dcf81e08988bbb65",
+    "sourceBytes": 233
+  },
+  {
+    "name": "/stage1/typescript/parser/gaps/5_optional_function_value.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "a14725aecb3e3e73190336a24736ec32158ae69ad47b7381740f8be2e60e2fc2",
+    "sourceBytes": 73
+  },
+  {
+    "name": "/stage1/typescript/parser/gaps/6_conditional_empty_array.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "e09efb5e3a1495a92b1f951da5d2205a709d099840a3050d74751cba61771138",
+    "sourceBytes": 90
+  },
+  {
+    "name": "/stage1/typescript/parser/grammar.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a",
+    "sourceBytes": 2145
+  },
+  {
+    "name": "/stage1/typescript/parser/lookahead.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "f5bb68f68eee08b706d50f7fd5aabeffa5942e36d42929f057f7a0ad1ac8f6ef",
+    "sourceBytes": 9235
+  },
+  {
+    "name": "/stage1/typescript/parser/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "4783899a25d9b15d4ec454bfaf87fdafedb49b5f4372569c04701e69a9448535",
+    "sourceBytes": 2307
+  },
+  {
+    "name": "/stage1/typescript/parser/nodes.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6",
+    "sourceBytes": 2002
+  },
+  {
+    "name": "/stage1/typescript/parser/parser.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "fff4c44f5a1e00161b8ac9e7b302e5ec90c92a78e6ec72aa8303f64b4160cc80",
+    "sourceBytes": 62379
+  },
+  {
+    "name": "/stage1/typescript/parser/statements.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "97ee7d84a0602c939ddeee613ec2286f6ef1fbf780efdb43e3b6972845b43f55",
+    "sourceBytes": 41794
+  },
+  {
+    "name": "/stage1/typescript/scanner/characters.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671",
+    "sourceBytes": 29452
+  },
+  {
+    "name": "/stage1/typescript/scanner/gaps/1_push.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "07bd8d26293ee20405e2ba8e9362e6d8d724fd4b3b7292548832207c41f1e7a5",
+    "sourceBytes": 132
+  },
+  {
+    "name": "/stage1/typescript/scanner/gaps/2_bigint.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "baa1d5b2000793d1c18f0e626d55eae7764aa5ae4ed31b3ce9bfd24248c22c90",
+    "sourceBytes": 159
+  },
+  {
+    "name": "/stage1/typescript/scanner/main.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "f0480cae2b2638dd92b3b3f692ed5789351b9e739462ee81a5c1614b97263f8f",
+    "sourceBytes": 4500
+  },
+  {
+    "name": "/stage1/typescript/scanner/scanner.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "69d8f0413f5f192a6fa9e573cfc907a23535b4c33f5b5e95745fb037166144db",
+    "sourceBytes": 33300
+  },
+  {
+    "name": "/stage1/typescript/scanner/tokens.ts",
+    "rule": "nexus/import-require-path-alias",
+    "optionsSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceSha256": "32f3e51645ebe265a1833bf19e1ddbf03e0e137b3c66cce61ea41ad48fba5ec9",
+    "sourceBytes": 4952
+  }
+]

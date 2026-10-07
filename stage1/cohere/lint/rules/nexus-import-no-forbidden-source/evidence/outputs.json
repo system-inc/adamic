@@ -1,0 +1,3086 @@
+[
+  {
+    "name": "bench-own-Go-0.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "bench-own-Go-1.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "bench-own-Go-2.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "bench-own-Node-0.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "bench-own-Node-1.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "bench-own-Node-2.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "bench-own-native-0.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "bench-own-native-1.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "bench-own-native-2.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "bench-own-positive.log",
+    "stdoutSha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "stdoutBytes": 2,
+    "stderrBytes": 0
+  },
+  {
+    "name": "benchmark-Go-0.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "benchmark-Go-1.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "benchmark-Go-2.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "benchmark-Node-0.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "benchmark-Node-1.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "benchmark-Node-2.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "benchmark-ast.log",
+    "stdoutSha256": "1e7d113b1079ec44235d409b85b4b96dc078bf893c93c8b212d9fbc01444baca",
+    "stdoutBytes": 149202,
+    "stderrBytes": 0
+  },
+  {
+    "name": "benchmark-native-0.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "benchmark-native-1.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "benchmark-native-2.log",
+    "stdoutSha256": "c11e3f4837efde2441e23a7b9da02131f53bf59fddeb7147c4ab81afe400460f",
+    "stdoutBytes": 4,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-0-Node.log",
+    "stdoutSha256": "0b80f169cb683ff957c855a33479ce951bfb8cb69cf683f021b70817f0ad23c0",
+    "stdoutBytes": 214023,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-0-ast.log",
+    "stdoutSha256": "9ab9dbac3416dc9939bb48a6eedd80ea237273e2e0e0badcbb9b3063ea3b448d",
+    "stdoutBytes": 1723863,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-0-emitted.log",
+    "stdoutSha256": "0b80f169cb683ff957c855a33479ce951bfb8cb69cf683f021b70817f0ad23c0",
+    "stdoutBytes": 214023,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-0-go.log",
+    "stdoutSha256": "0b80f169cb683ff957c855a33479ce951bfb8cb69cf683f021b70817f0ad23c0",
+    "stdoutBytes": 214023,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-0-native.log",
+    "stdoutSha256": "0b80f169cb683ff957c855a33479ce951bfb8cb69cf683f021b70817f0ad23c0",
+    "stdoutBytes": 214023,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-1-Node.log",
+    "stdoutSha256": "f6c1d5a6629c89d985ec75673233c0172a93e71f3fa09305fe8af185ca14af6e",
+    "stdoutBytes": 168629,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-1-ast.log",
+    "stdoutSha256": "bd9b703a9cf6857c78e2f074cf93fd9def957f220569d9332f3493be13f9fd9b",
+    "stdoutBytes": 1378169,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-1-emitted.log",
+    "stdoutSha256": "f6c1d5a6629c89d985ec75673233c0172a93e71f3fa09305fe8af185ca14af6e",
+    "stdoutBytes": 168629,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-1-go.log",
+    "stdoutSha256": "f6c1d5a6629c89d985ec75673233c0172a93e71f3fa09305fe8af185ca14af6e",
+    "stdoutBytes": 168629,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-1-native.log",
+    "stdoutSha256": "f6c1d5a6629c89d985ec75673233c0172a93e71f3fa09305fe8af185ca14af6e",
+    "stdoutBytes": 168629,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-10-Node.log",
+    "stdoutSha256": "6de73f0f018e7583140ea4f7e78401391c939e26dbc40e088c21355e9795b5f1",
+    "stdoutBytes": 225025,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-10-ast.log",
+    "stdoutSha256": "cb025e6a609d319c4dc5758ae96aa697e5b94c96bcf452deae4625c13ca46b20",
+    "stdoutBytes": 1636231,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-10-emitted.log",
+    "stdoutSha256": "6de73f0f018e7583140ea4f7e78401391c939e26dbc40e088c21355e9795b5f1",
+    "stdoutBytes": 225025,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-10-go.log",
+    "stdoutSha256": "6de73f0f018e7583140ea4f7e78401391c939e26dbc40e088c21355e9795b5f1",
+    "stdoutBytes": 225025,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-10-native.log",
+    "stdoutSha256": "6de73f0f018e7583140ea4f7e78401391c939e26dbc40e088c21355e9795b5f1",
+    "stdoutBytes": 225025,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-11-Node.log",
+    "stdoutSha256": "06b046a26fcb2827d1e813da185b0b057303bb13707161fdffde5407e77337b3",
+    "stdoutBytes": 441710,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-11-ast.log",
+    "stdoutSha256": "f6562bf8d1eee7a17e1a20ebb1fa90fada5dd761e519a5e417fd56d5194a14ae",
+    "stdoutBytes": 3134757,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-11-emitted.log",
+    "stdoutSha256": "06b046a26fcb2827d1e813da185b0b057303bb13707161fdffde5407e77337b3",
+    "stdoutBytes": 441710,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-11-go.log",
+    "stdoutSha256": "06b046a26fcb2827d1e813da185b0b057303bb13707161fdffde5407e77337b3",
+    "stdoutBytes": 441710,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-11-native.log",
+    "stdoutSha256": "06b046a26fcb2827d1e813da185b0b057303bb13707161fdffde5407e77337b3",
+    "stdoutBytes": 441710,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-12-Node.log",
+    "stdoutSha256": "42e1f6450fd6a706f5a6db59ccb365f9d7ade95914daed6b67e16907374515ea",
+    "stdoutBytes": 137042,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-12-ast.log",
+    "stdoutSha256": "ff4fbec0dd4a63790b4667faadd7ed28e19c9d212bfd10611b63ac4f8dfc6c76",
+    "stdoutBytes": 1017365,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-12-emitted.log",
+    "stdoutSha256": "42e1f6450fd6a706f5a6db59ccb365f9d7ade95914daed6b67e16907374515ea",
+    "stdoutBytes": 137042,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-12-go.log",
+    "stdoutSha256": "42e1f6450fd6a706f5a6db59ccb365f9d7ade95914daed6b67e16907374515ea",
+    "stdoutBytes": 137042,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-12-native.log",
+    "stdoutSha256": "42e1f6450fd6a706f5a6db59ccb365f9d7ade95914daed6b67e16907374515ea",
+    "stdoutBytes": 137042,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-13-Node.log",
+    "stdoutSha256": "9bb634ac5e1e19a3f29fa7d7555fc62e2819df39f146b9788162766f7edfc928",
+    "stdoutBytes": 191599,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-13-ast.log",
+    "stdoutSha256": "d4305c4feaf768ef67f232f864b551ffef3e34ea09831b468c4433e2b737a5e0",
+    "stdoutBytes": 1357913,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-13-emitted.log",
+    "stdoutSha256": "9bb634ac5e1e19a3f29fa7d7555fc62e2819df39f146b9788162766f7edfc928",
+    "stdoutBytes": 191599,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-13-go.log",
+    "stdoutSha256": "9bb634ac5e1e19a3f29fa7d7555fc62e2819df39f146b9788162766f7edfc928",
+    "stdoutBytes": 191599,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-13-native.log",
+    "stdoutSha256": "9bb634ac5e1e19a3f29fa7d7555fc62e2819df39f146b9788162766f7edfc928",
+    "stdoutBytes": 191599,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-14-Node.log",
+    "stdoutSha256": "8b8b3acd8b0254a3370f41c8fdbd6d3db05c0c1838bab0c9b9af1165cca6955c",
+    "stdoutBytes": 237192,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-14-ast.log",
+    "stdoutSha256": "cb512d3d70ff0eedcd60056f694d77f875c97e0e802485d3b6ee1ff962b57ff7",
+    "stdoutBytes": 1630047,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-14-emitted.log",
+    "stdoutSha256": "8b8b3acd8b0254a3370f41c8fdbd6d3db05c0c1838bab0c9b9af1165cca6955c",
+    "stdoutBytes": 237192,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-14-go.log",
+    "stdoutSha256": "8b8b3acd8b0254a3370f41c8fdbd6d3db05c0c1838bab0c9b9af1165cca6955c",
+    "stdoutBytes": 237192,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-14-native.log",
+    "stdoutSha256": "8b8b3acd8b0254a3370f41c8fdbd6d3db05c0c1838bab0c9b9af1165cca6955c",
+    "stdoutBytes": 237192,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-15-Node.log",
+    "stdoutSha256": "7d219a40da3c9d1748b6571b8441a691c4011c40c2b2a4a01fa3cb340278a965",
+    "stdoutBytes": 243154,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-15-ast.log",
+    "stdoutSha256": "2c52098d63578dc4996420bbb28864945ef0e847a6712f76cea75188e91d52a2",
+    "stdoutBytes": 1571301,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-15-emitted.log",
+    "stdoutSha256": "7d219a40da3c9d1748b6571b8441a691c4011c40c2b2a4a01fa3cb340278a965",
+    "stdoutBytes": 243154,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-15-go.log",
+    "stdoutSha256": "7d219a40da3c9d1748b6571b8441a691c4011c40c2b2a4a01fa3cb340278a965",
+    "stdoutBytes": 243154,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-15-native.log",
+    "stdoutSha256": "7d219a40da3c9d1748b6571b8441a691c4011c40c2b2a4a01fa3cb340278a965",
+    "stdoutBytes": 243154,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-16-Node.log",
+    "stdoutSha256": "6e900102808258515984668df476a7abd7c235cba82763ce346fd34730ed16d7",
+    "stdoutBytes": 203937,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-16-ast.log",
+    "stdoutSha256": "75809b3cd066fa3cf90ec79949c3e22750372c98620e48e979ae025d9c6225db",
+    "stdoutBytes": 1462464,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-16-emitted.log",
+    "stdoutSha256": "6e900102808258515984668df476a7abd7c235cba82763ce346fd34730ed16d7",
+    "stdoutBytes": 203937,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-16-go.log",
+    "stdoutSha256": "6e900102808258515984668df476a7abd7c235cba82763ce346fd34730ed16d7",
+    "stdoutBytes": 203937,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-16-native.log",
+    "stdoutSha256": "6e900102808258515984668df476a7abd7c235cba82763ce346fd34730ed16d7",
+    "stdoutBytes": 203937,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-17-Node.log",
+    "stdoutSha256": "c1a0154ddab15ea54bc979abee66342a5b637b1179634b38eab0d10596f8d4cd",
+    "stdoutBytes": 1224766,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-17-ast.log",
+    "stdoutSha256": "1a9b9b27fecb27e237f66b5fbb9a65bb78fbe63825a4903dd71c9d77fdec8ca6",
+    "stdoutBytes": 10400373,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-17-emitted.log",
+    "stdoutSha256": "c1a0154ddab15ea54bc979abee66342a5b637b1179634b38eab0d10596f8d4cd",
+    "stdoutBytes": 1224766,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-17-go.log",
+    "stdoutSha256": "c1a0154ddab15ea54bc979abee66342a5b637b1179634b38eab0d10596f8d4cd",
+    "stdoutBytes": 1224766,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-17-native.log",
+    "stdoutSha256": "c1a0154ddab15ea54bc979abee66342a5b637b1179634b38eab0d10596f8d4cd",
+    "stdoutBytes": 1224766,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-18-Node.log",
+    "stdoutSha256": "9209181600bc2e0c59ba4f1a99e6068af9ac5a512e3952d62dda164116cd9d2a",
+    "stdoutBytes": 325427,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-18-ast.log",
+    "stdoutSha256": "34281ea48e4f3e8e8d484c86a0b1a1863851805dc327194073dddd327bc27af8",
+    "stdoutBytes": 2869858,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-18-emitted.log",
+    "stdoutSha256": "9209181600bc2e0c59ba4f1a99e6068af9ac5a512e3952d62dda164116cd9d2a",
+    "stdoutBytes": 325427,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-18-go.log",
+    "stdoutSha256": "9209181600bc2e0c59ba4f1a99e6068af9ac5a512e3952d62dda164116cd9d2a",
+    "stdoutBytes": 325427,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-18-native.log",
+    "stdoutSha256": "9209181600bc2e0c59ba4f1a99e6068af9ac5a512e3952d62dda164116cd9d2a",
+    "stdoutBytes": 325427,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-19-Node.log",
+    "stdoutSha256": "56bcb97f9312a348294e1d63d6681e778d6505848ed1bf35d9a0a68d9fb13d2a",
+    "stdoutBytes": 38160,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-19-ast.log",
+    "stdoutSha256": "0a5d77a8b4ccfc3dbe210c276cca4b1e14ec2ca387ef8b45a8e9564fa6780f3c",
+    "stdoutBytes": 329158,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-19-emitted.log",
+    "stdoutSha256": "56bcb97f9312a348294e1d63d6681e778d6505848ed1bf35d9a0a68d9fb13d2a",
+    "stdoutBytes": 38160,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-19-go.log",
+    "stdoutSha256": "56bcb97f9312a348294e1d63d6681e778d6505848ed1bf35d9a0a68d9fb13d2a",
+    "stdoutBytes": 38160,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-19-native.log",
+    "stdoutSha256": "56bcb97f9312a348294e1d63d6681e778d6505848ed1bf35d9a0a68d9fb13d2a",
+    "stdoutBytes": 38160,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-2-Node.log",
+    "stdoutSha256": "e21fb0677d165ed3b4095657adbfb96734c5b01ece1af96980ad5285d09e75d0",
+    "stdoutBytes": 3674951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-2-ast.log",
+    "stdoutSha256": "941f7d3b6b7ee6a67689e3fdcd9e6f34cedd7fef0fadda07118bf152834fd24b",
+    "stdoutBytes": 32229270,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-2-emitted.log",
+    "stdoutSha256": "e21fb0677d165ed3b4095657adbfb96734c5b01ece1af96980ad5285d09e75d0",
+    "stdoutBytes": 3674951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-2-go.log",
+    "stdoutSha256": "e21fb0677d165ed3b4095657adbfb96734c5b01ece1af96980ad5285d09e75d0",
+    "stdoutBytes": 3674951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-2-native.log",
+    "stdoutSha256": "e21fb0677d165ed3b4095657adbfb96734c5b01ece1af96980ad5285d09e75d0",
+    "stdoutBytes": 3674951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-3-Node.log",
+    "stdoutSha256": "1bf089ee756b8439f227043bcd6e3324575e9ed971eabc5d7407731f559f4646",
+    "stdoutBytes": 495433,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-3-ast.log",
+    "stdoutSha256": "6baff50945a5fdd8c04bf72defb74c650506338414e18e6d9de1bff63048e24a",
+    "stdoutBytes": 4519558,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-3-emitted.log",
+    "stdoutSha256": "1bf089ee756b8439f227043bcd6e3324575e9ed971eabc5d7407731f559f4646",
+    "stdoutBytes": 495433,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-3-go.log",
+    "stdoutSha256": "1bf089ee756b8439f227043bcd6e3324575e9ed971eabc5d7407731f559f4646",
+    "stdoutBytes": 495433,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-3-native.log",
+    "stdoutSha256": "1bf089ee756b8439f227043bcd6e3324575e9ed971eabc5d7407731f559f4646",
+    "stdoutBytes": 495433,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-4-Node.log",
+    "stdoutSha256": "632a88cd0130441a21f7c355f170b1e86dbfc27ce3880295c405b22c980aae9d",
+    "stdoutBytes": 94888,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-4-ast.log",
+    "stdoutSha256": "7db02a18c7b29696ecf11521b9c3d42c867e94baad2ca75515042bdd2e3cd813",
+    "stdoutBytes": 571799,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-4-emitted.log",
+    "stdoutSha256": "632a88cd0130441a21f7c355f170b1e86dbfc27ce3880295c405b22c980aae9d",
+    "stdoutBytes": 94888,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-4-go.log",
+    "stdoutSha256": "632a88cd0130441a21f7c355f170b1e86dbfc27ce3880295c405b22c980aae9d",
+    "stdoutBytes": 94888,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-4-native.log",
+    "stdoutSha256": "632a88cd0130441a21f7c355f170b1e86dbfc27ce3880295c405b22c980aae9d",
+    "stdoutBytes": 94888,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-5-Node.log",
+    "stdoutSha256": "744291bf9ec60ca4348b6ecaf43aa13a1151cf602769d4bed7c5120f5b13e222",
+    "stdoutBytes": 451567,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-5-ast.log",
+    "stdoutSha256": "454339d09e2b91638194db272196c31143ae6bbbb4fb2279854c1107589bb740",
+    "stdoutBytes": 4288182,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-5-emitted.log",
+    "stdoutSha256": "744291bf9ec60ca4348b6ecaf43aa13a1151cf602769d4bed7c5120f5b13e222",
+    "stdoutBytes": 451567,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-5-go.log",
+    "stdoutSha256": "744291bf9ec60ca4348b6ecaf43aa13a1151cf602769d4bed7c5120f5b13e222",
+    "stdoutBytes": 451567,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-5-native.log",
+    "stdoutSha256": "744291bf9ec60ca4348b6ecaf43aa13a1151cf602769d4bed7c5120f5b13e222",
+    "stdoutBytes": 451567,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-6-Node.log",
+    "stdoutSha256": "2c58830635822c61816eeac9d84a546afc2225a95ffe2af7e8598ca64335d75a",
+    "stdoutBytes": 366352,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-6-ast.log",
+    "stdoutSha256": "3a2ff9bfc5babcfbf95fdb1a78a547af582cfe5cf575a61cd571122991b6e918",
+    "stdoutBytes": 3028066,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-6-emitted.log",
+    "stdoutSha256": "2c58830635822c61816eeac9d84a546afc2225a95ffe2af7e8598ca64335d75a",
+    "stdoutBytes": 366352,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-6-go.log",
+    "stdoutSha256": "2c58830635822c61816eeac9d84a546afc2225a95ffe2af7e8598ca64335d75a",
+    "stdoutBytes": 366352,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-6-native.log",
+    "stdoutSha256": "2c58830635822c61816eeac9d84a546afc2225a95ffe2af7e8598ca64335d75a",
+    "stdoutBytes": 366352,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-7-Node.log",
+    "stdoutSha256": "0e373cca86342657a17f94b14dd33eede205a07162821ae6a4770466686a36c7",
+    "stdoutBytes": 642739,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-7-ast.log",
+    "stdoutSha256": "ddb67d322e752e9fd43d2754366106b4763fd4c3b0a64b71a9c4934edc0f3fb8",
+    "stdoutBytes": 5269020,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-7-emitted.log",
+    "stdoutSha256": "0e373cca86342657a17f94b14dd33eede205a07162821ae6a4770466686a36c7",
+    "stdoutBytes": 642739,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-7-go.log",
+    "stdoutSha256": "0e373cca86342657a17f94b14dd33eede205a07162821ae6a4770466686a36c7",
+    "stdoutBytes": 642739,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-7-native.log",
+    "stdoutSha256": "0e373cca86342657a17f94b14dd33eede205a07162821ae6a4770466686a36c7",
+    "stdoutBytes": 642739,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-8-Node.log",
+    "stdoutSha256": "1ce547e0224015d8ca1cedd3f758fc60f71b03980fb70072949ce603b82ab3e4",
+    "stdoutBytes": 639412,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-8-ast.log",
+    "stdoutSha256": "2a9323f180b7d3ab6690fc54ed392febe65c324bd49404ff24c0e4e07b3ef23b",
+    "stdoutBytes": 5343579,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-8-emitted.log",
+    "stdoutSha256": "1ce547e0224015d8ca1cedd3f758fc60f71b03980fb70072949ce603b82ab3e4",
+    "stdoutBytes": 639412,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-8-go.log",
+    "stdoutSha256": "1ce547e0224015d8ca1cedd3f758fc60f71b03980fb70072949ce603b82ab3e4",
+    "stdoutBytes": 639412,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-8-native.log",
+    "stdoutSha256": "1ce547e0224015d8ca1cedd3f758fc60f71b03980fb70072949ce603b82ab3e4",
+    "stdoutBytes": 639412,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-9-Node.log",
+    "stdoutSha256": "925b6b07f212243a516cb8925375fed408fe6f82402b8ef18a2e9400d2a890b0",
+    "stdoutBytes": 158556,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-9-ast.log",
+    "stdoutSha256": "4923ec965ad358922712b9df1711c1c6dd4620fd2a39d256b55bfb318ed0e7d4",
+    "stdoutBytes": 1356497,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-9-emitted.log",
+    "stdoutSha256": "925b6b07f212243a516cb8925375fed408fe6f82402b8ef18a2e9400d2a890b0",
+    "stdoutBytes": 158556,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-9-go.log",
+    "stdoutSha256": "925b6b07f212243a516cb8925375fed408fe6f82402b8ef18a2e9400d2a890b0",
+    "stdoutBytes": 158556,
+    "stderrBytes": 0
+  },
+  {
+    "name": "compiler-9-native.log",
+    "stdoutSha256": "925b6b07f212243a516cb8925375fed408fe6f82402b8ef18a2e9400d2a890b0",
+    "stdoutBytes": 158556,
+    "stderrBytes": 0
+  },
+  {
+    "name": "forbidden_exact_match_widened-Node.log",
+    "stdoutSha256": "d3d9a5b8f223cd3457da2af3c6603fb1a91dde2070b15d1de76846d7e397bebd",
+    "stdoutBytes": 5272,
+    "stderrBytes": 0
+  },
+  {
+    "name": "forbidden_exact_match_widened-build.log",
+    "stdoutSha256": "af82de1a095da903a808686e89c3c5ea7efb10c55c8ce09b2cc29394e88d0708",
+    "stdoutBytes": 46,
+    "stderrBytes": 0
+  },
+  {
+    "name": "forbidden_exact_match_widened-emitted.log",
+    "stdoutSha256": "d3d9a5b8f223cd3457da2af3c6603fb1a91dde2070b15d1de76846d7e397bebd",
+    "stdoutBytes": 5272,
+    "stderrBytes": 0
+  },
+  {
+    "name": "forbidden_exact_match_widened-native.log",
+    "stdoutSha256": "d3d9a5b8f223cd3457da2af3c6603fb1a91dde2070b15d1de76846d7e397bebd",
+    "stdoutBytes": 5272,
+    "stderrBytes": 0
+  },
+  {
+    "name": "forbidden_owner_exemption_lost-Node.log",
+    "stdoutSha256": "f827f948bec55b91d536b2eb36fef958769e98afc26f054ec6b9ac3653601afa",
+    "stdoutBytes": 6325,
+    "stderrBytes": 0
+  },
+  {
+    "name": "forbidden_owner_exemption_lost-build.log",
+    "stdoutSha256": "af82de1a095da903a808686e89c3c5ea7efb10c55c8ce09b2cc29394e88d0708",
+    "stdoutBytes": 46,
+    "stderrBytes": 0
+  },
+  {
+    "name": "forbidden_owner_exemption_lost-emitted.log",
+    "stdoutSha256": "f827f948bec55b91d536b2eb36fef958769e98afc26f054ec6b9ac3653601afa",
+    "stdoutBytes": 6325,
+    "stderrBytes": 0
+  },
+  {
+    "name": "forbidden_owner_exemption_lost-native.log",
+    "stdoutSha256": "f827f948bec55b91d536b2eb36fef958769e98afc26f054ec6b9ac3653601afa",
+    "stdoutBytes": 6325,
+    "stderrBytes": 0
+  },
+  {
+    "name": "independent-upstream-Node.log",
+    "stdoutSha256": "5c71af807317d6ba086e2f9c00d6daf9589cfdd5149d428675d829bfc02eb519",
+    "stdoutBytes": 4756,
+    "stderrBytes": 0
+  },
+  {
+    "name": "independent-upstream-ast.log",
+    "stdoutSha256": "265a5c26c1adadf4c6f670381439cbe84705daeffa2659b0eb14c1a4d87a290e",
+    "stdoutBytes": 17562,
+    "stderrBytes": 0
+  },
+  {
+    "name": "independent-upstream-emitted.log",
+    "stdoutSha256": "5c71af807317d6ba086e2f9c00d6daf9589cfdd5149d428675d829bfc02eb519",
+    "stdoutBytes": 4756,
+    "stderrBytes": 0
+  },
+  {
+    "name": "independent-upstream-go.log",
+    "stdoutSha256": "5c71af807317d6ba086e2f9c00d6daf9589cfdd5149d428675d829bfc02eb519",
+    "stdoutBytes": 4756,
+    "stderrBytes": 0
+  },
+  {
+    "name": "independent-upstream-native.log",
+    "stdoutSha256": "5c71af807317d6ba086e2f9c00d6daf9589cfdd5149d428675d829bfc02eb519",
+    "stdoutBytes": 4756,
+    "stderrBytes": 0
+  },
+  {
+    "name": "positive.log",
+    "stdoutSha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "stdoutBytes": 2,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-0-Node.log",
+    "stdoutSha256": "0b80f169cb683ff957c855a33479ce951bfb8cb69cf683f021b70817f0ad23c0",
+    "stdoutBytes": 214023,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-0-emitted.log",
+    "stdoutSha256": "0b80f169cb683ff957c855a33479ce951bfb8cb69cf683f021b70817f0ad23c0",
+    "stdoutBytes": 214023,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-0-native.log",
+    "stdoutSha256": "0b80f169cb683ff957c855a33479ce951bfb8cb69cf683f021b70817f0ad23c0",
+    "stdoutBytes": 214023,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-1-Node.log",
+    "stdoutSha256": "f6c1d5a6629c89d985ec75673233c0172a93e71f3fa09305fe8af185ca14af6e",
+    "stdoutBytes": 168629,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-1-emitted.log",
+    "stdoutSha256": "f6c1d5a6629c89d985ec75673233c0172a93e71f3fa09305fe8af185ca14af6e",
+    "stdoutBytes": 168629,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-1-native.log",
+    "stdoutSha256": "f6c1d5a6629c89d985ec75673233c0172a93e71f3fa09305fe8af185ca14af6e",
+    "stdoutBytes": 168629,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-10-Node.log",
+    "stdoutSha256": "6de73f0f018e7583140ea4f7e78401391c939e26dbc40e088c21355e9795b5f1",
+    "stdoutBytes": 225025,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-10-emitted.log",
+    "stdoutSha256": "6de73f0f018e7583140ea4f7e78401391c939e26dbc40e088c21355e9795b5f1",
+    "stdoutBytes": 225025,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-10-native.log",
+    "stdoutSha256": "6de73f0f018e7583140ea4f7e78401391c939e26dbc40e088c21355e9795b5f1",
+    "stdoutBytes": 225025,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-11-Node.log",
+    "stdoutSha256": "06b046a26fcb2827d1e813da185b0b057303bb13707161fdffde5407e77337b3",
+    "stdoutBytes": 441710,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-11-emitted.log",
+    "stdoutSha256": "06b046a26fcb2827d1e813da185b0b057303bb13707161fdffde5407e77337b3",
+    "stdoutBytes": 441710,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-11-native.log",
+    "stdoutSha256": "06b046a26fcb2827d1e813da185b0b057303bb13707161fdffde5407e77337b3",
+    "stdoutBytes": 441710,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-12-Node.log",
+    "stdoutSha256": "42e1f6450fd6a706f5a6db59ccb365f9d7ade95914daed6b67e16907374515ea",
+    "stdoutBytes": 137042,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-12-emitted.log",
+    "stdoutSha256": "42e1f6450fd6a706f5a6db59ccb365f9d7ade95914daed6b67e16907374515ea",
+    "stdoutBytes": 137042,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-12-native.log",
+    "stdoutSha256": "42e1f6450fd6a706f5a6db59ccb365f9d7ade95914daed6b67e16907374515ea",
+    "stdoutBytes": 137042,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-13-Node.log",
+    "stdoutSha256": "9bb634ac5e1e19a3f29fa7d7555fc62e2819df39f146b9788162766f7edfc928",
+    "stdoutBytes": 191599,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-13-emitted.log",
+    "stdoutSha256": "9bb634ac5e1e19a3f29fa7d7555fc62e2819df39f146b9788162766f7edfc928",
+    "stdoutBytes": 191599,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-13-native.log",
+    "stdoutSha256": "9bb634ac5e1e19a3f29fa7d7555fc62e2819df39f146b9788162766f7edfc928",
+    "stdoutBytes": 191599,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-14-Node.log",
+    "stdoutSha256": "8b8b3acd8b0254a3370f41c8fdbd6d3db05c0c1838bab0c9b9af1165cca6955c",
+    "stdoutBytes": 237192,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-14-emitted.log",
+    "stdoutSha256": "8b8b3acd8b0254a3370f41c8fdbd6d3db05c0c1838bab0c9b9af1165cca6955c",
+    "stdoutBytes": 237192,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-14-native.log",
+    "stdoutSha256": "8b8b3acd8b0254a3370f41c8fdbd6d3db05c0c1838bab0c9b9af1165cca6955c",
+    "stdoutBytes": 237192,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-15-Node.log",
+    "stdoutSha256": "7d219a40da3c9d1748b6571b8441a691c4011c40c2b2a4a01fa3cb340278a965",
+    "stdoutBytes": 243154,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-15-emitted.log",
+    "stdoutSha256": "7d219a40da3c9d1748b6571b8441a691c4011c40c2b2a4a01fa3cb340278a965",
+    "stdoutBytes": 243154,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-15-native.log",
+    "stdoutSha256": "7d219a40da3c9d1748b6571b8441a691c4011c40c2b2a4a01fa3cb340278a965",
+    "stdoutBytes": 243154,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-16-Node.log",
+    "stdoutSha256": "6e900102808258515984668df476a7abd7c235cba82763ce346fd34730ed16d7",
+    "stdoutBytes": 203937,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-16-emitted.log",
+    "stdoutSha256": "6e900102808258515984668df476a7abd7c235cba82763ce346fd34730ed16d7",
+    "stdoutBytes": 203937,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-16-native.log",
+    "stdoutSha256": "6e900102808258515984668df476a7abd7c235cba82763ce346fd34730ed16d7",
+    "stdoutBytes": 203937,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-17-Node.log",
+    "stdoutSha256": "c1a0154ddab15ea54bc979abee66342a5b637b1179634b38eab0d10596f8d4cd",
+    "stdoutBytes": 1224766,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-17-emitted.log",
+    "stdoutSha256": "c1a0154ddab15ea54bc979abee66342a5b637b1179634b38eab0d10596f8d4cd",
+    "stdoutBytes": 1224766,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-17-native.log",
+    "stdoutSha256": "c1a0154ddab15ea54bc979abee66342a5b637b1179634b38eab0d10596f8d4cd",
+    "stdoutBytes": 1224766,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-18-Node.log",
+    "stdoutSha256": "9209181600bc2e0c59ba4f1a99e6068af9ac5a512e3952d62dda164116cd9d2a",
+    "stdoutBytes": 325427,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-18-emitted.log",
+    "stdoutSha256": "9209181600bc2e0c59ba4f1a99e6068af9ac5a512e3952d62dda164116cd9d2a",
+    "stdoutBytes": 325427,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-18-native.log",
+    "stdoutSha256": "9209181600bc2e0c59ba4f1a99e6068af9ac5a512e3952d62dda164116cd9d2a",
+    "stdoutBytes": 325427,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-19-Node.log",
+    "stdoutSha256": "56bcb97f9312a348294e1d63d6681e778d6505848ed1bf35d9a0a68d9fb13d2a",
+    "stdoutBytes": 38160,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-19-emitted.log",
+    "stdoutSha256": "56bcb97f9312a348294e1d63d6681e778d6505848ed1bf35d9a0a68d9fb13d2a",
+    "stdoutBytes": 38160,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-19-native.log",
+    "stdoutSha256": "56bcb97f9312a348294e1d63d6681e778d6505848ed1bf35d9a0a68d9fb13d2a",
+    "stdoutBytes": 38160,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-2-Node.log",
+    "stdoutSha256": "e21fb0677d165ed3b4095657adbfb96734c5b01ece1af96980ad5285d09e75d0",
+    "stdoutBytes": 3674951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-2-emitted.log",
+    "stdoutSha256": "e21fb0677d165ed3b4095657adbfb96734c5b01ece1af96980ad5285d09e75d0",
+    "stdoutBytes": 3674951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-2-native.log",
+    "stdoutSha256": "e21fb0677d165ed3b4095657adbfb96734c5b01ece1af96980ad5285d09e75d0",
+    "stdoutBytes": 3674951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-3-Node.log",
+    "stdoutSha256": "1bf089ee756b8439f227043bcd6e3324575e9ed971eabc5d7407731f559f4646",
+    "stdoutBytes": 495433,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-3-emitted.log",
+    "stdoutSha256": "1bf089ee756b8439f227043bcd6e3324575e9ed971eabc5d7407731f559f4646",
+    "stdoutBytes": 495433,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-3-native.log",
+    "stdoutSha256": "1bf089ee756b8439f227043bcd6e3324575e9ed971eabc5d7407731f559f4646",
+    "stdoutBytes": 495433,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-4-Node.log",
+    "stdoutSha256": "632a88cd0130441a21f7c355f170b1e86dbfc27ce3880295c405b22c980aae9d",
+    "stdoutBytes": 94888,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-4-emitted.log",
+    "stdoutSha256": "632a88cd0130441a21f7c355f170b1e86dbfc27ce3880295c405b22c980aae9d",
+    "stdoutBytes": 94888,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-4-native.log",
+    "stdoutSha256": "632a88cd0130441a21f7c355f170b1e86dbfc27ce3880295c405b22c980aae9d",
+    "stdoutBytes": 94888,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-5-Node.log",
+    "stdoutSha256": "744291bf9ec60ca4348b6ecaf43aa13a1151cf602769d4bed7c5120f5b13e222",
+    "stdoutBytes": 451567,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-5-emitted.log",
+    "stdoutSha256": "744291bf9ec60ca4348b6ecaf43aa13a1151cf602769d4bed7c5120f5b13e222",
+    "stdoutBytes": 451567,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-5-native.log",
+    "stdoutSha256": "744291bf9ec60ca4348b6ecaf43aa13a1151cf602769d4bed7c5120f5b13e222",
+    "stdoutBytes": 451567,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-6-Node.log",
+    "stdoutSha256": "2c58830635822c61816eeac9d84a546afc2225a95ffe2af7e8598ca64335d75a",
+    "stdoutBytes": 366352,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-6-emitted.log",
+    "stdoutSha256": "2c58830635822c61816eeac9d84a546afc2225a95ffe2af7e8598ca64335d75a",
+    "stdoutBytes": 366352,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-6-native.log",
+    "stdoutSha256": "2c58830635822c61816eeac9d84a546afc2225a95ffe2af7e8598ca64335d75a",
+    "stdoutBytes": 366352,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-7-Node.log",
+    "stdoutSha256": "0e373cca86342657a17f94b14dd33eede205a07162821ae6a4770466686a36c7",
+    "stdoutBytes": 642739,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-7-emitted.log",
+    "stdoutSha256": "0e373cca86342657a17f94b14dd33eede205a07162821ae6a4770466686a36c7",
+    "stdoutBytes": 642739,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-7-native.log",
+    "stdoutSha256": "0e373cca86342657a17f94b14dd33eede205a07162821ae6a4770466686a36c7",
+    "stdoutBytes": 642739,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-8-Node.log",
+    "stdoutSha256": "1ce547e0224015d8ca1cedd3f758fc60f71b03980fb70072949ce603b82ab3e4",
+    "stdoutBytes": 639412,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-8-emitted.log",
+    "stdoutSha256": "1ce547e0224015d8ca1cedd3f758fc60f71b03980fb70072949ce603b82ab3e4",
+    "stdoutBytes": 639412,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-8-native.log",
+    "stdoutSha256": "1ce547e0224015d8ca1cedd3f758fc60f71b03980fb70072949ce603b82ab3e4",
+    "stdoutBytes": 639412,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-9-Node.log",
+    "stdoutSha256": "925b6b07f212243a516cb8925375fed408fe6f82402b8ef18a2e9400d2a890b0",
+    "stdoutBytes": 158556,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-9-emitted.log",
+    "stdoutSha256": "925b6b07f212243a516cb8925375fed408fe6f82402b8ef18a2e9400d2a890b0",
+    "stdoutBytes": 158556,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-compiler-9-native.log",
+    "stdoutSha256": "925b6b07f212243a516cb8925375fed408fe6f82402b8ef18a2e9400d2a890b0",
+    "stdoutBytes": 158556,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-0-Node.log",
+    "stdoutSha256": "4597093a85399f4ec157fc046ded674d5f2033eded5a61c96d085ef0b603fa23",
+    "stdoutBytes": 12706,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-0-emitted.log",
+    "stdoutSha256": "4597093a85399f4ec157fc046ded674d5f2033eded5a61c96d085ef0b603fa23",
+    "stdoutBytes": 12706,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-0-native.log",
+    "stdoutSha256": "4597093a85399f4ec157fc046ded674d5f2033eded5a61c96d085ef0b603fa23",
+    "stdoutBytes": 12706,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-1-Node.log",
+    "stdoutSha256": "dc5423114e5f3d08c3a5a6ec7abd43aa45ad211472bbfe03fa722fc9865fdbfe",
+    "stdoutBytes": 33728,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-1-emitted.log",
+    "stdoutSha256": "dc5423114e5f3d08c3a5a6ec7abd43aa45ad211472bbfe03fa722fc9865fdbfe",
+    "stdoutBytes": 33728,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-1-native.log",
+    "stdoutSha256": "dc5423114e5f3d08c3a5a6ec7abd43aa45ad211472bbfe03fa722fc9865fdbfe",
+    "stdoutBytes": 33728,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-10-Node.log",
+    "stdoutSha256": "089b9c2cc22eaf45031d5b2094b0a77d3826851aaa2d403b3dc8104225cac22b",
+    "stdoutBytes": 90137,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-10-emitted.log",
+    "stdoutSha256": "089b9c2cc22eaf45031d5b2094b0a77d3826851aaa2d403b3dc8104225cac22b",
+    "stdoutBytes": 90137,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-10-native.log",
+    "stdoutSha256": "089b9c2cc22eaf45031d5b2094b0a77d3826851aaa2d403b3dc8104225cac22b",
+    "stdoutBytes": 90137,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-11-Node.log",
+    "stdoutSha256": "0eefa4784a491ba432bedfbf832cd5674728a6b3116a734309338bc0f5c643f9",
+    "stdoutBytes": 6838,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-11-emitted.log",
+    "stdoutSha256": "0eefa4784a491ba432bedfbf832cd5674728a6b3116a734309338bc0f5c643f9",
+    "stdoutBytes": 6838,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-11-native.log",
+    "stdoutSha256": "0eefa4784a491ba432bedfbf832cd5674728a6b3116a734309338bc0f5c643f9",
+    "stdoutBytes": 6838,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-12-Node.log",
+    "stdoutSha256": "252099d99df48ff236ea6af5bd20717a68d344e0511fc9af65e47916b58d0fca",
+    "stdoutBytes": 10951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-12-emitted.log",
+    "stdoutSha256": "252099d99df48ff236ea6af5bd20717a68d344e0511fc9af65e47916b58d0fca",
+    "stdoutBytes": 10951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-12-native.log",
+    "stdoutSha256": "252099d99df48ff236ea6af5bd20717a68d344e0511fc9af65e47916b58d0fca",
+    "stdoutBytes": 10951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-13-Node.log",
+    "stdoutSha256": "a1b2be04dc3b751c127186ed8d7aafe271240f7d97aa9428fc84d213ebb891d4",
+    "stdoutBytes": 20714,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-13-emitted.log",
+    "stdoutSha256": "a1b2be04dc3b751c127186ed8d7aafe271240f7d97aa9428fc84d213ebb891d4",
+    "stdoutBytes": 20714,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-13-native.log",
+    "stdoutSha256": "a1b2be04dc3b751c127186ed8d7aafe271240f7d97aa9428fc84d213ebb891d4",
+    "stdoutBytes": 20714,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-14-Node.log",
+    "stdoutSha256": "18d2ad2df2d0a5adf9a484767fc4debef51c32b2d360ddf1fd6e1042de4964b2",
+    "stdoutBytes": 14986,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-14-emitted.log",
+    "stdoutSha256": "18d2ad2df2d0a5adf9a484767fc4debef51c32b2d360ddf1fd6e1042de4964b2",
+    "stdoutBytes": 14986,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-14-native.log",
+    "stdoutSha256": "18d2ad2df2d0a5adf9a484767fc4debef51c32b2d360ddf1fd6e1042de4964b2",
+    "stdoutBytes": 14986,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-15-Node.log",
+    "stdoutSha256": "f9facc9f061a13f996f198e535a1670e44838b202fc3fe45863e9a40756fdc3d",
+    "stdoutBytes": 4965,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-15-emitted.log",
+    "stdoutSha256": "f9facc9f061a13f996f198e535a1670e44838b202fc3fe45863e9a40756fdc3d",
+    "stdoutBytes": 4965,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-15-native.log",
+    "stdoutSha256": "f9facc9f061a13f996f198e535a1670e44838b202fc3fe45863e9a40756fdc3d",
+    "stdoutBytes": 4965,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-16-Node.log",
+    "stdoutSha256": "0a79839d8dc69c1d67f4be9489af5b1597b01994946054e9147349d42ba9c9d9",
+    "stdoutBytes": 10536,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-16-emitted.log",
+    "stdoutSha256": "0a79839d8dc69c1d67f4be9489af5b1597b01994946054e9147349d42ba9c9d9",
+    "stdoutBytes": 10536,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-16-native.log",
+    "stdoutSha256": "0a79839d8dc69c1d67f4be9489af5b1597b01994946054e9147349d42ba9c9d9",
+    "stdoutBytes": 10536,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-17-Node.log",
+    "stdoutSha256": "c9b2e0cb0950b8cb96e755b640e1e32cd0a08eaf04248d16619b6dc8b5b7e038",
+    "stdoutBytes": 17571,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-17-emitted.log",
+    "stdoutSha256": "c9b2e0cb0950b8cb96e755b640e1e32cd0a08eaf04248d16619b6dc8b5b7e038",
+    "stdoutBytes": 17571,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-17-native.log",
+    "stdoutSha256": "c9b2e0cb0950b8cb96e755b640e1e32cd0a08eaf04248d16619b6dc8b5b7e038",
+    "stdoutBytes": 17571,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-18-Node.log",
+    "stdoutSha256": "c49c913b3f36b4cd432e89a45dfc66eadefb80192bb004c84daf459861eb751c",
+    "stdoutBytes": 6365,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-18-emitted.log",
+    "stdoutSha256": "c49c913b3f36b4cd432e89a45dfc66eadefb80192bb004c84daf459861eb751c",
+    "stdoutBytes": 6365,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-18-native.log",
+    "stdoutSha256": "c49c913b3f36b4cd432e89a45dfc66eadefb80192bb004c84daf459861eb751c",
+    "stdoutBytes": 6365,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-19-Node.log",
+    "stdoutSha256": "70fb531c169b87e90441524a0f0a498948f6971ecea7a5cff04a4a09da8fe8d8",
+    "stdoutBytes": 14923,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-19-emitted.log",
+    "stdoutSha256": "70fb531c169b87e90441524a0f0a498948f6971ecea7a5cff04a4a09da8fe8d8",
+    "stdoutBytes": 14923,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-19-native.log",
+    "stdoutSha256": "70fb531c169b87e90441524a0f0a498948f6971ecea7a5cff04a4a09da8fe8d8",
+    "stdoutBytes": 14923,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-2-Node.log",
+    "stdoutSha256": "2b4b3ca0583f601f13797e6c56ef401edd835afa134eb1f65e9dbd4084451168",
+    "stdoutBytes": 20979,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-2-emitted.log",
+    "stdoutSha256": "2b4b3ca0583f601f13797e6c56ef401edd835afa134eb1f65e9dbd4084451168",
+    "stdoutBytes": 20979,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-2-native.log",
+    "stdoutSha256": "2b4b3ca0583f601f13797e6c56ef401edd835afa134eb1f65e9dbd4084451168",
+    "stdoutBytes": 20979,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-20-Node.log",
+    "stdoutSha256": "9d5518fb31ab0bb00ba93f170c19c6d7f4e99a80c5275d5dabee2dd1619305fc",
+    "stdoutBytes": 9664,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-20-emitted.log",
+    "stdoutSha256": "9d5518fb31ab0bb00ba93f170c19c6d7f4e99a80c5275d5dabee2dd1619305fc",
+    "stdoutBytes": 9664,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-20-native.log",
+    "stdoutSha256": "9d5518fb31ab0bb00ba93f170c19c6d7f4e99a80c5275d5dabee2dd1619305fc",
+    "stdoutBytes": 9664,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-21-Node.log",
+    "stdoutSha256": "0cc859ae54d4121f8489b1c0871392e995be47c2dfbe8d2afb0c943e32b6ba75",
+    "stdoutBytes": 12031,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-21-emitted.log",
+    "stdoutSha256": "0cc859ae54d4121f8489b1c0871392e995be47c2dfbe8d2afb0c943e32b6ba75",
+    "stdoutBytes": 12031,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-21-native.log",
+    "stdoutSha256": "0cc859ae54d4121f8489b1c0871392e995be47c2dfbe8d2afb0c943e32b6ba75",
+    "stdoutBytes": 12031,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-22-Node.log",
+    "stdoutSha256": "8e2d8f4e9d518e08bf15d195ddf096b118bd26918ff071e0d0c5da0eaa45dc7d",
+    "stdoutBytes": 12580,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-22-emitted.log",
+    "stdoutSha256": "8e2d8f4e9d518e08bf15d195ddf096b118bd26918ff071e0d0c5da0eaa45dc7d",
+    "stdoutBytes": 12580,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-22-native.log",
+    "stdoutSha256": "8e2d8f4e9d518e08bf15d195ddf096b118bd26918ff071e0d0c5da0eaa45dc7d",
+    "stdoutBytes": 12580,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-23-Node.log",
+    "stdoutSha256": "53689555c061a834460ed5c58502307c0d654e7195d07b05e5dd6e5bd668acfd",
+    "stdoutBytes": 3659,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-23-emitted.log",
+    "stdoutSha256": "53689555c061a834460ed5c58502307c0d654e7195d07b05e5dd6e5bd668acfd",
+    "stdoutBytes": 3659,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-23-native.log",
+    "stdoutSha256": "53689555c061a834460ed5c58502307c0d654e7195d07b05e5dd6e5bd668acfd",
+    "stdoutBytes": 3659,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-24-Node.log",
+    "stdoutSha256": "67c4046220c3b45aaf9774b778f5cc3650f8c1a4b48f2fc7297127d8c7c07baf",
+    "stdoutBytes": 4381,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-24-emitted.log",
+    "stdoutSha256": "67c4046220c3b45aaf9774b778f5cc3650f8c1a4b48f2fc7297127d8c7c07baf",
+    "stdoutBytes": 4381,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-24-native.log",
+    "stdoutSha256": "67c4046220c3b45aaf9774b778f5cc3650f8c1a4b48f2fc7297127d8c7c07baf",
+    "stdoutBytes": 4381,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-25-Node.log",
+    "stdoutSha256": "cdf4fed26da5b91ac68a8365e746c6bec031bbcf725da5a5ca124180ab2b805c",
+    "stdoutBytes": 12284,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-25-emitted.log",
+    "stdoutSha256": "cdf4fed26da5b91ac68a8365e746c6bec031bbcf725da5a5ca124180ab2b805c",
+    "stdoutBytes": 12284,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-25-native.log",
+    "stdoutSha256": "cdf4fed26da5b91ac68a8365e746c6bec031bbcf725da5a5ca124180ab2b805c",
+    "stdoutBytes": 12284,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-26-Node.log",
+    "stdoutSha256": "733b3c33105edf98a4b6e2d047879c9607ee0b57f3a40e4f5e3840a9ecfc3b06",
+    "stdoutBytes": 1388,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-26-emitted.log",
+    "stdoutSha256": "733b3c33105edf98a4b6e2d047879c9607ee0b57f3a40e4f5e3840a9ecfc3b06",
+    "stdoutBytes": 1388,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-26-native.log",
+    "stdoutSha256": "733b3c33105edf98a4b6e2d047879c9607ee0b57f3a40e4f5e3840a9ecfc3b06",
+    "stdoutBytes": 1388,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-27-Node.log",
+    "stdoutSha256": "dcd44fa24c02b2dfeaa7dd49138b60edba3802bc84e612f85196c6108e720cbd",
+    "stdoutBytes": 13430,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-27-emitted.log",
+    "stdoutSha256": "dcd44fa24c02b2dfeaa7dd49138b60edba3802bc84e612f85196c6108e720cbd",
+    "stdoutBytes": 13430,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-27-native.log",
+    "stdoutSha256": "dcd44fa24c02b2dfeaa7dd49138b60edba3802bc84e612f85196c6108e720cbd",
+    "stdoutBytes": 13430,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-28-Node.log",
+    "stdoutSha256": "eb044b7374100b478e1db267467251ed695f305aad21d52bcf03ddf475007ef7",
+    "stdoutBytes": 26286,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-28-emitted.log",
+    "stdoutSha256": "eb044b7374100b478e1db267467251ed695f305aad21d52bcf03ddf475007ef7",
+    "stdoutBytes": 26286,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-28-native.log",
+    "stdoutSha256": "eb044b7374100b478e1db267467251ed695f305aad21d52bcf03ddf475007ef7",
+    "stdoutBytes": 26286,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-29-Node.log",
+    "stdoutSha256": "a9c3ea820c3006040cfb675b8082d2cbe0f0b9ba52b52d7bc31da40d13507330",
+    "stdoutBytes": 848,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-29-emitted.log",
+    "stdoutSha256": "a9c3ea820c3006040cfb675b8082d2cbe0f0b9ba52b52d7bc31da40d13507330",
+    "stdoutBytes": 848,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-29-native.log",
+    "stdoutSha256": "a9c3ea820c3006040cfb675b8082d2cbe0f0b9ba52b52d7bc31da40d13507330",
+    "stdoutBytes": 848,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-3-Node.log",
+    "stdoutSha256": "ba6bb4e2e64176ed5737aa6ddb026f2b5b8e6c3fba4095e959813bcca6e79e05",
+    "stdoutBytes": 1186,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-3-emitted.log",
+    "stdoutSha256": "ba6bb4e2e64176ed5737aa6ddb026f2b5b8e6c3fba4095e959813bcca6e79e05",
+    "stdoutBytes": 1186,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-3-native.log",
+    "stdoutSha256": "ba6bb4e2e64176ed5737aa6ddb026f2b5b8e6c3fba4095e959813bcca6e79e05",
+    "stdoutBytes": 1186,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-30-Node.log",
+    "stdoutSha256": "01464aeb8f5b0ad209fd36de9d1d52a110298566b040cd9de31016ec350e425c",
+    "stdoutBytes": 29193,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-30-emitted.log",
+    "stdoutSha256": "01464aeb8f5b0ad209fd36de9d1d52a110298566b040cd9de31016ec350e425c",
+    "stdoutBytes": 29193,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-30-native.log",
+    "stdoutSha256": "01464aeb8f5b0ad209fd36de9d1d52a110298566b040cd9de31016ec350e425c",
+    "stdoutBytes": 29193,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-31-Node.log",
+    "stdoutSha256": "9f514cf11141b6d517159ba177dfd40fbe4b153273793f082b7ba4903f82cdac",
+    "stdoutBytes": 21435,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-31-emitted.log",
+    "stdoutSha256": "9f514cf11141b6d517159ba177dfd40fbe4b153273793f082b7ba4903f82cdac",
+    "stdoutBytes": 21435,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-31-native.log",
+    "stdoutSha256": "9f514cf11141b6d517159ba177dfd40fbe4b153273793f082b7ba4903f82cdac",
+    "stdoutBytes": 21435,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-32-Node.log",
+    "stdoutSha256": "a97597d5bd1731bfa6549f0cc49ea12b4aa68da2abbed5da40f940bae646bd5c",
+    "stdoutBytes": 34030,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-32-emitted.log",
+    "stdoutSha256": "a97597d5bd1731bfa6549f0cc49ea12b4aa68da2abbed5da40f940bae646bd5c",
+    "stdoutBytes": 34030,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-32-native.log",
+    "stdoutSha256": "a97597d5bd1731bfa6549f0cc49ea12b4aa68da2abbed5da40f940bae646bd5c",
+    "stdoutBytes": 34030,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-33-Node.log",
+    "stdoutSha256": "8db1edbc3a6726dde187729f9edd7208ef4623f784bab3e0758ac2555426ea9d",
+    "stdoutBytes": 1482,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-33-emitted.log",
+    "stdoutSha256": "8db1edbc3a6726dde187729f9edd7208ef4623f784bab3e0758ac2555426ea9d",
+    "stdoutBytes": 1482,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-33-native.log",
+    "stdoutSha256": "8db1edbc3a6726dde187729f9edd7208ef4623f784bab3e0758ac2555426ea9d",
+    "stdoutBytes": 1482,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-34-Node.log",
+    "stdoutSha256": "fe7a8f85d4e77c00d381db83a3e0eb0a6968486694548463e4e77a7da7da5121",
+    "stdoutBytes": 70391,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-34-emitted.log",
+    "stdoutSha256": "fe7a8f85d4e77c00d381db83a3e0eb0a6968486694548463e4e77a7da7da5121",
+    "stdoutBytes": 70391,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-34-native.log",
+    "stdoutSha256": "fe7a8f85d4e77c00d381db83a3e0eb0a6968486694548463e4e77a7da7da5121",
+    "stdoutBytes": 70391,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-35-Node.log",
+    "stdoutSha256": "e592338db1fba9b41267e5cac27264049d6f2d600d5a5abd47f21285e5efa2ac",
+    "stdoutBytes": 2437,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-35-emitted.log",
+    "stdoutSha256": "e592338db1fba9b41267e5cac27264049d6f2d600d5a5abd47f21285e5efa2ac",
+    "stdoutBytes": 2437,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-35-native.log",
+    "stdoutSha256": "e592338db1fba9b41267e5cac27264049d6f2d600d5a5abd47f21285e5efa2ac",
+    "stdoutBytes": 2437,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-36-Node.log",
+    "stdoutSha256": "37e791c058456a7b7edbe1078f42777fdd5f51f84b00d7cd556d5a9e665d0a9f",
+    "stdoutBytes": 660,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-36-emitted.log",
+    "stdoutSha256": "37e791c058456a7b7edbe1078f42777fdd5f51f84b00d7cd556d5a9e665d0a9f",
+    "stdoutBytes": 660,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-36-native.log",
+    "stdoutSha256": "37e791c058456a7b7edbe1078f42777fdd5f51f84b00d7cd556d5a9e665d0a9f",
+    "stdoutBytes": 660,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-37-Node.log",
+    "stdoutSha256": "c1a4067e272b309cb50b3062edd94808a0f56b2984ac4f9fd770c61c21b34b67",
+    "stdoutBytes": 18260,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-37-emitted.log",
+    "stdoutSha256": "c1a4067e272b309cb50b3062edd94808a0f56b2984ac4f9fd770c61c21b34b67",
+    "stdoutBytes": 18260,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-37-native.log",
+    "stdoutSha256": "c1a4067e272b309cb50b3062edd94808a0f56b2984ac4f9fd770c61c21b34b67",
+    "stdoutBytes": 18260,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-38-Node.log",
+    "stdoutSha256": "cbce4cfc657c656bb463f6526cd5efc12641f0323b553aa3a2785b2b15cdca13",
+    "stdoutBytes": 148208,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-38-emitted.log",
+    "stdoutSha256": "cbce4cfc657c656bb463f6526cd5efc12641f0323b553aa3a2785b2b15cdca13",
+    "stdoutBytes": 148208,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-38-native.log",
+    "stdoutSha256": "cbce4cfc657c656bb463f6526cd5efc12641f0323b553aa3a2785b2b15cdca13",
+    "stdoutBytes": 148208,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-39-Node.log",
+    "stdoutSha256": "d8ba4481326594f56c6a5f15effb2c9297c239e90de8cbf8650d1b20e1733ad0",
+    "stdoutBytes": 49247,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-39-emitted.log",
+    "stdoutSha256": "d8ba4481326594f56c6a5f15effb2c9297c239e90de8cbf8650d1b20e1733ad0",
+    "stdoutBytes": 49247,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-39-native.log",
+    "stdoutSha256": "d8ba4481326594f56c6a5f15effb2c9297c239e90de8cbf8650d1b20e1733ad0",
+    "stdoutBytes": 49247,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-4-Node.log",
+    "stdoutSha256": "18c8a39c8e143e2b6c01605a88fcc4c0327ec25fb94702d5b7ec29c68917c315",
+    "stdoutBytes": 1093,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-4-emitted.log",
+    "stdoutSha256": "18c8a39c8e143e2b6c01605a88fcc4c0327ec25fb94702d5b7ec29c68917c315",
+    "stdoutBytes": 1093,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-4-native.log",
+    "stdoutSha256": "18c8a39c8e143e2b6c01605a88fcc4c0327ec25fb94702d5b7ec29c68917c315",
+    "stdoutBytes": 1093,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-5-Node.log",
+    "stdoutSha256": "e30fa40863f949c6fc01f35f6d128b412b6b7c11fe688a0da918a6a4787189a0",
+    "stdoutBytes": 67540,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-5-emitted.log",
+    "stdoutSha256": "e30fa40863f949c6fc01f35f6d128b412b6b7c11fe688a0da918a6a4787189a0",
+    "stdoutBytes": 67540,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-5-native.log",
+    "stdoutSha256": "e30fa40863f949c6fc01f35f6d128b412b6b7c11fe688a0da918a6a4787189a0",
+    "stdoutBytes": 67540,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-6-Node.log",
+    "stdoutSha256": "f5de47c105daf02f1a7c321ee308b0cfee0ec8cd91156bff50670f11a8a0e750",
+    "stdoutBytes": 6641,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-6-emitted.log",
+    "stdoutSha256": "f5de47c105daf02f1a7c321ee308b0cfee0ec8cd91156bff50670f11a8a0e750",
+    "stdoutBytes": 6641,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-6-native.log",
+    "stdoutSha256": "f5de47c105daf02f1a7c321ee308b0cfee0ec8cd91156bff50670f11a8a0e750",
+    "stdoutBytes": 6641,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-7-Node.log",
+    "stdoutSha256": "d348e214e4ea6439b74d8b27871f0c8a12ff552c894d77560906b6a4684fae9f",
+    "stdoutBytes": 107566,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-7-emitted.log",
+    "stdoutSha256": "d348e214e4ea6439b74d8b27871f0c8a12ff552c894d77560906b6a4684fae9f",
+    "stdoutBytes": 107566,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-7-native.log",
+    "stdoutSha256": "d348e214e4ea6439b74d8b27871f0c8a12ff552c894d77560906b6a4684fae9f",
+    "stdoutBytes": 107566,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-8-Node.log",
+    "stdoutSha256": "aef01a43ec597b328defa95039316726ee996ae4b9e6277d32bedd7aabffe99b",
+    "stdoutBytes": 33997,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-8-emitted.log",
+    "stdoutSha256": "aef01a43ec597b328defa95039316726ee996ae4b9e6277d32bedd7aabffe99b",
+    "stdoutBytes": 33997,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-8-native.log",
+    "stdoutSha256": "aef01a43ec597b328defa95039316726ee996ae4b9e6277d32bedd7aabffe99b",
+    "stdoutBytes": 33997,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-9-Node.log",
+    "stdoutSha256": "e76e4a4870f358bb56410964c6d4a769617f8f9dd83eb8d9767d863af7df96b4",
+    "stdoutBytes": 37059,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-9-emitted.log",
+    "stdoutSha256": "e76e4a4870f358bb56410964c6d4a769617f8f9dd83eb8d9767d863af7df96b4",
+    "stdoutBytes": 37059,
+    "stderrBytes": 0
+  },
+  {
+    "name": "raw-stage1-9-native.log",
+    "stdoutSha256": "e76e4a4870f358bb56410964c6d4a769617f8f9dd83eb8d9767d863af7df96b4",
+    "stdoutBytes": 37059,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-0-Node.log",
+    "stdoutSha256": "4597093a85399f4ec157fc046ded674d5f2033eded5a61c96d085ef0b603fa23",
+    "stdoutBytes": 12706,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-0-ast.log",
+    "stdoutSha256": "b5ce0dd160db01644778d241672edf6fe5a72f334c7ffbbdfd48273edaa9ae8d",
+    "stdoutBytes": 168019,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-0-emitted.log",
+    "stdoutSha256": "4597093a85399f4ec157fc046ded674d5f2033eded5a61c96d085ef0b603fa23",
+    "stdoutBytes": 12706,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-0-go.log",
+    "stdoutSha256": "4597093a85399f4ec157fc046ded674d5f2033eded5a61c96d085ef0b603fa23",
+    "stdoutBytes": 12706,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-0-native.log",
+    "stdoutSha256": "4597093a85399f4ec157fc046ded674d5f2033eded5a61c96d085ef0b603fa23",
+    "stdoutBytes": 12706,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-1-Node.log",
+    "stdoutSha256": "dc5423114e5f3d08c3a5a6ec7abd43aa45ad211472bbfe03fa722fc9865fdbfe",
+    "stdoutBytes": 33728,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-1-ast.log",
+    "stdoutSha256": "20782b3409258b7f1168f183d02a76d260a2d4bccf579b64d26b2d02f915d446",
+    "stdoutBytes": 284002,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-1-emitted.log",
+    "stdoutSha256": "dc5423114e5f3d08c3a5a6ec7abd43aa45ad211472bbfe03fa722fc9865fdbfe",
+    "stdoutBytes": 33728,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-1-go.log",
+    "stdoutSha256": "dc5423114e5f3d08c3a5a6ec7abd43aa45ad211472bbfe03fa722fc9865fdbfe",
+    "stdoutBytes": 33728,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-1-native.log",
+    "stdoutSha256": "dc5423114e5f3d08c3a5a6ec7abd43aa45ad211472bbfe03fa722fc9865fdbfe",
+    "stdoutBytes": 33728,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-10-Node.log",
+    "stdoutSha256": "089b9c2cc22eaf45031d5b2094b0a77d3826851aaa2d403b3dc8104225cac22b",
+    "stdoutBytes": 90137,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-10-ast.log",
+    "stdoutSha256": "78e9f56dd0d39c0966d5bc558f25653212dff2443b882c07ee36e37f9de248e7",
+    "stdoutBytes": 1144618,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-10-emitted.log",
+    "stdoutSha256": "089b9c2cc22eaf45031d5b2094b0a77d3826851aaa2d403b3dc8104225cac22b",
+    "stdoutBytes": 90137,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-10-go.log",
+    "stdoutSha256": "089b9c2cc22eaf45031d5b2094b0a77d3826851aaa2d403b3dc8104225cac22b",
+    "stdoutBytes": 90137,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-10-native.log",
+    "stdoutSha256": "089b9c2cc22eaf45031d5b2094b0a77d3826851aaa2d403b3dc8104225cac22b",
+    "stdoutBytes": 90137,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-11-Node.log",
+    "stdoutSha256": "0eefa4784a491ba432bedfbf832cd5674728a6b3116a734309338bc0f5c643f9",
+    "stdoutBytes": 6838,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-11-ast.log",
+    "stdoutSha256": "6306f1ce8452af3eba6aa4b91c7b5267e6aa2b464ba9bbabfda2d5b3f8d53510",
+    "stdoutBytes": 89150,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-11-emitted.log",
+    "stdoutSha256": "0eefa4784a491ba432bedfbf832cd5674728a6b3116a734309338bc0f5c643f9",
+    "stdoutBytes": 6838,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-11-go.log",
+    "stdoutSha256": "0eefa4784a491ba432bedfbf832cd5674728a6b3116a734309338bc0f5c643f9",
+    "stdoutBytes": 6838,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-11-native.log",
+    "stdoutSha256": "0eefa4784a491ba432bedfbf832cd5674728a6b3116a734309338bc0f5c643f9",
+    "stdoutBytes": 6838,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-12-Node.log",
+    "stdoutSha256": "252099d99df48ff236ea6af5bd20717a68d344e0511fc9af65e47916b58d0fca",
+    "stdoutBytes": 10951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-12-ast.log",
+    "stdoutSha256": "c6f90169fc110653a0ff6b51ab7955fc9b240e33e139e3b78ed49a965f77b1af",
+    "stdoutBytes": 131879,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-12-emitted.log",
+    "stdoutSha256": "252099d99df48ff236ea6af5bd20717a68d344e0511fc9af65e47916b58d0fca",
+    "stdoutBytes": 10951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-12-go.log",
+    "stdoutSha256": "252099d99df48ff236ea6af5bd20717a68d344e0511fc9af65e47916b58d0fca",
+    "stdoutBytes": 10951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-12-native.log",
+    "stdoutSha256": "252099d99df48ff236ea6af5bd20717a68d344e0511fc9af65e47916b58d0fca",
+    "stdoutBytes": 10951,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-13-Node.log",
+    "stdoutSha256": "a1b2be04dc3b751c127186ed8d7aafe271240f7d97aa9428fc84d213ebb891d4",
+    "stdoutBytes": 20714,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-13-ast.log",
+    "stdoutSha256": "e4ae4378e8102ca3943aa8a189d8612cdae32b0952f12be3b10b8e38eb5139cd",
+    "stdoutBytes": 321756,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-13-emitted.log",
+    "stdoutSha256": "a1b2be04dc3b751c127186ed8d7aafe271240f7d97aa9428fc84d213ebb891d4",
+    "stdoutBytes": 20714,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-13-go.log",
+    "stdoutSha256": "a1b2be04dc3b751c127186ed8d7aafe271240f7d97aa9428fc84d213ebb891d4",
+    "stdoutBytes": 20714,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-13-native.log",
+    "stdoutSha256": "a1b2be04dc3b751c127186ed8d7aafe271240f7d97aa9428fc84d213ebb891d4",
+    "stdoutBytes": 20714,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-14-Node.log",
+    "stdoutSha256": "18d2ad2df2d0a5adf9a484767fc4debef51c32b2d360ddf1fd6e1042de4964b2",
+    "stdoutBytes": 14986,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-14-ast.log",
+    "stdoutSha256": "2680b6c34739df2d9870bdd6d2a8918327b9d5a85921934e09ea09501258ab36",
+    "stdoutBytes": 209837,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-14-emitted.log",
+    "stdoutSha256": "18d2ad2df2d0a5adf9a484767fc4debef51c32b2d360ddf1fd6e1042de4964b2",
+    "stdoutBytes": 14986,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-14-go.log",
+    "stdoutSha256": "18d2ad2df2d0a5adf9a484767fc4debef51c32b2d360ddf1fd6e1042de4964b2",
+    "stdoutBytes": 14986,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-14-native.log",
+    "stdoutSha256": "18d2ad2df2d0a5adf9a484767fc4debef51c32b2d360ddf1fd6e1042de4964b2",
+    "stdoutBytes": 14986,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-15-Node.log",
+    "stdoutSha256": "f9facc9f061a13f996f198e535a1670e44838b202fc3fe45863e9a40756fdc3d",
+    "stdoutBytes": 4965,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-15-ast.log",
+    "stdoutSha256": "4526cc53e6c12623bc3b17d726e9a40436edfabe8fbfbbffe60b3de7b12c58ae",
+    "stdoutBytes": 47472,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-15-emitted.log",
+    "stdoutSha256": "f9facc9f061a13f996f198e535a1670e44838b202fc3fe45863e9a40756fdc3d",
+    "stdoutBytes": 4965,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-15-go.log",
+    "stdoutSha256": "f9facc9f061a13f996f198e535a1670e44838b202fc3fe45863e9a40756fdc3d",
+    "stdoutBytes": 4965,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-15-native.log",
+    "stdoutSha256": "f9facc9f061a13f996f198e535a1670e44838b202fc3fe45863e9a40756fdc3d",
+    "stdoutBytes": 4965,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-16-Node.log",
+    "stdoutSha256": "0a79839d8dc69c1d67f4be9489af5b1597b01994946054e9147349d42ba9c9d9",
+    "stdoutBytes": 10536,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-16-ast.log",
+    "stdoutSha256": "efdbaf141c8b048448fc51a29d3f9c0c8ed375b74ed8aae03307070feb1e9f00",
+    "stdoutBytes": 138555,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-16-emitted.log",
+    "stdoutSha256": "0a79839d8dc69c1d67f4be9489af5b1597b01994946054e9147349d42ba9c9d9",
+    "stdoutBytes": 10536,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-16-go.log",
+    "stdoutSha256": "0a79839d8dc69c1d67f4be9489af5b1597b01994946054e9147349d42ba9c9d9",
+    "stdoutBytes": 10536,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-16-native.log",
+    "stdoutSha256": "0a79839d8dc69c1d67f4be9489af5b1597b01994946054e9147349d42ba9c9d9",
+    "stdoutBytes": 10536,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-17-Node.log",
+    "stdoutSha256": "c9b2e0cb0950b8cb96e755b640e1e32cd0a08eaf04248d16619b6dc8b5b7e038",
+    "stdoutBytes": 17571,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-17-ast.log",
+    "stdoutSha256": "71a2e18dcf18bc76e02a624e84b7dbf497f9df183fb4c3f0f8f3ba667fa198ca",
+    "stdoutBytes": 255007,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-17-emitted.log",
+    "stdoutSha256": "c9b2e0cb0950b8cb96e755b640e1e32cd0a08eaf04248d16619b6dc8b5b7e038",
+    "stdoutBytes": 17571,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-17-go.log",
+    "stdoutSha256": "c9b2e0cb0950b8cb96e755b640e1e32cd0a08eaf04248d16619b6dc8b5b7e038",
+    "stdoutBytes": 17571,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-17-native.log",
+    "stdoutSha256": "c9b2e0cb0950b8cb96e755b640e1e32cd0a08eaf04248d16619b6dc8b5b7e038",
+    "stdoutBytes": 17571,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-18-Node.log",
+    "stdoutSha256": "c49c913b3f36b4cd432e89a45dfc66eadefb80192bb004c84daf459861eb751c",
+    "stdoutBytes": 6365,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-18-ast.log",
+    "stdoutSha256": "a1bb936993904e7c03d98b133f2d7dfb1788815a1532f0d6c05e75ff45842db8",
+    "stdoutBytes": 66636,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-18-emitted.log",
+    "stdoutSha256": "c49c913b3f36b4cd432e89a45dfc66eadefb80192bb004c84daf459861eb751c",
+    "stdoutBytes": 6365,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-18-go.log",
+    "stdoutSha256": "c49c913b3f36b4cd432e89a45dfc66eadefb80192bb004c84daf459861eb751c",
+    "stdoutBytes": 6365,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-18-native.log",
+    "stdoutSha256": "c49c913b3f36b4cd432e89a45dfc66eadefb80192bb004c84daf459861eb751c",
+    "stdoutBytes": 6365,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-19-Node.log",
+    "stdoutSha256": "70fb531c169b87e90441524a0f0a498948f6971ecea7a5cff04a4a09da8fe8d8",
+    "stdoutBytes": 14923,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-19-ast.log",
+    "stdoutSha256": "8ead265edaa7f9384733763f156950a7856e6d04728d39eddc04f473c8a20a59",
+    "stdoutBytes": 173314,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-19-emitted.log",
+    "stdoutSha256": "70fb531c169b87e90441524a0f0a498948f6971ecea7a5cff04a4a09da8fe8d8",
+    "stdoutBytes": 14923,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-19-go.log",
+    "stdoutSha256": "70fb531c169b87e90441524a0f0a498948f6971ecea7a5cff04a4a09da8fe8d8",
+    "stdoutBytes": 14923,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-19-native.log",
+    "stdoutSha256": "70fb531c169b87e90441524a0f0a498948f6971ecea7a5cff04a4a09da8fe8d8",
+    "stdoutBytes": 14923,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-2-Node.log",
+    "stdoutSha256": "2b4b3ca0583f601f13797e6c56ef401edd835afa134eb1f65e9dbd4084451168",
+    "stdoutBytes": 20979,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-2-ast.log",
+    "stdoutSha256": "892ea5e2db5ef59a23d500639df9b225d4fbaa7ba3faa1ef13303f50a4bc4813",
+    "stdoutBytes": 167189,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-2-emitted.log",
+    "stdoutSha256": "2b4b3ca0583f601f13797e6c56ef401edd835afa134eb1f65e9dbd4084451168",
+    "stdoutBytes": 20979,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-2-go.log",
+    "stdoutSha256": "2b4b3ca0583f601f13797e6c56ef401edd835afa134eb1f65e9dbd4084451168",
+    "stdoutBytes": 20979,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-2-native.log",
+    "stdoutSha256": "2b4b3ca0583f601f13797e6c56ef401edd835afa134eb1f65e9dbd4084451168",
+    "stdoutBytes": 20979,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-20-Node.log",
+    "stdoutSha256": "9d5518fb31ab0bb00ba93f170c19c6d7f4e99a80c5275d5dabee2dd1619305fc",
+    "stdoutBytes": 9664,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-20-ast.log",
+    "stdoutSha256": "c764336abdf6b857295f055319ee435ee155d069a2fa68c8e58eff2df6d564a0",
+    "stdoutBytes": 111397,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-20-emitted.log",
+    "stdoutSha256": "9d5518fb31ab0bb00ba93f170c19c6d7f4e99a80c5275d5dabee2dd1619305fc",
+    "stdoutBytes": 9664,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-20-go.log",
+    "stdoutSha256": "9d5518fb31ab0bb00ba93f170c19c6d7f4e99a80c5275d5dabee2dd1619305fc",
+    "stdoutBytes": 9664,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-20-native.log",
+    "stdoutSha256": "9d5518fb31ab0bb00ba93f170c19c6d7f4e99a80c5275d5dabee2dd1619305fc",
+    "stdoutBytes": 9664,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-21-Node.log",
+    "stdoutSha256": "0cc859ae54d4121f8489b1c0871392e995be47c2dfbe8d2afb0c943e32b6ba75",
+    "stdoutBytes": 12031,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-21-ast.log",
+    "stdoutSha256": "4d1f455e942ac8d27000b7c1e74010caf51793ca4c31a5b916e04addc33ce2ca",
+    "stdoutBytes": 177198,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-21-emitted.log",
+    "stdoutSha256": "0cc859ae54d4121f8489b1c0871392e995be47c2dfbe8d2afb0c943e32b6ba75",
+    "stdoutBytes": 12031,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-21-go.log",
+    "stdoutSha256": "0cc859ae54d4121f8489b1c0871392e995be47c2dfbe8d2afb0c943e32b6ba75",
+    "stdoutBytes": 12031,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-21-native.log",
+    "stdoutSha256": "0cc859ae54d4121f8489b1c0871392e995be47c2dfbe8d2afb0c943e32b6ba75",
+    "stdoutBytes": 12031,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-22-Node.log",
+    "stdoutSha256": "8e2d8f4e9d518e08bf15d195ddf096b118bd26918ff071e0d0c5da0eaa45dc7d",
+    "stdoutBytes": 12580,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-22-ast.log",
+    "stdoutSha256": "f69c3d92ca6c98f5dbc20ab39416c2a408e936b80a493c0acd3ec88ce3267323",
+    "stdoutBytes": 189230,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-22-emitted.log",
+    "stdoutSha256": "8e2d8f4e9d518e08bf15d195ddf096b118bd26918ff071e0d0c5da0eaa45dc7d",
+    "stdoutBytes": 12580,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-22-go.log",
+    "stdoutSha256": "8e2d8f4e9d518e08bf15d195ddf096b118bd26918ff071e0d0c5da0eaa45dc7d",
+    "stdoutBytes": 12580,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-22-native.log",
+    "stdoutSha256": "8e2d8f4e9d518e08bf15d195ddf096b118bd26918ff071e0d0c5da0eaa45dc7d",
+    "stdoutBytes": 12580,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-23-Node.log",
+    "stdoutSha256": "53689555c061a834460ed5c58502307c0d654e7195d07b05e5dd6e5bd668acfd",
+    "stdoutBytes": 3659,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-23-ast.log",
+    "stdoutSha256": "f9b8a84e2d40b3b7fdab23d22e4e33587af9cf0b293dcb2a10f8e2bf98bfb225",
+    "stdoutBytes": 30933,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-23-emitted.log",
+    "stdoutSha256": "53689555c061a834460ed5c58502307c0d654e7195d07b05e5dd6e5bd668acfd",
+    "stdoutBytes": 3659,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-23-go.log",
+    "stdoutSha256": "53689555c061a834460ed5c58502307c0d654e7195d07b05e5dd6e5bd668acfd",
+    "stdoutBytes": 3659,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-23-native.log",
+    "stdoutSha256": "53689555c061a834460ed5c58502307c0d654e7195d07b05e5dd6e5bd668acfd",
+    "stdoutBytes": 3659,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-24-Node.log",
+    "stdoutSha256": "67c4046220c3b45aaf9774b778f5cc3650f8c1a4b48f2fc7297127d8c7c07baf",
+    "stdoutBytes": 4381,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-24-ast.log",
+    "stdoutSha256": "3ab62e0fd45c5aa5f489fcf1e5e4fc2e677d560fcf8a4c4b14e96c9af463f794",
+    "stdoutBytes": 41818,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-24-emitted.log",
+    "stdoutSha256": "67c4046220c3b45aaf9774b778f5cc3650f8c1a4b48f2fc7297127d8c7c07baf",
+    "stdoutBytes": 4381,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-24-go.log",
+    "stdoutSha256": "67c4046220c3b45aaf9774b778f5cc3650f8c1a4b48f2fc7297127d8c7c07baf",
+    "stdoutBytes": 4381,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-24-native.log",
+    "stdoutSha256": "67c4046220c3b45aaf9774b778f5cc3650f8c1a4b48f2fc7297127d8c7c07baf",
+    "stdoutBytes": 4381,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-25-Node.log",
+    "stdoutSha256": "cdf4fed26da5b91ac68a8365e746c6bec031bbcf725da5a5ca124180ab2b805c",
+    "stdoutBytes": 12284,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-25-ast.log",
+    "stdoutSha256": "64f259ab9537ff5982fb753c295e033db68053584e4c618bec23d27cb4f3c07f",
+    "stdoutBytes": 157678,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-25-emitted.log",
+    "stdoutSha256": "cdf4fed26da5b91ac68a8365e746c6bec031bbcf725da5a5ca124180ab2b805c",
+    "stdoutBytes": 12284,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-25-go.log",
+    "stdoutSha256": "cdf4fed26da5b91ac68a8365e746c6bec031bbcf725da5a5ca124180ab2b805c",
+    "stdoutBytes": 12284,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-25-native.log",
+    "stdoutSha256": "cdf4fed26da5b91ac68a8365e746c6bec031bbcf725da5a5ca124180ab2b805c",
+    "stdoutBytes": 12284,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-26-Node.log",
+    "stdoutSha256": "733b3c33105edf98a4b6e2d047879c9607ee0b57f3a40e4f5e3840a9ecfc3b06",
+    "stdoutBytes": 1388,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-26-ast.log",
+    "stdoutSha256": "500b7607e554496448a77de16e3360081b10a1b8c684fa2e3022664d257679d2",
+    "stdoutBytes": 12830,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-26-emitted.log",
+    "stdoutSha256": "733b3c33105edf98a4b6e2d047879c9607ee0b57f3a40e4f5e3840a9ecfc3b06",
+    "stdoutBytes": 1388,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-26-go.log",
+    "stdoutSha256": "733b3c33105edf98a4b6e2d047879c9607ee0b57f3a40e4f5e3840a9ecfc3b06",
+    "stdoutBytes": 1388,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-26-native.log",
+    "stdoutSha256": "733b3c33105edf98a4b6e2d047879c9607ee0b57f3a40e4f5e3840a9ecfc3b06",
+    "stdoutBytes": 1388,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-27-Node.log",
+    "stdoutSha256": "dcd44fa24c02b2dfeaa7dd49138b60edba3802bc84e612f85196c6108e720cbd",
+    "stdoutBytes": 13430,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-27-ast.log",
+    "stdoutSha256": "79fe4660c30242e2d8304cdcec84a1c52aff36de43d16687d67057805ee0ac2f",
+    "stdoutBytes": 93941,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-27-emitted.log",
+    "stdoutSha256": "dcd44fa24c02b2dfeaa7dd49138b60edba3802bc84e612f85196c6108e720cbd",
+    "stdoutBytes": 13430,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-27-go.log",
+    "stdoutSha256": "dcd44fa24c02b2dfeaa7dd49138b60edba3802bc84e612f85196c6108e720cbd",
+    "stdoutBytes": 13430,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-27-native.log",
+    "stdoutSha256": "dcd44fa24c02b2dfeaa7dd49138b60edba3802bc84e612f85196c6108e720cbd",
+    "stdoutBytes": 13430,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-28-Node.log",
+    "stdoutSha256": "eb044b7374100b478e1db267467251ed695f305aad21d52bcf03ddf475007ef7",
+    "stdoutBytes": 26286,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-28-ast.log",
+    "stdoutSha256": "8449d5a581cea1cbc99616c6aed8afd4f9cc7d84e495b7ecfd49b84494ad372b",
+    "stdoutBytes": 184400,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-28-emitted.log",
+    "stdoutSha256": "eb044b7374100b478e1db267467251ed695f305aad21d52bcf03ddf475007ef7",
+    "stdoutBytes": 26286,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-28-go.log",
+    "stdoutSha256": "eb044b7374100b478e1db267467251ed695f305aad21d52bcf03ddf475007ef7",
+    "stdoutBytes": 26286,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-28-native.log",
+    "stdoutSha256": "eb044b7374100b478e1db267467251ed695f305aad21d52bcf03ddf475007ef7",
+    "stdoutBytes": 26286,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-29-Node.log",
+    "stdoutSha256": "a9c3ea820c3006040cfb675b8082d2cbe0f0b9ba52b52d7bc31da40d13507330",
+    "stdoutBytes": 848,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-29-ast.log",
+    "stdoutSha256": "7236ab6d237095425f5a571cf733d6e03e97dfd2c1c05265df6bf2e8c51e2482",
+    "stdoutBytes": 11508,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-29-emitted.log",
+    "stdoutSha256": "a9c3ea820c3006040cfb675b8082d2cbe0f0b9ba52b52d7bc31da40d13507330",
+    "stdoutBytes": 848,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-29-go.log",
+    "stdoutSha256": "a9c3ea820c3006040cfb675b8082d2cbe0f0b9ba52b52d7bc31da40d13507330",
+    "stdoutBytes": 848,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-29-native.log",
+    "stdoutSha256": "a9c3ea820c3006040cfb675b8082d2cbe0f0b9ba52b52d7bc31da40d13507330",
+    "stdoutBytes": 848,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-3-Node.log",
+    "stdoutSha256": "ba6bb4e2e64176ed5737aa6ddb026f2b5b8e6c3fba4095e959813bcca6e79e05",
+    "stdoutBytes": 1186,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-3-ast.log",
+    "stdoutSha256": "038763ac831db159a315b059f83a74b34d9eb8e898155d74b2279b7cc1739b9f",
+    "stdoutBytes": 13513,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-3-emitted.log",
+    "stdoutSha256": "ba6bb4e2e64176ed5737aa6ddb026f2b5b8e6c3fba4095e959813bcca6e79e05",
+    "stdoutBytes": 1186,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-3-go.log",
+    "stdoutSha256": "ba6bb4e2e64176ed5737aa6ddb026f2b5b8e6c3fba4095e959813bcca6e79e05",
+    "stdoutBytes": 1186,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-3-native.log",
+    "stdoutSha256": "ba6bb4e2e64176ed5737aa6ddb026f2b5b8e6c3fba4095e959813bcca6e79e05",
+    "stdoutBytes": 1186,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-30-Node.log",
+    "stdoutSha256": "01464aeb8f5b0ad209fd36de9d1d52a110298566b040cd9de31016ec350e425c",
+    "stdoutBytes": 29193,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-30-ast.log",
+    "stdoutSha256": "4a34b1eb8442b15e93886e8c1850752a8c8225a2617f793862ed2221194d5fb9",
+    "stdoutBytes": 354128,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-30-emitted.log",
+    "stdoutSha256": "01464aeb8f5b0ad209fd36de9d1d52a110298566b040cd9de31016ec350e425c",
+    "stdoutBytes": 29193,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-30-go.log",
+    "stdoutSha256": "01464aeb8f5b0ad209fd36de9d1d52a110298566b040cd9de31016ec350e425c",
+    "stdoutBytes": 29193,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-30-native.log",
+    "stdoutSha256": "01464aeb8f5b0ad209fd36de9d1d52a110298566b040cd9de31016ec350e425c",
+    "stdoutBytes": 29193,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-31-Node.log",
+    "stdoutSha256": "9f514cf11141b6d517159ba177dfd40fbe4b153273793f082b7ba4903f82cdac",
+    "stdoutBytes": 21435,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-31-ast.log",
+    "stdoutSha256": "e8c0f7089bf9e54be4035401a51122293215d7e29decb088df2bc2d7112b530b",
+    "stdoutBytes": 187487,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-31-emitted.log",
+    "stdoutSha256": "9f514cf11141b6d517159ba177dfd40fbe4b153273793f082b7ba4903f82cdac",
+    "stdoutBytes": 21435,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-31-go.log",
+    "stdoutSha256": "9f514cf11141b6d517159ba177dfd40fbe4b153273793f082b7ba4903f82cdac",
+    "stdoutBytes": 21435,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-31-native.log",
+    "stdoutSha256": "9f514cf11141b6d517159ba177dfd40fbe4b153273793f082b7ba4903f82cdac",
+    "stdoutBytes": 21435,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-32-Node.log",
+    "stdoutSha256": "a97597d5bd1731bfa6549f0cc49ea12b4aa68da2abbed5da40f940bae646bd5c",
+    "stdoutBytes": 34030,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-32-ast.log",
+    "stdoutSha256": "6b6446441924703a54970af862e3d6598f9ca81cb2ee7ef1550208cfc819147c",
+    "stdoutBytes": 255895,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-32-emitted.log",
+    "stdoutSha256": "a97597d5bd1731bfa6549f0cc49ea12b4aa68da2abbed5da40f940bae646bd5c",
+    "stdoutBytes": 34030,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-32-go.log",
+    "stdoutSha256": "a97597d5bd1731bfa6549f0cc49ea12b4aa68da2abbed5da40f940bae646bd5c",
+    "stdoutBytes": 34030,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-32-native.log",
+    "stdoutSha256": "a97597d5bd1731bfa6549f0cc49ea12b4aa68da2abbed5da40f940bae646bd5c",
+    "stdoutBytes": 34030,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-33-Node.log",
+    "stdoutSha256": "8db1edbc3a6726dde187729f9edd7208ef4623f784bab3e0758ac2555426ea9d",
+    "stdoutBytes": 1482,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-33-ast.log",
+    "stdoutSha256": "7d464bcab946416b953636cc7c680ebbc714890ea6d2ace8aadf9086036c895e",
+    "stdoutBytes": 13989,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-33-emitted.log",
+    "stdoutSha256": "8db1edbc3a6726dde187729f9edd7208ef4623f784bab3e0758ac2555426ea9d",
+    "stdoutBytes": 1482,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-33-go.log",
+    "stdoutSha256": "8db1edbc3a6726dde187729f9edd7208ef4623f784bab3e0758ac2555426ea9d",
+    "stdoutBytes": 1482,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-33-native.log",
+    "stdoutSha256": "8db1edbc3a6726dde187729f9edd7208ef4623f784bab3e0758ac2555426ea9d",
+    "stdoutBytes": 1482,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-34-Node.log",
+    "stdoutSha256": "fe7a8f85d4e77c00d381db83a3e0eb0a6968486694548463e4e77a7da7da5121",
+    "stdoutBytes": 70391,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-34-ast.log",
+    "stdoutSha256": "3c283c032cf3aeef11ea26cafa588d45a1c40bb9c153b0474280065a71c7b28e",
+    "stdoutBytes": 590492,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-34-emitted.log",
+    "stdoutSha256": "fe7a8f85d4e77c00d381db83a3e0eb0a6968486694548463e4e77a7da7da5121",
+    "stdoutBytes": 70391,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-34-go.log",
+    "stdoutSha256": "fe7a8f85d4e77c00d381db83a3e0eb0a6968486694548463e4e77a7da7da5121",
+    "stdoutBytes": 70391,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-34-native.log",
+    "stdoutSha256": "fe7a8f85d4e77c00d381db83a3e0eb0a6968486694548463e4e77a7da7da5121",
+    "stdoutBytes": 70391,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-35-Node.log",
+    "stdoutSha256": "e592338db1fba9b41267e5cac27264049d6f2d600d5a5abd47f21285e5efa2ac",
+    "stdoutBytes": 2437,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-35-ast.log",
+    "stdoutSha256": "8e3621f698a260259536e969d88a2cbc9892df62b86f9d3c83cb6cbc48299927",
+    "stdoutBytes": 17276,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-35-emitted.log",
+    "stdoutSha256": "e592338db1fba9b41267e5cac27264049d6f2d600d5a5abd47f21285e5efa2ac",
+    "stdoutBytes": 2437,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-35-go.log",
+    "stdoutSha256": "e592338db1fba9b41267e5cac27264049d6f2d600d5a5abd47f21285e5efa2ac",
+    "stdoutBytes": 2437,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-35-native.log",
+    "stdoutSha256": "e592338db1fba9b41267e5cac27264049d6f2d600d5a5abd47f21285e5efa2ac",
+    "stdoutBytes": 2437,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-36-Node.log",
+    "stdoutSha256": "37e791c058456a7b7edbe1078f42777fdd5f51f84b00d7cd556d5a9e665d0a9f",
+    "stdoutBytes": 660,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-36-ast.log",
+    "stdoutSha256": "3ccfb23244e308c06b7ca54f4079e9ad588399cd59c0ce5ae25a2315d56a295e",
+    "stdoutBytes": 9724,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-36-emitted.log",
+    "stdoutSha256": "37e791c058456a7b7edbe1078f42777fdd5f51f84b00d7cd556d5a9e665d0a9f",
+    "stdoutBytes": 660,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-36-go.log",
+    "stdoutSha256": "37e791c058456a7b7edbe1078f42777fdd5f51f84b00d7cd556d5a9e665d0a9f",
+    "stdoutBytes": 660,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-36-native.log",
+    "stdoutSha256": "37e791c058456a7b7edbe1078f42777fdd5f51f84b00d7cd556d5a9e665d0a9f",
+    "stdoutBytes": 660,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-37-Node.log",
+    "stdoutSha256": "c1a4067e272b309cb50b3062edd94808a0f56b2984ac4f9fd770c61c21b34b67",
+    "stdoutBytes": 18260,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-37-ast.log",
+    "stdoutSha256": "43407bf2e531cdea0f9ad7449650546478553621a2a0e94f47142b05ceea47a9",
+    "stdoutBytes": 208563,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-37-emitted.log",
+    "stdoutSha256": "c1a4067e272b309cb50b3062edd94808a0f56b2984ac4f9fd770c61c21b34b67",
+    "stdoutBytes": 18260,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-37-go.log",
+    "stdoutSha256": "c1a4067e272b309cb50b3062edd94808a0f56b2984ac4f9fd770c61c21b34b67",
+    "stdoutBytes": 18260,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-37-native.log",
+    "stdoutSha256": "c1a4067e272b309cb50b3062edd94808a0f56b2984ac4f9fd770c61c21b34b67",
+    "stdoutBytes": 18260,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-38-Node.log",
+    "stdoutSha256": "cbce4cfc657c656bb463f6526cd5efc12641f0323b553aa3a2785b2b15cdca13",
+    "stdoutBytes": 148208,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-38-ast.log",
+    "stdoutSha256": "43284c0c38c46fa27251df2dfeeb5e4bc786700b7d5adaa9d8ff1fb8608665bb",
+    "stdoutBytes": 1903741,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-38-emitted.log",
+    "stdoutSha256": "cbce4cfc657c656bb463f6526cd5efc12641f0323b553aa3a2785b2b15cdca13",
+    "stdoutBytes": 148208,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-38-go.log",
+    "stdoutSha256": "cbce4cfc657c656bb463f6526cd5efc12641f0323b553aa3a2785b2b15cdca13",
+    "stdoutBytes": 148208,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-38-native.log",
+    "stdoutSha256": "cbce4cfc657c656bb463f6526cd5efc12641f0323b553aa3a2785b2b15cdca13",
+    "stdoutBytes": 148208,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-39-Node.log",
+    "stdoutSha256": "d8ba4481326594f56c6a5f15effb2c9297c239e90de8cbf8650d1b20e1733ad0",
+    "stdoutBytes": 49247,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-39-ast.log",
+    "stdoutSha256": "2e833382686ba2ed5b25d8d50d16cc4c95ef04e605bd8dd32512e3fa1cb941c5",
+    "stdoutBytes": 579596,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-39-emitted.log",
+    "stdoutSha256": "d8ba4481326594f56c6a5f15effb2c9297c239e90de8cbf8650d1b20e1733ad0",
+    "stdoutBytes": 49247,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-39-go.log",
+    "stdoutSha256": "d8ba4481326594f56c6a5f15effb2c9297c239e90de8cbf8650d1b20e1733ad0",
+    "stdoutBytes": 49247,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-39-native.log",
+    "stdoutSha256": "d8ba4481326594f56c6a5f15effb2c9297c239e90de8cbf8650d1b20e1733ad0",
+    "stdoutBytes": 49247,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-4-Node.log",
+    "stdoutSha256": "18c8a39c8e143e2b6c01605a88fcc4c0327ec25fb94702d5b7ec29c68917c315",
+    "stdoutBytes": 1093,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-4-ast.log",
+    "stdoutSha256": "b36c5a0524567b3a8807ed1a309402dfc1c17e73490d8db203aa9ccee0d27065",
+    "stdoutBytes": 13166,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-4-emitted.log",
+    "stdoutSha256": "18c8a39c8e143e2b6c01605a88fcc4c0327ec25fb94702d5b7ec29c68917c315",
+    "stdoutBytes": 1093,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-4-go.log",
+    "stdoutSha256": "18c8a39c8e143e2b6c01605a88fcc4c0327ec25fb94702d5b7ec29c68917c315",
+    "stdoutBytes": 1093,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-4-native.log",
+    "stdoutSha256": "18c8a39c8e143e2b6c01605a88fcc4c0327ec25fb94702d5b7ec29c68917c315",
+    "stdoutBytes": 1093,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-5-Node.log",
+    "stdoutSha256": "e30fa40863f949c6fc01f35f6d128b412b6b7c11fe688a0da918a6a4787189a0",
+    "stdoutBytes": 67540,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-5-ast.log",
+    "stdoutSha256": "d72c43a939529ea18c6d48c5aa4a305333c6f3bca2df8e2ef14e84a70d8ff3e0",
+    "stdoutBytes": 520724,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-5-emitted.log",
+    "stdoutSha256": "e30fa40863f949c6fc01f35f6d128b412b6b7c11fe688a0da918a6a4787189a0",
+    "stdoutBytes": 67540,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-5-go.log",
+    "stdoutSha256": "e30fa40863f949c6fc01f35f6d128b412b6b7c11fe688a0da918a6a4787189a0",
+    "stdoutBytes": 67540,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-5-native.log",
+    "stdoutSha256": "e30fa40863f949c6fc01f35f6d128b412b6b7c11fe688a0da918a6a4787189a0",
+    "stdoutBytes": 67540,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-6-Node.log",
+    "stdoutSha256": "f5de47c105daf02f1a7c321ee308b0cfee0ec8cd91156bff50670f11a8a0e750",
+    "stdoutBytes": 6641,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-6-ast.log",
+    "stdoutSha256": "37f32da612c8b4808f3e816a1314de4e99fd189c27cb015280b8b2844c376ed0",
+    "stdoutBytes": 55450,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-6-emitted.log",
+    "stdoutSha256": "f5de47c105daf02f1a7c321ee308b0cfee0ec8cd91156bff50670f11a8a0e750",
+    "stdoutBytes": 6641,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-6-go.log",
+    "stdoutSha256": "f5de47c105daf02f1a7c321ee308b0cfee0ec8cd91156bff50670f11a8a0e750",
+    "stdoutBytes": 6641,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-6-native.log",
+    "stdoutSha256": "f5de47c105daf02f1a7c321ee308b0cfee0ec8cd91156bff50670f11a8a0e750",
+    "stdoutBytes": 6641,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-7-Node.log",
+    "stdoutSha256": "d348e214e4ea6439b74d8b27871f0c8a12ff552c894d77560906b6a4684fae9f",
+    "stdoutBytes": 107566,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-7-ast.log",
+    "stdoutSha256": "86f50da62ad13d31ec4e0b7dcfb91a29183f1f72f35863ad9f0f8e30ae34d724",
+    "stdoutBytes": 802704,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-7-emitted.log",
+    "stdoutSha256": "d348e214e4ea6439b74d8b27871f0c8a12ff552c894d77560906b6a4684fae9f",
+    "stdoutBytes": 107566,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-7-go.log",
+    "stdoutSha256": "d348e214e4ea6439b74d8b27871f0c8a12ff552c894d77560906b6a4684fae9f",
+    "stdoutBytes": 107566,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-7-native.log",
+    "stdoutSha256": "d348e214e4ea6439b74d8b27871f0c8a12ff552c894d77560906b6a4684fae9f",
+    "stdoutBytes": 107566,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-8-Node.log",
+    "stdoutSha256": "aef01a43ec597b328defa95039316726ee996ae4b9e6277d32bedd7aabffe99b",
+    "stdoutBytes": 33997,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-8-ast.log",
+    "stdoutSha256": "6ab0727e35d260ddf8d41c74761db7c5b0349891c68834521807322d9c170da3",
+    "stdoutBytes": 426145,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-8-emitted.log",
+    "stdoutSha256": "aef01a43ec597b328defa95039316726ee996ae4b9e6277d32bedd7aabffe99b",
+    "stdoutBytes": 33997,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-8-go.log",
+    "stdoutSha256": "aef01a43ec597b328defa95039316726ee996ae4b9e6277d32bedd7aabffe99b",
+    "stdoutBytes": 33997,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-8-native.log",
+    "stdoutSha256": "aef01a43ec597b328defa95039316726ee996ae4b9e6277d32bedd7aabffe99b",
+    "stdoutBytes": 33997,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-9-Node.log",
+    "stdoutSha256": "e76e4a4870f358bb56410964c6d4a769617f8f9dd83eb8d9767d863af7df96b4",
+    "stdoutBytes": 37059,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-9-ast.log",
+    "stdoutSha256": "f2d4c195a3e887cfda062b3f9a3d0b28b704739de7f67f96fefa863a35461426",
+    "stdoutBytes": 464657,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-9-emitted.log",
+    "stdoutSha256": "e76e4a4870f358bb56410964c6d4a769617f8f9dd83eb8d9767d863af7df96b4",
+    "stdoutBytes": 37059,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-9-go.log",
+    "stdoutSha256": "e76e4a4870f358bb56410964c6d4a769617f8f9dd83eb8d9767d863af7df96b4",
+    "stdoutBytes": 37059,
+    "stderrBytes": 0
+  },
+  {
+    "name": "stage1-9-native.log",
+    "stdoutSha256": "e76e4a4870f358bb56410964c6d4a769617f8f9dd83eb8d9767d863af7df96b4",
+    "stdoutBytes": 37059,
+    "stderrBytes": 0
+  }
+]

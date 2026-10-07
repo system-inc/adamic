@@ -1,0 +1,40 @@
+[
+  {
+    "rule": "nexus/consistency-no-screaming-snake-case",
+    "cases": 200,
+    "source": "const STRIPE_WEBHOOK_SECRET = readSecret();\n",
+    "scope": "startup-inclusive, raw-source input and own parsing; sanitized native",
+    "samples": [
+      {
+        "backend": "Go",
+        "findings": 200,
+        "seconds": [
+          0.01332618000014918,
+          0.01638460899994243,
+          0.015372716999991098
+        ],
+        "findingsPerSecond": 13010.061916843704
+      },
+      {
+        "backend": "Node",
+        "findings": 200,
+        "seconds": [
+          0.1439818649996596,
+          0.1264286439982243,
+          0.12224018199958664
+        ],
+        "findingsPerSecond": 1581.919995937068
+      },
+      {
+        "backend": "native",
+        "findings": 200,
+        "seconds": [
+          0.08157645100072841,
+          0.08977243300068949,
+          0.07160506599939254
+        ],
+        "findingsPerSecond": 2451.6879264361987
+      }
+    ]
+  }
+]

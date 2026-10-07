@@ -1,0 +1,1449 @@
+{
+  "upstreamCases": 23,
+  "compilerPin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "corpora": [
+    {
+      "name": "compiler",
+      "files": 77,
+      "bytes": 9400075,
+      "batches": [
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.5952078730006178
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.35067626999989443
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 2.9046161599999323
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.4647287330008112
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.4360003849997156
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 2.263570297000115
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 2.752009677999922
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 3.039457236999624
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 52.42848037600015
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.5208395460003885
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.501971014999981
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 5.954240540999308
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.19680696499926853
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.12661882099928334
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.8402223229995798
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.4533175090000441
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.46540635600013047
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 5.490852535999693
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.3622898650000934
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.3773160430000644
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 5.697945914000229
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.7024403410005107
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.597668875000636
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 6.8510457980000865
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.6035311089999595
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.5765809309996257
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 7.151050436000332
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.2492516419997628
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.19893288099956408
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 2.022657814000013
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.26611595499980467
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.21933674999945652
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 2.282304581999597
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.3890528069996435
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.3608356779996029
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 4.046634229999654
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.23013604799962195
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.1689494519996515
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 1.4252377620005063
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.2406844099996306
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.20185033100005967
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 1.984830666000562
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.29412516100001085
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.24219236299995828
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 2.243034123000143
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.28095035099977395
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.21713970200016774
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 2.2759293380004237
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.27135617600015394
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.20880920700074057
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 2.1098872980001033
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.8630794070004413
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 1.0367132900000797
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 13.969773896999868
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.4196038290001525
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.4427218669998183
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 5.595663133999551
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.1533366980002029
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.09043648300030327
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.5089750349998212
+          }
+        ]
+      ]
+    },
+    {
+      "name": "stage1",
+      "files": 156,
+      "bytes": 802182,
+      "batches": [
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.1659720389998256
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.13032078399919556
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.28271807999954035
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.19824861000051897
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.12396665999949619
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.5626012930006254
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.1666803849993812
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.09732575599991833
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.2696490939997602
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.10411003299941513
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.061374296999929356
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.0313510120004139
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.13541706100022566
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.06062959100017906
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.03644733999954042
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.23346950599989214
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.16875561699998798
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 1.0949559680002494
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.16271487799986062
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.07653286500044487
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.1460924969996995
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.29223351100063155
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.16153815800043958
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 1.127283368999997
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.16147230999922613
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.14686504500059527
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.6148810209997464
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.18742057399958867
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.10740002999955323
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.6687721470007091
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.30122666700026457
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.2398669369995332
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 1.6601234130002922
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.12232941399997799
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.056574289000309363
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.14921836599933158
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.13312434099952952
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.06341319599960116
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.3437887780000892
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.14539697500003967
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.09028022799975588
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.5047221899994838
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.1441769809998732
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.08526151299975027
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.5463932909997311
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.12211491699963517
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.053485995000301045
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.08029035100025794
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.16271821000009368
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.07309696999982407
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.26555822799946327
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.19352568500016787
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.10709037200012972
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.4275126580005235
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.13060168700030772
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.05580530800034467
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.12421950899988587
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.20325889000014286
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.10756806600056734
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.3458076250008162
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.2335818070005189
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.08500078300039604
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.21017709199986712
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.23655725000025996
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.12972988099954819
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.4306394779996481
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.21661263899932237
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.07907780299956357
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.053750378999211534
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.2611071510000329
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.09951306200036925
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.07885843599979125
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.14853703700009646
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.09318244199948822
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.2854998829998294
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.14457434199994168
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.05268076599986671
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.04821735499990609
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.14064207499995973
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.05771621900021273
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.24905424099961238
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.2034370030005448
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.1228252410001005
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.2953427570000713
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.1351387300001079
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.06339976399976877
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.028821412000070268
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.19294048699975974
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.13630712000031053
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.5775428649994865
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.15367235600024287
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.09261968899954809
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.29008026700012124
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.25094925299981696
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.14223930399930396
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.6594660049995582
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.11730788399927405
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.06726361900018674
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.03518507100034185
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.2298463150000316
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.17813165200004732
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 1.45791536500019
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.1486732410003242
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.0623473939995165
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.0420816610003385
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.13560484500067105
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.041437871999733034
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.044108701000368455
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.20497034799973335
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.1130875990002096
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.33505677199991624
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.3378405579996979
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.35649912700046116
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 2.6463860350004325
+          }
+        ],
+        [
+          {
+            "backend": "Node",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.25896591800028546
+          },
+          {
+            "backend": "emitted",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 0.17188710099981108
+          },
+          {
+            "backend": "native",
+            "equal": true,
+            "exit": 0,
+            "stderrBytes": 0,
+            "seconds": 1.4173930970000583
+          }
+        ]
+      ]
+    }
+  ],
+  "independentParser": [
+    {
+      "backend": "Node",
+      "equal": true,
+      "exit": 0,
+      "stderrBytes": 0,
+      "seconds": 0.1536091520001719
+    },
+    {
+      "backend": "emitted",
+      "equal": true,
+      "exit": 0,
+      "stderrBytes": 0,
+      "seconds": 0.054286014000354044
+    },
+    {
+      "backend": "native",
+      "equal": true,
+      "exit": 0,
+      "stderrBytes": 0,
+      "seconds": 0.06510446999982378
+    }
+  ],
+  "mutants": [
+    {
+      "name": "screaming_environment_exemption_lost",
+      "caughtBy": [
+        "Node",
+        "emitted",
+        "native"
+      ],
+      "onlyByteComparison": true
+    }
+  ],
+  "benchmarks": [
+    {
+      "rule": "nexus/consistency-no-screaming-snake-case",
+      "scope": "startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native",
+      "samples": [
+        {
+          "backend": "Go",
+          "findings": 200,
+          "seconds": [
+            0.008559089999835123,
+            0.010377620000326715,
+            0.008779152999522921
+          ],
+          "findingsPerSecond": 22781.24097061168
+        },
+        {
+          "backend": "Node",
+          "findings": 200,
+          "seconds": [
+            0.13866878499993618,
+            0.1313166119998641,
+            0.14401357199949416
+          ],
+          "findingsPerSecond": 1442.2856593146903
+        },
+        {
+          "backend": "native",
+          "findings": 200,
+          "seconds": [
+            0.24240161600027932,
+            0.24076521599999978,
+            0.2436370249997708
+          ],
+          "findingsPerSecond": 825.0770077364895
+        }
+      ]
+    }
+  ]
+}

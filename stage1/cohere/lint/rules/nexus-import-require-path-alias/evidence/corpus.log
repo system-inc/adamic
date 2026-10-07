@@ -1,0 +1,12 @@
+compiler files 77
+compiler processed 4
+compiler processed 44
+stage1 files 161
+stage1 processed 4
+stage1 processed 44
+stage1 processed 84
+stage1 processed 124
+stage1 processed 161
+mutant path_alias_longest_directory_reversed caught by all three comparisons
+benchmark {'rule': 'nexus/import-require-path-alias', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.010790950998853077, 0.011826616000689683, 0.011933395000596647], 'findingsPerSecond': 16911.0081859711}, {'backend': 'Node', 'findings': 200, 'seconds': [0.18525739299911947, 0.15359259599972575, 0.1503969519999373], 'findingsPerSecond': 1302.1461008469257}, {'backend': 'native', 'findings': 200, 'seconds': [0.42779190900000685, 0.43219593499998155, 0.4163090090005426], 'findingsPerSecond': 467.5170235629604}]}
+post validation complete

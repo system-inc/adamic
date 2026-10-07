@@ -1,0 +1,3 @@
+mutant forbidden_exact_match_widened caught by all three comparisons
+benchmark {'rule': 'nexus/import-no-forbidden-source', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.007876327001213212, 0.009944421000909642, 0.00759919000120135], 'findingsPerSecond': 25392.546547292088}, {'backend': 'Node', 'findings': 200, 'seconds': [0.1315690560004441, 0.161032370000612, 0.16395588199884514], 'findingsPerSecond': 1241.9863161626442}, {'backend': 'native', 'findings': 200, 'seconds': [0.2115200839998579, 0.21282069299923023, 0.20605150499977753], 'findingsPerSecond': 945.5366895567911}]}
+post validation complete

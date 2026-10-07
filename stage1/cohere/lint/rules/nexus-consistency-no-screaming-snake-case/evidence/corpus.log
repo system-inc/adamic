@@ -1,0 +1,11 @@
+compiler files 77
+compiler processed 4
+compiler processed 44
+stage1 files 156
+stage1 processed 4
+stage1 processed 44
+stage1 processed 84
+stage1 processed 124
+mutant screaming_environment_exemption_lost caught by all three comparisons
+benchmark {'rule': 'nexus/consistency-no-screaming-snake-case', 'scope': 'startup-inclusive; Go parses source; Adamic loads projected AST; sanitized native', 'samples': [{'backend': 'Go', 'findings': 200, 'seconds': [0.008559089999835123, 0.010377620000326715, 0.008779152999522921], 'findingsPerSecond': 22781.24097061168}, {'backend': 'Node', 'findings': 200, 'seconds': [0.13866878499993618, 0.1313166119998641, 0.14401357199949416], 'findingsPerSecond': 1442.2856593146903}, {'backend': 'native', 'findings': 200, 'seconds': [0.24240161600027932, 0.24076521599999978, 0.2436370249997708], 'findingsPerSecond': 825.0770077364895}]}
+post validation complete

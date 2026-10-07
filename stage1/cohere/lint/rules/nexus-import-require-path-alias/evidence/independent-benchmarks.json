@@ -1,0 +1,40 @@
+[
+  {
+    "rule": "nexus/import-require-path-alias",
+    "cases": 200,
+    "source": "import { Thing } from '../../foundation/Thing';\n",
+    "scope": "startup-inclusive, raw-source input and own parsing; sanitized native",
+    "samples": [
+      {
+        "backend": "Go",
+        "findings": 200,
+        "seconds": [
+          0.010803707999002654,
+          0.010590790001515415,
+          0.01026784200075781
+        ],
+        "findingsPerSecond": 18884.33251640174
+      },
+      {
+        "backend": "Node",
+        "findings": 200,
+        "seconds": [
+          0.15475211499870056,
+          0.1452184979989397,
+          0.14894056699995417
+        ],
+        "findingsPerSecond": 1342.8175011584422
+      },
+      {
+        "backend": "native",
+        "findings": 200,
+        "seconds": [
+          0.2804613070002233,
+          0.27185451699915575,
+          0.2548226719991362
+        ],
+        "findingsPerSecond": 735.6876104457779
+      }
+    ]
+  }
+]
