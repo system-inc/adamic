@@ -1,0 +1,11 @@
+case 0
+/workspace/adamic/stage1/cohere/lint/claims/wave1-09-third-evidence/type-import.ts.txt:1:1
+  @typescript-eslint/no-import-type-side-effects  Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+
+panic: unexpected fix shape
+
+goroutine 1 [running]:
+main.run({0x2ab1e914c870?, 0x2ab1e9271040?}, 0x0, 0x2ab1e9271040)
+	/workspace/adamic/cohere/wave109_oracle.go:62 +0x90b
+main.main()
+	/workspace/adamic/cohere/wave109_oracle.go:143 +0x2f7
