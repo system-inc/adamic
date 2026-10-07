@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+    oracle_test.go:679: stdout differs
+        node:   exit 0, stdout "variable-1 took dog-1\n1 false\n0\nparameter-2 took cat-2 | parameter-2 took owl-2 | 2 true\necho-3 echoed CAT-3 | echo-3 echoed OWL-3 | 20 false\nplain-4 literal cat-4 | plain-4 literal owl-4 | 2 true\nfirst-5 took fox-0 1\nsecond-6 literal fox-0 1\nthird-7 echoed FOX-0 10\nfourth-8 took fox-0 1\nfirst-5 took fox-1 2\nsecond-6 literal fox-1 2\nthird-7 echoed FOX-1 20\nfourth-8 took fox-1 2\n0\n0\n10\n0\nheld-9 took hen-10\nreplacement-10 echoed EMU-11\nglobal-13 took ram-14\nswapped-14 echoed EWE-15\nown-16 literal cow-16\nrewired-16 pig-17\neven-0 took yak-0\nodd-1 echoed YAK-1\neven-2 took yak-2\n6\nnegative--1\na-0 b-1 a-0 c-2\nmaybe-12 took elk-12\nno class no literal 0\n-1 1 0\nfirst-5 took gnu-20 displaced-20 echoed GNU-21 2\n", stderr ""
+        native: exit 0, stdout "variable-1 took dog-1\n1 false\n0\nparameter-2 took cat-2 | parameter-2 took owl-2 | 2 false\necho-3 echoed CAT-3 | echo-3 echoed OWL-3 | 20 false\nplain-4 literal cat-4 | plain-4 literal owl-4 | 2 true\nfirst-5 took fox-0 1\nsecond-6 literal fox-0 1\nthird-7 echoed FOX-0 10\nfourth-8 took fox-0 1\nfirst-5 took fox-1 2\nsecond-6 literal fox-1 2\nthird-7 echoed FOX-1 20\nfourth-8 took fox-1 2\n0\n0\n10\n0\nheld-9 took hen-10\nreplacement-10 echoed EMU-11\nglobal-13 took ram-14\nswapped-14 echoed EWE-15\nown-16 literal cow-16\nrewired-16 pig-17\neven-0 took yak-0\nodd-1 echoed YAK-1\neven-2 took yak-2\n6\nnegative--1\na-0 b-1 a-0 c-2\nmaybe-12 took elk-12\nno class no literal 0\n-1 1 0\nfirst-5 took gnu-20 displaced-20 echoed GNU-21 2\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a (10.81s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	10.830s
+FAIL

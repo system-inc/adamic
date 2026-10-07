@@ -1,0 +1,34 @@
+
+/workspace/scratch/parse-speed/callee-fast-parse:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .text:
+
+000000000007e380 <adamic_object_callee>:
+   7e380:	mov    0x10(%rdi),%rax
+   7e384:	cmp    %rax,(%rdx)
+   7e387:	je     7e394 <adamic_object_callee+0x14>
+   7e389:	push   %rax
+   7e38a:	call   7e3c0 <callee_cache_miss>
+   7e38f:	add    $0x8,%rsp
+   7e393:	ret
+   7e394:	mov    0x8(%rdx),%rsi
+   7e398:	mov    %rsi,%rdx
+   7e39b:	sub    (%rax),%rdx
+   7e39e:	jae    7e3a6 <adamic_object_callee+0x26>
+   7e3a0:	mov    0x28(%rdi,%rsi,8),%rax
+   7e3a5:	ret
+   7e3a6:	mov    0x18(%rax),%rax
+   7e3aa:	mov    0x10(%rax),%rax
+   7e3ae:	mov    (%rax,%rdx,8),%rax
+   7e3b2:	mov    %rax,(%rcx)
+   7e3b5:	xor    %eax,%eax
+   7e3b7:	ret
+
+Disassembly of section .fini:

@@ -54,7 +54,8 @@ adamic_value *adamic_object_find(const adamic_object *object, const char *name, 
 	adamic_panic(message, sizeof message - 1);
 }
 
-adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method) {
+// A name search is a cache miss. Keep it outside repeated method/function-field reads.
+static __attribute__((noinline)) adamic_closure *callee_cache_miss(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method) {
 	const adamic_shape *shape = object->shape;
 	// The cache's index counts the fields, then the methods after them.
 	if (cache->shape != shape) {
@@ -76,6 +77,18 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 			adamic_panic(message, sizeof message - 1);
 		}
 		cache->shape = shape;
+	}
+	if (cache->index < shape->count) {
+		return object->slots[cache->index].reference;
+	}
+	*method = shape->methods->code[cache->index - shape->count];
+	return NULL;
+}
+
+adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method) {
+	const adamic_shape *shape = object->shape;
+	if (cache->shape != shape) {
+		return callee_cache_miss(object, name, cache, method);
 	}
 	if (cache->index < shape->count) {
 		return object->slots[cache->index].reference;

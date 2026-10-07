@@ -1,0 +1,14 @@
+==65981== Callgrind, a call-graph generating cache profiler
+==65981== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==65981== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==65981== Command: /workspace/scratch/parse-speed/callee-fast-parse --manifest /workspace/scratch/parse-speed/compiler.txt --count
+==65981== 
+==65981== For interactive control, run 'callgrind_control -h'.
+==65981== brk segment overflow in thread #1: can't grow to 0x4838000
+==65981== (see section Limitations in user manual)
+==65981== NOTE: further instances of this message will not be shown
+==65981== 
+==65981== Events    : Ir
+==65981== Collected : 6460129543
+==65981== 
+==65981== I   refs:      6,460,129,543
