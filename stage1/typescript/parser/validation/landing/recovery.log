@@ -1,0 +1,95 @@
+=== RUN   TestMethodRecoveryAgrees
+--- PASS: TestMethodRecoveryAgrees (82.81s)
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/octal-suggestion
+    recovery_test.go:174: Node:  line 1: port "diagnostic 1487 11 4 1\tOctal escape sequences are not allowed. Use the syntax 'wrong\\u005cx53'.", Go "diagnostic 1487 11 4 1\tOctal escape sequences are not allowed. Use the syntax '\\u005cx53'."
+        Go context:
+        diagnostic 1487 11 4 1	Octal escape sequences are not allowed. Use the syntax '\u005cx53'.
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 VariableStatement 0 17 0 0 -1 0 0				
+        2 VariableDeclarationList 0 16 0 0 -1 0 0				2
+    recovery_test.go:174: native:  line 1: port "diagnostic 1487 11 4 1\tOctal escape sequences are not allowed. Use the syntax 'wrong\\u005cx53'.", Go "diagnostic 1487 11 4 1\tOctal escape sequences are not allowed. Use the syntax '\\u005cx53'."
+        Go context:
+        diagnostic 1487 11 4 1	Octal escape sequences are not allowed. Use the syntax '\u005cx53'.
+        file
+        0 SourceFile 0 17 0 0 -1 0 0				
+        1 VariableStatement 0 17 0 0 -1 0 0				
+        2 VariableDeclarationList 0 16 0 0 -1 0 0				2
+=== RUN   TestRecoveryMutants/diagnostic-code
+    recovery_test.go:174: Node:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:174: native:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+=== RUN   TestRecoveryMutants/stranded-export
+    recovery_test.go:174: Node:  line 1: port "diagnostic 1129 0 6 1\tDeclaration or statement expected.", Go "diagnostic 1128 0 6 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1128 0 6 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 6 0 0 -1 0 0				
+        1 EndOfFile 6 6 0 0 -1 0 0				
+    recovery_test.go:174: native:  line 1: port "diagnostic 1129 0 6 1\tDeclaration or statement expected.", Go "diagnostic 1128 0 6 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1128 0 6 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 6 0 0 -1 0 0				
+        1 EndOfFile 6 6 0 0 -1 0 0				
+=== RUN   TestRecoveryMutants/generic-child
+    recovery_test.go:174: Node:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+    recovery_test.go:174: native:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+=== RUN   TestRecoveryMutants/eof-loop
+    recovery_test.go:166: Node: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+    recovery_test.go:166: native: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+=== RUN   TestRecoveryMutants/speculative-roots
+    recovery_test.go:174: Node:  line 3: port "expression", Go ""
+        Go context:
+        expression
+        0 NumericLiteral 15 17 0 0 -1 0 0		1	
+    recovery_test.go:174: native:  line 3: port "expression", Go ""
+        Go context:
+        expression
+        0 NumericLiteral 15 17 0 0 -1 0 0		1	
+--- PASS: TestRecoveryMutants (121.13s)
+    --- PASS: TestRecoveryMutants/octal-suggestion (19.04s)
+    --- PASS: TestRecoveryMutants/diagnostic-code (14.20s)
+    --- PASS: TestRecoveryMutants/stranded-export (14.34s)
+    --- PASS: TestRecoveryMutants/generic-child (20.48s)
+    --- PASS: TestRecoveryMutants/eof-loop (29.63s)
+    --- PASS: TestRecoveryMutants/speculative-roots (22.08s)
+=== RUN   TestRecoveredLintCasesAgree
+    recovery_test.go:258: all eight original source/style combinations match real cohere findings and proposed repairs
+--- PASS: TestRecoveredLintCasesAgree (58.56s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	262.545s

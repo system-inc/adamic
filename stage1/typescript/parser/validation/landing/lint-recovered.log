@@ -1,0 +1,6 @@
+=== RUN   TestRulesAgree
+    lint_test.go:391: cohere cases: 1987 unique source/rule/options combinations
+    lint_test.go:430: Go, Node, emitted JavaScript, native identical: 13042211 bytes
+--- PASS: TestRulesAgree (115.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	115.116s

@@ -1,0 +1,45 @@
+=== RUN   TestJsxLintTrees
+    lint_test.go:391: cohere cases: 1987 unique source/rule/options combinations
+    jsx_integration_test.go:150: 54 captured cohere JSX sources: 45527 identical whole-tree bytes
+--- PASS: TestJsxLintTrees (59.34s)
+=== RUN   TestRulesAgree
+    lint_test.go:391: cohere cases: 1987 unique source/rule/options combinations
+    lint_test.go:424: EXPLICIT LIMIT: parser recovery is not ported for /tmp/adamic-gate/TestRulesAgree1505673134/019/case-079/Thing.ts	@typescript-eslint/method-signature-style			false	{"Style":"method"}	unsupported-recovery
+    lint_test.go:425: Go recovered output: case 0
+        recovery findings only
+    lint_test.go:425: expected parser refusal from /tmp/adamic-gate/TestRulesAgree1505673134/003/scanner, got <nil>: 
+--- FAIL: TestRulesAgree (77.59s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:466: compiler and stage1: 351 files
+    lint_test.go:467: Go, Node, emitted JavaScript, native identical: 20698926 bytes
+--- PASS: TestCompilerAndStage1Agree (231.67s)
+=== RUN   TestCountGuardMutant
+=== PAUSE TestCountGuardMutant
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: Go, Node, emitted JavaScript, native identical: 44914 bytes
+--- PASS: TestOwnedWitnesses (48.46s)
+=== RUN   TestRegistrationMutant
+    registration_test.go:64: wrong descriptor kind caught on Node: case 0 line 2: port "fixed\tdebugger;\\u000a", Go "/tmp/adamic-gate/TestRegistrationMutant2914732356/002/no-debugger-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestRegistrationMutant2914732356/002/no-debugger-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix			0 9
+        fixed	\u000a
+    registration_test.go:64: wrong descriptor kind caught on native: case 0 line 2: port "fixed\tdebugger;\\u000a", Go "/tmp/adamic-gate/TestRegistrationMutant2914732356/002/no-debugger-0.ts:1:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestRegistrationMutant2914732356/002/no-debugger-0.ts:1:1
+          no-debugger  A debugger statement stops execution when devtools are open and does nothing otherwise, so it is a breakpoint written into the source. Shipped, it halts the page for anyone with devtools open and is invisible to everyone else, which is the worst pairing of symptoms for reproducing a report. Set the breakpoint in the debugger instead.
+        
+        range 0 9 unexpectedDebugger fix			0 9
+        fixed	\u000a
+--- PASS: TestRegistrationMutant (40.79s)
+=== CONT  TestCountGuardMutant
+    lint_test.go:610: count check alone caught Node: mutant="3\n" Go="2\n"; ordinary output remains identical
+    lint_test.go:610: count check alone caught native: mutant="3\n" Go="2\n"; ordinary output remains identical
+--- PASS: TestCountGuardMutant (42.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	499.934s
+FAIL
