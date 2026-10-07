@@ -1,0 +1,20 @@
+function hold(pattern: RegExp): { pattern: RegExp; run: (text: string) => boolean } {
+    const box = {
+        pattern,
+        run: (text: string): boolean => pattern.test(text),
+    };
+    return box;
+}
+const kept = hold(/\d+/);
+console.log(`${kept.run('a9')} ${kept.pattern.source} ${kept.run('zz')}`);
+class Holder {
+    pattern: RegExp;
+    run: (text: string) => boolean;
+    constructor(pattern: RegExp) {
+        this.pattern = pattern;
+        const captured = pattern;
+        this.run = (text: string): boolean => captured.test(text);
+    }
+}
+const holder = new Holder(/a/g);
+console.log(`${holder.run('ba')} ${holder.pattern.lastIndex}`);

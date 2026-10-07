@@ -1,0 +1,19 @@
+=== RUN   TestComposedMemoryChecksCanFail
+    memory_checks_test.go:24: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:91: printed stylesheets: 2 inputs, 2 formatted, elapsed 486.22µs
+        --- PASS: TestAdamicPrinterCases (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css	0.006s
+=== RUN   TestComposedMemoryChecksCanFail/address_sanitizer
+    memory_checks_test.go:86: only address sanitizer caught: SUMMARY: AddressSanitizer: heap-use-after-free /tmp/adamic-gate/adamic-build-3869448319/main.c:8:36 in css_memory_probe
+=== RUN   TestComposedMemoryChecksCanFail/undefined_behavior_sanitizer
+    memory_checks_test.go:86: only undefined behavior sanitizer caught: /tmp/adamic-gate/adamic-build-941685856/main.c:4:36: runtime error: signed integer overflow: 2147483647 + 2 cannot be represented in type 'int'
+    memory_checks_test.go:86: only undefined behavior sanitizer caught: SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-941685856/main.c:4:36
+=== RUN   TestComposedMemoryChecksCanFail/leak_sanitizer
+    memory_checks_test.go:86: only leak sanitizer caught: SUMMARY: AddressSanitizer: 644428 byte(s) leaked in 8903 allocation(s).
+--- PASS: TestComposedMemoryChecksCanFail (51.43s)
+    --- PASS: TestComposedMemoryChecksCanFail/address_sanitizer (17.18s)
+    --- PASS: TestComposedMemoryChecksCanFail/undefined_behavior_sanitizer (15.94s)
+    --- PASS: TestComposedMemoryChecksCanFail/leak_sanitizer (16.24s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	51.444s

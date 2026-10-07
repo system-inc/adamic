@@ -1,0 +1,10 @@
+--- FAIL: TestCountsAreRecorded (16.15s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.00s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sweeps/regexp_methods.a (0.12s)
+            counts_test.go:143: Lower: /tmp/adamic-regex-cycle/css/internal/oracle/testdata/sweeps/regexp_methods.a:7:36: Adamic 0.1 refuses a value of type RegExpExecArray seen as RegExpMatchArray | null, which can write number | undefined where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	16.163s
+FAIL
