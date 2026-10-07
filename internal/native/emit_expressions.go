@@ -14,6 +14,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
 		return e.typedArrayValue(expression)
+	case ir.PromiseValue:
+		return e.promiseValue(expression)
+	case ir.Await:
+		panic("native: await was not exposed before state cutting")
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)

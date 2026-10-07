@@ -36,6 +36,7 @@ enum adamic_kind {
 	adamic_kind_async_reaction,
 	adamic_kind_typed_array,
 	adamic_kind_typed_array_iterator,
+	adamic_kind_environment,
 };
 
 typedef struct adamic_heap {
@@ -117,8 +118,20 @@ typedef struct adamic_maybe_boolean {
 typedef struct adamic_cell {
 	adamic_heap heap;
 	bool references;
+	bool ready;
+	adamic_heap *owner;
 	adamic_value value;
 } adamic_cell;
+
+// One counted allocation owns every interior captured slot.
+typedef struct adamic_environment {
+	adamic_heap heap;
+	size_t count;
+	adamic_cell cells[];
+} adamic_environment;
+adamic_environment *adamic_environment_new(size_t count);
+void adamic_environment_initialize_cells(adamic_heap *, adamic_cell *, size_t);
+void adamic_environment_drop_cells(adamic_cell *, size_t, void (*)(void *));
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references);
 
