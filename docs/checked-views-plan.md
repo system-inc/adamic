@@ -281,10 +281,11 @@ Existing union files and shared dispatch remain lane 1 territory.
 
 Required handoffs before compiler admission:
 
-1. In `view_contracts.go`, add `viewMixedUnionContractHook viewContractHook`;
-   route unions through it before callable detection and representation refusal.
-   Lane 4 registers `internMixedUnionViewContract` in its new file after this
-   variable exists. The shared registry, recursive builder callback and rollback
+1. In `view_contracts.go`, route unions through the lane-owned
+   `viewMixedUnionContractHook` before callable detection and representation
+   refusal. Lane 4 declares this hook in `view_unions_mixed.go` with
+   `internMixedUnionViewContract` as its implementation. The shared registry,
+   recursive builder callback and rollback
    on failed member construction must retain their common contract semantics.
 2. In `view_unions.go`, dispatch mixed and untagged union field registration to
    `viewMixedUnionFields(node,target,fields,seen)` before the finite tag refusal.

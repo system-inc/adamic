@@ -1,0 +1,257 @@
+diff --cc docs/escape-hatches.md
+index 3d6d5a64,f1b85d1e..00000000
+--- a/docs/escape-hatches.md
++++ b/docs/escape-hatches.md
+@@@ -1403,32 -978,12 +1403,44 @@@ exited 143 on termination, and all ten 
+  The full gate is not claimed to have passed. The completed scoped commands above
+  are the regression evidence for this unit.
+  
+++<<<<<<< HEAD
+ +### Lane 1 interface checkpoint
+ +
+ +Named interfaces now use the same transitive read checks as structural object
+ +fields, including inherited fields and recursive contracts. An unread staged
+ +recursive link remains legal; reading it checks the shared readiness state. Four
+ +source fixtures pin both backend failures or match source Node byte for byte.
+ +The inherited-field transitivity mutant emits valid C and is caught by the failure
+ +assertion. No shape or initialization fact is inferred from an interface assertion.
+ +
+ +The complete-target rejection audit still proves zero complete eligible sites:
+ +0/1,758 tagged and 0/1,178 untagged. Recursing through named interfaces exposes
+ +25 tagged and 438 untagged callable blockers; these are first blockers, not a new
+ +partition of the original direct-contract lane shares. Remaining first blockers
+ +are recorded per site in interfaces-contract-sites.json. This is a contract audit,
+ +not a successful whole-file lowering measurement.
+ +
+ +### Tagged object-union field subset
+ +
+ +A read of an object-union field checks its required finite common discriminant
+ +before returning the child. A subsequent tag comparison can narrow that checked
+ +child, but all payload reads remain checked. The contract graph retains member ids,
+ +not just common fields. Both backends evaluate the receiver once and preserve
+ +identity. Contract links on earlier function reads resolve after cast registration.
+ +
+ +This is a subset checkpoint, not completion of the union family. Null and undefined
+ +are still conflated by existing reference representations; checked views that need
+ +them remain NotYet until a distinct representation is implemented. Mixed scalar
+ +unions, optional fields, union cast targets and unsupported aliases remain gaps.
+ +No complete tsc target becomes eligible in the renewed object-unions audit.
+++=======
++ ## Checked downcasts implemented
++ 
++ On `codex/checked-downcasts`, based on enum commit `7127080756a1904cc8d65ed766b66bbfaa767771`, object union casts accept single literal discriminants, including numeric and string enum members from ordinary and const enums. Targets may be one member or a sub-union. The proof requires unique runtime tag values, one tag representation, and sound member relations; duplicate enum aliases and payload refinements are refused. Proven upcasts and casts already established by flow erase. Structural hidden optional fields cannot become typed fields merely through a cast.
++ 
++ Nominal class downcasts use the same ancestry and erased generic identity as `instanceof`, through ordinary IR helpers shared by both backends. Generic target arguments must already be fixed by invariant source ancestry: every target parameter must appear directly in the source ancestor's type arguments. A nongeneric base cannot prove an arbitrary `Box<number>`, and incompatible generic views remain refused. Successful casts evaluate their operand once and preserve its identity. Failure flushes stdout, prints `adamic: panic: cast failed: this <source type> is not a <target type>` with a newline, and exits 70. The Node runtime now uses blocking stdio and terminal panic exit, so catch and finally do not execute.
++ 
++ Sixteen new oracle fixtures cover success and failure, both backends, Node source, native release, ASan/UBSan and leaks on successful runs; failing fixtures use the oracle's checked flag. Contract tests independently pin messages, 340,009 bytes of preceding stdout, and absence of catch/finally execution. Sixteen runtime mutants are killed by exit or stdout comparison: skip each of eleven failing checks, use a wrong numeric tag, string tag or class identity, and evaluate each operand form twice. Seven restored compiler/runtime source mutants are killed for duplicate tags, omitted nominal ancestry, omitted generic argument proof, hidden optional fields, unsafe writes through union views, catchable panic and unflushed panic. The duplicate-tag mutant emits valid C and finishes without sanitizer findings, printing native `1` against Node's `wrongwrong1`.
++ 
++ Primitive `number | string | boolean` union assertions remain refused. Their packed union tags are not independently validated for cast extraction and ownership in this unit, so the existing narrowing path remains the repair. Unknown-to-interface, callback signature changes, mutable widening, unrelated assertions and `as unknown as` remain refused with `adamic/no-unchecked-cast` and the admitted forms named. Nested or transformed generic argument recovery is conservatively refused. Validation here is Linux only; no performance claim or macOS execution is made. The accepted design above is copied unchanged from `origin/codex/escape-hatches` because the enum base did not contain this document.
+++>>>>>>> origin/main
+diff --cc internal/lower/cast.go
+index a85ec256,381a97a8..00000000
+--- a/internal/lower/cast.go
++++ b/internal/lower/cast.go
+@@@ -18,80 -22,29 +22,70 @@@ func (l *lowering) cast(node *ast.Node
+  	if err != nil {
+  		return nil, err
+  	}
+- 	if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
++ 	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
+  		return value, nil
+  	}
+++<<<<<<< HEAD
+ +	source := l.checker.GetTypeAtLocation(as.Expression)
+ +	target := l.checker.GetTypeAtLocation(node)
+ +	// An object literal's type is fresh, and a fresh type is held to excess properties, so { name, age }
+ +	// as Named would read as not assignable. Its widened type isn't fresh; its own keeps the literal
+ +	// fields a discriminated union needs. Either assignable makes an upcast candidate; the sound
+ +	// relation below still has to prove its writable slots, function views and nominal ancestry.
+ +	if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+ +		if err := l.provenRelation(node, as.Expression, target); err != nil {
+ +			return nil, err
+ +		}
+ +		return value, nil
+ +	}
+ +	if checked, err := l.viewArrayCast(node, value, source, target); checked != nil || err != nil {
+ +		return checked, err
+ +	}
+ +	if checked, err := l.viewProvenClassCast(node, value, source, target); checked != nil || err != nil {
+ +		return checked, err
+ +	}
+ +	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: "narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"}
+ +	if source.Flags()&checker.TypeFlagsUnion == 0 {
+ +		if checked, err := l.interfaceCast(node, value, source, target); checked != nil || err != nil {
+ +			return checked, err
+ +		}
+ +	}
+ +	if source.Flags()&checker.TypeFlagsUnion == 0 {
+ +		if checked, err := l.structuralViewCast(node, value, source, target); checked != nil || err != nil {
+ +			return checked, err
+ +		}
+ +	}
+ +	if value.Type() != ir.Object || source.Flags()&checker.TypeFlagsUnion == 0 {
+++=======
++ 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
++ 	target := l.concrete(l.checker.GetTypeAtLocation(node))
++ 	refused := &Refused{Where: l.program.Where(node), What: "a cast without an object tag representation", Fix: castRepair}
++ 	if value.Type() != ir.Object {
+++>>>>>>> origin/main
+  		return nil, refused
+  	}
+- 	members := source.Types()
+- 	for _, property := range l.checker.GetPropertiesOfType(members[0]) {
+- 		field := property.Name
+- 		literals := map[*checker.Type]*checker.Type{}
+- 		for _, member := range members {
+- 			literal := l.fieldLiteral(member, field)
+- 			if literal == nil {
+- 				literals = nil
+- 				break
+- 			}
+- 			literals[member] = literal
+- 		}
+- 		if literals == nil {
+- 			continue
+- 		}
+- 		// field is a discriminant: every member holds a literal there. The cast allows the members
+- 		// the target takes.
+- 		cast := ir.CheckedCast{Value: value, Field: field, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}
+- 		for _, member := range members {
+- 			if !l.checker.IsTypeAssignableTo(member, target) {
+- 				continue
+- 			}
+- 			allowed, fieldType, isConstant := l.literalConstant(literals[member])
+- 			if !isConstant {
+- 				return nil, refused
+- 			}
+- 			cast.Allowed = append(cast.Allowed, allowed)
+- 			cast.FieldType = fieldType
+- 		}
+- 		if len(cast.Allowed) == 0 {
++ 	message := "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
++ 	if len(proof.classes) > 0 {
++ 		return l.checkedClassCast(node, value, proof.classes, message)
++ 	}
++ 	cast := ir.CheckedCast{Value: value, Field: proof.field, Message: message}
++ 	for _, literal := range proof.allowed {
++ 		allowed, fieldType, constant := l.literalConstant(literal)
++ 		if !constant || (cast.FieldType != 0 && cast.FieldType != fieldType) {
+  			return nil, refused
+  		}
+++<<<<<<< HEAD
+ +		if _, err := l.view(node, value, target); err != nil {
+ +			return nil, err
+ +		}
+ +		cast.CheckedFields = true
+ +		return cast, nil
+++=======
++ 		cast.Allowed = append(cast.Allowed, allowed)
++ 		cast.FieldType = fieldType
+++>>>>>>> origin/main
+  	}
+- 	return nil, refused
++ 	return cast, nil
+  }
+  
+  // fieldLiteral is a member's type for a field when it's a single literal ('Circle', 1, true), the
+diff --cc internal/lower/expression.go
+index d7a50341,79599a09..00000000
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@@ -407,11 -429,50 +429,54 @@@ func (l *lowering) enumNeverValue(node 
+  		if !isLocal {
+  			return nil, l.notYet(node, "reading "+node.Text())
+  		}
+++<<<<<<< HEAD
+ +		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local), Readiness: sourceExpression(node)})
+++=======
++ 		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(node, local)})
+++>>>>>>> origin/main
+  		if l.result.Locals[local].Type == ir.Union {
+  			// Where the checker has narrowed it to fewer members held one way, it's read as that.
+- 			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union {
+- 				read = ir.Narrow{Value: read, To: narrowed}
++ 			parent := node.Parent
++ 			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
++ 				parent = parent.Parent
++ 			}
++ 			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
++ 			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && !observing {
++ 				// Calls and captured writes can invalidate the checker's narrowing. Check the
++ 				// held member before casting it, with ordinary IR shared by both backends.
++ 				name := "object"
++ 				switch narrowed.Present() {
++ 				case ir.Number:
++ 					name = "number"
++ 				case ir.Boolean:
++ 					name = "boolean"
++ 				case ir.String:
++ 					name = "string"
++ 				case ir.Closure:
++ 					name = "function"
++ 				}
++ 				if name == "object" {
++ 					// typeof cannot distinguish differently held object members.
++ 					declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
++ 					members := []*checker.Type{declared}
++ 					if declared.Flags()&checker.TypeFlagsUnion != 0 {
++ 						members = declared.Types()
++ 					}
++ 					for _, member := range members {
++ 						if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map) {
++ 							return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
++ 						}
++ 					}
++ 				}
++ 				b := l.libraryArrayBuilder([]ir.Expression{read})
++ 				held := b.read(b.parameters[0])
++ 				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
++ 				if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
++ 					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
++ 				}
++ 				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
++ 				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
++ 				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
+  			}
+  		}
+  		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
+diff --cc internal/lower/refusals.go
+index d9e5ade5,00717ff7..00000000
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@@ -80,6 -79,32 +78,35 @@@ func (l *lowering) refuse(module *ast.S
+  				return true
+  			}
+  		}
+++<<<<<<< HEAD
+++=======
++ 		if err := l.enumRefusal(node); err != nil {
++ 			found = err
++ 			return true
++ 		}
++ 		checkedCast := false
++ 		if node.Kind == ast.KindAsExpression {
++ 			proof, err := l.castProof(node)
++ 			if err != nil {
++ 				found = err
++ 				return true
++ 			}
++ 			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
++ 		}
++ 		var assertion *ast.Node
++ 		if node.Kind == ast.KindPropertyDeclaration {
++ 			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
++ 				assertion = token
++ 			}
++ 		}
++ 		if node.Kind == ast.KindVariableDeclaration {
++ 			assertion = node.AsVariableDeclaration().ExclamationToken
++ 		}
++ 		if assertion != nil {
++ 			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
++ 			return true
++ 		}
+++>>>>>>> origin/main
+  		if node.Kind == ast.KindBinaryExpression {
+  			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {
+  				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}

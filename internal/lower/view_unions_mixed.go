@@ -6,6 +6,9 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
+// Lane 1 calls this hook only after wiring member selection at reads.
+var viewMixedUnionContractHook viewContractHook = internMixedUnionViewContract
+
 // Intern a complete union graph using the shared member builder. This is not an
 // admission hook until lane 1 wires selection and representation conversion.
 // Reserve before recursion, but discard every newly reserved id on failure:
