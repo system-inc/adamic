@@ -248,16 +248,43 @@ runTests() {
 	elif [ -n "$oraclePattern" ]; then
 		go test -json -count=1 -timeout 60m ./internal/oracle -run "$oraclePattern" >"$logs/$phase-oracle.json" 2>&1 || true
 	fi
-	python3 -c 'import json,sys
+	python3 "$logs/failures.py" "$logs/$phase-"*.json 2>/dev/null | sort -u >"$logs/$phase-failures.txt"
+}
+# One line per failure. A failing test is "<package> <test>". A package that doesn't build is
+# "<package> (build failed)", and one that fails outside any test (a timeout, a panic in TestMain) is
+# "<package> (failed outside a test)"; those two are never excused by the base, because a base can't
+# vouch for code that never ran. (A build failure once printed the same "package itself" line as a
+# base whose tests failed on a Mac, and an area's oracle changes were admitted without running.)
+cat >"$logs/failures.py" <<'PROGRAM'
+import json, sys
+
+failedTests, failedBuilds, failedPackages = set(), set(), set()
 for path in sys.argv[1:]:
     for line in open(path, errors="replace"):
         try:
             event = json.loads(line)
         except ValueError:
             continue
-        if event.get("Action") == "fail":
-            print(event.get("Package", "?"), event.get("Test", "(the package itself)"))' "$logs/$phase-"*.json 2>/dev/null | sort -u >"$logs/$phase-failures.txt"
-}
+        action = event.get("Action")
+        package = event.get("Package") or (event.get("ImportPath") or "?").split(" ")[0]
+        output = event.get("Output") or ""
+        if action == "build-fail" or (action == "output" and ("[build failed]" in output or "[setup failed]" in output)):
+            failedBuilds.add(package)
+        elif action == "fail":
+            if event.get("FailedBuild"):
+                failedBuilds.add(package)
+            elif event.get("Test"):
+                failedTests.add((package, event["Test"]))
+            else:
+                failedPackages.add(package)
+for package in failedBuilds:
+    print(package, "(build failed)")
+for package in failedPackages - failedBuilds:
+    if not any(test[0] == package for test in failedTests):
+        print(package, "(failed outside a test)")
+for package, test in failedTests:
+    print(package, test)
+PROGRAM
 
 # A failure the area tip already has on this machine (macOS's last-bit Math, no detect_leaks) is
 # named but doesn't hold the merge. Only a failure the merge brings does.
@@ -271,8 +298,11 @@ if [ "${#packages[@]}" -gt 0 ] || [ "$compiler" = yes ] || [ -n "$oraclePattern"
 		runTests base
 		git switch -q --detach "$merged"
 		git submodule update -q --init --recursive --depth 1
-		comm -23 "$logs/merged-failures.txt" "$logs/base-failures.txt" >"$logs/new-failures.txt"
-		echo "already failing on area/$area ${areaTip:0:8} here, not held against the merge: $(comm -12 "$logs/merged-failures.txt" "$logs/base-failures.txt" | wc -l | tr -d ' ') ($logs/base-failures.txt)"
+		# Only a named test the base fails the same way here is excused; a build failure or a failure
+		# outside any test is never excused, whatever the base did.
+		grep -v -E ' \((build failed|failed outside a test)\)$' "$logs/base-failures.txt" >"$logs/base-excusable.txt" || true
+		comm -23 "$logs/merged-failures.txt" "$logs/base-excusable.txt" >"$logs/new-failures.txt"
+		echo "already failing on area/$area ${areaTip:0:8} here, not held against the merge: $(comm -12 "$logs/merged-failures.txt" "$logs/base-excusable.txt" | wc -l | tr -d ' ') tests ($logs/base-failures.txt)"
 		if [ -s "$logs/new-failures.txt" ]; then
 			echo "new failures from the merge:"
 			sed 's/^/  /' "$logs/new-failures.txt"
