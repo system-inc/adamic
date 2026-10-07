@@ -1,0 +1,5 @@
+function compilePattern(pattern: string): boolean {
+    const expression = new RegExp(pattern, 'u');
+    return expression.test('a');
+}
+console.log(compilePattern('a') ? 'true' : 'false');

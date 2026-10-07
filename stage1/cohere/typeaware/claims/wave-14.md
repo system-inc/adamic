@@ -151,3 +151,17 @@ All owned suites pass again in 505.910 s, along with bridge, filtered uncached
 Node and vet. Remaining pattern grammar, shared numeric dispatch, undefined
 labels and real JSX are incomplete. No new rules are claimed.
 See ../WAVE_14_PATTERN_REPORT.md for current commands, mutants and timing.
+
+## Effective regex contract dependency
+
+The branch remains based on current main f8013f0b. No new rules are claimed.
+no-invalid-regexp is blocked under the new no-custom-matcher requirement on
+shared runtime RegExp construction and recoverable Go-compatible validation
+errors. A minimal new RegExp(pattern, 'u') native probe refuses nonconstant
+patterns; Node accepts the same program. Existing pattern validation is partial
+and is not claimed complete or compliant with the new contract. No further
+custom pattern validation is added. The exact compiler refusal, Go/Node error
+difference and declaration mutant checks are retained in
+../WAVE_14_REGEX_CONTRACT_REPORT.md and validation-wave-14-regex-contract.
+The leaked-render gap is JSX parsing, not IR, single assignment or captures,
+so its claim is not falsely marked parked on those analyses.
