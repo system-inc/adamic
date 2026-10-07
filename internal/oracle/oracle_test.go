@@ -37,6 +37,37 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/route_targets_callbacks.a", true, false},
+	{"internal/oracle/testdata/route_targets_virtual_fresh.a", true, false},
+	{"internal/oracle/testdata/route_targets_unknown.a", true, false},
+	{"internal/oracle/testdata/route_targets_bound_method.a", true, false},
+	{"internal/oracle/testdata/route_targets_recursive.a", true, false},
+	{"internal/oracle/testdata/route_targets_try_loop.a", true, false},
+	{"internal/oracle/testdata/route_targets_accessor.a", true, false},
+	{"internal/oracle/testdata/route_targets_sort_values.a", true, false},
+	{"internal/oracle/testdata/map_foreach_named_keys.a", true, false},
+	{"internal/oracle/testdata/set_foreach_named_keys.a", true, false},
+	{"internal/oracle/testdata/map_foreach_keys.a", true, false},
+	{"internal/oracle/testdata/set_foreach_keys.a", true, false},
+	{"internal/oracle/testdata/map_foreach_keep.a", true, false},
+	{"internal/oracle/testdata/set_foreach_keep.a", true, false},
+	{"internal/oracle/testdata/map_foreach_objects.a", true, false},
+	{"internal/oracle/testdata/set_foreach_objects.a", true, false},
+	{"internal/oracle/testdata/map_foreach_closures.a", true, false},
+	{"internal/oracle/testdata/set_foreach_closures.a", true, false},
+	{"internal/oracle/testdata/map_foreach_numbers.a", true, false},
+	{"internal/oracle/testdata/set_foreach_numbers.a", true, false},
+	{"internal/oracle/testdata/map_foreach_arrays.a", true, false},
+	{"internal/oracle/testdata/set_foreach_arrays.a", true, false},
+	{"internal/oracle/testdata/map_foreach_named_more.a", true, false},
+	{"internal/oracle/testdata/set_foreach_named_more.a", true, false},
+	{"internal/oracle/testdata/map_foreach_named_objects.a", true, false},
+	{"internal/oracle/testdata/set_foreach_named_objects.a", true, false},
+	{"internal/oracle/testdata/map_foreach_named_closures.a", true, false},
+	{"internal/oracle/testdata/set_foreach_named_closures.a", true, false},
+	{"internal/oracle/testdata/map_foreach_fnexpr.a", true, false},
+	{"internal/oracle/testdata/set_foreach_fnexpr.a", true, false},
+	{"internal/oracle/testdata/map_foreach_named_numbers.a", true, false},
 	{"internal/oracle/testdata/call_targets_element.a", true, false},
 	{"internal/oracle/testdata/call_targets_region.a", true, false},
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
@@ -55,6 +86,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/library_object_same.a", true, false},
 	{"internal/oracle/testdata/library_object_own.a", true, false},
 	{"dedication/dedication.a", true, false},
+	{"cmd/adamic/testdata/wasi/request.a", true, false},
 	// October 6 coverage: deeper dispatch, field order, ownership and subclass holders.
 	{"internal/oracle/testdata/class_oct6_deep.a", true, false},
 	{"internal/oracle/testdata/class_oct6_parameters.a", true, false},
@@ -253,6 +285,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regions_constructor_capture.a", true, false},
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
+	{"internal/oracle/testdata/borrow_loop.a", true, false},
+	{"internal/oracle/testdata/borrow_loop_calls.a", true, false},
+	{"internal/oracle/testdata/borrow_global_call.a", true, false},
 	{"internal/oracle/testdata/borrow_element_throw.a", true, false},
 	{"internal/oracle/testdata/borrow_element_virtual_store.a", true, false},
 	// A variable borrowed from an array, then the array moved into a consumed parameter of a
@@ -304,6 +339,12 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/gaps.a", true, false},
 	// A run of marks longer than any the normalize sweep has, for canonical ordering.
 	{"internal/oracle/testdata/normalize_long_marks.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_quick.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_repeat.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_stream.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_long.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_cache.a", true, false},
+	{"internal/oracle/testdata/normalize_coverage_limit.a", true, false},
 	// String() of the powers of two where the closest digits of the shortest length aren't the ones that
 	// read back (reviewer R, from the first night's number.c).
 	{"internal/oracle/testdata/power_of_two_string.a", true, false},

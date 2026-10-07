@@ -1,0 +1,61 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/unions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/unions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/set_maybe_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/set_maybe_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/set_maybe_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/unions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/strings.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/numbers.a (0.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/classes.a (0.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/set_maybe_numbers.a (0.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a (0.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_numbers.a (0.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/unions.a (0.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a (0.93s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_numbers.a (0.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_numbers.a (0.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a (0.42s)
+PASS
+gate cache: native hits=0 misses=38
+gate cache: node hits=0 misses=26
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.642s

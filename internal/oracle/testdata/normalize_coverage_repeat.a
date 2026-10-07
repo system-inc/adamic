@@ -1,0 +1,42 @@
+// Print UTF-16 length and a lossless run-length encoding of every code point.
+function show(label: string, text: string): void {
+	let runs = '';
+	let previous = -1;
+	let count = 0;
+	for (const character of text) {
+		const point = character.codePointAt(0) ?? -1;
+		if (point === previous) {
+			count++;
+		} else {
+			if (count > 0) runs = runs + `${previous.toString(16)}:${count},`;
+			previous = point;
+			count = 1;
+		}
+	}
+	if (count > 0) runs = runs + `${previous.toString(16)}:${count},`;
+	console.log(`${label} ${text.length} ${runs}`);
+}
+function check(label: string, text: string): void {
+	for (const form of ['NFC', 'NFD', 'NFKC', 'NFKD']) {
+		const result = text.normalize(form);
+		show(`${label} ${form}`, result);
+		show(`${label} ${form} again`, result.normalize(form));
+	}
+}
+
+// Seven/eight/nine copies, motifs at and beyond the eight-point prefix search.
+for (const pattern of ['ﷺ', 'ﬃ', 'éạ́', 'Åá', 'ᅡᄀ', '́A', 'abcdefgé', 'abcdefghé', '😀é']) {
+	for (const count of [1, 2, 7, 8, 9, 16, 17]) {
+		check(`${pattern} ${count}`, pattern.repeat(count) + '̣̕');
+	}
+}
+// Stream bulk runs after a prefix mismatch. A preceding jamo can change the last starter.
+for (const text of ['éX' + 'ﷺ'.repeat(19), 'éᄀ' + 'ᅡ'.repeat(19),
+	'éᄀ' + '가'.repeat(19), 'éX' + '각'.repeat(19), 'éX' + '😀'.repeat(19),
+	'éX' + 'ﬃ'.repeat(2), 'éX' + 'ﷺ'.repeat(2)]) {
+	check('bulk', text + '̣́');
+}
+// Byte-length cutoff, with an unsafe mark-leading prefix and a partial last copy.
+for (const length of [63, 64, 65]) {
+	check(`bytes ${length}`, 'a'.repeat(length - 7) + 'ẹ́̕');
+}
