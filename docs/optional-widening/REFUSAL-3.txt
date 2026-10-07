@@ -83,6 +83,9 @@ The inherited user_iterators fixture rewrite moves its row from
 669/669/463/912/67/0 to 663/663/455/904/64/0. Every other row is unchanged.
 
 Evidence
-All final logs and the initial setup failure are in evidence/refusal-3/.
+All final logs and the initial setup failure remain in the local workspace
+under docs/optional-widening/evidence/refusal-3/. Raw logs were not published;
+automatic approval review rejected exporting the ignored diagnostic payload.
+The public branch contains this command, result and mutant summary.
 The five-line summary records the implementation merge commit. The subsequent
 report commit and pushed head are reported to integration externally.
