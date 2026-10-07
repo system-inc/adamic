@@ -1,0 +1,163 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_construct.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_construct.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_call.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_call.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_mutated.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_mutated.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_optional.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_optional.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_view_return.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_view_return.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_literal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_literal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_new.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_new.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_call.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_call.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_view.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_view.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_plain_view.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_plain_view.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_default_empty.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_default_empty.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_empty.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_empty.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_message.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_message.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_empty_changed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_empty_changed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_no_argument.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_no_argument.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_array.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_number.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_number.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_string.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_boolean.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_boolean.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_closure.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_closure.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_construct.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_default_empty.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_closure.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_string.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_boolean.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_construct.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_error_construct.a:2:16: stage 0 can't lower spreading an Error (its name and message aren't own enumerable fields) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_number.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_closure.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_view_closure.a:3:19: stage 0 can't lower spreading through an object view (a value with a different native representation may be hidden by the view) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_array.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_boolean.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_view_boolean.a:3:19: stage 0 can't lower spreading through an object view (a value with a different native representation may be hidden by the view) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_no_argument.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_string.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_view_string.a:3:19: stage 0 can't lower spreading through an object view (a value with a different native representation may be hidden by the view) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_empty_changed.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_default_empty.a
+    oracle_test.go:585: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_number.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_view_number.a:3:19: stage 0 can't lower spreading through an object view (a value with a different native representation may be hidden by the view) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_message.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_array.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_view_array.a:3:19: stage 0 can't lower spreading through an object view (a value with a different native representation may be hidden by the view) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_empty.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_no_argument.a
+    oracle_test.go:585: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_empty_changed.a
+    oracle_test.go:585: gate cache node hit
+    oracle_test.go:585: gate cache node hit
+    oracle_test.go:474: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_message.a
+    oracle_test.go:585: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_default_empty.a
+    oracle_test.go:585: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_empty.a
+    oracle_test.go:585: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_no_argument.a
+    oracle_test.go:585: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_default_empty.a
+    oracle_test.go:474: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_no_argument.a
+    oracle_test.go:474: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_message.a
+    oracle_test.go:585: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_empty.a
+    oracle_test.go:585: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_message.a
+    oracle_test.go:474: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_empty.a
+    oracle_test.go:474: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_empty_changed.a
+    oracle_test.go:467: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_default_empty.a
+    oracle_test.go:467: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_literal.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_no_argument.a
+    oracle_test.go:467: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_literal.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_regexp_literal.a:3:16: stage 0 can't lower spreading a RegExp or its iterator yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_plain_view.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_view.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_empty.a
+    oracle_test.go:467: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_call.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_plain_view.a
+    oracle_test.go:585: gate cache node miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_new.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_view.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_regexp_view.a:3:19: stage 0 can't lower spreading through an object view (a RegExp or its iterator may be hidden by the view) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_mutated.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_message.a
+    oracle_test.go:467: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_call.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_regexp_call.a:1:16: stage 0 can't lower spreading a RegExp or its iterator yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_view_return.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_new.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_regexp_new.a:1:16: stage 0 can't lower spreading a RegExp or its iterator yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_optional.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_mutated.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_error_mutated.a:4:16: stage 0 can't lower spreading an Error (its name and message aren't own enumerable fields) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_call.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_plain_view.a
+    oracle_test.go:585: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_view_return.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_error_view_return.a:3:16: stage 0 can't lower spreading through an object view (an Error may be hidden by the view) yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_call.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_error_call.a:1:15: stage 0 can't lower reading Error yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_optional.a
+    oracle_test.go:579: not yet: /workspace/adamic/internal/oracle/testdata/coverage_error_optional.a:2:19: stage 0 can't lower spreading an Error (its name and message aren't own enumerable fields) yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/coverage_plain_view.a
+    oracle_test.go:474: gate cache native miss
+    oracle_test.go:467: gate cache native miss
+    oracle_test.go:481: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_construct.a (0.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_closure.a (0.34s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_boolean.a (0.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_string.a (0.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_number.a (0.24s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_view_array.a (0.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_empty_changed.a (1.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_literal.a (0.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_default_empty.a (1.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_no_argument.a (1.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_empty.a (1.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_view.a (0.25s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_call.a (0.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_regexp_new.a (0.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_mutated.a (0.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_view_return.a (0.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_uncaught_custom_message.a (1.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_call.a (0.15s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_error_optional.a (0.23s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/coverage_plain_view.a (1.50s)
+PASS
+gate cache: native hits=1 misses=12
+gate cache: node hits=2 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.425s
