@@ -98,6 +98,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		return castProof{}, nil
 	}
 	as := node.AsAsExpression()
+	// A qualified name (NodeJS.ErrnoException) has no Text; only a bare `const` is as const.
 	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return castProof{}, nil
 	}

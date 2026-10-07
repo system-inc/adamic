@@ -38,6 +38,10 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		return "adamicNodeFSFile.statSync(" + args[0] + ", {throwIfNoEntry:" + args[1] + "})"
 	case "mkdir":
 		return "adamicNodeFSFile.mkdirSync(" + args[0] + ", {recursive:" + args[1] + ", mode:" + args[2] + "})"
+	case "mkdtemp":
+		return "adamicNodeFSFile.mkdtempSync(" + args[0] + ")"
+	case "rm":
+		return "adamicNodeFSFile.rmSync(" + args[0] + ", {recursive:" + args[1] + ", force:" + args[2] + "})"
 	case "unlink":
 		return "adamicNodeFSFile.unlinkSync(" + args[0] + ")"
 	case "utimes", "utimes_dates", "utimes_atime_date", "utimes_mtime_date":

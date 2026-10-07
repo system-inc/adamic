@@ -454,6 +454,8 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				if !value.Interface().(ir.PhantomMember).Optional {
 					throws = true
 				}
+			case reflect.TypeOf(ir.ArrayHoles{}), reflect.TypeOf(ir.ArraySetLength{}):
+				throws = true
 			case reflect.TypeOf(ir.NodeHostCall{}):
 				throws = throws || value.Interface().(ir.NodeHostCall).Throws
 			case callType:

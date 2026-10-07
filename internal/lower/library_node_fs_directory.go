@@ -51,6 +51,9 @@ func (l *lowering) nodeHostMember(node *ast.Node) (string, string) {
 			if module == "" {
 				continue
 			}
+			if owner == "StatsBase" {
+				return "", ""
+			}
 			member := symbol.Name
 			if module == "node:fs" {
 				switch member {

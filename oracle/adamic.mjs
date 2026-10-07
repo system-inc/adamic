@@ -23,7 +23,7 @@ export function processExiting() { return exiting; }
 export function processExit(code) {
 	// Validate before committing to exit, so an invalid code remains catchable.
 	process.exitCode = code;
-	const status = panicked ? 70 : (process.exitCode ?? 0);
+	const status = process.exitCode ?? 0;
 	exiting = true;
 	const drained = [process.stdout, process.stderr].map((stream) =>
 		new Promise((resolve) => stream.write('', resolve)));

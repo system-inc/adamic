@@ -1,8 +1,12 @@
 // Linux is the gate of record. The filesystem owns descriptor offsets and paths;
 // the host owns only temporary buffers and returned counted values.
 #define _POSIX_C_SOURCE 200809L
+// macOS hides st_atimespec, st_mtimespec and mkdtemp once _POSIX_C_SOURCE is set, unless Darwin's
+// own extensions are asked for too. glibc ignores this macro.
+#define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include <errno.h>
+#include <dirent.h>
 #include <fcntl.h>
 #include <limits.h>
 #include <stdio.h>
@@ -492,6 +496,86 @@ adamic_string *adamic_fs_file_mkdir(const adamic_string *path, bool recursive, d
     if (error != 0) { adamic_release(first); first = NULL; system_error(error, "mkdir", name); }
     free(name);
     return first;
+}
+
+// libc mkdtemp atomically creates a private directory with a six-byte suffix.
+adamic_string *adamic_fs_file_mkdtemp(const adamic_string *prefix) {
+    adamic_output_flush();
+    if (memchr(prefix->bytes, 0, prefix->length) != NULL) {
+        invalid_value("The argument 'prefix' must be a string, Uint8Array, or URL without null bytes. Received ", prefix);
+        return NULL;
+    }
+    char *base = bytes(prefix);
+    size_t length = strlen(base);
+    char *name = malloc(length + 7);
+    if (name == NULL) { free(base); adamic_panic("out of memory", 13); }
+    memcpy(name, base, length); memcpy(name + length, "XXXXXX", 7); free(base);
+    adamic_string *result = NULL;
+    if (mkdtemp(name) != NULL) { result = text(name); }
+    else { int error = errno; memcpy(name + length, "XXXXXX", 7); system_error(error, "mkdtemp", name); }
+    free(name);
+    return result;
+}
+
+// Node's native rmSync uses filesystem removal errors after its lstat check.
+static void remove_error(int error, const char *operation, const char *name) {
+    if (error == EACCES || error == EPERM) {
+        const char *code = error == EACCES ? "EACCES" : "EPERM";
+        const char *reason = error == EACCES ? "Permission denied" : "Operation not permitted";
+        size_t length = strlen(name) * 2 + strlen(reason) + 32;
+        char *message = malloc(length);
+        if (message == NULL) { adamic_panic("out of memory", 13); }
+        snprintf(message, length, "%s, %s: %s '%s'", code, reason, name, name);
+        raise_error("Error", code, message); free(message);
+    } else { system_error(error, operation, name); }
+}
+
+// lstat keeps symlinks as leaves: recursive removal never follows their targets.
+static void remove_path(const char *name, bool recursive, bool force) {
+    struct stat information;
+    if (lstat(name, &information) != 0) {
+        if (errno != ENOENT || !force) { system_error(errno, "lstat", name); }
+        return;
+    }
+    if (!S_ISDIR(information.st_mode)) {
+        if (unlink(name) != 0 && errno != ENOENT) { remove_error(errno, "unlink", name); }
+        return;
+    }
+    if (!recursive) {
+        size_t length = strlen(name) + 80;
+        char *message = malloc(length);
+        if (message == NULL) { adamic_panic("out of memory", 13); }
+        snprintf(message, length, "Path is a directory: rm returned EISDIR (is a directory) %s", name);
+        raise_error("SystemError", "ERR_FS_EISDIR", message); free(message); return;
+    }
+    if (rmdir(name) == 0) { return; }
+    int error = errno;
+    if (error != ENOTEMPTY && error != EEXIST && error != EPERM) {
+        if (error != ENOENT) { remove_error(error, "rmdir", name); }
+        return;
+    }
+    DIR *directory = opendir(name);
+    if (directory == NULL) { if (errno != ENOENT) { remove_error(errno, "scandir", name); } return; }
+    struct dirent *entry;
+    while (adamic_thrown == NULL) {
+        errno = 0; entry = readdir(directory);
+        if (entry == NULL) { if (errno != 0) { remove_error(errno, "scandir", name); } break; }
+        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) { continue; }
+        size_t length = strlen(name) + strlen(entry->d_name) + 2;
+        char *child = malloc(length);
+        if (child == NULL) { closedir(directory); adamic_panic("out of memory", 13); }
+        snprintf(child, length, "%s/%s", name, entry->d_name);
+        remove_path(child, true, true); free(child);
+    }
+    closedir(directory);
+    if (adamic_thrown == NULL && rmdir(name) != 0 && errno != ENOENT) { remove_error(errno, "rmdir", name); }
+}
+
+double adamic_fs_file_rm(const adamic_string *path, bool recursive, bool force) {
+    adamic_output_flush();
+    char *name = path_bytes(path, true);
+    if (name != NULL) { remove_path(name, recursive, force); free(name); }
+    return 0;
 }
 
 double adamic_fs_file_unlink(const adamic_string *path) {

@@ -1,5 +1,8 @@
 // node_process.c: synchronous compiler host observations and performance entries.
 #define _POSIX_C_SOURCE 200809L
+// macOS hides malloc/malloc.h's zone types once _POSIX_C_SOURCE is set, unless Darwin's
+// own extensions are asked for too. glibc ignores this macro.
+#define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include <errno.h>
 #include <stdio.h>
