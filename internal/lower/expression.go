@@ -183,6 +183,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// The checker narrowed it to present (Target & WeakBrand).
 		to, present = target, true
 	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
+		// A union of branded targets still represents a Weak even after narrowing.
+		// Its read is present when the checker has removed undefined.
+		present = !l.includesUndefined(read)
 		for _, member := range read.Types() {
 			if target := l.weakTarget(member); target != nil {
 				if to, isKnown = l.representation(target); !isKnown {
