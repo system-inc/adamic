@@ -14,7 +14,7 @@
         "--no-fund"
       ],
       "exit": 0,
-      "seconds": 4.365
+      "seconds": 15.121
     },
     "build": {
       "command": [
@@ -23,7 +23,7 @@
         "build"
       ],
       "exit": 0,
-      "seconds": 22.574
+      "seconds": 13.452
     },
     "tests": {
       "command": [
@@ -35,7 +35,7 @@
         "--no-colors"
       ],
       "exit": 1,
-      "seconds": 348.99
+      "seconds": 623.501
     }
   },
   "status": "fail",
@@ -47,5 +47,5 @@
   "baseline_diffs": [
     "api/typescript.d.ts"
   ],
-  "wall_seconds": 376.01
+  "wall_seconds": 652.451
 }
