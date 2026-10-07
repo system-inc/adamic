@@ -1,7 +1,7 @@
-Built: optional captured callbacks use presence checks; synchronous cell/closure cycles use runtime graph regions, and async capture remains refused.
+Built: optional captured callbacks use presence checks; synchronous cell/closure cycles use runtime graph regions, and async capture and Promise-payload cycles remain refused.
 Commits: runtime base f09f8dbeccf9d9e7b2afdc4c56f5a534dc3952e6; merged capture adab0fe54fb8a53940b0c1481e2409b978c6050a in 9c62ffc5072b5b70621ef657f101383b17da1c6a; current main merged in 1571a852.
 Commands and outputs: full lower, native graph tests, expanded Node oracle, recorded counts, sequential signals, vet and formatting pass; commands and timings are below.
-Mutants: restoring the synchronous seed refusal fails adapted fixture a; omitting environment adoption preserves stdout but LeakSanitizer finds 243 bytes in three allocations.
+Mutants: omitting the Promise payload edge accepts the pinned cycle and leaks 112 bytes in two allocations; restoring the synchronous seed refusal fails adapted fixture a; omitting environment adoption preserves stdout but LeakSanitizer finds 243 bytes in three allocations.
 Limits: Linux only, filtered repository gate; host fixture 14's cache/context shape is covered, not its filesystem imports; the original undefined! form still stops at the pinned assertion refusal.
 
 ## Exact base and the edge
@@ -35,7 +35,9 @@ Adapted a.a and b.a are byte-exact inputs from `codex/stage3-adapt-memoize` d0e9
 
 The original library source uses `undefined!` in a nonoptional callback slot. That assertion remains refused on the pinned compiler lineage; `TestMemoizeCaptureStopsAtAssertion` pins it. This unit uses the supplied honest optional adaptations, so it does not claim to fix the earlier host-proof assertion/readiness behavior. Native ordinary undefined stores NULL and releases the old closure; the false-after-clear observation is executable coverage, not just a generated-C inference.
 
-The old Promise-payload test still expected the pre-region cycle refusal even on the runtime base. Its updated assertion permits refusal or requires graph ownership on acceptance; a generated runtime type name still cannot exempt a user cycle. The dedicated async-frame refusal remains intact.
+Runtime update 440e3cdb81c30add5897dc00bb9cf6121ccc81e3 was merged as 08ac080d9fff45e9f401df779852d4bcfc95b6c0. Its selected-component Promise guard was present, but graphLinks omitted the Promise payload edge. The new pin initially accepted Box -> Promise<Box> -> Box. Including Promise type arguments in graphLinks closes that component and activates runtime's refusal; Promise is not added to the acyclic container adoption path. The lower regression and the Node-backed oracle now pin the exact Promise refusal message and repair hint. Memoize contains no Promise and remains unaffected.
+
+The Promise fixture prints true on Node. Removing only the payload edge makes Adamic accept it and preserves Node's stdout with leak detection disabled. LeakSanitizer then reports 112 bytes leaked in two allocations. Its completed async wrapper avoids retaining the cycle through global roots; it captures no user closure, so the pin exercises the Promise refusal independently of the async-frame capture refusal.
 
 ## Mutants
 
@@ -59,3 +61,8 @@ Merged-tree verification (all test output first written to files):
 The full repository gate was not run. A preliminary lower/native/fresh package run had the stale Promise test failure, later fixed and fully rechecked in lower; its unrelated native decode corpus is slow. The worker gate is full lower, native graph tests, the expanded oracle above and the recorded counts. macOS leak checking was not executed; the permanent environment-omission test accepts its counted leak report on macOS, while this Linux run proves LeakSanitizer catches it.
 
 Final graph/count gate: `go test -buildvcs=false ./internal/oracle -run '^TestGraphRegionsCountsAndFree$|^TestMemoize' -count=1 -v -timeout=30m`: PASS, 17.781 s.
+
+
+## Runtime Promise update verification
+
+All commands use the merged runtime update plus the payload-edge correction. Full lower passes in 48.694 s. The expanded uncached oracle command above, extended with `TestGraphRegionsCountsAndFree`, passes in 87.695 s: 231 Node and 475 native observations. `TestMemoize` includes the exact Promise and async refusals, Node equality in both backends, leak-clean memoize/self fixtures, and the environment-omission leak mutant. Vet passes and gofmt output is empty. The payload-edge overlay makes the dedicated refusal pin fail (exit 1); its separate native leak probe passes by observing the expected LeakSanitizer failure. Evidence is in [memoize-regions-evidence](memoize-regions-evidence/). Current origin/main remains ce0750f28ef3943057f1f852b3ae5d93e6c5d644.

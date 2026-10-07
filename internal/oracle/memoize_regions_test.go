@@ -138,3 +138,24 @@ func TestMemoizeEnvironmentOmissionLeaks(t *testing.T) {
 	}
 	t.Logf("environment omission caught only by the leak check:\n%s", report)
 }
+
+// The resolved payload is the Box that strongly holds the Promise itself. A
+// counted Promise cannot be an internal region member, so this stays refused.
+func TestMemoizePromisePayloadCycleStillRefused(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/memoize_regions/promise-cycle.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	observed := onNode(t, path)
+	if observed.exitCode != 0 || len(observed.stderr) != 0 || string(observed.stdout) != "true\n" {
+		t.Fatalf("Node: %+v", observed)
+	}
+	_, err = lowered(t, path)
+	var refused *lower.Refused
+	const reason = "a Promise whose payload can reach back to what holds it: a cycle reference counting can't free, and a Promise can't join a graph region"
+	const fix = "don't keep a Promise in a value its result can reach, or declare the field Weak<...> (adamic/cycle-capable)"
+	if !errors.As(err, &refused) || refused.What != reason || refused.Fix != fix {
+		t.Fatalf("want pinned Promise payload cycle refusal, got %v", err)
+	}
+}

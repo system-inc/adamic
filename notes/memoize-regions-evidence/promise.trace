@@ -1,0 +1,5 @@
+cycle reach: Box -- slot contents --> Promise<Box> | undefined
+  Promise<Box> | undefined -- union or intersection member --> Promise<Box>
+  Promise<Box> -- collection type argument --> Box
+  Box -- related holder types --> Box
+adamic: /tmp/memoize-regions/internal/oracle/testdata/memoize_regions/promise-cycle.a:1:17: Adamic 0.1 refuses a Promise whose payload can reach back to what holds it: a cycle reference counting can't free, and a Promise can't join a graph region; don't keep a Promise in a value its result can reach, or declare the field Weak<...> (adamic/cycle-capable)
