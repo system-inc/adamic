@@ -61,3 +61,16 @@ Third reservation status: implementation ea2a3879 contains the label rule and
 partial regex judgments. Full regex integration remains blocked by shared
 helpers; see WAVE_15_CORE_REPORT.md. Prior HTTPS push failures were resolved.
 No further rules are reserved.
+
+## Fourth reservation
+
+Fetched all 348 origin refs after confirming prior work pushed at 172d8eba.
+Thirty-three claim documents mention 126 ranked checker rules. Excluding
+existing main/bridge ports and every origin claim, the first three are:
+
+- no-throw-literal (combined volume 0)
+- no-useless-backreference (combined volume 0)
+- prefer-arrow-callback (combined volume 0)
+
+Main and bridge matches are inventory/count records only. Reserved before code.
+Prior regex shared-helper gaps remain; no shared helper files will be edited.
