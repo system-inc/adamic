@@ -1,0 +1,31 @@
+=== RUN   TestCommentsMatchCohere
+    comments_test.go:96: Go, Node and sanitized native match 390 output lines
+--- PASS: TestCommentsMatchCohere (18.83s)
+=== RUN   TestCommentMutants
+=== RUN   TestCommentMutants/can_begin_at.ts
+    comments_test.go:139: compiled semantic mutant caught at line 251: got "cached 0 0"; Go "cached 1 1"
+=== RUN   TestCommentMutants/collect_list_interiors.ts
+    comments_test.go:139: compiled semantic mutant caught at line 3: got "cached 0 0"; Go "cached 1 1"
+=== RUN   TestCommentMutants/sort_by_position.ts
+    comments_test.go:139: compiled semantic mutant caught at line 60: got "47 54 1 0 47 0\t/* f */"; Go "6 13 1 0 6 0\t/* t */"
+=== RUN   TestCommentMutants/all.ts
+    comments_test.go:139: compiled semantic mutant caught at line 201: got "cached 0 0"; Go "cached 1 1"
+=== RUN   TestCommentMutants/for_file.ts
+    comments_test.go:139: compiled semantic mutant caught at line 2: got "cache 0 0 0"; Go "cache 1 0 0"
+--- PASS: TestCommentMutants (88.54s)
+    --- PASS: TestCommentMutants/can_begin_at.ts (15.95s)
+    --- PASS: TestCommentMutants/collect_list_interiors.ts (16.03s)
+    --- PASS: TestCommentMutants/sort_by_position.ts (17.74s)
+    --- PASS: TestCommentMutants/all.ts (18.27s)
+    --- PASS: TestCommentMutants/for_file.ts (18.98s)
+=== RUN   TestConsumerCommentHelpers
+    comments_test.go:162: Go, Node and sanitized native agree on 32770 consumer output lines with the stated AST adapter
+--- PASS: TestConsumerCommentHelpers (48.08s)
+=== RUN   TestJsxParserGapIsExplicit
+    comments_test.go:214: 4 valid Go JSX inputs explicitly refuse in the independent-parser adapter; AST-adapter helper comparisons cover them separately
+--- PASS: TestJsxParserGapIsExplicit (17.64s)
+=== RUN   TestJsxAdapterGuardMutant
+    comments_test.go:259: compiled adapter-guard mutant finishes the unsupported JSX input with exit 0; the explicit-refusal check requires exit 70 and catches it
+--- PASS: TestJsxAdapterGuardMutant (18.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	191.104s

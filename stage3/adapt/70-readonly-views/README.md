@@ -502,3 +502,63 @@ The 349 retained reasons still include genuine writers, structural escapes,
 container-element and callback contracts, public diagnostic families and inferred
 views needing further owner proofs. This remains a partial unit with measured
 progress and explicit declines, rather than a claim all remaining views are safe.
+
+
+## Decline wave 6
+
+No new owner edit is justified by this wave. The clean census remains **349 to
+349**, all 78 files measured, zero removed or added, identical 2,168 normalized
+diagnostics and no eligibility changes. Source manifests are identical. The
+whole build's ten JavaScript hashes are identical after the oracle. Idempotence
+changes zero files and preserves all 710 source hashes. The exact API delta
+remains 189 optional additions and one readonly input addition; 60,930 other
+references remain identical. No extra snapshot was accepted.
+
+The default oracle again passes **106,367 tests, zero failures, zero pending,
+empty diff**, 293.159s wall time. Logs are in evidence/wave6. No native Adamic
+compiler source changed, and the full native gate was not run.
+
+OWNER_RANKING.md records the highest unresolved groups and precise decline
+reasons. The stock checker inventories 349 sites and 574 field declarations.
+The ranking lists 390 non-readonly field candidates with context coverage,
+reference counts, observed direct-write counts and unresolved-path counts.
+Context coverage is not promised net removal; field scores overlap and are not
+added. The complete context and field observations are saved as compressed JSON.
+
+The diagnostic family's file, start and length slots share 26 contexts. Its
+base slots have no direct writes, but respectively 30, 31 and 35 unresolved
+structural or erased paths. Inferred diagnosticMessage locals forward the
+receiver to diagnostic helpers, and an erased refactor array retains it. The
+bounded SearchResult local-alias rule therefore cannot certify this family.
+Readonly on just the base slot could also expose a derived slot or a deeper
+refusal; no edit is made until the coupled view proof is complete.
+
+SourceFileLike remains blocked by its cache writer. The 14 iterator-result
+reasons require a proof through the iterator protocol. Rest diagnostic elements,
+inferred map/array unions and sparse-array insertion likewise remain explicit
+writers or unproven aliases. A zero direct-write count never establishes a
+whole-program no-write proof by itself. This is an honest decline wave, not a
+claim of an additional readonly adaptation or full reachability classification.
+
+The field-audit.cjs survey is now committed with a new mutant: a typed
+DiagnosticRelatedInformation consumer assigning file = undefined changes the
+reported write count from zero to one at the injected source location. The
+survey does not falsely certify it. The actual-writing-view readonly mutant
+was separately repeated: upstream build exits 1, **TS2540 at scanner.ts(504,46)**
+for SourceFileLike.lineMap. Every scratch source was restored.
+
+The setTextRange executable fixture and UPSTREAM_CANDIDATES.md are byte-identical
+to wave 5; their SHA-256 hashes are in evidence/wave6/counterexample-identity.json.
+Its exact pristine/adapted observations and reachable classification are unchanged.
+
+Commands, all with stdout/stderr captured in logs:
+
+```sh
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/survey.cjs /tmp/adaptation70-before /tmp/adaptation70-wave5-after.jsonl /tmp/adaptation70-wave6-owners.json
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/field-audit.cjs /tmp/adaptation70-before /tmp/adaptation70-wave6-owners.json.gz /tmp/adaptation70-wave6-fields.json.gz
+LATENT_ASSERT_NO_OUTPUT=1 /tmp/adaptation70-census /tmp/adaptation70-before/src/compiler /tmp/adaptation70-wave6-after.jsonl
+python3 stage3/adapt/70-readonly-views/summarize.py /tmp/adaptation70-before /tmp/adaptation70-wave5-after.jsonl /tmp/adaptation70-before /tmp/adaptation70-wave6-after.jsonl stage3/adapt/70-readonly-views/evidence/wave6 stage3/adapt/70-readonly-views/REMAINING.md
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/adapt.cjs /tmp/adaptation70-before
+NODE_PATH=/tmp/adaptation70-cache/api/node_modules node stage3/adapt/70-readonly-views/check-api.cjs /tmp/adaptation70-pristine /tmp/adaptation70-before /tmp/adaptation70-optional-owners.json /tmp/adaptation70-wave6-idempotence.json
+bash stage3/oracle/run.sh /tmp/adaptation70-before /tmp/adaptation70-wave6-oracle
+```

@@ -1,0 +1,14 @@
+oracle: node v24.19.0 at /tmp/adamic-gate/node-pin-tools/bin/node
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/typeof_null.a (9.57s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.588s

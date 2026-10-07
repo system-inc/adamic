@@ -1,0 +1,14 @@
+prettier 3.9.6
+yaml 2.9.0
+yaml-unist-parser 3.2.0
+typescript 6.0.3
+@typescript-eslint/typescript-estree 8.65.0
+css a {
+  color: red;
+}
+
+typescript const answer: number = 42;
+
+yaml answer: 42
+
+PASS: all shared module paths and formatter plugins

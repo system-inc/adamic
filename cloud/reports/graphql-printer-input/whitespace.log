@@ -1,0 +1,6 @@
+=== RUN   TestPrinterWhitespaceGap
+    gaps_test.go:59: repository and submodules: 0 .graphql files
+    gaps_test.go:100: five whitespace texts: native and Node equal Go refusals; npm and embedded Prettier return empty text
+--- PASS: TestPrinterWhitespaceGap (11.98s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql/printer	11.986s

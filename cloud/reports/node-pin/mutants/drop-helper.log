@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_every_key_component (cloud.test_node_setup.NodeSetup.test_every_key_component) (component='helper')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_node_setup.py", line 37, in test_every_key_component
+    self.assertNotEqual(before, node.installation_key(**dict(inputs, **{component: 'changed'})), component)
+AssertionError: 'c41952265ee2d466342aa063e433779d5f819c4374e31051a577f6953b0c5091' == 'c41952265ee2d466342aa063e433779d5f819c4374e31051a577f6953b0c5091' : helper
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

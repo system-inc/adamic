@@ -22,6 +22,8 @@ The installer reads npm manifests from its own cloud directory and builds the ar
 | ADAMIC_VALUES_LIBRARY | values | postcss-values-parser 2.0.1; values_test.go |
 | ADAMIC_JSON_PRETTIER | json-prettier | Prettier 3.9.6; JSON library.mjs checks it, GAPS.md records it |
 | ADAMIC_CSS_PRINTER_LIBRARY | css-printer | Prettier 3.9.6; print_test.go and print_library.mjs |
+| ADAMIC_TS_PRETTIER | css-printer | Shares the same install and lock with CSS and YAML; tsprinter testdata/doc.mjs and expressions.mjs assert 3.9.6 |
+| ADAMIC_YAML_LIBRARY | css-printer | Shared npm prefix: yaml 2.9.0, Prettier 3.9.6, yaml-unist-parser 3.2.0; YAML oracle scripts and GAPS.md |
 | ADAMIC_GITIGNORE_LARGEST | gitignore/.gitignore | Deterministic exactly 100 MiB, same recipe as gitignore/testdata/cohere_side_test.go |
 | ADAMIC_CLANG_TSGO_ARCHIVE | checker/tsgo.a | This checkout's bridge/tsgo/archive, go build -buildmode=c-archive with -trimpath and -buildvcs=false |
 

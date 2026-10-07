@@ -1,0 +1,6 @@
+=== RUN   TestCheckUsesPATH
+    nodepin_test.go:46: mismatch must name both versions and path, got <nil>
+--- FAIL: TestCheckUsesPATH (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/nodepin	0.003s
+FAIL

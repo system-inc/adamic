@@ -1,0 +1,13 @@
+s..F
+======================================================================
+FAIL: test_tree_validates_bytes_modes_links (__main__.Stage3Key.test_tree_validates_bytes_modes_links)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_stage3_setup.py", line 41, in test_tree_validates_bytes_modes_links
+    self.assertNotEqual(previous, changed)
+AssertionError: '0576483b74e9104bcdf79e45cdf7de3b908c9fbba56dceb0206a66ecc4b0dd57' == '0576483b74e9104bcdf79e45cdf7de3b908c9fbba56dceb0206a66ecc4b0dd57'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=1, skipped=1)

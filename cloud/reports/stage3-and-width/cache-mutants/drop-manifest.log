@@ -1,0 +1,13 @@
+s.F.
+======================================================================
+FAIL: test_each_component_invalidates (__main__.Stage3Key.test_each_component_invalidates) (component='manifest')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_stage3_setup.py", line 28, in test_each_component_invalidates
+    self.assertNotEqual(before, helper.stamp_key(**changed), name)
+AssertionError: '9c0cc7f7260442023af49b6e6f0fde95dc5b56c25218b689628fc099d8ed9495' == '9c0cc7f7260442023af49b6e6f0fde95dc5b56c25218b689628fc099d8ed9495' : manifest
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=1, skipped=1)
