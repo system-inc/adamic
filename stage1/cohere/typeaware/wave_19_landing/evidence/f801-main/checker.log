@@ -1,0 +1,35 @@
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.02s)
+=== RUN   TestWave19DeclarationAncestry
+    declaration_ancestry_test.go:101: raw ancestry equals checker declarations; global augmentation, library member and refusal controls pass
+--- PASS: TestWave19DeclarationAncestry (0.02s)
+=== RUN   TestWave19ResolvedCalleeAndProgramModules
+    declaration_ancestry_test.go:189: resolved signature declaration/body and program import targets agree with direct checker APIs
+--- PASS: TestWave19ResolvedCalleeAndProgramModules (0.02s)
+=== RUN   TestWave19AncestryAliasAndBindingNames
+    declaration_ancestry_test.go:243: aliases match the checker and binding-pattern ancestor names do not panic
+--- PASS: TestWave19AncestryAliasAndBindingNames (0.06s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestWave19CheckerQuestions
+=== RUN   TestWave19CheckerQuestions/false
+=== RUN   TestWave19CheckerQuestions/true
+--- PASS: TestWave19CheckerQuestions (0.03s)
+    --- PASS: TestWave19CheckerQuestions/false (0.01s)
+    --- PASS: TestWave19CheckerQuestions/true (0.02s)
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestShapeAndNameFacts
+--- PASS: TestShapeAndNameFacts (0.04s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.12s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.12s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.276s
