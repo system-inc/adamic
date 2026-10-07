@@ -139,3 +139,13 @@ No module configuration or shared files were changed. nproc remains 5.
 No new native source analysis, corpus comparison, sanitizer result, mutant or
 lint timing was obtained. All fifteen previously completed ports remain pushed
 at 8180b758. This recheck leaves the same three claims unfinished.
+
+### Sixth batch reporting progress
+
+The branch remains rebased onto origin/main e8ba3d5d and the previous fifteen
+ports remain green at f4bd9c34. Reporting portions of these three claims are
+now implemented in wave_26_react_reporting/, with native, source Node, emitted
+JavaScript, sanitizer and diagnostic-only mutant agreement. Their source
+analyses are still unfinished and explicitly refuse with NotYet. This is not
+a completion claim. See wave_26_react_reporting/REPORT.md for the precise
+reporting-only scope and missing HIR engineering work. No further rules claimed.
