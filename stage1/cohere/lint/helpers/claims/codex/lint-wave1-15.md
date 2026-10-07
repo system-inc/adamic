@@ -87,3 +87,11 @@ Six consumers: better-tailwindcss/enforce-canonical-classes, enforce-consistent-
 Withdrawn: DesignSystemForProgram. The current-main probe again refuses Mutex with TS2305 and emits no binary. Go's four focused cache tests pass, establishing identity, failed-result reuse and parallel build-once behavior that a serial substitute would not preserve. No production cache source or readiness claim is delivered. The reservation is released for a worker with the required program/filesystem/loaded-result and synchronization APIs. Stop at this measured prerequisite boundary; other helpers remain unclaimed. See wave15/design_system_cache/REPORT.md.
 
 Final retained helpers: parseCSSString, parseCSSDeclaration and regexp.parseFlags, all independently four-way tested and pushed. No shared harness or compiler files are edited.
+
+## Import specifier node continuation
+
+Both owned branches contain main 71d7e491 and lint area b28757f3, with fresh owned four-way witnesses and all mutants pushed. The broad octal refusal is explicitly recorded as the Adamic parser-recovery gap. Refreshed 770 origin refs and inspected every helper claim file; SpecifierNode is unclaimed. The 24-consumer comment bundle is already delivered, and the six-consumer DesignSystemForProgram cache is actively reclaimed by slot 05. All larger concrete helpers are reserved. Reserve a highest remaining count tie, three consumers, before code:
+
+- github.com/system-inc/cohere/internal/lint/ecmascript/imports.SpecifierNode
+
+File: wave15/import_specifier/specifier_node.a. Consumers: nexus/boundary-no-internal-import, nexus/boundary-no-nexus-outside-import and nexus/boundary-no-project-import. Preserve nil, import module-specifier identity, first call-argument identity regardless of whether it is a literal/import call, and self fallback. Numeric supplied-node facts and stable node handles carry the parser's links; no repeated parser fetch or node-table traversal. Compare the actual Go helper during every consuming rule's tests plus shape/identity controls on source Node, emitted JavaScript and sanitized native. Require a compiling call-argument omission mutant caught only by output comparison. Three prerequisite edges, zero whole-rule readiness promised. Claim pushed before implementation.
