@@ -29,7 +29,8 @@ var prelude string
 // is ever shadowed silently.
 type sourceFS struct {
 	vfs.FS
-	overlay map[string]string
+	overlay   map[string]string
+	nodeTypes bool
 }
 
 // adamicFile is the .a file behind a path the checker asked for, when there is one and no real .ts
@@ -65,6 +66,9 @@ func (s *sourceFS) FileExists(path string) bool {
 
 func (s *sourceFS) ReadFile(path string) (string, bool) {
 	if path == preludePath {
+		if s.nodeTypes {
+			return nodePrelude(), true
+		}
 		return prelude, true
 	}
 	if source, exists := s.overlay[path]; exists {

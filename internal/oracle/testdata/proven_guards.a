@@ -1,0 +1,71 @@
+type Leaf = { readonly kind: 'leaf'; readonly value: number };
+type Branch = { readonly kind: 'branch'; readonly label: string };
+type Node = Leaf | Branch;
+
+function isLeaf(node: Node): node is Leaf {
+	return node.kind === 'leaf';
+}
+function isBranch(node: Node): node is Branch {
+	if (node.kind !== 'branch') {
+		return false;
+	}
+	return true;
+}
+function show(node: Node): string {
+	if (isLeaf(node)) {
+		return `leaf ${node.value + 1}`;
+	}
+	return `branch ${node.label}`;
+}
+const nodes: readonly Node[] = [
+	{ kind: 'leaf', value: 4 },
+	{ kind: 'branch', label: 'oak' },
+	{ kind: 'leaf', value: 9 },
+];
+for (const node of nodes) {
+	console.log(show(node));
+	if (!isBranch(node)) {
+		console.log(`not branch ${node.value}`);
+	} else {
+		console.log(`branch ${node.label}`);
+	}
+}
+const leaves = nodes.filter((node: Node): node is Leaf => node.kind === 'leaf');
+console.log(leaves.map((leaf) => `${leaf.value}`).join(','));
+const namedLeaves = nodes.filter(isLeaf);
+console.log(namedLeaves.map((leaf) => `${leaf.value + 2}`).join(','));
+
+function isNumber(value: number | string): value is number {
+	return typeof value === 'number';
+}
+function primitive(value: number | string): string {
+	if (isNumber(value)) {
+		return `number ${value + 3}`;
+	}
+	return `string ${value.toUpperCase()}`;
+}
+console.log(primitive(7));
+console.log(primitive('seven'));
+
+function isText(value: string | undefined): value is string {
+	return value !== undefined;
+}
+function optional(value: string | undefined): string {
+	if (isText(value)) {
+		return value.toUpperCase();
+	}
+	return 'missing';
+}
+console.log(optional('text'));
+console.log(optional(undefined));
+
+function isAB(value: 'a' | 'b' | 'c'): value is 'a' | 'b' {
+	if (value === 'a') {
+		return true;
+	}
+	return value === 'b';
+}
+const values: readonly ('a' | 'b' | 'c')[] = ['a', 'b', 'c'];
+for (const value of values) {
+	console.log(`${value} ${isAB(value)}`);
+}
