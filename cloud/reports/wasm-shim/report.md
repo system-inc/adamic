@@ -1,10 +1,53 @@
-Built a 38-line portable WASI shim, runner, artifact import inventory, and opt-in differential tests.
-Commits: claim 7eb30502ed428eeb6b76eb1e971e4e89c2ba2b78; implementation 6b9df408cea3655e3831ca882e13aa87eaf69b34.
-Observed: 305 commands match Node WASI, 295 match source, 10 checked-source mismatches, 3 file fixtures skipped; native oracle passes.
-Mutants: omitted last iovec caught by iovecs; swallowed exit caught by exit; fake preopen caught by preopens.
-Not covered: actual browser/Workers/Deno deployment, filesystem support, clocks/randomness, or a green literal source gate for checked fixtures.
+Corrected the WASI shim oracle to use the JavaScript backend for checked fixtures, with a wrong-source control.
+Commits: prior report 01deb14f8ae47edae318ac0e5a66919dec717dd1; witness correction 6f8090e5790bbd219fba07ccf140c94045977f5f.
+Observed: corrected strict suite passes in 104.388s, with 305 three-way agreements and 3 file-access skips; package vet passes.
+Controls: writes_past_end.a source exits 0 while backend/shim exit 70; all three iovec, exit, and preopen mutants remain caught.
+Not covered: actual browser/Workers/Deno deployment, filesystem support, clocks/randomness, or another complete repository gate.
 
 # W2 report
+
+## Corrected strict rerun
+
+The user clarified the expected witness: fixtures with `checked=true` must use
+`onJavaScriptBackend`, exactly as `internal/oracle/wasi_test.go` does. Ordinary
+fixtures continue to use source Node. The strict test still compares stdout,
+stderr and exit code byte for byte under the shim, Node WASI, and that expected
+witness. It now records actual agreements separately from fixtures run.
+
+The corrected strict suite was run against witness-correction commit
+`6f8090e5790bbd219fba07ccf140c94045977f5f`:
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^TestWASIShim' \
+  -count=1 -v -timeout 30m > /tmp/wasm-shim-corrected-oracle.log 2>&1
+# exit 0, ok internal/oracle 104.388s
+# SHIM COUNTS run=305 agreed=305 skipped=3
+
+go vet ./internal/oracle > /tmp/wasm-shim-corrected-vet.log 2>&1
+# exit 0, no diagnostics
+
+git diff --check
+# exit 0, no diagnostics
+```
+
+All 305 eligible fixtures agree three ways: 295 use source Node and 10 use the
+checked backend. The three skipped file fixtures remain `write_stdout_order.a`,
+`write_stderr_order.a`, and `prompt_then_read.a`; their exact imports and the
+unchanged skip rule appear below.
+
+`TestWASIShimCheckedWitnessControl` passed in 0.24s. It verifies the existing
+`writes_past_end.a` entry is still checked, requires backend/shim agreement, and
+requires a source/shim comparison to report `exit codes differ`, with source exit
+0 and shim exit 70. This keeps the wrong-source witness detectable.
+`TestWASIShimContractsAndMutants` passed in 0.20s, catching each of the three
+requested mutants at its named assertion. `TestWASIShimRequest` passed in 0.27s.
+
+The original measurements below are retained as history. The source-only
+limitation is resolved by the clarified witness; there is no remaining red
+shim gate. No new toolchain setup or full native/repository gate was needed for
+this witness-only change. The original full oracle and existing WASI suite
+results are recorded below, and the complete shim suite was rerun uncached.
 
 Branch: `codex/wasm-shim`, starting from `origin/wasm/integrate` at
 `6f7dce3dc1eace606fe081c8f4ab12034ae11bb4`. The first pushed commit contained
@@ -44,7 +87,7 @@ The first existing native `TestWASI` invocation skipped: native clang on PATH
 could not open its WASI `libclang_rt.builtins.a`. Rerunning with SDK bin first on
 PATH passed. `native.Build` itself selects SDK clang beside the sysroot.
 
-## Commands and observed output
+## Initial commands and observed output
 
 All test output went directly to log files, without a pipeline.
 
@@ -94,16 +137,16 @@ the module's two initialized globals. The corrected check records the initialize
 baseline and requires every request to return to it. Six varied requests then
 matched both hosts and the source, with no additional live values.
 
-## Literal source gate limitation
+## Initial source-only run, superseded by the clarified brief
 
-The 10 failing fixtures all have `checked=true` in the existing oracle.
+The 10 initially failing fixtures all have `checked=true` in the existing oracle.
 For each, source Node exits 0 while the compiled command exits 70 with its
 inserted panic. Node WASI and the shim agree exactly, including that panic.
 The existing `wasi_test.go` deliberately compares these fixtures to the
-JavaScript backend, which carries the same checks. The unit request instead
-requires Node running source for every file-free fixture. Those two requirements
-are incompatible for these witnesses. The strict new test remains red and
-reports the mismatch rather than quietly changing the source witness.
+JavaScript backend, which carries the same checks. The initial brief instead
+required Node running source for every file-free fixture. The initial test stayed
+red and reported those mismatches. The user subsequently clarified that checked
+fixtures must use the JavaScript backend, matching the existing oracle.
 
 - `internal/oracle/testdata/writes_past_end.a`
 - `internal/oracle/testdata/cast_fails.a`
@@ -116,7 +159,7 @@ reports the mismatch rather than quietly changing the source witness.
 - `internal/oracle/testdata/e4eec87_f1_class_narrowed.a`
 - `internal/oracle/testdata/e4eec87_f1_alias_narrowed.a`
 
-Observed strict outcomes: 305 commands run, 3 skipped, 295 full three-way passes,
+Initial strict outcomes: 305 commands run, 3 skipped, 295 full three-way passes,
 10 source mismatches, zero shim vs Node WASI mismatches. Request reactor parity
 passes separately. There are no extra behavior-based skips. The file rule is
 conservative: any `path_*`, `fd_read`, `fd_readdir`, or `fd_filestat_get` import.
@@ -126,10 +169,10 @@ are recorded below. File access cannot be honestly provided by this host.
 
 The complete repository test gate was not run. The full touched oracle package,
 existing WASI suite, and focused runtime request test are the chosen gate scope.
-The literal strict source test cannot be declared green, so this report does
-not claim a fully green landing under that literal condition.
+The original source-only run was not green. The corrected witness policy and
+its rerun are documented in the follow-up results.
 
-## Final WASI gate
+## Earlier established WASI gate
 
 After the `origin/main` merge check, the existing oracle convention and all
 shim contracts/request checks passed:
@@ -143,8 +186,9 @@ ADAMIC_ORACLE_WASI=1 go test ./internal/oracle \
 ```
 
 This suite uses the repository's existing JavaScript-backend witness for the
-10 checked fixtures. It does not include `TestWASIShimAgreesWithNode`, whose
-literal source comparison remains red as explained above. The final log includes
+10 checked fixtures. This earlier suite did not include
+`TestWASIShimAgreesWithNode`, which still used the initial source-only brief
+at that time. Its log includes
 passing `TestWASIShimRequest` and all four contract subtests, with all three
 requested mutants caught by their named AssertionErrors. The earlier
 `/tmp/wasm-shim-contracts.log` also preserves the corrected request-baseline
@@ -206,15 +250,18 @@ That conservative artifact rule skips exactly these three fixtures:
 | `internal/oracle/testdata/write_stderr_order.a` | `args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
 | `internal/oracle/testdata/prompt_then_read.a` | `args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_open, proc_exit` |
 
-The differential command test runs 305 fixtures and skips 3. All 305 match
-`oracle/wasi.mjs` (Node WASI) in stdout, stderr and exit status. 295 also match
-Node running source. The remaining 10 are the existing `checked` fixtures:
-Adamic intentionally inserts a panic where source Node continues. Literal
-source equality for these is incompatible with the compiler's checks. The
-new oracle retains the literal source assertion and reports those 10 failures;
-it does not hide them with an extra skip or substitute the generated backend.
-The existing WASI oracle uses the JavaScript backend for `checked` fixtures.
-This is a limitation of the requested all-source gate, not a shim mismatch.
+The differential command test uses the same expected witness as
+`internal/oracle/wasi_test.go`: Node running source for ordinary fixtures, and
+`onJavaScriptBackend` for the 10 fixtures with `checked=true`. The backend
+carries Adamic's inserted checks; source Node continues where those checks panic.
+The test reports both commands run and actual three-way agreements, plus skips.
+The corrected strict run passed with `run=305 agreed=305 skipped=3`: 295
+source witnesses and 10 checked backend witnesses, with no mismatches.
+
+`TestWASIShimCheckedWitnessControl` holds `writes_past_end.a` to the checked
+backend and separately compares it to source Node. The backend and shim must
+agree with exit 70; source must exit 0 and produce `exit codes differ`. Choosing
+the source witness for a checked fixture therefore remains a detected error.
 
 `TestWASIShimRequest` compares the compiler reactor under the shim, Node WASI,
 and the source handler: empty input, Unicode, echo/reassignment, 1 KiB input,
@@ -232,7 +279,7 @@ Every control passed; every isolated mutant process exited 1 with the named
 AssertionError. The test also checks empty environment/arguments, named traps,
 stdout and stderr independently, byte counts, and memory growth.
 
-Run the literal command comparison and contract/request checks with:
+Run the command comparison and checked-witness, contract, and request checks with:
 
 ```sh
 source /workspace/adamic-tools/env.sh

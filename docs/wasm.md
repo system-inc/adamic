@@ -281,15 +281,18 @@ That conservative artifact rule skips exactly these three fixtures:
 | `internal/oracle/testdata/write_stderr_order.a` | `args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
 | `internal/oracle/testdata/prompt_then_read.a` | `args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_open, proc_exit` |
 
-The differential command test runs 305 fixtures and skips 3. All 305 match
-`oracle/wasi.mjs` (Node WASI) in stdout, stderr and exit status. 295 also match
-Node running source. The remaining 10 are the existing `checked` fixtures:
-Adamic intentionally inserts a panic where source Node continues. Literal
-source equality for these is incompatible with the compiler's checks. The
-new oracle retains the literal source assertion and reports those 10 failures;
-it does not hide them with an extra skip or substitute the generated backend.
-The existing WASI oracle uses the JavaScript backend for `checked` fixtures.
-This is a limitation of the requested all-source gate, not a shim mismatch.
+The differential command test uses the same expected witness as
+`internal/oracle/wasi_test.go`: Node running source for ordinary fixtures, and
+`onJavaScriptBackend` for the 10 fixtures with `checked=true`. The backend
+carries Adamic's inserted checks; source Node continues where those checks panic.
+The test reports both commands run and actual three-way agreements, plus skips.
+The corrected strict run passed with `run=305 agreed=305 skipped=3`: 295
+source witnesses and 10 checked backend witnesses, with no mismatches.
+
+`TestWASIShimCheckedWitnessControl` holds `writes_past_end.a` to the checked
+backend and separately compares it to source Node. The backend and shim must
+agree with exit 70; source must exit 0 and produce `exit codes differ`. Choosing
+the source witness for a checked fixture therefore remains a detected error.
 
 `TestWASIShimRequest` compares the compiler reactor under the shim, Node WASI,
 and the source handler: empty input, Unicode, echo/reassignment, 1 KiB input,
@@ -307,7 +310,7 @@ Every control passed; every isolated mutant process exited 1 with the named
 AssertionError. The test also checks empty environment/arguments, named traps,
 stdout and stderr independently, byte counts, and memory growth.
 
-Run the literal command comparison and contract/request checks with:
+Run the command comparison and checked-witness, contract, and request checks with:
 
 ```sh
 source /workspace/adamic-tools/env.sh
