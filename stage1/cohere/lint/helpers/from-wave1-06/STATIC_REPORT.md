@@ -1,3 +1,5 @@
+Withdrawn duplicate: slot 03 994ff553 (02:42:32 UTC) precedes fa760462 (02:43:24 UTC). The passing results below are historical and do not count as additional delivery.
+
 Built collapse.FrameworkStaticReading in one .a file: six prerequisite entries removed across six Tailwind rules, zero final blockers alone.
 Commits: fa760462 claimed before code; b07ef13e/bed0dfb8 are the withdrawn NewTheme duplicate, not additional delivery.
 Commands: parity PASS 15.99s, 3,036 cases, 893 registrations including three controls, 75,326 identical bytes; owned package vet clean; six external Node oracle fixtures PASS 10.132s.
