@@ -1,6 +1,14 @@
 // heap.c: allocation, counting and freeing for every heap value (docs/memory.md).
 
+#ifdef ADAMIC_TARGET_WASI
+// Keep the inline path and also supply the request host's ownership export.
+#define adamic_release adamic_release_inline
+#endif
 #include "adamic.h"
+#ifdef ADAMIC_TARGET_WASI
+#undef adamic_release
+void adamic_release(void *value) { adamic_release_inline(value); }
+#endif
 #include "count.h"
 
 #include <stdint.h>

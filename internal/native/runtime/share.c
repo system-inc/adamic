@@ -8,7 +8,12 @@
 static pthread_mutex_t sharing = PTHREAD_MUTEX_INITIALIZER;
 typedef struct { void **values; size_t count; size_t capacity; void **seen; size_t seen_count; size_t seen_capacity; } pending_values;
 static size_t seen_slot(void *value, size_t capacity) {
+#ifdef ADAMIC_TARGET_WASI
+	// Widen before the 64-bit hash shifts; wasm32 pointers have only 32 bits.
+	uint64_t hash = (uintptr_t)value >> 3;
+#else
 	uintptr_t hash = (uintptr_t)value >> 3;
+#endif
 	hash ^= hash >> 33; hash *= UINT64_C(0xff51afd7ed558ccd); hash ^= hash >> 33;
 	return (size_t)hash & (capacity - 1);
 }
