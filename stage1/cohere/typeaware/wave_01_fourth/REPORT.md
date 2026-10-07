@@ -453,3 +453,45 @@ The complete stage-1 gate, including the 17 newly required external correctness
 comparisons, was not run for this isolated helper. No check was disabled,
 relaxed, deleted or invoked with missing inputs and called green. Existing
 completed-rule corpus gates were not repeated and remain separately recorded.
+
+## Await head-range and joined rendering continuation
+
+Added require_await/head.a. Adamic selects a property parent's head before an
+arrow token, otherwise skips export/default/declare modifiers while preserving
+class-member modifiers, uses the name end or opening parameter parenthesis,
+and retains Go's short-head fallback. All scanning uses the supplied raw byte
+array, so it does not reinterpret Go byte spans as string indexes. Raw modifier
+text is used, with no string-kind relevance dispatch.
+
+The independent Go overlay parses 32 controls, captures raw token/name/parent
+spans and modifier text, and invokes unchanged checkRequireAwait. The native
+test joins head selection, whitespace/semicolon repair and finding rendering.
+It derives async token start from its supplied keyword end, builds the full
+removeAsync suggestion, and matches complete canonical finding/suggestion/
+repair bytes. No Go expected head, replacement, ID or message is supplied to
+that native pipeline. Controls cover property arrows, class-field functions,
+private/static modifiers, nested initializers, generic arrows, numeric names,
+export comments, Unicode names/prefixes and the prior repair/name shapes.
+
+The property-parent mutant disables that branch. Native and mutant compile
+and exit zero with empty ASan/UBSan/LSan stderr; only Go byte comparison rejects
+the mutant. Exact captures, expected streams and results are in
+validation/await-head.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_01_fourth/testdata/verify_await_head.py /workspace/wave01-await-head /workspace/wave-01-fourth-adamic > /tmp/wave01-await-head.log 2>&1
+```
+
+Output: PASS 32 Go head ranges and full finding/suggestion bytes; sanitizer-clean
+property-parent mutant caught by bytes. gofmt and git diff --check pass. Current
+main and area bases are unchanged. Claim status was refreshed without taking
+new rules. No shared files were edited.
+
+This uses captured Go AST/token spans and does not validate native parser fact
+delivery. Await body gating and contextual/declared-generic/heritage promise
+demand are not integrated here; checker-demand analysis remains unfinished.
+Atomic full integration and symbol shared-driver integration remain unfinished.
+No full-rule timing, new checker-handle coverage, complete stage-1 gate or the
+17 external correctness comparisons are claimed. No check was relaxed or skipped
+and called green. Existing completed-rule gates were unchanged and not repeated.

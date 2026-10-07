@@ -1,0 +1,58 @@
+export class AwaitModifier {
+    readonly text: string;
+    readonly end: number;
+    constructor(text: string, end: number) {
+        this.text = text;
+        this.end = end;
+    }
+}
+export class AwaitHeadRange {
+    readonly start: number;
+    readonly end: number;
+    constructor(start: number, end: number) {
+        this.start = start;
+        this.end = end;
+    }
+}
+function skipSpaces(bytes: readonly number[], start: number): number {
+    let index = start;
+    while(index < bytes.length) {
+        const byte = bytes[index];
+        if(byte !== 32 && byte !== 9 && byte !== 10 && byte !== 13) {
+            break;
+        }
+        index++;
+    }
+    return index;
+}
+function parameters(bytes: readonly number[], start: number, end: number): number {
+    for(let index = start; index < end && index < bytes.length; index++) {
+        if(bytes[index] === 40) {
+            return index;
+        }
+    }
+    return start;
+}
+export function awaitHead(bytes: readonly number[], nodeStart: number, nodeEnd: number, parentStart: number, arrowStart: number, arrowEnd: number, nameEnd: number, modifiers: readonly AwaitModifier[]): AwaitHeadRange {
+    if(parentStart >= 0) {
+        return new AwaitHeadRange(parentStart, parameters(bytes, parentStart, nodeEnd));
+    }
+    if(arrowStart >= 0) {
+        return new AwaitHeadRange(arrowStart, arrowEnd);
+    }
+    let start = nodeStart;
+    for(const modifier of modifiers) {
+        if(!['export', 'default', 'declare'].includes(modifier.text)) {
+            break;
+        }
+        if(modifier.end > start) {
+            start = modifier.end;
+        }
+    }
+    start = skipSpaces(bytes, start);
+    let end = nameEnd >= 0 ? nameEnd : parameters(bytes, start, nodeEnd);
+    if(end <= start) {
+        end = start + 5;
+    }
+    return new AwaitHeadRange(start, end);
+}

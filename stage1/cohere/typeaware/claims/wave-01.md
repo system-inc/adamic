@@ -85,8 +85,8 @@ and corrected in all nine manifests.
 
 Fourth-batch status: partial, not finished and not parked.
 - symbol-description: native supplied-node listener and raw bridge question tested using captured syntax; shared native-driver integration pending.
-- require-atomic-updates: native transfer/meet kernel tested; event collection and full-rule analysis pending.
-- require-await: native numeric syntax kernel tested; checker-demand analysis, diagnostic/suggestion rendering and full-rule replay pending.
+- require-atomic-updates: native transfer/meet, solver, deferrals, syntax, escape guard/cache and rendering tested; CFG/event collection, binding/capture facts and full integration pending.
+- require-await: native syntax kernel and joined head/repair/finding/suggestion pipeline tested with captured Go syntax; checker-demand analysis, native fact delivery and full-rule replay pending.
 
 The exact observations and limits are in wave_01_fourth/REPORT.md. No next batch
 will be claimed while these three remain incomplete.
