@@ -176,12 +176,11 @@ func buildLayoutFixture(t *testing.T) *layoutFixture {
 	})
 	program := lowerTask.await(t)
 	// Emit once; both native modes still compile separately with their original flags.
-	// Five split workers match the measured gate box; observations are never cached.
 	source := native.C(program)
 	sanitizedBuild := startFixtureTask(&workers, func() (string, error) {
-		return nativeBinaryResult(source, native.Options{Sanitize: true, Split: true, Jobs: 5})
+		return nativeBinaryResult(source, native.Options{Sanitize: true})
 	})
-	releaseBuild := startFixtureTask(&workers, func() (string, error) { return nativeBinaryResult(source, native.Options{Split: true, Jobs: 5}) })
+	releaseBuild := startFixtureTask(&workers, func() (string, error) { return nativeBinaryResult(source, native.Options{}) })
 	want := listTask.await(t)
 	clean(t, "Go list fixtures", want)
 	// Width slots are retained only for the canonical Go/fork doc protocol.

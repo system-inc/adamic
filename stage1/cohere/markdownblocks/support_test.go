@@ -33,7 +33,6 @@ var formatterError error
 type artifactKey struct {
 	source   [32]byte
 	sanitize bool
-	split    bool
 }
 
 type artifactBuild struct {
@@ -91,12 +90,12 @@ func nativeBinary(t *testing.T, source string, sanitize bool) string {
 }
 
 func nativeBinaryResult(source string, options native.Options) (string, error) {
-	key := artifactKey{source: sha256.Sum256([]byte(source)), sanitize: options.Sanitize, split: options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1"}
+	key := artifactKey{source: sha256.Sum256([]byte(source)), sanitize: options.Sanitize}
 	pending := &artifactBuild{done: make(chan struct{})}
 	actual, loaded := artifacts.LoadOrStore(key, pending)
 	build := actual.(*artifactBuild)
 	if !loaded {
-		build.binary = filepath.Join(artifactDirectory, fmt.Sprintf("%x-%t-%t", key.source, key.sanitize, key.split))
+		build.binary = filepath.Join(artifactDirectory, fmt.Sprintf("%x-%t", key.source, key.sanitize))
 		build.err = native.Build(source, build.binary, options)
 		close(build.done)
 	}
