@@ -56,8 +56,9 @@ func run(row string, countOnly bool, out *bufio.Writer) int {
 			panic("cohere report shape changed")
 		}
 		fmt.Fprint(out, display[:footer])
-        if len(d.Fixes) != 0 { panic("new rules unexpectedly have automatic fixes") }
+
         fmt.Fprintf(out, "range %d %d %s\n", start, end, d.Message.Id)
+        for _, fix := range d.Fixes { fmt.Fprintf(out, "fix %d %d\t%s\n", fix.Range.Pos(), fix.Range.End(), written(fix.Text)) }
         for _, suggestion := range d.Suggestions {
             fmt.Fprintf(out, "suggestion\t%s\t%s\n", suggestion.Message.Id, written(suggestion.Message.Description))
             for _, fix := range suggestion.Fixes {

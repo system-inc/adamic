@@ -1,0 +1,6 @@
+{
+ "name":"@typescript-eslint/no-restricted-types",
+ "kinds":["TypeReference","TupleType","TypeLiteral","BigIntKeyword","BooleanKeyword","NeverKeyword","NullKeyword","NumberKeyword","ObjectKeyword","StringKeyword","SymbolKeyword","UndefinedKeyword","UnknownKeyword","VoidKeyword"],
+ "visit":"visit","factory":"create","class":"Rule","oracle":"oracleRestrictedTypes",
+ "upstreamPackage":"typescript","upstreamTest":"TestNoRestrictedTypes"
+}

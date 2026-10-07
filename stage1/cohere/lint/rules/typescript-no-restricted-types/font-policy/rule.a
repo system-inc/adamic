@@ -1,0 +1,21 @@
+// Shared JSX parsing supplies this data. This module does not parse JSX source.
+export class Element {
+    readonly tag: string;
+    readonly href: string;
+    readonly hasHref: boolean;
+    constructor(tag: string, href: string, hasHref: boolean) {
+        this.tag = tag; this.href = href; this.hasHref = hasHref;
+    }
+}
+export function evaluate(element: Element): string {
+    if(element.tag !== 'link' || !element.hasHref || !element.href.startsWith('https://fonts.googleapis.com/css')) return '';
+    const question = element.href.indexOf('?');
+    if(question < 0) return 'googleFontDisplayMissing';
+    for(const pair of element.href.slice(question + 1).split('&')) {
+        const equals = pair.indexOf('=');
+        if(equals < 0 || pair.slice(0, equals) !== 'display') continue;
+        const value = pair.slice(equals + 1);
+        return ['auto', 'block', 'fallback'].includes(value) ? 'googleFontDisplayNotRecommended' : '';
+    }
+    return 'googleFontDisplayMissing';
+}

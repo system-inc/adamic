@@ -20,8 +20,8 @@ export class Suggestion {
 }
 export class SuggestedFinding extends Finding {
     readonly suggestions: readonly Suggestion[];
-    constructor(rule: string, id: string, message: string, start: number, end: number, suggestions: readonly Suggestion[]) {
-        super(rule, id, message, start, end, '', '', '');
+    constructor(rule: string, id: string, message: string, start: number, end: number, suggestions: readonly Suggestion[], repair = '', replacement = '') {
+        super(rule, id, message, start, end, repair, replacement, '');
         this.suggestions = suggestions;
     }
 }

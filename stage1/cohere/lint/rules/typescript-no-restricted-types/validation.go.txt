@@ -1,0 +1,51 @@
+func TestRestrictedTypesParity(t *testing.T) {
+ var rows []string
+ const name="@typescript-eslint/no-restricted-types"
+ for _,row:=range upstream(t) { if strings.Split(row,"\t")[1]==name { rows=append(rows,row+"\tapply") } }
+ t.Logf("restricted type upstream cases: %d",len(rows))
+ source:=ownedWitnesses(t,".","typescript-no-restricted-types")[0]
+ for _,options:=range []string{
+  `{"types":{"Foo":{"fixWith":"Baz","suggest":["Bar","Qux"]},"[]":true,"{}":true,"string":true}}`,
+  `{"types":{"Foo":false,"Foo<Bar>":true,"Bar":null,"[]":true,"{}":true,"string":"Use text."}}`,
+  `{"types":{"Foo":{"suggest":["","A|B","A:B"]}}}`,
+ } {rows=append(rows,source+"\t"+name+"\t\t\tfalse\t"+options+"\tapply")}
+ directory,err:=filepath.Abs(".");if err!=nil {t.Fatal(err)}
+ compare(t,goOracle(t),buildPort(t,directory,true),directory,manifest(t,rows))
+}
+func TestRestrictedTypesMutant(t *testing.T) {
+ source:=ownedWitnesses(t,".","typescript-no-restricted-types")[0]
+ path:=manifest(t,[]string{source+"\t@typescript-eslint/no-restricted-types\t\t\tfalse\t"+`{"types":{"Foo":false,"string":true}}`})
+ want:=execute(t,"",goOracle(t),"--manifest",path).output
+ directory:=mutant(t,"ban === undefined || ban.allowed","ban === undefined","rules/typescript-no-restricted-types/rule.a")
+ for _,side:=range []struct{name string;run execution}{
+  {"Node",node(t,directory,path,false)}, {"emitted JavaScript",emitted(t,directory,path)},
+  {"sanitized native",execute(t,"",buildPort(t,directory,true),"--manifest",path)},
+ } {if bytes.Equal(side.run.output,want){t.Fatalf("mutant survived on %s",side.name)};t.Logf("allowed ban mutant caught only by output comparison on %s: %s",side.name,difference(side.run.output,want))}
+}
+func TestRestrictedTypesCompiler(t *testing.T) {
+ source:=os.Getenv("ADAMIC_TYPESCRIPT_SOURCE");if source=="" {t.Fatal("missing compiler checkout")}
+ var rows []string
+ for _,root:=range []string{filepath.Join(source,"src/compiler"),filepath.Join(repository,"stage1")} {
+  err:=filepath.WalkDir(root,func(path string,entry fs.DirEntry,err error)error {
+   if err!=nil{return err};if !entry.IsDir()&&(strings.HasSuffix(path,".ts")||strings.HasSuffix(path,".a")) {
+    absolute,err:=filepath.Abs(path);if err!=nil{return err}
+    rows=append(rows,absolute+"\t@typescript-eslint/no-restricted-types\t\t\tfalse\t"+`{"types":{"unknown":true,"object":true,"Function":true,"{}":true,"[]":true}}`)
+   };return nil
+  });if err!=nil {t.Fatal(err)}
+ }
+ t.Logf("restricted types compiler/stage1: %d files",len(rows))
+ directory,err:=filepath.Abs(".");if err!=nil {t.Fatal(err)}
+ compare(t,goOracle(t),buildPort(t,directory,true),directory,manifest(t,rows))
+}
+func TestRestrictedTypesThroughput(t *testing.T) {
+ source:=ownedWitnesses(t,".","typescript-no-restricted-types")[0]
+ var rows []string
+ for index:=0;index<1000;index++ {rows=append(rows,source+"\t@typescript-eslint/no-restricted-types\t\t\tfalse\t"+`{"types":{"Foo":true,"[]":true,"{}":true,"string":true}}`)}
+ path:=manifest(t,rows);directory,err:=filepath.Abs(".");if err!=nil {t.Fatal(err)}
+ var want []byte
+ for _,side:=range []struct{name string;run execution}{
+ {"Go",execute(t,"",goOracle(t),"--manifest",path,"--count")},
+ {"native",execute(t,"",buildPort(t,directory,false),"--manifest",path,"--count")},
+ {"Node",node(t,directory,path,true)},
+ } {if want==nil{want=side.run.output};if !bytes.Equal(want,side.run.output){t.Fatal("counts differ")};var count int;fmt.Sscan(string(want),&count);t.Logf("%s %d findings, %s, %.2f findings/s (1000 owned witnesses)",side.name,count,side.run.duration,float64(count)/side.run.duration.Seconds())}
+}
