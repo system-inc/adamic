@@ -251,3 +251,68 @@ manual-memoization reactive scopes also remain missing. Full React findings,
 fixes/suggestions, full-rule mutants, checker-handle tests and full-rule timings
 remain unverified. The full repository gate was not rerun; the owned kernel
 oracle and both backends cover this change. No further claims were made.
+
+## Refs environment continuation
+
+Landing checked first: wave 04 was already rebased, green and pushed on current
+main `e8ba3d5d`, with remote SHA `a8c569a2`. No branch was pushed except
+`codex/typeaware-wave-04`. No new rules were claimed.
+
+`refs_environment.a` ports the production `refsEnvironment` helpers: ref identity
+allocation, one-step temporary resolution, definition/access-node transport,
+source/cached/property names, declaration lookup and monotone widening. Native
+values, nodes, identifiers and declarations use arena indices; maps do not own
+recursive graphs. Declaration ID zero and node index zero are valid values.
+`set` preserves Go's argument order, stores initial none without marking a change,
+uses convergence equality rather than ref identity, and caches non-none results
+against both the original and resolved declarations. `get` prefers direct
+resolved data, then the original declaration, then the resolved declaration.
+
+The owned Go overlay calls the unmodified production helpers on four operation
+traces. Forty-one steps produce 451 records / 9,943 bytes. Controls exercise
+initial none, reset/change state, repeated distinct refs, widening with none,
+shared declarations, aliases onto unnamed temporaries, access-node precedence,
+source-name precedence, empty-name/property preservation, missing bindings and
+identity allocation. Go, native, ASan/UBSan/leaks, source Node and emitted
+JavaScript agree byte for byte with empty native/Node stderr.
+
+Six sanitized environment mutants compile and exit zero with empty stderr and
+the same record count; only the Go byte comparison catches them: ignore alias
+resolution, query the wrong declaration, suppress change state, mark initial
+none as changed, discard the incoming widening value, and lose access-node
+transport. These are partial environment mutants, not a full refs rule mutant.
+
+The first normal build refused a string `||` expression. The owned implementation
+now uses Go's explicit name-selection branch; no compiler files changed. The
+first declaration mutant used `false`, which prevented TypeScript narrowing and
+failed compilation. It was replaced with a type-correct wrong-key lookup and
+rerun; the compiler failure is not counted as a killed oracle mutant. Both initial
+failures are retained in evidence.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 stage1/cohere/typeaware/wave_04_react/validate_refs_environment.py /workspace/typeaware-wave-04-react/refs-environment-release > /workspace/typeaware-wave-04-react/refs-environment-release.log 2>&1
+```
+
+The command prints `PASS partial refs environment: 451 records, 9943 bytes`.
+Inputs, exact output streams, build logs, source hashes, mutants and initial
+failures are in [evidence/refs-environment](evidence/refs-environment). This uses
+the fresh stage 0 built for main `e8ba3d5d`; the six finished rule runners do not
+import this new environment. No shared harness, generator or bridge dispatch
+was edited.
+
+A fresh inventory of 466 origin refs finds wave 21's `wave21_react/hir.a`, whose
+header explicitly says graph production from source is a separate adapter. Its
+input model is preserved in evidence. This updates the earlier dependency claim:
+a native HIR input model exists, but it does not supply source lowering, SSA or
+the three complete pipelines needed here. The inventory is a filename search,
+not exhaustive semantic inspection.
+
+Uncovered: connecting source/HIR to the environment, checker ref-type facts,
+instruction transfer and the ten-round sweep, purity aliases/captures, and
+manual-memoization reactive scopes. These three claimed React rules remain
+incomplete, with explicit source-analysis refusals. No full React findings,
+fixes/suggestions, full-rule mutants, checker-handle tests or full-rule timings
+are claimed. The full gate was not rerun for this owned kernel. Earlier complete
+ports, released-handle checks and native/Go timing remain in the landing report.
+No further claims were made.

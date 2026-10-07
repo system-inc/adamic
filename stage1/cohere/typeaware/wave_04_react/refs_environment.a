@@ -1,0 +1,88 @@
+// Partial refs environment. Nodes, identifiers and declarations are arena indices.
+import { RefValues } from './refs_value.a';
+export class RefBinding {
+    readonly name: string;
+    readonly declaration: number;
+    readonly present: boolean;
+    constructor(name: string, declaration: number, present = true) {
+        this.name = name; this.declaration = declaration; this.present = present;
+    }
+}
+export class RefEnvironment {
+    readonly arena = new RefValues();
+    readonly data = new Map<number,number>();
+    readonly temporaries = new Map<number,number>();
+    readonly names = new Map<number,string>();
+    readonly propertyNames = new Map<number,string>();
+    readonly accessNodes = new Map<number,number>();
+    readonly declarations = new Map<number,number>();
+    readonly byDeclaration = new Map<number,number>();
+    readonly bindings: readonly RefBinding[];
+    changed = false;
+    refIdSeed = 0;
+    constructor(bindings: readonly RefBinding[]) { this.bindings = bindings; }
+    nextRefId(): number { this.refIdSeed += 1; return this.refIdSeed; }
+    operandId(key: number): number { return this.temporaries.get(key) ?? key; }
+    define(key: number, value: number): void {
+        const resolved = this.operandId(value);
+        this.temporaries.set(key,resolved);
+        const node = this.accessNodes.get(resolved) ?? this.accessNodes.get(value);
+        if(node !== undefined) { this.accessNodes.set(key,node); }
+    }
+    carryAccessNode(to: number, from: number): void {
+        const node = this.accessNodes.get(this.operandId(from)) ?? this.accessNodes.get(from);
+        if(node !== undefined) { this.accessNodes.set(to,node); }
+    }
+    bindingName(id: number): string {
+        const binding = this.bindings[id];
+        return binding?.present === true ? binding.name : '';
+    }
+    setName(target: number, source: number): void {
+        const name = this.bindingName(source);
+        if(name !== '') { this.names.set(target,name); }
+    }
+    setName2(target: number, name: string): void {
+        if(name !== '') { this.names.set(target,name); }
+    }
+    setPropertyName(target: number, property: string): void {
+        if(property !== '') { this.propertyNames.set(target,property); }
+    }
+    nameOf(id: number): string {
+        const name = this.bindingName(id);
+        if(name !== '') { return name; }
+        return this.names.get(id) ?? '';
+    }
+    get(key: number): number {
+        const resolved = this.operandId(key);
+        if(this.data.has(resolved)) { return this.data.get(resolved) ?? -1; }
+        for(const candidate of [key,resolved]) {
+            const declaration = this.declarations.get(candidate);
+            if(declaration !== undefined && this.byDeclaration.has(declaration)) {
+                return this.byDeclaration.get(declaration) ?? -1;
+            }
+        }
+        return -1;
+    }
+    set(key: number, value: number): void {
+        const resolved = this.operandId(key);
+        const hadCurrent = this.data.has(resolved);
+        const current = this.data.get(resolved) ?? -1;
+        this.arena.nextRefId = this.refIdSeed + 1;
+        const widened = this.arena.join(value,current);
+        this.refIdSeed = this.arena.nextRefId - 1;
+        const kind = this.arena.values[widened]?.kind ?? -1;
+        if(!hadCurrent && kind === 0) { this.data.set(resolved,widened); return; }
+        if(!hadCurrent || !this.arena.equal(current,widened)) { this.changed = true; }
+        this.data.set(resolved,widened);
+        if(kind !== 0) {
+            for(const candidate of [key,resolved]) {
+                const declaration = this.declarations.get(candidate);
+                if(declaration !== undefined) { this.byDeclaration.set(declaration,widened); }
+            }
+        }
+    }
+    noteDeclaration(id: number): void {
+        const binding = this.bindings[id];
+        if(binding?.present === true && binding.name !== '') { this.declarations.set(id,binding.declaration); }
+    }
+}
