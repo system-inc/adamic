@@ -1,0 +1,24 @@
+/* eslint-disable nexus/consistency-require-type-suffix -- Keep the integration probe's original Box interface spelling. */
+// A read the checker narrowed to present, made undefined again by a call: on Node it throws a
+// TypeError, which the catch around it takes.
+interface Box {
+    value: number;
+}
+let current: Box | undefined = { value: 1 };
+function clear(): void {
+    current = undefined;
+}
+function run(): string {
+    try {
+        if(current !== undefined) {
+            clear();
+            return `read ${current.value}`;
+        }
+        return 'absent';
+    }
+    catch {
+        return 'caught';
+    }
+}
+console.log(run());
+console.log('after');

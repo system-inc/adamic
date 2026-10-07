@@ -5,6 +5,7 @@
 // character they make together, as JavaScript sees them: String.fromCharCode(0xd83c, 0xdf0d) is 🌍.
 
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -105,7 +106,7 @@ adamic_string *adamic_string_from_code_points(size_t count, const double values[
 			}
 			memcpy(message, prefix, sizeof prefix - 1);
 			memcpy(message + sizeof prefix - 1, written->bytes, written->length);
-			adamic_panic(message, length);
+			adamic_uncaught_library_error(message, length);
 		}
 		codes_point(&buffer, (unsigned)value);
 	}

@@ -1,0 +1,23 @@
+// Repeat uses UTF-16 length and rejects either infinity even for empty text.
+function repeat(text: string, count: number): void {
+    try {
+        console.log(`[${text.repeat(count)}]`);
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(error.toString());
+    }
+}
+repeat('', -Infinity);
+repeat('', Infinity);
+repeat('', 1e15);
+repeat('🌍', 268435445);
+repeat('\ud800', 536870889);
+repeat('é', -0.9);
+repeat('é', NaN);
+repeat('🌍', 2.9);
+try {
+    console.log(String.prototype.repeat.call('🌍', -Infinity));
+}
+catch(error) {
+    if(error instanceof RangeError) console.log(error.message);
+}

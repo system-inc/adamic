@@ -9,6 +9,7 @@
 #define _POSIX_C_SOURCE 200809L
 
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <stdint.h>
 #include <sys/resource.h>
@@ -52,5 +53,5 @@ __attribute__((constructor)) static void find_stack_limit(void) {
 
 _Noreturn void adamic_stack_overflow(void) {
 	static const char message[] = "RangeError: Maximum call stack size exceeded";
-	adamic_panic(message, sizeof message - 1);
+	adamic_uncaught_library_error(message, sizeof message - 1);
 }

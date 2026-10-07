@@ -13,6 +13,18 @@ import (
 // typeOf is what's left at runtime of the type the checker proved for a node: a number, a boolean or
 // a string. A union counts when every member is the same one ('Fizz' | 'Buzz' is a string).
 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
+	if l.isErrorCause(node) && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUnknown != 0 {
+		return ir.Union, nil
+	}
+	if ast.IsIdentifier(node) && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUnknown != 0 {
+		if symbol := l.symbol(node); symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
+			initial := symbol.Declarations[0].AsVariableDeclaration().Initializer
+			if initial != nil && l.isErrorCause(initial) && symbol.Declarations[0].Parent.Flags&ast.NodeFlagsConst != 0 {
+				return ir.Union, nil
+			}
+		}
+	}
+
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
 		return valueType, nil
 	}
@@ -521,6 +533,9 @@ func fit(value ir.Expression, to ir.Type) ir.Expression {
 	if to == ir.Weak && value != nil && value.Type() != ir.Weak {
 		return ir.WeakOf{Value: value}
 	}
+	if _, isNull := value.(ir.Null); isNull && to == ir.Union {
+		return ir.Null{Of: ir.Union}
+	}
 	if to == ir.Union && value != nil && value.Type() != ir.Union {
 		return ir.Box{Value: value}
 	}
@@ -640,7 +655,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: value.Type() != ir.Union && !l.includesNull(l.checker.GetTypeAtLocation(operand))})
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}

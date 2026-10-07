@@ -38,6 +38,10 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+
+	// ReadyErrors constructs nominal ReferenceErrors for checked global reads and writes.
+	// These hidden throws participate in MayThrow and use the ordinary cleanup paths.
+	ReadyErrors map[int]Call
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
@@ -83,6 +87,10 @@ type Function struct {
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool
+	// LibraryGuarded is a generated wrapper whose checks throw before a library argument fails.
+	LibraryGuarded bool
+	// StackGuarded replaces the fatal entry check with an ordinary IR throw.
+	StackGuarded bool
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of
@@ -207,6 +215,9 @@ type (
 		Local   int
 		Of      Type
 		Checked bool
+		// NoMove preserves a required ownership snapshot of the source slot.
+		// Proving a global initialized does not change its ownership handoff.
+		NoMove bool
 	}
 
 	// Call calls a function. Returns is its result type, 0 for void.
@@ -216,7 +227,13 @@ type (
 		Returns   Type
 
 		// Virtual is a one-based method slot. Function supplies its static signature.
-		Virtual  int
+		Virtual int
+
+		// Pure says the call cannot invalidate borrowed operand reads on its
+		// successful path, and returns its own counted result. A throwing path
+		// stops evaluation and therefore never uses those borrowed reads again.
+		// Generated guards around pure primitives establish this fact.
+		Pure     bool
 		Accessor string
 		Setter   bool
 	}
@@ -255,6 +272,9 @@ type (
 
 	// Concat joins strings, as + and template literals do.
 	Concat struct{ Parts []Expression }
+
+	// StackExceeded tests the native stack margin; JavaScript checks its own stack.
+	StackExceeded struct{}
 
 	// Conditional is the ?: operator.
 	Conditional struct {
@@ -411,7 +431,11 @@ type (
 	MaybeToString struct{ Value Expression }
 
 	// Box is Value where a Union goes: a number boxed, a boolean as its box, a reference as itself.
-	Box struct{ Value Expression }
+	Box struct {
+		Value Expression
+		// Nullable references have NULL for null, rather than undefined, before boxing.
+		Nullable bool
+	}
 
 	// Narrow is a Union the checker has proven to be one member (by typeof, ===, or assignment), as
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
@@ -776,6 +800,7 @@ func (BooleanConstant) Type() Type { return Boolean }
 func (StringConstant) Type() Type  { return String }
 func (NumberToString) Type() Type  { return String }
 func (BooleanToString) Type() Type { return String }
+func (StackExceeded) Type() Type   { return Boolean }
 func (Concat) Type() Type          { return String }
 func (c Conditional) Type() Type {
 	if c.Of != 0 {

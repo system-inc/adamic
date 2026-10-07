@@ -169,7 +169,7 @@ func (l *lowering) prepareSuper(constructor *ast.Node, initializer int) (uint8, 
 }
 
 func (l *lowering) superError(message string) ir.Statement {
-	return ir.Throw{Value: ir.MakeError{Message: ir.StringConstant{Index: l.constant(message)}, Name: ir.StringConstant{Index: l.constant("ReferenceError")}}}
+	return ir.Throw{Value: l.generatedError("ReferenceError", message)}
 }
 
 func (l *lowering) superEnd() ir.Statement {

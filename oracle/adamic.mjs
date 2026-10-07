@@ -28,7 +28,9 @@ process.on('uncaughtException', (error) => {
 		process.exit(70);
 	}
 	panicking = true;
-	const message = error instanceof AdamicPanic ? error.message : String(error);
+	const message = error instanceof AdamicPanic ? error.message
+		: error !== null && typeof error === 'object' && typeof error.name === 'string' && typeof error.message === 'string'
+			? Error.prototype.toString.call(error) : String(error);
 	process.stderr.write(`adamic: panic: ${message}\n`);
 	process.exitCode = 70;
 });

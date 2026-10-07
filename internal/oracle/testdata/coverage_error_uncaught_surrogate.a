@@ -1,0 +1,11 @@
+// Reporting replaces lone surrogates even for a newly supported built-in kind.
+function fail(message?: string): void {
+    throw new URIError(message);
+}
+console.log('before');
+try {
+    fail('bad-\ud800');
+}
+finally {
+    console.log('finally');
+}

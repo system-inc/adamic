@@ -1,0 +1,20 @@
+/* eslint-disable nexus/correctness-no-collection-misuse -- Preserve the reader oracle's deliberate exception, ownership and dispatch probes. */
+// Runtime callback loops must propagate generated nominal RangeErrors.
+function attempt(label: string, run: () => string): void {
+    try {
+        console.log(`${label} ${run()}`);
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(`${label} ${error.name} ${error.message}`);
+    }
+}
+const values = [2, 101];
+attempt('map', () => values.map((digits) => (1.25).toFixed(digits)).join(','));
+attempt('filter', () => values.filter((digits) => (1.25).toFixed(digits).length > 0).join(','));
+attempt('every', () => `${values.every((digits) => (1.25).toFixed(digits).length > 0)}`);
+attempt('findIndex', () => `${values.findIndex((digits) => (1.25).toFixed(digits).length < 0)}`);
+attempt('findLast', () => `${values.findLast((digits) => (1.25).toFixed(digits).length > 0) ?? 0}`);
+attempt('findLastIndex', () => `${values.findLastIndex((digits) => (1.25).toFixed(digits).length > 0)}`);
+attempt('flatMap', () => values.flatMap((digits) => [(1.25).toFixed(digits)]).join(','));
+attempt('toSorted', () => values.toSorted((left, right) => Number((1.25).toFixed(left + right))).join(','));
+console.log(values.join(','));

@@ -1,0 +1,21 @@
+// Dynamic arguments exercise truncation, NaN and both infinite bounds.
+function attempt(label: string, run: () => string): void {
+    try {
+        console.log(`${label} ${run()}`);
+    }
+    catch(error) {
+        if(error instanceof RangeError) console.log(`${label} ${error.name} ${error.message}`);
+    }
+}
+for(const digits of [-Infinity, -1.9, -0.9, -0, NaN, 0.9, 1.9, 36.9, 100.9, 101, Infinity]) {
+    attempt('fixed', () => (1.25).toFixed(digits));
+    attempt('precision', () => (1.25).toPrecision(digits));
+    attempt('exponential', () => (1.25).toExponential(digits));
+    attempt('radix', () => (15).toString(digits));
+}
+for(const value of [NaN, Infinity, -Infinity]) {
+    attempt('nonfinite fixed', () => value.toFixed(101));
+    attempt('nonfinite precision', () => value.toPrecision(-1));
+    attempt('nonfinite exponential', () => value.toExponential(Infinity));
+    attempt('nonfinite radix', () => value.toString(1));
+}

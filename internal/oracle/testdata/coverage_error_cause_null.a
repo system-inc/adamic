@@ -1,0 +1,9 @@
+try {
+    throw new Error('null cause', { cause: null });
+}
+catch(error) {
+    if(error instanceof Error) {
+        const cause = error.cause;
+        console.log(`${typeof cause} ${cause === null} ${cause === undefined}`);
+    }
+}

@@ -1,0 +1,6 @@
+try {
+    console.log(Error.prototype.toString.call(null));
+}
+catch(error) {
+    if(error instanceof TypeError) console.log(error.toString());
+}

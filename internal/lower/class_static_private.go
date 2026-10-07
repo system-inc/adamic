@@ -31,13 +31,14 @@ func (l *lowering) privateStaticReceiver(name *ast.Node, object ir.Expression, w
 			message = "Cannot write private member " + name.Text() + " to an object whose class did not declare it"
 		}
 	}
+	failure := l.generatedError("TypeError", message)
 	index := len(l.result.Functions)
 	self := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index})
 	value := ir.Read{Local: self, Of: ir.Object}
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "static_private_brand", Parameters: []int{self}, Returns: ir.Object, Body: []ir.Statement{
 		ir.If{Condition: ir.InstanceOf{Value: value, Class: class.class, Exact: true}, Then: []ir.Statement{ir.Return{Value: value}}},
-		ir.Throw{Value: ir.MakeError{Message: ir.StringConstant{Index: l.constant(message)}, Name: ir.StringConstant{Index: l.constant("TypeError")}}},
+		ir.Throw{Value: failure},
 	}})
 	return ir.Call{Function: index, Arguments: []ir.Expression{object}, Returns: ir.Object}
 }

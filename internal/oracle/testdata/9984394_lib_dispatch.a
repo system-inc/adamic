@@ -1,0 +1,23 @@
+/* eslint-disable nexus/consistency-require-type-suffix, @typescript-eslint/method-signature-style -- Keep the integration probe's original interface spelling and method signature. */
+interface Shower {
+    show(digits: number): string;
+}
+class Fixed implements Shower {
+    readonly value: number;
+    constructor(value: number) {
+        this.value = value;
+    }
+    show(digits: number): string {
+        return this.value.toFixed(digits);
+    }
+}
+function run(shower: Shower, digits: number): string {
+    try {
+        return shower.show(digits);
+    }
+    catch {
+        return 'caught';
+    }
+}
+console.log(run(new Fixed(1.5), 2));
+console.log(run(new Fixed(1.5), 200));

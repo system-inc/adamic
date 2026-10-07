@@ -91,7 +91,9 @@ func pure(expression ir.Expression) bool {
 
 // pureKind reports whether an expression's own operation is on pure's list, whatever its operands.
 func pureKind(expression ir.Expression) bool {
-	switch expression.(type) {
+	switch expression := expression.(type) {
+	case ir.Call:
+		return expression.Pure
 	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Read, ir.Undefined,
 		ir.Unary, ir.Binary, ir.NumberToString, ir.BooleanToString, ir.Concat, ir.Length, ir.StringLength,
 		ir.CharCodeAt, ir.StringIndex, ir.ArrayIndex, ir.Property, ir.MapGet, ir.MapHas, ir.MapSize, ir.HasOwn,
