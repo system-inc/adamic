@@ -1,0 +1,806 @@
+=== RUN   TestEnforceCanonicalClassesReportsCollapses
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses
+=== RUN   TestEnforceCanonicalClassesStaysSilent
+=== PAUSE TestEnforceCanonicalClassesStaysSilent
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling
+=== RUN   TestCanonicalProposesNoFix
+=== PAUSE TestCanonicalProposesNoFix
+=== RUN   TestPreconditionsAreCheckedNotAssumed
+=== PAUSE TestPreconditionsAreCheckedNotAssumed
+=== RUN   TestLongestRootWinsInCollapse
+=== PAUSE TestLongestRootWinsInCollapse
+=== RUN   TestSplitValueCarriesEverythingAfterTheRoot
+=== PAUSE TestSplitValueCarriesEverythingAfterTheRoot
+=== RUN   TestRebuiltClassIsWritable
+=== PAUSE TestRebuiltClassIsWritable
+=== RUN   TestCanonicalFixturesActuallyRan
+=== PAUSE TestCanonicalFixturesActuallyRan
+=== RUN   TestIgnoredClassesAreExempt
+=== PAUSE TestIgnoredClassesAreExempt
+=== RUN   TestCanonicalCollapseOption
+=== PAUSE TestCanonicalCollapseOption
+=== RUN   TestCanonicalLogicalOption
+=== PAUSE TestCanonicalLogicalOption
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering
+=== RUN   TestEnforceConsistentClassOrderStaysSilent
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent
+=== RUN   TestClassOrderMessageNamesTheOrder
+=== PAUSE TestClassOrderMessageNamesTheOrder
+=== RUN   TestClassOrderFixMatchesThePlugin
+=== PAUSE TestClassOrderFixMatchesThePlugin
+=== RUN   TestClassOrderReportsWithoutAFixItCannotPlace
+=== PAUSE TestClassOrderReportsWithoutAFixItCannotPlace
+=== RUN   TestClassOrderDimensionsAreAllUsed
+=== PAUSE TestClassOrderDimensionsAreAllUsed
+=== RUN   TestClassOrderVariantDimensions
+=== PAUSE TestClassOrderVariantDimensions
+=== RUN   TestClassOrderDepthIsNotADimension
+=== PAUSE TestClassOrderDepthIsNotADimension
+=== RUN   TestClassOrderReadingsKeepCustomProperties
+=== PAUSE TestClassOrderReadingsKeepCustomProperties
+=== RUN   TestClassOrderRootsResolveAgainstTheDesignSystem
+=== PAUSE TestClassOrderRootsResolveAgainstTheDesignSystem
+=== RUN   TestClassOrderMarkersLeadRegardlessOfVariant
+=== PAUSE TestClassOrderMarkersLeadRegardlessOfVariant
+=== RUN   TestClassOrderMarkersKeepSourceOrder
+=== PAUSE TestClassOrderMarkersKeepSourceOrder
+=== RUN   TestClassOrderFixturesActuallyRan
+=== PAUSE TestClassOrderFixturesActuallyRan
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves
+=== RUN   TestEnforceConsistentVariantOrderReports
+=== PAUSE TestEnforceConsistentVariantOrderReports
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent
+=== RUN   TestEnforceConsistentVariantOrderNamesBothSpellings
+=== PAUSE TestEnforceConsistentVariantOrderNamesBothSpellings
+=== RUN   TestEnforceShorthandClassesReports
+=== PAUSE TestEnforceShorthandClassesReports
+=== RUN   TestEnforceShorthandClassesStaysSilent
+=== PAUSE TestEnforceShorthandClassesStaysSilent
+=== RUN   TestEnforceShorthandClassesReportsOncePerFamily
+=== PAUSE TestEnforceShorthandClassesReportsOncePerFamily
+=== RUN   TestEnforceShorthandClassesReportsEachFamilySeparately
+=== PAUSE TestEnforceShorthandClassesReportsEachFamilySeparately
+=== RUN   TestEnforceShorthandClassesSuggestsOnlyClassesThatExist
+=== PAUSE TestEnforceShorthandClassesSuggestsOnlyClassesThatExist
+=== RUN   TestNoConflictingClassesReportsSymmetrically
+=== PAUSE TestNoConflictingClassesReportsSymmetrically
+=== RUN   TestNoConflictingClassesStaysSilent
+=== PAUSE TestNoConflictingClassesStaysSilent
+=== RUN   TestConflictingClassesProposeSuggestionsNotFixes
+=== PAUSE TestConflictingClassesProposeSuggestionsNotFixes
+=== RUN   TestPropertyLookupUsesTheLongestRoot
+=== PAUSE TestPropertyLookupUsesTheLongestRoot
+=== RUN   TestRepositoryUtilitiesAreCompiledRatherThanLookedUp
+=== PAUSE TestRepositoryUtilitiesAreCompiledRatherThanLookedUp
+=== RUN   TestStaticRepositoryUtilitiesStillReadFromTheFrameworkTables
+=== PAUSE TestStaticRepositoryUtilitiesStillReadFromTheFrameworkTables
+=== RUN   TestConflictFixturesActuallyRan
+=== PAUSE TestConflictFixturesActuallyRan
+=== RUN   TestVariantsAreComparedNotStripped
+=== PAUSE TestVariantsAreComparedNotStripped
+=== RUN   TestSelectorShapeCannotProduceAWrongFinding
+=== PAUSE TestSelectorShapeCannotProduceAWrongFinding
+=== RUN   TestNoUnknownClassesReportsTypos
+=== PAUSE TestNoUnknownClassesReportsTypos
+=== RUN   TestNoUnknownClassesStaysSilent
+=== PAUSE TestNoUnknownClassesStaysSilent
+=== RUN   TestUnknownIgnoreExemptsProjectClasses
+=== PAUSE TestUnknownIgnoreExemptsProjectClasses
+=== RUN   TestExistenceIsNotReadFromPropertyTables
+=== PAUSE TestExistenceIsNotReadFromPropertyTables
+=== RUN   TestKnownRootWithUnknownValueIsReported
+=== PAUSE TestKnownRootWithUnknownValueIsReported
+=== RUN   TestExistenceComesFromTheRepositoryRatherThanATable
+=== PAUSE TestExistenceComesFromTheRepositoryRatherThanATable
+=== RUN   TestRepositoryNamesAreNoLongerVouchedForByTheFramework
+=== PAUSE TestRepositoryNamesAreNoLongerVouchedForByTheFramework
+=== RUN   TestUnknownClassFixturesActuallyRan
+=== PAUSE TestUnknownClassFixturesActuallyRan
+=== RUN   TestRepositoryUtilityRootsAreNeverReported
+=== PAUSE TestRepositoryUtilityRootsAreNeverReported
+=== CONT  TestEnforceCanonicalClassesReportsCollapses
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/padding_axes
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves
+=== CONT  TestRepositoryUtilityRootsAreNeverReported
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class
+=== NAME  TestRepositoryUtilityRootsAreNeverReported
+    no_unknown_classes_test.go:690: no corpus stylesheet at /workspace/scratch/wave12-tailwind/theme.css, so there is no live design system to ask
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/padding_axes
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
+=== CONT  TestUnknownIgnoreExemptsProjectClasses
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/border_edges
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/border_edges
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/rounded_corners
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/rounded_corners
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/gap_axes
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/gap_axes
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin
+--- SKIP: TestRepositoryUtilityRootsAreNeverReported (0.00s)
+=== RUN   TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat
+=== PAUSE TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat
+=== CONT  TestClassOrderFixturesActuallyRan
+=== CONT  TestUnknownClassFixturesActuallyRan
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/negative_margins
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/negative_margins
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
+=== RUN   TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
+=== PAUSE TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
+=== CONT  TestClassOrderMarkersKeepSourceOrder
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch
+=== RUN   TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole
+=== PAUSE TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole
+=== CONT  TestClassOrderMarkersLeadRegardlessOfVariant
+    enforce_consistent_class_order_test.go:672: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+--- SKIP: TestClassOrderMarkersLeadRegardlessOfVariant (0.00s)
+=== CONT  TestRepositoryNamesAreNoLongerVouchedForByTheFramework
+    no_unknown_classes_test.go:524: no corpus stylesheet at /workspace/scratch/wave12-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestRepositoryNamesAreNoLongerVouchedForByTheFramework (0.00s)
+=== CONT  TestClassOrderRootsResolveAgainstTheDesignSystem
+    enforce_consistent_class_order_test.go:646: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+--- SKIP: TestClassOrderRootsResolveAgainstTheDesignSystem (0.00s)
+=== CONT  TestClassOrderReadingsKeepCustomProperties
+    enforce_consistent_class_order_test.go:604: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+--- SKIP: TestClassOrderReadingsKeepCustomProperties (0.00s)
+=== CONT  TestExistenceComesFromTheRepositoryRatherThanATable
+    no_unknown_classes_test.go:429: no corpus stylesheet at /workspace/scratch/wave12-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestExistenceComesFromTheRepositoryRatherThanATable (0.00s)
+=== CONT  TestClassOrderDepthIsNotADimension
+=== NAME  TestClassOrderMarkersKeepSourceOrder
+    enforce_consistent_class_order_test.go:688: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== NAME  TestClassOrderDepthIsNotADimension
+    enforce_consistent_class_order_test.go:554: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+--- SKIP: TestClassOrderMarkersKeepSourceOrder (0.00s)
+--- SKIP: TestClassOrderDepthIsNotADimension (0.00s)
+=== CONT  TestClassOrderVariantDimensions
+=== CONT  TestClassOrderDimensionsAreAllUsed
+    enforce_consistent_class_order_test.go:426: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+=== NAME  TestClassOrderVariantDimensions
+    enforce_consistent_class_order_test.go:483: the corpus repository is not on this machine: stat /Users/kirkouimet/Projects/ahra/app/_theme/styles/theme.css: no such file or directory
+--- SKIP: TestClassOrderDimensionsAreAllUsed (0.00s)
+=== CONT  TestKnownRootWithUnknownValueIsReported
+--- SKIP: TestClassOrderVariantDimensions (0.00s)
+=== CONT  TestClassOrderReportsWithoutAFixItCannotPlace
+=== NAME  TestKnownRootWithUnknownValueIsReported
+    no_unknown_classes_test.go:399: no corpus stylesheet at /workspace/scratch/wave12-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestKnownRootWithUnknownValueIsReported (0.00s)
+=== RUN   TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal
+=== CONT  TestExistenceIsNotReadFromPropertyTables
+=== PAUSE TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal
+=== NAME  TestExistenceIsNotReadFromPropertyTables
+    no_unknown_classes_test.go:353: no corpus stylesheet at /workspace/scratch/wave12-tailwind/theme.css, so there is no live design system to ask
+=== RUN   TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves
+=== PAUSE TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves
+--- SKIP: TestExistenceIsNotReadFromPropertyTables (0.00s)
+=== CONT  TestCanonicalFixturesActuallyRan
+=== CONT  TestClassOrderFixMatchesThePlugin
+=== RUN   TestClassOrderFixMatchesThePlugin/two_classes_reversed
+=== PAUSE TestClassOrderFixMatchesThePlugin/two_classes_reversed
+=== RUN   TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten
+=== PAUSE TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten
+=== RUN   TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order
+=== PAUSE TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order
+=== RUN   TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped
+=== PAUSE TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped
+=== RUN   TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule
+=== PAUSE TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule
+=== CONT  TestRebuiltClassIsWritable
+    enforce_canonical_classes_test.go:459: no corpus stylesheet at /workspace/scratch/wave12-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestRebuiltClassIsWritable (0.00s)
+=== CONT  TestSplitValueCarriesEverythingAfterTheRoot
+    enforce_canonical_classes_test.go:397: no corpus stylesheet at /workspace/scratch/wave12-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestSplitValueCarriesEverythingAfterTheRoot (0.00s)
+=== CONT  TestClassOrderMessageNamesTheOrder
+--- PASS: TestClassOrderFixturesActuallyRan (0.03s)
+=== CONT  TestLongestRootWinsInCollapse
+    enforce_canonical_classes_test.go:350: no corpus stylesheet at /workspace/scratch/wave12-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestLongestRootWinsInCollapse (0.00s)
+=== CONT  TestEnforceConsistentClassOrderStaysSilent
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/already_ordered
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/already_ordered
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/base_before_variant
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/base_before_variant
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/single_class
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/single_class
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+=== RUN   TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+=== PAUSE TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+=== CONT  TestRepositoryUtilitiesAreCompiledRatherThanLookedUp
+--- PASS: TestUnknownClassFixturesActuallyRan (0.03s)
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
+=== RUN   TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
+=== PAUSE TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
+=== CONT  TestPreconditionsAreCheckedNotAssumed
+--- PASS: TestClassOrderMessageNamesTheOrder (0.04s)
+=== CONT  TestNoUnknownClassesStaysSilent
+=== RUN   TestNoUnknownClassesStaysSilent/ordinary_utilities
+=== PAUSE TestNoUnknownClassesStaysSilent/ordinary_utilities
+=== RUN   TestNoUnknownClassesStaysSilent/gradient_stops
+=== PAUSE TestNoUnknownClassesStaysSilent/gradient_stops
+=== RUN   TestNoUnknownClassesStaysSilent/multi-rule_component_class
+=== PAUSE TestNoUnknownClassesStaysSilent/multi-rule_component_class
+=== RUN   TestNoUnknownClassesStaysSilent/group_and_peer
+=== PAUSE TestNoUnknownClassesStaysSilent/group_and_peer
+=== RUN   TestNoUnknownClassesStaysSilent/group_with_a_name
+=== PAUSE TestNoUnknownClassesStaysSilent/group_with_a_name
+=== RUN   TestNoUnknownClassesStaysSilent/arbitrary_property
+=== PAUSE TestNoUnknownClassesStaysSilent/arbitrary_property
+=== RUN   TestNoUnknownClassesStaysSilent/arbitrary_value
+=== PAUSE TestNoUnknownClassesStaysSilent/arbitrary_value
+=== RUN   TestNoUnknownClassesStaysSilent/variants
+=== PAUSE TestNoUnknownClassesStaysSilent/variants
+=== RUN   TestNoUnknownClassesStaysSilent/importance
+=== PAUSE TestNoUnknownClassesStaysSilent/importance
+=== RUN   TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
+=== PAUSE TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
+=== RUN   TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+=== PAUSE TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+=== RUN   TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
+=== PAUSE TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
+=== RUN   TestNoUnknownClassesStaysSilent/unrelated_attribute
+=== PAUSE TestNoUnknownClassesStaysSilent/unrelated_attribute
+=== RUN   TestNoUnknownClassesStaysSilent/unrelated_callee
+=== PAUSE TestNoUnknownClassesStaysSilent/unrelated_callee
+=== CONT  TestCanonicalLogicalOption
+--- PASS: TestCanonicalFixturesActuallyRan (0.04s)
+=== CONT  TestNoUnknownClassesReportsTypos
+=== RUN   TestNoUnknownClassesReportsTypos/misspelled_utility
+=== PAUSE TestNoUnknownClassesReportsTypos/misspelled_utility
+=== RUN   TestNoUnknownClassesReportsTypos/invented_utility
+=== PAUSE TestNoUnknownClassesReportsTypos/invented_utility
+=== RUN   TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
+=== PAUSE TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
+=== RUN   TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
+=== PAUSE TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
+=== RUN   TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
+=== PAUSE TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
+=== RUN   TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
+=== PAUSE TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
+=== RUN   TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
+=== PAUSE TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
+=== RUN   TestNoUnknownClassesReportsTypos/on_a_callee_surface
+=== PAUSE TestNoUnknownClassesReportsTypos/on_a_callee_surface
+=== RUN   TestNoUnknownClassesReportsTypos/on_a_variable_surface
+=== PAUSE TestNoUnknownClassesReportsTypos/on_a_variable_surface
+=== CONT  TestSelectorShapeCannotProduceAWrongFinding
+=== NAME  TestRepositoryUtilitiesAreCompiledRatherThanLookedUp
+    no_conflicting_classes_test.go:363: no corpus stylesheet at /workspace/scratch/wave12-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestRepositoryUtilitiesAreCompiledRatherThanLookedUp (0.01s)
+=== CONT  TestVariantsAreComparedNotStripped
+--- PASS: TestSelectorShapeCannotProduceAWrongFinding (0.00s)
+=== CONT  TestConflictFixturesActuallyRan
+--- PASS: TestConflictFixturesActuallyRan (0.02s)
+=== CONT  TestStaticRepositoryUtilitiesStillReadFromTheFrameworkTables
+--- PASS: TestStaticRepositoryUtilitiesStillReadFromTheFrameworkTables (0.00s)
+=== CONT  TestEnforceShorthandClassesReportsEachFamilySeparately
+--- PASS: TestEnforceShorthandClassesReportsEachFamilySeparately (0.00s)
+=== CONT  TestPropertyLookupUsesTheLongestRoot
+    no_conflicting_classes_test.go:296: no corpus stylesheet at /workspace/scratch/wave12-tailwind/theme.css, so there is no live design system to ask
+--- SKIP: TestPropertyLookupUsesTheLongestRoot (0.00s)
+=== CONT  TestConflictingClassesProposeSuggestionsNotFixes
+--- PASS: TestUnknownIgnoreExemptsProjectClasses (0.07s)
+=== CONT  TestNoConflictingClassesStaysSilent
+=== RUN   TestNoConflictingClassesStaysSilent/width_and_height
+=== PAUSE TestNoConflictingClassesStaysSilent/width_and_height
+=== RUN   TestNoConflictingClassesStaysSilent/padding_and_padding-inline
+=== PAUSE TestNoConflictingClassesStaysSilent/padding_and_padding-inline
+=== RUN   TestNoConflictingClassesStaysSilent/same_property_under_different_variants
+=== PAUSE TestNoConflictingClassesStaysSilent/same_property_under_different_variants
+=== RUN   TestNoConflictingClassesStaysSilent/different_axes_of_margin
+=== PAUSE TestNoConflictingClassesStaysSilent/different_axes_of_margin
+=== RUN   TestNoConflictingClassesStaysSilent/unrelated_properties
+=== PAUSE TestNoConflictingClassesStaysSilent/unrelated_properties
+=== RUN   TestNoConflictingClassesStaysSilent/one_class
+=== PAUSE TestNoConflictingClassesStaysSilent/one_class
+=== RUN   TestNoConflictingClassesStaysSilent/the_same_class_twice
+=== PAUSE TestNoConflictingClassesStaysSilent/the_same_class_twice
+=== RUN   TestNoConflictingClassesStaysSilent/unrelated_attribute
+=== PAUSE TestNoConflictingClassesStaysSilent/unrelated_attribute
+=== RUN   TestNoConflictingClassesStaysSilent/unrelated_callee
+=== PAUSE TestNoConflictingClassesStaysSilent/unrelated_callee
+=== RUN   TestNoConflictingClassesStaysSilent/divide_against_border
+=== PAUSE TestNoConflictingClassesStaysSilent/divide_against_border
+=== RUN   TestNoConflictingClassesStaysSilent/shadow_against_ring
+=== PAUSE TestNoConflictingClassesStaysSilent/shadow_against_ring
+=== RUN   TestNoConflictingClassesStaysSilent/border_against_border-dashed
+=== PAUSE TestNoConflictingClassesStaysSilent/border_against_border-dashed
+=== RUN   TestNoConflictingClassesStaysSilent/ring_against_ring-inset
+=== PAUSE TestNoConflictingClassesStaysSilent/ring_against_ring-inset
+=== RUN   TestNoConflictingClassesStaysSilent/container_against_w-full
+=== PAUSE TestNoConflictingClassesStaysSilent/container_against_w-full
+=== CONT  TestNoConflictingClassesReportsSymmetrically
+=== RUN   TestNoConflictingClassesReportsSymmetrically/two_display_utilities
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/two_display_utilities
+=== RUN   TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice
+=== RUN   TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities
+=== RUN   TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant
+=== RUN   TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
+=== RUN   TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
+=== RUN   TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
+=== PAUSE TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
+=== CONT  TestEnforceShorthandClassesSuggestsOnlyClassesThatExist
+--- PASS: TestVariantsAreComparedNotStripped (0.04s)
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/p-4
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/p-4
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/size-8
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/size-8
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/border-x
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/border-x
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
+=== RUN   TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
+=== PAUSE TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
+=== CONT  TestEnforceCanonicalClassesStaysSilent
+=== RUN   TestEnforceCanonicalClassesStaysSilent/different_values
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/different_values
+=== RUN   TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+=== RUN   TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== RUN   TestEnforceCanonicalClassesStaysSilent/one_side_is_important
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/one_side_is_important
+=== RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_roots
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_roots
+=== RUN   TestEnforceCanonicalClassesStaysSilent/single_class
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/single_class
+=== RUN   TestEnforceCanonicalClassesStaysSilent/statics
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/statics
+=== RUN   TestEnforceCanonicalClassesStaysSilent/no_pair_present
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/no_pair_present
+=== RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
+=== RUN   TestEnforceCanonicalClassesStaysSilent/unrelated_callee
+=== PAUSE TestEnforceCanonicalClassesStaysSilent/unrelated_callee
+=== CONT  TestEnforceShorthandClassesReports
+=== RUN   TestEnforceShorthandClassesReports/logical_inline_pair
+=== PAUSE TestEnforceShorthandClassesReports/logical_inline_pair
+=== RUN   TestEnforceShorthandClassesReports/physical_block_pair
+=== PAUSE TestEnforceShorthandClassesReports/physical_block_pair
+=== RUN   TestEnforceShorthandClassesReports/all_four_margin_sides
+=== PAUSE TestEnforceShorthandClassesReports/all_four_margin_sides
+=== RUN   TestEnforceShorthandClassesReports/width_and_height
+=== PAUSE TestEnforceShorthandClassesReports/width_and_height
+=== RUN   TestEnforceShorthandClassesReports/all_four_inset_sides
+=== PAUSE TestEnforceShorthandClassesReports/all_four_inset_sides
+=== RUN   TestEnforceShorthandClassesReports/pair_behind_the_same_variant
+=== PAUSE TestEnforceShorthandClassesReports/pair_behind_the_same_variant
+=== RUN   TestEnforceShorthandClassesReports/negative_pair
+=== PAUSE TestEnforceShorthandClassesReports/negative_pair
+=== RUN   TestEnforceShorthandClassesReports/pair_with_a_leading_marker
+=== PAUSE TestEnforceShorthandClassesReports/pair_with_a_leading_marker
+=== RUN   TestEnforceShorthandClassesReports/pair_with_a_trailing_marker
+=== PAUSE TestEnforceShorthandClassesReports/pair_with_a_trailing_marker
+=== RUN   TestEnforceShorthandClassesReports/pair_with_arbitrary_values
+=== PAUSE TestEnforceShorthandClassesReports/pair_with_arbitrary_values
+=== RUN   TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
+=== PAUSE TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
+=== CONT  TestEnforceShorthandClassesReportsOncePerFamily
+--- PASS: TestEnforceShorthandClassesReportsOncePerFamily (0.00s)
+=== CONT  TestEnforceShorthandClassesStaysSilent
+=== RUN   TestEnforceShorthandClassesStaysSilent/values_disagree
+=== PAUSE TestEnforceShorthandClassesStaysSilent/values_disagree
+=== RUN   TestEnforceShorthandClassesStaysSilent/variants_disagree
+=== PAUSE TestEnforceShorthandClassesStaysSilent/variants_disagree
+=== RUN   TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees
+=== PAUSE TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees
+=== RUN   TestEnforceShorthandClassesStaysSilent/important_marker_disagrees
+=== PAUSE TestEnforceShorthandClassesStaysSilent/important_marker_disagrees
+=== RUN   TestEnforceShorthandClassesStaysSilent/only_one_side_present
+=== PAUSE TestEnforceShorthandClassesStaysSilent/only_one_side_present
+=== RUN   TestEnforceShorthandClassesStaysSilent/shorthand_already_present
+=== PAUSE TestEnforceShorthandClassesStaysSilent/shorthand_already_present
+=== RUN   TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all
+=== PAUSE TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/one_variant
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/one_variant
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/no_variants
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/no_variants
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant
+=== RUN   TestEnforceConsistentVariantOrderStaysSilent/unknown_variant
+=== PAUSE TestEnforceConsistentVariantOrderStaysSilent/unknown_variant
+=== CONT  TestEnforceConsistentVariantOrderNamesBothSpellings
+--- PASS: TestConflictingClassesProposeSuggestionsNotFixes (0.02s)
+=== CONT  TestCanonicalCollapseOption
+--- PASS: TestCanonicalLogicalOption (0.05s)
+=== CONT  TestIgnoredClassesAreExempt
+--- PASS: TestEnforceConsistentVariantOrderNamesBothSpellings (0.01s)
+=== CONT  TestEnforceConsistentVariantOrderReports
+=== RUN   TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant
+=== PAUSE TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant
+=== RUN   TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order
+=== PAUSE TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order
+=== RUN   TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
+=== PAUSE TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
+=== RUN   TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint
+=== PAUSE TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint
+=== RUN   TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint
+=== PAUSE TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint
+=== RUN   TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon
+=== PAUSE TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon
+=== RUN   TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves
+=== PAUSE TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves
+=== CONT  TestCanonicalProposesNoFix
+--- PASS: TestEnforceShorthandClassesSuggestsOnlyClassesThatExist (0.02s)
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class
+--- PASS: TestCanonicalProposesNoFix (0.01s)
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat
+=== CONT  TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole
+--- PASS: TestIgnoredClassesAreExempt (0.02s)
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/padding_axes
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class
+--- PASS: TestPreconditionsAreCheckedNotAssumed (0.08s)
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/negative_margins
+--- PASS: TestClassOrderLeavesTemplateRunsThePluginLeaves (0.00s)
+    --- PASS: TestClassOrderLeavesTemplateRunsThePluginLeaves/glued_classes_leave_one_sortable_class (0.01s)
+    --- PASS: TestClassOrderLeavesTemplateRunsThePluginLeaves/a_run_holding_a_repeat (0.01s)
+    --- PASS: TestClassOrderLeavesTemplateRunsThePluginLeaves/already_ordered_on_both_sides_of_a_hole (0.01s)
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes
+--- PASS: TestCanonicalCollapseOption (0.03s)
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/arbitrary_values
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first
+=== CONT  TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/rounded_corners
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/gap_axes
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/border_edges
+=== CONT  TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size
+--- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin (0.00s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_after_a_glued_hole_keeps_its_glued_class (0.01s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/both_runs,_separators_untouched (0.01s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_inside_another_template's_hole (0.01s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/a_template_in_a_conditional's_branch (0.01s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/a_class_glued_after_a_hole_stays_first (0.01s)
+    --- PASS: TestClassOrderSortsTemplateRunsLikeThePlugin/a_run_before_a_glued_hole_keeps_its_glued_class (0.01s)
+=== CONT  TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal
+=== CONT  TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves
+=== CONT  TestClassOrderFixMatchesThePlugin/two_classes_reversed
+=== CONT  TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped
+--- PASS: TestEnforceCanonicalClassesReportsCollapses (0.00s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/padding_axes (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/negative_margins (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/collapse_among_other_classes (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/on_a_variable_surface (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/on_a_callee_surface (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/four_margins_collapse_through_three_steps (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/arbitrary_values (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/rounded_corners (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/collapse_under_a_shared_variant (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/gap_axes (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/border_edges (0.01s)
+    --- PASS: TestEnforceCanonicalClassesReportsCollapses/width_and_height_into_size (0.01s)
+=== CONT  TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule
+=== CONT  TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order
+--- PASS: TestClassOrderReportsWithoutAFixItCannotPlace (0.00s)
+    --- PASS: TestClassOrderReportsWithoutAFixItCannotPlace/an_escape_in_the_literal (0.01s)
+    --- PASS: TestClassOrderReportsWithoutAFixItCannotPlace/a_deprecated_class_that_moves (0.01s)
+=== CONT  TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/already_ordered
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unrelated_callee
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute
+--- PASS: TestClassOrderFixMatchesThePlugin (0.00s)
+    --- PASS: TestClassOrderFixMatchesThePlugin/two_classes_reversed (0.01s)
+    --- PASS: TestClassOrderFixMatchesThePlugin/a_wrapped_list_stays_wrapped (0.01s)
+    --- PASS: TestClassOrderFixMatchesThePlugin/padding_is_left_for_the_whitespace_rule (0.01s)
+    --- PASS: TestClassOrderFixMatchesThePlugin/several_classes,_only_the_moved_slots_rewritten (0.01s)
+    --- PASS: TestClassOrderFixMatchesThePlugin/a_null_leads_in_source_order (0.01s)
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/single_class
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/unranked_class_first
+=== CONT  TestEnforceConsistentClassOrderStaysSilent/base_before_variant
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface
+--- PASS: TestEnforceConsistentClassOrderStaysSilent (0.00s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/already_ordered (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/ordering_the_names_do_not_suggest (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/unrelated_callee (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/unrelated_attribute (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/unknown_class_written_first (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/duplicate_class_present (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/single_class (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/ring-offset_resolves_to_its_own_root,_not_to_ring (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_reverse-alphabetical_source_order (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/base_before_variant (0.00s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/two_unranked_classes,_alphabetical_source_order (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/variant_group_kept_together (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderStaysSilent/unranked_class_first (0.01s)
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order
+=== CONT  TestEnforceConsistentClassOrderReportsMisordering/variant_before_base
+=== CONT  TestNoUnknownClassesStaysSilent/ordinary_utilities
+=== CONT  TestNoUnknownClassesStaysSilent/variants
+=== CONT  TestNoUnknownClassesStaysSilent/unrelated_callee
+=== CONT  TestNoUnknownClassesStaysSilent/unrelated_attribute
+--- PASS: TestEnforceConsistentClassOrderReportsMisordering (0.00s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/two_classes_reversed (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/unknown_class_written_last (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/on_a_variable_surface (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/on_a_callee_surface (0.01s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/several_classes_out_of_order (0.03s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/unranked_class_written_last (0.03s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/two_unranked_classes_in_non-alphabetical_source_order (0.03s)
+    --- PASS: TestEnforceConsistentClassOrderReportsMisordering/variant_before_base (0.03s)
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility
+=== CONT  TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility
+=== CONT  TestNoUnknownClassesStaysSilent/importance
+=== CONT  TestNoUnknownClassesStaysSilent/group_with_a_name
+=== CONT  TestNoUnknownClassesStaysSilent/arbitrary_value
+=== CONT  TestNoUnknownClassesStaysSilent/arbitrary_property
+=== CONT  TestNoUnknownClassesStaysSilent/multi-rule_component_class
+=== CONT  TestNoUnknownClassesStaysSilent/group_and_peer
+=== CONT  TestNoUnknownClassesStaysSilent/gradient_stops
+=== CONT  TestNoUnknownClassesReportsTypos/misspelled_utility
+=== CONT  TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal
+=== CONT  TestNoUnknownClassesReportsTypos/on_a_variable_surface
+=== CONT  TestNoUnknownClassesReportsTypos/on_a_callee_surface
+--- PASS: TestNoUnknownClassesStaysSilent (0.00s)
+    --- PASS: TestNoUnknownClassesStaysSilent/ordinary_utilities (0.02s)
+    --- PASS: TestNoUnknownClassesStaysSilent/variants (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/unrelated_callee (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/unrelated_attribute (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/this_repository's_own_utility_under_a_variant (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/this_repository's_own_functional_utility (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/this_repository's_own_static_utility (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/importance (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/group_with_a_name (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/arbitrary_value (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/arbitrary_property (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/multi-rule_component_class (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/group_and_peer (0.01s)
+    --- PASS: TestNoUnknownClassesStaysSilent/gradient_stops (0.01s)
+=== CONT  TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility
+=== CONT  TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root
+=== CONT  TestNoUnknownClassesReportsTypos/another_root-prefixed_typo
+=== CONT  TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know
+=== CONT  TestNoUnknownClassesReportsTypos/invented_utility
+=== CONT  TestNoConflictingClassesStaysSilent/width_and_height
+=== CONT  TestNoConflictingClassesStaysSilent/unrelated_attribute
+=== CONT  TestNoConflictingClassesStaysSilent/container_against_w-full
+=== CONT  TestNoConflictingClassesStaysSilent/ring_against_ring-inset
+--- PASS: TestNoUnknownClassesReportsTypos (0.00s)
+    --- PASS: TestNoUnknownClassesReportsTypos/misspelled_utility (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/two_unknowns_in_one_literal (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/on_a_callee_surface (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/on_a_variable_surface (0.02s)
+    --- PASS: TestNoUnknownClassesReportsTypos/unknown_variant_on_a_real_utility (0.02s)
+    --- PASS: TestNoUnknownClassesReportsTypos/typo_starting_with_a_real_root (0.02s)
+    --- PASS: TestNoUnknownClassesReportsTypos/another_root-prefixed_typo (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/stylesheet_class_Tailwind_does_not_know (0.01s)
+    --- PASS: TestNoUnknownClassesReportsTypos/invented_utility (0.01s)
+=== CONT  TestNoConflictingClassesStaysSilent/border_against_border-dashed
+=== CONT  TestNoConflictingClassesReportsSymmetrically/two_display_utilities
+=== CONT  TestNoConflictingClassesStaysSilent/the_same_class_twice
+=== CONT  TestNoConflictingClassesStaysSilent/one_class
+=== CONT  TestNoConflictingClassesStaysSilent/unrelated_properties
+=== CONT  TestNoConflictingClassesStaysSilent/different_axes_of_margin
+=== CONT  TestNoConflictingClassesStaysSilent/same_property_under_different_variants
+=== CONT  TestNoConflictingClassesStaysSilent/padding_and_padding-inline
+=== CONT  TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface
+=== CONT  TestNoConflictingClassesStaysSilent/divide_against_border
+=== CONT  TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property
+=== CONT  TestNoConflictingClassesStaysSilent/shadow_against_ring
+=== CONT  TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface
+=== CONT  TestNoConflictingClassesStaysSilent/unrelated_callee
+=== CONT  TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities
+=== CONT  TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant
+=== CONT  TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/p-4
+--- PASS: TestNoConflictingClassesStaysSilent (0.00s)
+    --- PASS: TestNoConflictingClassesStaysSilent/width_and_height (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/unrelated_attribute (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/container_against_w-full (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/ring_against_ring-inset (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/border_against_border-dashed (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/the_same_class_twice (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/one_class (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/unrelated_properties (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/different_axes_of_margin (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/same_property_under_different_variants (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/padding_and_padding-inline (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/divide_against_border (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/shadow_against_ring (0.01s)
+    --- PASS: TestNoConflictingClassesStaysSilent/unrelated_callee (0.01s)
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/sm:p-4
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/p-[3px]
+--- PASS: TestNoConflictingClassesReportsSymmetrically (0.00s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/two_display_utilities (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/on_a_callee_surface (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/three_classes_on_one_property (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/on_a_variable_surface (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/two_alignment_utilities (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/conflict_inside_one_variant (0.01s)
+    --- PASS: TestNoConflictingClassesReportsSymmetrically/same_functional_root_twice (0.01s)
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/border-x
+=== CONT  TestCanonicalMessageNamesTheShorterSpelling/size-8
+=== CONT  TestEnforceCanonicalClassesStaysSilent/different_values
+=== CONT  TestEnforceCanonicalClassesStaysSilent/single_class
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_roots
+=== CONT  TestEnforceCanonicalClassesStaysSilent/one_side_is_important
+--- PASS: TestCanonicalMessageNamesTheShorterSpelling (0.00s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/p-4 (0.01s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/sm:p-4 (0.01s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/rounded-t-md (0.01s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/p-[3px] (0.01s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/border-x (0.01s)
+    --- PASS: TestCanonicalMessageNamesTheShorterSpelling/size-8 (0.01s)
+=== CONT  TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant
+=== CONT  TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_callee
+=== CONT  TestEnforceCanonicalClassesStaysSilent/statics
+=== CONT  TestEnforceCanonicalClassesStaysSilent/unrelated_attribute
+=== CONT  TestEnforceCanonicalClassesStaysSilent/no_pair_present
+=== CONT  TestEnforceShorthandClassesReports/logical_inline_pair
+=== CONT  TestEnforceShorthandClassesReports/pair_with_arbitrary_values
+=== CONT  TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant
+=== CONT  TestEnforceShorthandClassesReports/width_and_height
+=== CONT  TestEnforceShorthandClassesReports/pair_behind_the_same_variant
+=== CONT  TestEnforceShorthandClassesReports/all_four_inset_sides
+=== CONT  TestEnforceShorthandClassesReports/all_four_margin_sides
+=== CONT  TestEnforceShorthandClassesReports/physical_block_pair
+=== CONT  TestEnforceShorthandClassesReports/pair_with_a_trailing_marker
+=== CONT  TestEnforceShorthandClassesReports/pair_with_a_leading_marker
+=== CONT  TestEnforceShorthandClassesReports/negative_pair
+--- PASS: TestEnforceShorthandClassesReports (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/logical_inline_pair (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_with_arbitrary_values (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_behind_an_arbitrary_variant (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/width_and_height (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_behind_the_same_variant (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/all_four_inset_sides (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/all_four_margin_sides (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/physical_block_pair (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_with_a_trailing_marker (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/pair_with_a_leading_marker (0.00s)
+    --- PASS: TestEnforceShorthandClassesReports/negative_pair (0.00s)
+=== CONT  TestEnforceShorthandClassesStaysSilent/values_disagree
+=== CONT  TestEnforceShorthandClassesStaysSilent/only_one_side_present
+=== CONT  TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all
+=== CONT  TestEnforceShorthandClassesStaysSilent/shorthand_already_present
+=== CONT  TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees
+=== CONT  TestEnforceShorthandClassesStaysSilent/important_marker_disagrees
+=== CONT  TestEnforceShorthandClassesStaysSilent/variants_disagree
+--- PASS: TestEnforceShorthandClassesStaysSilent (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/values_disagree (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/only_one_side_present (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/no_shorthand_candidates_at_all (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/shorthand_already_present (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/negative_sign_disagrees (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/important_marker_disagrees (0.00s)
+    --- PASS: TestEnforceShorthandClassesStaysSilent/variants_disagree (0.00s)
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/no_variants
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/unknown_variant
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant
+--- PASS: TestEnforceCanonicalClassesStaysSilent (0.00s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/different_values (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/single_class (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/unrelated_roots (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/one_side_is_important (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/one_side_carries_a_variant (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/different_values_on_width_and_height (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/unrelated_callee (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/statics (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/unrelated_attribute (0.01s)
+    --- PASS: TestEnforceCanonicalClassesStaysSilent/no_pair_present (0.01s)
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/one_variant
+=== CONT  TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order
+=== CONT  TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant
+=== CONT  TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint
+=== CONT  TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves
+=== CONT  TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon
+--- PASS: TestEnforceConsistentVariantOrderStaysSilent (0.00s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/two_pseudo_variants_in_either_order (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/no_variants (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/unknown_variant (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/max-md_after_a_pseudo_variant (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/supports_after_a_pseudo_variant (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/breakpoint_already_outermost (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/one_variant (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderStaysSilent/dark_and_hover_in_either_order (0.01s)
+=== CONT  TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint
+=== CONT  TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint
+=== CONT  TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order
+--- PASS: TestEnforceConsistentVariantOrderReports (0.00s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/media_variant_after_a_pseudo_variant (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/arbitrary_variant_before_a_breakpoint (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/two_pseudo_variants_keep_their_order_while_a_breakpoint_moves (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/arbitrary_value_containing_a_colon (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/dark_before_a_breakpoint (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/compound_variant_before_a_breakpoint (0.01s)
+    --- PASS: TestEnforceConsistentVariantOrderReports/two_breakpoints_in_ascending_order (0.01s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind	0.413s

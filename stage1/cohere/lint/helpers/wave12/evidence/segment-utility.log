@@ -1,0 +1,84 @@
+=== RUN   TestUtilityMatchesEngine
+=== PAUSE TestUtilityMatchesEngine
+=== RUN   TestUtilityReproducesTheKnownExceptions
+=== PAUSE TestUtilityReproducesTheKnownExceptions
+=== RUN   TestUtilityFindsThePerDeclarationRoots
+=== PAUSE TestUtilityFindsThePerDeclarationRoots
+=== RUN   TestUtilityDropIsNotDefault
+=== PAUSE TestUtilityDropIsNotDefault
+=== RUN   TestUtilityRatioSpliceIsLoadBearing
+=== PAUSE TestUtilityRatioSpliceIsLoadBearing
+=== RUN   TestUtilityAgreesThroughTheGoCandidateParser
+=== PAUSE TestUtilityAgreesThroughTheGoCandidateParser
+=== RUN   TestUtilityDoesNotClaimTheShadowQuirk
+=== PAUSE TestUtilityDoesNotClaimTheShadowQuirk
+=== RUN   TestUtilitySpacingMultiplierRejects
+=== PAUSE TestUtilitySpacingMultiplierRejects
+=== RUN   TestUtilityNormalizesValueArguments
+=== PAUSE TestUtilityNormalizesValueArguments
+=== RUN   TestUtilitySyntheticCasesMatchEngine
+=== PAUSE TestUtilitySyntheticCasesMatchEngine
+=== CONT  TestUtilityMatchesEngine
+=== CONT  TestUtilityAgreesThroughTheGoCandidateParser
+=== CONT  TestUtilityFindsThePerDeclarationRoots
+=== CONT  TestUtilityRatioSpliceIsLoadBearing
+=== CONT  TestUtilityDropIsNotDefault
+=== NAME  TestUtilityMatchesEngine
+    utility_test.go:248: tailwindcss install is not present at /Users/kirkouimet/Projects/ahra/node_modules/.pnpm/tailwindcss@4.3.3/node_modules/tailwindcss; run internal/lint/rules/tailwind/tools/generate_utility to refresh
+--- SKIP: TestUtilityMatchesEngine (0.05s)
+=== CONT  TestUtilityReproducesTheKnownExceptions
+=== NAME  TestUtilityFindsThePerDeclarationRoots
+    utility_test.go:405: tailwindcss install is not present at /Users/kirkouimet/Projects/ahra/node_modules/.pnpm/tailwindcss@4.3.3/node_modules/tailwindcss; run internal/lint/rules/tailwind/tools/generate_utility to refresh
+--- SKIP: TestUtilityFindsThePerDeclarationRoots (0.05s)
+=== CONT  TestUtilitySpacingMultiplierRejects
+    utility_test.go:693: 7 accepted and 9 rejected spacing multipliers
+--- PASS: TestUtilitySpacingMultiplierRejects (0.00s)
+=== CONT  TestUtilitySyntheticCasesMatchEngine
+=== NAME  TestUtilityRatioSpliceIsLoadBearing
+    utility_test.go:526: tailwindcss install is not present at /Users/kirkouimet/Projects/ahra/node_modules/.pnpm/tailwindcss@4.3.3/node_modules/tailwindcss; run internal/lint/rules/tailwind/tools/generate_utility to refresh
+--- SKIP: TestUtilityRatioSpliceIsLoadBearing (0.05s)
+=== CONT  TestUtilityNormalizesValueArguments
+    utility_test.go:721: 10 argument spellings normalize as upstream documents
+--- PASS: TestUtilityNormalizesValueArguments (0.00s)
+=== CONT  TestUtilityDoesNotClaimTheShadowQuirk
+=== NAME  TestUtilityDropIsNotDefault
+    utility_test.go:468: tailwindcss install is not present at /Users/kirkouimet/Projects/ahra/node_modules/.pnpm/tailwindcss@4.3.3/node_modules/tailwindcss; run internal/lint/rules/tailwind/tools/generate_utility to refresh
+--- SKIP: TestUtilityDropIsNotDefault (0.06s)
+=== NAME  TestUtilityAgreesThroughTheGoCandidateParser
+    utility_test.go:575: tailwindcss install is not present at /Users/kirkouimet/Projects/ahra/node_modules/.pnpm/tailwindcss@4.3.3/node_modules/tailwindcss; run internal/lint/rules/tailwind/tools/generate_utility to refresh
+--- SKIP: TestUtilityAgreesThroughTheGoCandidateParser (0.07s)
+=== RUN   TestUtilitySyntheticCasesMatchEngine/percentage-and-integer
+=== RUN   TestUtilitySyntheticCasesMatchEngine/modifier
+=== RUN   TestUtilitySyntheticCasesMatchEngine/modifier-with-theme
+=== RUN   TestUtilitySyntheticCasesMatchEngine/default
+=== RUN   TestUtilitySyntheticCasesMatchEngine/literal
+=== RUN   TestUtilitySyntheticCasesMatchEngine/ratio-and-modifier
+=== RUN   TestUtilitySyntheticCasesMatchEngine/unnormalized-arguments
+=== RUN   TestUtilitySyntheticCasesMatchEngine/disallowed-bare-type
+=== RUN   TestUtilitySyntheticCasesMatchEngine/modifier-without-value
+=== RUN   TestUtilitySyntheticCasesMatchEngine/nested-theme-key
+=== RUN   TestUtilitySyntheticCasesMatchEngine/arbitrary-typehints
+=== RUN   TestUtilitySyntheticCasesMatchEngine/any-arbitrary
+=== NAME  TestUtilitySyntheticCasesMatchEngine
+    utility_test.go:830: 12 synthetic design systems; 69 probes compared, 29 compiled and agreed, 40 rejected and agreed
+--- PASS: TestUtilitySyntheticCasesMatchEngine (0.04s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/percentage-and-integer (0.00s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/modifier (0.00s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/modifier-with-theme (0.00s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/default (0.00s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/literal (0.00s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/ratio-and-modifier (0.00s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/unnormalized-arguments (0.00s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/disallowed-bare-type (0.00s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/modifier-without-value (0.00s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/nested-theme-key (0.00s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/arbitrary-typehints (0.00s)
+    --- PASS: TestUtilitySyntheticCasesMatchEngine/any-arbitrary (0.00s)
+=== NAME  TestUtilityReproducesTheKnownExceptions
+    utility_test.go:334: tailwindcss install is not present at /Users/kirkouimet/Projects/ahra/node_modules/.pnpm/tailwindcss@4.3.3/node_modules/tailwindcss; run internal/lint/rules/tailwind/tools/generate_utility to refresh
+--- SKIP: TestUtilityReproducesTheKnownExceptions (0.05s)
+=== NAME  TestUtilityDoesNotClaimTheShadowQuirk
+    utility_test.go:647: tailwindcss install is not present at /Users/kirkouimet/Projects/ahra/node_modules/.pnpm/tailwindcss@4.3.3/node_modules/tailwindcss; run internal/lint/rules/tailwind/tools/generate_utility to refresh
+--- SKIP: TestUtilityDoesNotClaimTheShadowQuirk (0.04s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/tailwind/collapse	0.102s

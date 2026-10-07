@@ -1,0 +1,36 @@
+import { panic } from 'adamic';
+// Consumers pass ASCII byte separators. Byte splits inside UTF-8 text cannot
+// be represented by Adamic's decoded string type, so refuse that wider API.
+export function segment(input: string, separator: number): string[] {
+    if(separator < 0 || separator > 127 || !Number.isInteger(separator)) {
+        panic('NotYet: CSS segment separator must be an ASCII byte');
+    }
+    const closing: string[] = [];
+    const parts: string[] = [];
+    let lastPosition = 0;
+    for(let index = 0; index < input.length; index++) {
+        const character = input.slice(index, index + 1);
+        if(closing.length === 0 && character.charCodeAt(0) === separator) {
+            parts.push(input.slice(lastPosition, index));
+            lastPosition = index + 1;
+            continue;
+        }
+        if(character === '\\') { index++; }
+        else if(character === "'" || character === '"') {
+            while(index + 1 < input.length) {
+                index++;
+                const next = input.slice(index, index + 1);
+                if(next === '\\') { index++; continue; }
+                if(next === character) { break; }
+            }
+        }
+        else if(character === '(') { closing.push(')'); }
+        else if(character === '[') { closing.push(']'); }
+        else if(character === '{') { closing.push('}'); }
+        else if(character === ']' || character === '}' || character === ')') {
+            if(closing.length > 0 && character === closing[closing.length - 1]) { closing.pop(); }
+        }
+    }
+    parts.push(input.slice(lastPosition));
+    return parts;
+}

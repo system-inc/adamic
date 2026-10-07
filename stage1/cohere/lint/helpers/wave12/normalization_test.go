@@ -30,10 +30,10 @@ func execute(t *testing.T, directory, command string, arguments ...string) []byt
 	}
 	return output.Bytes()
 }
-func upstream(t *testing.T) string {
+func upstreamFor(t *testing.T, adapter string) string {
 	t.Helper()
 	root, _ := filepath.Abs("../../../../../cohere")
-	main, _ := filepath.Abs("testdata/oracle.go.txt")
+	main, _ := filepath.Abs("testdata/" + adapter)
 	exports, _ := filepath.Abs("testdata/exports.go.txt")
 	virtual := filepath.Join(root, "adamic_wave12_oracle.go")
 	mapping, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: main, filepath.Join(root, "internal/lint/rules/tailwind/collapse/adamic_wave12_exports.go"): exports}})
@@ -45,10 +45,10 @@ func upstream(t *testing.T) string {
 	execute(t, root, "go", "build", "-overlay="+overlay, "-o", binary, virtual)
 	return binary
 }
-func backends(t *testing.T, entry, corpus string) [][]byte {
+func upstream(t *testing.T) string { return upstreamFor(t, "oracle.go.txt") }
+func backendCommands(t *testing.T, entry, corpus string) [][]string {
 	t.Helper()
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
-	source := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, corpus)
 	program, err := load.Load([]string{entry})
 	if err != nil {
 		t.Fatal(err)
@@ -62,13 +62,19 @@ func backends(t *testing.T, entry, corpus string) [][]byte {
 	if err := native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	sanitized := execute(t, "", binary, corpus)
 	emitted := filepath.Join(temporary, "emitted.mjs")
 	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(ir)), 0644); err != nil {
 		t.Fatal(err)
 	}
-	javascriptOutput := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted, corpus)
-	return [][]byte{source, sanitized, javascriptOutput}
+	return [][]string{{"node", "--disable-warning=ExperimentalWarning", runner, entry, corpus}, {binary, corpus}, {"node", "--disable-warning=ExperimentalWarning", runner, emitted, corpus}}
+}
+func backends(t *testing.T, entry, corpus string) [][]byte {
+	t.Helper()
+	var outputs [][]byte
+	for _, command := range backendCommands(t, entry, corpus) {
+		outputs = append(outputs, execute(t, "", command[0], command[1:]...))
+	}
+	return outputs
 }
 func difference(got, want []byte) int {
 	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")

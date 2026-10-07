@@ -3,3 +3,7 @@ package tailwind
 func AdamicNormalizeArgument(argument string) string {
     return normalizeValueFunctionArgument(argument)
 }
+
+func AdamicSegment(input string, separator byte) []string {
+    return segment(input, separator)
+}

@@ -29,3 +29,15 @@ The helper removes one listed dependency from each of:
 - `better-tailwindcss/no-unknown-classes`
 
 Zero rules lose their last helper blocker from this helper alone. This is a shared-helper handoff, not six completed rule ports or end-to-end Adamic findings/fix parity. Shared readiness and entry points remain untouched. Raw invalid UTF-8 is outside the decoded-string API. There is no exhaustive proof over arbitrary-length strings, and no complete repository gate claim.
+
+## Segment scanner
+
+`collapse_segment.a` exports `segment(input: string, separator: number): string[]`. Supported separators are integer ASCII bytes 0 through 127, which cover every observed consumer/engine call. Go's byte API can also split inside a multibyte UTF-8 character with separators 128 through 255, yielding invalid byte fragments. Adamic's decoded strings cannot preserve those fragments, so those separators refuse explicitly rather than silently substituting a UTF-16 interpretation. Negative and fractional inputs also refuse.
+
+The scanner preserves the original precedence: a top-level separator wins before escape, quote or bracket handling. Backslashes skip the next byte, quotes ignore nesting, only a matching top closer pops, and the final part is always returned, even empty. A UTF-16 scan agrees for supported ASCII separators because remaining bytes/code units of a skipped non-ASCII character cannot be ASCII syntax.
+
+Claim 8aeb70fd was pushed before implementation. Regenerate by setting `ADAMIC_CAPTURE_HELPER=segment` when running testdata/capture.py. The same six consumers contribute 138 captured fixture inputs, with 248 distinct real scanner input/separator pairs observed across the consumer and utility tests. The final corpus has 30,857 rows: actual pairs, each consumer source under space/comma as additional robustness inputs, and 30,333 controls. All 128 ASCII separators are exercised, including quote, bracket, backslash and NUL separators, with Unicode, escapes, empty parts, mismatched/unclosed nesting, bounded exhaustive and deterministic generated strings.
+
+Actual Go, source Node, ASan/UBSan native and emitted JavaScript match all 855,507 observation bytes. Three semantic mutants compile and are caught by comparison on every backend: dropping final empties (row 1), popping unmatched closers (row 4259), and disabling escapes (row 913). Four unsupported separator cases refuse identically on all backends with empty stdout, exit 70 and the exact panic message. Disabling the separator guard also compiles, finishes, and is caught only by the refusal comparison; that is a supported-domain check, not a claim that Go rejects its wider byte API.
+
+The complete owned helper package now passes in 32.477s; vet is clean. Both helpers remove two listed dependencies from each of the six named rules. None loses its final blocker from these two helpers alone. No rule port, production adapter or shared registry has been changed.

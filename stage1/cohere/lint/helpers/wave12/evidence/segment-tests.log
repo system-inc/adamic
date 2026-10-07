@@ -1,0 +1,48 @@
+=== RUN   TestNormalizationMatchesGo
+    normalization_test.go:100: 9364 cases and 309422 UTF-16 observation bytes match actual Go, source Node, ASan/UBSan native and emitted JavaScript
+--- PASS: TestNormalizationMatchesGo (3.61s)
+=== RUN   TestNormalizationMutants
+=== RUN   TestNormalizationMutants/namespace-suffix
+    normalization_test.go:135: backend 0 compiled semantic mutant caught only by Go comparison at row 8
+    normalization_test.go:135: backend 1 compiled semantic mutant caught only by Go comparison at row 8
+    normalization_test.go:135: backend 2 compiled semantic mutant caught only by Go comparison at row 8
+=== RUN   TestNormalizationMutants/newline-crossing
+    normalization_test.go:135: backend 0 compiled semantic mutant caught only by Go comparison at row 168
+    normalization_test.go:135: backend 1 compiled semantic mutant caught only by Go comparison at row 168
+    normalization_test.go:135: backend 2 compiled semantic mutant caught only by Go comparison at row 168
+=== RUN   TestNormalizationMutants/nested-key-join
+    normalization_test.go:135: backend 0 compiled semantic mutant caught only by Go comparison at row 12
+    normalization_test.go:135: backend 1 compiled semantic mutant caught only by Go comparison at row 12
+    normalization_test.go:135: backend 2 compiled semantic mutant caught only by Go comparison at row 12
+--- PASS: TestNormalizationMutants (6.18s)
+    --- PASS: TestNormalizationMutants/namespace-suffix (1.91s)
+    --- PASS: TestNormalizationMutants/newline-crossing (1.97s)
+    --- PASS: TestNormalizationMutants/nested-key-join (1.97s)
+=== RUN   TestSegmentMatchesGo
+    segment_test.go:24: 30857 cases and 855507 bytes match actual Go, Node, sanitized native and emitted JavaScript
+--- PASS: TestSegmentMatchesGo (5.72s)
+=== RUN   TestSegmentMutants
+=== RUN   TestSegmentMutants/drop-final-empty
+    segment_test.go:59: backend 0 compiled mutant caught only by comparison at row 1
+    segment_test.go:59: backend 1 compiled mutant caught only by comparison at row 1
+    segment_test.go:59: backend 2 compiled mutant caught only by comparison at row 1
+=== RUN   TestSegmentMutants/pop-unmatched-closer
+    segment_test.go:59: backend 0 compiled mutant caught only by comparison at row 4259
+    segment_test.go:59: backend 1 compiled mutant caught only by comparison at row 4259
+    segment_test.go:59: backend 2 compiled mutant caught only by comparison at row 4259
+=== RUN   TestSegmentMutants/escape-disabled
+    segment_test.go:59: backend 0 compiled mutant caught only by comparison at row 913
+    segment_test.go:59: backend 1 compiled mutant caught only by comparison at row 913
+    segment_test.go:59: backend 2 compiled mutant caught only by comparison at row 913
+--- PASS: TestSegmentMutants (14.34s)
+    --- PASS: TestSegmentMutants/drop-final-empty (4.48s)
+    --- PASS: TestSegmentMutants/pop-unmatched-closer (4.90s)
+    --- PASS: TestSegmentMutants/escape-disabled (4.47s)
+=== RUN   TestSegmentSeparatorRefusals
+    segment_test.go:93: four unsupported separator inputs refuse identically on all three backends
+    segment_test.go:119: backend 0 compiled separator-guard mutant finishes, caught only by refusal comparison
+    segment_test.go:119: backend 1 compiled separator-guard mutant finishes, caught only by refusal comparison
+    segment_test.go:119: backend 2 compiled separator-guard mutant finishes, caught only by refusal comparison
+--- PASS: TestSegmentSeparatorRefusals (2.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/wave12	32.477s
