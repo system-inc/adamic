@@ -1,0 +1,5 @@
+// Capability probe only, not a lint rule or a source verdict.
+import { programArguments, tsgoProgram, tsgoRelease } from 'adamic';
+const args = programArguments();
+const handle = tsgoProgram(args[0] ?? '', [args[1] ?? '']);
+tsgoRelease(handle);

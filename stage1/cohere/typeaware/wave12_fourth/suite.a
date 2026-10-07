@@ -3,7 +3,6 @@ import { written } from '../../../typescript/parser/nodes.ts';
 import { PreferRegexLiterals } from './prefer_regex_literals.a';
 import { PreferRestParams } from './prefer_rest_params.a';
 import { ExhaustiveDeps } from './exhaustive_deps.a';
-import { sourceHasJsx } from './source_has_jsx.a';
 import { SourceFiles } from '../wave12_next/source_files.a';
 
 const args = programArguments();
@@ -21,7 +20,6 @@ for(const path of paths) {
     if(source.kind === 'Error') {
         panic(source.message);
     }
-    if(sourceHasJsx(program, path, source.text)) { panic('wave 12 shared parser does not support JSX'); }
     const bindings = files.file(path); const linter = bindings.rules;
     new PreferRegexLiterals(bindings).run();
     new PreferRestParams(bindings).run();

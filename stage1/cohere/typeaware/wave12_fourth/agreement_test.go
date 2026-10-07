@@ -63,14 +63,18 @@ func TestAgreement(t *testing.T) {
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/wave12_fourth/suite.a")
 	binary := h.build(stage0, "native", entry, archive, false)
 	truth := oracle(h)
-	config := h.write("tsconfig.json", `{"compilerOptions":{"strict":true,"target":"ES2022","module":"NodeNext","lib":["ES2022"],"noEmit":true},"files":["modules/control-000.a"]}`)
+	config := h.write("tsconfig.json", `{"compilerOptions":{"strict":true,"target":"ES2022","module":"NodeNext","jsx":"preserve","lib":["ES2022"],"noEmit":true},"files":["modules/control-000.a"]}`)
 	modules := filepath.Join(directory, "modules")
 	if err := os.MkdirAll(modules, 0755); err != nil {
 		t.Fatal(err)
 	}
 	var paths []string
 	for at, source := range append(ownControls(), referenceControls(t, repository)...) {
-		path := filepath.Join(modules, fmt.Sprintf("control-%03d.a", at))
+		extension := ".a"
+		if strings.Contains(source, "</") || strings.Contains(source, "/>") || strings.Contains(source, "<>") {
+			extension = ".tsx"
+		}
+		path := filepath.Join(modules, fmt.Sprintf("control-%03d%s", at, extension))
 		if err := os.WriteFile(path, []byte((func() string {
 			if strings.HasPrefix(source, "#!") {
 				return source + "\nexport {};\n"
@@ -166,22 +170,9 @@ const args=programArguments();const file=args[1]??'';const program=tsgoProgram(a
 
 	jsx := h.write("jsx.tsx", "function C(props:any){useEffect(()=>log(props.x),[]);return <div/>};\n")
 	jsxManifest := h.write("jsx.manifest", jsx+"\n")
-	refusal := h.run("jsx-refusal", exec.Command(binary, config, jsxManifest))
-	code, ok := refusal.err.(*exec.ExitError)
-	if !ok || code.ExitCode() != 70 || string(refusal.stderr) != "adamic: panic: wave 12 shared parser does not support JSX\n" {
-		t.Fatalf("JSX refusal: %v %s", refusal.err, refusal.stderr)
-	}
-	t.Log("JSX source explicitly refused with panic 70; shared parser gap is not silently omitted")
-	overlay = h.overlay("jsx-guard", "bridge/tsgo/checker/source_has_jsx.go", "out.yes(found)", "out.yes(!found)")
-	jsxArchive := h.archive("jsx-guard", overlay, false)
-	jsxMutant := h.build(stage0, "jsx-guard-mutant", entry, jsxArchive, false)
-	guard := h.run("jsx-guard-run", exec.Command(jsxMutant, config, manifest))
-	if guard.err == nil {
-		t.Fatal("JSX guard mutant survived")
-	}
-	t.Log("reversing raw JSX presence is caught by the valid-control success requirement")
-	os.Remove(jsxMutant)
-	os.Remove(jsxArchive)
+	h.compare("jsx", truth, binary, config, jsxManifest)
+	h.compare("jsx-sanitized", truth, asan, config, jsxManifest)
+	t.Log("JSX source findings agree with Go, normal and sanitized")
 
 	for _, corpus := range []string{"COMPILER", "REPOSITORY"} {
 		roots := os.Getenv("ADAMIC_WAVE12_FOURTH_" + corpus + "_MANIFEST")

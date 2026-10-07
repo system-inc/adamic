@@ -4,6 +4,8 @@ Checks: 15 production findings match 6,333 complete bytes across native, ASan/UB
 Mutants: three reporting-ID mutants caught only by Go byte comparison; two unsupported-input guard mutants and three numeric metadata mutations caught by separate checks.
 Uncovered: native JSX source parsing, source callbacks/verdicts/span discovery, source corpus parity and comparable native/Go lint timing.
 
+Current area rebase and fresh validation: ../wave12_fifth/landing/AREA_REPORT.md. Native JSX parsing is now supported; the first five lines and initial run below are historical.
+
 Current contract correction: rule.json kinds are ast.Kind names and node: true requests a supplied node. No numeric adapter is required. Fresh named-contract validation is recorded in ../wave12_fifth/landing/NAMED_REPORT.md; the initial timing/count lines above describe the historical reporting run.
 
 ## Reservation and parked work
@@ -28,7 +30,7 @@ All three reporting-ID mutants compile, exit 0 with empty stderr and change only
 
 ## Exact remaining blockers
 
-The corrected contract intentionally uses named kinds. Current main's native parser refuses the Go-positive React.Fragment control with panic 70, expected GreaterThanToken, got SlashToken. The direct parser probe is preserved. JSX source parsing has not landed on this branch; shared parser/harness/registration edits are outside this unit. The named-kind contract does not require a numeric adapter. .a module loading or suggestion serialization alone does not supply native JSX parsing.
+After rebasing onto area/stage1-lint 7481e0324, native JSX parsing succeeds on all fifteen reporting sources. The earlier parser-refusal evidence below is historical. The current shared registry driver has no checker/file-program handle in RuleContext and builds ordinary native.C with native.Build rather than the C-checker profile. A direct checker_gap.a probe exits 70 under source Node because oracle/adamic.mjs does not export tsgoProgram; emitted-JavaScript compilation exits 1 with the explicit unlinked-typescript-go refusal. A private bypass mutant succeeds, proving these capability assertions can fail. Closing these gaps requires shared context/runtime/profile changes outside the owned rule directories, which Ahra explicitly forbids this worker to edit. These are observed harness limitations; source callbacks and checker-dependent algorithms are also unimplemented work, not completed ports.
 
 Unimplemented source work includes fragment import/alias/declaration matching and prop exemptions; JSX root/intrinsic/global resolution; provider and construction discovery, component-scope decisions, alias recursion and memo dependency stability. These are AST/checker analyses rather than the parked React HIR algorithms. No source analyze() placeholder or zero-finding corpus run is added. The reporters are portable groundwork; the new claims stay unfinished until their source frontend and algorithms are ported and compared. Under the instruction to stop on other shared dependencies, no further claims were taken.
 

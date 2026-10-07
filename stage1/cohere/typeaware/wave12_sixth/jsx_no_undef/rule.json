@@ -5,6 +5,6 @@
     "JsxSelfClosingElement"
   ],
   "status": "partial-reporting",
-  "blocker": "native JSX parser absent on main; source discovery and callbacks incomplete",
+  "blocker": "shared RuleContext has no checker/file-program handle; source Node lacks tsgoProgram and emitted-JavaScript compilation refuses an unlinked checker call; source discovery and callbacks incomplete",
   "node": true
 }

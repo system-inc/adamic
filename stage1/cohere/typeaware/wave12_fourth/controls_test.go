@@ -67,7 +67,6 @@ func referenceControls(t *testing.T, repository string) []string {
 			}
 			if strings.Contains(value, "</") || strings.Contains(value, "/>") || strings.Contains(value, "<>") {
 				jsx++
-				return false
 			}
 			sources = append(sources, value)
 			count++
@@ -76,7 +75,7 @@ func referenceControls(t *testing.T, repository string) []string {
 		if count == 0 {
 			t.Fatal("empty extraction", file)
 		}
-		t.Logf("%s: %d literal source rows, %d JSX rows blocked by shared parser", file, count, jsx)
+		t.Logf("%s: %d literal source rows, %d JSX rows included with shared parser", file, count, jsx)
 	}
 	return sources
 }

@@ -118,6 +118,17 @@ entry.write_text(imports+'\n'.join(generated)+'\n')
 from check_kinds import validate_kinds
 metadata_mutants=validate_kinds(scratch, run)
 parser=scratch/'shared-parser';run('shared-parser-build',[stage0,'build',repository/'stage1/typescript/parser/main.ts','-o',parser])
-got,err=run('shared-parser-refusal',[parser,paths[0],'--whole'],expected=70);assert not got;assert b'parser slice expected GreaterThanToken, got SlashToken' in err
-(scratch/'summary.json').write_text(json.dumps(dict(reporting_only=True,cases=len(cases),findings=counts,bytes=len(expected),mutants=mutants,guards=guard_results,metadata_mutants=metadata_mutants,commands=commands),indent=2)+'\n')
+for path in paths:
+    got,err=run('shared-parser-'+path.stem,[parser,path,'--whole']);assert got and not err
+    assert b'Jsx' in got, path
+# The shared registry's source-Node and emitted-JavaScript paths cannot load the C checker.
+probe=owned/'checker_gap.a'
+got,err=run('checker-gap-node',['node','--disable-warning=ExperimentalWarning',repository/'oracle/node.mjs',probe],expected=70)
+assert not got and b"does not provide an export named 'tsgoProgram'" in err
+got,err=run('checker-gap-emitted',[stage0,'js',probe],expected=1)
+assert not got and b'refuses an unlinked typescript-go library call' in err
+bypass=scratch/'checker-gap-bypass.a';bypass.write_text("console.log('checker probe bypassed');\n")
+got,err=run('checker-gap-bypass-node',['node','--disable-warning=ExperimentalWarning',repository/'oracle/node.mjs',bypass]);assert got and not err
+emitted,err=run('checker-gap-bypass-emitted',[stage0,'js',bypass]);assert emitted and not err
+(scratch/'summary.json').write_text(json.dumps(dict(reporting_only=True,cases=len(cases),findings=counts,bytes=len(expected),mutants=mutants,guards=guard_results,metadata_mutants=metadata_mutants,checker_gap=dict(source_node_exit=70,emitted_js_exit=1,bypass_mutant_exit=0),commands=commands),indent=2)+'\n')
 print('PARTIAL REPORTING PASS',counts,len(expected),'bytes; three ID mutants caught only by Go bytes')
