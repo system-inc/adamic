@@ -1,0 +1,105 @@
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:408: compiler and stage1: 228 files
+    lint_test.go:409: Go, Node, emitted JavaScript, native identical: 13054023 bytes
+--- PASS: TestCompilerAndStage1Agree (49.63s)
+=== RUN   TestOriginalUpstream
+    lint_test.go:324: cohere cases: 759 unique source/rule/options combinations
+    wave08_original_test.go:31: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getFalse)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:31: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getTrue)';\n  'use memo if(getFalse)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:31: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getTrue)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:31: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(true)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:31: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(true)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:31: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getTrue)';\n  'use memo if(getFalse)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:31: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(true)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:31: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var Foo = createReactClass({\n          propTypes: Bar.propTypes,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:31: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var Foo = createReactClass({\n          propTypes: Bar[\"propTypes\"],\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:31: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var { propTypes } = SomeComponent\n        var Foo = createReactClass({\n          propTypes,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:31: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var { propTypes: things, ...foo } = SomeComponent\n        var Foo = createReactClass({\n          propTypes,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:31: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var { propTypes: typesOfProps } = SomeComponent\n        var Foo = createReactClass({\n          propTypes: typesOfProps,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:31: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        const Message = (props) => (<div>{props.message}</div>);\n        Message.propTypes = {\n          message: PropTypes.string\n        };\n        const Hello = (props) => (<Message>Hello {props.name}</Message>);\n        Hello.propTypes = {\n          name: Message.propTypes.message\n        };\n      "
+    wave08_original_test.go:31: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        const Message = (props) => (<div>{props.message}</div>);\n        Message.propTypes = {\n          message: PropTypes.string\n        };\n        const Hello = (props) => (<Message>Hello {props.name}</Message>);\n        Hello.propTypes = {\n          name: Message.propTypes.message\n        };\n      "
+    wave08_original_test.go:37: assigned upstream selected=map[no-useless-computed-key:122 react-hooks/gating:35 react/forbid-foreign-prop-types:53] blockedJSX=map[react-hooks/gating:7 react/forbid-foreign-prop-types:7]
+    wave08_original_test.go:48: /tmp/adamic-gate/TestOriginalUpstream732020052/007/oracle [--manifest /tmp/adamic-gate/TestOriginalUpstream732020052/010/manifest.txt]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/TestOriginalUpstream732020052/001/case-484.ts: [']' expected.]
+        
+        goroutine 1 [running]:
+        main.collect({0xe1333eec8fc, 0x3e}, {0xe133407c8e0?, 0x1?}, {0xe1333cc5860, 0x6, 0x6})
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:116 +0x705
+        main.run({0xe1333eec8fc?, 0xe1333c50dc0?}, 0x0, 0xe1333c50dc0)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:168 +0x2f7
+--- FAIL: TestOriginalUpstream (51.37s)
+=== RUN   TestOriginalFull
+    lint_test.go:324: cohere cases: 759 unique source/rule/options combinations
+    wave08_original_test.go:37: assigned upstream selected=map[no-useless-computed-key:122 react-hooks/gating:42 react/forbid-foreign-prop-types:60] blockedJSX=map[]
+    wave08_original_test.go:58: /tmp/adamic-gate/TestOriginalFull1821888018/007/oracle [--manifest /tmp/adamic-gate/TestOriginalFull1821888018/010/manifest.txt]: exit status 2
+        panic: invalid corpus /tmp/adamic-gate/TestOriginalFull1821888018/001/case-484.ts: [']' expected.]
+        
+        goroutine 1 [running]:
+        main.collect({0xa968983e8b7, 0x3b}, {0xa9689821700?, 0x1?}, {0xa96898b86c0, 0x6, 0x6})
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:116 +0x705
+        main.run({0xa968983e8b7?, 0xa96897f2500?}, 0x0, 0xa96897f2500)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:45 +0x12f
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:168 +0x2f7
+--- FAIL: TestOriginalFull (33.66s)
+=== RUN   TestOriginalThroughput
+    wave08_original_test.go:124: no-useless-computed-key round=1 native seconds=1.504683 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=1 Node seconds=1.062594 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=1 Go seconds=0.347094 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=2 Node seconds=1.294345 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=2 Go seconds=0.264602 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=2 native seconds=1.471697 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=3 Go seconds=0.268219 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=3 native seconds=1.475894 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=3 Node seconds=1.270134 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=4 native seconds=1.793926 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=4 Node seconds=1.375782 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=4 Go seconds=0.317178 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=5 Node seconds=1.440297 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=5 Go seconds=0.864881 findings=1001
+    wave08_original_test.go:124: no-useless-computed-key round=5 native seconds=2.419104 findings=1001
+    wave08_original_test.go:132: no-useless-computed-key native: 680.17 findings/s seconds=1.471697 files=78 findings=1001
+    wave08_original_test.go:132: no-useless-computed-key Node: 942.03 findings/s seconds=1.062594 files=78 findings=1001
+    wave08_original_test.go:132: no-useless-computed-key Go: 3783.04 findings/s seconds=0.264602 files=78 findings=1001
+    wave08_original_test.go:124: react-hooks/gating round=1 native seconds=1.717006 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=1 Node seconds=1.127215 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=1 Go seconds=0.289939 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=2 Node seconds=1.573917 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=2 Go seconds=0.378906 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=2 native seconds=1.574224 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=3 Go seconds=0.337312 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=3 native seconds=1.493580 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=3 Node seconds=1.174995 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=4 native seconds=1.560880 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=4 Node seconds=1.354221 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=4 Go seconds=0.271593 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=5 Node seconds=1.312284 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=5 Go seconds=0.327001 findings=1000
+    wave08_original_test.go:124: react-hooks/gating round=5 native seconds=2.270962 findings=1000
+    wave08_original_test.go:132: react-hooks/gating native: 669.53 findings/s seconds=1.493580 files=78 findings=1000
+    wave08_original_test.go:132: react-hooks/gating Node: 887.14 findings/s seconds=1.127215 files=78 findings=1000
+    wave08_original_test.go:132: react-hooks/gating Go: 3681.98 findings/s seconds=0.271593 files=78 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=1 native seconds=1.657888 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=1 Node seconds=1.300484 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=1 Go seconds=0.287162 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=2 Node seconds=1.308253 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=2 Go seconds=0.421455 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=2 native seconds=2.483114 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=3 Go seconds=0.292748 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=3 native seconds=2.239778 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=3 Node seconds=1.274595 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=4 native seconds=1.663532 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=4 Node seconds=1.308934 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=4 Go seconds=0.296678 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=5 Node seconds=1.241988 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=5 Go seconds=0.311754 findings=1000
+    wave08_original_test.go:124: react/forbid-foreign-prop-types round=5 native seconds=1.673985 findings=1000
+    wave08_original_test.go:132: react/forbid-foreign-prop-types native: 603.18 findings/s seconds=1.657888 files=78 findings=1000
+    wave08_original_test.go:132: react/forbid-foreign-prop-types Node: 805.16 findings/s seconds=1.241988 files=78 findings=1000
+    wave08_original_test.go:132: react/forbid-foreign-prop-types Go: 3482.35 findings/s seconds=0.287162 files=78 findings=1000
+--- PASS: TestOriginalThroughput (59.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	193.811s
+FAIL

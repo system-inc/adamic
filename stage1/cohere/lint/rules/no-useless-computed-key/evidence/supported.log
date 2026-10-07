@@ -1,0 +1,28 @@
+=== RUN   TestOriginalUpstream
+    lint_test.go:324: cohere cases: 759 unique source/rule/options combinations
+    wave08_original_test.go:31: Recovery blocked: rule=no-useless-computed-key source="({ ['x' });"
+    wave08_original_test.go:31: Recovery blocked: rule=no-useless-computed-key source="({ ['x': 0 });"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getFalse)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getTrue)';\n  'use memo if(getFalse)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getTrue)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(true)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(true)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(getTrue)';\n  'use memo if(getFalse)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react-hooks/gating source="function Foo() {\n  'use memo if(true)';\n  return <div>hello world</div>;\n}\n"
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var Foo = createReactClass({\n          propTypes: Bar.propTypes,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var Foo = createReactClass({\n          propTypes: Bar[\"propTypes\"],\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var { propTypes } = SomeComponent\n        var Foo = createReactClass({\n          propTypes,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var { propTypes: things, ...foo } = SomeComponent\n        var Foo = createReactClass({\n          propTypes,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        var { propTypes: typesOfProps } = SomeComponent\n        var Foo = createReactClass({\n          propTypes: typesOfProps,\n          render: function() {\n            return <Foo className=\"bar\" />;\n          }\n        });\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        const Message = (props) => (<div>{props.message}</div>);\n        Message.propTypes = {\n          message: PropTypes.string\n        };\n        const Hello = (props) => (<Message>Hello {props.name}</Message>);\n        Hello.propTypes = {\n          name: Message.propTypes.message\n        };\n      "
+    wave08_original_test.go:36: JSX blocked: rule=react/forbid-foreign-prop-types source="\n        const Message = (props) => (<div>{props.message}</div>);\n        Message.propTypes = {\n          message: PropTypes.string\n        };\n        const Hello = (props) => (<Message>Hello {props.name}</Message>);\n        Hello.propTypes = {\n          name: Message.propTypes.message\n        };\n      "
+    wave08_original_test.go:42: assigned upstream selected=map[no-useless-computed-key:120 react-hooks/gating:35 react/forbid-foreign-prop-types:53] blockedJSX=map[no-useless-computed-key recovery:2 react-hooks/gating:7 react/forbid-foreign-prop-types:7]
+    wave08_original_test.go:53: Go, Node, emitted JavaScript, native identical: 69704 bytes
+--- PASS: TestOriginalUpstream (39.78s)
+=== RUN   TestOriginalJSX
+    wave08_original_test.go:153: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/lint/rules/typescript-no-unnecessary-type-constraint/main.a --manifest /tmp/adamic-gate/TestOriginalJSX440455340/005/manifest.txt]: exit status 70
+        adamic: panic: parser slice expected semicolon at 56 in /tmp/adamic-gate/TestOriginalJSX440455340/001/gating.tsx
+--- FAIL: TestOriginalJSX (30.99s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	70.782s
+FAIL

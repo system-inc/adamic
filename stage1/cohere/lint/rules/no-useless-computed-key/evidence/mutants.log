@@ -1,0 +1,109 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/computed_replacement_wrong
+    lint_test.go:491: computed_replacement_wrong caught on Node: case 24 line 526: port "fix 12 17 'different'", Go "fix 12 17 'x'"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantscomputed_replacement_wrong3047215327/007/no-useless-computed-key-0.ts:1:13
+          no-useless-computed-key  Unnecessarily computed property ['x'] found. This property key is wrapped in brackets that compute nothing. The brackets say the name is decided when the code runs, so a reader stops to work out what it evaluates to, and the answer is the literal already written inside them.
+        
+        range 12 20 unnecessarilyComputedProperty 		
+        fix 12 17 'x'
+        fixed	const v = { 'x': 1 };\u000a
+    lint_test.go:491: computed_replacement_wrong caught on emitted JavaScript: case 24 line 526: port "fix 12 17 'different'", Go "fix 12 17 'x'"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantscomputed_replacement_wrong3047215327/007/no-useless-computed-key-0.ts:1:13
+          no-useless-computed-key  Unnecessarily computed property ['x'] found. This property key is wrapped in brackets that compute nothing. The brackets say the name is decided when the code runs, so a reader stops to work out what it evaluates to, and the answer is the literal already written inside them.
+        
+        range 12 20 unnecessarilyComputedProperty 		
+        fix 12 17 'x'
+        fixed	const v = { 'x': 1 };\u000a
+    lint_test.go:491: computed_replacement_wrong caught on native: case 24 line 526: port "fix 12 17 'different'", Go "fix 12 17 'x'"
+        Go context:
+        case 24
+        /tmp/adamic-gate/TestMutantscomputed_replacement_wrong3047215327/007/no-useless-computed-key-0.ts:1:13
+          no-useless-computed-key  Unnecessarily computed property ['x'] found. This property key is wrapped in brackets that compute nothing. The brackets say the name is decided when the code runs, so a reader stops to work out what it evaluates to, and the answer is the literal already written inside them.
+        
+        range 12 20 unnecessarilyComputedProperty 		
+        fix 12 17 'x'
+        fixed	const v = { 'x': 1 };\u000a
+=== RUN   TestMutants/gating_invalid_suppressed
+    lint_test.go:491: gating_invalid_suppressed caught on Node: case 24 line 522: port "fixed\tfunction f() { 'use memo if(true)'; }\\u000a", Go "/tmp/adamic-gate/TestMutantsgating_invalid_suppressed1215866741/007/react-hooks-gating-0.ts:1:16"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsgating_invalid_suppressed1215866741/007/react-hooks-gating-0.ts:1:16
+          react-hooks/gating  The condition inside `use memo if(...)` is not a JavaScript identifier. React Compiler imports that exact name from the gating module and calls it to decide whether the memoized version of this function runs, so it has to be something importable. A literal like `true`, an expression, or a reserved word cannot be imported, and the compiler rejects the whole file rather than guessing. Name the flag getter and write that identifier instead.
+        
+        range 15 35 invalidGatingDirective 		
+        fixed	function f() { 'use memo if(true)'; }\u000a
+    lint_test.go:491: gating_invalid_suppressed caught on emitted JavaScript: case 24 line 522: port "fixed\tfunction f() { 'use memo if(true)'; }\\u000a", Go "/tmp/adamic-gate/TestMutantsgating_invalid_suppressed1215866741/007/react-hooks-gating-0.ts:1:16"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsgating_invalid_suppressed1215866741/007/react-hooks-gating-0.ts:1:16
+          react-hooks/gating  The condition inside `use memo if(...)` is not a JavaScript identifier. React Compiler imports that exact name from the gating module and calls it to decide whether the memoized version of this function runs, so it has to be something importable. A literal like `true`, an expression, or a reserved word cannot be imported, and the compiler rejects the whole file rather than guessing. Name the flag getter and write that identifier instead.
+        
+        range 15 35 invalidGatingDirective 		
+        fixed	function f() { 'use memo if(true)'; }\u000a
+    lint_test.go:491: gating_invalid_suppressed caught on native: case 24 line 522: port "fixed\tfunction f() { 'use memo if(true)'; }\\u000a", Go "/tmp/adamic-gate/TestMutantsgating_invalid_suppressed1215866741/007/react-hooks-gating-0.ts:1:16"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsgating_invalid_suppressed1215866741/007/react-hooks-gating-0.ts:1:16
+          react-hooks/gating  The condition inside `use memo if(...)` is not a JavaScript identifier. React Compiler imports that exact name from the gating module and calls it to decide whether the memoized version of this function runs, so it has to be something importable. A literal like `true`, an expression, or a reserved word cannot be imported, and the compiler rejects the whole file rather than guessing. Name the flag getter and write that identifier instead.
+        
+        range 15 35 invalidGatingDirective 		
+        fixed	function f() { 'use memo if(true)'; }\u000a
+=== RUN   TestMutants/foreign_read_suppressed
+    lint_test.go:491: foreign_read_suppressed caught on Node: case 24 line 522: port "fixed\tconst p = Foo.propTypes;\\u000a", Go "/tmp/adamic-gate/TestMutantsforeign_read_suppressed781937206/007/react-forbid-foreign-prop-types-0.ts:1:15"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsforeign_read_suppressed781937206/007/react-forbid-foreign-prop-types-0.ts:1:15
+          react/forbid-foreign-prop-types  Reading another component's `propTypes` breaks in production. The React production build strips `propTypes` off components to save bytes, so this expression is an object in development and `undefined` in the build users actually run, and the failure lands at runtime in the one environment nobody was testing. Declare the shape where it is used, or export the plain object both components can import.
+        
+        range 14 23 forbiddenPropType 		
+        fixed	const p = Foo.propTypes;\u000a
+    lint_test.go:491: foreign_read_suppressed caught on emitted JavaScript: case 24 line 522: port "fixed\tconst p = Foo.propTypes;\\u000a", Go "/tmp/adamic-gate/TestMutantsforeign_read_suppressed781937206/007/react-forbid-foreign-prop-types-0.ts:1:15"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsforeign_read_suppressed781937206/007/react-forbid-foreign-prop-types-0.ts:1:15
+          react/forbid-foreign-prop-types  Reading another component's `propTypes` breaks in production. The React production build strips `propTypes` off components to save bytes, so this expression is an object in development and `undefined` in the build users actually run, and the failure lands at runtime in the one environment nobody was testing. Declare the shape where it is used, or export the plain object both components can import.
+        
+        range 14 23 forbiddenPropType 		
+        fixed	const p = Foo.propTypes;\u000a
+    lint_test.go:491: foreign_read_suppressed caught on native: case 24 line 522: port "fixed\tconst p = Foo.propTypes;\\u000a", Go "/tmp/adamic-gate/TestMutantsforeign_read_suppressed781937206/007/react-forbid-foreign-prop-types-0.ts:1:15"
+        Go context:
+          no-empty  This block is empty, which leaves a reader unable to tell a deliberate no-op from a body that was deleted or never written. The distinction matters most in a `catch`, where an empty block is the difference between swallowing an error on purpose and swallowing it by accident. Write a comment saying why nothing happens here, or remove the block.
+        
+        range 52 54 unexpectedBlock 		
+        fixed	const \u00e9 = '\ud83d\ude00';\u000d\u000a \u00e9 == null;\u000a \u000d\u000a if(\u00e9){} // outside\u000a
+        case 24
+        /tmp/adamic-gate/TestMutantsforeign_read_suppressed781937206/007/react-forbid-foreign-prop-types-0.ts:1:15
+          react/forbid-foreign-prop-types  Reading another component's `propTypes` breaks in production. The React production build strips `propTypes` off components to save bytes, so this expression is an object in development and `undefined` in the build users actually run, and the failure lands at runtime in the one environment nobody was testing. Declare the shape where it is used, or export the plain object both components can import.
+        
+        range 14 23 forbiddenPropType 		
+        fixed	const p = Foo.propTypes;\u000a
+--- PASS: TestMutants (66.23s)
+    --- PASS: TestMutants/computed_replacement_wrong (20.83s)
+    --- PASS: TestMutants/gating_invalid_suppressed (19.79s)
+    --- PASS: TestMutants/foreign_read_suppressed (23.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	66.242s
