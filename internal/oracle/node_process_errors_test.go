@@ -24,7 +24,7 @@ func TestNodeProcessErrorNarrowingBlocker(t *testing.T) {
 		t.Fatal(err)
 	}
 	helper := strings.SplitN(strings.SplitN(string(adapter), "const helper = `", 2)[1], "`;", 2)[0]
-	fixture, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/node_process_errors.a"))
+	fixture, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/node_process_runtime/node_process_errors.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -32,7 +32,7 @@ func TestNodeProcessErrorNarrowingBlocker(t *testing.T) {
 		t.Fatal("process error fixture drifted from adaptation 47's exact helpers")
 	}
 
-	_, err = lowered(t, filepath.Join(repository, "internal/oracle/testdata/node_process_errors.a"))
+	_, err = lowered(t, filepath.Join(repository, "internal/oracle/testdata/node_process_runtime/node_process_errors.a"))
 	var refused *lower.Refused
 	if !errors.As(err, &refused) || !strings.Contains(refused.What, "in") {
 		t.Fatalf("expected reported in-language blocker; got %v", err)
@@ -91,7 +91,7 @@ int chdir(const char *path) {
 		paths = append(paths, filepath.Join(shared, "adamic-injected-ENOMEM"), filepath.Join(shared, "adamic-injected-EIO"))
 		codes = append(codes, "ENOMEM", "EIO")
 	}
-	source := filepath.Join(directory, "internal/oracle/testdata/node_process_errors.a")
+	source := filepath.Join(directory, "internal/oracle/testdata/node_process_runtime/node_process_errors.a")
 	how.arguments = paths
 	runner := filepath.Join(directory, "oracle/node.mjs")
 	truth := executeInput(t, how, environment, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, source}, paths...)...)
@@ -169,7 +169,7 @@ func TestNodeProcessCwdErrorRuntime(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	source := filepath.Join(directory, "internal/oracle/testdata/node_process_cwd_error.a")
+	source := filepath.Join(directory, "internal/oracle/testdata/node_process_runtime/node_process_cwd_error.a")
 	driver := filepath.Join(directory, "internal/oracle/testdata/node_process_cached_cwd.py")
 	observe := func(command ...string) run {
 		result := execute(t, "python3", append([]string{driver}, command...)...)
@@ -194,7 +194,7 @@ func TestNodeProcessCwdErrorRuntime(t *testing.T) {
 	program.Main = []ir.Statement{
 		ir.Evaluate{Value: ir.ProcessCall{Operation: "chdir", Of: ir.Object, Arguments: []ir.Expression{ir.StringConstant{Index: 0}}}},
 		ir.Evaluate{Value: ir.ProcessCall{Operation: "stdoutWrite", Of: ir.Object, Arguments: []ir.Expression{ir.StringConstant{Index: 1}}}},
-		ir.Evaluate{Value: ir.ReadTextFile{Path: ir.StringConstant{Index: 2}}},
+		ir.Evaluate{Value: ir.ReadTextFile{Path: ir.Coalesce{Value: ir.ArrayIndex{Array: ir.ProgramArguments{}, Index: ir.NumberConstant{Value: 0}, Element: ir.String}, Fallback: ir.StringConstant{Index: 2}, Of: ir.String}}},
 		ir.Try{HasCatch: true, CatchLocal: 0, Body: []ir.Statement{ir.Evaluate{Value: ir.ProcessCall{Operation: "cwd", Of: ir.String}}}, Catch: []ir.Statement{
 			ir.WriteLine{Stream: ir.Stdout, Value: ir.Property{Object: errorValue, Name: "code", Of: ir.String}},
 			ir.WriteLine{Stream: ir.Stdout, Value: ir.Property{Object: errorValue, Name: "message", Of: ir.String}},
