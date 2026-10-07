@@ -1,0 +1,27 @@
+import { utf8At, utf8Length } from 'adamic';
+export interface EscapeContext {
+    readonly unicode: boolean;
+    readonly inClass: boolean;
+    readonly groups: number;
+    readonly named: boolean;
+}
+export interface DecodedEscape {
+    readonly kind: number;
+    readonly set: number;
+    readonly rune: number;
+    readonly width: number;
+    readonly negated: boolean;
+    readonly error: string;
+}
+// Index and size are Go byte offsets. A failed Annex B escape consumes no c.
+export function decodeControlEscape(source: string, index: number, size: number, context: EscapeContext): DecodedEscape {
+    const letter = index + size;
+    if(letter < utf8Length(source)) {
+        const byte = utf8At(source, letter);
+        if((byte >= 97 && byte <= 122) || (byte >= 65 && byte <= 90) || (!context.unicode && context.inClass && ((byte >= 48 && byte <= 57) || byte === 95))) {
+            return {kind: 0, set: 0, rune: byte % 32, width: size + 1, negated: false, error: ''};
+        }
+    }
+    if(context.unicode) { return {kind: 0, set: 0, rune: 0, width: 0, negated: false, error: 'unsupported regexp syntax: \\c naming no control character'}; }
+    return {kind: 0, set: 0, rune: 92, width: 0, negated: false, error: ''};
+}

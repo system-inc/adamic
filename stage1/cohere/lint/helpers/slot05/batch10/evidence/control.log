@@ -1,0 +1,15 @@
+=== RUN   TestSlot05ControlEscape
+    helper_test.go:49: 4 consumers, 1048 strings and controls, 121552 Go verdicts
+    helper_test.go:59: consumer coverage: {
+          "@next/next/no-html-link-for-pages": 383,
+          "@typescript-eslint/no-empty-object-type": 65,
+          "no-restricted-exports": 480,
+          "no-restricted-imports": 1266
+        }
+    helper_test.go:114: decode_control_escape.a mutant "byte % 32" -> "byte % 31" caught at verdict 225: mutant "0:0:4:2:false", Go "0:0:2:2:false"
+    helper_test.go:114: decode_control_escape.a mutant "!context.unicode && context.inClass" -> "!context.unicode" caught at verdict 4057: mutant "0:0:31:2:false", Go "0:0:92:0:false"
+    helper_test.go:114: decode_control_escape.a mutant "if(context.unicode)" -> "if(false)" caught at verdict 5: mutant "0:0:92:0:false", Go "0:0:0:0:false"
+    helper_test.go:114: decode_control_escape.a mutant "rune: 92, width: 0" -> "rune: 92, width: 1" caught at verdict 1: mutant "0:0:92:1:false", Go "0:0:92:0:false"
+--- PASS: TestSlot05ControlEscape (63.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot05/batch10	63.026s
