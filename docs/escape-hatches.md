@@ -1140,12 +1140,23 @@ boxed scalar reads and supported boxed stores have source fixtures on both backe
 The non-null tip `e2ea9ab2`, including `c680ecf4`, supplies the shared readiness helper
 and state; no second initialization representation was added.
 
+The lane 1 objects checkpoint adds anonymous structural object fields, with nested
+reads checked through aliases/parameters/returns, plus untagged object-source
+admission without a tag test. The interface checkpoint adds named and recursive
+interface descendants, including inherited fields. Optional/mixed/nullish fields
+remain the next family. The six source fixtures match Node on success and
+pin failure on both backends. Contract metadata and hook signatures are documented
+in [checked-views-plan.md](checked-views-plan.md). Actual source-slot type certificates
+are required before writes of checked object fields; current unsupported writes are
+NotYet. The renewed complete-target audit is still 0/1,758 tagged and 0/1,178 untagged.
+
 The reusable lowering entry point is `(*lowering).view(node, value, target)` in
 `internal/lower/interface_cast.go`. It returns the original operand, preserving
 identity, and registers fields for conservative program-wide checks across aliases.
-This checkpoint is incomplete: optional/nullish, object-valued, mixed scalar and
-recursive contracts remain NotYet, as do unsupported accessor/conversion aliases.
-Untagged admission, transitive object views and proof erasure are not implemented.
+This checkpoint is incomplete: optional/nullish and mixed scalar contracts remain
+NotYet, as do unsupported accessor/conversion aliases. Required object/interface
+fields have transitive checks, including untagged object-source admission. Proof
+erasure is not implemented.
 The machinery is not ready for the optional-property widening worker to consume.
 Direct callable contracts and callable fields are Refused because a runtime function
 tag cannot certify a parameter/result contract. Backend gaps are NotYet, not new
@@ -1405,3 +1416,32 @@ Fixtures cover reassignment before reading, checked reads, method calls, aliases
 Validation: `go test ./internal/lower ./internal/ir ./internal/fresh ./internal/javascript` passed (lower 26.116s, ir 23.088s, fresh 38.609s). The flow package also passed in 51.679s. `go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(non_null|object_)' -count=1 -v` passed all 71 selected fixtures in 9.273s, including 17 new deinitialization fixtures. The scanner controls remain green. `go test ./internal/oracle -run 'TestReadinessMutants|TestDeinitializationIsNotOrdinaryStoreMutant' -count=1 -v` passed in 2.025s; dropping values, entries or assignment-source checks is also caught by pinned output. Count regeneration passed in 17.557s and adds 17 rows with no existing row changes. Focused native field, ownership, receiver and iterator tests passed in 1.649s. Vet passed for lower, ir, flow, fresh, native, javascript and oracle. Logs are `/tmp/deinit-packages-final.log`, `/tmp/deinit-fixtures-final.log`, `/tmp/deinit-mutants-final.log`, `/tmp/deinit-counts.log`, `/tmp/deinit-native.log` and `/tmp/deinit-vet.log`. The full repository gate was not rerun for this priority amendment.
 
 An initial package command named nonexistent borrow and reuse packages and exposed a changed refusal diagnostic. The command was corrected and the original diagnostic restored before the passing package run. The shared field representation remains the initialized byte per shape slot, with `adamic_object_read` and `adamicReadField` as its read helpers; this amendment changes state transitions and proof invalidation, not representation selection.
+### Lane 1 interface checkpoint
+
+Named interfaces now use the same transitive read checks as structural object
+fields, including inherited fields and recursive contracts. An unread staged
+recursive link remains legal; reading it checks the shared readiness state. Four
+source fixtures pin both backend failures or match source Node byte for byte.
+The inherited-field transitivity mutant emits valid C and is caught by the failure
+assertion. No shape or initialization fact is inferred from an interface assertion.
+
+The complete-target rejection audit still proves zero complete eligible sites:
+0/1,758 tagged and 0/1,178 untagged. Recursing through named interfaces exposes
+25 tagged and 438 untagged callable blockers; these are first blockers, not a new
+partition of the original direct-contract lane shares. Remaining first blockers
+are recorded per site in interfaces-contract-sites.json. This is a contract audit,
+not a successful whole-file lowering measurement.
+
+### Tagged object-union field subset
+
+A read of an object-union field checks its required finite common discriminant
+before returning the child. A subsequent tag comparison can narrow that checked
+child, but all payload reads remain checked. The contract graph retains member ids,
+not just common fields. Both backends evaluate the receiver once and preserve
+identity. Contract links on earlier function reads resolve after cast registration.
+
+This is a subset checkpoint, not completion of the union family. Null and undefined
+are still conflated by existing reference representations; checked views that need
+them remain NotYet until a distinct representation is implemented. Mixed scalar
+unions, optional fields, union cast targets and unsupported aliases remain gaps.
+No complete tsc target becomes eligible in the renewed object-unions audit.

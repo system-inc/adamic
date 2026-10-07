@@ -12,9 +12,10 @@ import "fmt"
 type Program struct {
 	// CheckedFields conservatively checks these field names at every object read.
 	CheckedFields map[string]bool
-	// GraphTypes selects ownership by checker identity and negative allocation-site
-	// flow IDs after the cycle proof.
-	GraphTypes map[int]bool
+	// GraphTypes selects ownership by checker identity and negative allocation-site flow IDs.
+	GraphTypes        map[int]bool
+	ViewContracts     []ViewContract
+	ViewContractTypes map[int]ViewContractID
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -327,9 +328,11 @@ type (
 	// number field read that way is number | undefined.
 	Property struct {
 		// View names a required field read whose presence, readiness and representation are checked.
-		View        string
-		ViewType    string
-		ViewAllowed []Expression
+		View         string
+		ViewType     string
+		ViewAllowed  []Expression
+		ViewContract ViewContractID
+		ViewTypeID   int
 		// Readiness is the source expression for a checked field read, empty when proven ready.
 		Readiness string
 		Object    Expression

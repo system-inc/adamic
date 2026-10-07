@@ -1,0 +1,1900 @@
+=== RUN   TestCheckedViewInterfaces
+=== RUN   TestCheckedViewInterfaces/interfaces-good
+=== RUN   TestCheckedViewInterfaces/interfaces-missing-inherited
+=== RUN   TestCheckedViewInterfaces/interfaces-wrong-inherited
+=== RUN   TestCheckedViewInterfaces/interfaces-uninitialized-object
+--- PASS: TestCheckedViewInterfaces (1.41s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-good (0.41s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-missing-inherited (0.29s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-wrong-inherited (0.39s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-uninitialized-object (0.32s)
+=== RUN   TestCheckedViewObjects
+=== RUN   TestCheckedViewObjects/objects-good
+=== RUN   TestCheckedViewObjects/objects-untagged-good
+=== RUN   TestCheckedViewObjects/objects-untagged-wrong
+=== RUN   TestCheckedViewObjects/objects-wrong-nested
+    checked_views_objects_test.go:44: skip transitive view caught by pinned exit/message with valid C
+=== RUN   TestCheckedViewObjects/objects-missing-nested
+=== RUN   TestCheckedViewObjects/objects-uninitialized-nested
+--- PASS: TestCheckedViewObjects (2.12s)
+    --- PASS: TestCheckedViewObjects/objects-good (0.35s)
+    --- PASS: TestCheckedViewObjects/objects-untagged-good (0.35s)
+    --- PASS: TestCheckedViewObjects/objects-untagged-wrong (0.29s)
+    --- PASS: TestCheckedViewObjects/objects-wrong-nested (0.43s)
+    --- PASS: TestCheckedViewObjects/objects-missing-nested (0.35s)
+    --- PASS: TestCheckedViewObjects/objects-uninitialized-nested (0.34s)
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+=== RUN   TestCountsAreRecorded/fixtures
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_map.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_map.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_catch.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_catch.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_field.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_field.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_capture.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_capture.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_array.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_array.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_union.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_union.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_boolean.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_boolean.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_null.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_null.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_callbacks.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_callbacks.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_virtual_fresh.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_virtual_fresh.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_unknown.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_unknown.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_bound_method.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_bound_method.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_recursive.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_recursive.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_try_loop.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_try_loop.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_accessor.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_accessor.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_sort_values.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_sort_values.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_keys.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_keys.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_keys.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_keys.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_keys.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_keys.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_keys.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_keys.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_keep.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_keep.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_keep.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_keep.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_objects.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_objects.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_objects.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_objects.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_closures.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_closures.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_closures.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_closures.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_numbers.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_numbers.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_numbers.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_numbers.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_arrays.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_arrays.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_arrays.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_arrays.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_more.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_more.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_more.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_more.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_objects.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_objects.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_objects.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_objects.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_closures.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_closures.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_closures.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_closures.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_fnexpr.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_fnexpr.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_fnexpr.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_fnexpr.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_numbers.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_numbers.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_guards.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_guards.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_callbacks.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_callbacks.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_exclusions.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_exclusions.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_spread.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_spread.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_scope.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_scope.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_depths.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_depths.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_values.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_values.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_return.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_return.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_method.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_method.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_finally.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_finally.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_parents.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_parents.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_bounded.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_bounded.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_override.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_override.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_unknown.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_unknown.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_argument.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_argument.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_walk.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_walk.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_listener.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_listener.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_write.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_write.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_reassigned.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_reassigned.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_capture.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_capture.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_store.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_store.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_element.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_element.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_region.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_region.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_reuse.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_reuse.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_closure.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_closure.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_sort.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_sort.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_keys.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_keys.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_is.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_is.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_has_own.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_has_own.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_assign.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_assign.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_write.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_write.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_order.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_order.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_assign_fields.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_assign_fields.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_alias.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_alias.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_assign.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_assign.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_same.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_same.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_own.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_own.a
+=== RUN   TestCountsAreRecorded/fixtures/dedication/dedication.a
+=== PAUSE TestCountsAreRecorded/fixtures/dedication/dedication.a
+=== RUN   TestCountsAreRecorded/fixtures/cmd/adamic/testdata/wasi/request.a
+=== PAUSE TestCountsAreRecorded/fixtures/cmd/adamic/testdata/wasi/request.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_deep.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_deep.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_parameters.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_parameters.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_release.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_release.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_join.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_join.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_iterators.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_iterators.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_metadata.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_metadata.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_with.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_with.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_flat_map.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_flat_map.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_flat.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_flat.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_spliced.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_spliced.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_copy_within.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_copy_within.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_search.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_search.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_copy.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_copy.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_find_last.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_find_last.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_scalars.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_scalars.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_values.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_values.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_options.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_options.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_escapes.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_escapes.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_numbers.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_numbers.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_undefined.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_undefined.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_indent.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_indent.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_keys.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_keys.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_replacer.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_replacer.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_function_expressions.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_function_expressions.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_recurse.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_recurse.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_store.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_store.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_loops.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_loops.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in_keys.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in_keys.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in_live.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in_live.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_globals.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_globals.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_globals_typeof.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_globals_typeof.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/01_hello.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/01_hello.ts
+=== RUN   TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+=== RUN   TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/03_shapes.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/03_shapes.ts
+=== RUN   TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/04_closures.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/04_closures.ts
+=== RUN   TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/05_wordcount.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/05_wordcount.ts
+=== RUN   TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/06_stack.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/06_stack.ts
+=== RUN   TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/07_modules/main.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/07_modules/main.ts
+=== RUN   TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/08_results.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/08_results.ts
+=== RUN   TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/09_tree.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/09_tree.ts
+=== RUN   TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/10_unicode.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/10_unicode.ts
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/strings.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/strings.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_caches.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_caches.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_padding.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_padding.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_join.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_join.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_repeat.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_repeat.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_cached_reads.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_cached_reads.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_boundaries.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_boundaries.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_calls.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_calls.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/numbers.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/numbers.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/bitwise_sweep.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/bitwise_sweep.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/loops.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/loops.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/booleans.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/booleans.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/shadowing.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/shadowing.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/functions.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/functions.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/effects.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/effects.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/dead_zone.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/dead_zone.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/objects.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/objects.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/modules/main.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/modules/main.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/panic.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/panic.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/maps_and_text.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/maps_and_text.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/lone_surrogates.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/lone_surrogates.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/sorting.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/sorting.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/classes.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/classes.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/local_console.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/local_console.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/indexing.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/indexing.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes_past_end.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes_past_end.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/casts.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/casts.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/cast_fails.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/cast_fails.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/updates.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/updates.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_order.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_order.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_index.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_index.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/visits.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/visits.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/searches.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/searches.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/spreads.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/spreads.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_numbers.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_numbers.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/defaults.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/defaults.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_halves.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_halves.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/runtime_last_index_of.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/runtime_last_index_of.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_release_chain.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_release_chain.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_release_shared.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_release_shared.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_search_boundaries.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_search_boundaries.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_search_calls.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_search_calls.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_equal_headers.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_equal_headers.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/strings_more.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/strings_more.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_parsing.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_parsing.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_math.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_math.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_convert.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_convert.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_prototype.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_prototype.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/navigation.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/navigation.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_formats.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_formats.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/precision_range.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/precision_range.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/radixes.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/radixes.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/radix_range.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/radix_range.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_numbers.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_numbers.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_iteration.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_iteration.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/sorts.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/sorts.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/sort_releases.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/sort_releases.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/timsort.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/timsort.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/unused_parameters.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/unused_parameters.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_shrinks.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_shrinks.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/find_shrinks.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/find_shrinks.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/find_index_shrinks.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/find_index_shrinks.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/self_assignments.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/self_assignments.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/method_closures.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/method_closures.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/splice_empty.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/splice_empty.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_reads.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_reads.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_writes.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_writes.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_methods.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_methods.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_fields.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_fields.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_numbers.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_numbers.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_compared.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_compared.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/sort_top_level.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/sort_top_level.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/splices.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/splices.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/fills.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/fills.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/fill_length.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/fill_length.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from_length.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from_length.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from_undefined.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from_undefined.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/weak_parent.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/weak_parent.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/doubly_linked.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/doubly_linked.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_parser.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_parser.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_writes.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_writes.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_calls.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_calls.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/weak_narrowed.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/weak_narrowed.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions_uncaught.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions_uncaught.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions_empty.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions_empty.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures_throw.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures_throw.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures_throw_uncaught.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures_throw_uncaught.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/finally_leaves.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/finally_leaves.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_foreach_global.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_foreach_global.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/param_assigned_in_try.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/param_assigned_in_try.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/named_function_values.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/named_function_values.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/panic_in_try.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/panic_in_try.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/invariance_readonly.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/invariance_readonly.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/tuples_kept.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/tuples_kept.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_keys.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_keys.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_strings.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_strings.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_booleans.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_booleans.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_boolean_panic.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_boolean_panic.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/unions.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/unions.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_number_slots.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_number_slots.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/case_mapping.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/case_mapping.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_elements.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_elements.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_zero_keys.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_zero_keys.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_limits.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_limits.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_too_long.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_too_long.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/pad_too_long.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/pad_too_long.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_order.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_order.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_exits.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_exits.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_iteration.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_iteration.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_edges.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_edges.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/long_chain.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/long_chain.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_after_shrink.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_after_shrink.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_form.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_form.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_positions.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_positions.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/long_literals.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/long_literals.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_layouts.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_layouts.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_access_paths.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_access_paths.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_field_values.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_field_values.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_slot_kinds.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_slot_kinds.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_runtime_fields.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_runtime_fields.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_narrowed_receiver.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_narrowed_receiver.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_base_writes.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_base_writes.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_collection_fields.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_collection_fields.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_write_read_order.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_write_read_order.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_static_collision.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_static_collision.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_optional_references.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_optional_references.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_spread_fields.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_spread_fields.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_write_paths.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_write_paths.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/inherited_static_field_read.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/inherited_static_field_read.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/ascii_scan.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/ascii_scan.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/size_class_churn.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/size_class_churn.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_reassigned.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_reassigned.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_defined_lent.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_defined_lent.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_defined_lent_field.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_defined_lent_field.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes_in_try.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes_in_try.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_as_interface.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_as_interface.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_class_method.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_class_method.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_undefined.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_undefined.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_map_overwrite.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_map_overwrite.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_snapshot.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_snapshot.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_arrays.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_arrays.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_forward.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_forward.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_global_sibling.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_global_sibling.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_weak_during_spread.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_weak_during_spread.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_weak_after_reuse.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_weak_after_reuse.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions_throw.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions_throw.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions_constructor_capture.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions_constructor_capture.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_loop.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_loop.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_loop_calls.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_loop_calls.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_global_call.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_global_call.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_throw.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_throw.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_virtual_store.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_virtual_store.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_virtual_move.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_virtual_move.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_super_move.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_super_move.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/move_throw.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/move_throw.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value_variants.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value_variants.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_in_writes.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_in_writes.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_global_move.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_global_move.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_undefined.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_undefined.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/lent_reads.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/lent_reads.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/large_output.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/large_output.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/output_then_panic.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/output_then_panic.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/interleaved.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/interleaved.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/trig_reduction.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/trig_reduction.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/sets.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/sets.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_maybe_numbers.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_maybe_numbers.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_keys.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_keys.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterators.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterators.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_construct.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_construct.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_group_by.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_group_by.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_collections.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_collections.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/stack_tail_call.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/stack_tail_call.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/stack_forever.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/stack_forever.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_strings.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_strings.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/concat_too_long.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/concat_too_long.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/replace_all_large.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/replace_all_large.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_stdout_order.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_stdout_order.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_stderr_order.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_stderr_order.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/prompt_then_read.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/prompt_then_read.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/collections.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/collections.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/gaps.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/gaps.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_long_marks.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_long_marks.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_quick.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_quick.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_repeat.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_repeat.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_stream.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_stream.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_long.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_long.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_cache.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_cache.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_limit.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_limit.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/power_of_two_string.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/power_of_two_string.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/declared_later.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/declared_later.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/return_panic.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/return_panic.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/return_panic_fires.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/return_panic_fires.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/from_codes.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/from_codes.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/from_code_point_fails.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/from_code_point_fails.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/bitwise.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/bitwise.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/tuple_values.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/tuple_values.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_functions.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_functions.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_method_return.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_method_return.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_values.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_values.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_references.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_references.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_calls.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_calls.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_view.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_view.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_view_fails.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_view_fails.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_from.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_from.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slices.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slices.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_append.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_append.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slice_append.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slice_append.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_from_sweep.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_from_sweep.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/integer_format.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/integer_format.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_throw.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_throw.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_narrowed.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_narrowed.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_lent_global.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_lent_global.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method_alias.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method_alias.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/try_assignments.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/try_assignments.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_conversion.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_conversion.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_prototype.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_prototype.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_indices.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_indices.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_raw.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_raw.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_existing.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_existing.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_visit.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_visit.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_setops.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_setops.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_zeros.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_zeros.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_groupby_keys.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_groupby_keys.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_next.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_next.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/has_own.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/has_own.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/sweeps/regexp_methods.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/sweeps/regexp_methods.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_matchall_nonglobal.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_matchall_nonglobal.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_null_narrowed.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_null_narrowed.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_replace.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_replace.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_split.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_split.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_exec.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_exec.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_match.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_match.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_search.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_search.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_unicode.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_unicode.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_split_pair_pattern.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_split_pair_pattern.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_static.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_static.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_static_private.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_static_private.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_private.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_private.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_accessors.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_accessors.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_twice.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_twice.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_retained.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_retained.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_distinct.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_distinct.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_exceptions.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_exceptions.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_order.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_order.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_identity.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_identity.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_memory.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_memory.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_generic.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_generic.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_interface.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_interface.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_conditional.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_conditional.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/devirtualize.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/devirtualize.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators_rest_tdz.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators_rest_tdz.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterator_number_hash.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterator_number_hash.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterator_exhausted.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterator_exhausted.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u02_optional_absent.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u02_optional_absent.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/literal_optional_shapes.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/literal_optional_shapes.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_field_narrowed.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_field_narrowed.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_class_narrowed.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_class_narrowed.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_field_present.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_field_present.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element_plain.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element_plain.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element_method.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element_method.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_param.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_param.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_numparam.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_numparam.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_coalesce.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_coalesce.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_typeof.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_typeof.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_template.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_template.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_optional.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_optional.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_arrayindex.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_arrayindex.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_paren.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_paren.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_conditional.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_conditional.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/override_same_representation.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/override_same_representation.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/object_prototype.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/object_prototype.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_guards.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_guards.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_class_guards.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_class_guards.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_assertions.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_assertions.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_satisfies.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_satisfies.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_upcasts.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_upcasts.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_initialized.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_initialized.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_field.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_field.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_capture.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_capture.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_exception.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_exception.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_loop.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_loop.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_default.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_default.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_const.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_const.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_weak.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_weak.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite_local.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite_local.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite_field.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite_field.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_static_initialized.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_static_initialized.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_static_uninitialized.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_static_uninitialized.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_optional.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_optional.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_spread.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_spread.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_return.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_return.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_assignment.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_assignment.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_statement.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_statement.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_iteration.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_iteration.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_catch.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_catch.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_interface.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_interface.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_append.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_append.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_map_entry.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_map_entry.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_initialized.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_initialized.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_read.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_read.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_field.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_field.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_static.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_static.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_default.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_default.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/fresh/testdata/regexp_tree.ts
+=== PAUSE TestCountsAreRecorded/fixtures/internal/fresh/testdata/regexp_tree.ts
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_fields.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_fields.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_collections.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_collections.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_closures.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_closures.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_weak.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_weak.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_dispatch.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_dispatch.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_string_literal.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_string_literal.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_compare.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_compare.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_switch.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_switch.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_slots.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_slots.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_roll.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_roll.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_files.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_files.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/empty-path.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/empty-path.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_sweep.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_sweep.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/arguments.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/arguments.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_arguments.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_arguments.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_files.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_files.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/walk.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/walk.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/walk.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_catch.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u02_optional_absent.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_iteration.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterator_exhausted.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterator_number_hash.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators_rest_tdz.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/devirtualize.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_conditional.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_interface.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_generic.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_memory.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_identity.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_order.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_exceptions.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_distinct.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_retained.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_twice.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_accessors.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_private.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_static_private.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_static.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_split_pair_pattern.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_unicode.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_search.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_match.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_exec.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_split.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_replace.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_null_narrowed.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_matchall_nonglobal.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/sweeps/regexp_methods.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/has_own.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_next.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_groupby_keys.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_zeros.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_setops.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_visit.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_existing.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_raw.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_indices.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_prototype.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_conversion.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/try_assignments.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method_alias.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_lent_global.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_narrowed.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_statement.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_throw.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/integer_format.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_from_sweep.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_assignment.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_return.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_spread.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_optional.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slice_append.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_static_uninitialized.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_static_initialized.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/return_panic_fires.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite_field.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_append.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite_local.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slices.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/weak_narrowed.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_from.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_weak.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_view_fails.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_view.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_calls.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_references.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_values.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_const.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_method_return.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_default.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_loop.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_functions.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/tuple_values.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/bitwise.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/from_code_point_fails.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/from_codes.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_exception.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_capture.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/return_panic.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_field.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/declared_later.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/power_of_two_string.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_limit.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_initialized.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_upcasts.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_satisfies.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_cache.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_long.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_assertions.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_stream.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_class_guards.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_repeat.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_quick.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_long_marks.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_keys.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/gaps.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_guards.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/collections.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/object_prototype.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/override_same_representation.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_conditional.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/prompt_then_read.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_paren.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_stderr_order.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_arrayindex.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_optional.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_stdout_order.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_template.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/replace_all_large.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/concat_too_long.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_strings.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_typeof.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_coalesce.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_numparam.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_param.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element_method.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/stack_forever.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/stack_tail_call.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_collections.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_files.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_group_by.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_arguments.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_construct.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterators.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_maybe_numbers.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/sets.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/trig_reduction.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/interleaved.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/output_then_panic.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/large_output.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/lent_reads.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_undefined.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element_plain.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_global_move.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_field_present.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_in_writes.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value_variants.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_class_narrowed.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/move_throw.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_field_narrowed.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_super_move.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_virtual_move.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/literal_optional_shapes.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_virtual_store.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_throw.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_global_call.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_class_method.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_loop_calls.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_as_interface.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_loop.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_static_collision.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes_in_try.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_defined_lent_field.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_defined_lent.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions_constructor_capture.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_reassigned.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/size_class_churn.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/ascii_scan.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions_throw.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/inherited_static_field_read.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_write_paths.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_weak_after_reuse.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_spread_fields.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_weak_during_spread.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_optional_references.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_global_sibling.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_write_read_order.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_forward.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_collection_fields.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_base_writes.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_narrowed_receiver.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_arrays.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_runtime_fields.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_slot_kinds.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_snapshot.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_field_values.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_map_overwrite.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_undefined.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_access_paths.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_layouts.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_exits.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/long_literals.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_order.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_positions.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/pad_too_long.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_too_long.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_limits.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_zero_keys.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_elements.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_form.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/case_mapping.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_after_shrink.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/long_chain.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_number_slots.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_edges.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/unions.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_iteration.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_booleans.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_boolean_panic.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_strings.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/invariance_readonly.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/panic_in_try.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_keys.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/tuples_kept.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/param_assigned_in_try.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/named_function_values.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_foreach_global.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/finally_leaves.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures_throw.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures_throw_uncaught.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions_empty.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions_uncaught.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions.a
+=== CONT  TestCountsAreRecorded/fixtures/cmd/adamic/testdata/wasi/request.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/arguments.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_sweep.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/empty-path.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_files.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_roll.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_slots.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_switch.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_compare.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_string_literal.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_dispatch.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_weak.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_closures.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_collections.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_fields.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/fresh/testdata/regexp_tree.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_default.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_static.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_field.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_read.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_initialized.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_map_entry.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_append.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_interface.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/05_wordcount.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_release_chain.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/runtime_last_index_of.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_calls.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_halves.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_writes.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_parser.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/defaults.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/doubly_linked.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_numbers.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/weak_parent.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/spreads.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from_undefined.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/searches.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/visits.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from_length.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/fill_length.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_index.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/fills.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_order.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_write.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/updates.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/splices.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/cast_fails.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/sort_top_level.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_compared.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/04_closures.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_numbers.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_fields.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/03_shapes.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_methods.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_writes.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/01_hello.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/casts.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes_past_end.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_globals_typeof.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/indexing.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/local_console.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/classes.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/sorting.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/lone_surrogates.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/maps_and_text.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/panic.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/modules/main.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/objects.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/dead_zone.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/effects.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/functions.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/shadowing.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/booleans.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/loops.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/bitwise_sweep.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/numbers.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_calls.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_boundaries.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_cached_reads.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_globals.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_repeat.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in_live.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_join.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in_keys.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_padding.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_caches.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_loops.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_store.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_recurse.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_function_expressions.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/strings.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/10_unicode.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_replacer.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_reads.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_keys.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/09_tree.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_indent.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/08_results.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/splice_empty.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/07_modules/main.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/06_stack.ts
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/radixes.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/method_closures.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/self_assignments.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/find_index_shrinks.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/precision_range.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_formats.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/find_shrinks.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_shrinks.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/unused_parameters.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/navigation.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/timsort.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_prototype.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/sort_releases.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_convert.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/sorts.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_math.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_iteration.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_numbers.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_parsing.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/radix_range.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/strings_more.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_equal_headers.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_closures.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_objects.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_objects.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_more.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_more.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_arrays.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_arrays.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_numbers.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_numbers.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_closures.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_closures.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_objects.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_objects.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_keep.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_keep.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_keys.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_keys.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_keys.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_keys.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_sort_values.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_accessor.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_try_loop.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_recursive.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_bound_method.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_unknown.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_virtual_fresh.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_callbacks.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_null.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_boolean.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_union.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_array.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_capture.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_field.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_catch.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_search_calls.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_map.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_search_boundaries.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_release_shared.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_metadata.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_numbers.a
+=== CONT  TestCountsAreRecorded/fixtures/dedication/dedication.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_iterators.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_join.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_escapes.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_options.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_release.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_values.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_scalars.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_find_last.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_parameters.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_copy.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_search.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_copy_within.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_deep.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_spliced.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_flat.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_assign.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_flat_map.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_with.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_own.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_same.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_assign_fields.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_unknown.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_alias.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_element.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_region.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_store.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_capture.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_assign.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_reassigned.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_write.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_listener.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_walk.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_argument.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_sort.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_is.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_keys.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_scope.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_override.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_bounded.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_parents.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_finally.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_method.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_return.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_values.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_depths.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_closure.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_reuse.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_order.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_numbers.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_spread.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_exclusions.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_callbacks.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_has_own.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_undefined.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_fnexpr.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_fnexpr.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_guards.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_closures.a
+--- PASS: TestCountsAreRecorded (24.61s)
+    --- PASS: TestCountsAreRecorded/fixtures (0.02s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_catch.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_iteration.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u02_optional_absent.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterator_exhausted.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/walk.a (0.27s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterator_number_hash.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators_rest_tdz.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/devirtualize.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_conditional.a (0.24s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_interface.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_memory.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_identity.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_generic.a (0.37s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_order.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance_exceptions.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_inheritance.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_distinct.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_twice.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_retained.a (0.27s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a (0.87s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_accessors.a (0.26s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_private.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_split_pair_pattern.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_static_private.a (0.28s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_features_static.a (0.32s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_search.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_unicode.a (0.24s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_match.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_exec.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_split.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_replace.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_null_narrowed.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_matchall_nonglobal.a (0.12s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_replaceall_nonglobal.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/has_own.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_groupby_keys.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_next.a (0.25s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sweeps/regexp_methods.a (0.35s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_zeros.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp.a (0.45s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_visit.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_setops.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_existing.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_raw.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_conversion.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_prototype.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_indices.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/try_assignments.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_spread_method_alias.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_lent_global.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_statement.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_narrowed.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_throw.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_assignment.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_literal_return.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_from_sweep.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/integer_format.a (0.28s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_optional.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_static_uninitialized.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_spread.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slice_append.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_static_initialized.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/return_panic_fires.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite_local.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite_field.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_append.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_definite.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_from.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/weak_narrowed.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_weak.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/shared_slices.a (0.24s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_view_fails.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_view.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_calls.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_references.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_values.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_const.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_default.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_method_return.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/generic_functions.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_loop.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/from_code_point_fails.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/bitwise.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/tuple_values.a (0.24s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_exception.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/from_codes.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_capture.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/return_panic.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_field.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/power_of_two_string.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/declared_later.a (0.24s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_initialized.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_upcasts.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_satisfies.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_cache.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_assertions.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_class_guards.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_stream.a (0.24s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_limit.a (0.60s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_repeat.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_quick.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_keys.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_long_marks.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/gaps.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/proven_guards.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/override_same_representation.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/collections.a (0.28s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/object_prototype.a (0.28s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_conditional.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_coverage_long.a (0.95s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/prompt_then_read.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_paren.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_stderr_order.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_arrayindex.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_optional.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_stdout_order.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_template.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/replace_all_large.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_strings.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_typeof.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_coalesce.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_numparam.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_param.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element_method.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/stack_forever.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/stack_tail_call.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_collections.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_files.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_arguments.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_group_by.a (0.26s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_construct.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set_iterators.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_maybe_numbers.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_map_set.a (0.33s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/trig_reduction.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/concat_too_long.a (1.03s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sets.a (0.27s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/output_then_panic.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/interleaved.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/lent_reads.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/large_output.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_undefined.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/047cb0d_n_element_plain.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_global_move.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_in_writes.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_field_present.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value_variants.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/throw_keeps_old_value.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_class_narrowed.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/move_throw.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_f1_field_narrowed.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_super_move.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_virtual_move.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_virtual_store.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/literal_optional_shapes.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_global_call.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_class_method.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element_throw.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_loop_calls.a (0.25s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes_in_try.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_as_interface.a (0.29s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_loop.a (0.27s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_static_collision.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_defined_lent_field.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_defined_lent.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions_constructor_capture.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_element.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_reassigned.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/ascii_scan.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions_throw.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/inherited_static_field_read.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regions.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_weak_after_reuse.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/size_class_churn.a (0.37s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_write_paths.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_weak_during_spread.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_spread_fields.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_global_sibling.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_optional_references.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_write_read_order.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_forward.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_collection_fields.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_base_writes.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_narrowed_receiver.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_arrays.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_runtime_fields.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_slot_kinds.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/spread_snapshot.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/nbody_field_values.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_map_overwrite.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_undefined.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_exits.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/field_access_paths.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/long_literals.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_layouts.a (0.25s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_order.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_positions.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/pad_too_long.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_limits.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_too_long.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_zero_keys.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize_form.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_elements.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/case_mapping.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/normalize.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/write_after_shrink.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/long_chain.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/adversarial_iteration.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_edges.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/unions.a (0.24s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_number_slots.a (0.29s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_boolean_panic.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_strings.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_booleans.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/panic_in_try.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/invariance_readonly.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/param_assigned_in_try.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/tuples_kept.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/undefined_keys.a (0.24s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/named_function_values.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/reuse_foreach_global.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures_throw_uncaught.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/finally_leaves.a (0.25s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions_uncaught.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions_empty.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures_throw.a (0.31s)
+        --- PASS: TestCountsAreRecorded/fixtures/cmd/adamic/testdata/wasi/request.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/arguments.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/empty-path.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/exceptions.a (0.27s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/utf8_sweep.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_files.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_roll.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_slots.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_switch.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null_compare.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_string_literal.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_dispatch.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_weak.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_closures.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_collections.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/fresh/testdata/regexp_tree.ts (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_default.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/regexp_cycle_fields.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_static.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_field.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_read.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_map_entry.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_lazy_initialized.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_append.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_uninitialized_interface.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/05_wordcount.ts (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/search_halves.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_release_chain.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/runtime_last_index_of.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_calls.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_writes.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/defaults.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maybe_numbers.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fresh_parser.a (0.24s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/doubly_linked.a (0.24s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/spreads.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/weak_parent.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from_undefined.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/searches.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from_length.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/visits.a (0.25s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/array_from.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fill_length.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_index.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_write.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/fills.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/read_order.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/updates.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/splices.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/cast_fails.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_compared.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sort_top_level.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_numbers.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/04_closures.ts (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_fields.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/02_fizzbuzz.ts (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_writes.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_methods.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/03_shapes.ts (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/01_hello.ts (0.12s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes_past_end.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_globals_typeof.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/writes.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/casts.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/indexing.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/local_console.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sorting.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/classes.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/closures.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/lone_surrogates.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/maps_and_text.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/panic.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/modules/main.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/objects.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/dead_zone.a (0.12s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/functions.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/booleans.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/loops.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/effects.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/shadowing.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_cached_reads.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/numbers.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_calls.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_boundaries.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_globals.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_repeat.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in_live.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_join.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in_keys.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_for_in.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_padding.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/string_build_caches.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_store.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_function_expressions.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_recurse.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_fnexpr_loops.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/bitwise_sweep.a (0.82s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/10_unicode.ts (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/strings.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_replacer.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/narrowed_reads.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_keys.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_indent.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/09_tree.ts (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/08_results.ts (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/splice_empty.a (0.12s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/07_modules/main.ts (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/load/testdata/0.1/compile/06_stack.ts (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/radixes.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/self_assignments.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/method_closures.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/find_index_shrinks.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/precision_range.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_shrinks.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_formats.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/find_shrinks.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/unused_parameters.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/navigation.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_prototype.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_convert.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/timsort.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sort_releases.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/sorts.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_math_number_math.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_iteration.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/optional_numbers.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/radix_range.a (0.11s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/number_parsing.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/strings_more.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_equal_headers.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_closures.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_objects.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_more.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_objects.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_more.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_arrays.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_arrays.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_numbers.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_numbers.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_objects.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_closures.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_closures.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_keep.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_objects.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_keys.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_keep.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_keys.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_keys.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_keys.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_try_loop.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_accessor.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_sort_values.a (0.23s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_recursive.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_bound_method.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_unknown.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_virtual_fresh.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/typeof_null.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_null.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/route_targets_callbacks.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_boolean.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_union.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_array.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_capture.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_field.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_map.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_search_calls.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/non_null_catch.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_search_boundaries.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/lint_runtime_release_shared.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/dedication/dedication.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_metadata.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_numbers.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_join.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_iterators.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_escapes.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_subclass_holder.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_options.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_values.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_release.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_scalars.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_find_last.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_copy.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_search.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_parameters.a (0.26s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_copy_within.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_flat.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/class_oct6_deep.a (0.22s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_spliced.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_assign.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_flat_map.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_same.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_assign_fields.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_own.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_array_with.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_unknown.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_freeze_alias.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_region.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_store.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_element.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_capture.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_assign.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_reassigned.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_write.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_listener.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_argument.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_walk.a (0.13s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_sort.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_is.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_keys.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_scope.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_override.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_bounded.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_parents.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_finally.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_method.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_return.a (0.15s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_values.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_depths.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_closure.a (0.14s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/call_targets_reuse.a (0.19s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_order.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_named_numbers.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_exclusions.a (0.18s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_spread.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_object_has_own.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_callbacks.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_stringify_undefined.a (0.20s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/map_foreach_fnexpr.a (0.17s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_fnexpr.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/borrow_chain_coverage_guards.a (0.16s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/set_foreach_named_closures.a (0.18s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=15
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	28.141s
