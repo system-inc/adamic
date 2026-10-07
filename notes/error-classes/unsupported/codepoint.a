@@ -1,0 +1,1 @@
+try { console.log(String.fromCodePoint(-1)); } catch (error) { if (error instanceof RangeError) console.log(error.toString()); }

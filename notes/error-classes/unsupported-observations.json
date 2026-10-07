@@ -1,0 +1,366 @@
+[
+  {
+    "program": "notes/error-classes/unsupported/array_from_length.a",
+    "node": {
+      "exit": 0,
+      "stdout": "RangeError: Invalid array length\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/array_from_length.a:1:1: stage 0 can't lower a try around Array.from({ length }), whose native runtime failure cannot unwind to a catch yet (docs/memory.md) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/array_length.a",
+    "node": {
+      "exit": 0,
+      "stdout": "RangeError: Invalid array length\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/array_length.a:1:1: stage 0 can't lower a try around new Array(length), whose native runtime failure cannot unwind to a catch yet (docs/memory.md) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/cause_cycle.a",
+    "node": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/cause_cycle.a:1:16: Adamic 0.1 refuses Holder.error, a mutable field of type Error | undefined, which can reach back to the Holder holding it: a cycle reference counting can't free, and the write at /workspace/adamic/notes/error-classes/unsupported/cause_cycle.a:1:95 may close one (the value written may reach what it's written into, where close is called from the top level); declare it error: Weak<Error> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed; or make it readonly; or write into it only values this function made, or only into what it made (adamic/cycle-capable)\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/cause_unknown.a",
+    "node": {
+      "exit": 0,
+      "stdout": "y\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/cause_unknown.a:1:101: stage 0 can't lower an erased unknown cause: narrow it before constructing the error so its possible reference cycles can be proven yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/cause_write.a",
+    "node": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/cause_write.a:1:31: stage 0 can't lower assigning Error.cause after construction: its erased reference ownership must be proven before mutable cause links are allowed yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/codepoint.a",
+    "node": {
+      "exit": 0,
+      "stdout": "RangeError: Invalid code point -1\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/codepoint.a:1:1: stage 0 can't lower a try around String.fromCodePoint, whose native runtime failure cannot unwind to a catch yet (docs/memory.md) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/codepoint_spread.a",
+    "node": {
+      "exit": 0,
+      "stdout": "RangeError: Invalid code point NaN\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/codepoint_spread.a:1:27: stage 0 can't lower a try around String.fromCodePoint, whose native runtime failure cannot unwind to a catch yet (docs/memory.md) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/error_coercion.a",
+    "node": {
+      "exit": 0,
+      "stdout": "Error: 42\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "notes/error-classes/unsupported/error_coercion.a:1:23: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'number' is not assignable to parameter of type 'string'.\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/error_extra_arguments.a",
+    "node": {
+      "exit": 0,
+      "stdout": "x\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "notes/error-classes/unsupported/error_extra_arguments.a:1:32: error TS2554: Expected 0-2 arguments, but got 3.\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/error_generic_field.a",
+    "node": {
+      "exit": 0,
+      "stdout": "a: text\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/error_generic_field.a:1:13: stage 0 can't lower Error.prototype.toString with a field whose ToString coercion is not lowered yet yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/error_override.a",
+    "node": {
+      "exit": 0,
+      "stdout": "custom\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/error_override.a:1:35: stage 0 can't lower an Error.toString override: the synthetic built-in method's override ABI is not checked yet yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/error_reflection.a",
+    "node": {
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/error_reflection.a:1:50: stage 0 can't lower Object.hasOwn on Error: inherited defaults and nonenumerable own descriptors are not represented by native shape yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/error_spread.a",
+    "node": {
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/error_spread.a:1:45: stage 0 can't lower spreading an Error: name, message and cause have JavaScript property descriptors that the native shape cannot enumerate yet yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/error_stack_read.a",
+    "node": {
+      "exit": 0,
+      "stdout": "Error: x\n    at file:///workspace/adamic/notes/error-classes/unsupported/error_stack_read.a:1:13\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async file:///workspace/adamic/oracle/node.mjs:36:1\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/error_stack_read.a:1:13: stage 0 can't lower Error.stack: native frames have no JavaScript source stack; fabricating one would misreport the program yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/error_stack_write.a",
+    "node": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/error_stack_write.a:1:31: stage 0 can't lower writing Error.stack: native frames have no JavaScript source stack yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/error_structural.a",
+    "node": {
+      "exit": 0,
+      "stdout": "x\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/error_structural.a:1:33: stage 0 can't lower an Error seen through a structural object view: nonenumerable error fields and native stack placeholders cannot be reflected as own fields yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/error_without_new.a",
+    "node": {
+      "exit": 0,
+      "stdout": "SyntaxError: without new\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/error_without_new.a:1:13: stage 0 can't lower reading SyntaxError yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/json_callback.a",
+    "node": {
+      "exit": 0,
+      "stdout": "TypeError: replacer\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/json_callback.a:1:37: stage 0 can't lower JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/json_parse.a",
+    "node": {
+      "exit": 0,
+      "stdout": "SyntaxError\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/json_parse.a:1:7: Adamic 0.1 refuses JSON.parse: its result's type can't be proven from the text; a checked parse against a declared type is a later design; construct typed values explicitly for now\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/normalize_dynamic.a",
+    "node": {
+      "exit": 0,
+      "stdout": "RangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/normalize_dynamic.a:1:83: stage 0 can't lower a try around normalize, whose native runtime failure cannot unwind to a catch yet (docs/memory.md) yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/options_spread.a",
+    "node": {
+      "exit": 0,
+      "stdout": "x\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/options_spread.a:1:57: stage 0 can't lower an ErrorOptions literal with computed, spread or other fields yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/options_variable.a",
+    "node": {
+      "exit": 0,
+      "stdout": "x\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/options_variable.a:1:70: stage 0 can't lower ErrorOptions not written as a literal: the erased cause's representation and ownership must be known where it is boxed yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/prototype_array.a",
+    "node": {
+      "exit": 0,
+      "stdout": "Error\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/prototype_array.a:1:13: stage 0 can't lower Error.prototype.toString on this receiver representation yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/prototype_function.a",
+    "node": {
+      "exit": 0,
+      "stdout": "\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/prototype_function.a:1:13: stage 0 can't lower Error.prototype.toString on this receiver representation yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/prototype_optional_field.a",
+    "node": {
+      "exit": 0,
+      "stdout": "Error\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/prototype_optional_field.a:1:56: stage 0 can't lower Error.prototype.toString with an optional or erased field: own property absence is not represented yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/prototype_optional_receiver.a",
+    "node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Method Error.prototype.toString called on incompatible receiver undefined\n"
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/prototype_optional_receiver.a:1:67: stage 0 can't lower Error.prototype.toString on a possibly undefined object: generic field lookup needs a proven receiver yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/prototype_undefined_fields.a",
+    "node": {
+      "exit": 0,
+      "stdout": "Error\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/prototype_undefined_fields.a:1:13: stage 0 can't lower Error.prototype.toString with an optional or erased field: own property absence is not represented yet\nexit status 1\n"
+    }
+  },
+  {
+    "program": "notes/error-classes/unsupported/reduce_right.a",
+    "node": {
+      "exit": 0,
+      "stdout": "RangeError: toFixed() digits argument must be between 0 and 100\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/error-classes/unsupported/reduce_right.a:2:19: Adamic 0.1 refuses inherited library member reduceRight read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\nexit status 1\n"
+    }
+  }
+]

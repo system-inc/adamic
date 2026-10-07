@@ -1,0 +1,1 @@
+const first = new Error('x', {cause: 1}); const cause = first.cause; const second = new Error('y', {cause}); console.log(second.message);

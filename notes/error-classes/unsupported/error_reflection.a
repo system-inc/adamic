@@ -1,0 +1,1 @@
+class ChildError extends Error {} console.log(`${Object.hasOwn(new ChildError('x'), 'message')}`);

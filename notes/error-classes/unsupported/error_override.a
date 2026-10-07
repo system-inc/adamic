@@ -1,0 +1,1 @@
+class CustomError extends Error { toString(): string { return 'custom'; } } console.log(new CustomError('x').toString());

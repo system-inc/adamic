@@ -1,0 +1,3 @@
+const values = [2, 101];
+try { console.log(values.reduceRight((held, digits) => held + (1.25).toFixed(digits), 'start')); }
+catch (error) { if (error instanceof RangeError) console.log(error.toString()); }

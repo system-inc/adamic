@@ -1,0 +1,11 @@
+// Early interface dispatch must preserve readiness checks and run finally.
+interface ReaderInterface { readonly read: () => string; }
+class Reader implements ReaderInterface { read(): string { return future; } }
+function use(reader: ReaderInterface): void {
+    try { console.log(reader.read()); }
+    catch (error) { if (error instanceof ReferenceError) console.log(error.toString()); }
+    finally { console.log('finally'); }
+}
+use(new Reader());
+const future = `ready-${7}`;
+use(new Reader());

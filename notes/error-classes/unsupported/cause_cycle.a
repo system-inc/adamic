@@ -1,0 +1,1 @@
+class Holder { error: Error | undefined = undefined; } function close(holder: Holder): void { holder.error = new Error('x', {cause: holder}); } close(new Holder());

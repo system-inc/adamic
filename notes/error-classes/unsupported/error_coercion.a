@@ -1,0 +1,1 @@
+try { throw new Error(42); } catch (error) { if (error instanceof Error) console.log(error.toString()); }

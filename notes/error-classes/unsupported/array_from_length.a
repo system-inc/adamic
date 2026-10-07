@@ -1,0 +1,1 @@
+try { console.log(Array.from({length: Infinity}, (_, index) => index).join(',')); } catch (error) { if (error instanceof RangeError) console.log(error.toString()); }

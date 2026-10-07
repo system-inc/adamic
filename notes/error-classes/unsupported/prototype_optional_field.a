@@ -1,0 +1,1 @@
+function text(value: {name?: string}): string { return Error.prototype.toString.call(value); } console.log(text({}));

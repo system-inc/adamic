@@ -1,0 +1,1 @@
+try { console.log(JSON.stringify(1, () => { throw new TypeError('replacer'); }) ?? '<undefined>'); } catch (error) { if (error instanceof TypeError) console.log(error.toString()); }

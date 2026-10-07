@@ -1,0 +1,1 @@
+try { throw SyntaxError('without new'); } catch (error) { if (error instanceof SyntaxError) console.log(error.toString()); }

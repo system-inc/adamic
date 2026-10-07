@@ -1,0 +1,1 @@
+try { JSON.parse('{'); } catch (error) { if (error instanceof SyntaxError) console.log(error.name); }

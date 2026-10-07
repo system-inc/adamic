@@ -1,0 +1,1 @@
+function normal(text:string, form:string):string { return text.normalize(form); } try { console.log(normal('x', 'BAD')); } catch (error) { if (error instanceof RangeError) console.log(error.toString()); }

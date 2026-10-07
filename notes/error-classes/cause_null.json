@@ -1,0 +1,23 @@
+{
+  "program": "notes/error-classes/cause_null.a",
+  "node": {
+    "exit": 0,
+    "stdout": "object true false\n",
+    "stderr": ""
+  },
+  "build": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "native": {
+    "exit": 0,
+    "stdout": "undefined false true\n",
+    "stderr": ""
+  },
+  "backend": {
+    "exit": 0,
+    "stdout": "object false false\n",
+    "stderr": ""
+  }
+}
