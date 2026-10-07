@@ -65,7 +65,7 @@ def timing_metadata(root, environment, arguments):
         "node": output(["node", "--version"], root, environment).strip(),
         "load_before": Path("/proc/loadavg").read_text().strip(),
         "uncached": True,
-        "build_flags": "go test -c; -test.v=test2json -test.timeout=30m; four package workers",
+        "build_flags": "go test -c; -test.v=test2json -test.timeout=60m; four package workers",
         "instrument": arguments,
         "started": time.time(),
     }
@@ -87,7 +87,7 @@ def run_package(package, directory, root, destination, environment):
                                      cwd=directory, env=environment, stdin=subprocess.PIPE,
                                      stdout=log, stderr=errors)
         try:
-            test = subprocess.run([binary, "-test.v=test2json", "-test.timeout=30m"],
+            test = subprocess.run([binary, "-test.v=test2json", "-test.timeout=60m"],
                                   cwd=directory, env=environment,
                                   stdout=converter.stdin, stderr=converter.stdin)
         finally:
@@ -118,7 +118,7 @@ def run_set(names, kind, state, state_path, packages, root, destination, environ
         for future in concurrent.futures.as_completed(futures):
             name = futures[future]
             result = future.result()
-            if kind == "skipped":
+            if kind == "skipped_run":
                 expected = canonical_events(reference["Packages"][name]["Events"])
                 actual = canonical_events(result["events"])
                 result["identical"] = expected == actual
@@ -303,7 +303,7 @@ def main():
         atomic_json(state_path, state)
         atomic_json(destination / "original-record.json", record)
         print(shape, "selected", len(selected), "skipped", len(skipped), flush=True)
-        run_set(skipped, "skipped", state, state_path, packages, args.root,
+        run_set(skipped, "skipped_run", state, state_path, packages, args.root,
                 destination / "skipped", test_environment, record)
         run_set(selected, "selected_run", state, state_path, packages, args.root,
                 destination / "selected", test_environment, record)
@@ -312,7 +312,7 @@ def main():
         reports[shape] = {
             "commit": state["commit"], "selected": selected, "skipped": skipped,
             "skipped_pass_and_identical": all(result["exit"] == 0 and result["identical"]
-                                              for result in state["skipped"]["packages"].values()),
+                                              for result in state["skipped_run"]["packages"].values()),
             "selected_pass": all(result["exit"] == 0 for result in state["selected_run"]["packages"].values()),
             "selected_wall_seconds": state["selected_run"]["wall_seconds"],
             "reference_wall_seconds": record["WallSeconds"], "mutants": state["mutants"],

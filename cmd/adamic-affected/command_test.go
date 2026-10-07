@@ -59,10 +59,21 @@ func TestListing(t *testing.T){entries,e:=os.ReadDir("../oracle/fixtures");if e!
 		output, err := cmd.CombinedOutput()
 		return string(output), err
 	}
-	execute := func(args ...string) (string, error) { return executeBinary(binary, args...) }
+	execute := func(args ...string) (string, error) {
+		if len(args) > 0 && args[0] == "record" {
+			args = append(args, "-isolate", "affected-command-proof/quiet")
+		}
+		return executeBinary(binary, args...)
+	}
 	output, err := execute("record", "-out", recordPath)
 	if err != nil {
 		t.Fatalf("record: %v\n%s", err, output)
+	}
+	if strings.LastIndex(output, "checkpoint 1/2 affected-command-proof/pkg") > strings.LastIndex(output, "record 2/2 affected-command-proof/quiet") {
+		t.Fatal("isolated package started before ordinary evidence was durable")
+	}
+	if output, err := executeBinary(binary, "record", "-out", recordPath); err == nil || !strings.Contains(output, "checkpoint identity changed") {
+		t.Fatalf("resume accepted changed isolation profile: %v %s", err, output)
 	}
 	selectPackages := func(record string) string {
 		t.Helper()
@@ -166,6 +177,15 @@ func TestListing(t *testing.T){entries,e:=os.ReadDir("../oracle/fixtures");if e!
 		return path
 	}
 	reader := recorded.Packages["affected-command-proof/pkg"]
+	// The deadline is part of the invocation identity, even with unchanged files.
+	invocation := recorded.Toolchain["test invocation"]
+	recorded.Toolchain["test invocation"] = strings.Replace(invocation, "60m", "30m", 1)
+	deadlineOutput := selectPackages(writeRecord(recorded))
+	if !strings.Contains(deadlineOutput, "affected-command-proof/pkg\n") || !strings.Contains(deadlineOutput, "affected-command-proof/quiet\n") {
+		t.Fatalf("deadline identity change failed to select all: %s", deadlineOutput)
+	}
+	recorded.Toolchain["test invocation"] = invocation
+	t.Log("30-minute deadline identity selected all under the 60-minute runner")
 	mutatedRecord := recorded
 	mutatedRecord.Packages = map[string]closure{}
 	for name, value := range recorded.Packages {
@@ -292,7 +312,7 @@ func TestListing(t *testing.T){entries,e:=os.ReadDir("../oracle/fixtures");if e!
 	if err := logged(mutantRoot, mutantBinary+".resume-build.log", "go", "build", "-o", mutantBinary, "."); err != nil {
 		t.Fatal(err)
 	}
-	if output, err := executeBinary(mutantBinary, "record", "-out", recordPath); err != nil {
+	if output, err := executeBinary(mutantBinary, "record", "-out", recordPath, "-isolate", "affected-command-proof/quiet"); err != nil {
 		t.Fatalf("integrity mutant did not accept corrupted reference: %v %s", err, output)
 	}
 	corrupted, err := os.ReadFile(readerEvents)

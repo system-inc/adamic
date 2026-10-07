@@ -10,6 +10,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 	"unicode/utf8"
 )
 
@@ -61,12 +62,14 @@ func tracedRun(root string, pkg packageInfo, binary, stem string, value *closure
 		return err
 	}
 	reader.Close()
-	args := []string{"-o", stem + ".trace", "--", binary, "-test.v=test2json", "-test.timeout=30m"}
+	args := []string{"-o", stem + ".trace", "--", binary, "-test.v=test2json", "-test.timeout=" + testDeadline}
 	command := exec.Command(observer, args...)
 	command.Dir = pkg.Dir
 	command.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1")
 	command.Stdout = writer
 	command.Stderr = writer
+	loadBefore, _ := os.ReadFile("/proc/loadavg")
+	started := time.Now()
 	startErr := command.Start()
 	writer.Close()
 	var runErr error
@@ -76,6 +79,11 @@ func tracedRun(root string, pkg packageInfo, binary, stem string, value *closure
 		runErr = startErr
 	}
 	conversionErr := converter.Wait()
+	seconds := time.Since(started).Seconds()
+	loadAfter, _ := os.ReadFile("/proc/loadavg")
+	if err := atomicJSON(stem+".timing.json", map[string]any{"started": started.UTC(), "wall_seconds": seconds, "load_before": strings.TrimSpace(string(loadBefore)), "load_after": strings.TrimSpace(string(loadAfter)), "instrument": append([]string{observer}, args...), "uncached": true}); err != nil {
+		return err
+	}
 	if runErr != nil {
 		return fmt.Errorf("traced uncached %s: %w; see %s and %s.stderr", pkg.ImportPath, runErr, value.Events, stem)
 	}

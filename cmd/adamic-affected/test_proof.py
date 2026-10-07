@@ -2,8 +2,9 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
-from proof import canonical_events
+from proof import canonical_events, run_set
 
 
 class EventComparisonTest(unittest.TestCase):
@@ -39,6 +40,19 @@ class EventComparisonTest(unittest.TestCase):
         c = {"Action": "pass", "Test": "A"}
         self.assertTrue(self.compare([a, b, c], [b, a, c]))
         self.assertFalse(self.compare([a, b, c], [c, b, a]))
+
+    def test_skipped_list_and_durable_run_have_distinct_keys(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            state = {"skipped": ["probe"]}
+            with patch("proof.run_package", return_value={"exit": 0, "events": ""}), \
+                 patch("proof.timing_metadata", return_value={}):
+                run_set(["probe"], "skipped_run", state, root / "state.json",
+                        {"probe": {"Dir": str(root)}}, root, root / "events", {},
+                        {"Packages": {"probe": {"Events": ""}}})
+            saved = json.loads((root / "state.json").read_text())
+            self.assertEqual(saved["skipped"], ["probe"])
+            self.assertTrue(saved["skipped_run"]["packages"]["probe"]["identical"])
 
 
 if __name__ == "__main__":

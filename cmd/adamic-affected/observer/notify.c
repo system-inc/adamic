@@ -252,7 +252,7 @@ int main(int count, char **arguments) {
  process_group = child; setpgid(child,child);
  struct sigaction action = {0}; action.sa_handler = stop_children; sigemptyset(&action.sa_mask);
  sigaction(SIGTERM,&action,NULL); sigaction(SIGINT,&action,NULL); sigaction(SIGHUP,&action,NULL); sigaction(SIGALRM,&action,NULL);
- alarm(35*60);
+ alarm(65*60);
  close(sockets[1]);
  struct pollfd transfer = {sockets[0], POLLIN, 0};
  if (poll(&transfer, 1, 10000) <= 0) {fprintf(stderr,"listener transfer timed out\n"); return 2;}

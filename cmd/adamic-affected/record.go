@@ -21,6 +21,7 @@ type recordCheckpoint struct {
 	Inventory map[string]string
 	Plan      []string
 	Failed    map[string]string
+	Isolation string
 }
 
 type failedAttempt struct {
@@ -30,7 +31,7 @@ type failedAttempt struct {
 
 // A checkpoint is evidence for this unfinished reference run, never a branch
 // result cache. Resume verifies all inputs and every finished event log first.
-func recordMain(root, destination string, packages []packageInfo, jobs int, mainRef string, retryFailed bool) error {
+func recordMain(root, destination string, packages []packageInfo, jobs int, mainRef string, retryFailed bool, isolation string) error {
 	if jobs < 1 {
 		return fmt.Errorf("-jobs must be positive")
 	}
@@ -68,13 +69,23 @@ func recordMain(root, destination string, packages []packageInfo, jobs int, main
 	for i, pkg := range packages {
 		plan[i] = pkg.ImportPath
 	}
+	if isolation != "" {
+		found := false
+		for _, name := range plan {
+			found = found || name == isolation
+		}
+		if !found {
+			return fmt.Errorf("isolated package is not in the gate: %s", isolation)
+		}
+	}
 	checkpointPath := destination + ".partial"
 	checkpoint := recordCheckpoint{Record: recordFile{Version: formatVersion, Commit: string(bytes.TrimSpace(commit)), Toolchain: tools, Submodule: submodule, Packages: map[string]closure{}, EventHashes: map[string]string{}, Reference: destination + ".reference.jsonl"}, Root: root, Inventory: inventory, Plan: plan}
+	checkpoint.Isolation = isolation
 	if contents, readErr := os.ReadFile(checkpointPath); readErr == nil {
 		if err := json.Unmarshal(contents, &checkpoint); err != nil {
 			return fmt.Errorf("invalid checkpoint: %w", err)
 		}
-		if checkpoint.Record.Version != formatVersion || checkpoint.Root != root || checkpoint.Record.Commit != string(bytes.TrimSpace(commit)) || !reflect.DeepEqual(checkpoint.Record.Toolchain, tools) || checkpoint.Record.Submodule != submodule || !reflect.DeepEqual(checkpoint.Inventory, inventory) || !reflect.DeepEqual(checkpoint.Plan, plan) {
+		if checkpoint.Record.Version != formatVersion || checkpoint.Isolation != isolation || checkpoint.Root != root || checkpoint.Record.Commit != string(bytes.TrimSpace(commit)) || !reflect.DeepEqual(checkpoint.Record.Toolchain, tools) || checkpoint.Record.Submodule != submodule || !reflect.DeepEqual(checkpoint.Inventory, inventory) || !reflect.DeepEqual(checkpoint.Plan, plan) {
 			return fmt.Errorf("checkpoint identity changed; refusing to mix reference runs")
 		}
 		if len(checkpoint.Failed) > 0 && !retryFailed {
@@ -141,12 +152,25 @@ func recordMain(root, destination string, packages []packageInfo, jobs int, main
 	}
 	tasks := make(chan task, len(packages))
 	results := make(chan result, len(packages))
+	var isolated *task
+	ordinary := 0
 	for i, pkg := range packages {
 		if _, done := checkpoint.Record.Packages[pkg.ImportPath]; !done {
-			tasks <- task{i, pkg}
+			job := task{i, pkg}
+			if pkg.ImportPath == isolation {
+				isolated = &job
+			} else {
+				tasks <- job
+				ordinary++
+			}
 		}
 	}
-	close(tasks)
+	if isolated == nil {
+		close(tasks)
+	} else if ordinary == 0 {
+		tasks <- *isolated
+		close(tasks)
+	}
 	var workers sync.WaitGroup
 	for i := 0; i < jobs; i++ {
 		workers.Add(1)
@@ -162,7 +186,9 @@ func recordMain(root, destination string, packages []packageInfo, jobs int, main
 	}
 	go func() { workers.Wait(); close(results) }()
 	var firstError error
+	completed := 0
 	for result := range results {
+		completed++
 		if result.err != nil {
 			if checkpoint.Failed == nil {
 				checkpoint.Failed = map[string]string{}
@@ -176,6 +202,10 @@ func recordMain(root, destination string, packages []packageInfo, jobs int, main
 				firstError = result.err
 			}
 			fmt.Fprintln(os.Stderr, result.err)
+			if isolated != nil && completed == ordinary {
+				tasks <- *isolated
+				close(tasks)
+			}
 			continue
 		}
 		checkpoint.Record.Packages[result.name] = result.value
@@ -194,6 +224,10 @@ func recordMain(root, destination string, packages []packageInfo, jobs int, main
 			return err
 		}
 		fmt.Fprintf(os.Stderr, "checkpoint %d/%d %s\n", len(checkpoint.Record.Packages), len(packages), result.name)
+		if isolated != nil && completed == ordinary {
+			tasks <- *isolated
+			close(tasks)
+		}
 	}
 	if firstError != nil {
 		return firstError

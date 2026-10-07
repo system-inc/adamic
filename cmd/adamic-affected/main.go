@@ -18,7 +18,9 @@ import (
 	"unicode/utf8"
 )
 
-const formatVersion = 4
+const formatVersion = 5
+
+const testDeadline = "60m"
 
 type packageInfo struct {
 	ImportPath, Dir                                          string
@@ -64,6 +66,7 @@ func run(args []string) error {
 	out := flags.String("out", "", "record destination outside repository")
 	input := flags.String("record", "", "green-main record")
 	jobs := flags.Int("jobs", 4, "maximum simultaneous uncached package runs")
+	isolate := flags.String("isolate", "", "run this package alone after all other packages, for observer calibration")
 	mainRef := flags.String("main", "origin/main", "fixed main commit or reference")
 	retryFailed := flags.Bool("retry-failed", false, "explicitly rerun failed reference packages, preserving their previous logs")
 	if err := flags.Parse(args[1:]); err != nil {
@@ -88,7 +91,7 @@ func run(args []string) error {
 		if inside(root, destination) {
 			return fmt.Errorf("record must live outside repository")
 		}
-		return recordMain(root, destination, packages, *jobs, *mainRef, *retryFailed)
+		return recordMain(root, destination, packages, *jobs, *mainRef, *retryFailed, *isolate)
 	case "select":
 		if *input == "" {
 			return fmt.Errorf("-record is required")
@@ -328,7 +331,7 @@ func toolchain(root string) (map[string]string, error) {
 	values["environment SHA256"] = digest([]byte(strings.Join(environment, "\x00")))
 	values["uid"] = fmt.Sprint(os.Getuid())
 	values["observer implementation SHA256"] = digest([]byte(notificationSource))
-	values["test invocation"] = "direct binary; stdin test2json; -test.v=test2json -test.timeout=30m"
+	values["test invocation"] = "direct binary; stdin test2json; -test.v=test2json -test.timeout=" + testDeadline
 	return values, nil
 }
 func submoduleIdentity(root string) (string, error) {

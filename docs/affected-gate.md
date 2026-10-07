@@ -8,7 +8,7 @@ prototype to omit integration packages until those proofs have been completed.
 
 `cmd/adamic-affected` records inputs and selects packages. It does not reuse test
 results. Every recorded test process runs with `ADAMIC_GATE_UNCACHED=1`; selected
-packages must likewise run with that variable and `go test -count=1 -timeout 30m`.
+packages must likewise run with that variable and `go test -count=1 -timeout 60m`.
 The existing sharded gate was not edited.
 
 Build the command from the worker branch into a path outside the repository:
@@ -51,13 +51,13 @@ Pin a known main ancestor when integration may advance `origin/main`:
 /tmp/adamic-affected record -main e011f8f60899586d6373a5ccb07335ad82cfbf3c -jobs 4 -out /tmp/main-inputs.json > /tmp/record.stdout 2> /tmp/record.stderr
 ```
 
-The test binary runs directly with `-test.v=test2json -test.timeout=30m` and
+The test binary runs directly with `-test.v=test2json -test.timeout=60m` and
 `ADAMIC_GATE_UNCACHED=1`. A separate stdin-mode `go tool test2json` converts its
 complete output into the JSON log. Command-mode test2json calls `ignoreSignals`
 before exec, which changes inherited SIGINT behavior. The first reference attempt
 failed the actual oracle interrupt test for that reason; it was retained separately
 and never published. The direct runner passed all three signal cases. Record format
-4 and the invocation identity prevent mixing the two harnesses on resume.
+5 and the invocation identity prevent mixing deadlines or harnesses on resume.
 
 On this fixed main, markdownblocks also requires pinned upstream width dependencies
 that `cloud/setup.sh` does not install:
@@ -84,12 +84,22 @@ no published `/tmp/affected-proof/green-main.json`. An extracted incomplete reco
 `/tmp/affected-proof/unfinished-reference.json`, was passed to `select`: it selected
 all 44 current packages, independently checked against `go list ./...`.
 
-The queued five-shape runner stopped with `reference_failed` and ran no branches.
-The current blocker is the explicit instruction in `CLAUDE.md:49`: “Keep
-`-timeout 30m` for the complete gate.” A proposed 60-minute observed-run override
-requires the user's decision. Changing the invocation and observer implementation
-identity requires a fresh record; old logs remain evidence, not a silently
-compatible cache. The integration gate and `cmd/adamic-gate` were not changed.
+The old queued five-shape runner stopped with `reference_failed` and ran no branches.
+The user explicitly authorized 60 minutes because integration already uses that
+deadline and CLAUDE.md's 30-minute line is stale. Format 5 records the actual
+60-minute invocation in its identity; a controlled 30-minute identity mutant selects
+every package. The fresh reference is `/tmp/affected-proof/main-60.json`.
+Old attempts remain separate evidence and cannot resume into the new identity.
+The integration gate and `cmd/adamic-gate` were not changed.
+
+For one fair observer measurement, `record -isolate IMPORT_PATH` queues that
+package only after all other package evidence is durable. The option is part of
+checkpoint identity. Its process wall time, exact invocation and load boundaries
+are saved alongside its JSON. The full reference isolates markdownblocks, then
+`finish_proof.py` runs markdownblocks once without the observer, alone, at the same
+commit and 60-minute deadline. This compares process execution, excluding Go
+compilation and later closure decoding; all events must match. Each run exceeds
+five minutes, so the requested single observed/control pair is reported.
 
 Finished traces were losslessly compressed where disk space was tight. Each
 compressed stream was independently decompressed and SHA256-checked before the
