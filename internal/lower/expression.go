@@ -30,6 +30,16 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
 	flags := proven.Flags()
+	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
+		return ir.Union, true
+	}
+	if flags&checker.TypeFlagsIntersection != 0 {
+		for _, part := range proven.Types() {
+			if part.Flags()&checker.TypeFlagsNonPrimitive != 0 {
+				return ir.Union, true
+			}
+		}
+	}
 	if l.nodeBufferType(proven, "Buffer") {
 		return ir.Array, true
 	}
@@ -63,7 +73,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
-		if l.includesNull(proven) {
+		if l.includesNull(proven) && !dynamicObjectType(proven) {
 			// A nullable match result uses NULL. A type also holding undefined needs a tag.
 			if l.includesUndefined(proven) {
 				return 0, false
@@ -167,6 +177,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil {
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
+				return nil, err
+			}
+		}
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
@@ -526,6 +543,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return ir.TypeOf{Value: operand, Null: null}, nil
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
+		if binary.OperatorToken.Kind == ast.KindInKeyword {
+			return l.inProperty(node)
+		}
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			return l.coalesce(node)
 		}
@@ -735,7 +755,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: value.Type() != ir.Union && !l.includesNull(l.checker.GetTypeAtLocation(operand))})
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
@@ -762,7 +782,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+			if value.Type() != ir.Union && l.includesNull(l.checker.GetTypeAtLocation(operand)) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
@@ -975,6 +995,11 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 			return nil, err
 		}
 		arguments = append(arguments, lowered)
+	}
+	for index, parameter := range l.result.Functions[function].Parameters {
+		if index < len(arguments) && l.result.Locals[parameter].Type == ir.Union {
+			arguments[index] = fit(arguments[index], ir.Union)
+		}
 	}
 	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
 }

@@ -36,7 +36,6 @@ var refusals = map[ast.Kind]refusal{
 var refusedOperators = map[ast.Kind]refusal{
 	ast.KindEqualsEqualsToken:             {"==", "use ===, which doesn't coerce"},
 	ast.KindExclamationEqualsToken:        {"!=", "use !==, which doesn't coerce"},
-	ast.KindInKeyword:                     {"in", "an object's shape is known; use a discriminant, or a Map"},
 	ast.KindCommaToken:                    {"the comma operator", "write each expression as its own statement"},
 	ast.KindAmpersandAmpersandEqualsToken: {"&&=", "write the if"},
 	ast.KindBarBarEqualsToken:             {"||=", "write the if"},
