@@ -18,12 +18,33 @@ import (
 //go:embed runtime/*.c runtime/*.h
 var runtime embed.FS
 
-// cString is a C string literal holding exactly value's bytes.
+// cString is a C expression for a NUL-terminated string holding exactly value's bytes: a string
+// literal, or, for one longer than C11 promises a literal can be (longestLiteral; a field name of
+// 5,000 bytes, say), a compound literal of its bytes, which has static storage at file scope and
+// lives through the call it's an argument to inside a function. A message array's initializer is
+// cArray instead.
 //
 // Every byte outside printable ASCII becomes a three-digit octal escape, which can't run into the
 // character after it the way \x can, and quote, backslash and question mark are escaped too, the last
 // so no ?? can ever read as a trigraph.
 func cString(value string) string {
+	if len(value) > longestLiteral {
+		return "((const char[]){" + cBytes(value) + ", 0})"
+	}
+	return cLiteral(value)
+}
+
+// cArray is what initializes a char array to value's bytes and a terminator, as
+// static const char message[] = ...; does: the literal, or the bytes when it would be too long.
+func cArray(value string) string {
+	if len(value) > longestLiteral {
+		return "{" + cBytes(value) + ", 0}"
+	}
+	return cLiteral(value)
+}
+
+// cLiteral is the string literal itself, of any length.
+func cLiteral(value string) string {
 	var builder strings.Builder
 	builder.WriteByte('"')
 	for index := 0; index < len(value); index++ {
