@@ -1,0 +1,138 @@
+package lint
+
+import (
+ "fmt"
+ "encoding/json"
+ "os/exec"
+ "sort"
+ "io/fs"
+ "os"
+ "path/filepath"
+ "strings"
+ "testing"
+ "time"
+)
+
+func TestWave10Shapes(t *testing.T) {
+ cases := []struct{ rule, extension, source, options string }{
+  {"structure/tailwind-no-physical-direction", ".ts", "const c = 'flex ml-4 -pl-4 border-l rounded-r-lg scroll-pr-2 md:text-left rtl:ml-4';", ""},
+  {"structure/tailwind-no-physical-direction", ".js", "const c = 'ml-4';", ""},
+  {"structure/tailwind-no-physical-direction", ".a", "const c = 'ml-4';", ""},
+  {"structure/tailwind-no-physical-direction", ".ts", "const c = `flex ml-4 ${x} mr-2 ${y} pl-3`;", ""},
+  {"structure/tailwind-no-physical-direction", ".ts", "const c = 'ml-4;'; const d = 'flex\u0085ml-4'; const e = '\ufeffml-4';", ""},
+  {"@typescript-eslint/ban-tslint-comment", ".ts", "const é = '😀'; /* tslint:disable */const x = 1;\n", ""},
+  {"@typescript-eslint/ban-tslint-comment", ".ts", "// tslint:disabled\n// tslint:disable-foo\n/** tslint:disable */\n/*\vtslint:disable */\n", ""},
+  {"@typescript-eslint/no-invalid-this", ".ts", "function Foo() { this.x; } function foo() { this.x; }", "{\"capIsConstructor\":false}"},
+  {"@typescript-eslint/no-invalid-this", ".ts", "function foo(this: T) { this.x; (() => this.x)(); }", ""},
+  {"@typescript-eslint/no-invalid-this", ".ts", "const o = { f: function() { this.x; }, g() { this.x; } }; const Foo = function bar() { this.x; };", ""},
+  {"@typescript-eslint/no-invalid-this", ".ts", "o.f = (function() { return function() { this.x; }; })();", ""},
+  {"@typescript-eslint/no-invalid-this", ".ts", "arr.forEach(function() { this.x; }, obj); arr.forEach(function() { this.x; }, null); (function() { this.x; }).bind(obj);", ""},
+  {"@typescript-eslint/no-invalid-this", ".ts", "function f() { /** @this Obj */ return function() { this.x; }; } q(/* @this */ function() { this.x; });", ""},
+  {"@typescript-eslint/no-invalid-this", ".ts", "class A { field = this.x; static { this.x; } method() { this.x; function inner() { this.x; } } }", ""},
+ }
+ var rows []string
+ for at, c := range cases {
+  path := filepath.Join(t.TempDir(), fmt.Sprintf("shape-%d%s", at, c.extension))
+  if err := os.WriteFile(path, []byte(c.source), 0644); err != nil { t.Fatal(err) }
+  rows = append(rows, path+"\t"+c.rule+"\t\t\tfalse\t"+c.options)
+ }
+ compare(t, goOracle(t), buildPort(t, ".", true), ".", manifest(t, rows))
+}
+
+func TestWave10Throughput(t *testing.T) {
+ root := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+ if root == "" { t.Fatal("missing compiler corpus") }
+ var paths []string
+ err := filepath.WalkDir(filepath.Join(root, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
+  if err != nil { return err }; if !entry.IsDir() && strings.HasSuffix(path, ".ts") { paths = append(paths, path) }; return nil
+ })
+ if err != nil { t.Fatal(err) }
+ oracle := goOracle(t)
+ binary := buildPort(t, ".", false)
+ for _, row := range []struct{name, positive string}{
+  {"structure/tailwind-no-physical-direction", "const value = 'ml-4';\n"},
+  {"@typescript-eslint/ban-tslint-comment", "// tslint:disable\n"},
+  {"@typescript-eslint/no-invalid-this", "function invalid() { this.x; }\n"},
+ } {
+  fixture := filepath.Join(t.TempDir(), "positive.ts")
+  if err := os.WriteFile(fixture, []byte(strings.Repeat(row.positive, 1000)), 0644); err != nil { t.Fatal(err) }
+  var rows []string
+  for _, path := range append(append([]string{}, paths...), fixture) { rows = append(rows, path+"\t"+row.name) }
+  manifest := manifest(t, rows)
+  var want string
+  best := map[string]time.Duration{}
+  for round := 0; round < 5; round++ {
+   for _, name := range []string{"Go", "Node", "native"} {
+    var run execution
+    switch name {
+    case "Go": run = execute(t, "", oracle, "--manifest", manifest, "--count")
+    case "Node": run = node(t, ".", manifest, true)
+    case "native": run = execute(t, "", binary, "--manifest", manifest, "--count")
+    }
+    output := string(run.output)
+    if want == "" { want = output }; if output != want { t.Fatalf("%s count: %s != %s", name, output, want) }
+    if best[name] == 0 || run.duration < best[name] { best[name] = run.duration }
+    t.Logf("%s round=%d %s count=%s elapsed=%s", row.name, round, name, strings.TrimSpace(want), run.duration)
+   }
+  }
+  var count int; if _, err := fmt.Sscan(want, &count); err != nil { t.Fatal(err) }
+  for _, name := range []string{"native", "Node", "Go"} { t.Logf("%s %s %.2f findings/s (%d findings, %d files, best of five)", row.name, name, float64(count)/best[name].Seconds(), count, len(rows)) }
+ }
+}
+
+func TestWave10Upstream(t *testing.T) {
+ upstream(t) // Capture passing Go tests, including the original filename.
+ data, err := os.ReadFile("/tmp/lint-wave1-10-next/captured.json"); if err != nil { t.Fatal(err) }
+ var records map[string]struct{Rule,File,Source string; Options json.RawMessage}
+ if err := json.Unmarshal(data, &records); err != nil { t.Fatal(err) }
+ oracle := goOracle(t)
+ var keys []string; for key := range records { keys = append(keys,key) }; sort.Strings(keys)
+ var rows []string
+ var exclusions []string
+ for at, key := range keys {
+  row := records[key]
+  if row.Rule != "structure/tailwind-no-physical-direction" && row.Rule != "@typescript-eslint/ban-tslint-comment" && row.Rule != "@typescript-eslint/no-invalid-this" { continue }
+  if row.Rule == "structure/tailwind-no-physical-direction" && row.Source == "export const c = <div className=\"flex ml-4\" />;\n" { exclusions=append(exclusions,"stage1 JSX parser panic: "+row.Source); continue }
+  ext := filepath.Ext(row.File); if ext == "" { ext = ".ts" }
+  path := filepath.Join(t.TempDir(), fmt.Sprintf("upstream-%03d%s",at,ext))
+  if err := os.WriteFile(path, []byte(row.Source),0644); err != nil {t.Fatal(err)}
+  option := string(row.Options); if option == "" { option = "null" }
+  entry := path+"\t"+row.Rule+"\t\t\tfalse\t"+option
+  output, err := exec.Command(oracle,"--manifest",manifest(t,[]string{entry})).CombinedOutput()
+  if err != nil {
+   if strings.Contains(string(output),"invalid corpus") { exclusions=append(exclusions, fmt.Sprintf("%s %s source=%q: %s",row.Rule,row.File,row.Source,output)); continue }
+   t.Fatalf("Go fixture %d: %v %s",at,err,output)
+  }
+  rows=append(rows,entry)
+ }
+ os.WriteFile("/tmp/lint-wave1-10-next/upstream-exclusions.log",[]byte(strings.Join(exclusions,"\n")),0644)
+ t.Logf("owned upstream: %d replayed, %d explicitly excluded",len(rows),len(exclusions))
+ compare(t,oracle,buildPort(t,".",true),".",manifest(t,rows))
+}
+
+func TestWave10Corpus(t *testing.T) {
+ var rows []string
+ root := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+ for _, base := range []string{filepath.Join(root,"src/compiler"),filepath.Join(repository,"stage1")} {
+  err := filepath.WalkDir(base,func(path string, entry fs.DirEntry, err error) error {
+   if err != nil { return err }
+   if !entry.IsDir() && (strings.HasSuffix(path,".ts") || strings.HasSuffix(path,".a")) {
+    path,err = filepath.Abs(path); if err != nil { return err }
+    for _, rule := range []string{"structure/tailwind-no-physical-direction","@typescript-eslint/ban-tslint-comment","@typescript-eslint/no-invalid-this"} { rows=append(rows,path+"\t"+rule) }
+   }; return nil
+  }); if err != nil {t.Fatal(err)}
+ }
+ t.Logf("owned rules: %d files, %d cases",len(rows)/3,len(rows))
+ compare(t,goOracle(t),buildPort(t,".",true),".",manifest(t,rows))
+}
+
+func TestWave10Unterminated(t *testing.T) {
+ t.Setenv("ADAMIC_ALLOW_PARSE_ERRORS","1") // The upstream Go rule tests accept these recovered trees.
+ var rows []string
+ for at, source := range []string{"/*","/* tslint:disable","/**","/*/"} {
+  path:=filepath.Join(t.TempDir(),fmt.Sprintf("unterminated-%d.ts",at))
+  if err:=os.WriteFile(path,[]byte(source),0644);err!=nil{t.Fatal(err)}
+  rows=append(rows,path+"\t@typescript-eslint/ban-tslint-comment")
+ }
+ compare(t,goOracle(t),buildPort(t,".",true),".",manifest(t,rows))
+}

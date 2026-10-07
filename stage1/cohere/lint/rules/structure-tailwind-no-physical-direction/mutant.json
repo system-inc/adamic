@@ -1,0 +1,6 @@
+{
+  "name": "physical_direction_exemption_removed",
+  "file": "rule.a",
+  "from": "parts.includes('rtl') || parts.includes('ltr')",
+  "to": "parts.includes('never-rtl') || parts.includes('never-ltr')"
+}
