@@ -72,3 +72,8 @@ internal/metamorphic/source.go:439:100: undefined: tspath.Path
         undeclared skip stage3/fixtures/runner_guard_test.go:TestTransformedNodeRunnerGuardHook:365ddb0b6660a8b806fdffbcf304774accc4879f412d115bfd7d912a4f669ab2 (TestTransformedNodeRunnerGuardHook:13)
 --- FAIL: TestCurrentCohereGateIsRequired (3.14s)
 
+== github.com/system-inc/adamic/internal/refusalprobe TestCatalogCoverage
+=== RUN   TestCatalogCoverage
+    probe_test.go:15: refusal catalog is incomplete: helper enumRefusal, helper refuseOptionalWidening
+--- FAIL: TestCatalogCoverage (0.01s)
+
