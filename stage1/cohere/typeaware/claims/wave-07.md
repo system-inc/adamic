@@ -188,3 +188,18 @@ rebase, including their bridge/decoder guards, filtered Node oracles and vet.
 See ../wave07_jsx/REPORT.md and its evidence. The three earlier analysis-heavy
 React claims stay parked with the named IR/SSA/capture blocker. No more rules
 are claimed in this update.
+
+## Named-kind landing and exhausted audit
+
+The three JSX rule descriptors now declare the exact ast.Kind names without
+the Kind prefix and set node: true. Their full comparison, sanitizer, live/
+released-handle and three named-dispatch-mutant gate passes again. The shared
+ab70f38d4 context has no checker-program handle, so standalone type-aware
+handlers are still not registered there; positive JSX on main remains blocked.
+
+A refreshed audit inspects 579 origin refs and 33 distinct claim blobs, including
+main/base descriptors. It has no remaining unported, unclaimed ranking entries.
+The previously two available names were claimed by wave 18 during validation.
+No new wave-07 claim was made. Main advanced to b8fb957a; the branch is rebased
+and its owned oracle includes the inherited-static-field-read fixture. See the
+named landing report and fresh evidence for actual green checks and source SHA.

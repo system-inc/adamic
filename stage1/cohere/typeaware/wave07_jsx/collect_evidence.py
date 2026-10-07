@@ -25,7 +25,7 @@ for label, directory in [('jsx', OUT), ('landing', pathlib.Path('/workspace/wave
         target.parent.mkdir(parents=True,exist_ok=True)
         target.write_bytes(gzip.compress(data,mtime=0))
         metadata['files'][str(target.relative_to(EVIDENCE))]=dict(bytes=len(data),sha256=hashlib.sha256(data).hexdigest())
-for name in ['jsx-setup.log','jsx-selection.json','jsx-rebase.log','jsx-validation-rebased.log','jsx-landing-gates.log','jsx-benchmark.log','jsx-source-lint-final.log','jsx-library-proof.log','jsx-main-build.log','jsx-gofmt.log','jsx-python-check.log']:
+for name in ['jsx-setup.log','jsx-selection.json','jsx-rebase.log','jsx-validation-rebased.log','jsx-landing-gates.log','jsx-benchmark.log','jsx-source-lint-final.log','jsx-library-proof.log','jsx-main-build.log','jsx-gofmt.log','jsx-python-check.log','named-listener-gate.log','named-source-lint.log','named-landing-gates.log','next-setup.log','next-nproc.log','final-trio-selection.json','named-landing-rebase.log','rebase-b8.log','named-listener-b8-gate.log','named-library-b8-gate.log','named-landing-resumed.log','named-node-resumed.log','named-b8-benchmark.log']:
     path=pathlib.Path('/workspace/wave-07-artifacts')/name
     if path.exists():
         data=path.read_bytes();target=EVIDENCE/(name+'.gz');target.write_bytes(gzip.compress(data,mtime=0))
