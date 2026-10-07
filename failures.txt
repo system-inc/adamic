@@ -1,0 +1,477 @@
+lane: whole
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a
+    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+    trace_test.go:38: function 0: the call ended after instruction 0, in the middle of bb1
+    trace_test.go:50: 62 points walked, 83 events
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/process_bad_code.a (0.47s)
+
+lane: whole
+package: github.com/system-inc/adamic/internal/flow
+test: TestEveryPathNodeTakesIsInTheGraph
+=== RUN   TestEveryPathNodeTakesIsInTheGraph
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph
+=== CONT  TestEveryPathNodeTakesIsInTheGraph
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.19s)
+
+lane: whole
+package: github.com/system-inc/adamic/internal/flow
+test: (package)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	358.423s
+
+lane: whole
+package: github.com/system-inc/adamic/internal/oracle
+test: TestRegExpLongBacktrackNode
+=== RUN   TestRegExpLongBacktrackNode
+    regexp_long_backtrack_test.go:47: long regex exceeded 3m: context deadline exceeded
+--- FAIL: TestRegExpLongBacktrackNode (190.34s)
+
+lane: whole
+package: github.com/system-inc/adamic/internal/oracle
+test: TestRegExpNativeTiming/quadratic_exec
+=== RUN   TestRegExpNativeTiming/quadratic_exec
+    regexp_native_fixes_test.go:57: native execution exceeded 3s or failed: signal: killed (3.045697097s)
+--- FAIL: TestRegExpNativeTiming/quadratic_exec (5.94s)
+
+lane: whole
+package: github.com/system-inc/adamic/internal/oracle
+test: TestRegExpNativeTiming/quadratic_matchall
+=== RUN   TestRegExpNativeTiming/quadratic_matchall
+    regexp_native_fixes_test.go:57: native execution exceeded 3s or failed: signal: killed (3.044949692s)
+--- FAIL: TestRegExpNativeTiming/quadratic_matchall (5.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/internal/oracle
+test: TestRegExpNativeTiming/quadratic_test
+=== RUN   TestRegExpNativeTiming/quadratic_test
+    regexp_native_fixes_test.go:57: native execution exceeded 3s or failed: signal: killed (3.095872254s)
+--- FAIL: TestRegExpNativeTiming/quadratic_test (5.75s)
+
+lane: whole
+package: github.com/system-inc/adamic/internal/oracle
+test: TestRegExpNativeTiming
+=== RUN   TestRegExpNativeTiming
+--- FAIL: TestRegExpNativeTiming (22.85s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage1/cohere/config
+test: TestLoadersMatchGoCohere
+=== RUN   TestLoadersMatchGoCohere
+=== PAUSE TestLoadersMatchGoCohere
+=== CONT  TestLoadersMatchGoCohere
+    loader_test.go:172: go: downloading github.com/dlclark/regexp2/v2 v2.5.2
+        go: downloading github.com/dlclark/regexp2 v1.11.5
+        === RUN   TestAdamicConfigCases
+            adamic_config_test.go:152: Go: 3.860359s, 0 projects, 0 projects/s; 2091 source files, 542 files/s
+        --- PASS: TestAdamicConfigCases (3.87s)
+        PASS
+        ok  	github.com/system-inc/cohere/command/cohere	3.915s
+    loader_test.go:187: native: line 5: "source \"cohere:house\"", Go cohere "source \"cohere:style\""
+    loader_test.go:187: Node: line 5: "source \"cohere:house\"", Go cohere "source \"cohere:style\""
+    loader_test.go:187: backend: line 5: "source \"cohere:house\"", Go cohere "source \"cohere:style\""
+    loader_test.go:195: baseline must agree before mutants
+--- FAIL: TestLoadersMatchGoCohere (495.95s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage1/cohere/config
+test: (package)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/config	496.003s
+
+lane: whole
+package: github.com/system-inc/adamic/internal/unicodeproperties
+test: TestCanonicalizeUnicodeNode
+=== RUN   TestCanonicalizeUnicodeNode
+    canonicalize_test.go:237: Unicode batch 51: node: signal: killed
+        
+        
+--- FAIL: TestCanonicalizeUnicodeNode (510.96s)
+
+lane: whole
+package: github.com/system-inc/adamic/internal/unicodeproperties
+test: (package)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/unicodeproperties	540.731s
+
+lane: whole
+package: github.com/system-inc/adamic/internal/oracle
+test: TestProcessExitDrainsStderr
+=== RUN   TestProcessExitDrainsStderr
+=== PAUSE TestProcessExitDrainsStderr
+=== CONT  TestProcessExitDrainsStderr
+    process_test.go:215: node shared=false backpressure=true: stdout=0 stderr=204800 exit=37 pipe capacity=4096
+    process_test.go:217: documented raw Node stderr pipe loss changed
+--- FAIL: TestProcessExitDrainsStderr (2.13s)
+
+lane: whole
+package: github.com/system-inc/adamic/internal/oracle
+test: TestProcessLargePipeExitPreservesOutput/immediate=true
+=== RUN   TestProcessLargePipeExitPreservesOutput/immediate=true
+    process_test.go:168: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+    process_test.go:169: program shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+    process_test.go:170: node shared=false backpressure=true: stdout=204800 stderr=0 exit=37 pipe capacity=4096
+    process_test.go:180: documented raw Node pipe loss changed; review Node first
+--- FAIL: TestProcessLargePipeExitPreservesOutput/immediate=true (3.86s)
+
+lane: whole
+package: github.com/system-inc/adamic/internal/oracle
+test: TestProcessLargePipeExitPreservesOutput
+=== RUN   TestProcessLargePipeExitPreservesOutput
+=== PAUSE TestProcessLargePipeExitPreservesOutput
+=== CONT  TestProcessLargePipeExitPreservesOutput
+--- FAIL: TestProcessLargePipeExitPreservesOutput (8.46s)
+
+lane: whole
+package: github.com/system-inc/adamic/internal/oracle
+test: (package)
+FAIL
+gate cache: native hits=0 misses=2191
+gate cache: node hits=0 misses=1818
+gate cache: probe hits=0 misses=36
+FAIL	github.com/system-inc/adamic/internal/oracle	1515.880s
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/25_readDirectory.a/stage0
+        stage3/fixtures/host/25_readDirectory.a:449:29: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+        stage3/fixtures/host/25_readDirectory.a:513:31: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+        stage3/fixtures/host/25_readDirectory.a:543:5: error TS2322: Type '(string | undefined)[]' is not assignable to type 'string[]'.
+          Type 'string | undefined' is not assignable to type 'string'.
+            Type 'undefined' is not assignable to type 'string'.
+        stage3/fixtures/host/25_readDirectory.a:587:5: error TS2775: Assertions require every name in the call target to be declared with an explicit type annotation.
+        stage3/fixtures/host/25_readDirectory.a:588:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.
+          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+        stage3/fixtures/host/25_readDirectory.a:613:54: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+        stage3/fixtures/host/25_readDirectory.a:709:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+        stage3/fixtures/host/25_readDirectory.a:741:10: error TS7030: Not all code paths return a value.
+        stage3/fixtures/host/25_readDirectory.a:851:27: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+          'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+        stage3/fixtures/host/25_readDirectory.a:879:31: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+          Type 'undefined' is not assignable to type 'string'.}
+--- FAIL: TestFixtures/host/25_readDirectory.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/25_readDirectory.a
+=== RUN   TestFixtures/host/25_readDirectory.a
+=== PAUSE TestFixtures/host/25_readDirectory.a
+=== CONT  TestFixtures/host/25_readDirectory.a
+--- FAIL: TestFixtures/host/25_readDirectory.a (1.57s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/23_newLine.a/stage0
+=== RUN   TestFixtures/host/23_newLine.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/23_newLine.a:10:31: stage 0 can't lower reading _os yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/23_newLine.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/23_newLine.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/23_newLine.a
+=== RUN   TestFixtures/host/23_newLine.a
+=== PAUSE TestFixtures/host/23_newLine.a
+=== CONT  TestFixtures/host/23_newLine.a
+--- FAIL: TestFixtures/host/23_newLine.a (1.73s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/22_createHash_fallback.a/stage0
+=== RUN   TestFixtures/host/22_createHash_fallback.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/22_createHash_fallback.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/22_createHash_fallback.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/22_createHash_fallback.a
+=== RUN   TestFixtures/host/22_createHash_fallback.a
+=== PAUSE TestFixtures/host/22_createHash_fallback.a
+=== CONT  TestFixtures/host/22_createHash_fallback.a
+--- FAIL: TestFixtures/host/22_createHash_fallback.a (1.71s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/24_useCaseSensitiveFileNames.a/stage0
+=== RUN   TestFixtures/host/24_useCaseSensitiveFileNames.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/24_useCaseSensitiveFileNames.a:20:16: stage 0 can't lower statSync: fs options other than a fixed literal or its plain const binding yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/24_useCaseSensitiveFileNames.a:15:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/24_useCaseSensitiveFileNames.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/24_useCaseSensitiveFileNames.a
+=== RUN   TestFixtures/host/24_useCaseSensitiveFileNames.a
+=== PAUSE TestFixtures/host/24_useCaseSensitiveFileNames.a
+=== CONT  TestFixtures/host/24_useCaseSensitiveFileNames.a
+--- FAIL: TestFixtures/host/24_useCaseSensitiveFileNames.a (2.04s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/21_createHash.a/stage0
+=== RUN   TestFixtures/host/21_createHash.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/host/21_createHash.a:13:18: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case}; recorded {Outcome:NotYet What:stage3/fixtures/host/21_createHash.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/21_createHash.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/21_createHash.a
+=== RUN   TestFixtures/host/21_createHash.a
+=== PAUSE TestFixtures/host/21_createHash.a
+=== CONT  TestFixtures/host/21_createHash.a
+--- FAIL: TestFixtures/host/21_createHash.a (1.72s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/20_exit_2.a/stage0
+=== RUN   TestFixtures/host/20_exit_2.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/20_exit_2.a:12:5: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/20_exit_2.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/20_exit_2.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/20_exit_2.a
+=== RUN   TestFixtures/host/20_exit_2.a
+=== PAUSE TestFixtures/host/20_exit_2.a
+=== CONT  TestFixtures/host/20_exit_2.a
+--- FAIL: TestFixtures/host/20_exit_2.a (1.48s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/16_getEnvironmentVariable.a/stage0
+=== RUN   TestFixtures/host/16_getEnvironmentVariable.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/16_getEnvironmentVariable.a:11:12: stage 0 can't lower a BinaryExpression with a string and a string yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/16_getEnvironmentVariable.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/16_getEnvironmentVariable.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/16_getEnvironmentVariable.a
+=== RUN   TestFixtures/host/16_getEnvironmentVariable.a
+=== PAUSE TestFixtures/host/16_getEnvironmentVariable.a
+=== CONT  TestFixtures/host/16_getEnvironmentVariable.a
+--- FAIL: TestFixtures/host/16_getEnvironmentVariable.a (1.26s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/19_exit_1.a/stage0
+=== RUN   TestFixtures/host/19_exit_1.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/19_exit_1.a:12:5: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/19_exit_1.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/19_exit_1.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/19_exit_1.a
+=== RUN   TestFixtures/host/19_exit_1.a
+=== PAUSE TestFixtures/host/19_exit_1.a
+=== CONT  TestFixtures/host/19_exit_1.a
+--- FAIL: TestFixtures/host/19_exit_1.a (1.62s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/18_exit_0.a/stage0
+=== RUN   TestFixtures/host/18_exit_0.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/18_exit_0.a:12:5: stage 0 can't lower a value of type undefined yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/18_exit_0.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/18_exit_0.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/18_exit_0.a
+=== RUN   TestFixtures/host/18_exit_0.a
+=== PAUSE TestFixtures/host/18_exit_0.a
+=== CONT  TestFixtures/host/18_exit_0.a
+--- FAIL: TestFixtures/host/18_exit_0.a (1.56s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/17_write.a/stage0
+=== RUN   TestFixtures/host/17_write.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/17_write.a:16:5: stage 0 can't lower a literal method call with an unrepresented result yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/17_write.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/17_write.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/17_write.a
+=== RUN   TestFixtures/host/17_write.a
+=== PAUSE TestFixtures/host/17_write.a
+=== CONT  TestFixtures/host/17_write.a
+--- FAIL: TestFixtures/host/17_write.a (1.53s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/15_getExecutingFilePath.a/stage0
+=== RUN   TestFixtures/host/15_getExecutingFilePath.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/15_getExecutingFilePath.a:21:21: stage 0 can't lower node:path.basename yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/15_getExecutingFilePath.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/15_getExecutingFilePath.a/stage0 (0.02s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/15_getExecutingFilePath.a
+=== RUN   TestFixtures/host/15_getExecutingFilePath.a
+=== PAUSE TestFixtures/host/15_getExecutingFilePath.a
+=== CONT  TestFixtures/host/15_getExecutingFilePath.a
+--- FAIL: TestFixtures/host/15_getExecutingFilePath.a (1.50s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/14_getCurrentDirectory.a/stage0
+=== RUN   TestFixtures/host/14_getCurrentDirectory.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/host/14_getCurrentDirectory.a:15:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case}; recorded {Outcome:NotYet What:stage3/fixtures/host/14_getCurrentDirectory.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/14_getCurrentDirectory.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/14_getCurrentDirectory.a
+=== RUN   TestFixtures/host/14_getCurrentDirectory.a
+=== PAUSE TestFixtures/host/14_getCurrentDirectory.a
+=== CONT  TestFixtures/host/14_getCurrentDirectory.a
+--- FAIL: TestFixtures/host/14_getCurrentDirectory.a (1.73s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/12_deleteFile.a/stage0
+=== RUN   TestFixtures/host/12_deleteFile.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/12_deleteFile.a:21:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/12_deleteFile.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/12_deleteFile.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/12_deleteFile.a
+=== RUN   TestFixtures/host/12_deleteFile.a
+=== PAUSE TestFixtures/host/12_deleteFile.a
+=== CONT  TestFixtures/host/12_deleteFile.a
+--- FAIL: TestFixtures/host/12_deleteFile.a (1.79s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/09_realpath.a/stage0
+=== RUN   TestFixtures/host/09_realpath.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/09_realpath.a:27:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/09_realpath.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/09_realpath.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/09_realpath.a
+=== RUN   TestFixtures/host/09_realpath.a
+=== PAUSE TestFixtures/host/09_realpath.a
+=== CONT  TestFixtures/host/09_realpath.a
+--- FAIL: TestFixtures/host/09_realpath.a (0.91s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/10_getModifiedTime.a/stage0
+=== RUN   TestFixtures/host/10_getModifiedTime.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/10_getModifiedTime.a:33:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/10_getModifiedTime.a:10:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/10_getModifiedTime.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/10_getModifiedTime.a
+=== RUN   TestFixtures/host/10_getModifiedTime.a
+=== PAUSE TestFixtures/host/10_getModifiedTime.a
+=== CONT  TestFixtures/host/10_getModifiedTime.a
+--- FAIL: TestFixtures/host/10_getModifiedTime.a (1.32s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/08_getDirectories.a/stage0
+=== RUN   TestFixtures/host/08_getDirectories.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/08_getDirectories.a:208:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/08_getDirectories.a:22:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/08_getDirectories.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/08_getDirectories.a
+=== RUN   TestFixtures/host/08_getDirectories.a
+=== PAUSE TestFixtures/host/08_getDirectories.a
+=== CONT  TestFixtures/host/08_getDirectories.a
+--- FAIL: TestFixtures/host/08_getDirectories.a (1.07s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/07_directoryExists.a/stage0
+=== RUN   TestFixtures/host/07_directoryExists.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/07_directoryExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/07_directoryExists.a:12:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/07_directoryExists.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/07_directoryExists.a
+=== RUN   TestFixtures/host/07_directoryExists.a
+=== PAUSE TestFixtures/host/07_directoryExists.a
+=== CONT  TestFixtures/host/07_directoryExists.a
+--- FAIL: TestFixtures/host/07_directoryExists.a (1.09s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/11_setModifiedTime.a/stage0
+=== RUN   TestFixtures/host/11_setModifiedTime.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/host/11_setModifiedTime.a:8:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/11_setModifiedTime.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/11_setModifiedTime.a
+=== RUN   TestFixtures/host/11_setModifiedTime.a
+=== PAUSE TestFixtures/host/11_setModifiedTime.a
+=== CONT  TestFixtures/host/11_setModifiedTime.a
+--- FAIL: TestFixtures/host/11_setModifiedTime.a (3.09s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/06_fileExists.a/stage0
+=== RUN   TestFixtures/host/06_fileExists.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/host/06_fileExists.a:48:5: stage 0 can't lower node:fs.symlinkSync yet}; recorded {Outcome:NotYet What:stage3/fixtures/host/06_fileExists.a:12:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/06_fileExists.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/06_fileExists.a
+=== RUN   TestFixtures/host/06_fileExists.a
+=== PAUSE TestFixtures/host/06_fileExists.a
+=== CONT  TestFixtures/host/06_fileExists.a
+--- FAIL: TestFixtures/host/06_fileExists.a (1.24s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/05_writeFile.a/stage0
+=== RUN   TestFixtures/host/05_writeFile.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/host/05_writeFile.a:37:30: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)}; recorded {Outcome:NotYet What:stage3/fixtures/host/05_writeFile.a:9:17: stage 0 can't lower node:fs.mkdtempSync yet}
+--- FAIL: TestFixtures/host/05_writeFile.a/stage0 (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host/05_writeFile.a
+=== RUN   TestFixtures/host/05_writeFile.a
+=== PAUSE TestFixtures/host/05_writeFile.a
+=== CONT  TestFixtures/host/05_writeFile.a
+--- FAIL: TestFixtures/host/05_writeFile.a (1.54s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures/host
+=== RUN   TestFixtures/host
+=== PAUSE TestFixtures/host
+=== CONT  TestFixtures/host
+--- FAIL: TestFixtures/host (0.00s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: TestFixtures
+=== RUN   TestFixtures
+=== PAUSE TestFixtures
+=== CONT  TestFixtures
+--- FAIL: TestFixtures (5.41s)
+
+lane: whole
+package: github.com/system-inc/adamic/stage3/fixtures
+test: (package)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	25.820s
