@@ -14,6 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+const propertySymbol = "github.com/system-inc/cohere/internal/lint/ecmascript/property.Name"
 const attributeSymbol = "github.com/system-inc/cohere/internal/lint/ecmascript/jsx.AttributeName"
 
 func slot02Corpus(t *testing.T, symbol string) (string, []byte) {
@@ -75,7 +76,11 @@ func slot02Corpus(t *testing.T, symbol string) (string, []byte) {
 	overlay := smallFixture(t, map[string]any{"Replace": map[string]string{filepath.Join(cohere, "adamic_slot02.go"): source}})
 	binary := filepath.Join(t.TempDir(), "oracle")
 	run(t, cohere, "go", "build", "-overlay="+overlay, "-o", binary, filepath.Join(cohere, "adamic_slot02.go"))
-	data = run(t, "", binary, config)
+	mode := "attribute"
+	if symbol == propertySymbol {
+		mode = "property"
+	}
+	data = run(t, "", binary, config, mode)
 	var corpus struct {
 		Want           string
 		Files, Sources int
@@ -108,24 +113,29 @@ func slot02Build(t *testing.T, entry string) string {
 	return binary
 }
 func TestSlot02AttributeName(t *testing.T) {
-	corpus, want := slot02Corpus(t, attributeSymbol)
+	slot02Check(t, attributeSymbol, "jsx_attribute_name.a", "name.kind !== 'Identifier'", "false")
+}
+func TestSlot02PropertyName(t *testing.T) {
+	slot02Check(t, propertySymbol, "property_name.a", "inner.kind === 'Identifier' || inner.kind === 'PrivateIdentifier'", "false")
+}
+func slot02Check(t *testing.T, symbol, file, anchor, replacement string) {
+	corpus, want := slot02Corpus(t, symbol)
 	runner, _ := filepath.Abs("../../../../oracle/node.mjs")
 	entry, _ := filepath.Abs("slot02/main.a")
 	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, corpus), want)
 	compare(t, run(t, "", slot02Build(t, entry), corpus), want)
 	t.Log("Go, Node source and sanitized native agree")
 	directory := t.TempDir()
-	for _, name := range []string{"options_json.ts", "slot02_ast.a", "jsx_attribute_name.a", "slot02/main.a"} {
+	for _, name := range []string{"options_json.ts", "slot02_ast.a", "jsx_attribute_name.a", "property_name.a", "slot02/main.a"} {
 		data, err := os.ReadFile(name)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if name == "jsx_attribute_name.a" {
-			anchor := "name.kind !== 'Identifier'"
+		if name == file {
 			if strings.Count(string(data), anchor) != 1 {
 				t.Fatal("mutant anchor changed")
 			}
-			data = []byte(strings.Replace(string(data), anchor, "false", 1))
+			data = []byte(strings.Replace(string(data), anchor, replacement, 1))
 		}
 		target := filepath.Join(directory, name)
 		if err = os.MkdirAll(filepath.Dir(target), 0755); err != nil {
@@ -142,7 +152,7 @@ func TestSlot02AttributeName(t *testing.T) {
 	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
 	for i := range a {
 		if i < len(b) && a[i] != b[i] {
-			t.Logf("compiled namespaced-name mutant caught at line %d: got %s, Go %s", i+1, a[i], b[i])
+			t.Logf("compiled semantic mutant caught at line %d: got %s, Go %s", i+1, a[i], b[i])
 			break
 		}
 	}

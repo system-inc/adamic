@@ -1,6 +1,7 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from '../options_json.ts';
 import type { HelperNode } from '../slot02_ast.a';
+import { propertyName } from '../property_name.a';
 import { attributeName } from '../jsx_attribute_name.a';
 
 const args = programArguments();
@@ -16,6 +17,14 @@ for (const index of json.node(json.field(root, 'Nodes')).children) {
     nodes.push({ kind: text(index, 'Kind'), text: text(index, 'Text'), expression: number(index, 'Expression'), tagName: number(index, 'TagName'), attributes: number(index, 'Attributes'), name: number(index, 'Name') });
 }
 for (const index of json.node(json.field(root, 'Queries')).children) {
-    const result = attributeName(nodes, number(index, 'Node'));
-    console.log(`${result.named}:${result.name}`);
+    const node = number(index, 'Node');
+    if (text(index, 'Helper') === 'property') {
+        for (let accept = 0; accept < 64; accept++) {
+            const result = propertyName(nodes, node, accept);
+            console.log(`${result.named}:${result.name}`);
+        }
+    } else {
+        const result = attributeName(nodes, node);
+        console.log(`${result.named}:${result.name}`);
+    }
 }
