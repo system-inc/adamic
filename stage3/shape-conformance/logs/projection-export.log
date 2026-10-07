@@ -1,0 +1,44 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "counts": {
+    "tagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1758
+    },
+    "untagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1178
+    }
+  },
+  "unknown_reasons": {
+    "tagged": {
+      "diagnosed body": 1153,
+      "flow the graph can't see": 605
+    },
+    "untagged": {
+      "diagnosed body": 851,
+      "flow the graph can't see": 326,
+      "host metadata": 1
+    }
+  },
+  "allocation_shapes": 1779,
+  "typed_body_skip_sites": {
+    "untagged": 35,
+    "tagged": 9
+  },
+  "diagnosed_dependency_sites": {
+    "tagged": 1144,
+    "untagged": 816
+  },
+  "host_values": {
+    "host.getPackageJsonInfoCache?.()?.getPackageJsonInfo": 1,
+    "host.getSourceFile": 1615,
+    "host.getSourceFileByPath": 1615,
+    "host.readFile": 617,
+    "host: ModuleResolutionHost": 617
+  }
+}

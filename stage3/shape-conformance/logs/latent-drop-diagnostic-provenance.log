@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/latent/audit.py", line 54, in <module>
+    print(json.dumps({'measurement':LABEL,'status':'PASS','counts':audit(result,mapped,root,fixture)},indent=2))
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/shape-conformance/latent/audit.py", line 28, in audit
+    assert row['diagnostic_causes'],'diagnosed site lacks provenance'
+           ~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: diagnosed site lacks provenance

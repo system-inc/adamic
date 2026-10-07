@@ -261,8 +261,9 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		if e.program.Functions[expression.Function].Receiver {
 			e.line("%s->receiver = true;", closure)
 		}
+		e.adoptGraph(closure, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell *)", closure, len(environment)), e.program.Functions[expression.Function].GraphClosure)
 		for index, local := range environment {
-			e.line("%s->cells[%d] = adamic_retain(%s);", closure, index, e.cellReference(local))
+			e.line("%s->cells[%d] = %s;", closure, index, e.heldReferenceIn(closure, e.cellReference(local)))
 		}
 		return closure
 	case ir.CallClosure:
@@ -323,6 +324,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
 		callback := e.value(expression.Callback)
 		mapped := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s->length, %t)", source, expression.Result.IsReference()))
+		e.adoptGraph(mapped, "sizeof *"+mapped, e.graphTypes(expression.GraphTypes))
 		count, index := e.temporary(), e.temporary()
 		// The length is read once, as JavaScript's map does; an array the callback shrinks is a
 		// panic here rather than JavaScript's holes, which 0.1 has no way to hold.
@@ -341,6 +343,9 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3);", element, callback, callback, argument, index, source)
 		// What's mapped so far is the statement's, let go with its temporaries.
 		e.closureThrown()
+		if e.graphTypes(expression.GraphTypes) && expression.Result.IsReference() {
+			e.line("%s.reference = adamic_graph_take(%s, %s.reference);", element, mapped, element)
+		}
 		e.line("adamic_array_push(%s, %s);", mapped, element)
 		e.indent--
 		e.line("}")
@@ -361,7 +366,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		if expression.Array == nil {
 			length := e.value(expression.Length)
 			value := e.value(expression.Value)
-			return e.own(ir.Array, fmt.Sprintf("adamic_array_filled(%s, %s, %t)", length, borrowed(expression.Element, value), expression.Element.IsReference()))
+			return e.graphArray(fmt.Sprintf("adamic_array_filled(%s, %s, %t)", length, borrowed(expression.Element, value), expression.Element.IsReference()), expression.GraphTypes)
 		}
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
@@ -375,7 +380,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		e.line("adamic_array_fill(%s, %s, %s, %s, %t, %t);", array, borrowed(expression.Element, value), start, end, expression.Start != nil, expression.End != nil)
 		return array
 	case ir.ArraySplice:
-		return e.own(ir.Array, fmt.Sprintf("adamic_array_splice(%s)", e.spliceArguments(expression)))
+		return e.graphArray(fmt.Sprintf("adamic_array_splice(%s)", e.spliceArguments(expression)), expression.GraphTypes)
 	case ir.ArrayFrom:
 		return e.arrayFrom(expression)
 	case ir.ArrayReverse:
@@ -387,7 +392,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		for _, other := range expression.Others {
 			arrays = append(arrays, e.value(other))
 		}
-		return e.own(ir.Array, fmt.Sprintf("adamic_array_concat(%d, (adamic_array *const[]){%s})", len(arrays), strings.Join(arrays, ", ")))
+		return e.graphArray(fmt.Sprintf("adamic_array_concat(%d, (adamic_array *const[]){%s})", len(arrays), strings.Join(arrays, ", ")), expression.GraphTypes)
 	case ir.CheckedCast:
 		object := e.temporary()
 		e.line("adamic_object *%s = %s;", object, e.value(expression.Value))
@@ -432,17 +437,21 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			return e.snapshot(expression.Type(), fmt.Sprintf("%s->length == 0 ? %s : %s", array, zero(expression.Type()), popped))
 		}
 		// The array's reference to the element becomes the statement's.
-		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s->elements[--%s->length].%s", array, array, array, member(expression.Element)))
+		popped := fmt.Sprintf("%s->elements[--%s->length].%s", array, array, member(expression.Element))
+		if len(e.program.GraphTypes) != 0 {
+			popped = fmt.Sprintf("adamic_graph_escape(%s, %s)", array, popped)
+		}
+		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s", array, popped))
 	case ir.MapEntries:
 		pair := e.shapeOf([]string{"0", "1"}, []ir.Type{expression.KeyType, expression.ValueType})
-		return e.own(ir.Array, fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair))
+		return e.graphArray(fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair), expression.GraphTypes)
 	case ir.ArraySlice:
 		array := e.value(expression.Array)
 		arguments := []string{"0.0", "0.0"}
 		for index, argument := range expression.Arguments {
 			arguments[index] = e.value(argument)
 		}
-		return e.own(ir.Array, fmt.Sprintf("adamic_array_slice(%s, %s, %s, %t)", array, arguments[0], arguments[1], len(expression.Arguments) == 2))
+		return e.graphArray(fmt.Sprintf("adamic_array_slice(%s, %s, %s, %t)", array, arguments[0], arguments[1], len(expression.Arguments) == 2), expression.GraphTypes)
 	case ir.ArraySort:
 		array := e.value(expression.Array)
 		sort := "adamic_array_sort"
@@ -483,17 +492,18 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			pairs = e.value(expression.Pairs)
 		}
 		created := e.own(ir.Map, newMap(expression.Key, expression.Value.IsReference()))
+		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		for _, entry := range entries {
-			e.line("adamic_map_set(%s, %s, %s);", created, held(expression.Key, entry[0]), held(expression.Value, entry[1]))
+			e.line("adamic_map_set(%s, %s, %s);", created, e.heldIn(created, expression.Key, entry[0]), e.heldIn(created, expression.Value, entry[1]))
 		}
 		if expression.Pairs != nil {
 			e.line("adamic_map_add_pairs(%s, %s);", created, pairs)
 		}
 		return created
 	case ir.MapKeys:
-		return e.own(ir.Array, fmt.Sprintf("adamic_map_keys(%s)", e.value(expression.Map)))
+		return e.graphArray(fmt.Sprintf("adamic_map_keys(%s)", e.value(expression.Map)), expression.GraphTypes)
 	case ir.MapValues:
-		return e.own(ir.Array, fmt.Sprintf("adamic_map_values(%s)", e.value(expression.Map)))
+		return e.graphArray(fmt.Sprintf("adamic_map_values(%s)", e.value(expression.Map)), expression.GraphTypes)
 	case ir.MapClear:
 		e.line("adamic_map_clear(%s);", e.value(expression.Map))
 		return "0"
@@ -505,6 +515,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			values = e.value(expression.Values)
 		}
 		created := e.own(ir.Map, newMap(expression.Element, false))
+		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		if expression.Values != nil {
 			e.line("adamic_set_add_all(%s, %s);", created, values)
 		}
@@ -512,10 +523,10 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.SetAdd:
 		set := e.value(expression.Set)
 		value := e.value(expression.Value)
-		e.line("adamic_map_set(%s, %s, (adamic_value){.number = 0});", set, held(expression.Element, value))
+		e.line("adamic_map_set(%s, %s, (adamic_value){.number = 0});", set, e.heldIn(set, expression.Element, value))
 		return set
 	case ir.SetValues:
-		return e.own(ir.Array, fmt.Sprintf("adamic_set_values(%s)", e.value(expression.Set)))
+		return e.graphArray(fmt.Sprintf("adamic_set_values(%s)", e.value(expression.Set)), expression.GraphTypes)
 	case ir.MapGet:
 		slot := e.mapGetSlot(expression)
 		if expression.Type().IsMaybe() {
@@ -527,7 +538,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)
 		value := e.value(expression.Value)
-		e.line("adamic_map_set(%s, %s, %s);", object, held(expression.KeyType, key), held(expression.ValueType, value))
+		e.line("adamic_map_set(%s, %s, %s);", object, e.heldIn(object, expression.KeyType, key), e.heldIn(object, expression.ValueType, value))
 		return object
 	case ir.MapHas:
 		object := e.value(expression.Map)
@@ -567,7 +578,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		value := e.value(expression.Value)
 		e.viewArrayMutation(array, expression.Element)
 		if expression.Element.IsReference() {
-			value = retained(value)
+			value = e.heldReferenceIn(array, value)
 		}
 		// The append happens here, in JavaScript's order, and the new length is the value.
 		e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
@@ -594,13 +605,14 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			// A spread is iterated where it stands, before the elements after it are evaluated, so the
 			// array is made first (which nothing can see) and each element appended as it comes.
 			array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", expression.Element.IsReference()))
+			e.adoptGraph(array, "sizeof *"+array, e.graphTypes(expression.GraphTypes))
 			for index, element := range expression.Elements {
 				value := e.value(element)
 				switch {
 				case expression.Spread[index]:
 					e.line("adamic_array_append(%s, %s);", array, value)
 				case expression.Element.IsReference():
-					e.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, retained(value))
+					e.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, e.heldReferenceIn(array, value))
 				default:
 					e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
 				}
@@ -619,9 +631,10 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			kind = ir.Union
 		}
 		e.line("%s->element_kind = %d;", array, kind)
+		e.adoptGraph(array, "sizeof *"+array, e.graphTypes(expression.GraphTypes))
 		for _, element := range elements {
 			if expression.Element.IsReference() {
-				element = retained(element)
+				element = e.heldReferenceIn(array, element)
 			}
 			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, element))
 		}

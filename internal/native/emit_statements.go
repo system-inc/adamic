@@ -67,7 +67,21 @@ func (e *emitter) statement(statement ir.Statement) {
 		value := e.value(statement.Value)
 		e.line("adamic_write_line(%s, %s);", stream, value)
 		e.end()
+	case ir.AllocateEnvironment:
+		// Emitted at function entry before captured parameters are initialized.
 	case ir.Declare:
+		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
+			local := e.program.Locals[statement.Local]
+			if local.Captured && !local.EnvironmentCell {
+				e.makeCell(statement.Local, zero(local.Type), true)
+				e.line("%s->ready = false;", e.cellReference(statement.Local))
+			}
+			return
+		}
+		if statement.Uninitialized && e.program.Locals[statement.Local].EnvironmentCell {
+			e.line("%s->ready = false;", e.cellReference(statement.Local))
+			return
+		}
 		if e.elementBorrows[e.at] {
 			e.borrowElement(statement)
 			return
@@ -133,7 +147,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		// while the statement still reads the value, so what the statement owns, the variable takes.
 		e.store(statement.Local, value, e.taken(value))
 		if e.program.Locals[statement.Local].Uninitialized {
-			e.line("%s = true;", e.localReady(statement.Local))
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 		}
 		e.end()
 	case ir.Evaluate:
@@ -165,7 +179,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		value := e.value(statement.Value)
 		e.viewArrayMutation(array, statement.Element)
 		if statement.Element.IsReference() {
-			value = retained(value)
+			value = e.heldReferenceIn(array, value)
 		}
 		setter := "adamic_array_set"
 		if e.hasArrayHoles() {
@@ -214,8 +228,12 @@ func (e *emitter) statement(statement ir.Statement) {
 			// The new reference is taken before the old is let go: they may be the same.
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
-			e.line("%s->reference = %s;", slot, e.kept(value))
-			e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			e.line("%s->reference = %s;", slot, e.keptIn(object, value))
+			if len(e.program.GraphTypes) != 0 {
+				e.dropIn(object, old)
+			} else {
+				e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			}
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
@@ -333,6 +351,7 @@ func (e *emitter) loop(statement ir.Loop) {
 		e.line("if (%s->references) {", fresh)
 		e.line("\tadamic_retain(%s->value.reference);", fresh)
 		e.line("}")
+		e.adoptGraph(fresh, "sizeof *"+fresh, e.program.Locals[local].GraphCell)
 		e.line("adamic_release(%s);", cell)
 		e.line("%s = %s;", cell, fresh)
 	}

@@ -180,6 +180,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil {
+		value = l.graphAllocation(value, node)
+	}
 	if l.isNever(node) {
 		return value, err
 	}
@@ -461,6 +464,9 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 		}
 		if value, handled := l.staticClassRead(node); handled {
 			return value, nil
+		}
+		if value, handled, err := l.nestedReference(node); handled {
+			return value, err
 		}
 		local, isLocal := l.local(node)
 		if !isLocal && node.Text() == "undefined" {
@@ -1000,6 +1006,21 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
+	if direct := l.nestedSibling(callee); direct >= 0 {
+		arguments := []ir.Expression{}
+		for _, argument := range call.Arguments.Nodes {
+			value, err := l.expression(argument)
+			if err != nil {
+				return nil, err
+			}
+			position := len(arguments)
+			if position < len(l.result.Functions[direct].Parameters) {
+				value = fit(value, l.result.Locals[l.result.Functions[direct].Parameters[position]].Type)
+			}
+			arguments = append(arguments, value)
+		}
+		return ir.CallClosure{Closure: ir.ClosureSelf{}, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
+	}
 	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
 		instance, err := l.instantiateFunction(node, declaration)
 		if err != nil {

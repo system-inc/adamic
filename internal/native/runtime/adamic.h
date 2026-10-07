@@ -28,6 +28,7 @@ enum adamic_kind {
 	adamic_kind_number,
 	adamic_kind_boolean,
 	adamic_kind_weak,
+	adamic_kind_environment,
 };
 
 typedef struct adamic_heap {
@@ -41,6 +42,16 @@ typedef struct adamic_heap {
 // adamic_retain and adamic_release take any heap value. NULL (undefined) is left alone.
 void *adamic_retain(void *value);
 void adamic_release(void *value);
+
+// Graph allocation and slot ownership (graph_regions.c). Ordinary references use
+// adamic_retain/release, which dispatch to the object's current region root.
+void *adamic_graph_adopt(void *value, size_t bytes);
+void *adamic_graph_adopt_owned(void *value, size_t bytes);
+void *adamic_graph_hold(void *holder, void *value);
+void adamic_graph_drop(void *holder, void *value);
+void *adamic_graph_escape(void *holder, void *value);
+void *adamic_graph_take(void *holder, void *value);
+bool adamic_graph_counted(const void *value);
 
 // adamic_allocate makes a heap value of size bytes, references 1, and panics when memory runs out.
 void *adamic_allocate(size_t size, enum adamic_kind kind);
@@ -73,8 +84,17 @@ typedef struct adamic_cell {
 	adamic_heap heap;
 	bool references;
 	bool ready;
+	struct adamic_environment *owner;
 	adamic_value value;
 } adamic_cell;
+
+// One counted allocation owns every interior captured slot.
+typedef struct adamic_environment {
+	adamic_heap heap;
+	size_t count;
+	adamic_cell cells[];
+} adamic_environment;
+adamic_environment *adamic_environment_new(size_t count);
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references);
 
@@ -308,6 +328,8 @@ bool adamic_object_has_own(const adamic_object *object, const adamic_string *key
 struct adamic_array *adamic_object_keys(const adamic_object *object);
 struct adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries);
 void adamic_object_assign(adamic_object *target, const adamic_object *source);
+struct adamic_array *adamic_object_values_checked(const adamic_object *object, bool references, bool entries, const char *expression);
+void adamic_object_assign_checked(adamic_object *target, const adamic_object *source, const char *expression);
 void adamic_object_check_write(const adamic_object *object, const char *name);
 // Keep frozen-object failures out of the ordinary write's call path.
 static inline void adamic_object_check_data_write(const adamic_object *object, const char *name) {

@@ -7,6 +7,7 @@
 // ECMA-262 requires.
 
 #include "adamic.h"
+#include "graph_regions.h"
 
 #include <math.h>
 #include <stdint.h>
@@ -211,10 +212,10 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
 	if (index != SIZE_MAX) {
 		// The key it already has stays; the one passed in is let go, and so is the old value.
 		if (map->reference_keys) {
-			adamic_release(key.reference);
+			if (adamic_graph_is(map)) { adamic_graph_drop(map, key.reference); } else { adamic_release(key.reference); }
 		}
 		if (map->reference_values) {
-			adamic_release(map->entries[index].value.reference);
+			if (adamic_graph_is(map)) { adamic_graph_drop(map, map->entries[index].value.reference); } else { adamic_release(map->entries[index].value.reference); }
 		}
 		map->entries[index].value = value;
 		return;
@@ -258,10 +259,10 @@ bool adamic_map_delete(adamic_map *map, adamic_value key) {
 	adamic_map_entry *entry = &map->entries[index];
 	entry->deleted = true;
 	if (map->reference_keys) {
-		adamic_release(entry->key.reference);
+		if (adamic_graph_is(map)) { adamic_graph_drop(map, entry->key.reference); } else { adamic_release(entry->key.reference); }
 	}
 	if (map->reference_values) {
-		adamic_release(entry->value.reference);
+		if (adamic_graph_is(map)) { adamic_graph_drop(map, entry->value.reference); } else { adamic_release(entry->value.reference); }
 	}
 	map->count--;
 	return_inline(map);
@@ -292,6 +293,7 @@ adamic_map_iterator *adamic_map_iterate(adamic_map *map) {
 	iterator->next = 0;
 	iterator->exhausted = false;
 	map->iterating++;
+	if (adamic_graph_is(map)) { iterator = adamic_graph_adopt_owned(iterator, sizeof *iterator); }
 	return iterator;
 }
 
@@ -339,6 +341,7 @@ adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair
 		if (map->reference_values) {
 			adamic_retain(entry->value.reference);
 		}
+		if (adamic_graph_is(map)) { tuple = adamic_graph_adopt_owned(tuple, sizeof *tuple + pair->count * sizeof(adamic_value)); }
 		adamic_array_push(entries, (adamic_value){.reference = tuple});
 	}
 	return entries;
@@ -352,10 +355,10 @@ void adamic_map_clear(adamic_map *map) {
 		}
 		entry->deleted = true;
 		if (map->reference_keys) {
-			adamic_release(entry->key.reference);
+			if (adamic_graph_is(map)) { adamic_graph_drop(map, entry->key.reference); } else { adamic_release(entry->key.reference); }
 		}
 		if (map->reference_values) {
-			adamic_release(entry->value.reference);
+			if (adamic_graph_is(map)) { adamic_graph_drop(map, entry->value.reference); } else { adamic_release(entry->value.reference); }
 		}
 	}
 	map->count = 0;
@@ -396,10 +399,10 @@ void adamic_map_add_pairs(adamic_map *map, const adamic_array *pairs) {
 		adamic_value key = *adamic_object_field(pair, "0", &key_cache);
 		adamic_value value = *adamic_object_field(pair, "1", &value_cache);
 		if (map->reference_keys) {
-			adamic_retain(key.reference);
+			adamic_graph_hold(map, key.reference);
 		}
 		if (map->reference_values) {
-			adamic_retain(value.reference);
+			adamic_graph_hold(map, value.reference);
 		}
 		adamic_map_set(map, key, value);
 	}

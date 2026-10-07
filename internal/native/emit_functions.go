@@ -59,6 +59,7 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
+	e.allocateEnvironment(function.FrameEnvironment)
 	for _, parameter := range function.Parameters {
 		switch {
 		case e.reuse.consumed[parameter]:
@@ -68,6 +69,9 @@ func (e *emitter) functionBody(function ir.Function) {
 			// A borrowed parameter is its caller's, kept alive for the whole call.
 			e.line("adamic_retain(%s);", e.localName(parameter))
 			e.hold(e.localName(parameter))
+		}
+		if e.program.Locals[parameter].Uninitialized && !e.program.Locals[parameter].Captured {
+			e.line("bool %s = true;", readyName(parameter))
 		}
 		if e.program.Locals[parameter].Captured {
 			// A closure captured this parameter: from here on it lives in a cell.
@@ -240,6 +244,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
 	}
 	call := fmt.Sprintf("adamic_node_performance_invoke(%s, %s, %d, %t)", closure, packed, len(arguments), expression.Returns == 0)
+	if expression.Direct > 0 {
+		call = fmt.Sprintf("%s(%s, %s, %d)", e.functionName(expression.Direct-1), closure, packed, len(arguments))
+	}
 	if receiver != "" {
 		if closure == "" {
 			call = fmt.Sprintf("%s(%s, %s, %d)", method, receiver, packed, len(arguments))

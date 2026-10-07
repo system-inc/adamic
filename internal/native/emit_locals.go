@@ -26,7 +26,7 @@ var cIdentifier = regexp.MustCompile(`[^A-Za-z0-9_]`)
 // store gives a local a value; a string's new reference is taken before the old one is let go,
 // since they may be the same string.
 func (e *emitter) store(local int, value string, owned bool) {
-	if e.program.Locals[local].Borrowed {
+	if e.program.Locals[local].Borrowed && e.cellSlot(local) == "" {
 		// Storing would release the old value, which is the caller's. Lowering never borrows a
 		// parameter anything assigns, so reaching this is a compiler bug, said out loud.
 		panic(fmt.Sprintf("native: a store into the borrowed parameter %s", e.program.Locals[local].Name))
@@ -35,6 +35,16 @@ func (e *emitter) store(local int, value string, owned bool) {
 	if slot := e.cellSlot(local); slot != "" {
 		if !e.program.Locals[local].Type.IsReference() {
 			e.line("%s.%s = %s;", slot, member(e.program.Locals[local].Type), slotted(e.program.Locals[local].Type, value))
+			return
+		}
+		if e.program.Locals[local].GraphCell {
+			old := e.temporary()
+			e.line("void *%s = %s.reference;", old, slot)
+			e.line("%s.reference = adamic_graph_hold(%s, %s);", slot, e.cellReference(local), value)
+			e.dropIn(e.cellReference(local), old)
+			if owned {
+				e.line("adamic_release(%s);", value)
+			}
 			return
 		}
 		if !owned {
@@ -95,6 +105,9 @@ func (e *emitter) read(read ir.Read) string {
 	// A reference its consumer lends needs no count: nothing can run before it's used (borrow.go).
 	lent := e.lendable && lendable(read.Of)
 	if slot := e.cellSlot(read.Local); slot != "" {
+		if read.Checked {
+			e.checkReady(read.Local)
+		}
 		// A captured variable may change under a call later in the statement (a closure that
 		// writes it), so, like a global, it's copied the moment JavaScript reads it.
 		value := unslotted(read.Of, slot+"."+member(read.Of))
@@ -136,6 +149,11 @@ func (e *emitter) declareLocal(local int, value string, owned bool) {
 		e.line("int64_t %s = (int64_t)%s;", e.localName(local), value)
 		return
 	}
+	if declared.Captured && declared.Preallocated {
+		e.store(local, value, owned)
+		e.line("%s->ready = true;", e.cellReference(local))
+		return
+	}
 	if declared.Captured {
 		e.makeCell(local, value, owned)
 		return
@@ -155,10 +173,22 @@ func (e *emitter) declareLocal(local int, value string, owned bool) {
 // makeCell declares a captured local's cell, holding value (retained unless owned).
 func (e *emitter) makeCell(local int, value string, owned bool) {
 	declared := e.program.Locals[local]
+	if declared.EnvironmentCell {
+		e.store(local, value, owned)
+		e.line("%s->ready = true;", e.cellReference(local))
+		return
+	}
+	cell := e.cellName(local)
+	if declared.GraphCell {
+		e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.number = 0}, %t);", cell, declared.Type.IsReference())
+		e.adoptGraph(cell, "sizeof *"+cell, true)
+		e.hold(cell)
+		e.store(local, value, owned)
+		return
+	}
 	if declared.Type.IsReference() && !owned {
 		value = retained(value)
 	}
-	cell := e.cellName(local)
 	e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", cell, member(declared.Type), slotted(declared.Type, value), declared.Type.IsReference())
 	e.hold(cell)
 }
@@ -190,4 +220,23 @@ func (e *emitter) cellReference(local int) string {
 		}
 	}
 	return e.cellName(local)
+}
+
+// allocateEnvironment emits the one IR frame site; slot names borrow its storage.
+func (e *emitter) allocateEnvironment(cells []int) {
+	if len(cells) == 0 {
+		return
+	}
+	environment := e.temporary()
+	e.line("adamic_environment *%s = adamic_environment_new(%d);", environment, len(cells))
+	graph := false
+	for _, local := range cells {
+		graph = graph || e.program.Locals[local].GraphCell
+	}
+	e.adoptGraph(environment, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell)", environment, len(cells)), graph)
+	e.hold(environment)
+	for position, local := range cells {
+		e.line("adamic_cell *%s = &%s->cells[%d];", e.cellName(local), environment, position)
+		e.line("%s->references = %t;", e.cellName(local), e.program.Locals[local].Type.IsReference())
+	}
 }

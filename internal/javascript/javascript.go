@@ -151,8 +151,15 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 				emitter.line("let %s = values[%d];", emitter.name(parameter), position)
 			}
 		}
+		emitter.allocateEnvironment(function.FrameEnvironment)
 		for _, parameter := range function.Parameters {
-			if program.Locals[parameter].Captured {
+			if program.Locals[parameter].Uninitialized && !program.Locals[parameter].Captured {
+				emitter.line("let %s = true;", readyName(parameter))
+			}
+			if program.Locals[parameter].EnvironmentCell {
+				emitter.line("%s.value = %s;", emitter.cellName(parameter), emitter.name(parameter))
+				emitter.line("%s.ready = true;", emitter.cellName(parameter))
+			} else if program.Locals[parameter].Captured {
 				emitter.line("const %s = { value: %s, ready: true };", emitter.cellName(parameter), emitter.name(parameter))
 			}
 		}
@@ -323,6 +330,11 @@ func (e *emitter) nested(statements []ir.Statement) {
 
 func (e *emitter) declare(local int, value string) {
 	declared := e.program.Locals[local]
+	if declared.Captured && declared.Preallocated {
+		e.line("%s.value = %s;", e.cell(local), value)
+		e.line("%s.ready = true;", e.cell(local))
+		return
+	}
 	if declared.Captured {
 		e.line("let %s = { value: %s, ready: true };", e.cellName(local), value)
 		return
@@ -345,7 +357,20 @@ func (e *emitter) statement(at *ir.Statement) {
 			stream = "error"
 		}
 		e.line("console.%s(%s);", stream, e.value(statement.Value))
+	case ir.AllocateEnvironment:
+		// Emitted at function entry before parameter cells are initialized.
 	case ir.Declare:
+		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
+			local := e.program.Locals[statement.Local]
+			if local.Captured && !local.EnvironmentCell {
+				e.line("let %s = { value: undefined, ready: false };", e.cellName(statement.Local))
+			}
+			return
+		}
+		if statement.Uninitialized && e.program.Locals[statement.Local].EnvironmentCell {
+			e.line("%s = false;", e.localReady(statement.Local))
+			return
+		}
 		value := "undefined"
 		if statement.Value != nil {
 			value = e.value(statement.Value)
@@ -380,12 +405,12 @@ func (e *emitter) statement(at *ir.Statement) {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
 			temporary := e.temporary()
 			e.line("const %s = %s;", temporary, value)
-			e.line("if (!%s) adamicUnready(%s);", readyName(statement.Local), quote(e.program.Locals[statement.Local].Name))
+			e.line("if (!%s) adamicUnready(%s);", e.ready(statement.Local), quote(e.program.Locals[statement.Local].Name))
 			value = temporary
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
 		if e.program.Locals[statement.Local].Uninitialized {
-			e.line("%s = true;", e.localReady(statement.Local))
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 		}
 	case ir.Evaluate:
 		e.line("%s;", e.value(statement.Value))
@@ -672,7 +697,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 			return fmt.Sprintf("(%s ? %s : panic(%s))", e.localReady(expression.Local), e.variable(expression.Local), quote(message))
 		}
 		if expression.Checked {
-			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", readyName(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
+			return fmt.Sprintf("(%s ? %s : adamicUnready(%s))", e.ready(expression.Local), e.variable(expression.Local), quote(e.program.Locals[expression.Local].Name))
 		}
 		return e.variable(expression.Local)
 	case ir.Unary:
@@ -863,6 +888,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
+		if expression.Readiness != "" {
+			return "adamicObjectReadCall(" + quote(expression.Method) + ", " + quote(expression.Readiness) + ", " + e.values(expression.Arguments) + ")"
+		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
 		if expression.Function == "toBoolean" {
@@ -1023,6 +1051,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t)", functionName(e.program, expression.Function), strings.Join(cells, ", "), e.program.Functions[expression.Function].Receiver)
 	case ir.CallClosure:
+		if expression.Direct > 0 {
+			return fmt.Sprintf("%s(self, [%s])", functionName(e.program, expression.Direct-1), e.values(expression.Arguments))
+		}
 		if property, ok := expression.Closure.(ir.Property); ok && property.View != "" {
 			return "adamicCall(" + e.emitViewCallableProperty(property) + ", [" + e.values(expression.Arguments) + "])"
 		}
@@ -1200,3 +1231,21 @@ func quote(text string) string {
 
 // narrowedAwayMessage is native's (internal/native), word for word: the checks are the same on both sides.
 const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
+
+func (e *emitter) ready(local int) string {
+	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
+		return e.cell(local) + ".ready"
+	}
+	return readyName(local)
+}
+
+func (e *emitter) allocateEnvironment(cells []int) {
+	if len(cells) == 0 {
+		return
+	}
+	environment := e.temporary()
+	e.line("const %s = Array.from({length: %d}, () => ({value: undefined, ready: false}));", environment, len(cells))
+	for position, local := range cells {
+		e.line("const %s = %s[%d];", e.cellName(local), environment, position)
+	}
+}

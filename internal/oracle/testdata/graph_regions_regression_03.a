@@ -1,0 +1,7 @@
+function run(): number {
+	let countdown = (from: number): number => from;
+	countdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));
+	return countdown(3);
+}
+console.log(`${run()}`);
+

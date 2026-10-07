@@ -1,0 +1,17 @@
+{
+  "entry_rows": 82,
+  "source_entries": 79,
+  "source_outcomes": {
+    "checker": 78,
+    "Refused": 1
+  },
+  "accepted_ir_programs": 0,
+  "whole_program": [
+    {
+      "roots": 79,
+      "kind": "checker",
+      "diagnostic_count": 830,
+      "first_diagnostic": "/tmp/shape-conformance-adapted/src/compiler/binder.ts:1229:13: error TS7029: Fallthrough case in switch."
+    }
+  ]
+}
