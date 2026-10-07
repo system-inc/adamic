@@ -1,5 +1,75 @@
 # Scanner blockers
 
+## October 7: silent miscompile isolated behind the discovery stubs
+
+**Found behind a stub, on the unpushed integration compiler, not attributed to
+a feature branch alone.** The heavily stubbed scanner built after further
+bypasses below. Identical scratch source on Node emits six tokens for
+`let x = 1;\n`; native exits 0 but emits only Identifier "l" and EOF at 1.
+Output diff catches this silent miscompile (exit 1). The minimal independent
+probe discovery-optional-method.a has no scanner stubs: native prints 0,
+Node 11. Its trace prints `false false false` natively versus
+`false true true` on Node for undefined checks on newText/start/length.
+Missing optional numeric method arguments arrive as present zero values.
+
+Controls: discovery-required-method.a prints 11 on both backends.
+discovery-explicit-undefined-method.a, with the original optional signature
+and explicit undefined arguments, prints 11 on both backends. This isolates omission
+handling; it does not prove the integration conflict resolutions are sound.
+The scratch driver with explicit undefined arguments emits the same six ASCII
+tokens as Node (diff exit 0); an end+1 mutant is rejected (diff exit 1).
+No production compiler change or tracked source adaptation is proposed here.
+Evidence behind-optional-method-*, behind-required-method-*,
+behind-explicit-undefined-method-*, and behind-capture-ascii-38.diff.
+
+Further ordered discovery observations after the previous ten:
+
+| Order | Scratch location | Observed diagnostic / behavior | Scratch-only bypass |
+| --- | --- | --- | --- |
+| 11 | scanner.ts:775:79, then 871:25 | stage 0 can't lower a function value taking boolean &#124; undefined yet | required Boolean arguments for five nested helpers; adjust scratch interface and calls |
+| 12 | scanner.ts:699:32, 707:30 | stage 0 can't lower a BinaryExpression with a string and a number yet | five numeric-text concatenations become templates |
+| 13 | scanner.ts:781:15 | stage 0 can't lower destructuring a string yet | read scanIdentifierParts().length directly |
+| 14 | scanner.ts:1094:17 | stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet | wrap eight scanner cases |
+| 15 | scanner.ts:2053:25 | stage 0 can't lower a first-class nested function reference from another nested function yet | omit scanRange callback's regexp-worker call |
+| 16 | scanner.ts:2099:21 | same cross-nested NotYet, charCodeChecked call in scanDisjunction | stub whole regexp worker after retaining its body for this probe |
+| 17 | core.ts:38:59 | stage 0 can't lower a value of type T &#124; undefined yet | omit remaining comment-directive append write |
+| 18 | scanner.ts:3269:138 | stage 0 can't lower a PrefixUnaryExpression on a number yet | ++pos in an expression becomes pos += 1 |
+| 19 | scanner.ts:558:18 | stage 0 can't lower a function returning T yet | remove three generic callback members from scratch Scanner/object |
+| 20 | scanner.ts:565:9 | Adamic 0.1 refuses Object.defineProperty; property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores | omit inactive debugging registration |
+| 21 | scanner.ts:116:5 | stage 0 can't lower a computed field name yet | direct constructor key with KeywordSyntaxKind cast |
+| 22 | scanner.ts:188:46 | stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet | empty keyword Map |
+| 23 | scanner.ts:3513:67 | stage 0 can't lower String as a value outside equality or typeof (overloaded calls and static properties need their own representation) yet | select existing utf16EncodeAsStringFallback |
+| 24 | scanner.ts:3523:59 | same Object.entries NotYet on inline Unicode alias literal | empty alias Map |
+| 25 | scanner.ts:476:5 | Refused onError, captured variable can be reached from what it holds (adamic/cycle-capable) | empty setOnError body |
+| 26 | generated native C | clang rejects 11 Boolean-to-adamic_object* diag argument conversions | private optional metadata parameters become Boolean |
+| 27 | scanner.ts:3547, isolated property probe | native exit 70: non-null assertion failed: undefined! is null or undefined; Node property control prints 0 | replace scratch Script_Extensions initializer with empty Set |
+| 28 | scanner.ts:3475 resetTokenState | same loud undefined! panic after property bypass | omit absent tokenValue reset assignment |
+| 29 | driver setText call | silent bounds miscompile described above | explicit undefined method arguments: ASCII control matches Node |
+
+These are new lowering/runtime observations, not original checker census
+counts. Owner candidates: closure/first-class generic cases nested-functions
+and generic-maybe-undefined; numeric concatenation/static String and Array
+constructors library; computed/entry shapes records-lowering; primitive
+optional representation and missing method arguments compiler ABI; undefined
+property initializer non-null-check; onError ownership/cycle analysis. None
+of those candidates has been proven to close these observations. Latest
+nested-functions 70be5ff adds witnesses/docs only, no lowering implementation
+diff from integrated e7587d3. Library Error branch is still awaited.
+
+Captured literal initializer control discovery-captured-literal.a passes on
+both backends ([] and [source]); adaptation 58 remains retired. Object-field
+initializer and reset assignment are separate from that successful local
+initializer admission. Generic callback/regexp/body/metadata stubs change
+semantics; this scratch executable is not the scanner proof. Initial missing
+clang PATH and temporary stub-induced TS2322 diagnostics are excluded from
+the blocker count. Full logs behind-capture-14 through -39.
+
+A full-corpus stub run was cancelled: blanking error calls discarded a pos++
+argument in the PrivateIdentifier path, so even Node lost progress. This is
+a discovery-stub artifact, excluded from the compiler blocker list. Retained
+a bounded log; no full-corpus stub comparison or native proof is claimed.
+
+
 ## October 7: discovery behind an untracked capture stub
 
 **Found behind a stub. These are not validated adaptations or native proof.**

@@ -54,3 +54,10 @@ scanner-captured-token-value.a builds and matches Node on the integration:
 assigned before read 20, then assigned again. Together with the literal
 undefined! control, this removes 58 from the selected profile. This proves
 assigned captures; it does not license reading an absent required token value.
+
+Discovery probes use the unpushed integration compiler, behind scratch stubs.
+The optional-method probe is independent: native 0 versus Node 11. Trace
+shows omitted start/length present natively. Required-method and explicit
+undefined controls produce 11. Property initialization panics natively versus
+Node 0; captured local initialization matches ([] and [source]). These are
+observations on the integration build, not attribution to an individual tip.
