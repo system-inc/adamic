@@ -1,0 +1,39 @@
+import type { RuleContext } from '../../context.ts';
+import { Diagnostic, report } from '../typescript-eslint-prefer-as-const/repairs.a';
+import { messageRedundantBlock, messageRedundantNestedBlock } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly diagnostics: Diagnostic[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    binding(index: number): boolean {
+        for(const statement of this.context.node(index).children) {
+            const node = this.context.node(statement);
+            if(['ClassDeclaration', 'FunctionDeclaration', 'EnumDeclaration', 'InterfaceDeclaration', 'TypeAliasDeclaration', 'ModuleDeclaration'].includes(node.kind)) { return true; }
+            if(node.kind === 'VariableStatement') {
+                for(const child of node.children) {
+                    const declaration = this.context.node(child);
+                    if(declaration.kind === 'VariableDeclarationList' && declaration.semantic !== '0') { return true; }
+                }
+            }
+        }
+        return false;
+    }
+    visit(index: number): void {
+        if(this.context.node(index).kind !== 'Block') { return; }
+        const parent = this.context.parents[index] ?? -1;
+        if(parent < 0) { return; }
+        const above = this.context.node(parent);
+        const clause = above.kind === 'CaseClause' || above.kind === 'DefaultClause';
+        const statements = above.children.length - (above.kind === 'CaseClause' ? 1 : 0);
+        const lone = above.kind === 'Block' || above.kind === 'SourceFile' || (clause && statements !== 1);
+        const only = above.kind === 'Block' && above.children.length === 1;
+        if((lone && !this.binding(index)) || only) {
+            const nested = above.kind === 'Block';
+            const id = nested ? 'redundantNestedBlock' : 'redundantBlock';
+            const message = nested ? messageRedundantNestedBlock : messageRedundantBlock;
+            this.diagnostics.push(report(this.context, index, id, message, [], []));
+            this.context.report(index, 'no-lone-blocks', id, message, 'none', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

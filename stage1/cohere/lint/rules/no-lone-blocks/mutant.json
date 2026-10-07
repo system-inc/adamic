@@ -1,0 +1,6 @@
+{
+  "file": "rule.a",
+  "name": "bound sole block exemption widened",
+  "from": "const only = above.kind === 'Block' && above.children.length === 1;",
+  "to": "const only = false;"
+}
