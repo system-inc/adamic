@@ -126,7 +126,7 @@ func TestMovesRunnerCanFail(t *testing.T) {
 		}
 	}
 	path := filepath.Join(directory, "finding.a")
-	if err := WriteFinding(path, accepted, 1, nil, "example"); err != nil {
+	if err := WriteFinding(path, accepted, 1, nil, nil, "example"); err != nil {
 		t.Fatal(err)
 	}
 	bytes, err := os.ReadFile(path)

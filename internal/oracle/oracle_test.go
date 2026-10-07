@@ -46,6 +46,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_views_characters.a", true, false},
 	{"internal/oracle/testdata/string_views_calls.a", true, false},
 	{"internal/oracle/testdata/string_views_surrogates.a", true, false},
+	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/route_targets_callbacks.a", true, false},
 	{"internal/oracle/testdata/route_targets_virtual_fresh.a", true, false},
 	{"internal/oracle/testdata/route_targets_unknown.a", true, false},
