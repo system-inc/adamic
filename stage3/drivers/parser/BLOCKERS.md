@@ -1,3 +1,62 @@
+# Array views and generic empty fallback rerun: red at the legacy cast preflight
+
+Both requested fixes are in unpushed scratch 444d57b1: views-arrays-callables
+0b141c26 (including lane 1 609ed395), and parser-generic-empty-array 4e022aae.
+Stage0 compiler rebuild succeeds. The validated slice still has only sanctioned
+60-65 adaptations; no discovery source stubs or compiler proof bypasses were used.
+
+Final first real failure remains core.ts:195:37, sameMap's
+`array.slice(0, i) as unknown[] as U[]`, adamic/no-unchecked-cast. Unsplit,
+split and repeat builds all exit 1 before C emission. This is still the array
+family, not a tuple or a later array consumer. No such later stop was reached.
+
+Observed: the final diagnostic has the older castRepair message; the unchanged
+row-2 minimal still refuses at 4:12 and Node prints 1, exit 0. Code inspection:
+refusals.go calls the pre-existing castProof before expression lowering, and
+castProof rejects this array assertion instead of dispatching checked-array
+views. Incoming cast.go does contain checked-view dispatch after conflict
+resolution. Thus the combined compiler still has a preflight/checked-view
+integration interaction. The lane branch's separately reported generic-probe
+success is not claimed as reproduced here. The old preflight was not bypassed.
+
+Final unchanged probe count: 4/11, rows 1, 3, 4 and 9 compile and match Node
+exit/stdout/stderr byte for byte. All four native-output one-byte mutants are
+caught (cmp 1). With only the view branch added the count was 3/11; the empty
+fallback branch clears row 3 exactly. Row 10's original cast probe remains
+unchanged and refused; adaptation 65 removes its source site in the actual slice.
+
+C size, clang times, parser binary size, native timing and both native references
+remain unavailable. Repeat cache has zero objects and is not warm. nproc 5.
+
+## Integration validation and limitations
+
+Focused lower empty-array, array/callable-contract and predicate tests pass
+(5.076s). Before the empty-array merge, the checked-array oracle command could
+not compile its test package: three node_require_test.go calls pass inputRun
+where inputLeaks now requires func() inputRun. No fixture execution or checked-
+array oracle pass is claimed. No compiler/test repair was made for that API
+interaction, and no full gate ran. Initial focused lower contracts/predicates
+before the empty merge passed in 10.709s.
+
+The views merge touched lowering: keep incoming checked-view cast dispatch and
+old literal/nominal fallback, concrete generic types, Node require projection
+and qualified-name guard. Native/JavaScript conflicts retain array-hole paths,
+counted closure ABI and current readiness bookkeeping while incorporating view
+reads. Joint holes+views runtime semantics were not verified by this stopped
+parser run; only the four actual green minimal programs were executed.
+All scratch conflict resolutions and exact requested ancestry are recorded in
+evidence/front13/inputs.json and compressed patches/logs. They were never pushed
+as compiler commits. No second array-view implementation or temporary source
+adaptation was made.
+
+Reproduce with measure-builds.py and probe-stops.py using the compiler/slice paths
+in evidence/front13/front13-build.json and inputs.json. The existing unchanged
+native-generic-array-cast.a is the minimal first-stop witness. Both the view-only
+and final two-feature observations are retained. Native JSDoc and error-recovery
+acceptance remain unverified.
+
+---
+
 # Overload and marker fixes rerun: red at sameMap
 
 Scratch d1ed400a contains proven-predicates 5588a3b and census-small-families
