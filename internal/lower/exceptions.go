@@ -159,8 +159,14 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			}
 		case ir.PhantomMember:
 			found = !node.Optional
+		case ir.NodeFSFile:
+			found = found || node.MayThrow()
 		case ir.Throw:
 			found = true
+		case ir.NodeHostCall:
+			found = node.Throws
+		case ir.ProcessCall:
+			found = node.Operation == "exit" || node.Operation == "setExitCode" || node.Operation == "cwd" || node.Operation == "chdir" || node.Operation == "measure"
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
@@ -210,6 +216,10 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		case ir.SetProperty:
 			if l.objectCanFreeze() {
 				failing = "a write to a potentially frozen object"
+			}
+		case ir.NodeBufferCall:
+			if node.Function == "hash_update" || node.Function == "hash_digest" {
+				failing = "Hash finalization, whose catchable .code contract is not supported yet"
 			}
 		case ir.ObjectCall:
 			if node.Method == "assign" && l.objectCanFreeze() {

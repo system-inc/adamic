@@ -133,7 +133,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 			return nil, err
 		}
 		fs.nodeTypes = true
-		roots = append(roots, currentDirectory.ResolveFile(index))
+		roots = append(roots, currentDirectory.ResolveFile(index), currentDirectory.ResolveFile(nodeRequirePath))
 		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
 		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
 		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)

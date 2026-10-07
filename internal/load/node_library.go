@@ -1,6 +1,7 @@
 package load
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -55,6 +56,29 @@ func nodeTypesIndex(directory string) (string, error) {
 
 func usesNodeModules(program *compiler.Program) bool {
 	for _, file := range program.GetSourceFiles() {
+		if file.IsDeclarationFile {
+			continue
+		}
+		found := false
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindIdentifier && (node.Text() == "require" || node.Text() == "module") {
+				// A user's local require or module is ordinary Adamic, not a Node dependency.
+				checker, release := program.GetTypeCheckerForFile(context.Background(), file)
+				symbol := checker.GetSymbolAtLocation(node)
+				release()
+				if symbol == nil || len(symbol.Declarations) == 0 {
+					found = true
+					return true
+				}
+			}
+			node.ForEachChild(visit)
+			return found
+		}
+		file.AsNode().ForEachChild(visit)
+		if found {
+			return true
+		}
 		for _, statement := range file.Statements.Nodes {
 			if statement.Kind != ast.KindImportDeclaration && statement.Kind != ast.KindExportDeclaration {
 				continue
@@ -76,5 +100,13 @@ func IsNodeLibrary(file *ast.SourceFile) bool {
 // Preserve the existing console lowerer's declaration identity while letting
 // the pinned Node global Console interface merge. The package itself is untouched.
 func nodePrelude() string {
-	return strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "declare var console: Console;", 1)
+	source := strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "declare var console: Console;", 1)
+	start := strings.Index(source, "declare const process: {")
+	if start >= 0 {
+		end := strings.Index(source[start:], "\n};")
+		if end >= 0 {
+			source = source[:start] + "declare var process: NodeJS.Process;" + source[start+end+3:]
+		}
+	}
+	return source
 }

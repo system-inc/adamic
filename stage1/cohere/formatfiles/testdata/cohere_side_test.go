@@ -26,6 +26,7 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/cohere/internal/format/formatoptions"
 )
@@ -50,13 +51,14 @@ func adamicHandles(path string) bool {
 
 // adamicTree is one tree to walk: its name and root, and the paths below it to ask about.
 type adamicTree struct {
-	name  string
-	root  string
-	paths []string
+	name      string
+	root      string
+	paths     []string
+	walkBelow string
 }
 
 // adamicCohereTrees builds every tree cohere's tests in this package build with writeTree or
-// settingsTree from literals, and counts those left out because their settings name globs.
+// settingsTree from literals, including settings trees with lint globs.
 func adamicCohereTrees(t *testing.T) ([]adamicTree, int) {
 	t.Helper()
 	files := token.NewFileSet()
@@ -120,10 +122,6 @@ func adamicCohereTrees(t *testing.T) ([]adamicTree, int) {
 			if !houseIsString || !patternsAreString || !isFound {
 				return true
 			}
-			if patterns != "[]" {
-				leftOut++
-				return true
-			}
 			contents = found
 			root = settingsTree(t, house, patterns, contents)
 		default:
@@ -144,6 +142,15 @@ func adamicCohereTrees(t *testing.T) ([]adamicTree, int) {
 		".gitignore": "ignored.a\n",
 	}
 	trees = append(trees, adamicTree{name: "Adamic boundaries", root: writeTree(t, contents), paths: []string{"source.a", "libfoo.a", "source.A", ".a", "ignored.a"}})
+
+	trees = append(trees,
+		adamicTree{name: "settings relative to a parent", root: settingsTree(t, `[]`, `["source/generated/**", "**/*.code.js"]`, map[string]string{
+			"source/a.ts": "", "source/generated/schema.ts": "", "source/bundle.code.js": "", "source/odd.code.js/keep.ts": "",
+		}), walkBelow: "source"},
+		adamicTree{name: "nested repository ignores stay outside", root: settingsTree(t, `["pnpm-lock.yaml"]`, `["projects/**"]`, map[string]string{
+			"projects/listed/.git/HEAD": "", "projects/listed/b.ts": "", "projects/listed/pnpm-lock.yaml": "",
+		}), walkBelow: "projects/listed"},
+	)
 	return trees, leftOut
 }
 
@@ -309,7 +316,14 @@ func TestAdamicPortCases(t *testing.T) {
 		if output, err := exec.Command("cp", "-a", trees[index].root, copied).CombinedOutput(); err != nil {
 			t.Fatalf("copying %s: %v\n%s", trees[index].root, err, output)
 		}
-		trees[index].root = copied
+		trees[index].root = filepath.Join(copied, trees[index].walkBelow)
+	}
+	repository, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, root := range []string{repository, filepath.Join(repository, "cohere"), filepath.Join(repository, "cohere/TypeScript")} {
+		trees = append(trees, adamicTree{name: "real " + root, root: root})
 	}
 	random := rand.New(rand.NewSource(request.Seed))
 	for number := range request.Generated {
@@ -334,6 +348,7 @@ func TestAdamicPortCases(t *testing.T) {
 	}
 	handled := append([]string{"handles"}, adamicHandled...)
 	record(handled...)
+	started := time.Now()
 	walked := 0
 	for _, tree := range trees {
 		root, err := filepath.EvalSymlinks(tree.root)
@@ -344,11 +359,9 @@ func TestAdamicPortCases(t *testing.T) {
 		if err != nil {
 			t.Fatalf("%s: formatoptions.Resolve, whose answer the port is given, refuses the tree: %v", tree.name, err)
 		}
-		if len(resolution.IgnorePatterns) > 0 {
-			t.Fatalf("%s: its settings name ignorePatterns, which the port doesn't carry", tree.name)
-		}
 		walked++
 		record("tree", tree.name, root)
+		record(append([]string{"patterns"}, resolution.IgnorePatterns...)...)
 		fmt.Fprintf(&answers, "tree %s\n", tree.name)
 		declared := "0"
 		if resolution.HouseIgnoreDeclared {
@@ -418,7 +431,8 @@ func TestAdamicPortCases(t *testing.T) {
 	if err := os.WriteFile(request.Answers, []byte(answers.String()), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("%d trees built as cohere's tests build them (%d left out, whose settings name ignorePatterns), %d generated, %d walked", cohereCount, leftOut, request.Generated, walked)
+	t.Logf("formatter enumeration: %.6fs, %d files offered", time.Since(started).Seconds(), strings.Count(answers.String(), "\nfile "))
+	t.Logf("%d trees built as cohere's tests build them (%d left out), %d generated, %d walked", cohereCount, leftOut, request.Generated, walked)
 }
 
 func adamicKeys(counts map[string]int) func(func(string) bool) {

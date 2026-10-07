@@ -1048,6 +1048,8 @@ func (a *analysis) value(expression ir.Expression) value {
 		}
 		// Patterns are compiled constants; the runtime object holds only immutable strings.
 		return a.fresh(anyField, value{})
+	case ir.NodeHostCall:
+		return a.call(a.operands(expression), expression.Type())
 	case ir.RegExpCall:
 		return a.regexCall(expression)
 	case ir.RegExpProperty:
@@ -1296,6 +1298,11 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ReadDirectory:
 		a.value(expression.Path)
 		return a.fresh(anyField, a.fresh(elementKey, value{}))
+	case ir.NodeFSFile:
+		return a.nodeFSFile(expression)
+	case ir.RealPath:
+		a.value(expression.Path)
+		return a.fresh(anyField, value{})
 	case ir.FileStatus:
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})

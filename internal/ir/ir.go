@@ -760,6 +760,9 @@ type (
 	// and size of what Path names, a symbolic link followed, and whether Path is itself one, or
 	// { kind: 'Error', message }.
 	FileStatus struct{ Path Expression }
+
+	// RealPath is realPath(Path): canonical filesystem path, or an error value.
+	RealPath struct{ Path Expression }
 )
 
 // Field is one field of an object literal.
@@ -905,6 +908,7 @@ func (Utf8At) Type() Type           { return Number }
 func (WriteTextFile) Type() Type    { return Object }
 func (ReadDirectory) Type() Type    { return Object }
 func (FileStatus) Type() Type       { return Object }
+func (RealPath) Type() Type         { return Object }
 
 func (MapNew) Type() Type     { return Map }
 func (MapKeys) Type() Type    { return Array }
