@@ -1413,7 +1413,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of classAliases[declaration.id] in trySubstituteClassAlias has not been established; its table population invariant review remains unfinished."
+    "invariant": "An absent class alias is handled by the following if (classAlias) test; substitution then retains the original node."
   },
   {
     "file": "transformers/classThis.ts",
@@ -1737,7 +1737,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of substitutedSuperAccessors[getNodeId(node)] in onEmitNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "The sparse super-accessor marker is intentionally tested for truth; a missing marker leaves substitution enabled normally."
   },
   {
     "file": "transformers/es2018.ts",
@@ -1809,7 +1809,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of substitutedSuperAccessors[getNodeId(node)] in onEmitNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "The sparse super-accessor marker is intentionally tested for truth; a missing marker leaves substitution enabled normally."
   },
   {
     "file": "transformers/es2020.ts",
@@ -2049,7 +2049,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-position",
-    "invariant": "Presence of renamedCatchVariableDeclarations[getOriginalNodeId(declaration)] in substituteExpressionIdentifier has not been established; its producer and index invariant review remains unfinished."
+    "invariant": "An absent renamed catch-variable entry is handled by the following if (name) branch; the original reference is retained."
   },
   {
     "file": "transformers/generators.ts",
@@ -2229,7 +2229,7 @@
     "total": 5,
     "action": "decline",
     "class": "U-grid",
-    "invariant": "Presence of labelExpressions[label] in createLabel has not been established; its table population invariant review remains unfinished."
+    "invariant": "This is the explicit undefined test that detects and allocates an absent label-expression bucket."
   },
   {
     "file": "transformers/generators.ts",
@@ -2253,7 +2253,7 @@
     "total": 5,
     "action": "decline",
     "class": "U-grid",
-    "invariant": "Presence of labelExpressions[label] in createLabel has not been established; its table population invariant review remains unfinished."
+    "invariant": "The preceding same-slot undefined test handles absence by allocation; this repeated read is confined to its else branch."
   },
   {
     "file": "transformers/generators.ts",
@@ -2301,7 +2301,7 @@
     "total": 4,
     "action": "decline",
     "class": "U-position",
-    "invariant": "Presence of labelOffsets[label] in isFinalLabelReachable has not been established; its producer and index invariant review remains unfinished."
+    "invariant": "This comparison/truth test intentionally permits absent sparse label offsets or expression buckets while checking reachability."
   },
   {
     "file": "transformers/generators.ts",
@@ -2313,7 +2313,7 @@
     "total": 5,
     "action": "decline",
     "class": "U-grid",
-    "invariant": "Presence of labelExpressions[label] in isFinalLabelReachable has not been established; its table population invariant review remains unfinished."
+    "invariant": "This comparison/truth test intentionally permits absent sparse label offsets or expression buckets while checking reachability."
   },
   {
     "file": "transformers/generators.ts",
@@ -2337,7 +2337,7 @@
     "total": 4,
     "action": "decline",
     "class": "U-position",
-    "invariant": "Presence of labelOffsets[label] in tryEnterLabel has not been established; its producer and index invariant review remains unfinished."
+    "invariant": "An absent sparse label offset fails the equality comparison with operationIndex and is intentionally ignored."
   },
   {
     "file": "transformers/generators.ts",
@@ -2349,7 +2349,7 @@
     "total": 4,
     "action": "decline",
     "class": "U-grid",
-    "invariant": "Presence of labelNumbers[labelNumber] in tryEnterLabel has not been established; its table population invariant review remains unfinished."
+    "invariant": "This is the explicit undefined test that detects and allocates an absent per-label-number bucket."
   },
   {
     "file": "transformers/generators.ts",
@@ -2373,7 +2373,7 @@
     "total": 4,
     "action": "decline",
     "class": "U-grid",
-    "invariant": "Presence of labelNumbers[labelNumber] in tryEnterLabel has not been established; its table population invariant review remains unfinished."
+    "invariant": "The preceding same-slot undefined test handles absence by allocation; preserve this repeated bucket read in its else branch."
   },
   {
     "file": "transformers/generators.ts",
@@ -2385,7 +2385,7 @@
     "total": 4,
     "action": "decline",
     "class": "U-grid",
-    "invariant": "Presence of labelNumbers[labelNumber] in updateLabelExpressions has not been established; its table population invariant review remains unfinished."
+    "invariant": "The following labels !== undefined guard handles missing sparse label-number buckets before iterating them."
   },
   {
     "file": "transformers/generators.ts",
@@ -2661,7 +2661,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of classAliases[getOriginalNodeId(node)] in generateConstructorDecorationExpression has not been established; its table population invariant review remains unfinished."
+    "invariant": "The alias is intentionally optional; the later classAlias conditional emits the plain decorate expression when no alias exists."
   },
   {
     "file": "transformers/legacyDecorators.ts",
@@ -2685,7 +2685,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of classAliases[declaration.id] in trySubstituteClassAlias has not been established; its table population invariant review remains unfinished."
+    "invariant": "The following if (classAlias) guard handles a missing alias and retains the original reference."
   },
   {
     "file": "transformers/module/esnextAnd2015.ts",
@@ -2901,7 +2901,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of noSubstitution[node.id] in onSubstituteNode has not been established; its table population invariant review remains unfinished."
+    "invariant": "The sparse no-substitution flag is intentionally tested for truth; absence follows normal substitution."
   },
   {
     "file": "transformers/module/module.ts",
@@ -2949,7 +2949,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of currentModuleInfo?.exportedBindings[getOriginalNodeId(importDeclaration)] in getExports has not been established; its table population invariant review remains unfinished."
+    "invariant": "getExports explicitly returns an optional list, so absence of an import export-binding bucket is a valid result."
   },
   {
     "file": "transformers/module/module.ts",
@@ -2961,7 +2961,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of currentModuleInfo?.exportedBindings[getOriginalNodeId(declaration)] in getExports has not been established; its table population invariant review remains unfinished."
+    "invariant": "The following if (bindings) guard handles missing export-binding buckets before iterating them."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3105,7 +3105,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of moduleInfo?.exportedBindings[getOriginalNodeId(valueDeclaration)] in getReferencedDeclaration has not been established; its table population invariant review remains unfinished."
+    "invariant": "This truth test detects whether the referenced value declaration has an export-binding bucket; absence continues the search."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3117,7 +3117,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of moduleInfo?.exportedBindings[getOriginalNodeId(declaration)] in getReferencedDeclaration has not been established; its table population invariant review remains unfinished."
+    "invariant": "This truth test detects whether a merged declaration has an export-binding bucket; absence continues the search."
   },
   {
     "file": "transformers/module/system.ts",
@@ -3141,7 +3141,7 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "Presence of noSubstitution[node.id] in isSubstitutionPrevented has not been established; its table population invariant review remains unfinished."
+    "invariant": "The sparse no-substitution flag is returned as a truth-test result; absence means substitution is permitted."
   },
   {
     "file": "transformers/namedEvaluation.ts",

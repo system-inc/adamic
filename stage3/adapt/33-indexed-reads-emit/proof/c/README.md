@@ -93,7 +93,7 @@ Total: 113 → 78. Every remaining finding follows.
 - `transformers/generators.ts:2499:51 TS2345`: Presence of blockStack[i] in findContinueTarget has not been established; its loop-bound and populated-list invariant review remains unfinished.
 - `transformers/generators.ts:2507:51 TS2345`: Presence of blockStack[i] in findContinueTarget has not been established; its loop-bound and populated-list invariant review remains unfinished.
 - `transformers/generators.ts:2880:63 TS18048`: Presence of withBlockStack[i] in appendLabel has not been established; its loop-bound and populated-list invariant review remains unfinished.
-- `transformers/generators.ts:2951:21 TS2532`: Presence of labelNumbers[labelNumber] in tryEnterLabel has not been established; its table population invariant review remains unfinished.
+- `transformers/generators.ts:2951:21 TS2532`: The preceding same-slot undefined test handles absence by allocation; preserve this repeated bucket read in its else branch.
 - `transformers/generators.ts:2983:57 TS2532`: The block offset, action and block arrays must have corresponding populated slots at blockIndex; that parallel invariant review remains unfinished.
 - `transformers/generators.ts:2984:23 TS2322`: The block offset, action and block arrays must have corresponding populated slots at blockIndex; that parallel invariant review remains unfinished.
 - `transformers/jsx.ts:309:58 TS2345`: Presence of nonWhitespaceChildren[0] in convertJsxChildrenToChildrenPropAssignment has not been established; its nonempty-list invariant review remains unfinished.
