@@ -1,0 +1,4 @@
+function lie(value: number | string): asserts value is number;
+function lie(value: number | string): void { console.log("called"); }
+lie("text");
+console.log("returned");

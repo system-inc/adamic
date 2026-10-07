@@ -257,7 +257,7 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 			}
 		}
 	}
-	if !overloaded || value.Type() == 0 {
+	if !overloaded {
 		return value, nil
 	}
 	resolved := l.checker.GetResolvedSignature(call.AsNode())
@@ -265,6 +265,9 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 		overload := resolved.Declaration()
 		implementation := l.censusImplementation(overload)
 		if implementation != nil && overload.Body() == nil {
+			if overload.Type() != nil && overload.Type().Kind == ast.KindTypePredicate {
+				return l.predicateOverloadResult(call, value, implementation, overload)
+			}
 			ordinal := 0
 			for _, declaration := range symbol.Declarations {
 				if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil {
@@ -287,6 +290,9 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 				}
 			}
 		}
+	}
+	if value.Type() == 0 {
+		return value, nil
 	}
 	of, err := l.typeOf(call.AsNode())
 	if err != nil {

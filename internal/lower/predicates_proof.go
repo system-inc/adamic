@@ -5,6 +5,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 // A tag proof certifies membership in the tag set only. Admission must preserve
@@ -650,4 +651,284 @@ func predicateNormalExit(node *ast.Node) bool {
 		return found
 	})
 	return found
+}
+
+// Overloads share the implementation's control flow, under their admitted input.
+// An annotation is never installed on the implementation as a checker fact.
+func (l *lowering) predicateOverloadProven(implementation, overload *ast.Node) bool {
+	outer := l.typeMapper
+	defer func() { l.typeMapper = outer }()
+	sources, targets := []*checker.Type{}, []*checker.Type{}
+	for index, parameter := range implementation.TypeParameters() {
+		if index >= len(overload.TypeParameters()) {
+			return false
+		}
+		sources = append(sources, l.checker.GetTypeAtLocation(parameter.Name()))
+		targets = append(targets, l.checker.GetTypeAtLocation(overload.TypeParameters()[index].Name()))
+	}
+	if len(sources) > 0 {
+		l.typeMapper = newTypeMapper(sources, targets)
+	}
+	claim := predicateOfSignature(l.checker, l.checker.GetSignatureFromDeclaration(overload))
+	if claim == nil || int(claim.ParameterIndex()) >= len(implementation.Parameters()) {
+		return false
+	}
+	index := int(claim.ParameterIndex())
+	if index < 0 {
+		return false
+	}
+	parameter := implementation.Parameters()[index]
+	if !ast.IsIdentifier(parameter.Name()) || parameter.AsParameterDeclaration().Initializer != nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
+		return false
+	}
+	admitted, _, rest, err := l.censusOverloadParameter(overload.Parameters(), index)
+	if err != nil || rest || admitted == nil {
+		return false
+	}
+	changed := false
+	var writes ast.Visitor
+	writes = func(node *ast.Node) bool {
+		if ast.IsIdentifier(node) && l.symbol(node) == l.symbol(parameter.Name()) && ast.IsAssignmentTarget(node) {
+			changed = true
+		}
+		node.ForEachChild(writes)
+		return false
+	}
+	implementation.Body().ForEachChild(writes)
+	if changed {
+		return false
+	}
+	target := claim.Type()
+	if target == nil {
+		if admitted.Flags()&checker.TypeFlagsBooleanLike == 0 {
+			return false
+		}
+		target = predicateTrueType(l.checker)
+	}
+	proof := predicateFlowProof{l: l, function: implementation, parameter: parameter, declared: l.checker.GetTypeAtLocation(parameter.Name()), admitted: admitted, target: l.concrete(target), assertion: claim.Kind() == checker.TypePredicateKindAssertsIdentifier}
+	return proof.proveBody(overload.Type()) == nil
+}
+
+// The existing overload-result seam supplies the call. A small IR wrapper keeps
+// argument evaluation and the implementation call single, then checks both
+// predicate directions against those arguments before the caller can narrow.
+func (l *lowering) predicateOverloadResult(call *ast.CallExpression, value ir.Expression, implementation, overload *ast.Node) (ir.Expression, error) {
+	if l.predicateOverloadProven(implementation, overload) {
+		return value, nil
+	}
+	invoked, ok := value.(ir.Call)
+	if !ok {
+		return nil, l.notYet(call.AsNode(), "a checked predicate overload on an indirect call")
+	}
+	resolved := l.checker.GetResolvedSignature(call.AsNode())
+	claim := predicateOfSignature(l.checker, resolved)
+	if claim == nil {
+		return nil, l.notYet(overload, "a predicate overload without a reifiable target")
+	}
+	assertion := claim.Kind() == checker.TypePredicateKindAssertsIdentifier
+	if claim.Type() == nil && !assertion {
+		return nil, l.notYet(overload, "a predicate overload without a reifiable target")
+	}
+	index := int(claim.ParameterIndex())
+	if index < 0 || index >= len(invoked.Arguments) {
+		return nil, l.notYet(overload, "a predicate overload on a missing argument")
+	}
+	if (!assertion && invoked.Type() != ir.Boolean) || (assertion && invoked.Type() != 0) {
+		return nil, l.notYet(overload, "a checked predicate overload with a non-boolean result")
+	}
+	ordinal := 0
+	for _, declaration := range l.symbol(implementation.Name()).Declarations {
+		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil {
+			ordinal++
+			if declaration == overload {
+				break
+			}
+		}
+	}
+	message := fmt.Sprintf("overload %d of %s result: predicate %s is false", ordinal, implementation.Name().Text(), claim.ParameterName())
+	wrapper := len(l.result.Functions)
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("%s_overload_%d_check_%d", implementation.Name().Text(), ordinal, wrapper), Returns: invoked.Type()})
+	local := func(name string, of ir.Type) int {
+		index := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: wrapper})
+		return index
+	}
+	arguments := []ir.Expression{}
+	for index, argument := range invoked.Arguments {
+		// Direct emission contextualizes undefined at the callee parameter.
+		// Preserve that representation when passing through wrapper locals.
+		if undefined, ok := argument.(ir.Undefined); ok && index < len(l.result.Functions[invoked.Function].Parameters) {
+			parameter := l.result.Functions[invoked.Function].Parameters[index]
+			undefined.Of = l.result.Locals[parameter].Type
+			argument = undefined
+			invoked.Arguments[index] = argument
+		}
+		parameter := local(fmt.Sprintf("argument_%d", index), argument.Type())
+		l.result.Functions[wrapper].Parameters = append(l.result.Functions[wrapper].Parameters, parameter)
+		arguments = append(arguments, ir.Read{Local: parameter, Of: argument.Type()})
+	}
+	checked := invoked
+	checked.Arguments = arguments
+
+	result := -1
+	body := []ir.Statement{}
+	if assertion {
+		body = append(body, ir.Evaluate{Value: checked})
+	} else {
+		result = local("result", ir.Boolean)
+		body = append(body, ir.Declare{Local: result, Value: checked})
+	}
+	source := l.checker.GetTypeOfSymbol(resolved.Parameters()[index])
+	if _, undefined := invoked.Arguments[index].(ir.Undefined); undefined {
+		source = l.checker.GetTypeAtLocation(call.Arguments.Nodes[index])
+	}
+	var setup []ir.Statement
+	var membership ir.Expression
+	var err error
+	if claim.Type() == nil {
+		membership = censusCondition(arguments[index])
+	} else {
+		setup, membership, err = l.predicateMembership(overload, arguments[index], source, claim.Type(), local, 0)
+	}
+	if err != nil {
+		return nil, err
+	}
+	body = append(body, setup...)
+	invalid := ir.Expression(ir.Unary{Operator: ir.Not, Operand: membership})
+	var returned ir.Expression
+	if !assertion {
+		returned = ir.Read{Local: result, Of: ir.Boolean}
+		invalid = ir.Binary{Operator: ir.NotEqual, Left: returned, Right: membership}
+	}
+	body = append(body, ir.If{Condition: invalid, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}}, ir.Return{Value: returned})
+	l.result.Functions[wrapper].Body = body
+
+	return ir.Call{Function: wrapper, Arguments: invoked.Arguments, Returns: invoked.Type()}, nil
+}
+
+// Reification is limited to independently checkable contracts. Tagged interfaces
+// continue through the shared view checker; untagged/callable contracts are not
+// silently equated with a primitive typeof test.
+func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, source, target *checker.Type, local func(string, ir.Type) int, depth int) ([]ir.Statement, ir.Expression, error) {
+	target = l.concrete(target)
+	source = l.concrete(source)
+	if depth > 8 {
+		return nil, nil, l.notYet(node, "a recursive predicate overload target")
+	}
+	equal := func(a, b ir.Expression) ir.Expression { return ir.Binary{Operator: ir.Equal, Left: a, Right: b} }
+	isType := func(name string) ir.Expression {
+		return equal(ir.TypeOf{Value: value}, ir.StringConstant{Index: l.constant(name)})
+	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		var setup []ir.Statement
+		var result ir.Expression = ir.BooleanConstant{Value: false}
+		for _, member := range target.Types() {
+			statements, test, err := l.predicateMembership(node, value, source, member, local, depth+1)
+			if err != nil {
+				return nil, nil, err
+			}
+			setup = append(setup, statements...)
+			result = ir.Binary{Operator: ir.Or, Left: result, Right: test}
+		}
+		return setup, result, nil
+	}
+	if target.Flags()&checker.TypeFlagsUndefined != 0 {
+		return nil, isType("undefined"), nil
+	}
+	name := ""
+	of := ir.Type(0)
+	switch {
+	case target.Flags()&checker.TypeFlagsStringLike != 0:
+		name = "string"
+		of = ir.String
+	case target.Flags()&checker.TypeFlagsNumberLike != 0:
+		name = "number"
+		of = ir.Number
+	case target.Flags()&checker.TypeFlagsBooleanLike != 0:
+		name = "boolean"
+		of = ir.Boolean
+	}
+	if name != "" {
+		test := isType(name)
+		if literal, _, ok := l.literalConstant(target); ok {
+			narrowed := value
+			if value.Type() == ir.Union {
+				narrowed = ir.Narrow{Value: value, To: of}
+			} else if value.Type().IsMaybe() {
+				narrowed = ir.Unwrap{Value: value}
+			}
+			if narrowed.Type() != of {
+				return nil, nil, l.notYet(node, "a predicate overload literal representation")
+			}
+			test = ir.Binary{Operator: ir.And, Left: test, Right: equal(narrowed, literal)}
+		}
+		return nil, test, nil
+	}
+	if l.checker.IsArrayType(target) && (source.Flags()&checker.TypeFlagsUndefined != 0 || value.Type() == ir.Number || value.Type() == ir.String || value.Type() == ir.Boolean) {
+		return nil, ir.BooleanConstant{Value: false}, nil
+	}
+	if l.checker.IsArrayType(target) && value.Type() == ir.Array {
+		arraySource := source
+		if source.Flags()&checker.TypeFlagsUnion != 0 {
+			arraySource = nil
+			for _, member := range source.Types() {
+				if l.checker.IsArrayType(member) {
+					if arraySource != nil {
+						return nil, nil, l.notYet(node, "a predicate overload over multiple array representations")
+					}
+					arraySource = member
+				}
+			}
+		}
+		if arraySource == nil || !l.checker.IsArrayType(arraySource) {
+			return nil, nil, l.notYet(node, "a predicate overload without a known array representation")
+		}
+		element := l.checker.GetElementTypeOfArrayType(arraySource)
+		held, known := l.kept(element)
+		if !known || slotless(held) {
+			return nil, nil, l.notYet(node, "a checked predicate overload array element "+l.checker.TypeToString(element))
+		}
+		matches := local("array_matches", ir.Boolean)
+		counter := local("array_index", ir.Number)
+		read := ir.Read{Local: counter, Of: ir.Number}
+		statements, test, err := l.predicateMembership(node, ir.ArrayIndex{Array: value, Index: read, Element: held}, element, l.checker.GetElementTypeOfArrayType(target), local, depth+1)
+		if err != nil {
+			return nil, nil, err
+		}
+		loopBody := append(statements, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: test}, Then: []ir.Statement{ir.Assign{Local: matches, Value: ir.BooleanConstant{Value: false}}, ir.Break{}}})
+		setup := []ir.Statement{ir.Declare{Local: matches, Value: ir.BooleanConstant{Value: false}}, ir.If{Condition: censusCondition(value), Then: []ir.Statement{ir.Assign{Local: matches, Value: ir.BooleanConstant{Value: true}}, ir.Declare{Local: counter, Value: ir.NumberConstant{Value: 0}}, ir.Loop{Condition: ir.Binary{Operator: ir.Less, Left: read, Right: ir.Length{Array: value}}, Body: loopBody, Update: []ir.Statement{ir.Assign{Local: counter, Value: ir.Binary{Operator: ir.Add, Left: read, Right: ir.NumberConstant{Value: 1}}}}}}}}
+		return setup, ir.Read{Local: matches, Of: ir.Boolean}, nil
+	}
+	if isClassInstance(target) && target.Symbol() != nil {
+		for _, declaration := range target.Symbol().Declarations {
+			if declaration.Kind != ast.KindClassDeclaration || len(declaration.TypeParameters()) != 0 {
+				continue
+			}
+			if value.Type() != ir.Object && value.Type() != ir.Union {
+				return nil, ir.BooleanConstant{Value: false}, nil
+			}
+			instance, err := l.instantiate(declaration, target, node)
+			if err != nil {
+				return nil, nil, err
+			}
+			object := value
+			if value.Type() == ir.Union {
+				object = ir.Narrow{Value: value, To: ir.Object}
+			}
+			return nil, ir.Binary{Operator: ir.And, Left: isType("object"), Right: ir.InstanceOf{Value: object, Class: instance.class}}, nil
+		}
+	}
+	if target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && value.Type() == ir.Object {
+		tag := l.fieldLiteral(target, "kind")
+		if tag != nil {
+			if _, err := l.view(node, nil, target); err != nil {
+				return nil, nil, err
+			}
+			literal, of, known := l.literalConstant(tag)
+			if known {
+				return nil, ir.Binary{Operator: ir.And, Left: censusCondition(value), Right: equal(ir.Property{Object: value, Name: "kind", Of: of, View: "predicate argument.kind", ViewType: l.checker.TypeToString(tag)}, literal)}, nil
+			}
+		}
+	}
+	return nil, nil, l.notYet(node, "checked predicate overload target "+l.checker.TypeToString(target))
 }

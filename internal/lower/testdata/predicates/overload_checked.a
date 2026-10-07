@@ -1,0 +1,3 @@
+function lie(value: number | string): value is number;
+function lie(value: number | string): boolean { console.log("called"); return true; }
+console.log(`${lie("text")}`);

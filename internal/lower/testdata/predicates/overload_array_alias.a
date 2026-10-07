@@ -1,0 +1,7 @@
+interface Node { readonly kind: number }
+interface Identifier extends Node { readonly kind: 80; readonly escapedText: string }
+const identifier: Identifier = { kind: 80, escapedText: "name" };
+const nodes: Node[] = [identifier];
+function corrupt(array: readonly Node[]): array is readonly Identifier[];
+function corrupt(array: readonly Node[]): boolean { console.log("called"); nodes[0] = { kind: 11 }; return true; }
+console.log(`${corrupt(nodes)}`);
