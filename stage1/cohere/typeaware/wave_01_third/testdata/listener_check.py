@@ -20,6 +20,11 @@ for native, oracle in pairs:
  text = (repo/'stage1/cohere/typeaware'/native).read_text()
  actual = json.loads(re.search(r'listenerKinds: readonly number\[\] = (\[[^;]+\]);', text).group(1))
  assert actual == expected, (native, actual, expected)
+ manifest = repo/'stage1/cohere/typeaware/wave_01_third/rules'/Path(native).stem/'rule.json'
+ declared = json.loads(manifest.read_text())['kinds']
+ assert declared == expected, (manifest, declared, expected)
+ wrong_manifest = declared.copy(); wrong_manifest[0] += 1
+ assert wrong_manifest != expected, manifest
  mutant = actual.copy(); mutant[0] += 1
  assert mutant != expected, native
  print(native, 'PASS numeric registration; +1 mutant caught')

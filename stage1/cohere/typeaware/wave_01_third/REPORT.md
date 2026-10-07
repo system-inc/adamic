@@ -127,3 +127,13 @@ is still a string in the shared parser, and the existing rule routines still
 use string-kind helpers and per-rule traversal. A numeric parser field and
 shared node delivery are needed to remove those paths. No speed improvement
 is claimed; the shared parser/driver remains outside this worker scope.
+
+## rule.json kinds
+
+The six completed rules now also declare numeric kinds in rules/*/rule.json.
+The manifests match Go listener registrations and the native listenerKinds
+arrays. The metadata checker catches an in-memory +1 mutant for each manifest.
+The shared driver does not yet consume these manifests. No native code changed,
+so the earlier passing oracle/sanitizer gates apply to the identical native
+code. No new rule timing was measured. JSX and numeric node-delivery blockers
+remain unchanged; no new rule was claimed.
