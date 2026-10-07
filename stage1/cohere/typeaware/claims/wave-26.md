@@ -61,3 +61,17 @@ claims leaves these first three available, each with zero combined findings:
 - no-new-wrappers
 
 Reserved on codex/typeaware-wave-26 before implementation.
+
+## Fifth batch, October 7
+
+All twelve previous claims are implemented, tested and pushed at 135bbbc7.
+Fetched 356 origin refs. Base remains 5afbdb83 and main ef3d907e. Excluding
+base/main ports and 132 ranked names mentioned in origin Markdown claims leaves
+40 available rules. The first three by combined volume and lexical ties are:
+
+- prefer-promise-reject-errors
+- prefer-regex-literals
+- prefer-rest-params
+
+Each has zero combined corpus findings. Reserved on codex/typeaware-wave-26
+before implementation.
