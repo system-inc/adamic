@@ -1,7 +1,7 @@
 Built expr, patternBind and switchStatement in three separate .a files; fifty-seven owned helpers total.
-Commits: claim b3f1eb20 pushed before source; base main c7991b90 and lint area b4691483; final implementation/publication SHAs are named in the final response.
-Commands: current baseline 8,354 comparisons; shared helpers PASS 90.073s; vet clean; six uncached probes PASS 1.845s; setup 58s, nproc 5; owned gate PASS 436.923s, all twenty-seven variants caught.
-Mutants: all twenty-seven new variants compile and run cleanly before stdout comparisons catch them; three initial binding survivors are caught by the expanded actual-Go controls.
+Commits: original claim b3f1eb20 pushed before source (rebased fa6fb15c), implementation ce3b63bc; lint area d3a37422 contains current fetched main b6b1538b; final publication SHA is named in the final response.
+Commands: full rebased helper gate PASS owned 1,264.599s/shared 91.887s, 3,054,680 comparisons; selected shared harness PASS 290.864s; vet/format clean; six uncached probes PASS 9.502s; setup 58s, nproc 5.
+Mutants: all 230 owned variants (twenty-seven new), four inherited variants and the missing-consumer check caught after rebase; semantic variants finish cleanly and fail stdout comparison, the empty-stack guard variant fails its exit comparison.
 Not covered: complete rule findings, independent recursive/graph/jump backends, arbitrary malformed ASTs or AST-mutating callbacks, and the full repository gate including its seventeen external comparisons.
 
 # Ownership, landing and readiness
@@ -58,7 +58,7 @@ The first owned run fails in 362.776s: 8,124 baseline comparisons pass, but thre
 
 # Every mutant
 
-The owned test records the exact source replacement and each variant's first mismatching output line. evidence/helpers.log names every final variant and its witness. Source Node and emitted JavaScript are baseline comparisons; these semantic variants execute on sanitized native only. The following table describes every owned replacement. Prior batches' 203 variants were already green on this unchanged integration base; they are not claimed rerun by this selected gate.
+The owned test records the exact source replacement and each variant's first mismatching output line. evidence/helpers.log names every final variant and its witness. Source Node and emitted JavaScript are baseline comparisons; these semantic variants execute on sanitized native only. The following table describes every owned replacement. Prior batches' 203 variants were already green before reservation; all are rerun in the full rebased landing gate recorded below.
 
 | Variant | Replacement |
 |---|---|
@@ -99,3 +99,21 @@ There is no whole-rule finding/fix/suggestion comparison or integration into a c
 This worker used the bounded touched-package/filtered external oracle gate. The full repository gate, including the seventeen required external correctness comparisons, was not run. No external check was skipped, relaxed or deleted. All previously owned helpers were already green and pushed before new claims; their code is unchanged in this unit.
 
 A later fetch advanced main to b6b1538b and the lint area to d3a37422, which contains that main. The completed selected-gate unit is committed before rebase; the full owned helper gate will be repeated against those bases for landing. No new helpers are claimed.
+
+# Current-main landing
+
+The completed selected-gate implementation accef463 rebased cleanly as ce3b63bc, and original claim b3f1eb20 rebased as fa6fb15c. All sixty-six own commits rebased onto current lint area d3a37422, containing current main b6b1538b. This accepts main's typeof-null changes unchanged. The full fifty-seven-helper gate is rerun on this compiler/runtime; no earlier green result is substituted for that rerun. Vet, six uncached input probes and six selected .a/emitted-JavaScript/suggestion/profile harness tests also run on the new base.
+
+A claim race appeared in the final twenty-branch scan. At reservation, slot04 was 4982546a and its claim file contained neither expr nor patternBind. Slot03 original claim b3f1eb20 is timestamped 2026-10-07T09:11:17Z and was pushed before source. Slot04 later claimed both symbols in 3ab03bc3, timestamped 2026-10-07T09:13:10Z, one minute fifty-three seconds later. Slot03 retains its prior published reservation; the concurrent overlap is recorded in ownership.json for integration. No helper was claimed despite an existing earlier claim.
+
+```
+git rebase origin/area/stage1-lint
+go test ./stage1/cohere/lint/helpers ./stage1/cohere/lint/helpers/slot03 -count=1 -v -timeout=30m > stage1/cohere/lint/helpers/slot03/batch19/evidence/rebased-helpers.log 2>&1
+go vet ./... > stage1/cohere/lint/helpers/slot03/batch19/evidence/rebased-vet.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestInputAgreesWithNode$' -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot03/batch19/evidence/rebased-input-oracle.log 2>&1
+go test ./stage1/cohere/lint -run '^(TestEmittedJavaScriptMismatch|TestDotARename|TestCompleteSuggestionSerialization|TestSuggestionAlongsideAutomaticFix|TestWitnessScriptKind|TestProfileCompilation)$' -count=1 -v -timeout=20m > stage1/cohere/lint/helpers/slot03/batch19/evidence/rebased-harness.log 2>&1
+```
+
+Rebased auxiliary results: shared helper package PASS 91.887s, all six selected shared-harness checks PASS 290.864s, six uncached input probes PASS 9.502s with zero hits and six misses, and repository vet output is empty. The profile test reports 139 allocations and 139 frees. Its current-base wire output is 652 bytes, compared to the preceding 654-byte historical run, with Go, source, emitted JavaScript and native still identical. The emitted-JavaScript mismatch test intentionally invokes a failing child comparison; the parent passes only when it catches that mutant. Raw child FAIL text is not an unhandled gate failure.
+
+Final current-base landing result: all fifty-seven owned helpers PASS 1,264.599s, 3,054,680 comparison lines, 229 owned compiling semantic variants plus one owned empty-stack guard variant, four inherited semantic variants and the independent missing-consumer mutant. No selected helper tests skip or fail. evidence/rebased-mutant-witnesses.log names every rerun variant and preserves its first mismatch or guard result; earlier batch reports and tests specify all prior replacements. All 8,354 new cases agree across real Go, source Node, emitted JavaScript and sanitized native. Earlier batches compare Go/source/native, and later ones also emitted JavaScript; the complete line total is not claimed four-way for every earlier batch. Shared harness, vet, formatting and six uncached input probes are green as recorded above. The final publication targets only codex/lint-helpers-03, with an exact lease on the previously pushed claim b3f1eb20. No further helper is claimed.

@@ -1,7 +1,7 @@
 {
   "claim": "b3f1eb20",
-  "base_main": "c7991b900362796aefd111474e65eb5398e91953",
-  "base_area": "b46914832d70e00847d82d5d221ab7bb24040c53",
+  "base_main": "b6b1538b0cebc4ba6741ac34f1aedb60293c1d06",
+  "base_area": "d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898",
   "owned_helpers": 57,
   "new_comparison_lines": 8354,
   "new_mutants": 27,
@@ -173,5 +173,18 @@
     }
   ],
   "selected_gate_seconds": 436.923,
-  "new_mutants_caught": 27
+  "new_mutants_caught": 27,
+  "rebased_claim": "fa6fb15c",
+  "rebased_implementation": "ce3b63bc",
+  "rebased_shared_seconds": 91.887,
+  "rebased_harness_seconds": 290.864,
+  "rebased_uncached_input_seconds": 9.502,
+  "rebased_owned_seconds": 1264.599,
+  "owned_comparison_lines": 3054680,
+  "owned_mutants": 230,
+  "owned_semantic_mutants": 229,
+  "owned_guard_mutants": 1,
+  "inherited_mutants": 4,
+  "coverage_mutants": 1,
+  "skips": 0
 }

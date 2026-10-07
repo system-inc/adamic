@@ -1,8 +1,25 @@
 {
   "branches_checked": 20,
   "claim_files_read": 19,
-  "possible_duplicate_mentions": [],
-  "main": "c7991b900362796aefd111474e65eb5398e91953",
-  "area": "b46914832d70e00847d82d5d221ab7bb24040c53",
-  "claim": "b3f1eb20"
+  "possible_duplicate_mentions": [
+    {
+      "branch": "origin/codex/lint-helpers-04",
+      "path": "stage1/cohere/lint/helpers/claims/04.md",
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].expr"
+    },
+    {
+      "branch": "origin/codex/lint-helpers-04",
+      "path": "stage1/cohere/lint/helpers/claims/04.md",
+      "symbol": "github.com/system-inc/cohere/internal/lint/ecmascript/control_flow_graph.*Builder[E].patternBind"
+    }
+  ],
+  "main": "b6b1538b0cebc4ba6741ac34f1aedb60293c1d06",
+  "area": "d3a37422c6c2c3dd4a90b8721a2067a4ba0d8898",
+  "claim_original": "b3f1eb20",
+  "claim_original_timestamp": "2026-10-07T09:11:17Z",
+  "competing_claim": "3ab03bc3",
+  "competing_claim_timestamp": "2026-10-07T09:13:10Z",
+  "resolution": "Initial scan at slot04 4982546a had no overlap; slot03 pushed first and retains the existing three claims. Later overlapping reservation is reported for integration.",
+  "rebased_claim": "fa6fb15c",
+  "rebased_implementation": "ce3b63bcf22974e946cd0166043d9f2b38fa22e4"
 }
