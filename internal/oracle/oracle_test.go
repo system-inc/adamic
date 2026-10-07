@@ -301,6 +301,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_limits.a", true, false},
 	{"internal/oracle/testdata/string_too_long.a", true, false},
 	{"internal/oracle/testdata/pad_too_long.a", true, false},
+	// The length checks that stop a pad or a repeat before it's built, and normalize past its first
+	// block of points (integration's reading of d96d304).
+	{"internal/oracle/testdata/pad_infinity.a", true, false},
+	{"internal/oracle/testdata/repeat_huge.a", true, false},
+	{"internal/oracle/testdata/normalize_long.a", true, false},
 	{"internal/oracle/testdata/stack_overflow.a", true, false},
 	{"internal/oracle/testdata/adversarial_order.a", true, false},
 	{"internal/oracle/testdata/adversarial_exits.a", true, false},
@@ -355,6 +360,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_weak_after_reuse.a", true, false},
 	// Regions: a statement's fresh values let go of together, and every way one could escape kept off it.
 	{"internal/oracle/testdata/regions.a", true, false},
+	{"internal/oracle/testdata/region_end.a", true, false},
 	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
 	{"internal/oracle/testdata/regions_throw.a", true, false},
 	// A constructor whose object a closure captures, kept in a global (integration's reading of
@@ -475,6 +481,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
+	// A field name longer than a C string literal may be (integration's reading of 4ddd17f).
+	{"internal/oracle/testdata/long_field_name.a", true, false},
 	// A method called on a spread's source inside the literal runs code with the source as this
 	// (integration's reading of aa17d3c): the source is not only read there, so it isn't reused.
 	{"internal/oracle/testdata/reuse_spread_method.a", true, false},

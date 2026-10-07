@@ -11,6 +11,7 @@
 #include "adamic.h"
 #include "count.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -30,7 +31,8 @@ static size_t object_size(size_t count) {
 	return (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
 }
 
-adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape) {
+// Keep allocation in each entry point: an out-of-line helper adds a call per object.
+static inline adamic_object *object_new(adamic_region *region, const adamic_shape *shape, bool zero) {
 	if (region == NULL) {
 		return adamic_object_new(shape);
 	}
@@ -64,23 +66,52 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
-	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
+	if (zero) {
+		memset(object->slots, 0, shape->count * sizeof object->slots[0]);
+		// An incremental initializer can throw or write heap children later. Until proven otherwise
+		// the region must walk it, including the still-zero slots on its exceptional exit.
+		region->holds_outside = true;
+	}
 	region->count++;
 	ADAMIC_COUNT_ALLOCATION();
 	return object;
 }
 
-void adamic_region_end(adamic_region *region) {
-	// First let go of everything the objects hold, while every block is still there: a child may be
-	// in another block of the same region (and immortal, so passed over).
-	for (adamic_region_block *block = region->blocks; block != NULL; block = block->next) {
-		for (size_t offset = 0; offset < block->used;) {
-			adamic_object *object = (adamic_object *)(void *)(block->bytes + offset);
-			adamic_object_free_children(object, adamic_release);
-			adamic_weak_forget(object);
-			offset += object_size(object->shape->count);
+adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape) {
+	return object_new(region, shape, true);
+}
+
+adamic_object *adamic_object_new_filled_in(adamic_region *region, const adamic_shape *shape) {
+	return object_new(region, shape, false);
+}
+
+bool adamic_region_contains(const adamic_region *region, const void *value) {
+	// Integer ranges, not relational comparisons of pointers into unrelated allocations.
+	uintptr_t address = (uintptr_t)value;
+	for (const adamic_region_block *block = region->blocks; block != NULL; block = block->next) {
+		uintptr_t start = (uintptr_t)block->bytes;
+		if (address >= start && address - start < block->used) {
+			return true;
 		}
 	}
+	return false;
+}
+
+void adamic_region_end(adamic_region *region) {
+	// No object/slot walk at all when every child is regional or immortal. Otherwise let go while
+	// every block still exists: a child can be in another block of the same region.
+	if (region->holds_outside) {
+		for (adamic_region_block *block = region->blocks; block != NULL; block = block->next) {
+			for (size_t offset = 0; offset < block->used;) {
+				adamic_object *object = (adamic_object *)(void *)(block->bytes + offset);
+				adamic_object_free_children(object, adamic_release);
+				offset += object_size(object->shape->count);
+			}
+		}
+	}
+	// Weak is independent of strong-child cleanup. The table walks its handles once, rather than
+	// asking it about every object in a program that may have no Weak at all.
+	adamic_weak_forget_region(region);
 	for (adamic_region_block *block = region->blocks; block != NULL;) {
 		adamic_region_block *next = block->next;
 		free(block);
@@ -89,4 +120,5 @@ void adamic_region_end(adamic_region *region) {
 	ADAMIC_COUNT_REGION(region->count);
 	region->blocks = NULL;
 	region->count = 0;
+	region->holds_outside = false;
 }

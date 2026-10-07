@@ -362,7 +362,7 @@ func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
 // checkDefined emits ir.Defined's check of a value: NULL panics with the message.
 func (e *emitter) checkDefined(value string, message string) {
 	e.line("if (%s == NULL) {", value)
-	e.line("\tstatic const char message[] = %s;", cString(message))
+	e.line("\tstatic const char message[] = %s;", cArray(message))
 	e.line("\tadamic_panic(message, sizeof message - 1);")
 	e.line("}")
 }
