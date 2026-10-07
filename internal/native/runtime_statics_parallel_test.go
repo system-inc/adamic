@@ -2,11 +2,13 @@ package native
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	goruntime "runtime"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 )
@@ -69,6 +71,75 @@ func TestRuntimeStaticsProtectionMutants(t *testing.T) {
 	}
 }
 
+// Not parallel: these processes intentionally terminate while four pool callbacks print.
+func TestRuntimeStaticsSignalAndExit(t *testing.T) {
+	if goruntime.GOOS != "linux" {
+		t.Skip("requires Linux ThreadSanitizer")
+	}
+	library, root := staticsRaceLibrary(t, "", "", "")
+	binary := staticsRaceFixture(t, root, library, "signal_output")
+	for _, worker := range []bool{false, true} {
+		for _, signal := range []syscall.Signal{0, syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP} {
+			if worker && signal == 0 {
+				continue
+			} // Normal exit belongs to the loop thread.
+			t.Run(fmt.Sprintf("worker_%t_signal_%d", worker, signal), func(t *testing.T) {
+				staticsSignalRun(t, binary, worker, signal, false)
+			})
+		}
+	}
+	t.Run("handler_buffer_mutant", func(t *testing.T) {
+		library, root := staticsRaceLibrary(t, "adamic.c", "int saved_errno = errno;", "int saved_errno = errno;\n flush();")
+		binary := staticsRaceFixture(t, root, library, "signal_output")
+		staticsSignalRun(t, binary, true, syscall.SIGTERM, true)
+	})
+	t.Run("exit_flush_mutant", func(t *testing.T) {
+		library, root := staticsRaceLibrary(t, "adamic.c", "adamic_parallel_shutdown();\n\tpthread_mutex_lock(&output_lock);\n\tflush();\n\tbool failed = broken[adamic_stdout] || broken[adamic_stderr];\n\tpthread_mutex_unlock(&output_lock);", "flush();\n bool failed = broken[adamic_stdout] || broken[adamic_stderr];")
+		binary := staticsRaceFixture(t, root, library, "signal_output")
+		staticsSignalRun(t, binary, false, 0, true)
+	})
+}
+
+func staticsSignalRun(t *testing.T, binary string, worker bool, signal syscall.Signal, mutant bool) {
+	t.Helper()
+	for attempt := 0; attempt < 3; attempt++ {
+		ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+		command := exec.CommandContext(ctx, binary)
+		command.Env = append(os.Environ(), "ADAMIC_THREADS=4", "TSAN_OPTIONS=halt_on_error=1", fmt.Sprintf("ADAMIC_STOP_SIGNAL=%d", signal))
+		if worker {
+			command.Env = append(command.Env, "ADAMIC_STOP_WORKER=1")
+		}
+		output, err := command.CombinedOutput()
+		timedOut := ctx.Err() != nil
+		cancel()
+		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race")
+		if mutant {
+			if err == nil || timedOut || !race {
+				t.Fatalf("signal mutant not caught: %v\n%s", err, output)
+			}
+			for _, line := range strings.Split(string(output), "\n") {
+				if strings.Contains(line, "SUMMARY: ThreadSanitizer:") {
+					t.Log(line)
+				}
+			}
+			continue
+		}
+		if timedOut || race || !strings.Contains(string(output), "signal worker line\n") {
+			t.Fatalf("signal fixture failed: %v\n%s", err, output)
+		}
+		if signal == 0 {
+			if err != nil {
+				t.Fatalf("exit fixture failed: %v\n%s", err, output)
+			}
+		} else {
+			status, ok := command.ProcessState.Sys().(syscall.WaitStatus)
+			if !ok || !status.Signaled() || status.Signal() != signal {
+				t.Fatalf("wanted signal %d, got %v\n%s", signal, err, output)
+			}
+		}
+	}
+}
+
 func staticsRaceLibrary(t *testing.T, mutantFile, old, changed string) (string, string) {
 	t.Helper()
 	root := t.TempDir()
@@ -89,7 +160,7 @@ func staticsRaceLibrary(t *testing.T, mutantFile, old, changed string) (string, 
 				t.Fatalf("missing mutant seam in %s: %q", mutantFile, old)
 			}
 			source = []byte(strings.ReplaceAll(string(source), old, changed))
-			if mutantFile == "adamic.c" {
+			if mutantFile == "adamic.c" && old == "pthread_mutex_lock(&output_lock);" {
 				source = []byte(strings.ReplaceAll(string(source), "pthread_mutex_unlock(&output_lock);", "/* mutant: no output unlock */"))
 			}
 			if mutantFile == "weak.c" {

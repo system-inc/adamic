@@ -1,6 +1,6 @@
 # Runtime mutable storage audit
 
-This is the first checkpoint, before concurrency integration. It does **not** certify that parallelMap is ready to land. Unsafe rows remain blockers until fixes and race mutants pass.
+The original snapshot table is historical. The integrated-runtime section below supersedes its unsafe classifications after concurrency-area integration. Unrelated compiler and external-checker behavior is outside this audit.
 
 Sources: `origin/area/runtime` at `d8759cd66d04a940cba179c1990997c81fa5bb95` and `origin/codex/concurrency-stack` at `5a1963eca6e2b688b7bdaf4668a5c19989defc27`. Lines below refer to those immutable snapshots. A dash means absent. Header extern declarations are included alongside definitions. Keys use file/name/occurrence so moving a declaration does not require a line-only documentation edit.
 
@@ -268,3 +268,86 @@ A newly added runtime C source or header requires review even when it introduces
 - `runtime-file:weak.c`
 
 Final guard validation after adding the audited-file manifest: exit 0 in 0.215s. Two isolated mutants were run and restored: a new runtime file failed both the file-review and variable checks at line 1; adding the same unlisted static to the already audited count.c failed only the variable check at line 36. Logs are `/tmp/runtime-statics-guard-mutant-final.log` and `/tmp/runtime-statics-existing-file-mutant.log`. Final base checks passed in 7.180s, including the existing catastrophic-regex step-limit check; the two pool proof tests explicitly skipped because the base still has no parallel.c.
+
+## Integrated runtime, signals and exit
+
+Merged concurrency-area `b9479aa4beb65409312eaae5f406e94d3a6d7dfb` in `5e19080`. The historical stack classifications now apply, except normalization caches remain C TLS, regex/checker counters are atomic, and output is protected on every path as recorded below. Historical unsafe classifications describe the original snapshots, not the integrated runtime. `output_whole` was removed: volatile and signal fences cannot protect bytes that other threads write.
+
+The only installed handlers are stopped for SIGTERM, SIGINT and SIGHUP; SIGPIPE is ignored. stopped may execute on any unblocked thread. It only reads an immutable nonblocking pipe descriptor, saves/restores thread-local errno, and performs async-signal-safe write of a signal byte. It never touches output, locks, counters or the heap. The normal signal thread inherits stop signals blocked, takes output_lock to flush complete lines, installs the default action, unblocks that signal on itself and raises it. Inherited ignored signals stay ignored. A full pipe already contains a pending termination event.
+
+stop_start initializes descriptors before installing handlers or publishing work. Descriptors remain open and unchanged until process death; OS cleanup deliberately avoids close/reuse races with handlers. stop_end sends zero and joins the signal thread at ordinary exit. Panic uses _exit, so it runs no exit hooks. SIGKILL/default fatal actions run no teardown.
+
+| File, current line, storage | Handler or exit access / writers | Current safety |
+|---|---|---|
+| `adamic.c:stop_pipe:1`, 116 | Startup initializes; stopped reads write descriptor; stop_loop reads read descriptor; stop_end sends shutdown | Written only before pool starts and handler installation; never closed/changed. Handler uses async-signal-safe nonblocking write |
+| `adamic.c:stop_thread:1`, 117 | Startup pthread_create writes identity; stop_end joins | Written only before pool starts; no handler access |
+| `adamic.c:output:1`, 52 | buffer/write_line writes; signal-thread, finish and panic flush reads | Guarded by output_lock on every path; no handler access |
+| `adamic.c:output_used:1`, 53 | buffer increments; all flush paths read/reset | Guarded by output_lock; no handler access |
+| `adamic.c:output_mode:1`, 56 | First write_line sets mode and registers finish | Guarded by output_lock; exit/handler do not read |
+| `adamic.c:broken:1`, 59 | Failed writes set; flush and finish read | Guarded by output_lock; finish snapshots failure before unlocking |
+| `adamic.c:output_lock:1`, 60 | Ordinary writes, signal thread, finish, panic lock/unlock | Statically initialized mutex; never used by a handler |
+| `adamic.c:panicking:1`, 61 | Panic selects the one fatal-message writer | Atomic flag; losing panic threads pause; winner locks output, reports then _exit |
+| adamic.c const prefix/message | Panic/unreachable read constant message bytes | Static initialization, no writers, excluded from mutable inventory |
+| parallel.c started 55, scheduler 56, changed 57, workers 58, thread_count 59, created 60, stopping 61, worker_index 62 | shutdown sets stopping under scheduler, broadcasts, joins workers, frees workers/resets created; workers read deques/stopping and TLS worker_index | pthread_once publishes startup, scheduler guards live deque/state; shutdown is an exit/quiescent operation. finish explicitly joins before flushing even if first worker output registered finish after pool hook. Repeated shutdown sees created zero. No handler access |
+| heap.c giving 94, spares 95, owned_chunks 96, freeing 281, freeing_count 282, freeing_capacity 283, draining 284 | Worker heap_thread_end drains owned remote frees, changes its free lists and frees freeing buffer; heap_end cleans caller | C TLS; each worker cleans its own state. Signal thread allocates no Adamic values |
+| heap_parallel.h chunk_pages 11, chunk_count 12, thread_count 13, owner_number 14 | heap_end reads registry and frees chunks/pages; thread cleanup reads owner identity | Atomic registry/counters; owner_number TLS. Constructor registers heap cleanup before main, so later pool join and output/signal hooks complete first. Remote queues are atomic chunk fields |
+| count.c adamic_counted 8; count.h 29 | report_at_exit destructor and panic read allocations/frees/retains/releases/live/peak/regions; heap operations write | Every member atomic. Normal destructor follows atexit cleanup on supported clang targets. Panic snapshots may overlap tasks; snprintf is normal code only, never a handler |
+| weak.c table 38, table_capacity 39, table_count 40, table_lock 41, table_used 42; exceptions.c name_cache/message_cache 27 | Generated final releases and heap release paths can remove weak entries/access error fields | table_lock guards weak state, count atomic; packed error caches atomic. Generated final releases precede main return; workers join before heap-wide disposal |
+| tsgo.c loaded_ns/queried_ns/first_query_ns/run_started_ns 13, query_count 14, input_ns/call_ns/output_ns/facts_bytes 15 | Handle release can report/reset profiling during cleanup | All nine atomic; measurements are snapshots, not transactions; external checker concurrency outside C proof |
+| async.c subscriptions/jobs/jobs_last; async_host_impl.h host_* below | async_run explicitly calls teardown before return; host_shutdown retires requests and closes pipe under host_mutex, then releases values | Host publication/shutdown under host_mutex; promises/reactions confined to loop. No signal-handler/stop_end access. Source async work in parallelMap is refused by internal/lower/parallel.go |
+| ADAMIC_TARGET_WASI | WASI parallelMap, signals and teardown | n/a: codex/wasm-threads makes parallelMap sequential; available_threads returns 1 before overrides, start creates no workers, build has no threads; native signal loop excluded |
+
+New async storage introduced by integration follows. Loop confined means the documented C loop-thread API contract, rather than C TLS. host_loop_thread checks affinity on host loop entry; source async work in parallelMap is refused. Foreign host workers may only publish copied buffers via mutex-protected resolve/reject/abandon, never manipulate Adamic values. Calling a loop-only C API concurrently is outside that contract.
+
+| Audit key | Line | Holds / writers and timing | Classification |
+|---|---:|---|---|
+| `async.c:subscriptions:1` | 14 | Subscription registry; await/unregister/teardown on loop | Thread-local by loop confinement; async parallelMap refused |
+| `async.c:jobs:1` | 15 | Reaction head; queue/drain_jobs on loop | Thread-local by loop confinement |
+| `async.c:jobs_last:1` | 15 | Reaction tail; queue/drain_jobs on loop | Thread-local by loop confinement |
+| `async_host_impl.h:host_mutex:1` | 23 | Queue/identity/pipe lock | Statically initialized named host_mutex |
+| `async_host_impl.h:host_requests:1` | 24 | Live registry; new/process/shutdown mutate | Guarded by host_mutex |
+| `async_host_impl.h:host_completions:1` | 24 | Completion head; publish/process/shutdown mutate | Guarded by host_mutex |
+| `async_host_impl.h:host_completions_last:1` | 24 | Completion tail; publish/process/shutdown mutate | Guarded by host_mutex |
+| `async_host_impl.h:host_next_identity:1` | 25 | Identity sequence; new increments | Guarded by host_mutex |
+| `async_host_impl.h:host_started:1` | 26 | First request flag; loop new writes under mutex, loop process/shutdown read | Thread-local by loop confinement; writes also hold host_mutex |
+| `async_host_impl.h:host_closed:1` | 26 | Shutdown flag; shutdown writes, new/hooks read | Guarded by host_mutex for registry; loop-only configuration reads |
+| `async_host_impl.h:host_hooks_set:1` | 26 | One-time hook flag; startup loop sets | Thread-local by loop confinement |
+| `async_host_impl.h:host_owner_set:1` | 26 | Affinity-established flag; first loop entry writes | Thread-local by documented loop affinity |
+| `async_host_impl.h:host_owner:1` | 27 | Loop identity; first loop entry writes, later entries compare | Thread-local by documented loop affinity |
+| `async_host_impl.h:host_pipe:1` | 29 | Host wake pipe; new creates, shutdown closes/resets | Guarded by host_mutex for create/wake/close; only loop drains/waits, so shutdown cannot overlap its own read |
+| `async_host_impl.h:host_wake_hook:1` | 33 | Wake callback; startup loop configures; foreign publish calls | Written only before host work publication by startup-only API; mutex publication establishes visibility |
+| `async_host_impl.h:host_wait_hook:1` | 34 | Wait callback; startup loop configures, async_run calls | Written only before host work publication; otherwise loop confined |
+
+
+- `runtime-file:async.c`
+
+- `runtime-file:async.h`
+
+- `runtime-file:async_host_impl.h`
+
+## Integrated observations
+
+The previous “not covered” paragraph records d6d6ca4's pre-integration limits. Concurrency-area, signal output and exit output are now exercised; external Go checker concurrency and the complete repository gate remain outside the passing proof.
+
+From internal/native, with `/workspace/adamic-tools/env.sh` sourced:
+
+```sh
+go test runtime_statics_test.go runtime_statics_parallel_test.go -run '^TestRuntimeStaticsParallel$|^TestRuntimeStaticsProtectionMutants$' -count=1 -v -timeout 30m > /tmp/runtime-statics-integrated-proof.log 2>&1
+go test runtime_statics_test.go runtime_statics_parallel_test.go -run 'TestRuntimeStaticsSignalAndExit|TestRuntimeStaticsAreListed|TestRuntimeStorageScanner' -count=1 -v -timeout 10m > /tmp/runtime-statics-followup-final.log 2>&1
+```
+
+Observed: the 11 integrated fixtures and all 11 protection mutants passed in 186.136s, each fixture/mutant executed three times on four pool threads. The seven signal/exit scenarios cover SIGTERM/SIGINT/SIGHUP raised on the caller or a deliberately unblocked pool worker, and normal exit on the caller while pool tasks print. Signals retain their exact terminating signal; exit succeeds; no positive TSan race is accepted. Both new mutants compile and must produce explicit TSan data races in all three runs: an unlocked flush restored inside stopped races in flush/buffer, and restoring the unlocked exit flush without its preceding join races in flush. The initial weaker handler mutant merely read the buffer and survived one run; that attempt is not proof. The final mutant restores an actual unprotected flush and was caught.
+
+The integrated guard passed; adding an unlisted static in a new isolated runtime file failed with file, line 1 and variable name in `/tmp/runtime-statics-followup-guard-mutant.log`. No working-tree mutant remains. Focused Go vet passed, and `git diff --check` passed.
+
+Uncached Node output oracle from repository root:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestASignalLeavesWhatWasPrinted|TestClosedStdoutEndsAsOnNode|TestOneFileHoldsNodesOrder|TestAPromptComesBeforeTheRead' -count=1 -timeout 10m > /tmp/runtime-statics-signal-oracle.log 2>&1
+```
+
+Observed exit 0, package 44.498s. This includes signal behavior under native sanitizers compared to Node, output ordering, broken stdout and prompt flushing.
+
+Setup rerun: Go 1.27.1 ready 0s, clang 20.1.8 ready 0s, Node 24.19.0 ready 0s, submodules ready 0s; nproc 5. It failed during test-cache warming because integrated `internal/native/map_hash_test.go:90` uses `Options{slabs: ...}` while the field is now `Slabs`. The old missing-target-API failure is resolved by integration. Rather than editing another unit's test, the commands above run the runtime proof/guard Go files directly; they compile and exercise the actual integrated C runtime. The complete native package and repository gate remain blocked by that unrelated merged test build error.
+
+Final signal/exit, two new mutants, scanner and coverage checks passed together in 59.332s (`/tmp/runtime-statics-followup-final.log`). The two new mutants each produced three explicit TSan race summaries. The integrated 11-fixture proof was run after the signal-loop/exit-lock implementation; the final additional code change retries an interrupted handler pipe write and was covered by this final signal run.

@@ -267,7 +267,7 @@ static void start(void) {
 	pthread_attr_t attributes;
 	pthread_attr_init(&attributes);
 	if (pthread_attr_setstacksize(&attributes, (size_t)8 << 20) != 0) { adamic_panic("cannot set worker stack size", sizeof "cannot set worker stack size" - 1); }
-	// Only the caller handles termination signals; its stdout state is quiescent at every join.
+	// Workers inherit blocked stop signals. A handler on any unblocked thread forwards to the signal loop.
 	sigset_t signals, saved;
 	sigemptyset(&signals); sigaddset(&signals, SIGTERM); sigaddset(&signals, SIGINT); sigaddset(&signals, SIGHUP);
 	pthread_sigmask(SIG_BLOCK, &signals, &saved);
