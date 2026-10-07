@@ -291,10 +291,12 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
-		Object   Expression
-		Name     string
-		Of       Type
-		Optional bool
+		// Readiness is the source expression for a checked field read, empty when proven ready.
+		Readiness string
+		Object    Expression
+		Name      string
+		Of        Type
+		Optional  bool
 		// Absent is an optional own field: a shape without it reads as undefined.
 		Absent bool
 		// Class is, when the field is one of a class's, that class's constructor plus one, and 0
@@ -752,9 +754,11 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
-	Name    string
-	Value   Expression
-	Private bool
+	// Uninitialized reserves storage without making its typed value readable.
+	Uninitialized bool
+	Name          string
+	Value         Expression
+	Private       bool
 }
 
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter

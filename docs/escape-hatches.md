@@ -832,3 +832,9 @@ Node and failures held to the checked JavaScript backend. Mutants removing the
 native check, rejecting zero, false or empty string, and evaluating twice fail
 those comparisons. A changed message fails the exact-text lowering test; ignoring
 nullable storage after a capture write fails the oracle under UBSan.
+
+### Shared field readiness representation
+
+Each native object carries one initialized byte per field after its `adamic_value` slots, indexed by its actual shape. `adamic_object_initialized(const adamic_object *object)` exposes those bytes; `adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized)` updates a named slot. Fresh ordinary fields are initialized; an `ir.Field.Uninitialized` starts clear. Writes set the bit. The bytes share the object's allocation, including region allocations.
+
+Checked reads use `adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression)` in native code and `adamicReadField(object, name, expression, optional = false)` in JavaScript. `ir.Property.Readiness` supplies the source expression. Missing or uninitialized fields panic with `read before assignment: field '<name>' in <expression>`. The state is independent of the value, so zero, false, empty strings, and assigned undefined do not mean uninitialized. JavaScript keeps state in a WeakMap, preserving own keys.
