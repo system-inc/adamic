@@ -160,3 +160,10 @@ main 71d7e491b. Shared Go/Node/emitted-JavaScript/native parity and the unattach
 node-row guard pass, 13 MB of complete bytes each; no skips. Owned profile
 dependencies are unchanged, so their completed current-main validation applies.
 See ../wave08-core-next/LANDING_71D_REPORT.md for the final area checks.
+
+Multi-edit/path landing: merged lint area e667e3e1d, retaining main 71d7e491b.
+Core 264/264 comparisons pass normally and sanitized. Shared suggestions,
+automatic edits, path-preserving witnesses, broad syntax parity and unattached
+node-row guard pass without skips. Owned dependencies are unchanged; preceding
+other-profile, mutant and released-handle evidence applies. A 772-ref audit
+finds no unclaimed rule; full gate not run. See ../wave08-core-next/LANDING_E667_REPORT.md.
