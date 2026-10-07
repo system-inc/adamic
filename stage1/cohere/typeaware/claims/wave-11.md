@@ -41,3 +41,23 @@ Continuation completed in `5ff9e4e6`: all three reserved rules have normal and
 sanitized byte agreement with unchanged Go production rules, positive controls,
 per-rule mutants, raw-question mutants and released-handle checks. Evidence and
 limits are in ../WAVE_11_NEXT_REPORT.md. No further claims after Ahra's correction.
+
+## Third batch claim
+
+All six earlier reserved rules are ported, tested and pushed through `617850b4`.
+Fetched origin and audited 330 refs, 325 distinct trees and 33 Markdown claim
+documents. Combined descending volume with lexical ties excludes the 26 base
+ports, native ports on main/bridge, and every rule named in any origin claim.
+Released or skipped reservations named in other claims remain untouched.
+
+Next three reserved before implementation:
+
+1. `no-eval`
+2. `no-extend-native`
+3. `no-func-assign`
+
+Each has zero compiler and repository findings in the recorded ranking. None
+is ported on origin/main or origin/codex/tsgo-c-library or named in an origin
+claim document. Continue on codex/typeaware-wave-11. New Adamic sources use `.a`.
+Shared generator and harness remain untouched; isolated raw questions, complete
+Go byte agreement and comparison-only mutants are required.
