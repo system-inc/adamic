@@ -1,0 +1,53 @@
+import {panic, readTextFile, programArguments} from 'adamic';
+import {OptionsJson} from '../../options_json.ts';
+import {type ValueArena, type ValueNode} from './value_arena.a';
+import {recursivelyDecodeArbitraryValues} from './recursively_decode_arbitrary_values.a';
+import {decodeArbitraryValue} from './decode_arbitrary_value.a';
+import {registerThemeBreakpointVariants, type GroupOrder} from './register_theme_breakpoint_variants.a';
+const file = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(file.kind === 'Error') { panic(file.message); }
+const json = new OptionsJson(file.text); const root = json.parse(); if(root < 0) { panic(json.error); }
+function convert(value: string, preserve: boolean): string {
+ let out = ''; for(let i=0;i<value.length;i++) {
+  const c=value[i] ?? ''; if(c === '\\' && value[i+1] === '_') { out += '_'; i++; }
+  else if(c === '_' && !preserve) { out += ' '; } else { out += c; }
+ } return out;
+}
+function units(value: string): string { let out=''; for(let i=0;i<value.length;i++) {out+=`${value.charCodeAt(i)},`;}return out; }
+function readArena(index: number): ValueArena {
+ const nodes: ValueNode[]=[]; const roots: number[]=[];
+ for(const row of json.node(json.field(index,'nodes')).children) {
+  const children: number[]=[]; for(const c of json.node(json.field(row,'children')).children) { children.push(json.node(c).number); }
+  nodes.push({kind:json.node(json.field(row,'kind')).text,value:json.node(json.field(row,'value')).text,children});
+ }
+ for(const row of json.node(json.field(index,'roots')).children) { roots.push(json.node(row).number); }
+ return {nodes, roots};
+}
+function snapshot(arena: ValueArena): string { let out=''; for(const node of arena.nodes) {out+=node.kind+':'+units(node.value)+'|';}return out; }
+// Test-only serializer adapter for Go's AST geometry; not a published ValueToCss port.
+function writeNodes(arena: ValueArena, roots: number[]): string {
+ let out=''; for(const id of roots) {const n=arena.nodes[id] ?? panic('invalid node'); if(n.kind==='function') {out+=n.value+'('+writeNodes(arena,n.children)+')';} else if(n.kind==='word'||n.kind==='separator') {out+=n.value;}}return out;
+}
+const adapter = {row: 0};
+function parse(input: string): ValueArena { if(input !== json.node(json.field(adapter.row,'input')).text) { return {nodes: [{kind: 'word', value: 'unexpected parse input:'+input, children: []}], roots: [0]}; } return readArena(json.field(adapter.row,'ast')); }
+function write(arena: ValueArena): string { return writeNodes(arena,arena.roots); }
+function math(input: string): string {const css=json.node(json.field(adapter.row,'css')).text;return input===css ? json.node(json.field(adapter.row,'math')).text : 'unexpected math input:'+input;}
+for(const row of json.node(json.field(root,'decode')).children) {
+ const arena=readArena(json.field(row,'ast')); recursivelyDecodeArbitraryValues(arena,arena.roots,convert);console.log(snapshot(arena));
+ adapter.row=row;console.log(units(decodeArbitraryValue(json.node(json.field(row,'input')).text,{convert: (value, preserve) => convert(value, preserve), parse: input => parse(input), write: arena => write(arena), math: input => math(input)})));
+}
+for(const row of json.node(json.field(root,'trees')).children) {const arena=readArena(json.field(row,'ast'));recursivelyDecodeArbitraryValues(arena,arena.roots,convert);console.log(snapshot(arena));}
+export type Registration = {name: string; order: number; kind: string};
+const breakpoint = {row: 0, registrations: new Map<string, Registration>(), last: 0};
+function group(): GroupOrder {return {present:json.node(json.field(breakpoint.row,'groupPresent')).text==='true',order:json.node(json.field(breakpoint.row,'order')).number};}
+function keys(namespace: string): string[] {const values: string[]=[];if(namespace!=='--breakpoint') {values.push('wrong namespace');return values;}for(const row of json.node(json.field(breakpoint.row,'keys')).children) {values.push(json.node(row).text);}return values;}
+function has(name: string): boolean {return breakpoint.registrations.has(name);}
+function register(name: string, order: number, kind: string): void {const existing=breakpoint.registrations.get(name);if(existing!==undefined) {breakpoint.registrations.set(name,{name:existing.name,order:existing.order,kind});return;}breakpoint.registrations.set(name,{name,order,kind});if(order>breakpoint.last) {breakpoint.last=order;}}
+function compareNames(left: string, right: string): number {return left<right ? -1 : left>right ? 1 : 0;}
+for(const row of json.node(json.field(root,'breakpoints')).children) {
+ breakpoint.row=row;breakpoint.registrations=new Map<string, Registration>();breakpoint.last=0;
+ register('existing',1,'functional');register('sm',2,'compound');
+ registerThemeBreakpointVariants(json.node(json.field(row,'present')).text==='true',{group: () => group(), keys: namespace => keys(namespace), has: name => has(name), register: (name, order, kind) => register(name, order, kind)});
+ const names: string[]=[];for(const name of breakpoint.registrations.keys()) {names.push(name);}names.sort(compareNames);
+ let out='';for(const name of names) {const r=breakpoint.registrations.get(name) ?? panic('missing registration');out+=units(r.name)+':'+`${r.order}`+':'+r.kind+'|';}console.log(out);
+}

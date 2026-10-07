@@ -1,0 +1,35 @@
+=== RUN   TestBatch8Helpers
+    batch8_test.go:44: /workspace/adamic/stage1/cohere/lint/helpers/slot03/batch8/main.a:37:98: stage 0 can't lower reading convert yet
+--- FAIL: TestBatch8Helpers (2.50s)
+=== RUN   TestBatch8Mutants
+=== RUN   TestBatch8Mutants/recursively_decode_arbitrary_values.a
+    batch8_test.go:78: /tmp/adamic-gate/TestBatch8Mutantsrecursively_decode_arbitrary_values.a4249100003/001/main.a:37:98: stage 0 can't lower reading convert yet
+=== RUN   TestBatch8Mutants/recursively_decode_arbitrary_values.a#01
+    batch8_test.go:78: /tmp/adamic-gate/TestBatch8Mutantsrecursively_decode_arbitrary_values.a#012631219238/001/main.a:37:98: stage 0 can't lower reading convert yet
+=== RUN   TestBatch8Mutants/recursively_decode_arbitrary_values.a#02
+    batch8_test.go:78: /tmp/adamic-gate/TestBatch8Mutantsrecursively_decode_arbitrary_values.a#024196046483/001/main.a:37:98: stage 0 can't lower reading convert yet
+=== RUN   TestBatch8Mutants/decode_arbitrary_value.a
+    batch8_test.go:78: /tmp/adamic-gate/TestBatch8Mutantsdecode_arbitrary_value.a2002974147/001/main.a:37:98: stage 0 can't lower reading convert yet
+=== RUN   TestBatch8Mutants/decode_arbitrary_value.a#01
+    batch8_test.go:78: /tmp/adamic-gate/TestBatch8Mutantsdecode_arbitrary_value.a#011610873392/001/main.a:37:98: stage 0 can't lower reading convert yet
+=== RUN   TestBatch8Mutants/register_theme_breakpoint_variants.a
+    batch8_test.go:78: /tmp/adamic-gate/TestBatch8Mutantsregister_theme_breakpoint_variants.a261488418/001/main.a:37:98: stage 0 can't lower reading convert yet
+=== RUN   TestBatch8Mutants/register_theme_breakpoint_variants.a#01
+    batch8_test.go:78: /tmp/adamic-gate/TestBatch8Mutantsregister_theme_breakpoint_variants.a#012102005517/001/main.a:37:98: stage 0 can't lower reading convert yet
+=== RUN   TestBatch8Mutants/register_theme_breakpoint_variants.a#02
+    batch8_test.go:78: /tmp/adamic-gate/TestBatch8Mutantsregister_theme_breakpoint_variants.a#02768429759/001/main.a:37:98: stage 0 can't lower reading convert yet
+=== RUN   TestBatch8Mutants/register_theme_breakpoint_variants.a#03
+    batch8_test.go:78: /tmp/adamic-gate/TestBatch8Mutantsregister_theme_breakpoint_variants.a#032785603517/001/main.a:37:98: stage 0 can't lower reading convert yet
+--- FAIL: TestBatch8Mutants (0.85s)
+    --- FAIL: TestBatch8Mutants/recursively_decode_arbitrary_values.a (0.05s)
+    --- FAIL: TestBatch8Mutants/recursively_decode_arbitrary_values.a#01 (0.05s)
+    --- FAIL: TestBatch8Mutants/recursively_decode_arbitrary_values.a#02 (0.05s)
+    --- FAIL: TestBatch8Mutants/decode_arbitrary_value.a (0.05s)
+    --- FAIL: TestBatch8Mutants/decode_arbitrary_value.a#01 (0.05s)
+    --- FAIL: TestBatch8Mutants/register_theme_breakpoint_variants.a (0.05s)
+    --- FAIL: TestBatch8Mutants/register_theme_breakpoint_variants.a#01 (0.06s)
+    --- FAIL: TestBatch8Mutants/register_theme_breakpoint_variants.a#02 (0.06s)
+    --- FAIL: TestBatch8Mutants/register_theme_breakpoint_variants.a#03 (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/helpers/slot03	3.360s
+FAIL

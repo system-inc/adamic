@@ -1,0 +1,30 @@
+import {panic} from 'adamic';
+import {type ValueArena, type Converter} from './value_arena.a';
+export function recursivelyDecodeArbitraryValues(arena: ValueArena, roots: number[], convert: Converter): void {
+ for(const index of roots) {
+  const node = arena.nodes[index] ?? panic('invalid value node');
+  if(node.kind === 'function') {
+   if(node.value === 'url' || node.value.endsWith('_url')) {
+    node.value = convert(node.value, false);
+    continue;
+   }
+   if(node.value === 'var' || node.value.endsWith('_var') || node.value === 'theme' || node.value.endsWith('_theme')) {
+    node.value = convert(node.value, false);
+    for(let argument = 0; argument < node.children.length; argument++) {
+     const childIndex = node.children[argument] ?? panic('invalid value child');
+     const child = arena.nodes[childIndex] ?? panic('invalid value node');
+     if(argument === 0 && child.kind === 'word') {
+      child.value = convert(child.value, true);
+      continue;
+     }
+     recursivelyDecodeArbitraryValues(arena, [childIndex], convert);
+    }
+    continue;
+   }
+   node.value = convert(node.value, false);
+   recursivelyDecodeArbitraryValues(arena, node.children, convert);
+  } else if(node.kind === 'separator' || node.kind === 'word') {
+   node.value = convert(node.value, false);
+  }
+ }
+}

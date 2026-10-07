@@ -1,0 +1,11 @@
+export type GroupOrder = {present: boolean; order: number};
+export type BreakpointDependencies = {group: () => GroupOrder; keys: (namespace: string) => string[]; has: (name: string) => boolean; register: (name: string, order: number, kind: string) => void};
+export function registerThemeBreakpointVariants(themePresent: boolean, dependencies: BreakpointDependencies): void {
+ if(!themePresent) { return; }
+ const group = dependencies.group();
+ if(!group.present) { return; }
+ for(const name of dependencies.keys('--breakpoint')) {
+  if(name === '' || dependencies.has(name)) { continue; }
+  dependencies.register(name, group.order, 'static');
+ }
+}

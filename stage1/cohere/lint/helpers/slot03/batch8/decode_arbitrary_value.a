@@ -1,0 +1,10 @@
+import {type ValueArena, type Converter} from './value_arena.a';
+import {recursivelyDecodeArbitraryValues} from './recursively_decode_arbitrary_values.a';
+export type DecodeDependencies = {convert: Converter; parse: (input: string) => ValueArena; write: (arena: ValueArena) => string; math: (input: string) => string};
+export function decodeArbitraryValue(input: string, dependencies: DecodeDependencies): string {
+ if(!input.includes('(')) { return dependencies.convert(input, false); }
+ const arena = dependencies.parse(input);
+ recursivelyDecodeArbitraryValues(arena, arena.roots, dependencies.convert);
+ const css = dependencies.write(arena);
+ return dependencies.math(css);
+}

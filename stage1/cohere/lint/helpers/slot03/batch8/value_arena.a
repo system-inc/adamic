@@ -1,0 +1,3 @@
+export type ValueNode = {kind: string; value: string; children: number[]};
+export type ValueArena = {nodes: ValueNode[]; roots: number[]};
+export type Converter = (value: string, preserve: boolean) => string;
