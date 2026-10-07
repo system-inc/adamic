@@ -1161,6 +1161,32 @@
     ]
   },
   {
+    "file": "stage1/cohere/lint/rule_check_test.go",
+    "test": "TestRule",
+    "id": "TestRule:da5c31d098aed527635d2f72b8cae6d04c5a61eec036f59bfe65a10e65da9015",
+    "line": 132,
+    "condition": "*ruleSlug == \"\"",
+    "reads": [
+      "filepath.WalkDir(\".\", func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() && (path == \"gaps\" || strings.HasSuffix(path, \"testdata\")) {\n\t\treturn filepath.SkipDir\n\t}\n\tif !entry.IsDir() && (strings.HasSuffix(path, \".ts\") || strings.HasSuffix(path, \".a\") || strings.HasSuffix(path, \"rule.json\") || strings.HasSuffix(path, \"mutant.json\") || strings.HasSuffix(path, \"oracle.go\")) {\n\t\tfiles = append(files, path)\n\t}\n\treturn nil\n})",
+      "filepath.WalkDir(filepath.Join(repository, \"internal\"), func(path string, entry fs.DirEntry, err error) error {\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Type()&os.ModeSymlink != 0 {\n\t\ttarget, err := os.Readlink(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tparts[path] = \"symlink:\" + target\n\t} else if !entry.IsDir() {\n\t\tparts[path] = \"file:\" + lintBytes(t, path)\n\t}\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_LINT_BENCH\")",
+      "os.ReadFile(file)",
+      "os.ReadFile(filepath.Join(directory, \"digest\"))",
+      "os.ReadFile(filepath.Join(root, \".selected-rule\"))",
+      "os.ReadFile(harness)",
+      "os.ReadFile(output.Name())",
+      "os.ReadFile(path)",
+      "os.Stat(filepath.Join(directory, \".selected-rule\"))"
+    ],
+    "callers": [
+      "TestRule"
+    ],
+    "message": "\"use cmd/adamic-lint-check <slug> or -args -rule <slug>\"",
+    "class": "not-applicable",
+    "provides": "Selected-rule entry point: runs only with -args -rule <slug> or through cmd/adamic-lint-check; the full lint suite checks every rule."
+  },
+  {
     "file": "stage1/cohere/mediaquery/mediaquery_test.go",
     "test": "TestThePortParsesAsGoCohereDoes",
     "id": "TestThePortParsesAsGoCohereDoes:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc",

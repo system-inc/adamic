@@ -3,6 +3,7 @@ package oracle
 import (
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"testing"
@@ -78,11 +79,8 @@ func TestSlabLaneCatchesEarlyRelease(t *testing.T) {
 		t.Fatal(err)
 	}
 	source := native.C(program)
-	needle := "adamic_local_17_doubled = adamic_string_append(adamic_local_17_doubled,"
-	if strings.Count(source, needle) != 1 {
-		t.Fatal("mutant insertion point changed")
-	}
-	source = strings.Replace(source, needle, "adamic_release(adamic_local_17_doubled);\n\t"+needle, 1)
+	doubled, needle := doubledSelfAppend(t, source)
+	source = strings.Replace(source, needle, "adamic_release("+doubled+");\n\t"+needle, 1)
 	for _, slabs := range []bool{false, true} {
 		binary := filepath.Join(t.TempDir(), "mutant")
 		if err := native.Build(source, binary, native.Options{Sanitize: true, Slabs: slabs}); err != nil {
@@ -113,13 +111,10 @@ func TestSlabLaneCatchesRecycledRelease(t *testing.T) {
 		t.Fatal(err)
 	}
 	source := native.C(program)
-	allocation := "adamic_string * adamic_temporary_27 = adamic_string_concat("
-	use := "adamic_local_17_doubled = adamic_string_append(adamic_local_17_doubled,"
-	if strings.Count(source, allocation) != 1 || strings.Count(source, use) != 1 {
-		t.Fatal("mutant insertion points changed")
-	}
+	doubled, use := doubledSelfAppend(t, source)
+	allocation := doubledInitialization(t, source, doubled)
 	source = strings.Replace(source, allocation, "adamic_string *recycle_probe = adamic_string_allocate(7);\n\tuintptr_t recycled_address = (uintptr_t)recycle_probe;\n\tadamic_release(recycle_probe);\n\t"+allocation, 1)
-	source = strings.Replace(source, use, "if ((uintptr_t)adamic_local_17_doubled == recycled_address) { adamic_release(adamic_local_17_doubled); }\n\t"+use, 1)
+	source = strings.Replace(source, use, "if ((uintptr_t)"+doubled+" == recycled_address) { adamic_release("+doubled+"); }\n\t"+use, 1)
 	expected := onNode(t, path)
 	for _, slabs := range []bool{false, true} {
 		binary := filepath.Join(t.TempDir(), "mutant")
@@ -139,4 +134,50 @@ func TestSlabLaneCatchesRecycledRelease(t *testing.T) {
 			t.Log("string_append.a: recycled-release mutant passes malloc byte for byte")
 		}
 	}
+}
+
+// The mutants find string_append.a's doubling() by the shape of its C, not by the emitter's numbers,
+// which move whenever anything before it lowers differently.
+var (
+	selfAppend     = regexp.MustCompile(`(adamic_local_\d+_doubled) = adamic_string_append\((adamic_local_\d+_doubled),`)
+	initialization = regexp.MustCompile(`(adamic_string \* (adamic_temporary_\d+) = adamic_string_concat\()[^\n]*\n\s*adamic_string \* (adamic_local_\d+_doubled) = (adamic_temporary_\d+);`)
+)
+
+// doubledSelfAppend finds `doubled += doubled`: the one statement that appends a local named
+// doubled to itself. It returns the local and the statement's text up to its first argument.
+func doubledSelfAppend(t *testing.T, source string) (string, string) {
+	t.Helper()
+	var sites [][]string
+	for _, match := range selfAppend.FindAllStringSubmatch(source, -1) {
+		if match[1] == match[2] {
+			sites = append(sites, match)
+		}
+	}
+	if len(sites) != 1 {
+		t.Fatalf("mutant insertion point: want exactly one `adamic_local_N_doubled = adamic_string_append(adamic_local_N_doubled,` (doubled += doubled), found %d", len(sites))
+	}
+	if count := strings.Count(source, sites[0][0]); count != 1 {
+		t.Fatalf("mutant insertion point: %q appears %d times", sites[0][0], count)
+	}
+	return sites[0][1], sites[0][0]
+}
+
+// doubledInitialization finds the string_concat temporary that builds doubled's first value: the
+// declaration the very next statement declares doubled from. It returns that declaration up to its
+// arguments.
+func doubledInitialization(t *testing.T, source string, doubled string) string {
+	t.Helper()
+	var sites []string
+	for _, match := range initialization.FindAllStringSubmatch(source, -1) {
+		if match[3] == doubled && match[2] == match[4] {
+			sites = append(sites, match[1])
+		}
+	}
+	if len(sites) != 1 {
+		t.Fatalf("mutant insertion point: want exactly one `adamic_string * adamic_temporary_N = adamic_string_concat(...);` followed by `adamic_string * %s = adamic_temporary_N;`, found %d", doubled, len(sites))
+	}
+	if count := strings.Count(source, sites[0]); count != 1 {
+		t.Fatalf("mutant insertion point: %q appears %d times", sites[0], count)
+	}
+	return sites[0]
 }
