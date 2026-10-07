@@ -406,3 +406,21 @@ unchanged rule behavior. Latest measured complete continuation corpus timing:
 compiler native 1.904769 s / Go 0.318496 s; repository native 0.296343 s / Go
 0.130137 s. Listener declarations are currently ignored by the legacy driver.
 No full repository gate or complete React corpus agreement is claimed.
+
+## rule.json listener metadata
+
+Nine owned `listeners/<module>/rule.json` manifests now declare `name`, a relative
+`module` path and numeric `kinds`. No shared manifest loader or registration
+generator was edited. `validate_rule_json.py` regenerates production Go
+listener expectations and checks all nine manifests against those expectations
+and the actual exported module declarations. Nine in-memory numeric +1
+manifest mutants are rejected only by the metadata comparison. The validation
+prints `PASS nine rule.json declarations and nine comparison-only metadata
+mutants`; exact output is under `evidence/rule-json`. These are metadata checks,
+not new full-rule mutants. Main remains e8ba3d5d and rule behavior is unchanged.
+
+The source-to-HIR/SSA/reactive adapter remains absent; the refreshed wave-21
+HIR module still explicitly identifies itself as validator input requiring a
+separate source adapter. Numeric node-local execution also remains blocked by
+the shared parser API. None of these manifests claims full source lint parity
+or a dispatch speedup. No further rules were claimed.
