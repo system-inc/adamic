@@ -1,177 +1,223 @@
-"""Render the observed partial result without substituting zero for missing data."""
+"""Render all measured counts, deltas, evidence and limits."""
 import json
 from pathlib import Path
+root=Path(__file__).resolve().parent;result=json.loads((root/'REPORT.json').read_text());runs=result['runs'];base=runs[0]
+LABEL='measured on a checker-rejected program'
+def esc(s):return str(s).replace('|','\\|').replace('\n','<br>')
+text=f'''Built: a scratch-only census that measures eligible top-level functions and every top-level statement across six configurations.
+Base: {base['main']}; exact scratch heads and source/binary/overlay hashes are in REPORT.json.
+Commands/results: six builds and six corpus measurements exit 0; all census counts are {LABEL}.
+Mutants: extra NotYet on probes and real tsc, body-scope, misattribution, output guards, and report artifacts caught.
+Limits: first lowering error per unit, diagnosed-body skips, generic/isolation limits, and no native execution claim.
 
-root = Path(__file__).resolve().parent
-result = json.loads((root / 'REPORT.json').read_text())
-runs = result['runs']
-finished = [row for row in runs if row['status'] == 'complete']
-text = '''Built: a scratch-only per-unit census prototype; adapted TypeScript lowering remains blocked.
-Base: ef3d907ecdc4c771b016f7d9c52372def057a340; TypeScript 6.0.3 at 050880ce59e30b356b686bd3144efe24f875ebc8.
-Commands/results: apply.sh with adaptations 10 and 20; branch builds, checker runs and probe audit recorded below.
-Mutants: planted overlay-only NotYet added exactly one finding to one.a and zero to two.a; misattribution and six report-recount mutants were caught.
-Not completed: exhaustive latent corpus counts and feature-lowering deltas, two conflicted feature merges, and native/oracle correctness validation.
+# Scope and method
 
-# Observed result
+**Every census number in this report and its JSON is measured on a checker-rejected program.**
+This includes checker counts, unit counts, reason/file totals, skipped counts, and
+feature deltas. Branch/source SHAs and setup timings are provenance. These
+observations cannot establish which programs compile or preserve JavaScript semantics.
 
-This unit is incomplete. The adapted corpus fails the unchanged Adamic checker,
-so the tool does not pass it to lowering. Corpus NotYet/Refused counts and all
-feature-lowering deltas are **unknown**, represented by JSON null. They are not
-zero. Per-file and per-reason tables below count observed checker diagnostics,
-not inferred latent blockers. REPORT.json includes all source hashes, every
-file's blocked status, and null lowering counts for every configuration.
+TypeScript 6.0.3 is pinned to `050880ce59e30b356b686bd3144efe24f875ebc8`.
+The 78 compiler roots are the 77 original sources plus
+`diagnosticInformationMap.generated.ts`. `apply.sh` ran with adaptations 10 and 20
+merged: type imports changed 72 files / 3,719 lines; optional declarations changed
+26 files / 406 lines; combined, 73 files / 4,125 lines. All configurations use the
+same adapted bytes. `data/apply.log.gz`, `data/patch-set.md`, and the SHA-256 manifest
+preserve this evidence. The two JSON input files are not source roots.
 
-Apply ran successfully in a scratch main-based worktree with the base pipeline,
-original census, and both adaptation branches merged. Adaptation 10 changed 72
-files, replacing 3,719 lines; adaptation 20 changed 26 files, replacing 406 lines.
-The total is 73 files and 4,125 replaced lines. The source population is 77
-original compiler sources plus diagnosticInformationMap.generated.ts, for 78.
-The same adapted bytes were used for every comparison. The two JSON inputs are
-not source roots. Full apply output and the patch-set ledger are under data/.
+The project is checked once per configuration with all roots together. The overlay
+preserves every checker diagnostic but exposes the rejected program only through
+`LatentLoad`. It matches each top-level function body's byte interval against raw
+checker diagnostic spans in that file. A diagnosed body is skipped and counted;
+a signature-only diagnostic leaves its body eligible. Functions on the same line
+remain distinct. The raw spans and unit eligibility ledger permit an independent recount.
 
-The request names main and four feature branches but calls them four scratch
-branches. With no clarification received, I attempted five individual
-configurations so each named feature could have its own comparison. An extra
-scratch preparation branch built the adapted tree. None was pushed.
+For each file, the refusal visitor continues past findings and skips diagnosed
+top-level functions. Every eligible function and every top-level statement gets a
+fresh lowering state. A returned error or recoverable panic is recorded and the next
+unit runs. Project declarations, globals, class static storage, and supported enum
+values are registered without lowering sibling bodies. Sibling function signatures
+are prepared on use. Checker-diagnosed dependency bodies encountered by generic/class
+lowering become separate `SkippedDependency` boundaries, excluded from actual
+NotYet/Refused counts. Registration failures are rediscovered at actual reads.
 
-| Configuration | Scratch result | Whole-project checker diagnostics | Latent counts | Feature lowering delta |
-|---|---|---:|---|---|
-'''
-for row in runs:
-    text += f"| {row['name']} | {row['status']} | {row.get('checker_total', 'unknown')} | unknown | unknown |\n"
-text += '''
-Main, taste, and nested configurations check all 78 roots together using their
-production `load.Load`. The overlay does not edit `internal/load`, change its
-options, suppress diagnostics, replace standard library types, or reuse the
-older census's upstream-config counterfactual. Per-file checker counts assign
-each diagnostic to its reported source location in that whole-project run;
-they are not repeated per-entry runs. A file with no own checker diagnostic
-still remains blocked by the rejected project.
+Counts deduplicate `(kind, location, reason, exact diagnostic text)` across attempts.
+A shared dependency failure is attributed to its actual diagnostic file, and raw
+events retain each owning unit and refusal/lowering phase. REPORT.json includes all
+unique finding texts/locations, per-file reasons/deltas, and source/binary/overlay
+hashes. `data/<configuration>.jsonl.gz` preserves all raw events, checker spans and
+units. `outside_roots` accounts for unlocated ordinary errors as well as findings
+outside the compiler roots. All NotYet/Refused sites have structured locations.
 
-The flag-enum and namespace octopus merges failed with conflicts in
-internal/lower/class_inheritance.go, internal/lower/lower.go,
-internal/lower/refusals.go, and internal/oracle/counts.md. The exact failed merge
-logs are committed under data/. I did not resolve compiler semantic conflicts
-for this measurement unit. Those configurations have no compiler binary and no
-observed checker or lowering delta.
+The refusal scan records every visited refusal site. Lowering still returns its
+first error within each unit. These are observed latent findings, not an exhaustive
+list of every potential error in every function.
 
-# Branch provenance
+# Measurement only
 
-All configurations start from the base SHA above. Scratch merge SHAs import
-existing feature work; this unit makes no committed edits to internal/.
+Only `stage3/census/latent/` is committed on the delivery branch. Measurement edits are
+scratch Go overlays, never production edits. Ordinary `Load` and `LoadOverlay`
+are disabled in the census binary; `lower.Lower` always returns nil IR and an explicit
+measurement error. The driver imports no emitter/backend. Every corpus run enables
+`LATENT_ASSERT_NO_OUTPUT`, checking both disabled APIs. The ordinary driver fails
+unless overlaid. No scratch branches are pushed, and no native output is produced.
 
-| Configuration | Feature SHA | Scratch merge SHA | Never-pushed branch |
+# Configurations and conflict resolution
+
+Baseline is main plus the stage3 pipeline, original census and adaptations 10/20.
+Each individual configuration adds the named feature alone to that same baseline.
+The cumulative run adds taste, flags, namespaces and nested in that order. Feature
+branches include their ancestors; comparisons concern their actual merged heads.
+
+| Configuration | Feature commit(s) | Resolved scratch head | Never-pushed branch |
 |---|---|---|---|
 '''
-for row in runs:
-    text += f"| {row['name']} | {row.get('feature_sha', 'baseline')} | {row.get('head', 'merge failed')} | {row['branch']} |\n"
-text += '''
-Dependency checkout: cohere 715ba94f3608a6500086b1076ce5cb7e51b836db;
-typescript-go 8d550c837c90bd1805b047b7eeccc2baac2d5e7a. The conflict-free
-scratch merges retain this dependency pin. Scratch builds share that initialized
-checkout through a symlink. Initial Go builds failed on VCS stamping because Git
-could not identify the symlink as an initialized submodule; retrying with
-`-buildvcs=false` fixed the build without changing compiler semantics.
+for r in runs:text+=f"| {r['name']} | {'<br>'.join(k+': '+v for k,v in r['features'].items()) or 'baseline'} | {r['head']} | {r['branch']} |\n"
+text+='''
+Individual flags/namespaces conflicts combine main's accessor and nominal checks
+with the feature enum/namespace rules. Cumulative resolutions also combine taste's
+syntax support, flag safeguards, namespace state/traversal, and nested sibling-call
+and capture rules. `resolve_scratch.py` contains exact observed conflict recipes,
+accepts only `/tmp` trees on `scratch/latent-*` branches, and refuses unknown conflicts.
+Merge/resolution logs are in data/. These are scratch integration decisions, not
+compiler changes committed by this unit. Conflicting oracle count rows retain the
+current scratch ledger with new feature rows appended; that ledger is unused by the
+census and is not claimed as validated oracle evidence. All resolved compilers build.
 
-# Per reason and delta
+Dependency pins: cohere `715ba94f3608a6500086b1076ce5cb7e51b836db`,
+typescript-go `8d550c837c90bd1805b047b7eeccc2baac2d5e7a`.
+Scratch trees share the initialized checkout through a symlink. Builds use
+`-buildvcs=false` because initial VCS stamping did not recognize the symlink as a
+worktree submodule. This changes build metadata, not compiler semantics.
 
-These are observed TS-code buckets, including diagnostics outside compiler/
-when the project imports them. Negative deltas would mean fewer checker
-findings; they would still not establish a reduction in latent lowering errors.
+# Totals
 
-| Reason | Main | Taste | Nested | Taste minus main | Nested minus main |
-|---|---:|---:|---:|---:|---:|
+Every number below is **measured on a checker-rejected program**. Dependency skips
+are separate measurement boundaries. Bodyless function declarations are attempted
+and can produce the lowerer's ordinary missing-body diagnostic.
+
+| Configuration | Checker diagnostics | Units | Functions attempted | Bodies skipped | Statements attempted | NotYet | Refused | Dependency skips | Errors/panics | Raw events |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 '''
-by_name = {row['name']: row for row in finished}
-reasons = sorted(set().union(*(row.get('per_reason', {}) for row in finished)))
-for reason in reasons:
-    values = [by_name.get(name, {}).get('per_reason', {}).get(reason) for name in ['main', 'taste', 'nested']]
-    main, taste, nested = values
-    delta = lambda value: value - main if value is not None and main is not None else 'unknown'
-    text += f"| {reason} | {main} | {taste} | {nested} | {delta(taste)} | {delta(nested)} |\n"
-text += '''
+for r in runs:
+ u=r['units'];c=r['lowering_counts'];text+=f"| {r['name']} | {r['checker_total']} | {u['total']} | {u['attempted_functions']} | {u['skipped_checker_body']} | {u['attempted_statements']} | {c['NotYet']} | {c['Refused']} | {c['SkippedDependency']} | {c['error']}/{c['panic']} | {r['recorded_events']} |\n"
+text+='''
+The namespace and cumulative runs each record one ordinary error:
+`lower: src/compiler/parser.ts:1472:9: the checker gave a declaration no symbol`.
+Its error type exposes no structured location, so it is retained in the unlocated
+`outside_roots` bucket and its attempting unit remains in the raw event. It is not
+counted as NotYet or Refused. No configuration records a panic.
+
+# Feature deltas
+
+All deltas are **measured on a checker-rejected program**, relative to main.
+Negative count deltas mean fewer observed sites. Exact removed/added identities
+expose shifted first errors. Common-unit deltas restrict events to units eligible
+in both configurations, separating changes in eligibility from changes in blockers.
+These observations do not prove successful compilation or feature semantics.
+
+| Configuration | NotYet delta | Refused delta | Removed sites | Added sites | Skipped-body delta | Newly eligible units | Common-unit NotYet delta | Common-unit Refused delta |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+'''
+for r in runs[1:]:
+ d=r['feature_lowering_delta'];text+=f"| {r['name']} | {d['counts']['NotYet']} | {d['counts']['Refused']} | {d['removed_sites']} | {d['added_sites']} | {d['skipped_bodies']} | {d['newly_eligible_units']} | {d['common_eligible_counts_delta']['NotYet']} | {d['common_eligible_counts_delta']['Refused']} |\n"
+text+='\nLargest reason decreases and increases, all **measured on a checker-rejected program**:\n'
+for r in runs[1:]:
+ d=r['feature_lowering_delta']['per_reason']; changes=sorted((n,k) for k,n in d.items() if n<0)[:5]+sorted(((n,k) for k,n in d.items() if n>0),reverse=True)[:5]
+ text+='\n- '+r['name']+': '+'; '.join(esc(k)+f' ({n:+d})' for n,k in changes)+'.\n'
+text+='''
 # Per file
 
-Each cell counts diagnostic locations in the whole-project checker run.
-All 78 files have unknown NotYet/Refused counts in all five configurations.
-Flag-enum and namespace per-file observations are unavailable after merge failure.
-The generated file is included explicitly rather than silently omitted.
+Every cell is **measured on a checker-rejected program**, showing `NotYet / Refused`.
+JSON also includes checker/skip counts, per-file reasons, and per-file deltas.
+Zero own findings do not imply the rejected program compiles.
 
-| File under src/compiler | Main checker | Taste checker | Nested checker |
-|---|---:|---:|---:|
+| File under src/compiler | Main N/R | Taste N/R | Flags N/R | Namespaces N/R | Nested N/R | Cumulative N/R |
+|---|---:|---:|---:|---:|---:|---:|
 '''
-for file in result['source']['files']:
-    name = file['file']
-    values = [by_name.get(branch, {}).get('per_file', {}).get(name, {}).get('checker', 'unknown') for branch in ['main', 'taste', 'nested']]
-    text += f"| {name.removeprefix('src/compiler/')} | {' | '.join(map(str, values))} |\n"
-text += '''
-# Prototype and mutant evidence
+for f in result['source']['files']:
+ name=f['file'];text+='| '+name.removeprefix('src/compiler/')+' | '+' | '.join(f"{r['per_file'][name]['NotYet']} / {r['per_file'][name]['Refused']}" for r in runs)+' |\n'
+text+='''
+# Per reason
 
-The scratch overlay disables `lower.Lower`: it always returns nil IR with
-`latent census: measurement only; no IR output`. There is no emitter import or
-backend invocation. The overlay-only `Latent` API walks refusal nodes without
-stopping, then attempts each top-level function/statement with fresh lowering
-state, recording returned errors and proceeding to the next unit. Each finding
-has its actual kind, location, reason, and complete diagnostic text.
+Every cell is **measured on a checker-rejected program**. Reasons are the exact
+lowerer strings, including concrete types. SkippedDependency rows are measurement
+boundaries, not compiler blockers. Complete diagnostic text/locations are in JSON.
 
-`audit.py` generates two scratch .a files. It observes both failing named-nested
-functions, including the later function after the earlier failure, and both
-non-null assertion refusal sites in another function. The injected NotYet is at
-one.a:2:1 in target, in the overlay only: the selected file's finding count rises
-by exactly one, while two.a's entire record remains identical. A second mutant
-places the extra finding in the other file and the equality assertion rejects
-it. The same audit also calls disabled Lower and checks its exact failure and
-nil IR. These probes test bookkeeping; they are not TypeScript-derived runtime
-fixtures, native programs or Node comparisons. data/audit.log preserves results.
-The mutant was not tested on the TypeScript corpus because the checker blocks it.
+| Reason | Main | Taste | Flags | Namespaces | Nested | Cumulative |
+|---|---:|---:|---:|---:|---:|---:|
+'''
+for reason in sorted(set().union(*(r['per_reason'] for r in runs))):text+='| '+esc(reason)+' | '+' | '.join(str(r['per_reason'].get(reason,0)) for r in runs)+' |\n'
+text+='''
+# Mutants and validation
 
-`audit_report.py` independently checks source hashes against the adapted bytes,
-raw diagnostic reasons against the JSON totals, per-file location attribution,
-file coverage, unknown lowering results, and checker deltas. Six separate
-artifact mutants were run and caught: inflated checker total, changed source
-hash, dropped file row, fabricated zero lowering delta, changed per-file count,
-and changed checker delta. data/report-audit.log records every catch.
+`audit.py` checks continuation through two failing functions, two refusal sites in
+one function, an imported sibling call, diagnosed-body skips, signature-only
+eligibility, same-line function ranges, and measurement labels. An overlay-only
+NotYet at `one.a:3:1` adds one finding in one.a and leaves two.a identical. A
+misattribution mutant fails that equality. Expanding body scope to include the
+signature wrongly skips `signatureOnly`; the eligibility check catches it.
+`data/audit.log` records these checks. Synthetic probes are scratch .a programs,
+not TypeScript-derived runtime fixtures or Node/native comparisons.
 
-The prototype still stops at the first lowering error within each unit, and its
-fresh state registers only that unit, not sibling globals/functions. Thus an
-isolation error can reflect missing sibling registration rather than a genuine
-production blocker. Generic declarations are attempted without invented
-specializations. Final module-order and ownership passes are omitted. The
-prototype is not an exhaustive lowerer and should not be used to rank production
-blockers until these limitations and the checker prerequisite are addressed.
+`audit_corpus.py` plants the extra NotYet in the real eligible tsc function
+`getModuleInstanceState`, `src/compiler/binder.ts:330:1`. Binder's unique-site count
+rises by exactly one; all other 77 files' entire records and every unit's eligibility
+remain unchanged. `data/corpus-mutant-audit.json` records every file's delta.
+`data/corpus-mutant-run.log` preserves the run. The baseline contains no mutant.
 
-# Commands and validation
+`audit_output_guards.py` builds two scratch compiler mutants. Non-nil IR from Lower
+is caught by `measurement returned usable IR`; exposing the permissive loader through
+ordinary Load is caught by `measurement loader exposed an output program`. Both
+audit runs fail as intended, with exact guard panic logs preserved in data/.
 
-All command output was redirected to files and subsequently read.
+`audit_report.py` independently verifies adapted source hashes, root coverage,
+checker spans, body eligibility, measurement labels, unique findings, attempt events,
+per-file reasons and feature deltas. Mutants alter a source hash, drop a file, inflate
+checker/finding totals, change a reason/per-file/unit count, remove the label, change the outside-root bucket, alter
+a feature delta/common-unit count, and flip a raw skipped-body status. Every mutant is caught.
+`data/report-audit.log` records their failures. The actual overlaid scratch compiler
+passes `go vet`; all Python scripts pass syntax compilation. All test outputs go to logs.
+
+Initial setup: Go 1.27.1 ready in 0s; clang 20.1.8, Node 24.19.0 and submodules ready
+by 1s; cache warming 119s; total 119s. `nproc` is 5; cgroup quota is four CPUs.
+`data/setup.log` preserves timing lines.
+
+Commands used after the scratch merges and adaptation:
 
 ```sh
-bash cloud/setup.sh > /tmp/latent-setup.log 2>&1
 source /workspace/adamic-tools/env.sh
-bash stage3/apply.sh /tmp/tsc-latent-adapted > /tmp/latent-apply.log 2>&1
-python3 stage3/census/latent/run_comparisons.py /workspace/adamic /tmp/tsc-latent-adapted /tmp/latent-comparisons > /tmp/latent-comparisons.log 2>&1
-python3 stage3/census/latent/make_overlay.py /workspace/adamic /tmp/latent-final-overlay > /tmp/latent-final-overlay.log 2>&1
-gofmt -w /tmp/latent-final-overlay/*.go
-go build -overlay=/tmp/latent-final-overlay/overlay.json -o /tmp/latent-final-census ./stage3/census/latent/tool > /tmp/latent-final-build.log 2>&1
-python3 stage3/census/latent/audit.py /tmp/latent-final-census > /tmp/latent-audit.log 2>&1
-go vet -overlay=/tmp/latent-final-overlay/overlay.json ./stage3/census/latent/tool > /tmp/latent-vet.log 2>&1
-python3 stage3/census/latent/summarize.py /tmp/latent-comparisons /tmp/tsc-latent-adapted > /tmp/latent-summary.log 2>&1
-python3 stage3/census/latent/write_report.py > /tmp/latent-report.log 2>&1
-python3 stage3/census/latent/audit_report.py /tmp/tsc-latent-adapted > /tmp/latent-report-audit.log 2>&1
+python3 stage3/census/latent/run_comparisons.py /workspace/adamic /tmp/tsc-latent-adapted /tmp/latent-complete-runs /tmp/latent-rejected-worktrees.json > /tmp/latent-complete-comparisons.log 2>&1
+python3 stage3/census/latent/audit.py /tmp/latent-complete-runs/main-census > /tmp/latent-complete-audit.log 2>&1
+python3 stage3/census/latent/audit_corpus.py /tmp/latent-complete-runs /tmp/tsc-latent-adapted > /tmp/latent-complete-corpus-audit.log 2>&1
+python3 stage3/census/latent/audit_output_guards.py /tmp/latent-comparisons/main /tmp/latent-complete-runs/main-overlay /tmp/latent-output-guards > /tmp/latent-output-guards.log 2>&1
+python3 stage3/census/latent/summarize.py /tmp/latent-complete-runs /tmp/tsc-latent-adapted > /tmp/latent-complete-summary.log 2>&1
+python3 stage3/census/latent/write_report.py > /tmp/latent-complete-report.log 2>&1
+python3 stage3/census/latent/audit_report.py /tmp/tsc-latent-adapted > /tmp/latent-complete-report-audit.log 2>&1
+cd /tmp/latent-comparisons/main
+go vet -overlay=/tmp/latent-complete-runs/main-overlay/overlay.json ./stage3/census/latent/tool > /tmp/latent-complete-vet.log 2>&1
 ```
 
-The three conflict-free configurations were rebuilt with the final overlay
-and `-buildvcs=false` after the initial VCS-stamping failure; their raw outputs
-are data/main.jsonl.gz, data/taste.jsonl.gz and data/nested.jsonl.gz.
-Scratch builds and runs return exit 0, but the raw checker status is rejected.
-Probe audit, report audit, and overlay vet return exit 0. Python syntax compilation also returns 0.
-Setup: Go 1.27.1 ready in 0s; clang 20.1.8, Node 24.19.0 and submodules ready
-by 1s; cache warming 119s; total 119s. `nproc` is 5; cgroup quota is four CPUs.
+`prepare_scratch.py REPOSITORY NEW_TMP_DIRECTORY UNIQUE_BRANCH_PREFIX` reproduces
+individual/cumulative scratch configurations and writes worktrees.json for the runner.
+Main, feature, and preparation commits are pinned by REPORT.json. Apply adaptations from the new main scratch tree, then measure every
+configuration on that one tree. Observed resolution recipes were run; a second full
+scratch preparation cycle was not repeated.
 
-I did not produce the requested exhaustive latent TypeScript counts or numeric
-feature-lowering deltas: the adapted project remains checker-rejected, and two
-feature merges conflict. I did not run TypeScript's full suite, Node/native
-output comparisons, ownership validation, or the full uncached Adamic gate.
-This work provides a tested partial measurement prototype and explicit blockers,
-not evidence that native tsc is closer to correctness.
+# Limits and unmeasured work
+
+Lowering stops at its first returned error within each unit. The refusal visitor
+can expose multiple syntax refusals, while type-dependent helpers can still return
+their first error. Generic declarations are attempted without invented substitutions.
+Symbol registration is best effort; some reads may reflect isolated context rather
+than successful whole-program lowering. Diagnosed dependency bodies remain skipped
+measurement boundaries. The final module-order, ownership, and backend passes are
+omitted; local operations may still produce their own cycle/readiness refusals.
+Panics/ordinary errors are explicitly separated from NotYet/Refused.
+
+I did not run TypeScript's upstream suite, native-vs-Node comparisons, or the full
+Adamic compiler gate. This binary cannot produce runnable native output, and every
+adapted configuration remains checker-rejected. The ledger records latent lowering
+observations under the stated rules, not native tsc readiness or correctness.
 '''
-(root / 'REPORT.md').write_text(text)
+(root/'REPORT.md').write_text(text)

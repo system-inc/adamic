@@ -1,54 +1,46 @@
-"""Run never-pushed scratch feature comparisons; preserve all phase logs."""
-import json
-import pathlib
-import shutil
-import subprocess
-import sys
-
+"""Measure resolved, never-pushed scratch worktrees. No output compiler is built."""
+import concurrent.futures, json, os, pathlib, shutil, subprocess, sys, time
 repository = pathlib.Path(sys.argv[1]).resolve()
 adapted = pathlib.Path(sys.argv[2]).resolve()
-scratch = pathlib.Path(sys.argv[3]).resolve()
-scratch.mkdir(parents=True, exist_ok=True)
+scratch = pathlib.Path(sys.argv[3]).resolve(); scratch.mkdir(parents=True, exist_ok=True)
 territory = pathlib.Path(__file__).resolve().parent
-branch_prefix = sys.argv[4] if len(sys.argv) > 4 else 'scratch/latent-compare-'
-features = [('main', None), ('taste', 'codex/taste-not-soundness'), ('flags', 'codex/flag-enums'), ('namespaces', 'codex/namespaces-tsc'), ('nested', 'codex/nested-functions')]
+worktrees = json.loads(pathlib.Path(sys.argv[4]).read_text())
 results = []
-
-def run(command, cwd, log):
+label = 'measured on a checker-rejected program'
+def run(command, cwd, log, env=None):
+    started = time.monotonic()
     with log.open('w') as output:
-        return subprocess.run(command, cwd=cwd, stdout=output, stderr=subprocess.STDOUT).returncode
+        code = subprocess.run(command, cwd=cwd, stdout=output, stderr=subprocess.STDOUT, env=env).returncode
+    return code, round(time.monotonic()-started, 3)
+def measure(spec):
+    name = spec['name']; tree = pathlib.Path(spec['tree']).resolve()
+    row = dict(spec, measurement=label, main='ef3d907ecdc4c771b016f7d9c52372def057a340')
+    row['head'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=tree, text=True).strip()
+    row['branch'] = subprocess.check_output(['git', 'branch', '--show-current'], cwd=tree, text=True).strip()
+    row['features'] = {feature: subprocess.check_output(['git', 'rev-parse', 'origin/'+feature], cwd=repository, text=True).strip() for feature in spec['features']}
+    for sha in [row['main'], *row['features'].values()]:
+        subprocess.run(['git', 'merge-base', '--is-ancestor', sha, row['head']], cwd=tree, check=True)
+    dep = tree/'cohere'
+    if not dep.is_symlink():
+        dep.rmdir(); dep.symlink_to(repository/'cohere', target_is_directory=True)
+    shutil.copytree(territory, tree/'stage3/census/latent', dirs_exist_ok=True)
+    row['durations_seconds']={}
+    phases = [('overlay', ['python3', str(territory/'make_overlay.py'), str(tree), str(scratch/(name+'-overlay'))]),
+              ('build', ['go', 'build', '-buildvcs=false', '-overlay='+str(scratch/(name+'-overlay/overlay.json')), '-o', str(scratch/(name+'-census')), './stage3/census/latent/tool']),
+              ('run', [str(scratch/(name+'-census')), str(adapted/'src/compiler'), str(scratch/(name+'.jsonl'))])]
+    for phase, command in phases:
+        row['status'] = phase
+        code, seconds = run(command, tree, scratch/(name+'-'+phase+'.log'), dict(os.environ, LATENT_ASSERT_NO_OUTPUT='1'))
+        row['durations_seconds'][phase]=seconds; row['exit']=code
+        if code: break
+    if not code: row['status']='complete'
+    print(name, row['status'], code, row['durations_seconds'], flush=True)
 
-for name, feature in features:
-    tree = scratch / name
-    row = {'name': name, 'feature': feature, 'main': subprocess.check_output(['git', 'rev-parse', 'origin/main'], cwd=repository, text=True).strip()}
-    results.append(row)
-    branch = branch_prefix + name
-    row['branch'] = branch
-    row['status'] = 'worktree'
-    code = run(['git', 'worktree', 'add', '-b', branch, str(tree), 'origin/main'], repository, scratch / (name + '-worktree.log'))
-    if code == 0:
-        row['status'] = 'merge'
-        refs = ['origin/codex/stage3-base', 'origin/codex/tsc-census', 'origin/codex/stage3-type-imports', 'origin/codex/stage3-optional-declarations']
-        if feature:
-            refs.append('origin/' + feature)
-            row['feature_sha'] = subprocess.check_output(['git', 'rev-parse', 'origin/' + feature], cwd=repository, text=True).strip()
-        code = run(['git', 'merge', '--no-edit', *refs], tree, scratch / (name + '-merge.log'))
-    if code == 0:
-        row['head'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=tree, text=True).strip()
-        # Share the already initialized read-only compiler dependency checkout.
-        (tree / 'cohere').rmdir()
-        (tree / 'cohere').symlink_to(repository / 'cohere', target_is_directory=True)
-        shutil.copytree(territory, tree / 'stage3/census/latent')
-        row['status'] = 'overlay'
-        code = run(['python3', str(territory / 'make_overlay.py'), str(tree), str(scratch / (name + '-overlay'))], tree, scratch / (name + '-overlay.log'))
-    if code == 0:
-        row['status'] = 'build'
-        code = run(['go', 'build', '-buildvcs=false', '-overlay=' + str(scratch / (name + '-overlay/overlay.json')), '-o', str(scratch / (name + '-census')), './stage3/census/latent/tool'], tree, scratch / (name + '-build.log'))
-    if code == 0:
-        row['status'] = 'run'
-        code = run([str(scratch / (name + '-census')), str(adapted / 'src/compiler'), str(scratch / (name + '.jsonl'))], tree, scratch / (name + '-run.log'))
-    if code == 0:
-        row['status'] = 'complete'
-    row['exit'] = code
-    (scratch / 'runs.json').write_text(json.dumps(results, indent=2) + '\n')
-    print(name, row['status'], code, flush=True)
+    return row
+with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+    pending = {pool.submit(measure,spec):spec for spec in worktrees}
+    for future in concurrent.futures.as_completed(pending):
+        results.append(future.result())
+        order={r['name']:i for i,r in enumerate(worktrees)}
+        results.sort(key=lambda r:order[r['name']])
+        (scratch/'runs.json').write_text(json.dumps(results,indent=2)+'\n')
