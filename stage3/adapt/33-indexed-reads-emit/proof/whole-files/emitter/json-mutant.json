@@ -1,0 +1,29 @@
+{
+  "site": {
+    "file": "emitter.ts",
+    "line": 1138,
+    "column": 1,
+    "function": "getBuildInfoText",
+    "expression": "JSON.stringify(buildInfo)",
+    "kind": "CallExpression",
+    "occurrence": 1,
+    "total": 1,
+    "action": "assert",
+    "class": "required-result",
+    "invariant": "The compiler build-info producers in builder.ts construct plain records with version, and emitBuildInfo supplies the same plain version record as fallback; no producer supplies a toJSON hook. Standard JSON serialization of that record returns a string or throws, never undefined."
+  },
+  "checks": [
+    {
+      "name": "emitted-JavaScript",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "/workspace/adamic/stage3/adapt/33-indexed-reads-emit/verify.cjs:22\n        throw new Error(`unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)}`);\n        ^\n\nError: unexpected emitted JavaScript change in emitter.ts: ecc6ee944e584a713d453305212583318e95d1870d636f703de16264d8571386 != a5dfd32b008b2110129e9daaf9ad9b898d3ffe67e6efecce791534d99d16bf14\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/33-indexed-reads-emit/verify.cjs:22:15)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+    },
+    {
+      "name": "site-contract",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "required read defaulted: emitter.ts:1138:1\n"
+    }
+  ]
+}

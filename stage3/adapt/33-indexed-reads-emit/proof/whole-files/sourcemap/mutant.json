@@ -1,0 +1,29 @@
+{
+  "site": {
+    "file": "sourcemap.ts",
+    "line": 83,
+    "column": 25,
+    "function": "createSourceMapGenerator",
+    "expression": "JSON.stringify(toJSON())",
+    "kind": "CallExpression",
+    "occurrence": 1,
+    "total": 1,
+    "action": "assert",
+    "class": "required-result",
+    "invariant": "toJSON returns a fresh plain object with a numeric version field and no toJSON method; JSON.stringify returns a string for that object or throws, never undefined. The assertion is on the original call result and erases on Node."
+  },
+  "checks": [
+    {
+      "name": "emitted-JavaScript",
+      "exit": 1,
+      "stdout": "PASS emitter.ts: stock emitted JavaScript bytes, site contract, idempotence\n",
+      "stderr": "/workspace/adamic/stage3/adapt/33-indexed-reads-emit/verify.cjs:22\n        throw new Error(`unexpected emitted JavaScript change in ${file}: ${hash(expected.outputText)} != ${hash(actual.outputText)}`);\n        ^\n\nError: unexpected emitted JavaScript change in sourcemap.ts: 383761f6a17cfec2d3d7734ea21293a8a9635563677b6971f5cf7f6a3e6e6954 != 64bd4cd1985ef9f307d4307b0131b6e1434b5910acb23d38fb37cb3785800d07\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/33-indexed-reads-emit/verify.cjs:22:15)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+    },
+    {
+      "name": "site-contract",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "required read defaulted: sourcemap.ts:83:25\n"
+    }
+  ]
+}

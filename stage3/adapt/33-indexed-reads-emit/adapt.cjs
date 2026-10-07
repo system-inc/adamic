@@ -2,7 +2,7 @@
 "use strict";
 const fs = require("node:fs");
 const path = require("node:path");
-const sites = require("./sites.json");
+const sites = [...require("./sites.json"), ...require("./required-values.json")];
 const files = require("./files.json");
 
 // Addresses are parsed expressions plus their occurrence in the pinned file.
@@ -12,8 +12,8 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
     if (source.parseDiagnostics.length) throw new Error(`cannot parse ${file}`);
     const groups = new Map();
     function visit(node) {
-        if (ts.isElementAccessExpression(node)) {
-            const expression = node.getText(source).replaceAll("!", "");
+        if (ts.isElementAccessExpression(node) || ts.isCallExpression(node) || ts.isPropertyAccessExpression(node)) {
+            const expression = ts.SyntaxKind[node.kind] + ":" + node.getText(source).replaceAll("!", "");
             const group = groups.get(expression) || [];
             group.push(node);
             groups.set(expression, group);
@@ -24,7 +24,7 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
     const edits = [];
     let assertions = 0, zeros = 0, declined = 0;
     for (const site of sites.filter(site => site.file === file)) {
-        const group = groups.get(site.expression);
+        const group = groups.get((site.kind || "ElementAccessExpression") + ":" + site.expression);
         if (!group || group.length !== site.total) throw new Error(`site drift: ${file}:${site.line} ${site.expression}`);
         const node = group[site.occurrence - 1];
         const parent = node.parent;
