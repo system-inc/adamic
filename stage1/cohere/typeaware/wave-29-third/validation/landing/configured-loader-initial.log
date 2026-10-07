@@ -1,0 +1,11 @@
+configured inputs 272 bytes 70068 sha256 d3b68f4b44a262046ab95bfdf190410d657fd3befb79dc6eb892df18a20c793c findings 209
+denylist mutant compiled, exit 0, empty stderr; bytes differ
+match mutant compiled, exit 0, empty stderr; bytes differ
+ASan/UBSan/LeakSanitizer bytes agree; empty stderr
+Traceback (most recent call last):
+  File "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/check.py", line 114, in <module>
+    assert run('regexp-probe-js-node',['node',artifacts/'regexp-probe.js']) == node
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage1/cohere/typeaware/wave-29-configured/check.py", line 24, in run
+    raise RuntimeError(f'{name} exit {result.returncode}, expected {expected}; see {artifacts / (name + ".stderr")}')
+RuntimeError: regexp-probe-js-node exit 1, expected 0; see /workspace/wave29-regex-controls/regexp-probe-js-node.stderr

@@ -172,3 +172,5 @@ are stored in `validation/static-core/`. No shared files were edited, no new
 rules were claimed, and the three full rules remain blocked rather than marked
 complete. Set-state-in-effect and set-state-in-render have no new native
 validator here; their blocker controls remain the executable evidence.
+
+The branch was subsequently rebased onto current main and its available oracles rechecked. See [LANDING_REPORT.md](LANDING_REPORT.md) for current results and the remaining React dependency boundary.

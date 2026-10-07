@@ -1,0 +1,103 @@
+[
+  {
+    "name": "go",
+    "args": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/wave29-landing-static-core/overlay.json",
+      "./internal/lint/rules/react",
+      "-run",
+      "^TestWave29StaticCore$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0,
+    "elapsed_ns": 9882989906
+  },
+  {
+    "name": "native-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/static_core.a",
+      "-o",
+      "/workspace/wave29-landing-static-core/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 13898010939
+  },
+  {
+    "name": "native",
+    "args": [
+      "/workspace/wave29-landing-static-core/native",
+      "/workspace/wave29-landing-static-core/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 10324392
+  },
+  {
+    "name": "asan-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/adamic/stage1/cohere/typeaware/wave-29-third/static_core.a",
+      "-o",
+      "/workspace/wave29-landing-static-core/asan",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "elapsed_ns": 11094642779
+  },
+  {
+    "name": "asan",
+    "args": [
+      "/workspace/wave29-landing-static-core/asan",
+      "/workspace/wave29-landing-static-core/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 22223557
+  },
+  {
+    "name": "store-binding-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/wave29-landing-static-core/mutant-store-binding/static_core.a",
+      "-o",
+      "/workspace/wave29-landing-static-core/mutant-store-binding/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 1138804646
+  },
+  {
+    "name": "store-binding",
+    "args": [
+      "/workspace/wave29-landing-static-core/mutant-store-binding/native",
+      "/workspace/wave29-landing-static-core/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 2410955
+  },
+  {
+    "name": "phi-build",
+    "args": [
+      "/workspace/wave29-regex-controls/adamic",
+      "build",
+      "/workspace/wave29-landing-static-core/mutant-phi/static_core.a",
+      "-o",
+      "/workspace/wave29-landing-static-core/mutant-phi/native"
+    ],
+    "exit": 0,
+    "elapsed_ns": 1044693844
+  },
+  {
+    "name": "phi",
+    "args": [
+      "/workspace/wave29-landing-static-core/mutant-phi/native",
+      "/workspace/wave29-landing-static-core/graphs.frames"
+    ],
+    "exit": 0,
+    "elapsed_ns": 2501712
+  }
+]

@@ -102,7 +102,19 @@ os.environ['UBSAN_OPTIONS']='halt_on_error=1'
 asan=run('asan',[artifacts/'asan-native',*args,artifacts/'profiles'])
 assert asan==truth and not (artifacts/'asan.stderr').read_bytes(), 'sanitizer mismatch'
 print('ASan/UBSan/LeakSanitizer bytes agree; empty stderr')
-run('regexp-gap',[compiler,'build',source/'gaps/regexp.a','-o',artifacts/'regexp-gap'],expected=1)
-assert "stage 0 can't lower new an Identifier yet" in (artifacts/'regexp-gap.stderr').read_text()
-print('regexp gap reproduced: compile exit 1')
+# Main now lowers RegExp construction. Hold the formerly refused probe to Node
+# rather than accepting compilation alone as proof that this gap is closed.
+probe = source/'gaps/regexp.a'
+run('regexp-probe-build',[compiler,'build',probe,'-o',artifacts/'regexp-probe'])
+node = run('regexp-probe-node',['node','--disable-warning=ExperimentalWarning',repo/'oracle/node.mjs',probe])
+assert node == b'match\n', 'unexpected reference RegExp behavior'
+assert run('regexp-probe-native',[artifacts/'regexp-probe']) == node
+javascript = run('regexp-probe-javascript',[compiler,'js',probe])
+(artifacts/'regexp-probe.js').write_bytes(javascript)
+assert run('regexp-probe-js-node',['node','--disable-warning=ExperimentalWarning',repo/'oracle/node.mjs',artifacts/'regexp-probe.js']) == node
+run('regexp-probe-asan-build',[compiler,'build',probe,'-o',artifacts/'regexp-probe-asan','--sanitize'])
+assert run('regexp-probe-asan',[artifacts/'regexp-probe-asan']) == node
+for label in ['node','native','javascript','js-node','asan']:
+    assert not (artifacts/('regexp-probe-'+label+'.stderr')).read_bytes()
+print('former RegExp gap closes: Node, native, JavaScript and sanitized native agree')
 (artifacts/'commands.json').write_text(json.dumps(commands,indent=2)+'\n')
