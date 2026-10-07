@@ -1,0 +1,13 @@
+interface EntryNode {
+ readonly label: string;
+ entries: [string, EntryNode][];
+}
+function run(): void {
+ const node: EntryNode = { label: `node${1}`, entries: [] };
+ const cache = new Map<string, EntryNode>();
+ cache.set(node.label, node);
+ node.entries = [...cache];
+ const entry = node.entries[0];
+ if (entry !== undefined) { console.log(`${entry[0]} ${entry[1] === node}`); }
+}
+run();
