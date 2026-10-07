@@ -20,11 +20,13 @@ reports NotYet, `stage 0 can't lower the library method shift yet`: this
 unsupported method must not become a load from a nonexistent own slot. The parser reads the
 front token and removes it with `splice(0, 1)` instead.
 
-## 3. Optional boolean conditions
+## 3. Optional boolean conditions: closed
 
 [gaps/3_optional_boolean_condition.ts](gaps/3_optional_boolean_condition.ts) prints
-`important`. Adamic refuses `a boolean | undefined as a condition`. Reads of the
-boolean property tables compare the result explicitly with `true`.
+`important`. Taste-land now lowers this condition with JavaScript truthiness.
+`TestEachGapStandsWhereGapsMdSaysItDoes` requires the unchanged program and
+Node answer on native ASan/UBSan and the JavaScript backend, with LeakSanitizer.
+The port retains its equivalent explicit comparisons with `true`.
 
 ## 4. Empty array assigned into an optional array
 

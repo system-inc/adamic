@@ -296,3 +296,16 @@ Clean merge efdd7e7f7. Comments only: preserve React/cohere provenance while doc
 ### Item 22: escape-hatches
 
 Resolved document add/add by retaining the complete landed document, including main's accepted decisions and later evidence. Incoming .a probes and measurement tools retained. No compiler behavior changed. Vet passed, Linux counts 26.831s unchanged, whole lower 23.875s passed; no stage3 change or new check requiring a mutant. Historical escape-hatch findings remain labeled observations of their recorded commit.
+
+## Item 23 stage3 audit
+
+Only stage0 changed. Bytes outside every stage0 field, including all Node observations, match the prior tip exactly. Current Node and compiling native checks were required by the updater.
+
+| Fixture | Before | After | Reason |
+|---|---|---|---|
+
+### Item 23: inherited-not-yet
+
+Merge 52be6d202 resolves prototype.go with incoming member-aware signature and classification, keeping diagnostics-audit's adamic/no-prototype-reflection ID. Unsupported library calls/properties are NotYet; unbound methods and isPrototypeOf/constructor/__proto__ remain Refused. Mandatory CSS repair adcff66 applied as 64c1da28f. An existing array.values() gap test expected the old Refused; it now pins NotYet, leaving cycle refusals unchanged. CSS optional boolean original probe now closes under taste-land, checked against unchanged Node output on both backends and leaks. Vet passed; Linux counts 27.658s unchanged. Initial lower failed only the stale array.values() expectation; repaired whole lower 31.914s passed. Stage3 updater 23.306s and byte audit found zero record changes. Removing both NotYet classification branches through a Go overlay fails all three NotYet assertions in TestInheritedLibraryMembersAreClassifiedNotYetOrRefused (0.202s), without changing production source. Full CSS package result follows below.
+
+Full CSS package passed 736.487s; dry guard passed 8.911s. CSS optional boolean gap is closed with the original program and Node answer unchanged. External npm CSS printer comparisons were not enabled. Logs: /tmp/landing-batch-3-23-*.log.

@@ -60,8 +60,8 @@ func TestArrayIteratorInterfaceSlotGap(t *testing.T) {
 		t.Fatal(err)
 	}
 	_, err = Lower(context.Background(), program)
-	var refusal *Refused
-	if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "inherited library member values") {
+	var gap *NotYet
+	if !errors.As(err, &gap) || !strings.Contains(err.Error(), "the library method values") {
 		t.Fatalf("want the stored array iterator's explicit gap, got %v", err)
 	}
 }
