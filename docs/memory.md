@@ -847,7 +847,7 @@ Its result may now name a placeholder too: `same(node)` returns the argument, pr
 - *What a deferred write's value reaches outside is judged by what had escaped before the call.* Replaying a push into a global holder lets the pushed value escape, and that escape is the write's own effect, not a way the value could have reached the holder. While the callee runs, only code it can't see into could tie its arguments to anything, so before the call is what counts, unless the callee clobbers, and then everything escaped after the replay counts. Whether the holder is exposed is judged after the replay: the callee may have stored it into something escaped itself.
 - *A function's exits are its returns and its throws,* so a write before a throw is in its summary. One that never leaves keeps its deferred writes refused.
 
-**How it's held.** 12 more probes in `internal/oracle/testdata/fresh_refused/call_*.a`, the list above (with the child holding its parent written into the child's literal, so the probe is about the push and not about a second cycle-capable field). Each stays refused naming its marked write. `fresh_calls.a` runs three ways leak-clean: a parser built on `addChild`, `addPair` deferring through `addChild`, a helper that makes a child with a `Weak` parent pointer and returns it, and pushes at the top level into a global holder of fresh values. `TestEveryWriteIsRecordedAndKnown`: 314 writes in 148 programs, 295 proven. Mutants, against all 36 probes:
+**How it's held.** 12 more probes in `internal/oracle/testdata/fresh_refused/call_*.a`, the list above (with the child holding its parent written into the child's literal, so the probe is about the push and not about a second cycle-capable field). Each stays refused naming its marked write. `fresh_calls.a` runs three ways leak-clean: a parser built on `addChild`, `addPair` deferring through `addChild`, a helper that makes a child with a `Weak` parent pointer and returns it, and pushes at the top level into a global holder of fresh values. `TestEveryWriteIsRecordedAndKnown`: 314 writes in 148 programs, 295 proven. Mutants, against the probes:
 
 | Mutant | Probes accepted, and leaking |
 |---|---|
@@ -856,10 +856,10 @@ Its result may now name a placeholder too: `same(node)` returns the argument, pr
 | Leaks not replayed | `call_leaks_parent`, `caught` |
 | A comparator treated as a direct call | `call_comparator` |
 | A deferred write dropped instead of judged by callers | 35, every probe but one (34 leak reports; the 35th was refused at another write) |
-| Clobbers ignored | none: masked |
-| What had escaped before the call ignored | none: masked |
+| Clobbers ignored | `clobber_link_loop` |
+| What had escaped before the call ignored | `escaped_before` |
 
-The two masked mutants drop conditions that keep the abstract reach sound when code the callee can't see adds links. Every link such code could add is itself a write into a cycle-capable slot (every edge on a cycle is one), judged in that code with its parameters outside, and refused there; so no whole program is accepted by those mutants that the proof refuses. They're kept because the proof's argument rests on them, not because a probe needs them.
+These two rows once read "none: masked", on the argument that every link code the callee can't see could add is itself a write into a cycle-capable slot, refused where that code is judged. That's false: the link can be a write the proof accepts, a fresh child pushed into a parent, made by a function value or through a global the callee can't see, and only together with the later write does it close a cycle. Integration's reading of aee89b2 (#fxspptb) showed it: without either condition `clobber_link_loop.a` (a function value adds the child) and `escaped_before.a` (a closure adds it through a global the parent escaped to) compile, and leak 800 objects each under LeakSanitizer. Both are probes now, with eight more from the same reading that hold other conditions in `internal/fresh` no probe reached: `everything()`'s exposed reads, a handler's state before and after, a destructured `for...of` keeping its element, and `reverse`, `fill`, `sort`, `map.set` and `set.add` returning their receiver (`spread_outside`, `throw_keeps_old`, `map_entries_pattern`, `alias_*`).
 
 ## Exceptions, designed into counting
 
