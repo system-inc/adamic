@@ -1,0 +1,14 @@
+// Stopped language choice: admit ordinary functions with dynamic this and bind.
+// Judgment: sound if a bound closure retains its receiver, this is erased from
+// runtime parameters, and the existing ownership/cycle checks cover that edge.
+// Today docs/0.1.md limits this to methods and constructors. Do not erase this
+// into an ordinary argument or detach the callee while adding optional calls.
+// TypeScript 6.0.3 core.ts:1522, original maybeBind body.
+function maybeBind<T, A extends any[], R>(obj: T, fn: ((this: T, ...args: A) => R) | undefined): ((...args: A) => R) | undefined {
+    return fn?.bind(obj);
+}
+const receiver = { value: 'receiver' };
+const fn = function (this: typeof receiver): string { return this.value; };
+const bound = maybeBind(receiver, fn);
+console.log(bound?.() ?? 'missing');
+console.log(`${maybeBind<typeof receiver, [], string>(receiver, undefined)}`);
