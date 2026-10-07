@@ -1,0 +1,8 @@
+--- FAIL: TestRefusalPassRulings (0.00s)
+    --- FAIL: TestRefusalPassRulings/any-order.a (0.08s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsany-order.a2676900967/001/main.a:2:5: stage 0 can't lower a value of type any yet, want Refused
+    --- FAIL: TestRefusalPassRulings/any.a (0.03s)
+        refusal_pass_test.go:31: got /tmp/adamic-gate/TestRefusalPassRulingsany.a430347680/001/main.a:1:5: stage 0 can't lower a value of type any yet, want Refused
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.363s
+FAIL
