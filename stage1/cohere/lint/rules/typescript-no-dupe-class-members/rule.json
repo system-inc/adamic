@@ -1,0 +1,14 @@
+{
+  "name": "@typescript-eslint/no-dupe-class-members",
+  "kinds": [
+    "ClassDeclaration",
+    "ClassExpression"
+  ],
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "visit": "visit",
+  "oracle": "oracleNoDupeClassMembers",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoDupeClassMembers"
+}
