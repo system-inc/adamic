@@ -1,0 +1,1357 @@
+{
+  "typescript": "6.0.3",
+  "census": [
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1074,
+      "column": 88,
+      "source": "export type IncrementalBuildInfoFileId = number & { __incrementalBuildInfoFileIdBrand: any; };"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1076,
+      "column": 100,
+      "source": "export type IncrementalBuildInfoFileIdListId = number & { __incrementalBuildInfoFileIdListIdBrand: any; };"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1452,
+      "column": 32,
+      "source": "    declare _symbolLinksBrand: any;"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2940,
+      "column": 76,
+      "source": "        return nodeLinks[nodeId] || (nodeLinks[nodeId] = new (NodeLinks as any)());"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6834,
+      "column": 40,
+      "source": "                        (parentName as any).isTypeOf = true; // mutably update, node is freshly manufactured anyhow"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10953,
+      "column": 77,
+      "source": "                    return Debug.fail(`Unhandled class member kind! ${(p as any).__debugFlags || p.flags}`);"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 12480,
+      "column": 87,
+      "source": "    function widenTypeForVariableLikeDeclaration(type: Type | undefined, declaration: any, reportErrors?: boolean) {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2206,
+      "column": 72,
+      "source": "export function getDiagnosticText(message: DiagnosticMessage, ...args: any[]): string {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2267,
+      "column": 110,
+      "source": "export function readConfigFile(fileName: string, readFile: (path: string) => string | undefined): { config?: any; error?: Diagnostic; } {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2277,
+      "column": 91,
+      "source": "export function parseConfigFileTextToJson(fileName: string, jsonText: string): { config?: any; error?: Diagnostic; } {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2430,
+      "column": 16,
+      "source": "        value: any,"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2441,
+      "column": 4,
+      "source": "): any {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2467,
+      "column": 84,
+      "source": "export function convertToObject(sourceFile: JsonSourceFile, errors: Diagnostic[]): any {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2484,
+      "column": 4,
+      "source": "): any {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2494,
+      "column": 8,
+      "source": "    ): any {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2495,
+      "column": 23,
+      "source": "        const result: any = returnValue ? {} : undefined;"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2538,
+      "column": 110,
+      "source": "    function convertPropertyValueToJson(valueExpression: Expression, option: CommandLineOption | undefined): any {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2606,
+      "column": 79,
+      "source": "function isCompilerOptionsValue(option: CommandLineOption | undefined, value: any): value is CompilerOptionsValue {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3013,
+      "column": 50,
+      "source": "export function parseJsonConfigFileContent(json: any, host: ParseConfigHost, basePath: string, existingOptions?: CompilerOptions, configFileName?: string, resolutionStack?: Path[], extraFileExtensions?: readonly FileExtensionInfo[], extendedConfigCache?: Map<string, ExtendedConfigCacheEntry>, existingWatchOptions?: WatchOptions): ParsedCommandLine {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3038,
+      "column": 31,
+      "source": "function isNullOrUndefined(x: any): x is null | undefined { // eslint-disable-line no-restricted-syntax"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3060,
+      "column": 11,
+      "source": "    json: any,"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3300,
+      "column": 45,
+      "source": "function startsWithConfigDirTemplate(value: any): value is string {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3354,
+      "column": 48,
+      "source": "export function canJsonReportNoInputFiles(raw: any): boolean {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3377,
+      "column": 10,
+      "source": "    raw: any;"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3406,
+      "column": 11,
+      "source": "    json: any,"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3497,
+      "column": 11,
+      "source": "    json: any,"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3599,
+      "column": 16,
+      "source": "        value: any,"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3725,
+      "column": 57,
+      "source": "function convertCompileOnSaveOptionFromJson(jsonOption: any, basePath: string, errors: Diagnostic[]): boolean {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3733,
+      "column": 61,
+      "source": "export function convertCompilerOptionsFromJson(jsonOptions: any, basePath: string, configFileName?: string): { options: CompilerOptions; errors: Diagnostic[]; } {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3739,
+      "column": 61,
+      "source": "export function convertTypeAcquisitionFromJson(jsonOptions: any, basePath: string, configFileName?: string): { options: TypeAcquisition; errors: Diagnostic[]; } {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3752,
+      "column": 60,
+      "source": "function convertCompilerOptionsFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[], configFileName?: string): CompilerOptions {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3765,
+      "column": 60,
+      "source": "function convertTypeAcquisitionFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[], configFileName?: string): TypeAcquisition {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3771,
+      "column": 57,
+      "source": "function convertWatchOptionsFromJsonWorker(jsonOptions: any, basePath: string, errors: Diagnostic[]): WatchOptions | undefined {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3775,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined;"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3776,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition;"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3777,
+      "column": 94,
+      "source": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition | WatchOptions | undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]) {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3803,
+      "column": 12,
+      "source": "    value: any,"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3835,
+      "column": 90,
+      "source": "function normalizeNonListOptionValue(option: CommandLineOption, basePath: string, value: any): CompilerOptionsValue {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3880,
+      "column": 22,
+      "source": "    values: readonly any[],"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3886,
+      "column": 4,
+      "source": "): any[] {"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 4276,
+      "column": 48,
+      "source": "function getOptionValueWithEmptyStrings(value: any, option: CommandLineOption): {} | undefined {"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 22,
+      "column": 40,
+      "source": "export function length(array: readonly any[] | undefined): number {"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 437,
+      "column": 136,
+      "source": "export function* flatMapIterator<T, U>(iter: Iterable<T>, mapfn: (x: T) => readonly U[] | Iterable<U> | undefined): Generator<U, void, any> {"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 736,
+      "column": 50,
+      "source": "    if (array.length === 0) return emptyArray as any as SortedReadonlyArray<T>;"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 759,
+      "column": 28,
+      "source": "    return deduplicated as any as SortedReadonlyArray<T>;"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 764,
+      "column": 18,
+      "source": "    return [] as any as SortedArray<T>; // TODO: GH#19873"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 810,
+      "column": 120,
+      "source": "    return deduplicateSorted(toSorted(array, comparer), equalityComparer ?? comparer ?? compareStringsCaseSensitive as any as Comparer<T>);"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 965,
+      "column": 35,
+      "source": "function toOffset(array: readonly any[], offset: number) {"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1066,
+      "column": 119,
+      "source": "export const elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined = !!(Array.prototype as any).at"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1067,
+      "column": 36,
+      "source": "    ? (array, offset) => (array as any)?.at(offset)"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1266,
+      "column": 42,
+      "source": "export function hasProperty(map: MapLike<any>, key: string): boolean {"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1479,
+      "column": 19,
+      "source": "    const result: any = {};"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1482,
+      "column": 37,
+      "source": "            result[id] = (object as any)[id];"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1496,
+      "column": 35,
+      "source": "    const result: T1 & T2 = {} as any;"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1499,
+      "column": 24,
+      "source": "            (result as any)[id] = (second as any)[id];"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1499,
+      "column": 46,
+      "source": "            (result as any)[id] = (second as any)[id];"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1505,
+      "column": 24,
+      "source": "            (result as any)[id] = (first as any)[id];"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1505,
+      "column": 45,
+      "source": "            (result as any)[id] = (first as any)[id];"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1516,
+      "column": 23,
+      "source": "            (first as any)[id] = second[id];"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1522,
+      "column": 40,
+      "source": "export function maybeBind<T, A extends any[], R>(obj: T, fn: ((this: T, ...args: A) => R) | undefined): ((...args: A) => R) | undefined {"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1750,
+      "column": 32,
+      "source": "export function isArray(value: any): value is readonly unknown[] {"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1778,
+      "column": 49,
+      "source": "export function tryCast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut | undefined {"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1783,
+      "column": 46,
+      "source": "export function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut {"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 2593,
+      "column": 25,
+      "source": "        && !(process as any).browser"
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "line": 18,
+      "column": 28,
+      "source": "    \" __sortedArrayBrand\": any;"
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "line": 22,
+      "column": 28,
+      "source": "    \" __sortedArrayBrand\": any;"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 170,
+      "column": 31,
+      "source": "                    (Debug as any)[key] = cachedFunc;"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 190,
+      "column": 23,
+      "source": "            (Debug as any)[name] = noop;"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 200,
+      "column": 23,
+      "source": "        if ((Error as any).captureStackTrace) {"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 201,
+      "column": 23,
+      "source": "            (Error as any).captureStackTrace(e, stackCrawlMark || fail);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 373,
+      "column": 29,
+      "source": "            return (func as any).name;"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 389,
+      "column": 55,
+      "source": "    export function formatEnum(value = 0, enumObject: any, isFlags?: boolean): string {"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 420,
+      "column": 37,
+      "source": "    const enumMemberCache = new Map<any, SortedReadonlyArray<[number, string]>>();"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 422,
+      "column": 41,
+      "source": "    function getEnumMembers(enumObject: any) {"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 445,
+      "column": 40,
+      "source": "        return formatEnum(kind, (ts as any).SyntaxKind, /*isFlags*/ false);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 449,
+      "column": 40,
+      "source": "        return formatEnum(kind, (ts as any).SnippetKind, /*isFlags*/ false);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 453,
+      "column": 40,
+      "source": "        return formatEnum(kind, (ts as any).ScriptKind, /*isFlags*/ false);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 457,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).NodeFlags, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 461,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).NodeCheckFlags, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 465,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).ModifierFlags, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 469,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).TransformFlags, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 473,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).EmitFlags, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 477,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).SymbolFlags, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 481,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).TypeFlags, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 485,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).SignatureFlags, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 489,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).ObjectFlags, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 493,
+      "column": 41,
+      "source": "        return formatEnum(flags, (ts as any).FlowFlags, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 497,
+      "column": 42,
+      "source": "        return formatEnum(result, (ts as any).RelationComparisonResult, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 501,
+      "column": 40,
+      "source": "        return formatEnum(mode, (ts as any).CheckMode, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 505,
+      "column": 40,
+      "source": "        return formatEnum(mode, (ts as any).SignatureCheckMode, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 509,
+      "column": 41,
+      "source": "        return formatEnum(facts, (ts as any).TypeFacts, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 540,
+      "column": 62,
+      "source": "                        return formatEnum(this.flags, (ts as any).FlowFlags, /*isFlags*/ true);"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1274,
+      "column": 53,
+      "source": "    var currentParenthesizerRule: ParenthesizerRule<any> | undefined;"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5790,
+      "column": 147,
+      "source": "        return Debug.fail(`Unsupported GeneratedIdentifierKind: ${Debug.formatEnum(autoGenerate.flags & GeneratedIdentifierFlags.KindMask, (ts as any).GeneratedIdentifierFlags, /*isFlags*/ true)}.`);"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 22,
+      "source": "            (node as any)[p] = (source as any)[p];"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 43,
+      "source": "            (node as any)[p] = (source as any)[p];"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 118,
+      "column": 88,
+      "source": "export function trace(host: ModuleResolutionHost, message: DiagnosticMessage, ...args: any[]): void {"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 954,
+      "column": 69,
+      "source": "            str += `${key}: ${compilerOptionValueToString((value as any)[key])}`;"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 975,
+      "column": 66,
+      "source": "export type RedirectsCacheKey = string & { __compilerOptionsKey: any; };"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1113,
+      "column": 65,
+      "source": "export type ModeAwareCacheKey = string & { __modeAwareCacheKey: any; };"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1256,
+      "column": 54,
+      "source": "            const packageJsonContent: Record<string, any> | undefined = cachedPackageJson?.contents.packageJsonContent || tryParseJson(host.readFile!(packageJsonPath)!);"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1253,
+      "column": 78,
+      "source": "    const fn = (forEachChildTable as Record<SyntaxKind, ForEachChildFunction<any>>)[node.kind];"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2176,
+      "column": 75,
+      "source": "    function scanError(message: DiagnosticMessage, length: number, arg0?: any): void {"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10207,
+      "column": 25,
+      "source": "        if ((element as any).parent) {"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10208,
+      "column": 40,
+      "source": "            const parent = (element as any).parent as Node;"
+    },
+    {
+      "file": "src/compiler/path.ts",
+      "line": 457,
+      "column": 67,
+      "source": "export type PathPathComponents = Path[] & { __pathComponensBrand: any; };"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 393,
+      "column": 27,
+      "source": "    readFile: ProgramHost<any>[\"readFile\"],"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3284,
+      "column": 130,
+      "source": "        return rootNames.length ? sortAndDeduplicateDiagnostics(getTypeChecker().getGlobalDiagnostics().slice()) : emptyArray as any as SortedReadonlyArray<Diagnostic>;"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3526,
+      "column": 50,
+      "source": "            fileIncludeKind: (FileIncludeKind as any)[reason.kind],"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4379,
+      "column": 81,
+      "source": "            const moduleResolutionName = ModuleResolutionKind[moduleKindName as any] ? moduleKindName : \"Node16\";"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 209,
+      "column": 8,
+      "source": "    ): any;"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 215,
+      "column": 15,
+      "source": "        data: any,"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 216,
+      "column": 8,
+      "source": "    ): any;"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 563,
+      "column": 46,
+      "source": "            (primaryResult.resolvedModule as any) = resolvedModule;"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 39,
+      "column": 81,
+      "source": "export type ErrorCallback = (message: DiagnosticMessage, length: number, arg0?: any) => void;"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 952,
+      "column": 111,
+      "source": "function appendCommentRange(pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, _state: any, comments: CommentRange[] = []) {"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1161,
+      "column": 87,
+      "source": "    function error(message: DiagnosticMessage, errPos: number, length: number, arg0?: any): void;"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1162,
+      "column": 94,
+      "source": "    function error(message: DiagnosticMessage, errPos: number = pos, length?: number, arg0?: any): void {"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 4063,
+      "column": 77,
+      "source": "const utf16EncodeAsStringWorker: (codePoint: number) => string = (String as any).fromCodePoint ? codePoint => (String as any).fromCodePoint(codePoint) : utf16EncodeAsStringFallback;"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 4063,
+      "column": 122,
+      "source": "const utf16EncodeAsStringWorker: (codePoint: number) => string = (String as any).fromCodePoint ? codePoint => (String as any).fromCodePoint(codePoint) : utf16EncodeAsStringFallback;"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 404,
+      "column": 28,
+      "source": "function isStringOrNull(x: any) {"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 408,
+      "column": 28,
+      "source": "function isRawSourceMap(x: any): x is RawSourceMap {"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 27,
+      "source": "                if ((d as any).type && (d as any).type.kind === SyntaxKind.TypeQuery) {"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 46,
+      "source": "                if ((d as any).type && (d as any).type.kind === SyntaxKind.TypeQuery) {"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 208,
+      "column": 41,
+      "source": "                    const query = (d as any).type as TypeQueryNode;"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 50,
+      "column": 48,
+      "source": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 50,
+      "column": 82,
+      "source": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 51,
+      "column": 39,
+      "source": "declare function clearTimeout(handle: any): void;"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 75,
+      "column": 19,
+      "source": "    if ((Error as any).stackTraceLimit < 100) { // Also tests that we won't set the property if it doesn't exist."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 76,
+      "column": 19,
+      "source": "        (Error as any).stackTraceLimit = 100;"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 463,
+      "column": 24,
+      "source": "    let pollScheduled: any;"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 516,
+      "column": 30,
+      "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 516,
+      "column": 58,
+      "source": "                    (param1: any, param2: never, param3: any) => cache.get(path)?.callbacks.slice().forEach(cb => cb(param1, param2, param3))"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 617,
+      "column": 36,
+      "source": "    let timerToUpdateChildWatches: any;"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1440,
+      "column": 37,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1440,
+      "column": 74,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1440,
+      "column": 82,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 30,
+      "source": "    clearTimeout?(timeoutId: any): void;"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1594,
+      "column": 203,
+      "source": "            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!(process as any).recordreplay,"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1609,
+      "column": 51,
+      "source": "                const handle = (process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; };"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1853,
+      "column": 31,
+      "source": "                    let stat: any;"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 231,
+      "column": 42,
+      "source": "            const objectFlags = (type as any).objectFlags;"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 317,
+      "column": 41,
+      "source": "                intrinsicName: (type as any).intrinsicName,"
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "line": 338,
+      "column": 116,
+      "source": "        tracing?.push(tracing.Phase.Emit, \"transformNodes\", node.kind === SyntaxKind.SourceFile ? { path: (node as any as SourceFile).path } : { kind: node.kind, pos: node.pos, end: node.end });"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 774,
+      "column": 103,
+      "source": "function isUsingVariableDeclarationList(node: Node): node is VariableDeclarationList & { _usingBrand: any; } {"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 424,
+      "column": 37,
+      "source": "    timerToBuildInvalidatedProject: any;"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 992,
+      "column": 34,
+      "source": "                    ((program as any as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile) &&"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 993,
+      "column": 33,
+      "source": "                    (program as any as SemanticDiagnosticsBuilderProgram).getSemanticDiagnosticsOfNextAffectedFile(cancellationToken, ignoreSourceFile),"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1355,
+      "column": 64,
+      "source": "    return readBuilderProgram(parsed.options, compilerHost) as any as T;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 23,
+      "column": 44,
+      "source": "export type Path = string & { __pathBrand: any; };"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 958,
+      "column": 27,
+      "source": "    _jsdocContainerBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 968,
+      "column": 28,
+      "source": "    _localsContainerBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 974,
+      "column": 26,
+      "source": "    _flowContainerBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 1757,
+      "column": 24,
+      "source": "    _declarationBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 1944,
+      "column": 25,
+      "source": "    _autoAccessorBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 1981,
+      "column": 26,
+      "source": "    _objectLiteralBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 2064,
+      "column": 36,
+      "source": "    _functionLikeDeclarationBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 2185,
+      "column": 21,
+      "source": "    _typeNodeBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 2397,
+      "column": 23,
+      "source": "    _expressionBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 2412,
+      "column": 28,
+      "source": "    _unaryExpressionBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 2418,
+      "column": 29,
+      "source": "    _updateExpressionBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 2449,
+      "column": 35,
+      "source": "    _leftHandSideExpressionBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 2453,
+      "column": 29,
+      "source": "    _memberExpressionBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 2457,
+      "column": 30,
+      "source": "    _primaryExpressionBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 2785,
+      "column": 30,
+      "source": "    _literalExpressionBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 2982,
+      "column": 26,
+      "source": "    _optionalChainBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 2997,
+      "column": 55,
+      "source": "    _propertyAccessExpressionLikeQualifiedNameBrand?: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 3010,
+      "column": 26,
+      "source": "    _optionalChainBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 3034,
+      "column": 26,
+      "source": "    _optionalChainBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 3168,
+      "column": 26,
+      "source": "    _optionalChainBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 3322,
+      "column": 22,
+      "source": "    _statementBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 3568,
+      "column": 25,
+      "source": "    _classElementBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 3573,
+      "column": 24,
+      "source": "    _typeElementBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 3903,
+      "column": 22,
+      "source": "    _jsDocTypeBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 6059,
+      "column": 24,
+      "source": "    _symbolLinksBrand: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 7705,
+      "column": 11,
+      "source": "    raw?: any;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 9857,
+      "column": 64,
+      "source": "    /** @internal */ onBeforeEmitNodeArray?: (nodes: NodeArray<any> | undefined) => void;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 9858,
+      "column": 63,
+      "source": "    /** @internal */ onAfterEmitNodeArray?: (nodes: NodeArray<any> | undefined) => void;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10320,
+      "column": 49,
+      "source": "export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10323,
+      "column": 91,
+      "source": "export type ArgumentDefinitionToFieldUnion<T extends readonly PragmaArgumentSpecification<any>[]> = {"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10332,
+      "column": 155,
+      "source": "export type PragmaArgumentType<KPrag extends keyof ConcretePragmaSpecs> = ConcretePragmaSpecs[KPrag] extends { args: readonly PragmaArgumentSpecification<any>[]; } ? UnionToIntersection<ArgumentDefinitionToFieldUnion<ConcretePragmaSpecs[KPrag][\"args\"]>>"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 4289,
+      "column": 40,
+      "source": "    _prototypePropertyAssignmentBrand: any;"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 7809,
+      "column": 45,
+      "source": "export function tryParseJson(text: string): any {"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 41,
+      "source": "export function compareDataObjects(dst: any, src: any): boolean {"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 51,
+      "source": "export function compareDataObjects(dst: any, src: any): boolean {"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8486,
+      "column": 14,
+      "source": "    (this as any).links = undefined; // used by TransientSymbol"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8553,
+      "column": 39,
+      "source": "    getNodeConstructor: () => Node as any,"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8554,
+      "column": 41,
+      "source": "    getTokenConstructor: () => Token as any,"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8555,
+      "column": 51,
+      "source": "    getIdentifierConstructor: () => Identifier as any,"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8556,
+      "column": 52,
+      "source": "    getPrivateIdentifierConstructor: () => Node as any,"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8557,
+      "column": 45,
+      "source": "    getSourceFileConstructor: () => Node as any,"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8558,
+      "column": 43,
+      "source": "    getSymbolConstructor: () => Symbol as any,"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8559,
+      "column": 39,
+      "source": "    getTypeConstructor: () => Type as any,"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8560,
+      "column": 49,
+      "source": "    getSignatureConstructor: () => Signature as any,"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8561,
+      "column": 61,
+      "source": "    getSourceMapSourceConstructor: () => SourceMapSource as any,"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9029,
+      "column": 97,
+      "source": "type CompilerOptionKeys = keyof { [K in keyof CompilerOptions as string extends K ? never : K]: any; };"
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 603,
+      "column": 82,
+      "source": "    const fn = (visitEachChildTable as Record<SyntaxKind, VisitEachChildFunction<any> | undefined>)[node.kind];"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 221,
+      "column": 49,
+      "source": "    const host: ParseConfigFileHost = system as any;"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 754,
+      "column": 69,
+      "source": "export function createCompilerHostFromProgramHost(host: ProgramHost<any>, getCompilerOptions: () => CompilerOptions, directoryStructureHost: DirectoryStructureHost = host): CompilerHost {"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 862,
+      "column": 91,
+      "source": "        createProgram: createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>,"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 150,
+      "column": 88,
+      "source": "    createProgram = createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>;"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 151,
+      "column": 61,
+      "source": "    const oldProgram = readBuilderProgram(options, host) as any as T;"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 37,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 74,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 82,
+      "source": "    setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 171,
+      "column": 30,
+      "source": "    clearTimeout?(timeoutId: any): void;"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 443,
+      "column": 31,
+      "source": "    let timerToUpdateProgram: any; // timer callback to recompile the program"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 444,
+      "column": 51,
+      "source": "    let timerToInvalidateFailedLookupResolutions: any; // timer callback to invalidate resolutions for changes in failed lookup locations"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 555,
+      "column": 75,
+      "source": "    builderProgram = readBuilderProgram(compilerOptions, compilerHost) as any as T;"
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 814,
+      "column": 23,
+      "source": "            (...args: any[]) => {"
+    }
+  ],
+  "sources": {
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e",
+    "src/compiler/_namespaces/ts.performance.ts": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+    "src/compiler/_namespaces/ts.ts": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b",
+    "src/compiler/binder.ts": "b2a0d4d09bfdd389297e346776d12297e4add7e0b62ba2015862e6b50dcb2aa3",
+    "src/compiler/builder.ts": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+    "src/compiler/builderPublic.ts": "a6a304c41be6a7b33febcae8dd98955f90313c7e2d56af02f476e6b9722b82d6",
+    "src/compiler/builderState.ts": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+    "src/compiler/builderStatePublic.ts": "93138f0f93fd9dff071c3def9feebc5f88fbe65bcb028d4ca8871d3155b9b522",
+    "src/compiler/checker.ts": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "src/compiler/commandLineParser.ts": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab",
+    "src/compiler/core.ts": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+    "src/compiler/corePublic.ts": "899b3d3421836d6345090bce67d16d6c73c944762bfb0b5483a1e2ae192c9b09",
+    "src/compiler/debug.ts": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "src/compiler/emitter.ts": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63",
+    "src/compiler/executeCommandLine.ts": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf",
+    "src/compiler/expressionToTypeNode.ts": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462",
+    "src/compiler/factory/baseNodeFactory.ts": "86826be85abc6406cec8915574950ab349ba829167a4d3f28332c38dd8b90e0a",
+    "src/compiler/factory/emitHelpers.ts": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+    "src/compiler/factory/emitNode.ts": "d4e8f25e7c30e6c6f5fbb72d56812d140f8d15384be4a7bd4da226a47559583a",
+    "src/compiler/factory/nodeChildren.ts": "bded8155f089e40a86d99d53e135b8f3a4cbc49f70ff2bdd0b80f0683a2e9606",
+    "src/compiler/factory/nodeConverters.ts": "3d5979059f70d4c381bbd5998181441dd6aaa7e15f6564a8f97d446ad85b041d",
+    "src/compiler/factory/nodeFactory.ts": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "src/compiler/factory/nodeTests.ts": "47cc22cce04a5fa143e8182bd0f6e5aea2b1b34d58539701a0785fb0b60cf14f",
+    "src/compiler/factory/parenthesizerRules.ts": "94aa00739f9d2b7f41ca6c5d0aaa5495a1d4d4b7c8af1919361a64a7abf90764",
+    "src/compiler/factory/utilities.ts": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+    "src/compiler/factory/utilitiesPublic.ts": "a91c2dcc86ec6711aeae4fb0ad512209abe7a220ef2a0e7d2f04c3adcb7a0ff1",
+    "src/compiler/moduleNameResolver.ts": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+    "src/compiler/moduleSpecifiers.ts": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+    "src/compiler/parser.ts": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "src/compiler/path.ts": "4b777f1a03b9f39b4864106e60a43828b5b749a5fae00f68d6faf8f02e0c91bc",
+    "src/compiler/performance.ts": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+    "src/compiler/performanceCore.ts": "7f6e15fcf84111901e95303399ba69c9baacc3466a3ad5b5b21633c3d382f7b4",
+    "src/compiler/program.ts": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "src/compiler/programDiagnostics.ts": "1def95bb98fb69151be4295c58ccc4599cdb38b4cb710b807f19b7e8433fa8a5",
+    "src/compiler/resolutionCache.ts": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+    "src/compiler/scanner.ts": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+    "src/compiler/semver.ts": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe",
+    "src/compiler/sourcemap.ts": "036ab3c39165eb06a3fb145e1467f4f0dfebdb1f76b5faccc34a79db756473e4",
+    "src/compiler/symbolWalker.ts": "6aec8fecf7d57abd557bdbd4a9744ba2a1f3d8fcc9e9b84721158bd4f284300a",
+    "src/compiler/sys.ts": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+    "src/compiler/tracing.ts": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+    "src/compiler/transformer.ts": "d13096beeb8d41a78cc48add41d5028b456e23f73c9973fe175c35941257a066",
+    "src/compiler/transformers/classFields.ts": "d3a0359fad8430943ca68282cc32b12bc61a6631fa93901f6c480f411c4542f4",
+    "src/compiler/transformers/classThis.ts": "41c65d5bb7518697a301cce563f6f800ed3ba8856372e86998d259a3eb439a6e",
+    "src/compiler/transformers/declarations.ts": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e",
+    "src/compiler/transformers/declarations/diagnostics.ts": "dbc7849a0535ef63307656557c1037ef15006f7d6246197c095350854b71e721",
+    "src/compiler/transformers/destructuring.ts": "d38490b41ddbc56be090ddebcec8de5cd11ec88104cc4b859a19cdf132e7c640",
+    "src/compiler/transformers/es2015.ts": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4",
+    "src/compiler/transformers/es2016.ts": "3e3ba9728ee63a9c68e8aee6356e84b611ec19c4acbfc7b4b806b49903c2967e",
+    "src/compiler/transformers/es2017.ts": "b18e65782e3ff096fb09a4609db90dddcb0cbdd8a2f1e72caeea19426dbd92b5",
+    "src/compiler/transformers/es2018.ts": "846876b89a5be66536d351c7c89769acc7b8ed45577411f361107963caa09c2d",
+    "src/compiler/transformers/es2019.ts": "99d755a8cd5bdd07d23590330990828ae7c8a33dae9d55926f5b0ab07db84878",
+    "src/compiler/transformers/es2020.ts": "763fb25fb5c40acf6d2482631c79709c9eddd299303292750a57216e392ae1dd",
+    "src/compiler/transformers/es2021.ts": "29798cddd385947caa004effdf997df6bc97b9a9b1d9919413dcee3a6a8b5205",
+    "src/compiler/transformers/esDecorators.ts": "bcef2e876468210c48941dad975a492f49eab7abeb4f75ca603e76ffd5e06c7c",
+    "src/compiler/transformers/esnext.ts": "7c566610dda1adbd37eec796f52b00a0ab2c08f42f678028ecf3b9f3516f60d1",
+    "src/compiler/transformers/generators.ts": "93e6814b36032fd49fbc2f9ff7fa60695430431f3c11a3f03207827fe44c07f5",
+    "src/compiler/transformers/jsx.ts": "2d9f268e5764a96ef52c2fd4d8b889bf248914917c6152358666a3effb041e6b",
+    "src/compiler/transformers/legacyDecorators.ts": "8321e776d83fe3892df9331baa9c1b837736ba5e4130d379a75ef9bfe34d86e8",
+    "src/compiler/transformers/module/esnextAnd2015.ts": "6c163c8dc720431f02b335d8d5c25efe849039d5805bfa722899f8a2cc2e6945",
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts": "9170b66a9feaa1b340e0723e0a0b10c085385c42ff25d39e9a24dd44e2d84a45",
+    "src/compiler/transformers/module/module.ts": "69802404b3e40beec0a1707813bf556841b81728a31af29ac554e95bc87f9c36",
+    "src/compiler/transformers/module/system.ts": "89f55cac43736092d29266dbe77b6e3a94c8ff5684bb7d41306a1e544b2caef7",
+    "src/compiler/transformers/namedEvaluation.ts": "7529078853a659502ab39832a4eec7e0ee6b94df675f63960254c56cc31060e7",
+    "src/compiler/transformers/taggedTemplate.ts": "800dc3bebb7e7879e68b5f3ed684397e41dd76b73a1130764fefe6007f627ea9",
+    "src/compiler/transformers/ts.ts": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+    "src/compiler/transformers/typeSerializer.ts": "8219081416c67c9ea7f1f8da6125775652eb7d065e8897fd430f50d83dbac5d6",
+    "src/compiler/transformers/utilities.ts": "cbddbf83ed9af717b94398ab8b2617f0098406d26712ae816130f40d3ce9c2e5",
+    "src/compiler/tsbuild.ts": "fb3789e399c0c7e1548d3949eab83a47da545cc88fe0ba2eee356926be607b78",
+    "src/compiler/tsbuildPublic.ts": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5",
+    "src/compiler/types.ts": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "src/compiler/utilities.ts": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "src/compiler/utilitiesPublic.ts": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2",
+    "src/compiler/visitorPublic.ts": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "src/compiler/watch.ts": "c9d074948345a04d85e87d3c4b3e1a2c8328422c20e0b36b3ee9ae1c7a7ad24e",
+    "src/compiler/watchPublic.ts": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef",
+    "src/compiler/watchUtilities.ts": "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487"
+  },
+  "diagnostics": [],
+  "outputs": {
+    "local/_tsc.js": "1c59e77a54b186ec43fa7f3e0d3c4bb15ca5eb5ba43e96b1d3a267139eddd3e3",
+    "local/_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+    "local/_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+    "local/run.js": "515554e08cfa2887a10c2d357e3515068788d427af4053e7db016de98350bb94",
+    "local/tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "local/tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+    "local/tsserverlibrary.js": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+    "local/typescript.js": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+    "local/typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+    "local/watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+  }
+}

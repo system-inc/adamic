@@ -384,9 +384,20 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	var found *widening
 	switch {
 	case node.Kind == ast.KindAsExpression:
-		// x as Wider is a view as much as an initializer is; cast.go takes an upcast as the value.
-		own, contextual = l.checker.GetTypeAtLocation(node.AsAsExpression().Expression), l.checker.GetTypeAtLocation(node)
-		found = l.freshOrWidened(node.AsAsExpression().Expression, own, contextual)
+		as := node.AsAsExpression()
+		if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+			return nil
+		}
+		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
+		if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+			return l.provenRelation(node, as.Expression, target)
+		}
+		// Preserve the existing checks on downcasts; their lowering belongs to cast.go.
+		own, contextual = source, target
+		found = l.freshOrWidened(as.Expression, own, contextual)
+	case node.Kind == ast.KindSatisfiesExpression:
+		satisfies := node.AsSatisfiesExpression()
+		return l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type))
 	case node.Kind == ast.KindShorthandPropertyAssignment:
 		// { pets } is { pets: pets }: the variable seen as the literal's property.
 		literal := l.checker.GetContextualType(node.Parent, checker.ContextFlagsNone)
@@ -449,6 +460,10 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	if found == nil {
 		return nil
 	}
+	return l.wideningRefusal(node, own, contextual, found)
+}
+
+func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
 	if found.enum {
 		if enumObjectSymbol(found.target) != nil {
 			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}

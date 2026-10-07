@@ -209,7 +209,7 @@ func (l *lowering) localRead(node *ast.Node, local int) ir.Expression {
 	}
 	if declared := l.result.Locals[local].Type; declared.IsMaybe() {
 		// Where the checker has narrowed it to what it holds, it's read as that.
-		if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !comparedWithUndefined(node) {
+		if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
 			read = ir.Unwrap{Value: read}
 		}
 	}

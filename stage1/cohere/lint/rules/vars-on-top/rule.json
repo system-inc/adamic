@@ -1,0 +1,14 @@
+{
+  "name": "vars-on-top",
+  "kinds": [
+    "VariableDeclarationList"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleVarsOnTop",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestVarsOnTop",
+  "factory": "create",
+  "class": "Rule",
+  "parent": true
+}

@@ -1,0 +1,296 @@
+[
+  {
+    "reason": "a function inside a function (a closure)",
+    "category": "a",
+    "action": "Implement named nested functions with recursive binding, captures and lifetime proofs.",
+    "path": "repro/r01/main.a"
+  },
+  {
+    "reason": "a class inside a function",
+    "category": "a",
+    "action": "Implement local class binding and captured constructor/method environments.",
+    "path": "repro/r02/main.a"
+  },
+  {
+    "reason": "TS1484",
+    "category": "b",
+    "action": "Use explicit type imports; runtime import effects must remain.",
+    "path": "repro/r03/main.a"
+  },
+  {
+    "reason": "non-boolean control condition",
+    "category": "b",
+    "action": "Make the original truthiness test explicit; preserve JS coercion.",
+    "path": "repro/r04/main.a"
+  },
+  {
+    "reason": "the non-null assertion !",
+    "category": "b",
+    "action": "Replace each assertion with proven narrowing or a loud checked unwrap.",
+    "path": "repro/r05/main.a"
+  },
+  {
+    "reason": "TS2345",
+    "category": "c",
+    "action": "Required argument, optional value, array density, and generic contracts need site review.",
+    "path": "repro/r06/main.a"
+  },
+  {
+    "reason": "TS1294",
+    "category": "c",
+    "action": "Enum/namespace/parameter-property policy; see the prior complete syntax census.",
+    "path": "repro/r07/main.a"
+  },
+  {
+    "reason": "enum",
+    "category": "c",
+    "action": "Constant flags and ordinary enum runtime objects require an explicit language decision.",
+    "path": "repro/r08/main.a"
+  },
+  {
+    "reason": "TS7030",
+    "category": "b",
+    "action": "Explicit undefined return only for a declared optional-return contract; inferred contracts need review.",
+    "path": "repro/r09/main.a"
+  },
+  {
+    "reason": "TS2322",
+    "category": "c",
+    "action": "Assignment buckets include optional reads, generics and narrowing; no blanket repair.",
+    "path": "repro/r10/main.a"
+  },
+  {
+    "reason": "a type predicate",
+    "category": "c",
+    "action": "Verify guards and assert functions, or narrow at use; cannot trust arbitrary predicates.",
+    "path": "repro/r11/main.a"
+  },
+  {
+    "reason": "explicit any",
+    "category": "b",
+    "action": "Adamic intentionally forbids unproven any; observed stage-0 spelling can be NotYet.",
+    "path": "repro/r12/main.a"
+  },
+  {
+    "reason": "TS2532",
+    "category": "c",
+    "action": "Required indexed read needs a density/bounds contract or explicit missing handling.",
+    "path": "repro/r13/main.a"
+  },
+  {
+    "reason": "TS18048",
+    "category": "c",
+    "action": "Required value must be proven present; preserve legitimate absence.",
+    "path": "repro/r14/main.a"
+  },
+  {
+    "reason": "TS2412",
+    "category": "b",
+    "action": "Truthful optional declaration may permit present undefined, preserving the write and key.",
+    "path": "repro/r15/main.a"
+  },
+  {
+    "reason": "||=",
+    "category": "b",
+    "action": "Use an explicit if with identical single evaluation and truthiness semantics.",
+    "path": "repro/r16/main.a"
+  },
+  {
+    "reason": "TS2375",
+    "category": "b",
+    "action": "Represent intentionally materialized undefined in the owned optional declaration.",
+    "path": "repro/r17/main.a"
+  },
+  {
+    "reason": "TS2724",
+    "category": "a",
+    "action": "Fetch/generate upstream inputs first; this corpus has missing Diagnostics exports, not a proven language gap.",
+    "path": "repro/r18/main.a"
+  },
+  {
+    "reason": "TS7029",
+    "category": "b",
+    "action": "Make intentional switch fallthrough explicit without changing control effects.",
+    "path": "repro/r19/main.a"
+  },
+  {
+    "reason": "TS2379",
+    "category": "b",
+    "action": "Align optional representation across owned parameter views; generic mismatch cases need review.",
+    "path": "repro/r20/main.a"
+  },
+  {
+    "reason": "the comma operator",
+    "category": "b",
+    "action": "Sequence statements while retaining value and evaluation order.",
+    "path": "repro/r21/main.a"
+  },
+  {
+    "reason": "TS2488",
+    "category": "c",
+    "action": "Iterable presence, element contracts, and custom iterator representation need review.",
+    "path": "repro/r22/main.a"
+  },
+  {
+    "reason": "a namespace",
+    "category": "c",
+    "action": "Live namespace objects, merging, exports and initialization need a language decision.",
+    "path": "repro/r23/main.a"
+  },
+  {
+    "reason": "an index signature",
+    "category": "c",
+    "action": "Choose exact object-key semantics or a reviewed Map source migration.",
+    "path": "repro/r24/main.a"
+  },
+  {
+    "reason": "TS2339",
+    "category": "c",
+    "action": "Union/property access needs a real discriminant or generic contract proof.",
+    "path": "repro/r25/main.a"
+  },
+  {
+    "reason": "TS2538",
+    "category": "c",
+    "action": "An optional lookup key must be proved present at its original read.",
+    "path": "repro/r26/main.a"
+  },
+  {
+    "reason": "a spread after the first field",
+    "category": "b",
+    "action": "Only a single leading spread is sound; review hidden keys before rewriting.",
+    "path": "repro/r27/main.a"
+  },
+  {
+    "reason": "TS2769",
+    "category": "c",
+    "action": "Overload selection is a bucket; iterator, element and callable contracts differ by site.",
+    "path": "repro/r28/main.a"
+  },
+  {
+    "reason": "a label",
+    "category": "b",
+    "action": "Replace labeled control flow with a function preserving exits and finally effects.",
+    "path": "repro/r29/main.a"
+  },
+  {
+    "reason": "TS18046",
+    "category": "c",
+    "action": "Narrow the actual thrown value; upstream catch-any behavior is not a proof.",
+    "path": "repro/r30/main.a"
+  },
+  {
+    "reason": "TS2591",
+    "category": "a",
+    "action": "Host declarations and native Node host APIs are separate prerequisites.",
+    "path": "repro/r31/main.a"
+  },
+  {
+    "reason": "the void operator",
+    "category": "b",
+    "action": "Retain evaluation and undefined result; special return adaptation is tooling-only.",
+    "path": "repro/r32/main.a"
+  },
+  {
+    "reason": "a definite assignment assertion !",
+    "category": "b",
+    "action": "Initialize the declared slot or represent absence honestly.",
+    "path": "repro/r33/main.a"
+  },
+  {
+    "reason": "in",
+    "category": "c",
+    "action": "Own/inherited presence and optional undefined cannot be replaced by truthiness.",
+    "path": "repro/r34/main.a"
+  },
+  {
+    "reason": "Record<string, T>",
+    "category": "c",
+    "action": "String records, integer-key ordering and prototype/presence semantics need a decision.",
+    "path": "repro/r35/main.a"
+  },
+  {
+    "reason": "an ExportDeclaration",
+    "category": "b",
+    "action": "Prefer declaration-site named exports; barrels also participate in module cycles.",
+    "path": "repro/r36/main.a"
+  },
+  {
+    "reason": "delete",
+    "category": "b",
+    "action": "Fixed object shapes are intentional; dynamic removal needs Map or explicit tombstones.",
+    "path": "repro/r37/main.a"
+  },
+  {
+    "reason": "&&=",
+    "category": "b",
+    "action": "Use an explicit if preserving evaluation and assignment semantics.",
+    "path": "repro/r38/main.a"
+  },
+  {
+    "reason": "debugger",
+    "category": "b",
+    "action": "Remove the debugger statement.",
+    "path": "repro/r39/main.a"
+  },
+  {
+    "reason": "TS2307",
+    "category": "a",
+    "action": "Module input generation/resolution must precede feature work.",
+    "path": "repro/r40/main.a"
+  },
+  {
+    "reason": "TS2304",
+    "category": "a",
+    "action": "Missing external/global declarations are setup or host surface prerequisites.",
+    "path": "repro/r41/main.a"
+  },
+  {
+    "reason": "TS2722",
+    "category": "c",
+    "action": "Prove a callback present or handle its absence.",
+    "path": "repro/r42/main.a"
+  },
+  {
+    "reason": "TS2556",
+    "category": "c",
+    "action": "Arity/tuple proof must justify a spread into fixed parameters.",
+    "path": "repro/r43/main.a"
+  },
+  {
+    "reason": "TS2684",
+    "category": "c",
+    "action": "Callable receiver contract must be valid at the detached call.",
+    "path": "repro/r44/main.a"
+  },
+  {
+    "reason": "TS2366",
+    "category": "b",
+    "action": "Every admitted path must meet a required return contract.",
+    "path": "repro/r45/main.a"
+  },
+  {
+    "reason": "TS2420",
+    "category": "c",
+    "action": "An implements relationship must satisfy the actual required fields.",
+    "path": "repro/r46/main.a"
+  },
+  {
+    "reason": "TS2740",
+    "category": "c",
+    "action": "The structural target cannot invent fields absent from the source.",
+    "path": "repro/r47/main.a"
+  },
+  {
+    "reason": "TS7006",
+    "category": "b",
+    "action": "Give genuinely implicit parameters truthful explicit types.",
+    "path": "repro/r48/main.a"
+  },
+  {
+    "reason": "TS7031",
+    "category": "b",
+    "action": "Give destructured parameters truthful explicit types.",
+    "path": "repro/r49/main.a"
+  }
+]

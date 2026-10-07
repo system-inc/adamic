@@ -1,0 +1,50 @@
+// Named callbacks go through owned closure forwarders, even when the target borrows.
+// Each runtime key belongs only to the collection before callback entry.
+function key(index: number): string {
+	return `runtime-key-${index}`;
+}
+
+function deleteBorrowed(value: number, current: string, owner: Map<string, number>): void {
+	owner.delete(current);
+	console.log(`deleteBorrowed ${current.length} ${current.slice(1, 10)} ${value}`);
+}
+
+function clearBorrowed(value: number, current: string, owner: Map<string, number>): void {
+	owner.clear();
+	console.log(`clearBorrowed ${current.length} ${current.slice(1, 10)} ${value}`);
+}
+
+function deleteOwned(value: number, current: string, owner: Map<string, number>): void {
+	owner.delete(current);
+	console.log(`deleteOwned ${current.length} ${current.slice(1, 10)} ${value}`);
+	current = `${current}/reassigned`;
+	console.log(`reassigned ${current.length} ${current.slice(2, 12)}`);
+}
+
+function clearOwned(value: number, current: string, owner: Map<string, number>): void {
+	owner.clear();
+	console.log(`clearOwned ${current.length} ${current.slice(1, 10)} ${value}`);
+	current = `${current}/reassigned`;
+	console.log(`reassigned ${current.length} ${current.slice(2, 12)}`);
+}
+
+function filled(): Map<string, number> {
+	const collection = new Map<string, number>();
+	for (let index = 0; index < 3; index += 1) {
+		collection.set(key(index), index);
+	}
+	return collection;
+}
+
+const deleteBorrowedCollection = filled();
+deleteBorrowedCollection.forEach(deleteBorrowed);
+console.log(`remaining ${deleteBorrowedCollection.size}`);
+const clearBorrowedCollection = filled();
+clearBorrowedCollection.forEach(clearBorrowed);
+console.log(`remaining ${clearBorrowedCollection.size}`);
+const deleteOwnedCollection = filled();
+deleteOwnedCollection.forEach(deleteOwned);
+console.log(`remaining ${deleteOwnedCollection.size}`);
+const clearOwnedCollection = filled();
+clearOwnedCollection.forEach(clearOwned);
+console.log(`remaining ${clearOwnedCollection.size}`);

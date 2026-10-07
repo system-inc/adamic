@@ -1,0 +1,28 @@
+--- FAIL: TestNativeAgreesWithNode (0.00s)
+    --- FAIL: TestNativeAgreesWithNode/notes/nbody-speed/optional_write_number.a (0.45s)
+        oracle_test.go:627: exit codes differ
+            node:   exit 0, stdout "1\n2\nundefined\n2\n", stderr ""
+            native: exit 70, stdout "1\n2\nundefined\n", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+        oracle_test.go:640: leaks:
+            exit 70
+            adamic: panic: compiler bug: a field the checker proved is there is missing
+    --- FAIL: TestNativeAgreesWithNode/notes/nbody-speed/optional_write_unknown.a (0.45s)
+        oracle_test.go:627: exit codes differ
+            node:   exit 0, stdout "undefined\n2\n", stderr ""
+            native: exit 70, stdout "undefined\n", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+        oracle_test.go:640: leaks:
+            exit 70
+            adamic: panic: compiler bug: a field the checker proved is there is missing
+    --- FAIL: TestNativeAgreesWithNode/notes/nbody-speed/optional_write_string.a (0.46s)
+        oracle_test.go:627: exit codes differ
+            node:   exit 0, stdout "absent\ncreated1\n", stderr ""
+            native: exit 70, stdout "absent\n", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+        oracle_test.go:640: leaks:
+            exit 70
+            adamic: panic: compiler bug: a field the checker proved is there is missing
+FAIL
+gate cache: native hits=0 misses=9
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.473s
+FAIL

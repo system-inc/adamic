@@ -1,0 +1,24 @@
+// From TypeScript 6.0.3, src/compiler/binder.ts:630
+// Census reason: a function inside a function (a closure)
+
+type SymbolFlags = number;
+type __String = string;
+class Symbol {
+    flags: SymbolFlags;
+    name: __String;
+    constructor(flags: SymbolFlags, name: __String) { this.flags = flags; this.name = name; }
+}
+function createBinder() {
+    let symbolCount = 0;
+    return { createSymbol, count: () => symbolCount };
+    function createSymbol(flags: SymbolFlags, name: __String): Symbol {
+        symbolCount++;
+        return new Symbol(flags, name);
+    }
+}
+const first = createBinder();
+const second = createBinder();
+console.log(first.createSymbol(2, 'x').name);
+console.log(first.createSymbol(16, 'f').name);
+console.log(second.createSymbol(2, 'y').name);
+console.log(`${first.count()} ${second.count()}`);

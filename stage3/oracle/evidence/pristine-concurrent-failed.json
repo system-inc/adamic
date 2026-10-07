@@ -1,0 +1,48 @@
+{
+  "tree": "/tmp/stage3-pristine",
+  "nproc": 5,
+  "workers": 4,
+  "runners": "all",
+  "tests": null,
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.705
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 22.507
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=4",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 1,
+      "seconds": 136.905
+    }
+  },
+  "status": "fail",
+  "counts": {
+    "passing": 0,
+    "failing": 0,
+    "pending": 0
+  },
+  "baseline_diffs": [],
+  "wall_seconds": 162.157
+}

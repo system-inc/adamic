@@ -1,0 +1,13 @@
+{
+  "name": "no-warning-comments",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleNoWarningComments",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoWarningComments",
+  "factory": "create",
+  "class": "Rule"
+}

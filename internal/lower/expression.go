@@ -146,6 +146,9 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
+		return nil, err
+	}
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
@@ -424,7 +427,17 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		return ir.TypeOf{Value: operand}, nil
+		written := node.AsTypeOfExpression().Expression
+		null := l.typeOfNull(written)
+		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
+			switch operand.(type) {
+			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
+				// The lookup still has a presence slot, so typeof can distinguish null from undefined.
+			default:
+				return nil, l.notYet(node, "typeof a value holding both null and undefined without a presence slot")
+			}
+		}
+		return ir.TypeOf{Value: operand, Null: null}, nil
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
@@ -477,6 +490,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		return l.closure(node)
 	case ast.KindAsExpression:
 		return l.cast(node)
+	case ast.KindSatisfiesExpression:
+		satisfies := node.AsSatisfiesExpression()
+		if err := l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type)); err != nil {
+			return nil, err
+		}
+		return l.expression(satisfies.Expression)
 	case ast.KindFunctionExpression:
 		return l.functionExpression(node)
 	case ast.KindCallExpression:
@@ -697,7 +716,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 // spelled is a string as + and a template write it: one that may be missing (a null reference) is
 // written "undefined", as JavaScript writes it.
 func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
-	if value.Type() != ir.String || !l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
+	if value.Type() != ir.String || !(l.includesUndefined(l.checker.GetTypeAtLocation(node)) || l.narrowedAway(ast.SkipParentheses(node))) {
 		return value
 	}
 	return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("undefined")}, Of: ir.String}
@@ -755,6 +774,15 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 	whenNot, err := l.expression(conditional.WhenFalse)
 	if err != nil {
 		return nil, err
+	}
+	if whenTrue.Type() != whenNot.Type() && l.acceptsUndefined(node) {
+		// A stale narrowing in either branch may still hold undefined. Keep that representation
+		// when the whole conditional is observed or written into a slot that accepts it.
+		if pair := whenTrue.Type(); pair.IsMaybe() && whenNot.Type() == pair.Present() {
+			whenNot = fit(whenNot, pair)
+		} else if pair := whenNot.Type(); pair.IsMaybe() && whenTrue.Type() == pair.Present() {
+			whenTrue = fit(whenTrue, pair)
+		}
 	}
 	if whenTrue.Type() != whenNot.Type() {
 		// flag ? 1 : undefined is number | undefined, and flag ? 1 : 'one' a union: each branch made
