@@ -1,0 +1,14 @@
+integration logs: /tmp/adamic-gate/setup-proof-_j3mukyb
+F
+======================================================================
+FAIL: test_reruns_and_identical_uncached_answer (__main__.SetupIntegration.test_reruns_and_identical_uncached_answer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_setup.py", line 171, in test_reruns_and_identical_uncached_answer
+    self.assertIn("go build ready", run(setup))
+AssertionError: 'go build ready' not found in 'go version go1.27.1 linux/amd64\nv24.19.0\nsetup: go ready (0.017s)\nsetup: node ready (0.018s)\nsetup: submodules ready (0.032s)\nclang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nsetup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.157s)\nsetup: go build skipped (validated warming stamp) (0.248s)\nsetup: test binaries deferred (use --warm-tests) (0.249s)\nsetup: build cache warm (0.250s)\nsetup: build-flags commit=66bb5ef4d509b945715472a01d81c9a4bcb9d574 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=1.19 1.76 3.45 1/236 52849 load-after=1.19 1.76 3.45 1/237 52994\nsetup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (0.275s)\nsetup: source /workspace/adamic-tools/env.sh\nsetup: logs /tmp/adamic-gate/setup.tKljJq\n'
+
+----------------------------------------------------------------------
+Ran 1 test in 4.976s
+
+FAILED (failures=1)
