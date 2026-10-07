@@ -11,3 +11,25 @@ The helper report points to the ordered list in ../HELPERS.md. Assigned position
 Existing-port evidence: batch 4 implementation 7bd94a2f92cc17d12bb69bbd78bfe2c4ac4ca63d and its BATCH4.md report. This claim is pushed before new rule code.
 
 Foundation merge note: helpers conflicts with registration in six shared files. Resolution retains directory registration and imports the helper package, inventory and HELPERS.md; it does not restore the helper branch's legacy shared dispatcher. docs/parallel-work.md is absent in main and both foundation branches; docs/lint-registration.md provides the available contract.
+
+## Next three rules, October 7
+
+After pushing all previous work and fetching every origin head, the first available
+helper-ready rule is position 46. Positions 1 to 45 are named in claim files on
+origin/codex/lint-wave1-01 through origin/codex/lint-wave1-15. The helper report
+links the ordered names in HELPERS.md.
+
+Claimed next, in queue order:
+
+1. `structure/tailwind-no-physical-direction` (helper-ready position 46).
+2. `@eslint-community/eslint-comments/require-description` (first syntax-only inventory entry).
+3. `@next/next/google-font-display` (next syntax-only inventory entry).
+
+Selection uses inventory.json on origin/codex/lint-inventory and excludes names
+in claim files under stage1/cohere/lint/claims on every fetched origin branch.
+None of these three has an executable selection site in origin/main's lint
+sources. All three are reserved here before any new implementation code.
+
+Existing .a registration limitations remain explicit. Any validation workaround
+will be confined to owned files and scratch overlays; no shared production code
+or lists will be edited.
