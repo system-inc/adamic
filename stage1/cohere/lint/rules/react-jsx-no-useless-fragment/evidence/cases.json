@@ -1,0 +1,523 @@
+[
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "\n        <>\n          <div/>\n        </>\n      "
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": true
+    },
+    "sourceText": "\n        <>\n          {moo}\n        </>\n      "
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "\n        <React.Fragment>\n          <Foo />\n        </React.Fragment>\n      "
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "\n        <section>\n          <Eeee />\n          <Eeee />\n          <>{\"a\"}{\"b\"}</>\n        </section>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "\n        <section>\n          git<>\n            <b>hub</b>.\n          </>\n\n          git<> <b>hub</b></>\n        </section>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "(()=>{})();\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<> <div /></>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<></>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<><Foo /><Bar /></>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": true
+    },
+    "sourceText": "<><Foo>{moo}</Foo></>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<><div/></>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<>foo<div /></>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<>{\"moo\"} </>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<>{foos.map(foo => foo)}</>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<>{meow}</>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": true
+    },
+    "sourceText": "<>{moo}</>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<>{}</>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<Eeee><>foo</></Eeee>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<Foo><><div /><div /></></Foo>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<Fooo content={<>eeee ee eeeeeee eeeeeeee</>} />"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<Fragment />"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<Fragment key={item.id}>{item.value}</Fragment>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<NotFragment />"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<NotReact.Fragment />"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<React.NotFragment />"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<div p={<>{\"a\"}{\"b\"}</>} />"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<div><>{\"a\"}{\"b\"}</></div>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<div><Fragment>{\"a\"}{\"b\"}</Fragment></div>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "<div>a <>{\"\"}{\"\"}</> a</div>"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "const a = (\n    <>\n        {/* <div>dead</div> */}\n    </>\n);\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "const a = <>\n</>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "const a = <></>;"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "const a = <></>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "const a = <div />;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "const a = <div><>{(y: number): string => String(y)}</></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Foo: any;\nconst a = <><Foo /></>;"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Foo: any;\nconst a = <><Foo /></>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Foo: any;\nconst a = <div><Foo /></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Foo: any;\ndeclare const x: any;\nconst a = <Foo attribute={<>{x}</>} />;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Foo: any;\ndeclare const x: any;\nconst a = <Foo><>{x}</></Foo>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Fragment: any;\nconst a = <Fragment />;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Fragment: any;\nconst a = <Fragment></Fragment>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Fragment: any;\nconst a = <div><Fragment /></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Fragment: any;\ndeclare const Foo: any;\nconst a = <Fragment><Foo /></Fragment>;"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Fragment: any;\ndeclare const x: any;\nconst a = <div><Fragment id={1}>{x}</Fragment></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Fragment: any;\ndeclare const x: any;\nconst a = <div><Fragment key={1}>{x}</Fragment></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Fragment: any;\ndeclare const x: any;\nconst a = <div><Fragment>{x}</Fragment></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Fragment: any;\ndeclare const x: any;\ndeclare const r: any;\nconst a = <div><Fragment id={1} ref={r}>{x}</Fragment></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Fragment: any;\ndeclare const x: any;\ndeclare const rest: any;\nconst a = <div><Fragment {...rest}>{x}</Fragment></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const Other: any;\ndeclare const Foo: any;\nconst a = <Other.Fragment><Foo /></Other.Fragment>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const React: any;\nconst a = <React.Fragment />;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const React: any;\nconst a = <div><React.Fragment /></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const React: any;\ndeclare const Foo: any;\nconst a = <React.Fragment><Foo /></React.Fragment>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const React: any;\ndeclare const foo: any;\nconst a = <React.Fragment>{foo}</React.Fragment>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const SomeReact: any;\ndeclare const foo: any;\nconst a = <SomeReact.SomeFragment>{foo}</SomeReact.SomeFragment>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const myDiv: any;\ndeclare namespace JSX { interface IntrinsicElements { [name: string]: any } }\ndeclare const x: any;\nconst a = <myDiv><>{x}</></myDiv>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: any;\nconst a = <><>{x}</><span /></>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": null,
+    "sourceText": "declare const x: any;\nconst a = <>{x}</>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: any;\nconst a = <>{x}</>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": true
+    },
+    "sourceText": "declare const x: any;\nconst a = <>{x}</>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: any;\nconst a = <>{}</>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: any;\nconst a = <div><>{/* keep me */}{x}</></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: any;\nconst a = <div><>{x}</></div>;"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: any;\nconst a = <div><>{x}</></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": true
+    },
+    "sourceText": "declare const x: any;\nconst a = <div><>{x}</></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: any;\nconst a = <h1><>{x}</></h1>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: any;\ndeclare const y: any;\nconst a = <div><>{x}{y}</></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: any;\ndeclare namespace JSX { interface IntrinsicElements { [name: string]: any } }\nconst a = <mytag><>{x}</></mytag>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: string | undefined;\nconst a = <div><>{x!}</></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: unknown;\nconst a = <div><>{x as string}</></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare const x: unknown;\nconst a = <div><>{x satisfies unknown}</></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare function foo(): any;\nconst a = <div><>{foo()}</></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare function foo<T>(value: T): T;\nconst a = <div><>{foo<number>(1)}</></div>;\n"
+  },
+  {
+    "file": "/repository/source/JsxNoUselessFragment.tsx",
+    "options": {
+      "allowExpressions": false
+    },
+    "sourceText": "declare namespace JSX { interface IntrinsicElements { [name: string]: any } }\ndeclare const x: any;\nconst a = <див><>{x}</></див>;\n"
+  },
+  {
+    "file": "/source.tsx",
+    "options": null,
+    "sourceText": "const a = <div><><span /></></div>;\nconst b = <>{/* comment */}</>;\nconst c = <React.Fragment><i /></React.Fragment>;\n"
+  }
+]
