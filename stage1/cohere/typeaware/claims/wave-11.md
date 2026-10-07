@@ -264,3 +264,8 @@ passed again with 230 controls and 307 findings. Wave 11 now has 21 native
 production-default ports; four analysis claims remain parked. No new rules
 are reserved. Evidence, quiet native/Go times and option/harness limits are
 in ../wave-11-eighth/REPORT.md.
+
+Landing revalidation: rebased onto origin/main b8fb957a, implementation
+47e4fbc8. All eight worker suites, bridge tests, filtered compiler oracle
+and vet are green again; evidence in ../wave-11-eighth/validation-b8/.
+No additional rules are claimed.

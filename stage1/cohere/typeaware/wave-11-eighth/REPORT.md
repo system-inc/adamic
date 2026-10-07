@@ -1,5 +1,5 @@
 Built native default-mode no-danger-with-children, no-multi-comp and no-namespace with numeric handed-node listeners.
-Claim 667e6a47 was pushed before code; implementation 48433207 is based on current main c01907a7.
+Claim 667e6a47 was pushed before code; rebased implementation 47e4fbc8 is based on main b8fb957a.
 Go/native suite PASS: 250 parse-clean controls, 193 findings, both frozen corpora, sanitizers, metadata and ownership; earlier JSX regression PASS.
 Three rule mutants and two raw-fact mutants run normally and fail Go-byte comparison; released-registry mutant fails required panic 70.
 Limits: ignoreStateless=true and emitted-JavaScript/shared-harness lint execution uncovered; four React analysis claims parked; full raw snapshot remains slow.
@@ -16,8 +16,8 @@ Selection snapshot and reconstruction are in selection/. Claim 667e6a47 was
 pushed before any rule or bridge implementation was written.
 
 The existing eighteen native production-default ports were already oracle-green
-on main c01907a7 and pushed through 242f4172 before claiming this batch. Main was
-still c01907a7 at the final pre-commit check; no further rebase was needed. The
+on main c01907a7 and pushed through 242f4172 before claiming this batch. Main advanced to b8fb957a after the initial push. The branch was rebased
+cleanly and every owned suite was run again; results are in validation-b8/. The
 new shared model ab70f38d4 exists on origin/lint-rules/harness and is not on this
 main base. No shared harness, generator, parser, allocator helper or protected
 compiler files were edited. No main/area branch is pushed and no PR is opened.
@@ -120,7 +120,7 @@ not claim emitted-JavaScript lint-rule execution. The full repository gate was
 not run. Only identified, reproducible worker scratch archives were removed
 when workspace capacity fell below 500 MB; logs and source evidence were kept.
 
-## Quiet native versus Go timing
+## Quiet native versus Go timing on the original c01907a7 base
 
 Three alternating rounds after all builds/tests completed, complete output to
 files, independently checked identical in every timed run. Whole-process median:
@@ -151,3 +151,30 @@ are not native ports. Prior fifteen legacy rules still have their documented
 string-kind execution limitation pending the shared handed-node API. This batch
 adds three native ports, bringing wave 11 to 21 production-default ports; it
 makes no further reservations.
+
+## Landing validation on b8fb957a
+
+Rebased implementation: 47e4fbc80e823d4c366296da4d7cc052b22057d1.
+Original claim 667e6a47 was pushed before implementation; its rebased commit is
+cfbf0291c7258c376e198c0a32e3dfe454213507. All eight owned comparison and
+metadata suites passed, plus full bridge tests, package vet and filtered
+Node/native/emitted-JavaScript compiler agreement including inherited static
+field reads and the one-byte oracle mutant. Exact commands, completion codes
+and timings are in validation-b8/b8-results.json; complete logs are adjacent.
+No protected compiler or shared harness files were edited.
+
+All 21 production-default rules were revalidated over their controls and both
+frozen corpora, including sanitizers, released handles and 46 worker mutant
+observations. Eighth batch passed in 135.017s; its 250 controls retain 193
+findings. Seventh batch includes the repaired JSX-text regression and retains
+230 controls and 307 findings. New semantic mutants again exit normally with
+empty stderr and fail only full Go-byte comparison: danger-property byte 1071,
+namespace-colon 2576, component-first 4879, raw whitespace 1027, raw uppercase
+4879. The released-registry mutant exits 0 and fails required panic 70. Byte
+indices changed because scratch artifact paths are shorter.
+
+The original quiet timings above remain the standalone performance measurement.
+Final-base concurrent verification measured repository native 1.9163s versus
+Go 0.1764s and compiler native 8.4314s versus Go 0.3673s; these concurrent
+observations are not substituted for the quiet benchmark. Full repository gate
+and shared emitted-JavaScript lint execution remain uncovered.
