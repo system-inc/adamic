@@ -239,3 +239,14 @@ skipped; the full gate and its external correctness checks were not run.
 Four named analysis claims remain parked. The refreshed 455-head audit
 finds zero unclaimed ranked rules; no new claim made. See
 wave_18_component_props/LANDING_B84A_REPORT.md and validation-b84a.
+
+## Landing on the registry migration area b46914832
+
+Rebased onto lint area b46914832 containing fetched main c7991b900.
+All six owned suites pass together in 897.723s; rebuilt standalone groups,
+sanitizers, released handles, mutants, parked reporters, registry, shared
+harness, uncached Node and vet pass. No selected test skipped. The full
+gate and its external correctness checks were not run. Four named native
+analysis claims stay parked. Refreshed 462-head audit finds zero unclaimed
+ranked rules; no new claim made. See
+wave_18_component_props/LANDING_REGISTRY_REPORT.md and validation-registry.
