@@ -44,7 +44,7 @@ python3 stage1/cohere/lint/rules/typescript-eslint-prefer-as-const/validate_boun
 
 Every rule mutant is in its own descriptor. Constraint comma omission, `as never` insertion, one-based enum suggestion changed to position+2, bang deletion shifted one character, wrong wrap closer and retained trailing semicolon all compile, exit 0 and have empty stderr on Node source, emitted JavaScript and sanitized native. Go byte comparison catches each. Two additional tests prove explicit refusals: a mutant bypassing the shared-contract refusal cleanly prints accepted instead of refusing, and a mutant permitting a split-UTF-8 edit cleanly produces byte ranges/rewrites different from Go.
 
-The modified destructuring parameter fixture is the only excluded upstream case. All 93 parameter-property cases were preflighted; only `constructor(public { a }: { a: string })` fails, at offset 33 with `parser slice expected CloseParenToken, got OpenBraceToken`. Its raw source is kept in that rule's testdata. The Go assertion passes. A suggestion that blindly eats the first byte of a non-ASCII trailing character is explicitly refused, rather than silently deleting the whole UTF-16 character.
+The modified destructuring parameter fixture is the only excluded upstream case. All 93 parameter-property cases were preflighted; only `constructor(public { a }: { a: string })` fails, at offset 33 with `parser slice expected CloseParenToken, got OpenBraceToken`. Its raw source is kept in that rule's gaps directory. The Go assertion passes. A suggestion that blindly eats the first byte of a non-ASCII trailing character is explicitly refused, rather than silently deleting the whole UTF-16 character.
 
 Shared integration remains blocked: the current registry hardcodes .ts in `registry/registry.go:95` and `:187`; the shared Finding lacks independent fix/suggestion arrays and ranges; the shared fixer uses the diagnostic range. The six factories explicitly refuse the unsupported contract. A future handoff must bridge the owned diagnostics into the shared Finding once its contract lands. `origin/codex/lint-harness-dot-a` was absent when origin was fetched. No shared registration generator or test harness was edited.
 
@@ -53,3 +53,12 @@ Shared integration remains blocked: the current registry hardcodes .ts in `regis
 `gofmt -l cmd internal` is empty. `go vet ./...` exits 1 on the same pre-existing profile compile error, recorded in `evidence/vet.log`. `go test ./internal/oracle -run 'TestTheOracleCatchesOneByte|TestCountsAreRecorded' -count=1 -timeout 30m` passes in 13.498s (`evidence/filtered-oracle.log`). The complete repository gate and shared lint package gate were not run past that compile blocker.
 
 Automatic approval review rejected the registry generator because it writes shared .generated files. It was not retried or bypassed; read-only inspection records the exact loading contract in `evidence/registry-readonly.log`.
+
+After the six ports were pushed, a fresh fetch found the harness branch at
+2650ad595b82220c368631ea13139fad4b306ed6. It now provides .a registration,
+emitted-JavaScript comparison, profile compilation and complete suggestion arrays.
+The published dependency was inspected read-only; this worker does not edit or
+merge shared files. Its fixer still uses diagnostic ranges and its Go serializer
+still rejects multi-fix arrays, so independent single fixes and as-const multi-edits
+remain blocked even after that dependency is integrated. Gap sources were moved
+outside testdata so they are not mistaken for positive conformance witnesses.

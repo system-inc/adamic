@@ -49,7 +49,7 @@ try:
  for side,args in artifacts(source,'shared-mutant'):
   for name in names:assert observe(args+['@typescript-eslint/'+name])==(0,b'accepted\n',b'')
   note('shared refusal mutant compiles and exits 0; baseline comparison catches it on '+side)
- witness=root/'stage1/cohere/lint/rules/typescript-eslint-no-unnecessary-parameter-property-assignment/testdata/unsupported-byte-boundary.ts.txt'
+ witness=root/'stage1/cohere/lint/rules/typescript-eslint-no-unnecessary-parameter-property-assignment/gaps/unsupported-byte-boundary.ts.txt'
  manifest=scratch/'unicode.manifest';manifest.write_text(str(witness)+'\t@typescript-eslint/no-unnecessary-parameter-property-assignment\t/repository/source/unicode.ts\n')
  existing=Path(sys.argv[1]) if len(sys.argv)>1 else None
  if existing:

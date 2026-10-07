@@ -10,7 +10,7 @@ The mutant **trailing semicolon retained** changes `node.end + 1` to `node.end` 
 
 Findings/s, best of five interleaved count-only runs: native **427.22**, Node **591.76**, Go **2159.53**. The natural corpus has zero findings, so these include 500 copies of the witness. Count=500; files=230.
 
-One upstream fixture is excluded from Adamic comparison: `testdata/unsupported-destructured-parameter.ts.txt`, because the shared parser panics at the `{` in `constructor(public { a } ...)`. Its original Go assertion passes. `testdata/unsupported-byte-boundary.ts.txt` proves the deliberate split-UTF-8 refusal on all three runtimes; a clean compiling mutant disabling that guard is caught only by Go byte comparison.
+One upstream fixture is excluded from Adamic comparison: `gaps/unsupported-destructured-parameter.ts.txt`, because the shared parser panics at the `{` in `constructor(public { a } ...)`. Its original Go assertion passes. `gaps/unsupported-byte-boundary.ts.txt` proves the deliberate split-UTF-8 refusal on all three runtimes; a clean compiling mutant disabling that guard is caught only by Go byte comparison.
 
 Shared integration is blocked. `registry/registry.go:95` and `:187` require `rule.ts`; `Finding` cannot represent this rule's independent repair ranges/arrays, and the shared fixer applies diagnostic ranges. The registered factory explicitly refuses this unsupported contract. The complete listener and repairs run through the owned runner, with no shared Adamic files modified. The shared-contract refusal is tested on all three runtimes and a compiling mutant proves it can fail.
 

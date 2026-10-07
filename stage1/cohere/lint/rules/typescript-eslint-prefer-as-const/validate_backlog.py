@@ -53,7 +53,7 @@ func wave14CaptureRun(t *testing.T, subject rule.Rule, fileName, source string) 
    seen.add(key);name=row['rule'].split('/')[-1]
    if name=='no-unnecessary-parameter-property-assignment' and 'constructor(public { a }' in row['source']:
     note('EXCLUDED shared parser gap: modified destructuring parameter, exact source '+repr(row['source']))
-    assert row['source']==(lint/'rules/typescript-eslint-no-unnecessary-parameter-property-assignment/testdata/unsupported-destructured-parameter.ts.txt').read_text()
+    assert row['source']==(lint/'rules/typescript-eslint-no-unnecessary-parameter-property-assignment/gaps/unsupported-destructured-parameter.ts.txt').read_text()
     continue
    path=scratch/f'case-{len(seen)}{Path(row["file"]).suffix}'
    path.write_text(row['source'])
