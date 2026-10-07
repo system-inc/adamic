@@ -1,0 +1,20 @@
+import { Frames, header } from './frames.ts';
+import type { Rules } from './rules.ts';
+export class CallDeclarationChain {
+    readonly module: number;
+    readonly kinds: string[] = [];
+    readonly names: string[] = [];
+    readonly nameKinds: string[] = [];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'call-declaration-chain'));
+        header(frames, 'call-declaration-chain');
+        this.module = frames.natural();
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) {
+            this.kinds.push(frames.field());
+            this.names.push(frames.field());
+            this.nameKinds.push(frames.field());
+        }
+        frames.end();
+    }
+}

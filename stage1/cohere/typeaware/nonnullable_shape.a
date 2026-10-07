@@ -1,0 +1,6 @@
+import type { Rules } from './rules.ts';
+import { types } from './facts.ts';
+import type { Types } from './types.ts';
+export function nonnullableShape(rules: Rules, index: number, id: number): Types {
+    return types(rules.ask(index, `nonnullable-shape\n${id}`), 'nonnullable-shape');
+}

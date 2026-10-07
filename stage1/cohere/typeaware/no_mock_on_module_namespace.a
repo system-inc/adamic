@@ -1,0 +1,93 @@
+import type { Rules } from './rules.ts';
+import { Diagnostic } from './diagnostic.ts';
+import { CallDeclarationChain } from './call_declaration_chain.a';
+import { NamespaceBinding } from './namespace_binding.a';
+
+export class NoMockOnModuleNamespace {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    unwrap(index: number): number {
+        let at = index;
+        while(
+            [
+                'ParenthesizedExpression',
+                'NonNullExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+            ].includes(this.rules.parser.node(at).kind)
+        ) {
+            const node = this.rules.parser.node(at);
+            at = node.children[node.kind === 'TypeAssertionExpression' ? node.children.length - 1 : 0] ?? -1;
+        }
+        return at;
+    }
+    run(): void {
+        for(let at = 0; at < this.rules.parser.nodes.length; at++) {
+            const node = this.rules.parser.node(at);
+            if(node.kind !== 'CallExpression' || node.list < 1) {
+                continue;
+            }
+            const callee = this.rules.parser.node(this.rules.skip(node.children[0] ?? -1));
+            if(callee.kind !== 'PropertyAccessExpression') {
+                continue;
+            }
+            const name = this.rules.parser.node(callee.children[callee.children.length - 1] ?? -1);
+            if(name.kind !== 'Identifier' || !['method', 'getter', 'setter', 'property'].includes(name.text)) {
+                continue;
+            }
+            const target = this.unwrap(node.children[node.children.length - node.list] ?? -1);
+            if(this.rules.parser.node(target).kind !== 'Identifier') {
+                continue;
+            }
+            const binding = new NamespaceBinding(this.rules, target);
+            const local = binding.kinds.filter((kind, index) => binding.local[index] === true);
+            if(!binding.present || (binding.flags & 2097152) === 0 || local.length !== 1) {
+                continue;
+            }
+            const index = binding.local.indexOf(true);
+            if(binding.kinds[index] !== 'NamespaceImport' || binding.typeOnly[index] === true) {
+                continue;
+            }
+            const chain = new CallDeclarationChain(this.rules, at);
+            const path = this.rules.path;
+            if(path.endsWith('.cts') || path.endsWith('.cjs')) {
+                continue;
+            }
+            if(!path.endsWith('.mts') && !path.endsWith('.mjs') && ![5, 6, 7, 99, 200].includes(chain.module)) {
+                continue;
+            }
+            if(
+                !['MethodSignature', 'MethodDeclaration'].includes(chain.kinds[0] ?? '') ||
+                !['InterfaceDeclaration', 'ClassDeclaration'].includes(chain.kinds[1] ?? '') ||
+                chain.names[1] !== 'MockTracker'
+            ) {
+                continue;
+            }
+            let matching = false;
+            for(let i = 2; i < chain.kinds.length; i++) {
+                if(chain.kinds[i] === 'SourceFile') {
+                    break;
+                }
+                if(chain.kinds[i] === 'ModuleDeclaration' && chain.nameKinds[i] === 'StringLiteral') {
+                    matching = chain.names[i] === 'node:test' || chain.names[i] === 'test';
+                    break;
+                }
+            }
+            if(matching) {
+                this.rules.findings.push(
+                    new Diagnostic(
+                        'correctness-no-mock-on-module-namespace',
+                        'mockOnModuleNamespace',
+                        "This mocks a member of an `import * as` namespace with node:test. An ES module namespace is sealed: its properties cannot be redefined, so the mock throws `Cannot redefine property` every time and the test never runs its body. Mock the object the module really exports instead: for a node builtin, the CommonJS exports reached through `createRequire(import.meta.url)`, followed by `syncBuiltinESMExports()` so the namespace's live binding sees the mock.",
+                        this.rules.byte(this.rules.start(node)),
+                        this.rules.byte(node.end),
+                        'nexus/',
+                    ),
+                );
+            }
+        }
+    }
+}

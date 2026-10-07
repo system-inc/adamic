@@ -1,0 +1,95 @@
+import type { Rules } from './rules.ts';
+import { Frames, header } from './frames.ts';
+import type { TypeFact } from './type_fact.ts';
+export class ListenerDeclaration {
+    readonly file: string;
+    readonly kind: string;
+    readonly defaultLibrary: boolean;
+    constructor(file: string, kind: string, library: boolean) {
+        this.file = file;
+        this.kind = kind;
+        this.defaultLibrary = library;
+    }
+}
+export class ListenerSymbol {
+    readonly present: boolean;
+    readonly identity: number;
+    readonly flags: number;
+    readonly name: string;
+    readonly declarations: readonly ListenerDeclaration[];
+    constructor(
+        present: boolean,
+        id: number,
+        flags: number,
+        name: string,
+        declarations: readonly ListenerDeclaration[],
+    ) {
+        this.present = present;
+        this.identity = id;
+        this.flags = flags;
+        this.name = name;
+        this.declarations = declarations;
+    }
+}
+export class ListenerMetadata {
+    readonly rules: Rules;
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    symbol(frames: Frames): ListenerSymbol {
+        const present = frames.yes();
+        let id = 0;
+        let flags = 0;
+        let name = '';
+        const declarations: ListenerDeclaration[] = [];
+        if(present) {
+            id = frames.natural();
+            flags = frames.natural();
+            name = frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const file = frames.field();
+                const kind = frames.field();
+                frames.natural();
+                frames.natural();
+                frames.yes();
+                const library = frames.yes();
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                const tags = frames.natural();
+                for(let t = 0; t < tags; t++) {
+                    frames.field();
+                    frames.field();
+                    frames.natural();
+                    frames.natural();
+                    frames.field();
+                }
+                const parameters = frames.natural();
+                for(let p = 0; p < parameters; p++) {
+                    frames.field();
+                }
+                declarations.push(new ListenerDeclaration(file, kind, library));
+            }
+        }
+        return new ListenerSymbol(present, id, flags, name, declarations);
+    }
+    nodeSymbol(index: number): ListenerSymbol {
+        const frames = new Frames(this.rules.ask(index, 'node-symbol-details'));
+        header(frames, 'node-symbol-details');
+        const result = this.symbol(frames);
+        frames.end();
+        return result;
+    }
+    typeSymbols(index: number, type: TypeFact): ListenerSymbol[] {
+        const frames = new Frames(this.rules.ask(index, `type-symbol-details\n${type.id}`));
+        header(frames, 'type-symbol-details');
+        const result = [this.symbol(frames), this.symbol(frames)];
+        frames.end();
+        return result;
+    }
+    identity(index: number): number {
+        return this.nodeSymbol(index).identity;
+    }
+}

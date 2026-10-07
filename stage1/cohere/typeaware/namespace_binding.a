@@ -1,0 +1,24 @@
+import { Frames, header } from './frames.ts';
+import type { Rules } from './rules.ts';
+export class NamespaceBinding {
+    readonly present: boolean;
+    flags = 0;
+    readonly kinds: string[] = [];
+    readonly local: boolean[] = [];
+    readonly typeOnly: boolean[] = [];
+    constructor(rules: Rules, index: number) {
+        const frames = new Frames(rules.ask(index, 'namespace-binding'));
+        header(frames, 'namespace-binding');
+        this.present = frames.yes();
+        if(this.present) {
+            this.flags = frames.natural();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                this.kinds.push(frames.field());
+                this.local.push(frames.yes());
+                this.typeOnly.push(frames.yes());
+            }
+        }
+        frames.end();
+    }
+}

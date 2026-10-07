@@ -203,6 +203,12 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "call-declaration-chain":
+		return p.callDeclarationChain(c, node, question)
+	case "namespace-binding":
+		return p.namespaceBinding(c, node, question)
+	case "nonnullable-shape":
+		return p.nonnullableShape(c, node, question)
 	case "declaration-contract":
 		return p.declarationContract(c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
