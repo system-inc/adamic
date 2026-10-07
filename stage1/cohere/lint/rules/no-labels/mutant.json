@@ -1,0 +1,5 @@
+{
+  "name": "label option widened",
+  "from": "this.context.settings.read('allowloop', 'false') === 'true'",
+  "to": "this.context.settings.read('allowloop', 'false') !== 'true'"
+}
