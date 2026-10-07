@@ -1,0 +1,29 @@
+Built: rebased the 17 completed native wave 23 rules and four parked analysis reservations onto current area b84a9d931; no new rules claimed.
+Commits: tested rebase tip 4fdf261a8bdbe2f24cc26e1a6bd3da1004eff89b; this evidence commit follows it on codex/typeaware-wave-23.
+Commands and outputs: all eight wave gates PASS 654.768s; pinned external comparisons PASS; compiler/repository lint PASS 90.715s; checker PASS 0.162s; filtered Node PASS 4.560s; vet clean.
+Mutants: all 17 rule mutants, extra question/option mutants, eighteen listener mutants and released-handle checks caught again; fragments byte mismatch 2460, required handle rejection exit 70.
+Not covered: full repository gate, optional performance benchmarks and native analysis for the four parked React rules; no unclaimed ranking entries remain.
+
+Landing bases: origin/main c7991b900362796aefd111474e65eb5398e91953 and origin/area/stage1-lint b84a9d9314b65d3d0261ee017e233287b4f071da are ancestors of the tested worker tip. The rebase completed without conflicts. Shared harness, compiler and allocator changes from integration were retained. This continuation changes only this report and owned compressed evidence. No shared tests, correctness checks or implementation files were relaxed or removed.
+
+The refreshed scan examined 634 origin refs and 33 distinct claim blobs. The 197 ranked names remain covered by existing ports or claims. There is no eligible next set of three rules. Four reservations remain parked on native high-level IR/identity/capture/escape analysis, as documented in claims/wave-23.md and the prior report; they count as finished under the user's parking instruction, without claiming native decision parity.
+
+All frozen wave controls, compiler77 and repository287 manifests were supplied again. Findings, fixes and suggestions remain byte-identical to the independent production-Go adapters in normal and sanitizer executions. Every mutant and timing is in current-gates.log.gz. For JSX fragments the compiler native time was 1.333665323s against Go 0.352345211s. Native remains slower; these are individual measurements while other checks ran, not isolated benchmarks.
+
+The required external inputs are now installed rather than left unset. The scratch npm prefix is /workspace/wave-23/required-libraries, containing pinned postcss@8.5.16, postcss-scss@4.0.9, graphql@17.0.2, postcss-values-parser@2.0.1, postcss-selector-parser@2.2.3, postcss-media-query-parser@0.2.3 and prettier@3.9.6. Each corresponding ADAMIC_*_LIBRARY variable and ADAMIC_JSON_PRETTIER points there. ADAMIC_TYPESCRIPT_SOURCE points to /workspace/wave-23/typescript. No correctness-input subtest skipped. The broad selection also matched optional TestCSSPrinterThroughput, which skipped; the exact CSS correctness selection subsequently passed with zero skips in css-correctness-only.log.gz. This is not a claim that the full repository gate or every future named mandatory check was run.
+
+Observed package results: scanner 32.890s, parser 45.114s, CSS 260.975s, graphql 55.782s, values 55.662s, selector 35.342s, mediaquery 14.023s, JSON 71.998s. Scanner compared 30,624,949 bytes; compiler expressions compared 28,836,875 bytes; whole compiler trees compared 44,766,682 bytes. PostCSS had 23,494 exact agreements and two occurrences of its existing proved surrogate gap. CSS printing checked 23,496 formats/refusals in default and narrow modes, native ASan/UBSan, Node and emitted JavaScript, with printer mutants caught. JSON's three external printer mutants were caught. The additional compiler-and-stage1 lint test compared 403 files and 20,953,174 identical bytes across Go, Node, emitted JavaScript and native. Raw logs retain all observations and existing documented upstream differences.
+
+Commands, after sourcing /workspace/adamic-tools/env.sh and exporting the corpus/library variables above:
+
+    go test ./stage1/cohere/typeaware -run '^TestWave23((Next|Core|Constructor|Behavior)?AgreementAndMutants|NumericListeners|JsxNoUndefAgreementAndMutants|JsxFragmentsAgreementAndMutants)$' -parallel=1 -count=1 -timeout=30m -v
+    go test ./stage1/typescript/scanner ./stage1/typescript/parser ./stage1/cohere/css ./stage1/cohere/graphql ./stage1/cohere/values ./stage1/cohere/selector ./stage1/cohere/mediaquery ./stage1/cohere/json -run 'TestScannerAgreesWithTypescriptGo|TestCompilerExpressionsAgree|TestWholeCompilerAgrees|TestThePortParsesAsGoCohereDoes|TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars|Test.*[Pp]rint|Test.*[Pp]rettier|Test.*[Uu]pstream' -p=1 -parallel=1 -count=1 -timeout=30m -v
+    go test ./stage1/cohere/css -run '^TestThePortParsesAsGoCohereDoes$/^PostCSS$|^TestCSSPrinterAgreesWithGo$/^(default|narrow)$/^$' -parallel=1 -count=1 -timeout=10m -v
+    go test ./stage1/cohere/lint -run '^TestCompilerAndStage1Agree$' -count=1 -timeout=15m -v
+    go test ./bridge/tsgo/checker -count=1 -v
+    go vet ./...
+    go test ./internal/oracle -run '^TestTheOracleCatchesOneByte$|^TestNativeAgreesWithNode$/internal/oracle/testdata/(maps_and_text|functions|closures|sorting|runtime_last_index_of)\.a$|^TestRuntimeLastIndex' -count=1 -timeout=10m -v
+
+All output was redirected to logs, never piped. Full raw results are compressed with stable timestamps and SHA-256 hashes in validation-wave23-b84a. Toolchain setup was not repeated: previously recorded warm setup 83s, nproc 5/quota 4.
+
+Automatic approval review rejected a broad recursive ELF/archive cleanup because it could remove needed artifacts. After inspecting the owned test's build paths and verifying ELF headers, a separate request to remove exactly five completed fragments-final scratch outputs (native, native-asan, mutant, released, jsx-fragments-oracle) was approved. All source, manifests, logs and committed evidence were retained; no cleanup remains blocked.
