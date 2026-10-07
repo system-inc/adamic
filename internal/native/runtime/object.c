@@ -111,7 +111,7 @@ adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, cons
 }
 
 // Cache absence too, with count as the index, without adding a field to the object's shape.
-adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
 	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
 	size_t slot = packed >> 48;
 	if ((packed & ADAMIC_SLOT_SHAPE_MASK) != (uintptr_t)object->shape) {

@@ -130,3 +130,29 @@ func eachOperand(expression ir.Expression, visit func(ir.Expression)) {
 	}
 	each(reflect.ValueOf(expression))
 }
+
+// lentArgument lends only a direct global read to a borrowed parameter. Every later
+// argument is pure, and all possible callees are proved not to touch the global.
+// touches also rejects unknown closure and callback effects. Reads of the global
+// are conservatively refused along with writes.
+func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
+	parameters := e.program.Functions[call.Function].Parameters
+	read, ok := call.Arguments[index].(ir.Read)
+	if !ok || index >= len(parameters) || !e.program.Locals[read.Local].Global || !lendable(read.Of) || !e.program.Locals[parameters[index]].Borrowed || e.reuse.consumed[parameters[index]] {
+		return "", false
+	}
+	for _, argument := range call.Arguments[index+1:] {
+		if !pure(argument) {
+			return "", false
+		}
+	}
+	for _, target := range e.program.CallTargets(call) {
+		if touches(e.program, target, read.Local, map[int]bool{}) || !e.program.Locals[e.program.Functions[target].Parameters[index]].Borrowed || e.reuse.consumed[e.program.Functions[target].Parameters[index]] {
+			return "", false
+		}
+	}
+	if read.Checked {
+		e.checkReady(read.Local)
+	}
+	return e.snapshot(read.Of, e.localName(read.Local)), true
+}

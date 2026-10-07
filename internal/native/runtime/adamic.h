@@ -270,14 +270,27 @@ adamic_value *adamic_object_write_field(adamic_object *object, const char *name,
 // A readonly numeric view may see a field made with the undefined-only reference representation.
 adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
-adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
-static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
-	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
+adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
+	if ((packed & ADAMIC_SLOT_SHAPE_MASK) != (uintptr_t)object->shape) {
+		return adamic_object_optional_find(object, name, cache);
+	}
+	size_t index = packed >> 48;
+	if (index == object->shape->count) { return NULL; }
+	return &((adamic_object *)object)->slots[index];
+}
+// Data lookup excludes inherited constructor storage and uses the atomic shape/slot pair.
+static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
 	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
 	if ((packed & ADAMIC_SLOT_SHAPE_MASK) == (uintptr_t)object->shape) {
 		return &((adamic_object *)object)->slots[packed >> 48];
 	}
 	return adamic_object_find(object, name, cache);
+}
+static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
+	return adamic_object_data_field(object, name, cache);
 }
 
 // Static Object methods (library_object.c). Returned collections and freeze own one reference.
@@ -289,6 +302,12 @@ struct adamic_array *adamic_object_keys(const adamic_object *object);
 struct adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries);
 void adamic_object_assign(adamic_object *target, const adamic_object *source);
 void adamic_object_check_write(const adamic_object *object, const char *name);
+// Keep frozen-object failures out of the ordinary write's call path.
+static inline void adamic_object_check_data_write(const adamic_object *object, const char *name) {
+	if (object->frozen) {
+		adamic_object_check_write(object, name);
+	}
+}
 
 // adamic_array is an array (array.c). references says whether its elements are references.
 typedef struct adamic_array {
@@ -880,12 +899,27 @@ _Noreturn void adamic_panic(const char *message, size_t length);
 extern _Thread_local uintptr_t adamic_stack_limit;
 void adamic_stack_thread_start(void);
 _Noreturn void adamic_stack_overflow(void);
+#ifdef ADAMIC_TARGET_WASI
+// Even a function using only Wasm locals must advance the linear stack. Otherwise
+// its engine call stack can trap before this check sees any movement. The volatile
+// endpoints preserve a 64-byte frame, including in optimized recursive functions.
+#define ADAMIC_CHECK_STACK() \
+	do { \
+		volatile unsigned char adamic_stack_frame[64]; \
+		adamic_stack_frame[0] = 0; \
+		adamic_stack_frame[63] = 0; \
+		if ((uintptr_t)adamic_stack_frame < adamic_stack_limit) { \
+			adamic_stack_overflow(); \
+		} \
+	} while (0)
+#else
 #define ADAMIC_CHECK_STACK() \
 	do { \
 		if ((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit) { \
 			adamic_stack_overflow(); \
 		} \
 	} while (0)
+#endif
 
 // adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
 // bug, and it says so rather than returning garbage.
