@@ -58,3 +58,19 @@ wave_19_next_registration.patch. The unmodified archive explicitly refuses each
 question. No shared harness, generator or dispatch file was edited in this
 checkpoint, and no further rules have been claimed. See WAVE_19_STREAM_REPORT.md
 in the parent directory for the final commands, evidence and timing.
+
+## Second continuation claim
+
+After pushing all three Nexus algorithms and their parity, sanitizer and mutant
+proofs through 8845163bf64cad8c62a06ab5f83ab3141b91080a, fetched all origin heads.
+The snapshot has 389 origin refs, 40 unique text claim blobs, 197 ranked rules,
+26 named base/main ports and 142 rules named in claim files. Thirty candidates
+remain after those exclusions. The first three by combined volume descending
+and lexical ties are reserved for this branch before any implementation:
+
+- react-hooks/set-state-in-effect (compiler 0, repository 0)
+- react-hooks/set-state-in-render (compiler 0, repository 0)
+- react-hooks/static-components (compiler 0, repository 0)
+
+The previous Nexus production registrations remain pending under the shared-file
+restriction; their algorithms and overlay-based checks are already pushed.
