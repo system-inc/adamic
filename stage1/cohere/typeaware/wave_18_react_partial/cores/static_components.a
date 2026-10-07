@@ -1,0 +1,81 @@
+import { Diagnostic } from '../../diagnostic.ts';
+import { HirFunction, reportIdentity } from './hir.a';
+// Same single forward walk as Go. Loop back-edge taint is intentionally not fixed.
+export class StaticComponents {
+    readonly findings: Diagnostic[];
+    constructor(findings: Diagnostic[]) {
+        this.findings = findings;
+    }
+    run(function_: HirFunction): void {
+        const dynamic = new Map<number, number>();
+        for(const block of function_.blocks) {
+            for(const phi of block.phis) {
+                for(const operand of phi.operands) {
+                    const creator = dynamic.get(operand);
+                    if(creator !== undefined) {
+                        dynamic.set(phi.target, creator);
+                        break;
+                    }
+                }
+            }
+            for(const i of block.instructions) {
+                const target = i.target.id;
+                if(i.kind === 'FunctionExpression') {
+                    dynamic.set(target, target);
+                }
+                else if(i.kind === 'CallExpression' || i.kind === 'NewExpression') {
+                    dynamic.set(target, i.p0.id);
+                }
+                else if(i.kind === 'MethodCall') {
+                    dynamic.set(target, i.p1.id);
+                }
+                else if(i.kind === 'LoadLocal') {
+                    const creator = dynamic.get(i.p0.id);
+                    if(creator !== undefined) {
+                        dynamic.set(target, creator);
+                    }
+                }
+                else if(i.kind === 'StoreLocal') {
+                    const creator = dynamic.get(i.p1.id);
+                    if(creator !== undefined) {
+                        dynamic.set(target, creator);
+                        dynamic.set(i.p0.id, creator);
+                    }
+                }
+                else if(i.kind === 'JsxExpression' && i.p0.id >= 0) {
+                    const creation = dynamic.get(i.p0.id);
+                    if(creation === undefined) {
+                        continue;
+                    }
+                    const created = function_.identity(creation)?.text ?? '';
+                    const where = created === '' ? 'in this render' : `at \`${created}\``;
+                    const message = `This component is created during render, ${where}, so it gets a new identity every time this function runs. React compares components by identity, so it unmounts the previous one and mounts this as a fresh component rather than updating it, discarding all of its state and re-rendering its whole subtree on every render. The usual symptom is an input that loses what was typed into it. Move the component to module scope, or pass the value that varies as a prop.`;
+                    const n = function_.identity(i.p0.id);
+                    if(n !== undefined && n.start >= 0) {
+                        reportIdentity(
+                            function_,
+                            i.p0.id,
+                            'static-components',
+                            'staticComponents',
+                            message,
+                            this.findings,
+                        );
+                    }
+                    else {
+                        const tag = i.p0;
+                        this.findings.push(
+                            new Diagnostic(
+                                'static-components',
+                                'staticComponents',
+                                message,
+                                tag.start,
+                                tag.end,
+                                'react-hooks/',
+                            ),
+                        );
+                    }
+                }
+            }
+        }
+    }
+}

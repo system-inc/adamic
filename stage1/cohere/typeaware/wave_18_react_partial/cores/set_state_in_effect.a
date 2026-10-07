@@ -1,0 +1,216 @@
+import type { Diagnostic } from '../../diagnostic.ts';
+import { HirFunction, HirPlace, HirInstruction, reportPlace } from './hir.a';
+import { PostDominance } from './postdominator.a';
+import { messageSetStateInEffect } from './messages.a';
+export class SetStateInEffect {
+    readonly empty: HirPlace[] = [];
+    readonly findings: Diagnostic[];
+    constructor(findings: Diagnostic[]) {
+        this.findings = findings;
+    }
+    run(function_: HirFunction): void {
+        const known = new Map<number, HirPlace>();
+        for(const block of function_.blocks) {
+            for(const i of block.instructions) {
+                if(i.kind === 'LoadLocal' || i.kind === 'LoadContext') {
+                    const origin = known.get(i.p0.id);
+                    if(origin !== undefined) {
+                        known.set(i.target.id, origin);
+                    }
+                }
+                else if(i.kind === 'StoreLocal') {
+                    const origin = known.get(i.p1.id);
+                    if(origin !== undefined) {
+                        known.set(i.p0.id, origin);
+                        known.set(i.target.id, origin);
+                    }
+                }
+                else if(i.kind === 'FunctionExpression') {
+                    const nested = function_.nested(i);
+                    if(nested === undefined) {
+                        continue;
+                    }
+                    let relevant = false;
+                    const captures: HirPlace[] = [];
+                    for(const place of i.captures) {
+                        captures.push(place);
+                    }
+                    for(const place of nested.context) {
+                        captures.push(place);
+                    }
+                    for(const place of captures) {
+                        if(known.has(place.id) || function_.setter(place.id)) {
+                            relevant = true;
+                        }
+                    }
+                    if(!relevant) {
+                        continue;
+                    }
+                    const translated = new Map<number, HirPlace>();
+                    for(let at = 0; at < Math.min(i.captures.length, nested.context.length); at++) {
+                        const capture = i.captures[at];
+                        const context = nested.context[at];
+                        if(capture !== undefined && context !== undefined) {
+                            const origin = known.get(capture.id);
+                            if(origin !== undefined) {
+                                translated.set(context.id, origin);
+                            }
+                        }
+                    }
+                    const callee = this.find(nested, translated);
+                    if(callee !== undefined) {
+                        known.set(i.target.id, callee);
+                    }
+                }
+                else if(i.kind === 'CallExpression' || i.kind === 'MethodCall') {
+                    const first = this.first(i);
+                    if(first === undefined) {
+                        continue;
+                    }
+                    const setter = known.get(first.id);
+                    if(setter === undefined) {
+                        continue;
+                    }
+                    const callee = i.kind === 'MethodCall' ? i.p1 : i.p0;
+                    const name = function_.identity(callee.id)?.symbol ?? '';
+                    if(name === 'useEffectEvent') {
+                        known.set(i.target.id, setter);
+                    }
+                    else if(['useEffect', 'useLayoutEffect', 'useInsertionEffect'].includes(name)) {
+                        reportPlace(
+                            function_,
+                            setter,
+                            'set-state-in-effect',
+                            'setStateInEffect',
+                            messageSetStateInEffect,
+                            this.findings,
+                        );
+                    }
+                }
+            }
+        }
+        for(const nested of function_.functions) {
+            this.run(nested);
+        }
+    }
+    first(i: HirInstruction): HirPlace | undefined {
+        if(i.args.length === 0 || i.spreads[0] === true) {
+            return undefined;
+        }
+        return i.args[0];
+    }
+    find(function_: HirFunction, known: Map<number, HirPlace>): HirPlace | undefined {
+        const derived = new Set<number>();
+        const local = new Map<number, HirPlace>();
+        for(const [id, place] of known) {
+            local.set(id, place);
+        }
+        const post = new PostDominance(function_);
+        const controlled = new Map<number, boolean>();
+        for(const block of function_.blocks) {
+            for(const phi of block.phis) {
+                for(const operand of phi.operands) {
+                    if(derived.has(operand)) {
+                        derived.add(phi.target);
+                        break;
+                    }
+                }
+            }
+            for(const i of block.instructions) {
+                if(i.kind === 'PropertyLoad' && i.property === 'current' && function_.ref(i.p0.id)) {
+                    derived.add(i.target.id);
+                }
+                if(this.reads(i, function_, derived)) {
+                    derived.add(i.target.id);
+                    if(i.kind === 'StoreLocal') {
+                        derived.add(i.p0.id);
+                    }
+                    if(i.kind === 'Destructure') {
+                        for(const id of i.pattern) {
+                            derived.add(id);
+                        }
+                    }
+                }
+                if(i.kind === 'LoadLocal') {
+                    const origin = local.get(i.p0.id);
+                    if(origin !== undefined) {
+                        local.set(i.target.id, origin);
+                    }
+                }
+                else if(i.kind === 'LoadContext') {
+                    if(local.has(i.p0.id)) {
+                        local.set(i.target.id, i.p0);
+                    }
+                }
+                else if(i.kind === 'StoreLocal') {
+                    const origin = local.get(i.p1.id);
+                    if(origin !== undefined) {
+                        local.set(i.p0.id, origin);
+                        local.set(i.target.id, origin);
+                    }
+                }
+                else if(i.kind === 'CallExpression') {
+                    if(!local.has(i.p0.id) && !function_.setter(i.p0.id)) {
+                        continue;
+                    }
+                    const argument = this.first(i);
+                    if(argument !== undefined && derived.has(argument.id)) {
+                        return undefined;
+                    }
+                    if(!controlled.has(block.id)) {
+                        let answer = false;
+                        for(const id of post.frontier(block.id)) {
+                            for(const test of function_.block(id)?.tests ?? this.empty) {
+                                if(derived.has(test.id) || function_.ref(test.id)) {
+                                    answer = true;
+                                    break;
+                                }
+                            }
+                            if(answer) {
+                                break;
+                            }
+                        }
+                        controlled.set(block.id, answer);
+                    }
+                    if(controlled.get(block.id) === true) {
+                        return undefined;
+                    }
+                    return i.p0;
+                }
+            }
+        }
+        return undefined;
+    }
+    reads(i: HirInstruction, function_: HirFunction, derived: Set<number>): boolean {
+        const places: HirPlace[] = [];
+        if(['LoadLocal', 'PropertyLoad', 'Destructure', 'UnaryExpression'].includes(i.kind)) {
+            places.push(i.p0);
+        }
+        else if(i.kind === 'StoreLocal') {
+            places.push(i.p1);
+        }
+        else if(i.kind === 'ComputedLoad' || i.kind === 'BinaryExpression') {
+            places.push(i.p0);
+            places.push(i.p1);
+        }
+        else if(i.kind === 'CallExpression') {
+            places.push(i.p0);
+            for(const arg of i.args) {
+                places.push(arg);
+            }
+        }
+        else if(i.kind === 'MethodCall') {
+            places.push(i.p0);
+            places.push(i.p1);
+            for(const arg of i.args) {
+                places.push(arg);
+            }
+        }
+        for(const p of places) {
+            if(derived.has(p.id) || function_.ref(p.id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

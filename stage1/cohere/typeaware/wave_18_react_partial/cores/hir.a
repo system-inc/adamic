@@ -1,0 +1,175 @@
+// Native validator input. Producing this graph from source is a separate adapter.
+// Identifier and block identities are local to one function, never global handles.
+import { panic } from 'adamic';
+import { Diagnostic } from '../../diagnostic.ts';
+export class HirPlace {
+    readonly id: number;
+    readonly start: number;
+    readonly end: number;
+    constructor(id: number, start: number, end: number) {
+        this.id = id;
+        this.start = start;
+        this.end = end;
+    }
+}
+export class HirIdentity {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    readonly alias: string;
+    readonly symbol: string;
+    constructor(start: number, end: number, text: string, alias: string, symbol: string) {
+        this.start = start;
+        this.end = end;
+        this.text = text;
+        this.alias = alias;
+        this.symbol = symbol;
+    }
+}
+export class HirPhi {
+    readonly target: number;
+    readonly operands: readonly number[];
+    constructor(target: number, operands: readonly number[]) {
+        this.target = target;
+        this.operands = operands;
+    }
+}
+export class HirInstruction {
+    readonly kind: string;
+    readonly target: HirPlace;
+    readonly p0: HirPlace;
+    readonly p1: HirPlace;
+    readonly p2: HirPlace;
+    readonly args: readonly HirPlace[];
+    readonly spreads: readonly boolean[];
+    readonly captures: readonly HirPlace[];
+    readonly pattern: readonly number[];
+    readonly nested: number;
+    readonly property: string;
+    readonly optional: boolean;
+    constructor(
+        kind: string,
+        target: HirPlace,
+        p0: HirPlace,
+        p1: HirPlace,
+        p2: HirPlace,
+        args: readonly HirPlace[],
+        spreads: readonly boolean[],
+        captures: readonly HirPlace[],
+        pattern: readonly number[],
+        nested: number,
+        property: string,
+        optional: boolean,
+    ) {
+        this.kind = kind;
+        this.target = target;
+        this.p0 = p0;
+        this.p1 = p1;
+        this.p2 = p2;
+        this.args = args;
+        this.spreads = spreads;
+        this.captures = captures;
+        this.pattern = pattern;
+        this.nested = nested;
+        this.property = property;
+        this.optional = optional;
+    }
+}
+export class HirBlock {
+    readonly id: number;
+    readonly predecessors: readonly number[];
+    readonly returning: boolean;
+    readonly tests: readonly HirPlace[];
+    readonly instructions: readonly HirInstruction[];
+    readonly phis: readonly HirPhi[];
+    constructor(
+        id: number,
+        predecessors: readonly number[],
+        returning: boolean,
+        tests: readonly HirPlace[],
+        instructions: readonly HirInstruction[],
+        phis: readonly HirPhi[],
+    ) {
+        this.id = id;
+        this.predecessors = predecessors;
+        this.returning = returning;
+        this.tests = tests;
+        this.instructions = instructions;
+        this.phis = phis;
+    }
+}
+export class HirFunction {
+    readonly entry: number;
+    readonly identities: readonly HirIdentity[];
+    readonly context: readonly HirPlace[];
+    readonly memo: boolean;
+    readonly blocks: readonly HirBlock[];
+    readonly functions: readonly HirFunction[];
+    constructor(
+        entry: number,
+        identities: readonly HirIdentity[],
+        context: readonly HirPlace[],
+        memo: boolean,
+        blocks: readonly HirBlock[],
+        functions: readonly HirFunction[],
+    ) {
+        this.entry = entry;
+        this.identities = identities;
+        this.context = context;
+        this.memo = memo;
+        this.blocks = blocks;
+        this.functions = functions;
+    }
+    identity(id: number): HirIdentity | undefined {
+        return this.identities[id];
+    }
+    setter(id: number): boolean {
+        return this.identity(id)?.alias === 'Dispatch';
+    }
+    ref(id: number): boolean {
+        return this.identity(id)?.symbol === 'RefObject';
+    }
+    block(id: number): HirBlock | undefined {
+        for(const b of this.blocks) {
+            if(b.id === id) {
+                return b;
+            }
+        }
+        return undefined;
+    }
+    nested(i: HirInstruction): HirFunction | undefined {
+        return this.functions[i.nested];
+    }
+}
+export function reportIdentity(
+    function_: HirFunction,
+    id: number,
+    rule: string,
+    messageId: string,
+    message: string,
+    out: Diagnostic[],
+): void {
+    const n = function_.identity(id);
+    if(n === undefined || n.start < 0) {
+        return;
+    }
+    out.push(new Diagnostic(rule, messageId, message, n.start, n.end, 'react-hooks/'));
+}
+export function reportPlace(
+    function_: HirFunction,
+    place: HirPlace,
+    rule: string,
+    messageId: string,
+    message: string,
+    out: Diagnostic[],
+): void {
+    if(place.start >= 0 && place.start < place.end) {
+        out.push(new Diagnostic(rule, messageId, message, place.start, place.end, 'react-hooks/'));
+    }
+    else {
+        reportIdentity(function_, place.id, rule, messageId, message, out);
+    }
+}
+export function requireFunction(function_: HirFunction | undefined): HirFunction {
+    return function_ ?? panic('missing native React HIR function');
+}

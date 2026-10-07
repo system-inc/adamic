@@ -1,0 +1,94 @@
+import type { Diagnostic } from '../../diagnostic.ts';
+import { HirFunction, reportIdentity } from './hir.a';
+import { PostDominance } from './postdominator.a';
+import { setStateInRenderMessage, setStateInUseMemoMessage } from './messages.a';
+// The caller supplies a compiled unit; source classification is adapter work.
+export class SetStateInRender {
+    readonly findings: Diagnostic[];
+    constructor(findings: Diagnostic[]) {
+        this.findings = findings;
+    }
+    run(function_: HirFunction): void {
+        this.scan(function_, true, new Set<number>());
+    }
+    scan(function_: HirFunction, emit: boolean, known: Set<number>): boolean {
+        const unconditional = new PostDominance(function_).unconditional();
+        let reported = false;
+        for(const block of function_.blocks) {
+            for(const i of block.instructions) {
+                if(i.kind === 'LoadLocal' || i.kind === 'LoadContext') {
+                    if(known.has(i.p0.id)) {
+                        known.add(i.target.id);
+                    }
+                }
+                else if(i.kind === 'StoreLocal') {
+                    if(known.has(i.p1.id)) {
+                        known.add(i.p0.id);
+                        known.add(i.target.id);
+                    }
+                }
+                else if(i.kind === 'FunctionExpression') {
+                    const nested = function_.nested(i);
+                    if(nested === undefined) {
+                        continue;
+                    }
+                    const translated = new Set<number>();
+                    for(let at = 0; at < i.captures.length; at++) {
+                        const capture = i.captures[at];
+                        const context = nested.context[at];
+                        if(
+                            capture !== undefined &&
+                            context !== undefined &&
+                            (known.has(capture.id) || function_.setter(capture.id))
+                        ) {
+                            translated.add(context.id);
+                        }
+                    }
+                    if(translated.size === 0 && !nested.memo) {
+                        continue;
+                    }
+                    if(this.scan(nested, nested.memo, translated)) {
+                        known.add(i.target.id);
+                    }
+                }
+                else if(i.kind === 'CallExpression') {
+                    if(i.optional) {
+                        continue;
+                    }
+                    if(!function_.setter(i.p0.id) && !known.has(i.p0.id)) {
+                        continue;
+                    }
+                    if(function_.memo) {
+                        if(emit) {
+                            reportIdentity(
+                                function_,
+                                i.p0.id,
+                                'set-state-in-render',
+                                'setStateInUseMemo',
+                                setStateInUseMemoMessage,
+                                this.findings,
+                            );
+                        }
+                        reported = true;
+                        continue;
+                    }
+                    if(!unconditional.has(block.id)) {
+                        continue;
+                    }
+                    if(emit) {
+                        reportIdentity(
+                            function_,
+                            i.p0.id,
+                            'set-state-in-render',
+                            'setStateInRender',
+                            setStateInRenderMessage,
+                            this.findings,
+                        );
+                    }
+                    reported = true;
+                }
+            }
+        }
+        return reported;
+    }
+}

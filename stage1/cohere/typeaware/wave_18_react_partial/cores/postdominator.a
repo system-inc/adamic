@@ -1,0 +1,171 @@
+// Cooper-Harvey-Kennedy on the reversed graph, with returns feeding exit zero.
+import { HirFunction } from './hir.a';
+export class PostDominance {
+    readonly empty: number[] = [];
+    readonly function_: HirFunction;
+    readonly immediate = new Map<number, number>();
+    constructor(function_: HirFunction) {
+        this.function_ = function_;
+        const edges = new Map<number, number[]>();
+        const exits: number[] = [];
+        edges.set(0, exits);
+        for(const block of function_.blocks) {
+            edges.set(block.id, [...block.predecessors]);
+            if(block.returning) {
+                const exits = edges.get(0);
+                if(exits !== undefined) {
+                    exits.push(block.id);
+                }
+            }
+        }
+        const visited = new Set<number>();
+        const ids = [0];
+        const next = [0];
+        const post: number[] = [];
+        visited.add(0);
+        while(ids.length > 0) {
+            const i = ids.length - 1;
+            const id = ids[i] ?? 0;
+            const children = edges.get(id) ?? this.empty;
+            const n = next[i] ?? 0;
+            if(n < children.length) {
+                next[i] = n + 1;
+                const child = children[n] ?? 0;
+                if(!visited.has(child)) {
+                    visited.add(child);
+                    ids.push(child);
+                    next.push(0);
+                }
+            }
+            else {
+                post.push(id);
+                ids.pop();
+                next.pop();
+            }
+        }
+        post.reverse();
+        const position = new Map<number, number>();
+        for(let i = 0; i < post.length; i++) {
+            position.set(post[i] ?? 0, i);
+        }
+        const predecessors = new Map<number, number[]>();
+        for(const [from, targets] of edges) {
+            for(const to of targets) {
+                const fresh: number[] = [];
+                const row = predecessors.get(to) ?? fresh;
+                row.push(from);
+                predecessors.set(to, row);
+            }
+        }
+        const immediate: number[] = [];
+        for(let i = 0; i < post.length; i++) {
+            immediate.push(-1);
+        }
+        immediate[0] = 0;
+        let changed = true;
+        while(changed) {
+            changed = false;
+            for(let i = 1; i < post.length; i++) {
+                let candidate = -1;
+                for(const predecessor of predecessors.get(post[i] ?? 0) ?? this.empty) {
+                    const p = position.get(predecessor) ?? -1;
+                    if(p < 0 || (immediate[p] ?? -1) === -1) {
+                        continue;
+                    }
+                    candidate = candidate < 0 ? p : this.intersect(p, candidate, immediate);
+                }
+                if(candidate !== -1 && immediate[i] !== candidate) {
+                    immediate[i] = candidate;
+                    changed = true;
+                }
+            }
+        }
+        for(let i = 1; i < post.length; i++) {
+            const at = immediate[i] ?? -1;
+            if(at >= 0) {
+                this.immediate.set(post[i] ?? 0, post[at] ?? 0);
+            }
+        }
+    }
+    intersect(left: number, right: number, immediate: readonly number[]): number {
+        let a = left;
+        let b = right;
+        while(a !== b) {
+            while(a > b) {
+                const n = immediate[a] ?? -1;
+                if(n === -1 || n === a) {
+                    return b;
+                }
+                a = n;
+            }
+            while(b > a) {
+                const n = immediate[b] ?? -1;
+                if(n === -1 || n === b) {
+                    return a;
+                }
+                b = n;
+            }
+        }
+        return a;
+    }
+    unconditional(): Set<number> {
+        const result = new Set<number>();
+        if(this.function_.blocks.length === 0) {
+            return result;
+        }
+        let current = this.function_.entry;
+        for(let step = 0; step <= this.function_.blocks.length; step++) {
+            if(current === 0 || result.has(current)) {
+                break;
+            }
+            result.add(current);
+            const next = this.immediate.get(current);
+            if(next === undefined) {
+                break;
+            }
+            current = next;
+        }
+        return result;
+    }
+    frontier(target: number): Set<number> {
+        const dominated = new Set<number>();
+        const visited = new Set<number>();
+        const queue = [target];
+        let at = 0;
+        while(at < queue.length) {
+            const current = queue[at] ?? 0;
+            at++;
+            if(visited.has(current)) {
+                continue;
+            }
+            visited.add(current);
+            const block = this.function_.block(current);
+            if(block === undefined) {
+                continue;
+            }
+            for(const predecessor of block.predecessors) {
+                const immediate = this.immediate.get(predecessor) ?? predecessor;
+                if(immediate === target || dominated.has(immediate)) {
+                    dominated.add(predecessor);
+                }
+                queue.push(predecessor);
+            }
+        }
+        const result = new Set<number>();
+        const walked = new Set<number>();
+        const roots = [...dominated];
+        roots.push(target);
+        for(const id of roots) {
+            if(walked.has(id)) {
+                continue;
+            }
+            walked.add(id);
+            for(const predecessor of this.function_.block(id)?.predecessors ?? this.empty) {
+                if(!dominated.has(predecessor)) {
+                    result.add(predecessor);
+                }
+            }
+        }
+        return result;
+    }
+}
