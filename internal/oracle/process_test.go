@@ -176,13 +176,25 @@ func TestProcessLargePipeExitPreservesOutput(t *testing.T) {
 					t.Fatal("normal return must drain output byte for byte")
 				}
 			} else {
-				if !bytes.Equal(truth.stdout, expected[:4096]) {
-					t.Fatal("documented raw Node pipe loss changed; review Node first")
+				if !bytes.Equal(truth.stdout, expected) {
+					t.Fatal("blocking oracle runner must preserve output")
+				}
+				raw := filepath.Join(t.TempDir(), "stock-node.mjs")
+				source, err := os.ReadFile(path)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if err := os.WriteFile(raw, source, 0600); err != nil {
+					t.Fatal(err)
+				}
+				stock := processExitOutput(t, "pipe", false, true, "node", raw)
+				if stock.exitCode != 37 || len(stock.stderr) != 0 || !bytes.Equal(stock.stdout, expected[:4096]) {
+					t.Fatal("stock Node pipe-loss control changed")
 				}
 				if difference := disagreement(got, backend); difference != "" {
 					t.Fatalf("Adamic backends must preserve all output: %s", difference)
 				}
-				t.Logf("NAMED EXCEPTION: raw Node writes %d bytes; both Adamic backends preserve all %d bytes", len(truth.stdout), len(expected))
+				t.Logf("stock Node writes %d bytes; blocking oracle and both backends preserve all %d bytes", len(stock.stdout), len(expected))
 				data, err := os.ReadFile(script)
 				if err != nil {
 					t.Fatal(err)
@@ -191,11 +203,11 @@ func TestProcessLargePipeExitPreservesOutput(t *testing.T) {
 					t.Fatal("JS exit mutant anchor changed")
 				}
 				mutant := filepath.Join(t.TempDir(), "mutant.mjs")
-				if err := os.WriteFile(mutant, []byte(strings.Replace(string(data), "adamicProcessExit(", "process.exit(", 1)), 0o644); err != nil {
+				if err := os.WriteFile(mutant, []byte("process.stdout._handle.setBlocking(false);\n"+strings.Replace(string(data), "adamicProcessExit(", "process.exit(", 1)), 0o644); err != nil {
 					t.Fatal(err)
 				}
 				bad := processExitOutput(t, "pipe", false, true, "node", "--disable-warning=ExperimentalWarning", runner, mutant)
-				if disagreement(truth, bad) != "" || disagreement(got, bad) != "stdout differs" {
+				if disagreement(truth, bad) != "stdout differs" || disagreement(got, bad) != "stdout differs" || bad.exitCode != 37 || len(bad.stderr) != 0 {
 					t.Fatal("JS exit without draining mutant survived, or failed outside output comparison")
 				}
 				t.Log("JS no-drain mutant runs cleanly with exit 37; caught by missing 200,704 output bytes")
@@ -213,8 +225,8 @@ func TestProcessExitDrainsStderr(t *testing.T) {
 	path, binary, script := processOutputProgram(t, "const line = 'x'.repeat(1023); for (let index = 0; index < 200; index += 1) { console.error(line); } process.exit(37);", "")
 	runner := filepath.Join(repository, "oracle/node.mjs")
 	truth := processExitOutput(t, "stderr-pipe", false, true, "node", "--disable-warning=ExperimentalWarning", runner, path)
-	if truth.exitCode != 37 || len(truth.stdout) != 0 || !bytes.Equal(truth.stderr, expected[:4096]) {
-		t.Fatal("documented raw Node stderr pipe loss changed")
+	if truth.exitCode != 37 || len(truth.stdout) != 0 || !bytes.Equal(truth.stderr, expected) {
+		t.Fatal("blocking oracle runner must preserve stderr")
 	}
 	for _, command := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
 		got := processExitOutput(t, "stderr-pipe", false, true, command...)

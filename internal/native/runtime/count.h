@@ -23,6 +23,8 @@ typedef struct adamic_counts {
 	// regions is the values let go of with their region rather than freed one at a time (region.c):
 	// a finished program's allocations are its frees and its regions.
 	size_t regions;
+	// Only abrupt termination adds a suffix to the final counts line.
+	const char *termination;
 } adamic_counts;
 
 extern adamic_counts adamic_counted;
@@ -39,6 +41,7 @@ void adamic_count_report(void);
 #define ADAMIC_COUNT_RETAIN() (adamic_counted.retains++)
 #define ADAMIC_COUNT_RELEASE() (adamic_counted.releases++)
 #define ADAMIC_COUNT_REPORT() adamic_count_report()
+#define ADAMIC_COUNT_TERMINATE(reason) (adamic_counted.termination = " termination " reason)
 #define ADAMIC_COUNT_REGION(count) (adamic_counted.regions += (count), adamic_counted.live -= (count))
 #else
 #define ADAMIC_COUNT_ALLOCATION() ((void)0)
@@ -46,6 +49,7 @@ void adamic_count_report(void);
 #define ADAMIC_COUNT_RETAIN() ((void)0)
 #define ADAMIC_COUNT_RELEASE() ((void)0)
 #define ADAMIC_COUNT_REPORT() ((void)0)
+#define ADAMIC_COUNT_TERMINATE(reason) ((void)0)
 #define ADAMIC_COUNT_REGION(count) ((void)(count))
 #endif
 

@@ -222,6 +222,7 @@ _Noreturn void adamic_unreachable(void) {
 // An explicit exit does not unwind JavaScript frames or run their finally clauses.
 _Noreturn void adamic_process_exit_now(int code) {
 	flush();
+	ADAMIC_COUNT_TERMINATE("process_exit");
 	ADAMIC_COUNT_REPORT();
 	_exit(code);
 }

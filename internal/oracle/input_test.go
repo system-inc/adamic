@@ -328,17 +328,21 @@ func inputLeaks(t *testing.T, prepared func() inputRun, program *ir.Program, san
 }
 func inputLeaksUncached(t *testing.T, prepared func() inputRun, program *ir.Program, sanitized string) string {
 	t.Helper()
+	// Use the same executed-path decision as closed fixtures, with fresh inputs for each run.
+	binary := filepath.Join(sharedDirectory(t), "counted")
+	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+		t.Fatal(err)
+	}
+	how := prepared()
+	counted := executeInput(t, how, nil, binary, how.arguments...)
+	if report := unbalanced(t, counted); report != "" {
+		return report
+	}
+	if abruptTermination(counted) {
+		return ""
+	}
 	switch runtime.GOOS {
 	case "darwin":
-		// The counted build, then leaks --atExit on it, as leaksCounted checks every other fixture.
-		binary := filepath.Join(sharedDirectory(t), "counted")
-		if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
-			t.Fatal(err)
-		}
-		how := prepared()
-		if report := unbalanced(t, executeInput(t, how, nil, binary, how.arguments...)); report != "" {
-			return report
-		}
 		how = prepared()
 		return leaksTool(executeInput(t, how, nil, "leaks", append([]string{"--atExit", "--", binary}, how.arguments...)...))
 	case "linux":

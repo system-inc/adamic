@@ -1,0 +1,55 @@
+# github.com/microsoft/TypeScript/tsc/shim/core
+cohere/TypeScript-shim/core/shim.go:51:51: undefined: tspath.RootedFilePath
+cohere/TypeScript-shim/core/shim.go:68:48: undefined: tspath.RootedFilePath
+cohere/TypeScript-shim/core/shim.go:166:58: undefined: tspath.RootedPath
+cohere/TypeScript-shim/core/shim.go:166:77: undefined: tspath.RootedFilePath
+cohere/TypeScript-shim/core/shim.go:169:69: undefined: tspath.RootedFilePath
+# github.com/microsoft/TypeScript/tsc/shim/bundled
+cohere/TypeScript-shim/bundled/shim.go:18:23: undefined: tspath.RootedDirectoryPath
+# github.com/microsoft/TypeScript/tsc/shim/tspath
+cohere/TypeScript-shim/tspath/shim.go:14:31: undefined: tspath.CaseSensitivity
+cohere/TypeScript-shim/tspath/shim.go:132:28: undefined: tspath.FileNameStem
+cohere/TypeScript-shim/tspath/shim.go:133:24: undefined: tspath.FileSpec
+cohere/TypeScript-shim/tspath/shim.go:231:31: undefined: tspath.ModuleSpecifier
+cohere/TypeScript-shim/tspath/shim.go:245:23: undefined: tspath.PathKey
+cohere/TypeScript-shim/tspath/shim.go:250:27: undefined: tspath.PathPattern
+cohere/TypeScript-shim/tspath/shim.go:251:28: undefined: tspath.RelativePath
+cohere/TypeScript-shim/tspath/shim.go:280:35: undefined: tspath.RootedDirectoryPath
+cohere/TypeScript-shim/tspath/shim.go:291:30: undefined: tspath.RootedFilePath
+cohere/TypeScript-shim/tspath/shim.go:302:26: undefined: tspath.RootedPath
+cohere/TypeScript-shim/tspath/shim.go:302:26: too many errors
+# github.com/microsoft/TypeScript/tsc/shim/ast
+cohere/TypeScript-shim/ast/shim.go:436:54: undefined: tspath.RootedFilePath
+cohere/TypeScript-shim/ast/shim.go:454:56: undefined: tspath.RootedFilePath
+cohere/TypeScript-shim/ast/shim.go:487:56: undefined: tspath.RootedFilePath
+cohere/TypeScript-shim/ast/shim.go:490:50: undefined: tspath.RootedFilePath
+cohere/TypeScript-shim/ast/shim.go:2643:31: undefined: ast.KindSourceKeyword
+cohere/TypeScript-shim/ast/shim.go:2862:37: undefined: tspath.RootedFilePath
+cohere/TypeScript-shim/ast/shim.go:2862:65: undefined: tspath.PathKey
+cohere/TypeScript-shim/ast/shim.go:3153:48: undefined: tspath.RootedFilePath
+# github.com/microsoft/TypeScript/tsc/shim/tsoptions
+cohere/TypeScript-shim/tsoptions/shim.go:24:44: undefined: tsoptions.CommandLineOptionPathKind
+cohere/TypeScript-shim/tsoptions/shim.go:26:58: undefined: tsoptions.CommandLineOptionPathKindConfigLocator
+cohere/TypeScript-shim/tsoptions/shim.go:27:54: undefined: tsoptions.CommandLineOptionPathKindDirectory
+cohere/TypeScript-shim/tsoptions/shim.go:28:49: undefined: tsoptions.CommandLineOptionPathKindFile
+cohere/TypeScript-shim/tsoptions/shim.go:29:60: undefined: tsoptions.CommandLineOptionPathKindFileOrDirectory
+cohere/TypeScript-shim/tsoptions/shim.go:30:53: undefined: tsoptions.CommandLineOptionPathKindFileSpec
+cohere/TypeScript-shim/tsoptions/shim.go:31:49: undefined: tsoptions.CommandLineOptionPathKindNone
+cohere/TypeScript-shim/tsoptions/shim.go:32:56: undefined: tsoptions.CommandLineOptionPathKindPathPattern
+cohere/TypeScript-shim/tsoptions/shim.go:33:64: undefined: tsoptions.CommandLineOptionPathKindResolvedPathPattern
+cohere/TypeScript-shim/tsoptions/shim.go:170:37: undefined: tsoptions.RawCompilerOptions
+cohere/TypeScript-shim/tsoptions/shim.go:33:64: too many errors
+# github.com/microsoft/TypeScript/tsc/shim/checker
+cohere/TypeScript-shim/checker/shim.go:433:56: undefined: checker.VarianceRelationEntry
+cohere/TypeScript-shim/checker/shim.go:1484:38: undefined: checker.VarianceRelationEntry
+# github.com/microsoft/TypeScript/tsc/shim/vfs
+cohere/TypeScript-shim/vfs/shim.go:21:19: undefined: vfs.SkipAll
+cohere/TypeScript-shim/vfs/shim.go:22:19: undefined: vfs.SkipDir
+cohere/TypeScript-shim/vfs/shim.go:25:45: undefined: tspath.RootedPath
+cohere/TypeScript-shim/vfs/shim.go:25:68: undefined: vfs.WalkDirFunc
+cohere/TypeScript-shim/vfs/shim.go:27:24: undefined: vfs.WalkDirFunc
+# github.com/microsoft/TypeScript/tsc/shim/compiler
+cohere/TypeScript-shim/compiler/shim.go:60:67: undefined: tspath.RootedDirectoryPath
+cohere/TypeScript-shim/compiler/shim.go:63:59: undefined: tspath.RootedDirectoryPath
+FAIL	github.com/system-inc/adamic/internal/oracle [build failed]
+FAIL

@@ -1,0 +1,131 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestProcessExitPathOwnsLeakPolicy
+=== PAUSE TestProcessExitPathOwnsLeakPolicy
+=== CONT  TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+=== CONT  TestProcessExitPathOwnsLeakPolicy
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/realpath.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/realpath.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/empty-path.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/empty-path.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/realpath.a
+=== NAME  TestProcessExitPathOwnsLeakPolicy
+    process_exit_path_test.go:23: gate cache node miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/realpath.a
+    input_test.go:116: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a
+    input_test.go:116: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a
+    input_test.go:116: gate cache probe miss
+=== NAME  TestProcessExitPathOwnsLeakPolicy
+    process_exit_path_test.go:28: gate cache node miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a
+    input_test.go:116: gate cache probe miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a
+=== NAME  TestProcessExitPathOwnsLeakPolicy
+    process_exit_path_test.go:23: gate cache node miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a
+    input_test.go:116: gate cache probe miss
+=== NAME  TestProcessExitPathOwnsLeakPolicy
+    process_exit_path_test.go:28: gate cache node miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a
+    input_test.go:116: gate cache probe miss
+=== NAME  TestProcessExitPathOwnsLeakPolicy
+    process_exit_path_test.go:23: gate cache node miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a
+    input_test.go:116: gate cache probe miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/arguments.a
+    input_test.go:116: gate cache probe miss
+=== NAME  TestProcessExitPathOwnsLeakPolicy
+    process_exit_path_test.go:28: gate cache node miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/read_files.a
+    input_test.go:116: gate cache probe miss
+=== NAME  TestProcessExitPathOwnsLeakPolicy
+    process_exit_path_test.go:104: status 0 exit abandons its live closure; normal status 0 releases it; both metadata and release mutants run cleanly and fail only counted checks
+--- PASS: TestProcessExitPathOwnsLeakPolicy (3.70s)
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/empty-path.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/empty-path.a
+    input_test.go:116: gate cache probe miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a
+    input_test.go:116: gate cache probe miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a
+    input_test.go:116: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a
+    input_test.go:116: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a
+    input_test.go:116: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a
+    input_test.go:116: gate cache probe miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a
+    input_test.go:116: gate cache probe miss
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/walk.a
+    input_test.go:116: gate cache probe miss
+=== NAME  TestInputAgreesWithNode/internal/oracle/testdata/write_files.a
+    input_test.go:116: gate cache probe miss
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/read_arguments.a (1.37s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/realpath.a (1.55s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_process_host.a (2.58s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_process_system.a (2.74s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance.a (2.08s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_process_performance_core.a (2.36s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/utf8_sweep.a (1.24s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/arguments.a (1.10s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/read_files.a (0.80s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/empty-path.a (0.81s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_entries.a (1.74s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a (1.52s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_realpath.a (1.62s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_permissions.a (2.26s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_fs_directory_system.a (2.42s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_path_posix.a (1.16s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/walk.a (0.64s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/write_files.a (0.67s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=18
+ok  	github.com/system-inc/adamic/internal/oracle	6.898s

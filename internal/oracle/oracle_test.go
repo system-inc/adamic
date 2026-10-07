@@ -620,9 +620,13 @@ func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
 // there, run on the sanitized binary the comparison already built.
 func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
 	t.Helper()
+	report, abrupt := leaksCountedWithPath(t, native.C(program))
+	if report != "" || abrupt {
+		return report
+	}
 	switch runtime.GOOS {
 	case "darwin":
-		return leaksCounted(t, native.C(program))
+		return ""
 	case "linux":
 		return leakSanitizer(t, sanitized)
 	}
@@ -643,14 +647,27 @@ func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
 // a region's blocks never freed, the counts balance and leaks finds the blocks.
 func leaksCounted(t *testing.T, code string) string {
 	t.Helper()
+	report, _ := leaksCountedWithPath(t, code)
+	return report
+}
+
+func leaksCountedWithPath(t *testing.T, code string) (string, bool) {
+	t.Helper()
 	binary := filepath.Join(t.TempDir(), "counted")
 	if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
-	if report := unbalanced(t, execute(t, binary)); report != "" {
-		return report
+	result := execute(t, binary)
+	if report := unbalanced(t, result); report != "" {
+		return report, false
 	}
-	return leaksTool(execute(t, "leaks", "--atExit", "--", binary))
+	if abruptTermination(result) {
+		return "", true
+	}
+	if runtime.GOOS != "darwin" {
+		return "", false
+	}
+	return leaksTool(execute(t, "leaks", "--atExit", "--", binary)), false
 }
 
 // leaksTool reads a run of macOS's leaks --atExit: its report when it found memory nothing reaches,
@@ -667,6 +684,10 @@ func leaksTool(report run) string {
 func unbalanced(t *testing.T, counted run) string {
 	t.Helper()
 	match := countsLine.FindSubmatch(counted.stderr)
+	if match != nil && len(match[7]) != 0 {
+		// The runtime reached process.exit; live values are abandoned, not leaked.
+		return ""
+	}
 	if counted.exitCode != 0 || match == nil {
 		return fmt.Sprintf("the counted build didn't finish with its counts: exit %d, stderr %q", counted.exitCode, counted.stderr)
 	}
@@ -675,6 +696,12 @@ func unbalanced(t *testing.T, counted run) string {
 		return ""
 	}
 	return fmt.Sprintf("heap values leaked: %d (allocations %d, frees %d, in regions %d)", allocations-frees-regions, allocations, frees, regions)
+}
+
+// abruptTermination reads the executed path, never infers it from status or a static call site.
+func abruptTermination(result run) bool {
+	match := countsLine.FindSubmatch(result.stderr)
+	return match != nil && len(match[7]) != 0
 }
 
 // countOf is one number of a counts line, signed, so frees past allocations read as a negative leak.
