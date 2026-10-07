@@ -1,0 +1,104 @@
+import { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { isIdentifierStart, isIdentifierPart } from '../../../../typescript/scanner/characters.ts';
+import { adjacentSignature } from './messages.a';
+
+function identifier(text: string): boolean {
+    if(text.length === 0) return false;
+    let index = 0;
+    while(index < text.length) {
+        const code = text.codePointAt(index) ?? -1;
+        if(index === 0 ? !isIdentifierStart(code) : !isIdentifierPart(code)) return false;
+        index += code > 65535 ? 2 : 1;
+    }
+    return true;
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(container: ParseNode, _index: number): void {
+        const ctx = this.context;
+        const seen = new Set<string>();
+        let previous = '';
+        for(const member of container.children) {
+            const kind = ctx.node(member).kind;
+            if(
+                kind.endsWith('Keyword') ||
+                kind === 'TypeParameter' ||
+                kind === 'HeritageClause' ||
+                kind === 'Identifier'
+            )
+                continue;
+            if(
+                ![
+                    'FunctionDeclaration',
+                    'MethodSignature',
+                    'MethodDeclaration',
+                    'GetAccessor',
+                    'SetAccessor',
+                    'Constructor',
+                    'CallSignature',
+                    'ConstructSignature',
+                ].includes(kind) ||
+                ctx.has(member, 'AbstractKeyword')
+            ) {
+                previous = '';
+                continue;
+            }
+            let name =
+                kind === 'Constructor'
+                    ? 'constructor'
+                    : kind === 'CallSignature'
+                      ? 'call'
+                      : kind === 'ConstructSignature'
+                        ? 'new'
+                        : '';
+            let nameKind = 'Normal';
+            if(name === '') {
+                let key = ctx.name(member);
+                if(key < 0) {
+                    previous = '';
+                    continue;
+                }
+                if(ctx.node(key).kind === 'ComputedPropertyName') key = ctx.node(key).children[0] ?? key;
+                const node = ctx.node(key);
+                if(node.kind === 'PrivateIdentifier') {
+                    name = node.text;
+                    nameKind = 'Private';
+                }
+                else if(node.kind === 'Identifier') name = node.text;
+                else if(node.kind === 'StringLiteral' || node.kind === 'NumericLiteral') {
+                    name = identifier(node.text) ? node.text : `"${node.text}"`;
+                    nameKind = identifier(node.text) ? 'Normal' : 'Quoted';
+                }
+                else {
+                    name = ctx.raw(key);
+                    nameKind = 'Expression';
+                }
+            }
+            const staticness = ['FunctionDeclaration', 'CallSignature', 'ConstructSignature'].includes(kind)
+                ? 'Unset'
+                : ctx.has(member, 'StaticKeyword')
+                  ? 'Static'
+                  : 'Instance';
+            const key = `${nameKind} ${staticness} ${kind === 'CallSignature'} ${name}`;
+            if(seen.has(key) && previous !== key) {
+                const display = staticness === 'Static' ? `static ${name}` : name;
+                ctx.report(
+                    member,
+                    '@typescript-eslint/adjacent-overload-signatures',
+                    'adjacentSignature',
+                    adjacentSignature(display),
+                    '',
+                    '',
+                    '',
+                );
+            }
+            seen.add(key);
+            previous = key;
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule { return new Rule(context); }
