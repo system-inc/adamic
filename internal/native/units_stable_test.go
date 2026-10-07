@@ -275,3 +275,36 @@ func TestStableLintUnitChanges(t *testing.T) {
 		}
 	}
 }
+
+func TestSharedIdentitiesDoNotMigrate(t *testing.T) {
+	source := `#include "adamic.h"
+static int adamic_string_probe=7;
+// adamic-module ""
+static int helper(void) { return adamic_string_probe; }
+// adamic-module "one.a"
+static int first(void) { return helper(); }
+// adamic-module "two.a"
+static int second(void) { return 0; }
+int main(void) { return first()-7; }
+`
+	header, units, err := splitC(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	edited := strings.Replace(source, "int main(void)", "// adamic-module \"two.a\"\nstatic int added(void) { return helper()+adamic_string_probe; }\nint main(void)", 1)
+	nextHeader, nextUnits, err := splitC(edited)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := changedUnitInputs(unitInputs(header, units), unitInputs(nextHeader, nextUnits))
+	if len(changed) != 1 || changed[0] != moduleUnit("two.a") {
+		t.Fatalf("shared identity migrated: changed %v", changed)
+	}
+}
+
+func TestModuleMainRejectsEarlyReturn(t *testing.T) {
+	source := "#include \"adamic.h\"\nint main(void) {\n// adamic-module \"one.a\"\nreturn;\n\treturn 0;\n}\n"
+	if _, _, err := splitC(source); err == nil || !strings.Contains(err.Error(), "return crosses") {
+		t.Fatalf("early return accepted: %v", err)
+	}
+}

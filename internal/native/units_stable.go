@@ -128,8 +128,17 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 		item.definition = rewrite(tokens) + "\n"
 		if d.name == "main" {
 			item.owner = "main.c"
-		} else if d.function && marked && module != "" {
-			item.owner = moduleUnit(module)
+		} else if d.function && marked {
+			if module != "" {
+				item.owner = moduleUnit(module)
+			} else {
+				digest := sha256.Sum256([]byte(d.name))
+				item.owner = fmt.Sprintf("helpers_%02d.c", int(digest[0])%16)
+			}
+		} else if !d.function && (strings.HasPrefix(d.name, "adamic_string_") || strings.HasPrefix(d.name, "adamic_shape_") || strings.HasPrefix(d.name, "adamic_regex_")) {
+			// Content-addressed descriptors may gain consumers without migrating their identity.
+			digest := sha256.Sum256([]byte(d.name))
+			item.owner = fmt.Sprintf("shared_%02d.c", int(digest[0])%32)
 		}
 		references := map[string]bool{}
 		for _, token := range d.tokens {
@@ -303,7 +312,9 @@ func splitModuleMain(main string, globals map[string]string) (string, map[string
 			if err != nil {
 				return "", nil, err
 			}
-			boundaries = append(boundaries, boundary{offset, module})
+			if module != "" {
+				boundaries = append(boundaries, boundary{offset, module})
+			}
 		}
 		offset += len(line)
 	}
@@ -359,6 +370,8 @@ func splitModuleMain(main string, globals map[string]string) (string, map[string
 		references := map[string]bool{}
 		for _, token := range tokens {
 			switch token.text {
+			case "return":
+				return "", nil, fmt.Errorf("native: split: return crosses module initialization")
 			case "{":
 				depth++
 			case "}":
