@@ -1,0 +1,4 @@
+// Arena handles preserve builder/node identity; -1 represents a nil node.
+export function read(builder: number, node: number, present: boolean, hook: (builder: number, node: number) => void): void {
+    if (present) { hook(builder, node); }
+}

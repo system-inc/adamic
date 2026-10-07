@@ -1,0 +1,55 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { read } from './read.a';
+import { write } from './write.a';
+import { loop } from './loop.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('corpus path'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text);
+const root = json.parse();
+if (root === -1) { panic(json.error); }
+function number(index: number, name: string): number { return json.node(json.field(index,name)).number; }
+function flag(index: number, name: string): boolean { return json.node(json.field(index,name)).text === 'true'; }
+interface Block { reachable: boolean; events: number[]; }
+interface Builder { current: number; }
+let blocks: Block[] = [];
+let builders: Builder[] = [];
+let mode = 0;
+let calls = 0;
+let trace = '';
+function hook(builder: number, node: number): void {
+    const b = builders[builder] ?? panic('builder identity');
+    const block = blocks[b.current] ?? panic('current block');
+    calls++;
+    trace += `hook:${builder}:${node}:${calls};`;
+    block.events.push(node);
+    if (mode === 1) {
+        b.current = 1 - builder;
+        const next = blocks[b.current] ?? panic('new current block');
+        next.events.push(100 + node);
+    }
+}
+for (const row of json.node(json.field(root,'Cases')).children) {
+    const reachable = flag(row,'Reachable');
+    blocks = [{reachable,events:[11]},{reachable:!reachable,events:[22]}];
+    builders = [{current:0},{current:1}];
+    mode = number(row,'Mode');
+    calls = 0;
+    trace = '';
+    const builder = number(row,'Builder');
+    const node = number(row,'Node');
+    const present = flag(row,'Present');
+    const op = json.node(json.field(row,'Op')).text;
+    if (op === 'read') { read(builder,node,present,(b,n) => hook(b,n)); }
+    else if (op === 'write') { write(builder,node,present,(b,n) => hook(b,n)); }
+    else { loop(builder,node,present,(b,n) => hook(b,n)); }
+    console.log(`calls:${calls}:${trace}`);
+    for (let i=0;i<builders.length;i++) { const b=builders[i] ?? panic('builder');console.log(`builder:${i}:${b.current}`); }
+    for (let i=0;i<blocks.length;i++) {
+        const block = blocks[i] ?? panic('block');
+        let events = '';
+        for (const e of block.events) { events += `${e},`; }
+        console.log(`block:${i}:${block.reachable}:${events}`);
+    }
+}
