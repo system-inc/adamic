@@ -325,6 +325,37 @@ def c_blind_map(c, repository):
     return entries
 
 
+def neither_go(generator, fixtures):
+    """Per Go group, the blocks and statements neither the generator nor the fixtures run."""
+    result = {}
+    for label, predicate in go_groups:
+        blocks = statements = total = 0
+        for key, (count_statements, count) in generator.items():
+            if not predicate(key[0]):
+                continue
+            total += count_statements
+            if count == 0 and fixtures.get(key, [0, 0])[1] == 0:
+                blocks += 1
+                statements += count_statements
+        result[label] = {"blocks": blocks, "statements": statements, "share": round(statements / total, 4) if total else None}
+    return result
+
+
+def neither_c(generator, fixtures):
+    """The runtime's lines and branch outcomes neither side runs."""
+    lines = total = 0
+    for file, numbers in generator["lines"].items():
+        for number, count in numbers.items():
+            total += 1
+            if count == 0 and fixtures["lines"].get(file, {}).get(number, 0) == 0:
+                lines += 1
+    outcomes = 0
+    for key, (true, false) in generator["branches"].items():
+        other = fixtures["branches"].get(key, [0, 0])
+        outcomes += (1 if true == 0 and other[0] == 0 else 0) + (1 if false == 0 and other[1] == 0 else 0)
+    return {"lines": lines, "lineShare": round(lines / total, 4) if total else None, "branchOutcomes": outcomes}
+
+
 def compare_go(generator, fixtures):
     result = {}
     for label, predicate in go_groups:
@@ -436,6 +467,7 @@ def main():
     c_blind = c_blind_map(generator["c"], repository)
     if "fixtures" in sides:
         fixtures = sides["fixtures"]
+        report["neither"] = {"go": neither_go(generator["go"], fixtures["go"]), "c": neither_c(generator["c"], fixtures["c"])}
         report["comparison"] = {
             "go": compare_go(generator["go"], fixtures["go"]),
             "goGeneratorOnlyByFunction": go_only_by_function(repository, generator["go"], fixtures["go"])[:60],
@@ -482,13 +514,18 @@ def main():
             write(f"- **{side}**: " + ", ".join(f"{key} {meta[key]}" for key in meta) + "\n")
     write("\nGo's coverage counts blocks (each arm of an `if`, each `case`, is its own block) and the statements in them; Go has no branch coverage, so on the Go side the branch share is the block share. clang's source-based coverage counts branch outcomes (each condition's true and its false), regions and lines.\n")
 
-    write("\n## (b) What the 2,000 seeds reach\n")
-    write("| Area | Branches | Statements or lines |\n|---|---|---|\n")
+    seeds = report["sides"]["generator"]["meta"].get("seeds", "")
+    write(f"\n## (b) What the seeds ({seeds}) reach, and what neither the seeds nor the fixtures reach\n")
+    write("The last column is the code no line of defense executes: neither a generated program nor a hand-written fixture.\n\n")
+    write("| Area | Branches | Statements or lines | Covered by neither |\n|---|---|---|---|\n")
     shares = report["sides"]["generator"]
+    neither = report.get("neither")
     for label, share in shares["goShares"].items():
-        write(f"| {label} | {percent(share['blockShare'])} of {share['blocks']} blocks | {percent(share['statementShare'])} of {share['statements']} statements |\n")
+        blind = f"{neither['go'][label]['statements']} statements ({percent(neither['go'][label]['share'])})" if neither else "n/a"
+        write(f"| {label} | {percent(share['blockShare'])} of {share['blocks']} blocks | {percent(share['statementShare'])} of {share['statements']} statements | {blind} |\n")
     runtime = shares["cShares"]["internal/native/runtime"]
-    write(f"| internal/native/runtime (C) | {percent(runtime['branchShare'])} of {runtime['branchOutcomes']} branch outcomes | {percent(runtime['lineShare'])} of {runtime['lines']} lines; {percent(runtime['functionShare'])} of {runtime['functions']} functions; {percent(runtime['regionShare'])} of {runtime['regions']} regions |\n")
+    blind = f"{neither['c']['lines']} lines ({percent(neither['c']['lineShare'])}), {neither['c']['branchOutcomes']} branch outcomes" if neither else "n/a"
+    write(f"| internal/native/runtime (C) | {percent(runtime['branchShare'])} of {runtime['branchOutcomes']} branch outcomes | {percent(runtime['lineShare'])} of {runtime['lines']} lines; {percent(runtime['functionShare'])} of {runtime['functions']} functions; {percent(runtime['regionShare'])} of {runtime['regions']} regions | {blind} |\n")
 
     if "fixtures" in sides:
         write("\n## (c) The oracle fixtures, for comparison\n")

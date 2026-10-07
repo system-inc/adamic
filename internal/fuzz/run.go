@@ -371,6 +371,7 @@ func execute(directory string, environment []string, limit time.Duration, name s
 	if profile := coverageProfile(); profile != "" {
 		environment = append(append([]string{}, environment...), "LLVM_PROFILE_FILE="+profile)
 	}
+	environment = append(environment, programCoverage(directory)...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -403,6 +404,25 @@ var profiles atomic.Uint64
 // verify/coverage/measure.sh asks for one (native.Options.Coverage): a path no other run of this
 // process or another uses, under ADAMIC_C_COVERAGE_DIRECTORY. Only a binary built with coverage
 // writes it; Node and the compiler ignore it. Empty when nothing is being measured.
+// ProgramCoverage is the directory under a program's own directory where, with
+// ADAMIC_COVERAGE_PER_PROGRAM=1, every run for that program writes its coverage: the compiler's Go
+// counters (GOCOVERDIR, for an adamic built with -cover) under go/, and the binary's clang profiles
+// under c/. cmd/adamic-steer reads it to see what each program reached on its own.
+const ProgramCoverage = "coverage"
+
+// programCoverage is the environment that sends a run's coverage to its program's directory, or
+// nothing when coverage isn't being kept per program.
+func programCoverage(directory string) []string {
+	if os.Getenv("ADAMIC_COVERAGE_PER_PROGRAM") != "1" {
+		return nil
+	}
+	golang, clang := filepath.Join(directory, ProgramCoverage, "go"), filepath.Join(directory, ProgramCoverage, "c")
+	if os.MkdirAll(golang, 0o755) != nil || os.MkdirAll(clang, 0o755) != nil {
+		return nil
+	}
+	return []string{"GOCOVERDIR=" + golang, "LLVM_PROFILE_FILE=" + filepath.Join(clang, fmt.Sprintf("%d-%%p.profraw", profiles.Add(1)))}
+}
+
 func coverageProfile() string {
 	directory := os.Getenv("ADAMIC_C_COVERAGE_DIRECTORY")
 	if directory == "" || !native.CoverageRequested() {

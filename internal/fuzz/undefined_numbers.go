@@ -37,6 +37,8 @@ var OptIn = []string{
 	unaryCoercion,            // unary - and ~ on a string or a boolean
 	nullScalarComparison,     // null === value where value is a number, a boolean or a number | undefined
 	typeofStringLiteral,      // typeof 'a', whose C clang refuses
+	breadthStatics,           // with breadth: static members, which stop stage 0 lowering structural method calls and spreads (breadth.go)
+	breadthFrozen,            // with breadth: a try around a write to a frozen object (breadth.go)
 }
 
 // maybeShape is one way a number | undefined crosses a boundary. call writes it around its argument;

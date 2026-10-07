@@ -62,6 +62,7 @@ var Features = []string{
 	"overrides",            // static read-only signatures with implementations that mutate or escape arguments
 	"liveness",             // locals assigned from calls that may throw, read in catch, finally, after and in loops (liveness.go)
 	"field-representation", // number | undefined fields narrowed then cleared, and literals with undefined fields (field_representation.go)
+	breadthFeature,         // constructs chosen from the coverage blind map: switch, finally on every exit, statics, accessors, generics, iterators and more (breadth.go)
 }
 
 // GenerateWithout makes the program a seed names with some features left out. The same seed and the
@@ -124,6 +125,10 @@ type generator struct {
 	silent bool
 	// operators is what the operators scene wrote, for its test (operatorSeen).
 	operators map[string]bool
+	// weights is the breadth scene's weight table; nil is the checked-in one (breadth_weights.txt).
+	weights map[string]float64
+	// breadthChosen is what the breadth scene wrote, for cmd/adamic-steer.
+	breadthChosen []string
 }
 
 // function is a callable the generator made: a name, its parameter types, and what it returns.
@@ -274,6 +279,11 @@ func (g *generator) program() *Program {
 	}
 	if g.allowed("field-representation") {
 		for _, part := range g.fieldRepresentationProgram() {
+			add(part)
+		}
+	}
+	if g.allowed(breadthFeature) {
+		for _, part := range g.breadthProgram() {
 			add(part)
 		}
 	}

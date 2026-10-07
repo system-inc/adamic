@@ -62,6 +62,10 @@ fi
 commands="$output/commands.md"
 cd "$repository"
 commit="$(git rev-parse HEAD)"
+# A run of a working tree with changes says so, since the commit alone isn't what ran.
+if ! git diff --quiet HEAD; then
+	commit="$commit+dirty"
+fi
 
 # The runtime the coverage builds link, sanitized as the fuzzer and the oracle compile it. Its objects
 # carry the coverage mapping llvm-cov reads.
@@ -125,7 +129,7 @@ for verdict in ("crash", "agreed", "finding", "checked", "not yet", "invalid", "
     if match:
         verdicts[verdict] = int(match.group(1))
 profiles = sum(1 for _ in open(os.path.join(output, "generator", "profraw.list")))
-meta = {"seeds": f"{seed} to {int(seed) + int(count) - 1}", "parallel": int(parallel), "commit": commit[:10],
+meta = {"seeds": f"{seed} to {int(seed) + int(count) - 1}", "parallel": int(parallel), "commit": commit[:10] + ("+dirty" if commit.endswith("+dirty") else ""),
         "verdicts": ", ".join(f"{key} {value}" for key, value in verdicts.items()),
         "C profiles": profiles, "exit": int(generator_exit), "seconds": int(generator_seconds)}
 json.dump(meta, open(os.path.join(output, "generator", "meta.json"), "w"))
