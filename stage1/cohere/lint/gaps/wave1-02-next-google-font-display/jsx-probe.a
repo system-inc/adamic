@@ -1,0 +1,5 @@
+import { Parser } from '../../../../typescript/parser/parser.ts';
+const source = 'export const Test = () => <link href="https://fonts.googleapis.com/css2?family=Krona+One" />;';
+const parser = new Parser(source, 'Component.tsx');
+parser.file();
+console.log('unexpected parse success');
