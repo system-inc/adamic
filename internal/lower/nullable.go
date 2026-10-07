@@ -21,15 +21,22 @@ func (l *lowering) nullableObservation(name string, value, empty ir.Expression, 
 }
 
 func (l *lowering) nullableUse(node *ast.Node) error {
-	own := l.concrete(l.checker.GetTypeAtLocation(node))
-	if l.includesNull(own) && l.includesUndefined(own) {
-		return l.notYet(node, nullableTagReason)
-	}
-	// Console observes its argument immediately as text; it never stores the wider declared type.
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
 	}
+	own := l.concrete(l.checker.GetTypeAtLocation(node))
+	if l.includesNull(own) && l.includesUndefined(own) {
+		// typeof consumes a lookup's presence slot immediately. Its lowering accepts only
+		// ArrayIndex, MapGet and ArrayPop; a stored value still needs an empty-case tag.
+		lookup := ast.SkipParentheses(node)
+		if outer.Parent != nil && outer.Parent.Kind == ast.KindTypeOfExpression &&
+			(lookup.Kind == ast.KindElementAccessExpression || lookup.Kind == ast.KindCallExpression) {
+			return nil
+		}
+		return l.notYet(node, nullableTagReason)
+	}
+	// Console observes its argument immediately as text; it never stores the wider declared type.
 	if parent := outer.Parent; parent != nil && parent.Kind == ast.KindCallExpression && l.isConsole(parent.AsCallExpression().Expression) {
 		return nil
 	}

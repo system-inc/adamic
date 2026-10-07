@@ -217,8 +217,6 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name);
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
-adamic_string *adamic_static_union_typeof(const adamic_heap *value);
-adamic_string *adamic_object_typeof(const adamic_object *object);
 adamic_value *adamic_static_field(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 adamic_value *adamic_object_write_field(adamic_object *object, const char *name, adamic_slot_cache *cache);
 // A readonly numeric view may see a field made with the undefined-only reference representation.
@@ -658,8 +656,9 @@ bool adamic_union_equal(const adamic_heap *left, const adamic_heap *right);
 // string the caller owns.
 adamic_string *adamic_union_to_string(adamic_heap *value);
 
-// adamic_union_typeof is typeof value, a constant; the names typeof gives are these.
-adamic_string *adamic_union_typeof(const adamic_heap *value);
+// adamic_union_typeof classifies every reference, including static constructors. null says what
+// a missing pointer represents; null and undefined share NULL but have different typeof results.
+adamic_string *adamic_union_typeof(const adamic_heap *value, bool null);
 extern adamic_string adamic_typeof_number;
 extern adamic_string adamic_typeof_string;
 extern adamic_string adamic_typeof_boolean;

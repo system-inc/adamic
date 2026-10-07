@@ -453,10 +453,17 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		if operand.Type().IsReference() && l.includesNull(l.checker.GetTypeAtLocation(node.AsTypeOfExpression().Expression)) {
-			return l.nullableObservation("typeof", operand, ir.StringConstant{Index: l.constant("object")}, func(read ir.Expression) ir.Expression { return ir.TypeOf{Value: read} }), nil
+		written := node.AsTypeOfExpression().Expression
+		null := l.typeOfNull(written)
+		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
+			switch operand.(type) {
+			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
+				// The lookup still has a presence slot, so typeof can distinguish null from undefined.
+			default:
+				return nil, l.notYet(node, "typeof a value holding both null and undefined without a presence slot")
+			}
 		}
-		return ir.TypeOf{Value: operand}, nil
+		return ir.TypeOf{Value: operand, Null: null}, nil
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {

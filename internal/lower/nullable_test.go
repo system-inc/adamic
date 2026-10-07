@@ -72,7 +72,6 @@ func TestNullableReferenceReadsNeedATagInEveryExpression(t *testing.T) {
 		"console.log(`${found[3] === null}`);",
 		"console.log(`${found[0] === undefined}`);",
 		"console.log(`${seen.get('miss')}`);",
-		"console.log(typeof found[0]);",
 		"function pass<T>(v: T): string { return typeof v; } console.log(pass(seen.get('miss')));",
 		"if (seen.has('miss')) { console.log(`${seen.get('miss') === null}`); }",
 		"if (seen.get('miss') !== undefined) { console.log(`${seen.get('miss') === null}`); }",
@@ -82,5 +81,14 @@ func TestNullableReferenceReadsNeedATagInEveryExpression(t *testing.T) {
 		if !errors.As(err, &gap) || !strings.Contains(err.Error(), "empty-case tag") {
 			t.Errorf("%s: got %v, want the named empty-case tag reason", observed, err)
 		}
+	}
+}
+
+// A direct typeof lookup retains the presence slot rather than storing its two empty cases.
+func TestNullableReferenceTypeOfLookupKeepsPresence(t *testing.T) {
+	t.Parallel()
+	source := "const slots: (RegExpMatchArray | null)[] = ['x'.match(/x/)]; slots[0] = null; console.log(`${typeof slots[0]} ${typeof slots.at(1)} ${typeof slots.pop()}`); const entries = new Map<string, RegExpMatchArray | null>(); entries.set('null', null); console.log(`${typeof entries.get('null')} ${typeof entries.get('missing')}`);"
+	if _, err := lowerSource(t, source); err != nil {
+		t.Fatalf("presence-backed typeof: %v", err)
 	}
 }
