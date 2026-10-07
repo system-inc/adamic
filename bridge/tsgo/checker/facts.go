@@ -203,6 +203,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "unicode-node-text": return p.unicodeNodeText(out, node, question)
 	case "symbol-declaration-syntax": return p.symbolDeclarationSyntax(out, c, node, question)
 	case "global-binding": return p.globalBinding(out, c, node, question)
 	case "global-source": return p.globalSource(out, c, node, question)
