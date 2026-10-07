@@ -53,3 +53,19 @@ wave1-04-continuation-report.md. Tailwind and Google Fonts witnesses refuse in
 the independent parser; require-description's JSX witness silently lacks its JSX
 node, though its comment is discovered correctly. No rule certification or
 throughput claim is made. The shared .a registration contract is still absent.
+
+## Next continuation claim, October 7
+
+After pushing all prior work and fetching all origin heads, reserve:
+
+1. @typescript-eslint/no-non-null-asserted-optional-chain
+2. @typescript-eslint/no-non-null-assertion
+3. @typescript-eslint/no-this-alias
+
+Selection snapshot: origin/main ef3d907ecdc4c771b016f7d9c52372def057a340;
+320 origin refs, 39 distinct Markdown claim blobs. The 46-rule helper-ready
+list referenced by helpers/REPORT.md is exhausted. These are the first three
+remaining inventory rules in array order after excluding needs_type_information
+and binding_only, names found in main's executable lint sources, and names in
+claim documents on any origin branch. No earlier claims are released.
+This update is pushed before writing rule code. New Adamic sources use .a.
