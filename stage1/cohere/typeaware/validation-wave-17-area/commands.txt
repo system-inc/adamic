@@ -1,0 +1,13 @@
+bash cloud/setup.sh > setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+git rebase origin/area/stage1-lint > final-rebase.log 2>&1
+ADAMIC_WAVE17_ARTIFACTS=/workspace/wave-17-area-final/original ADAMIC_WAVE17_HEAD_ARTIFACTS=/workspace/wave-17-area-final/heads ADAMIC_WAVE17_NEXT_ARTIFACTS=/workspace/wave-17-area-final/next ADAMIC_WAVE17_THIRD_ARTIFACTS=/workspace/wave-17-area-final/third ADAMIC_WAVE17_FOURTH_ARTIFACTS=/workspace/wave-17-area-final/fourth ADAMIC_WAVE17_FIFTH_ARTIFACTS=/workspace/wave-17-area-final/fifth ADAMIC_COVERAGE_ARTIFACTS=/workspace/wave-17-area-final/coverage ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-17-typescript TMPDIR=/workspace/wave-17-artifacts go test ./stage1/cohere/typeaware -run '^(TestWave17|TestCoverageAgreementAndMutants)' -count=1 -v -timeout=30m > test.log 2>&1
+go vet ./... > vet.log 2>&1
+go test ./internal/native -run '^TestRuntime(ReleasePaths|StringEquality)$' -count=1 -v > runtime.log 2>&1
+ADAMIC_GATE_UNCACHED=1 TMPDIR=/workspace/wave-17-artifacts go test ./internal/oracle -run '^TestTheOracleCatchesOneByte$|^TestRuntimeLastIndexOfMatchesNode$|^TestNativeAgreesWithNode$/internal/oracle/testdata/(functions|closures|generic_functions|method_closures|devirtualize|call_targets_closure|call_targets_element|call_targets_region|call_targets_reuse|call_targets_sort)[.]a$' -count=1 -v > node.log 2>&1
+go test ./bridge/tsgo/checker ./stage1/cohere/lint/registry -count=1 -v > checker-registry.log 2>&1
+python3 stage1/cohere/typeaware/wave_17_listeners/verify.py > listeners.log 2>&1
+python3 /workspace/wave-17-sixth/select.py > selection.log 2>&1
+python3 stage1/cohere/typeaware/validation-wave-17-landing/measure.py /workspace/wave-17-area-final/fifth /workspace/wave-17-area-final/timing-quiet /workspace/wave-17-typescript > timing-quiet.log 2>&1
+gofmt -l stage1/cohere/typeaware/wave_17_heads_test.go stage1/cohere/typeaware/wave_17_test.go > formatting.log
+git diff --check > diff-check.log 2>&1

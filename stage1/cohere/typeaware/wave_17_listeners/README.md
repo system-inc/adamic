@@ -1,3 +1,6 @@
+Current named-kind verification: ../validation-wave-17-area/listeners.log.
+Native Next JSX coverage is now green; legacy driver adapter limits remain.
+
 Current contract correction: listener kinds are now registry-valid ast.Kind names
 such as SourceFile and CallExpression, without the Kind prefix. The verifier
 compares those names directly with production Go listeners, and substitutes

@@ -279,3 +279,22 @@ remains withdrawn, its prototypes are outside the branch, and no rule remains
 unclaimed in the recorded all-origin audit. WAVE_17_LANDING4_REPORT.md contains
 the current-base timings, limitations and exact command evidence. This branch
 is pushed only to codex/typeaware-wave-17 with an exact lease against 72ce121c.
+
+
+## Current area landing and native Next JSX
+
+Rebased source f4bba2554e6c86effb45f3ac956ebf84f2c687ea is on current area
+d65a8f931c98655936ae04c6899f38f14862b73e and includes main
+39638d9e278d38bb5aeae887f46d55a70e47aaad, model 50a5f105 and harness
+41eb6eab2. All eight selected lint suites passed again in 911.697s with
+complete Go bytes, sanitizers, mutants and released-handle checks. Named
+listener metadata passes the independent production-listener verifier.
+
+The native JSX parser now passes all 40 Next head controls and the original
+three JSX witnesses. This supersedes the historical Next JSX parser blocker.
+React analysis/configured regex and legacy shared-driver adapter limits remain
+incomplete; JSX success does not establish those analyses. The sixth duplicate
+claim remains withdrawn. The refreshed all-origin audit has 597 refs, 33 claim
+blobs and zero unclaimed checker-dependent entries, so no new claim is made.
+WAVE_17_AREA_LANDING_REPORT.md records exact current-base evidence and timings.
+Only codex/typeaware-wave-17 is pushed, never main or an area branch.
