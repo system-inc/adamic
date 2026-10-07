@@ -37,6 +37,8 @@ func TestJSONParseRefusalBoundaries(t *testing.T) {
 		{"escaping_nested", `const obj = {a: {n: 1}}; const alias = obj.a; JSON.stringify(obj);`, "structural types can hide fields"},
 		{"shorthand_escape", `const obj = {a: {n: 1}}; const alias = {obj}; JSON.stringify(obj);`, "structural types can hide fields"},
 		{"array_return_view", `const fn: () => readonly (number | string)[] = () => [1]; JSON.stringify({toJSON: fn});`, "literal element metadata"},
+		{"parsed_descendant_space", `JSON.stringify({p: JSON.parse('{"x":1}')}, null, 2);`, "full runtime metadata"},
+		{"parsed_descendant_keys", `JSON.stringify({p: JSON.parse('{"x":1,"y":2}')}, ['p', 'x']);`, "full runtime metadata"},
 		{"context", `const value: string = JSON.parse('1');`, "incompatible with its contextual type"},
 		{"literal_context", `const value: 1 = JSON.parse('2');`, "incompatible with its contextual type"},
 		{"dynamic", `const text = '1'.repeat(2); const value: number = JSON.parse(text);`, "result's type can't be proven"},
