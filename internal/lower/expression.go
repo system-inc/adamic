@@ -362,6 +362,9 @@ func (l *lowering) weakTarget(proven *checker.Type) *checker.Type {
 
 // value lowers a value, as expression does, but leaves a Weak as it's kept.
 func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeFSDirectoryValue(node); known {
+		return value, err
+	}
 	node = ast.SkipParentheses(node)
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
@@ -1019,10 +1022,16 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	// number | undefined is packed as one.
 	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
 		for index, parameter := range signatures[0].Parameters() {
-			if index < len(arguments) {
-				if takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter)); isKnown {
-					arguments[index] = fit(arguments[index], takes)
-				}
+			takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter))
+			if !isKnown {
+				return nil, l.notYet(node, "a function value parameter without a runtime representation")
+			}
+			if index >= len(arguments) {
+				// The checker accepted an omitted optional argument. A native closure reads every
+				// declared parameter slot, so absence must be supplied as typed undefined.
+				arguments = append(arguments, fit(ir.Undefined{}, takes))
+			} else {
+				arguments[index] = fit(arguments[index], takes)
 			}
 		}
 	}
