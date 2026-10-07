@@ -1,6 +1,6 @@
 Rebased all twelve owned checker-rule ports onto the integrated lint area without changing rule bodies or shared sources.
-Final base origin/area/stage1-lint is d65a8f931c98655936ae04c6899f38f14862b73e, containing main 39638d9e and harness 41eb6eab2; push only the worker branch.
-All four owned oracle suites and named-listener checks PASS; bridge tests PASS 64.323s/0.249s; vet and diff checks clean.
+Current validated base is origin/area/stage1-lint b84a9d9314b65d3d0261ee017e233287b4f071da, containing main c7991b900362796aefd111474e65eb5398e91953 and harness 41eb6eab2; push only the worker branch.
+All four owned byte-oracle suites, named listeners, sanitizer and released-handle checks PASS again; bridge PASS 162.084s/1.060s; Node lowering fixtures and one-byte mutant PASS 22.191s.
 Caught 12 rule and 11 raw-question byte mutants, released-registry mutation, native listener mutation and two JSON listener mutations.
 Default options only, full repository gate and older node-only migration uncovered; React analysis claims remain parked.
 
@@ -41,3 +41,15 @@ After the first area-based push (7c4463dc3), area advanced to d65a8f93 with allo
 Ran go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/runtime_last_index_of|TestTheOracleCatchesOneByte' -count=1 -v with direct output in runtime-oracle.log. The exact runtime search fixture and one-byte oracle mutant pass in 11.525s, with the fixture taking 11.49s; worker caching enabled (native hits=1, misses=3). No compiler source was edited by this unit.
 
 Post-push audit of all origin branches inspected 610 refs and 33 distinct claim blobs. The conservative mention-based scan counts 172 claimed rules and leaves no unclaimed rule after the frozen main/bridge exclusions. No next claim is made. Main remains 39638d9e; the final area tip was independently verified as d65a8f93 before publication. The shared registry, parser, heap/string optimization and leak-helper changes are preserved unchanged.
+
+## Latest lowering and record-runtime landing
+
+Rebased cleanly onto b84a9d9314b65d3d0261ee017e233287b4f071da, containing current main c7991b900362796aefd111474e65eb5398e91953. Preserved all integrated proven-predicate, relation and record-runtime changes without editing shared sources. Ran cloud/setup.sh successfully: Go, clang, Node and submodules ready at 0s; cache warm 135s; total 135s; nproc=5. Regenerated the 15-entry shared registry and rebuilt /tmp/wave24-refresh-adamic.
+
+Repeated the four complete owned suites using the commands above with /tmp/wave24-refresh-adamic and logs /tmp/wave24-refresh-{original,next,third,fifth}.log. All pass, including full findings/fixes/suggestions bytes on both frozen corpora, all 23 byte mutants, normal/sanitized controls and exact released-handle panics. Original suite passes in 226.443s. Repeated the nine native and JSON named listeners, their mutants, bridge packages and vet: all pass. Bridge times are 162.084s and 1.060s. The latest three declarations and metadata mutant pass in the fifth suite.
+
+Ran the exact Node oracle filter TestNativeAgreesWithNode/internal/oracle/testdata/proven_(assertions|class_guards|guards|satisfies|upcasts)|TestTheOracleCatchesOneByte. The initial run failed before comparisons because the runtime cache could not allocate disk space. Freed only obsolete large binaries in explicitly named worker scratch directories, retaining source and committed evidence. Repeated the unchanged filter: all five fixtures and the one-byte mutant pass in 22.191s. Both logs are retained. No check was skipped or relaxed.
+
+After all builds stopped, three alternating whole-process timing medians: repository native 283.297ms versus Go 99.580ms (2.845x slower); compiler native 1493.848ms versus Go 307.696ms (4.855x slower). These newest-three-suite measurements supersede earlier timing figures for this base. Full gate and the seventeen newly mandatory external-input correctness checks were not run; no coverage of them is claimed. Default-option and older node-only migration limitations still apply. React analysis claims remain parked.
+
+Fresh all-origin audit: 636 refs, 33 distinct claim blobs, 172 claimed rule mentions, no unclaimed rule. Verified main, area and own remote worker tips before publication. Logs and timing samples are in evidence/area-landing/refresh/. No new claim is made.
